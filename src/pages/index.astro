@@ -1,17 +1,252 @@
 ---
+import Layout from '../layouts/Layout.astro';
+import latestNews from '../data/latest-news.json';
 
+// 날짜순 정렬 (최신순)
+const sortedNews = latestNews.sort((a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime());
+
+const formatDate = (isoString) => {
+  const date = new Date(isoString);
+  const now = new Date();
+  const diffTime = Math.abs(now - date);
+  const diffHours = Math.ceil(diffTime / (1000 * 60 * 60));
+
+  if (diffHours < 24) {
+    return `${diffHours} hours ago`;
+  }
+  return date.toLocaleDateString('ko-KR', {
+    month: 'short',
+    day: 'numeric'
+  });
+};
+
+const getSourceColor = (source) => {
+  if (source.includes('Knowledge')) return 'bg-blue-900 text-blue-200 border-blue-700';
+  if (source.includes('Dynamics')) return 'bg-emerald-900 text-emerald-200 border-emerald-700';
+  return 'bg-gray-800 text-gray-300 border-gray-600';
+};
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<Layout title="AI Infra & Data Center News">
+	<main>
+    <header class="hero">
+      <div class="container">
+        <span class="badge-beta">Beta</span>
+        <h1>AI Infrastructure <br class="mobile-break" />& Data Center Brief</h1>
+        <p class="subtitle">Curated daily updates on Hyperscale, Power, and AI Hardware.</p>
+      </div>
+    </header>
+
+    <div class="container content-wrapper">
+      <div class="news-grid">
+        {sortedNews.map((news) => (
+          <article class="news-card">
+            <a href={news.url} target="_blank" rel="noopener noreferrer" class="card-link">
+              <div class="card-content">
+                <div class="card-meta">
+                  <span class={`source-badge ${getSourceColor(news.source)}`}>{news.source}</span>
+                  <span class="date">{formatDate(news.publishedAt)}</span>
+                </div>
+                <h2>{news.title}</h2>
+                <p>{news.summary}</p>
+              </div>
+              <div class="card-footer">
+                Read more &rarr;
+              </div>
+            </a>
+          </article>
+        ))}
+      </div>
+    </div>
+	</main>
+</Layout>
+
+<style>
+  :root {
+    --primary: #60a5fa; /* Blue-400 */
+    --text-main: #f1f5f9; /* Slate-100 */
+    --text-muted: #94a3b8; /* Slate-400 */
+    --bg-page: #0f172a; /* Slate-900 */
+    --bg-card: #1e293b; /* Slate-800 */
+    --border-card: #334155; /* Slate-700 */
+    --bg-hero: #0f172a;
+    --border-hero: #1e293b;
+  }
+
+	main {
+    background-color: var(--bg-page);
+    color: var(--text-main);
+    min-height: 100vh;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+	}
+
+  .container {
+    max-width: 1200px; /* Increased width for 3 columns */
+    margin: 0 auto;
+    padding: 0 1.5rem;
+  }
+
+  /* Hero Section */
+  .hero {
+    background: var(--bg-hero);
+    padding: 4rem 0 3rem;
+    text-align: center;
+    border-bottom: 1px solid var(--border-hero);
+    margin-bottom: 3rem;
+  }
+
+  .badge-beta {
+    background: #1e3a8a; /* Blue-900 */
+    color: #93c5fd; /* Blue-300 */
+    border: 1px solid #1d4ed8;
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    display: inline-block;
+    margin-bottom: 1rem;
+  }
+
+	h1 {
+		font-size: 3rem;
+		font-weight: 800;
+		line-height: 1.1;
+    color: #f8fafc; /* Slate-50 */
+    letter-spacing: -0.02em;
+		margin: 0 0 1rem 0;
+	}
+
+  .mobile-break { display: none; }
+  @media (max-width: 640px) {
+    h1 { font-size: 2.25rem; }
+    .mobile-break { display: block; }
+  }
+
+  .subtitle {
+    font-size: 1.125rem;
+    color: var(--text-muted);
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.6;
+  }
+
+  /* Grid Layout - 3 Columns */
+  .news-grid {
+    display: grid;
+    /* minmax(350px, 1fr) ensures cards don't get too small, but fills space */
+    grid-template-columns: repeat(3, 1fr); 
+    gap: 2rem;
+    padding-bottom: 4rem;
+  }
+
+  /* Responsive breakpoints */
+  @media (max-width: 1024px) {
+    .news-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 640px) {
+    .news-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  /* Card Design */
+  .news-card {
+    background: var(--bg-card);
+    border-radius: 12px;
+    border: 1px solid var(--border-card);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+  }
+
+  .news-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 24px -10px rgba(0, 0, 0, 0.5);
+    border-color: #475569;
+    background: #253349; /* Slightly lighter on hover */
+  }
+
+  .card-link {
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+
+  .card-content {
+    padding: 1.5rem;
+    flex-grow: 1;
+  }
+
+  .card-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+    font-size: 0.875rem;
+  }
+
+  .source-badge {
+    padding: 0.25rem 0.6rem;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 0.7rem;
+    border: 1px solid transparent;
+  }
+  
+  .bg-blue-900 { background-color: rgba(30, 58, 138, 0.5); color: #bfdbfe; border-color: #1e40af; }
+  .bg-emerald-900 { background-color: rgba(6, 78, 59, 0.5); color: #a7f3d0; border-color: #065f46; }
+  .bg-gray-800 { background-color: rgba(31, 41, 55, 0.5); color: #d1d5db; border-color: #374151; }
+
+  .date {
+    color: #64748b; /* Slate-500 */
+    font-size: 0.8rem;
+  }
+
+  h2 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    line-height: 1.4;
+    color: var(--text-main);
+    margin: 0 0 0.75rem 0;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  p {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    line-height: 1.6;
+    margin: 0;
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .card-footer {
+    padding: 1rem 1.5rem;
+    border-top: 1px solid var(--border-card);
+    background: rgba(15, 23, 42, 0.5); /* Slightly darker footer */
+    color: var(--primary);
+    font-weight: 600;
+    font-size: 0.875rem;
+    transition: background 0.2s;
+  }
+
+  .news-card:hover .card-footer {
+    background: rgba(30, 41, 59, 0.5);
+  }
+</style>
