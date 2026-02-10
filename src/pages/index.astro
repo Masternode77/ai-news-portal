@@ -5,10 +5,10 @@ import latestNews from '../data/latest-news.json';
 // 날짜순 정렬 (최신순)
 const sortedNews = latestNews.sort((a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime());
 
-const formatDate = (isoString) => {
+const formatDate = (isoString: string) => {
   const date = new Date(isoString);
   const now = new Date();
-  const diffTime = Math.abs(now - date);
+  const diffTime = Math.abs(now.getTime() - date.getTime());
   const diffHours = Math.ceil(diffTime / (1000 * 60 * 60));
 
   if (diffHours < 24) {
@@ -20,7 +20,7 @@ const formatDate = (isoString) => {
   });
 };
 
-const getSourceColor = (source) => {
+const getSourceColor = (source: string) => {
   if (source.includes('Knowledge')) return 'bg-blue-900 text-blue-200 border-blue-700';
   if (source.includes('Dynamics')) return 'bg-emerald-900 text-emerald-200 border-emerald-700';
   return 'bg-gray-800 text-gray-300 border-gray-600';
