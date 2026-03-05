@@ -4,6 +4,8 @@
   "version": "0.0.1",
   "scripts": {
     "dev": "astro dev",
+    "pipeline": "node scripts/pipeline.mjs",
+    "update-news": "node scripts/pipeline.mjs",
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro"

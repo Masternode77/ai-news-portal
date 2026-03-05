@@ -1,35 +1,41 @@
-
-name: Update News Content
+name: Curate AI/DC News
 
 on:
   schedule:
-    - cron: '0 */6 * * *' # Run every 6 hours
-  workflow_dispatch: # Allow manual trigger
+    - cron: '0 */8 * * *'
+  workflow_dispatch:
 
 jobs:
-  update-news:
+  pipeline:
     runs-on: ubuntu-latest
     permissions:
-      contents: write # Need write access to commit changes
+      contents: write
 
     steps:
-      - name: Checkout repo
+      - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Setup Node.js
+      - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: '20'
+          cache: npm
 
       - name: Install dependencies
         run: npm ci
 
-      - name: Run update script
-        run: node scripts/update-news.js
+      - name: Run curation pipeline
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          GEMINI_IMAGE_MODEL: ${{ secrets.GEMINI_IMAGE_MODEL }}
+        run: npm run pipeline
 
-      - name: Commit and Push changes
+      - name: Verify build
+        run: npm run build
+
+      - name: Commit and push updated content
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          commit_message: "chore: auto-update news content [skip ci]"
-          file_pattern: src/data/latest-news.json
-          push_options: '--force' # Optional, but good for ensuring updates land
+          commit_message: "chore: 8h AI/DC curation update [skip ci]"
+          branch: main
+          file_pattern: src/data/*.json scripts/state/*.json public/generated/*

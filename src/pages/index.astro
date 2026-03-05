@@ -2,108 +2,78 @@
 import '../styles/global.css';
 import newsData from '../data/latest-news.json';
 
-// Helper to get initials for source icon
-function getSourceInitials(source) {
-  return source.split(' ').map(word => word[0]).join('').substring(0, 2).toUpperCase();
-}
+const formatTimeAgo = (iso) => {
+  const ms = Date.now() - new Date(iso).getTime();
+  const mins = Math.max(1, Math.floor(ms / 60000));
+  if (mins < 60) return `${mins}m ago`;
+  const hours = Math.floor(mins / 60);
+  if (hours < 24) return `${hours}h ago`;
+  const days = Math.floor(hours / 24);
+  return `${days}d ago`;
+};
 
-// Helper to get color for source
-function getSourceColor(source) {
-  if (source.includes('TechCrunch')) return 'bg-green-500';
-  if (source.includes('Data Center')) return 'bg-blue-500';
-  return 'bg-purple-500';
-}
+const cards = (newsData || []).map((item, idx) => ({
+  ...item,
+  summary: item.summary || item.snippet || '',
+  insight: item.insight || 'Expert insight: Capacity, power, and silicon lead times should be planned together for durable AI infrastructure outcomes.',
+  image: item.generatedImage || item.image || '/generated/default.svg',
+  timeAgo: formatTimeAgo(item.publishedAt),
+  isHero: idx === 0,
+}));
+
+const hero = cards[0];
+const rest = cards.slice(1);
 ---
 
 <html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>AI & Data Center Brief</title>
-        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-	</head>
-	<body class="bg-slate-900 text-slate-100 font-['Inter'] antialiased min-h-screen">
-        
-        <!-- Header -->
-        <header class="sticky top-0 z-50 backdrop-blur-md bg-slate-900/80 border-b border-slate-700/50">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-                <div class="flex items-center gap-3">
-                    <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center shadow-lg shadow-indigo-500/20">
-                        <svg class="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
-                        </svg>
-                    </div>
-                    <h1 class="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white to-slate-400">
-                        AI & Data Center Brief
-                    </h1>
-                </div>
-                <div class="text-xs font-medium text-slate-400 border border-slate-700 rounded-full px-3 py-1">
-                    Updated: {new Date().toLocaleTimeString('en-US', {hour: '2-digit', minute:'2-digit'})}
-                </div>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="description" content="Curated AI, data center, and semiconductor intelligence dashboard." />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>AI / Data Center Signal Board</title>
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">AI / Data Center Signal Board</p>
+          <h1>Curated infrastructure intelligence every 8 hours</h1>
+        </div>
+        <p class="updated">Updated {new Date().toLocaleString('en-US', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' })}</p>
+      </header>
+
+      {hero && (
+        <article class="hero-card">
+          <img src={hero.image} alt={hero.title} loading="lazy" />
+          <div class="hero-content">
+            <div class="meta-row">
+              <span class="source-pill">{hero.source}</span>
+              <time>{hero.timeAgo}</time>
             </div>
-        </header>
+            <h2><a href={hero.url} target="_blank" rel="noopener noreferrer">{hero.title}</a></h2>
+            <p class="summary">{hero.summary}</p>
+            <p class="insight">{hero.insight}</p>
+          </div>
+        </article>
+      )}
 
-        <!-- Main Content -->
-		<main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-            
-            <!-- Hero Stats / Intro (Optional future expansion) -->
-            <div class="mb-8">
-                <h2 class="text-2xl font-bold text-white mb-2">Today's Headlines</h2>
-                <p class="text-slate-400">Curated insights from TechCrunch, Data Center Knowledge, and more.</p>
+      <section class="masonry-board" aria-label="Latest curated news">
+        {rest.map((item) => (
+          <article class="news-card">
+            <img src={item.image} alt={item.title} loading="lazy" />
+            <div class="card-content">
+              <div class="meta-row">
+                <span class="source-pill">{item.source}</span>
+                <time>{item.timeAgo}</time>
+              </div>
+              <h3><a href={item.url} target="_blank" rel="noopener noreferrer">{item.title}</a></h3>
+              <p class="summary">{item.summary}</p>
+              <p class="insight">{item.insight}</p>
             </div>
-
-            <!-- News Grid -->
-			<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-				{newsData.map((item) => (
-					<a href={item.url} target="_blank" rel="noopener noreferrer" 
-                       class="group relative flex flex-col bg-slate-800/50 border border-slate-700/50 rounded-xl overflow-hidden hover:bg-slate-800 hover:border-slate-600 transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl hover:shadow-indigo-500/10">
-                        
-                        <!-- Image Placeholder / Header -->
-                        <div class="h-3 bg-gradient-to-r from-slate-700 to-slate-800 group-hover:from-indigo-500/20 group-hover:to-purple-500/20 transition-colors duration-300"></div>
-                        
-                        <div class="p-5 flex-1 flex flex-col">
-                            <!-- Source Tag -->
-                            <div class="flex items-center gap-2 mb-3">
-                                <span class={`w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-bold text-white ${getSourceColor(item.source)}`}>
-                                    {getSourceInitials(item.source)}
-                                </span>
-                                <span class="text-xs font-medium text-slate-400 uppercase tracking-wider">
-                                    {item.source}
-                                </span>
-                                <span class="text-xs text-slate-600 ml-auto">
-                                    {new Date(item.publishedAt).toLocaleDateString(undefined, {month:'short', day:'numeric'})}
-                                </span>
-                            </div>
-
-                            <!-- Title -->
-                            <h3 class="text-lg font-bold text-slate-100 mb-3 leading-snug group-hover:text-indigo-400 transition-colors">
-                                {item.title}
-                            </h3>
-
-                            <!-- Summary -->
-                            <p class="text-sm text-slate-400 line-clamp-3 mb-4 leading-relaxed">
-                                {item.summary}
-                            </p>
-                        </div>
-
-                        <!-- Footer / Link Icon -->
-                        <div class="px-5 py-3 border-t border-slate-700/30 bg-slate-900/30 flex items-center justify-between">
-                            <span class="text-xs font-medium text-indigo-400 opacity-0 group-hover:opacity-100 transition-opacity transform translate-x-[-10px] group-hover:translate-x-0 duration-300">
-                                Read Article &rarr;
-                            </span>
-                        </div>
-					</a>
-				))}
-			</div>
-		</main>
-
-        <!-- Footer -->
-        <footer class="border-t border-slate-800 mt-12 py-8 text-center">
-            <p class="text-slate-500 text-sm">
-                &copy; {new Date().getFullYear()} AI & Data Center Brief. Powered by automated agents.
-            </p>
-        </footer>
-	</body>
+          </article>
+        ))}
+      </section>
+    </div>
+  </body>
 </html>
