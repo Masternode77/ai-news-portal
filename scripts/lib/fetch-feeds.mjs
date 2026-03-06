@@ -1,36 +1,47 @@
 import Parser from 'rss-parser';
 import { FEEDS, MAX_ITEMS_FETCHED } from './constants.mjs';
-import { normalizeUrl, stableArticleId, stripHtml, truncate } from './normalize.mjs';
+import { guessLanguage, normalizeUrl, stableArticleId, stripHtml, truncate } from './normalize.mjs';
 
-const parser = new Parser({ timeout: 20000, customFields: { item: [['media:content', 'mediaContent', { keepArray: true }]] } });
+const parser = new Parser({
+  timeout: 20000,
+  customFields: {
+    item: [
+      ['media:content', 'mediaContent', { keepArray: true }],
+      ['content:encoded', 'contentEncoded'],
+    ],
+  },
+});
 
 function firstImage(item) {
   if (item.enclosure?.url && item.enclosure?.type?.startsWith('image')) return item.enclosure.url;
-
   const media = item.mediaContent?.[0]?.$?.url;
   if (media) return media;
-
-  const html = item['content:encoded'] || item.content || '';
+  const html = item.contentEncoded || item.content || item.summary || '';
   const match = html.match(/<img[^>]+src=["']([^"']+)["']/i);
   return match?.[1] ?? null;
 }
 
-function parseItem(source, item) {
+function parseItem(feed, item) {
   const title = (item.title || '').trim();
   const url = normalizeUrl(item.link || item.guid || '');
   if (!title || !url) return null;
 
-  const rawSnippet = stripHtml(item.contentSnippet || item.summary || item.content || '');
+  const rawBody = stripHtml(item.contentEncoded || item.content || item.summary || item.contentSnippet || '');
+  const rawSnippet = stripHtml(item.contentSnippet || item.summary || rawBody || '');
   const publishedAt = item.isoDate || item.pubDate || new Date().toISOString();
 
   return {
     id: stableArticleId(url, title),
-    source,
-    title,
+    source: feed.source,
     url,
-    snippet: truncate(rawSnippet, 220),
+    title,
+    snippet: truncate(rawSnippet || rawBody, 220),
+    contentText: truncate(rawBody, 800),
     publishedAt: new Date(publishedAt).toISOString(),
     sourceImage: firstImage(item),
+    region: feed.region || 'Global',
+    language: feed.language || guessLanguage(`${title} ${rawSnippet}`),
+    defaultCategory: feed.defaultCategory || null,
   };
 }
 
@@ -41,8 +52,9 @@ export async function fetchNewsPool() {
     try {
       const parsed = await parser.parseURL(feed.url);
       const items = (parsed.items || [])
-        .map((item) => parseItem(feed.source, item))
+        .map((item) => parseItem(feed, item))
         .filter(Boolean);
+
       fetched.push(...items);
     } catch (error) {
       console.error(`[pipeline] feed failed: ${feed.source} -> ${error.message}`);
@@ -57,7 +69,8 @@ export async function fetchNewsPool() {
 
   for (const item of fetched) {
     if (seenIds.has(item.id)) continue;
-    const titleKey = item.title.toLowerCase().replace(/[^a-z0-9]/g, '');
+
+    const titleKey = item.title.toLowerCase().replace(/[^a-z0-9가-힣]/g, '');
     if (seenTitles.has(titleKey)) continue;
 
     seenIds.add(item.id);

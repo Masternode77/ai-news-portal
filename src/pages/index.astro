@@ -1,6 +1,8 @@
 ---
-import '../styles/global.css';
+import Layout from '../layouts/Layout.astro';
 import newsData from '../data/latest-news.json';
+
+const boardTitle = 'AI / Data Center Signal Board';
 
 const formatTimeAgo = (iso) => {
   const ms = Date.now() - new Date(iso).getTime();
@@ -15,65 +17,174 @@ const formatTimeAgo = (iso) => {
 const cards = (newsData || []).map((item, idx) => ({
   ...item,
   summary: item.summary || item.snippet || '',
-  insight: item.insight || 'Expert insight: Capacity, power, and silicon lead times should be planned together for durable AI infrastructure outcomes.',
-  image: item.generatedImage || item.image || '/generated/default.svg',
+  insight:
+    item.insight ||
+    'Expert lens: Capacity, power, network topology, and silicon procurement should be planned as one system.',
+  generatedImage: item.generatedImage || '/generated/default.svg',
   timeAgo: formatTimeAgo(item.publishedAt),
   isHero: idx === 0,
 }));
 
 const hero = cards[0];
 const rest = cards.slice(1);
+const categories = [...new Set(cards.map((item) => item.category).filter(Boolean))];
+const stats = [
+  { label: 'Tracked / run', value: '30' },
+  { label: 'Curated / day', value: '6' },
+  { label: 'Published / run', value: '2' },
+];
 ---
+<Layout title={boardTitle}>
+  <main class="page-shell">
+    <div class="ambient ambient-a"></div>
+    <div class="ambient ambient-b"></div>
+    <div class="ambient-grid"></div>
 
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width" />
-    <meta name="description" content="Curated AI, data center, and semiconductor intelligence dashboard." />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <title>AI / Data Center Signal Board</title>
-  </head>
-  <body>
-    <div class="page-shell">
-      <header class="topbar">
-        <div>
-          <p class="eyebrow">AI / Data Center Signal Board</p>
-          <h1>Curated infrastructure intelligence every 8 hours</h1>
+    <section class="topbar panel panel-herohead">
+      <div class="topbar-copy">
+        <p class="eyebrow">Curated AI / Data Center Intelligence</p>
+        <h1>{boardTitle}</h1>
+        <p class="deck">
+          Global tech, AI infrastructure, data center, semiconductor, and power-market signals curated on an
+          8-hour publishing cycle.
+        </p>
+
+        <div class="chip-row">
+          {categories.length > 0 ? (
+            categories.slice(0, 5).map((category) => <span class="chip">{category}</span>)
+          ) : (
+            <>
+              <span class="chip">Hyperscalers &amp; Cloud</span>
+              <span class="chip">AI Infrastructure</span>
+              <span class="chip">Power / Grid / Energy</span>
+            </>
+          )}
         </div>
-        <p class="updated">Updated {new Date().toLocaleString('en-US', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' })}</p>
-      </header>
+      </div>
 
-      {hero && (
-        <article class="hero-card">
-          <img src={hero.image} alt={hero.title} loading="lazy" />
-          <div class="hero-content">
-            <div class="meta-row">
-              <span class="source-pill">{hero.source}</span>
-              <time>{hero.timeAgo}</time>
+      <div class="stat-grid">
+        {stats.map((stat) => (
+          <div class="stat-card">
+            <span class="stat-label">{stat.label}</span>
+            <strong>{stat.value}</strong>
+          </div>
+        ))}
+        <div class="stat-card stat-card-wide">
+          <span class="stat-label">Updated</span>
+          <strong>
+            {new Date().toLocaleString('en-US', {
+              month: 'short',
+              day: 'numeric',
+              hour: '2-digit',
+              minute: '2-digit',
+            })}
+          </strong>
+        </div>
+      </div>
+    </section>
+
+    {hero ? (
+      <article class="hero-card panel">
+        <div class="hero-media">
+          <img src={hero.generatedImage} alt={hero.title} loading="eager" />
+          <div class="media-sheen"></div>
+        </div>
+
+        <div class="hero-content">
+          <div class="meta-strip">
+            <span class="category-badge">{hero.category || 'Infrastructure'}</span>
+            <span class="source-pill">{hero.source}</span>
+            <span class="region-pill">{hero.region || 'Global'}</span>
+            <time>{hero.timeAgo}</time>
+          </div>
+
+          <h2>
+            <a href={hero.url} target="_blank" rel="noreferrer">
+              {hero.title}
+            </a>
+          </h2>
+
+          <p class="summary summary-hero">{hero.summary}</p>
+
+          <div class="insight-block">
+            <span>Expert lens</span>
+            <p>{hero.insight}</p>
+          </div>
+
+          {hero.tags?.length ? (
+            <div class="tag-row">
+              {hero.tags.slice(0, 6).map((tag) => (
+                <span class="tag-pill">#{tag}</span>
+              ))}
             </div>
-            <h2><a href={hero.url} target="_blank" rel="noopener noreferrer">{hero.title}</a></h2>
-            <p class="summary">{hero.summary}</p>
-            <p class="insight">{hero.insight}</p>
+          ) : null}
+
+          <div class="hero-actions">
+            <a class="link-button" href={hero.url} target="_blank" rel="noreferrer">
+              Read original
+            </a>
+          </div>
+        </div>
+      </article>
+    ) : (
+      <section class="empty-board panel">
+        <h2>Pipeline ready</h2>
+        <p>
+          The board will populate after the next scheduled curation run. Once the workflow executes, the latest
+          two stories for the current slot will appear here automatically.
+        </p>
+      </section>
+    )}
+
+    <section class="feed-header">
+      <div>
+        <p class="eyebrow">Latest published cards</p>
+        <h3>Signal board</h3>
+      </div>
+      <p class="feed-copy">
+        Each card keeps the original source title, a tight 1–2 line summary, and an operator/investor lens for
+        faster triage.
+      </p>
+    </section>
+
+    <section class="masonry-board">
+      {rest.map((item) => (
+        <article class="news-card panel">
+          <div class="card-media">
+            <img src={item.generatedImage} alt={item.title} loading="lazy" />
+            <div class="card-media-overlay"></div>
+          </div>
+
+          <div class="card-content">
+            <div class="meta-row">
+              <span class="category-badge">{item.category || 'Infrastructure'}</span>
+              <time>{item.timeAgo}</time>
+            </div>
+
+            <div class="meta-row meta-row-secondary">
+              <span class="source-pill">{item.source}</span>
+              <span class="region-pill">{item.region || 'Global'}</span>
+            </div>
+
+            <h4>
+              <a href={item.url} target="_blank" rel="noreferrer">
+                {item.title}
+              </a>
+            </h4>
+
+            <p class="summary">{item.summary}</p>
+            <p class="insight">{item.insight}</p>
+
+            {item.tags?.length ? (
+              <div class="tag-row tag-row-compact">
+                {item.tags.slice(0, 4).map((tag) => (
+                  <span class="tag-pill">#{tag}</span>
+                ))}
+              </div>
+            ) : null}
           </div>
         </article>
-      )}
-
-      <section class="masonry-board" aria-label="Latest curated news">
-        {rest.map((item) => (
-          <article class="news-card">
-            <img src={item.image} alt={item.title} loading="lazy" />
-            <div class="card-content">
-              <div class="meta-row">
-                <span class="source-pill">{item.source}</span>
-                <time>{item.timeAgo}</time>
-              </div>
-              <h3><a href={item.url} target="_blank" rel="noopener noreferrer">{item.title}</a></h3>
-              <p class="summary">{item.summary}</p>
-              <p class="insight">{item.insight}</p>
-            </div>
-          </article>
-        ))}
-      </section>
-    </div>
-  </body>
-</html>
+      ))}
+    </section>
+  </main>
+</Layout>

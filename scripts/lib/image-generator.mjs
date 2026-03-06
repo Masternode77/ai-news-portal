@@ -1,16 +1,18 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
-import { GEMINI_IMAGE_MODEL } from './constants.mjs';
+import { GEMINI_API_URL, GEMINI_IMAGE_MODEL } from './constants.mjs';
 
 const OUT_DIR = path.join(process.cwd(), 'public/generated');
 
-function colorFromId(id) {
-  const a = parseInt(id.slice(0, 2), 16);
-  const b = parseInt(id.slice(2, 4), 16);
-  const c = parseInt(id.slice(4, 6), 16);
+function colorFromId(id = 'abcdef1234567890') {
+  const a = parseInt(id.slice(0, 2), 16) || 64;
+  const b = parseInt(id.slice(2, 4), 16) || 96;
+  const c = parseInt(id.slice(4, 6), 16) || 128;
+
   return {
-    one: `rgb(${20 + (a % 120)}, ${40 + (b % 120)}, ${70 + (c % 120)})`,
-    two: `rgb(${90 + (c % 120)}, ${40 + (a % 120)}, ${120 + (b % 100)})`,
+    one: `rgb(${40 + (a % 120)} ${64 + (b % 120)} ${96 + (c % 100)})`,
+    two: `rgb(${90 + (c % 120)} ${70 + (a % 100)} ${110 + (b % 100)})`,
+    three: `rgb(${90 + (b % 80)} ${160 + (c % 70)} ${190 + (a % 40)})`,
   };
 }
 
@@ -18,25 +20,45 @@ async function ensureOutDir() {
   await fs.mkdir(OUT_DIR, { recursive: true });
 }
 
+function safeText(text = '', max = 72) {
+  return (text || '').replace(/[<>&"']/g, ' ').trim().slice(0, max);
+}
+
 async function writePlaceholderSvg(item) {
   const palette = colorFromId(item.id);
   const filename = `${item.id}.svg`;
   const outPath = path.join(OUT_DIR, filename);
-  const safeTitle = (item.title || 'AI/DC Update').replace(/[<>&"']/g, ' ');
-
-  const svg = `<?xml version="1.0" encoding="UTF-8"?>
-<svg width="1200" height="630" viewBox="0 0 1200 630" xmlns="http://www.w3.org/2000/svg">
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="1344" height="768" viewBox="0 0 1344 768" fill="none">
   <defs>
-    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="${palette.one}"/>
-      <stop offset="100%" stop-color="${palette.two}"/>
+    <linearGradient id="bg" x1="120" y1="70" x2="1180" y2="690" gradientUnits="userSpaceOnUse">
+      <stop stop-color="${palette.one}"/>
+      <stop offset="0.42" stop-color="#111829"/>
+      <stop offset="1" stop-color="#090C12"/>
     </linearGradient>
+    <filter id="noise">
+      <feTurbulence type="fractalNoise" baseFrequency="0.84" numOctaves="2" stitchTiles="stitch"/>
+      <feComponentTransfer><feFuncA type="table" tableValues="0 0 0.03 0.04"/></feComponentTransfer>
+    </filter>
   </defs>
-  <rect width="1200" height="630" fill="url(#g)"/>
-  <rect x="38" y="40" width="1124" height="550" rx="24" fill="rgba(12,16,22,0.62)"/>
-  <text x="80" y="120" fill="#A3B3CC" font-size="30" font-family="Arial, sans-serif">AI / Data Center Briefing</text>
-  <text x="80" y="210" fill="#EAF1FF" font-size="46" font-weight="700" font-family="Arial, sans-serif">${safeTitle.slice(0, 70)}</text>
-  <text x="80" y="530" fill="#B9C9E9" font-size="26" font-family="Arial, sans-serif">Generated fallback artwork</text>
+  <rect width="1344" height="768" rx="40" fill="url(#bg)"/>
+  <circle cx="284" cy="172" r="232" fill="${palette.two}" fill-opacity="0.22"/>
+  <circle cx="1080" cy="138" r="194" fill="${palette.three}" fill-opacity="0.15"/>
+  <rect x="70" y="72" width="1204" height="624" rx="34" stroke="rgba(255,255,255,0.12)" fill="rgba(255,255,255,0.03)"/>
+  <path d="M126 592C250 506 356 460 456 458C564 456 650 520 758 520C890 520 998 420 1206 244" stroke="#E8F0FF" stroke-opacity="0.45" stroke-width="4"/>
+  <g stroke="rgba(255,255,255,0.08)">
+    <path d="M108 604H1236"/>
+    <path d="M108 556H1236"/>
+    <path d="M108 508H1236"/>
+    <path d="M210 112V658"/>
+    <path d="M488 112V658"/>
+    <path d="M766 112V658"/>
+    <path d="M1044 112V658"/>
+  </g>
+  <text x="118" y="164" fill="#F6F8FF" font-family="Inter, Arial, sans-serif" font-size="20" font-weight="700" letter-spacing="0.12em">${safeText(item.category || 'AI / DATA CENTER SIGNAL')}</text>
+  <text x="118" y="236" fill="#F6F8FF" font-family="Inter, Arial, sans-serif" font-size="54" font-weight="800">${safeText(item.title, 34)}</text>
+  <text x="118" y="292" fill="#CBD8F5" font-family="Inter, Arial, sans-serif" font-size="26" font-weight="600">${safeText(item.source || 'Curated infrastructure briefing', 44)}</text>
+  <text x="118" y="612" fill="#C1CDE6" font-family="Inter, Arial, sans-serif" font-size="20" font-weight="600">Fallback editorial artwork generated locally</text>
+  <rect width="1344" height="768" rx="40" filter="url(#noise)"/>
 </svg>`;
 
   await fs.writeFile(outPath, svg, 'utf8');
@@ -44,29 +66,34 @@ async function writePlaceholderSvg(item) {
 }
 
 async function generateWithGemini(item, apiKey) {
-  const prompt = [
-    'Nano Banana concept illustration for enterprise AI infrastructure news.',
-    'Create a clean editorial image with no logos or text.',
-    `Theme: ${item.title}.`,
-    'Visual style: modern data center dashboard, cinematic lighting, subtle depth, semiconductors/cloud motifs.',
-  ].join(' ');
-
-  const url = `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_IMAGE_MODEL}:generateContent?key=${apiKey}`;
-
-  const response = await fetch(url, {
+  const response = await fetch(`${GEMINI_API_URL}/${GEMINI_IMAGE_MODEL}:generateContent`, {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    headers: {
+      'x-goog-api-key': apiKey,
+      'Content-Type': 'application/json',
+    },
     body: JSON.stringify({
-      contents: [{ parts: [{ text: prompt }] }],
+      contents: [
+        {
+          parts: [
+            {
+              text:
+                item.imagePrompt ||
+                `Editorial enterprise technology illustration about ${item.title}. No logos. No text. 16:9.`,
+            },
+          ],
+        },
+      ],
       generationConfig: {
-        temperature: 0.5,
-        responseModalities: ['TEXT', 'IMAGE'],
+        imageConfig: {
+          aspectRatio: '16:9',
+        },
       },
     }),
   });
 
   if (!response.ok) {
-    throw new Error(`gemini image request failed: ${response.status}`);
+    throw new Error(`Gemini image request failed: ${response.status}`);
   }
 
   const payload = await response.json();
@@ -74,7 +101,7 @@ async function generateWithGemini(item, apiKey) {
   const inlinePart = parts.find((part) => part.inlineData?.data);
 
   if (!inlinePart?.inlineData?.data) {
-    throw new Error('no image bytes returned by Gemini');
+    throw new Error('No image bytes returned by Gemini');
   }
 
   const mime = inlinePart.inlineData.mimeType || 'image/png';

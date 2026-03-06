@@ -2,7 +2,10 @@ name: Curate AI/DC News
 
 on:
   schedule:
-    - cron: '0 */8 * * *'
+    # 00:05 / 08:05 / 16:05 KST = 15:05 / 23:05 / 07:05 UTC
+    - cron: '5 15 * * *'
+    - cron: '5 23 * * *'
+    - cron: '5 7 * * *'
   workflow_dispatch:
 
 jobs:
@@ -26,6 +29,10 @@ jobs:
 
       - name: Run curation pipeline
         env:
+          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+          OPENROUTER_MODEL: ${{ secrets.OPENROUTER_MODEL }}
+          OPENROUTER_SITE_URL: ${{ secrets.OPENROUTER_SITE_URL }}
+          OPENROUTER_APP_TITLE: ${{ secrets.OPENROUTER_APP_TITLE }}
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           GEMINI_IMAGE_MODEL: ${{ secrets.GEMINI_IMAGE_MODEL }}
         run: npm run pipeline
@@ -33,9 +40,25 @@ jobs:
       - name: Verify build
         run: npm run build
 
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps chromium
+
+      - name: Capture homepage preview
+        run: npm run capture:homepage
+
+      - name: Send Telegram preview
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: npm run notify:telegram
+
       - name: Commit and push updated content
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: "chore: 8h AI/DC curation update [skip ci]"
           branch: main
-          file_pattern: src/data/*.json scripts/state/*.json public/generated/*
+          file_pattern: |
+            src/data/*.json
+            scripts/state/*.json
+            public/generated/*
+            artifacts/*

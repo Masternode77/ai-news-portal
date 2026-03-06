@@ -28,9 +28,16 @@ export async function writeJsonFile(filePath, value) {
 
 export async function readPipelineState(filePath) {
   const state = await readJsonFile(filePath, DEFAULT_STATE);
-  return { ...DEFAULT_STATE, ...state };
+  return {
+    ...DEFAULT_STATE,
+    ...state,
+  };
 }
 
 export async function writePipelineState(filePath, state) {
   await writeJsonFile(filePath, state);
+}
+
+export async function sleep(ms) {
+  await new Promise((resolve) => setTimeout(resolve, ms));
 }

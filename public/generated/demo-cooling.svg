@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1344" height="768" viewBox="0 0 1344 768" fill="none">
+  <defs>
+    <linearGradient id="bg" x1="64" y1="64" x2="1240" y2="704" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#6eb1ff"/>
+      <stop offset="0.45" stop-color="#12192A"/>
+      <stop offset="1" stop-color="#090C12"/>
+    </linearGradient>
+    <filter id="noise">
+      <feTurbulence type="fractalNoise" baseFrequency="0.82" numOctaves="2" stitchTiles="stitch"/>
+      <feComponentTransfer><feFuncA type="table" tableValues="0 0 0.03 0.04"/></feComponentTransfer>
+    </filter>
+  </defs>
+  <rect width="1344" height="768" rx="40" fill="url(#bg)"/>
+  <circle cx="280" cy="180" r="220" fill="#6eb1ff" fill-opacity="0.26"/>
+  <circle cx="1070" cy="150" r="200" fill="#8fe8d0" fill-opacity="0.18"/>
+  <rect x="72" y="72" width="1200" height="624" rx="34" stroke="rgba(255,255,255,0.12)" fill="rgba(255,255,255,0.03)"/>
+  <g stroke="rgba(255,255,255,0.12)">
+    <path d="M96 604H1248"/>
+    <path d="M96 558H1248"/>
+    <path d="M96 512H1248"/>
+    <path d="M204 110V658"/>
+    <path d="M484 110V658"/>
+    <path d="M764 110V658"/>
+    <path d="M1044 110V658"/>
+  </g>
+  <path d="M122 594C260 512 356 454 470 454C598 454 676 524 780 526C896 528 1010 458 1218 250" stroke="#F4F8FF" stroke-opacity="0.5" stroke-width="4"/>
+  <text x="118" y="166" fill="#F5F8FF" font-family="Inter, Arial, sans-serif" font-size="20" font-weight="700" letter-spacing="0.12em">COOLING / MEP / ENGINEERING</text>
+  <text x="118" y="232" fill="#F5F8FF" font-family="Inter, Arial, sans-serif" font-size="58" font-weight="800">Editorial AI image</text>
+  <text x="118" y="286" fill="#CAD7F4" font-family="Inter, Arial, sans-serif" font-size="26" font-weight="600">Generated placeholder for the latest signal card</text>
+  <rect width="1344" height="768" rx="40" filter="url(#noise)"/>
+</svg>
