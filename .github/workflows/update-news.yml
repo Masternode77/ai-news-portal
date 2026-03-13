@@ -1,64 +1,55 @@
-name: Curate AI/DC News
+
+name: Update News & Dashboard
 
 on:
   schedule:
-    # 00:05 / 08:05 / 16:05 KST = 15:05 / 23:05 / 07:05 UTC
-    - cron: '5 15 * * *'
-    - cron: '5 23 * * *'
-    - cron: '5 7 * * *'
-  workflow_dispatch:
+    # News: every 6 hours
+    - cron: '0 */6 * * *'
+    # Dashboard sync: every 15 minutes
+    - cron: '*/15 * * * *'
+  workflow_dispatch: # Allow manual trigger
 
 jobs:
-  pipeline:
+  update-news:
     runs-on: ubuntu-latest
     permissions:
-      contents: write
+      contents: write # Need write access to commit changes
 
     steps:
-      - name: Checkout
+      - name: Checkout repo
         uses: actions/checkout@v4
 
-      - name: Setup Node
+      - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '20'
-          cache: npm
 
       - name: Install dependencies
         run: npm ci
 
-      - name: Run curation pipeline
-        env:
-          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
-          OPENROUTER_MODEL: ${{ secrets.OPENROUTER_MODEL }}
-          OPENROUTER_SITE_URL: ${{ secrets.OPENROUTER_SITE_URL }}
-          OPENROUTER_APP_TITLE: ${{ secrets.OPENROUTER_APP_TITLE }}
-          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-          GEMINI_IMAGE_MODEL: ${{ secrets.GEMINI_IMAGE_MODEL }}
-        run: npm run pipeline
+      - name: Run news update
+        run: node scripts/update-news.js
 
-      - name: Verify build
-        run: npm run build
+      - name: Run dashboard data sync
+        run: node scripts/sync-dashboard-data.cjs
 
-      - name: Install Playwright browsers
-        run: npx playwright install --with-deps chromium
+      - name: Check for changes
+        id: changes
+        run: |
+          if git diff --quiet -- src/data/latest-news.json public/dashboard-data.json; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            echo "No changes detected."
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+            echo "Changes detected."
+          fi
 
-      - name: Capture homepage preview
-        run: npm run capture:homepage
-
-      - name: Send Telegram preview
-        env:
-          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
-          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
-        run: npm run notify:telegram
-
-      - name: Commit and push updated content
+      - name: Commit and Push changes
+        if: steps.changes.outputs.changed == 'true'
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          commit_message: "chore: 8h AI/DC curation update [skip ci]"
-          branch: main
+          commit_message: "chore: auto-update news + dashboard data [skip ci]"
           file_pattern: |
-            src/data/*.json
-            scripts/state/*.json
-            public/generated/*
-            artifacts/*
+            src/data/latest-news.json
+            public/dashboard-data.json
+          push_options: '--force' # Optional, but good for ensuring updates land

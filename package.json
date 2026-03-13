@@ -1,15 +1,12 @@
 {
   "name": "ai-news-portal",
   "type": "module",
-  "version": "0.1.0",
+  "version": "0.0.1",
   "scripts": {
+    "sync:dashboard-data": "node ./scripts/sync-dashboard-data.cjs",
     "dev": "astro dev",
-    "pipeline": "node scripts/pipeline.mjs",
-    "update-news": "node scripts/pipeline.mjs",
-    "build": "astro build",
+    "build": "npm run sync:dashboard-data && astro build",
     "preview": "astro preview",
-    "capture:homepage": "node scripts/capture-homepage.mjs",
-    "notify:telegram": "node scripts/send-telegram-photo.mjs",
     "astro": "astro"
   },
   "dependencies": {
@@ -17,7 +14,6 @@
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.6",
-    "playwright": "^1.52.0",
     "rss-parser": "^3.13.0",
     "typescript": "^5.9.3"
   }

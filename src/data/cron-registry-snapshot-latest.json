@@ -1,0 +1,235 @@
+{
+  "jobs": [
+    {
+      "id": "d24f2227-0cb8-43eb-b82e-47910ba18076",
+      "agentId": "main",
+      "name": "컨텍스트 예산 체크 (11:30/16:30/21:30 KST)",
+      "enabled": true,
+      "createdAtMs": 1770560301896,
+      "updatedAtMs": 1770967809961,
+      "schedule": {
+        "kind": "cron",
+        "expr": "30 11,16,21 * * *",
+        "tz": "Asia/Seoul"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "now",
+      "payload": {
+        "kind": "agentTurn",
+        "timeoutSeconds": 300,
+        "message": "[Cron Payload Template v1]\njob: context-budget-check-v2\nownerAgent: main\npurpose: 메인 세션 컨텍스트 사용률 조기 경보\ninput.sources:\n- session_status(sessionKey=\"agent:main:main\")\nconstraints:\n- 읽기/요약 전용(설정 변경/삭제/외부 전송/돈 이동 금지)\n- 출력 2줄 이내\napprovalGate: 해당 없음(읽기 전용)\noutput.format:\n1) [컨텍스트체크] X% · 상태: 정상(<70) / 주의(70~85, /new 권장) / 높음(>=85, 즉시 /new 권장)\n2) [STATUS] YYYY-MM-DD HH:mm KST"
+      },
+      "delivery": {
+        "mode": "announce"
+      },
+      "state": {
+        "nextRunAtMs": 1770985800000,
+        "lastRunAtMs": 1770967800008,
+        "lastStatus": "ok",
+        "lastDurationMs": 9953,
+        "consecutiveErrors": 0
+      }
+    },
+    {
+      "id": "2ccf1e11-0d98-4fd6-b130-f6263f68a254",
+      "agentId": "main",
+      "name": "네이버 경제 + bumgore 채널 8시간 요약 (Top 10+핵심)",
+      "enabled": true,
+      "createdAtMs": 1770453447930,
+      "updatedAtMs": 1770966066620,
+      "schedule": {
+        "kind": "cron",
+        "expr": "0 16,0 * * *",
+        "tz": "Asia/Seoul"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "now",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "[Cron Payload Template v1]\njob: naver-bumgore-threads-8h-v2\nownerAgent: marketbrief\npurpose: 최근 8시간 핵심 경제/AI 이슈를 조시 의사결정용으로 압축 제공\n\ninput.sources:\n- 네이버 경제\n- https://t.me/s/bumgore\n- Threads: @unclejobs.ai, @choi.openai\nconstraints:\n- web_fetch maxChars <= 8000\n- 원문 인용 1~2줄, 링크 우선\n- 출력 총 길이 <= 95줄\n\n[HANDOFF]\nFrom: main\nTo: marketbrief\nTask: 8시간 소스 수집·검증·초안 작성\nContext:\n- Goal: 매크로/AI/부동산 우선 신호 정리\n- Constraints: 검증 없는 수치 금지, 과장 금지\n- Deadline: 이번 실행 턴 내\nInputs:\n- 상기 3개 소스\nOutput required:\n- Format: A/B/C/D 섹션 초안\n- Max length: 75줄\nDefinition of done:\n- 링크 포함\n- 중복 제거\n- 루머 라벨링\n\napprovalGate:\n- Trigger: external_send | settings_change | delete | money_move\n- Rule: 아래 블록을 먼저 출력하고, 승인 전 어떤 실행도 진행하지 않는다.\n\n[APPROVAL REQUIRED]\nAction: <수행 예정 작업>\nWhy now: <필요 이유>\nImpact scope: <채널/파일/시스템>\nRisk level: <Low|Med|High>\nRollback: <되돌리는 방법>\nReply one: APPROVE | REJECT | EDIT: <changes>\n\noutput.format:\n- Header(기간/작성시각)\n- A: 네이버 Top10(관심축 우선)\n- B: bumgore 핵심 3~5\n- C: Threads AI 최신(합산 최대 15)\n- D: 통합 시사점(각 3~5줄)\n- 마지막 줄: [STATUS] YYYY-MM-DD HH:mm KST",
+        "timeoutSeconds": 1200
+      },
+      "delivery": {
+        "mode": "announce"
+      },
+      "state": {
+        "nextRunAtMs": 1770994800000,
+        "lastRunAtMs": 1770966000020,
+        "lastStatus": "ok",
+        "lastDurationMs": 66600,
+        "consecutiveErrors": 0
+      }
+    },
+    {
+      "id": "c9e7002e-8fa5-443b-8dc5-6fdd76281974",
+      "agentId": "main",
+      "name": "야간 루틴 (01:10–08:00) — 텔레그램 요약 + 파일 로그",
+      "enabled": true,
+      "createdAtMs": 1770457763850,
+      "updatedAtMs": 1770965306302,
+      "schedule": {
+        "kind": "cron",
+        "expr": "10 1 * * *",
+        "tz": "Asia/Seoul"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "now",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "[Cron Payload Template v1]\njob: nightly-lowload-routine-v2\nownerAgent: personaladmin\npurpose: 새벽 저부하 정리+준비(텔레그램 6줄 + 파일로그)\n\nconstraints:\n- web_search / web_fetch / browser.snapshot 호출 금지\n- 외부 전송/삭제/돈 이동/민감 설정 변경 금지\n- 출력은 짧고 실행형 문장 유지\n\napprovalGate:\n- Trigger: external_send | settings_change | delete | money_move\n- Rule: 위험 액션 필요 시 즉시 아래 블록 출력 후 승인 전 중단.\n\n[APPROVAL REQUIRED]\nAction: <수행 예정 작업>\nWhy now: <필요 이유>\nImpact scope: <채널/파일/시스템>\nRisk level: <Low|Med|High>\nRollback: <되돌리는 방법>\nReply one: APPROVE | REJECT | EDIT: <changes>\n\nsteps:\n0) 리하이드레이션(필수, 로컬 파일만)\n- /Users/josh/.openclaw/workspace/NOW.md\n- /Users/josh/.openclaw/workspace/memory/ROLLING_SUMMARY.md\n- /Users/josh/.openclaw/workspace/TASK_BOARD.md (있으면)\n- /Users/josh/.openclaw/workspace/TODO.md (있으면)\n\n1) 파일 로그 생성(필수)\n- 경로: /Users/josh/.openclaw/workspace/memory/nightly/YYYY-MM-DD.md\n- 내용:\n  A) 오늘 변화/진행 3~5줄\n  B) 내일 Top 3 후보 3개 + 한 줄 이유\n  C) 승인/확인 필요 1~3개(있을 때만)\n  D) 주요 크론 next run 3줄 이내\n  E) 마지막 줄: [STATUS] YYYY-MM-DD HH:mm KST\n\n2) 컨텍스트 예산 체크(필수)\n- session_status(sessionKey=\"agent:main:main\")로 사용률 확인\n- 70% 미만: 정상 / 70~85%: 주의(내일 오전 /new 권장) / 85% 이상: 높음(즉시 /new 권장)\n- nightly 로그에 1줄 기록\n\n3) NOW/ROLLING_SUMMARY 업데이트(필수)\n- NOW.md: Active threads/Next actions 3~8줄\n- ROLLING_SUMMARY.md: 변화분 5~10줄\n\noutput.primary: telegram\noutput.format(6 lines fixed):\n1) Nightly: (한 줄)\n2) Progress: (한 줄)\n3) Tomorrow Top3: (한 줄)\n4) Blocked/Needs OK: (한 줄, 없으면 '-')\n5) Context budget: (정상/주의/높음)\n6) [STATUS] YYYY-MM-DD HH:mm KST",
+        "timeoutSeconds": 600
+      },
+      "delivery": {
+        "mode": "announce"
+      },
+      "state": {
+        "nextRunAtMs": 1770999000000,
+        "lastRunAtMs": 1770965271783,
+        "lastStatus": "ok",
+        "lastDurationMs": 34519,
+        "consecutiveErrors": 0
+      }
+    },
+    {
+      "id": "62b99c8f-d4bd-4ec8-aa9a-e1dbef0943ec",
+      "agentId": "main",
+      "name": "OpenClaw 5일 리빌드 진행 리마인더 (매일 08:00)",
+      "enabled": true,
+      "createdAtMs": 1770959207127,
+      "updatedAtMs": 1770960081062,
+      "schedule": {
+        "kind": "cron",
+        "expr": "0 8 * * *",
+        "tz": "Asia/Seoul"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "now",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "리마인더: OpenClaw 5일 리빌드 진행 보고 시간.\n오늘이 Day N/5인지 계산하고 아래 표준 포맷으로 8줄 이내 보고.\n\n[STATUS] YYYY-MM-DD HH:mm KST\n1) Completed (max 3)\n- ...\n2) In Progress (max 3)\n- ...\n3) Blockers / Risks\n- ...\n4) Needs Approval\n- ... (없으면 '-')\n5) Next 24h Actions\n- ...\n\n규칙: 실행형 문장, 과장 금지.",
+        "timeoutSeconds": 300
+      },
+      "delivery": {
+        "mode": "announce"
+      },
+      "state": {
+        "nextRunAtMs": 1771023600000
+      }
+    },
+    {
+      "id": "e2e8b81f-7557-4dd7-bab7-d6b83a9b59ba",
+      "agentId": "main",
+      "name": "Daily Top3 Brief (Template v1) 08:30 KST",
+      "enabled": true,
+      "createdAtMs": 1770402853625,
+      "updatedAtMs": 1770960062812,
+      "schedule": {
+        "kind": "cron",
+        "expr": "30 8 * * *",
+        "tz": "Asia/Seoul"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "now",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "[Cron Payload Template v1]\njob: daily-top3-v2\nownerAgent: personaladmin\npurpose: 조시의 당일 실행 우선순위 3개 제시\ninput.sources:\n- /Users/josh/.openclaw/workspace/TASK_BOARD.kanban.md\n- /Users/josh/.openclaw/workspace/1.Work\n- /Users/josh/.openclaw/workspace/2.Side\n- /Users/josh/.openclaw/workspace/3.Finance\n- /Users/josh/.openclaw/workspace/4.Personal\nconstraints: 장문 금지(12줄 이내), 실행 문장만\n\n[HANDOFF]\nFrom: main\nTo: personaladmin\nTask: 우선순위 3개/승인항목/시간표 초안\nContext:\n- Goal: 오늘 바로 실행 가능한 Top3\n- Constraints: 모호한 항목 제외\n- Deadline: 08:30 실행 내\nInputs: 로컬 작업 파일\nOutput required:\n- Format: Top3 + 승인 + 시간표\n- Max length: 12줄\nDefinition of done:\n- 액션 동사로 시작\n- 승인이 필요한 항목 분리\n\napprovalGate:\n- Trigger: external_send | settings_change | delete | money_move\n- Rule: 해당 액션 필요 시 아래 블록 출력 후 승인 대기(중단).\n\n[APPROVAL REQUIRED]\nAction: <수행 예정 작업>\nWhy now: <필요 이유>\nImpact scope: <채널/파일/시스템>\nRisk level: <Low|Med|High>\nRollback: <되돌리는 방법>\nReply one: APPROVE | REJECT | EDIT: <changes>\n\noutput.primary: telegram\noutput.format:\n1) Today Top 3\n2) 승인 필요 항목\n3) 오늘 시간표(짧게)\n4) [STATUS] YYYY-MM-DD HH:mm KST",
+        "timeoutSeconds": 600
+      },
+      "state": {
+        "nextRunAtMs": 1771025400000,
+        "lastRunAtMs": 1770939000008,
+        "lastStatus": "ok",
+        "lastDurationMs": 23997,
+        "consecutiveErrors": 0
+      },
+      "delivery": {
+        "mode": "announce"
+      }
+    },
+    {
+      "id": "e7d5c6e4-3d71-49bb-ad20-6ac451fa2066",
+      "agentId": "main",
+      "name": "Morning Intelligence Brief (Template v1) 09:10 KST",
+      "enabled": true,
+      "createdAtMs": 1770703877823,
+      "updatedAtMs": 1770960054089,
+      "schedule": {
+        "kind": "cron",
+        "expr": "10 9 * * *",
+        "tz": "Asia/Seoul"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "now",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "[Cron Payload Template v1]\njob: morning-intel-brief-v2\nownerAgent: marketbrief\npurpose: 조시 아침 의사결정용 시장 인텔 브리프\n\ninput.sources:\n- web_search\n- web_fetch(maxChars<=8000)\nconstraints:\n- 파괴적 작업 금지\n- 인용 없는 숫자 금지\n\n[HANDOFF]\nFrom: main\nTo: marketbrief\nTask: 아침 시장 인텔 조사/검증/초안\nContext:\n- Goal: 실행 가능한 인사이트 5개 이내\n- Constraints: source-grounded only\n- Deadline: 09:10 런타임 내\nInputs: web 소스\nOutput required:\n- Format: Headlines/Pulse/SupplyChain/Implications/Links\n- Max length: 파일 표준 + 텔레그램 10줄\nDefinition of done:\n- 모든 수치에 링크\n- 루머 라벨링\n- 중복 링크 제거\n\napprovalGate:\n- Trigger: external_send | settings_change | delete | money_move\n- Rule: 위험 액션 필요 시 즉시 아래 블록 출력 후 승인 대기(중단).\n\n[APPROVAL REQUIRED]\nAction: <수행 예정 작업>\nWhy now: <필요 이유>\nImpact scope: <채널/파일/시스템>\nRisk level: <Low|Med|High>\nRollback: <되돌리는 방법>\nReply one: APPROVE | REJECT | EDIT: <changes>\n\noutput.primary: file+telegram\noutput.path: /Users/josh/.openclaw/workspace/3.Finance/YYYY-MM-DD-MORNING_BRIEF.md\noutput.format:\n- Headlines(<=8)\n- Market Pulse(수치마다 링크)\n- AI Supply Chain(HBM/CoWoS)\n- Implications/Actions(<=5)\n- Links(dedup)\n- 마지막 줄: [STATUS] YYYY-MM-DD HH:mm KST",
+        "timeoutSeconds": 1200
+      },
+      "delivery": {
+        "mode": "announce"
+      },
+      "state": {
+        "nextRunAtMs": 1771027800000,
+        "lastRunAtMs": 1770936600018,
+        "lastStatus": "ok",
+        "lastDurationMs": 149268,
+        "consecutiveErrors": 0
+      }
+    },
+    {
+      "id": "605b26e9-ca31-4fb8-9de0-d5cb8389ba07",
+      "agentId": "main",
+      "name": "일일 비용 리포트 1줄 (Template v1) 09:20 KST",
+      "enabled": true,
+      "createdAtMs": 1770476607328,
+      "updatedAtMs": 1770960075695,
+      "schedule": {
+        "kind": "cron",
+        "expr": "20 9 * * *",
+        "tz": "Asia/Seoul"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "now",
+      "payload": {
+        "kind": "agentTurn",
+        "timeoutSeconds": 600,
+        "message": "[Cron Payload Template v1]\njob: daily-cost-check-v2\nownerAgent: main\npurpose: 전일 도구 사용량 급증 여부 조기 탐지\ninput.sources: /Users/josh/.openclaw/agents/main/sessions/*.jsonl\nconstraints:\n- browser/web_fetch/web_search 호출 금지\n- 출력 2줄 이내\noutput.primary: telegram\noutput.format:\n1) [비용체크] YYYY-MM-DD 전일 browser X회 / web_fetch Y회 · 급증여부: {정상 범위|급증}\n2) [STATUS] YYYY-MM-DD HH:mm KST\nlogic: 직전 3일 평균 대비 50% 이상 증가면 급증\napprovalGate: 해당 없음(읽기/요약 전용)"
+      },
+      "delivery": {
+        "mode": "announce"
+      },
+      "state": {
+        "nextRunAtMs": 1771028400000,
+        "lastRunAtMs": 1770938700009,
+        "lastStatus": "ok",
+        "lastDurationMs": 22358,
+        "consecutiveErrors": 0
+      }
+    },
+    {
+      "id": "41046689-97a8-419e-9a9d-71092d1b9bbd",
+      "agentId": "main",
+      "name": "주말 리마인드: 비트코인 자동매매 후속 점검",
+      "enabled": true,
+      "deleteAfterRun": true,
+      "createdAtMs": 1770948535572,
+      "updatedAtMs": 1770960069205,
+      "schedule": {
+        "kind": "at",
+        "at": "2026-02-14T01:00:00.000Z"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "now",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "리마인드: 비트코인 자동매매 후속 점검 시간입니다.\n\n규칙:\n- 이 작업은 '점검/요약 전용'이다. 실제 주문/송금/계정설정 변경/삭제를 실행하지 않는다.\n- money_move, settings_change, external_send(외부 제3자), delete가 필요해지면 즉시 아래 블록을 출력하고 승인 전 중단한다.\n\n[APPROVAL REQUIRED]\nAction: <수행 예정 작업>\nWhy now: <필요 이유>\nImpact scope: <거래소/계정/채널>\nRisk level: <Low|Med|High>\nRollback: <되돌리는 방법>\nReply one: APPROVE | REJECT | EDIT: <changes>\n\n출력(5줄 이내):\n1) 현재 상태\n2) 남은 의사결정 1~2개\n3) 다음 실행 항목 1~2개\n4) 위험/가드레일\n5) [STATUS] YYYY-MM-DD HH:mm KST"
+      },
+      "delivery": {
+        "mode": "announce"
+      },
+      "state": {
+        "nextRunAtMs": 1771030800000
+      }
+    }
+  ]
+}

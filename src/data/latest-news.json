@@ -1,41 +1,402 @@
 [
   {
-    "id": "demo-aws-grid",
-    "source": "Reuters Technology",
-    "title": "Hyperscalers rethink campus power strategy as AI clusters drive denser builds",
-    "url": "https://example.com/hyperscaler-power-strategy",
-    "summary": "Operators are moving from generic growth plans to site-specific power and substation strategies as AI density raises both time-to-power and capex sensitivity.",
-    "insight": "Expert lens: The winners here will be teams that lock utility access, transformer slots, and cooling design before they finalize GPU procurement. In AI campuses, power lead time is now a market-share variable.",
-    "publishedAt": "2026-03-06T00:05:00.000Z",
-    "generatedImage": "/generated/demo-aws-grid.svg",
-    "category": "Power / Grid / Energy",
-    "tags": ["power", "campus", "hyperscale", "gpu", "utility"],
-    "region": "Global"
-  },
-  {
-    "id": "demo-cooling",
     "source": "Data Center Dynamics",
-    "title": "Liquid cooling shifts from pilot projects to standard rack design in new AI halls",
-    "url": "https://example.com/liquid-cooling-standardization",
-    "summary": "Facilities teams are standardizing CDU, rear-door, and liquid loop decisions earlier in the design cycle instead of treating them as late-stage retrofits.",
-    "insight": "Expert lens: Cooling is no longer a mechanical afterthought. It directly affects rack density, fit-out sequencing, and how quickly operators can monetize contracted GPU demand.",
-    "publishedAt": "2026-03-05T16:05:00.000Z",
-    "generatedImage": "/generated/demo-cooling.svg",
-    "category": "Cooling / MEP / Engineering",
-    "tags": ["liquid-cooling", "mep", "rack-density", "cdus"],
-    "region": "APAC"
+    "title": "AMC Robotics selects Hive Digital Technologies for AI-powered robotics",
+    "url": "https://www.datacenterdynamics.com/en/news/amc-robotics-selects-hive-digital-technologies-for-ai-powered-robotics/",
+    "summary": "AMC using Hive's GPU-based AI compute infrastructure",
+    "publishedAt": "2026-03-13T17:20:04.000Z",
+    "image": "https://media.datacenterdynamics.com/media/images/58181459-1.2e16d0ba.fill-750x500.png"
   },
   {
-    "id": "demo-neocloud",
-    "source": "VentureBeat AI",
-    "title": "Neocloud providers are bundling inference, networking, and bare metal into tighter enterprise offers",
-    "url": "https://example.com/neocloud-bundles",
-    "summary": "The next wave of AI infrastructure competition is shifting toward packaging quality: predictable throughput, deployment speed, and managed network architecture.",
-    "insight": "Expert lens: Raw GPU access is commoditizing. Margin will move to orchestration, fabric design, and the ability to turn contracted capacity into stable enterprise service levels.",
-    "publishedAt": "2026-03-05T08:05:00.000Z",
-    "generatedImage": "/generated/demo-neocloud.svg",
-    "category": "AI Infrastructure (GPU/Neocloud)",
-    "tags": ["neocloud", "inference", "networking", "bare-metal"],
-    "region": "US"
+    "source": "TechCrunch AI",
+    "title": "The wild six weeks for NanoClaw’s creator that led to a deal with Docker",
+    "url": "https://techcrunch.com/2026/03/13/the-wild-six-weeks-for-nanoclaws-creator-that-led-to-a-deal-with-docker/",
+    "summary": "Gavriel Cohen is living an open source developer's dream as his project has achieved acclaim and a partnership with Docker in a matter of weeks.",
+    "publishedAt": "2026-03-13T17:09:59.000Z",
+    "image": null
+  },
+  {
+    "source": "TechCrunch AI",
+    "title": "Spotify will let you edit your Taste Profile to control your recommendations",
+    "url": "https://techcrunch.com/2026/03/13/spotify-will-let-you-edit-your-taste-profile-to-control-your-recommendations/",
+    "summary": "When you edit your Taste Profile, you'll impact your personalized playlists like Discover Weekly, recommendations, and Wrapped.",
+    "publishedAt": "2026-03-13T17:04:12.000Z",
+    "image": null
+  },
+  {
+    "source": "Data Center Dynamics",
+    "title": "Eutelsat completes its re-financing plan, closing €1.5bn bond offering",
+    "url": "https://www.datacenterdynamics.com/en/news/eutelsat-announces-completion-of-its-re-financing-plan-closing-15bn-bond-offering/",
+    "summary": "Funding to support LEO growth",
+    "publishedAt": "2026-03-13T17:00:00.000Z",
+    "image": "https://media.datacenterdynamics.com/media/images/47949324668_2a38723108_z.2e16d0ba.fill-750x500.jpg"
+  },
+  {
+    "source": "Data Center Dynamics",
+    "title": "Solving the heat problems: How silicon photonics is redefining thermal efficiency in data centers",
+    "url": "https://www.datacenterdynamics.com/en/opinions/solving-the-heat-problems-how-silicon-photonics-is-redefining-thermal-efficiency-in-data-centers/",
+    "summary": "Interconnect efficiency is now essential and photonics can help",
+    "publishedAt": "2026-03-13T17:00:00.000Z",
+    "image": "https://media.datacenterdynamics.com/media/images/OpenLight_Dr_Adam_Carter.10400066.fill-750x500.jpg"
+  },
+  {
+    "source": "Data Center Dynamics",
+    "title": "Apto eyes Madrid for 240MW data center campus",
+    "url": "https://www.datacenterdynamics.com/en/news/apto-eyes-madrid-for-240mw-data-center-campus/",
+    "summary": "PIMCO-owned developer building on former bottling plant site",
+    "publishedAt": "2026-03-13T16:47:15.000Z",
+    "image": "https://media.datacenterdynamics.com/media/images/1773402185809.2e16d0ba.fill-750x500.jpg"
+  },
+  {
+    "source": "Data Center Dynamics",
+    "title": "Frustration grows as data center project in limbo in Bergamo, Italy",
+    "url": "https://www.datacenterdynamics.com/en/news/frustration-grows-as-data-center-project-in-limbo-in-bergamo-italy/",
+    "summary": "Construction of the 181,000 sqm ‘Innovation Hub’ was expected to start in 2024",
+    "publishedAt": "2026-03-13T16:31:01.000Z",
+    "image": "https://media.datacenterdynamics.com/media/images/Arcene_Italy_Vitali.2e16d0ba.fill-750x500.png"
+  },
+  {
+    "source": "Data Center Dynamics",
+    "title": "AWS partners with big chip co. Cerebras for AI “inference disaggregation”",
+    "url": "https://www.datacenterdynamics.com/en/news/aws-partners-with-big-chip-co-cerebras-for-ai-inference-disaggregation/",
+    "summary": "Will be deployed on Amazon Bedrock in AWS data centers",
+    "publishedAt": "2026-03-13T16:29:00.000Z",
+    "image": "https://media.datacenterdynamics.com/media/images/Cerebras_WS-3.2e16d0ba.fill-750x500.jpg"
+  },
+  {
+    "source": "Data Center Dynamics",
+    "title": "Nvidia builds out LPU chip team following $20bn Groq acquihire, announcement rumored for GTC",
+    "url": "https://www.datacenterdynamics.com/en/news/nvidia-builds-out-lpu-chip-team-following-20bn-groq-acquihire-announcement-rumored-for-gtc/",
+    "summary": "Multiple hires for \"Nvidia's new class of LPU technology,\" despite company's Language Processing Unit yet to be officially confirmed",
+    "publishedAt": "2026-03-13T16:25:00.000Z",
+    "image": "https://media.datacenterdynamics.com/media/images/groq_chip.9935d19e.fill-750x500.png"
+  },
+  {
+    "source": "TechCrunch AI",
+    "title": "The $32B acquisition that one VC is calling the ‘Deal of the Decade’",
+    "url": "https://techcrunch.com/video/the-32b-acquisition-that-one-vc-is-calling-the-deal-of-the-decade/",
+    "summary": "According to Index Ventures Partner Shardul Shah, cybersecurity startup Wiz sits “at the center of three tailwinds: AI, cloud, and security spend.” Those tailwinds powered what just became the largest venture-backed acquisition in history — Google’s $32 billion deal, finalized after a declined 2024 offer, antitrust review on both sides of the Atlantic, and an […]",
+    "publishedAt": "2026-03-13T16:20:23.000Z",
+    "image": null
+  },
+  {
+    "source": "Data Center Dynamics",
+    "title": "MWC 2026: AI deluge grips telecoms industry",
+    "url": "https://www.datacenterdynamics.com/en/analysis/mwc-2026-ai-deluge-grips-telecoms-industry/",
+    "summary": "As Nvidia plays a starring role ahead of AI and 6G future",
+    "publishedAt": "2026-03-13T15:49:28.000Z",
+    "image": "https://media.datacenterdynamics.com/media/images/IMG_9403.2e16d0ba.fill-750x500.jpg"
+  },
+  {
+    "source": "Data Center Dynamics",
+    "title": "Synopsys launches AI-powered EDA solutions, including first integrated Ansys tools since acquisition",
+    "url": "https://www.datacenterdynamics.com/en/news/synopsys-launches-ai-powered-eda-solutions-including-first-integrated-ansys-tools-since-acquisition/",
+    "summary": "Announcements made at company’s annual Converge conference in California",
+    "publishedAt": "2026-03-13T15:20:03.000Z",
+    "image": "https://media.datacenterdynamics.com/media/images/re-engineering-future-web-converge.2e16d0ba.fill-750x500.jpg"
+  },
+  {
+    "source": "Data Center Dynamics",
+    "title": "As data center campuses grow, so do related career opportunities",
+    "url": "https://www.datacenterdynamics.com/en/opinions/as-data-center-campuses-grow-so-do-related-career-opportunities/",
+    "summary": "How US data center development is forging new career pathways",
+    "publishedAt": "2026-03-13T15:12:44.000Z",
+    "image": "https://media.datacenterdynamics.com/media/images/Bill_Jabjiniak_bnw.3f97b129.fill-750x500.jpg"
+  },
+  {
+    "source": "Data Center Dynamics",
+    "title": "Crusoe launches Edge offering with self-made modular AI data centers",
+    "url": "https://www.datacenterdynamics.com/en/news/crusoe-launches-edge-offering-with-self-made-modular-ai-data-centers/",
+    "summary": "Also establishes new manufacturing facility for modular data centers",
+    "publishedAt": "2026-03-13T15:00:03.000Z",
+    "image": "https://media.datacenterdynamics.com/media/images/Stargate_Abilene.2e16d0ba.fill-750x500.png"
+  },
+  {
+    "source": "Data Center Dynamics",
+    "title": "Russian hosting firm RUVDS launches experimental data center in Antarctica",
+    "url": "https://www.datacenterdynamics.com/en/news/russian-hosting-firm-ruvds-launches-experimental-data-center-in-antarctica/",
+    "summary": "Wrap up warm",
+    "publishedAt": "2026-03-13T14:16:51.000Z",
+    "image": "https://media.datacenterdynamics.com/media/images/GettyImages-1383117117.2e16d0ba.fill-750x500.jpg"
+  },
+  {
+    "source": "TechCrunch AI",
+    "title": "Peacock expands into AI-driven video, mobile-first live sports, and gaming",
+    "url": "https://techcrunch.com/2026/03/13/peacock-expands-into-ai-driven-video-mobile-first-live-sports-and-gaming/",
+    "summary": "Peacock is betting on new AI-powered video experiences, vertical clips, and mobile games to help its growth.",
+    "publishedAt": "2026-03-13T14:00:00.000Z",
+    "image": null
+  },
+  {
+    "source": "Data Center Dynamics",
+    "title": "Panasonic’s Tecnair launches two CDUs for liquid cooling",
+    "url": "https://www.datacenterdynamics.com/en/news/panasonics-tecnair-launches-two-cdus-for-liquid-cooling/",
+    "summary": "Parent company said it is working on 1.2MW CDU",
+    "publishedAt": "2026-03-13T12:50:03.000Z",
+    "image": "https://media.datacenterdynamics.com/media/images/PANASONIC-TECNAIR-CDU_DESIGNED_COO.2e16d0ba.fill-750x500.jpg"
+  },
+  {
+    "source": "Data Center Dynamics",
+    "title": "Korea Zinc in talks with US tech firms to extract rare earth minerals from old data center kit - report",
+    "url": "https://www.datacenterdynamics.com/en/news/korea-zinc-in-talks-with-us-tech-firms-to-extract-rare-earth-minerals-from-old-data-center-kit-report/",
+    "summary": "Could help reduce reliance on China",
+    "publishedAt": "2026-03-13T12:46:55.000Z",
+    "image": "https://media.datacenterdynamics.com/media/images/Gallium.2e16d0ba.fill-750x500.jpg"
+  },
+  {
+    "source": "Data Center Knowledge",
+    "title": "NTT Lands 115 MW in Data Center Deals as Part of $10B AI Push",
+    "url": "https://www.datacenterknowledge.com/build-design/ntt-data-lands-115-mw-in-us-data-center-deals-as-part-of-10b-ai-push",
+    "summary": "The company is forging ahead with new data center commitments as part of its $10 billion expansion plan to support growing demand for AI and high-density compute infrastructure.",
+    "publishedAt": "2026-03-13T12:45:00.000Z",
+    "image": null
+  },
+  {
+    "source": "Data Center Dynamics",
+    "title": "DCX launches three CDUs, offering 600kW-2.6MW cooling capacities",
+    "url": "https://www.datacenterdynamics.com/en/news/dcx-launches-three-cdus-offering-600kw-26mw-cooling-capacities/",
+    "summary": "Company aims to cater to all kinds of liquid environments",
+    "publishedAt": "2026-03-13T12:30:04.000Z",
+    "image": "https://media.datacenterdynamics.com/media/images/ECDUPortfolio.2e16d0ba.fill-750x500.png"
+  },
+  {
+    "source": "Data Center Dynamics",
+    "title": "QTS targets two data center campuses in Georgia",
+    "url": "https://www.datacenterdynamics.com/en/news/qts-targets-two-data-center-campuses-in-georgia/",
+    "summary": "Company is also expanding in Wilmer, Texas",
+    "publishedAt": "2026-03-13T12:20:03.000Z",
+    "image": "https://media.datacenterdynamics.com/media/images/QTS_blakely.2e16d0ba.fill-750x500.png"
+  },
+  {
+    "source": "Data Center Dynamics",
+    "title": "Microsoft breaks ground on data center in Bergheim, Germany",
+    "url": "https://www.datacenterdynamics.com/en/news/microsoft-breaks-ground-on-data-center-in-bergheim-germany/",
+    "summary": "Plans first revealed in late 2024",
+    "publishedAt": "2026-03-13T12:17:00.000Z",
+    "image": "https://media.datacenterdynamics.com/media/images/1773320731091.2e16d0ba.fill-750x500.jpg"
+  },
+  {
+    "source": "Data Center Dynamics",
+    "title": "RadiusDC enters Arizona, acquires PhoenixNAP facility in Phoenix",
+    "url": "https://www.datacenterdynamics.com/en/news/radiusdc-enters-arizona-acquires-phoenixnap-facility-in-phoenix/",
+    "summary": "Campus to be expanded, with new building coming online in 2028",
+    "publishedAt": "2026-03-13T11:53:29.000Z",
+    "image": "https://media.datacenterdynamics.com/media/images/phoenixnap.2e16d0ba.fill-750x500.png"
+  },
+  {
+    "source": "Data Center Dynamics",
+    "title": "SES satellite teleport in Israel struck by Hezbollah missile",
+    "url": "https://www.datacenterdynamics.com/en/news/ses-satellite-teleport-in-israel-struck-by-hezbollah-missile/",
+    "summary": "Social media footage shows damage to several antennas",
+    "publishedAt": "2026-03-13T11:52:00.000Z",
+    "image": "https://media.datacenterdynamics.com/media/images/ses_israel.2e16d0ba.fill-750x500.png"
+  },
+  {
+    "source": "Data Center Dynamics",
+    "title": "DCD>Talks: Scaling Africa's digital infrastructure with Ayotunde Coker, Open Access Data Centres",
+    "url": "https://www.datacenterdynamics.com/en/videos/dcdtalks-scaling-africas-digital-infrastructure-with-ayotunde-coker-open-access-data-centres/",
+    "summary": "Open Access Data Centres CEO Ayotunde Coker joins DCD’s James Raddings to discuss Africa’s data center growth, the open access model, and preparing infrastructure for rising AI demand.",
+    "publishedAt": "2026-03-13T10:59:48.000Z",
+    "image": "https://media.datacenterdynamics.com/media/images/Scaling_Africas_digital_infrastruc.2e16d0ba.fill-750x500.png"
+  },
+  {
+    "source": "Data Center Knowledge",
+    "title": "Digital Infrastructure Boom Faces Complex Labor Crisis",
+    "url": "https://www.datacenterknowledge.com/data-center-career-development/digital-infrastructure-boom-faces-complex-labor-crisis",
+    "summary": "The main bottleneck for the data center investment boom isn’t capital, land, or energy. It’s labor.",
+    "publishedAt": "2026-03-13T09:30:00.000Z",
+    "image": null
+  },
+  {
+    "source": "TechCrunch AI",
+    "title": "Before quantum computing arrives, this startup wants enterprises already running on it",
+    "url": "https://techcrunch.com/2026/03/12/before-quantum-computing-arrives-this-startup-wants-enterprises-already-running-on-it/",
+    "summary": "After selling his AI startup to AMD for $665 million, Peter Sarlin is back with Qutwo, a new venture building the infrastructure it believes enterprises will need when quantum computing finally arrives.",
+    "publishedAt": "2026-03-13T05:00:00.000Z",
+    "image": null
+  },
+  {
+    "source": "TechCrunch AI",
+    "title": "Truecaller now lets you hang up on scammers — on behalf of your family",
+    "url": "https://techcrunch.com/2026/03/12/truecallers-now-lets-you-hang-up-on-scammers-on-behalf-of-your-family/",
+    "summary": "Caller identity platform Truecaller recently launched a new feature that lets one person become an admin of a family group, get alerts about fraud calls received by other members, and even end a call on their behalf if they suspect a family member might get scammed.",
+    "publishedAt": "2026-03-13T04:30:00.000Z",
+    "image": null
+  },
+  {
+    "source": "TechCrunch AI",
+    "title": "How to watch Jensen Huang’s Nvidia GTC 2026 keynote",
+    "url": "https://techcrunch.com/2026/03/12/how-to-watch-jensen-huangs-nvidia-gtc-2026-keynote/",
+    "summary": "GTC — which stands for GPU Technology Conference — is Nvidia's flagship annual event, where the chipmaker typically uses the spotlight to announce new products, champion partnerships, and lay out its vision for the future of computing. Huang's keynote will focus on Nvidia's role in the future of computing and AI.",
+    "publishedAt": "2026-03-12T23:25:39.000Z",
+    "image": null
+  },
+  {
+    "source": "TechCrunch AI",
+    "title": "Sales automation startup Rox AI hits $1.2B valuation, sources say",
+    "url": "https://techcrunch.com/2026/03/12/sales-automation-startup-rox-ai-hits-1-2b-valuation-sources-say/",
+    "summary": "Rox, founded in 2024 by the former chief growth officer of New Relic, offers an AI-native alternative to CRM tools.",
+    "publishedAt": "2026-03-12T22:25:50.000Z",
+    "image": null
+  },
+  {
+    "source": "Data Center Knowledge",
+    "title": "Cooling for AI Without the Hype: Choosing the Right Architecture for Mixed-Density Data Halls",
+    "url": "https://www.datacenterknowledge.com/cooling/cooling-for-ai-without-the-hype-choosing-the-right-architecture-for-a-mixed-density-data-hall",
+    "summary": "Mixed-density data halls demand cooling strategies grounded in workloads, facility constraints, and the teams on the floor.",
+    "publishedAt": "2026-03-12T21:19:52.000Z",
+    "image": null
+  },
+  {
+    "source": "TechCrunch AI",
+    "title": "Facebook Marketplace now lets Meta AI respond to buyers’ messages",
+    "url": "https://techcrunch.com/2026/03/12/facebook-marketplace-now-lets-meta-ai-respond-to-buyers-messages/",
+    "summary": "When buyers inquire about an item’s availability, sellers can use Meta AI to automatically draft replies using information from their listing, such as the description, availability, pickup location, and price.",
+    "publishedAt": "2026-03-12T18:20:33.000Z",
+    "image": null
+  },
+  {
+    "source": "TechCrunch AI",
+    "title": "Tinder tries to lure people back to online dating with IRL events, virtual speed dating",
+    "url": "https://techcrunch.com/2026/03/12/tinder-tries-to-lure-people-back-to-online-dating-with-irl-events-virtual-speed-dating/",
+    "summary": "Tinder just got a major revamp as it attempts to reengage its user base and attract younger daters. This includes in-person events, AI enhancements, and even virtual speed dating.",
+    "publishedAt": "2026-03-12T18:00:00.000Z",
+    "image": null
+  },
+  {
+    "source": "TechCrunch AI",
+    "title": "Atlassian follows Block’s footsteps and cuts staff in the name of AI",
+    "url": "https://techcrunch.com/2026/03/12/atlassian-follows-blocks-footsteps-and-cuts-staff-in-the-name-of-ai/",
+    "summary": "Atlassian laid off 10% of its workforce, around 1,600 people, as the company looks to funnel more funds to AI.",
+    "publishedAt": "2026-03-12T17:20:19.000Z",
+    "image": null
+  },
+  {
+    "source": "TechCrunch AI",
+    "title": "Bumble introduces an AI dating assistant, ‘Bee’",
+    "url": "https://techcrunch.com/2026/03/12/bumble-introduces-an-ai-dating-assistant-bee/",
+    "summary": "Bumble's new AI assistant Bee will move the dating app beyond the swipe by matching people based on compatibility and goals.",
+    "publishedAt": "2026-03-12T16:52:17.000Z",
+    "image": null
+  },
+  {
+    "source": "TechCrunch AI",
+    "title": "A writer is suing Grammarly for turning her and other authors into ‘AI editors’ without consent",
+    "url": "https://techcrunch.com/2026/03/12/a-writer-is-suing-grammarly-for-turning-her-and-other-authors-into-ai-editors-without-consent/",
+    "summary": "Journalist Julia Angwin is leading a class action lawsuit against Grammarly for violating her privacy and publicity rights.",
+    "publishedAt": "2026-03-12T16:42:40.000Z",
+    "image": null
+  },
+  {
+    "source": "TechCrunch AI",
+    "title": "Gumloop lands $50M from Benchmark to turn every employee into an AI agent builder",
+    "url": "https://techcrunch.com/2026/03/12/gumloop-lands-50m-from-benchmark-to-turn-every-employee-into-an-ai-agent-builder/",
+    "summary": "As companies race to adopt AI, Benchmark general partner Everett Randle believes the key to success lies in empowering every worker with AI superpowers, and Gumloop’s intuitive agent builder is an example of the kind of tool that will unlock that potential.",
+    "publishedAt": "2026-03-12T15:30:00.000Z",
+    "image": null
+  },
+  {
+    "source": "TechCrunch AI",
+    "title": "Alexa+ gets a new ‘adults only’ personality option that curses but won’t do NSFW content",
+    "url": "https://techcrunch.com/2026/03/12/alexa-gets-a-new-adults-only-personality-option-that-curses-but-wont-do-nsfw-content/",
+    "summary": "The new Sassy style can curse and roast you, but the fun ends there.",
+    "publishedAt": "2026-03-12T15:16:16.000Z",
+    "image": null
+  },
+  {
+    "source": "TechCrunch AI",
+    "title": "Wonderful raises $150M Series B at $2B valuation",
+    "url": "https://techcrunch.com/2026/03/12/wonderful-raises-150m-series-b-at-2b-valuation/",
+    "summary": "The funding round, led by Insight Partners, comes just four months after Wonderful raised a $100 million Series A.",
+    "publishedAt": "2026-03-12T15:12:35.000Z",
+    "image": null
+  },
+  {
+    "source": "Data Center Knowledge",
+    "title": "Gimlet Labs, d-Matrix Partner to Boost Agentic AI Inference Performance",
+    "url": "https://www.datacenterknowledge.com/infrastructure/d-matrix-gimlet-labs-partner-to-boost-agentic-ai-inference-performance",
+    "summary": "The companies say combining specialized inference accelerators with GPUs could deliver major speed and power efficiency gains for frontier AI workloads.",
+    "publishedAt": "2026-03-12T13:00:00.000Z",
+    "image": null
+  },
+  {
+    "source": "TechCrunch AI",
+    "title": "Google is using old news reports and AI to predict flash floods",
+    "url": "https://techcrunch.com/2026/03/12/google-is-using-old-news-reports-and-ai-to-predict-flash-floods/",
+    "summary": "A new way to solve data scarcity: Turning qualitative reports into quantitative data with an LLM.",
+    "publishedAt": "2026-03-12T13:00:00.000Z",
+    "image": null
+  },
+  {
+    "source": "TechCrunch AI",
+    "title": "Google Maps is getting an AI ‘Ask Maps’ feature and upgraded ‘immersive’ navigation",
+    "url": "https://techcrunch.com/2026/03/12/google-maps-is-getting-an-ai-ask-maps-feature-and-upgraded-immersive-navigation/",
+    "summary": "The tech giant says the \"Immersive Navigation\" launch is the biggest update to Maps in over a decade.",
+    "publishedAt": "2026-03-12T12:30:00.000Z",
+    "image": null
+  },
+  {
+    "source": "Data Center Knowledge",
+    "title": "Interview: Utilidata CEO on NexGen Cloud Partnership, Reclaiming Stranded AI Power",
+    "url": "https://www.datacenterknowledge.com/build-design/utilidata-ceo-on-nexgen-cloud-team-up-unlocking-stranded-ai-data-center-power",
+    "summary": "The companies are deploying the Karman AI power platform to tap unused electrical headroom and expand AI compute inside existing facilities.",
+    "publishedAt": "2026-03-12T10:00:00.000Z",
+    "image": null
+  },
+  {
+    "source": "TechCrunch AI",
+    "title": "AI ‘actor’ Tilly Norwood put out the worst song I’ve ever heard",
+    "url": "https://techcrunch.com/2026/03/11/ai-actor-tilly-norwood-put-out-the-worst-song-ive-ever-heard/",
+    "summary": "This song is an AI actor's rallying cry to other AI actors, urging them to keep going despite the naysayers who doubt their humanity. Literally no one can relate to this.",
+    "publishedAt": "2026-03-11T23:35:03.000Z",
+    "image": null
+  },
+  {
+    "source": "Data Center Knowledge",
+    "title": "AI Is Driving Demand – Data Centers Must Rewrite the Rulebook to Keep Up",
+    "url": "https://www.datacenterknowledge.com/data-observability/ai-is-driving-demand-data-centers-must-rewrite-the-rulebook",
+    "summary": "To meet the world’s soaring computer needs, data centers must break free from outdated construction models, writes Aveva’s Gary Wong.",
+    "publishedAt": "2026-03-11T23:09:42.000Z",
+    "image": null
+  },
+  {
+    "source": "TechCrunch AI",
+    "title": "Ford’s new AI assistant will help fleet owners know if seatbelts are being used",
+    "url": "https://techcrunch.com/2026/03/11/fords-new-ai-assistant-will-help-fleet-owners-know-if-seatbelts-are-being-used/",
+    "summary": "Ford Pro AI debuted at Work Truck Week in Indianapolis and is now available to all of its U.S.-based Pro telematics subscribers.",
+    "publishedAt": "2026-03-11T22:51:39.000Z",
+    "image": null
+  },
+  {
+    "source": "Data Center Knowledge",
+    "title": "Amazon Thinks SpaceX’s Data Center Plan Is a Bunch of Hooey",
+    "url": "https://www.datacenterknowledge.com/next-gen-data-centers/amazon-thinks-spacex-s-data-center-plan-is-a-bunch-of-hooey",
+    "summary": "Amazon has urged the FCC to deny SpaceX’s plan to build orbital data centers comprising up to one million satellites, arguing that it's ‘wholly unrealistic’.",
+    "publishedAt": "2026-03-11T17:08:15.000Z",
+    "image": null
+  },
+  {
+    "source": "Data Center Knowledge",
+    "title": "Information-Centric Networking: What It Means for Data Centers",
+    "url": "https://www.datacenterknowledge.com/networking/information-centric-networking-what-it-means-for-data-centers",
+    "summary": "While still in the research phase, ICN principles can guide data centers in improving verification, replication, and edge hosting to enhance scalability and performance.",
+    "publishedAt": "2026-03-11T09:00:00.000Z",
+    "image": null
+  },
+  {
+    "source": "Data Center Knowledge",
+    "title": "The Memory ‘Crisis’ Is An Opportunity for a Smarter Unstructured Data Strategy",
+    "url": "https://www.datacenterknowledge.com/data-storage/the-memory-crisis-is-an-opportunity-for-a-smarter-unstructured-data-strategy",
+    "summary": "The ongoing memory chip shortage, driven by surging AI demand, has exposed the inefficiencies of unstructured data management, forcing enterprises to confront the rising costs of storing redundant, obsolete, and trivial data.",
+    "publishedAt": "2026-03-10T16:00:00.000Z",
+    "image": null
+  },
+  {
+    "source": "Data Center Knowledge",
+    "title": "HPE Rides AI Wave with Juniper-Fueled Networking Surge",
+    "url": "https://www.datacenterknowledge.com/networking/hpe-rides-ai-wave-with-juniper-fueled-networking-surge",
+    "summary": "The IT infrastructure giant posted stronger-than-expected Q1 results, showcasing gains from its blockbuster Juniper acquisition.",
+    "publishedAt": "2026-03-10T14:25:01.000Z",
+    "image": null
   }
 ]

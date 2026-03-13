@@ -1,0 +1,268 @@
+---
+---
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AI Dashboard — 운영 뷰</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --bg: #04070f;
+        --line: #202a3e;
+        --text: #e5ecff;
+        --muted: #93a1c2;
+        --ok: #32d583;
+        --warn: #f4bf50;
+        --critical: #ff5c7a;
+        --info: #55a6ff;
+      }
+      * { box-sizing: border-box; }
+      html, body { margin: 0; padding: 0; background: radial-gradient(1200px 500px at 80% -10%, #15213b, var(--bg)); color: var(--text); font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, sans-serif; }
+      a { color: inherit; text-decoration: none; }
+      .app { min-height: 100vh; padding: 22px; max-width: 1180px; margin: 0 auto; }
+      .topbar { display: flex; align-items: center; justify-content: space-between; gap: 14px; border: 1px solid #202a3e; background: rgba(15, 25, 45, 0.6); border-radius: 16px; padding: 14px 16px; backdrop-filter: blur(6px); }
+      .brand { display: flex; align-items: center; gap: 12px; font-weight: 700; }
+      .badge { border-radius: 999px; border: 1px solid #2d3a55; color: #c6d3ff; padding: 6px 12px; font-size: 12px; }
+      .healthy { color: #b8ffcf; font-size: 12px; }
+      .chip { display: inline-flex; align-items: center; gap: 8px; border-radius: 10px; padding: 10px 12px; border: 1px solid var(--line); background: linear-gradient(180deg, #0f1a34, #0b1428); }
+      .kpis { margin-top: 16px; display: grid; grid-template-columns: repeat(5, minmax(120px, 1fr)); gap: 12px; }
+      .kpiVal { font-size: 24px; font-weight: 800; }
+      .kpiLabel { color: var(--muted); font-size: 12px; margin-top: 2px; }
+      .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 14px; }
+      .card { border: 1px solid var(--line); border-radius: 16px; background: linear-gradient(180deg, #0d1730, #0a1222); box-shadow: inset 0 1px 0 #27345a40; padding: 16px; }
+      h2 { margin: 0 0 8px; font-size: 17px; }
+      .list { display: grid; gap: 10px; margin-top: 10px; }
+      .listItem { border: 1px dashed #27345a; border-radius: 12px; padding: 10px 12px; background: #0f1930; }
+      .rowTop { display: flex; justify-content: space-between; gap: 12px; align-items: baseline; }
+      .title { font-weight: 600; }
+      .small { color: var(--muted); font-size: 12px; }
+      .p1 { color: #ff6f88; font-weight: 700; }
+      .p2 { color: #ffc35a; font-weight: 700; }
+      .p3 { color: #6fd0ff; font-weight: 700; }
+      .progressWrap { margin-top: 12px; }
+      .progressHead { display: flex; justify-content: space-between; font-size: 12px; color: var(--muted); margin-bottom: 8px; }
+      .bar { width: 100%; height: 9px; border-radius: 999px; background: #1a2540; overflow: hidden; }
+      .bar > span { display: block; height: 100%; border-radius: inherit; background: linear-gradient(90deg, #56c2ff, #6d79ff); transition: width .4s ease; }
+      .alerts { display: grid; gap: 8px; }
+      .alert { display: flex; align-items: center; justify-content: space-between; gap: 10px; border-radius: 12px; padding: 10px 12px; border: 1px solid #2b3a63; }
+      .alertMeta { font-size: 12px; color: var(--muted); }
+      .critical { border-color: #4a2430; background: linear-gradient(90deg, #3a1520, #2d111b); }
+      .ok { border-color: #1f3d2a; background: linear-gradient(90deg, #1d3b26, #15331f); }
+      .warn { border-color: #40300f; background: linear-gradient(90deg, #3f2f11, #2c2310); }
+      .info { border-color: #24375f; background: linear-gradient(90deg, #152845, #182d49); }
+      .dot { width: 10px; height: 10px; border-radius: 999px; display: inline-block; }
+      .dot.critical { background: var(--critical); }
+      .dot.ok { background: var(--ok); }
+      .dot.warn { background: var(--warn); }
+      .dot.info { background: var(--info); }
+      .queueStatus { display: flex; gap: 8px; margin-top: 12px; }
+      .qbox { border: 1px solid var(--line); background: #0b152d; border-radius: 12px; padding: 10px; }
+      .qNum { font-size: 20px; font-weight: 800; }
+      .timeline { display: grid; gap: 8px; }
+      .timelineItem { display: grid; grid-template-columns: 86px 1fr auto; gap: 10px; align-items: center; }
+      .time { color: #a3b4d1; font-weight: 700; font-size: 12px; }
+      .pill { width: 66px; text-align: center; border-radius: 999px; border: 1px solid #2c3b61; font-size: 11px; padding: 2px 0; }
+      .pill.p1 { color: #ff8ea3; border-color: #4a2735; }
+      .pill.p2 { color: #ffd28c; border-color: #5a4622; }
+      .pill.ok { color: #86db94; border-color: #1f3c2a; }
+      .timelineName { font-size: 13px; }
+      .statusRow { display: flex; gap: 8px; margin-top: 16px; align-items: center; }
+      .btn { border: 1px solid #2f3e66; color: #cfdcff; background: #102047; border-radius: 10px; padding: 8px 10px; font-size: 12px; }
+      @media (max-width: 1050px) { .grid, .statusRow { grid-template-columns: 1fr; } .kpis { grid-template-columns: 1fr 1fr; } }
+      @media (max-width: 640px) { .kpis { grid-template-columns: 1fr; } .topbar { flex-direction: column; align-items: flex-start; } .timelineItem { grid-template-columns: 1fr; } }
+    </style>
+  </head>
+  <body>
+    <div class="app">
+      <header class="topbar">
+        <div class="brand">
+          <div style="width:40px;height:40px;border-radius:12px;background:linear-gradient(145deg,#5f7bff,#9f69ff); display:grid;place-items:center;font-weight:800;">AI</div>
+          <div>
+            <div style="font-size:19px;font-weight:800;">AI Dashboard</div>
+            <div class="small" style="margin-top:1px;">오퍼레이션 뷰 (탑건 · 진행률 · 알림 · 대기열)</div>
+          </div>
+          <span class="chip"><span class="dot ok"></span> Main system active</span>
+        </div>
+        <div class="badge">Owner: 조시 · <span class="healthy">HEALTHY</span> · <span id="updatedAt"></span></div>
+      </header>
+
+      <section class="kpis">
+        <div class="chip"><div class="kpiVal" id="totalJobs">-</div><div class="kpiLabel">총 Job</div></div>
+        <div class="chip"><div class="kpiVal"><span id="activeJobs">-</span> / <span id="totalJobs2">-</span></div><div class="kpiLabel">활성 Job</div></div>
+        <div class="chip"><div class="kpiVal" id="successRate">-%</div><div class="kpiLabel">24h 성공률</div></div>
+        <div class="chip"><div class="kpiVal" id="errorStreak">-</div><div class="kpiLabel">연속 실패</div></div>
+        <div class="chip"><div class="kpiVal" id="burnRate">-%</div><div class="kpiLabel">버너인 진행률</div></div>
+      </section>
+
+      <section class="grid">
+        <div class="card">
+          <h2>🎯 Top Gun (Priority 3)</h2>
+          <div class="list" id="topgun"></div>
+        </div>
+
+        <div class="card">
+          <h2>📈 Progress Board</h2>
+          <div class="progressWrap">
+            <div class="progressHead"><span>오퍼레이션 진행률</span><span id="progressText">-/-</span></div>
+            <div class="bar"><span id="overallBar" style="width:0%"></span></div>
+          </div>
+          <div class="progressWrap" style="margin-top:16px">
+            <div class="progressHead"><span>크론 배치 적중율</span><span id="targetRatio">-</span></div>
+            <div class="bar"><span id="targetBar" style="width:0%; background:linear-gradient(90deg,#61f0a8,#47c9ff)"></span></div>
+          </div>
+          <div style="margin-top:14px">
+            <h2 style="font-size:14px">Queue</h2>
+            <div class="queueStatus">
+              <div class="qbox"><div class="qNum" id="qWaiting">-</div><div class="small">Waiting</div></div>
+              <div class="qbox"><div class="qNum" id="qRunning">-</div><div class="small">Running</div></div>
+              <div class="qbox"><div class="qNum" id="qDone">-</div><div class="small">Done</div></div>
+            </div>
+            <h2 style="font-size:14px; margin-top:14px">Alerts</h2>
+            <div class="alerts" id="alerts"></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="card" style="margin-top:14px">
+        <h2>🧭 Queue + Timeline</h2>
+        <div class="timeline" id="timeline"></div>
+      </section>
+
+      <section class="statusRow">
+        <button class="btn" id="refreshBtn">데이터 새로고침</button>
+        <span class="small" id="statusText"></span>
+      </section>
+    </div>
+
+    <script>
+      const fallbackData = {
+        kpi: { totalJobs: 8, activeJobs: 8, successRate24h: 99.2, errorStreak: 0 },
+        topGun: [
+          { title: 'Google 1-pager 완성', priority: 'P1', etaMin: 60, status: '진행중', progress: 74, nextAt: '11:30' },
+          { title: 'Daily Top3 Template 표준화', priority: 'P1', etaMin: 45, status: '대기', progress: 35, nextAt: '08:30' },
+          { title: 'Nightly Routine 점검', priority: 'P1', etaMin: 15, status: '대기', progress: 0, nextAt: '01:10' },
+        ],
+        queue: { waiting: 3, running: 1, done: 4, items: [] },
+        alerts: [
+          { level: 'critical', text: '08:00 리마인더 18분 전 임박', age: '18m ago' },
+          { level: 'ok', text: '09:10 Morning Brief 실행 성공', age: '8m ago' },
+          { level: 'warn', text: 'Vercel alias 인증 페이지 응답 감지', age: '6m ago' },
+        ],
+        timeline: [
+          { time: '02:00', level: 'p2', name: 'c9e7002e · Nightly Routine', eta: '완료 예정' },
+          { time: '08:00', level: 'p1', name: '62b99c8f · OpenClaw 리빌드 리마인더', eta: '실행' },
+          { time: '08:30', level: 'p1', name: 'e2e8b81f · Daily Top3 Brief', eta: '예정' },
+          { time: '09:10', level: 'p1', name: 'e7d5c6e4 · Morning Intelligence', eta: '예정' },
+          { time: '09:20', level: 'p2', name: '605b26e9 · 일일 비용 리포트', eta: '예정' },
+          { time: '10:00', level: 'p2', name: '410466c89 · BTC 주말 후속 점검', eta: '예정' },
+        ],
+        progress: { burnIn: 87, target: 95, successRatio: 99.2, targetRatio: 95 },
+      };
+
+      function levelClass(level) {
+        return ({
+          critical: 'critical',
+          warn: 'warn',
+          info: 'info',
+          p1: 'p1',
+          p2: 'p2',
+          p3: 'ok',
+          p4: 'ok',
+          ok: 'ok',
+        })[level] || 'info';
+      }
+
+      function setText(id, text) {
+        const el = document.getElementById(id);
+        if (el) el.textContent = text;
+      }
+
+      function render(d) {
+        const kpi = d.kpi || {};
+        setText('totalJobs', kpi.totalJobs ?? '-');
+        setText('activeJobs', kpi.activeJobs ?? '-');
+        setText('totalJobs2', kpi.totalJobs ?? '-');
+        setText('successRate', `${kpi.successRate24h ?? 0}%`);
+        setText('errorStreak', kpi.errorStreak ?? 0);
+        setText('burnRate', `${d.progress?.burnIn ?? 0}%`);
+
+        setText('updatedAt', `Updated ${new Date(d.generatedAt || Date.now()).toLocaleTimeString('en-US', { hour:'2-digit', minute:'2-digit' })}`);
+
+        const topGunEl = document.getElementById('topgun');
+        topGunEl.innerHTML = '';
+        (d.topGun || []).forEach((item) => {
+          const row = document.createElement('div');
+          row.className = 'listItem';
+          const level = item.priority || 'P3';
+          row.innerHTML = `
+            <div class="rowTop">
+              <div class="title">${item.title}</div>
+              <div class="small"><span class="${level.toLowerCase()}" style="margin-right:8px">${level}</span>${item.status || ''}</div>
+            </div>
+            <div class="small" style="margin-top:4px">ETA ${item.etaMin || 0}m · Next: ${item.nextAt || '-'}</div>
+            <div class="bar" style="margin-top:8px"><span style="width:${item.progress || 0}%"></span></div>
+            <div class="rowTop" style="margin-top:6px"><span></span><span class="small">${item.progress || 0}%</span></div>
+          `;
+          topGunEl.appendChild(row);
+        });
+
+        const q = d.queue || {};
+        setText('qWaiting', q.waiting ?? 0);
+        setText('qRunning', q.running ?? 0);
+        setText('qDone', q.done ?? 0);
+
+        const p = d.progress || {};
+        const burn = Math.round(p.burnIn || 0);
+        const target = p.targetRatio || 95;
+        document.getElementById('overallBar').style.width = `${burn}%`;
+        document.getElementById('targetBar').style.width = `${Math.min(target, 100)}%`;
+        setText('progressText', `${burn}/100`);
+        setText('targetRatio', `${target}`);
+
+        const alerts = document.getElementById('alerts');
+        alerts.innerHTML = '';
+        (d.alerts || []).forEach((a) => {
+          const row = document.createElement('div');
+          const level = levelClass(a.level);
+          row.className = `alert ${level}`;
+          row.innerHTML = `<div><span class="dot ${level}"></span> ${a.text}</div><div class="alertMeta">${a.age}</div>`;
+          alerts.appendChild(row);
+        });
+
+        const timeline = document.getElementById('timeline');
+        timeline.innerHTML = '';
+        (d.timeline || []).forEach((item) => {
+          const row = document.createElement('div');
+          row.className = 'timelineItem';
+          row.innerHTML = `<div class="time">${item.time || ''}</div><div class="timelineName">${item.name || ''}</div><div><span class="pill ${levelClass(item.level)}">${item.eta || ''}</span></div>`;
+          timeline.appendChild(row);
+        });
+
+        setText('statusText', `렌더링 완료 · ${((d.alerts || []).length)}개 알림 · ${((d.timeline || []).length)}개 타임라인`);
+      }
+
+      async function loadDashboardData() {
+        try {
+          const res = await fetch('/dashboard-data.json', { cache: 'no-store' });
+          if (!res.ok) throw new Error('fetch failed');
+          const data = await res.json();
+          render(data);
+        } catch {
+          render(fallbackData);
+        }
+      }
+
+      document.addEventListener('DOMContentLoaded', loadDashboardData);
+      document.getElementById('refreshBtn')?.addEventListener('click', loadDashboardData);
+
+      setInterval(loadDashboardData, 60_000);
+    </script>
+  </body>
+</html>
