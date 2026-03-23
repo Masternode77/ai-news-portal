@@ -66,12 +66,14 @@ async function main() {
     return;
   }
 
-  const enriched = [];
-  for (const item of picked) {
-    const article = await withSingleRetry(`enrich article ${item.id}`, () => enrichContent(item));
-    article.generatedImage = await withSingleRetry(`generate image ${item.id}`, () => ensureArticleImage(article));
-    enriched.push(article);
-  }
+  const enrichmentPromises = picked.map(item =>
+    withSingleRetry(`enrich article ${item.id}`, () => enrichContent(item))
+      .then(article =>
+        withSingleRetry(`generate image ${item.id}`, () => ensureArticleImage(article))
+          .then(generatedImage => ({ ...article, generatedImage }))
+      )
+  );
+  const enriched = await Promise.all(enrichmentPromises);
 
   const dedupedExisting = (existingLatest || []).filter(
     (item) => !enriched.some((fresh) => fresh.id === item.id)
