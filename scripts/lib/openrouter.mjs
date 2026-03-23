@@ -1,8 +1,10 @@
 import {
+  EXPERT_LENS_FALLBACK_MODEL,
   OPENROUTER_API_URL,
   OPENROUTER_APP_TITLE,
   OPENROUTER_MODEL,
   OPENROUTER_SITE_URL,
+  PIPELINE_OFFLINE,
 } from './constants.mjs';
 import { safeJsonParse } from './normalize.mjs';
 
@@ -25,15 +27,16 @@ function extractContent(payload) {
   return '';
 }
 
-export async function callOpenRouterJson({
+export async function callOpenRouterText({
   systemPrompt,
   userPrompt,
   temperature = 0.25,
   maxTokens = 900,
   timeoutMs = 30000,
+  model = OPENROUTER_MODEL,
 }) {
   const apiKey = process.env.OPENROUTER_API_KEY;
-  if (!apiKey) return null;
+  if (!apiKey || PIPELINE_OFFLINE) return '';
 
   const controller = new AbortController();
   const timeout = setTimeout(() => controller.abort(), timeoutMs);
@@ -44,7 +47,7 @@ export async function callOpenRouterJson({
       signal: controller.signal,
       headers: buildHeaders(apiKey),
       body: JSON.stringify({
-        model: OPENROUTER_MODEL,
+        model,
         temperature,
         max_tokens: maxTokens,
         messages: [
@@ -59,9 +62,25 @@ export async function callOpenRouterJson({
     }
 
     const payload = await response.json();
-    const content = extractContent(payload);
-    return safeJsonParse(content, null);
+    return extractContent(payload);
   } finally {
     clearTimeout(timeout);
+  }
+}
+
+export async function callOpenRouterJson(options) {
+  const content = await callOpenRouterText(options);
+  return safeJsonParse(content, null);
+}
+
+export async function callExpertLensText(options) {
+  try {
+    const content = await callOpenRouterText({
+      ...options,
+      model: options.model || process.env.EXPERT_LENS_MODEL || EXPERT_LENS_FALLBACK_MODEL,
+    });
+    return content?.trim() || '';
+  } catch {
+    return '';
   }
 }

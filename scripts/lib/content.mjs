@@ -107,13 +107,14 @@ export async function enrichContent(item) {
     userPrompt: JSON.stringify({
       title: item.title,
       source: item.source,
-      url: item.url,
-      publishedAt: item.publishedAt,
-      snippet: item.snippet,
-      articleText,
-      defaultCategory: item.defaultCategory || item.categoryHint || null,
-      defaultRegion: item.region || null,
-    }),
+    url: item.url,
+    publishedAt: item.publishedAt,
+    snippet: item.snippet,
+    articleText,
+    fullArticleText: articleText,
+    defaultCategory: item.defaultCategory || item.categoryHint || null,
+    defaultRegion: item.region || null,
+  }),
     maxTokens: 700,
   }).catch(() => null);
 
@@ -130,5 +131,6 @@ export async function enrichContent(item) {
     imagePrompt: normalized.imagePrompt,
     lang: guessLanguage(`${item.title} ${item.snippet} ${articleText}`),
     articleText,
+    sourceUrl: item.url,
   };
 }

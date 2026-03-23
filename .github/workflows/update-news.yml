@@ -3,8 +3,10 @@ name: Update News & Dashboard
 
 on:
   schedule:
-    # News: every 6 hours
-    - cron: '0 */6 * * *'
+    # 00:05 / 08:05 / 16:05 KST
+    - cron: '5 15 * * *'
+    - cron: '5 23 * * *'
+    - cron: '5 7 * * *'
     # Dashboard sync: every 15 minutes
     - cron: '*/15 * * * *'
   workflow_dispatch: # Allow manual trigger
@@ -28,7 +30,16 @@ jobs:
         run: npm ci
 
       - name: Run news update
-        run: node scripts/update-news.js
+        env:
+          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+          OPENROUTER_MODEL: ${{ secrets.OPENROUTER_MODEL }}
+          EXPERT_LENS_MODEL: ${{ secrets.EXPERT_LENS_MODEL }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          GEMINI_IMAGE_MODEL: ${{ secrets.GEMINI_IMAGE_MODEL }}
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+          SUPABASE_ARCHIVE_TABLE: ${{ secrets.SUPABASE_ARCHIVE_TABLE }}
+        run: npm run pipeline
 
       - name: Run dashboard data sync
         run: node scripts/sync-dashboard-data.cjs
@@ -36,7 +47,7 @@ jobs:
       - name: Check for changes
         id: changes
         run: |
-          if git diff --quiet -- src/data/latest-news.json public/dashboard-data.json; then
+          if git diff --quiet -- src/data/latest-news.json src/data/archived-news.json src/data/search-index.json public/dashboard-data.json public/generated; then
             echo "changed=false" >> "$GITHUB_OUTPUT"
             echo "No changes detected."
           else
@@ -48,8 +59,10 @@ jobs:
         if: steps.changes.outputs.changed == 'true'
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          commit_message: "chore: auto-update news + dashboard data [skip ci]"
+          commit_message: "chore: refresh news surface, archive, and dashboard [skip ci]"
           file_pattern: |
             src/data/latest-news.json
+            src/data/archived-news.json
+            src/data/search-index.json
             public/dashboard-data.json
-          push_options: '--force' # Optional, but good for ensuring updates land
+            public/generated/**

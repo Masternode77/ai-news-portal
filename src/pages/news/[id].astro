@@ -1,0 +1,72 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import latestNews from '../../data/latest-news.json';
+import archivedNews from '../../data/archived-news.json';
+
+export function getStaticPaths() {
+  return [...latestNews, ...archivedNews]
+    .filter((article) => article?.id)
+    .map((article) => ({
+      params: { id: article.id },
+      props: { article },
+    }));
+}
+
+const { article } = Astro.props;
+
+if (!article) {
+  throw new Error('Article not found');
+}
+---
+<Layout title={article.title} description={article.summary || article.snippet || article.title}>
+  <main class="detail-shell">
+    <a class="back-link" href="/">Back to board</a>
+
+    <article class="detail-card panel">
+      <div class="detail-media">
+        <img src={article.generatedImage || '/generated/default.svg'} alt={article.title} loading="eager" />
+      </div>
+
+      <div class="detail-body">
+        <div class="meta-strip">
+          <span class="category-badge">{article.category || 'Infrastructure'}</span>
+          <span class="source-pill">{article.source}</span>
+          <span class="region-pill">{article.region || 'Global'}</span>
+          <time>{new Date(article.publishedAt).toLocaleString('ko-KR')}</time>
+        </div>
+
+        <h1>{article.title}</h1>
+        <p class="detail-summary">{article.summary || article.snippet}</p>
+
+        {article.expertLens ? (
+          <section class="detail-lens">
+            <span>Expert Lens</span>
+            <p>{article.expertLens}</p>
+          </section>
+        ) : null}
+
+        <section class="detail-section">
+          <h2>Why it matters</h2>
+          <p>{article.articleText || article.snippet || article.summary}</p>
+        </section>
+
+        {article.tags?.length ? (
+          <div class="tag-row">
+            {article.tags.map((tag) => (
+              <span class="tag-pill">#{tag}</span>
+            ))}
+          </div>
+        ) : null}
+
+        <div class="detail-footer">
+          <a class="detail-button" href="/">
+            Browse latest board
+          </a>
+          <a class="source-cta" href={article.sourceUrl || article.url} target="_blank" rel="noreferrer">
+            Read crawled source article
+          </a>
+        </div>
+      </div>
+    </article>
+  </main>
+</Layout>

@@ -1,13 +1,21 @@
 export const KST_OFFSET_MS = 9 * 60 * 60 * 1000;
+export const REFRESH_INTERVAL_HOURS = Number(process.env.REFRESH_INTERVAL_HOURS || 8);
 
 export const MAX_ITEMS_FETCHED = Number(process.env.MAX_ITEMS_FETCHED || 30);
 export const DAILY_CURATION_TARGET = Number(process.env.DAILY_CURATION_TARGET || 6);
 export const ITEMS_PER_RUN = Number(process.env.ITEMS_PER_RUN || 2);
+export const LATEST_NEWS_LIMIT = Number(process.env.LATEST_NEWS_LIMIT || 30);
+export const LATEST_EXPERT_LENS_COUNT = Number(process.env.LATEST_EXPERT_LENS_COUNT || 3);
+export const PIPELINE_USE_EXISTING_POOL = process.env.PIPELINE_USE_EXISTING_POOL === '1';
+export const PIPELINE_OFFLINE =
+  process.env.PIPELINE_OFFLINE === '1' || process.env.CODEX_SANDBOX_NETWORK_DISABLED === '1';
 
 export const OPENROUTER_API_URL = 'https://openrouter.ai/api/v1/chat/completions';
 export const OPENROUTER_MODEL = process.env.OPENROUTER_MODEL || 'openai/gpt-5.3-codex';
 export const OPENROUTER_SITE_URL = process.env.OPENROUTER_SITE_URL || '';
 export const OPENROUTER_APP_TITLE = process.env.OPENROUTER_APP_TITLE || 'AI / Data Center Signal Board';
+export const EXPERT_LENS_MODEL = process.env.EXPERT_LENS_MODEL || 'openai/gpt-5.4';
+export const EXPERT_LENS_FALLBACK_MODEL = process.env.EXPERT_LENS_FALLBACK_MODEL || OPENROUTER_MODEL;
 
 export const GEMINI_API_URL = 'https://generativelanguage.googleapis.com/v1beta/models';
 export const GEMINI_IMAGE_MODEL = process.env.GEMINI_IMAGE_MODEL || 'gemini-2.5-flash-image';
@@ -15,6 +23,12 @@ export const GEMINI_IMAGE_MODEL = process.env.GEMINI_IMAGE_MODEL || 'gemini-2.5-
 export const PIPELINE_STATE_PATH = 'scripts/state/pipeline-state.json';
 export const LATEST_NEWS_PATH = 'src/data/latest-news.json';
 export const NEWS_POOL_PATH = 'src/data/news-pool.json';
+export const ARCHIVE_NEWS_PATH = 'src/data/archived-news.json';
+export const SEARCH_INDEX_PATH = 'src/data/search-index.json';
+
+export const SUPABASE_URL = process.env.SUPABASE_URL || '';
+export const SUPABASE_SERVICE_ROLE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY || '';
+export const SUPABASE_ARCHIVE_TABLE = process.env.SUPABASE_ARCHIVE_TABLE || 'archived_articles';
 
 export const CATEGORIES = [
   'Hyperscalers & Cloud',

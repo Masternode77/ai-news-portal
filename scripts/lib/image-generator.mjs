@@ -1,6 +1,7 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
-import { GEMINI_API_URL, GEMINI_IMAGE_MODEL } from './constants.mjs';
+import sharp from 'sharp';
+import { GEMINI_API_URL, GEMINI_IMAGE_MODEL, PIPELINE_OFFLINE } from './constants.mjs';
 
 const OUT_DIR = path.join(process.cwd(), 'public/generated');
 
@@ -18,6 +19,15 @@ function colorFromId(id = 'abcdef1234567890') {
 
 async function ensureOutDir() {
   await fs.mkdir(OUT_DIR, { recursive: true });
+}
+
+async function fileExists(filePath) {
+  try {
+    await fs.access(filePath);
+    return true;
+  } catch {
+    return false;
+  }
 }
 
 function safeText(text = '', max = 72) {
@@ -65,6 +75,67 @@ async function writePlaceholderSvg(item) {
   return `/generated/${filename}`;
 }
 
+async function generateLocalPoster(item) {
+  if (PIPELINE_OFFLINE) {
+    return null;
+  }
+
+  const sourceImage = item.sourceImage || item.image || null;
+  if (!sourceImage) {
+    return null;
+  }
+
+  const response = await fetch(sourceImage, {
+    headers: {
+      'user-agent': 'Mozilla/5.0 (compatible; AINewsPortalBot/1.0)',
+    },
+  });
+
+  if (!response.ok) {
+    throw new Error(`Source image fetch failed: ${response.status}`);
+  }
+
+  const arrayBuffer = await response.arrayBuffer();
+  const palette = colorFromId(item.id);
+  const title = safeText(item.title, 56);
+  const category = safeText(item.category || 'AI Infrastructure Brief', 32);
+  const source = safeText(item.source || 'Curated source', 28);
+  const summary = safeText(item.summary || item.snippet || '', 96);
+  const filename = `${item.id}.jpg`;
+  const outPath = path.join(OUT_DIR, filename);
+
+  const overlaySvg = Buffer.from(`
+    <svg width="1344" height="768" viewBox="0 0 1344 768" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="wash" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="${palette.one}" stop-opacity="0.18" />
+          <stop offset="0.5" stop-color="#071019" stop-opacity="0.72" />
+          <stop offset="1" stop-color="#05070c" stop-opacity="0.94" />
+        </linearGradient>
+      </defs>
+      <rect width="1344" height="768" fill="url(#wash)" />
+      <rect x="48" y="48" width="1248" height="672" rx="34" fill="none" stroke="rgba(255,255,255,0.14)" />
+      <text x="92" y="132" fill="#d8e6ff" font-family="Arial, sans-serif" font-size="24" font-weight="700" letter-spacing="2">${category}</text>
+      <text x="92" y="240" fill="#ffffff" font-family="Arial, sans-serif" font-size="62" font-weight="800">${title}</text>
+      <text x="92" y="306" fill="#d7e4fb" font-family="Arial, sans-serif" font-size="28" font-weight="500">${source}</text>
+      <text x="92" y="628" fill="#bbcae2" font-family="Arial, sans-serif" font-size="24" font-weight="500">${summary}</text>
+    </svg>
+  `);
+
+  await sharp(Buffer.from(arrayBuffer))
+    .resize(1344, 768, {
+      fit: 'cover',
+      position: 'attention',
+    })
+    .modulate({ brightness: 0.82, saturation: 1.08 })
+    .blur(0.3)
+    .composite([{ input: overlaySvg }])
+    .jpeg({ quality: 88, mozjpeg: true })
+    .toFile(outPath);
+
+  return `/generated/${filename}`;
+}
+
 async function generateWithGemini(item, apiKey) {
   const response = await fetch(`${GEMINI_API_URL}/${GEMINI_IMAGE_MODEL}:generateContent`, {
     method: 'POST',
@@ -79,7 +150,7 @@ async function generateWithGemini(item, apiKey) {
             {
               text:
                 item.imagePrompt ||
-                `Editorial enterprise technology illustration about ${item.title}. No logos. No text. 16:9.`,
+                `Editorial enterprise technology illustration about ${item.title}. Context: ${item.articleText || item.summary || item.snippet || item.title}. No logos. No text. 16:9.`,
             },
           ],
         },
@@ -114,18 +185,35 @@ async function generateWithGemini(item, apiKey) {
   return `/generated/${filename}`;
 }
 
+export async function needsImageRefresh(item) {
+  if (!item?.generatedImage) return true;
+  if (/^https?:\/\//i.test(item.generatedImage)) return true;
+  const localPath = path.join(process.cwd(), 'public', item.generatedImage.replace(/^\//, ''));
+  return !(await fileExists(localPath));
+}
+
 export async function ensureArticleImage(item) {
   await ensureOutDir();
 
+  if (!(await needsImageRefresh(item))) {
+    return item.generatedImage;
+  }
+
   const apiKey = process.env.GEMINI_API_KEY;
-  if (!apiKey) {
-    return writePlaceholderSvg(item);
+  if (apiKey && !PIPELINE_OFFLINE) {
+    try {
+      return await generateWithGemini(item, apiKey);
+    } catch (error) {
+      console.error(`[pipeline] image AI fallback for ${item.id}: ${error.message}`);
+    }
   }
 
   try {
-    return await generateWithGemini(item, apiKey);
+    const poster = await generateLocalPoster(item);
+    if (poster) return poster;
   } catch (error) {
-    console.error(`[pipeline] image fallback for ${item.id}: ${error.message}`);
-    return writePlaceholderSvg(item);
+    console.error(`[pipeline] source poster fallback for ${item.id}: ${error.message}`);
   }
+
+  return writePlaceholderSvg(item);
 }

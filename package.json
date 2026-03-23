@@ -5,12 +5,15 @@
   "scripts": {
     "sync:dashboard-data": "node ./scripts/sync-dashboard-data.cjs",
     "dev": "astro dev",
+    "pipeline": "node ./scripts/pipeline.mjs",
     "build": "npm run sync:dashboard-data && astro build",
+    "check": "astro check",
     "preview": "astro preview",
     "astro": "astro"
   },
   "dependencies": {
-    "astro": "^5.17.1"
+    "astro": "^5.17.1",
+    "sharp": "^0.34.5"
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.6",

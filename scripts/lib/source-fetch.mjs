@@ -1,6 +1,11 @@
+import { PIPELINE_OFFLINE } from './constants.mjs';
 import { stripHtml, truncate } from './normalize.mjs';
 
 export async function fetchArticleExcerpt(url, fallbackSnippet = '', timeoutMs = 12000) {
+  if (PIPELINE_OFFLINE) {
+    return truncate(fallbackSnippet, 500);
+  }
+
   const controller = new AbortController();
   const timeout = setTimeout(() => controller.abort(), timeoutMs);
 
