@@ -49,7 +49,7 @@ const stats = [
   { label: 'Refresh', value: '8h' },
 ];
 ---
-<Layout title={boardTitle} description="8시간마다 갱신되는 AI·데이터센터 인텔리전스 보드와 아카이브 검색">
+<Layout title={boardTitle} description="An AI and data center intelligence board with archive search, refreshed every 8 hours.">
   <main class="page-shell">
     <div class="ambient ambient-a"></div>
     <div class="ambient ambient-b"></div>
@@ -60,8 +60,7 @@ const stats = [
         <p class="eyebrow">Curated AI / Data Center Intelligence</p>
         <h1>{boardTitle}</h1>
         <p class="deck">
-          신규 기사는 8시간 주기로 메인 surface를 갱신하고, 30개를 넘는 누적 콘텐츠는 아카이브로 이동해
-          계속 검색할 수 있습니다.
+          Fresh stories update the live surface every 8 hours, while older coverage moves into the archive and remains searchable.
         </p>
 
         <div class="chip-row">
@@ -81,10 +80,10 @@ const stats = [
         <div class="stat-card stat-card-wide">
           <span class="stat-label">Updated</span>
           <strong>
-            {new Date().toLocaleString('ko-KR', {
+            {new Date().toLocaleString('en-US', {
               month: 'short',
               day: 'numeric',
-              hour: '2-digit',
+              hour: 'numeric',
               minute: '2-digit',
             })}
           </strong>
@@ -95,14 +94,14 @@ const stats = [
     <section class="search-shell panel">
       <div class="search-copy">
         <p class="eyebrow">Unified Search</p>
-        <h2>최신 기사와 아카이브를 한 번에 찾기</h2>
-        <p>제목, 소스, 카테고리, 지역, 요약 기준으로 즉시 필터링됩니다.</p>
+        <h2>Search live coverage and the archive at once</h2>
+        <p>Filter instantly by title, source, category, region, or summary.</p>
       </div>
       <label class="search-input-wrap">
         <span class="sr-only">Search news archive</span>
-        <input id="news-search" class="search-input" type="search" placeholder="예: nvidia, cooling, korea, power" />
+        <input id="news-search" class="search-input" type="search" placeholder="e.g. nvidia, cooling, korea, power" />
       </label>
-      <div id="search-meta" class="search-meta">총 {searchPayload.length}개 인덱스 로드됨</div>
+      <div id="search-meta" class="search-meta">Loaded {searchPayload.length} indexed items</div>
       <div id="search-results" class="search-results"></div>
     </section>
 
@@ -181,7 +180,7 @@ const stats = [
     ) : (
       <section class="empty-board panel">
         <h2>Pipeline ready</h2>
-        <p>다음 8시간 배치가 실행되면 보드가 자동으로 채워집니다.</p>
+        <p>The board will fill automatically after the next 8-hour pipeline run.</p>
       </section>
     )}
 
@@ -190,10 +189,7 @@ const stats = [
         <p class="eyebrow">Latest published cards</p>
         <h3>Signal board</h3>
       </div>
-      <p class="feed-copy">
-        최신 3개에는 한국어 Expert Lens를 제공하고, 그 외 기사는 빠른 스캔을 위한 핵심 정보와 원문 CTA를
-        유지합니다.
-      </p>
+      
     </section>
 
     <section class="masonry-board">
@@ -251,7 +247,7 @@ const stats = [
     const payload = JSON.parse(document.getElementById('search-index-data')?.textContent || '[]');
 
     const formatDate = (value) =>
-      new Date(value).toLocaleDateString('ko-KR', {
+      new Date(value).toLocaleDateString('en-US', {
         month: 'short',
         day: 'numeric',
       });
@@ -261,17 +257,17 @@ const stats = [
 
       if (!query.trim()) {
         results.innerHTML = '';
-        meta.textContent = `총 ${payload.length}개 인덱스 로드됨`;
+        meta.textContent = `Loaded ${payload.length} indexed items`;
         return;
       }
 
       if (!items.length) {
-        results.innerHTML = '<p class="search-empty">검색 결과가 없습니다.</p>';
-        meta.textContent = `"${query}" 결과 0건`;
+        results.innerHTML = '<p class="search-empty">No matching results found.</p>';
+        meta.textContent = `0 results for "${query}"`;
         return;
       }
 
-      meta.textContent = `"${query}" 결과 ${items.length}건`;
+      meta.textContent = `${items.length} results for "${query}"`;
       results.innerHTML = items
         .slice(0, 12)
         .map(

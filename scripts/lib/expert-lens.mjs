@@ -5,24 +5,24 @@ import { truncate } from './normalize.mjs';
 function inferSignal(article) {
   const text = `${article.title} ${article.summary || ''} ${article.articleText || ''}`.toLowerCase();
   if (/(power|grid|utility|substation|energy|ppa)/.test(text)) {
-    return '전력 확보 속도와 수전 인프라 병목이 실제 증설 속도를 좌우할 가능성이 큽니다.';
+    return 'Power availability and grid interconnection bottlenecks are likely to determine the real pace of capacity expansion.';
   }
   if (/(cooling|thermal|liquid|cdu|rack)/.test(text)) {
-    return '냉각 아키텍처와 운영 표준화가 랙 밀도 수익성을 가르는 핵심 변수로 보입니다.';
+    return 'Cooling architecture and operating standardization look like the key variables that will shape rack-density economics.';
   }
   if (/(nvidia|gpu|hbm|inference|training|semiconductor|chip)/.test(text)) {
-    return '실제 차별화 포인트는 칩 자체보다 조달 안정성, 네트워크, 전력, 배치 속도의 결합에 있습니다.';
+    return 'The real differentiator is less the chip itself and more the combination of supply certainty, network design, power, and deployment speed.';
   }
   if (/(funding|bond|financing|acquisition|merger|valuation)/.test(text)) {
-    return '자금조달 이벤트는 단순 재무 뉴스가 아니라 향후 용량 선점과 고객 신뢰 신호로 해석할 필요가 있습니다.';
+    return 'This financing event should be read not just as a capital story, but as a signal about future capacity capture and customer confidence.';
   }
-  return '표면적인 발표보다 실제 구축 속도, 공급망 제약, 지역별 실행 리스크를 함께 봐야 의미가 선명해집니다.';
+  return 'The real takeaway is clearer when execution speed, supply-chain constraints, and regional delivery risk are evaluated alongside the headline.';
 }
 
 function fallbackExpertLens(article) {
   const opening = truncate(
-    `${article.source}의 이번 이슈는 ${article.category || 'AI 인프라'} 시장에서 수요 자체보다 실행력 격차가 어디서 벌어지는지를 보여줍니다.`,
-    90
+    `This ${article.source} story highlights where execution gaps are opening up across ${article.category || 'AI infrastructure'}, not just where demand is growing.`,
+    120
   );
   const closing = inferSignal(article);
   return truncate(`${opening} ${closing}`, 220);
@@ -32,11 +32,11 @@ export async function generateExpertLens(article) {
   const fallback = fallbackExpertLens(article);
   const content = await callExpertLensText({
     systemPrompt: [
-      '당신은 AI 인프라, 데이터센터, 전력, 반도체, 클라우드 투자와 운영을 모두 이해하는 최고 수준의 한국어 애널리스트다.',
-      '자연스러운 한국어로만 답하라.',
-      '허세나 번역투를 피하고, 실제 업계 전문가가 투자자/운영자에게 설명하듯 쓰라.',
-      '2문장 이하, 220자 이하.',
-      '기사에 없는 수치나 사실을 만들지 말라.',
+      'You are a top-tier analyst covering AI infrastructure, data centers, power, semiconductors, and cloud investing and operations.',
+      'Reply in natural, concise English only.',
+      'Avoid hype and translation-like phrasing; write like a real sector expert briefing an operator or investor.',
+      'Use no more than 2 sentences and stay within 220 characters when possible.',
+      'Do not invent facts or numbers that are not supported by the article context.',
     ].join(' '),
     userPrompt: JSON.stringify({
       title: article.title,
