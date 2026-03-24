@@ -1,13 +1,13 @@
 import { EXPERT_LENS_VERSION } from './constants.mjs';
 import { callExpertLensText } from './openrouter.mjs';
-import { safeJsonParse, slugify, truncate } from './normalize.mjs';
+import { safeJsonParse, sanitizeGeneratedText, slugify, truncate } from './normalize.mjs';
 
 const EXPERT_LENS_MODE = 'industry-editor-v2';
 
 function splitParagraphs(text = '') {
-  return String(text)
+  return sanitizeGeneratedText(text)
     .split(/\n{2,}/)
-    .map((part) => part.replace(/\s+/g, ' ').trim())
+    .map((part) => sanitizeGeneratedText(part.replace(/\s+/g, ' ')))
     .filter(Boolean);
 }
 
@@ -155,11 +155,15 @@ function normalizeExpertLensFull(article, payload) {
     headlineOptions: normalizeHeadlineOptions(parsed.headlineOptions, fallback.headlineOptions),
     finalHeadline: truncate(parsed.finalHeadline || fallback.finalHeadline || article.title, 120),
     metaDescription: truncate(parsed.metaDescription || fallback.metaDescription, 170),
-    finalArticleBody: (parsed.finalArticleBody || fallback.finalArticleBody || '')
-      .toString()
-      .trim(),
+    finalArticleBody: sanitizeGeneratedText((parsed.finalArticleBody || fallback.finalArticleBody || '').toString()),
     sourceLink: parsed.sourceLink || fallback.sourceLink,
   };
+
+  for (const key of ['thesis', 'whatHappened', 'whyThisMatters', 'marketMissing', 'investors', 'operators', 'hyperscalers', 'watchNext', 'finalHeadline', 'metaDescription']) {
+    normalized[key] = sanitizeGeneratedText(normalized[key]);
+  }
+
+  normalized.headlineOptions = normalized.headlineOptions.map((headline) => sanitizeGeneratedText(headline)).filter(Boolean);
 
   if (!normalized.finalArticleBody) {
     normalized.finalArticleBody = fallback.finalArticleBody;

@@ -51,10 +51,21 @@ export function stripHtml(text = '') {
     .trim();
 }
 
-export function truncate(text = '', maxLen = 180) {
+export function sanitizeGeneratedText(text = '') {
   if (!text) return '';
-  if (text.length <= maxLen) return text.trim();
-  return `${text.slice(0, Math.max(0, maxLen - 1)).trim()}…`;
+
+  return String(text)
+    .replace(/\b(?:bye\s+end|end\s+bye)(?:\s+(?:bye\s+end|end\s+bye))*\b/gi, ' ')
+    .replace(/(?:\s*\n\s*){3,}/g, '\n\n')
+    .replace(/[ \t]{2,}/g, ' ')
+    .trim();
+}
+
+export function truncate(text = '', maxLen = 180) {
+  const cleaned = sanitizeGeneratedText(text);
+  if (!cleaned) return '';
+  if (cleaned.length <= maxLen) return cleaned.trim();
+  return `${cleaned.slice(0, Math.max(0, maxLen - 1)).trim()}…`;
 }
 
 export function slugify(text = '') {
