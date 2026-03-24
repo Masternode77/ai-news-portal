@@ -5,7 +5,7 @@ export const MAX_ITEMS_FETCHED = Number(process.env.MAX_ITEMS_FETCHED || 30);
 export const DAILY_CURATION_TARGET = Number(process.env.DAILY_CURATION_TARGET || 6);
 export const ITEMS_PER_RUN = Number(process.env.ITEMS_PER_RUN || 2);
 export const LATEST_NEWS_LIMIT = Number(process.env.LATEST_NEWS_LIMIT || 30);
-export const LATEST_EXPERT_LENS_COUNT = Number(process.env.LATEST_EXPERT_LENS_COUNT || 3);
+export const EXPERT_LENS_VERSION = Number(process.env.EXPERT_LENS_VERSION || 2);
 export const PIPELINE_USE_EXISTING_POOL = process.env.PIPELINE_USE_EXISTING_POOL === '1';
 export const PIPELINE_OFFLINE =
   process.env.PIPELINE_OFFLINE === '1' || process.env.CODEX_SANDBOX_NETWORK_DISABLED === '1';

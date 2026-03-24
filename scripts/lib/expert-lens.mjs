@@ -1,68 +1,281 @@
-import { LATEST_EXPERT_LENS_COUNT } from './constants.mjs';
+import { EXPERT_LENS_VERSION } from './constants.mjs';
 import { callExpertLensText } from './openrouter.mjs';
-import { truncate } from './normalize.mjs';
+import { safeJsonParse, slugify, truncate } from './normalize.mjs';
+
+const EXPERT_LENS_MODE = 'industry-editor-v2';
+
+function splitParagraphs(text = '') {
+  return String(text)
+    .split(/\n{2,}/)
+    .map((part) => part.replace(/\s+/g, ' ').trim())
+    .filter(Boolean);
+}
 
 function inferSignal(article) {
   const text = `${article.title} ${article.summary || ''} ${article.articleText || ''}`.toLowerCase();
-  if (/(power|grid|utility|substation|energy|ppa)/.test(text)) {
-    return 'Power availability and grid interconnection bottlenecks are likely to determine the real pace of capacity expansion.';
+  if (/(power|grid|utility|substation|energy|ppa|transformer)/.test(text)) {
+    return 'Power access and interconnection timing are likely to matter more than the announced demand signal itself.';
   }
-  if (/(cooling|thermal|liquid|cdu|rack)/.test(text)) {
-    return 'Cooling architecture and operating standardization look like the key variables that will shape rack-density economics.';
+  if (/(cooling|thermal|liquid|cdu|rack|density)/.test(text)) {
+    return 'Cooling design standardization may determine who can actually monetize higher-density deployments on schedule.';
   }
-  if (/(nvidia|gpu|hbm|inference|training|semiconductor|chip)/.test(text)) {
-    return 'The real differentiator is less the chip itself and more the combination of supply certainty, network design, power, and deployment speed.';
+  if (/(nvidia|gpu|hbm|inference|training|semiconductor|chip|silicon)/.test(text)) {
+    return 'The underappreciated variable is deployment readiness across networking, power, and packaging, not just chip availability.';
   }
-  if (/(funding|bond|financing|acquisition|merger|valuation)/.test(text)) {
-    return 'This financing event should be read not just as a capital story, but as a signal about future capacity capture and customer confidence.';
+  if (/(funding|bond|financing|acquisition|merger|valuation|capital)/.test(text)) {
+    return 'Capital formation here should be read as a proxy for who is being trusted to secure future capacity, not only as a balance-sheet event.';
   }
-  return 'The real takeaway is clearer when execution speed, supply-chain constraints, and regional delivery risk are evaluated alongside the headline.';
+  return 'Execution speed, supply-chain coordination, and regional delivery risk remain more important than headline ambition.';
 }
 
-function fallbackExpertLens(article) {
-  const opening = truncate(
-    `This ${article.source} story highlights where execution gaps are opening up across ${article.category || 'AI infrastructure'}, not just where demand is growing.`,
-    120
+function buildHeadlineOptions(article) {
+  const source = article.source || 'market';
+  const category = article.category || 'AI infrastructure';
+  return [
+    `${article.title}: what it changes for ${category.toLowerCase()}`,
+    `${source} signal: why this move matters beyond the headline`,
+    `${article.title} raises the stakes for operators and investors`,
+    `What ${article.title} says about the next bottleneck`,
+    `${article.title}: the strategic read-through for cloud and infrastructure`,
+  ].map((headline) => truncate(headline, 110));
+}
+
+function fallbackFinalArticleBody(article, sections) {
+  return [
+    sections.whatHappened,
+    sections.whyThisMatters,
+    sections.marketMissing,
+    sections.investors,
+    sections.operators,
+    sections.hyperscalers,
+    sections.watchNext,
+  ]
+    .filter(Boolean)
+    .join('\n\n');
+}
+
+function fallbackExpertLensFull(article) {
+  const thesis = truncate(
+    `${article.title} matters because it shifts the practical balance between demand narrative and infrastructure execution.`,
+    140
   );
-  const closing = inferSignal(article);
-  return truncate(`${opening} ${closing}`, 220);
+  const whatHappened = truncate(
+    `${article.source || 'The source'} reported that ${article.summary || article.snippet || article.title}.`,
+    320
+  );
+  const whyThisMatters = truncate(
+    `The strategic significance is not only the announcement itself but how it changes capacity planning, vendor leverage, and deployment sequencing across AI infrastructure.`,
+    340
+  );
+  const marketMissing = truncate(
+    inferSignal(article),
+    320
+  );
+  const investors = truncate(
+    `Investors should track whether this development improves pricing power, locks in scarce capacity, or exposes execution risk that the market may still be discounting.`,
+    320
+  );
+  const operators = truncate(
+    `Operators should read this through procurement timing, facility readiness, network design, and the likelihood that adjacent constraints will slow realized deployment.`,
+    320
+  );
+  const hyperscalers = truncate(
+    `Hyperscalers should focus on whether this changes build sequencing, partner dependence, or the economics of scaling regions and clusters over the next few quarters.`,
+    320
+  );
+  const watchNext = truncate(
+    `Watch the next disclosures on customer commitments, infrastructure readiness, and any evidence that power, cooling, silicon supply, or permitting becomes the real gating factor.`,
+    320
+  );
+  const headlineOptions = buildHeadlineOptions(article);
+  const finalHeadline = headlineOptions[0];
+  const metaDescription = truncate(
+    `${whatHappened} ${whyThisMatters}`,
+    160
+  );
+
+  const sections = {
+    thesis,
+    whatHappened,
+    whyThisMatters,
+    marketMissing,
+    investors,
+    operators,
+    hyperscalers,
+    watchNext,
+  };
+
+  return {
+    version: EXPERT_LENS_VERSION,
+    mode: EXPERT_LENS_MODE,
+    generatedAt: new Date().toISOString(),
+    thesis,
+    whatHappened,
+    whyThisMatters,
+    marketMissing,
+    investors,
+    operators,
+    hyperscalers,
+    watchNext,
+    headlineOptions,
+    finalHeadline,
+    metaDescription,
+    finalArticleBody: fallbackFinalArticleBody(article, sections),
+    sourceLink: article.sourceUrl || article.url || '',
+  };
 }
 
-export async function generateExpertLens(article) {
-  const fallback = fallbackExpertLens(article);
+function normalizeHeadlineOptions(headlineOptions = [], fallback = []) {
+  const cleaned = [...headlineOptions, ...fallback]
+    .map((value) => truncate(String(value || '').trim(), 110))
+    .filter(Boolean);
+
+  return cleaned.slice(0, 5);
+}
+
+function normalizeExpertLensFull(article, payload) {
+  const fallback = fallbackExpertLensFull(article);
+  const parsed = typeof payload === 'string' ? safeJsonParse(payload, null) : payload;
+  if (!parsed || typeof parsed !== 'object') {
+    return fallback;
+  }
+
+  const normalized = {
+    version: EXPERT_LENS_VERSION,
+    mode: parsed.mode || fallback.mode,
+    generatedAt: parsed.generatedAt || new Date().toISOString(),
+    thesis: truncate(parsed.thesis || fallback.thesis, 160),
+    whatHappened: truncate(parsed.whatHappened || fallback.whatHappened, 500),
+    whyThisMatters: truncate(parsed.whyThisMatters || fallback.whyThisMatters, 500),
+    marketMissing: truncate(parsed.marketMissing || fallback.marketMissing, 500),
+    investors: truncate(parsed.investors || fallback.investors, 500),
+    operators: truncate(parsed.operators || fallback.operators, 500),
+    hyperscalers: truncate(parsed.hyperscalers || fallback.hyperscalers, 500),
+    watchNext: truncate(parsed.watchNext || fallback.watchNext, 500),
+    headlineOptions: normalizeHeadlineOptions(parsed.headlineOptions, fallback.headlineOptions),
+    finalHeadline: truncate(parsed.finalHeadline || fallback.finalHeadline || article.title, 120),
+    metaDescription: truncate(parsed.metaDescription || fallback.metaDescription, 170),
+    finalArticleBody: (parsed.finalArticleBody || fallback.finalArticleBody || '')
+      .toString()
+      .trim(),
+    sourceLink: parsed.sourceLink || fallback.sourceLink,
+  };
+
+  if (!normalized.finalArticleBody) {
+    normalized.finalArticleBody = fallback.finalArticleBody;
+  }
+
+  if (normalized.headlineOptions.length < 5) {
+    normalized.headlineOptions = normalizeHeadlineOptions(normalized.headlineOptions, fallback.headlineOptions);
+  }
+
+  return normalized;
+}
+
+function buildExpertLensShort(fullLens, fallbackShort = '') {
+  return truncate(
+    fullLens?.thesis || fullLens?.whyThisMatters || fallbackShort,
+    220
+  );
+}
+
+export function hydrateExpertLens(article = {}) {
+  const short = truncate(article.expertLensShort || article.expertLens || '', 220) || null;
+  const full = article.expertLensFull && typeof article.expertLensFull === 'object'
+    ? normalizeExpertLensFull(article, article.expertLensFull)
+    : null;
+
+  return {
+    ...article,
+    expertLensShort: short || (full ? buildExpertLensShort(full) : null),
+    expertLensFull: full,
+    expertLens: short || (full ? buildExpertLensShort(full) : null),
+  };
+}
+
+export function mergeArticleRecords(primary = {}, secondary = {}) {
+  const left = hydrateExpertLens(primary);
+  const right = hydrateExpertLens(secondary);
+  const merged = {
+    ...right,
+    ...left,
+  };
+
+  for (const [key, value] of Object.entries(right)) {
+    const current = merged[key];
+    if (current === undefined || current === null || current === '' || (Array.isArray(current) && !current.length)) {
+      merged[key] = value;
+    }
+  }
+
+  const mergedFull = left.expertLensFull || right.expertLensFull || null;
+  const mergedShort = left.expertLensShort || right.expertLensShort || buildExpertLensShort(mergedFull, '');
+
+  return {
+    ...merged,
+    slug: merged.slug || slugify(merged.title || ''),
+    expertLensShort: mergedShort || null,
+    expertLensFull: mergedFull,
+    expertLens: mergedShort || null,
+  };
+}
+
+function needsExpertLens(article) {
+  const hydrated = hydrateExpertLens(article);
+  return !hydrated.expertLensFull || !hydrated.expertLensShort;
+}
+
+async function generateExpertLensFull(article) {
+  const fallback = fallbackExpertLensFull(article);
   const content = await callExpertLensText({
     systemPrompt: [
-      'You are a top-tier analyst covering AI infrastructure, data centers, power, semiconductors, and cloud investing and operations.',
-      'Reply in natural, concise English only.',
-      'Avoid hype and translation-like phrasing; write like a real sector expert briefing an operator or investor.',
-      'Use no more than 2 sentences and stay within 220 characters when possible.',
-      'Do not invent facts or numbers that are not supported by the article context.',
+      'You are the editorial voice for an AI infrastructure intelligence publication.',
+      'Write like a top-tier industry editor and strategic analyst covering AI, data centers, power, semiconductors, and cloud infrastructure.',
+      'The output must be decision-grade, accurate, skeptical, and free of generic hype or unsupported certainty.',
+      'Use this logic in order: summarize what happened, explain why it matters, identify 1-2 underappreciated variables, include viewpoints for at least two of investors / operators / hyperscalers, then end with what to watch next.',
+      'Return strict JSON only with keys: thesis, whatHappened, whyThisMatters, marketMissing, investors, operators, hyperscalers, watchNext, headlineOptions, finalHeadline, metaDescription, finalArticleBody, sourceLink.',
+      'headlineOptions must be an array of exactly 5 Korean-count headline ideas written in English.',
+      'Keep each section concise but substantive. Do not invent facts or numbers not grounded in the provided context.',
+      'The finalArticleBody should read like a polished final article built from the prior sections, in multiple paragraphs.',
     ].join(' '),
     userPrompt: JSON.stringify({
       title: article.title,
       source: article.source,
       category: article.category,
       region: article.region,
+      publishedAt: article.publishedAt,
       summary: article.summary,
+      snippet: article.snippet,
       articleText: article.articleText,
+      sourceLink: article.sourceUrl || article.url,
     }),
-    maxTokens: 220,
+    maxTokens: 1600,
   }).catch(() => '');
 
-  return truncate(content || fallback, 220);
+  return normalizeExpertLensFull(article, content || fallback);
 }
 
-export async function attachExpertLens(articles) {
-  const sorted = [...articles].sort(
-    (a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime()
-  );
+async function enrichSingleArticle(article) {
+  const hydrated = hydrateExpertLens(article);
+  if (!needsExpertLens(hydrated)) {
+    return hydrated;
+  }
 
-  const withLens = await Promise.all(
-    sorted.map(async (article, index) => ({
-      ...article,
-      expertLens: index < LATEST_EXPERT_LENS_COUNT ? await generateExpertLens(article) : null,
-    }))
-  );
+  const full = hydrated.expertLensFull || await generateExpertLensFull(hydrated);
+  const short = hydrated.expertLensShort || buildExpertLensShort(full, hydrated.summary || hydrated.snippet || hydrated.title);
 
-  return withLens;
+  return {
+    ...hydrated,
+    expertLensShort: short,
+    expertLensFull: full,
+    expertLens: short,
+  };
+}
+
+export async function attachExpertLens(articles = []) {
+  return Promise.all(articles.map((article) => enrichSingleArticle(article)));
+}
+
+export function expertLensBodyParagraphs(article = {}) {
+  return splitParagraphs(article?.expertLensFull?.finalArticleBody || article?.articleText || '');
 }

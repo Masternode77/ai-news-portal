@@ -1,4 +1,3 @@
-// Forcing git to recognize change
 import {
   LATEST_NEWS_PATH,
   NEWS_POOL_PATH,
@@ -8,7 +7,7 @@ import {
 import { readArchiveSnapshot, syncArchiveArtifacts } from './lib/archive-store.mjs';
 import { enrichContent } from './lib/content.mjs';
 import { planForToday, pickItemsForRun, updatePlanAfterRun } from './lib/curate.mjs';
-import { attachExpertLens } from './lib/expert-lens.mjs';
+import { attachExpertLens, hydrateExpertLens, mergeArticleRecords } from './lib/expert-lens.mjs';
 import { fetchNewsPool } from './lib/fetch-feeds.mjs';
 import { ensureArticleImage, needsImageRefresh } from './lib/image-generator.mjs';
 import {
@@ -37,7 +36,7 @@ function legacyPoolFromLatest(existingLatest = []) {
 }
 
 function normalizeExistingArticle(item) {
-  return {
+  return hydrateExpertLens({
     ...item,
     id: item.id || stableArticleId(item.url, item.title),
     source: item.source || 'Legacy Source',
@@ -49,17 +48,25 @@ function normalizeExistingArticle(item) {
     language: item.language || 'en',
     defaultCategory: item.defaultCategory || item.category || null,
     sourceUrl: item.sourceUrl || item.url,
-  };
+  });
 }
 
 function dedupeById(items) {
-  const seen = new Set();
-  return items.filter((item) => {
+  const merged = new Map();
+  const orderedIds = [];
+
+  for (const item of items) {
     const id = item?.id;
-    if (!id || seen.has(id)) return false;
-    seen.add(id);
-    return true;
-  });
+    if (!id) continue;
+    if (!merged.has(id)) {
+      orderedIds.push(id);
+      merged.set(id, normalizeExistingArticle(item));
+      continue;
+    }
+    merged.set(id, mergeArticleRecords(merged.get(id), item));
+  }
+
+  return orderedIds.map((id) => merged.get(id));
 }
 
 async function loadPoolWithFallback(existingLatest) {
@@ -156,7 +163,7 @@ async function main() {
     (item) => !enriched.some((fresh) => fresh.id === item.id)
   );
 
-  const merged = dedupeById([...enriched, ...dedupedExisting]).sort(
+  const merged = dedupeById([...enriched, ...dedupedExisting, ...(existingArchive || [])]).sort(
     (a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime()
   );
   const imageBackfilled = await backfillLocalImages(merged);

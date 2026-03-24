@@ -6,32 +6,53 @@ import {
   SUPABASE_SERVICE_ROLE_KEY,
   SUPABASE_URL,
 } from './constants.mjs';
+import { hydrateExpertLens, mergeArticleRecords } from './expert-lens.mjs';
 import { readJsonFile, writeJsonFile } from './state-store.mjs';
 import { slugify, unique } from './normalize.mjs';
 
 function mergeUniqueArticles(articles) {
-  const seen = new Set();
-  return articles.filter((article) => {
-    if (!article?.id || seen.has(article.id)) return false;
-    seen.add(article.id);
-    return true;
-  });
+  const merged = new Map();
+  const orderedIds = [];
+
+  for (const article of articles) {
+    if (!article?.id) continue;
+    if (!merged.has(article.id)) {
+      orderedIds.push(article.id);
+      merged.set(article.id, hydrateExpertLens(article));
+      continue;
+    }
+    merged.set(article.id, mergeArticleRecords(merged.get(article.id), article));
+  }
+
+  return orderedIds.map((id) => merged.get(id));
 }
 
 function toSearchableArticle(article) {
+  const hydrated = hydrateExpertLens(article);
+  const fullLens = hydrated.expertLensFull || {};
   return {
-    ...article,
-    slug: article.slug || slugify(article.title),
+    ...hydrated,
+    slug: hydrated.slug || slugify(hydrated.title),
     searchText: unique(
       [
-        article.title,
-        article.source,
-        article.category,
-        article.region,
-        article.summary,
-        article.expertLens,
-        article.articleText,
-        ...(article.tags || []),
+        hydrated.title,
+        hydrated.source,
+        hydrated.category,
+        hydrated.region,
+        hydrated.summary,
+        hydrated.expertLensShort,
+        fullLens.thesis,
+        fullLens.whatHappened,
+        fullLens.whyThisMatters,
+        fullLens.marketMissing,
+        fullLens.investors,
+        fullLens.operators,
+        fullLens.hyperscalers,
+        fullLens.watchNext,
+        fullLens.finalHeadline,
+        fullLens.metaDescription,
+        hydrated.articleText,
+        ...(hydrated.tags || []),
       ].filter(Boolean)
     ).join(' '),
   };
@@ -42,9 +63,26 @@ async function upsertSupabaseArchive(articles) {
     return { pushed: false, reason: 'missing_env_or_no_articles' };
   }
 
-  const response = await fetch(
-    `${SUPABASE_URL}/rest/v1/${SUPABASE_ARCHIVE_TABLE}?on_conflict=id`,
-    {
+  const rows = articles.map((article) => ({
+    id: article.id,
+    slug: article.slug,
+    title: article.title,
+    url: article.url,
+    source: article.source,
+    published_at: article.publishedAt,
+    summary: article.summary || null,
+    expert_lens: article.expertLensShort || article.expertLens || null,
+    expert_lens_full: article.expertLensFull || null,
+    category: article.category || null,
+    region: article.region || null,
+    generated_image: article.generatedImage || null,
+    tags: article.tags || [],
+    article_text: article.articleText || null,
+    archived_at: new Date().toISOString(),
+  }));
+
+  const postRows = async (payloadRows) =>
+    fetch(`${SUPABASE_URL}/rest/v1/${SUPABASE_ARCHIVE_TABLE}?on_conflict=id`, {
       method: 'POST',
       headers: {
         apikey: SUPABASE_SERVICE_ROLE_KEY,
@@ -52,26 +90,14 @@ async function upsertSupabaseArchive(articles) {
         'Content-Type': 'application/json',
         Prefer: 'resolution=merge-duplicates,return=minimal',
       },
-      body: JSON.stringify(
-        articles.map((article) => ({
-          id: article.id,
-          slug: article.slug,
-          title: article.title,
-          url: article.url,
-          source: article.source,
-          published_at: article.publishedAt,
-          summary: article.summary || null,
-          expert_lens: article.expertLens || null,
-          category: article.category || null,
-          region: article.region || null,
-          generated_image: article.generatedImage || null,
-          tags: article.tags || [],
-          article_text: article.articleText || null,
-          archived_at: new Date().toISOString(),
-        }))
-      ),
-    }
-  );
+      body: JSON.stringify(payloadRows),
+    });
+
+  let response = await postRows(rows);
+
+  if (!response.ok) {
+    response = await postRows(rows.map(({ expert_lens_full, ...row }) => row));
+  }
 
   if (!response.ok) {
     throw new Error(`Supabase archive upsert failed: ${response.status}`);
@@ -85,7 +111,7 @@ export async function readArchiveSnapshot() {
 }
 
 export function splitLatestAndArchive(articles) {
-  const sorted = [...articles].sort(
+  const sorted = mergeUniqueArticles(articles).sort(
     (a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime()
   );
   return {

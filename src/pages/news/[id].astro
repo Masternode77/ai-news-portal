@@ -17,6 +17,22 @@ const { article } = Astro.props;
 if (!article) {
   throw new Error('Article not found');
 }
+
+const lens = article.expertLensFull || null;
+const lensTeaser = article.expertLensShort || article.expertLens || lens?.thesis || null;
+const lensSections = [
+  ['What happened', lens?.whatHappened],
+  ['Why this matters', lens?.whyThisMatters],
+  ['What the market may be missing', lens?.marketMissing],
+  ['Implications for investors', lens?.investors],
+  ['Implications for operators', lens?.operators],
+  ['Implications for hyperscalers', lens?.hyperscalers],
+  ['What to watch next', lens?.watchNext],
+].filter(([, value]) => Boolean(value));
+const articleBody = (lens?.finalArticleBody || article.articleText || article.snippet || article.summary || '')
+  .split(/\n{2,}/)
+  .map((paragraph) => paragraph.replace(/\s+/g, ' ').trim())
+  .filter(Boolean);
 ---
 <Layout title={article.title} description={article.summary || article.snippet || article.title}>
   <main class="detail-shell">
@@ -38,16 +54,61 @@ if (!article) {
         <h1>{article.title}</h1>
         <p class="detail-summary">{article.summary || article.snippet}</p>
 
-        {article.expertLens ? (
+        {lensTeaser ? (
           <section class="detail-lens">
-            <span>Expert Lens</span>
-            <p>{article.expertLens}</p>
+            <span>One-line thesis</span>
+            <p>{lensTeaser}</p>
+          </section>
+        ) : null}
+
+        {lensSections.map(([title, value]) => (
+          <section class="detail-section">
+            <h2>{title}</h2>
+            <p>{value}</p>
+          </section>
+        ))}
+
+        {lens?.headlineOptions?.length ? (
+          <section class="detail-section">
+            <h2>Headline options 5개</h2>
+            <ol class="headline-list">
+              {lens.headlineOptions.map((headline) => (
+                <li>{headline}</li>
+              ))}
+            </ol>
+          </section>
+        ) : null}
+
+        {lens?.finalHeadline ? (
+          <section class="detail-section">
+            <h2>Final headline</h2>
+            <p>{lens.finalHeadline}</p>
+          </section>
+        ) : null}
+
+        {lens?.metaDescription ? (
+          <section class="detail-section">
+            <h2>Meta description</h2>
+            <p>{lens.metaDescription}</p>
+          </section>
+        ) : null}
+
+        {articleBody.length ? (
+          <section class="detail-section">
+            <h2>Final article body</h2>
+            {articleBody.map((paragraph) => (
+              <p>{paragraph}</p>
+            ))}
           </section>
         ) : null}
 
         <section class="detail-section">
-          <h2>Why it matters</h2>
-          <p>{article.articleText || article.snippet || article.summary}</p>
+          <h2>Source link</h2>
+          <p>
+            <a href={lens?.sourceLink || article.sourceUrl || article.url} target="_blank" rel="noreferrer">
+              {lens?.sourceLink || article.sourceUrl || article.url}
+            </a>
+          </p>
         </section>
 
         {article.tags?.length ? (

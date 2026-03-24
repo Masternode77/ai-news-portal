@@ -16,15 +16,18 @@ const formatTimeAgo = (iso) => {
   return `${days}d ago`;
 };
 
+const getLensTeaser = (item) => item.expertLensShort || item.expertLens || item.expertLensFull?.thesis || '';
+
 const latest = (latestNews || []).map((item, idx) => ({
   ...item,
   summary: item.summary || item.snippet || '',
+  expertLensTeaser: getLensTeaser(item),
   generatedImage: item.generatedImage || '/generated/default.svg',
   detailHref: `/news/${item.id}/`,
   sourceUrl: item.sourceUrl || item.url,
   timeAgo: formatTimeAgo(item.publishedAt),
   isHero: idx === 0,
-  hasExpertLens: idx < 3 && Boolean(item.expertLens),
+  hasExpertLens: Boolean(getLensTeaser(item)),
 }));
 
 const archiveCount = archivedNews.length;
@@ -39,6 +42,18 @@ const searchPayload = (searchIndex || []).slice(0, 400).map((item) => ({
   category: item.category,
   region: item.region,
   summary: item.summary || item.snippet || '',
+  expertLensTeaser: getLensTeaser(item),
+  searchText: item.searchText || [
+    item.title,
+    item.source,
+    item.category,
+    item.region,
+    item.summary,
+    item.expertLensShort,
+    item.expertLens,
+    item.expertLensFull?.thesis,
+    item.expertLensFull?.whyThisMatters,
+  ].filter(Boolean).join(' '),
   publishedAt: item.publishedAt,
   href: `/news/${item.id}/`,
   sourceUrl: item.sourceUrl || item.url,
@@ -130,7 +145,7 @@ const stats = [
             {hero.hasExpertLens ? (
               <section class="insight-block">
                 <span>Expert Lens</span>
-                <p>{hero.expertLens}</p>
+                <p>{hero.expertLensTeaser}</p>
               </section>
             ) : null}
 
@@ -164,7 +179,7 @@ const stats = [
                 <a href={item.detailHref}>{item.title}</a>
               </h3>
               <p>{item.summary}</p>
-              {item.hasExpertLens ? <p class="spotlight-lens">{item.expertLens}</p> : null}
+              {item.hasExpertLens ? <p class="spotlight-lens">{item.expertLensTeaser}</p> : null}
               <div class="card-footer">
                 <a class="detail-link" href={item.detailHref}>
                   Detail
@@ -276,7 +291,7 @@ const stats = [
               <div>
                 <div class="search-result-meta">${item.source} · ${item.category || 'Infrastructure'} · ${formatDate(item.publishedAt)}</div>
                 <h3><a href="${item.href}">${item.title}</a></h3>
-                <p>${item.summary || ''}</p>
+                <p>${item.expertLensTeaser || item.summary || ''}</p>
               </div>
               <a class="source-cta" href="${item.sourceUrl}" target="_blank" rel="noreferrer">Source</a>
             </article>
@@ -288,7 +303,7 @@ const stats = [
     input?.addEventListener('input', (event) => {
       const query = event.target.value.toLowerCase().trim();
       const matches = payload.filter((item) =>
-        `${item.title} ${item.source} ${item.category || ''} ${item.region || ''} ${item.summary || ''}`
+        `${item.searchText || ''} ${item.title} ${item.source} ${item.category || ''} ${item.region || ''} ${item.summary || ''}`
           .toLowerCase()
           .includes(query)
       );
