@@ -4,7 +4,7 @@ import latestNews from '../data/latest-news.json';
 import archivedNews from '../data/archived-news.json';
 import searchIndex from '../data/search-index.json';
 
-const boardTitle = 'AI / Data Center Signal Board';
+const boardTitle = 'AI / Data Center\nSignal Board';
 
 const formatTimeAgo = (iso) => {
   const ms = Date.now() - new Date(iso).getTime();
@@ -58,7 +58,7 @@ const stats = [
     <section class="topbar panel panel-herohead">
       <div class="topbar-copy">
         <p class="eyebrow">Curated AI / Data Center Intelligence</p>
-        <h1>{boardTitle}</h1>
+        <h1 style="white-space: pre-line;">{boardTitle}</h1>
         <p class="deck">
           Fresh stories update the live surface every 8 hours, while older coverage moves into the archive and remains searchable.
         </p>

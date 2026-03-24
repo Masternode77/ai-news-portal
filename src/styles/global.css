@@ -127,20 +127,21 @@ p {
 .topbar {
   display: grid;
   grid-template-columns: minmax(0, 1.55fr) minmax(320px, 0.9fr);
-  gap: 24px;
-  padding: 30px;
-  margin-bottom: 24px;
+  gap: 20px;
+  padding: 24px 26px;
+  margin-bottom: 22px;
 }
 
 .topbar h1 {
   font-size: clamp(2.7rem, 5vw, 4.8rem);
-  line-height: 0.95;
-  max-width: 10ch;
+  line-height: 0.88;
+  letter-spacing: -0.05em;
+  max-width: 7.2ch;
 }
 
 .deck {
-  margin-top: 18px;
-  max-width: 64ch;
+  margin-top: 14px;
+  max-width: 56ch;
 }
 
 .chip-row,
@@ -148,7 +149,7 @@ p {
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
-  margin-top: 22px;
+  margin-top: 18px;
 }
 
 .chip,
@@ -171,12 +172,13 @@ p {
 .stat-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 14px;
+  gap: 12px;
   align-self: stretch;
 }
 
 .stat-card {
-  padding: 18px;
+  padding: 14px 16px;
+  min-height: 124px;
   border-radius: 22px;
   border: 1px solid rgba(194, 215, 255, 0.12);
   background: rgba(255, 255, 255, 0.04);
@@ -184,9 +186,9 @@ p {
 
 .stat-card strong {
   display: block;
-  margin-top: 8px;
+  margin-top: 6px;
   color: var(--hero);
-  font-size: 1.35rem;
+  font-size: 1.3rem;
 }
 
 .stat-label {
