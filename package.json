@@ -6,7 +6,8 @@
     "sync:dashboard-data": "node ./scripts/sync-dashboard-data.cjs",
     "dev": "astro dev",
     "pipeline": "node ./scripts/pipeline.mjs",
-    "build": "npm run sync:dashboard-data && astro build",
+    "prepare:static-images": "node ./scripts/prepare-static-images.mjs",
+    "build": "npm run sync:dashboard-data && npm run prepare:static-images && astro build",
     "check": "astro check",
     "preview": "astro preview",
     "astro": "astro"
