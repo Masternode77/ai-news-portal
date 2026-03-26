@@ -123,24 +123,35 @@ async function backfillLocalImages(articles) {
   );
 }
 
-async function attachExpertLensToVisibleWindow(articles) {
+async function attachExpertLensToVisibleWindow(articles, focusArticleIds = []) {
   const visible = articles.slice(0, LATEST_NEWS_LIMIT);
   const overflow = articles.slice(LATEST_NEWS_LIMIT);
+  const focusIds = new Set(focusArticleIds);
 
   console.log(
-    `[pipeline] expert-lens scope: visible=${visible.length}, overflow=${overflow.length}`
+    `[pipeline] expert-lens scope: visible=${visible.length}, overflow=${overflow.length}, focus=${focusIds.size}`
   );
 
-  const enrichedVisible = await withTimeout(
-    'attach expert lens to visible window',
-    () => attachExpertLens(visible),
-    120_000
-  ).catch((error) => {
-    console.warn(`[pipeline] expert lens fallback -> ${error.message}`);
-    return visible.map((article) => hydrateExpertLens(article));
-  });
+  const hydratedVisible = visible.map((article) => hydrateExpertLens(article));
+  const focusTargets = hydratedVisible.filter((article) => focusIds.has(article.id));
+  const unchangedVisible = hydratedVisible.filter((article) => !focusIds.has(article.id));
 
-  return [...enrichedVisible, ...overflow.map((article) => hydrateExpertLens(article))];
+  let enrichedFocus = focusTargets;
+  if (focusTargets.length) {
+    enrichedFocus = await withTimeout(
+      'attach expert lens to focused articles',
+      () => attachExpertLens(focusTargets),
+      90_000
+    ).catch((error) => {
+      console.warn(`[pipeline] expert lens fallback -> ${error.message}`);
+      return focusTargets.map((article) => hydrateExpertLens(article));
+    });
+  }
+
+  const enrichedById = new Map(enrichedFocus.map((article) => [article.id, article]));
+  const finalVisible = hydratedVisible.map((article) => enrichedById.get(article.id) || article);
+
+  return [...finalVisible, ...overflow.map((article) => hydrateExpertLens(article))];
 }
 
 async function enrichPickedArticles(picked) {
@@ -195,7 +206,7 @@ async function main() {
     console.log(`[pipeline] no publishable items for slot ${slot} on ${todayKey}`);
     const normalizedExisting = dedupeById((existingLatest || []).map((item) => normalizeExistingArticle(item)));
     const imageBackfilled = await backfillLocalImages(normalizedExisting);
-    const withExpertLens = await attachExpertLensToVisibleWindow(imageBackfilled);
+    const withExpertLens = await attachExpertLensToVisibleWindow(imageBackfilled, []);
     const { latest, supabaseStatus } = await syncArchiveArtifacts(withExpertLens, existingArchive);
     await writeJsonFile(LATEST_NEWS_PATH, latest);
 
@@ -233,7 +244,10 @@ async function main() {
   console.log(`[pipeline] merged article set: ${merged.length}`);
 
   const imageBackfilled = await backfillLocalImages(merged);
-  const withExpertLens = await attachExpertLensToVisibleWindow(imageBackfilled);
+  const withExpertLens = await attachExpertLensToVisibleWindow(
+    imageBackfilled,
+    enriched.map((article) => article.id)
+  );
   const { latest, supabaseStatus } = await syncArchiveArtifacts(withExpertLens, existingArchive);
 
   await writeJsonFile(LATEST_NEWS_PATH, latest);
@@ -258,7 +272,11 @@ async function main() {
   );
 }
 
-main().catch((error) => {
-  console.error('[pipeline] fatal error:', error);
-  process.exitCode = 1;
-});
+main()
+  .then(() => {
+    process.exit(0);
+  })
+  .catch((error) => {
+    console.error('[pipeline] fatal error:', error);
+    process.exit(1);
+  });
