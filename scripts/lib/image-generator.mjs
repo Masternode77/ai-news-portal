@@ -75,6 +75,20 @@ async function writePlaceholderSvg(item) {
   return `/generated/${filename}`;
 }
 
+async function fetchWithTimeout(url, options = {}, timeoutMs = 20000) {
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), timeoutMs);
+
+  try {
+    return await fetch(url, {
+      ...options,
+      signal: controller.signal,
+    });
+  } finally {
+    clearTimeout(timeout);
+  }
+}
+
 async function generateLocalPoster(item) {
   if (PIPELINE_OFFLINE) {
     return null;
@@ -85,11 +99,11 @@ async function generateLocalPoster(item) {
     return null;
   }
 
-  const response = await fetch(sourceImage, {
+  const response = await fetchWithTimeout(sourceImage, {
     headers: {
       'user-agent': 'Mozilla/5.0 (compatible; AINewsPortalBot/1.0)',
     },
-  });
+  }, 20000);
 
   if (!response.ok) {
     throw new Error(`Source image fetch failed: ${response.status}`);
@@ -137,7 +151,7 @@ async function generateLocalPoster(item) {
 }
 
 async function generateWithGemini(item, apiKey) {
-  const response = await fetch(`${GEMINI_API_URL}/${GEMINI_IMAGE_MODEL}:generateContent`, {
+  const response = await fetchWithTimeout(`${GEMINI_API_URL}/${GEMINI_IMAGE_MODEL}:generateContent`, {
     method: 'POST',
     headers: {
       'x-goog-api-key': apiKey,
@@ -161,7 +175,7 @@ async function generateWithGemini(item, apiKey) {
         },
       },
     }),
-  });
+  }, 45000);
 
   if (!response.ok) {
     throw new Error(`Gemini image request failed: ${response.status}`);

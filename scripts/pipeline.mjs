@@ -3,6 +3,7 @@ import {
   NEWS_POOL_PATH,
   PIPELINE_STATE_PATH,
   PIPELINE_USE_EXISTING_POOL,
+  LATEST_NEWS_LIMIT,
 } from './lib/constants.mjs';
 import { readArchiveSnapshot, syncArchiveArtifacts } from './lib/archive-store.mjs';
 import { enrichContent } from './lib/content.mjs';
@@ -26,6 +27,20 @@ async function withSingleRetry(label, fn) {
     console.warn(`[pipeline] ${label} failed; retrying once in 60s -> ${error.message}`);
     await sleep(60_000);
     return fn();
+  }
+}
+
+async function withTimeout(label, fn, timeoutMs = 90_000) {
+  let timeoutId;
+  try {
+    return await Promise.race([
+      fn(),
+      new Promise((_, reject) => {
+        timeoutId = setTimeout(() => reject(new Error(`${label} timed out after ${timeoutMs}ms`)), timeoutMs);
+      }),
+    ]);
+  } finally {
+    clearTimeout(timeoutId);
   }
 }
 
@@ -95,10 +110,63 @@ async function backfillLocalImages(articles) {
       if (!(await needsImageRefresh(article))) {
         return article;
       }
-      const generatedImage = await ensureArticleImage(article);
+      const generatedImage = await withTimeout(
+        `image refresh ${article.id}`,
+        () => ensureArticleImage(article),
+        45_000
+      ).catch((error) => {
+        console.warn(`[pipeline] image refresh skipped for ${article.id} -> ${error.message}`);
+        return article.generatedImage || null;
+      });
       return { ...article, generatedImage };
     })
   );
+}
+
+async function attachExpertLensToVisibleWindow(articles) {
+  const visible = articles.slice(0, LATEST_NEWS_LIMIT);
+  const overflow = articles.slice(LATEST_NEWS_LIMIT);
+
+  console.log(
+    `[pipeline] expert-lens scope: visible=${visible.length}, overflow=${overflow.length}`
+  );
+
+  const enrichedVisible = await withTimeout(
+    'attach expert lens to visible window',
+    () => attachExpertLens(visible),
+    120_000
+  ).catch((error) => {
+    console.warn(`[pipeline] expert lens fallback -> ${error.message}`);
+    return visible.map((article) => hydrateExpertLens(article));
+  });
+
+  return [...enrichedVisible, ...overflow.map((article) => hydrateExpertLens(article))];
+}
+
+async function enrichPickedArticles(picked) {
+  const results = [];
+
+  for (const item of picked) {
+    console.log(`[pipeline] enriching article ${item.id} :: ${item.title}`);
+    const article = await withTimeout(
+      `enrich article ${item.id}`,
+      () => withSingleRetry(`enrich article ${item.id}`, () => enrichContent(item)),
+      75_000
+    );
+
+    const generatedImage = await withTimeout(
+      `generate image ${item.id}`,
+      () => withSingleRetry(`generate image ${item.id}`, () => ensureArticleImage(article)),
+      45_000
+    ).catch((error) => {
+      console.warn(`[pipeline] image generation degraded for ${item.id} -> ${error.message}`);
+      return article.generatedImage || null;
+    });
+
+    results.push({ ...article, generatedImage });
+  }
+
+  return results;
 }
 
 async function main() {
@@ -112,6 +180,7 @@ async function main() {
   ]);
 
   const pool = await loadPoolWithFallback(existingLatest);
+  console.log(`[pipeline] pool loaded: ${pool.length} items`);
 
   if (!pool.length) {
     console.log('[pipeline] no feed items available; exiting without changes');
@@ -120,12 +189,13 @@ async function main() {
 
   const { key: todayKey, plan } = await planForToday(pool, state, now);
   const { slot, picked } = pickItemsForRun(plan, now);
+  console.log(`[pipeline] plan selected for ${todayKey} slot=${slot} picked=${picked.length}`);
 
   if (!picked.length) {
     console.log(`[pipeline] no publishable items for slot ${slot} on ${todayKey}`);
     const normalizedExisting = dedupeById((existingLatest || []).map((item) => normalizeExistingArticle(item)));
     const imageBackfilled = await backfillLocalImages(normalizedExisting);
-    const withExpertLens = await attachExpertLens(imageBackfilled);
+    const withExpertLens = await attachExpertLensToVisibleWindow(imageBackfilled);
     const { latest, supabaseStatus } = await syncArchiveArtifacts(withExpertLens, existingArchive);
     await writeJsonFile(LATEST_NEWS_PATH, latest);
 
@@ -149,14 +219,8 @@ async function main() {
     return;
   }
 
-  const enrichmentPromises = picked.map(item =>
-    withSingleRetry(`enrich article ${item.id}`, () => enrichContent(item))
-      .then(article =>
-        withSingleRetry(`generate image ${item.id}`, () => ensureArticleImage(article))
-          .then(generatedImage => ({ ...article, generatedImage }))
-      )
-  );
-  const enriched = await Promise.all(enrichmentPromises);
+  const enriched = await enrichPickedArticles(picked);
+  console.log(`[pipeline] article enrichment complete: ${enriched.length} items`);
 
   const normalizedExisting = dedupeById((existingLatest || []).map((item) => normalizeExistingArticle(item)));
   const dedupedExisting = normalizedExisting.filter(
@@ -166,8 +230,10 @@ async function main() {
   const merged = dedupeById([...enriched, ...dedupedExisting, ...(existingArchive || [])]).sort(
     (a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime()
   );
+  console.log(`[pipeline] merged article set: ${merged.length}`);
+
   const imageBackfilled = await backfillLocalImages(merged);
-  const withExpertLens = await attachExpertLens(imageBackfilled);
+  const withExpertLens = await attachExpertLensToVisibleWindow(imageBackfilled);
   const { latest, supabaseStatus } = await syncArchiveArtifacts(withExpertLens, existingArchive);
 
   await writeJsonFile(LATEST_NEWS_PATH, latest);

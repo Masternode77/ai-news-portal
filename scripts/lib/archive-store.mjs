@@ -81,17 +81,26 @@ async function upsertSupabaseArchive(articles) {
     archived_at: new Date().toISOString(),
   }));
 
-  const postRows = async (payloadRows) =>
-    fetch(`${SUPABASE_URL}/rest/v1/${SUPABASE_ARCHIVE_TABLE}?on_conflict=id`, {
-      method: 'POST',
-      headers: {
-        apikey: SUPABASE_SERVICE_ROLE_KEY,
-        Authorization: `Bearer ${SUPABASE_SERVICE_ROLE_KEY}`,
-        'Content-Type': 'application/json',
-        Prefer: 'resolution=merge-duplicates,return=minimal',
-      },
-      body: JSON.stringify(payloadRows),
-    });
+  const postRows = async (payloadRows) => {
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 20000);
+
+    try {
+      return await fetch(`${SUPABASE_URL}/rest/v1/${SUPABASE_ARCHIVE_TABLE}?on_conflict=id`, {
+        method: 'POST',
+        signal: controller.signal,
+        headers: {
+          apikey: SUPABASE_SERVICE_ROLE_KEY,
+          Authorization: `Bearer ${SUPABASE_SERVICE_ROLE_KEY}`,
+          'Content-Type': 'application/json',
+          Prefer: 'resolution=merge-duplicates,return=minimal',
+        },
+        body: JSON.stringify(payloadRows),
+      });
+    } finally {
+      clearTimeout(timeout);
+    }
+  };
 
   let response = await postRows(rows);
 
