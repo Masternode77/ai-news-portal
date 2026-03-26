@@ -200,6 +200,7 @@ async function generateWithGemini(item, apiKey) {
 }
 
 export async function needsImageRefresh(item) {
+  if (item?.forceImageRefresh || item?.forceAiImage) return true;
   if (!item?.generatedImage) return true;
   if (/^https?:\/\//i.test(item.generatedImage)) return true;
   const localPath = path.join(process.cwd(), 'public', item.generatedImage.replace(/^\//, ''));
@@ -214,11 +215,16 @@ export async function ensureArticleImage(item) {
   }
 
   const apiKey = process.env.GEMINI_API_KEY;
+  const wantsAiImage = Boolean(item?.forceAiImage);
+
   if (apiKey && !PIPELINE_OFFLINE) {
     try {
       return await generateWithGemini(item, apiKey);
     } catch (error) {
       console.error(`[pipeline] image AI fallback for ${item.id}: ${error.message}`);
+      if (wantsAiImage) {
+        return writePlaceholderSvg(item);
+      }
     }
   }
 

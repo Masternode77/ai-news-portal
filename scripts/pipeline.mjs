@@ -167,7 +167,10 @@ async function enrichPickedArticles(picked) {
 
     const generatedImage = await withTimeout(
       `generate image ${item.id}`,
-      () => withSingleRetry(`generate image ${item.id}`, () => ensureArticleImage(article)),
+      () =>
+        withSingleRetry(`generate image ${item.id}`, () =>
+          ensureArticleImage({ ...article, forceAiImage: true, forceImageRefresh: true })
+        ),
       45_000
     ).catch((error) => {
       console.warn(`[pipeline] image generation degraded for ${item.id} -> ${error.message}`);
