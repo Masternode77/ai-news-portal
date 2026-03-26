@@ -5,7 +5,9 @@
     "0eb22810e57e895c",
     "89f8efd8ed88c5aa",
     "9af0c0e84138bb97",
-    "8c4de32de0a6087c"
+    "8c4de32de0a6087c",
+    "4c1c106cee97d5f8",
+    "9cbdd3ac4fd8feaf"
   ],
   "dayPlans": {
     "2026-03-24": {
@@ -215,10 +217,13 @@
       ],
       "publishedIds": [
         "9af0c0e84138bb97",
-        "8c4de32de0a6087c"
+        "8c4de32de0a6087c",
+        "4c1c106cee97d5f8",
+        "9cbdd3ac4fd8feaf"
       ],
       "slotPublications": {
-        "1": true
+        "1": true,
+        "2": true
       }
     }
   },
@@ -288,7 +293,17 @@
       "day": "2026-03-26",
       "slot": 1,
       "publishedCount": 0
+    },
+    {
+      "at": "2026-03-26T08:07:32.836Z",
+      "day": "2026-03-26",
+      "slot": 2,
+      "publishedCount": 2,
+      "publishedIds": [
+        "4c1c106cee97d5f8",
+        "9cbdd3ac4fd8feaf"
+      ]
     }
   ],
-  "lastRunAt": "2026-03-26T04:20:15.337Z"
+  "lastRunAt": "2026-03-26T08:07:32.836Z"
 }
