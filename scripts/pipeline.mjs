@@ -20,12 +20,14 @@ import {
 } from './lib/state-store.mjs';
 import { stableArticleId, truncate } from './lib/normalize.mjs';
 
+const RETRY_DELAY_MS = Number(process.env.PIPELINE_RETRY_DELAY_MS || 15_000);
+
 async function withSingleRetry(label, fn) {
   try {
     return await fn();
   } catch (error) {
-    console.warn(`[pipeline] ${label} failed; retrying once in 60s -> ${error.message}`);
-    await sleep(60_000);
+    console.warn(`[pipeline] ${label} failed; retrying once in ${RETRY_DELAY_MS}ms -> ${error.message}`);
+    await sleep(RETRY_DELAY_MS);
     return fn();
   }
 }

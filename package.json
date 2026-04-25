@@ -10,7 +10,11 @@
     "build": "npm run sync:dashboard-data && npm run prepare:static-images && astro build",
     "check": "astro check",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "qa:visual:capture": "node ./scripts/qa-visual-capture.mjs",
+    "qa:visual:smoke": "node ./scripts/qa-visual-smoke.mjs",
+    "qa:visual:status": "node ./scripts/qa-visual-status.mjs",
+    "qa:visual:percy": "node ./scripts/qa-visual-percy.mjs"
   },
   "dependencies": {
     "astro": "^5.17.1",

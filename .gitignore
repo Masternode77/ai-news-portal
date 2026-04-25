@@ -1,0 +1,16 @@
+# Dependencies
+node_modules/
+
+# Build and tool output
+dist/
+.astro/
+artifacts/
+
+# Local platform state
+.vercel/
+
+# Logs and local env
+*.log
+.env
+.env.*
+!.env.example

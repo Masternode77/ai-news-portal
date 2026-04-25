@@ -45,21 +45,20 @@ function parseItem(feed, item) {
   };
 }
 
-export async function fetchNewsPool() {
-  const fetched = [];
-
-  for (const feed of FEEDS) {
-    try {
-      const parsed = await parser.parseURL(feed.url);
-      const items = (parsed.items || [])
-        .map((item) => parseItem(feed, item))
-        .filter(Boolean);
-
-      fetched.push(...items);
-    } catch (error) {
-      console.error(`[pipeline] feed failed: ${feed.source} -> ${error.message}`);
-    }
+async function fetchFeedItems(feed) {
+  try {
+    const parsed = await parser.parseURL(feed.url);
+    return (parsed.items || [])
+      .map((item) => parseItem(feed, item))
+      .filter(Boolean);
+  } catch (error) {
+    console.error(`[pipeline] feed failed: ${feed.source} -> ${error.message}`);
+    return [];
   }
+}
+
+export async function fetchNewsPool() {
+  const fetched = (await Promise.all(FEEDS.map(fetchFeedItems))).flat();
 
   fetched.sort((a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime());
 

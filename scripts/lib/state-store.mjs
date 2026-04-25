@@ -23,7 +23,9 @@ export async function readJsonFile(filePath, defaultValue) {
 
 export async function writeJsonFile(filePath, value) {
   await ensureDir(filePath);
-  await fs.writeFile(filePath, `${JSON.stringify(value, null, 2)}\n`, 'utf8');
+  const tmpPath = `${filePath}.${process.pid}.${Date.now()}.tmp`;
+  await fs.writeFile(tmpPath, `${JSON.stringify(value, null, 2)}\n`, 'utf8');
+  await fs.rename(tmpPath, filePath);
 }
 
 export async function readPipelineState(filePath) {

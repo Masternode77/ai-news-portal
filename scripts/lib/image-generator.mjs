@@ -214,6 +214,10 @@ export async function ensureArticleImage(item) {
     return item.generatedImage;
   }
 
+  if (item?.forcePlaceholderImage) {
+    return writePlaceholderSvg(item);
+  }
+
   const apiKey = process.env.GEMINI_API_KEY;
   const wantsAiImage = Boolean(item?.forceAiImage);
 

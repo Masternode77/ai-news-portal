@@ -1,0 +1,57 @@
+name: Visual QA
+
+on:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  visual-qa:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      PERCY_TOKEN: ${{ secrets.PERCY_TOKEN }}
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+
+      - name: Install visual QA runtime
+        run: |
+          npm install --no-save playwright @percy/cli
+          npx playwright install --with-deps chromium
+
+      - name: Visual capture
+        run: npm run qa:visual:capture
+
+      - name: Visual smoke
+        run: npm run qa:visual:smoke
+
+      - name: Visual status
+        run: npm run qa:visual:status
+
+      - name: Upload visual QA artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: visual-qa-artifacts
+          path: |
+            artifacts/homepage.png
+            artifacts/visual-status/*.json
+          if-no-files-found: warn
+
+      - name: Percy snapshot
+        if: ${{ github.event_name == 'pull_request' && env.PERCY_TOKEN != '' }}
+        run: npm run qa:visual:percy

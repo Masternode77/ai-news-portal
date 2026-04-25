@@ -19,10 +19,15 @@ async function refreshCollection(label, filePath) {
       continue;
     }
 
-    const generatedImage = await ensureArticleImage(item);
-    updated.push({ ...item, generatedImage });
-    changed += 1;
-    console.log(`[prepare-static-images] ${label}: refreshed ${item.id} -> ${generatedImage}`);
+    try {
+      const generatedImage = await ensureArticleImage({ ...item, forcePlaceholderImage: true });
+      updated.push({ ...item, generatedImage });
+      changed += 1;
+      console.log(`[prepare-static-images] ${label}: refreshed ${item.id} -> ${generatedImage}`);
+    } catch (error) {
+      console.warn(`[prepare-static-images] ${label}: skipped ${item.id} -> ${error.message}`);
+      updated.push(item);
+    }
   }
 
   if (changed > 0) {

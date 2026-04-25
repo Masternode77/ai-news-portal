@@ -6,7 +6,8 @@ import { chromium } from 'playwright';
 const DIST_DIR = path.join(process.cwd(), 'dist');
 const OUT_DIR = path.join(process.cwd(), 'artifacts');
 const OUT_PATH = path.join(OUT_DIR, 'homepage.png');
-const DEFAULT_PORT = 4173;
+const DEFAULT_PORT = Number(process.env.PREVIEW_PORT || 4173);
+const DEFAULT_HOST = process.env.PREVIEW_HOST || '127.0.0.1';
 
 function contentTypeFor(filePath) {
   if (filePath.endsWith('.html')) return 'text/html; charset=utf-8';
@@ -19,7 +20,7 @@ function contentTypeFor(filePath) {
   return 'application/octet-stream';
 }
 
-async function createServer(port = DEFAULT_PORT) {
+async function createServer(port = DEFAULT_PORT, host = DEFAULT_HOST) {
   const server = http.createServer(async (req, res) => {
     try {
       const reqPath = req.url === '/' ? '/index.html' : req.url;
@@ -48,14 +49,20 @@ async function createServer(port = DEFAULT_PORT) {
     }
   });
 
-  await new Promise((resolve) => server.listen(port, resolve));
+  await new Promise((resolve, reject) => {
+    server.once('error', reject);
+    server.listen(port, host, () => {
+      server.off('error', reject);
+      resolve();
+    });
+  });
   return server;
 }
 
 async function main() {
   await fs.mkdir(OUT_DIR, { recursive: true });
   const server = await createServer();
-  const baseUrl = process.env.PREVIEW_BASE_URL || `http://127.0.0.1:${DEFAULT_PORT}`;
+  const baseUrl = process.env.PREVIEW_BASE_URL || `http://${DEFAULT_HOST}:${DEFAULT_PORT}`;
 
   try {
     const browser = await chromium.launch({ headless: true });
