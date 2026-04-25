@@ -301,7 +301,9 @@ const stats = [
     };
 
     input?.addEventListener('input', (event) => {
-      const query = event.target.value.toLowerCase().trim();
+      const target = event.target;
+      if (!(target instanceof HTMLInputElement)) return;
+      const query = target.value.toLowerCase().trim();
       const matches = payload.filter((item) =>
         `${item.searchText || ''} ${item.title} ${item.source} ${item.category || ''} ${item.region || ''} ${item.summary || ''}`
           .toLowerCase()
