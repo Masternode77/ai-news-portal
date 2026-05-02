@@ -19,14 +19,16 @@
 - Verified the default 30-item pool now includes all five added feeds.
 - Replaced four broken feeds: Reuters Technology -> SiliconANGLE AI, NVIDIA URL fixed, Google Cloud URL fixed, AnandTech -> StorageReview.
 - Verified all four replacement feeds parse and appear in the default 30-item candidate pool.
+- Ran the full pipeline after feed repair; it refreshed `news-pool`, normalized live/archive/search data, and confirmed all added/replacement feeds are present in the saved 30-item pool.
 
 ## Current state
 - `npm run check` passed with 0 errors and existing hints.
 - `npm run build` passed and generated 279 static pages.
 - Previously broken feeds have been replaced or repaired.
+- The latest pipeline run published 0 new articles because the current KST slot was already marked published.
 
 ## Next safe task
-- Run the full pipeline when ready to write refreshed `news-pool` and article data from the repaired source set.
+- Review and optionally commit refreshed data files from the full pipeline run.
 
 ## Validation
 - Confirm this file remains under 120 lines.
