@@ -1,7 +1,9 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import sharp from 'sharp';
-import { GEMINI_API_URL, GEMINI_IMAGE_MODEL, PIPELINE_OFFLINE } from './constants.mjs';
+import { IMAGE_PROVIDER, PIPELINE_OFFLINE } from './constants.mjs';
+import { createImageProvider } from './image-providers/index.mjs';
+import { fetchWithTimeout } from './image-providers/shared.mjs';
 
 const OUT_DIR = path.join(process.cwd(), 'public/generated');
 
@@ -75,20 +77,6 @@ async function writePlaceholderSvg(item) {
   return `/generated/${filename}`;
 }
 
-async function fetchWithTimeout(url, options = {}, timeoutMs = 20000) {
-  const controller = new AbortController();
-  const timeout = setTimeout(() => controller.abort(), timeoutMs);
-
-  try {
-    return await fetch(url, {
-      ...options,
-      signal: controller.signal,
-    });
-  } finally {
-    clearTimeout(timeout);
-  }
-}
-
 async function generateLocalPoster(item) {
   if (PIPELINE_OFFLINE) {
     return null;
@@ -150,55 +138,6 @@ async function generateLocalPoster(item) {
   return `/generated/${filename}`;
 }
 
-async function generateWithGemini(item, apiKey) {
-  const response = await fetchWithTimeout(`${GEMINI_API_URL}/${GEMINI_IMAGE_MODEL}:generateContent`, {
-    method: 'POST',
-    headers: {
-      'x-goog-api-key': apiKey,
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      contents: [
-        {
-          parts: [
-            {
-              text:
-                item.imagePrompt ||
-                `Editorial enterprise technology illustration about ${item.title}. Context: ${item.articleText || item.summary || item.snippet || item.title}. No logos. No text. 16:9.`,
-            },
-          ],
-        },
-      ],
-      generationConfig: {
-        imageConfig: {
-          aspectRatio: '16:9',
-        },
-      },
-    }),
-  }, 45000);
-
-  if (!response.ok) {
-    throw new Error(`Gemini image request failed: ${response.status}`);
-  }
-
-  const payload = await response.json();
-  const parts = payload?.candidates?.[0]?.content?.parts || [];
-  const inlinePart = parts.find((part) => part.inlineData?.data);
-
-  if (!inlinePart?.inlineData?.data) {
-    throw new Error('No image bytes returned by Gemini');
-  }
-
-  const mime = inlinePart.inlineData.mimeType || 'image/png';
-  const ext = mime.includes('jpeg') ? 'jpg' : 'png';
-  const filename = `${item.id}.${ext}`;
-  const outPath = path.join(OUT_DIR, filename);
-  const bytes = Buffer.from(inlinePart.inlineData.data, 'base64');
-
-  await fs.writeFile(outPath, bytes);
-  return `/generated/${filename}`;
-}
-
 export async function needsImageRefresh(item) {
   if (item?.forceImageRefresh || item?.forceAiImage) return true;
   if (!item?.generatedImage) return true;
@@ -218,18 +157,16 @@ export async function ensureArticleImage(item) {
     return writePlaceholderSvg(item);
   }
 
-  const apiKey = process.env.GEMINI_API_KEY;
-  const wantsAiImage = Boolean(item?.forceAiImage);
+  const provider = createImageProvider();
 
-  if (apiKey && !PIPELINE_OFFLINE) {
+  if (provider && !PIPELINE_OFFLINE) {
     try {
-      return await generateWithGemini(item, apiKey);
+      return await provider.generate(item);
     } catch (error) {
-      console.error(`[pipeline] image AI fallback for ${item.id}: ${error.message}`);
-      if (wantsAiImage) {
-        return writePlaceholderSvg(item);
-      }
+      console.error(`[pipeline] ${provider.name} image fallback for ${item.id}: ${error.message}`);
     }
+  } else if (IMAGE_PROVIDER !== 'local' && !PIPELINE_OFFLINE) {
+    console.warn(`[pipeline] IMAGE_PROVIDER="${IMAGE_PROVIDER}" is not fully configured; using local image fallback`);
   }
 
   try {

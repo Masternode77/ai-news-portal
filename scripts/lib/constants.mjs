@@ -10,6 +10,14 @@ export const PIPELINE_USE_EXISTING_POOL = process.env.PIPELINE_USE_EXISTING_POOL
 export const PIPELINE_OFFLINE =
   process.env.PIPELINE_OFFLINE === '1' || process.env.CODEX_SANDBOX_NETWORK_DISABLED === '1';
 
+export const IMAGE_PROVIDER = process.env.IMAGE_PROVIDER || 'chatgpt';
+export const CHATGPT_IMAGE_OAUTH_ENDPOINT = process.env.CHATGPT_IMAGE_OAUTH_ENDPOINT || '';
+export const CHATGPT_IMAGE_OAUTH_ACCESS_TOKEN = process.env.CHATGPT_IMAGE_OAUTH_ACCESS_TOKEN || '';
+export const OPENAI_IMAGE_API_URL = process.env.OPENAI_IMAGE_API_URL || 'https://api.openai.com/v1/images/generations';
+export const OPENAI_IMAGE_MODEL = process.env.OPENAI_IMAGE_MODEL || 'gpt-image-1';
+export const OPENAI_IMAGE_SIZE = process.env.OPENAI_IMAGE_SIZE || '1536x1024';
+export const OPENAI_IMAGE_QUALITY = process.env.OPENAI_IMAGE_QUALITY || 'medium';
+
 export const OPENROUTER_API_URL = 'https://openrouter.ai/api/v1/chat/completions';
 export const OPENROUTER_MODEL = process.env.OPENROUTER_MODEL || 'openai/gpt-5.3-codex';
 export const OPENROUTER_SITE_URL = process.env.OPENROUTER_SITE_URL || '';
@@ -17,7 +25,7 @@ export const OPENROUTER_APP_TITLE = process.env.OPENROUTER_APP_TITLE || 'AI / Da
 export const EXPERT_LENS_MODEL = process.env.EXPERT_LENS_MODEL || 'openai/gpt-5.4';
 export const EXPERT_LENS_FALLBACK_MODEL = process.env.EXPERT_LENS_FALLBACK_MODEL || OPENROUTER_MODEL;
 
-export const GEMINI_API_URL = 'https://generativelanguage.googleapis.com/v1beta/models';
+export const GEMINI_API_URL = process.env.GEMINI_API_URL || 'https://generativelanguage.googleapis.com/v1beta/models';
 export const GEMINI_IMAGE_MODEL = process.env.GEMINI_IMAGE_MODEL || 'gemini-2.5-flash-image';
 
 export const PIPELINE_STATE_PATH = 'scripts/state/pipeline-state.json';

@@ -30,10 +30,11 @@ Production-ready Astro portal for curated AI, data center, semiconductor, power,
   - Primary model wiring is exposed via `EXPERT_LENS_MODEL` so a GPT-5.4-class model can be used at the integration point
   - If the model is unavailable, the repo falls back to a deterministic Korean expert-summary path
 
-- **Nano Banana image flow**
-  - If `GEMINI_API_KEY` is present, the pipeline requests article art from Gemini image generation
-  - Default model is `gemini-2.5-flash-image` ("Nano Banana")
-  - If the API key is missing or image generation fails, the pipeline first attempts to build a local poster from the crawled source image and then falls back to a premium SVG placeholder
+- **ChatGPT/OpenAI-first image provider flow**
+  - Default provider is `IMAGE_PROVIDER=chatgpt`, which expects a callable OAuth-backed ChatGPT/OpenAI image runtime
+  - `IMAGE_PROVIDER=openai-api` is available only as an explicit OpenAI API-key fallback path
+  - `IMAGE_PROVIDER=legacy-gemini` keeps the old Gemini / Nano Banana path available but deprecated
+  - If the configured provider is unavailable or image generation fails, the pipeline first attempts to build a local poster from the crawled source image and then falls back to a premium SVG placeholder
   - External image hotlinking is avoided for published cards
 
 - **30-item live surface + archive search**
@@ -62,6 +63,7 @@ Production-ready Astro portal for curated AI, data center, semiconductor, power,
 │   │   ├── curate.mjs
 │   │   ├── fetch-feeds.mjs
 │   │   ├── image-generator.mjs
+│   │   ├── image-providers/
 │   │   ├── normalize.mjs
 │   │   ├── openrouter.mjs
 │   │   ├── rank.mjs
@@ -97,8 +99,23 @@ npm run dev
 - `EXPERT_LENS_FALLBACK_MODEL` *(optional)*: backup model id if the preferred lens model is unavailable
 
 ### Image generation
-- `GEMINI_API_KEY` *(optional)*: enables Gemini / Nano Banana image generation
-- `GEMINI_IMAGE_MODEL` *(optional)*: defaults to `gemini-2.5-flash-image`
+- `IMAGE_PROVIDER` *(optional)*: defaults to `chatgpt`
+  - `chatgpt`: preferred ChatGPT/OpenAI OAuth-backed runtime adapter
+  - `openai-api`: explicit OpenAI API-key fallback
+  - `local`: skip remote generation and build local source-image posters when possible
+  - `legacy-gemini`: deprecated Gemini / Nano Banana provider
+- `CHATGPT_IMAGE_OAUTH_ENDPOINT` *(for `IMAGE_PROVIDER=chatgpt`)*: callable image runtime endpoint
+- `CHATGPT_IMAGE_OAUTH_ACCESS_TOKEN` *(for `IMAGE_PROVIDER=chatgpt`)*: OAuth access token for the runtime endpoint
+- `OPENAI_API_KEY` *(for `IMAGE_PROVIDER=openai-api`)*: OpenAI API-key auth and API billing; this is not the default path
+- `OPENAI_IMAGE_MODEL` *(optional, API fallback)*: defaults to `gpt-image-1`
+- `OPENAI_IMAGE_SIZE` *(optional, API fallback)*: defaults to `1536x1024`
+- `OPENAI_IMAGE_QUALITY` *(optional, API fallback)*: defaults to `medium`
+- `GEMINI_API_KEY` *(legacy only)*: used only with `IMAGE_PROVIDER=legacy-gemini`
+- `GEMINI_IMAGE_MODEL` *(legacy only)*: defaults to `gemini-2.5-flash-image`
+
+The published image contract is unchanged: generated assets are written under `public/generated/`, article data receives `/generated/<filename>`, and external source images are not hotlinked as published card art. If the configured provider is unavailable or fails, the pipeline falls back to a locally composed poster from the source image, then to an SVG placeholder.
+
+`IMAGE_PROVIDER=chatgpt` is adapter-ready. GitHub Actions and Vercel do not automatically expose ChatGPT OAuth-backed image generation, so production needs a callable OAuth runtime endpoint and token. Use `IMAGE_PROVIDER=openai-api` only when API-key auth and billing are explicitly acceptable.
 
 ### Pipeline controls
 - `MAX_ITEMS_FETCHED` *(optional)*: defaults to `30`
