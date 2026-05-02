@@ -1,8 +1,13 @@
 import { EXPERT_LENS_VERSION } from './constants.mjs';
+import {
+  EDITORIAL_HUMANIZER_MODE,
+  EDITORIAL_HUMANIZER_PROMPT,
+  humanizedFallbackSections,
+} from './editorial-humanizer.mjs';
 import { callExpertLensText } from './openrouter.mjs';
 import { safeJsonParse, sanitizeGeneratedText, slugify, truncate } from './normalize.mjs';
 
-const EXPERT_LENS_MODE = 'industry-editor-v2';
+const EXPERT_LENS_MODE = EDITORIAL_HUMANIZER_MODE;
 
 function splitParagraphs(text = '') {
   return sanitizeGeneratedText(text)
@@ -55,38 +60,15 @@ function fallbackFinalArticleBody(article, sections) {
 }
 
 function fallbackExpertLensFull(article) {
-  const thesis = truncate(
-    `${article.title} matters because it shifts the practical balance between demand narrative and infrastructure execution.`,
-    140
-  );
-  const whatHappened = truncate(
-    `${article.source || 'The source'} reported that ${article.summary || article.snippet || article.title}.`,
-    320
-  );
-  const whyThisMatters = truncate(
-    `The strategic significance is not only the announcement itself but how it changes capacity planning, vendor leverage, and deployment sequencing across AI infrastructure.`,
-    340
-  );
-  const marketMissing = truncate(
-    inferSignal(article),
-    320
-  );
-  const investors = truncate(
-    `Investors should track whether this development improves pricing power, locks in scarce capacity, or exposes execution risk that the market may still be discounting.`,
-    320
-  );
-  const operators = truncate(
-    `Operators should read this through procurement timing, facility readiness, network design, and the likelihood that adjacent constraints will slow realized deployment.`,
-    320
-  );
-  const hyperscalers = truncate(
-    `Hyperscalers should focus on whether this changes build sequencing, partner dependence, or the economics of scaling regions and clusters over the next few quarters.`,
-    320
-  );
-  const watchNext = truncate(
-    `Watch the next disclosures on customer commitments, infrastructure readiness, and any evidence that power, cooling, silicon supply, or permitting becomes the real gating factor.`,
-    320
-  );
+  const humanized = humanizedFallbackSections(article, inferSignal(article));
+  const thesis = truncate(humanized.thesis, 160);
+  const whatHappened = truncate(humanized.whatHappened, 500);
+  const whyThisMatters = truncate(humanized.whyThisMatters, 500);
+  const marketMissing = truncate(humanized.marketMissing, 500);
+  const investors = truncate(humanized.investors, 500);
+  const operators = truncate(humanized.operators, 500);
+  const hyperscalers = truncate(humanized.hyperscalers, 500);
+  const watchNext = truncate(humanized.watchNext, 500);
   const headlineOptions = buildHeadlineOptions(article);
   const finalHeadline = headlineOptions[0];
   const metaDescription = truncate(
@@ -235,10 +217,11 @@ async function generateExpertLensFull(article) {
     systemPrompt: [
       'You are the editorial voice for an AI infrastructure intelligence publication.',
       'Write like a top-tier industry editor and strategic analyst covering AI, data centers, power, semiconductors, and cloud infrastructure.',
+      EDITORIAL_HUMANIZER_PROMPT,
       'The output must be decision-grade, accurate, skeptical, and free of generic hype or unsupported certainty.',
       'Use this logic in order: summarize what happened, explain why it matters, identify 1-2 underappreciated variables, include viewpoints for at least two of investors / operators / hyperscalers, then end with what to watch next.',
       'Return strict JSON only with keys: thesis, whatHappened, whyThisMatters, marketMissing, investors, operators, hyperscalers, watchNext, headlineOptions, finalHeadline, metaDescription, finalArticleBody, sourceLink.',
-      'headlineOptions must be an array of exactly 5 Korean-count headline ideas written in English.',
+      'headlineOptions must be an array of exactly 5 concise headline ideas written in English.',
       'Keep each section concise but substantive. Do not invent facts or numbers not grounded in the provided context.',
       'The finalArticleBody should read like a polished final article built from the prior sections, in multiple paragraphs.',
     ].join(' '),
