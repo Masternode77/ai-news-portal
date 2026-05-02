@@ -36,10 +36,43 @@ function safeText(text = '', max = 72) {
   return (text || '').replace(/[<>&"']/g, ' ').trim().slice(0, max);
 }
 
+function wrapText(text = '', maxChars = 28, maxLines = 3) {
+  const words = safeText(text, maxChars * maxLines * 2).split(/\s+/).filter(Boolean);
+  const lines = [];
+  let line = '';
+
+  for (const word of words) {
+    const next = line ? `${line} ${word}` : word;
+    if (next.length > maxChars && line) {
+      lines.push(line);
+      line = word;
+    } else {
+      line = next;
+    }
+
+    if (lines.length === maxLines) break;
+  }
+
+  if (line && lines.length < maxLines) {
+    lines.push(line);
+  }
+
+  return lines;
+}
+
+function svgTextLines(lines = [], { x, y, size, lineHeight, fill, weight = 700, family = 'Inter, Arial, sans-serif', letterSpacing = 0 }) {
+  const tspans = lines
+    .map((line, index) => `<tspan x="${x}" dy="${index === 0 ? 0 : lineHeight}">${safeText(line, 120)}</tspan>`)
+    .join('');
+
+  return `<text x="${x}" y="${y}" fill="${fill}" font-family="${family}" font-size="${size}" font-weight="${weight}" letter-spacing="${letterSpacing}">${tspans}</text>`;
+}
+
 async function writePlaceholderSvg(item) {
   const palette = colorFromId(item.id);
   const filename = `${item.id}.svg`;
   const outPath = path.join(OUT_DIR, filename);
+  const titleLines = wrapText(item.title, 30, 3);
   const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="1344" height="768" viewBox="0 0 1344 768" fill="none">
   <defs>
     <linearGradient id="bg" x1="120" y1="70" x2="1180" y2="690" gradientUnits="userSpaceOnUse">
@@ -67,8 +100,8 @@ async function writePlaceholderSvg(item) {
     <path d="M1044 112V658"/>
   </g>
   <text x="118" y="164" fill="#F6F8FF" font-family="Inter, Arial, sans-serif" font-size="20" font-weight="700" letter-spacing="0.12em">${safeText(item.category || 'AI / DATA CENTER SIGNAL')}</text>
-  <text x="118" y="236" fill="#F6F8FF" font-family="Inter, Arial, sans-serif" font-size="54" font-weight="800">${safeText(item.title, 34)}</text>
-  <text x="118" y="292" fill="#CBD8F5" font-family="Inter, Arial, sans-serif" font-size="26" font-weight="600">${safeText(item.source || 'Curated infrastructure briefing', 44)}</text>
+  ${svgTextLines(titleLines, { x: 118, y: 236, size: 50, lineHeight: 58, fill: '#F6F8FF', weight: 800 })}
+  <text x="118" y="${292 + Math.max(0, titleLines.length - 1) * 58}" fill="#CBD8F5" font-family="Inter, Arial, sans-serif" font-size="26" font-weight="600">${safeText(item.source || 'Curated infrastructure briefing', 44)}</text>
   <text x="118" y="612" fill="#C1CDE6" font-family="Inter, Arial, sans-serif" font-size="20" font-weight="600">Fallback editorial artwork generated locally</text>
   <rect width="1344" height="768" rx="40" filter="url(#noise)"/>
 </svg>`;
@@ -99,10 +132,10 @@ async function generateLocalPoster(item) {
 
   const arrayBuffer = await response.arrayBuffer();
   const palette = colorFromId(item.id);
-  const title = safeText(item.title, 56);
+  const titleLines = wrapText(item.title, 34, 3);
   const category = safeText(item.category || 'AI Infrastructure Brief', 32);
   const source = safeText(item.source || 'Curated source', 28);
-  const summary = safeText(item.summary || item.snippet || '', 96);
+  const summaryLines = wrapText(item.summary || item.snippet || '', 72, 2);
   const filename = `${item.id}.jpg`;
   const outPath = path.join(OUT_DIR, filename);
 
@@ -118,9 +151,9 @@ async function generateLocalPoster(item) {
       <rect width="1344" height="768" fill="url(#wash)" />
       <rect x="48" y="48" width="1248" height="672" rx="34" fill="none" stroke="rgba(255,255,255,0.14)" />
       <text x="92" y="132" fill="#d8e6ff" font-family="Arial, sans-serif" font-size="24" font-weight="700" letter-spacing="2">${category}</text>
-      <text x="92" y="240" fill="#ffffff" font-family="Arial, sans-serif" font-size="62" font-weight="800">${title}</text>
-      <text x="92" y="306" fill="#d7e4fb" font-family="Arial, sans-serif" font-size="28" font-weight="500">${source}</text>
-      <text x="92" y="628" fill="#bbcae2" font-family="Arial, sans-serif" font-size="24" font-weight="500">${summary}</text>
+      ${svgTextLines(titleLines, { x: 92, y: 232, size: 56, lineHeight: 62, fill: '#ffffff', weight: 800, family: 'Arial, sans-serif' })}
+      <text x="92" y="${298 + Math.max(0, titleLines.length - 1) * 62}" fill="#d7e4fb" font-family="Arial, sans-serif" font-size="28" font-weight="500">${source}</text>
+      ${svgTextLines(summaryLines, { x: 92, y: 610, size: 24, lineHeight: 32, fill: '#bbcae2', weight: 500, family: 'Arial, sans-serif' })}
     </svg>
   `);
 

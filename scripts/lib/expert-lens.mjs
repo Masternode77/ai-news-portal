@@ -59,6 +59,14 @@ function fallbackFinalArticleBody(article, sections) {
     .join('\n\n');
 }
 
+function normalizeExecutiveSummary(value = [], fallback = []) {
+  const source = Array.isArray(value) ? value : String(value || '').split(/\n+/);
+  return [...source, ...fallback]
+    .map((line) => sanitizeGeneratedText(String(line || '').replace(/^[-•\d.\s]+/, '')))
+    .filter(Boolean)
+    .slice(0, 3);
+}
+
 function fallbackExpertLensFull(article) {
   const humanized = humanizedFallbackSections(article, inferSignal(article));
   const thesis = truncate(humanized.thesis, 160);
@@ -69,6 +77,11 @@ function fallbackExpertLensFull(article) {
   const operators = truncate(humanized.operators, 500);
   const hyperscalers = truncate(humanized.hyperscalers, 500);
   const watchNext = truncate(humanized.watchNext, 500);
+  const executiveSummary = normalizeExecutiveSummary(humanized.executiveSummary, [
+    thesis,
+    whyThisMatters,
+    watchNext,
+  ]);
   const headlineOptions = buildHeadlineOptions(article);
   const finalHeadline = headlineOptions[0];
   const metaDescription = truncate(
@@ -99,6 +112,7 @@ function fallbackExpertLensFull(article) {
     operators,
     hyperscalers,
     watchNext,
+    executiveSummary,
     headlineOptions,
     finalHeadline,
     metaDescription,
@@ -134,6 +148,7 @@ function normalizeExpertLensFull(article, payload) {
     operators: truncate(parsed.operators || fallback.operators, 500),
     hyperscalers: truncate(parsed.hyperscalers || fallback.hyperscalers, 500),
     watchNext: truncate(parsed.watchNext || fallback.watchNext, 500),
+    executiveSummary: normalizeExecutiveSummary(parsed.executiveSummary, fallback.executiveSummary),
     headlineOptions: normalizeHeadlineOptions(parsed.headlineOptions, fallback.headlineOptions),
     finalHeadline: truncate(parsed.finalHeadline || fallback.finalHeadline || article.title, 120),
     metaDescription: truncate(parsed.metaDescription || fallback.metaDescription, 170),
@@ -220,10 +235,12 @@ async function generateExpertLensFull(article) {
       EDITORIAL_HUMANIZER_PROMPT,
       'The output must be decision-grade, accurate, skeptical, and free of generic hype or unsupported certainty.',
       'Use this logic in order: summarize what happened, explain why it matters, identify 1-2 underappreciated variables, include viewpoints for at least two of investors / operators / hyperscalers, then end with what to watch next.',
-      'Return strict JSON only with keys: thesis, whatHappened, whyThisMatters, marketMissing, investors, operators, hyperscalers, watchNext, headlineOptions, finalHeadline, metaDescription, finalArticleBody, sourceLink.',
-      'headlineOptions must be an array of exactly 5 concise headline ideas written in English.',
+      'Return strict JSON only with keys: thesis, whatHappened, whyThisMatters, marketMissing, investors, operators, hyperscalers, watchNext, executiveSummary, headlineOptions, finalHeadline, metaDescription, finalArticleBody, sourceLink.',
+      'executiveSummary must be exactly 3 short lines for busy readers: what changed, why it matters, and what to watch.',
+      'headlineOptions must be an array of exactly 5 concise headline ideas written in English, each with a concrete hook that invites a click without hype.',
+      'finalHeadline must use the strongest hook while preserving the source facts.',
       'Keep each section concise but substantive. Do not invent facts or numbers not grounded in the provided context.',
-      'The finalArticleBody should read like a polished final article built from the prior sections, in multiple paragraphs.',
+      'The finalArticleBody should read like a polished final article built from the prior sections, in multiple paragraphs, with the opening paragraph carrying the hook.',
     ].join(' '),
     userPrompt: JSON.stringify({
       title: article.title,

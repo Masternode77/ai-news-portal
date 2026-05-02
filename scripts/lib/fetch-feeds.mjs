@@ -1,5 +1,5 @@
 import Parser from 'rss-parser';
-import { FEEDS, MAX_ITEMS_FETCHED } from './constants.mjs';
+import { FEEDS, MAX_ITEMS_FETCHED, MIN_ITEMS_PER_SOURCE_IN_POOL } from './constants.mjs';
 import { guessLanguage, normalizeUrl, stableArticleId, stripHtml, truncate } from './normalize.mjs';
 
 const parser = new Parser({
@@ -62,7 +62,7 @@ export async function fetchNewsPool() {
 
   fetched.sort((a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime());
 
-  const deduped = [];
+  const dedupedByRecency = [];
   const seenIds = new Set();
   const seenTitles = new Set();
 
@@ -74,10 +74,31 @@ export async function fetchNewsPool() {
 
     seenIds.add(item.id);
     seenTitles.add(titleKey);
-    deduped.push(item);
-
-    if (deduped.length >= MAX_ITEMS_FETCHED) break;
+    dedupedByRecency.push(item);
   }
 
-  return deduped;
+  const selected = [];
+  const selectedIds = new Set();
+  const sourceCount = new Map();
+  const minPerSource = Math.max(0, MIN_ITEMS_PER_SOURCE_IN_POOL);
+
+  if (minPerSource > 0) {
+    for (const item of dedupedByRecency) {
+      if (selected.length >= MAX_ITEMS_FETCHED) break;
+      const count = sourceCount.get(item.source) || 0;
+      if (count >= minPerSource) continue;
+
+      selected.push(item);
+      selectedIds.add(item.id);
+      sourceCount.set(item.source, count + 1);
+    }
+  }
+
+  for (const item of dedupedByRecency) {
+    if (selected.length >= MAX_ITEMS_FETCHED) break;
+    if (selectedIds.has(item.id)) continue;
+    selected.push(item);
+  }
+
+  return selected;
 }

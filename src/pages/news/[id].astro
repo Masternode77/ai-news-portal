@@ -2,6 +2,7 @@
 import Layout from '../../layouts/Layout.astro';
 import latestNews from '../../data/latest-news.json';
 import archivedNews from '../../data/archived-news.json';
+import { cleanEditorialText, displayHeadline, executiveSummaryLines } from '../../lib/editorial-display.js';
 
 export function getStaticPaths() {
   return [...latestNews, ...archivedNews]
@@ -20,7 +21,7 @@ if (!article) {
 
 const lens = article.expertLensFull || null;
 const lensTeaser = article.expertLensShort || article.expertLens || lens?.thesis || null;
-const displayTitle = lens?.finalHeadline || article.title;
+const displayTitle = displayHeadline(article);
 const detailImage = article.sourceImage || article.generatedImage || '/generated/default.svg';
 const lensSections = [
   ['What happened', lens?.whatHappened],
@@ -30,10 +31,11 @@ const lensSections = [
   ['Operator read', lens?.operators],
   ['Cloud read', lens?.hyperscalers],
   ['What to watch', lens?.watchNext],
-].filter(([, value]) => Boolean(value));
+].map(([title, value]) => [title, cleanEditorialText(value)]).filter(([, value]) => Boolean(value));
+const executiveSummary = executiveSummaryLines(article);
 const articleBody = (lens?.finalArticleBody || article.articleText || article.snippet || article.summary || '')
   .split(/\n{2,}/)
-  .map((paragraph) => paragraph.replace(/\s+/g, ' ').trim())
+  .map((paragraph) => cleanEditorialText(paragraph))
   .filter(Boolean);
 ---
 <Layout title={displayTitle} description={lens?.metaDescription || article.summary || article.snippet || article.title}>
@@ -54,12 +56,23 @@ const articleBody = (lens?.finalArticleBody || article.articleText || article.sn
         </div>
 
         <h1>{displayTitle}</h1>
-        <p class="detail-summary">{article.summary || article.snippet}</p>
+        <p class="detail-summary">{cleanEditorialText(article.summary || article.snippet)}</p>
+
+        {executiveSummary.length ? (
+          <section class="executive-summary" aria-label="Executive summary">
+            <span>Executive Summary</span>
+            <ol>
+              {executiveSummary.map((line) => (
+                <li>{line}</li>
+              ))}
+            </ol>
+          </section>
+        ) : null}
 
         {lensTeaser ? (
           <section class="detail-lens">
             <span>The read</span>
-            <p>{lensTeaser}</p>
+            <p>{cleanEditorialText(lensTeaser)}</p>
           </section>
         ) : null}
 

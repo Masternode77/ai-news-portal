@@ -3,6 +3,7 @@ import Layout from '../layouts/Layout.astro';
 import latestNews from '../data/latest-news.json';
 import archivedNews from '../data/archived-news.json';
 import searchIndex from '../data/search-index.json';
+import { cleanEditorialText, displayHeadline } from '../lib/editorial-display.js';
 
 const boardTitle = 'AI / Data Center\nSignal Board';
 
@@ -20,9 +21,10 @@ const getLensTeaser = (item) => item.expertLensShort || item.expertLens || item.
 
 const latest = (latestNews || []).map((item, idx) => ({
   ...item,
-  summary: item.summary || item.snippet || '',
-  expertLensTeaser: getLensTeaser(item),
-  generatedImage: item.generatedImage || '/generated/default.svg',
+  title: displayHeadline(item),
+  summary: cleanEditorialText(item.summary || item.snippet || ''),
+  expertLensTeaser: cleanEditorialText(getLensTeaser(item)),
+  displayImage: item.sourceImage || item.generatedImage || '/generated/default.svg',
   detailHref: `/news/${item.id}/`,
   sourceUrl: item.sourceUrl || item.url,
   timeAgo: formatTimeAgo(item.publishedAt),
@@ -37,12 +39,12 @@ const feed = latest.slice(5);
 const categories = [...new Set(latest.map((item) => item.category).filter(Boolean))];
 const searchPayload = (searchIndex || []).slice(0, 400).map((item) => ({
   id: item.id,
-  title: item.title,
+  title: displayHeadline(item),
   source: item.source,
   category: item.category,
   region: item.region,
-  summary: item.summary || item.snippet || '',
-  expertLensTeaser: getLensTeaser(item),
+  summary: cleanEditorialText(item.summary || item.snippet || ''),
+  expertLensTeaser: cleanEditorialText(getLensTeaser(item)),
   searchText: item.searchText || [
     item.title,
     item.source,
@@ -112,7 +114,7 @@ const stats = [
       <section class="frontpage-grid">
         <article class="lead-story">
           <a class="lead-media" href={hero.detailHref} aria-label={hero.title}>
-            <img src={hero.generatedImage} alt={hero.title} loading="eager" />
+            <img src={hero.displayImage} alt={hero.title} loading="eager" />
           </a>
           <div class="lead-copy">
             <div class="story-meta">
@@ -188,7 +190,7 @@ const stats = [
       {feed.map((item) => (
         <article class="news-card">
           <div class="card-media">
-            <img src={item.generatedImage} alt={item.title} loading="lazy" />
+            <img src={item.displayImage} alt={item.title} loading="lazy" />
           </div>
 
           <div class="card-content">
