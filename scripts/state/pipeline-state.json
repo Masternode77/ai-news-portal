@@ -231,7 +231,9 @@
     "073092a304dfb8f0",
     "f3d503705be942ad",
     "558ee696dc9acd67",
-    "2741d3b09b3cd206"
+    "2741d3b09b3cd206",
+    "67c0a5c5a00adffa",
+    "b3a9961fd5097fcc"
   ],
   "dayPlans": {
     "2026-03-24": {
@@ -4656,20 +4658,17 @@
       ],
       "publishedIds": [
         "558ee696dc9acd67",
-        "2741d3b09b3cd206"
+        "2741d3b09b3cd206",
+        "67c0a5c5a00adffa",
+        "b3a9961fd5097fcc"
       ],
       "slotPublications": {
-        "0": true
+        "0": true,
+        "1": true
       }
     }
   },
   "runHistory": [
-    {
-      "at": "2026-03-23T23:49:36.918Z",
-      "day": "2026-03-24",
-      "slot": 1,
-      "publishedCount": 0
-    },
     {
       "at": "2026-03-24T00:21:16.210Z",
       "day": "2026-03-24",
@@ -5839,7 +5838,17 @@
       "day": "2026-05-03",
       "slot": 0,
       "publishedCount": 0
+    },
+    {
+      "at": "2026-05-02T23:49:23.746Z",
+      "day": "2026-05-03",
+      "slot": 1,
+      "publishedCount": 2,
+      "publishedIds": [
+        "67c0a5c5a00adffa",
+        "b3a9961fd5097fcc"
+      ]
     }
   ],
-  "lastRunAt": "2026-05-02T18:00:59.776Z"
+  "lastRunAt": "2026-05-02T23:49:23.746Z"
 }
