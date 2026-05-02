@@ -32,8 +32,8 @@ const latest = (latestNews || []).map((item, idx) => ({
 
 const archiveCount = archivedNews.length;
 const hero = latest[0];
-const spotlight = latest.slice(1, 3);
-const feed = latest.slice(3);
+const briefing = latest.slice(1, 5);
+const feed = latest.slice(5);
 const categories = [...new Set(latest.map((item) => item.category).filter(Boolean))];
 const searchPayload = (searchIndex || []).slice(0, 400).map((item) => ({
   id: item.id,
@@ -70,123 +70,87 @@ const stats = [
     <div class="ambient ambient-b"></div>
     <div class="ambient-grid"></div>
 
-    <section class="topbar panel panel-herohead">
-      <div class="topbar-copy">
-        <p class="eyebrow">Curated AI / Data Center Intelligence</p>
-        <h1 style="white-space: pre-line;">{boardTitle}</h1>
-        <p class="deck">
-          Fresh stories update the live surface every 8 hours, while older coverage moves into the archive and remains searchable.
+    <header class="publication-header">
+      <div class="edition-line">
+        <span>AI Infrastructure Daily</span>
+        <time>
+          {new Date().toLocaleString('en-US', {
+            month: 'short',
+            day: 'numeric',
+            hour: 'numeric',
+            minute: '2-digit',
+          })}
+        </time>
+      </div>
+
+      <div class="masthead-row">
+        <h1 aria-label={boardTitle}>
+          <span>AI / Data Center</span>
+          <span>Signal Board</span>
+        </h1>
+        <p>
+          Decision-grade coverage of AI infrastructure, hyperscale cloud, power, cooling, chips, and data center capital flows.
         </p>
-
-        <div class="chip-row">
-          {categories.length > 0 ? (
-            categories.slice(0, 5).map((category) => <span class="chip">{category}</span>)
-          ) : null}
-        </div>
       </div>
 
-      <div class="stat-grid">
+      <div class="nav-strip">
+        {categories.length > 0 ? categories.slice(0, 6).map((category) => <span>{category}</span>) : null}
+      </div>
+    </header>
+
+    <section class="live-brief">
+      <div class="brief-kicker">Live Brief</div>
+      <div class="brief-track">
         {stats.map((stat) => (
-          <div class="stat-card">
-            <span class="stat-label">{stat.label}</span>
-            <strong>{stat.value}</strong>
-          </div>
+          <span><strong>{stat.value}</strong> {stat.label}</span>
         ))}
-        <div class="stat-card stat-card-wide">
-          <span class="stat-label">Updated</span>
-          <strong>
-            {new Date().toLocaleString('en-US', {
-              month: 'short',
-              day: 'numeric',
-              hour: 'numeric',
-              minute: '2-digit',
-            })}
-          </strong>
-        </div>
+        <span><strong>{searchPayload.length}</strong> Indexed archive</span>
       </div>
-    </section>
-
-    <section class="search-shell panel">
-      <div class="search-copy">
-        <p class="eyebrow">Unified Search</p>
-        <h2>Search live coverage and the archive at once</h2>
-        <p>Filter instantly by title, source, category, region, or summary.</p>
-      </div>
-      <label class="search-input-wrap">
-        <span class="sr-only">Search news archive</span>
-        <input id="news-search" class="search-input" type="search" placeholder="e.g. nvidia, cooling, korea, power" />
-      </label>
-      <div id="search-meta" class="search-meta">Loaded {searchPayload.length} indexed items</div>
-      <div id="search-results" class="search-results"></div>
     </section>
 
     {hero ? (
-      <section class="hero-grid">
-        <article class="hero-card panel">
-          <div class="hero-media">
+      <section class="frontpage-grid">
+        <article class="lead-story">
+          <a class="lead-media" href={hero.detailHref} aria-label={hero.title}>
             <img src={hero.generatedImage} alt={hero.title} loading="eager" />
-            <div class="media-sheen"></div>
-          </div>
-
-          <div class="hero-content">
-            <div class="meta-strip">
-              <span class="category-badge">{hero.category || 'Infrastructure'}</span>
-              <span class="source-pill">{hero.source}</span>
-              <span class="region-pill">{hero.region || 'Global'}</span>
+          </a>
+          <div class="lead-copy">
+            <div class="story-meta">
+              <span>{hero.category || 'Infrastructure'}</span>
+              <span>{hero.source}</span>
+              <span>{hero.region || 'Global'}</span>
               <time>{hero.timeAgo}</time>
             </div>
-
             <h2>
               <a href={hero.detailHref}>{hero.title}</a>
             </h2>
-
-            <p class="summary summary-hero">{hero.summary}</p>
-
+            <p>{hero.summary}</p>
             {hero.hasExpertLens ? (
-              <section class="insight-block">
+              <div class="editor-note">
                 <span>Expert Lens</span>
                 <p>{hero.expertLensTeaser}</p>
-              </section>
-            ) : null}
-
-            {hero.tags?.length ? (
-              <div class="tag-row">
-                {hero.tags.slice(0, 6).map((tag) => (
-                  <span class="tag-pill">#{tag}</span>
-                ))}
               </div>
             ) : null}
-
-            <div class="hero-actions">
-              <a class="detail-button" href={hero.detailHref}>
-                View detail
-              </a>
-              <a class="source-cta" href={hero.sourceUrl} target="_blank" rel="noreferrer">
-                Read original source
-              </a>
-            </div>
           </div>
         </article>
 
-        <aside class="spotlight-stack">
-          {spotlight.map((item) => (
-            <article class="spotlight-card panel">
-              <div class="spotlight-meta">
-                <span class="category-badge">{item.category}</span>
-                <time>{item.timeAgo}</time>
-              </div>
-              <h3>
-                <a href={item.detailHref}>{item.title}</a>
-              </h3>
-              <p>{item.summary}</p>
-              {item.hasExpertLens ? <p class="spotlight-lens">{item.expertLensTeaser}</p> : null}
-              <div class="card-footer">
-                <a class="detail-link" href={item.detailHref}>
-                  Detail
-                </a>
-                <a class="source-cta" href={item.sourceUrl} target="_blank" rel="noreferrer">
-                  Source
-                </a>
+        <aside class="briefing-rail">
+          <div class="rail-heading">
+            <p class="eyebrow">Top Stories</p>
+            <h2>What matters now</h2>
+          </div>
+          {briefing.map((item, index) => (
+            <article class="rail-story">
+              <span class="rail-index">{String(index + 1).padStart(2, '0')}</span>
+              <div>
+                <div class="story-meta">
+                  <span>{item.category || 'Infrastructure'}</span>
+                  <time>{item.timeAgo}</time>
+                </div>
+                <h3>
+                  <a href={item.detailHref}>{item.title}</a>
+                </h3>
+                <p>{item.summary}</p>
               </div>
             </article>
           ))}
@@ -199,31 +163,38 @@ const stats = [
       </section>
     )}
 
-    <section class="feed-header">
-      <div>
-        <p class="eyebrow">Latest published cards</p>
-        <h3>Signal board</h3>
+    <section class="search-shell">
+      <div class="search-copy">
+        <p class="eyebrow">Archive Search</p>
+        <h2>Search live and archived coverage</h2>
       </div>
-      
+      <label class="search-input-wrap">
+        <span class="sr-only">Search news archive</span>
+        <input id="news-search" class="search-input" type="search" placeholder="Search topics, companies, regions, power, cooling, chips..." />
+      </label>
+      <div id="search-meta" class="search-meta">Loaded {searchPayload.length} indexed items</div>
+      <div id="search-results" class="search-results"></div>
     </section>
 
-    <section class="masonry-board">
+    <section class="feed-header">
+      <div>
+        <p class="eyebrow">Latest Dispatches</p>
+        <h2>Signal feed</h2>
+      </div>
+      <p class="feed-copy">A continuously refreshed front page for operators, investors, and infrastructure teams tracking the AI buildout.</p>
+    </section>
+
+    <section class="news-grid">
       {feed.map((item) => (
-        <article class="news-card panel">
+        <article class="news-card">
           <div class="card-media">
             <img src={item.generatedImage} alt={item.title} loading="lazy" />
-            <div class="card-media-overlay"></div>
           </div>
 
           <div class="card-content">
-            <div class="meta-row">
-              <span class="category-badge">{item.category || 'Infrastructure'}</span>
+            <div class="story-meta">
+              <span>{item.category || 'Infrastructure'}</span>
               <time>{item.timeAgo}</time>
-            </div>
-
-            <div class="meta-row meta-row-secondary">
-              <span class="source-pill">{item.source}</span>
-              <span class="region-pill">{item.region || 'Global'}</span>
             </div>
 
             <h4>
@@ -231,14 +202,6 @@ const stats = [
             </h4>
 
             <p class="summary">{item.summary}</p>
-
-            {item.tags?.length ? (
-              <div class="tag-row tag-row-compact">
-                {item.tags.slice(0, 4).map((tag) => (
-                  <span class="tag-pill">#{tag}</span>
-                ))}
-              </div>
-            ) : null}
 
             <div class="card-footer">
               <a class="detail-link" href={item.detailHref}>
