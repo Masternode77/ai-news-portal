@@ -2,6 +2,7 @@ export const KST_OFFSET_MS = 9 * 60 * 60 * 1000;
 export const REFRESH_INTERVAL_HOURS = Number(process.env.REFRESH_INTERVAL_HOURS || 8);
 
 export const MAX_ITEMS_FETCHED = Number(process.env.MAX_ITEMS_FETCHED || 30);
+export const MIN_ITEMS_PER_SOURCE_IN_POOL = Number(process.env.MIN_ITEMS_PER_SOURCE_IN_POOL || 1);
 export const DAILY_CURATION_TARGET = Number(process.env.DAILY_CURATION_TARGET || 6);
 export const ITEMS_PER_RUN = Number(process.env.ITEMS_PER_RUN || 2);
 export const LATEST_NEWS_LIMIT = Number(process.env.LATEST_NEWS_LIMIT || 30);
@@ -10,6 +11,14 @@ export const PIPELINE_USE_EXISTING_POOL = process.env.PIPELINE_USE_EXISTING_POOL
 export const PIPELINE_OFFLINE =
   process.env.PIPELINE_OFFLINE === '1' || process.env.CODEX_SANDBOX_NETWORK_DISABLED === '1';
 
+export const IMAGE_PROVIDER = process.env.IMAGE_PROVIDER || 'chatgpt';
+export const CHATGPT_IMAGE_OAUTH_ENDPOINT = process.env.CHATGPT_IMAGE_OAUTH_ENDPOINT || '';
+export const CHATGPT_IMAGE_OAUTH_ACCESS_TOKEN = process.env.CHATGPT_IMAGE_OAUTH_ACCESS_TOKEN || '';
+export const OPENAI_IMAGE_API_URL = process.env.OPENAI_IMAGE_API_URL || 'https://api.openai.com/v1/images/generations';
+export const OPENAI_IMAGE_MODEL = process.env.OPENAI_IMAGE_MODEL || 'gpt-image-1';
+export const OPENAI_IMAGE_SIZE = process.env.OPENAI_IMAGE_SIZE || '1536x1024';
+export const OPENAI_IMAGE_QUALITY = process.env.OPENAI_IMAGE_QUALITY || 'medium';
+
 export const OPENROUTER_API_URL = 'https://openrouter.ai/api/v1/chat/completions';
 export const OPENROUTER_MODEL = process.env.OPENROUTER_MODEL || 'openai/gpt-5.3-codex';
 export const OPENROUTER_SITE_URL = process.env.OPENROUTER_SITE_URL || '';
@@ -17,7 +26,7 @@ export const OPENROUTER_APP_TITLE = process.env.OPENROUTER_APP_TITLE || 'AI / Da
 export const EXPERT_LENS_MODEL = process.env.EXPERT_LENS_MODEL || 'openai/gpt-5.4';
 export const EXPERT_LENS_FALLBACK_MODEL = process.env.EXPERT_LENS_FALLBACK_MODEL || OPENROUTER_MODEL;
 
-export const GEMINI_API_URL = 'https://generativelanguage.googleapis.com/v1beta/models';
+export const GEMINI_API_URL = process.env.GEMINI_API_URL || 'https://generativelanguage.googleapis.com/v1beta/models';
 export const GEMINI_IMAGE_MODEL = process.env.GEMINI_IMAGE_MODEL || 'gemini-2.5-flash-image';
 
 export const PIPELINE_STATE_PATH = 'scripts/state/pipeline-state.json';
@@ -85,11 +94,11 @@ export const RELEVANCE_KEYWORDS = [
 
 export const FEEDS = [
   {
-    source: 'Reuters Technology',
-    url: 'https://www.reutersagency.com/feed/?best-topics=technology',
+    source: 'SiliconANGLE AI',
+    url: 'https://siliconangle.com/category/ai/feed/',
     region: 'Global',
     language: 'en',
-    defaultCategory: 'Market / M&A / Financing',
+    defaultCategory: 'AI Infrastructure (GPU/Neocloud)',
   },
   {
     source: 'Bloomberg Technology',
@@ -100,14 +109,14 @@ export const FEEDS = [
   },
   {
     source: 'NVIDIA Blog',
-    url: 'https://blogs.nvidia.com/blog/feed/',
+    url: 'https://blogs.nvidia.com/feed/',
     region: 'Global',
     language: 'en',
     defaultCategory: 'AI Infrastructure (GPU/Neocloud)',
   },
   {
     source: 'Google Cloud Blog',
-    url: 'https://cloud.google.com/blog/topics/infrastructure/rss/',
+    url: 'https://cloudblog.withgoogle.com/rss/',
     region: 'Global',
     language: 'en',
     defaultCategory: 'Hyperscalers & Cloud',
@@ -176,8 +185,8 @@ export const FEEDS = [
     defaultCategory: 'AI Infrastructure (GPU/Neocloud)',
   },
   {
-    source: 'AnandTech',
-    url: 'https://www.anandtech.com/rss/',
+    source: 'StorageReview',
+    url: 'https://www.storagereview.com/feed',
     region: 'Global',
     language: 'en',
     defaultCategory: 'AI Infrastructure (GPU/Neocloud)',
@@ -185,6 +194,41 @@ export const FEEDS = [
   {
     source: 'Semiconductor Engineering',
     url: 'https://semiengineering.com/feed/',
+    region: 'Global',
+    language: 'en',
+    defaultCategory: 'AI Infrastructure (GPU/Neocloud)',
+  },
+  {
+    source: 'Data Center Frontier',
+    url: 'https://www.datacenterfrontier.com/__rss/website-scheduled-content.xml?input=%7B%22sectionAlias%22%3A%22home%22%7D',
+    region: 'Global',
+    language: 'en',
+    defaultCategory: 'Colocation & Wholesale',
+  },
+  {
+    source: 'Data Center POST',
+    url: 'https://datacenterpost.com/feed/',
+    region: 'Global',
+    language: 'en',
+    defaultCategory: 'Colocation & Wholesale',
+  },
+  {
+    source: 'Cloudflare Blog',
+    url: 'https://blog.cloudflare.com/rss',
+    region: 'Global',
+    language: 'en',
+    defaultCategory: 'Hyperscalers & Cloud',
+  },
+  {
+    source: 'Engineering at Meta',
+    url: 'https://engineering.fb.com/feed/',
+    region: 'Global',
+    language: 'en',
+    defaultCategory: 'Hyperscalers & Cloud',
+  },
+  {
+    source: 'Hugging Face Blog',
+    url: 'https://huggingface.co/blog/feed.xml',
     region: 'Global',
     language: 'en',
     defaultCategory: 'AI Infrastructure (GPU/Neocloud)',

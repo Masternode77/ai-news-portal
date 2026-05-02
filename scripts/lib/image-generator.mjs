@@ -1,7 +1,9 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import sharp from 'sharp';
-import { GEMINI_API_URL, GEMINI_IMAGE_MODEL, PIPELINE_OFFLINE } from './constants.mjs';
+import { IMAGE_PROVIDER, PIPELINE_OFFLINE } from './constants.mjs';
+import { createImageProvider } from './image-providers/index.mjs';
+import { fetchWithTimeout } from './image-providers/shared.mjs';
 
 const OUT_DIR = path.join(process.cwd(), 'public/generated');
 
@@ -34,10 +36,43 @@ function safeText(text = '', max = 72) {
   return (text || '').replace(/[<>&"']/g, ' ').trim().slice(0, max);
 }
 
+function wrapText(text = '', maxChars = 28, maxLines = 3) {
+  const words = safeText(text, maxChars * maxLines * 2).split(/\s+/).filter(Boolean);
+  const lines = [];
+  let line = '';
+
+  for (const word of words) {
+    const next = line ? `${line} ${word}` : word;
+    if (next.length > maxChars && line) {
+      lines.push(line);
+      line = word;
+    } else {
+      line = next;
+    }
+
+    if (lines.length === maxLines) break;
+  }
+
+  if (line && lines.length < maxLines) {
+    lines.push(line);
+  }
+
+  return lines;
+}
+
+function svgTextLines(lines = [], { x, y, size, lineHeight, fill, weight = 700, family = 'Inter, Arial, sans-serif', letterSpacing = 0 }) {
+  const tspans = lines
+    .map((line, index) => `<tspan x="${x}" dy="${index === 0 ? 0 : lineHeight}">${safeText(line, 120)}</tspan>`)
+    .join('');
+
+  return `<text x="${x}" y="${y}" fill="${fill}" font-family="${family}" font-size="${size}" font-weight="${weight}" letter-spacing="${letterSpacing}">${tspans}</text>`;
+}
+
 async function writePlaceholderSvg(item) {
   const palette = colorFromId(item.id);
   const filename = `${item.id}.svg`;
   const outPath = path.join(OUT_DIR, filename);
+  const titleLines = wrapText(item.title, 30, 3);
   const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="1344" height="768" viewBox="0 0 1344 768" fill="none">
   <defs>
     <linearGradient id="bg" x1="120" y1="70" x2="1180" y2="690" gradientUnits="userSpaceOnUse">
@@ -65,28 +100,14 @@ async function writePlaceholderSvg(item) {
     <path d="M1044 112V658"/>
   </g>
   <text x="118" y="164" fill="#F6F8FF" font-family="Inter, Arial, sans-serif" font-size="20" font-weight="700" letter-spacing="0.12em">${safeText(item.category || 'AI / DATA CENTER SIGNAL')}</text>
-  <text x="118" y="236" fill="#F6F8FF" font-family="Inter, Arial, sans-serif" font-size="54" font-weight="800">${safeText(item.title, 34)}</text>
-  <text x="118" y="292" fill="#CBD8F5" font-family="Inter, Arial, sans-serif" font-size="26" font-weight="600">${safeText(item.source || 'Curated infrastructure briefing', 44)}</text>
+  ${svgTextLines(titleLines, { x: 118, y: 236, size: 50, lineHeight: 58, fill: '#F6F8FF', weight: 800 })}
+  <text x="118" y="${292 + Math.max(0, titleLines.length - 1) * 58}" fill="#CBD8F5" font-family="Inter, Arial, sans-serif" font-size="26" font-weight="600">${safeText(item.source || 'Curated infrastructure briefing', 44)}</text>
   <text x="118" y="612" fill="#C1CDE6" font-family="Inter, Arial, sans-serif" font-size="20" font-weight="600">Fallback editorial artwork generated locally</text>
   <rect width="1344" height="768" rx="40" filter="url(#noise)"/>
 </svg>`;
 
   await fs.writeFile(outPath, svg, 'utf8');
   return `/generated/${filename}`;
-}
-
-async function fetchWithTimeout(url, options = {}, timeoutMs = 20000) {
-  const controller = new AbortController();
-  const timeout = setTimeout(() => controller.abort(), timeoutMs);
-
-  try {
-    return await fetch(url, {
-      ...options,
-      signal: controller.signal,
-    });
-  } finally {
-    clearTimeout(timeout);
-  }
 }
 
 async function generateLocalPoster(item) {
@@ -111,10 +132,10 @@ async function generateLocalPoster(item) {
 
   const arrayBuffer = await response.arrayBuffer();
   const palette = colorFromId(item.id);
-  const title = safeText(item.title, 56);
+  const titleLines = wrapText(item.title, 34, 3);
   const category = safeText(item.category || 'AI Infrastructure Brief', 32);
   const source = safeText(item.source || 'Curated source', 28);
-  const summary = safeText(item.summary || item.snippet || '', 96);
+  const summaryLines = wrapText(item.summary || item.snippet || '', 72, 2);
   const filename = `${item.id}.jpg`;
   const outPath = path.join(OUT_DIR, filename);
 
@@ -130,9 +151,9 @@ async function generateLocalPoster(item) {
       <rect width="1344" height="768" fill="url(#wash)" />
       <rect x="48" y="48" width="1248" height="672" rx="34" fill="none" stroke="rgba(255,255,255,0.14)" />
       <text x="92" y="132" fill="#d8e6ff" font-family="Arial, sans-serif" font-size="24" font-weight="700" letter-spacing="2">${category}</text>
-      <text x="92" y="240" fill="#ffffff" font-family="Arial, sans-serif" font-size="62" font-weight="800">${title}</text>
-      <text x="92" y="306" fill="#d7e4fb" font-family="Arial, sans-serif" font-size="28" font-weight="500">${source}</text>
-      <text x="92" y="628" fill="#bbcae2" font-family="Arial, sans-serif" font-size="24" font-weight="500">${summary}</text>
+      ${svgTextLines(titleLines, { x: 92, y: 232, size: 56, lineHeight: 62, fill: '#ffffff', weight: 800, family: 'Arial, sans-serif' })}
+      <text x="92" y="${298 + Math.max(0, titleLines.length - 1) * 62}" fill="#d7e4fb" font-family="Arial, sans-serif" font-size="28" font-weight="500">${source}</text>
+      ${svgTextLines(summaryLines, { x: 92, y: 610, size: 24, lineHeight: 32, fill: '#bbcae2', weight: 500, family: 'Arial, sans-serif' })}
     </svg>
   `);
 
@@ -147,55 +168,6 @@ async function generateLocalPoster(item) {
     .jpeg({ quality: 88, mozjpeg: true })
     .toFile(outPath);
 
-  return `/generated/${filename}`;
-}
-
-async function generateWithGemini(item, apiKey) {
-  const response = await fetchWithTimeout(`${GEMINI_API_URL}/${GEMINI_IMAGE_MODEL}:generateContent`, {
-    method: 'POST',
-    headers: {
-      'x-goog-api-key': apiKey,
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      contents: [
-        {
-          parts: [
-            {
-              text:
-                item.imagePrompt ||
-                `Editorial enterprise technology illustration about ${item.title}. Context: ${item.articleText || item.summary || item.snippet || item.title}. No logos. No text. 16:9.`,
-            },
-          ],
-        },
-      ],
-      generationConfig: {
-        imageConfig: {
-          aspectRatio: '16:9',
-        },
-      },
-    }),
-  }, 45000);
-
-  if (!response.ok) {
-    throw new Error(`Gemini image request failed: ${response.status}`);
-  }
-
-  const payload = await response.json();
-  const parts = payload?.candidates?.[0]?.content?.parts || [];
-  const inlinePart = parts.find((part) => part.inlineData?.data);
-
-  if (!inlinePart?.inlineData?.data) {
-    throw new Error('No image bytes returned by Gemini');
-  }
-
-  const mime = inlinePart.inlineData.mimeType || 'image/png';
-  const ext = mime.includes('jpeg') ? 'jpg' : 'png';
-  const filename = `${item.id}.${ext}`;
-  const outPath = path.join(OUT_DIR, filename);
-  const bytes = Buffer.from(inlinePart.inlineData.data, 'base64');
-
-  await fs.writeFile(outPath, bytes);
   return `/generated/${filename}`;
 }
 
@@ -218,18 +190,16 @@ export async function ensureArticleImage(item) {
     return writePlaceholderSvg(item);
   }
 
-  const apiKey = process.env.GEMINI_API_KEY;
-  const wantsAiImage = Boolean(item?.forceAiImage);
+  const provider = createImageProvider();
 
-  if (apiKey && !PIPELINE_OFFLINE) {
+  if (provider && !PIPELINE_OFFLINE) {
     try {
-      return await generateWithGemini(item, apiKey);
+      return await provider.generate(item);
     } catch (error) {
-      console.error(`[pipeline] image AI fallback for ${item.id}: ${error.message}`);
-      if (wantsAiImage) {
-        return writePlaceholderSvg(item);
-      }
+      console.error(`[pipeline] ${provider.name} image fallback for ${item.id}: ${error.message}`);
     }
+  } else if (IMAGE_PROVIDER !== 'local' && !PIPELINE_OFFLINE) {
+    console.warn(`[pipeline] IMAGE_PROVIDER="${IMAGE_PROVIDER}" is not fully configured; using local image fallback`);
   }
 
   try {

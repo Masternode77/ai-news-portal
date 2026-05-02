@@ -2,6 +2,7 @@
 import Layout from '../../layouts/Layout.astro';
 import latestNews from '../../data/latest-news.json';
 import archivedNews from '../../data/archived-news.json';
+import { cleanEditorialText, displayHeadline, executiveSummaryLines } from '../../lib/editorial-display.js';
 
 export function getStaticPaths() {
   return [...latestNews, ...archivedNews]
@@ -20,27 +21,30 @@ if (!article) {
 
 const lens = article.expertLensFull || null;
 const lensTeaser = article.expertLensShort || article.expertLens || lens?.thesis || null;
+const displayTitle = displayHeadline(article);
+const detailImage = article.sourceImage || article.generatedImage || '/generated/default.svg';
 const lensSections = [
   ['What happened', lens?.whatHappened],
-  ['Why this matters', lens?.whyThisMatters],
-  ['What the market may be missing', lens?.marketMissing],
-  ['Implications for investors', lens?.investors],
-  ['Implications for operators', lens?.operators],
-  ['Implications for hyperscalers', lens?.hyperscalers],
-  ['What to watch next', lens?.watchNext],
-].filter(([, value]) => Boolean(value));
+  ['Why it matters', lens?.whyThisMatters],
+  ['The overlooked risk', lens?.marketMissing],
+  ['Investor read', lens?.investors],
+  ['Operator read', lens?.operators],
+  ['Cloud read', lens?.hyperscalers],
+  ['What to watch', lens?.watchNext],
+].map(([title, value]) => [title, cleanEditorialText(value)]).filter(([, value]) => Boolean(value));
+const executiveSummary = executiveSummaryLines(article);
 const articleBody = (lens?.finalArticleBody || article.articleText || article.snippet || article.summary || '')
   .split(/\n{2,}/)
-  .map((paragraph) => paragraph.replace(/\s+/g, ' ').trim())
+  .map((paragraph) => cleanEditorialText(paragraph))
   .filter(Boolean);
 ---
-<Layout title={article.title} description={article.summary || article.snippet || article.title}>
+<Layout title={displayTitle} description={lens?.metaDescription || article.summary || article.snippet || article.title}>
   <main class="detail-shell">
-    <a class="back-link" href="/">Back to board</a>
+    <a class="back-link" href="/">Latest board</a>
 
-    <article class="detail-card panel">
-      <div class="detail-media">
-        <img src={article.generatedImage || '/generated/default.svg'} alt={article.title} loading="eager" />
+    <article class="detail-card">
+      <div class="detail-media detail-media-top">
+        <img src={detailImage} alt={displayTitle} loading="eager" />
       </div>
 
       <div class="detail-body">
@@ -51,13 +55,32 @@ const articleBody = (lens?.finalArticleBody || article.articleText || article.sn
           <time>{new Date(article.publishedAt).toLocaleString('en-US')}</time>
         </div>
 
-        <h1>{article.title}</h1>
-        <p class="detail-summary">{article.summary || article.snippet}</p>
+        <h1>{displayTitle}</h1>
+        <p class="detail-summary">{cleanEditorialText(article.summary || article.snippet)}</p>
+
+        {executiveSummary.length ? (
+          <section class="executive-summary" aria-label="Executive summary">
+            <span>Executive Summary</span>
+            <ol>
+              {executiveSummary.map((line) => (
+                <li>{line}</li>
+              ))}
+            </ol>
+          </section>
+        ) : null}
 
         {lensTeaser ? (
           <section class="detail-lens">
-            <span>One-line thesis</span>
-            <p>{lensTeaser}</p>
+            <span>The read</span>
+            <p>{cleanEditorialText(lensTeaser)}</p>
+          </section>
+        ) : null}
+
+        {articleBody.length ? (
+          <section class="detail-section detail-article-copy">
+            {articleBody.map((paragraph) => (
+              <p>{paragraph}</p>
+            ))}
           </section>
         ) : null}
 
@@ -68,45 +91,11 @@ const articleBody = (lens?.finalArticleBody || article.articleText || article.sn
           </section>
         ))}
 
-        {lens?.headlineOptions?.length ? (
-          <section class="detail-section">
-            <h2>Headline options 5개</h2>
-            <ol class="headline-list">
-              {lens.headlineOptions.map((headline) => (
-                <li>{headline}</li>
-              ))}
-            </ol>
-          </section>
-        ) : null}
-
-        {lens?.finalHeadline ? (
-          <section class="detail-section">
-            <h2>Final headline</h2>
-            <p>{lens.finalHeadline}</p>
-          </section>
-        ) : null}
-
-        {lens?.metaDescription ? (
-          <section class="detail-section">
-            <h2>Meta description</h2>
-            <p>{lens.metaDescription}</p>
-          </section>
-        ) : null}
-
-        {articleBody.length ? (
-          <section class="detail-section">
-            <h2>Final article body</h2>
-            {articleBody.map((paragraph) => (
-              <p>{paragraph}</p>
-            ))}
-          </section>
-        ) : null}
-
         <section class="detail-section">
-          <h2>Source link</h2>
+          <h2>Source</h2>
           <p>
             <a href={lens?.sourceLink || article.sourceUrl || article.url} target="_blank" rel="noreferrer">
-              {lens?.sourceLink || article.sourceUrl || article.url}
+              Read the original report
             </a>
           </p>
         </section>

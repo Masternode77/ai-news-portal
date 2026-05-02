@@ -6,6 +6,7 @@
     "sync:dashboard-data": "node ./scripts/sync-dashboard-data.cjs",
     "dev": "astro dev",
     "pipeline": "node ./scripts/pipeline.mjs",
+    "smoke:image-provider": "IMAGE_PROVIDER=local PIPELINE_OFFLINE=1 node ./scripts/image-provider-dry-run.mjs",
     "prepare:static-images": "node ./scripts/prepare-static-images.mjs",
     "build": "npm run sync:dashboard-data && npm run prepare:static-images && astro build",
     "check": "astro check",

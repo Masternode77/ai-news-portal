@@ -17,10 +17,13 @@
    - Optional daily curation with `openai/gpt-5.3-codex`
    - Optional article summary / expert insight / tags / category / image prompt generation
 
-4. **Nano Banana image flow**
-   - Switched the default Gemini image model to `gemini-2.5-flash-image`
-   - Added cleaner editorial prompt generation and stronger SVG fallback art
+4. **ChatGPT/OpenAI-first image provider flow**
+   - Added a provider layer under `scripts/lib/image-providers/`
+   - Defaults to `IMAGE_PROVIDER=chatgpt` for an OAuth-backed ChatGPT/OpenAI runtime adapter
+   - Keeps `IMAGE_PROVIDER=openai-api` as an explicit API-key fallback path, not the default
+   - Moves Gemini / Nano Banana behind `IMAGE_PROVIDER=legacy-gemini`
    - Avoids publishing external source images as the main card art
+   - Preserves the fallback chain: configured provider, local source-image poster, SVG placeholder
 
 5. **KST scheduling**
    - GitHub Actions now runs at 00:05 / 08:05 / 16:05 KST using UTC cron entries
@@ -35,7 +38,8 @@
 - GitHub push from this environment
 - Vercel import/deploy from your account
 - Telegram photo send from your bot token
-- Live Gemini / OpenRouter API execution
+- Live ChatGPT/OpenAI image runtime or explicit OpenAI API-key fallback execution
+- Live OpenRouter API execution
 
 ## Suggested first live test
 
@@ -50,7 +54,10 @@ Then set GitHub Secrets:
 
 - `OPENROUTER_API_KEY`
 - `OPENROUTER_MODEL` (optional)
-- `GEMINI_API_KEY`
-- `GEMINI_IMAGE_MODEL` (optional)
+- `IMAGE_PROVIDER=chatgpt`
+- `CHATGPT_IMAGE_OAUTH_ENDPOINT`
+- `CHATGPT_IMAGE_OAUTH_ACCESS_TOKEN`
+- `IMAGE_PROVIDER=openai-api` and `OPENAI_API_KEY` only if API-key auth / billing is acceptable
+- `IMAGE_PROVIDER=legacy-gemini`, `GEMINI_API_KEY`, and `GEMINI_IMAGE_MODEL` only for deprecated Gemini fallback testing
 - `TELEGRAM_BOT_TOKEN` (optional)
 - `TELEGRAM_CHAT_ID` (optional)
