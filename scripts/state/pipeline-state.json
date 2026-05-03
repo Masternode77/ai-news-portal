@@ -235,7 +235,9 @@
     "67c0a5c5a00adffa",
     "b3a9961fd5097fcc",
     "0a3d8e53a949c79c",
-    "2bb0448359727852"
+    "2bb0448359727852",
+    "09bf14c891180af1",
+    "42643512f2829ad6"
   ],
   "dayPlans": {
     "2026-03-24": {
@@ -4671,15 +4673,114 @@
         "1": true,
         "2": true
       }
+    },
+    "2026-05-04": {
+      "date": "2026-05-04",
+      "createdAt": "2026-05-03T15:55:21.201Z",
+      "curatedItems": [
+        {
+          "id": "09bf14c891180af1",
+          "source": "The Register Data Centre",
+          "url": "https://go.theregister.com/feed/www.theregister.com/2026/05/03/inference_is_giving_ai_chip/",
+          "title": "Inference is giving AI chip startups a second chance to make their mark",
+          "snippet": "In a disaggregated AI world, Nvidia can be both a friend and an enemy AI adoption is reaching an inflection point as the focus shifts from training new models to serving them. For the AI startups vying for a slice of Nv…",
+          "contentText": "In a disaggregated AI world, Nvidia can be both a friend and an enemy AI adoption is reaching an inflection point as the focus shifts from training new models to serving them. For the AI startups vying for a slice of Nvidia's pie, it's now or never.…",
+          "publishedAt": "2026-05-03T13:05:11.000Z",
+          "sourceImage": null,
+          "region": "Global",
+          "language": "en",
+          "defaultCategory": "Colocation & Wholesale",
+          "score": 74
+        },
+        {
+          "id": "42643512f2829ad6",
+          "source": "Toms Hardware",
+          "url": "https://www.tomshardware.com/maker-stem/nvidia-accelerates-end-of-life-for-some-jetson-ai-processors-due-to-memory-shortages-rampocalypse-sends-older-ddr4-based-modules-to-the-great-scrapheap-in-the-sky",
+          "title": "Nvidia accelerates end-of-life for some Jetson AI processors due to memory shortages — RAMpocalypse sends older DDR4-based modules to the great scrapheap in the sky",
+          "snippet": "Nvidia is apparently discontinuing some older embedded platforms earlier than anticipated, but this is mostly about market reality finally catching up, not abrupt discontinuation.",
+          "contentText": "Nvidia is apparently discontinuing some older embedded platforms earlier than anticipated, but this is mostly about market reality finally catching up, not abrupt discontinuation.",
+          "publishedAt": "2026-05-03T14:53:08.000Z",
+          "sourceImage": "https://cdn.mos.cms.futurecdn.net/YqyE7WKzDBtHaoJrTAM6zg-1280-80.jpg",
+          "region": "Global",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "score": 55
+        },
+        {
+          "id": "c1733f95469cb12b",
+          "source": "StorageReview",
+          "url": "https://www.storagereview.com/news/google-announces-tpu-v8t-sunfish-and-tpu-v8i-zebrafish",
+          "title": "Google Announces TPU v8t Sunfish and TPU v8i Zebrafish",
+          "snippet": "At Google Cloud Next, Google announced its next-generation AI accelerators: the TPU v8t “Sunfish” for training and the TPU v8i “Zebrafish” for inference, along with its new Virgo data center fabric. From Google’s blog p…",
+          "contentText": "At Google Cloud Next, Google announced its next-generation AI accelerators: the TPU v8t &#8220;Sunfish&#8221; for training and the TPU v8i &#8220;Zebrafish&#8221; for inference, along with its new Virgo data center fabric. From Google&#8217;s blog posts, it is clear these chips are optimized for &#8220;the agentic era&#8221;: training frontier mixture-of-experts models at the hundreds-of-thousands-of-chips scale, and then serving those same models at low latency and aggressive price-per-token targets. The v8t and v8i are two architecturally distinct chips that share a host platform and a fabric but diverge on memory capacity, on-chip SRAM, interconnect topology, and on-die specialization. The v8t is built for dense matrix multiplication (matmul) at scale, while the v8i is built around KV…",
+          "publishedAt": "2026-05-01T20:51:43.000Z",
+          "sourceImage": "https://www.storagereview.com/wp-content/uploads/2026/04/Storagereview-google-accelerators-isolated-chip-view.jpg",
+          "region": "Global",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "score": 46
+        },
+        {
+          "id": "5e704981b60bd034",
+          "source": "Data Center Dynamics",
+          "url": "https://www.datacenterdynamics.com/en/opinions/protecting-telecom-operators-from-cyberattacks-is-a-matter-of-national-resilience/",
+          "title": "Protecting telecom operators from cyberattacks is a matter of national resilience",
+          "snippet": "The threat of cybersecurity must be taken seriously by telcos, or they risk damage to their reputation",
+          "contentText": "The threat of cybersecurity must be taken seriously by telcos, or they risk damage to their reputation",
+          "publishedAt": "2026-05-03T15:00:37.000Z",
+          "sourceImage": "https://media.datacenterdynamics.com/media/images/Presiden_Direktur_ITSEC_Asia_-_Pat.b54a7275.fill-750x500.jpg",
+          "region": "Global",
+          "language": "en",
+          "defaultCategory": "Colocation & Wholesale",
+          "score": 39
+        },
+        {
+          "id": "1db0cd4b192a8a0d",
+          "source": "Toms Hardware",
+          "url": "https://www.tomshardware.com/pc-components/save-usd370-on-this-amd-ryzen-9-9950x3d2-dual-edition-with-an-x870e-motherboard-and-32gb-of-ram-big-savings-for-your-next-high-end-build",
+          "title": "Save $370 on this AMD Ryzen 9 9950X3D2 Dual Edition with an X870E motherboard and 32GB of RAM — big savings for your next high-end build",
+          "snippet": "This Newegg bundle offers cutting-edge performance with practical value, combining AMD’s latest flagship CPU with high-end supporting components at a discounted price.",
+          "contentText": "This Newegg bundle offers cutting-edge performance with practical value, combining AMD’s latest flagship CPU with high-end supporting components at a discounted price.",
+          "publishedAt": "2026-05-03T14:37:58.000Z",
+          "sourceImage": "https://cdn.mos.cms.futurecdn.net/cDAWcNc7vq2DEQWgnj4tDK-1280-80.jpg",
+          "region": "Global",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "score": 39
+        },
+        {
+          "id": "47cddf5845068cfc",
+          "source": "Toms Hardware",
+          "url": "https://www.tomshardware.com/software/a-suspected-youtube-interface-bug-spikes-ram-usage-above-7-gigabytes-users-report-severe-lag-and-frozen-tabs-bug-might-be-trapping-browsers-in-an-endless-layout-loop",
+          "title": "A suspected YouTube interface bug spikes RAM usage above 7 gigabytes, users report severe lag and frozen tabs — bug might be trapping browsers in an endless layout loop",
+          "snippet": "Reports of YouTube freezing browsers and consuming massive amounts of RAM are spreading online, with developers tracing the issue to a suspected UI bug that may trigger endless layout recalculations and severe system la…",
+          "contentText": "Reports of YouTube freezing browsers and consuming massive amounts of RAM are spreading online, with developers tracing the issue to a suspected UI bug that may trigger endless layout recalculations and severe system lag.",
+          "publishedAt": "2026-05-03T14:12:47.000Z",
+          "sourceImage": "https://cdn.mos.cms.futurecdn.net/83cDsUf2Fo5e8PvNpsKoPY-1280-80.jpg",
+          "region": "Global",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "score": 38
+        }
+      ],
+      "curatedIds": [
+        "09bf14c891180af1",
+        "42643512f2829ad6",
+        "c1733f95469cb12b",
+        "5e704981b60bd034",
+        "1db0cd4b192a8a0d",
+        "47cddf5845068cfc"
+      ],
+      "publishedIds": [
+        "09bf14c891180af1",
+        "42643512f2829ad6"
+      ],
+      "slotPublications": {
+        "0": true
+      }
     }
   },
   "runHistory": [
-    {
-      "at": "2026-03-24T01:58:30.240Z",
-      "day": "2026-03-24",
-      "slot": 1,
-      "publishedCount": 0
-    },
     {
       "at": "2026-03-26T03:35:24.516Z",
       "day": "2026-03-26",
@@ -5857,7 +5958,17 @@
         "0a3d8e53a949c79c",
         "2bb0448359727852"
       ]
+    },
+    {
+      "at": "2026-05-03T15:55:21.201Z",
+      "day": "2026-05-04",
+      "slot": 0,
+      "publishedCount": 2,
+      "publishedIds": [
+        "09bf14c891180af1",
+        "42643512f2829ad6"
+      ]
     }
   ],
-  "lastRunAt": "2026-05-03T08:54:21.675Z"
+  "lastRunAt": "2026-05-03T15:55:21.201Z"
 }
