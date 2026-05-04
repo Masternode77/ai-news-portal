@@ -1,4 +1,4 @@
-import { DAILY_CURATION_TARGET, ITEMS_PER_RUN } from './constants.mjs';
+import { DAILY_CURATION_TARGET, FRESH_CANDIDATE_WINDOW_HOURS, ITEMS_PER_RUN } from './constants.mjs';
 import { kstDayKey, kstSlot } from './normalize.mjs';
 import { callOpenRouterJson } from './openrouter.mjs';
 import { rankWithDiversity } from './rank.mjs';
@@ -59,16 +59,35 @@ function fallbackCurate(ranked) {
   return selected.slice(0, DAILY_CURATION_TARGET);
 }
 
+function publishedAtMs(item) {
+  const timestamp = new Date(item.publishedAt).getTime();
+  return Number.isFinite(timestamp) ? timestamp : 0;
+}
+
+function rollingCandidates(pool, state, existingPlan, now) {
+  const publishedSet = new Set([
+    ...(state.publishedIds || []),
+    ...(existingPlan?.publishedIds || []),
+  ]);
+  const cutoffMs = now.getTime() - FRESH_CANDIDATE_WINDOW_HOURS * 60 * 60 * 1000;
+  const ranked = rankWithDiversity(pool).filter((item) => !publishedSet.has(item.id));
+  const fresh = ranked.filter((item) => publishedAtMs(item) >= cutoffMs);
+
+  if (fresh.length >= ITEMS_PER_RUN) {
+    return fresh;
+  }
+
+  const freshIds = new Set(fresh.map((item) => item.id));
+  return [
+    ...fresh,
+    ...ranked.filter((item) => !freshIds.has(item.id)),
+  ];
+}
+
 export async function planForToday(pool, state, now = new Date()) {
   const key = kstDayKey(now);
   const existingPlan = state.dayPlans[key];
-
-  if (existingPlan?.curatedItems?.length >= DAILY_CURATION_TARGET) {
-    return { key, plan: existingPlan };
-  }
-
-  const publishedSet = new Set(state.publishedIds || []);
-  const ranked = rankWithDiversity(pool).filter((item) => !publishedSet.has(item.id));
+  const ranked = rollingCandidates(pool, state, existingPlan, now);
   const selectedIds = (await curateWithLlm(ranked)) || fallbackCurate(ranked);
   const curatedItems = selectedIds
     .map((id) => ranked.find((item) => item.id === id))
@@ -77,7 +96,9 @@ export async function planForToday(pool, state, now = new Date()) {
 
   const plan = {
     date: key,
-    createdAt: now.toISOString(),
+    createdAt: existingPlan?.createdAt || now.toISOString(),
+    refreshedAt: now.toISOString(),
+    candidateWindowHours: FRESH_CANDIDATE_WINDOW_HOURS,
     curatedItems,
     curatedIds: curatedItems.map((item) => item.id),
     publishedIds: existingPlan?.publishedIds || [],
