@@ -251,7 +251,9 @@
     "71695f1e8a42e1a6",
     "32b70fcdf635bcac",
     "962233ec49b4ebf4",
-    "31238876627c6f57"
+    "31238876627c6f57",
+    "038ed22e4e071a9e",
+    "5682daf625803504"
   ],
   "dayPlans": {
     "2026-03-24": {
@@ -4915,31 +4917,45 @@
     "2026-05-06": {
       "date": "2026-05-06",
       "createdAt": "2026-05-05T16:47:20.741Z",
-      "refreshedAt": "2026-05-05T23:51:16.293Z",
+      "refreshedAt": "2026-05-06T09:33:40.497Z",
       "candidateWindowHours": 24,
       "curatedItems": [
         {
-          "id": "962233ec49b4ebf4",
-          "source": "Google Cloud Blog",
-          "url": "https://cloud.google.com/blog/topics/public-sector/public-sector-momentum-and-mission-impact-at-google-cloud-next-26/",
-          "title": "Public sector momentum and mission impact at Google Cloud Next ‘26",
-          "snippet": "The agentic era is here, and the public sector is at the forefront of leading this transformation. At Google Cloud Next ’26, it was clear that academia and public sector organizations are no longer just exploring the po…",
-          "contentText": "The agentic era is here, and the public sector is at the forefront of leading this transformation. At Google Cloud Next ’26, it was clear that academia and public sector organizations are no longer just exploring the possibilities of AI; they are actively scaling it across their organizations to drive tangible mission impact. From the main stage to the show floor, we featured over 40+ inspiring public sector customers and partner speakers who shared how AI and agents are empowering their workforces, unlocking new levels of productivity, and transforming how services are delivered. Let’s take a closer look at the public sector sessions and activations that brought the agentic era to life at Google Cloud Next '26. The blueprint for agentic transformation We were honored to bring together so…",
-          "publishedAt": "2026-05-05T21:00:00.000Z",
-          "sourceImage": "https://storage.googleapis.com/gweb-cloudblog-publish/images/GCNEXT2026_0423_134918-_ALIVE_1.max-600x600.jpg",
+          "id": "038ed22e4e071a9e",
+          "source": "Toms Hardware",
+          "url": "https://www.tomshardware.com/tech-industry/artificial-intelligence/denmark-presses-pause-on-new-data-center-grid-connections-as-total-requests-hit-60-gw-nordic-nation-is-the-latest-to-put-the-brakes-on-ai-buildouts",
+          "title": "Denmark presses pause on new data center grid connections as total requests hit 60 GW — Nordic nation is the latest to put the brakes on AI buildouts",
+          "snippet": "Denmark's Energinet grid operator has pressed pause on new connection requests in the country as potential new data centers and other installations put total demands of up to 60 GW on its docket.",
+          "contentText": "Denmark's Energinet grid operator has pressed pause on new connection requests in the country as potential new data centers and other installations put total demands of up to 60 GW on its docket.",
+          "publishedAt": "2026-05-06T09:30:00.000Z",
+          "sourceImage": "https://cdn.mos.cms.futurecdn.net/rhNoeoSe4dfRJcHFM2sFsb-1280-80.jpg",
           "region": "Global",
           "language": "en",
-          "defaultCategory": "Hyperscalers & Cloud",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
           "score": 66
         },
         {
-          "id": "31238876627c6f57",
+          "id": "5682daf625803504",
+          "source": "Bloomberg Technology",
+          "url": "https://www.bloomberg.com/news/videos/2026-05-06/ai-is-pushing-chipmaking-to-its-limits",
+          "title": "AI Is Pushing Chipmaking to Its Limits",
+          "snippet": "Semiconductors power modern technology, from AI to everyday devices. Now, global tensions and rising demand are forcing the chip supply chain to adapt. (Source: Bloomberg)",
+          "contentText": "Semiconductors power modern technology, from AI to everyday devices. Now, global tensions and rising demand are forcing the chip supply chain to adapt. (Source: Bloomberg)",
+          "publishedAt": "2026-05-06T08:00:04.000Z",
+          "sourceImage": "https://assets.bwbx.io/images/users/iqjWHBFdfxIU/iNLgBbwLO.WQ/v3/1200x-1.jpg",
+          "region": "Global",
+          "language": "en",
+          "defaultCategory": "Hyperscalers & Cloud",
+          "score": 63
+        },
+        {
+          "id": "11cc52e6f30e4db5",
           "source": "Semiconductor Engineering",
-          "url": "https://semiengineering.com/gpu-power-prediction-tool-for-ai-workloads-mit-ibm/",
-          "title": "GPU Power Prediction Tool for AI Workloads (MIT, IBM)",
-          "snippet": "A new technical paper, “EnergAIzer: Fast and Accurate GPU Power Estimation Framework for AI Workloads,” was published by researchers at MIT and IBM Research. Abstract “As AI workloads drive increases in datacenter power…",
-          "contentText": "A new technical paper, &#8220;EnergAIzer: Fast and Accurate GPU Power Estimation Framework for AI Workloads,&#8221; was published by researchers at MIT and IBM Research. Abstract &#8220;As AI workloads drive increases in datacenter power consumption, accurate GPU power estimation is critical for proactive power management. However, existing power models face a scalability bottleneck not in the modeling techniques themselves, but in obtaining the hardware utilization inputs they require. Conventional approaches rely on either costly simulation or hardware profiling, which makes them impractical when rapid predictions are required. This work presents EnergAIzer, which addresses this scalability bottleneck by developing a lightweight solution to predict utilization inputs, reducing the estim…",
-          "publishedAt": "2026-05-05T20:45:14.000Z",
+          "url": "https://semiengineering.com/hardware-from-specifications-using-ai/",
+          "title": "Hardware From Specifications Using AI",
+          "snippet": "Can AI really generate hardware from specifications? It may not matter, because that's only a small part of the problem. The post Hardware From Specifications Using AI appeared first on Semiconductor Engineering.",
+          "contentText": "There is a lot of excitement these days surrounding the idea that AI could make it possible to go from a specification to a design with absolutely no hardware skills. Well, get in line, because this is the umpteenth potential technology that was going to make that possible. Don&#8217;t get me wrong, it just might do it, but will this be an implementation that is reliable, have decent performance, use the minimum possible energy, be secure from hacks, work under extreme conditions, be cost effective — and have all the software necessary to turn it from a piece of silicon into a viable product? Thirty years ago, I worked on products that were designed to go from a specification, enable hardware/software partitioning onto a predefined platform, and then enable the hardware to be synthesized…",
+          "publishedAt": "2026-05-06T07:05:41.000Z",
           "sourceImage": null,
           "region": "Global",
           "language": "en",
@@ -4947,18 +4963,18 @@
           "score": 62
         },
         {
-          "id": "ca97e13657e187e0",
-          "source": "Bloomberg Technology",
-          "url": "https://www.bloomberg.com/news/videos/2026-05-05/amd-gives-upbeat-forecast-super-micro-jumps-on-outlook-video",
-          "title": "AMD Gives Upbeat Forecast, Super Micro Jumps on Outlook",
-          "snippet": "Advanced Micro Devices gave a strong forecast for the current period while Super Micro Computer shares gained in extended trading after the company reported improved margins. Michael Shepard reports on \"Balance of Power…",
-          "contentText": "Advanced Micro Devices gave a strong forecast for the current period while Super Micro Computer shares gained in extended trading after the company reported improved margins. Michael Shepard reports on \"Balance of Power: Evening Edition.\" (Source: Bloomberg)",
-          "publishedAt": "2026-05-05T21:27:29.000Z",
-          "sourceImage": "https://assets.bwbx.io/images/users/iqjWHBFdfxIU/iz3DBcdgk7OM/v3/1200x-1.jpg",
+          "id": "fb08b10647a9ab36",
+          "source": "TechCrunch AI",
+          "url": "https://techcrunch.com/2026/05/05/peter-sarlins-qutwo-reaches-380m-valuation-in-angel-round/",
+          "title": "Peter Sarlin’s QuTwo reaches $380M valuation in angel round",
+          "snippet": "QyTw0, the Finnish AI lab founded by former AMD Silo AI CEO Peter Sarlin, is now valued at €325 million (approximately $380 million) after raising a €25 million angel round ($29 million). It's a sign of enduring tailwin…",
+          "contentText": "QyTw0, the Finnish AI lab founded by former AMD Silo AI CEO Peter Sarlin, is now valued at €325 million (approximately $380 million) after raising a €25 million angel round ($29 million). It's a sign of enduring tailwinds for AI, quantum computing, and sovereign tech, especially for Europe-made companies.",
+          "publishedAt": "2026-05-06T06:47:12.000Z",
+          "sourceImage": null,
           "region": "Global",
           "language": "en",
-          "defaultCategory": "Hyperscalers & Cloud",
-          "score": 58
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "score": 54
         },
         {
           "id": "168e33f5b3d3ffb9",
@@ -4972,68 +4988,47 @@
           "region": "Global",
           "language": "en",
           "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
-          "score": 58
+          "score": 52
         },
         {
-          "id": "5e947eea7d8df135",
-          "source": "Data Center Frontier",
-          "url": "https://www.datacenterfrontier.com/energy/article/55372397/federal-shift-build-fast-pay-your-way-washingtons-ai-infrastructure-doctrinedata-center-and-ai-infrastructure-with-strategic-support-and-regulation",
-          "title": "Build Fast, Pay Your Way: Washington’s AI Infrastructure Doctrine",
-          "snippet": "Washington is accelerating AI data center development while enforcing a new rule: hyperscalers must fund the power, transmission, and infrastructure required to support it, resetting how projects are built, financed, an…",
-          "contentText": "Washington is accelerating AI data center development while enforcing a new rule: hyperscalers must fund the power, transmission, and infrastructure required to support it, resetting how projects are built, financed, and approved.",
-          "publishedAt": "2026-05-05T09:48:28.000Z",
-          "sourceImage": "https://img.datacenterfrontier.com/files/base/ebm/datacenterfrontier/image/2026/05/69f9bc6e6567573b9cf4f6df-dreamstime_xxl_359540868.png",
+          "id": "2bb86d6f4cbaa9f4",
+          "source": "Data Center Knowledge",
+          "url": "https://www.datacenterknowledge.com/compliance/federal-data-center-requirements-a-guide-for-upgrading-existing-facilities",
+          "title": "Federal Data Center Requirements: A Guide for Upgrading Existing Facilities",
+          "snippet": "Federal data centers require both facility-level certifications and separate government authorization for each system or service that runs inside them.",
+          "contentText": "Federal data centers require both facility-level certifications and separate government authorization for each system or service that runs inside them.",
+          "publishedAt": "2026-05-06T09:00:00.000Z",
+          "sourceImage": "https://eu-images.contentstack.com/v3/assets/blt8eb3cdfc1fce5194/blt36091da226ea01c7/69fa57b9405f80b21c2e4b1a/us_flag_in_data_center.png?width=1280&auto=webp&quality=80&disable=upscale",
           "region": "Global",
           "language": "en",
           "defaultCategory": "Colocation & Wholesale",
-          "score": 56
-        },
-        {
-          "id": "cb2403c2cadbb1b4",
-          "source": "TechCrunch AI",
-          "url": "https://techcrunch.com/2026/05/05/sap-bets-1-16b-on-18-month-old-german-ai-lab-and-says-yes-to-nemoclaw/",
-          "title": "SAP bets $1.16B on 18-month-old German AI lab and says yes to NemoClaw",
-          "snippet": "SAP plans to buy German AI startup Prior Labs and invest heavily in it. It is also prohibiting customers' agents use to a select few like Nvidia's NemoClaw.",
-          "contentText": "SAP plans to buy German AI startup Prior Labs and invest heavily in it. It is also prohibiting customers' agents use to a select few like Nvidia's NemoClaw.",
-          "publishedAt": "2026-05-05T23:50:10.000Z",
-          "sourceImage": null,
-          "region": "Global",
-          "language": "en",
-          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
-          "score": 55
+          "score": 51
         }
       ],
       "curatedIds": [
-        "962233ec49b4ebf4",
-        "31238876627c6f57",
-        "ca97e13657e187e0",
+        "038ed22e4e071a9e",
+        "5682daf625803504",
+        "11cc52e6f30e4db5",
+        "fb08b10647a9ab36",
         "168e33f5b3d3ffb9",
-        "5e947eea7d8df135",
-        "cb2403c2cadbb1b4"
+        "2bb86d6f4cbaa9f4"
       ],
       "publishedIds": [
         "71695f1e8a42e1a6",
         "32b70fcdf635bcac",
         "962233ec49b4ebf4",
-        "31238876627c6f57"
+        "31238876627c6f57",
+        "038ed22e4e071a9e",
+        "5682daf625803504"
       ],
       "slotPublications": {
         "0": true,
-        "1": true
+        "1": true,
+        "2": true
       }
     }
   },
   "runHistory": [
-    {
-      "at": "2026-03-27T23:35:40.498Z",
-      "day": "2026-03-28",
-      "slot": 1,
-      "publishedCount": 2,
-      "publishedIds": [
-        "a59c35d2ca95ea26",
-        "60ba8acf08996c5a"
-      ]
-    },
     {
       "at": "2026-03-28T07:50:51.905Z",
       "day": "2026-03-28",
@@ -6215,7 +6210,17 @@
         "962233ec49b4ebf4",
         "31238876627c6f57"
       ]
+    },
+    {
+      "at": "2026-05-06T09:33:40.497Z",
+      "day": "2026-05-06",
+      "slot": 2,
+      "publishedCount": 2,
+      "publishedIds": [
+        "038ed22e4e071a9e",
+        "5682daf625803504"
+      ]
     }
   ],
-  "lastRunAt": "2026-05-05T23:51:16.293Z"
+  "lastRunAt": "2026-05-06T09:33:40.497Z"
 }
