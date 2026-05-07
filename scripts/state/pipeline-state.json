@@ -261,7 +261,9 @@
     "526db143efea396f",
     "7c73ee50e0a85096",
     "5c3ad4989e1f7056",
-    "56a5fd6cc9a86f35"
+    "56a5fd6cc9a86f35",
+    "61d7aa8def75634d",
+    "959a645ecc1fe069"
   ],
   "dayPlans": {
     "2026-03-24": {
@@ -5151,36 +5153,22 @@
     "2026-05-08": {
       "date": "2026-05-08",
       "createdAt": "2026-05-07T16:58:35.542Z",
-      "refreshedAt": "2026-05-07T16:58:35.542Z",
+      "refreshedAt": "2026-05-07T23:55:05.936Z",
       "candidateWindowHours": 24,
       "curatedItems": [
         {
-          "id": "5c3ad4989e1f7056",
-          "source": "StorageReview",
-          "url": "https://www.storagereview.com/news/amd-instinct-mi350p-enterprise-pcie-ai-inference-returns-to-standard-servers",
-          "title": "AMD Instinct MI350P: Enterprise PCIe AI Inference Returns to Standard Servers",
-          "snippet": "AMD has announced the Instinct MI350P, a PCIe accelerator aimed at enterprises that want on-premises AI inference without rebuilding their data center. The card is a dual-slot, full-height, full-length design built for…",
-          "contentText": "AMD has announced the Instinct MI350P, a PCIe accelerator aimed at enterprises that want on-premises AI inference without rebuilding their data center. The card is a dual-slot, full-height, full-length design built for standard air-cooled servers. It is also the first time in nearly four years that AMD has put a current-generation Instinct chip into a form factor that drops into a normal server. The PCIe Instinct line had effectively gone quiet after the MI210 shipped in early 2022. Every generation since (MI300X, MI325X, and the OAM MI350X) has been an OAM socketed module on a Universal Baseboard, requiring a purpose-built chassis with the power delivery and airflow for eight 1,000W-class accelerators in a single tray. That works for hyperscalers buying GPUs by the rack. It does not work…",
-          "publishedAt": "2026-05-07T16:53:08.000Z",
-          "sourceImage": "https://www.storagereview.com/wp-content/uploads/2026/05/AMD-MI350P-e1778168747307.jpg",
+          "id": "61d7aa8def75634d",
+          "source": "Toms Hardware",
+          "url": "https://www.tomshardware.com/pc-components/gpus/amd-announces-mi350p-pcie-ai-accelerator-card-with-144gb-of-hbm3e-roughly-40-percent-faster-in-fp16-and-fp8-theoretical-compute-compared-to-nvidias-h200-nvl-competitor",
+          "title": "AMD announces MI350P PCIe AI accelerator card with 144GB of HBM3E — roughly 40% faster in FP16 and FP8 theoretical compute compared to Nvidia's H200 NVL competitor",
+          "snippet": "AMD launches a new MI350P PCIe AI-accelerator card with half the cores and memory of its flagship Instinct MI355X GPU. The new card provides customers with a drop-in upgrade solution for existing air-cooled servers.",
+          "contentText": "AMD launches a new MI350P PCIe AI-accelerator card with half the cores and memory of its flagship Instinct MI355X GPU. The new card provides customers with a drop-in upgrade solution for existing air-cooled servers.",
+          "publishedAt": "2026-05-07T19:07:58.000Z",
+          "sourceImage": "https://cdn.mos.cms.futurecdn.net/6jbHyzPsPmMudxSVmcRXfS-1280-80.jpg",
           "region": "Global",
           "language": "en",
           "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
-          "score": 88
-        },
-        {
-          "id": "56a5fd6cc9a86f35",
-          "source": "Data Center POST",
-          "url": "https://datacenterpost.com/duos-edge-ai-expands-south-texas-footprint-with-corpus-christi-edge-data-center-deployment/",
-          "title": "Duos Edge AI Expands South Texas Footprint with Corpus Christi Edge Data Center Deployment",
-          "snippet": "TL;DR New deployment completed: Duos Edge AI launched its Corpus Christi Edge Data Center in South Texas. Built for local demand: The facility adds more than 450kW of critical IT load capacity for AI, network, and disas…",
-          "contentText": "TL;DR New deployment completed: Duos Edge AI launched its Corpus Christi Edge Data Center in South Texas. Built for local demand: The facility adds more than 450kW of critical IT load capacity for AI, network, and disaster recovery needs. Bigger regional impact: The project strengthens Duos’ edge infrastructure footprint and supports digital growth in the region. # # # Duos Technologies Group Inc . (Nasdaq: DUOT), through Duos Edge AI , Inc., has announced the deployment of a newly operational Edge Data Center in Corpus Christi, Texas. The facility strengthens digital infrastructure in South Texas and supports carriers, enterprises, healthcare organizations, and other local users that need secure, low-latency computing closer to where data is created and consumed. The Corpus Christi deplo…",
-          "publishedAt": "2026-05-07T16:00:03.000Z",
-          "sourceImage": "https://d3qut6qyo6tw2j.cloudfront.net/bin/uploads/2026/05/07104343/DUOS-CC-PR-Blog-5.7.26-1024x512.png",
-          "region": "Global",
-          "language": "en",
-          "defaultCategory": "Colocation & Wholesale",
-          "score": 62
+          "score": 66
         },
         {
           "id": "959a645ecc1fe069",
@@ -5197,76 +5185,83 @@
           "score": 59
         },
         {
-          "id": "b26dae902cb70f2a",
-          "source": "Toms Hardware",
-          "url": "https://www.tomshardware.com/pc-components/pc-cases/lian-lis-new-dk07-wood-motorized-standing-desk-doubles-as-a-dual-pc-chassis-with-support-for-e-atx-systems-and-massive-cooling-setups-five-new-wood-finished-models-are-available-now",
-          "title": "Lian Li’s new DK07 Wood motorized standing desk doubles as a dual-PC chassis with support for E-ATX systems and massive cooling setups — five new wood-finished models are available now",
-          "snippet": "The updated version adds a dark walnut finish while retaining support for dual systems, large GPUs, and extensive cooling setups.",
-          "contentText": "The updated version adds a dark walnut finish while retaining support for dual systems, large GPUs, and extensive cooling setups.",
-          "publishedAt": "2026-05-07T15:23:07.000Z",
-          "sourceImage": "https://cdn.mos.cms.futurecdn.net/PybMfGdgoXxKVhguk2JbyD-1280-80.jpg",
+          "id": "915f2abaac934208",
+          "source": "Data Center Knowledge",
+          "url": "https://www.datacenterknowledge.com/business/nvidia-places-massive-ai-infrastructure-bet-on-iren-s-5-gw-pipeline",
+          "title": "Nvidia Places Massive AI Infrastructure Bet on IREN’s 5 GW Pipeline",
+          "snippet": "Nvidia and IREN are targeting up to 5 GW of AI infrastructure deployment, with the Sweetwater, Texas campus positioned as a flagship site for Nvidia’s DSX AI factory architecture.",
+          "contentText": "Nvidia and IREN are targeting up to 5 GW of AI infrastructure deployment, with the Sweetwater, Texas campus positioned as a flagship site for Nvidia’s DSX AI factory architecture.",
+          "publishedAt": "2026-05-07T23:12:17.000Z",
+          "sourceImage": "https://eu-images.contentstack.com/v3/assets/blt8eb3cdfc1fce5194/blte8d3ffc226fac808/69fd1dbbd7761541838a48fd/2R53K60.jpg?width=1280&auto=webp&quality=80&disable=upscale",
           "region": "Global",
           "language": "en",
-          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "defaultCategory": "Colocation & Wholesale",
           "score": 59
         },
         {
-          "id": "b7a99a6dd8f3ad96",
-          "source": "Bloomberg Technology",
-          "url": "https://www.bloomberg.com/news/videos/2026-05-07/arm-ceo-sees-ai-demand-while-smartphone-business-slumps-video",
-          "title": "Arm CEO Sees AI Demand While Smartphone Business Slumps",
-          "snippet": "Rene Haas, chief executive officer of Arm Holdings Plc, says demand for AI-related products is buoying the company amid a slowdown in its smartphone business. He speaks with Caroline Hyde on “Bloomberg Tech.” (Source: B…",
-          "contentText": "Rene Haas, chief executive officer of Arm Holdings Plc, says demand for AI-related products is buoying the company amid a slowdown in its smartphone business. He speaks with Caroline Hyde on “Bloomberg Tech.” (Source: Bloomberg)",
-          "publishedAt": "2026-05-07T16:31:57.000Z",
-          "sourceImage": "https://assets.bwbx.io/images/users/iqjWHBFdfxIU/iphaqLcPpALw/v3/1200x-1.jpg",
+          "id": "9babb21149e3fe73",
+          "source": "NVIDIA Blog",
+          "url": "https://blogs.nvidia.com/blog/energy-secretary-chris-wright-ian-buck/",
+          "title": "Powering the Next American Century: US Energy Secretary Chris Wright and NVIDIA’s Ian Buck on the Genesis Mission",
+          "snippet": "AI will help build the energy it needs. That’s the case U.S. Energy Secretary Chris Wright and NVIDIA Vice President of Hyperscale and High-Performance Computing Ian Buck made Thursday morning at the SCSP AI+ Expo. The…",
+          "contentText": "AI will help build the energy it needs. That’s the case U.S. Energy Secretary Chris Wright and NVIDIA Vice President of Hyperscale and High-Performance Computing Ian Buck made Thursday morning at the SCSP AI+ Expo. The 30-minute fireside chat, moderated by SCSP president Ylli Bajraktari, was called “Powering the Next American Century.” Their argument: American leadership in AI runs through American leadership in energy. “Energy is life,” Wright said. “The more energy you have, the more affordable energy you have, the more opportunities you have in your society.” The Genesis Mission — the U.S. Department of Energy (DOE)’s effort to apply AI to scientific discovery — is where that case meets execution. NVIDIA is among the DOE partners on the mission, building on what Buck called two decades…",
+          "publishedAt": "2026-05-07T19:14:38.000Z",
+          "sourceImage": "https://blogs.nvidia.com/wp-content/uploads/2019/06/DC-skyline.jpg",
           "region": "Global",
           "language": "en",
-          "defaultCategory": "Hyperscalers & Cloud",
-          "score": 58
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "score": 54
         },
         {
-          "id": "b69bbb772bb38d3c",
-          "source": "Bloomberg Technology",
-          "url": "https://www.bloomberg.com/news/articles/2026-05-07/arm-sees-explosion-in-cpu-demand-on-ai-amid-smartphone-slump",
-          "title": "Arm Sees ‘Explosion’ in CPU Demand on AI Amid Smartphone Slump",
-          "snippet": "Arm Holdings Plc Chief Executive Officer Rene Haas said the company is experiencing an “explosion of demand” for its CPU architecture driven by AI workloads in data centers, with orders doubling to $2 billion in just fi…",
-          "contentText": "Arm Holdings Plc Chief Executive Officer Rene Haas said the company is experiencing an “explosion of demand” for its CPU architecture driven by AI workloads in data centers, with orders doubling to $2 billion in just five weeks.",
-          "publishedAt": "2026-05-07T16:06:06.000Z",
-          "sourceImage": "https://assets.bwbx.io/images/users/iqjWHBFdfxIU/iMWB_6riYHgM/v1/1200x-1.jpg",
+          "id": "093dd26563e49643",
+          "source": "TechCrunch AI",
+          "url": "https://techcrunch.com/2026/05/07/voi-founders-new-ai-startup-pit-has-become-the-latest-rising-star-out-of-stockholm/",
+          "title": "Voi founders’ new AI startup Pit has become the latest rising star out of Stockholm",
+          "snippet": "AI startup Pit is led by the co-founders of European scooter giant Voi and backed by a16z, which is leading the startup’s $16 million seed round.",
+          "contentText": "AI startup Pit is led by the co-founders of European scooter giant Voi and backed by a16z, which is leading the startup’s $16 million seed round.",
+          "publishedAt": "2026-05-07T21:02:11.000Z",
+          "sourceImage": null,
           "region": "Global",
           "language": "en",
-          "defaultCategory": "Hyperscalers & Cloud",
-          "score": 58
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "score": 51
+        },
+        {
+          "id": "30e4b7bd231b44e6",
+          "source": "TechCrunch AI",
+          "url": "https://techcrunch.com/2026/05/07/openai-launches-new-voice-intelligence-features-in-its-api/",
+          "title": "OpenAI launches new voice intelligence features in its API",
+          "snippet": "The new features could be handy for customer service systems, but OpenAI says they have applications that work across a variety of other fields, including education and creator platforms.",
+          "contentText": "The new features could be handy for customer service systems, but OpenAI says they have applications that work across a variety of other fields, including education and creator platforms.",
+          "publishedAt": "2026-05-07T22:24:50.000Z",
+          "sourceImage": null,
+          "region": "Global",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "score": 50
         }
       ],
       "curatedIds": [
-        "5c3ad4989e1f7056",
-        "56a5fd6cc9a86f35",
+        "61d7aa8def75634d",
         "959a645ecc1fe069",
-        "b26dae902cb70f2a",
-        "b7a99a6dd8f3ad96",
-        "b69bbb772bb38d3c"
+        "915f2abaac934208",
+        "9babb21149e3fe73",
+        "093dd26563e49643",
+        "30e4b7bd231b44e6"
       ],
       "publishedIds": [
         "5c3ad4989e1f7056",
-        "56a5fd6cc9a86f35"
+        "56a5fd6cc9a86f35",
+        "61d7aa8def75634d",
+        "959a645ecc1fe069"
       ],
       "slotPublications": {
-        "0": true
+        "0": true,
+        "1": true
       }
     }
   },
   "runHistory": [
-    {
-      "at": "2026-03-29T15:40:06.760Z",
-      "day": "2026-03-30",
-      "slot": 0,
-      "publishedCount": 2,
-      "publishedIds": [
-        "c7955d7d73e21503",
-        "743211765e83619d"
-      ]
-    },
     {
       "at": "2026-03-29T23:36:00.205Z",
       "day": "2026-03-30",
@@ -6448,7 +6443,17 @@
         "5c3ad4989e1f7056",
         "56a5fd6cc9a86f35"
       ]
+    },
+    {
+      "at": "2026-05-07T23:55:05.936Z",
+      "day": "2026-05-08",
+      "slot": 1,
+      "publishedCount": 2,
+      "publishedIds": [
+        "61d7aa8def75634d",
+        "959a645ecc1fe069"
+      ]
     }
   ],
-  "lastRunAt": "2026-05-07T16:58:35.542Z"
+  "lastRunAt": "2026-05-07T23:55:05.936Z"
 }
