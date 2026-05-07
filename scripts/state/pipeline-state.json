@@ -259,7 +259,9 @@
     "9fe1aa13c658db2f",
     "1bede29af92b661d",
     "526db143efea396f",
-    "7c73ee50e0a85096"
+    "7c73ee50e0a85096",
+    "5c3ad4989e1f7056",
+    "56a5fd6cc9a86f35"
   ],
   "dayPlans": {
     "2026-03-24": {
@@ -5145,19 +5147,116 @@
         "1": true,
         "2": true
       }
+    },
+    "2026-05-08": {
+      "date": "2026-05-08",
+      "createdAt": "2026-05-07T16:58:35.542Z",
+      "refreshedAt": "2026-05-07T16:58:35.542Z",
+      "candidateWindowHours": 24,
+      "curatedItems": [
+        {
+          "id": "5c3ad4989e1f7056",
+          "source": "StorageReview",
+          "url": "https://www.storagereview.com/news/amd-instinct-mi350p-enterprise-pcie-ai-inference-returns-to-standard-servers",
+          "title": "AMD Instinct MI350P: Enterprise PCIe AI Inference Returns to Standard Servers",
+          "snippet": "AMD has announced the Instinct MI350P, a PCIe accelerator aimed at enterprises that want on-premises AI inference without rebuilding their data center. The card is a dual-slot, full-height, full-length design built for…",
+          "contentText": "AMD has announced the Instinct MI350P, a PCIe accelerator aimed at enterprises that want on-premises AI inference without rebuilding their data center. The card is a dual-slot, full-height, full-length design built for standard air-cooled servers. It is also the first time in nearly four years that AMD has put a current-generation Instinct chip into a form factor that drops into a normal server. The PCIe Instinct line had effectively gone quiet after the MI210 shipped in early 2022. Every generation since (MI300X, MI325X, and the OAM MI350X) has been an OAM socketed module on a Universal Baseboard, requiring a purpose-built chassis with the power delivery and airflow for eight 1,000W-class accelerators in a single tray. That works for hyperscalers buying GPUs by the rack. It does not work…",
+          "publishedAt": "2026-05-07T16:53:08.000Z",
+          "sourceImage": "https://www.storagereview.com/wp-content/uploads/2026/05/AMD-MI350P-e1778168747307.jpg",
+          "region": "Global",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "score": 88
+        },
+        {
+          "id": "56a5fd6cc9a86f35",
+          "source": "Data Center POST",
+          "url": "https://datacenterpost.com/duos-edge-ai-expands-south-texas-footprint-with-corpus-christi-edge-data-center-deployment/",
+          "title": "Duos Edge AI Expands South Texas Footprint with Corpus Christi Edge Data Center Deployment",
+          "snippet": "TL;DR New deployment completed: Duos Edge AI launched its Corpus Christi Edge Data Center in South Texas. Built for local demand: The facility adds more than 450kW of critical IT load capacity for AI, network, and disas…",
+          "contentText": "TL;DR New deployment completed: Duos Edge AI launched its Corpus Christi Edge Data Center in South Texas. Built for local demand: The facility adds more than 450kW of critical IT load capacity for AI, network, and disaster recovery needs. Bigger regional impact: The project strengthens Duos’ edge infrastructure footprint and supports digital growth in the region. # # # Duos Technologies Group Inc . (Nasdaq: DUOT), through Duos Edge AI , Inc., has announced the deployment of a newly operational Edge Data Center in Corpus Christi, Texas. The facility strengthens digital infrastructure in South Texas and supports carriers, enterprises, healthcare organizations, and other local users that need secure, low-latency computing closer to where data is created and consumed. The Corpus Christi deplo…",
+          "publishedAt": "2026-05-07T16:00:03.000Z",
+          "sourceImage": "https://d3qut6qyo6tw2j.cloudfront.net/bin/uploads/2026/05/07104343/DUOS-CC-PR-Blog-5.7.26-1024x512.png",
+          "region": "Global",
+          "language": "en",
+          "defaultCategory": "Colocation & Wholesale",
+          "score": 62
+        },
+        {
+          "id": "959a645ecc1fe069",
+          "source": "Data Center Dynamics",
+          "url": "https://www.datacenterdynamics.com/en/opinions/in-rack-cdu-v-floor-mounted-cdu-which-option-is-better-for-your-data-center/",
+          "title": "Sponsored: In-rack CDU v. floor-mounted CDU: Which option is better for your data center?",
+          "snippet": "Making a choice comes down to the specific requirements of the liquid cooling architecture in each implementation",
+          "contentText": "Making a choice comes down to the specific requirements of the liquid cooling architecture in each implementation",
+          "publishedAt": "2026-05-09T07:00:00.000Z",
+          "sourceImage": "https://media.datacenterdynamics.com/media/images/headshot.f2033fb2.fill-750x500.png",
+          "region": "Global",
+          "language": "en",
+          "defaultCategory": "Colocation & Wholesale",
+          "score": 59
+        },
+        {
+          "id": "b26dae902cb70f2a",
+          "source": "Toms Hardware",
+          "url": "https://www.tomshardware.com/pc-components/pc-cases/lian-lis-new-dk07-wood-motorized-standing-desk-doubles-as-a-dual-pc-chassis-with-support-for-e-atx-systems-and-massive-cooling-setups-five-new-wood-finished-models-are-available-now",
+          "title": "Lian Li’s new DK07 Wood motorized standing desk doubles as a dual-PC chassis with support for E-ATX systems and massive cooling setups — five new wood-finished models are available now",
+          "snippet": "The updated version adds a dark walnut finish while retaining support for dual systems, large GPUs, and extensive cooling setups.",
+          "contentText": "The updated version adds a dark walnut finish while retaining support for dual systems, large GPUs, and extensive cooling setups.",
+          "publishedAt": "2026-05-07T15:23:07.000Z",
+          "sourceImage": "https://cdn.mos.cms.futurecdn.net/PybMfGdgoXxKVhguk2JbyD-1280-80.jpg",
+          "region": "Global",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "score": 59
+        },
+        {
+          "id": "b7a99a6dd8f3ad96",
+          "source": "Bloomberg Technology",
+          "url": "https://www.bloomberg.com/news/videos/2026-05-07/arm-ceo-sees-ai-demand-while-smartphone-business-slumps-video",
+          "title": "Arm CEO Sees AI Demand While Smartphone Business Slumps",
+          "snippet": "Rene Haas, chief executive officer of Arm Holdings Plc, says demand for AI-related products is buoying the company amid a slowdown in its smartphone business. He speaks with Caroline Hyde on “Bloomberg Tech.” (Source: B…",
+          "contentText": "Rene Haas, chief executive officer of Arm Holdings Plc, says demand for AI-related products is buoying the company amid a slowdown in its smartphone business. He speaks with Caroline Hyde on “Bloomberg Tech.” (Source: Bloomberg)",
+          "publishedAt": "2026-05-07T16:31:57.000Z",
+          "sourceImage": "https://assets.bwbx.io/images/users/iqjWHBFdfxIU/iphaqLcPpALw/v3/1200x-1.jpg",
+          "region": "Global",
+          "language": "en",
+          "defaultCategory": "Hyperscalers & Cloud",
+          "score": 58
+        },
+        {
+          "id": "b69bbb772bb38d3c",
+          "source": "Bloomberg Technology",
+          "url": "https://www.bloomberg.com/news/articles/2026-05-07/arm-sees-explosion-in-cpu-demand-on-ai-amid-smartphone-slump",
+          "title": "Arm Sees ‘Explosion’ in CPU Demand on AI Amid Smartphone Slump",
+          "snippet": "Arm Holdings Plc Chief Executive Officer Rene Haas said the company is experiencing an “explosion of demand” for its CPU architecture driven by AI workloads in data centers, with orders doubling to $2 billion in just fi…",
+          "contentText": "Arm Holdings Plc Chief Executive Officer Rene Haas said the company is experiencing an “explosion of demand” for its CPU architecture driven by AI workloads in data centers, with orders doubling to $2 billion in just five weeks.",
+          "publishedAt": "2026-05-07T16:06:06.000Z",
+          "sourceImage": "https://assets.bwbx.io/images/users/iqjWHBFdfxIU/iMWB_6riYHgM/v1/1200x-1.jpg",
+          "region": "Global",
+          "language": "en",
+          "defaultCategory": "Hyperscalers & Cloud",
+          "score": 58
+        }
+      ],
+      "curatedIds": [
+        "5c3ad4989e1f7056",
+        "56a5fd6cc9a86f35",
+        "959a645ecc1fe069",
+        "b26dae902cb70f2a",
+        "b7a99a6dd8f3ad96",
+        "b69bbb772bb38d3c"
+      ],
+      "publishedIds": [
+        "5c3ad4989e1f7056",
+        "56a5fd6cc9a86f35"
+      ],
+      "slotPublications": {
+        "0": true
+      }
     }
   },
   "runHistory": [
-    {
-      "at": "2026-03-29T07:56:55.364Z",
-      "day": "2026-03-29",
-      "slot": 2,
-      "publishedCount": 2,
-      "publishedIds": [
-        "72982a030d6a9909",
-        "9e61de331b79324e"
-      ]
-    },
     {
       "at": "2026-03-29T15:40:06.760Z",
       "day": "2026-03-30",
@@ -6339,7 +6438,17 @@
         "526db143efea396f",
         "7c73ee50e0a85096"
       ]
+    },
+    {
+      "at": "2026-05-07T16:58:35.542Z",
+      "day": "2026-05-08",
+      "slot": 0,
+      "publishedCount": 2,
+      "publishedIds": [
+        "5c3ad4989e1f7056",
+        "56a5fd6cc9a86f35"
+      ]
     }
   ],
-  "lastRunAt": "2026-05-07T09:43:35.371Z"
+  "lastRunAt": "2026-05-07T16:58:35.542Z"
 }
