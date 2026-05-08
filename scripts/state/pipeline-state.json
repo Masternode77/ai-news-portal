@@ -265,7 +265,9 @@
     "61d7aa8def75634d",
     "959a645ecc1fe069",
     "496c229777e9c372",
-    "30d7f4c7dfd030d8"
+    "30d7f4c7dfd030d8",
+    "c49c276b73df7bfa",
+    "12201296766576f1"
   ],
   "dayPlans": {
     "2026-03-24": {
@@ -5264,19 +5266,116 @@
         "1": true,
         "2": true
       }
+    },
+    "2026-05-09": {
+      "date": "2026-05-09",
+      "createdAt": "2026-05-08T16:20:22.314Z",
+      "refreshedAt": "2026-05-08T16:20:22.314Z",
+      "candidateWindowHours": 24,
+      "curatedItems": [
+        {
+          "id": "c49c276b73df7bfa",
+          "source": "Data Center Knowledge",
+          "url": "https://www.datacenterknowledge.com/build-design/unconventional-texas-data-center-explores-off-grid-power",
+          "title": "Interconnection Delays Push Texas Data Center Behind the Meter",
+          "snippet": "Facing a 2029 grid wait and $35 million in upgrades, a Texas developer is building its own power to launch a 200,000‑square‑foot AI campus.",
+          "contentText": "Facing a 2029 grid wait and $35 million in upgrades, a Texas developer is building its own power to launch a 200,000‑square‑foot AI campus.",
+          "publishedAt": "2026-05-08T15:09:03.000Z",
+          "sourceImage": "https://eu-images.contentstack.com/v3/assets/blt8eb3cdfc1fce5194/bltaa480e980bab08da/69fd13c81ff84e456a519067/3C86P0Y.jpg?width=1280&auto=webp&quality=80&disable=upscale",
+          "region": "Global",
+          "language": "en",
+          "defaultCategory": "Colocation & Wholesale",
+          "score": 67
+        },
+        {
+          "id": "12201296766576f1",
+          "source": "Bloomberg Technology",
+          "url": "https://www.bloomberg.com/news/videos/2026-05-08/akamai-s-1-8b-ai-power-move-video",
+          "title": "Akamai’s $1.8B AI Power Move",
+          "snippet": "Akamai CEO Tom Leighton joined Bloomberg Open Interest to break down a massive $1.8B AI cloud deal. He explains why it signals a shift away from big tech hyperscalers and how edge computing is becoming essential for sto…",
+          "contentText": "Akamai CEO Tom Leighton joined Bloomberg Open Interest to break down a massive $1.8B AI cloud deal. He explains why it signals a shift away from big tech hyperscalers and how edge computing is becoming essential for stopping AI-powered cyberattacks, cutting costs, and delivering faster performance. (Source: Bloomberg)",
+          "publishedAt": "2026-05-08T15:21:06.000Z",
+          "sourceImage": "https://assets.bwbx.io/images/users/iqjWHBFdfxIU/iQz2l4PLaXmQ/v3/1200x-1.jpg",
+          "region": "Global",
+          "language": "en",
+          "defaultCategory": "Hyperscalers & Cloud",
+          "score": 66
+        },
+        {
+          "id": "bdae790abb0e423e",
+          "source": "StorageReview",
+          "url": "https://www.storagereview.com/news/anthropic-signs-spacex-colossus-1-deal-for-major-claude-compute-expansion",
+          "title": "Anthropic Signs SpaceX Colossus 1 Deal For Major Claude Compute Expansion",
+          "snippet": "Anthropic’s new compute agreement with SpaceX gives the AI company access to all compute capacity at SpaceX’s Colossus 1 data center, adding more than 300 megawatts of capacity and more than 220,000 NVIDIA GPUs within t…",
+          "contentText": "Anthropic’s new compute agreement with SpaceX gives the AI company access to all compute capacity at SpaceX’s Colossus 1 data center, adding more than 300 megawatts of capacity and more than 220,000 NVIDIA GPUs within the month. While the immediate impact is higher capacity for Claude users, the deal also stands out as a major utilization win for SpaceX’s AI infrastructure ambitions. The agreement comes as AI companies continue to lock down large-scale compute wherever they can find it. For Anthropic, the SpaceX capacity will directly improve availability for Claude Pro and Claude Max subscribers and support broader growth across Claude Code and the Claude API. For SpaceX, the partnership brings a major external AI workload into Colossus 1, giving the facility an immediate customer for a…",
+          "publishedAt": "2026-05-08T16:03:02.000Z",
+          "sourceImage": "https://www.storagereview.com/wp-content/uploads/2026/05/spacex-anthropic-deal.jpg",
+          "region": "Global",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "score": 62
+        },
+        {
+          "id": "2b0eda2d7416b7c9",
+          "source": "Google Cloud Blog",
+          "url": "https://cloud.google.com/blog/products/containers-kubernetes/gke-node-startup-gets-faster/",
+          "title": "With faster node startup for GKE, say goodbye to cold-start latency",
+          "snippet": "We’ve rolled out a significant update to Google Kubernetes Engine (GKE) that solves one of the most annoying problems in cloud infrastructure: cold start latency. GKE now has up to 4x faster node startup times compared…",
+          "contentText": "We’ve rolled out a significant update to Google Kubernetes Engine (GKE) that solves one of the most annoying problems in cloud infrastructure: cold start latency . GKE now has up to 4x faster node startup times compared to previous versions for qualifying nodes, allowing customers to provision quickly and efficiently. This isn't a setting you have to toggle or a config file you need to patch. It’s an architectural upgrade to how we provision infrastructure, meaning your nodes just start faster, out of the box. This translates directly into enhanced agility and cost-efficiency for your cloud operations with a significant impact on a wide range of use cases, from rapid deployment of models for AI inference to dynamic scaling of accelerated and general-purpose nodes. The problem we set out t…",
+          "publishedAt": "2026-05-08T16:00:00.000Z",
+          "sourceImage": "https://storage.googleapis.com/gweb-cloudblog-publish/images/image2_BkVgpdt.max-600x600.png",
+          "region": "Global",
+          "language": "en",
+          "defaultCategory": "Hyperscalers & Cloud",
+          "score": 58
+        },
+        {
+          "id": "a2bebe63d81b4c47",
+          "source": "TechCrunch AI",
+          "url": "https://techcrunch.com/podcast/the-peoples-airline-and-the-enterprise-ai-gold-rush/",
+          "title": "The “people’s airline” and the enterprise AI gold rush",
+          "snippet": "Everyone wants a piece of the enterprise AI pie, and this week, we saw a string of companies making their moves. From Anthropic and OpenAI announcing new joint ventures targeting enterprise AI deployment to SAP dropping…",
+          "contentText": "Everyone wants a piece of the&#160;enterprise&#160;AI pie, and this week, we saw a string of companies making their moves. From&#160;Anthropic and OpenAI announcing new joint ventures&#160;targeting enterprise AI deployment to&#160;SAP dropping $1B&#160;on German AI startup Prior Labs,&#160;it&#8217;s&#160;becoming clear that if&#160;you&#8217;re&#160;a startup building enterprise tools,&#160;you&#8217;re&#160;likely an&#160;acquisition target.&#160; On this episode of TechCrunch&#8217;s&#160;Equity&#160;podcast, hosts Kirsten Korosec, Anthony [&#8230;]",
+          "publishedAt": "2026-05-08T15:46:17.000Z",
+          "sourceImage": null,
+          "region": "Global",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "score": 58
+        },
+        {
+          "id": "8a5aa287ab1ce478",
+          "source": "Bloomberg Technology",
+          "url": "https://www.bloomberg.com/news/videos/2026-05-08/coreweave-s-q1-earnings-transformational-ceo-says-video",
+          "title": "CoreWeave's Q1 Earnings Were 'Transformational,' CEO Says",
+          "snippet": "CoreWeave CEO Michael Intrator characterizes the company's first-quarter earnings as transformational, highlighting strong performance across revenue and operating margins. Speaking on \"Bloomberg Tech,\" Intrator emphasi…",
+          "contentText": "CoreWeave CEO Michael Intrator characterizes the company's first-quarter earnings as transformational, highlighting strong performance across revenue and operating margins. Speaking on \"Bloomberg Tech,\" Intrator emphasizes robust demand from existing AI-native and cloud customers, as well as new verticals such as trading and finance firms and robotics companies integrating AI at scale. (Source: Bloomberg)",
+          "publishedAt": "2026-05-08T15:35:19.000Z",
+          "sourceImage": "https://assets.bwbx.io/images/users/iqjWHBFdfxIU/idvAroxFRcgE/v3/1200x-1.jpg",
+          "region": "Global",
+          "language": "en",
+          "defaultCategory": "Hyperscalers & Cloud",
+          "score": 54
+        }
+      ],
+      "curatedIds": [
+        "c49c276b73df7bfa",
+        "12201296766576f1",
+        "bdae790abb0e423e",
+        "2b0eda2d7416b7c9",
+        "a2bebe63d81b4c47",
+        "8a5aa287ab1ce478"
+      ],
+      "publishedIds": [
+        "c49c276b73df7bfa",
+        "12201296766576f1"
+      ],
+      "slotPublications": {
+        "0": true
+      }
     }
   },
   "runHistory": [
-    {
-      "at": "2026-03-30T08:45:28.946Z",
-      "day": "2026-03-30",
-      "slot": 2,
-      "publishedCount": 2,
-      "publishedIds": [
-        "570c07e21f234f2b",
-        "8ac48a1abc8d8f60"
-      ]
-    },
     {
       "at": "2026-03-30T16:09:40.408Z",
       "day": "2026-03-31",
@@ -6458,7 +6557,17 @@
         "496c229777e9c372",
         "30d7f4c7dfd030d8"
       ]
+    },
+    {
+      "at": "2026-05-08T16:20:22.314Z",
+      "day": "2026-05-09",
+      "slot": 0,
+      "publishedCount": 2,
+      "publishedIds": [
+        "c49c276b73df7bfa",
+        "12201296766576f1"
+      ]
     }
   ],
-  "lastRunAt": "2026-05-08T08:45:36.881Z"
+  "lastRunAt": "2026-05-08T16:20:22.314Z"
 }
