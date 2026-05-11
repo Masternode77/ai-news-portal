@@ -283,7 +283,9 @@
     "28e61f1bc5945e1e",
     "4709c17e6e3ab582",
     "4d24059bf0a2d98c",
-    "b6a7ccb84c18c4d6"
+    "b6a7ccb84c18c4d6",
+    "1337fccd414a7f23",
+    "c3309d794df18c21"
   ],
   "dayPlans": {
     "2026-03-24": {
@@ -5621,19 +5623,116 @@
         "1": true,
         "2": true
       }
+    },
+    "2026-05-12": {
+      "date": "2026-05-12",
+      "createdAt": "2026-05-11T17:28:37.388Z",
+      "refreshedAt": "2026-05-11T17:28:37.388Z",
+      "candidateWindowHours": 24,
+      "curatedItems": [
+        {
+          "id": "1337fccd414a7f23",
+          "source": "StorageReview",
+          "url": "https://www.storagereview.com/news/dell-expands-ai-platform-with-amd-gpu-and-modular-infrastructure-options",
+          "title": "Dell Expands AI Platform with AMD GPU and Modular Infrastructure Options",
+          "snippet": "Dell Technologies has announced two major updates to its Dell AI Platform with AMD, targeting organizations scaling from pilot AI deployments to full production environments. The enhancements focus on high-performance t…",
+          "contentText": "Dell Technologies has announced two major updates to its Dell AI Platform with AMD, targeting organizations scaling from pilot AI deployments to full production environments. The enhancements focus on high-performance training infrastructure and a modular architecture that balances cost, scalability, and operational control. The first update introduces a large-scale configuration featuring Dell PowerEdge XE9785 server nodes equipped with AMD Instinct MI355X GPU s and AMD EPYC CPUs. It is designed for demanding AI workloads, including model training, pre-training, and high-throughput inference. The platform integrates Dell PowerSwitch networking and PowerScale storage, ensuring a consistent infrastructure stack across deployments. Using AMD Instinct MI355X GPUs increases per-node memory ca…",
+          "publishedAt": "2026-05-11T16:36:56.000Z",
+          "sourceImage": "https://www.storagereview.com/wp-content/uploads/2025/11/StorageReview-Dell-XE7745.jpg",
+          "region": "Global",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "score": 78
+        },
+        {
+          "id": "c3309d794df18c21",
+          "source": "Google Cloud Blog",
+          "url": "https://cloud.google.com/blog/products/storage-data-transfer/cloud-storage-rapid-turbocharges-object-storage-for-ai-analytics/",
+          "title": "Cloud Storage Rapid: Turbocharged object storage for AI and analytics",
+          "snippet": "At Google Cloud Next ’26 we announced Cloud Storage Rapid, a family of object storage capabilities for data-intensive workloads like AI and analytics. Out of the gate, Cloud Storage Rapid consists of Rapid Bucket (forme…",
+          "contentText": "At Google Cloud Next ’26 we announced Cloud Storage Rapid, a family of object storage capabilities for data-intensive workloads like AI and analytics. Out of the gate, Cloud Storage Rapid consists of Rapid Bucket (formerly Rapid Storage), a high-performance zonal object storage offering, and Rapid Cache (formerly Anywhere Cache), which accelerates reads on-demand and colocates compute and data for workloads in existing buckets. Cloud Storage Rapid: Turbocharged object storage for AI and analytics Cloud Storage Rapid is our response to the generational shift in how organizations build with AI. Teams are training trillion-parameter models, deploying inference at global scale, and building autonomous agents that reason over vast amounts of enterprise data. While accelerators like GPUs and TP…",
+          "publishedAt": "2026-05-11T17:00:00.000Z",
+          "sourceImage": "https://storage.googleapis.com/gweb-cloudblog-publish/images/1_5x_faster_checkpoint_restores_with_Rapid.max-1000x1000.png",
+          "region": "Global",
+          "language": "en",
+          "defaultCategory": "Hyperscalers & Cloud",
+          "score": 74
+        },
+        {
+          "id": "16b85ef91cbda595",
+          "source": "Data Center POST",
+          "url": "https://datacenterpost.com/are-we-building-for-the-right-future-key-takeaways-from-the-imn-nyc-data-center-investment-forum/",
+          "title": "Are We Building for the Right Future? Key Takeaways from the IMN NYC Data Center Investment Forum",
+          "snippet": "TL;DR AI infrastructure strategy is shifting from centralized training environments toward distributed inference deployments that require lower latency, regional proximity and edge connectivity. Power availability remai…",
+          "contentText": "TL;DR AI infrastructure strategy is shifting from centralized training environments toward distributed inference deployments that require lower latency, regional proximity and edge connectivity. Power availability remains a major obstacle, but policy, permitting, and community engagement are emerging as equally important factors influencing where and how projects move forward. Workforce shortages and supply chain limitations involving transformers, turbines, fiber and construction labor are creating new execution risks, even as capital investment in digital infrastructure continues to accelerate. Connectivity and interconnection density may become as critical to the future of AI as power itself, particularly as AI-generated data volumes increase and inference workloads expand across distr…",
+          "publishedAt": "2026-05-11T16:00:09.000Z",
+          "sourceImage": "https://d3qut6qyo6tw2j.cloudfront.net/bin/uploads/2026/05/08113244/DCP-IMN-DC-PE-East-2026-blog-5-8-26-1024x512.png",
+          "region": "Global",
+          "language": "en",
+          "defaultCategory": "Colocation & Wholesale",
+          "score": 74
+        },
+        {
+          "id": "b3bd7ec0b39d2a8d",
+          "source": "Bloomberg Technology",
+          "url": "https://www.bloomberg.com/news/videos/2026-05-11/bmo-s-schleif-says-ai-stampede-fueling-rally-beyond-tech-video",
+          "title": "BMO's Schleif Says AI Stampede Fueling Rally Beyond Tech",
+          "snippet": "Carol Schleif, chief market strategist for Bank of Montreal, says the buildout of AI infrastructure is lifting a broad cross section of stocks, not just a handful of tech names. She speaks with Ed Ludlow and Caroline Hy…",
+          "contentText": "Carol Schleif, chief market strategist for Bank of Montreal, says the buildout of AI infrastructure is lifting a broad cross section of stocks, not just a handful of tech names. She speaks with Ed Ludlow and Caroline Hyde on “Bloomberg Tech.” (Source: Bloomberg)",
+          "publishedAt": "2026-05-11T17:12:27.000Z",
+          "sourceImage": "https://assets.bwbx.io/images/users/iqjWHBFdfxIU/i.g3svgHaGbI/v3/1200x-1.jpg",
+          "region": "Global",
+          "language": "en",
+          "defaultCategory": "Hyperscalers & Cloud",
+          "score": 58
+        },
+        {
+          "id": "e7a1bf8cb855cbfd",
+          "source": "Data Center Dynamics",
+          "url": "https://www.datacenterdynamics.com/en/news/aionx-secures-hyperscale-tenant-for-irish-data-center-campus-outside-dublin/",
+          "title": "AiOnX secures hyperscale tenant for Irish data center campus outside Dublin",
+          "snippet": "Tenant likely Amazon, first phase due to launch later this year",
+          "contentText": "Tenant likely Amazon, first phase due to launch later this year",
+          "publishedAt": "2026-05-11T17:00:36.000Z",
+          "sourceImage": "https://media.datacenterdynamics.com/media/images/Building_Seven_Kildare_Cushman_Wak.2e16d0ba.fill-750x500.png",
+          "region": "Global",
+          "language": "en",
+          "defaultCategory": "Colocation & Wholesale",
+          "score": 58
+        },
+        {
+          "id": "b3148cc3b8ef333b",
+          "source": "Bloomberg Technology",
+          "url": "https://www.bloomberg.com/news/videos/2026-05-11/market-optimistic-on-ai-surge-ignoring-risks-noviskis-video",
+          "title": "Market Optimistic on AI Surge, Ignoring Risks: Noviskis",
+          "snippet": "Jessica Noviskis, OCIO portfolio strategist at Marquette Associates, says market optimism is largely driven by strong earnings and the resurgence of the AI sector despite potential risks. \"We are entirely pricing market…",
+          "contentText": "Jessica Noviskis, OCIO portfolio strategist at Marquette Associates, says market optimism is largely driven by strong earnings and the resurgence of the AI sector despite potential risks. \"We are entirely pricing markets off of the good things that are happening,\" she said, \"and ignoring the risks and the war and the potential for inflation and maybe rate hikes.\" (Source: Bloomberg)",
+          "publishedAt": "2026-05-11T16:50:45.000Z",
+          "sourceImage": "https://assets.bwbx.io/images/users/iqjWHBFdfxIU/i_gtWoyRz46U/v3/1200x-1.jpg",
+          "region": "Global",
+          "language": "en",
+          "defaultCategory": "Hyperscalers & Cloud",
+          "score": 58
+        }
+      ],
+      "curatedIds": [
+        "1337fccd414a7f23",
+        "c3309d794df18c21",
+        "16b85ef91cbda595",
+        "b3bd7ec0b39d2a8d",
+        "e7a1bf8cb855cbfd",
+        "b3148cc3b8ef333b"
+      ],
+      "publishedIds": [
+        "1337fccd414a7f23",
+        "c3309d794df18c21"
+      ],
+      "slotPublications": {
+        "0": true
+      }
     }
   },
   "runHistory": [
-    {
-      "at": "2026-04-02T08:13:00.418Z",
-      "day": "2026-04-02",
-      "slot": 2,
-      "publishedCount": 2,
-      "publishedIds": [
-        "aaf8db28e4171138",
-        "771cb0c752de6a1f"
-      ]
-    },
     {
       "at": "2026-04-02T16:06:01.911Z",
       "day": "2026-04-03",
@@ -6815,7 +6914,17 @@
         "4d24059bf0a2d98c",
         "b6a7ccb84c18c4d6"
       ]
+    },
+    {
+      "at": "2026-05-11T17:28:37.388Z",
+      "day": "2026-05-12",
+      "slot": 0,
+      "publishedCount": 2,
+      "publishedIds": [
+        "1337fccd414a7f23",
+        "c3309d794df18c21"
+      ]
     }
   ],
-  "lastRunAt": "2026-05-11T10:42:14.990Z"
+  "lastRunAt": "2026-05-11T17:28:37.388Z"
 }
