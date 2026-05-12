@@ -289,7 +289,9 @@
     "f2be98c20e360a07",
     "080548f8c96249b6",
     "e6ad57f4107ac6af",
-    "54cd7db48e0f40ea"
+    "54cd7db48e0f40ea",
+    "341f3e11be204997",
+    "fee3dad0550ec9b9"
   ],
   "dayPlans": {
     "2026-03-24": {
@@ -5740,19 +5742,116 @@
         "1": true,
         "2": true
       }
+    },
+    "2026-05-13": {
+      "date": "2026-05-13",
+      "createdAt": "2026-05-12T17:19:07.507Z",
+      "refreshedAt": "2026-05-12T17:19:07.507Z",
+      "candidateWindowHours": 24,
+      "curatedItems": [
+        {
+          "id": "341f3e11be204997",
+          "source": "StorageReview",
+          "url": "https://www.storagereview.com/news/rackspace-and-amd-plan-governed-ai-cloud-for-enterprise-workloads",
+          "title": "Rackspace and AMD Plan Governed AI Cloud for Enterprise Workloads",
+          "snippet": "Rackspace Technology and AMD have signed a memorandum of understanding establishing a framework for a multi-year strategic partnership focused on enterprise AI infrastructure for regulated organizations and sovereign wo…",
+          "contentText": "Rackspace Technology and AMD have signed a memorandum of understanding establishing a framework for a multi-year strategic partnership focused on enterprise AI infrastructure for regulated organizations and sovereign workloads. The agreement centers on a proposed Enterprise AI Cloud designed for mission-critical AI deployments in which security, governance, compliance, and operational accountability are core requirements. The platform would combine AMD Instinct GPU s and AMD EPYC CPUs with Rackspace Technology&#8217;s managed operating model to create a dedicated AI infrastructure stack for organizations that cannot rely on generic GPU rental models or unmanaged public infrastructure for production AI workloads. Rackspace Technology and AMD stressed that many enterprises are moving AI fro…",
+          "publishedAt": "2026-05-12T16:18:28.000Z",
+          "sourceImage": "https://www.storagereview.com/wp-content/uploads/2026/05/Storagereview-amd-rackspace-logos.png",
+          "region": "Global",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "score": 74
+        },
+        {
+          "id": "fee3dad0550ec9b9",
+          "source": "Bloomberg Technology",
+          "url": "https://www.bloomberg.com/news/articles/2026-05-12/anthropic-expands-push-into-legal-industry-with-new-ai-tools",
+          "title": "Anthropic Expands Push Into Legal Industry With New AI Tools",
+          "snippet": "Anthropic PBC is taking steps to help legal professionals carry out more tasks using its Claude chatbot, months after the startup helped spark a steep selloff in software stocks by quietly introducing a narrower set of…",
+          "contentText": "Anthropic PBC is taking steps to help legal professionals carry out more tasks using its Claude chatbot, months after the startup helped spark a steep selloff in software stocks by quietly introducing a narrower set of features.Anthropic on Tuesday announced a dozen new tools, or plugins, intended for attorneys, law students and others in the legal sector. One feature, called “commercial counsel,” is meant to take on work like reviewing vendor agreements; another tool is intended to help with st",
+          "publishedAt": "2026-05-12T17:00:10.000Z",
+          "sourceImage": "https://assets.bwbx.io/images/users/iqjWHBFdfxIU/iDhxOPBefLoc/v1/1200x-1.jpg",
+          "region": "Global",
+          "language": "en",
+          "defaultCategory": "Hyperscalers & Cloud",
+          "score": 58
+        },
+        {
+          "id": "3caebfa4444e256f",
+          "source": "AWS News Blog",
+          "url": "https://aws.amazon.com/blogs/aws/amazon-redshift-introduces-aws-graviton-based-rg-instances-with-an-integrated-data-lake-query-engine/",
+          "title": "Amazon Redshift introduces AWS Graviton-based RG instances with an integrated data lake query engine",
+          "snippet": "Amazon Redshift RG instances, powered by AWS Graviton, run data warehouse and data lake workloads up to 2.4x as fast as RA3 instances at 30% lower price per vCPU. Its integrated data lake query engine supports open tabl…",
+          "contentText": "Since 2013, Amazon Redshift has given the full power of a data warehouse in the cloud, at a fraction of the on-premises cost. Every architectural generation—from dense compute to Amazon RA3 instances , from provisioned to Amazon Redshift Serverless —has made each query cheaper, faster, and more efficient than the last. For over a decade, as data volumes have grown and analytics requirements have evolved, organizations increasingly leverage both data warehouse tables for structured, frequently-accessed data and data lakes for cost-effective storage of diverse datasets. Add AI agents to the mix and they query your data warehouse at a scale that dwarfs typical human usage, leading to spiraling operational costs. Amazon Redshift has doubled down on its core strengths to meet the demands of an…",
+          "publishedAt": "2026-05-12T16:05:12.000Z",
+          "sourceImage": "https://d2908q01vomqb2.cloudfront.net/da4b9237bacccdf19c0760cab7aec4a8359010b0/2026/05/06/2026-redshift-rg-instances-1.png",
+          "region": "Global",
+          "language": "en",
+          "defaultCategory": "Hyperscalers & Cloud",
+          "score": 58
+        },
+        {
+          "id": "03750473d8590d28",
+          "source": "Google Cloud Blog",
+          "url": "https://cloud.google.com/blog/products/infrastructure/how-imgix-processes-8-billion-images-daily-with-g4-vms-powered-by-nvidia-blackwell/",
+          "title": "How Imgix processes 8 billion images daily with G4 VMs powered by NVIDIA Blackwell",
+          "snippet": "The modern web is extremely visual. People are busy and easily-distracted, and smart companies know they have just seconds to attract would-be customers with compelling images, videos, animations, and other eye-catching…",
+          "contentText": "The modern web is extremely visual. People are busy and easily-distracted, and smart companies know they have just seconds to attract would-be customers with compelling images, videos, animations, and other eye-catching elements. That’s why iconic brands like Bugatti, Yeti, Porsche, Spotify, and Sonos rely on Imgix to be the engine driving their online visual media. Every day, Imgix serves more than 8 billion images and videos for brands like these and many others. With a platform designed to unify media optimization, AI transformation, and global delivery, Imgix ensures that its partners’ digital experiences are fast, personalized, and built for performance. Now more than ever, leading organizations are demanding real-time, high-fidelity media, and they need it to be fast. To meet that d…",
+          "publishedAt": "2026-05-12T16:00:00.000Z",
+          "sourceImage": "https://storage.googleapis.com/gweb-cloudblog-publish/images/imgx-g4-vms-image-processing.max-600x600.png",
+          "region": "Global",
+          "language": "en",
+          "defaultCategory": "Hyperscalers & Cloud",
+          "score": 58
+        },
+        {
+          "id": "9d93a67afee2b655",
+          "source": "Toms Hardware",
+          "url": "https://www.tomshardware.com/laptops/googles-new-laptop-platform-googlebook-leaks-ahead-of-reveal-event-new-laptops-powered-by-android-and-google-gemini-meant-to-succeed-chromebook",
+          "title": "Google's new laptop platform, 'Googlebook,' leaks ahead of reveal event — new laptops powered by Android and Google Gemini, meant to succeed Chromebook",
+          "snippet": "Google has a new laptop platform coming out called the \"Googlebook\" and it's meant to replace or succeed Chromebook. It's powered by Android and \"designed for Gemini Intelligence.\" The main highlight is native integrati…",
+          "contentText": "Google has a new laptop platform coming out called the \"Googlebook\" and it's meant to replace or succeed Chromebook. It's powered by Android and \"designed for Gemini Intelligence.\" The main highlight is native integration with other Android devices and a \"Glowbar\" that dynamically reacts to what your Googlebook is doing.",
+          "publishedAt": "2026-05-12T16:58:48.000Z",
+          "sourceImage": "https://cdn.mos.cms.futurecdn.net/VQyD75DsrtCgQeus3an2wN-1280-80.webp",
+          "region": "Global",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "score": 54
+        },
+        {
+          "id": "714de5b5b1c8cc1b",
+          "source": "Semiconductor Engineering",
+          "url": "https://semiengineering.com/a-comprehensive-study-on-integrating-2d-materials-with-cfet-architecture-skku-et-al/",
+          "title": "A Comprehensive Study Of Integrating 2D Materials With CFET Architecture (SKKU, et al.)",
+          "snippet": "A new technical paper, “Challenges and prospects of 2D electronics for future monolithic complementary field-effect transistors,” was published by researchers at Sungkyunkwan University, Hangyang University, Istituto It…",
+          "contentText": "A new technical paper, &#8220;Challenges and prospects of 2D electronics for future monolithic complementary field-effect transistors,&#8221; was published by researchers at Sungkyunkwan University, Hangyang University, Istituto Italiano di Tecnologia, Shanghai University, Jeonbuk National University, and Kyonggi University. Abstract &#8220;With planar complementary metal-oxide-semiconductor (CMOS) scaling nearing its physical limits, the transistor roadmap is transitioning toward monolithic three-dimensional (M3D) integration through complementary field-effect transistors (CFETs). While silicon (Si)-CFETs demonstrate the viability of monolithic stacking, their scalability is constrained by high thermal budgets, dopant diffusion, and alignment complexity. Two-dimensional (2D) materials of…",
+          "publishedAt": "2026-05-12T16:09:26.000Z",
+          "sourceImage": null,
+          "region": "Global",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "score": 54
+        }
+      ],
+      "curatedIds": [
+        "341f3e11be204997",
+        "fee3dad0550ec9b9",
+        "3caebfa4444e256f",
+        "03750473d8590d28",
+        "9d93a67afee2b655",
+        "714de5b5b1c8cc1b"
+      ],
+      "publishedIds": [
+        "341f3e11be204997",
+        "fee3dad0550ec9b9"
+      ],
+      "slotPublications": {
+        "0": true
+      }
     }
   },
   "runHistory": [
-    {
-      "at": "2026-04-03T08:07:24.430Z",
-      "day": "2026-04-03",
-      "slot": 2,
-      "publishedCount": 2,
-      "publishedIds": [
-        "42c5fd65786ff84a",
-        "f4bd69dd2b5f7dcf"
-      ]
-    },
     {
       "at": "2026-04-03T15:46:01.002Z",
       "day": "2026-04-04",
@@ -6934,7 +7033,17 @@
         "e6ad57f4107ac6af",
         "54cd7db48e0f40ea"
       ]
+    },
+    {
+      "at": "2026-05-12T17:19:07.507Z",
+      "day": "2026-05-13",
+      "slot": 0,
+      "publishedCount": 2,
+      "publishedIds": [
+        "341f3e11be204997",
+        "fee3dad0550ec9b9"
+      ]
     }
   ],
-  "lastRunAt": "2026-05-12T09:47:43.699Z"
+  "lastRunAt": "2026-05-12T17:19:07.507Z"
 }
