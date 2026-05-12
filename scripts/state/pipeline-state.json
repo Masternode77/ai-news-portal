@@ -287,7 +287,9 @@
     "1337fccd414a7f23",
     "c3309d794df18c21",
     "f2be98c20e360a07",
-    "080548f8c96249b6"
+    "080548f8c96249b6",
+    "e6ad57f4107ac6af",
+    "54cd7db48e0f40ea"
   ],
   "dayPlans": {
     "2026-03-24": {
@@ -5629,125 +5631,118 @@
     "2026-05-12": {
       "date": "2026-05-12",
       "createdAt": "2026-05-11T17:28:37.388Z",
-      "refreshedAt": "2026-05-12T00:00:33.227Z",
+      "refreshedAt": "2026-05-12T09:47:43.699Z",
       "candidateWindowHours": 24,
       "curatedItems": [
         {
-          "id": "f2be98c20e360a07",
-          "source": "StorageReview",
-          "url": "https://www.storagereview.com/review/nvidia-dgx-spark-cluster-review-distributed-inference-on-dell-gigabyte-and-hp",
-          "title": "NVIDIA DGX Spark Cluster Review: Distributed Inference on Dell, GIGABYTE, and HP",
-          "snippet": "Two things tend to come up first whenever the conversation turns to the NVIDIA DGX Spark. The first is the headline spec: 128 GB of unified memory in a roughly $4,000 desktop box, a number that would have seemed implaus…",
-          "contentText": "Two things tend to come up first whenever the conversation turns to the NVIDIA DGX Spark. The first is the headline spec: 128 GB of unified memory in a roughly $4,000 desktop box, a number that would have seemed implausible to put on an engineer&#8217;s desk even two years ago. The second is the 200 GB network on the back of the unit. The presence of a real datacenter-class fabric on a desktop appliance is what makes people lean forward, because it implies something more than a faster single-box workstation. It implies the ability to connect Sparks and replicate physically, the kind of multi-node setup that used to live exclusively in a rack. This review examines that capability. We benchmark distributed inference across all three OEM Spark implementations we have on hand, paired into two…",
-          "publishedAt": "2026-05-11T21:09:31.000Z",
-          "sourceImage": "https://www.storagereview.com/wp-content/uploads/2026/05/StorageReview-NVIDIA-Spark-Clusters-3.jpg",
+          "id": "e6ad57f4107ac6af",
+          "source": "Semiconductor Engineering",
+          "url": "https://semiengineering.com/test-distribution-evolves-to-meet-ai-challenges/",
+          "title": "Test Distribution Evolves To Meet AI Challenges",
+          "snippet": "ATE is evolving from a pure defect-detection system to one that provides system-level validation supported by AI software tools. The post Test Distribution Evolves To Meet AI Challenges appeared first on Semiconductor E…",
+          "contentText": "The proliferation of artificial intelligence (AI) is driving rapid acceleration of the semiconductor market, which analysts now predict will reach $1 trillion this year. Many semiconductor devices will be the GPUs that populate the data centers that run AI workloads. Driven by strong, sustained investments from hyperscaler operators, high-performance computing (HPC)/AI data centers are expected to account for a large portion of the market. This market is driven by the growing demand for computational capability, with training computing requirements for generative AI models having increased fourfold each year since 2018 in terms of floating-point operations per second (FLOPS). In addition, semiconductors will also find increasing use in consumer-facing AI-related products such as AI-enable…",
+          "publishedAt": "2026-05-12T07:05:32.000Z",
+          "sourceImage": "https://i0.wp.com/semiengineering.com/wp-content/uploads/2026/05/Advantest_Test-Distribution-Evolves-AI-Challenges-fig1.webp?resize=1072%2C403&#038;ssl=1",
           "region": "Global",
           "language": "en",
           "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
-          "score": 66
+          "score": 74
         },
         {
-          "id": "080548f8c96249b6",
-          "source": "Data Center POST",
-          "url": "https://datacenterpost.com/when-ai-manages-infrastructure-the-case-for-a-data-center-ai-governance-framework/",
-          "title": "When AI Manages Infrastructure: The Case for a Data Center AI Governance Framework",
-          "snippet": "TL;DR AI is already embedded in hyperscale data center program management — synthesizing portfolio data, generating risk briefings, and driving capital decisions across portfolios of 50 or more active construction sites…",
-          "contentText": "TL;DR AI is already embedded in hyperscale data center program management — synthesizing portfolio data, generating risk briefings, and driving capital decisions across portfolios of 50 or more active construction sites simultaneously. Unlike AI in financial services, healthcare, or aviation, data center program management AI operates with no external governance framework, no auditability standards, and no defined accountability structures. The industry needs an AI governance framework built on four pillars: auditability of AI-generated decisions, risk-based oversight design, data governance for sensitive infrastructure intelligence, and clear accountability structures. Organizations like the Uptime Institute and the Project Management Institute are well positioned to lead this work — and…",
-          "publishedAt": "2026-05-11T17:00:00.000Z",
-          "sourceImage": "https://d3qut6qyo6tw2j.cloudfront.net/bin/uploads/2026/05/11103136/DCP-Blog-Submission_05112026-1024x512.png",
-          "region": "Global",
-          "language": "en",
-          "defaultCategory": "Colocation & Wholesale",
-          "score": 58
-        },
-        {
-          "id": "68abc9645600da37",
-          "source": "Data Center Frontier",
-          "url": "https://www.datacenterfrontier.com/hyperscale/article/55373985/utahs-wonder-valley-and-the-industrialization-of-ai-infrastructure",
-          "title": "Utah’s Wonder Valley and the Industrialization of AI Infrastructure",
-          "snippet": "A proposed 40,000-acre AI infrastructure development in Box Elder County would pair hyperscale compute with utility-scale power generation, highlighting how data centers are evolving into integrated industrial platforms…",
-          "contentText": "A proposed 40,000-acre AI infrastructure development in Box Elder County would pair hyperscale compute with utility-scale power generation, highlighting how data centers are evolving into integrated industrial platforms shaped by energy, water, public policy, and national-security priorities.",
-          "publishedAt": "2026-05-11T15:20:09.000Z",
-          "sourceImage": "https://img.datacenterfrontier.com/files/base/ebm/datacenterfrontier/image/2026/04/69f0f5633816adb12b15bd1c-utah.png",
-          "region": "Global",
-          "language": "en",
-          "defaultCategory": "Colocation & Wholesale",
-          "score": 56
-        },
-        {
-          "id": "615d01aa34eba933",
+          "id": "54cd7db48e0f40ea",
           "source": "Bloomberg Technology",
-          "url": "https://www.bloomberg.com/news/articles/2026-05-11/gitlab-says-will-cut-jobs-to-spend-on-growth-in-agentic-era",
-          "title": "GitLab Says Will Cut Jobs to Spend on Growth in ‘Agentic Era’",
-          "snippet": "GitLab Inc., which makes software that helps developers on coding projects, said it is cutting jobs to free up money to spend on the market opportunity for artificial intelligence agents.",
-          "contentText": "GitLab Inc., which makes software that helps developers on coding projects, said it is cutting jobs to free up money to spend on the market opportunity for artificial intelligence agents.",
-          "publishedAt": "2026-05-11T21:31:40.000Z",
-          "sourceImage": "https://assets.bwbx.io/images/users/iqjWHBFdfxIU/i2.NfTQjNrBU/v0/1200x-1.jpg",
+          "url": "https://www.bloomberg.com/news/videos/2026-05-12/startup-has-means-to-harvest-drinkable-water-from-air-video",
+          "title": "Water Made From Air Aims to Help Drought-Ravaged Communities",
+          "snippet": "As water risks are exposed by the Iran War and AI data centers, startup Atoco is preparing production of a device that can produce 4,000 liters daily. Katie Meyer has more. (Source: Bloomberg)",
+          "contentText": "As water risks are exposed by the Iran War and AI data centers, startup Atoco is preparing production of a device that can produce 4,000 liters daily. Katie Meyer has more. (Source: Bloomberg)",
+          "publishedAt": "2026-05-12T09:30:07.000Z",
+          "sourceImage": "https://assets.bwbx.io/images/users/iqjWHBFdfxIU/i2o4r5_yRLTY/v3/1200x-1.png",
           "region": "Global",
           "language": "en",
           "defaultCategory": "Hyperscalers & Cloud",
           "score": 54
         },
         {
-          "id": "d402e46440ec0414",
-          "source": "TechCrunch AI",
-          "url": "https://techcrunch.com/2026/05/11/digg-tries-again-this-time-as-an-ai-news-aggregator/",
-          "title": "Digg tries again, this time as an AI news aggregator",
-          "snippet": "In an email to beta testers, the company said the site's goal is to \"track the most influential voices in a space\" and to surface the news that's actually worth \"paying attention to.\"",
-          "contentText": "In an email to beta testers, the company said the site's goal is to \"track the most influential voices in a space\" and to surface the news that's actually worth \"paying attention to.\"",
-          "publishedAt": "2026-05-11T17:02:35.000Z",
-          "sourceImage": null,
+          "id": "aa75a52b211ea138",
+          "source": "Data Center Dynamics",
+          "url": "https://www.datacenterdynamics.com/en/product-news/not-all-power-is-equal-most-of-it-isnt-close/",
+          "title": "Sponsored: Not all power is equal. Most of it isn't close",
+          "snippet": "Procurement is not a downstream task. It is a parallel-path activity that must begin early and stay coordinated with the energization schedule",
+          "contentText": "Procurement is not a downstream task. It is a parallel-path activity that must begin early and stay coordinated with the energization schedule",
+          "publishedAt": "2026-05-12T09:00:00.000Z",
+          "sourceImage": "https://media.datacenterdynamics.com/media/images/Yelantsevv.2e16d0ba.fill-750x500.jpg",
           "region": "Global",
           "language": "en",
-          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
-          "score": 54
+          "defaultCategory": "Colocation & Wholesale",
+          "score": 51
         },
         {
-          "id": "5b926ef7e637a987",
+          "id": "daa755368c170cd6",
+          "source": "Data Center Knowledge",
+          "url": "https://www.datacenterknowledge.com/cloud/from-outage-to-action-a-guide-to-cloud-region-migration",
+          "title": "From Outage to Action: A Guide to Cloud Region Migration",
+          "snippet": "Following the recent AWS UAE outage, businesses are rethinking cloud resilience. Discover practical strategies for seamless cloud region migrations.",
+          "contentText": "Following the recent AWS UAE outage, businesses are rethinking cloud resilience. Discover practical strategies for seamless cloud region migrations.",
+          "publishedAt": "2026-05-12T08:45:00.000Z",
+          "sourceImage": "https://eu-images.contentstack.com/v3/assets/blt8eb3cdfc1fce5194/bltd34fc52588e52d0f/6a02693c52c9d1c522d10204/Cloud-Migration.jpg?width=1280&auto=webp&quality=80&disable=upscale",
+          "region": "Global",
+          "language": "en",
+          "defaultCategory": "Colocation & Wholesale",
+          "score": 51
+        },
+        {
+          "id": "305e749979cd5bcf",
           "source": "Bloomberg Technology",
-          "url": "https://www.bloomberg.com/news/videos/2026-05-11/what-s-next-for-telecom-and-digital-infrastructure-video",
-          "title": "What’s Next for Telecom and Digital Infrastructure",
-          "snippet": "Grain Management CEO and founder David Grain discusses what's next for telecom and digital infrastructure. He sees real workloads absorbing infrastructure and says they're 'very' active in deploying capital. He speaks w…",
-          "contentText": "Grain Management CEO and founder David Grain discusses what's next for telecom and digital infrastructure. He sees real workloads absorbing infrastructure and says they're 'very' active in deploying capital. He speaks with Katie Greifeld and Romaine Bostick on \"The Close.\" (Source: Bloomberg)",
-          "publishedAt": "2026-05-11T22:35:01.000Z",
-          "sourceImage": "https://assets.bwbx.io/images/users/iqjWHBFdfxIU/itm4uIFWszLw/v3/1200x-1.jpg",
+          "url": "https://www.bloomberg.com/news/videos/2026-05-12/goldman-says-trend-toward-non-us-debt-is-accelerating-video",
+          "title": "Goldman Says Trend Toward Non-US Debt Is Accelerating",
+          "snippet": "Amanda Lynam, chief credit strategist at Goldman Sachs, says the scale of investment in artificial intelligence is forcing corporates to increasingly diversify their funding outside the US. She speaks on Bloomberg Telev…",
+          "contentText": "Amanda Lynam, chief credit strategist at Goldman Sachs, says the scale of investment in artificial intelligence is forcing corporates to increasingly diversify their funding outside the US. She speaks on Bloomberg Television. (Source: Bloomberg)",
+          "publishedAt": "2026-05-12T09:19:09.000Z",
+          "sourceImage": "https://assets.bwbx.io/images/users/iqjWHBFdfxIU/i1Lyo9T.rkJc/v3/1200x-1.jpg",
           "region": "Global",
           "language": "en",
           "defaultCategory": "Hyperscalers & Cloud",
           "score": 50
+        },
+        {
+          "id": "dbcd6140b1104d1d",
+          "source": "TechCrunch AI",
+          "url": "https://techcrunch.com/2026/05/11/thinking-machines-wants-to-build-an-ai-that-actually-listens-while-it-talks/",
+          "title": "Thinking Machines wants to build an AI that actually listens while it talks",
+          "snippet": "Right now, every AI model you've ever used works the same way. You talk, it listens. It responds, you listen. Thinking Machines is trying to change that by building a model that processes your input and generates a resp…",
+          "contentText": "Right now, every AI model you've ever used works the same way. You talk, it listens. It responds, you listen. Thinking Machines is trying to change that by building a model that processes your input and generates a response at the same time, so it's more like a phone call than a text chain.",
+          "publishedAt": "2026-05-12T04:52:35.000Z",
+          "sourceImage": null,
+          "region": "Global",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "score": 50
         }
       ],
       "curatedIds": [
-        "f2be98c20e360a07",
-        "080548f8c96249b6",
-        "68abc9645600da37",
-        "615d01aa34eba933",
-        "d402e46440ec0414",
-        "5b926ef7e637a987"
+        "e6ad57f4107ac6af",
+        "54cd7db48e0f40ea",
+        "aa75a52b211ea138",
+        "daa755368c170cd6",
+        "305e749979cd5bcf",
+        "dbcd6140b1104d1d"
       ],
       "publishedIds": [
         "1337fccd414a7f23",
         "c3309d794df18c21",
         "f2be98c20e360a07",
-        "080548f8c96249b6"
+        "080548f8c96249b6",
+        "e6ad57f4107ac6af",
+        "54cd7db48e0f40ea"
       ],
       "slotPublications": {
         "0": true,
-        "1": true
+        "1": true,
+        "2": true
       }
     }
   },
   "runHistory": [
-    {
-      "at": "2026-04-02T23:37:31.907Z",
-      "day": "2026-04-03",
-      "slot": 1,
-      "publishedCount": 2,
-      "publishedIds": [
-        "3e492a3ce0991efe",
-        "12c9ece956233f40"
-      ]
-    },
     {
       "at": "2026-04-03T08:07:24.430Z",
       "day": "2026-04-03",
@@ -6929,7 +6924,17 @@
         "f2be98c20e360a07",
         "080548f8c96249b6"
       ]
+    },
+    {
+      "at": "2026-05-12T09:47:43.699Z",
+      "day": "2026-05-12",
+      "slot": 2,
+      "publishedCount": 2,
+      "publishedIds": [
+        "e6ad57f4107ac6af",
+        "54cd7db48e0f40ea"
+      ]
     }
   ],
-  "lastRunAt": "2026-05-12T00:00:33.227Z"
+  "lastRunAt": "2026-05-12T09:47:43.699Z"
 }
