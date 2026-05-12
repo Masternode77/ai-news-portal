@@ -285,7 +285,9 @@
     "4d24059bf0a2d98c",
     "b6a7ccb84c18c4d6",
     "1337fccd414a7f23",
-    "c3309d794df18c21"
+    "c3309d794df18c21",
+    "f2be98c20e360a07",
+    "080548f8c96249b6"
   ],
   "dayPlans": {
     "2026-03-24": {
@@ -5627,122 +5629,115 @@
     "2026-05-12": {
       "date": "2026-05-12",
       "createdAt": "2026-05-11T17:28:37.388Z",
-      "refreshedAt": "2026-05-11T17:28:37.388Z",
+      "refreshedAt": "2026-05-12T00:00:33.227Z",
       "candidateWindowHours": 24,
       "curatedItems": [
         {
-          "id": "1337fccd414a7f23",
+          "id": "f2be98c20e360a07",
           "source": "StorageReview",
-          "url": "https://www.storagereview.com/news/dell-expands-ai-platform-with-amd-gpu-and-modular-infrastructure-options",
-          "title": "Dell Expands AI Platform with AMD GPU and Modular Infrastructure Options",
-          "snippet": "Dell Technologies has announced two major updates to its Dell AI Platform with AMD, targeting organizations scaling from pilot AI deployments to full production environments. The enhancements focus on high-performance t…",
-          "contentText": "Dell Technologies has announced two major updates to its Dell AI Platform with AMD, targeting organizations scaling from pilot AI deployments to full production environments. The enhancements focus on high-performance training infrastructure and a modular architecture that balances cost, scalability, and operational control. The first update introduces a large-scale configuration featuring Dell PowerEdge XE9785 server nodes equipped with AMD Instinct MI355X GPU s and AMD EPYC CPUs. It is designed for demanding AI workloads, including model training, pre-training, and high-throughput inference. The platform integrates Dell PowerSwitch networking and PowerScale storage, ensuring a consistent infrastructure stack across deployments. Using AMD Instinct MI355X GPUs increases per-node memory ca…",
-          "publishedAt": "2026-05-11T16:36:56.000Z",
-          "sourceImage": "https://www.storagereview.com/wp-content/uploads/2025/11/StorageReview-Dell-XE7745.jpg",
+          "url": "https://www.storagereview.com/review/nvidia-dgx-spark-cluster-review-distributed-inference-on-dell-gigabyte-and-hp",
+          "title": "NVIDIA DGX Spark Cluster Review: Distributed Inference on Dell, GIGABYTE, and HP",
+          "snippet": "Two things tend to come up first whenever the conversation turns to the NVIDIA DGX Spark. The first is the headline spec: 128 GB of unified memory in a roughly $4,000 desktop box, a number that would have seemed implaus…",
+          "contentText": "Two things tend to come up first whenever the conversation turns to the NVIDIA DGX Spark. The first is the headline spec: 128 GB of unified memory in a roughly $4,000 desktop box, a number that would have seemed implausible to put on an engineer&#8217;s desk even two years ago. The second is the 200 GB network on the back of the unit. The presence of a real datacenter-class fabric on a desktop appliance is what makes people lean forward, because it implies something more than a faster single-box workstation. It implies the ability to connect Sparks and replicate physically, the kind of multi-node setup that used to live exclusively in a rack. This review examines that capability. We benchmark distributed inference across all three OEM Spark implementations we have on hand, paired into two…",
+          "publishedAt": "2026-05-11T21:09:31.000Z",
+          "sourceImage": "https://www.storagereview.com/wp-content/uploads/2026/05/StorageReview-NVIDIA-Spark-Clusters-3.jpg",
           "region": "Global",
           "language": "en",
           "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
-          "score": 78
+          "score": 66
         },
         {
-          "id": "c3309d794df18c21",
-          "source": "Google Cloud Blog",
-          "url": "https://cloud.google.com/blog/products/storage-data-transfer/cloud-storage-rapid-turbocharges-object-storage-for-ai-analytics/",
-          "title": "Cloud Storage Rapid: Turbocharged object storage for AI and analytics",
-          "snippet": "At Google Cloud Next ’26 we announced Cloud Storage Rapid, a family of object storage capabilities for data-intensive workloads like AI and analytics. Out of the gate, Cloud Storage Rapid consists of Rapid Bucket (forme…",
-          "contentText": "At Google Cloud Next ’26 we announced Cloud Storage Rapid, a family of object storage capabilities for data-intensive workloads like AI and analytics. Out of the gate, Cloud Storage Rapid consists of Rapid Bucket (formerly Rapid Storage), a high-performance zonal object storage offering, and Rapid Cache (formerly Anywhere Cache), which accelerates reads on-demand and colocates compute and data for workloads in existing buckets. Cloud Storage Rapid: Turbocharged object storage for AI and analytics Cloud Storage Rapid is our response to the generational shift in how organizations build with AI. Teams are training trillion-parameter models, deploying inference at global scale, and building autonomous agents that reason over vast amounts of enterprise data. While accelerators like GPUs and TP…",
-          "publishedAt": "2026-05-11T17:00:00.000Z",
-          "sourceImage": "https://storage.googleapis.com/gweb-cloudblog-publish/images/1_5x_faster_checkpoint_restores_with_Rapid.max-1000x1000.png",
-          "region": "Global",
-          "language": "en",
-          "defaultCategory": "Hyperscalers & Cloud",
-          "score": 74
-        },
-        {
-          "id": "16b85ef91cbda595",
+          "id": "080548f8c96249b6",
           "source": "Data Center POST",
-          "url": "https://datacenterpost.com/are-we-building-for-the-right-future-key-takeaways-from-the-imn-nyc-data-center-investment-forum/",
-          "title": "Are We Building for the Right Future? Key Takeaways from the IMN NYC Data Center Investment Forum",
-          "snippet": "TL;DR AI infrastructure strategy is shifting from centralized training environments toward distributed inference deployments that require lower latency, regional proximity and edge connectivity. Power availability remai…",
-          "contentText": "TL;DR AI infrastructure strategy is shifting from centralized training environments toward distributed inference deployments that require lower latency, regional proximity and edge connectivity. Power availability remains a major obstacle, but policy, permitting, and community engagement are emerging as equally important factors influencing where and how projects move forward. Workforce shortages and supply chain limitations involving transformers, turbines, fiber and construction labor are creating new execution risks, even as capital investment in digital infrastructure continues to accelerate. Connectivity and interconnection density may become as critical to the future of AI as power itself, particularly as AI-generated data volumes increase and inference workloads expand across distr…",
-          "publishedAt": "2026-05-11T16:00:09.000Z",
-          "sourceImage": "https://d3qut6qyo6tw2j.cloudfront.net/bin/uploads/2026/05/08113244/DCP-IMN-DC-PE-East-2026-blog-5-8-26-1024x512.png",
-          "region": "Global",
-          "language": "en",
-          "defaultCategory": "Colocation & Wholesale",
-          "score": 74
-        },
-        {
-          "id": "b3bd7ec0b39d2a8d",
-          "source": "Bloomberg Technology",
-          "url": "https://www.bloomberg.com/news/videos/2026-05-11/bmo-s-schleif-says-ai-stampede-fueling-rally-beyond-tech-video",
-          "title": "BMO's Schleif Says AI Stampede Fueling Rally Beyond Tech",
-          "snippet": "Carol Schleif, chief market strategist for Bank of Montreal, says the buildout of AI infrastructure is lifting a broad cross section of stocks, not just a handful of tech names. She speaks with Ed Ludlow and Caroline Hy…",
-          "contentText": "Carol Schleif, chief market strategist for Bank of Montreal, says the buildout of AI infrastructure is lifting a broad cross section of stocks, not just a handful of tech names. She speaks with Ed Ludlow and Caroline Hyde on “Bloomberg Tech.” (Source: Bloomberg)",
-          "publishedAt": "2026-05-11T17:12:27.000Z",
-          "sourceImage": "https://assets.bwbx.io/images/users/iqjWHBFdfxIU/i.g3svgHaGbI/v3/1200x-1.jpg",
-          "region": "Global",
-          "language": "en",
-          "defaultCategory": "Hyperscalers & Cloud",
-          "score": 58
-        },
-        {
-          "id": "e7a1bf8cb855cbfd",
-          "source": "Data Center Dynamics",
-          "url": "https://www.datacenterdynamics.com/en/news/aionx-secures-hyperscale-tenant-for-irish-data-center-campus-outside-dublin/",
-          "title": "AiOnX secures hyperscale tenant for Irish data center campus outside Dublin",
-          "snippet": "Tenant likely Amazon, first phase due to launch later this year",
-          "contentText": "Tenant likely Amazon, first phase due to launch later this year",
-          "publishedAt": "2026-05-11T17:00:36.000Z",
-          "sourceImage": "https://media.datacenterdynamics.com/media/images/Building_Seven_Kildare_Cushman_Wak.2e16d0ba.fill-750x500.png",
+          "url": "https://datacenterpost.com/when-ai-manages-infrastructure-the-case-for-a-data-center-ai-governance-framework/",
+          "title": "When AI Manages Infrastructure: The Case for a Data Center AI Governance Framework",
+          "snippet": "TL;DR AI is already embedded in hyperscale data center program management — synthesizing portfolio data, generating risk briefings, and driving capital decisions across portfolios of 50 or more active construction sites…",
+          "contentText": "TL;DR AI is already embedded in hyperscale data center program management — synthesizing portfolio data, generating risk briefings, and driving capital decisions across portfolios of 50 or more active construction sites simultaneously. Unlike AI in financial services, healthcare, or aviation, data center program management AI operates with no external governance framework, no auditability standards, and no defined accountability structures. The industry needs an AI governance framework built on four pillars: auditability of AI-generated decisions, risk-based oversight design, data governance for sensitive infrastructure intelligence, and clear accountability structures. Organizations like the Uptime Institute and the Project Management Institute are well positioned to lead this work — and…",
+          "publishedAt": "2026-05-11T17:00:00.000Z",
+          "sourceImage": "https://d3qut6qyo6tw2j.cloudfront.net/bin/uploads/2026/05/11103136/DCP-Blog-Submission_05112026-1024x512.png",
           "region": "Global",
           "language": "en",
           "defaultCategory": "Colocation & Wholesale",
           "score": 58
         },
         {
-          "id": "b3148cc3b8ef333b",
+          "id": "68abc9645600da37",
+          "source": "Data Center Frontier",
+          "url": "https://www.datacenterfrontier.com/hyperscale/article/55373985/utahs-wonder-valley-and-the-industrialization-of-ai-infrastructure",
+          "title": "Utah’s Wonder Valley and the Industrialization of AI Infrastructure",
+          "snippet": "A proposed 40,000-acre AI infrastructure development in Box Elder County would pair hyperscale compute with utility-scale power generation, highlighting how data centers are evolving into integrated industrial platforms…",
+          "contentText": "A proposed 40,000-acre AI infrastructure development in Box Elder County would pair hyperscale compute with utility-scale power generation, highlighting how data centers are evolving into integrated industrial platforms shaped by energy, water, public policy, and national-security priorities.",
+          "publishedAt": "2026-05-11T15:20:09.000Z",
+          "sourceImage": "https://img.datacenterfrontier.com/files/base/ebm/datacenterfrontier/image/2026/04/69f0f5633816adb12b15bd1c-utah.png",
+          "region": "Global",
+          "language": "en",
+          "defaultCategory": "Colocation & Wholesale",
+          "score": 56
+        },
+        {
+          "id": "615d01aa34eba933",
           "source": "Bloomberg Technology",
-          "url": "https://www.bloomberg.com/news/videos/2026-05-11/market-optimistic-on-ai-surge-ignoring-risks-noviskis-video",
-          "title": "Market Optimistic on AI Surge, Ignoring Risks: Noviskis",
-          "snippet": "Jessica Noviskis, OCIO portfolio strategist at Marquette Associates, says market optimism is largely driven by strong earnings and the resurgence of the AI sector despite potential risks. \"We are entirely pricing market…",
-          "contentText": "Jessica Noviskis, OCIO portfolio strategist at Marquette Associates, says market optimism is largely driven by strong earnings and the resurgence of the AI sector despite potential risks. \"We are entirely pricing markets off of the good things that are happening,\" she said, \"and ignoring the risks and the war and the potential for inflation and maybe rate hikes.\" (Source: Bloomberg)",
-          "publishedAt": "2026-05-11T16:50:45.000Z",
-          "sourceImage": "https://assets.bwbx.io/images/users/iqjWHBFdfxIU/i_gtWoyRz46U/v3/1200x-1.jpg",
+          "url": "https://www.bloomberg.com/news/articles/2026-05-11/gitlab-says-will-cut-jobs-to-spend-on-growth-in-agentic-era",
+          "title": "GitLab Says Will Cut Jobs to Spend on Growth in ‘Agentic Era’",
+          "snippet": "GitLab Inc., which makes software that helps developers on coding projects, said it is cutting jobs to free up money to spend on the market opportunity for artificial intelligence agents.",
+          "contentText": "GitLab Inc., which makes software that helps developers on coding projects, said it is cutting jobs to free up money to spend on the market opportunity for artificial intelligence agents.",
+          "publishedAt": "2026-05-11T21:31:40.000Z",
+          "sourceImage": "https://assets.bwbx.io/images/users/iqjWHBFdfxIU/i2.NfTQjNrBU/v0/1200x-1.jpg",
           "region": "Global",
           "language": "en",
           "defaultCategory": "Hyperscalers & Cloud",
-          "score": 58
+          "score": 54
+        },
+        {
+          "id": "d402e46440ec0414",
+          "source": "TechCrunch AI",
+          "url": "https://techcrunch.com/2026/05/11/digg-tries-again-this-time-as-an-ai-news-aggregator/",
+          "title": "Digg tries again, this time as an AI news aggregator",
+          "snippet": "In an email to beta testers, the company said the site's goal is to \"track the most influential voices in a space\" and to surface the news that's actually worth \"paying attention to.\"",
+          "contentText": "In an email to beta testers, the company said the site's goal is to \"track the most influential voices in a space\" and to surface the news that's actually worth \"paying attention to.\"",
+          "publishedAt": "2026-05-11T17:02:35.000Z",
+          "sourceImage": null,
+          "region": "Global",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "score": 54
+        },
+        {
+          "id": "5b926ef7e637a987",
+          "source": "Bloomberg Technology",
+          "url": "https://www.bloomberg.com/news/videos/2026-05-11/what-s-next-for-telecom-and-digital-infrastructure-video",
+          "title": "What’s Next for Telecom and Digital Infrastructure",
+          "snippet": "Grain Management CEO and founder David Grain discusses what's next for telecom and digital infrastructure. He sees real workloads absorbing infrastructure and says they're 'very' active in deploying capital. He speaks w…",
+          "contentText": "Grain Management CEO and founder David Grain discusses what's next for telecom and digital infrastructure. He sees real workloads absorbing infrastructure and says they're 'very' active in deploying capital. He speaks with Katie Greifeld and Romaine Bostick on \"The Close.\" (Source: Bloomberg)",
+          "publishedAt": "2026-05-11T22:35:01.000Z",
+          "sourceImage": "https://assets.bwbx.io/images/users/iqjWHBFdfxIU/itm4uIFWszLw/v3/1200x-1.jpg",
+          "region": "Global",
+          "language": "en",
+          "defaultCategory": "Hyperscalers & Cloud",
+          "score": 50
         }
       ],
       "curatedIds": [
-        "1337fccd414a7f23",
-        "c3309d794df18c21",
-        "16b85ef91cbda595",
-        "b3bd7ec0b39d2a8d",
-        "e7a1bf8cb855cbfd",
-        "b3148cc3b8ef333b"
+        "f2be98c20e360a07",
+        "080548f8c96249b6",
+        "68abc9645600da37",
+        "615d01aa34eba933",
+        "d402e46440ec0414",
+        "5b926ef7e637a987"
       ],
       "publishedIds": [
         "1337fccd414a7f23",
-        "c3309d794df18c21"
+        "c3309d794df18c21",
+        "f2be98c20e360a07",
+        "080548f8c96249b6"
       ],
       "slotPublications": {
-        "0": true
+        "0": true,
+        "1": true
       }
     }
   },
   "runHistory": [
-    {
-      "at": "2026-04-02T16:06:01.911Z",
-      "day": "2026-04-03",
-      "slot": 0,
-      "publishedCount": 2,
-      "publishedIds": [
-        "fd637a7f07be30c3",
-        "5fdbf370e189371d"
-      ]
-    },
     {
       "at": "2026-04-02T23:37:31.907Z",
       "day": "2026-04-03",
@@ -6924,7 +6919,17 @@
         "1337fccd414a7f23",
         "c3309d794df18c21"
       ]
+    },
+    {
+      "at": "2026-05-12T00:00:33.227Z",
+      "day": "2026-05-12",
+      "slot": 1,
+      "publishedCount": 2,
+      "publishedIds": [
+        "f2be98c20e360a07",
+        "080548f8c96249b6"
+      ]
     }
   ],
-  "lastRunAt": "2026-05-11T17:28:37.388Z"
+  "lastRunAt": "2026-05-12T00:00:33.227Z"
 }
