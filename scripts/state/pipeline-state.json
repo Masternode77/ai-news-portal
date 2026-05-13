@@ -295,7 +295,9 @@
     "18495307e5a94019",
     "b548cf3edd48c266",
     "c70483089f3fef1c",
-    "ad85c84fae1273b4"
+    "ad85c84fae1273b4",
+    "008d63bbec093365",
+    "c01410f2bb849a37"
   ],
   "dayPlans": {
     "2026-03-24": {
@@ -5859,19 +5861,116 @@
         "1": true,
         "2": true
       }
+    },
+    "2026-05-14": {
+      "date": "2026-05-14",
+      "createdAt": "2026-05-13T17:21:05.777Z",
+      "refreshedAt": "2026-05-13T17:21:05.777Z",
+      "candidateWindowHours": 24,
+      "curatedItems": [
+        {
+          "id": "008d63bbec093365",
+          "source": "StorageReview",
+          "url": "https://www.storagereview.com/news/minio-introduces-memkv-for-petabyte-scale-ai-inference-memory",
+          "title": "MinIO Introduces MemKV for Petabyte-Scale AI Inference Memory",
+          "snippet": "MinIO has announced MemKV, a context memory store designed to address a growing bottleneck in large-scale AI inference environments. Positioned as the second core component of the company’s portfolio alongside AIStor, M…",
+          "contentText": "MinIO has announced MemKV, a context memory store designed to address a growing bottleneck in large-scale AI inference environments. Positioned as the second core component of the company&#8217;s portfolio alongside AIStor , MemKV extends MinIO&#8217;s data infrastructure into the memory tier, targeting persistent, shared context for agentic AI workloads operating across GPU clusters. As AI systems evolve from single-response interactions to multi-step reasoning and task execution, maintaining context across inference cycles has become critical. In current architectures, context is frequently lost due to limited capacity in GPU-adjacent memory tiers such as HBM and DRAM. This forces GPUs to recompute previously generated context, increasing latency, compute utilization, and energy consump…",
+          "publishedAt": "2026-05-13T16:17:17.000Z",
+          "sourceImage": "https://www.storagereview.com/wp-content/uploads/2026/02/Storagereview-minio-aistor.png",
+          "region": "Global",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "score": 70
+        },
+        {
+          "id": "c01410f2bb849a37",
+          "source": "Google Cloud Blog",
+          "url": "https://cloud.google.com/blog/products/ai-machine-learning/google-named-a-leader-in-the-gartner-magic-quadrant/",
+          "title": "Google Named a Leader in the Gartner® Magic Quadrant™ for AI Application Development Platforms: Mid-cycle update",
+          "snippet": "May 2026 update: We’ve refreshed this post to reflect our mid-cycle positioning and the evolution of our platform since the report was first published last November. Last fall, Google was recognized as a Leader in the i…",
+          "contentText": "May 2026 update: We’ve refreshed this post to reflect our mid-cycle positioning and the evolution of our platform since the report was first published last November. Last fall, Google was recognized as a Leader in the inaugural Gartner ® Magic Quadrant ™ for AI Application Development Platforms, positioned highest in Ability to Execute of all vendors evaluated. In our opinion, the mid-cycle update published last week reflects continued momentum. In this update, Google is a Leader, positioned highest in Ability to Execute and ranked #1 ranking across the three use cases assessed in the associated Critical Capabilities report. A lot has changed since last November, including the platform itself. At Google Cloud Next ‘26, we unified the core power of Vertex AI with new breakthroughs from Goo…",
+          "publishedAt": "2026-05-13T17:00:00.000Z",
+          "sourceImage": "https://storage.googleapis.com/gweb-cloudblog-publish/images/AIADP_MQ_Graphic_Mid-Cycle_Update_April_20.max-1000x1000.png",
+          "region": "Global",
+          "language": "en",
+          "defaultCategory": "Hyperscalers & Cloud",
+          "score": 66
+        },
+        {
+          "id": "3e535e6a452444b8",
+          "source": "Data Center POST",
+          "url": "https://datacenterpost.com/from-monitoring-to-autonomy-how-predictive-and-agentic-ai-is-transforming-data-center-operations/",
+          "title": "From Monitoring to Autonomy: How Predictive and Agentic AI Is Transforming Data Center Operations",
+          "snippet": "TL;DR The Limits of Reactive Monitoring: Traditional alert-based monitoring struggles to manage today’s complex, multi-domain data center environments, often generating excessive noise rather than anticipating system is…",
+          "contentText": "TL;DR The Limits of Reactive Monitoring: Traditional alert-based monitoring struggles to manage today&#8217;s complex, multi-domain data center environments, often generating excessive noise rather than anticipating system issues. Anticipating Risk with Predictive and Causal AI: Moving beyond basic correlation, predictive AI forecasts potential failures hours or days in advance, while causal AI identifies root cause-and-effect relationships across interconnected systems. The Rise of Agentic Operations: Advanced AI systems can now recommend and independently execute corrective actions, such as adjusting cooling or redistributing workloads, which elevates human operators from manual triage to strategic oversight # # # As data center environments evolve, operators are managing far more than…",
+          "publishedAt": "2026-05-13T16:00:50.000Z",
+          "sourceImage": "https://d3qut6qyo6tw2j.cloudfront.net/bin/uploads/2026/05/13090854/DCP-Blog-Submission_05122026-1024x512.png",
+          "region": "Global",
+          "language": "en",
+          "defaultCategory": "Colocation & Wholesale",
+          "score": 66
+        },
+        {
+          "id": "f1b08bfff90b625d",
+          "source": "Data Center Dynamics",
+          "url": "https://www.datacenterdynamics.com/en/news/fractile-raises-220m-to-accelerate-development-of-ai-inference-chips/",
+          "title": "Fractile raises $220m to accelerate development of AI inference chips",
+          "snippet": "Series B round was co-led by Accel, Factorial Funds, and Peter Thiel’s Founders Fund",
+          "contentText": "Series B round was co-led by Accel, Factorial Funds, and Peter Thiel’s Founders Fund",
+          "publishedAt": "2026-05-13T16:20:22.000Z",
+          "sourceImage": "https://media.datacenterdynamics.com/media/images/Walter_Goodwin_CEO.b4525cd9.fill-750x500.jpg",
+          "region": "Global",
+          "language": "en",
+          "defaultCategory": "Colocation & Wholesale",
+          "score": 59
+        },
+        {
+          "id": "536ebc3254612c04",
+          "source": "Data Center Knowledge",
+          "url": "https://www.datacenterknowledge.com/infrastructure/gpu-rental-markets-show-signs-of-pricing-compression",
+          "title": "Live GPU Rental Listings Point to Early Price Compression",
+          "snippet": "New marketplace data suggests AI compute pricing is becoming increasingly transparent, fragmented, and volatile as neocloud capacity expands.",
+          "contentText": "New marketplace data suggests AI compute pricing is becoming increasingly transparent, fragmented, and volatile as neocloud capacity expands.",
+          "publishedAt": "2026-05-13T15:36:14.000Z",
+          "sourceImage": "https://eu-images.contentstack.com/v3/assets/blt8eb3cdfc1fce5194/blt8f5fa7964427d29e/6a049b3f239afa675d94035f/2RYNAFY.jpg?width=1280&auto=webp&quality=80&disable=upscale",
+          "region": "Global",
+          "language": "en",
+          "defaultCategory": "Colocation & Wholesale",
+          "score": 59
+        },
+        {
+          "id": "3cef17f211922330",
+          "source": "Bloomberg Technology",
+          "url": "https://www.bloomberg.com/news/videos/2026-05-13/mara-strikes-data-center-deals-in-ai-pivot-video",
+          "title": "MARA Strikes Data Center Deals in AI Pivot",
+          "snippet": "MARA continues to shift its focus from Bitcoin mining to the unprecedented energy demand needed to fuel AI. MARA CEO Fred Thiel discusses the company’s big pivot on \"Bloomberg Open Interest.\" (Source: Bloomberg)",
+          "contentText": "MARA continues to shift its focus from Bitcoin mining to the unprecedented energy demand needed to fuel AI. MARA CEO Fred Thiel discusses the company’s big pivot on \"Bloomberg Open Interest.\" (Source: Bloomberg)",
+          "publishedAt": "2026-05-13T16:47:54.000Z",
+          "sourceImage": null,
+          "region": "Global",
+          "language": "en",
+          "defaultCategory": "Hyperscalers & Cloud",
+          "score": 58
+        }
+      ],
+      "curatedIds": [
+        "008d63bbec093365",
+        "c01410f2bb849a37",
+        "3e535e6a452444b8",
+        "f1b08bfff90b625d",
+        "536ebc3254612c04",
+        "3cef17f211922330"
+      ],
+      "publishedIds": [
+        "008d63bbec093365",
+        "c01410f2bb849a37"
+      ],
+      "slotPublications": {
+        "0": true
+      }
     }
   },
   "runHistory": [
-    {
-      "at": "2026-04-04T07:54:10.434Z",
-      "day": "2026-04-04",
-      "slot": 2,
-      "publishedCount": 2,
-      "publishedIds": [
-        "374f93c5a37c6511",
-        "63df66c8da819031"
-      ]
-    },
     {
       "at": "2026-04-04T15:40:16.204Z",
       "day": "2026-04-05",
@@ -7053,7 +7152,17 @@
         "c70483089f3fef1c",
         "ad85c84fae1273b4"
       ]
+    },
+    {
+      "at": "2026-05-13T17:21:05.777Z",
+      "day": "2026-05-14",
+      "slot": 0,
+      "publishedCount": 2,
+      "publishedIds": [
+        "008d63bbec093365",
+        "c01410f2bb849a37"
+      ]
     }
   ],
-  "lastRunAt": "2026-05-13T09:50:18.566Z"
+  "lastRunAt": "2026-05-13T17:21:05.777Z"
 }
