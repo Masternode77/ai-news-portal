@@ -297,7 +297,9 @@
     "c70483089f3fef1c",
     "ad85c84fae1273b4",
     "008d63bbec093365",
-    "c01410f2bb849a37"
+    "c01410f2bb849a37",
+    "8d3331f325d66aad",
+    "0ed07cfa83e089d9"
   ],
   "dayPlans": {
     "2026-03-24": {
@@ -5865,50 +5867,50 @@
     "2026-05-14": {
       "date": "2026-05-14",
       "createdAt": "2026-05-13T17:21:05.777Z",
-      "refreshedAt": "2026-05-13T17:21:05.777Z",
+      "refreshedAt": "2026-05-14T00:02:27.633Z",
       "candidateWindowHours": 24,
       "curatedItems": [
         {
-          "id": "008d63bbec093365",
-          "source": "StorageReview",
-          "url": "https://www.storagereview.com/news/minio-introduces-memkv-for-petabyte-scale-ai-inference-memory",
-          "title": "MinIO Introduces MemKV for Petabyte-Scale AI Inference Memory",
-          "snippet": "MinIO has announced MemKV, a context memory store designed to address a growing bottleneck in large-scale AI inference environments. Positioned as the second core component of the company’s portfolio alongside AIStor, M…",
-          "contentText": "MinIO has announced MemKV, a context memory store designed to address a growing bottleneck in large-scale AI inference environments. Positioned as the second core component of the company&#8217;s portfolio alongside AIStor , MemKV extends MinIO&#8217;s data infrastructure into the memory tier, targeting persistent, shared context for agentic AI workloads operating across GPU clusters. As AI systems evolve from single-response interactions to multi-step reasoning and task execution, maintaining context across inference cycles has become critical. In current architectures, context is frequently lost due to limited capacity in GPU-adjacent memory tiers such as HBM and DRAM. This forces GPUs to recompute previously generated context, increasing latency, compute utilization, and energy consump…",
-          "publishedAt": "2026-05-13T16:17:17.000Z",
-          "sourceImage": "https://www.storagereview.com/wp-content/uploads/2026/02/Storagereview-minio-aistor.png",
-          "region": "Global",
-          "language": "en",
-          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
-          "score": 70
-        },
-        {
-          "id": "c01410f2bb849a37",
-          "source": "Google Cloud Blog",
-          "url": "https://cloud.google.com/blog/products/ai-machine-learning/google-named-a-leader-in-the-gartner-magic-quadrant/",
-          "title": "Google Named a Leader in the Gartner® Magic Quadrant™ for AI Application Development Platforms: Mid-cycle update",
-          "snippet": "May 2026 update: We’ve refreshed this post to reflect our mid-cycle positioning and the evolution of our platform since the report was first published last November. Last fall, Google was recognized as a Leader in the i…",
-          "contentText": "May 2026 update: We’ve refreshed this post to reflect our mid-cycle positioning and the evolution of our platform since the report was first published last November. Last fall, Google was recognized as a Leader in the inaugural Gartner ® Magic Quadrant ™ for AI Application Development Platforms, positioned highest in Ability to Execute of all vendors evaluated. In our opinion, the mid-cycle update published last week reflects continued momentum. In this update, Google is a Leader, positioned highest in Ability to Execute and ranked #1 ranking across the three use cases assessed in the associated Critical Capabilities report. A lot has changed since last November, including the platform itself. At Google Cloud Next ‘26, we unified the core power of Vertex AI with new breakthroughs from Goo…",
-          "publishedAt": "2026-05-13T17:00:00.000Z",
-          "sourceImage": "https://storage.googleapis.com/gweb-cloudblog-publish/images/AIADP_MQ_Graphic_Mid-Cycle_Update_April_20.max-1000x1000.png",
+          "id": "8d3331f325d66aad",
+          "source": "Bloomberg Technology",
+          "url": "https://www.bloomberg.com/news/articles/2026-05-13/blackstone-reit-raises-1-75-billion-in-ipo-to-buy-data-centers",
+          "title": "Blackstone REIT Raises $1.75 Billion in IPO to Buy Data Centers",
+          "snippet": "Blackstone Digital Infrastructure Trust Inc. raised $1.75 billion in a US initial public offering, as investors’ appetite for artificial intelligence infrastructure shows no sign of easing.",
+          "contentText": "Blackstone Digital Infrastructure Trust Inc. raised $1.75 billion in a US initial public offering, as investors’ appetite for artificial intelligence infrastructure shows no sign of easing.",
+          "publishedAt": "2026-05-13T23:05:32.000Z",
+          "sourceImage": "https://assets.bwbx.io/images/users/iqjWHBFdfxIU/i12G3Yv8iQOk/v1/1200x-1.jpg",
           "region": "Global",
           "language": "en",
           "defaultCategory": "Hyperscalers & Cloud",
-          "score": 66
+          "score": 58
         },
         {
-          "id": "3e535e6a452444b8",
+          "id": "0ed07cfa83e089d9",
+          "source": "TechCrunch AI",
+          "url": "https://techcrunch.com/2026/05/13/notion-just-turned-its-workspace-into-a-hub-for-ai-agents/",
+          "title": "Notion just turned its workspace into a hub for AI agents",
+          "snippet": "Notion’s new developer platform lets teams connect AI agents, external data sources, and custom code directly into their workspace as the company pushes deeper into agentic productivity software.",
+          "contentText": "Notion’s new developer platform lets teams connect AI agents, external data sources, and custom code directly into their workspace as the company pushes deeper into agentic productivity software.",
+          "publishedAt": "2026-05-13T21:45:09.000Z",
+          "sourceImage": null,
+          "region": "Global",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "score": 58
+        },
+        {
+          "id": "efbf3a3564efc737",
           "source": "Data Center POST",
-          "url": "https://datacenterpost.com/from-monitoring-to-autonomy-how-predictive-and-agentic-ai-is-transforming-data-center-operations/",
-          "title": "From Monitoring to Autonomy: How Predictive and Agentic AI Is Transforming Data Center Operations",
-          "snippet": "TL;DR The Limits of Reactive Monitoring: Traditional alert-based monitoring struggles to manage today’s complex, multi-domain data center environments, often generating excessive noise rather than anticipating system is…",
-          "contentText": "TL;DR The Limits of Reactive Monitoring: Traditional alert-based monitoring struggles to manage today&#8217;s complex, multi-domain data center environments, often generating excessive noise rather than anticipating system issues. Anticipating Risk with Predictive and Causal AI: Moving beyond basic correlation, predictive AI forecasts potential failures hours or days in advance, while causal AI identifies root cause-and-effect relationships across interconnected systems. The Rise of Agentic Operations: Advanced AI systems can now recommend and independently execute corrective actions, such as adjusting cooling or redistributing workloads, which elevates human operators from manual triage to strategic oversight # # # As data center environments evolve, operators are managing far more than…",
-          "publishedAt": "2026-05-13T16:00:50.000Z",
-          "sourceImage": "https://d3qut6qyo6tw2j.cloudfront.net/bin/uploads/2026/05/13090854/DCP-Blog-Submission_05122026-1024x512.png",
+          "url": "https://datacenterpost.com/duos-edge-ai-to-host-waco-edge-data-center-open-house/",
+          "title": "Duos Edge AI to Host Waco Edge Data Center Open House",
+          "snippet": "TL;DR Open house incoming: Duos Edge AI is hosting a public showcase of its newly operational Waco Edge Data Center on May 21. Serving the region: 77 school districts and 12 counties across the Region 12 footprint will…",
+          "contentText": "TL;DR Open house incoming: Duos Edge AI is hosting a public showcase of its newly operational Waco Edge Data Center on May 21. Serving the region: 77 school districts and 12 counties across the Region 12 footprint will benefit from localized AI, network, and disaster recovery capabilities. Growing the footprint: The Waco deployment is a key step in Duos&#8217; broader strategy to scale distributed edge infrastructure across Central Texas and beyond. # # # Duos Technologies Group Inc . (Nasdaq: DUOT), through Duos Edge AI , Inc., has announced a newly operational Edge Data Center in Waco, Texas, designed to serve as a scalable local computing hub for the broader Central Texas region. The facility supports high-performance compute, network infrastructure, AI workloads, education technology,…",
+          "publishedAt": "2026-05-13T19:00:59.000Z",
+          "sourceImage": "https://d3qut6qyo6tw2j.cloudfront.net/bin/uploads/2026/05/13142641/DUOS-Waco-PR-Blog-5.13.26-1024x512.png",
           "region": "Global",
           "language": "en",
           "defaultCategory": "Colocation & Wholesale",
-          "score": 66
+          "score": 54
         },
         {
           "id": "f1b08bfff90b625d",
@@ -5922,65 +5924,58 @@
           "region": "Global",
           "language": "en",
           "defaultCategory": "Colocation & Wholesale",
-          "score": 59
+          "score": 51
         },
         {
-          "id": "536ebc3254612c04",
-          "source": "Data Center Knowledge",
-          "url": "https://www.datacenterknowledge.com/infrastructure/gpu-rental-markets-show-signs-of-pricing-compression",
-          "title": "Live GPU Rental Listings Point to Early Price Compression",
-          "snippet": "New marketplace data suggests AI compute pricing is becoming increasingly transparent, fragmented, and volatile as neocloud capacity expands.",
-          "contentText": "New marketplace data suggests AI compute pricing is becoming increasingly transparent, fragmented, and volatile as neocloud capacity expands.",
-          "publishedAt": "2026-05-13T15:36:14.000Z",
-          "sourceImage": "https://eu-images.contentstack.com/v3/assets/blt8eb3cdfc1fce5194/blt8f5fa7964427d29e/6a049b3f239afa675d94035f/2RYNAFY.jpg?width=1280&auto=webp&quality=80&disable=upscale",
+          "id": "1f15a0eb88a9a5c5",
+          "source": "SiliconANGLE AI",
+          "url": "https://siliconangle.com/2026/05/13/ai-control-plane-takes-center-stage-boomi-world-boomiworld/",
+          "title": "Boomi makes its AI control plane case: theCUBE’s Boomi World keynote analysis",
+          "snippet": "The AI arms race has a new front, and it isn’t the battle over individual models — it’s war for the entire AI control plane. That theme was front and center at Boomi World in Chicago, where Boomi LP Chief Executive Offi…",
+          "contentText": "The AI arms race has a new front, and it isn&#8217;t the battle over individual models — it&#8217;s war for the entire AI control plane. That theme was front and center at Boomi World in Chicago, where Boomi LP Chief Executive Officer Steve Lucas spent two hours on stage steering the conversation away from model hype [&#8230;] The post Boomi makes its AI control plane case: theCUBE&#8217;s Boomi World keynote analysis appeared first on SiliconANGLE .",
+          "publishedAt": "2026-05-13T18:49:36.000Z",
+          "sourceImage": "https://d15shllkswkct0.cloudfront.net/wp-content/blogs.dir/1/files/2026/05/D1-Keynote-Analysis-Clean.jpg",
           "region": "Global",
           "language": "en",
-          "defaultCategory": "Colocation & Wholesale",
-          "score": 59
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "score": 50
         },
         {
-          "id": "3cef17f211922330",
-          "source": "Bloomberg Technology",
-          "url": "https://www.bloomberg.com/news/videos/2026-05-13/mara-strikes-data-center-deals-in-ai-pivot-video",
-          "title": "MARA Strikes Data Center Deals in AI Pivot",
-          "snippet": "MARA continues to shift its focus from Bitcoin mining to the unprecedented energy demand needed to fuel AI. MARA CEO Fred Thiel discusses the company’s big pivot on \"Bloomberg Open Interest.\" (Source: Bloomberg)",
-          "contentText": "MARA continues to shift its focus from Bitcoin mining to the unprecedented energy demand needed to fuel AI. MARA CEO Fred Thiel discusses the company’s big pivot on \"Bloomberg Open Interest.\" (Source: Bloomberg)",
-          "publishedAt": "2026-05-13T16:47:54.000Z",
-          "sourceImage": null,
+          "id": "e584d6a39e9c6e3e",
+          "source": "StorageReview",
+          "url": "https://www.storagereview.com/review/dapustor-r6060-122tb-review-read-heavy-gen5-qlc-at-scale",
+          "title": "DapuStor R6060 122TB Review: Read-Heavy Gen5 QLC at Scale",
+          "snippet": "The DapuStor R6060 is a PCIe Gen5 enterprise QLC SSD built around the company’s DP800 controller and 3D QLC NAND. The series spans U.2, E3.L, and E1.L form factors, with capacities of 15.36TB, 30.72TB, 61.44TB, and 122.…",
+          "contentText": "The DapuStor R6060 is a PCIe Gen5 enterprise QLC SSD built around the company&#8217;s DP800 controller and 3D QLC NAND. The series spans U.2, E3.L, and E1.L form factors, with capacities of 15.36TB, 30.72TB, 61.44TB, and 122.88TB, plus a 245TB SKU at the top of the stack. The interface supports PCIe 5.0 x4 or 2&#215;2 dual-port operation and NVMe 2.0. Our review unit is the 122.88TB E3.L 2T variant, which DapuStor positions for dense AI infrastructure, cloud deployments, and large-scale storage pools where flash density is the primary consideration. The performance profile fits that role, pairing high sequential read bandwidth with much lower write throughput, making the R6060 better suited to read-heavy datasets and capacity-driven storage tiers than to small-block transactional workload…",
+          "publishedAt": "2026-05-13T19:12:43.000Z",
+          "sourceImage": "https://www.storagereview.com/wp-content/uploads/2026/05/StorageReview-Dapustor-R6060-3.jpg",
           "region": "Global",
           "language": "en",
-          "defaultCategory": "Hyperscalers & Cloud",
-          "score": 58
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "score": 46
         }
       ],
       "curatedIds": [
-        "008d63bbec093365",
-        "c01410f2bb849a37",
-        "3e535e6a452444b8",
+        "8d3331f325d66aad",
+        "0ed07cfa83e089d9",
+        "efbf3a3564efc737",
         "f1b08bfff90b625d",
-        "536ebc3254612c04",
-        "3cef17f211922330"
+        "1f15a0eb88a9a5c5",
+        "e584d6a39e9c6e3e"
       ],
       "publishedIds": [
         "008d63bbec093365",
-        "c01410f2bb849a37"
+        "c01410f2bb849a37",
+        "8d3331f325d66aad",
+        "0ed07cfa83e089d9"
       ],
       "slotPublications": {
-        "0": true
+        "0": true,
+        "1": true
       }
     }
   },
   "runHistory": [
-    {
-      "at": "2026-04-04T15:40:16.204Z",
-      "day": "2026-04-05",
-      "slot": 0,
-      "publishedCount": 2,
-      "publishedIds": [
-        "e9dfd53fea392989",
-        "2dfad5a1c2678635"
-      ]
-    },
     {
       "at": "2026-04-04T23:34:47.431Z",
       "day": "2026-04-05",
@@ -7162,7 +7157,17 @@
         "008d63bbec093365",
         "c01410f2bb849a37"
       ]
+    },
+    {
+      "at": "2026-05-14T00:02:27.633Z",
+      "day": "2026-05-14",
+      "slot": 1,
+      "publishedCount": 2,
+      "publishedIds": [
+        "8d3331f325d66aad",
+        "0ed07cfa83e089d9"
+      ]
     }
   ],
-  "lastRunAt": "2026-05-13T17:21:05.777Z"
+  "lastRunAt": "2026-05-14T00:02:27.633Z"
 }
