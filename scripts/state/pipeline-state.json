@@ -311,7 +311,9 @@
     "03ad74aeabe4fed6",
     "eab2bc2f6f7d59c2",
     "1fbd2acc35cad9b3",
-    "af45a6f9a7a983f9"
+    "af45a6f9a7a983f9",
+    "ebbdd50f6259511c",
+    "c8fd1d25f9a85fc7"
   ],
   "dayPlans": {
     "2026-03-24": {
@@ -6105,35 +6107,21 @@
     "2026-05-16": {
       "date": "2026-05-16",
       "createdAt": "2026-05-15T16:55:16.736Z",
-      "refreshedAt": "2026-05-15T23:56:11.237Z",
+      "refreshedAt": "2026-05-16T08:56:43.876Z",
       "candidateWindowHours": 24,
       "curatedItems": [
         {
-          "id": "1fbd2acc35cad9b3",
+          "id": "ebbdd50f6259511c",
           "source": "Bloomberg Technology",
-          "url": "https://www.bloomberg.com/news/articles/2026-05-15/arm-holdings-said-to-face-us-antitrust-probe-over-chip-tech",
-          "title": "Arm Holdings to Face US Antitrust Probe Over Chip Tech",
-          "snippet": "Arm Holdings Plc is facing an antitrust investigation by the US Federal Trade Commission over the UK company’s licensing of its semiconductor technology, part of ongoing global scrutiny of the business, people familiar…",
-          "contentText": "Arm Holdings Plc is facing an antitrust investigation by the US Federal Trade Commission over the UK company’s licensing of its semiconductor technology, part of ongoing global scrutiny of the business, people familiar with the matter said.",
-          "publishedAt": "2026-05-15T22:05:36.000Z",
-          "sourceImage": "https://assets.bwbx.io/images/users/iqjWHBFdfxIU/iu7_pZreqqLg/v1/1200x-1.jpg",
+          "url": "https://www.bloomberg.com/news/articles/2026-05-16/china-data-centers-tap-spot-power-trading-first-time-report",
+          "title": "China Data Centers Tap Spot Power Trading First Time: Report",
+          "snippet": "China’s large-scale data centers have joined electricity spot trading as virtual power plants for the first time, marking a shift in how computing demand interacts with the grid, a report in an official media said.",
+          "contentText": "China’s large-scale data centers have joined electricity spot trading as virtual power plants for the first time, marking a shift in how computing demand interacts with the grid, a report in an official media said.",
+          "publishedAt": "2026-05-16T05:28:00.000Z",
+          "sourceImage": "https://assets.bwbx.io/images/users/iqjWHBFdfxIU/iYr0uICDYx18/v0/1200x-1.jpg",
           "region": "Global",
           "language": "en",
           "defaultCategory": "Hyperscalers & Cloud",
-          "score": 54
-        },
-        {
-          "id": "af45a6f9a7a983f9",
-          "source": "StorageReview",
-          "url": "https://www.storagereview.com/news/netapp-expands-openshift-data-management-with-faster-vm-backup-dr-and-cloud-scale-support",
-          "title": "NetApp Expands OpenShift Data Management With Faster VM Backup, DR, and Cloud Scale Support",
-          "snippet": "NetApp announced a set of data management updates for Red Hat OpenShift to improve backup predictability, disaster recovery, and operational scalability across on-premises and cloud-based virtualized environments. The r…",
-          "contentText": "NetApp announced a set of data management updates for Red Hat OpenShift to improve backup predictability, disaster recovery, and operational scalability across on-premises and cloud-based virtualized environments. The release focuses on OpenShift Virtualization deployments, where growing VM counts and larger datasets can make traditional full-disk backup approaches increasingly inefficient. The announcement addresses a practical challenge in enterprise virtualization. As OpenShift-based VM environments scale, backup products that rely on scanning entire virtual disks can lengthen backup windows, complicate recovery planning, and increase storage and compute overhead. NetApp is positioning its latest OpenShift integrations around block-level change tracking, automation, and cloud consisten…",
-          "publishedAt": "2026-05-15T20:10:05.000Z",
-          "sourceImage": "https://www.storagereview.com/wp-content/uploads/2024/11/Storagereview-netapp-red-hat.png",
-          "region": "Global",
-          "language": "en",
-          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
           "score": 54
         },
         {
@@ -6151,20 +6139,6 @@
           "score": 52
         },
         {
-          "id": "b80d7b2e0622d189",
-          "source": "ServeTheHome",
-          "url": "https://www.servethehome.com/asus-zenscreen-mb16ace-review-a-15-6in-1080p-ips-option/",
-          "title": "ASUS ZenScreen MB16ACE Review A 15.6in 1080P IPS Option",
-          "snippet": "We take a look at the ASUS ZenScreen MB16ACE which is a 15.6\" IPS display designed for portability and light weight The post ASUS ZenScreen MB16ACE Review A 15.6in 1080P IPS Option appeared first on ServeTheHome.",
-          "contentText": "We take a look at the ASUS ZenScreen MB16ACE which is a 15.6\" IPS display designed for portability and light weight The post ASUS ZenScreen MB16ACE Review A 15.6in 1080P IPS Option appeared first on ServeTheHome .",
-          "publishedAt": "2026-05-15T21:51:36.000Z",
-          "sourceImage": null,
-          "region": "Global",
-          "language": "en",
-          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
-          "score": 46
-        },
-        {
           "id": "75bd66360d00875d",
           "source": "Google Cloud Blog",
           "url": "https://cloud.google.com/blog/topics/developers-practitioners/winners-and-highlights-of-the-gemini-live-agent-challenge/",
@@ -6176,54 +6150,75 @@
           "region": "Global",
           "language": "en",
           "defaultCategory": "Hyperscalers & Cloud",
-          "score": 46
+          "score": 40
         },
         {
-          "id": "27a43f411b75eacf",
+          "id": "cf5745024d7f0f2a",
           "source": "TechCrunch AI",
-          "url": "https://techcrunch.com/2026/05/15/silicon-valleys-vacationland-needs-a-new-energy-provider-just-as-ai-is-driving-prices-up/",
-          "title": "Silicon Valley’s vacationland needs a new energy provider just as AI is driving prices up",
-          "snippet": "Lake Tahoe, Silicon Valley's favorite vacation spot, is about to get hit with higher energy prices as AI drives demand for electricity.",
-          "contentText": "Lake Tahoe, Silicon Valley's favorite vacation spot, is about to get hit with higher energy prices as AI drives demand for electricity.",
-          "publishedAt": "2026-05-15T18:14:44.000Z",
+          "url": "https://techcrunch.com/podcast/the-openai-trial-wraps-up-and-the-musk-founder-machine-keeps-spinning/",
+          "title": "The OpenAI trial wraps up, and the Musk founder machine keeps spinning",
+          "snippet": "The Musk v. Altman trial came to a close this week, and the final arguments kept circling back to one question: can we trust the people in charge of AI? All of this is playing out as SpaceX charges toward what could be…",
+          "contentText": "The Musk v. Altman trial came to a close this week, and the final arguments kept circling back to one question:&#160;can we trust the people in charge of AI?&#160;All of this is playing out as SpaceX charges toward what could be one of the largest IPOs in American history, with&#160;a whole generation&#160;of founders&#160;already spinning out [&#8230;]",
+          "publishedAt": "2026-05-15T19:24:16.000Z",
           "sourceImage": null,
           "region": "Global",
           "language": "en",
           "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
-          "score": 43
+          "score": 36
+        },
+        {
+          "id": "5801e91ccadb5d3c",
+          "source": "Semiconductor Engineering",
+          "url": "https://semiengineering.com/micro-transfer-printing-mtp-as-a-promising-scalable-approach-to-heterogeneous-integration-for-silicon-photonics-ghent-u-imec-et-al/",
+          "title": "Micro-Transfer Printing (MTP) As A Promising Scalable Approach to Heterogeneous Integration for Silicon Photonics (Ghent U., imec et al)",
+          "snippet": "A new technical paper, “Micro-Transfer Printing on Silicon Photonics: Tutorial, Recent Progress and Outlook,” was published by researchers at Ghent University, imec et al. Abstract “This paper highlights micro-transfer…",
+          "contentText": "A new technical paper, &#8220;Micro-Transfer Printing on Silicon Photonics: Tutorial, Recent Progress and Outlook,&#8221; was published by researchers at Ghent University, imec et al. Abstract &#8220;This paper highlights micro-transfer printing (MTP) as a promising scalable approach to heterogeneous integration for silicon photonics. MTP uniquely achieves high integration density, high throughput, and high material efficiency through a low-temperature, back-end integration process. Current demonstrations, including integrated III-V lasers and thin-film electro-optic modulators, confirm MTP&#8217;s potential. Industrial adoption requires resolving challenges related to final integration yield and throughput, device reliability, and supply chain maturity.&#8221; Find the technical paper he…",
+          "publishedAt": "2026-05-15T18:44:10.000Z",
+          "sourceImage": null,
+          "region": "Global",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "score": 36
+        },
+        {
+          "id": "b80d7b2e0622d189",
+          "source": "ServeTheHome",
+          "url": "https://www.servethehome.com/asus-zenscreen-mb16ace-review-a-15-6in-1080p-ips-option/",
+          "title": "ASUS ZenScreen MB16ACE Review A 15.6in 1080P IPS Option",
+          "snippet": "We take a look at the ASUS ZenScreen MB16ACE which is a 15.6\" IPS display designed for portability and light weight The post ASUS ZenScreen MB16ACE Review A 15.6in 1080P IPS Option appeared first on ServeTheHome.",
+          "contentText": "We take a look at the ASUS ZenScreen MB16ACE which is a 15.6\" IPS display designed for portability and light weight The post ASUS ZenScreen MB16ACE Review A 15.6in 1080P IPS Option appeared first on ServeTheHome .",
+          "publishedAt": "2026-05-15T21:51:36.000Z",
+          "sourceImage": null,
+          "region": "Global",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "score": 32
         }
       ],
       "curatedIds": [
-        "1fbd2acc35cad9b3",
-        "af45a6f9a7a983f9",
+        "ebbdd50f6259511c",
         "c8fd1d25f9a85fc7",
-        "b80d7b2e0622d189",
         "75bd66360d00875d",
-        "27a43f411b75eacf"
+        "cf5745024d7f0f2a",
+        "5801e91ccadb5d3c",
+        "b80d7b2e0622d189"
       ],
       "publishedIds": [
         "03ad74aeabe4fed6",
         "eab2bc2f6f7d59c2",
         "1fbd2acc35cad9b3",
-        "af45a6f9a7a983f9"
+        "af45a6f9a7a983f9",
+        "ebbdd50f6259511c",
+        "c8fd1d25f9a85fc7"
       ],
       "slotPublications": {
         "0": true,
-        "1": true
+        "1": true,
+        "2": true
       }
     }
   },
   "runHistory": [
-    {
-      "at": "2026-04-06T23:39:34.484Z",
-      "day": "2026-04-07",
-      "slot": 1,
-      "publishedCount": 2,
-      "publishedIds": [
-        "7d2058cec908b7aa",
-        "55aaee025a893153"
-      ]
-    },
     {
       "at": "2026-04-07T08:18:10.739Z",
       "day": "2026-04-07",
@@ -7405,7 +7400,17 @@
         "1fbd2acc35cad9b3",
         "af45a6f9a7a983f9"
       ]
+    },
+    {
+      "at": "2026-05-16T08:56:43.876Z",
+      "day": "2026-05-16",
+      "slot": 2,
+      "publishedCount": 2,
+      "publishedIds": [
+        "ebbdd50f6259511c",
+        "c8fd1d25f9a85fc7"
+      ]
     }
   ],
-  "lastRunAt": "2026-05-15T23:56:11.237Z"
+  "lastRunAt": "2026-05-16T08:56:43.876Z"
 }
