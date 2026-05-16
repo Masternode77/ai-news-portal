@@ -3,9 +3,10 @@ import Layout from '../layouts/Layout.astro';
 import latestNews from '../data/latest-news.json';
 import archivedNews from '../data/archived-news.json';
 import searchIndex from '../data/search-index.json';
+import { SITE } from '../config/site';
 import { cleanEditorialText, displayHeadline } from '../lib/editorial-display.js';
 
-const boardTitle = 'AI / Data Center\nSignal Board';
+const boardTitle = SITE.name;
 
 const formatTimeAgo = (iso) => {
   const ms = Date.now() - new Date(iso).getTime();
@@ -66,7 +67,7 @@ const stats = [
   { label: 'Refresh', value: '8h' },
 ];
 ---
-<Layout title={boardTitle} description="An AI and data center intelligence board with archive search, refreshed every 8 hours.">
+<Layout title={boardTitle} description={SITE.description} canonicalPath="/">
   <main class="page-shell">
     <div class="ambient ambient-a"></div>
     <div class="ambient ambient-b"></div>
@@ -74,7 +75,7 @@ const stats = [
 
     <header class="publication-header">
       <div class="edition-line">
-        <span>AI Infrastructure Daily</span>
+        <span>AI Infrastructure Intelligence</span>
         <time>
           {new Date().toLocaleString('en-US', {
             month: 'short',
@@ -87,11 +88,11 @@ const stats = [
 
       <div class="masthead-row">
         <h1 aria-label={boardTitle}>
-          <span>AI / Data Center</span>
-          <span>Signal Board</span>
+          <span>Compute</span>
+          <span>Current</span>
         </h1>
         <p>
-          Decision-grade coverage of AI infrastructure, hyperscale cloud, power, cooling, chips, and data center capital flows.
+          {SITE.description}
         </p>
       </div>
 
@@ -183,7 +184,7 @@ const stats = [
         <p class="eyebrow">Latest Dispatches</p>
         <h2>Signal feed</h2>
       </div>
-      <p class="feed-copy">A continuously refreshed front page for operators, investors, and infrastructure teams tracking the AI buildout.</p>
+      <p class="feed-copy">A continuously refreshed front page for operators, investors, and infrastructure teams tracking the AI buildout, refreshed every 8 hours.</p>
     </section>
 
     <section class="news-grid">
@@ -219,7 +220,7 @@ const stats = [
     </section>
   </main>
 
-  <script type="application/json" id="search-index-data" set:html={JSON.stringify(searchPayload)}></script>
+  <script is:inline type="application/json" id="search-index-data" set:html={JSON.stringify(searchPayload)}></script>
   <script>
     const input = document.getElementById('news-search');
     const results = document.getElementById('search-results');

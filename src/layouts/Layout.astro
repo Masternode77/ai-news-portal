@@ -1,15 +1,29 @@
 ---
 import '../styles/global.css';
+import { SITE } from '../config/site';
 
 export interface Props {
   title?: string;
   description?: string;
+  image?: string;
+  canonicalPath?: string;
+  type?: 'website' | 'article';
+  noindex?: boolean;
 }
 
 const {
-  title = 'AI / Data Center Signal Board',
-  description = 'Curated AI, data center, cloud, semiconductor, and power infrastructure intelligence every 8 hours.',
+  title = SITE.name,
+  description = SITE.description,
+  image = SITE.defaultOgImage,
+  canonicalPath,
+  type = 'website',
+  noindex = false,
 } = Astro.props;
+
+const joinUrl = (base: string, path: string) =>
+  `${base.replace(/\/$/, '')}/${path.replace(/^\//, '')}`;
+const canonical = canonicalPath ? joinUrl(SITE.url, canonicalPath) : joinUrl(SITE.url, Astro.url.pathname);
+const ogImage = image.startsWith('http') ? image : joinUrl(SITE.url, image);
 ---
 <!doctype html>
 <html lang="ko">
@@ -18,9 +32,21 @@ const {
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{title}</title>
     <meta name="description" content={description} />
+    {noindex ? <meta name="robots" content="noindex,nofollow" /> : null}
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="alternate" type="application/rss+xml" title={`${SITE.name} RSS`} href={SITE.rssPath} />
     <meta name="theme-color" content="#090b12" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
+    <meta property="og:type" content={type} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:site_name" content={SITE.name} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
   </head>
   <body>
     <slot />

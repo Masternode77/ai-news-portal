@@ -2,6 +2,7 @@
 import Layout from '../../layouts/Layout.astro';
 import latestNews from '../../data/latest-news.json';
 import archivedNews from '../../data/archived-news.json';
+import { SITE } from '../../config/site';
 import { cleanEditorialText, displayHeadline, executiveSummaryLines } from '../../lib/editorial-display.js';
 
 export function getStaticPaths() {
@@ -22,7 +23,10 @@ if (!article) {
 const lens = article.expertLensFull || null;
 const lensTeaser = article.expertLensShort || article.expertLens || lens?.thesis || null;
 const displayTitle = displayHeadline(article);
-const detailImage = article.sourceImage || article.generatedImage || '/generated/default.svg';
+const detailImage = article.sourceImage || article.generatedImage || SITE.defaultOgImage;
+const articleDescription = cleanEditorialText(lens?.metaDescription || article.summary || article.snippet || article.title);
+const canonicalPath = `/news/${article.id}/`;
+const articleUrl = `${SITE.url}${canonicalPath}`;
 const lensSections = [
   ['What happened', lens?.whatHappened],
   ['Why it matters', lens?.whyThisMatters],
@@ -37,8 +41,33 @@ const articleBody = (lens?.finalArticleBody || article.articleText || article.sn
   .split(/\n{2,}/)
   .map((paragraph) => cleanEditorialText(paragraph))
   .filter(Boolean);
+const structuredData = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: displayTitle,
+  description: articleDescription,
+  image: detailImage.startsWith('http') ? detailImage : `${SITE.url}${detailImage}`,
+  datePublished: article.publishedAt,
+  dateModified: article['updatedAt'] || article.publishedAt,
+  author: {
+    '@type': 'Organization',
+    name: SITE.name,
+  },
+  publisher: {
+    '@type': 'Organization',
+    name: SITE.name,
+  },
+  mainEntityOfPage: articleUrl,
+};
 ---
-<Layout title={displayTitle} description={lens?.metaDescription || article.summary || article.snippet || article.title}>
+<Layout
+  title={`${displayTitle} | ${SITE.name}`}
+  description={articleDescription}
+  type="article"
+  canonicalPath={canonicalPath}
+  image={detailImage}
+>
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(structuredData)}></script>
   <main class="detail-shell">
     <a class="back-link" href="/">Latest board</a>
 
