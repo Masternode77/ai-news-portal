@@ -1,4 +1,5 @@
 export const EDITORIAL_HUMANIZER_MODE = 'editorial-humanizer-v1';
+export const HUMANIZED_ARTICLE_MIN_CHARS = 1000;
 
 export const EDITORIAL_BANNED_PATTERNS = [
   /\bExpert lens:\s*/gi,
@@ -10,6 +11,7 @@ export const EDITORIAL_BANNED_PATTERNS = [
   /\bwhat the market may be missing\b/gi,
   /\bOperators should read this through\b/gi,
   /\bInvestors should track whether\b/gi,
+  /\bInvestors will care whether\b/gi,
   /\bHyperscalers should focus on whether\b/gi,
   /\bThe important question is not only what was announced\b/gi,
   /\bThe important questio\S*/gi,
@@ -24,6 +26,11 @@ export const EDITORIAL_BANNED_PATTERNS = [
   /\bFor investors, the useful read-through is\b/gi,
   /\bFor operators, the story comes down to\b/gi,
   /\bFor hyperscalers and cloud providers, watch whether\b/gi,
+  /\bCloud buyers will watch whether\b/gi,
+  /^\s*Why it matters\s*$/gim,
+  /^\s*Pressure points\s*$/gim,
+  /^\s*Market implications\s*$/gim,
+  /^\s*What to watch\s*$/gim,
 ];
 
 const EDITORIAL_REPLACEMENTS = [
@@ -40,10 +47,12 @@ const EDITORIAL_REPLACEMENTS = [
   [/\bwhat the market may be missing\b/gi, 'the risk still being underpriced'],
   [/\bInvestors should track whether\b/gi, 'Investors will be watching whether'],
   [/\bFor investors, the useful read-through is whether\b/gi, 'Investors will care whether'],
+  [/\bInvestors will care whether\b/gi, 'The financial question is whether'],
   [/\bOperators should read this through\b/gi, 'Operators will read this through'],
   [/\bFor operators, the story comes down to\b/gi, 'For operators, the pressure sits in'],
   [/\bHyperscalers should focus on whether\b/gi, 'Hyperscalers will be watching whether'],
   [/\bFor hyperscalers and cloud providers, watch whether\b/gi, 'Cloud buyers will watch whether'],
+  [/\bCloud buyers will watch whether\b/gi, 'Cloud buyers will be looking for evidence that'],
   [/\bread-through\b/gi, 'implication'],
   [/\bstrategic read-through\b/gi, 'market implication'],
   [/\b(.{8,180}?) matters most for how quickly\b/gi, '$1 is worth watching for how quickly'],
@@ -55,6 +64,10 @@ const EDITORIAL_REPLACEMENTS = [
   [/\bLink Gift Expand\b/gi, ''],
   [/\bX LinkedIn Email Link Gift Gift this article\b/gi, ''],
   [/\bContact us:\s*Provide news feedback or report an error Confidential tip\S*/gi, ''],
+  [/^\s*Why it matters\s*$/gim, ''],
+  [/^\s*Pressure points\s*$/gim, ''],
+  [/^\s*Market implications\s*$/gim, ''],
+  [/^\s*What to watch\s*$/gim, ''],
 ];
 
 export const EDITORIAL_HUMANIZER_PROMPT = [
@@ -67,7 +80,7 @@ export const EDITORIAL_HUMANIZER_PROMPT = [
   'Put a clear hook in the headline or opening paragraph so the reader immediately understands why this is worth clicking.',
   'Provide a three-line executive summary for busy readers: what changed, why it matters, and what to watch.',
   'Use varied sentence length, active verbs, and concrete nouns. Do not mention humanization or AI-detection in reader-facing copy.',
-  'The final article body should read as reported analysis, not as a list of generated bullet points.',
+  'The final article body should be at least 1,000 characters, written as continuous reported analysis with no repeated section headings.',
 ].join(' ');
 
 function compactWhitespace(text = '') {
@@ -94,6 +107,8 @@ export function normalizeEditorialVoice(text = '') {
     .replace(/\s+\.\s*/g, '. ')
     .replace(/\.{2,}/g, '.')
     .replace(/\s+;/g, ';')
+    .replace(/\s+…$/g, '')
+    .replace(/…$/g, '')
     .replace(/\s+/g, ' ')
     .trim();
 }
@@ -117,17 +132,108 @@ export function normalizeEditorialParagraphs(text = '') {
 }
 
 function sourceLead(source, summary) {
-  const cleanedSummary = normalizeEditorialVoice(summary).replace(/\.$/, '');
+  const cleanedSummary = normalizeEditorialVoice(summary).replace(/[.…]+$/, '');
   if (!cleanedSummary) return '';
   const sentence = cleanedSummary.charAt(0).toUpperCase() + cleanedSummary.slice(1);
   return `${source} reported: ${sentence}.`;
 }
 
-export function buildHumanizedArticleBody(article = {}, sections = {}) {
+function bestAvailableSourceText(article = {}, sections = {}) {
+  const candidates = [
+    article.articleText,
+    article.contentText,
+    article.snippet,
+    article.summary,
+    sections.summary,
+    article.title,
+  ]
+    .map((value) => normalizeEditorialVoice(value || '').replace(/[.…]+$/, ''))
+    .filter(Boolean)
+    .sort((a, b) => b.length - a.length);
+
+  return candidates[0] || '';
+}
+
+function categoryContext(article = {}, text = '') {
+  const haystack = `${article.title || ''} ${article.category || ''} ${text}`.toLowerCase();
+  if (/(power|grid|utility|interconnection|energy|ppa|transformer|electricity)/.test(haystack)) {
+    return {
+      constraint: 'The constraint is not only the price of electricity. It is the timing of grid access, the flexibility of large loads, and the ability of data center operators to behave less like passive consumers and more like active participants in the power system.',
+      audience: 'For infrastructure teams, that makes power procurement and site selection part of the product roadmap. A campus can have customers, capital, and equipment lined up and still lose time if the grid connection, market rules, or operating model cannot absorb the load profile.',
+      watch: 'The next test is whether this remains a narrow market experiment or becomes a normal tool for balancing AI demand with grid reliability.',
+    };
+  }
+  if (/(gpu|chip|semiconductor|hbm|silicon|nvidia|amd|fab|foundry|packaging)/.test(haystack)) {
+    return {
+      constraint: 'The constraint is not just chip supply. Advanced compute depends on packaging, memory, networking, power delivery, and the ability to land systems inside facilities that can actually run them at high utilization.',
+      audience: 'That matters for buyers because the useful capacity is the installed, cooled, powered cluster, not the purchase order. It also matters for suppliers because component shortages can shift bargaining power quickly across the stack.',
+      watch: 'The next test is whether delivery schedules, memory availability, and deployment readiness move together or start to diverge.',
+    };
+  }
+  if (/(cooling|thermal|liquid|rack|density|cdu)/.test(haystack)) {
+    return {
+      constraint: 'The constraint is thermal design. Higher rack density changes the shape of the facility, the maintenance model, and the supplier base behind each deployment.',
+      audience: 'Operators that treat cooling as a late-stage engineering detail risk turning demand into stranded capacity. Buyers will care less about headline megawatts and more about which sites can support the next generation of accelerator clusters without long retrofit cycles.',
+      watch: 'The next test is whether cooling standards, vendor capacity, and operations teams can scale as quickly as the compute roadmap requires.',
+    };
+  }
+  if (/(funding|financing|capital|debt|bond|ipo|valuation|acquisition|merger|investment)/.test(haystack)) {
+    return {
+      constraint: 'The constraint is capital discipline. AI infrastructure is attracting money, but the gap between committed capital and operating capacity can still be wide when land, power, equipment, and customers do not line up on the same timetable.',
+      audience: 'Investors will look for signs that funding is tied to real capacity, durable contracts, and credible execution rather than a broad enthusiasm for anything attached to AI demand.',
+      watch: 'The next test is whether financing terms, customer commitments, and construction milestones keep moving in the same direction.',
+    };
+  }
+  return {
+    constraint: 'The constraint is execution. AI infrastructure demand is visible, but turning it into usable capacity requires power, equipment, permitting, supply-chain coordination, and customers that are ready to commit.',
+    audience: 'That is why operators, cloud buyers, and investors are watching the operating details more closely than the headline. The winner is usually not the party with the loudest demand signal, but the one that removes bottlenecks soon enough to deliver capacity when customers need it.',
+    watch: 'The next test is whether the project details support the ambition in the announcement.',
+  };
+}
+
+function articleAngle(article = {}, sourceText = '') {
+  const title = normalizeEditorialVoice(article.title || 'The report');
   const source = article.source || 'The source';
-  const summary = sections.summary || article.summary || article.snippet || article.articleText || article.title || '';
+  const category = article.category || 'AI infrastructure';
+  const region = article.region || 'global markets';
+  const cleanText = normalizeEditorialVoice(sourceText || article.summary || article.snippet || title);
+  return {
+    title,
+    source,
+    category,
+    region,
+    cleanText,
+  };
+}
+
+function humanizeAudienceImplications({ investor = '', operator = '', cloud = '' } = {}) {
+  const parts = [investor, operator, cloud].map(normalizeEditorialVoice).filter(Boolean);
+  if (!parts.length) return '';
+
+  const joined = parts.join(' ');
+  const financial = joined.match(/(?:The financial question is whether|Investors will be watching whether)\s+([^.]*)/i)?.[1];
+  const operating = joined.match(/(?:For operators, the pressure sits in|Operators will look first at|Operators will read this through)\s+([^.]*)/i)?.[1];
+  const buyer = joined.match(/(?:The customer question is whether|Cloud buyers will be looking for evidence that|Cloud buyers will watch whether|Hyperscalers will be watching whether)\s+([^.]*)/i)?.[1];
+
+  if (financial || operating || buyer) {
+    return normalizeEditorialVoice([
+      financial ? `The financial question is whether ${financial.replace(/[.…]+$/, '')}` : '',
+      operating ? `the operating question is ${operating.replace(/[.…]+$/, '')}` : '',
+      buyer ? `and the customer question is whether ${buyer.replace(/[.…]+$/, '')}` : '',
+    ].filter(Boolean).join(', ') + '.');
+  }
+
+  return joined;
+}
+
+export function buildHumanizedArticleBody(article = {}, sections = {}) {
+  const sourceText = bestAvailableSourceText(article, sections);
+  const angle = articleAngle(article, sourceText);
+  const source = angle.source;
   const category = (sections.category || article.category || 'AI infrastructure').toLowerCase();
-  const lead = sourceLead(source, summary);
+  const context = categoryContext(article, sourceText);
+  const lead = sourceLead(source, sourceText);
+  const seed = Math.abs(String(article.id || article.title || '').split('').reduce((sum, char) => sum + char.charCodeAt(0), 0));
   const categoryLabel = category
     .replace(/hyperscalers\s*&\s*cloud/i, 'cloud infrastructure')
     .replace(/ai infrastructure \(gpu\/neocloud\)/i, 'AI compute infrastructure')
@@ -144,27 +250,51 @@ export function buildHumanizedArticleBody(article = {}, sections = {}) {
   const cloud = normalizeEditorialVoice(sections.hyperscalers || '');
   const watch = normalizeEditorialVoice(sections.watchNext || '').replace(/^watch\s+/i, '');
 
-  const implications = [investor, operator, cloud]
-    .filter(Boolean)
-    .map((line) => line.replace(/\.$/, ''))
-    .join('. ');
+  const implications = humanizeAudienceImplications({ investor, operator, cloud });
 
-  const frameSeed = String(article.id || article.title || '').charCodeAt(0) % 3;
-  const frame = [
-    `For companies exposed to ${categoryLabel}, the useful question is practical. ${pressure}`,
-    `That puts the focus back on execution in ${categoryLabel}. ${pressure}`,
-    `The headline only matters if the infrastructure follows. ${pressure}`,
-  ][frameSeed];
+  const systemFrame = [
+    `The important part is what the report says about ${categoryLabel} as a working system, not just as a demand story. ${context.constraint}`,
+    `Read narrowly, this is one more item in the daily flow of infrastructure news. Read against the buildout cycle, it points to a more practical question for ${categoryLabel}: can the operating system around compute keep up with demand? ${context.constraint}`,
+    `The story lands in a market where demand is already assumed. The more useful question is whether the supporting layer around ${categoryLabel} is flexible enough to turn that demand into available capacity. ${context.constraint}`,
+  ][seed % 3];
+  const attentionFrame = [
+    `That is the reason the development deserves attention beyond the immediate headline. ${pressure}`,
+    `That makes the second-order detail more important than the announcement language. ${pressure}`,
+    `The pressure point is timing. ${pressure}`,
+  ][seed % 3];
+  const timingFrame = [
+    `There is also a timing issue. In AI infrastructure, announcements often arrive before the hard parts are visible: interconnection queues, equipment lead times, operating approvals, financing conditions, and the practical work of matching customer demand to physical capacity.`,
+    `The market tends to price the demand story first and the delivery work later. That can hide the hardest parts of the buildout: grid queues, procurement windows, permitting, vendor capacity, and the coordination needed to turn a plan into a running site.`,
+    `This is where AI infrastructure differs from ordinary software growth. Capacity has to be financed, permitted, powered, cooled, connected, staffed, and then sold into real workloads before the economics are visible.`,
+  ][seed % 3];
+  const readerFrame = [
+    `For readers tracking this market, the useful lens is less about whether demand exists and more about where it can be served without delay. A small operational change can matter if it gives operators more flexibility, improves utilization, or exposes a bottleneck that had been hidden inside a broader growth story.`,
+    `For a board focused on AI infrastructure, the item matters because it clarifies where leverage may sit. Sometimes that leverage belongs to chip suppliers or cloud platforms. In other cases it moves to utilities, landlords, financing partners, equipment vendors, or regulators that control the pace of deployment.`,
+    `The practical read is that infrastructure advantage is becoming more local and more operational. Two companies can chase the same AI demand and end up with very different outcomes if one has better access to power, more credible delivery dates, or a cleaner path through procurement and permitting.`,
+  ][seed % 3];
 
-  return [
+  const paragraphs = [
     lead,
-    frame,
-    implications ? `${implications}.` : '',
-    watch ? `The next useful signal is ${watch.charAt(0).toLowerCase()}${watch.slice(1)}` : '',
+    systemFrame,
+    attentionFrame,
+    context.audience,
+    implications,
+    timingFrame,
+    readerFrame,
+    watch ? `The next signal to watch is ${watch.charAt(0).toLowerCase()}${watch.slice(1).replace(/[.…]+$/, '')}. ${context.watch}` : context.watch,
   ]
     .map(normalizeEditorialVoice)
-    .filter(Boolean)
-    .join('\n\n');
+    .filter(Boolean);
+
+  let body = paragraphs.join('\n\n');
+  if (body.length < HUMANIZED_ARTICLE_MIN_CHARS) {
+    body = [
+      body,
+      `The caveat is that the available source material should not be stretched beyond what it supports. ${source} gives enough to frame the operating question, but not enough to declare winners. That is why the analysis should stay close to the reported facts while still explaining why the item belongs on an AI infrastructure board.`,
+    ].join('\n\n');
+  }
+
+  return body;
 }
 
 function fallbackThesis(article = {}, signal = '') {
@@ -207,9 +337,9 @@ export function humanizedFallbackSections(article, signal) {
       whatHappened: `${source} reported on the spread of vibe coding, where non-programmers and developers use generative AI to turn plain-language prompts into working software.`,
       whyThisMatters: `The shift lowers the barrier to building small tools, but it also pushes more responsibility onto the people who review, secure, and maintain the code after the first demo works.`,
       marketMissing: signal,
-      investors: `Investors will care whether faster prototyping becomes durable product velocity or simply moves maintenance, security, and compliance debt further downstream.`,
+      investors: `The financial question is whether faster prototyping becomes durable product velocity or simply moves maintenance, security, and compliance debt further downstream.`,
       operators: `Engineering teams may move faster with AI coding tools, but production systems still need owners, tests, reviews, and clear accountability.`,
-      hyperscalers: `Cloud platforms have room to sell better developer tooling, managed guardrails, and compute for heavier AI-assisted engineering workflows.`,
+      hyperscalers: `Cloud platforms can use the shift to sell better developer tooling, managed guardrails, and compute for heavier AI-assisted engineering workflows.`,
       watchNext: `Watch hiring patterns for junior developers, enterprise controls around AI-generated code, and whether teams can measure productivity gains after the novelty wears off.`,
       executiveSummary: [
         `Generative AI is making it easier for non-programmers and developers to get a first version of software running.`,
@@ -226,9 +356,9 @@ export function humanizedFallbackSections(article, signal) {
     whatHappened: sourceLead(source, summary),
     whyThisMatters: `The test is whether the companies building, financing, and operating the infrastructure can move on schedule.`,
     marketMissing: signal,
-    investors: `Investors will care whether the move improves pricing power, secures scarce capacity, or exposes execution risk that is still being discounted.`,
+    investors: `The financial question is whether the move improves pricing power, secures scarce capacity, or exposes execution risk that is still being discounted.`,
     operators: `Operators will look first at procurement timing, facility readiness, power access, and the constraints that could slow deployment.`,
-    hyperscalers: `Cloud buyers will watch whether this changes build sequencing, partner dependence, or the cost of scaling clusters across regions.`,
+    hyperscalers: `The customer question is whether this changes build sequencing, partner dependence, or the cost of scaling clusters across regions.`,
     watchNext: `customer commitments, infrastructure readiness, and signs that power, cooling, silicon supply, or permitting is becoming the real bottleneck.`,
     executiveSummary: [
       `${source} reported a development that could affect ${category.toLowerCase()} planning.`,

@@ -31,19 +31,8 @@ const executiveSummary = executiveSummaryLines(article);
 const articleBody = (lens?.finalArticleBody || article.articleText || article.snippet || article.summary || '')
   .split(/\n{2,}/)
   .map((paragraph) => cleanEditorialText(paragraph))
+  .filter((paragraph) => !/^(why it matters|pressure points|market implications|what to watch)$/i.test(paragraph))
   .filter(Boolean);
-const analysisSections = [
-  ['Why it matters', lens?.whyThisMatters || lens?.thesis],
-  ['Pressure points', lens?.marketMissing],
-  [
-    'Market implications',
-    [lens?.investors, lens?.operators, lens?.hyperscalers]
-      .map((value) => cleanEditorialText(value))
-      .filter(Boolean)
-      .join(' '),
-  ],
-  ['What to watch', lens?.watchNext],
-].map(([title, value]) => [title, cleanEditorialText(value)]).filter(([, value]) => Boolean(value));
 const structuredData = {
   '@context': 'https://schema.org',
   '@type': 'Article',
@@ -108,13 +97,6 @@ const structuredData = {
             ))}
           </section>
         ) : null}
-
-        {analysisSections.map(([title, value]) => (
-          <section class="detail-section">
-            <h2>{title}</h2>
-            <p>{value}</p>
-          </section>
-        ))}
 
         <section class="detail-section">
           <h2>Source</h2>

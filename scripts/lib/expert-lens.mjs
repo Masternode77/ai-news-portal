@@ -2,6 +2,7 @@ import { EXPERT_LENS_VERSION } from './constants.mjs';
 import {
   EDITORIAL_HUMANIZER_MODE,
   EDITORIAL_HUMANIZER_PROMPT,
+  HUMANIZED_ARTICLE_MIN_CHARS,
   buildHumanizedArticleBody,
   containsTemplateLanguage,
   humanizedFallbackSections,
@@ -47,8 +48,10 @@ function buildHeadlineOptions(article) {
 }
 
 function finalArticleBody(article, sections, candidate = '') {
-  const body = normalizeEditorialParagraphs(candidate).join('\n\n');
-  if (body && !containsTemplateLanguage(body)) {
+  const body = normalizeEditorialParagraphs(candidate)
+    .filter((paragraph) => !/^(why it matters|pressure points|market implications|what to watch)$/i.test(paragraph))
+    .join('\n\n');
+  if (body.length >= HUMANIZED_ARTICLE_MIN_CHARS && !containsTemplateLanguage(body)) {
     return body;
   }
   return buildHumanizedArticleBody(article, sections);
@@ -240,7 +243,8 @@ async function generateExpertLensFull(article) {
       'headlineOptions must be an array of exactly 5 concise headline ideas written in English, each with a concrete hook that invites a click without hype.',
       'finalHeadline must use the strongest hook while preserving the source facts.',
       'Keep each section concise but substantive. Do not invent facts or numbers not grounded in the provided context.',
-      'The finalArticleBody is the primary deliverable. Write 4-6 short paragraphs of reported analysis, not bullets, not a memo, and not a repeated section template.',
+      `The finalArticleBody is the primary deliverable. It must be at least ${HUMANIZED_ARTICLE_MIN_CHARS} characters and 6-9 paragraphs of reported analysis, not bullets, not a memo, and not a repeated section template.`,
+      'Do not include the headings "Why it matters", "Pressure points", "Market implications", or "What to watch" anywhere in reader-facing copy.',
     ].join(' '),
     userPrompt: JSON.stringify({
       title: article.title,
@@ -253,7 +257,7 @@ async function generateExpertLensFull(article) {
       articleText: article.articleText,
       sourceLink: article.sourceUrl || article.url,
     }),
-    maxTokens: 1600,
+    maxTokens: 2600,
   }).catch(() => '');
 
   return normalizeExpertLensFull(article, content || fallback);

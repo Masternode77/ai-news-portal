@@ -3,6 +3,7 @@ import {
   buildHumanizedArticleBody,
   containsTemplateLanguage,
   humanizedFallbackSections,
+  HUMANIZED_ARTICLE_MIN_CHARS,
   normalizeEditorialVoice,
 } from './lib/editorial-humanizer.mjs';
 
@@ -38,7 +39,9 @@ const body = buildHumanizedArticleBody(article, sections);
 
 assert.ok(body.includes('Example Source reported'));
 assert.ok(body.split(/\n{2,}/).length >= 3);
+assert.ok(body.length >= HUMANIZED_ARTICLE_MIN_CHARS);
 assert.equal(containsTemplateLanguage(body), false);
+assert.equal(/Why it matters|Pressure points|Market implications|What to watch/i.test(body), false);
 assert.equal(containsTemplateLanguage(sections.investors), false);
 assert.equal(containsTemplateLanguage(sections.operators), false);
 assert.equal(containsTemplateLanguage(sections.hyperscalers), false);

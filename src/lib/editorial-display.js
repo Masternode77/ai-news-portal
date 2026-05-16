@@ -26,6 +26,10 @@ const TEMPLATE_REPLACEMENTS = [
   [/\bLink Gift Expand\b/gi, ''],
   [/\bX LinkedIn Email Link Gift Gift this article\b/gi, ''],
   [/\bContact us:\s*Provide news feedback or report an error Confidential tip\S*/gi, ''],
+  [/^\s*Why it matters\s*$/gim, ''],
+  [/^\s*Pressure points\s*$/gim, ''],
+  [/^\s*Market implications\s*$/gim, ''],
+  [/^\s*What to watch\s*$/gim, ''],
 ];
 
 export function cleanEditorialText(text = '') {

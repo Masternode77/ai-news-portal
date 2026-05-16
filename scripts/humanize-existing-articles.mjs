@@ -6,8 +6,8 @@ import {
 import {
   buildHumanizedArticleBody,
   containsTemplateLanguage,
+  HUMANIZED_ARTICLE_MIN_CHARS,
   humanizedFallbackSections,
-  normalizeEditorialParagraphs,
   normalizeEditorialVoice,
 } from './lib/editorial-humanizer.mjs';
 import { readJsonFile, writeJsonFile } from './lib/state-store.mjs';
@@ -17,7 +17,26 @@ const DRY_RUN = process.argv.includes('--dry-run');
 
 function normalizeLens(article = {}) {
   const lens = article.expertLensFull;
-  if (!lens || typeof lens !== 'object') return lens || null;
+  if (!lens || typeof lens !== 'object') {
+    const fallback = humanizedFallbackSections(
+      article,
+      'Execution risk is still the variable worth watching.'
+    );
+    return {
+      version: 2,
+      mode: 'editorial-humanizer-v1',
+      generatedAt: new Date().toISOString(),
+      ...fallback,
+      finalHeadline: article.title || fallback.thesis,
+      metaDescription: truncate(fallback.thesis || article.summary || article.snippet || article.title, 170),
+      finalArticleBody: buildHumanizedArticleBody(article, {
+        ...fallback,
+        summary: article.summary || article.snippet || article.articleText || article.title,
+        category: article.category,
+      }),
+      sourceLink: article.sourceUrl || article.url || '',
+    };
+  }
 
   const normalized = { ...lens };
   const fallback = humanizedFallbackSections(
@@ -149,6 +168,21 @@ function countTemplateArticles(articles = []) {
   }).length;
 }
 
+function countShortArticleBodies(articles = []) {
+  return articles.filter((article) => {
+    const body = article.expertLensFull?.finalArticleBody || '';
+    return body.length < HUMANIZED_ARTICLE_MIN_CHARS;
+  }).length;
+}
+
+function countSectionHeadingBodies(articles = []) {
+  return articles.filter((article) => (
+    /(^|\n)(Why it matters|Pressure points|Market implications|What to watch)(\n|$)/i.test(
+      article.expertLensFull?.finalArticleBody || ''
+    )
+  )).length;
+}
+
 const latest = await readJsonFile(LATEST_NEWS_PATH, []);
 const archive = await readJsonFile(ARCHIVE_NEWS_PATH, []);
 const beforeCount = countTemplateArticles([...latest, ...archive]);
@@ -156,6 +190,8 @@ const beforeCount = countTemplateArticles([...latest, ...archive]);
 const normalizedLatest = latest.map(normalizeArticle);
 const normalizedArchive = archive.map(normalizeArticle);
 const afterCount = countTemplateArticles([...normalizedLatest, ...normalizedArchive]);
+const shortBodyAfter = countShortArticleBodies([...normalizedLatest, ...normalizedArchive]);
+const sectionHeadingAfter = countSectionHeadingBodies([...normalizedLatest, ...normalizedArchive]);
 const searchableLatest = normalizedLatest.map(toSearchableArticle);
 const searchableArchive = normalizedArchive.map(toSearchableArticle);
 const searchIndex = [...searchableLatest, ...searchableArchive];
@@ -173,4 +209,6 @@ console.log(JSON.stringify({
   searchIndex: searchIndex.length,
   templateLanguageBefore: beforeCount,
   templateLanguageAfter: afterCount,
+  shortArticleBodiesAfter: shortBodyAfter,
+  sectionHeadingBodiesAfter: sectionHeadingAfter,
 }, null, 2));
