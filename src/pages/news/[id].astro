@@ -27,20 +27,23 @@ const detailImage = article.sourceImage || article.generatedImage || SITE.defaul
 const articleDescription = cleanEditorialText(lens?.metaDescription || article.summary || article.snippet || article.title);
 const canonicalPath = `/news/${article.id}/`;
 const articleUrl = `${SITE.url}${canonicalPath}`;
-const lensSections = [
-  ['What happened', lens?.whatHappened],
-  ['Why it matters', lens?.whyThisMatters],
-  ['The overlooked risk', lens?.marketMissing],
-  ['Investor read', lens?.investors],
-  ['Operator read', lens?.operators],
-  ['Cloud read', lens?.hyperscalers],
-  ['What to watch', lens?.watchNext],
-].map(([title, value]) => [title, cleanEditorialText(value)]).filter(([, value]) => Boolean(value));
 const executiveSummary = executiveSummaryLines(article);
 const articleBody = (lens?.finalArticleBody || article.articleText || article.snippet || article.summary || '')
   .split(/\n{2,}/)
   .map((paragraph) => cleanEditorialText(paragraph))
   .filter(Boolean);
+const analysisSections = [
+  ['Why it matters', lens?.whyThisMatters || lens?.thesis],
+  ['Pressure points', lens?.marketMissing],
+  [
+    'Market implications',
+    [lens?.investors, lens?.operators, lens?.hyperscalers]
+      .map((value) => cleanEditorialText(value))
+      .filter(Boolean)
+      .join(' '),
+  ],
+  ['What to watch', lens?.watchNext],
+].map(([title, value]) => [title, cleanEditorialText(value)]).filter(([, value]) => Boolean(value));
 const structuredData = {
   '@context': 'https://schema.org',
   '@type': 'Article',
@@ -85,23 +88,16 @@ const structuredData = {
         </div>
 
         <h1>{displayTitle}</h1>
-        <p class="detail-summary">{cleanEditorialText(article.summary || article.snippet)}</p>
+        <p class="detail-summary">{cleanEditorialText(lensTeaser || article.summary || article.snippet)}</p>
 
         {executiveSummary.length ? (
           <section class="executive-summary" aria-label="Executive summary">
-            <span>Executive Summary</span>
+            <span>Editor&apos;s Brief</span>
             <ol>
               {executiveSummary.map((line) => (
                 <li>{line}</li>
               ))}
             </ol>
-          </section>
-        ) : null}
-
-        {lensTeaser ? (
-          <section class="detail-lens">
-            <span>The read</span>
-            <p>{cleanEditorialText(lensTeaser)}</p>
           </section>
         ) : null}
 
@@ -113,7 +109,7 @@ const structuredData = {
           </section>
         ) : null}
 
-        {lensSections.map(([title, value]) => (
+        {analysisSections.map(([title, value]) => (
           <section class="detail-section">
             <h2>{title}</h2>
             <p>{value}</p>

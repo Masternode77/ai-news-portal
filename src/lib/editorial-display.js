@@ -1,19 +1,44 @@
 const TEMPLATE_REPLACEMENTS = [
+  [/\bExpert lens:\s*/gi, ''],
   [/\bThe strategic significance is not only the announcement itself but how it changes\b/gi, 'The important part is what this could change for'],
-  [/\bThis signal matters because it changes\b/gi, 'This matters because it changes'],
-  [/\bOperators should read this through\b/gi, 'Operators should focus on'],
-  [/\bInvestors should track whether\b/gi, 'For investors, the question is whether'],
-  [/\bHyperscalers should focus on whether\b/gi, 'For hyperscalers, watch whether'],
-  [/\bwhat the market may be missing\b/gi, 'the overlooked risk'],
+  [/\bThe strategic significance is not only[^.]*\.?/gi, 'The important part is how this could change capacity planning, vendor leverage, and deployment sequencing.'],
+  [/\bThe strategic significance is not onl\S*/gi, 'The important part is how this could change capacity planning, vendor leverage, and deployment sequencing.'],
+  [/\bThe strategic significance is[^.]*$/gi, 'The important part is how this could change capacity planning, vendor leverage, and deployment sequencing.'],
+  [/\bThe strategic significance\S*/gi, 'The important part is how this could change capacity planning, vendor leverage, and deployment sequencing.'],
+  [/\bThis signal matters because it changes\b/gi, 'The practical effect is on'],
+  [/\bThis signal matters because\b/gi, 'The point is that'],
+  [/\bThe important question is not only what was announced, but whether\b/gi, 'The test is whether'],
+  [/\bThe important questio\S*/gi, 'The test is whether the execution details hold up.'],
+  [/\bOperators should read this through\b/gi, 'Operators will read this through'],
+  [/\bFor operators, the story comes down to\b/gi, 'For operators, the pressure sits in'],
+  [/\bInvestors should track whether\b/gi, 'Investors will be watching whether'],
+  [/\bFor investors, the useful read-through is whether\b/gi, 'Investors will care whether'],
+  [/\bHyperscalers should focus on whether\b/gi, 'Hyperscalers will be watching whether'],
+  [/\bFor hyperscalers and cloud providers, watch whether\b/gi, 'Cloud buyers will watch whether'],
+  [/\bwhat the market may be missing\b/gi, 'the risk still being underpriced'],
   [/\bread-through\b/gi, 'implication'],
+  [/\b(.{8,180}?) matters most for how quickly\b/gi, '$1 is worth watching for how quickly'],
+  [/\b(.{8,180}?) is worth watching for how quickly\b/gi, '$1 depends on how quickly'],
+  [/\b(.{8,180}?) matters because it shifts\b/gi, '$1 is worth watching because it shifts'],
+  [/\b(.{8,180}?) is worth watching because it shifts\b/gi, '$1 could shift'],
+  [/\b:\s*what it changes for\b/gi, ': the capacity question for'],
+  [/\b:\s*what it changes\S*/gi, ': the capacity question'],
+  [/\bLink Gift Expand\b/gi, ''],
+  [/\bX LinkedIn Email Link Gift Gift this article\b/gi, ''],
+  [/\bContact us:\s*Provide news feedback or report an error Confidential tip\S*/gi, ''],
 ];
 
 export function cleanEditorialText(text = '') {
-  let cleaned = String(text || '').replace(/\s+/g, ' ').trim();
+  let cleaned = String(text || '')
+    .replace(/&nbsp;/g, ' ')
+    .replace(/&#8217;/g, "'")
+    .replace(/&amp;/g, '&')
+    .replace(/\s+/g, ' ')
+    .trim();
   for (const [pattern, replacement] of TEMPLATE_REPLACEMENTS) {
     cleaned = cleaned.replace(pattern, replacement);
   }
-  return cleaned;
+  return cleaned.replace(/\.{2,}/g, '.').replace(/\s+([,.;:!?])/g, '$1').trim();
 }
 
 function splitSentences(text = '') {

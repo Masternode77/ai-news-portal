@@ -2,7 +2,11 @@ import { EXPERT_LENS_VERSION } from './constants.mjs';
 import {
   EDITORIAL_HUMANIZER_MODE,
   EDITORIAL_HUMANIZER_PROMPT,
+  buildHumanizedArticleBody,
+  containsTemplateLanguage,
   humanizedFallbackSections,
+  normalizeEditorialParagraphs,
+  normalizeEditorialVoice,
 } from './editorial-humanizer.mjs';
 import { callExpertLensText } from './openrouter.mjs';
 import { safeJsonParse, sanitizeGeneratedText, slugify, truncate } from './normalize.mjs';
@@ -10,10 +14,7 @@ import { safeJsonParse, sanitizeGeneratedText, slugify, truncate } from './norma
 const EXPERT_LENS_MODE = EDITORIAL_HUMANIZER_MODE;
 
 function splitParagraphs(text = '') {
-  return sanitizeGeneratedText(text)
-    .split(/\n{2,}/)
-    .map((part) => sanitizeGeneratedText(part.replace(/\s+/g, ' ')))
-    .filter(Boolean);
+  return normalizeEditorialParagraphs(sanitizeGeneratedText(text));
 }
 
 function inferSignal(article) {
@@ -37,32 +38,27 @@ function buildHeadlineOptions(article) {
   const source = article.source || 'market';
   const category = article.category || 'AI infrastructure';
   return [
-    `${article.title}: what it changes for ${category.toLowerCase()}`,
-    `${source} signal: why this move matters beyond the headline`,
-    `${article.title} raises the stakes for operators and investors`,
-    `What ${article.title} says about the next bottleneck`,
-    `${article.title}: the strategic read-through for cloud and infrastructure`,
+    `${article.title}`,
+    `${source}: the execution test behind the latest ${category.toLowerCase()} move`,
+    `The bottleneck behind ${article.title}`,
+    `${article.title} puts execution back in focus`,
+    `What to watch after ${article.title}`,
   ].map((headline) => truncate(headline, 110));
 }
 
-function fallbackFinalArticleBody(article, sections) {
-  return [
-    sections.whatHappened,
-    sections.whyThisMatters,
-    sections.marketMissing,
-    sections.investors,
-    sections.operators,
-    sections.hyperscalers,
-    sections.watchNext,
-  ]
-    .filter(Boolean)
-    .join('\n\n');
+function finalArticleBody(article, sections, candidate = '') {
+  const body = normalizeEditorialParagraphs(candidate).join('\n\n');
+  if (body && !containsTemplateLanguage(body)) {
+    return body;
+  }
+  return buildHumanizedArticleBody(article, sections);
 }
 
 function normalizeExecutiveSummary(value = [], fallback = []) {
   const source = Array.isArray(value) ? value : String(value || '').split(/\n+/);
   return [...source, ...fallback]
     .map((line) => sanitizeGeneratedText(String(line || '').replace(/^[-•\d.\s]+/, '')))
+    .map((line) => normalizeEditorialVoice(line))
     .filter(Boolean)
     .slice(0, 3);
 }
@@ -98,6 +94,8 @@ function fallbackExpertLensFull(article) {
     operators,
     hyperscalers,
     watchNext,
+    summary: humanized.summary,
+    category: humanized.category,
   };
 
   return {
@@ -116,7 +114,7 @@ function fallbackExpertLensFull(article) {
     headlineOptions,
     finalHeadline,
     metaDescription,
-    finalArticleBody: fallbackFinalArticleBody(article, sections),
+    finalArticleBody: finalArticleBody(article, sections),
     sourceLink: article.sourceUrl || article.url || '',
   };
 }
@@ -152,15 +150,17 @@ function normalizeExpertLensFull(article, payload) {
     headlineOptions: normalizeHeadlineOptions(parsed.headlineOptions, fallback.headlineOptions),
     finalHeadline: truncate(parsed.finalHeadline || fallback.finalHeadline || article.title, 120),
     metaDescription: truncate(parsed.metaDescription || fallback.metaDescription, 170),
-    finalArticleBody: sanitizeGeneratedText((parsed.finalArticleBody || fallback.finalArticleBody || '').toString()),
+    finalArticleBody: '',
     sourceLink: parsed.sourceLink || fallback.sourceLink,
   };
 
   for (const key of ['thesis', 'whatHappened', 'whyThisMatters', 'marketMissing', 'investors', 'operators', 'hyperscalers', 'watchNext', 'finalHeadline', 'metaDescription']) {
-    normalized[key] = sanitizeGeneratedText(normalized[key]);
+    normalized[key] = normalizeEditorialVoice(sanitizeGeneratedText(normalized[key]));
   }
 
-  normalized.headlineOptions = normalized.headlineOptions.map((headline) => sanitizeGeneratedText(headline)).filter(Boolean);
+  normalized.headlineOptions = normalized.headlineOptions.map((headline) => normalizeEditorialVoice(sanitizeGeneratedText(headline))).filter(Boolean);
+
+  normalized.finalArticleBody = finalArticleBody(article, normalized, parsed.finalArticleBody || fallback.finalArticleBody || '');
 
   if (!normalized.finalArticleBody) {
     normalized.finalArticleBody = fallback.finalArticleBody;
@@ -231,16 +231,16 @@ async function generateExpertLensFull(article) {
   const content = await callExpertLensText({
     systemPrompt: [
       'You are the editorial voice for an AI infrastructure intelligence publication.',
-      'Write like a top-tier industry editor and strategic analyst covering AI, data centers, power, semiconductors, and cloud infrastructure.',
+      'Write like a top-tier business technology editor covering AI, data centers, power, semiconductors, and cloud infrastructure.',
       EDITORIAL_HUMANIZER_PROMPT,
       'The output must be decision-grade, accurate, skeptical, and free of generic hype or unsupported certainty.',
-      'Use this logic in order: summarize what happened, explain why it matters, identify 1-2 underappreciated variables, include viewpoints for at least two of investors / operators / hyperscalers, then end with what to watch next.',
+      'Use this logic in order: report what changed, explain why the development matters now, identify 1-2 underappreciated constraints, name practical implications for the most relevant audience, then end with what to watch next.',
       'Return strict JSON only with keys: thesis, whatHappened, whyThisMatters, marketMissing, investors, operators, hyperscalers, watchNext, executiveSummary, headlineOptions, finalHeadline, metaDescription, finalArticleBody, sourceLink.',
       'executiveSummary must be exactly 3 short lines for busy readers: what changed, why it matters, and what to watch.',
       'headlineOptions must be an array of exactly 5 concise headline ideas written in English, each with a concrete hook that invites a click without hype.',
       'finalHeadline must use the strongest hook while preserving the source facts.',
       'Keep each section concise but substantive. Do not invent facts or numbers not grounded in the provided context.',
-      'The finalArticleBody should read like a polished final article built from the prior sections, in multiple paragraphs, with the opening paragraph carrying the hook.',
+      'The finalArticleBody is the primary deliverable. Write 4-6 short paragraphs of reported analysis, not bullets, not a memo, and not a repeated section template.',
     ].join(' '),
     userPrompt: JSON.stringify({
       title: article.title,

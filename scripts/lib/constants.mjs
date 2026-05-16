@@ -23,7 +23,7 @@ export const OPENAI_IMAGE_QUALITY = process.env.OPENAI_IMAGE_QUALITY || 'medium'
 export const OPENROUTER_API_URL = 'https://openrouter.ai/api/v1/chat/completions';
 export const OPENROUTER_MODEL = process.env.OPENROUTER_MODEL || 'openai/gpt-5.3-codex';
 export const OPENROUTER_SITE_URL = process.env.OPENROUTER_SITE_URL || '';
-export const OPENROUTER_APP_TITLE = process.env.OPENROUTER_APP_TITLE || 'AI / Data Center Signal Board';
+export const OPENROUTER_APP_TITLE = process.env.OPENROUTER_APP_TITLE || 'Compute Current';
 export const EXPERT_LENS_MODEL = process.env.EXPERT_LENS_MODEL || 'openai/gpt-5.4';
 export const EXPERT_LENS_FALLBACK_MODEL = process.env.EXPERT_LENS_FALLBACK_MODEL || OPENROUTER_MODEL;
 

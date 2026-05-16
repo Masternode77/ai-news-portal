@@ -10,6 +10,7 @@ import {
 } from './normalize.mjs';
 import { callOpenRouterJson } from './openrouter.mjs';
 import { fetchArticleExcerpt } from './source-fetch.mjs';
+import { normalizeEditorialVoice } from './editorial-humanizer.mjs';
 
 function fallbackSummary(item, articleText = '') {
   const base = articleText || item.snippet || item.title;
@@ -39,7 +40,7 @@ function inferTheme(text = '') {
 function fallbackInsight(item, articleText = '') {
   const theme = inferTheme(`${item.title} ${item.snippet} ${articleText}`);
   return truncate(
-    `Expert lens: This signal matters because it changes ${theme}; operators and investors that align power, facility design, network topology, and silicon timing will compound the advantage faster than teams optimizing any single layer alone.`,
+    `The practical effect is on ${theme}. The advantage goes to teams that line up power, facility design, network topology, and silicon timing instead of optimizing one layer in isolation.`,
     260
   );
 }
@@ -60,8 +61,8 @@ function fallbackImagePrompt(item, category, summary) {
 function normalizeAiPayload(aiPayload, fallback) {
   if (!aiPayload || typeof aiPayload !== 'object') return fallback;
 
-  const summary = truncate(aiPayload.summary || fallback.summary, 180);
-  const insight = truncate(aiPayload.insight || fallback.insight, 260);
+  const summary = truncate(normalizeEditorialVoice(aiPayload.summary || fallback.summary), 180);
+  const insight = truncate(normalizeEditorialVoice(aiPayload.insight || fallback.insight), 260);
   const category = CATEGORIES.includes(aiPayload.category) ? aiPayload.category : fallback.category;
   const tags = unique([...(Array.isArray(aiPayload.tags) ? aiPayload.tags : []), ...fallback.tags]).slice(0, 6);
   const region = aiPayload.region || fallback.region;
@@ -94,10 +95,11 @@ export async function enrichContent(item) {
   const aiPayload = await callOpenRouterJson({
     systemPrompt: [
       'You are a veteran editor covering data centers, hyperscalers, cloud infrastructure, semiconductors, power markets, and AI deployment.',
-      'Write like a senior operator and investor briefing analyst.',
+      'Write like a senior newsroom editor, not a strategy deck.',
       'Return JSON only with keys: summary, insight, category, tags, region, imagePrompt.',
       'summary: 1-2 sentences, 180 characters max, crisp and factual.',
       'insight: 2 sentences max, focused on why this matters for operators / investors / capacity planners.',
+      'Avoid phrases such as "Expert lens", "This signal matters", "strategic significance", and "read-through".',
       `category must be one of: ${CATEGORIES.join(' | ')}`,
       'tags: array of up to 6 concise lowercase tags.',
       'region: short market label like Global, Korea, APAC, US, EU, MiddleEast.',
