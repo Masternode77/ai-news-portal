@@ -27,8 +27,12 @@
     "test:repetition": "node ./scripts/test-repetition-detector.mjs",
     "test:expert-insight": "PIPELINE_OFFLINE=1 OPENROUTER_API_KEY= node ./scripts/test-expert-insight-engine.mjs",
     "test:public-content": "node ./scripts/test-public-content-regression.mjs",
+    "test": "node --test tests/*.test.mjs && npm run test:quality-gate && npm run test:relevance && npm run test:taxonomy && npm run test:repetition",
     "regenerate:narrative-dna": "node ./scripts/regenerate-narrative-dna-articles.mjs",
+    "regenerate:public-content-v2": "node ./scripts/regenerate-public-content-v2.mjs",
     "purge:deployment-cache": "node ./scripts/purge-deployment-cache.mjs",
+    "purge:public-cache": "node ./scripts/purge-public-cache.mjs",
+    "audit:public-surface": "npm run build && node ./scripts/audit-public-surface.mjs",
     "eval:articles": "node ./scripts/eval-article-generation.mjs"
   },
   "dependencies": {

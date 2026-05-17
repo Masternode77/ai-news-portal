@@ -4,7 +4,8 @@ import latestNews from '../../data/latest-news.json';
 import archivedNews from '../../data/archived-news.json';
 import { SITE } from '../../config/site';
 import { cleanEditorialText, displayHeadline, executiveSummaryLines } from '../../lib/editorial-display.js';
-import { taxonomyDisplay, urgencyLabel as taxonomyUrgencyLabel } from '../../lib/taxonomy-display.js';
+import { buildPublicPresentation } from '../../lib/publicPresentation.js';
+import { taxonomyDisplay } from '../../lib/taxonomy-display.js';
 import {
   articleCanonicalPath,
   articleNoindexReasons,
@@ -12,6 +13,8 @@ import {
   shouldNoindexArticle,
   sourceAttributionFor,
 } from '../../lib/seo-safeguards.js';
+import { forbiddenPublicPhraseMatches, guardPublicCopy } from '../../../scripts/lib/copy-quality-guard.mjs';
+import { routePublicLane } from '../../../scripts/lib/public-lane-router.mjs';
 
 export function getStaticPaths() {
   return [...latestNews, ...archivedNews]
@@ -33,21 +36,30 @@ const lens = article.expertLensFull || null;
 const lensTeaser = article.expertLensShort || article.expertLens || lens?.thesis || null;
 const displayTitle = displayHeadline(article);
 const detailImage = article.sourceImage || article.generatedImage || SITE.defaultOgImage;
-const articleDescription = cleanEditorialText(lens?.metaDescription || article.summary || article.snippet || article.title);
 const canonicalPath = articleCanonicalPath(article);
 const articleUrl = `${SITE.url}${canonicalPath}`;
-const executiveSummary = executiveSummaryLines(article);
+const executiveSummary = executiveSummaryLines(article)
+  .map((line) => guardPublicCopy(line).text)
+  .filter((line) => !forbiddenPublicPhraseMatches(line).length)
+  .slice(0, 3);
 const executiveSummaryLabel = lens?.dynamicBriefLabel || article.dynamic_brief_label || article.narrative_dna?.brief_label || 'Operator Note';
 const taxonomy = taxonomyDisplay(articleRecord);
-const urgencyLabel = taxonomyUrgencyLabel(taxonomy.urgency);
+const publicRouting = article.public_routing || routePublicLane(articleRecord);
+const publicPresentation = buildPublicPresentation(articleRecord, { route: publicRouting });
+const articleDescription = cleanEditorialText(publicPresentation.deck || lens?.metaDescription || article.summary || article.snippet || article.title);
 const sourceAttribution = sourceAttributionFor(articleRecord);
 const noindexReasons = articleNoindexReasons(articleRecord);
 const noindexArticle = shouldNoindexArticle(articleRecord);
-const articleBody = (lens?.finalArticleBody || article.articleText || article.snippet || article.summary || '')
+const articleBodyBlocks = (lens?.finalArticleBody || article.articleText || article.snippet || article.summary || '')
   .split(/\n{2,}/)
-  .map((paragraph) => cleanEditorialText(paragraph))
+  .map((paragraph) => guardPublicCopy(cleanEditorialText(paragraph)).text)
   .filter((paragraph) => !/^(why it matters|pressure points|market implications|what to watch)$/i.test(paragraph))
+  .filter((paragraph) => !forbiddenPublicPhraseMatches(paragraph).length)
   .filter(Boolean);
+const isBodyHeading = (paragraph: string) =>
+  paragraph.length <= 72 &&
+  !/[.!?]$/.test(paragraph) &&
+  /^[A-Z0-9][A-Za-z0-9 &:/+-]+$/.test(paragraph);
 const structuredData = buildArticleStructuredData({
   article: articleRecord,
   site: SITE,
@@ -56,7 +68,7 @@ const structuredData = buildArticleStructuredData({
   image: detailImage,
   canonicalUrl: articleUrl,
   taxonomy,
-  articleBody,
+  articleBody: articleBodyBlocks,
 });
 ---
 <Layout
@@ -79,22 +91,22 @@ const structuredData = buildArticleStructuredData({
       <div class="detail-body">
         <div class="meta-strip">
           <span class="category-badge">{taxonomy.primary}</span>
-          <span class="source-pill">{article.source}</span>
-          <span class="region-pill">{taxonomy.region}</span>
+          <span class="source-pill">{publicPresentation.signal_label}</span>
+          <span class="region-pill">{publicPresentation.region}</span>
           <time>{new Date(article.publishedAt).toLocaleString('en-US')}</time>
         </div>
 
         <h1>{displayTitle}</h1>
-        <p class="detail-summary">{cleanEditorialText(lensTeaser || article.summary || article.snippet)}</p>
+        <p class="detail-summary">{publicPresentation.deck || cleanEditorialText(lensTeaser || article.summary || article.snippet)}</p>
 
         <section class="taxonomy-panel" aria-label="Infrastructure taxonomy">
           <div>
-            <span>Primary</span>
-            <strong>{taxonomy.primary}</strong>
+            <span>Signal</span>
+            <strong>{publicPresentation.signal_label}</strong>
           </div>
           <div>
-            <span>Secondary</span>
-            <strong>{taxonomy.secondary || 'General infrastructure signal'}</strong>
+            <span>Editorial Lens</span>
+            <strong>{publicPresentation.editorial_lens}</strong>
           </div>
           <div>
             <span>Layer</span>
@@ -106,20 +118,19 @@ const structuredData = buildArticleStructuredData({
           </div>
           <div>
             <span>Region</span>
-            <strong>{taxonomy.region}</strong>
+            <strong>{publicPresentation.region}</strong>
           </div>
-          {urgencyLabel ? (
-            <div>
-              <span>Urgency</span>
-              <strong>{urgencyLabel} · {taxonomy.urgency?.toFixed(2)}</strong>
-            </div>
-          ) : null}
-          {taxonomy.stakeholders.length ? (
+          {publicPresentation.reader_impact.length ? (
             <div class="taxonomy-panel-wide">
-              <span>Affected stakeholders</span>
-              <strong>{taxonomy.stakeholders.join(', ')}</strong>
+              <span>Reader Impact</span>
+              <strong>{publicPresentation.reader_impact.join(', ')}</strong>
             </div>
           ) : null}
+        </section>
+
+        <section class="detail-section public-why-panel">
+          <h2>Editorial Read</h2>
+          <p>{publicPresentation.why_it_matters}</p>
         </section>
 
         {executiveSummary.length ? (
@@ -133,10 +144,10 @@ const structuredData = buildArticleStructuredData({
           </section>
         ) : null}
 
-        {articleBody.length ? (
+        {articleBodyBlocks.length ? (
           <section class="detail-section detail-article-copy">
-            {articleBody.map((paragraph) => (
-              <p>{paragraph}</p>
+            {articleBodyBlocks.map((paragraph) => (
+              isBodyHeading(paragraph) ? <h2>{paragraph}</h2> : <p>{paragraph}</p>
             ))}
           </section>
         ) : null}

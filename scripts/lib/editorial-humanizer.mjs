@@ -1,4 +1,5 @@
 import { buildNarrativeArticleBody, buildNarrativeLensFields } from './narrative-dna.mjs';
+import { normalizeProperNouns } from './proper-noun-normalizer.mjs';
 
 export const EDITORIAL_HUMANIZER_MODE = 'narrative-dna-editorial-v1';
 export const HUMANIZED_ARTICLE_MIN_CHARS = 1000;
@@ -55,6 +56,13 @@ const EDITORIAL_REPLACEMENTS = [
   [/\bHyperscalers should focus on whether\b/gi, 'Hyperscalers will be watching whether'],
   [/\bFor hyperscalers and cloud providers, watch whether\b/gi, 'Cloud buyers will watch whether'],
   [/\bCloud buyers will watch whether\b/gi, 'Cloud buyers will be looking for evidence that'],
+  [/\b[A-Za-z ]+ raises a practical capacity question after\b/gi, 'The source-backed read starts with'],
+  [/\b[A-Za-z ]+ turns component availability into a delivery test after\b/gi, 'The supply-chain read starts with'],
+  [/\b[A-Za-z ]+ puts grid timing back into the operating plan after\b/gi, 'The power-market read starts with'],
+  [/\bThe useful follow-up is the next [^.]+ disclosure that confirms timing, site readiness, buyer commitment, or operating impact\.?/gi, 'The watch item should be a source-specific operating metric.'],
+  [/\bThe useful follow-up is\b/gi, 'Watch'],
+  [/\bstill has to show that the reported change can survive real deployment, financing, or operating constraints\.?/gi, 'still needs source-backed deployment, financing, or operating evidence.'],
+  [/\bbelongs on the board only if\b/gi, 'matters to readers when'],
   [/\bread-through\b/gi, 'implication'],
   [/\bstrategic read-through\b/gi, 'market implication'],
   [/\b(.{8,180}?) matters most for how quickly\b/gi, '$1 is worth watching for how quickly'],
@@ -105,14 +113,14 @@ export function normalizeEditorialVoice(text = '') {
     cleaned = cleaned.replace(pattern, replacement);
   }
 
-  return cleaned
+  return normalizeProperNouns(cleaned
     .replace(/\s+\.\s*/g, '. ')
     .replace(/\.{2,}/g, '.')
     .replace(/\s+;/g, ';')
     .replace(/\s+…$/g, '')
     .replace(/…$/g, '')
     .replace(/\s+/g, ' ')
-    .trim();
+    .trim());
 }
 
 export function containsTemplateLanguage(text = '') {

@@ -1,5 +1,5 @@
 export const FULL_MEMO_RELEVANCE_THRESHOLD = 0.75;
-export const SIGNAL_CARD_RELEVANCE_THRESHOLD = 0.45;
+export const SIGNAL_CARD_RELEVANCE_THRESHOLD = 0.55;
 
 const DIMENSION_KEYS = [
   'direct_ai_infrastructure_relevance',
@@ -89,6 +89,27 @@ const WEAK_AI_ADJACENT_TERMS = [
   'browser assistant',
   'search feature',
   'consumer ai',
+];
+
+const HARD_ARCHIVE_TOPICS = [
+  'dinosaur',
+  'fossil',
+  'stegosaurus',
+  'skeleton',
+];
+
+const ADJACENT_ONLY_TOPICS = [
+  'sports ai',
+  'football',
+  'sumersports',
+  'sūmersports',
+  'paul tudor jones',
+  'legal industry',
+  'legal professionals',
+  'law firm',
+  'law firms',
+  'labor market',
+  'consumer hardware',
 ];
 
 const DIMENSIONS = {
@@ -348,6 +369,8 @@ export function classifyInfrastructureRelevance(article = {}) {
     !hasInfra &&
     hasAny(text, CONSUMER_AI_TERMS);
   const hasWeakAiAdjacent = hasAi && hasAny(text, WEAK_AI_ADJACENT_TERMS);
+  const hasHardArchiveTopic = hasAny(text, HARD_ARCHIVE_TOPICS);
+  const hasAdjacentOnlyTopic = hasAny(text, ADJACENT_ONLY_TOPICS);
 
   if (hasAi && hasInfra) {
     dimensionResults.direct_ai_infrastructure_relevance = Math.min(
@@ -420,6 +443,12 @@ export function classifyInfrastructureRelevance(article = {}) {
     overall = Math.min(overall, hasAi ? 0.38 : 0.28);
   }
 
+  if (hasHardArchiveTopic) {
+    overall = Math.min(overall, 0.2);
+  } else if (hasAdjacentOnlyTopic) {
+    overall = Math.min(overall, 0.62);
+  }
+
   overall = Number(overall.toFixed(3));
   const tier = classifyTier(overall);
   const route = routeFields(tier);
@@ -428,6 +457,8 @@ export function classifyInfrastructureRelevance(article = {}) {
     .map((key) => `${key}:${dimensionResults[key].toFixed(2)}${matchedByDimension[key]?.length ? `(${matchedByDimension[key].slice(0, 3).join(', ')})` : ''}`);
 
   if (!reasons.length) reasons.push('no_strong_compute_current_infrastructure_match');
+  if (hasHardArchiveTopic) reasons.push('hard_archive_topic_outside_compute_current_boundary');
+  if (hasAdjacentOnlyTopic) reasons.push('adjacent_only_topic_requires_infrastructure_evidence');
   if (hasConsumerAiOnly) reasons.push('consumer_ai_without_infrastructure_surface');
   if (hasWeakAiAdjacent && overall < FULL_MEMO_RELEVANCE_THRESHOLD) {
     reasons.push('weak_ai_adjacent_without_compute_current_infrastructure_surface');

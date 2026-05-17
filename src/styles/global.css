@@ -1018,6 +1018,134 @@ time {
   grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
+.public-signal-label {
+  color: var(--accent);
+  font-weight: 900;
+}
+
+.signal-deck {
+  color: #20262d;
+  font-weight: 750;
+}
+
+.signal-why {
+  -webkit-line-clamp: 4;
+}
+
+.reader-impact {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.reader-impact span {
+  display: inline-flex;
+  align-items: center;
+  min-height: 28px;
+  padding: 0 10px;
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.72);
+  color: #303740;
+  font-size: 0.76rem;
+  font-weight: 850;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.public-why-panel {
+  padding: 18px 0;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+
+.public-why-panel h2,
+.detail-article-copy h2 {
+  margin: 0 0 10px;
+  color: #20262d;
+  font-family: var(--body-font);
+  font-size: 0.82rem;
+  font-weight: 950;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.detail-article-copy h2 {
+  margin-top: 26px;
+}
+
+.quality-list {
+  display: grid;
+  gap: 24px;
+}
+
+.quality-list-item {
+  display: grid;
+  gap: 16px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid var(--line);
+}
+
+.internal-quality-panel {
+  display: grid;
+  gap: 18px;
+}
+
+.quality-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  border-top: 1px solid var(--line);
+  border-left: 1px solid var(--line);
+}
+
+.quality-grid div {
+  min-width: 0;
+  padding: 12px;
+  border-right: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.7);
+}
+
+.quality-grid span,
+.quality-block dt {
+  display: block;
+  margin-bottom: 5px;
+  color: var(--muted);
+  font-size: 0.68rem;
+  font-weight: 900;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.quality-grid strong,
+.quality-block dd {
+  margin: 0;
+  overflow-wrap: anywhere;
+  color: #20262d;
+  font-size: 0.9rem;
+  line-height: 1.35;
+}
+
+.quality-block {
+  padding: 16px;
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.56);
+}
+
+.quality-block h2 {
+  margin-bottom: 12px;
+}
+
+.quality-block dl {
+  display: grid;
+  gap: 12px;
+  margin: 0;
+}
+
+.quality-block dl div {
+  display: grid;
+  gap: 3px;
+}
+
 .publication-header {
   padding: 20px 0 18px;
   border-bottom: 3px solid var(--text);
@@ -1353,7 +1481,8 @@ time {
   .news-grid,
   .lane-grid,
   .metric-grid,
-  .signal-metrics {
+  .signal-metrics,
+  .quality-grid {
     grid-template-columns: 1fr;
   }
 

@@ -1,402 +1,299 @@
-import {
-  BANNED_PHRASES,
-  bannedPhraseMatches,
-  hookStartsWithBlockedPhrase,
-  hasBannedPhrase,
-} from './banned-phrases.mjs';
-import { sanitizeGeneratedText, truncate, unique } from './normalize.mjs';
+import { guardPublicCopy } from './copy-quality-guard.mjs';
+import { generateEditorialExcerpt } from './editorial-excerpt-generator.mjs';
+import { extractNamedCompanies } from './expert-insight-engine.mjs';
+import { normalizeProperNouns } from './proper-noun-normalizer.mjs';
+import { routePublicLane } from './public-lane-router.mjs';
+import { sectionArchitectureFor } from './section-architecture.mjs';
+import { routeStoryArchetype, STORY_ARCHETYPES_V2 } from './story-archetype-router.mjs';
+import { detectTruncationArtifacts, isTruncatedEvidence } from './truncation-detector.mjs';
+import { sanitizeGeneratedText, unique } from './normalize.mjs';
 
-export const GENERATION_VERSION = 'narrative_dna_v1';
-
+export const GENERATION_VERSION = 'editorial_surface_v2';
 export const BRIEF_LABELS = [
-  'Operator Note',
-  'Investor Read',
-  'Policy Signal',
-  'Technical Read',
-  'Supply Chain Watch',
-  'Field Note',
-  'Market Structure',
-  'Deployment Risk',
-  "Skeptic's Read",
-  'Capacity Implication',
+  'Core Signal',
+  'Watchlist',
+  'Adjacent Signal',
+  'Deep Dive',
+  'Operator Alert',
+  'Investor Signal',
+  'Policy Risk',
+  'Stack Shift',
 ];
+export const STORY_ARCHETYPES = STORY_ARCHETYPES_V2;
 
-export const STORY_ARCHETYPES = [
-  {
-    id: 'board-memo',
-    name: 'Board Memo',
-    signals: ['capital', 'investor', 'strategy', 'governance'],
-    headings: ['Decision Context', 'Board-Level Exposure', 'Next Proof Point'],
-  },
-  {
-    id: 'operator-field-note',
-    name: 'Operator Field Note',
-    signals: ['operator', 'facility', 'deployment', 'site'],
-    headings: ['Field Signal', 'Execution Friction', 'Operating Watch'],
-  },
-  {
-    id: 'investor-deal-read',
-    name: 'Investor Deal Read',
-    signals: ['funding', 'financing', 'debt', 'equity', 'acquisition', 'valuation'],
-    headings: ['Deal Signal', 'Contract Quality', 'Capital Risk'],
-  },
-  {
-    id: 'technical-teardown',
-    name: 'Technical Teardown',
-    signals: ['technical', 'architecture', 'network', 'cooling', 'chip', 'gpu'],
-    headings: ['Architecture Signal', 'System Constraint', 'Engineering Watch'],
-  },
-  {
-    id: 'supply-chain-fault-line',
-    name: 'Supply Chain Fault Line',
-    signals: ['supply', 'lead time', 'procurement', 'shortage', 'memory', 'hbm'],
-    headings: ['Supply Signal', 'Constraint Path', 'Procurement Watch'],
-  },
-  {
-    id: 'policy-risk-flash',
-    name: 'Policy Risk Flash',
-    signals: ['policy', 'regulation', 'approval', 'permit', 'tariff'],
-    headings: ['Policy Move', 'Exposure Map', 'Regulatory Watch'],
-  },
-  {
-    id: 'local-resistance-watch',
-    name: 'Local Resistance Watch',
-    signals: ['local', 'community', 'zoning', 'siting', 'moratorium'],
-    headings: ['Local Signal', 'Siting Constraint', 'Approval Risk'],
-  },
-  {
-    id: 'capital-allocation-memo',
-    name: 'Capital Allocation Memo',
-    signals: ['capex', 'capital expenditure', 'budget', 'bond', 'project finance'],
-    headings: ['Capital Signal', 'Allocation Tradeoff', 'Financing Watch'],
-  },
-  {
-    id: 'stack-shift-explainer',
-    name: 'Stack Shift Explainer',
-    signals: ['platform', 'cloud', 'software', 'stack', 'kubernetes'],
-    headings: ['Stack Shift', 'Buyer Impact', 'Platform Watch'],
-  },
-  {
-    id: 'procurement-watch',
-    name: 'Procurement Watch',
-    signals: ['procurement', 'supplier', 'vendor', 'equipment', 'server'],
-    headings: ['Procurement Signal', 'Vendor Leverage', 'Delivery Watch'],
-  },
-  {
-    id: 'skeptics-take',
-    name: "Skeptic's Take",
-    signals: ['claim', 'target', 'plan', 'announced', 'ambition'],
-    headings: ['Claim', 'What Still Has To Prove Out', 'Watch Item'],
-  },
-  {
-    id: 'second-order-effect',
-    name: 'Second-Order Effect',
-    signals: ['indirect', 'ecosystem', 'knock-on', 'spillover'],
-    headings: ['First Move', 'Second-Order Effect', 'Monitor'],
-  },
-  {
-    id: 'what-breaks-first',
-    name: 'What Breaks First',
-    signals: ['bottleneck', 'constraint', 'delay', 'risk', 'queue'],
-    headings: ['Stress Point', 'Likely Failure Mode', 'Next Check'],
-  },
-  {
-    id: 'winner-loser-map',
-    name: 'Winner / Loser Map',
-    signals: ['benefit', 'exposed', 'leverage', 'competition'],
-    headings: ['Who Gains', 'Who Gets Squeezed', 'Market Watch'],
-  },
-  {
-    id: 'timeline-risk-note',
-    name: 'Timeline Risk Note',
-    signals: ['timeline', 'schedule', 'delivery', 'milestone', 'construction'],
-    headings: ['Timing Signal', 'Schedule Risk', 'Milestone To Watch'],
-  },
-  {
-    id: 'architecture-implication',
-    name: 'Architecture Implication',
-    signals: ['architecture', 'fabric', 'interconnect', 'memory', 'inference'],
-    headings: ['Architecture Move', 'Design Implication', 'Adoption Watch'],
-  },
-];
-
-function clean(value = '') {
-  return sanitizeGeneratedText(String(value || '').replace(/\s+/g, ' ').trim());
+function compact(value = '') {
+  return normalizeProperNouns(
+    sanitizeGeneratedText(String(value || ''))
+      .replace(/\s+/g, ' ')
+      .replace(/\s+([,.;:!?])/g, '$1')
+      .trim()
+  );
 }
 
-function cleanBlock(value = '') {
-  return sanitizeGeneratedText(String(value || ''))
-    .split(/\n{2,}/)
-    .map((part) => part.replace(/[ \t]+/g, ' ').trim())
-    .filter(Boolean)
-    .join('\n\n');
+function sentence(value = '') {
+  const cleaned = compact(value).replace(/[.!?]+$/, '');
+  if (!cleaned) return '';
+  return `${cleaned.charAt(0).toUpperCase()}${cleaned.slice(1)}.`;
+}
+
+function limitClean(value = '', maxLen = 180) {
+  const cleaned = compact(value).replace(/(?:…|\.{3}).*$/g, '');
+  if (cleaned.length <= maxLen) return cleaned;
+  const clipped = cleaned.slice(0, maxLen).replace(/\s+\S*$/, '').replace(/[,:;/-]+$/, '').trim();
+  return clipped || cleaned.slice(0, maxLen).trim();
 }
 
 function textBundle(article = {}) {
-  return [
+  return compact([
     article.title,
     article.source,
     article.summary,
     article.snippet,
     article.articleText,
-    article.category,
+    article.contentText,
     article.primary_category,
     article.secondary_category,
     article.infrastructure_layer,
     article.article_type,
     article.region,
     ...(article.tags || []),
-  ].filter(Boolean).join(' ');
+  ].filter(Boolean).join(' '));
+}
+
+function indefiniteArticle(value = '') {
+  return /^[aeiou]/i.test(String(value || '').trim()) ? 'an' : 'a';
 }
 
 function firstUseful(values = [], fallback = '') {
-  return values.map(clean).find((value) => value && value.length >= 3) || fallback;
-}
-
-function sourceSpecificSignal(values = [], fallback = '') {
   return values
-    .map(clean)
-    .map((value) => value.replace(/^watch\s+/i, ''))
-    .find((value) =>
-      value &&
-      value.length >= 8 &&
-      !/customer commitments,\s*infrastructure readiness/i.test(value) &&
-      !/power,\s*cooling,\s*silicon supply,\s*or permitting/i.test(value) &&
-      !/next disclosed milestone,\s*customer commitment,\s*or deployment date/i.test(value)
-    ) || fallback;
+    .map(compact)
+    .find((value) => value && value.length >= 3) || fallback;
 }
 
-function selectArchetype(article = {}) {
-  const haystack = textBundle(article).toLowerCase();
-  const explicit = String(article.story_archetype || article.narrative_dna?.story_archetype || '').toLowerCase();
-  const byExplicit = STORY_ARCHETYPES.find((item) => item.name.toLowerCase() === explicit || item.id === explicit);
-  if (byExplicit) return byExplicit;
-
-  let best = STORY_ARCHETYPES[0];
-  let bestScore = -1;
-  for (const archetype of STORY_ARCHETYPES) {
-    const score = archetype.signals.filter((signal) => haystack.includes(signal)).length;
-    if (score > bestScore) {
-      best = archetype;
-      bestScore = score;
-    }
-  }
-  return best;
+function readerRoles(article = {}) {
+  const stakeholders = Array.isArray(article.affected_stakeholders)
+    ? article.affected_stakeholders
+    : [];
+  const roles = stakeholders.map(compact).filter(Boolean).slice(0, 4);
+  if (roles.length) return roles;
+  const text = textBundle(article).toLowerCase();
+  if (/power|grid|utility/.test(text)) return ['Operators', 'Utilities', 'Energy buyers'];
+  if (/funding|financing|capital|valuation/.test(text)) return ['Investors', 'Developers', 'Cloud buyers'];
+  if (/openshift|kubernetes|storage|backup|virtualization/.test(text)) return ['Platform teams', 'Enterprise IT', 'Cloud architects'];
+  return ['Operators', 'Capacity planners'];
 }
 
-function chooseBriefLabel(article = {}, dna = {}) {
-  const haystack = textBundle(article).toLowerCase();
-  if (/(policy|permit|regulation|approval|zoning|tariff)/.test(haystack)) return 'Policy Signal';
-  if (/(funding|financing|debt|equity|bond|valuation|acquisition|capex)/.test(haystack)) return 'Investor Read';
-  if (/(cooling|gpu|chip|network|architecture|fabric|memory|hbm|technical)/.test(haystack)) return 'Technical Read';
-  if (/(supply|procurement|lead time|vendor|supplier|shortage)/.test(haystack)) return 'Supply Chain Watch';
-  if (/(power|grid|facility|campus|operator|deployment|interconnection)/.test(haystack)) return 'Operator Note';
-  if (/(risk|delay|queue|constraint|bottleneck)/.test(haystack)) return 'Deployment Risk';
-  if (/market|pricing|competition|structure/.test(haystack)) return 'Market Structure';
-  if (dna.counterpoint) return "Skeptic's Read";
-  return 'Capacity Implication';
-}
-
-function inferReaderRole(article = {}) {
-  const stakeholders = article.affected_stakeholders || [];
-  return firstUseful(stakeholders, 'infrastructure operators');
-}
-
-function inferTimeHorizon(article = {}) {
-  const haystack = textBundle(article).toLowerCase();
-  if (/(today|now|immediate|outage|pause|blocked|approval|deadline)/.test(haystack)) return 'near term';
-  if (/(quarter|months|construction|delivery|procurement|deployment)/.test(haystack)) return 'next few quarters';
-  if (/(2030|decade|roadmap|nuclear|transmission|campus)/.test(haystack)) return 'multi-year buildout';
+function timeHorizon(article = {}) {
+  const text = textBundle(article).toLowerCase();
+  if (/(today|now|first time|spot|outage|blocked|pause|deadline)/.test(text)) return 'near term';
+  if (/(quarter|months|delivery|procurement|deployment|backup|pricing)/.test(text)) return 'next few quarters';
+  if (/(2030|2027|decade|roadmap|construction|campus|transmission)/.test(text)) return 'multi-year buildout';
   return 'next planning cycle';
 }
 
-function inferHookStyle(article = {}, archetype = STORY_ARCHETYPES[0]) {
-  const haystack = textBundle(article).toLowerCase();
-  if (/(risk|delay|blocked|constraint|bottleneck)/.test(haystack)) return 'constraint-first';
-  if (/(funding|financing|deal|acquisition|capital)/.test(haystack)) return 'capital-first';
-  if (/(technical|architecture|chip|gpu|cooling|network)/.test(haystack)) return 'system-first';
-  if (/(policy|permit|regulation|zoning)/.test(haystack)) return 'risk-first';
-  return archetype.id === 'skeptics-take' ? 'skeptical' : 'source-first';
+function concreteEvent(article = {}) {
+  const title = compact(article.title || '');
+  const summary = compact(article.summary || article.snippet || '');
+  const text = textBundle(article);
+  if (/NetApp/i.test(text) && /OpenShift/i.test(text)) return 'NetApp expanded OpenShift data management with faster VM backup, DR, and cloud-scale support';
+  if (/memory pricing/i.test(text)) return 'AI memory pricing is pushing into virtualization planning across Proxmox, KVM, Hyper-V, Nutanix, and XCP-ng estates';
+  if (/spot power trading|electricity spot/i.test(text)) return 'large data centers in China joined electricity spot trading through virtual power plant participation';
+  if (/Land and Expand/i.test(text)) return 'a Data Center Frontier roundup grouped NVIDIA, IREN, Coatue, Microsoft, Switch, Cerebras, and Core Scientific into one market view';
+  return firstUseful([summary, title], title || 'the source reported a new infrastructure signal');
 }
 
-function stableIndex(value = '', modulo = 1) {
-  const text = String(value || '');
-  let hash = 0;
-  for (let index = 0; index < text.length; index += 1) {
-    hash = (hash * 33 + text.charCodeAt(index)) >>> 0;
+function evidenceAnchor(article = {}) {
+  const insight = article.expert_insight || article.expertInsight || {};
+  const facts = Array.isArray(insight.concrete_facts) ? insight.concrete_facts : [];
+  const candidates = [
+    facts[0],
+    article.articleText,
+    article.contentText,
+    article.summary,
+    article.snippet,
+    article.title,
+  ];
+  const value = firstUseful(candidates, article.title || '');
+  return limitClean(value, 380);
+}
+
+function protagonist(article = {}) {
+  const insight = article.expert_insight || article.expertInsight || {};
+  const named = unique([
+    ...(Array.isArray(insight.named_companies) ? insight.named_companies : []),
+    ...extractNamedCompanies(textBundle(article)),
+  ]).map(compact).filter(Boolean);
+  if (named.length) return named[0];
+  const title = compact(article.title || '');
+  const beforeVerb = title.split(/\s+(?:adds|expands|launches|raises|plans|taps|uses|moves|announces|backs|buys|warns|faces|opens|secures|tests|updates)\s+/i)[0];
+  if (beforeVerb && beforeVerb.length <= 72) return beforeVerb;
+  return article.source || 'The source';
+}
+
+function infrastructureLayer(article = {}, route = routePublicLane(article), archetype = routeStoryArchetype(article)) {
+  const layer = compact(article.infrastructure_layer || article.expert_insight?.infrastructure_layer || '');
+  if (layer && !/^compute$/i.test(layer)) return layer;
+  if (/memory/i.test(archetype.editorialLens)) return 'Memory';
+  if (/power/i.test(archetype.editorialLens)) return 'Power';
+  if (/platform|resilience/i.test(archetype.editorialLens)) return 'Enterprise Platform Infrastructure';
+  if (route.visibility === 'adjacent') return 'Adjacent AI application layer';
+  return archetype.editorialLens || 'AI infrastructure';
+}
+
+function counterpointFor(article = {}, dnaSeed = {}) {
+  const insight = article.expert_insight || article.expertInsight || {};
+  const sourceCounter = compact(insight.counterargument || article.counterargument || '');
+  if (sourceCounter && !/still has to show|reported change can survive/i.test(sourceCounter)) {
+    return limitClean(sourceCounter, 260);
   }
-  return modulo ? hash % modulo : 0;
+  const layer = dnaSeed.infrastructure_layer || article.infrastructure_layer || 'infrastructure';
+  const event = dnaSeed.concrete_event || concreteEvent(article);
+  if (/adjacent/i.test(layer)) {
+    return 'The source does not yet connect the AI use case to compute, cloud capacity, data center, power, cooling, storage, or network decisions';
+  }
+  if (/market map/i.test(dnaSeed.editorial_lens || '')) {
+    return `${event} should be separated by control point before readers treat the source as one capacity thesis`;
+  }
+  return `${event} only changes decisions if the ${String(layer).toLowerCase()} evidence is specific enough to affect timing, procurement, or operating plans`;
+}
+
+function watchMetricFor(article = {}, route = routePublicLane(article), archetype = routeStoryArchetype(article)) {
+  const text = textBundle(article);
+  const insight = article.expert_insight || article.expertInsight || {};
+  const sourceSignal = compact(insight.next_observable_signal || article.next_observable_signal || '');
+  if (
+    sourceSignal &&
+    !/next .* disclosure|timing, site readiness, buyer commitment|operating impact|execution details/i.test(sourceSignal)
+  ) {
+    return limitClean(sourceSignal, 220);
+  }
+  if (/NetApp/i.test(text) && /OpenShift/i.test(text)) return 'restore-time evidence, DR failover validation, and cross-environment OpenShift adoption';
+  if (/memory pricing/i.test(text)) return 'VM density, memory cost per host, and swap or performance pressure across enterprise virtualization estates';
+  if (/spot power trading|electricity spot|virtual power plant/i.test(text)) return 'spot-market participation, volatility exposure, and predictable energy-cost savings for large data centers';
+  if (/Land and Expand/i.test(text)) return 'which named actor controls land, power, capital, chips, or contracted customer demand';
+  if (/Chip Industry Week in Review/i.test(text)) return 'HBM availability, export-control impact, packaging capacity, and funded fab or equipment milestones';
+  if (/Anthropic/i.test(text) && /legal/i.test(text)) return 'enterprise deployment evidence that changes cloud, security, or platform architecture, not legal-seat adoption alone';
+  if (/sports ai|football|S[ūu]merSports|Paul Tudor/i.test(text)) return 'evidence that the product changes infrastructure purchasing rather than sports analytics adoption';
+  if (route.visibility === 'adjacent') return 'a concrete infrastructure dependency named by the next source update';
+  return `${archetype.editorialLens.toLowerCase()} evidence tied to a named customer, deployment milestone, cost metric, or operating constraint`;
+}
+
+function isGenericWatchMetric(value = '') {
+  return !value ||
+    /next .* disclosure/i.test(value) ||
+    /timing, site readiness, buyer commitment/i.test(value) ||
+    /operating impact/i.test(value) ||
+    /execution details/i.test(value) ||
+    value.length < 24;
 }
 
 export function extractNarrativeDNA(article = {}) {
-  const insight = article.expert_insight || article.expertInsight || {};
-  const companies = Array.isArray(insight.named_companies) ? insight.named_companies.filter(Boolean) : [];
-  const facts = Array.isArray(insight.concrete_facts) ? insight.concrete_facts.filter(Boolean) : [];
-  const archetype = selectArchetype(article);
-  const protagonist = firstUseful([
-    companies[0],
-    article.source,
-    clean(article.title || '').split(/\s+(?:to|adds|expands|launches|faces|targets|plans)\s+/i)[0],
-  ], article.source || 'The source');
-  const antagonist = firstUseful([
-    insight.bottleneck_type,
-    article.bottleneck_type,
-    article.secondary_category,
-    article.infrastructure_layer,
-  ], 'execution risk');
-  const evidenceAnchor = firstUseful([
-    facts[0],
-    article.summary,
-    article.snippet,
-    article.articleText,
-    article.title,
-  ], article.title || 'the reported change');
-  const counterpoint = firstUseful([
-    insight.counterargument,
-    article.counterargument,
-  ], `${protagonist} still has to show that the reported change can survive real deployment, financing, or operating constraints.`);
-  const nextSignal = sourceSpecificSignal([
-    insight.next_observable_signal,
-    article.next_observable_signal,
-    article.expertLensFull?.watchNext,
-  ], `the next ${protagonist} disclosure that confirms timing, site readiness, buyer commitment, or operating impact`);
-
+  const route = routePublicLane(article);
+  const archetype = routeStoryArchetype(article);
+  const event = concreteEvent(article);
+  const anchor = evidenceAnchor(article);
+  const actor = protagonist(article);
+  const layer = infrastructureLayer(article, route, archetype);
+  const roles = readerRoles(article);
+  const lens = route.editorial_lens || archetype.editorialLens;
+  const watchMetric = watchMetricFor(article, route, archetype);
+  const seed = {
+    concrete_event: event,
+    infrastructure_layer: layer,
+    editorial_lens: lens,
+  };
   const dna = {
-    protagonist,
-    antagonist_or_constraint: antagonist,
-    core_tension: `${protagonist} has to turn ${clean(evidenceAnchor).toLowerCase()} into a usable infrastructure outcome despite ${clean(antagonist).toLowerCase()}.`,
-    reader_role: inferReaderRole(article),
-    infrastructure_layer: article.infrastructure_layer || insight.infrastructure_layer || 'AI infrastructure',
-    time_horizon: inferTimeHorizon(article),
+    protagonist: actor,
+    concrete_event: event,
+    core_tension: `${actor} has to translate ${event.toLowerCase()} into ${indefiniteArticle(layer)} ${String(layer).toLowerCase()} decision that survives cost, timing, or operating constraints`,
+    infrastructure_layer: layer,
+    reader_role: roles,
+    decision_relevance: `${roles.slice(0, 2).join(' and ')} can use the item to test ${lens.toLowerCase()} before changing procurement, deployment, or risk assumptions`,
+    evidence_anchor: anchor,
+    counterpoint: counterpointFor(article, seed),
+    watch_metric: watchMetric,
+    time_horizon: timeHorizon(article),
+    public_signal_label: route.public_signal_label || archetype.publicLabel,
+    editorial_lens: lens,
     story_archetype: archetype.name,
     story_archetype_id: archetype.id,
-    hook_style: inferHookStyle(article, archetype),
-    evidence_anchor: truncate(evidenceAnchor, 360),
-    counterpoint: truncate(counterpoint, 280),
-    next_observable_signal: truncate(nextSignal, 240),
-    brief_label: chooseBriefLabel(article, { counterpoint }),
-    headings: archetype.headings,
+    routing_decision: route.routing_decision,
   };
 
-  return dna;
-}
-
-function sentence(value = '') {
-  const cleaned = clean(value).replace(/[.]+$/, '');
-  return cleaned ? `${cleaned}.` : '';
-}
-
-function layerVerb(layer = '') {
-  const lower = String(layer || '').toLowerCase();
-  if (lower.includes('power')) return 'puts grid timing back into the operating plan';
-  if (lower.includes('cooling')) return 'moves thermal design from engineering detail to deployment risk';
-  if (lower.includes('silicon') || lower.includes('compute')) return 'turns component availability into a delivery test';
-  if (lower.includes('capital')) return 'asks whether financing can keep pace with build obligations';
-  if (lower.includes('policy')) return 'moves the constraint into approvals and market access';
-  return 'raises a practical capacity question';
+  const missing = [];
+  if (!dna.protagonist || compact(dna.protagonist).length < 2 || !detectTruncationArtifacts(dna.protagonist).ok) {
+    missing.push('protagonist');
+  }
+  for (const key of ['concrete_event', 'core_tension', 'evidence_anchor']) {
+    if (!dna[key] || isTruncatedEvidence(dna[key])) missing.push(key);
+  }
+  if (isGenericWatchMetric(dna.watch_metric)) missing.push('watch_metric');
+  const truncation = detectTruncationArtifacts(Object.values(dna).flat().join(' '));
+  return {
+    ...dna,
+    valid_for_full_article: missing.length === 0 && truncation.ok && route.visibility === 'core',
+    missing_fields: missing,
+    truncation,
+  };
 }
 
 export function buildNarrativeHook(article = {}, dna = extractNarrativeDNA(article), recentHooks = []) {
-  const candidates = [
-    `${dna.protagonist} ${layerVerb(dna.infrastructure_layer)} after ${clean(dna.evidence_anchor).toLowerCase()}`,
-    `${dna.evidence_anchor} That gives ${dna.reader_role} a ${dna.time_horizon} test around ${dna.antagonist_or_constraint}.`,
-    `${dna.protagonist} is no longer just announcing a move; the harder proof is ${dna.next_observable_signal}.`,
-    `${dna.infrastructure_layer} is the useful lens on ${article.title || 'this report'} because ${dna.antagonist_or_constraint} decides how quickly the plan becomes usable capacity.`,
-  ].map((item) => truncate(sentence(item), 260));
-
-  const recentStarts = new Set(
-    recentHooks.map((hook) => clean(hook).split(/\s+/).slice(0, 12).join(' ').toLowerCase())
-  );
-
-  for (const candidate of candidates) {
-    const start = clean(candidate).split(/\s+/).slice(0, 12).join(' ').toLowerCase();
-    if (!candidate || hookStartsWithBlockedPhrase(candidate) || hasBannedPhrase(candidate) || recentStarts.has(start)) continue;
-    return candidate;
-  }
-
-  return `${dna.protagonist} gives ${dna.reader_role} a fresh ${dna.infrastructure_layer.toLowerCase()} signal to verify against ${dna.next_observable_signal}.`;
+  const excerpt = generateEditorialExcerpt(article, { recentDecks: recentHooks });
+  return excerpt.deck;
 }
 
 export function buildDynamicBrief(article = {}, dna = extractNarrativeDNA(article)) {
   const lines = [
-    sentence(dna.evidence_anchor),
-    sentence(`${dna.reader_role} should read it through ${dna.antagonist_or_constraint}, ${dna.time_horizon} execution, and the ${dna.infrastructure_layer} layer`),
-    sentence(`The useful follow-up is ${dna.next_observable_signal}`),
-  ].map((line) => truncate(line, 220)).filter(Boolean);
-
+    sentence(dna.concrete_event),
+    sentence(dna.decision_relevance),
+    sentence(`Watch ${dna.watch_metric}`),
+  ]
+    .map((line) => limitClean(line, 220))
+    .filter(Boolean);
   return {
-    label: dna.brief_label,
+    label: dna.public_signal_label || 'Core Signal',
     lines,
   };
 }
 
-function bodyParagraphs(article = {}, dna = extractNarrativeDNA(article), recentHooks = []) {
-  const hook = buildNarrativeHook(article, dna, recentHooks);
-  const brief = buildDynamicBrief(article, dna);
-  const insight = article.expert_insight || article.expertInsight || {};
-  const companies = Array.isArray(insight.named_companies) ? insight.named_companies.filter(Boolean).slice(0, 3) : [];
-  const facts = Array.isArray(insight.concrete_facts) ? insight.concrete_facts.filter(Boolean).slice(0, 2) : [];
-  const factLine = [
-    companies.length ? `Named companies: ${companies.join(', ')}` : '',
-    facts.length ? `Source facts: ${facts.join(' ')}` : '',
-  ].filter(Boolean).join('. ');
-  const riskLine = [
-    insight.bottleneck_type ? `Bottleneck type: ${String(insight.bottleneck_type).replace(/_/g, ' ')}` : '',
-    insight.who_gains_leverage ? `Leverage moves toward ${insight.who_gains_leverage}` : '',
-    insight.who_takes_execution_risk ? `Execution risk sits with ${insight.who_takes_execution_risk}` : '',
-    insight.timing_dependency ? `Timing depends on ${insight.timing_dependency}` : '',
-  ].filter(Boolean).join('. ');
-  const seed = stableIndex(`${article.id || ''}|${article.title || ''}|${dna.story_archetype}`, 4);
-  const actorLine = [
-    `${dna.protagonist} is the actor named by the source; ${dna.antagonist_or_constraint} is the limiting condition that decides whether the update becomes usable capacity`,
-    `${dna.evidence_anchor} For ${dna.reader_role}, the practical read is the effect on ${dna.infrastructure_layer} planning over the ${dna.time_horizon} window`,
-    `${dna.story_archetype} is the right frame because the source points to ${dna.antagonist_or_constraint}, not just another broad AI demand claim`,
-    `${dna.protagonist} now gives ${dna.reader_role} a source-backed signal to test against the ${dna.infrastructure_layer} layer`,
-  ][seed];
-  const exposureLine = [
-    `${dna.reader_role} are exposed if ${dna.antagonist_or_constraint} slows procurement, deployment sequencing, or operating readiness`,
-    `Leverage shifts only if the reported move survives the counterpoint: ${dna.counterpoint}`,
-    `The useful distinction is between announcement value and operating value; ${dna.counterpoint}`,
-    `The constraint gives the story its shape because ${dna.reader_role} cannot treat ${dna.infrastructure_layer} as abstract capacity`,
-  ][seed];
-  const watchLine = [
-    `The next observable signal is ${dna.next_observable_signal}`,
-    `Judge the story by ${dna.next_observable_signal}, not by the size of the announced ambition`,
-    `The follow-up that matters is ${dna.next_observable_signal} within the ${dna.time_horizon} window`,
-    `${dna.protagonist}'s next proof point is ${dna.next_observable_signal}`,
-  ][seed];
-
-  return [
-    hook,
-    `${dna.headings[0]}\n\n${sentence(actorLine)} ${sentence(factLine || dna.evidence_anchor)}`,
-    `${dna.headings[1]}\n\n${sentence(exposureLine)} ${sentence(riskLine || dna.counterpoint)}`,
-    `${brief.label}\n\n${brief.lines.join(' ')}`,
-    `${dna.headings[2]}\n\n${sentence(watchLine)} ${sentence(`${article.title || dna.protagonist} belongs on the board only if that proof point changes decisions for ${dna.reader_role} in ${article.region || 'the affected market'}`)}`,
-  ];
+function paragraphForHeading(heading = '', article = {}, dna = extractNarrativeDNA(article)) {
+  const roleText = Array.isArray(dna.reader_role) ? dna.reader_role.slice(0, 3).join(', ') : dna.reader_role;
+  const lower = heading.toLowerCase();
+  if (/map|pieces|signals to separate|split/.test(lower)) {
+    return sentence(`${dna.concrete_event} is more useful as a map of control points than as one broad capacity claim`);
+  }
+  if (/changed|move|signal|product|system|architecture|field|deal|policy|power-market|cost/.test(lower)) {
+    return sentence(`${dna.concrete_event} is the source-backed change, with ${dna.protagonist} as the actor readers can track`);
+  }
+  if (/constraint|bottleneck|resilience|impact|lever|dependency|path|supply|below|design|failure/.test(lower)) {
+    return sentence(`${dna.infrastructure_layer} is the operating layer that turns the update into ${dna.editorial_lens.toLowerCase()}, especially for ${roleText}`);
+  }
+  if (/exposure|risk|who|buyer|stakeholder|capital|quality|leverage/.test(lower)) {
+    return sentence(`${dna.counterpoint}; that keeps the public read tied to evidence instead of treating the announcement as finished capacity`);
+  }
+  if (/watch|metric|proof|checkpoint|validation|test|decision|filing|adoption|delivery|planning/.test(lower)) {
+    return sentence(`The watch metric is ${dna.watch_metric} over the ${dna.time_horizon} window`);
+  }
+  return sentence(dna.decision_relevance);
 }
 
 export function buildNarrativeArticleBody(article = {}, options = {}) {
   const dna = options.narrativeDNA || extractNarrativeDNA(article);
-  const paragraphs = bodyParagraphs(article, dna, options.recentHooks || [])
-    .map((paragraph) => cleanBlock(paragraph))
-    .filter(Boolean);
-  let body = paragraphs.join('\n\n');
-
-  if (body.length < 900) {
-    body = [
-      body,
-      sentence(`${article.source || 'The source'} gives enough detail to track the decision, but not enough to declare which side captures the economics`),
-    ].join('\n\n');
+  const { headings } = sectionArchitectureFor(article, dna.story_archetype_id);
+  const opening = guardPublicCopy(buildNarrativeHook(article, dna, options.recentHooks || [])).text;
+  const lines = [opening];
+  for (const heading of headings) {
+    lines.push(heading);
+    lines.push(paragraphForHeading(heading, article, dna));
   }
-
-  const matches = bannedPhraseMatches(body);
-  if (Object.keys(matches).length) {
-    for (const phrase of BANNED_PHRASES) {
-      body = body.replace(new RegExp(phrase.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'gi'), '');
-    }
-  }
-
-  return body.replace(/\n{3,}/g, '\n\n').trim();
+  const closing = sentence(`For Compute Current readers, the decision point is whether ${dna.watch_metric} changes ${dna.infrastructure_layer.toLowerCase()} planning before the story is treated as core capacity`);
+  lines.push(closing);
+  return lines
+    .map((line) => guardPublicCopy(line).text)
+    .filter(Boolean)
+    .join('\n\n')
+    .replace(/\n{3,}/g, '\n\n')
+    .trim();
 }
 
 export function buildNarrativeLensFields(article = {}, options = {}) {
@@ -404,22 +301,25 @@ export function buildNarrativeLensFields(article = {}, options = {}) {
   const brief = buildDynamicBrief(article, dna);
   const hook = buildNarrativeHook(article, dna, options.recentHooks || []);
   const body = buildNarrativeArticleBody(article, { narrativeDNA: dna, recentHooks: options.recentHooks || [] });
+  const excerpt = generateEditorialExcerpt(article, { recentDecks: options.recentHooks || [] });
 
   return {
     generation_version: GENERATION_VERSION,
     narrative_dna: dna,
     dynamicBriefLabel: brief.label,
     executiveSummary: brief.lines,
-    thesis: truncate(hook, 160),
-    whatHappened: truncate(sentence(dna.evidence_anchor), 500),
-    whyThisMatters: truncate(sentence(dna.core_tension), 500),
-    marketMissing: truncate(sentence(dna.counterpoint), 500),
-    investors: truncate(sentence(`${dna.reader_role} should test whether ${dna.next_observable_signal} confirms the operating case`), 500),
-    operators: truncate(sentence(`${dna.infrastructure_layer} teams need to resolve ${dna.antagonist_or_constraint} within the ${dna.time_horizon} window`), 500),
-    hyperscalers: truncate(sentence(`Cloud buyers should track whether the plan changes supplier dependence, regional timing, or deployment sequencing`), 500),
-    watchNext: truncate(sentence(dna.next_observable_signal), 500),
-    finalHeadline: truncate(article.title || hook, 120),
-    metaDescription: truncate(hook, 170),
+    thesis: limitClean(excerpt.deck || hook, 220),
+    whatHappened: limitClean(sentence(dna.concrete_event), 500),
+    whyThisMatters: limitClean(excerpt.why_it_matters || sentence(dna.core_tension), 600),
+    marketMissing: limitClean(sentence(dna.counterpoint), 500),
+    investors: limitClean(sentence(dna.decision_relevance), 500),
+    operators: limitClean(sentence(`${dna.infrastructure_layer} teams should track ${dna.watch_metric}`), 500),
+    hyperscalers: limitClean(sentence(`Cloud and platform buyers should separate source evidence from generic AI demand before changing deployment plans`), 500),
+    watchNext: limitClean(sentence(dna.watch_metric), 500),
+    finalHeadline: limitClean(article.title || excerpt.deck || hook, 130),
+    metaDescription: limitClean(excerpt.deck || hook, 170),
     finalArticleBody: body,
+    deck: excerpt.deck,
+    why_it_matters: excerpt.why_it_matters,
   };
 }

@@ -1,3 +1,5 @@
+import { analyzeSourceTextCompleteness } from './source-text-completeness.mjs';
+
 export const ARTICLE_PAGE_QUALITY_THRESHOLD = Number(
   process.env.ARTICLE_PAGE_QUALITY_THRESHOLD || 0.8
 );
@@ -252,6 +254,11 @@ export function qualityGateReason(article = {}, threshold = ARTICLE_PAGE_QUALITY
   }
   if (article.extraction_qa?.copyright_footer_detected || article.copyright_footer_detected) {
     return 'fail_closed: copyright_footer_detected';
+  }
+
+  const completeness = analyzeSourceTextCompleteness(article);
+  if (!completeness.ok) {
+    return `fail_closed: source_text_incomplete:${completeness.reasons.join(', ')}`;
   }
 
   const score = Number(article.extraction_quality_score ?? 0);
