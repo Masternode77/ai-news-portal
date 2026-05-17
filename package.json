@@ -12,6 +12,7 @@
     "humanize:existing": "node ./scripts/humanize-existing-articles.mjs",
     "smoke:image-provider": "IMAGE_PROVIDER=local PIPELINE_OFFLINE=1 node ./scripts/image-provider-dry-run.mjs",
     "prepare:static-images": "node ./scripts/prepare-static-images.mjs",
+    "backfill:article-metadata": "node ./scripts/backfill-article-metadata.mjs",
     "build": "npm run sync:dashboard-data && npm run prepare:static-images && astro build",
     "check": "astro check",
     "preview": "astro preview",
@@ -19,7 +20,13 @@
     "qa:visual:capture": "node ./scripts/qa-visual-capture.mjs",
     "qa:visual:smoke": "node ./scripts/qa-visual-smoke.mjs",
     "qa:visual:status": "node ./scripts/qa-visual-status.mjs",
-    "qa:visual:percy": "node ./scripts/qa-visual-percy.mjs"
+    "qa:visual:percy": "node ./scripts/qa-visual-percy.mjs",
+    "test:relevance": "node ./scripts/test-relevance-classifier.mjs",
+    "test:taxonomy": "node ./scripts/test-taxonomy.mjs",
+    "test:blueprints": "PIPELINE_OFFLINE=1 OPENROUTER_API_KEY= node ./scripts/test-blueprints.mjs",
+    "test:repetition": "node ./scripts/test-repetition-detector.mjs",
+    "test:expert-insight": "PIPELINE_OFFLINE=1 OPENROUTER_API_KEY= node ./scripts/test-expert-insight-engine.mjs",
+    "eval:articles": "node ./scripts/eval-article-generation.mjs"
   },
   "dependencies": {
     "@astrojs/rss": "^4.0.12",

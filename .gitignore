@@ -5,6 +5,8 @@ node_modules/
 dist/
 .astro/
 artifacts/
+outputs/
+.codex/tmp-spreadsheet/
 
 # Local platform state
 .vercel/
@@ -15,3 +17,6 @@ artifacts/
 .env.*
 !.env.example
 .vercel
+
+# Local duplicate editor copies
+scripts/*\ 2.mjs

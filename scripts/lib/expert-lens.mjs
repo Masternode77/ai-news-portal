@@ -3,12 +3,25 @@ import {
   EDITORIAL_HUMANIZER_MODE,
   EDITORIAL_HUMANIZER_PROMPT,
   HUMANIZED_ARTICLE_MIN_CHARS,
-  buildHumanizedArticleBody,
   containsTemplateLanguage,
   humanizedFallbackSections,
   normalizeEditorialParagraphs,
   normalizeEditorialVoice,
 } from './editorial-humanizer.mjs';
+import {
+  bodyUsesBlueprint,
+  blueprintFallbackBody,
+  blueprintHistoryFromRecords,
+  blueprintPrompt,
+  blueprintSnapshot,
+  getArticleBlueprint,
+  selectArticleBlueprint,
+} from './article-blueprints.mjs';
+import {
+  articleHasExpertInsight,
+  expertInsightUsageScore,
+  insightFieldSummary,
+} from './expert-insight-engine.mjs';
 import { callExpertLensText } from './openrouter.mjs';
 import { safeJsonParse, sanitizeGeneratedText, slugify, truncate } from './normalize.mjs';
 
@@ -47,14 +60,22 @@ function buildHeadlineOptions(article) {
   ].map((headline) => truncate(headline, 110));
 }
 
-function finalArticleBody(article, sections, candidate = '') {
+function finalArticleBody(article, sections, candidate = '', blueprint, enforceBlueprint = false) {
   const body = normalizeEditorialParagraphs(candidate)
     .filter((paragraph) => !/^(why it matters|pressure points|market implications|what to watch)$/i.test(paragraph))
     .join('\n\n');
-  if (body.length >= HUMANIZED_ARTICLE_MIN_CHARS && !containsTemplateLanguage(body)) {
+  const minChars = enforceBlueprint ? blueprint?.minChars || HUMANIZED_ARTICLE_MIN_CHARS : HUMANIZED_ARTICLE_MIN_CHARS;
+  const maxChars = blueprint?.maxChars ? blueprint.maxChars + 400 : Number.POSITIVE_INFINITY;
+  if (
+    body.length >= minChars &&
+    (!enforceBlueprint || body.length <= maxChars) &&
+    (!enforceBlueprint || bodyUsesBlueprint(body, blueprint)) &&
+    (!enforceBlueprint || !articleHasExpertInsight(article) || expertInsightUsageScore(body, article.expert_insight || article.expertInsight) >= 0.55) &&
+    !containsTemplateLanguage(body)
+  ) {
     return body;
   }
-  return buildHumanizedArticleBody(article, sections);
+  return blueprintFallbackBody(article, sections, blueprint);
 }
 
 function normalizeExecutiveSummary(value = [], fallback = []) {
@@ -66,7 +87,22 @@ function normalizeExecutiveSummary(value = [], fallback = []) {
     .slice(0, 3);
 }
 
-function fallbackExpertLensFull(article) {
+function resolveArticleBlueprint(article = {}, recentBlueprintIds = []) {
+  return getArticleBlueprint(
+    article.article_blueprint || article.articleBlueprint?.id || article.expertLensFull?.blueprintId
+  ) || selectArticleBlueprint(article, recentBlueprintIds);
+}
+
+function withBlueprintFields(article = {}, blueprint) {
+  const selected = blueprint || resolveArticleBlueprint(article);
+  return {
+    ...article,
+    article_blueprint: selected.id,
+    articleBlueprint: blueprintSnapshot(selected),
+  };
+}
+
+function fallbackExpertLensFull(article, blueprint = resolveArticleBlueprint(article)) {
   const humanized = humanizedFallbackSections(article, inferSignal(article));
   const thesis = truncate(humanized.thesis, 160);
   const whatHappened = truncate(humanized.whatHappened, 500);
@@ -105,6 +141,9 @@ function fallbackExpertLensFull(article) {
     version: EXPERT_LENS_VERSION,
     mode: EXPERT_LENS_MODE,
     generatedAt: new Date().toISOString(),
+    blueprintId: blueprint.id,
+    blueprintName: blueprint.name,
+    blueprint: blueprintSnapshot(blueprint),
     thesis,
     whatHappened,
     whyThisMatters,
@@ -117,7 +156,7 @@ function fallbackExpertLensFull(article) {
     headlineOptions,
     finalHeadline,
     metaDescription,
-    finalArticleBody: finalArticleBody(article, sections),
+    finalArticleBody: finalArticleBody(article, sections, '', blueprint, true),
     sourceLink: article.sourceUrl || article.url || '',
   };
 }
@@ -130,17 +169,21 @@ function normalizeHeadlineOptions(headlineOptions = [], fallback = []) {
   return cleaned.slice(0, 5);
 }
 
-function normalizeExpertLensFull(article, payload) {
-  const fallback = fallbackExpertLensFull(article);
+function normalizeExpertLensFull(article, payload, blueprint = resolveArticleBlueprint(article), options = {}) {
+  const fallback = fallbackExpertLensFull(article, blueprint);
   const parsed = typeof payload === 'string' ? safeJsonParse(payload, null) : payload;
   if (!parsed || typeof parsed !== 'object') {
     return fallback;
   }
+  const selectedBlueprint = getArticleBlueprint(parsed.blueprintId) || blueprint;
 
   const normalized = {
     version: EXPERT_LENS_VERSION,
     mode: parsed.mode || fallback.mode,
     generatedAt: parsed.generatedAt || new Date().toISOString(),
+    blueprintId: selectedBlueprint.id,
+    blueprintName: selectedBlueprint.name,
+    blueprint: blueprintSnapshot(selectedBlueprint),
     thesis: truncate(parsed.thesis || fallback.thesis, 160),
     whatHappened: truncate(parsed.whatHappened || fallback.whatHappened, 500),
     whyThisMatters: truncate(parsed.whyThisMatters || fallback.whyThisMatters, 500),
@@ -163,7 +206,13 @@ function normalizeExpertLensFull(article, payload) {
 
   normalized.headlineOptions = normalized.headlineOptions.map((headline) => normalizeEditorialVoice(sanitizeGeneratedText(headline))).filter(Boolean);
 
-  normalized.finalArticleBody = finalArticleBody(article, normalized, parsed.finalArticleBody || fallback.finalArticleBody || '');
+  normalized.finalArticleBody = finalArticleBody(
+    article,
+    normalized,
+    parsed.finalArticleBody || fallback.finalArticleBody || '',
+    selectedBlueprint,
+    options.enforceBlueprint || Boolean(parsed.blueprintId || article.article_blueprint || article.articleBlueprint?.id)
+  );
 
   if (!normalized.finalArticleBody) {
     normalized.finalArticleBody = fallback.finalArticleBody;
@@ -184,13 +233,20 @@ function buildExpertLensShort(fullLens, fallbackShort = '') {
 }
 
 export function hydrateExpertLens(article = {}) {
+  const existingBlueprint = getArticleBlueprint(
+    article.article_blueprint || article.articleBlueprint?.id || article.expertLensFull?.blueprintId
+  );
+  const blueprint = existingBlueprint || resolveArticleBlueprint(article);
   const short = truncate(article.expertLensShort || article.expertLens || '', 220) || null;
   const full = article.expertLensFull && typeof article.expertLensFull === 'object'
-    ? normalizeExpertLensFull(article, article.expertLensFull)
+    ? normalizeExpertLensFull(article, article.expertLensFull, blueprint)
     : null;
+  const persistedBlueprint = existingBlueprint || (full ? getArticleBlueprint(full.blueprintId) : null);
 
   return {
     ...article,
+    article_blueprint: article.article_blueprint || full?.blueprintId || null,
+    articleBlueprint: article.articleBlueprint || full?.blueprint || (persistedBlueprint ? blueprintSnapshot(persistedBlueprint) : null),
     expertLensShort: short || (full ? buildExpertLensShort(full) : null),
     expertLensFull: full,
     expertLens: short || (full ? buildExpertLensShort(full) : null),
@@ -221,6 +277,8 @@ export function mergeArticleRecords(primary = {}, secondary = {}) {
     expertLensShort: mergedShort || null,
     expertLensFull: mergedFull,
     expertLens: mergedShort || null,
+    article_blueprint: merged.article_blueprint || mergedFull?.blueprintId || null,
+    articleBlueprint: merged.articleBlueprint || mergedFull?.blueprint || null,
   };
 }
 
@@ -229,8 +287,12 @@ function needsExpertLens(article) {
   return !hydrated.expertLensFull || !hydrated.expertLensShort;
 }
 
-async function generateExpertLensFull(article) {
-  const fallback = fallbackExpertLensFull(article);
+async function generateExpertLensFull(article, blueprint) {
+  if (!articleHasExpertInsight(article)) {
+    throw new Error('expert insight fields are incomplete; refusing generic long-form article generation');
+  }
+  const fallback = fallbackExpertLensFull(article, blueprint);
+  const expertInsight = article.expert_insight || article.expertInsight || {};
   const content = await callExpertLensText({
     systemPrompt: [
       'You are the editorial voice for an AI infrastructure intelligence publication.',
@@ -238,15 +300,20 @@ async function generateExpertLensFull(article) {
       EDITORIAL_HUMANIZER_PROMPT,
       'The output must be decision-grade, accurate, skeptical, and free of generic hype or unsupported certainty.',
       'Use this logic in order: report what changed, explain why the development matters now, identify 1-2 underappreciated constraints, name practical implications for the most relevant audience, then end with what to watch next.',
-      'Return strict JSON only with keys: thesis, whatHappened, whyThisMatters, marketMissing, investors, operators, hyperscalers, watchNext, executiveSummary, headlineOptions, finalHeadline, metaDescription, finalArticleBody, sourceLink.',
+      'The article must use the extracted expert insight fields. Do not substitute generic infrastructure analysis for missing details.',
+      'Every finalArticleBody must explicitly use at least one concrete fact, one named company, the infrastructure layer, bottleneck type, leverage holder, execution-risk holder, timing dependency, counterargument, and next observable signal.',
+      blueprintPrompt(blueprint),
+      'Return strict JSON only with keys: blueprintId, thesis, whatHappened, whyThisMatters, marketMissing, investors, operators, hyperscalers, watchNext, executiveSummary, headlineOptions, finalHeadline, metaDescription, finalArticleBody, sourceLink.',
+      `blueprintId must be "${blueprint.id}".`,
       'executiveSummary must be exactly 3 short lines for busy readers: what changed, why it matters, and what to watch.',
       'headlineOptions must be an array of exactly 5 concise headline ideas written in English, each with a concrete hook that invites a click without hype.',
       'finalHeadline must use the strongest hook while preserving the source facts.',
       'Keep each section concise but substantive. Do not invent facts or numbers not grounded in the provided context.',
-      `The finalArticleBody is the primary deliverable. It must be at least ${HUMANIZED_ARTICLE_MIN_CHARS} characters and 6-9 paragraphs of reported analysis, not bullets, not a memo, and not a repeated section template.`,
+      `The finalArticleBody is the primary deliverable. It must include the selected blueprint headings as standalone lines and otherwise be reported analysis, not bullets and not a repeated section template.`,
       'Do not include the headings "Why it matters", "Pressure points", "Market implications", or "What to watch" anywhere in reader-facing copy.',
     ].join(' '),
     userPrompt: JSON.stringify({
+      selectedBlueprint: blueprintSnapshot(blueprint),
       title: article.title,
       source: article.source,
       category: article.category,
@@ -256,34 +323,53 @@ async function generateExpertLensFull(article) {
       snippet: article.snippet,
       articleText: article.articleText,
       sourceLink: article.sourceUrl || article.url,
+      expertInsight,
+      expertInsightFieldSummary: insightFieldSummary(expertInsight),
     }),
     maxTokens: 2600,
   }).catch(() => '');
 
-  return normalizeExpertLensFull(article, content || fallback);
+  return normalizeExpertLensFull(article, content || fallback, blueprint, { enforceBlueprint: true });
 }
 
-async function enrichSingleArticle(article) {
+async function enrichSingleArticle(article, options = {}) {
   const hydrated = hydrateExpertLens(article);
+  const blueprint = resolveArticleBlueprint(hydrated, options.recentBlueprintIds || []);
+  const articleWithBlueprint = withBlueprintFields(hydrated, blueprint);
   if (!needsExpertLens(hydrated)) {
-    return hydrated;
+    return articleWithBlueprint;
   }
 
-  const full = hydrated.expertLensFull || await generateExpertLensFull(hydrated);
-  const short = hydrated.expertLensShort || buildExpertLensShort(full, hydrated.summary || hydrated.snippet || hydrated.title);
+  const full = articleWithBlueprint.expertLensFull || await generateExpertLensFull(articleWithBlueprint, blueprint);
+  const short = articleWithBlueprint.expertLensShort || buildExpertLensShort(full, hydrated.summary || hydrated.snippet || hydrated.title);
 
   return {
-    ...hydrated,
+    ...articleWithBlueprint,
     expertLensShort: short,
     expertLensFull: full,
     expertLens: short,
+    article_blueprint: full.blueprintId || blueprint.id,
+    articleBlueprint: full.blueprint || blueprintSnapshot(blueprint),
   };
 }
 
-export async function attachExpertLens(articles = []) {
-  return Promise.all(articles.map((article) => enrichSingleArticle(article)));
+export async function attachExpertLens(articles = [], options = {}) {
+  const results = [];
+  const recentBlueprintIds = [...(options.recentBlueprintIds || [])];
+
+  for (const article of articles) {
+    const enriched = await enrichSingleArticle(article, { recentBlueprintIds });
+    results.push(enriched);
+    if (enriched.article_blueprint) {
+      recentBlueprintIds.unshift(enriched.article_blueprint);
+    }
+  }
+
+  return results;
 }
 
 export function expertLensBodyParagraphs(article = {}) {
   return splitParagraphs(article?.expertLensFull?.finalArticleBody || article?.articleText || '');
 }
+
+export { blueprintHistoryFromRecords };

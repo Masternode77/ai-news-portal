@@ -4,6 +4,14 @@ import latestNews from '../../data/latest-news.json';
 import archivedNews from '../../data/archived-news.json';
 import { SITE } from '../../config/site';
 import { cleanEditorialText, displayHeadline, executiveSummaryLines } from '../../lib/editorial-display.js';
+import { taxonomyDisplay, urgencyLabel as taxonomyUrgencyLabel } from '../../lib/taxonomy-display.js';
+import {
+  articleCanonicalPath,
+  articleNoindexReasons,
+  buildArticleStructuredData,
+  shouldNoindexArticle,
+  sourceAttributionFor,
+} from '../../lib/seo-safeguards.js';
 
 export function getStaticPaths() {
   return [...latestNews, ...archivedNews]
@@ -15,6 +23,7 @@ export function getStaticPaths() {
 }
 
 const { article } = Astro.props;
+const articleRecord = article as any;
 
 if (!article) {
   throw new Error('Article not found');
@@ -25,32 +34,29 @@ const lensTeaser = article.expertLensShort || article.expertLens || lens?.thesis
 const displayTitle = displayHeadline(article);
 const detailImage = article.sourceImage || article.generatedImage || SITE.defaultOgImage;
 const articleDescription = cleanEditorialText(lens?.metaDescription || article.summary || article.snippet || article.title);
-const canonicalPath = `/news/${article.id}/`;
+const canonicalPath = articleCanonicalPath(article);
 const articleUrl = `${SITE.url}${canonicalPath}`;
 const executiveSummary = executiveSummaryLines(article);
+const taxonomy = taxonomyDisplay(articleRecord);
+const urgencyLabel = taxonomyUrgencyLabel(taxonomy.urgency);
+const sourceAttribution = sourceAttributionFor(articleRecord);
+const noindexReasons = articleNoindexReasons(articleRecord);
+const noindexArticle = shouldNoindexArticle(articleRecord);
 const articleBody = (lens?.finalArticleBody || article.articleText || article.snippet || article.summary || '')
   .split(/\n{2,}/)
   .map((paragraph) => cleanEditorialText(paragraph))
   .filter((paragraph) => !/^(why it matters|pressure points|market implications|what to watch)$/i.test(paragraph))
   .filter(Boolean);
-const structuredData = {
-  '@context': 'https://schema.org',
-  '@type': 'Article',
-  headline: displayTitle,
+const structuredData = buildArticleStructuredData({
+  article: articleRecord,
+  site: SITE,
+  title: displayTitle,
   description: articleDescription,
-  image: detailImage.startsWith('http') ? detailImage : `${SITE.url}${detailImage}`,
-  datePublished: article.publishedAt,
-  dateModified: article['updatedAt'] || article.publishedAt,
-  author: {
-    '@type': 'Organization',
-    name: SITE.name,
-  },
-  publisher: {
-    '@type': 'Organization',
-    name: SITE.name,
-  },
-  mainEntityOfPage: articleUrl,
-};
+  image: detailImage,
+  canonicalUrl: articleUrl,
+  taxonomy,
+  articleBody,
+});
 ---
 <Layout
   title={`${displayTitle} | ${SITE.name}`}
@@ -58,6 +64,7 @@ const structuredData = {
   type="article"
   canonicalPath={canonicalPath}
   image={detailImage}
+  noindex={noindexArticle}
 >
   <script is:inline type="application/ld+json" set:html={JSON.stringify(structuredData)}></script>
   <main class="detail-shell">
@@ -70,14 +77,49 @@ const structuredData = {
 
       <div class="detail-body">
         <div class="meta-strip">
-          <span class="category-badge">{article.category || 'Infrastructure'}</span>
+          <span class="category-badge">{taxonomy.primary}</span>
           <span class="source-pill">{article.source}</span>
-          <span class="region-pill">{article.region || 'Global'}</span>
+          <span class="region-pill">{taxonomy.region}</span>
           <time>{new Date(article.publishedAt).toLocaleString('en-US')}</time>
         </div>
 
         <h1>{displayTitle}</h1>
         <p class="detail-summary">{cleanEditorialText(lensTeaser || article.summary || article.snippet)}</p>
+
+        <section class="taxonomy-panel" aria-label="Infrastructure taxonomy">
+          <div>
+            <span>Primary</span>
+            <strong>{taxonomy.primary}</strong>
+          </div>
+          <div>
+            <span>Secondary</span>
+            <strong>{taxonomy.secondary || 'General infrastructure signal'}</strong>
+          </div>
+          <div>
+            <span>Layer</span>
+            <strong>{taxonomy.layer}</strong>
+          </div>
+          <div>
+            <span>Type</span>
+            <strong>{taxonomy.articleType}</strong>
+          </div>
+          <div>
+            <span>Region</span>
+            <strong>{taxonomy.region}</strong>
+          </div>
+          {urgencyLabel ? (
+            <div>
+              <span>Urgency</span>
+              <strong>{urgencyLabel} · {taxonomy.urgency?.toFixed(2)}</strong>
+            </div>
+          ) : null}
+          {taxonomy.stakeholders.length ? (
+            <div class="taxonomy-panel-wide">
+              <span>Affected stakeholders</span>
+              <strong>{taxonomy.stakeholders.join(', ')}</strong>
+            </div>
+          ) : null}
+        </section>
 
         {executiveSummary.length ? (
           <section class="executive-summary" aria-label="Executive summary">
@@ -98,11 +140,33 @@ const structuredData = {
           </section>
         ) : null}
 
-        <section class="detail-section">
+        <section class="detail-section disclosure-panel">
+          <h2>AI-assisted disclosure</h2>
+          <p>
+            {SITE.name} uses AI-assisted extraction, classification, summarization, and drafting workflows. The source article remains the authoritative record; this page is an editorial intelligence memo derived from that source and internal quality gates.
+          </p>
+          <p>
+            Read the full <a href="/ai-disclosure/">AI-assisted content disclosure</a> and <a href="/methodology/">methodology</a>.
+          </p>
+          <p>
+            Canonical page: <a href={articleUrl}>{articleUrl}</a>
+          </p>
+          {noindexReasons.length ? (
+            <p>
+              Search indexing is disabled for this generated page because: {noindexReasons.join(', ')}.
+            </p>
+          ) : null}
+        </section>
+
+        <section class="detail-section source-attribution-panel">
           <h2>Source</h2>
           <p>
-            <a href={lens?.sourceLink || article.sourceUrl || article.url} target="_blank" rel="noreferrer">
-              Read the original report
+            Analysis is based on reporting from <strong>{sourceAttribution.name}</strong>
+            {sourceAttribution.domain ? <> ({sourceAttribution.domain})</> : null}. Compute Current links to the original source for attribution and reader verification.
+          </p>
+          <p>
+            <a href={sourceAttribution.url} target="_blank" rel="noopener noreferrer">
+              Read the original source
             </a>
           </p>
         </section>
@@ -119,7 +183,7 @@ const structuredData = {
           <a class="detail-button" href="/">
             Browse latest board
           </a>
-          <a class="source-cta" href={article.sourceUrl || article.url} target="_blank" rel="noreferrer">
+          <a class="source-cta" href={sourceAttribution.url} target="_blank" rel="noopener noreferrer">
             Read crawled source article
           </a>
         </div>

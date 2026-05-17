@@ -1,4 +1,3 @@
-import { CATEGORIES } from './constants.mjs';
 import {
   buildFallbackTags,
   guessLanguage,
@@ -9,9 +8,16 @@ import {
   unique,
 } from './normalize.mjs';
 import { callOpenRouterJson } from './openrouter.mjs';
-import { fetchArticleExcerpt } from './source-fetch.mjs';
+import { fetchArticleExtraction } from './source-fetch.mjs';
 import { normalizeEditorialVoice } from './editorial-humanizer.mjs';
-import { scoreExtractionQuality } from './quality-gate.mjs';
+import { extractExpertInsight } from './expert-insight-engine.mjs';
+import { classifyInfrastructureRelevance } from './relevance-classifier.mjs';
+import {
+  ARTICLE_TYPES,
+  INFRASTRUCTURE_LAYERS,
+  PRIMARY_CATEGORIES,
+  classifyTaxonomy,
+} from './taxonomy.mjs';
 
 function fallbackSummary(item, articleText = '') {
   const base = articleText || item.snippet || item.title;
@@ -64,7 +70,6 @@ function normalizeAiPayload(aiPayload, fallback) {
 
   const summary = truncate(normalizeEditorialVoice(aiPayload.summary || fallback.summary), 180);
   const insight = truncate(normalizeEditorialVoice(aiPayload.insight || fallback.insight), 260);
-  const category = CATEGORIES.includes(aiPayload.category) ? aiPayload.category : fallback.category;
   const tags = unique([...(Array.isArray(aiPayload.tags) ? aiPayload.tags : []), ...fallback.tags]).slice(0, 6);
   const region = aiPayload.region || fallback.region;
   const imagePrompt = aiPayload.imagePrompt || fallback.imagePrompt;
@@ -72,19 +77,28 @@ function normalizeAiPayload(aiPayload, fallback) {
     ...fallback,
     summary,
     insight,
-    category,
     tags,
     region,
     imagePrompt,
+    taxonomy: aiPayload.taxonomy && typeof aiPayload.taxonomy === 'object'
+      ? aiPayload.taxonomy
+      : {
+        primary_category: aiPayload.primary_category,
+        secondary_category: aiPayload.secondary_category,
+        infrastructure_layer: aiPayload.infrastructure_layer,
+        affected_stakeholders: aiPayload.affected_stakeholders,
+        article_type: aiPayload.article_type,
+        region: aiPayload.region,
+        urgency_score: aiPayload.urgency_score,
+      },
   };
 }
 
 export async function enrichContent(item) {
-  const articleText = await fetchArticleExcerpt(item.url, item.snippet);
-  const extractionQualityScore = scoreExtractionQuality({
-    articleText,
+  const { articleText, extractionQa } = await fetchArticleExtraction({
+    url: item.url,
+    title: item.title,
     fallbackSnippet: item.snippet,
-    sourceUrl: item.url,
   });
   const category = inferCategory(`${item.title} ${item.snippet} ${articleText}`, item.defaultCategory || item.categoryHint);
   const region = inferRegion(`${item.title} ${item.snippet} ${articleText}`, item.region || 'Global');
@@ -102,11 +116,16 @@ export async function enrichContent(item) {
     systemPrompt: [
       'You are a veteran editor covering data centers, hyperscalers, cloud infrastructure, semiconductors, power markets, and AI deployment.',
       'Write like a senior newsroom editor, not a strategy deck.',
-      'Return JSON only with keys: summary, insight, category, tags, region, imagePrompt.',
+      'Return JSON only with keys: summary, insight, primary_category, secondary_category, infrastructure_layer, affected_stakeholders, article_type, region, urgency_score, tags, imagePrompt.',
       'summary: 1-2 sentences, 180 characters max, crisp and factual.',
       'insight: 2 sentences max, focused on why this matters for operators / investors / capacity planners.',
       'Avoid phrases such as "Expert lens", "This signal matters", "strategic significance", and "read-through".',
-      `category must be one of: ${CATEGORIES.join(' | ')}`,
+      `primary_category must be one of: ${PRIMARY_CATEGORIES.join(' | ')}`,
+      'secondary_category: concise desk/subbeat label grounded in the source.',
+      `infrastructure_layer must be one of: ${INFRASTRUCTURE_LAYERS.join(' | ')}`,
+      'affected_stakeholders: array of up to 5 concise plural groups such as operators, utilities, hyperscalers, investors, enterprise IT.',
+      `article_type must be one of: ${ARTICLE_TYPES.join(' | ')}`,
+      'urgency_score: number from 0 to 1 based on timing sensitivity, bottleneck severity, and decision value.',
       'tags: array of up to 6 concise lowercase tags.',
       'region: short market label like Global, Korea, APAC, US, EU, MiddleEast.',
       'imagePrompt: premium editorial image prompt, 16:9, no logos, no text.',
@@ -127,19 +146,93 @@ export async function enrichContent(item) {
   }).catch(() => null);
 
   const normalized = normalizeAiPayload(aiPayload, fallback);
+  const infrastructureRelevance = classifyInfrastructureRelevance({
+    ...item,
+    articleText,
+    summary: normalized.summary,
+    insight: normalized.insight,
+    category: normalized.category,
+    tags: normalized.tags,
+    region: normalized.region,
+  });
+  const taxonomy = classifyTaxonomy({
+    ...item,
+    ...infrastructureRelevance,
+    articleText,
+    summary: normalized.summary,
+    insight: normalized.insight,
+    category: normalized.category,
+    tags: normalized.tags,
+    region: normalized.region,
+  }, normalized.taxonomy);
+  const expertInsight = extractExpertInsight({
+    ...item,
+    articleText,
+    summary: normalized.summary,
+    insight: normalized.insight,
+    category: taxonomy.primary_category,
+    primary_category: taxonomy.primary_category,
+    secondary_category: taxonomy.secondary_category,
+    infrastructure_layer: taxonomy.infrastructure_layer,
+    affected_stakeholders: taxonomy.affected_stakeholders,
+    article_type: taxonomy.article_type,
+    region: taxonomy.region,
+    tags: normalized.tags,
+  });
 
   return {
     ...item,
     slug: slugify(item.title),
     summary: normalized.summary,
     insight: normalized.insight,
-    category: normalized.category,
+    category: taxonomy.primary_category,
+    primary_category: taxonomy.primary_category,
+    secondary_category: taxonomy.secondary_category,
+    infrastructure_layer: taxonomy.infrastructure_layer,
+    affected_stakeholders: taxonomy.affected_stakeholders,
+    article_type: taxonomy.article_type,
+    urgency_score: taxonomy.urgency_score,
+    taxonomy_confidence: taxonomy.taxonomy_confidence,
+    taxonomy_reasons: taxonomy.taxonomy_reasons,
+    expert_insight: expertInsight,
+    expertInsight,
+    concrete_facts: expertInsight.concrete_facts,
+    named_companies: expertInsight.named_companies,
+    bottleneck_type: expertInsight.bottleneck_type,
+    who_gains_leverage: expertInsight.who_gains_leverage,
+    who_takes_execution_risk: expertInsight.who_takes_execution_risk,
+    timing_dependency: expertInsight.timing_dependency,
+    counterargument: expertInsight.counterargument,
+    next_observable_signal: expertInsight.next_observable_signal,
+    expert_insight_complete: expertInsight.expert_insight_complete,
+    expert_insight_missing_fields: expertInsight.expert_insight_missing_fields,
     tags: normalized.tags,
-    region: normalized.region,
+    region: taxonomy.region,
     imagePrompt: normalized.imagePrompt,
     lang: guessLanguage(`${item.title} ${item.snippet} ${articleText}`),
     articleText,
-    extraction_quality_score: extractionQualityScore,
+    content_length: extractionQa.content_length,
+    boilerplate_ratio: extractionQa.boilerplate_ratio,
+    title_body_similarity: extractionQa.title_body_similarity,
+    copyright_footer_detected: extractionQa.copyright_footer_detected,
+    nav_or_cta_detected: extractionQa.nav_or_cta_detected,
+    sentence_completion_score: extractionQa.sentence_completion_score,
+    source_domain_adapter: extractionQa.source_domain_adapter,
+    extraction_quality_score: extractionQa.extraction_quality_score,
+    extraction_qa: extractionQa,
+    direct_ai_infrastructure_relevance: infrastructureRelevance.direct_ai_infrastructure_relevance,
+    data_center_relevance: infrastructureRelevance.data_center_relevance,
+    cloud_capacity_relevance: infrastructureRelevance.cloud_capacity_relevance,
+    semiconductor_relevance: infrastructureRelevance.semiconductor_relevance,
+    power_grid_relevance: infrastructureRelevance.power_grid_relevance,
+    cooling_relevance: infrastructureRelevance.cooling_relevance,
+    capital_markets_relevance: infrastructureRelevance.capital_markets_relevance,
+    enterprise_ai_infrastructure_relevance: infrastructureRelevance.enterprise_ai_infrastructure_relevance,
+    infrastructure_relevance_score: infrastructureRelevance.infrastructure_relevance_score,
+    infrastructure_relevance_tier: infrastructureRelevance.infrastructure_relevance_tier,
+    infrastructure_relevance_action: infrastructureRelevance.infrastructure_relevance_action,
+    infrastructure_relevance_reasons: infrastructureRelevance.infrastructure_relevance_reasons,
+    infrastructure_relevance: infrastructureRelevance,
     sourceUrl: item.url,
   };
 }
