@@ -1,7 +1,7 @@
 # Public Surface Regression Report
 
-Generated at: 2026-05-17T14:42:29.120Z
-Base URL: http://127.0.0.1:50287
+Generated at: 2026-05-17T14:44:50.263Z
+Base URL: https://www.computecurrent.com
 Homepage cards checked: 18
 Detail pages checked: 5
 
@@ -83,8 +83,8 @@ Detail pages checked: 5
 
 ## Checked Detail URLs
 
-- http://127.0.0.1:50287/news/47270f6d05c43680/
-- http://127.0.0.1:50287/news/080548f8c96249b6/
-- http://127.0.0.1:50287/news/af45a6f9a7a983f9/
-- http://127.0.0.1:50287/news/18495307e5a94019/
-- http://127.0.0.1:50287/news/c1fb0077cc25e13b/
+- https://www.computecurrent.com/news/47270f6d05c43680/
+- https://www.computecurrent.com/news/080548f8c96249b6/
+- https://www.computecurrent.com/news/af45a6f9a7a983f9/
+- https://www.computecurrent.com/news/18495307e5a94019/
+- https://www.computecurrent.com/news/c1fb0077cc25e13b/
