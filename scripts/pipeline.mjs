@@ -6,6 +6,7 @@ import {
   LATEST_NEWS_LIMIT,
 } from './lib/constants.mjs';
 import { readArchiveSnapshot, syncArchiveArtifacts } from './lib/archive-store.mjs';
+import { applyAntiTemplateRewrite } from './lib/anti-template-rewrite.mjs';
 import { enrichContent } from './lib/content.mjs';
 import { planForToday, pickItemsForRun, updatePlanAfterRun } from './lib/curate.mjs';
 import {
@@ -326,7 +327,8 @@ async function publishExistingOnly({
   const signalMerged = sortForPipelineVisibility(dedupeById([...signalOnly, ...archiveOnly, ...normalizedExisting]));
   const imageBackfilled = await backfillLocalImages(signalMerged);
   const withExpertLens = await attachExpertLensToVisibleWindow(imageBackfilled, [], recentBlueprintIds);
-  const { latest, supabaseStatus } = await syncArchiveArtifacts(withExpertLens, existingArchive);
+  const templateChecked = applyAntiTemplateRewrite(withExpertLens, [...existingLatest, ...existingArchive]);
+  const { latest, supabaseStatus } = await syncArchiveArtifacts(templateChecked, existingArchive);
   await writeJsonFile(LATEST_NEWS_PATH, latest);
 
   state.dayPlans[todayKey] = updatePlanAfterRun(plan, processedItems, slot);
@@ -378,7 +380,8 @@ async function main() {
     const normalizedExisting = dedupeById((existingLatest || []).map((item) => normalizeExistingArticle(item)));
     const imageBackfilled = await backfillLocalImages(normalizedExisting);
     const withExpertLens = await attachExpertLensToVisibleWindow(imageBackfilled, [], recentBlueprintIds);
-    const { latest, supabaseStatus } = await syncArchiveArtifacts(withExpertLens, existingArchive);
+    const templateChecked = applyAntiTemplateRewrite(withExpertLens, [...existingLatest, ...existingArchive]);
+    const { latest, supabaseStatus } = await syncArchiveArtifacts(templateChecked, existingArchive);
     await writeJsonFile(LATEST_NEWS_PATH, latest);
 
     state.dayPlans[todayKey] = {
@@ -471,8 +474,9 @@ async function main() {
     publishable.map((article) => article.id),
     recentBlueprintIds
   );
+  const templateChecked = applyAntiTemplateRewrite(withExpertLens, [...existingLatest, ...existingArchive]);
   const focusedPublishIds = new Set(publishable.map((article) => article.id));
-  const generatedDrafts = withExpertLens.filter((article) => focusedPublishIds.has(article.id));
+  const generatedDrafts = templateChecked.filter((article) => focusedPublishIds.has(article.id));
   const {
     passed: repetitionPassed,
     blocked: repetitionBlocked,
@@ -480,7 +484,7 @@ async function main() {
   const repetitionById = new Map(
     [...repetitionPassed, ...repetitionBlocked].map((article) => [article.id, article])
   );
-  const repetitionChecked = withExpertLens.map((article) => repetitionById.get(article.id) || article);
+  const repetitionChecked = templateChecked.map((article) => repetitionById.get(article.id) || article);
   const finalProcessedItems = [...repetitionPassed, ...signalCards, ...archiveOnly, ...repetitionBlocked];
 
   logRepetitionBlockedArticles(repetitionBlocked);

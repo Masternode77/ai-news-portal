@@ -37,6 +37,7 @@ const articleDescription = cleanEditorialText(lens?.metaDescription || article.s
 const canonicalPath = articleCanonicalPath(article);
 const articleUrl = `${SITE.url}${canonicalPath}`;
 const executiveSummary = executiveSummaryLines(article);
+const executiveSummaryLabel = lens?.dynamicBriefLabel || article.dynamic_brief_label || article.narrative_dna?.brief_label || 'Operator Note';
 const taxonomy = taxonomyDisplay(articleRecord);
 const urgencyLabel = taxonomyUrgencyLabel(taxonomy.urgency);
 const sourceAttribution = sourceAttributionFor(articleRecord);
@@ -123,7 +124,7 @@ const structuredData = buildArticleStructuredData({
 
         {executiveSummary.length ? (
           <section class="executive-summary" aria-label="Executive summary">
-            <span>Editor&apos;s Brief</span>
+            <span>{executiveSummaryLabel}</span>
             <ol>
               {executiveSummary.map((line) => (
                 <li>{line}</li>

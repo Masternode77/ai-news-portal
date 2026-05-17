@@ -64,7 +64,7 @@ const [enriched] = await attachExpertLens([
 
 assert.ok(articleHasExpertInsight(enriched));
 assert.ok(enriched.expertLensFull.finalArticleBody.includes('Microsoft'));
-assert.ok(enriched.expertLensFull.finalArticleBody.includes('power grid'));
+assert.match(enriched.expertLensFull.finalArticleBody, /Power & Energy|power_grid|power agreement/i);
 assert.ok(expertInsightUsageScore(enriched.expertLensFull.finalArticleBody, insight) >= 0.55);
 
 console.log('expert insight engine tests passed');

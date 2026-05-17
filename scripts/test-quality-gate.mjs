@@ -133,7 +133,7 @@ assert.equal(blocked.length, 1);
 assert.equal(blocked[0].id, 'bad');
 assert.equal(blocked[0].qualityGateBlocked, true);
 assert.equal(blocked[0].articlePagePublished, false);
-assert.match(blocked[0].qualityGateReason, /below/);
-assert.match(blocked[0].qualityGateReason, /copyright_footer_detected/);
+assert.match(blocked[0].qualityGateReason, /fail_closed/);
+assert.match(blocked[0].qualityGateReason, /legal_boilerplate_detected|copyright_footer_detected/);
 
 console.log('quality gate test passed');

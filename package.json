@@ -26,6 +26,9 @@
     "test:blueprints": "PIPELINE_OFFLINE=1 OPENROUTER_API_KEY= node ./scripts/test-blueprints.mjs",
     "test:repetition": "node ./scripts/test-repetition-detector.mjs",
     "test:expert-insight": "PIPELINE_OFFLINE=1 OPENROUTER_API_KEY= node ./scripts/test-expert-insight-engine.mjs",
+    "test:public-content": "node ./scripts/test-public-content-regression.mjs",
+    "regenerate:narrative-dna": "node ./scripts/regenerate-narrative-dna-articles.mjs",
+    "purge:deployment-cache": "node ./scripts/purge-deployment-cache.mjs",
     "eval:articles": "node ./scripts/eval-article-generation.mjs"
   },
   "dependencies": {

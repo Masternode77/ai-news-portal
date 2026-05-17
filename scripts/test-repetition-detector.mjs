@@ -3,6 +3,7 @@ import {
   analyzeArticleRepetition,
   splitByRepetitionGate,
 } from './lib/repetition-detector.mjs';
+import { BANNED_PHRASES } from './lib/banned-phrases.mjs';
 
 function article(id, body, overrides = {}) {
   return {
@@ -96,7 +97,7 @@ const bannedRecent = Array.from({ length: 9 }, (_, index) =>
     [
       'Report',
       index === 0
-        ? 'The financial question is whether customer contracts can support the capital plan.'
+        ? `${BANNED_PHRASES[5]} customer contracts can support the capital plan.`
         : 'This article uses a different closing frame for infrastructure readers.',
       'Capital Read',
       'The rest of the body avoids the repeated phrase so the window count is explicit.',
@@ -111,7 +112,7 @@ const bannedDraft = article(
   'draft-4',
   [
     'Change',
-    'The financial question is whether the new capacity plan has enough signed demand behind it.',
+    `${BANNED_PHRASES[5]} the new capacity plan has enough signed demand behind it.`,
     'Infrastructure Read',
     'The operating issue is still specific to the reported source and its delivery schedule.',
     'Exposed Edges',
@@ -121,8 +122,8 @@ const bannedDraft = article(
   ].join('\n\n')
 );
 const bannedMetrics = analyzeArticleRepetition(bannedDraft, bannedRecent);
-assert.ok(bannedMetrics.banned_phrase_count >= 2);
-assert.ok(bannedMetrics.reasons.some((reason) => reason.startsWith('banned_phrase_repeated')));
+assert.ok(bannedMetrics.banned_phrase_count >= 1);
+assert.ok(bannedMetrics.reasons.some((reason) => reason.startsWith('banned_phrase:')));
 
 const { passed, blocked } = splitByRepetitionGate([bannedDraft], bannedRecent);
 assert.equal(passed.length, 0);

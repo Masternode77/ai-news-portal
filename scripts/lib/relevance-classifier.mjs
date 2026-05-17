@@ -74,6 +74,23 @@ const CONSUMER_AI_TERMS = [
   'table tennis robot',
 ];
 
+const WEAK_AI_ADJACENT_TERMS = [
+  'ai app',
+  'agentic ai',
+  'ai agent',
+  'coding assistant',
+  'vibe coding',
+  'software engineer',
+  'chatbot',
+  'content generation',
+  'image generator',
+  'video generator',
+  'productivity software',
+  'browser assistant',
+  'search feature',
+  'consumer ai',
+];
+
 const DIMENSIONS = {
   direct_ai_infrastructure_relevance: [
     ['ai infrastructure', 0.48],
@@ -330,6 +347,7 @@ export function classifyInfrastructureRelevance(article = {}) {
     hasAi &&
     !hasInfra &&
     hasAny(text, CONSUMER_AI_TERMS);
+  const hasWeakAiAdjacent = hasAi && hasAny(text, WEAK_AI_ADJACENT_TERMS);
 
   if (hasAi && hasInfra) {
     dimensionResults.direct_ai_infrastructure_relevance = Math.min(
@@ -389,6 +407,15 @@ export function classifyInfrastructureRelevance(article = {}) {
     overall = Math.min(overall, 0.72);
   }
 
+  const physicalOrMarketTop = Math.max(...physicalOrMarketScores);
+  if (
+    hasWeakAiAdjacent &&
+    dimensionResults.direct_ai_infrastructure_relevance < 0.65 &&
+    physicalOrMarketTop < 0.24
+  ) {
+    overall = Math.min(overall, 0.44);
+  }
+
   if (!hasInfra) {
     overall = Math.min(overall, hasAi ? 0.38 : 0.28);
   }
@@ -402,6 +429,9 @@ export function classifyInfrastructureRelevance(article = {}) {
 
   if (!reasons.length) reasons.push('no_strong_compute_current_infrastructure_match');
   if (hasConsumerAiOnly) reasons.push('consumer_ai_without_infrastructure_surface');
+  if (hasWeakAiAdjacent && overall < FULL_MEMO_RELEVANCE_THRESHOLD) {
+    reasons.push('weak_ai_adjacent_without_compute_current_infrastructure_surface');
+  }
 
   return {
     ...dimensionResults,

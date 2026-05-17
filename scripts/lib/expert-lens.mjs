@@ -4,7 +4,6 @@ import {
   EDITORIAL_HUMANIZER_PROMPT,
   HUMANIZED_ARTICLE_MIN_CHARS,
   containsTemplateLanguage,
-  humanizedFallbackSections,
   normalizeEditorialParagraphs,
   normalizeEditorialVoice,
 } from './editorial-humanizer.mjs';
@@ -23,29 +22,18 @@ import {
   insightFieldSummary,
 } from './expert-insight-engine.mjs';
 import { callExpertLensText } from './openrouter.mjs';
+import { BANNED_PHRASES, BLOCKED_HOOK_STARTS, hasBannedPhrase } from './banned-phrases.mjs';
+import {
+  GENERATION_VERSION,
+  buildNarrativeLensFields,
+  extractNarrativeDNA,
+} from './narrative-dna.mjs';
 import { safeJsonParse, sanitizeGeneratedText, slugify, truncate } from './normalize.mjs';
 
 const EXPERT_LENS_MODE = EDITORIAL_HUMANIZER_MODE;
 
 function splitParagraphs(text = '') {
   return normalizeEditorialParagraphs(sanitizeGeneratedText(text));
-}
-
-function inferSignal(article) {
-  const text = `${article.title} ${article.summary || ''} ${article.articleText || ''}`.toLowerCase();
-  if (/(power|grid|utility|substation|energy|ppa|transformer)/.test(text)) {
-    return 'Power access and interconnection timing are likely to matter more than the announced demand signal itself.';
-  }
-  if (/(cooling|thermal|liquid|cdu|rack|density)/.test(text)) {
-    return 'Cooling design standardization may determine who can actually monetize higher-density deployments on schedule.';
-  }
-  if (/(nvidia|gpu|hbm|inference|training|semiconductor|chip|silicon)/.test(text)) {
-    return 'The underappreciated variable is deployment readiness across networking, power, and packaging, not just chip availability.';
-  }
-  if (/(funding|bond|financing|acquisition|merger|valuation|capital)/.test(text)) {
-    return 'Capital formation here should be read as a proxy for who is being trusted to secure future capacity, not only as a balance-sheet event.';
-  }
-  return 'Execution speed, supply-chain coordination, and regional delivery risk remain more important than headline ambition.';
 }
 
 function buildHeadlineOptions(article) {
@@ -64,14 +52,15 @@ function finalArticleBody(article, sections, candidate = '', blueprint, enforceB
   const body = normalizeEditorialParagraphs(candidate)
     .filter((paragraph) => !/^(why it matters|pressure points|market implications|what to watch)$/i.test(paragraph))
     .join('\n\n');
-  const minChars = enforceBlueprint ? blueprint?.minChars || HUMANIZED_ARTICLE_MIN_CHARS : HUMANIZED_ARTICLE_MIN_CHARS;
+  const minChars = enforceBlueprint ? blueprint?.minChars || HUMANIZED_ARTICLE_MIN_CHARS : Math.min(HUMANIZED_ARTICLE_MIN_CHARS, 850);
   const maxChars = blueprint?.maxChars ? blueprint.maxChars + 400 : Number.POSITIVE_INFINITY;
   if (
     body.length >= minChars &&
     (!enforceBlueprint || body.length <= maxChars) &&
     (!enforceBlueprint || bodyUsesBlueprint(body, blueprint)) &&
     (!enforceBlueprint || !articleHasExpertInsight(article) || expertInsightUsageScore(body, article.expert_insight || article.expertInsight) >= 0.55) &&
-    !containsTemplateLanguage(body)
+    !containsTemplateLanguage(body) &&
+    !hasBannedPhrase(body)
   ) {
     return body;
   }
@@ -103,7 +92,7 @@ function withBlueprintFields(article = {}, blueprint) {
 }
 
 function fallbackExpertLensFull(article, blueprint = resolveArticleBlueprint(article)) {
-  const humanized = humanizedFallbackSections(article, inferSignal(article));
+  const humanized = buildNarrativeLensFields(article);
   const thesis = truncate(humanized.thesis, 160);
   const whatHappened = truncate(humanized.whatHappened, 500);
   const whyThisMatters = truncate(humanized.whyThisMatters, 500);
@@ -141,6 +130,9 @@ function fallbackExpertLensFull(article, blueprint = resolveArticleBlueprint(art
     version: EXPERT_LENS_VERSION,
     mode: EXPERT_LENS_MODE,
     generatedAt: new Date().toISOString(),
+    generation_version: GENERATION_VERSION,
+    narrative_dna: humanized.narrative_dna,
+    dynamicBriefLabel: humanized.dynamicBriefLabel,
     blueprintId: blueprint.id,
     blueprintName: blueprint.name,
     blueprint: blueprintSnapshot(blueprint),
@@ -156,7 +148,7 @@ function fallbackExpertLensFull(article, blueprint = resolveArticleBlueprint(art
     headlineOptions,
     finalHeadline,
     metaDescription,
-    finalArticleBody: finalArticleBody(article, sections, '', blueprint, true),
+    finalArticleBody: finalArticleBody(article, sections, humanized.finalArticleBody, blueprint, false),
     sourceLink: article.sourceUrl || article.url || '',
   };
 }
@@ -181,6 +173,9 @@ function normalizeExpertLensFull(article, payload, blueprint = resolveArticleBlu
     version: EXPERT_LENS_VERSION,
     mode: parsed.mode || fallback.mode,
     generatedAt: parsed.generatedAt || new Date().toISOString(),
+    generation_version: GENERATION_VERSION,
+    narrative_dna: parsed.narrative_dna || fallback.narrative_dna || extractNarrativeDNA(article),
+    dynamicBriefLabel: parsed.dynamicBriefLabel || parsed.briefLabel || fallback.dynamicBriefLabel || fallback.narrative_dna?.brief_label,
     blueprintId: selectedBlueprint.id,
     blueprintName: selectedBlueprint.name,
     blueprint: blueprintSnapshot(selectedBlueprint),
@@ -202,19 +197,30 @@ function normalizeExpertLensFull(article, payload, blueprint = resolveArticleBlu
 
   for (const key of ['thesis', 'whatHappened', 'whyThisMatters', 'marketMissing', 'investors', 'operators', 'hyperscalers', 'watchNext', 'finalHeadline', 'metaDescription']) {
     normalized[key] = normalizeEditorialVoice(sanitizeGeneratedText(normalized[key]));
+    if (hasBannedPhrase(normalized[key])) {
+      normalized[key] = fallback[key] || '';
+    }
   }
 
-  normalized.headlineOptions = normalized.headlineOptions.map((headline) => normalizeEditorialVoice(sanitizeGeneratedText(headline))).filter(Boolean);
+  normalized.headlineOptions = normalized.headlineOptions
+    .map((headline) => normalizeEditorialVoice(sanitizeGeneratedText(headline)))
+    .filter((headline) => headline && !hasBannedPhrase(headline));
 
   normalized.finalArticleBody = finalArticleBody(
     article,
     normalized,
     parsed.finalArticleBody || fallback.finalArticleBody || '',
     selectedBlueprint,
-    options.enforceBlueprint || Boolean(parsed.blueprintId || article.article_blueprint || article.articleBlueprint?.id)
+    parsed.generation_version === GENERATION_VERSION || parsed.narrative_dna
+      ? false
+      : options.enforceBlueprint || Boolean(parsed.blueprintId || article.article_blueprint || article.articleBlueprint?.id)
   );
 
   if (!normalized.finalArticleBody) {
+    normalized.finalArticleBody = fallback.finalArticleBody;
+  }
+
+  if (hasBannedPhrase(normalized.finalArticleBody)) {
     normalized.finalArticleBody = fallback.finalArticleBody;
   }
 
@@ -298,12 +304,16 @@ async function generateExpertLensFull(article, blueprint) {
       'You are the editorial voice for an AI infrastructure intelligence publication.',
       'Write like a top-tier business technology editor covering AI, data centers, power, semiconductors, and cloud infrastructure.',
       EDITORIAL_HUMANIZER_PROMPT,
+      `Use NarrativeDNA before writing: protagonist, antagonist_or_constraint, core_tension, reader_role, infrastructure_layer, time_horizon, story_archetype, hook_style, evidence_anchor, counterpoint, next_observable_signal.`,
+      `Do not use any banned phrase: ${BANNED_PHRASES.join(' | ')}.`,
+      `No hook or lead sentence may begin with: ${BLOCKED_HOOK_STARTS.join(' | ')}.`,
       'The output must be decision-grade, accurate, skeptical, and free of generic hype or unsupported certainty.',
       'Use this logic in order: report what changed, explain why the development matters now, identify 1-2 underappreciated constraints, name practical implications for the most relevant audience, then end with what to watch next.',
       'The article must use the extracted expert insight fields. Do not substitute generic infrastructure analysis for missing details.',
       'Every finalArticleBody must explicitly use at least one concrete fact, one named company, the infrastructure layer, bottleneck type, leverage holder, execution-risk holder, timing dependency, counterargument, and next observable signal.',
       blueprintPrompt(blueprint),
-      'Return strict JSON only with keys: blueprintId, thesis, whatHappened, whyThisMatters, marketMissing, investors, operators, hyperscalers, watchNext, executiveSummary, headlineOptions, finalHeadline, metaDescription, finalArticleBody, sourceLink.',
+      'Return strict JSON only with keys: blueprintId, generation_version, narrative_dna, dynamicBriefLabel, thesis, whatHappened, whyThisMatters, marketMissing, investors, operators, hyperscalers, watchNext, executiveSummary, headlineOptions, finalHeadline, metaDescription, finalArticleBody, sourceLink.',
+      `generation_version must be "${GENERATION_VERSION}". dynamicBriefLabel must be one of the allowed NarrativeDNA brief labels.`,
       `blueprintId must be "${blueprint.id}".`,
       'executiveSummary must be exactly 3 short lines for busy readers: what changed, why it matters, and what to watch.',
       'headlineOptions must be an array of exactly 5 concise headline ideas written in English, each with a concrete hook that invites a click without hype.',
@@ -325,6 +335,7 @@ async function generateExpertLensFull(article, blueprint) {
       sourceLink: article.sourceUrl || article.url,
       expertInsight,
       expertInsightFieldSummary: insightFieldSummary(expertInsight),
+      narrativeDNA: extractNarrativeDNA(article),
     }),
     maxTokens: 2600,
   }).catch(() => '');
@@ -348,6 +359,9 @@ async function enrichSingleArticle(article, options = {}) {
     expertLensShort: short,
     expertLensFull: full,
     expertLens: short,
+    generation_version: GENERATION_VERSION,
+    narrative_dna: full.narrative_dna || extractNarrativeDNA(articleWithBlueprint),
+    dynamic_brief_label: full.dynamicBriefLabel || full.narrative_dna?.brief_label || null,
     article_blueprint: full.blueprintId || blueprint.id,
     articleBlueprint: full.blueprint || blueprintSnapshot(blueprint),
   };

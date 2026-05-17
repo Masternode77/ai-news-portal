@@ -1,4 +1,5 @@
 import { ARTICLE_BLUEPRINTS, normalizeBlueprintId } from './article-blueprints.mjs';
+import { BANNED_PHRASES, bannedPhraseMatches } from './banned-phrases.mjs';
 import { normalizeEditorialParagraphs } from './editorial-humanizer.mjs';
 import { sanitizeGeneratedText } from './normalize.mjs';
 
@@ -8,23 +9,7 @@ export const CONCLUSION_SIMILARITY_THRESHOLD = 0.7;
 export const RECENT_ARTICLE_LIMIT = 50;
 export const BANNED_PHRASE_WINDOW = 10;
 
-export const REPETITION_BANNED_PHRASES = [
-  'The issue is no longer demand alone',
-  'The real test is whether power access can keep pace',
-  'The practical issue is whether demand can be converted into reliable capacity on schedule',
-  'The next signal to watch is customer commitments',
-  'The financial question is',
-  'the operating question is',
-  'the customer question is',
-  'strategic significance',
-  'This signal matters',
-  'what the market may be missing',
-  'Operators should read this through',
-  'Investors should track whether',
-  'For investors, the useful read-through is',
-  'For operators, the story comes down to',
-  'For hyperscalers and cloud providers, watch whether',
-];
+export const REPETITION_BANNED_PHRASES = BANNED_PHRASES;
 
 const KNOWN_HEADINGS = new Set(ARTICLE_BLUEPRINTS.flatMap((blueprint) => blueprint.sectionHeadings));
 const STOP_WORDS = new Set([
@@ -174,24 +159,14 @@ function conclusion(article = {}) {
   return paragraphs[paragraphs.length - 1] || '';
 }
 
-function phraseOccurrences(text = '', phrase = '') {
-  if (!phrase) return 0;
-  const escaped = phrase.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-  return (text.match(new RegExp(escaped, 'gi')) || []).length;
-}
-
 function bannedPhraseCounts(article = {}, recentWindow = []) {
-  const counts = {};
-  const text = [article, ...recentWindow]
-    .map((item) => articleBody(item))
-    .join('\n\n');
-
-  for (const phrase of REPETITION_BANNED_PHRASES) {
-    const count = phraseOccurrences(text, phrase);
-    if (count > 0) counts[phrase] = count;
-  }
-
-  return counts;
+  return {
+    draft: bannedPhraseMatches(articleBody(article), REPETITION_BANNED_PHRASES),
+    recent: bannedPhraseMatches(
+      recentWindow.map((item) => articleBody(item)).join('\n\n'),
+      REPETITION_BANNED_PHRASES
+    ),
+  };
 }
 
 function publishedRecentArticles(records = [], currentId = '') {
@@ -205,16 +180,20 @@ function publishedRecentArticles(records = [], currentId = '') {
 }
 
 function blueprintRepetition(article = {}, recent = []) {
-  const selected = normalizeBlueprintId(
-    article.article_blueprint || article.articleBlueprint?.id || article.expertLensFull?.blueprintId
-  );
+  const blueprintKey = (record = {}) => {
+    if (record.generation_version === 'narrative_dna_v1' || record.expertLensFull?.generation_version === 'narrative_dna_v1') {
+      return record.narrative_dna?.story_archetype_id || record.expertLensFull?.narrative_dna?.story_archetype_id || '';
+    }
+    return normalizeBlueprintId(
+      record.article_blueprint || record.articleBlueprint?.id || record.expertLensFull?.blueprintId
+    );
+  };
+  const selected = blueprintKey(article);
   if (!selected) return 0;
 
   let count = 1;
   for (const record of recent) {
-    const recentBlueprint = normalizeBlueprintId(
-      record.article_blueprint || record.articleBlueprint?.id || record.expertLensFull?.blueprintId
-    );
+    const recentBlueprint = blueprintKey(record);
     if (recentBlueprint !== selected) break;
     count += 1;
   }
@@ -239,8 +218,8 @@ export function analyzeArticleRepetition(article = {}, recentRecords = []) {
   const draftConclusion = conclusion(article);
   const recentWindow = recent.slice(0, BANNED_PHRASE_WINDOW - 1);
   const bannedCounts = bannedPhraseCounts(article, recentWindow);
-  const repeatedBannedPhrases = Object.entries(bannedCounts)
-    .filter(([, count]) => count > 1)
+  const repeatedBannedPhrases = Object.entries(bannedCounts.draft)
+    .filter(([phrase, count]) => count > 0 || (bannedCounts.recent[phrase] || 0) > 0)
     .map(([phrase]) => phrase);
 
   const metrics = {
@@ -248,8 +227,9 @@ export function analyzeArticleRepetition(article = {}, recentRecords = []) {
     repeated_sentence_ratio: sentences.length ? repeatedSentences.length / sentences.length : 0,
     repeated_paragraph_ratio: paragraphs.length ? repeatedParagraphs.length / paragraphs.length : 0,
     heading_sequence_similarity: maxByRecent(article, recent, (record) => sequenceSimilarity(headings, headingSequence(record))),
-    banned_phrase_count: Object.values(bannedCounts).reduce((sum, count) => sum + count, 0),
-    banned_phrase_counts: bannedCounts,
+    banned_phrase_count: Object.values(bannedCounts.draft).reduce((sum, count) => sum + count, 0),
+    banned_phrase_counts: bannedCounts.draft,
+    recent_banned_phrase_counts: bannedCounts.recent,
     ngram_overlap: maxByRecent(article, recent, (record) => setOverlapRatio(draftNgrams, ngrams(tokenize(articleBody(record))))),
     blueprint_repetition: blueprintRepetition(article, recent),
     conclusion_similarity: maxByRecent(article, recent, (record) => cosineSimilarity(draftConclusion, conclusion(record))),
@@ -260,7 +240,7 @@ export function analyzeArticleRepetition(article = {}, recentRecords = []) {
     reasons.push(`repeated_sentence_ratio>${REPETITION_SENTENCE_RATIO_THRESHOLD}`);
   }
   if (repeatedBannedPhrases.length) {
-    reasons.push(`banned_phrase_repeated:${repeatedBannedPhrases.join('|')}`);
+    reasons.push(`banned_phrase:${repeatedBannedPhrases.join('|')}`);
   }
   if (metrics.heading_sequence_similarity > HEADING_SEQUENCE_SIMILARITY_THRESHOLD) {
     reasons.push(`heading_sequence_similarity>${HEADING_SEQUENCE_SIMILARITY_THRESHOLD}`);

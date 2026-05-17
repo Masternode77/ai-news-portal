@@ -4,6 +4,7 @@ import {
   normalizeEditorialParagraphs,
   normalizeEditorialVoice,
 } from './editorial-humanizer.mjs';
+import { hasBannedPhrase } from './banned-phrases.mjs';
 import { sanitizeGeneratedText, truncate } from './normalize.mjs';
 
 export const ARTICLE_BLUEPRINTS = [
@@ -182,7 +183,7 @@ function bodyParagraphCandidates(article = {}, sections = {}) {
   return [...additions, ...base]
     .map((paragraph) => normalizeEditorialVoice(paragraph))
     .filter((paragraph) => {
-      if (!paragraph || containsTemplateLanguage(paragraph)) return false;
+      if (!paragraph || containsTemplateLanguage(paragraph) || hasBannedPhrase(paragraph)) return false;
       const key = paragraph.toLowerCase();
       if (seen.has(key)) return false;
       seen.add(key);

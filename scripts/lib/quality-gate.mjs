@@ -108,6 +108,17 @@ const COPYRIGHT_PATTERNS = [
   /\bowned and operated by\b/i,
 ];
 
+const LEGAL_BOILERPLATE_PATTERNS = [
+  /\bterms (?:and conditions|of use|of service)\b/i,
+  /\bprivacy (?:policy|notice|statement)\b/i,
+  /\blegal notice\b/i,
+  /\bdo not sell or share my personal information\b/i,
+  /\bthis site is protected by reCAPTCHA\b/i,
+  /\buse of this website constitutes acceptance\b/i,
+  /\bunauthorized reproduction\b/i,
+  /\btrademark(?:s)? (?:are|is) (?:the )?property\b/i,
+];
+
 const NAV_OR_CTA_PATTERNS = [
   /\bsubscribe\b/i,
   /\bsign up\b/i,
@@ -133,6 +144,7 @@ function buildExtractionReasons(metrics, threshold) {
   if (metrics.boilerplate_ratio >= 0.18) reasons.push(`boilerplate_ratio ${metrics.boilerplate_ratio.toFixed(2)} high`);
   if (metrics.title_body_similarity < 0.18) reasons.push(`title_body_similarity ${metrics.title_body_similarity.toFixed(2)} low`);
   if (metrics.copyright_footer_detected) reasons.push('copyright_footer_detected');
+  if (metrics.legal_boilerplate_detected) reasons.push('legal_boilerplate_detected');
   if (metrics.nav_or_cta_detected && metrics.boilerplate_ratio >= 0.08) reasons.push('nav_or_cta_detected');
   if (metrics.sentence_completion_score < 0.65) {
     reasons.push(`sentence_completion_score ${metrics.sentence_completion_score.toFixed(2)} low`);
@@ -161,6 +173,7 @@ export function analyzeExtractionQuality({
   const titleSimilarity = titleBodySimilarity(title, text);
   const completionScore = sentenceCompletionScore(text);
   const copyrightFooterDetected = booleanFromPatterns(raw, COPYRIGHT_PATTERNS);
+  const legalBoilerplateDetected = copyrightFooterDetected || booleanFromPatterns(raw, LEGAL_BOILERPLATE_PATTERNS);
   const navOrCtaDetected = booleanFromPatterns(raw, NAV_OR_CTA_PATTERNS);
   const hasSpecificAdapter = sourceDomainAdapter && sourceDomainAdapter !== 'generic';
 
@@ -194,6 +207,7 @@ export function analyzeExtractionQuality({
   if (boilerplateRatio >= 0.18) score -= 0.16;
   else if (boilerplateRatio >= 0.1) score -= 0.08;
   if (copyrightFooterDetected) score -= 0.16;
+  if (legalBoilerplateDetected) score -= 0.22;
   if (navOrCtaDetected && boilerplateRatio >= 0.08) score -= 0.08;
   if (!hasMeaningfulExtraction) score -= 0.18;
   if (extractionFailureReason) score -= 0.25;
@@ -204,6 +218,7 @@ export function analyzeExtractionQuality({
     boilerplate_ratio: boilerplateRatio,
     title_body_similarity: titleSimilarity,
     copyright_footer_detected: copyrightFooterDetected,
+    legal_boilerplate_detected: legalBoilerplateDetected,
     nav_or_cta_detected: navOrCtaDetected,
     sentence_completion_score: completionScore,
     source_domain_adapter: sourceDomainAdapter || 'generic',
@@ -222,6 +237,23 @@ export function scoreExtractionQuality(options = {}) {
 }
 
 export function qualityGateReason(article = {}, threshold = ARTICLE_PAGE_QUALITY_THRESHOLD) {
+  const rawArticleText = [article.articleText, article.contentText, article.summary].filter(Boolean).join('\n');
+  if (booleanFromPatterns(rawArticleText, LEGAL_BOILERPLATE_PATTERNS)) {
+    return 'fail_closed: legal_boilerplate_detected';
+  }
+  if (booleanFromPatterns(rawArticleText, COPYRIGHT_PATTERNS)) {
+    return 'fail_closed: copyright_footer_detected';
+  }
+  if (booleanFromPatterns(rawArticleText, NAV_OR_CTA_PATTERNS)) {
+    return 'fail_closed: nav_or_cta_detected';
+  }
+  if (article.extraction_qa?.legal_boilerplate_detected || article.legal_boilerplate_detected) {
+    return 'fail_closed: legal_boilerplate_detected';
+  }
+  if (article.extraction_qa?.copyright_footer_detected || article.copyright_footer_detected) {
+    return 'fail_closed: copyright_footer_detected';
+  }
+
   const score = Number(article.extraction_quality_score ?? 0);
   if (score >= threshold) return null;
 

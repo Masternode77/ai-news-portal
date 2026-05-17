@@ -23,13 +23,7 @@ Agents working in this repository must preserve that product boundary. Treat eve
 
 ## Banned Generic Patterns
 
-Do not generate or preserve these generic patterns in reader-facing article copy unless the source itself specifically justifies the phrasing and the article explains why:
-
-- "The issue is no longer demand alone"
-- "The real test is whether power access can keep pace"
-- "The practical issue is whether demand can be converted into reliable capacity on schedule"
-- "The next signal to watch is customer commitments..."
-- "The financial question is..., the operating question is..., the customer question is..."
+Do not generate or preserve generic patterns in reader-facing article copy. The canonical phrase inventory lives in `config/bannedPhrases.yml`; update that config and the publishing guard together instead of copying blocked strings into prompts, fallback copy, or article data.
 
 ## Content Generation Scope
 

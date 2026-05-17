@@ -14,12 +14,7 @@ This override applies to content generation modules in `scripts/lib/`.
 ## Prompt and Fallback Copy Rules
 
 - Do not add fallback language that can be reused unchanged across many articles.
-- Do not use these banned generic patterns in generated or fallback article bodies:
-  - "The issue is no longer demand alone"
-  - "The real test is whether power access can keep pace"
-  - "The practical issue is whether demand can be converted into reliable capacity on schedule"
-  - "The next signal to watch is customer commitments..."
-  - "The financial question is..., the operating question is..., the customer question is..."
+- Do not use banned generic patterns in generated or fallback article bodies. The canonical phrase inventory lives in `../../config/bannedPhrases.yml`; do not duplicate blocked strings in prompts, fallback copy, or fixture data unless a test is explicitly asserting the guard.
 - If a phrase is intentionally similar to a banned pattern, keep it only when source facts make it specific, and prefer concrete nouns from the source over reusable abstractions.
 - Avoid forcing weakly related AI software, model, app, or consumer news into a data center infrastructure thesis.
 
