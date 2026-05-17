@@ -1,5 +1,18 @@
 [
   {
+    "id": "8c23e91d72849ec1",
+    "source": "Bloomberg Technology",
+    "url": "https://www.bloomberg.com/news/articles/2026-05-17/samsung-labor-union-to-meet-in-last-chance-to-avert-strike",
+    "title": "Samsung, Labor Union to Meet in ‘Last Chance’ to Avert Strike",
+    "snippet": "Samsung Electronics Co. and its largest labor union are set to resume negotiations Monday to avert a strike that the nation’s prime minister warned could wreak havoc on the economy.",
+    "contentText": "Samsung Electronics Co. and its largest labor union are set to resume negotiations Monday to avert a strike that the nation’s prime minister warned could wreak havoc on the economy.",
+    "publishedAt": "2026-05-17T06:20:36.000Z",
+    "sourceImage": "https://assets.bwbx.io/images/users/iqjWHBFdfxIU/iqb6hRGDDbIw/v1/1200x-1.jpg",
+    "region": "Global",
+    "language": "en",
+    "defaultCategory": "Hyperscalers & Cloud"
+  },
+  {
     "id": "42fcaeff3a177286",
     "source": "ServeTheHome",
     "url": "https://www.servethehome.com/bzizu-realtek-rtl8127-pcie-10gbe-network-adapter-review/",
@@ -24,19 +37,6 @@
     "region": "Global",
     "language": "en",
     "defaultCategory": "AI Infrastructure (GPU/Neocloud)"
-  },
-  {
-    "id": "cf2fd8cda852f93b",
-    "source": "Bloomberg Technology",
-    "url": "https://www.bloomberg.com/news/articles/2026-05-16/asml-partners-with-tata-electronics-to-advance-india-chip-plans",
-    "title": "ASML Partners With Tata Electronics to Advance India Chip Plans",
-    "snippet": "ASML Holding NV entered into a partnership agreement with Tata Electronics Private Limited aimed at ramping up India’s goal to develop domestic chip-manufacturing capabilities.",
-    "contentText": "ASML Holding NV entered into a partnership agreement with Tata Electronics Private Limited aimed at ramping up India’s goal to develop domestic chip-manufacturing capabilities.",
-    "publishedAt": "2026-05-16T16:02:33.000Z",
-    "sourceImage": "https://assets.bwbx.io/images/users/iqjWHBFdfxIU/i9P4ZWSEla0s/v1/1200x-1.jpg",
-    "region": "Global",
-    "language": "en",
-    "defaultCategory": "Hyperscalers & Cloud"
   },
   {
     "id": "b1603a03544fa73f",
@@ -102,19 +102,6 @@
     "region": "Global",
     "language": "en",
     "defaultCategory": "Hyperscalers & Cloud"
-  },
-  {
-    "id": "c8fd1d25f9a85fc7",
-    "source": "Data Center Frontier",
-    "url": "https://www.datacenterfrontier.com/energy/article/55377066/ai-data-centers-are-driving-nuclears-next-commercial-test",
-    "title": "AI Data Centers Are Driving Nuclear's Next Commercial Test",
-    "snippet": "From SMRs and microreactors to reactor restarts, uprates, and gas-plus-nuclear energy strategies, AI data center growth is accelerating a broad commercial push toward firm nuclear-backed power infrastructure.",
-    "contentText": "From SMRs and microreactors to reactor restarts, uprates, and gas-plus-nuclear energy strategies, AI data center growth is accelerating a broad commercial push toward firm nuclear-backed power infrastructure.",
-    "publishedAt": "2026-05-15T15:48:38.000Z",
-    "sourceImage": "https://img.datacenterfrontier.com/files/base/ebm/datacenterfrontier/image/2026/05/6a073f542beaeebd44ae3d00-riotplatformsbitcoin.png",
-    "region": "Global",
-    "language": "en",
-    "defaultCategory": "Colocation & Wholesale"
   },
   {
     "id": "cd6510edb392b120",
@@ -187,7 +174,7 @@
     "url": "https://blog.cloudflare.com/clickhouse-query-plan-contention/",
     "title": "Our billing pipeline was suddenly slow. The culprit was a hidden bottleneck in ClickHouse",
     "snippet": "When a partitioning change to our petabyte-scale ClickHouse cluster caused critical billing jobs to stall, standard metrics showed no obvious errors. This post explores how we identified severe lock contention in ClickH…",
-    "contentText": "At Cloudflare, we are heavy users of ClickHouse, an open source online analytical processing (OLAP) database. Every day, we make millions of calls to ClickHouse to determine how much users should be billed for their usage of Cloudflare products. If we don't finish those jobs in a timely fashion, the invoices become very difficult to reconcile. This pipeline powers hundreds of millions of dollars in usage revenue, fraud systems, and more, so being delayed has major downstream implications. Which is why it was a big problem when the daily aggregation jobs in ClickHouse – responsible for ensuring Cloudflare’s bills go out – had slowed way down, following a migration. All the usual suspects looked clean: I/O, memory, rows scanned, parts read. Everything we would normally check when a ClickHou…",
+    "contentText": "At Cloudflare, we are heavy users of ClickHouse, an open-source analytical database management system. We redesigned one of our largest ClickHouse tables to add a column to the partitioning key. The change enabled per-tenant retention on a table that serves hundreds of internal teams. The design went through several rounds of revision and review with engineers across multiple teams before we landed on the final approach. But a few weeks after rollout, the jobs that produce most of Cloudflare's bills were running up against their hard daily deadline. All the usual suspects looked clean: I/O, memory, rows scanned, parts read. Everything we would normally check when a ClickHouse query is slow appeared to be normal. The problem turned out to be lock contention in query planning, something we'…",
     "publishedAt": "2026-05-14T13:00:00.000Z",
     "sourceImage": "https://cf-assets.www.cloudflare.com/zkvhlag99gkb/6d3ywoUP3OE2DCRAJtAgF7/5aa62c5702a923e30889ebf787925ae8/BLOG-3299_image4.png",
     "region": "Global",
@@ -234,6 +221,19 @@
     "defaultCategory": "Hyperscalers & Cloud"
   },
   {
+    "id": "ad85c84fae1273b4",
+    "source": "Data Center Frontier",
+    "url": "https://www.datacenterfrontier.com/cooling/podcast/55377116/delta-electronics-and-the-rise-of-the-ai-infrastructure-stack-how-chip-to-grid-thinking-is-reshaping-ai-data-center-design",
+    "title": "Delta Electronics and the Rise of the AI Infrastructure Stack: How Chip-to-Grid Thinking Is Reshaping AI Data Center Design",
+    "snippet": "Delta Electronics’ Kelly Gray outlines how AI infrastructure is driving a convergence of high-voltage DC power, liquid cooling, microgrids, digital twins, and chip-to-grid systems design as the industry races to build t…",
+    "contentText": "Delta Electronics’ Kelly Gray outlines how AI infrastructure is driving a convergence of high-voltage DC power, liquid cooling, microgrids, digital twins, and chip-to-grid systems design as the industry races to build the next generation of AI factories.",
+    "publishedAt": "2026-05-12T18:30:51.000Z",
+    "sourceImage": "https://img.datacenterfrontier.com/files/base/ebm/datacenterfrontier/image/2026/05/6a036abce021a52a6104e6b7-deltaplano.png",
+    "region": "Global",
+    "language": "en",
+    "defaultCategory": "Colocation & Wholesale"
+  },
+  {
     "id": "b62db982897e8a42",
     "source": "VentureBeat AI",
     "url": "https://venturebeat.com/infrastructure/railway-secures-usd100-million-to-challenge-aws-with-ai-native-cloud",
@@ -258,6 +258,19 @@
     "region": "Global",
     "language": "en",
     "defaultCategory": "AI Infrastructure (GPU/Neocloud)"
+  },
+  {
+    "id": "cf2fd8cda852f93b",
+    "source": "Bloomberg Technology",
+    "url": "https://www.bloomberg.com/news/articles/2026-05-16/asml-partners-with-tata-electronics-to-advance-india-chip-plans",
+    "title": "ASML Partners With Tata Electronics to Advance India Chip Plans",
+    "snippet": "ASML Holding NV entered into a partnership agreement with Tata Electronics Private Limited aimed at ramping up India’s goal to develop domestic chip-manufacturing capabilities.",
+    "contentText": "ASML Holding NV entered into a partnership agreement with Tata Electronics Private Limited aimed at ramping up India’s goal to develop domestic chip-manufacturing capabilities.",
+    "publishedAt": "2026-05-16T16:02:33.000Z",
+    "sourceImage": "https://assets.bwbx.io/images/users/iqjWHBFdfxIU/i9P4ZWSEla0s/v1/1200x-1.jpg",
+    "region": "Global",
+    "language": "en",
+    "defaultCategory": "Hyperscalers & Cloud"
   },
   {
     "id": "b915de455a0f7320",
@@ -372,19 +385,6 @@
     "contentText": "Industry watchdog Monitoring Analytics says that PJM Interconnection is not doing enough to prevent power prices from spiking due to massive data center demand.",
     "publishedAt": "2026-05-16T12:02:35.000Z",
     "sourceImage": "https://cdn.mos.cms.futurecdn.net/KHUetaXQbsmm6z9m5g5Pne-1280-80.jpg",
-    "region": "Global",
-    "language": "en",
-    "defaultCategory": "AI Infrastructure (GPU/Neocloud)"
-  },
-  {
-    "id": "7be750df3917e2d8",
-    "source": "Toms Hardware",
-    "url": "https://www.tomshardware.com/pc-components/cpus/intel-core-ultra-5-250k-plus-vs-amd-ryzen-5-7600x3d-faceoff",
-    "title": "Intel Core Ultra 5 250K Plus vs AMD Ryzen 5 7600X3D faceoff — Battle for the fastest mid-range gaming CPU",
-    "snippet": "We tested both CPUs across gaming, rendering, encoding, efficiency, and pricing to determine whether Intel’s Arrow Lake Refresh can finally challenge AMD’s X3D dominance in the mid-range segment.",
-    "contentText": "We tested both CPUs across gaming, rendering, encoding, efficiency, and pricing to determine whether Intel’s Arrow Lake Refresh can finally challenge AMD’s X3D dominance in the mid-range segment.",
-    "publishedAt": "2026-05-16T12:00:00.000Z",
-    "sourceImage": "https://cdn.mos.cms.futurecdn.net/icmJTzj8TNK8Sb8BBg48V4-1280-80.jpg",
     "region": "Global",
     "language": "en",
     "defaultCategory": "AI Infrastructure (GPU/Neocloud)"
