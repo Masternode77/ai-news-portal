@@ -12,6 +12,10 @@ import { attachExpertLens, hydrateExpertLens, mergeArticleRecords } from './lib/
 import { fetchNewsPool } from './lib/fetch-feeds.mjs';
 import { ensureArticleImage, needsImageRefresh } from './lib/image-generator.mjs';
 import {
+  ARTICLE_PAGE_QUALITY_THRESHOLD,
+  splitByArticleQualityGate,
+} from './lib/quality-gate.mjs';
+import {
   readJsonFile,
   readPipelineState,
   sleep,
@@ -185,6 +189,53 @@ async function enrichPickedArticles(picked) {
   return results;
 }
 
+function logBlockedArticles(blocked = []) {
+  for (const article of blocked) {
+    console.warn(
+      `[pipeline] blocked article page ${article.id} :: ${article.title} -> ${article.qualityGateReason}`
+    );
+  }
+}
+
+async function publishExistingOnly({
+  existingLatest,
+  existingArchive,
+  signalOnly = [],
+  plan,
+  state,
+  todayKey,
+  slot,
+  now,
+  blocked = [],
+}) {
+  const normalizedExisting = dedupeById((existingLatest || []).map((item) => normalizeExistingArticle(item)));
+  const signalMerged = dedupeById([...signalOnly, ...normalizedExisting]);
+  const imageBackfilled = await backfillLocalImages(signalMerged);
+  const withExpertLens = await attachExpertLensToVisibleWindow(imageBackfilled, []);
+  const { latest, supabaseStatus } = await syncArchiveArtifacts(withExpertLens, existingArchive);
+  await writeJsonFile(LATEST_NEWS_PATH, latest);
+
+  state.dayPlans[todayKey] = updatePlanAfterRun(plan, [], slot);
+  state.lastRunAt = now.toISOString();
+  state.runHistory.push({
+    at: now.toISOString(),
+    day: todayKey,
+    slot,
+    publishedCount: 0,
+    blockedCount: blocked.length,
+    blockedItems: blocked.map((article) => ({
+      id: article.id,
+      title: article.title,
+      extraction_quality_score: article.extraction_quality_score ?? null,
+      reason: article.qualityGateReason,
+    })),
+  });
+  state.runHistory = state.runHistory.slice(-120);
+  await writePipelineState(PIPELINE_STATE_PATH, state);
+
+  return supabaseStatus;
+}
+
 async function main() {
   const now = new Date();
   console.log(`[pipeline] run started at ${now.toISOString()}`);
@@ -237,13 +288,36 @@ async function main() {
 
   const enriched = await enrichPickedArticles(picked);
   console.log(`[pipeline] article enrichment complete: ${enriched.length} items`);
+  const { publishable, blocked } = splitByArticleQualityGate(enriched, ARTICLE_PAGE_QUALITY_THRESHOLD);
+  console.log(
+    `[pipeline] quality gate: threshold=${ARTICLE_PAGE_QUALITY_THRESHOLD.toFixed(2)} publishable=${publishable.length} blocked=${blocked.length}`
+  );
+  logBlockedArticles(blocked);
+
+  if (!publishable.length) {
+    const supabaseStatus = await publishExistingOnly({
+      existingLatest,
+      existingArchive,
+      signalOnly: blocked,
+      plan,
+      state,
+      todayKey,
+      slot,
+      now,
+      blocked,
+    });
+    console.log(
+      `[pipeline] completed with no new article pages published; quality gate blocked ${blocked.length}. archive push: ${JSON.stringify(supabaseStatus)}`
+    );
+    return;
+  }
 
   const normalizedExisting = dedupeById((existingLatest || []).map((item) => normalizeExistingArticle(item)));
   const dedupedExisting = normalizedExisting.filter(
-    (item) => !enriched.some((fresh) => fresh.id === item.id)
+    (item) => !publishable.some((fresh) => fresh.id === item.id)
   );
 
-  const merged = dedupeById([...enriched, ...dedupedExisting, ...(existingArchive || [])]).sort(
+  const merged = dedupeById([...publishable, ...blocked, ...dedupedExisting, ...(existingArchive || [])]).sort(
     (a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime()
   );
   console.log(`[pipeline] merged article set: ${merged.length}`);
@@ -251,29 +325,36 @@ async function main() {
   const imageBackfilled = await backfillLocalImages(merged);
   const withExpertLens = await attachExpertLensToVisibleWindow(
     imageBackfilled,
-    enriched.map((article) => article.id)
+    publishable.map((article) => article.id)
   );
   const { latest, supabaseStatus } = await syncArchiveArtifacts(withExpertLens, existingArchive);
 
   await writeJsonFile(LATEST_NEWS_PATH, latest);
 
-  const updatedPlan = updatePlanAfterRun(plan, enriched, slot);
+  const updatedPlan = updatePlanAfterRun(plan, publishable, slot);
   state.dayPlans[todayKey] = updatedPlan;
-  state.publishedIds = [...new Set([...(state.publishedIds || []), ...enriched.map((x) => x.id)])].slice(-1000);
+  state.publishedIds = [...new Set([...(state.publishedIds || []), ...publishable.map((x) => x.id)])].slice(-1000);
   state.lastRunAt = now.toISOString();
   state.runHistory.push({
     at: now.toISOString(),
     day: todayKey,
     slot,
-    publishedCount: enriched.length,
-    publishedIds: enriched.map((x) => x.id),
+    publishedCount: publishable.length,
+    publishedIds: publishable.map((x) => x.id),
+    blockedCount: blocked.length,
+    blockedItems: blocked.map((article) => ({
+      id: article.id,
+      title: article.title,
+      extraction_quality_score: article.extraction_quality_score ?? null,
+      reason: article.qualityGateReason,
+    })),
   });
   state.runHistory = state.runHistory.slice(-120);
 
   await writePipelineState(PIPELINE_STATE_PATH, state);
 
   console.log(
-    `[pipeline] completed. published ${enriched.length} articles for slot ${slot} (${todayKey}). archive push: ${JSON.stringify(supabaseStatus)}`
+    `[pipeline] completed. published ${publishable.length} articles for slot ${slot} (${todayKey}); blocked ${blocked.length}. archive push: ${JSON.stringify(supabaseStatus)}`
   );
 }
 

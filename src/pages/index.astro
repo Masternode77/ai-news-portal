@@ -22,11 +22,12 @@ const getLensTeaser = (item) => item.expertLensShort || item.expertLens || item.
 
 const latest = (latestNews || []).map((item, idx) => ({
   ...item,
+  hasArticlePage: item['articlePagePublished'] !== false,
   title: displayHeadline(item),
   summary: cleanEditorialText(item.summary || item.snippet || ''),
   expertLensTeaser: cleanEditorialText(getLensTeaser(item)),
   displayImage: item.sourceImage || item.generatedImage || '/generated/default.svg',
-  detailHref: `/news/${item.id}/`,
+  detailHref: item['articlePagePublished'] === false ? item.sourceUrl || item.url : `/news/${item.id}/`,
   sourceUrl: item.sourceUrl || item.url,
   timeAgo: formatTimeAgo(item.publishedAt),
   isHero: idx === 0,
@@ -58,7 +59,7 @@ const searchPayload = (searchIndex || []).slice(0, 400).map((item) => ({
     item.expertLensFull?.whyThisMatters,
   ].filter(Boolean).join(' '),
   publishedAt: item.publishedAt,
-  href: `/news/${item.id}/`,
+  href: item['articlePagePublished'] === false ? item.sourceUrl || item.url : `/news/${item.id}/`,
   sourceUrl: item.sourceUrl || item.url,
 }));
 const stats = [

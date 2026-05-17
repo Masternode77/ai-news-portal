@@ -11,6 +11,7 @@ import {
 import { callOpenRouterJson } from './openrouter.mjs';
 import { fetchArticleExcerpt } from './source-fetch.mjs';
 import { normalizeEditorialVoice } from './editorial-humanizer.mjs';
+import { scoreExtractionQuality } from './quality-gate.mjs';
 
 function fallbackSummary(item, articleText = '') {
   const base = articleText || item.snippet || item.title;
@@ -80,6 +81,11 @@ function normalizeAiPayload(aiPayload, fallback) {
 
 export async function enrichContent(item) {
   const articleText = await fetchArticleExcerpt(item.url, item.snippet);
+  const extractionQualityScore = scoreExtractionQuality({
+    articleText,
+    fallbackSnippet: item.snippet,
+    sourceUrl: item.url,
+  });
   const category = inferCategory(`${item.title} ${item.snippet} ${articleText}`, item.defaultCategory || item.categoryHint);
   const region = inferRegion(`${item.title} ${item.snippet} ${articleText}`, item.region || 'Global');
   const summary = fallbackSummary(item, articleText);
@@ -133,6 +139,7 @@ export async function enrichContent(item) {
     imagePrompt: normalized.imagePrompt,
     lang: guessLanguage(`${item.title} ${item.snippet} ${articleText}`),
     articleText,
+    extraction_quality_score: extractionQualityScore,
     sourceUrl: item.url,
   };
 }

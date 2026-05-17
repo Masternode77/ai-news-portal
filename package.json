@@ -8,6 +8,7 @@
     "pipeline": "node ./scripts/pipeline.mjs",
     "test:curation": "PIPELINE_OFFLINE=1 OPENROUTER_API_KEY= node ./scripts/test-curation.mjs",
     "test:editorial": "node ./scripts/test-editorial-humanizer.mjs",
+    "test:quality-gate": "node ./scripts/test-quality-gate.mjs",
     "humanize:existing": "node ./scripts/humanize-existing-articles.mjs",
     "smoke:image-provider": "IMAGE_PROVIDER=local PIPELINE_OFFLINE=1 node ./scripts/image-provider-dry-run.mjs",
     "prepare:static-images": "node ./scripts/prepare-static-images.mjs",
