@@ -46,6 +46,8 @@ const HARD_ARCHIVE_PATTERNS = [
   /\bfossils?\b/i,
   /\bstegosaurus\b/i,
   /\bskeleton\b/i,
+  /\bcommencement\b/i,
+  /\bgraduates?\b/i,
 ];
 
 const ADJACENT_ONLY_PATTERNS = [

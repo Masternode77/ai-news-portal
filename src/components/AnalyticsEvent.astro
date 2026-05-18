@@ -58,22 +58,58 @@ const plausibleDomain = import.meta.env.PUBLIC_PLAUSIBLE_DOMAIN;
     });
   });
 
-  document.addEventListener('submit', (event) => {
+  document.addEventListener('submit', async (event) => {
     const form = event.target;
     if (!(form instanceof HTMLFormElement)) return;
     const eventName = form.getAttribute('data-analytics-submit');
     if (!eventName) return;
     event.preventDefault();
-    const payload = Object.fromEntries(new FormData(form).entries());
-    window.computeCurrentTrack(eventName, { form: form.getAttribute('data-form-name') || form.id || 'form' });
-    try {
-      const key = `compute-current:${form.getAttribute('data-form-name') || eventName}`;
-      const stored = JSON.parse(window.localStorage.getItem(key) || '[]');
-      stored.push({ ...payload, created_at: new Date().toISOString() });
-      window.localStorage.setItem(key, JSON.stringify(stored.slice(-50)));
-    } catch {}
+    const formName = form.getAttribute('data-form-name') || form.id || 'form';
     const status = form.querySelector('[data-form-status]');
-    if (status) status.textContent = 'Received. We will follow up when this product is available.';
-    form.reset();
+    const data = new FormData(form);
+    const payload = {};
+    for (const [key, value] of data.entries()) {
+      if (payload[key] === undefined) {
+        payload[key] = value;
+      } else if (Array.isArray(payload[key])) {
+        payload[key].push(value);
+      } else {
+        payload[key] = [payload[key], value];
+      }
+    }
+    window.computeCurrentTrack(eventName, { form: formName });
+    if (status) status.textContent = 'Sending...';
+
+    const leadRequest = {
+      type: formName.startsWith('newsletter-') ? 'newsletter' : undefined,
+      form_name: formName,
+      event_name: eventName,
+      page_url: window.location.href,
+      payload,
+    };
+
+    const rememberLocally = () => {
+      try {
+        const key = `compute-current:${formName}`;
+        const stored = JSON.parse(window.localStorage.getItem(key) || '[]');
+        stored.push({ ...payload, created_at: new Date().toISOString() });
+        window.localStorage.setItem(key, JSON.stringify(stored.slice(-50)));
+      } catch {}
+    };
+
+    try {
+      const response = await fetch('/api/leads', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(leadRequest),
+      });
+      if (!response.ok) throw new Error('lead_submit_failed');
+      rememberLocally();
+      if (status) status.textContent = 'Received. We will follow up when this product is available.';
+      form.reset();
+    } catch {
+      rememberLocally();
+      if (status) status.textContent = 'Saved locally. Please email contact@computecurrent.com if you do not hear back.';
+    }
   });
 </script>

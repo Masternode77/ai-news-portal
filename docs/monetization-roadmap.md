@@ -12,7 +12,8 @@ Compute Current now has the public structure for a B2B intelligence business: fr
 
 ## Integration Gaps
 
-- Configure email platform or connect static form submissions to a backend.
+- Configure `LEADS_WEBHOOK_URL` for durable production lead capture. `/api/leads` validates and stores submissions locally, but Vercel serverless local storage is not durable across cold starts.
+- Protect static internal QA surfaces with `ADMIN_PAGE_PASSWORD`/`ADMIN_PAGE_USERNAME` or the existing `ADMIN_PASSWORD`/`ADMIN_USERNAME` pair.
 - Configure checkout before enabling hard paid access.
 - Configure analytics provider with `PUBLIC_GA4_ID` or `PUBLIC_PLAUSIBLE_DOMAIN`.
 - Add live audience metrics to the media kit when verified.
