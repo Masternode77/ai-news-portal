@@ -1,6 +1,6 @@
 # Public Surface Regression Report
 
-Generated at: 2026-05-18T15:38:03.528Z
+Generated at: 2026-05-18T15:39:27.427Z
 Base URL: https://www.computecurrent.com
 Homepage cards checked: 19
 Detail pages checked: 5
@@ -26,7 +26,7 @@ Detail pages checked: 5
 - Old deck: Arm stays on the public watchlist until clean source evidence ties it to a concrete infrastructure decision.
 - New deck: Arm stays on the public watchlist until clean source evidence ties it to a concrete infrastructure decision.
 - Old lane: Adjacent Watchlist
-- New lane: Adjacent Watchlist
+- New lane: Policy/Risk Watch
 
 ### NetApp Expands OpenShift Data Management With Faster VM Backup, DR, and Cloud Scale Support
 - Old deck: NetApp’s OpenShift update turns backup and DR into a platform-readiness issue for enterprise AI workloads.
@@ -36,7 +36,7 @@ Detail pages checked: 5
 
 ### AI Data Centers Are Driving Nuclear's Next Commercial Test
 - Old deck: Supermicro puts facility planning in focus as charting the future of data center, cloud, and AI infrastructure riot platforms operates large-scale bitcoin mining facilities in texas and kentucky and is increasingly positionin.
-- New deck: Supermicro puts facility planning in focus as charting the future of data center, cloud, and AI infrastructure riot platforms operates large-scale bitcoin mining facilities in texas and kentucky and is increasingly positionin.
+- New deck: Nuclear-backed power planning is moving from concept to commercial test for AI data center campuses.
 - Old lane: Stack Shifts
 - New lane: Stack Shifts
 
@@ -48,7 +48,7 @@ Detail pages checked: 5
 
 ### Veeam Expands Data Resilience Portfolio with DataAI Command Platform, v13.1 Updates, and AI Trust Framework
 - Old deck: Veeam Expands Data gives investor signals readers a concrete compute signal to test against source evidence.
-- New deck: Veeam Expands Data gives investor signals readers a concrete compute signal to test against source evidence.
+- New deck: Veeam’s DataAI Command Platform turns backup, governance, and recovery into an enterprise AI readiness signal.
 - Old lane: Investor Signals
 - New lane: Investor Signals
 
@@ -56,7 +56,7 @@ Detail pages checked: 5
 - Old deck: Google stays on the public watchlist until clean source evidence ties it to a concrete infrastructure decision.
 - New deck: Google stays on the public watchlist until clean source evidence ties it to a concrete infrastructure decision.
 - Old lane: Adjacent Watchlist
-- New lane: Adjacent Watchlist
+- New lane: Market Maps
 
 ### Chip Industry Week in Review
 - Old deck: H200 controls, IC funding, and packaging pressure make the chip roundup a supply-chain map rather than a single delivery thesis.
@@ -66,13 +66,13 @@ Detail pages checked: 5
 
 ### Navigating the AI Inflection Point and the Future of Digital Infrastructure
 - Old deck: Gives investor signals readers a concrete facility signal to test against source evidence.
-- New deck: Gives investor signals readers a concrete facility signal to test against source evidence.
+- New deck: Structure Research’s AI infrastructure discussion frames power, capital, and sovereign cloud as capacity constraints.
 - Old lane: Investor Signals
 - New lane: Investor Signals
 
 ### What’s new with Google Data Cloud
 - Old deck: Google is a technical bottleneck item for stack shifts readers, with the infrastructure read limited to source-backed facts.
-- New deck: Google is a technical bottleneck item for stack shifts readers, with the infrastructure read limited to source-backed facts.
+- New deck: Google puts cloud platform planning in focus around What’s new with Google Data Cloud.
 - Old lane: Stack Shifts
 - New lane: Stack Shifts
 
