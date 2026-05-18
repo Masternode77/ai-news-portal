@@ -325,7 +325,9 @@
     "4047727ca0fead33",
     "53b22d2af7d9b23a",
     "22d191803fececf1",
-    "0fd3ce9da7479398"
+    "0fd3ce9da7479398",
+    "8bfac13bd732cf6d",
+    "bc4876d1896cc11d"
   ],
   "dayPlans": {
     "2026-03-24": {
@@ -6454,19 +6456,116 @@
         "1": true,
         "2": true
       }
+    },
+    "2026-05-19": {
+      "date": "2026-05-19",
+      "createdAt": "2026-05-18T17:33:47.289Z",
+      "refreshedAt": "2026-05-18T17:33:47.289Z",
+      "candidateWindowHours": 24,
+      "curatedItems": [
+        {
+          "id": "8bfac13bd732cf6d",
+          "source": "StorageReview",
+          "url": "https://www.storagereview.com/news/dell-expands-ai-factory-with-nvidia-adds-deskside-agentic-ai-and-deepens-mistral-collaboration",
+          "title": "Dell Expands AI Factory with NVIDIA, Adds Deskside Agentic AI and Deepens Mistral Collaboration",
+          "snippet": "Kicking off Dell Technologies World, Dell announced an expansion of the Dell AI Factory with NVIDIA. This broad update targets a familiar enterprise problem: moving AI projects from pilot to production. Across three rel…",
+          "contentText": "Kicking off Dell Technologies World, Dell announced an expansion of the Dell AI Factory with NVIDIA. This broad update targets a familiar enterprise problem: moving AI projects from pilot to production. Across three related announcements, Dell is introducing new local agentic AI systems, expanding its AI data and infrastructure stack, and widening its partner ecosystem. The company is also highlighting Mistral AI as both a user of Dell AI Factory infrastructure and a deeper software partner for enterprise deployments. The most immediate product addition is Dell Deskside Agentic AI , a local deployment option aimed at teams that want to run agentic AI workflows without relying entirely on public cloud inference. Dell positions the offering around cost control, lower latency, and data sover…",
+          "publishedAt": "2026-05-18T17:00:56.000Z",
+          "sourceImage": "https://www.storagereview.com/wp-content/uploads/2026/03/StorageReview-Dell-PowerEdge-XE7745-Lab-2-2.jpg",
+          "region": "Global",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "score": 70
+        },
+        {
+          "id": "bc4876d1896cc11d",
+          "source": "Data Center Frontier",
+          "url": "https://www.datacenterfrontier.com/energy/article/55376679/why-nerc-now-sees-ai-data-centers-as-grid-actors",
+          "title": "Why NERC Now Sees AI Data Centers as Grid Actors",
+          "snippet": "NERC’s May 4 Level 3 Alert signals that AI campuses, hyperscale data centers, and other large computational loads are now being treated as dynamic grid actors whose behavior during disturbances can materially affect bul…",
+          "contentText": "NERC’s May 4 Level 3 Alert signals that AI campuses, hyperscale data centers, and other large computational loads are now being treated as dynamic grid actors whose behavior during disturbances can materially affect bulk power system reliability.",
+          "publishedAt": "2026-05-18T13:12:56.000Z",
+          "sourceImage": "https://img.datacenterfrontier.com/files/base/ebm/datacenterfrontier/image/2026/05/6a0b0e712beaeebd44b06a7b-dreamstime_xxl_398315431.png",
+          "region": "Global",
+          "language": "en",
+          "defaultCategory": "Colocation & Wholesale",
+          "score": 70
+        },
+        {
+          "id": "aae7ee0c26f96f6d",
+          "source": "Data Center POST",
+          "url": "https://datacenterpost.com/from-ai-factories-to-edge-nodes-why-communities-need-a-layered-infrastructure-vision/",
+          "title": "From AI Factories to Edge Nodes: Why Communities Need a Layered Infrastructure Vision",
+          "snippet": "TL;DR The Shift to the Edge: While massive “AI factories” built for model training currently dominate public attention, the real economic transformation of AI will happen at the inference layer or the edge, where capabi…",
+          "contentText": "TL;DR The Shift to the Edge: While massive &#8220;AI factories&#8221; built for model training currently dominate public attention, the real economic transformation of AI will happen at the inference layer or the edge, where capabilities are deployed directly to businesses and public services. Beyond Isolated Projects: Communities must move away from evaluating individual hyperscale projects in isolation and instead adopt a layered infrastructure architecture that strategically interconnects centralized compute, regional data centers, connectivity hubs, and edge nodes. Long-Term Competitiveness: Infrastructure decisions require a decade-long outlook, as building an aligned, distributed ecosystem today will directly dictate a region&#8217;s future workforce development, business attraction…",
+          "publishedAt": "2026-05-18T13:00:58.000Z",
+          "sourceImage": "https://d3qut6qyo6tw2j.cloudfront.net/bin/uploads/2026/05/14160005/DCP-Banner-2-1024x536.png",
+          "region": "Global",
+          "language": "en",
+          "defaultCategory": "Colocation & Wholesale",
+          "score": 66
+        },
+        {
+          "id": "4dfa81f8e86371b9",
+          "source": "Bloomberg Technology",
+          "url": "https://www.bloomberg.com/news/articles/2026-05-18/dell-sells-1-000-ai-servers-with-nvidia-chips-in-current-quarter",
+          "title": "Dell Adds 1,000 Clients for AI Servers, Targets Corporate Users",
+          "snippet": "Dell Technologies Inc. said it added 1,000 customers for a key AI product line in the past quarter as the company tries to capture business from traditional large businesses taking on new artificial intelligence workloa…",
+          "contentText": "Dell Technologies Inc. said it added 1,000 customers for a key AI product line in the past quarter as the company tries to capture business from traditional large businesses taking on new artificial intelligence workloads.",
+          "publishedAt": "2026-05-18T16:45:00.000Z",
+          "sourceImage": "https://assets.bwbx.io/images/users/iqjWHBFdfxIU/ibTtdCHx0JnM/v0/1200x-1.jpg",
+          "region": "Global",
+          "language": "en",
+          "defaultCategory": "Hyperscalers & Cloud",
+          "score": 62
+        },
+        {
+          "id": "186c1ad859f7a4be",
+          "source": "Semiconductor Engineering",
+          "url": "https://semiengineering.com/hw-native-gpu-compiler-for-large-scale-ml-production-systems-uc-san-diego-meta/",
+          "title": "HW-Native, GPU Compiler for Large-scale ML Production Systems (UC San Diego, Meta)",
+          "snippet": "A new technical paper, “TLX: Hardware-Native, Evolvable MIMW GPU Compiler for Large-scale Production Environments,” was published by researchers at UC San Diego and Meta. Abstract “Modern GPUs increasingly rely on speci…",
+          "contentText": "A new technical paper, &#8220;TLX: Hardware-Native, Evolvable MIMW GPU Compiler for Large-scale Production Environments,&#8221; was published by researchers at UC San Diego and Meta. Abstract &#8220;Modern GPUs increasingly rely on specialized hardware units and asynchronous coordination mechanisms, so performance depends on orchestrating data movement, tensor-core computation, and synchronization rather than exposing more thread-level parallelism. This creates a programming-model tension: if too much execution structure is hidden, the compiler must catch up to new hardware mechanisms; if too much is exposed, the burden of orchestration falls back onto the programmer. We present TLX (Triton Low-level Language Extensions), built around MIMW (Multi-Instruction, Multi-Warp), which expresses…",
+          "publishedAt": "2026-05-18T17:16:41.000Z",
+          "sourceImage": null,
+          "region": "Global",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "score": 58
+        },
+        {
+          "id": "612fb805d6e3d4cd",
+          "source": "Data Center Dynamics",
+          "url": "https://www.datacenterdynamics.com/en/news/dell-launches-powerrack-a-turnkey-compute-storage-and-networking-solution-updates-nvidia-ai-factory-platform/",
+          "title": "Dell launches PowerRack, a turnkey compute, storage, and networking solution, updates Nvidia AI Factory platform",
+          "snippet": "Company says it is working to close the gap between AI ambition and outcomes",
+          "contentText": "Company says it is working to close the gap between AI ambition and outcomes",
+          "publishedAt": "2026-05-18T17:00:33.000Z",
+          "sourceImage": "https://media.datacenterdynamics.com/media/images/Dell_Booth.2e16d0ba.fill-750x500.jpg",
+          "region": "Global",
+          "language": "en",
+          "defaultCategory": "Colocation & Wholesale",
+          "score": 58
+        }
+      ],
+      "curatedIds": [
+        "8bfac13bd732cf6d",
+        "bc4876d1896cc11d",
+        "aae7ee0c26f96f6d",
+        "4dfa81f8e86371b9",
+        "186c1ad859f7a4be",
+        "612fb805d6e3d4cd"
+      ],
+      "publishedIds": [
+        "8bfac13bd732cf6d",
+        "bc4876d1896cc11d"
+      ],
+      "slotPublications": {
+        "0": true
+      }
     }
   },
   "runHistory": [
-    {
-      "at": "2026-04-09T08:25:03.080Z",
-      "day": "2026-04-09",
-      "slot": 2,
-      "publishedCount": 2,
-      "publishedIds": [
-        "a3d96ff68d9f3e3c",
-        "589ff6b848fb9ace"
-      ]
-    },
     {
       "at": "2026-04-09T16:22:43.225Z",
       "day": "2026-04-10",
@@ -7648,7 +7747,17 @@
         "22d191803fececf1",
         "0fd3ce9da7479398"
       ]
+    },
+    {
+      "at": "2026-05-18T17:33:47.289Z",
+      "day": "2026-05-19",
+      "slot": 0,
+      "publishedCount": 2,
+      "publishedIds": [
+        "8bfac13bd732cf6d",
+        "bc4876d1896cc11d"
+      ]
     }
   ],
-  "lastRunAt": "2026-05-18T11:11:42.299Z"
+  "lastRunAt": "2026-05-18T17:33:47.289Z"
 }
