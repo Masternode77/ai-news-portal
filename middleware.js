@@ -28,5 +28,5 @@ export default function middleware(request) {
 }
 
 export const config = {
-  matcher: ['/admin/content-quality/:path*', '/dashboard/:path*'],
+  matcher: ['/admin/:path*', '/dashboard/:path*'],
 };
