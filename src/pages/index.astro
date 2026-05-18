@@ -1,6 +1,8 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import NewsletterSignup from '../components/NewsletterSignup.astro';
 import PublicSignalCard from '../components/PublicSignalCard.astro';
+import SponsorSlot from '../components/SponsorSlot.astro';
 import latestNews from '../data/latest-news.json';
 import archivedNews from '../data/archived-news.json';
 import searchIndex from '../data/search-index.json';
@@ -32,7 +34,7 @@ const homepageEligibleNews = (latestNews || []).filter((item: any) =>
 const recentDecks: string[] = [];
 const latest = homepageEligibleNews.map((item: any, idx) => {
   const sourceUrl = item.sourceUrl || item.url;
-  const route = item.public_routing || routePublicLane(item);
+  const route = routePublicLane(item);
   if (route.visibility === 'archive') return null;
   const hasArticlePage = route.visibility === 'core' && item['articlePagePublished'] !== false && !shouldNoindexArticle(item);
   const publicSignal = buildPublicPresentation(
@@ -133,7 +135,7 @@ const intelligenceSections = sectionDefinitions.map((definition) => ({
 })).filter((section) => section.items.length);
 const searchPayload = (searchIndex || []).slice(0, 400).map((item: any) => ({
   ...(() => {
-    const route = item.public_routing || routePublicLane(item);
+    const route = routePublicLane(item);
     const presentation = buildPublicPresentation(item, { route });
     return {
       signal_label: presentation.signal_label,
@@ -212,6 +214,9 @@ const stats = [
         {intelligenceNav.map((item) => <span>{item}</span>)}
       </div>
     </header>
+
+    <NewsletterSignup variant="hero" title="Daily AI Infrastructure Brief" source="homepage-hero" compact />
+    <SponsorSlot slotId="homepage_top_sponsor" context={{ seed: 'homepage' }} />
 
     <section class="live-brief">
       <div class="brief-kicker">Live Brief</div>

@@ -24,6 +24,15 @@ export const SOURCE_BOILERPLATE_PATTERNS = [
   /\bgift this article\b/i,
   /\blinkedin\b/i,
   /\bfacebook\b/i,
+  /\babout the author\b/i,
+  /\bmore from this author\b/i,
+  /\brecommended for you\b/i,
+  /\bcontinue reading\b/i,
+  /\bdownload our app\b/i,
+  /\bregister now\b/i,
+  /\bjoin our community\b/i,
+  /\ball trademarks\b/i,
+  /\b©\s?\d{4}\b/i,
 ];
 
 function compact(value = '') {

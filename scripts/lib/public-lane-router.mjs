@@ -58,7 +58,20 @@ const ADJACENT_ONLY_PATTERNS = [
   /\blaw firms?\b/i,
   /\bgeneric legal\b/i,
   /\blabor market\b/i,
+  /\brecruit(?:ing|ment)\b/i,
+  /\bcommencement speech\b/i,
+  /\bbiograph(?:y|ical)\b/i,
   /\bconsumer hardware\b/i,
+  /\bconsumer tech\b/i,
+  /\blaptop deals?\b/i,
+  /\bgaming laptop\b/i,
+  /\b(?:save|\% off|all-time low|discount|deals?)\b.{0,90}\b(?:Radeon|Ryzen|GeForce|PowerColor|motherboard|gaming|laptop)\b/i,
+  /\b(?:Radeon|Ryzen|GeForce|PowerColor|motherboard|gaming|laptop)\b.{0,90}\b(?:save|\% off|all-time low|discount|deals?)\b/i,
+  /\bsmartphone\b/i,
+  /\bwearable\b/i,
+  /\bcelebrity\b/i,
+  /\bchatbot app\b/i,
+  /\bgeneric ai tools?\b/i,
 ];
 
 function textBundle(article = {}) {

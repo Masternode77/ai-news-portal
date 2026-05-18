@@ -1,5 +1,8 @@
 ---
 import Layout from '../../layouts/Layout.astro';
+import NewsletterSignup from '../../components/NewsletterSignup.astro';
+import PaywallCTA from '../../components/PaywallCTA.astro';
+import SponsorSlot from '../../components/SponsorSlot.astro';
 import latestNews from '../../data/latest-news.json';
 import archivedNews from '../../data/archived-news.json';
 import { SITE } from '../../config/site';
@@ -14,11 +17,12 @@ import {
   sourceAttributionFor,
 } from '../../lib/seo-safeguards.js';
 import { forbiddenPublicPhraseMatches, guardPublicCopy } from '../../../scripts/lib/copy-quality-guard.mjs';
+import { evaluatePaywallPolicy } from '../../../scripts/lib/paywall-policy.mjs';
 import { routePublicLane } from '../../../scripts/lib/public-lane-router.mjs';
 
 export function getStaticPaths() {
   return [...latestNews, ...archivedNews]
-    .filter((article) => article?.id && article['articlePagePublished'] !== false)
+    .filter((article) => article?.id && article['articlePagePublished'] !== false && routePublicLane(article).visibility === 'core' && !shouldNoindexArticle(article))
     .map((article) => ({
       params: { id: article.id },
       props: { article },
@@ -44,7 +48,7 @@ const executiveSummary = executiveSummaryLines(article)
   .slice(0, 3);
 const executiveSummaryLabel = lens?.dynamicBriefLabel || article.dynamic_brief_label || article.narrative_dna?.brief_label || 'Operator Note';
 const taxonomy = taxonomyDisplay(articleRecord);
-const publicRouting = article.public_routing || routePublicLane(articleRecord);
+const publicRouting = routePublicLane(articleRecord);
 const publicPresentation = buildPublicPresentation(articleRecord, { route: publicRouting });
 const articleDescription = cleanEditorialText(publicPresentation.deck || lens?.metaDescription || article.summary || article.snippet || article.title);
 const sourceAttribution = sourceAttributionFor(articleRecord);
@@ -56,6 +60,12 @@ const articleBodyBlocks = (lens?.finalArticleBody || article.articleText || arti
   .filter((paragraph) => !/^(why it matters|pressure points|market implications|what to watch)$/i.test(paragraph))
   .filter((paragraph) => !forbiddenPublicPhraseMatches(paragraph).length)
   .filter(Boolean);
+const paywallPolicy = evaluatePaywallPolicy(articleRecord, { userTier: 'anonymous' });
+const visibleArticleBodyBlocks = paywallPolicy.previewOnly
+  ? articleBodyBlocks.slice(0, paywallPolicy.previewParagraphs)
+  : articleBodyBlocks;
+const bodyBeforeSignup = visibleArticleBodyBlocks.slice(0, Math.min(3, visibleArticleBodyBlocks.length));
+const bodyAfterSignup = visibleArticleBodyBlocks.slice(bodyBeforeSignup.length);
 const isBodyHeading = (paragraph: string) =>
   paragraph.length <= 72 &&
   !/[.!?]$/.test(paragraph) &&
@@ -68,7 +78,7 @@ const structuredData = buildArticleStructuredData({
   image: detailImage,
   canonicalUrl: articleUrl,
   taxonomy,
-  articleBody: articleBodyBlocks,
+  articleBody: visibleArticleBodyBlocks,
 });
 ---
 <Layout
@@ -144,11 +154,19 @@ const structuredData = buildArticleStructuredData({
           </section>
         ) : null}
 
-        {articleBodyBlocks.length ? (
+        {visibleArticleBodyBlocks.length ? (
           <section class="detail-section detail-article-copy">
-            {articleBodyBlocks.map((paragraph) => (
+            {bodyBeforeSignup.map((paragraph) => (
               isBodyHeading(paragraph) ? <h2>{paragraph}</h2> : <p>{paragraph}</p>
             ))}
+            {visibleArticleBodyBlocks.length > 3 ? (
+              <NewsletterSignup variant="inline" title="Get the Daily AI Infrastructure Brief" source={`article-${article.id}`} compact />
+            ) : null}
+            <SponsorSlot slotId="article_mid_sponsor" context={{ seed: article.id }} />
+            {bodyAfterSignup.map((paragraph) => (
+              isBodyHeading(paragraph) ? <h2>{paragraph}</h2> : <p>{paragraph}</p>
+            ))}
+            {paywallPolicy.previewOnly ? <PaywallCTA policy={paywallPolicy} /> : null}
           </section>
         ) : null}
 

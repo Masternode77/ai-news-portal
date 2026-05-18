@@ -1,0 +1,31 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { SITE } from '../config/site';
+import { DIRECTORY_CATEGORIES } from '../../scripts/lib/vendor-directory-store.mjs';
+---
+<Layout title={`Vendor Directory | ${SITE.name}`} description="Compute Current vendor directory for AI infrastructure suppliers and advisors." canonicalPath="/directory/">
+  <main class="product-shell">
+    <section class="product-hero">
+      <p class="eyebrow">Vendor Directory</p>
+      <h1>Find AI infrastructure vendors by operating layer.</h1>
+      <p>
+        Free listings are visible, featured listings can be promoted, and each category is prepared for clean sponsor inventory.
+      </p>
+    </section>
+    <section class="product-grid product-grid-three">
+      {DIRECTORY_CATEGORIES.map((category) => (
+        <article class="product-card">
+          <h2><a href={`/directory/${category.slug}/`}>{category.title}</a></h2>
+          <p>Browse vendors, advisors, and service providers in this AI infrastructure category.</p>
+        </article>
+      ))}
+    </section>
+    <section class="product-band">
+      <div>
+        <p class="eyebrow">Request Listing</p>
+        <h2>Add your company to the directory.</h2>
+      </div>
+      <a class="product-button" href="/directory/cooling/#request-listing" data-analytics-event="directory_listing_request">Request listing</a>
+    </section>
+  </main>
+</Layout>

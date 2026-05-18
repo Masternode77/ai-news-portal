@@ -1,0 +1,79 @@
+---
+const ga4Id = import.meta.env.PUBLIC_GA4_ID;
+const plausibleDomain = import.meta.env.PUBLIC_PLAUSIBLE_DOMAIN;
+---
+{ga4Id ? (
+  <>
+    <script is:inline async src={`https://www.googletagmanager.com/gtag/js?id=${ga4Id}`}></script>
+    <script is:inline define:vars={{ ga4Id }}>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', ga4Id);
+    </script>
+  </>
+) : null}
+{plausibleDomain ? (
+  <script is:inline defer data-domain={plausibleDomain} src="https://plausible.io/js/script.js"></script>
+) : null}
+<script is:inline>
+  window.computeCurrentTrack = function(eventName, payload) {
+    const eventPayload = { event: eventName, ...(payload || {}) };
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push(eventPayload);
+    if (typeof window.gtag === 'function') {
+      window.gtag('event', eventName, payload || {});
+    }
+    if (typeof window.plausible === 'function') {
+      window.plausible(eventName, { props: payload || {} });
+    }
+    window.dispatchEvent(new CustomEvent('compute-current-analytics', { detail: eventPayload }));
+  };
+
+  document.addEventListener('click', (event) => {
+    const target = event.target instanceof Element ? event.target.closest('[data-analytics-event]') : null;
+    if (!target) return;
+    window.computeCurrentTrack(target.getAttribute('data-analytics-event'), {
+      label: target.getAttribute('data-analytics-label') || target.textContent?.trim() || '',
+      href: target.getAttribute('href') || '',
+    });
+  });
+
+  document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('[data-page-event]').forEach((element) => {
+      window.computeCurrentTrack(element.getAttribute('data-page-event'), {
+        path: window.location.pathname,
+      });
+    });
+    document.querySelectorAll('[data-newsletter-signup]').forEach((element) => {
+      window.computeCurrentTrack('newsletter_signup_view', {
+        variant: element.className || '',
+        path: window.location.pathname,
+      });
+    });
+    document.querySelectorAll('[data-premium-preview]').forEach(() => {
+      window.computeCurrentTrack('premium_article_preview_view', {
+        path: window.location.pathname,
+      });
+    });
+  });
+
+  document.addEventListener('submit', (event) => {
+    const form = event.target;
+    if (!(form instanceof HTMLFormElement)) return;
+    const eventName = form.getAttribute('data-analytics-submit');
+    if (!eventName) return;
+    event.preventDefault();
+    const payload = Object.fromEntries(new FormData(form).entries());
+    window.computeCurrentTrack(eventName, { form: form.getAttribute('data-form-name') || form.id || 'form' });
+    try {
+      const key = `compute-current:${form.getAttribute('data-form-name') || eventName}`;
+      const stored = JSON.parse(window.localStorage.getItem(key) || '[]');
+      stored.push({ ...payload, created_at: new Date().toISOString() });
+      window.localStorage.setItem(key, JSON.stringify(stored.slice(-50)));
+    } catch {}
+    const status = form.querySelector('[data-form-status]');
+    if (status) status.textContent = 'Received. We will follow up when this product is available.';
+    form.reset();
+  });
+</script>

@@ -1,0 +1,34 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import ReportPurchaseCTA from '../../components/ReportPurchaseCTA.astro';
+import { SITE } from '../../config/site';
+import { allReports, reportBySlug } from '../../../scripts/lib/reports-store.mjs';
+
+export function getStaticPaths() {
+  return allReports().map((report) => ({
+    params: { slug: report.slug },
+    props: { report },
+  }));
+}
+
+const { report } = Astro.props;
+if (!reportBySlug(report.slug)) throw new Error('Report not found');
+---
+<Layout title={`${report.title} | ${SITE.name}`} description={report.executive_summary} canonicalPath={`/reports/${report.slug}/`}>
+  <main class="product-shell product-shell-narrow" data-page-event="report_view">
+    <section class="product-hero">
+      <p class="eyebrow">{report.category}</p>
+      <h1>{report.title}</h1>
+      <p>{report.executive_summary}</p>
+    </section>
+    <section class="report-preview">
+      <h2>Table of contents</h2>
+      <ol>{report.toc.map((item) => <li>{item}</li>)}</ol>
+      <h2>Free preview</h2>
+      <p>
+        This report preview summarizes the decision frame, key market signals, and buyer questions. Full report access includes source notes, market map tables, and downloadable briefings.
+      </p>
+    </section>
+    <ReportPurchaseCTA report={report} />
+  </main>
+</Layout>

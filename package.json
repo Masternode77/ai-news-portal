@@ -33,6 +33,7 @@
     "purge:deployment-cache": "node ./scripts/purge-deployment-cache.mjs",
     "purge:public-cache": "node ./scripts/purge-public-cache.mjs",
     "audit:public-surface": "npm run build && node ./scripts/audit-public-surface.mjs",
+    "audit:longform-public": "node ./scripts/audit-longform-public.mjs",
     "eval:articles": "node ./scripts/eval-article-generation.mjs"
   },
   "dependencies": {
