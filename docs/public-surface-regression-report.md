@@ -1,7 +1,7 @@
 # Public Surface Regression Report
 
-Generated at: 2026-05-18T15:25:52.973Z
-Base URL: http://127.0.0.1:65194
+Generated at: 2026-05-18T15:35:54.631Z
+Base URL: http://127.0.0.1:49292
 Homepage cards checked: 19
 Detail pages checked: 5
 
@@ -83,8 +83,8 @@ Detail pages checked: 5
 
 ## Checked Detail URLs
 
-- http://127.0.0.1:65194/news/47270f6d05c43680/
-- http://127.0.0.1:65194/news/080548f8c96249b6/
-- http://127.0.0.1:65194/news/af45a6f9a7a983f9/
-- http://127.0.0.1:65194/news/18495307e5a94019/
-- http://127.0.0.1:65194/news/c1fb0077cc25e13b/
+- http://127.0.0.1:49292/news/47270f6d05c43680/
+- http://127.0.0.1:49292/news/080548f8c96249b6/
+- http://127.0.0.1:49292/news/af45a6f9a7a983f9/
+- http://127.0.0.1:49292/news/18495307e5a94019/
+- http://127.0.0.1:49292/news/c1fb0077cc25e13b/

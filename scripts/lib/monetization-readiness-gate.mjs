@@ -3,6 +3,7 @@ import { analyzeSourceTextCompleteness } from './source-text-completeness.mjs';
 import { guardPublicCopy } from './copy-quality-guard.mjs';
 import { evaluatePremiumArticleQuality } from './premium-article-quality-gate.mjs';
 import { normalizeProperNouns } from './proper-noun-normalizer.mjs';
+import { buildPublicPresentation } from './public-presentation.mjs';
 
 const WEAK_PUBLIC_PATTERNS = [
   /\bconsumer laptop\b/i,
@@ -35,10 +36,11 @@ export function evaluateMonetizationReadiness(article = {}) {
   const text = bundle(article);
   const route = routePublicLane(article);
   const source = analyzeSourceTextCompleteness(article);
+  const presentation = buildPublicPresentation(article, { route });
   const publicCopy = guardPublicCopy([
     normalizeProperNouns(String(article.title || '').replace(/…/g, ' ')),
-    article.public_presentation?.deck || article.deck,
-    article.public_presentation?.why_it_matters || article.why_it_matters,
+    presentation.deck,
+    presentation.why_it_matters,
   ].filter(Boolean).join(' '));
   const weakTopic = WEAK_PUBLIC_PATTERNS.find((pattern) => pattern.test(text));
   const premium = ['pro', 'team', 'enterprise'].includes(String(article.access_level || '').toLowerCase())
@@ -59,6 +61,7 @@ export function evaluateMonetizationReadiness(article = {}) {
     route,
     source,
     public_copy: publicCopy,
+    public_presentation: presentation,
     premium,
   };
 }

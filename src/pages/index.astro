@@ -133,47 +133,45 @@ const intelligenceSections = sectionDefinitions.map((definition) => ({
   ...definition,
   items: pickSectionItems(definition),
 })).filter((section) => section.items.length);
-const searchPayload = (searchIndex || []).slice(0, 400).map((item: any) => ({
-  ...(() => {
-    const route = routePublicLane(item);
-    const presentation = buildPublicPresentation(item, { route });
-    return {
-      signal_label: presentation.signal_label,
-      editorial_lens: presentation.editorial_lens,
-      public_deck: presentation.deck,
-      why_it_matters: presentation.why_it_matters,
-    };
-  })(),
-  id: item.id,
-  title: displayHeadline(item),
-  source: item.source,
-  category: item.primary_category || item.category,
-  primary_category: item.primary_category || item.category,
-  secondary_category: item.secondary_category,
-  infrastructure_layer: item.infrastructure_layer,
-  affected_stakeholders: item.affected_stakeholders || [],
-  article_type: item.article_type,
-  region: item.region,
-  summary: cleanEditorialText(item.public_presentation?.why_it_matters || item.summary || item.snippet || ''),
-  expertLensTeaser: cleanEditorialText(item.public_presentation?.deck || item.summary || item.snippet || ''),
-  searchText: [
-    item.title,
-    item.source,
-    item.primary_category,
-    item.secondary_category,
-    item.infrastructure_layer,
-    item.article_type,
-    ...(item.affected_stakeholders || []),
-    item.category,
-    item.region,
-    item.public_presentation?.deck,
-    item.public_presentation?.why_it_matters,
-    ...(item.tags || []),
-  ].filter(Boolean).join(' '),
-  publishedAt: item.publishedAt,
-  href: item['articlePagePublished'] === false || shouldNoindexArticle(item) ? item.sourceUrl || item.url : `/news/${item.id}/`,
-  sourceUrl: item.sourceUrl || item.url,
-}));
+const searchPayload = (searchIndex || []).slice(0, 400).map((item: any) => {
+  const route = routePublicLane(item);
+  const presentation = buildPublicPresentation(item, { route });
+  return {
+    signal_label: presentation.signal_label,
+    editorial_lens: presentation.editorial_lens,
+    public_deck: presentation.deck,
+    why_it_matters: presentation.why_it_matters,
+    id: item.id,
+    title: displayHeadline(item),
+    source: item.source,
+    category: item.primary_category || item.category,
+    primary_category: item.primary_category || item.category,
+    secondary_category: item.secondary_category,
+    infrastructure_layer: item.infrastructure_layer,
+    affected_stakeholders: item.affected_stakeholders || [],
+    article_type: item.article_type,
+    region: item.region,
+    summary: cleanEditorialText(presentation.why_it_matters || item.summary || item.snippet || ''),
+    expertLensTeaser: cleanEditorialText(presentation.deck || item.summary || item.snippet || ''),
+    searchText: [
+      item.title,
+      item.source,
+      item.primary_category,
+      item.secondary_category,
+      item.infrastructure_layer,
+      item.article_type,
+      ...(item.affected_stakeholders || []),
+      item.category,
+      item.region,
+      presentation.deck,
+      presentation.why_it_matters,
+      ...(item.tags || []),
+    ].filter(Boolean).join(' '),
+    publishedAt: item.publishedAt,
+    href: item['articlePagePublished'] === false || shouldNoindexArticle(item) ? item.sourceUrl || item.url : `/news/${item.id}/`,
+    sourceUrl: item.sourceUrl || item.url,
+  };
+});
 const stats = [
   { label: 'Live Signals', value: `${latest.length}` },
   { label: 'Archived', value: `${archiveCount}` },

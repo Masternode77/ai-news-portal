@@ -1,4 +1,25 @@
-const INCOMPLETE_TERMINALS = new Set(['b', 'c', 'd', 'clo', 'te', 'th', 'pla']);
+const INCOMPLETE_TERMINALS = new Set([
+  'b',
+  'c',
+  'd',
+  'clo',
+  'clou',
+  'te',
+  'th',
+  'pla',
+  'platfor',
+  'positionin',
+  'operatin',
+  'plannin',
+  'financin',
+  'deploymen',
+  'procuremen',
+  'infrastructur',
+  'semiconducto',
+  'capacit',
+  'availabilit',
+  'readines',
+]);
 const SAFE_ABBREVIATIONS = new Set(['u.s', 'u.k', 'e.g', 'i.e', 'inc', 'co', 'ltd', 'corp', 'mr', 'ms', 'dr']);
 
 function normalizeText(text = '') {
@@ -26,7 +47,7 @@ export function detectTruncationArtifacts(text = '', options = {}) {
     .filter(Boolean);
 
   for (const sentence of sentenceLike) {
-    const terminal = sentence.match(/\b([A-Za-z]{1,4})\.(?:"|')?$/)?.[1]?.toLowerCase();
+    const terminal = sentence.match(/\b([A-Za-z]{1,16})\.(?:"|')?$/)?.[1]?.toLowerCase();
     if (!terminal) continue;
     const safe = SAFE_ABBREVIATIONS.has(terminal.replace(/\.$/, ''));
     if (!safe && INCOMPLETE_TERMINALS.has(terminal)) {
@@ -34,7 +55,7 @@ export function detectTruncationArtifacts(text = '', options = {}) {
     }
   }
 
-  const lastToken = normalized.match(/\b([A-Za-z]{1,4})\.?$/)?.[1]?.toLowerCase();
+  const lastToken = normalized.match(/\b([A-Za-z]{1,16})\.?$/)?.[1]?.toLowerCase();
   if (
     lastToken &&
     INCOMPLETE_TERMINALS.has(lastToken) &&

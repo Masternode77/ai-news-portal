@@ -5,6 +5,7 @@ import { detectTruncationArtifacts, hasTruncationArtifacts } from '../scripts/li
 test('detects visible incomplete sentence fragments', () => {
   assert.equal(hasTruncationArtifacts('The platform spans on-premises and clo.'), true);
   assert.equal(hasTruncationArtifacts('Memory pressure, swap activity, b.'), true);
+  assert.equal(hasTruncationArtifacts('The company is increasingly positionin.'), true);
 });
 
 test('allows normal complete copy', () => {
