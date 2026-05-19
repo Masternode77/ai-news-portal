@@ -135,15 +135,9 @@ The published image contract is unchanged: generated assets are written under `p
 - `ADMIN_USERNAME` *(optional)*: username required by the private editor. If omitted, any username is accepted as long as the password is correct.
 - `ADMIN_PASSWORD` *(required for editor)*: password for `/admin/edit/<article-id>/`.
 - `ADMIN_AUTH_SECRET` *(recommended)*: long random string used to sign the admin session cookie. If omitted, `ADMIN_PASSWORD` is used as the signing secret.
-- `ADMIN_PAGE_USERNAME` *(optional)*: Basic Auth username for static internal pages. If omitted, `ADMIN_USERNAME` is used.
-- `ADMIN_PAGE_PASSWORD` *(optional)*: Basic Auth password for `/admin/content-quality/` and `/dashboard/`. If omitted, `ADMIN_PASSWORD` is used. If neither is set, those static internal pages return 404.
 - `GITHUB_TOKEN` *(required for editor saves)*: GitHub token with contents write access to this repository.
 - `GITHUB_REPO` *(optional)*: defaults to `Masternode77/ai-news-portal`.
 - `GITHUB_BRANCH` *(optional)*: defaults to `main`.
-
-### Lead capture
-- `LEADS_WEBHOOK_URL` *(recommended for production)*: webhook destination for newsletter, sponsor, report, directory, contact, and enterprise lead forms.
-- `LEADS_STORE_PATH` *(optional for local/self-hosted)*: JSONL path used by the local lead store. Vercel serverless falls back to `/tmp`, so configure `LEADS_WEBHOOK_URL` for durable production capture.
 
 The private editor is not linked from the public site and is marked `noindex`. Open an article editor directly at:
 

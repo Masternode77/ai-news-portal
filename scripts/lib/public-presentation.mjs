@@ -20,15 +20,6 @@ function stakeholderLabels(article = {}) {
   return normalized.length ? normalized : FALLBACK_READER_IMPACT;
 }
 
-function choosePublicCopy(candidates = [], fallback = '') {
-  for (const candidate of candidates) {
-    const guarded = guardPublicCopy(candidate);
-    if (guarded.ok && guarded.text) return guarded.text;
-  }
-  const guardedFallback = guardPublicCopy(fallback);
-  return guardedFallback.text || compact(fallback);
-}
-
 export function publicDetailHref(article = {}) {
   const sourceUrl = article.sourceUrl || article.url || '';
   if (article.articlePagePublished === false || article.archiveOnly === true || article.signalCardOnly === true) {
@@ -45,14 +36,8 @@ export function buildPublicPresentation(article = {}, options = {}) {
     recentDecks: options.recentDecks || [],
   });
   const title = compact(article.expertLensFull?.finalHeadline || article.title || '');
-  const deck = choosePublicCopy(
-    [article.deck, persisted.deck, generated.deck],
-    generated.deck
-  );
-  const why = choosePublicCopy(
-    [article.why_it_matters, persisted.why_it_matters, generated.why_it_matters],
-    generated.why_it_matters
-  );
+  const deck = guardPublicCopy(article.deck || persisted.deck || generated.deck).text;
+  const why = guardPublicCopy(article.why_it_matters || persisted.why_it_matters || generated.why_it_matters).text;
   const detailHref = publicDetailHref(article);
 
   return {

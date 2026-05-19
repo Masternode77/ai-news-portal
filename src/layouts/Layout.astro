@@ -1,9 +1,6 @@
 ---
 import '../styles/global.css';
 import { SITE } from '../config/site';
-import AnalyticsEvent from '../components/AnalyticsEvent.astro';
-import SiteFooter from '../components/SiteFooter.astro';
-import SiteHeader from '../components/SiteHeader.astro';
 
 export interface Props {
   title?: string;
@@ -52,9 +49,6 @@ const ogImage = image.startsWith('http') ? image : joinUrl(SITE.url, image);
     <meta name="twitter:image" content={ogImage} />
   </head>
   <body>
-    <AnalyticsEvent />
-    <SiteHeader />
     <slot />
-    <SiteFooter />
   </body>
 </html>

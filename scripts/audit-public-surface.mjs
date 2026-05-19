@@ -4,8 +4,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import latestNews from '../src/data/latest-news.json' with { type: 'json' };
 import archivedNews from '../src/data/archived-news.json' with { type: 'json' };
-import { CORE_RELEVANCE_THRESHOLD, CORE_LANE_KEYS, routePublicLane } from './lib/public-lane-router.mjs';
-import { buildPublicPresentation } from './lib/public-presentation.mjs';
+import { CORE_RELEVANCE_THRESHOLD, CORE_LANE_KEYS } from './lib/public-lane-router.mjs';
 import {
   duplicateFirstWordPrefixes,
   firstWords,
@@ -152,17 +151,13 @@ function beforeAfterExamples(limit = 10) {
   return [...ARTICLE_BY_ID.values()]
     .filter((article) => article.regeneration_v2_audit && article.public_presentation)
     .slice(0, limit)
-    .map((article) => {
-      const route = routePublicLane(article);
-      const presentation = buildPublicPresentation(article, { route });
-      return {
-        title: article.title,
-        oldDeck: article.regeneration_v2_audit.old_public_deck,
-        newDeck: presentation.deck,
-        oldLane: article.regeneration_v2_audit.old_lane,
-        newLane: presentation.lane_title,
-      };
-    });
+    .map((article) => ({
+      title: article.title,
+      oldDeck: article.regeneration_v2_audit.old_public_deck,
+      newDeck: article.public_presentation.deck,
+      oldLane: article.regeneration_v2_audit.old_lane,
+      newLane: article.public_presentation.lane_title,
+    }));
 }
 
 export async function runAudit(options = {}) {

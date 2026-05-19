@@ -3,7 +3,6 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { hasMalformedProperNouns, malformedProperNouns, normalizeProperNouns } from './proper-noun-normalizer.mjs';
 import { detectTruncationArtifacts } from './truncation-detector.mjs';
-import { publicTemplatePhraseMatches } from './public-template-phrase-guard.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
 const FORBIDDEN_PUBLIC_PHRASES_PATH = path.join(ROOT, 'config/forbiddenPublicPhrases.yml');
@@ -106,18 +105,15 @@ export function guardPublicCopy(value = '', options = {}) {
   const malformed = malformedProperNouns(original);
   const normalized = normalizeProperNouns(original);
   const forbidden = forbiddenPublicPhraseMatches(normalized);
-  const template = publicTemplatePhraseMatches(normalized);
   const truncation = detectTruncationArtifacts(normalized, { allowEllipsis: options.allowEllipsis === true });
   const reasons = [];
   if (forbidden.length) reasons.push(...forbidden.map((phrase) => `forbidden_phrase:${phrase}`));
-  if (template.length) reasons.push(...template.map((match) => `template_phrase:${match.phrase}`));
   if (!truncation.ok) reasons.push(...truncation.artifacts);
   if (hasMalformedProperNouns(original)) reasons.push(...malformed.map((item) => `proper_noun:${item.observed}->${item.expected}`));
   return {
     ok: reasons.length === 0,
     text: normalized,
     forbidden,
-    template_phrase_matches: template,
     truncation,
     malformed_proper_nouns: malformed,
     reasons,

@@ -5,8 +5,7 @@ import { analyzeSourceTextCompleteness } from '../scripts/lib/source-text-comple
 test('blocks source evidence that is too short for a full article', () => {
   const result = analyzeSourceTextCompleteness({ articleText: 'Short source fragment.' });
   assert.equal(result.ok, false);
-  assert.ok(result.reasons.includes('source_evidence_length_below_500'));
-  assert.ok(result.reasons.includes('source_evidence_length_below_1200'));
+  assert.ok(result.reasons.includes('source_evidence_length_below_280'));
 });
 
 test('blocks truncated source evidence even with enough characters', () => {

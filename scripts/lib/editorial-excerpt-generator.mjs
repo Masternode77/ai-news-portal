@@ -56,33 +56,6 @@ function primaryActor(article = {}) {
   return beforeVerb && beforeVerb.length <= 70 ? beforeVerb : (article.source || 'The item');
 }
 
-function firstCleanSentence(value = '') {
-  const sentences = compact(value)
-    .split(/(?<=[.!?])\s+/)
-    .map((sentence) => cleanSentence(sentence))
-    .filter((sentence) => {
-      if (sentence.length < 45 || sentence.length > 240) return false;
-      if (!detectTruncationArtifacts(sentence).ok) return false;
-      if (hasForbiddenPublicPhrase(sentence)) return false;
-      return true;
-    });
-  return sentences[0] || '';
-}
-
-function evidenceSentence(article = {}) {
-  return firstCleanSentence(article.articleText)
-    || firstCleanSentence(article.contentText)
-    || firstCleanSentence(article.snippet)
-    || firstCleanSentence(article.summary)
-    || cleanSentence(article.title || '');
-}
-
-function conciseTitle(article = {}) {
-  const title = compact(article.title || '');
-  if (!title) return 'the reported infrastructure move';
-  return title.length > 120 ? `${title.slice(0, 117).trim()}...` : title;
-}
-
 function sourcePublicationIsSubject(article = {}) {
   const source = compact(article.source || '').toLowerCase();
   const title = compact(article.title || '').toLowerCase();
@@ -96,9 +69,6 @@ function hasSourceSpecificOverride(article = {}) {
     /land and expand/i.test(text) || /nvidia, iren/i.test(text.toLowerCase()) ||
     /spot power trading|electricity spot trading|virtual power plant/i.test(text) ||
     /chip industry week in review/i.test(text) ||
-    /nuclear|microreactor|reactor restart|smr/i.test(text) && /data center|datacenter|campus|power/i.test(text) ||
-    /veeam/i.test(text) && /dataai|data resilience|backup|recovery/i.test(text) ||
-    /structure research|nedas|ai inflection point|sovereign ai/i.test(text) && /data center|digital infrastructure|hyperscale|neocloud/i.test(text) ||
     /paul tudor jones|sports ai|sumersports|sūmersports|football/i.test(text) ||
     /anthropic/i.test(text) && /legal/i.test(text) ||
     /dinosaur|fossil|stegosaurus/i.test(text);
@@ -108,7 +78,7 @@ function sourceQualityProblem(article = {}) {
   const result = analyzeSourceTextCompleteness(article);
   if (result.ok) return false;
   return result.reasons.some((reason) =>
-    /boilerplate|navigation|copyright|truncated|source_evidence_length_below_(500|1200)|cleaned_source_text_below_(500|1200)/.test(reason)
+    /boilerplate|navigation|copyright|truncated|source_evidence_length_below_280/.test(reason)
   );
 }
 
@@ -131,15 +101,6 @@ function sourceSpecificDeck(article = {}, route = routePublicLane(article), arch
   if (/chip industry week in review/i.test(text)) {
     return 'H200 controls, IC funding, and packaging pressure make the chip roundup a supply-chain map rather than a single delivery thesis.';
   }
-  if (/nuclear|microreactor|reactor restart|smr/i.test(text) && /data center|datacenter|campus|power/i.test(text)) {
-    return 'Nuclear-backed power planning is moving from concept to commercial test for AI data center campuses.';
-  }
-  if (/veeam/i.test(text) && /dataai|data resilience|backup|recovery/i.test(text)) {
-    return 'Veeam’s DataAI Command Platform turns backup, governance, and recovery into an enterprise AI readiness signal.';
-  }
-  if (/structure research|nedas|ai inflection point|sovereign ai/i.test(text) && /data center|digital infrastructure|hyperscale|neocloud/i.test(text)) {
-    return 'Structure Research’s AI infrastructure discussion frames power, capital, and sovereign cloud as capacity constraints.';
-  }
   if (/paul tudor jones|sports ai|sumersports|sūmersports|football/i.test(text)) {
     return 'SumerSports is an adjacent AI application signal until it changes compute buying, cloud capacity, or enterprise platform architecture.';
   }
@@ -152,13 +113,12 @@ function sourceSpecificDeck(article = {}, route = routePublicLane(article), arch
 
   const actor = primaryActor(article);
   const layer = compact(article.infrastructure_layer || route.editorial_lens || archetype.editorialLens || 'infrastructure');
-  const event = evidenceSentence(article).replace(/[.!?]+$/, '');
-  const title = conciseTitle(article).replace(/[.!?]+$/, '');
+  const event = compact(article.summary || article.snippet || article.title || '').replace(/[.!?]+$/, '');
   const variants = [
-    `${actor} puts ${layer.toLowerCase()} planning in focus around ${title}`,
-    `${title} makes ${layer.toLowerCase()} the planning lens for infrastructure teams`,
-    `${actor} gives ${route.laneTitle.toLowerCase()} a source-backed ${layer.toLowerCase()} decision point`,
-    `${event} That makes ${archetype.editorialLens.toLowerCase()} the sharper infrastructure read`,
+    `${actor} puts ${layer.toLowerCase()} planning in focus as ${event.toLowerCase()}`,
+    `${actor} gives ${route.laneTitle.toLowerCase()} readers a concrete ${layer.toLowerCase()} signal to test against source evidence`,
+    `${layer} is the useful lens on ${actor} because the source points to a specific operating decision`,
+    `${actor} turns the reported move into a ${archetype.editorialLens.toLowerCase()} question for infrastructure buyers`,
   ];
   return cleanSentence(variants[stableIndex(`${article.id || ''}|${article.title || ''}`, variants.length)]);
 }
@@ -180,15 +140,6 @@ function sourceSpecificWhy(article = {}, route = routePublicLane(article), arche
   if (/chip industry week in review/i.test(text)) {
     return 'A roundup can still be valuable when it separates export controls, funding, equipment supply, and packaging constraints instead of pretending they are one bottleneck.';
   }
-  if (/nuclear|microreactor|reactor restart|smr/i.test(text) && /data center|datacenter|campus|power/i.test(text)) {
-    return 'Operators should watch whether SMRs, reactor restarts, uprates, and utility agreements become financeable capacity options rather than long-range power narratives.';
-  }
-  if (/veeam/i.test(text) && /dataai|data resilience|backup|recovery/i.test(text)) {
-    return 'Enterprise platform teams need data resilience controls before agentic workloads become production systems, especially across security, compliance, and recovery operations.';
-  }
-  if (/structure research|nedas|ai inflection point|sovereign ai/i.test(text) && /data center|digital infrastructure|hyperscale|neocloud/i.test(text)) {
-    return 'Capacity teams should treat the signal as market context until it names projects, buyers, or energy commitments that change deployment timing.';
-  }
   if (/paul tudor jones|sports ai|sumersports|sūmersports|football/i.test(text)) {
     return 'It may matter to AI adoption investors, but it does not yet name a compute, cloud, data center, power, cooling, storage, or network infrastructure decision.';
   }
@@ -201,8 +152,8 @@ function sourceSpecificWhy(article = {}, route = routePublicLane(article), arche
   const stakeholders = Array.isArray(article.affected_stakeholders) && article.affected_stakeholders.length
     ? article.affected_stakeholders.slice(0, 2).join(' and ')
     : 'infrastructure teams';
-  const event = evidenceSentence(article) || conciseTitle(article);
-  return cleanSentence(`For ${stakeholders}, the commercial question is whether ${event.toLowerCase()} changes ${layer.toLowerCase()} timing, cost, capacity, or vendor leverage`);
+  const event = compact(article.summary || article.snippet || article.title || 'the reported change');
+  return cleanSentence(`${stakeholders} should care because ${actor} links ${event.toLowerCase()} to a ${layer.toLowerCase()} decision that can affect timing, vendor leverage, or operating readiness`);
 }
 
 function ensureUniqueDeck(deck = '', article = {}, recentDecks = []) {
@@ -210,9 +161,9 @@ function ensureUniqueDeck(deck = '', article = {}, recentDecks = []) {
   if (!used.has(firstWords(deck, 8))) return deck;
   const route = routePublicLane(article);
   const actor = primaryActor(article);
-  const alternate = cleanSentence(`${route.editorial_lens} is the sharper read on ${actor} because the source names an infrastructure decision point`);
+  const alternate = cleanSentence(`${route.editorial_lens} is the sharper read on ${actor} because the source names a decision point rather than a generic AI trend`);
   return used.has(firstWords(alternate, 8))
-    ? cleanSentence(`${actor} adds a source-specific ${route.editorial_lens.toLowerCase()} signal for infrastructure planners`)
+    ? cleanSentence(`${actor} adds a source-specific ${route.editorial_lens.toLowerCase()} signal for ${route.laneTitle.toLowerCase()} readers`)
     : alternate;
 }
 
@@ -243,8 +194,8 @@ export function generateEditorialExcerpt(article = {}, options = {}) {
   const truncation = detectTruncationArtifacts(`${deck} ${why}`);
   if (!deckGuard.ok || !whyGuard.ok || !truncation.ok || hasForbiddenPublicPhrase(`${deck} ${why}`)) {
     const actor = primaryActor(article);
-    deck = cleanSentence(`${actor} remains a ${route.editorial_lens.toLowerCase()} signal until clean evidence supports a fuller infrastructure memo`);
-    why = cleanSentence(`The public card stays short because the available evidence supports a watchlist signal more than paid analysis`);
+    deck = cleanSentence(`${actor} is a ${route.editorial_lens.toLowerCase()} item for ${route.laneTitle.toLowerCase()} readers, with the infrastructure read limited to source-backed facts`);
+    why = cleanSentence(`The public card stays short because the available evidence supports a watchlist signal more than a full infrastructure memo`);
   }
 
   return {
