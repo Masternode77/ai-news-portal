@@ -1,0 +1,62 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import SponsorSlot from '../../components/SponsorSlot.astro';
+import { SITE } from '../../config/site';
+import { DIRECTORY_CATEGORIES, directoryCategoryBySlug, listingsForCategory } from '../../../scripts/lib/vendor-directory-store.mjs';
+
+export function getStaticPaths() {
+  return DIRECTORY_CATEGORIES.map((category) => ({
+    params: { category: category.slug },
+    props: { category },
+  }));
+}
+
+const { category } = Astro.props;
+const categoryRecord = directoryCategoryBySlug(category.slug);
+const listings = listingsForCategory(category.slug);
+---
+<Layout title={`${category.title} Directory | ${SITE.name}`} description={`AI infrastructure vendor directory for ${category.title}.`} canonicalPath={`/directory/${category.slug}/`}>
+  <main class="product-shell">
+    <section class="product-hero">
+      <p class="eyebrow">Directory</p>
+      <h1>{category.title}</h1>
+      <p>Free listings are visible. Featured listings and category sponsorships are available without changing editorial coverage.</p>
+    </section>
+    <SponsorSlot slotId={categoryRecord?.sponsorSlot} context={{ seed: category.slug }} />
+    <section class="directory-listings">
+      {listings.length ? listings.map((listing) => (
+        <article class:list={['directory-listing', listing.featured && 'directory-listing-featured']}>
+          <div>
+            <h2>{listing.company_name}</h2>
+            <p>{listing.description}</p>
+            <div class="story-meta">
+              <span>{listing.region}</span>
+              <span>{listing.verified ? 'Verified' : 'Unverified'}</span>
+              {listing.featured ? <span>Featured</span> : null}
+            </div>
+          </div>
+          <a href={listing.contact_url || listing.website || '/contact/'}>Contact</a>
+        </article>
+      )) : (
+        <p class="empty-note">No active listings yet. Request a listing below.</p>
+      )}
+    </section>
+    <section id="request-listing" class="lead-form-panel">
+      <div>
+        <p class="eyebrow">Request Listing</p>
+        <h2>Add or claim a directory listing.</h2>
+      </div>
+      <form class="conversion-form" data-form-name={`directory-${category.slug}`} data-analytics-submit="directory_listing_request">
+        <div class="form-grid-two">
+          <label><span>Company name</span><input name="company_name" required /></label>
+          <label><span>Region</span><input name="region" /></label>
+        </div>
+        <label><span>Website</span><input name="website" type="url" /></label>
+        <label><span>Description</span><textarea name="description" rows="4"></textarea></label>
+        <label><span>Contact email</span><input name="email" type="email" required /></label>
+        <button type="submit">Request listing</button>
+        <p class="form-status" data-form-status></p>
+      </form>
+    </section>
+  </main>
+</Layout>

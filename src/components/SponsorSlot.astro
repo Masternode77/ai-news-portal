@@ -1,0 +1,14 @@
+---
+import { selectSponsorForSlot } from '../../scripts/lib/sponsor-rotation.mjs';
+
+const { slotId, context = {} } = Astro.props;
+const sponsor = selectSponsorForSlot(slotId, context) as any;
+---
+{sponsor?.sponsor_name && sponsor?.copy ? (
+  <aside class="sponsor-slot" data-sponsor-slot={slotId}>
+    <span>Sponsored</span>
+    <h2>{sponsor.sponsor_name}</h2>
+    <p>{sponsor.copy}</p>
+    {sponsor.href ? <a href={sponsor.href} rel="sponsored noopener noreferrer" target="_blank">Learn more</a> : null}
+  </aside>
+) : null}

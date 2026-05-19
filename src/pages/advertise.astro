@@ -1,0 +1,65 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { SITE } from '../config/site';
+import { SPONSOR_PRODUCTS, SPONSOR_INTERESTS } from '../../scripts/lib/sponsor-inventory.mjs';
+---
+<Layout
+  title={`Advertise | ${SITE.name}`}
+  description="Sponsor Compute Current and reach AI infrastructure operators, investors, cloud capacity teams, and data center decision makers."
+  canonicalPath="/advertise/"
+>
+  <main class="product-shell">
+    <section class="product-hero">
+      <p class="eyebrow">Advertise</p>
+      <h1>Reach the infrastructure buyers behind the AI buildout.</h1>
+      <p>
+        Compute Current offers direct, clearly labeled sponsorship inventory for companies selling into power, cooling, cloud capacity, silicon, data center, finance, and siting workflows.
+      </p>
+    </section>
+
+    <section class="product-grid">
+      {SPONSOR_PRODUCTS.map((product) => (
+        <article class="product-card">
+          <span>Sponsored</span>
+          <h2>{product}</h2>
+          <p>Direct sponsorship package with editorial separation, clear labeling, and premium placement options.</p>
+        </article>
+      ))}
+    </section>
+
+    <section class="lead-form-panel">
+      <div>
+        <p class="eyebrow">Sponsor Inquiry</p>
+        <h2>Tell us what you want to reach.</h2>
+        <p>We will respond with inventory, availability, audience fit, and sponsorship package options.</p>
+      </div>
+      <form class="conversion-form" data-form-name="sponsor-inquiry" data-analytics-submit="sponsor_inquiry_submit">
+        <div class="form-grid-two">
+          <label><span>Company</span><input name="company" required /></label>
+          <label><span>Contact name</span><input name="contact_name" required /></label>
+        </div>
+        <label><span>Email</span><input name="email" type="email" required /></label>
+        <div class="form-grid-two">
+          <label>
+            <span>Sponsor interest</span>
+            <select name="sponsor_interest">
+              {SPONSOR_INTERESTS.map((interest) => <option value={interest}>{interest}</option>)}
+            </select>
+          </label>
+          <label>
+            <span>Budget range</span>
+            <select name="budget_range">
+              <option value="Under $5k">Under $5k</option>
+              <option value="$5k-$15k">$5k-$15k</option>
+              <option value="$15k-$50k">$15k-$50k</option>
+              <option value="$50k+">$50k+</option>
+            </select>
+          </label>
+        </div>
+        <label><span>Message</span><textarea name="message" rows="5"></textarea></label>
+        <button type="submit" data-analytics-event="advertise_cta_click">Request sponsorship details</button>
+        <p class="form-status" data-form-status></p>
+      </form>
+    </section>
+  </main>
+</Layout>

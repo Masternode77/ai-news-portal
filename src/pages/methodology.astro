@@ -1,0 +1,69 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { SITE } from '../config/site';
+---
+<Layout
+  title={`Methodology | ${SITE.name}`}
+  description="Compute Current methodology for source selection, extraction quality, infrastructure relevance, AI-assisted drafting, human review, corrections, and monetization boundaries."
+  canonicalPath="/methodology/"
+>
+  <main class="policy-shell">
+    <a class="back-link" href="/">Intelligence board</a>
+    <article class="policy-page">
+      <p class="eyebrow">Methodology</p>
+      <h1>How Compute Current turns source reporting into infrastructure intelligence.</h1>
+      <p class="policy-lede">
+        The pipeline separates source facts from interpretation, classifies infrastructure relevance, routes weak items away from core lanes, and prevents low-quality summaries from being sold as premium analysis.
+      </p>
+
+      <section>
+        <h2>1. Source Collection</h2>
+        <p>
+          Sources are selected for relevance to power, grid, data centers, cooling, silicon, systems, cloud capacity, capital formation, policy, siting, and enterprise infrastructure. Generic AI application news is not treated as core infrastructure coverage unless the source connects directly to those layers.
+        </p>
+      </section>
+
+      <section>
+        <h2>2. Extraction QA</h2>
+        <p>
+          Each source is checked for content length, boilerplate leakage, copyright footer text, navigation or subscription copy, sentence completion, truncation artifacts, source-domain adapter fit, and public copy quality.
+        </p>
+      </section>
+
+      <section>
+        <h2>3. Infrastructure Relevance</h2>
+        <p>
+          Articles are scored for direct AI infrastructure relevance, then routed into core lanes, adjacent watchlist, or archive-only treatment. Consumer tech, recruiting spam, generic AI labor, biography, and unrelated application stories are blocked from core infrastructure lanes.
+        </p>
+      </section>
+
+      <section>
+        <h2>4. Taxonomy and Briefing Shape</h2>
+        <p>
+          Qualified items receive a primary category, secondary category, infrastructure layer, affected stakeholders, article type, region, public signal label, editorial lens, and NarrativeDNA. Story structure varies by archetype so repeated generic detail pages do not become the house style.
+        </p>
+      </section>
+
+      <section>
+        <h2>5. Publication and Indexing</h2>
+        <p>
+          High-relevance, high-quality articles can become full Compute Current memos. Medium-relevance items are short signal cards. Low-relevance items are archived. Pro or Enterprise content must pass a premium quality gate before it can be treated as paid analysis.
+        </p>
+      </section>
+
+      <section>
+        <h2>6. Human Review and Corrections</h2>
+        <p>
+          AI-assisted workflows support extraction, classification, summarization, and drafting, but the source article remains the authoritative record. Readers can request corrections through the contact page, and material issues should be corrected or removed from public circulation.
+        </p>
+      </section>
+
+      <nav class="policy-link-row" aria-label="Transparency pages">
+        <a href="/about/">About</a>
+        <a href="/editorial-policy/">Editorial Policy</a>
+        <a href="/ai-disclosure/">AI-assisted Disclosure</a>
+        <a href="/contact/">Corrections</a>
+      </nav>
+    </article>
+  </main>
+</Layout>

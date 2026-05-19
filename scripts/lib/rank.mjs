@@ -11,6 +11,10 @@ function recencyScore(isoDate) {
 }
 
 function relevanceScore(item) {
+  if (Number.isFinite(item.infrastructure_relevance_score)) {
+    return Math.round(item.infrastructure_relevance_score * 42);
+  }
+
   const haystack = `${item.title} ${item.snippet} ${item.contentText || ''}`.toLowerCase();
   let score = 0;
   for (const keyword of RELEVANCE_KEYWORDS) {
@@ -26,7 +30,7 @@ function completenessScore(item) {
   let score = 0;
   if (item.snippet?.length > 80) score += 5;
   if (item.contentText?.length > 180) score += 7;
-  if (item.defaultCategory || item.categoryHint) score += 2;
+  if (item.primary_category || item.defaultCategory || item.categoryHint) score += 2;
   return score;
 }
 

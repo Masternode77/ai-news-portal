@@ -1,0 +1,37 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { SITE } from '../../config/site';
+import { ENTERPRISE_CAPABILITIES } from '../../../scripts/lib/enterprise-leads.mjs';
+---
+<Layout title={`Request Enterprise Demo | ${SITE.name}`} description="Request a Compute Current Terminal demo." canonicalPath="/enterprise/request-demo/">
+  <main class="product-shell product-shell-narrow">
+    <section class="product-hero">
+      <p class="eyebrow">Request Demo</p>
+      <h1>Tell us what your team needs to monitor.</h1>
+      <p>We will follow up on enterprise seats, watchlists, API/RSS, alerts, dashboards, and research needs.</p>
+    </section>
+    <form class="conversion-form lead-form-full" data-form-name="enterprise-demo" data-analytics-submit="enterprise_cta_click">
+      <div class="form-grid-two">
+        <label><span>Name</span><input name="name" required /></label>
+        <label><span>Company</span><input name="company" required /></label>
+      </div>
+      <div class="form-grid-two">
+        <label><span>Role</span><input name="role" /></label>
+        <label><span>Email</span><input name="email" type="email" required /></label>
+      </div>
+      <label><span>Use case</span><textarea name="use_case" rows="4"></textarea></label>
+      <div class="form-grid-two">
+        <label><span>Team size</span><input name="team_size" /></label>
+        <label><span>Budget range</span><input name="budget_range" /></label>
+      </div>
+      <fieldset class="interest-grid">
+        <legend>Requested capabilities</legend>
+        {ENTERPRISE_CAPABILITIES.map((capability) => (
+          <label><input type="checkbox" name="requested_capabilities" value={capability} /><span>{capability}</span></label>
+        ))}
+      </fieldset>
+      <button type="submit">Request demo</button>
+      <p class="form-status" data-form-status></p>
+    </form>
+  </main>
+</Layout>

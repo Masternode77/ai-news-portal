@@ -1,0 +1,56 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { SITE } from '../config/site';
+---
+<Layout
+  title={`About | ${SITE.name}`}
+  description="About Compute Current, an AI infrastructure intelligence publication for operators, investors, cloud capacity teams, data center developers, and infrastructure strategists."
+  canonicalPath="/about/"
+>
+  <main class="policy-shell">
+    <a class="back-link" href="/">Intelligence board</a>
+    <article class="policy-page">
+      <p class="eyebrow">About</p>
+      <h1>Compute Current tracks the constraints behind the AI buildout.</h1>
+      <p class="policy-lede">
+        Compute Current is an AI infrastructure intelligence publication tracking power, cooling, semiconductors, cloud capacity, data centers, capital flows, and policy risk.
+      </p>
+
+      <section>
+        <h2>What We Cover</h2>
+        <p>
+          Coverage areas include power and grid, data centers, cooling, semiconductors, cloud capacity, capital flows, policy and siting risk, and enterprise infrastructure.
+        </p>
+      </section>
+
+      <section>
+        <h2>Who We Serve</h2>
+        <p>
+          The publication is built for data center operators, colocation and wholesale teams, hyperscaler capacity groups, infrastructure investors, power stakeholders, silicon and networking suppliers, enterprise infrastructure buyers, and policy professionals.
+        </p>
+      </section>
+
+      <section>
+        <h2>What We Do Not Try To Be</h2>
+        <p>
+          Compute Current is not a generic AI blog. We do not force weakly related AI news into an infrastructure frame, and we do not publish long-form generated memos from sources that fail extraction quality checks.
+        </p>
+      </section>
+
+      <section>
+        <h2>Reader Promise</h2>
+        <p>
+          Every full memo is intended to answer what changed, why it matters for AI infrastructure, who benefits, who is exposed, and what bottleneck or decision point readers should watch next.
+        </p>
+      </section>
+
+      <nav class="policy-link-row" aria-label="Transparency pages">
+        <a href="/editorial-policy/">Editorial Policy</a>
+        <a href="/methodology/">Methodology</a>
+        <a href="/ai-disclosure/">AI-assisted Disclosure</a>
+        <a href="/pricing/">Pricing</a>
+        <a href="/advertise/">Advertise</a>
+      </nav>
+    </article>
+  </main>
+</Layout>

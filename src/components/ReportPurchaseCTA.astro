@@ -1,0 +1,25 @@
+---
+const { report, compact = false } = Astro.props;
+---
+<section class:list={['report-purchase-cta', compact && 'report-purchase-cta-compact']}>
+  <div>
+    <p class="eyebrow">Premium Report</p>
+    <h2>{report.title}</h2>
+    <p>
+      Payment integration is not configured yet. Request this report and Compute Current will follow up with availability, license options, and enterprise access.
+    </p>
+  </div>
+  <form class="conversion-form" data-form-name={`report-${report.slug}`} data-analytics-submit="report_purchase_click">
+    <input type="hidden" name="report" value={report.title} />
+    <label>
+      <span>Email</span>
+      <input type="email" name="email" required placeholder="you@company.com" />
+    </label>
+    <label>
+      <span>Company</span>
+      <input type="text" name="company" placeholder="Company" />
+    </label>
+    <button type="submit">Request report</button>
+    <p class="form-status" data-form-status></p>
+  </form>
+</section>

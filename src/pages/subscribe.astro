@@ -1,0 +1,33 @@
+---
+import Layout from '../layouts/Layout.astro';
+import NewsletterSignup from '../components/NewsletterSignup.astro';
+import { SITE } from '../config/site';
+---
+<Layout
+  title={`Subscribe | ${SITE.name}`}
+  description="Subscribe to the Daily AI Infrastructure Brief from Compute Current."
+  canonicalPath="/subscribe/"
+>
+  <main class="product-shell">
+    <section class="product-hero">
+      <p class="eyebrow">Newsletter</p>
+      <h1>Daily AI Infrastructure Brief</h1>
+      <p>
+        A concise daily read on power, capacity, silicon, cooling, cloud, capital, and policy signals behind the AI buildout.
+      </p>
+    </section>
+
+    <NewsletterSignup variant="page" source="subscribe-page" />
+
+    <section class="product-band">
+      <div>
+        <p class="eyebrow">Upgrade Path</p>
+        <h2>Need more than the free brief?</h2>
+      </div>
+      <p>
+        Pro adds weekly analyst memos, premium archive access, market maps, and PDF briefing downloads for infrastructure readers who need a durable research workflow.
+      </p>
+      <a class="product-button" href="/pricing/" data-analytics-event="pro_cta_click" data-analytics-label="Subscribe page Pro CTA">See Pro pricing</a>
+    </section>
+  </main>
+</Layout>

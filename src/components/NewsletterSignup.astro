@@ -1,0 +1,51 @@
+---
+import { NEWSLETTER_INTERESTS, ROLE_SEGMENTS } from '../../scripts/lib/newsletter-segmentation.mjs';
+
+const {
+  variant = 'default',
+  title = 'Daily AI Infrastructure Brief',
+  source = 'site',
+  compact = false,
+} = Astro.props;
+---
+<section
+  class:list={['newsletter-signup', `newsletter-signup-${variant}`, compact && 'newsletter-signup-compact']}
+  data-newsletter-signup
+>
+  <div class="newsletter-copy">
+    <p class="eyebrow">Daily Brief</p>
+    <h2>{title}</h2>
+    <p>Power, capacity, silicon, cooling, and capital signals behind the AI buildout.</p>
+  </div>
+  <form class="conversion-form" data-form-name={`newsletter-${source}`} data-analytics-submit="newsletter_signup_submit">
+    <input type="hidden" name="source" value={source} />
+    <label>
+      <span>Email</span>
+      <input name="email" type="email" required placeholder="you@company.com" />
+    </label>
+    <div class="form-grid-two">
+      <label>
+        <span>Role</span>
+        <select name="role">
+          <option value="">Select role</option>
+          {ROLE_SEGMENTS.map((role) => <option value={role}>{role}</option>)}
+        </select>
+      </label>
+      <label>
+        <span>Company</span>
+        <input name="company" type="text" placeholder="Company" />
+      </label>
+    </div>
+    <fieldset class="interest-grid">
+      <legend>Interests</legend>
+      {NEWSLETTER_INTERESTS.map((interest) => (
+        <label>
+          <input type="checkbox" name="interests" value={interest} />
+          <span>{interest}</span>
+        </label>
+      ))}
+    </fieldset>
+    <button type="submit">Sign up free</button>
+    <p class="form-status" data-form-status></p>
+  </form>
+</section>

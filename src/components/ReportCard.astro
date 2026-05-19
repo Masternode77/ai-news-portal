@@ -1,0 +1,16 @@
+---
+const { report } = Astro.props;
+---
+<article class="report-card">
+  <div>
+    <p class="eyebrow">{report.category}</p>
+    <h2><a href={`/reports/${report.slug}/`}>{report.title}</a></h2>
+    <p>{report.executive_summary}</p>
+  </div>
+  <div class="report-card-footer">
+    <span>{report.price}</span>
+    <a href={`/reports/${report.slug}/`} data-analytics-event="report_view" data-analytics-label={report.title}>
+      View preview
+    </a>
+  </div>
+</article>
