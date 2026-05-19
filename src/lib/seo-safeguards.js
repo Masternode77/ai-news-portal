@@ -1,3 +1,5 @@
+import { seoNoindexReasons as qualityNoindexReasons } from '../../scripts/lib/seo-quality-policy.mjs';
+
 export const ARTICLE_INDEXING_THRESHOLDS = {
   extractionQuality: 0.8,
   infrastructureRelevance: 0.75,
@@ -97,6 +99,8 @@ export const articleNoindexReasons = (article = {}) => {
   ) {
     addReason(`infrastructure_relevance_below_${ARTICLE_INDEXING_THRESHOLDS.infrastructureRelevance}`);
   }
+
+  qualityNoindexReasons(article).forEach(addReason);
 
   return reasons;
 };

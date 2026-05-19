@@ -12,6 +12,7 @@ import { taxonomyDisplay } from '../lib/taxonomy-display.js';
 import { routePublicLane } from '../../scripts/lib/public-lane-router.mjs';
 
 const boardTitle = SITE.name;
+const HIDDEN_PUBLIC_STATUSES = new Set(['quarantined', 'archive_only_noindex']);
 
 const formatTimeAgo = (iso: string) => {
   const ms = Date.now() - new Date(iso).getTime();
@@ -25,9 +26,20 @@ const formatTimeAgo = (iso: string) => {
 
 const homepageEligibleNews = (latestNews || []).filter((item: any) =>
   item.homepagePublished !== false
+  && item.quarantined !== true
+  && !HIDDEN_PUBLIC_STATUSES.has(item.public_status)
   && item.archiveOnly !== true
   && item.infrastructure_relevance_action !== 'archive_only'
 );
+
+const searchEligible = (item: any) =>
+  item?.id
+  && item.quarantined !== true
+  && !HIDDEN_PUBLIC_STATUSES.has(item.public_status)
+  && item.archiveOnly !== true
+  && item.infrastructure_relevance_action !== 'archive_only'
+  && (item.homepagePublished !== false || item.articlePagePublished !== false)
+  && !shouldNoindexArticle(item);
 
 const recentDecks: string[] = [];
 const latest = homepageEligibleNews.map((item: any, idx) => {
@@ -75,12 +87,13 @@ const intelligenceNav = [
   'Market Maps',
   'Adjacent Watchlist',
 ];
-const coreLatest = latest.filter((item: any) => item.publicRouting.visibility === 'core' && item.hasArticlePage);
+const coreLatest = latest.filter((item: any) => item.publicRouting.visibility === 'core');
 const topConstraint = [...coreLatest].sort((a: any, b: any) => {
   const aScore = (a.taxonomy.urgency || 0) * 0.58 + (a.publicRouting.score || 0) * 0.42;
   const bScore = (b.taxonomy.urgency || 0) * 0.58 + (b.publicRouting.score || 0) * 0.42;
   return bScore - aScore;
 })[0];
+const topConstraintHref = topConstraint ? (topConstraint.detailHref || topConstraint.sourceUrl || '#') : '#';
 const usedIds = new Set(topConstraint ? [topConstraint.id] : []);
 const sectionDefinitions = [
   {
@@ -131,7 +144,7 @@ const intelligenceSections = sectionDefinitions.map((definition) => ({
   ...definition,
   items: pickSectionItems(definition),
 })).filter((section) => section.items.length);
-const searchPayload = (searchIndex || []).slice(0, 400).map((item: any) => ({
+const searchPayload = (searchIndex || []).filter(searchEligible).slice(0, 400).map((item: any) => ({
   ...(() => {
     const route = item.public_routing || routePublicLane(item);
     const presentation = buildPublicPresentation(item, { route });
@@ -225,11 +238,17 @@ const stats = [
 
     {topConstraint ? (
       <section class="constraint-board">
-        <article class="constraint-lead">
+        <article
+          class="constraint-lead"
+          data-public-card
+          data-article-id={topConstraint.id}
+          data-lane={topConstraint.publicSignal.lane_key}
+          data-deck={topConstraint.publicSignal.deck}
+        >
           <div class="constraint-label">
             <p class="eyebrow">Today's Constraint</p>
             <span>{topConstraint.publicSignal.editorial_lens}</span>
-            <a class="constraint-media" href={topConstraint.detailHref} aria-label={topConstraint.title}>
+            <a class="constraint-media" href={topConstraintHref} aria-label={topConstraint.title}>
               <img src={topConstraint.displayImage} alt={topConstraint.title} loading="eager" />
             </a>
           </div>
@@ -241,7 +260,7 @@ const stats = [
               <time>{topConstraint.timeAgo}</time>
             </div>
             <h2>
-              <a href={topConstraint.detailHref}>{topConstraint.title}</a>
+              <a href={topConstraintHref}>{topConstraint.title}</a>
             </h2>
             <p class="signal-deck">{topConstraint.publicSignal.deck}</p>
             <p>{topConstraint.publicSignal.why_it_matters}</p>

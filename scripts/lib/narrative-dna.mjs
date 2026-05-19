@@ -286,7 +286,7 @@ export function buildNarrativeArticleBody(article = {}, options = {}) {
     lines.push(heading);
     lines.push(paragraphForHeading(heading, article, dna));
   }
-  const closing = sentence(`For Compute Current readers, the decision point is whether ${dna.watch_metric} changes ${dna.infrastructure_layer.toLowerCase()} planning before the story is treated as core capacity`);
+  const closing = sentence(`Readers should track ${dna.watch_metric} before treating the item as a planning assumption for ${dna.infrastructure_layer.toLowerCase()}`);
   lines.push(closing);
   return lines
     .map((line) => guardPublicCopy(line).text)

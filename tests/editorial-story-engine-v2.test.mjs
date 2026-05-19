@@ -7,7 +7,7 @@ const netapp = {
   title: 'NetApp Expands OpenShift Data Management With Faster VM Backup, DR, and Cloud Scale Support',
   source: 'StorageReview',
   summary: 'NetApp announced data management updates for Red Hat OpenShift backup and DR.',
-  articleText: 'NetApp announced a set of data management updates for Red Hat OpenShift to improve backup predictability, disaster recovery, and operational scalability across on-premises and cloud-based virtualized environments. The release focuses on OpenShift Virtualization deployments, where growing VM counts and larger datasets can make traditional full-disk backup approaches harder to operate. Platform teams can watch restore speed, DR failover validation, and cross-environment management as AI workloads move from pilot to production.',
+  articleText: `${'NetApp announced a set of data management updates for Red Hat OpenShift to improve backup predictability, disaster recovery, and operational scalability across on-premises and cloud-based virtualized environments. The release focuses on OpenShift Virtualization deployments, where growing VM counts and larger datasets can make traditional full-disk backup approaches harder to operate. Platform teams can watch restore speed, DR failover validation, and cross-environment management as AI workloads move from pilot to production. '.repeat(3)}Final sentence complete.`,
   infrastructure_layer: 'Enterprise Platform',
   infrastructure_relevance_score: 1,
   affected_stakeholders: ['platform teams', 'enterprise IT'],
