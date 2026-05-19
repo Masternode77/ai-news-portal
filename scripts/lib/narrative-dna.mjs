@@ -43,6 +43,23 @@ function limitClean(value = '', maxLen = 180) {
   return clipped || cleaned.slice(0, maxLen).trim();
 }
 
+function completeSentenceExcerpt(value = '', maxLen = 260) {
+  const cleaned = compact(value).replace(/(?:…|\.{3}).*$/g, '');
+  const sentences = cleaned.match(/[^.!?]+[.!?]/g) || [];
+  const picked = [];
+  let length = 0;
+  for (const raw of sentences) {
+    const sentenceText = compact(raw);
+    if (sentenceText.length < 18) continue;
+    if (detectTruncationArtifacts(sentenceText).ok === false) continue;
+    if (length && length + sentenceText.length + 1 > maxLen) break;
+    if (!length && sentenceText.length > maxLen) continue;
+    picked.push(sentenceText);
+    length += sentenceText.length + 1;
+  }
+  return picked.join(' ').trim();
+}
+
 function textBundle(article = {}) {
   return compact([
     article.title,
@@ -99,7 +116,12 @@ function concreteEvent(article = {}) {
   if (/memory pricing/i.test(text)) return 'AI memory pricing is pushing into virtualization planning across Proxmox, KVM, Hyper-V, Nutanix, and XCP-ng estates';
   if (/spot power trading|electricity spot/i.test(text)) return 'large data centers in China joined electricity spot trading through virtual power plant participation';
   if (/Land and Expand/i.test(text)) return 'a Data Center Frontier roundup grouped NVIDIA, IREN, Coatue, Microsoft, Switch, Cerebras, and Core Scientific into one market view';
-  return firstUseful([summary, title], title || 'the source reported a new infrastructure signal');
+  return firstUseful([
+    completeSentenceExcerpt(article.articleText, 220),
+    completeSentenceExcerpt(article.contentText, 220),
+    completeSentenceExcerpt(summary, 220),
+    title,
+  ], title || 'the source reported a new infrastructure signal');
 }
 
 function evidenceAnchor(article = {}) {
@@ -113,8 +135,11 @@ function evidenceAnchor(article = {}) {
     article.snippet,
     article.title,
   ];
-  const value = firstUseful(candidates, article.title || '');
-  return limitClean(value, 380);
+  const value = candidates
+    .map((candidate) => completeSentenceExcerpt(candidate, 380))
+    .find((candidate) => candidate && candidate.length >= 40)
+    || firstUseful([article.title], article.title || '');
+  return value;
 }
 
 function protagonist(article = {}) {
@@ -184,6 +209,8 @@ function isGenericWatchMetric(value = '') {
     /timing, site readiness, buyer commitment/i.test(value) ||
     /operating impact/i.test(value) ||
     /execution details/i.test(value) ||
+    /evidence tied to a named customer, deployment milestone, cost metric, or operating constraint/i.test(value) ||
+    /concrete infrastructure dependency named by the next source update/i.test(value) ||
     value.length < 24;
 }
 
@@ -286,7 +313,7 @@ export function buildNarrativeArticleBody(article = {}, options = {}) {
     lines.push(heading);
     lines.push(paragraphForHeading(heading, article, dna));
   }
-  const closing = sentence(`For Compute Current readers, the decision point is whether ${dna.watch_metric} changes ${dna.infrastructure_layer.toLowerCase()} planning before the story is treated as core capacity`);
+  const closing = sentence(`The decision checkpoint is whether ${dna.watch_metric} changes ${dna.infrastructure_layer.toLowerCase()} planning enough to alter procurement, deployment, or risk assumptions`);
   lines.push(closing);
   return lines
     .map((line) => guardPublicCopy(line).text)

@@ -16,8 +16,8 @@ test('monetization gate downgrades weak consumer topics before core monetization
   };
   const result = evaluateMonetizationReadiness(article);
   assert.equal(result.ok, true);
-  assert.equal(result.route.visibility, 'adjacent');
-  assert.match(result.route.blocked_reasons.join(' '), /adjacent_topic_boundary/);
+  assert.equal(result.route.visibility, 'archive');
+  assert.match(result.route.blocked_reasons.join(' '), /outside_compute_current_product_boundary/);
 });
 
 test('premium quality gate rejects short summaries sold as Pro analysis', () => {

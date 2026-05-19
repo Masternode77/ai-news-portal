@@ -19,10 +19,14 @@ import {
 import { forbiddenPublicPhraseMatches, guardPublicCopy } from '../../../scripts/lib/copy-quality-guard.mjs';
 import { evaluatePaywallPolicy } from '../../../scripts/lib/paywall-policy.mjs';
 import { routePublicLane } from '../../../scripts/lib/public-lane-router.mjs';
+import { articleDetailQualityResult } from '../../../scripts/lib/article-detail-quality-gate.mjs';
 
 export function getStaticPaths() {
   return [...latestNews, ...archivedNews]
-    .filter((article) => article?.id && article['articlePagePublished'] !== false && routePublicLane(article).visibility === 'core' && !shouldNoindexArticle(article))
+    .filter((article) => {
+      if (!article?.id || article['articlePagePublished'] === false || shouldNoindexArticle(article)) return false;
+      return articleDetailQualityResult(article).ok;
+    })
     .map((article) => ({
       params: { id: article.id },
       props: { article },
@@ -46,19 +50,20 @@ const executiveSummary = executiveSummaryLines(article)
   .map((line) => guardPublicCopy(line).text)
   .filter((line) => !forbiddenPublicPhraseMatches(line).length)
   .slice(0, 3);
-const executiveSummaryLabel = lens?.dynamicBriefLabel || article.dynamic_brief_label || article.narrative_dna?.brief_label || 'Operator Note';
+const rawExecutiveSummaryLabel = lens?.dynamicBriefLabel || article.dynamic_brief_label || article.narrative_dna?.brief_label || 'At a glance';
+const executiveSummaryLabel = /editor'?s brief/i.test(rawExecutiveSummaryLabel)
+  ? 'At a glance'
+  : guardPublicCopy(rawExecutiveSummaryLabel).text || 'At a glance';
 const taxonomy = taxonomyDisplay(articleRecord);
 const publicRouting = routePublicLane(articleRecord);
+const detailQuality = articleDetailQualityResult(articleRecord, { route: publicRouting });
 const publicPresentation = buildPublicPresentation(articleRecord, { route: publicRouting });
 const articleDescription = cleanEditorialText(publicPresentation.deck || lens?.metaDescription || article.summary || article.snippet || article.title);
 const sourceAttribution = sourceAttributionFor(articleRecord);
 const noindexReasons = articleNoindexReasons(articleRecord);
 const noindexArticle = shouldNoindexArticle(articleRecord);
-const articleBodyBlocks = (lens?.finalArticleBody || article.articleText || article.snippet || article.summary || '')
-  .split(/\n{2,}/)
-  .map((paragraph) => guardPublicCopy(cleanEditorialText(paragraph)).text)
-  .filter((paragraph) => !/^(why it matters|pressure points|market implications|what to watch)$/i.test(paragraph))
-  .filter((paragraph) => !forbiddenPublicPhraseMatches(paragraph).length)
+const articleBodyBlocks = detailQuality.bodyBlocks
+  .map((paragraph) => cleanEditorialText(paragraph))
   .filter(Boolean);
 const paywallPolicy = evaluatePaywallPolicy(articleRecord, { userTier: 'anonymous' });
 const visibleArticleBodyBlocks = paywallPolicy.previewOnly

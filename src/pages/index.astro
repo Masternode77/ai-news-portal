@@ -13,6 +13,8 @@ import { shouldNoindexArticle } from '../lib/seo-safeguards.js';
 import { taxonomyDisplay } from '../lib/taxonomy-display.js';
 import { routePublicLane } from '../../scripts/lib/public-lane-router.mjs';
 import { buildPublicSearchPayload, publicSearchEligible } from '../../scripts/lib/public-search-index.mjs';
+import { homepageQualityResult } from '../../scripts/lib/homepage-quality-filter.mjs';
+import { deckPrefix } from '../../scripts/lib/homepage-card-copy-guard.mjs';
 
 const boardTitle = SITE.name;
 
@@ -26,13 +28,10 @@ const formatTimeAgo = (iso: string) => {
   return `${days}d ago`;
 };
 
-const homepageEligibleNews = (latestNews || []).filter((item: any) =>
-  item.homepagePublished !== false
-  && item.archiveOnly !== true
-  && item.infrastructure_relevance_action !== 'archive_only'
-);
+const homepageEligibleNews = (latestNews || []).filter((item: any) => item?.id);
 
 const recentDecks: string[] = [];
+const seenDeckPrefixes = new Set<string>();
 const latest = homepageEligibleNews.map((item: any, idx) => {
   const sourceUrl = item.sourceUrl || item.url;
   const route = routePublicLane(item);
@@ -45,6 +44,10 @@ const latest = homepageEligibleNews.map((item: any, idx) => {
     },
     { route, recentDecks }
   );
+  const quality = homepageQualityResult(item, { route, presentation: publicSignal, recentDecks });
+  const prefix = deckPrefix(publicSignal.deck);
+  if (!quality.ok || (prefix && seenDeckPrefixes.has(prefix))) return null;
+  if (prefix) seenDeckPrefixes.add(prefix);
   recentDecks.push(publicSignal.deck);
   return {
     ...item,

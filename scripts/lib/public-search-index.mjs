@@ -1,11 +1,17 @@
 import { buildPublicPresentation } from './public-presentation.mjs';
 import { routePublicLane } from './public-lane-router.mjs';
+import { sourceExtractionPassesPublicGate } from './source-extraction-fail-closed.mjs';
+import { shouldNoindexPublicArticle } from './seo-quality-policy.mjs';
 
 export function publicSearchEligible(article = {}, route = routePublicLane(article)) {
   return route.visibility !== 'archive'
     && article.homepagePublished !== false
     && article.archiveOnly !== true
-    && article.infrastructure_relevance_action !== 'archive_only';
+    && article.infrastructure_relevance_action !== 'archive_only'
+    && article.public_status !== 'quarantined'
+    && article.public_status !== 'archive_only_noindex'
+    && !shouldNoindexPublicArticle(article, { route })
+    && sourceExtractionPassesPublicGate(article).ok;
 }
 
 export function buildPublicSearchPayload(article = {}, helpers = {}) {

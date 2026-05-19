@@ -1,4 +1,32 @@
-export const PROPER_NOUN_REPLACEMENTS = [
+import fs from 'node:fs';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+
+const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
+const CONFIG_PATH = path.join(ROOT, 'config/properNouns.yml');
+
+function parseProperNounsConfig() {
+  try {
+    const lines = fs.readFileSync(CONFIG_PATH, 'utf8').split(/\r?\n/);
+    const pairs = [];
+    let inBlock = false;
+    for (const line of lines) {
+      const trimmed = line.trim();
+      if (trimmed === 'proper_nouns:') {
+        inBlock = true;
+        continue;
+      }
+      if (!inBlock || !trimmed || trimmed.startsWith('#')) continue;
+      const match = line.match(/^\s*([^:]+):\s*["']?(.+?)["']?\s*$/);
+      if (match?.[1] && match?.[2]) pairs.push([match[1].trim(), match[2].trim()]);
+    }
+    return pairs;
+  } catch {
+    return [];
+  }
+}
+
+const DEFAULT_PROPER_NOUN_REPLACEMENTS = [
   ['netapp', 'NetApp'],
   ['red hat', 'Red Hat'],
   ['openshift', 'OpenShift'],
@@ -30,9 +58,18 @@ export const PROPER_NOUN_REPLACEMENTS = [
   ['ai', 'AI'],
   ['gpu', 'GPU'],
   ['gpus', 'GPUs'],
+  ['cpu', 'CPU'],
+  ['cdu', 'CDU'],
+  ['cdus', 'CDUs'],
+  ['ppa', 'PPA'],
+  ['reit', 'REIT'],
   ['vm', 'VM'],
   ['vms', 'VMs'],
   ['dr', 'DR'],
+];
+
+export const PROPER_NOUN_REPLACEMENTS = [
+  ...new Map([...DEFAULT_PROPER_NOUN_REPLACEMENTS, ...parseProperNounsConfig()].map(([source, replacement]) => [source, [source, replacement]])).values(),
 ];
 
 function escapeRegExp(value = '') {

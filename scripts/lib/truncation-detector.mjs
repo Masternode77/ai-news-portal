@@ -4,6 +4,8 @@ const INCOMPLETE_TERMINALS = new Set([
   'd',
   'clo',
   'clou',
+  'fuelin',
+  'hundreds o',
   'te',
   'th',
   'pla',
@@ -37,6 +39,14 @@ export function detectTruncationArtifacts(text = '', options = {}) {
     artifacts.push('single_letter_or_clo_sentence_fragment');
   }
 
+  if (/(?:^|\s)(?:fuelin|hundreds\s+o)\.(?:\s|$)/i.test(normalized)) {
+    artifacts.push('known_clipped_sentence_fragment');
+  }
+
+  if (/(?:^|\s)[a-z]\.(?:\s|$)/.test(normalized)) {
+    artifacts.push('single_lowercase_letter_sentence_fragment');
+  }
+
   if (!options.allowEllipsis && /(?:…|\.{3})/.test(normalized)) {
     artifacts.push('ellipsis_truncation_artifact');
   }
@@ -47,7 +57,7 @@ export function detectTruncationArtifacts(text = '', options = {}) {
     .filter(Boolean);
 
   for (const sentence of sentenceLike) {
-    const terminal = sentence.match(/\b([A-Za-z]{1,16})\.(?:"|')?$/)?.[1]?.toLowerCase();
+    const terminal = sentence.match(/\b([A-Za-z](?:[A-Za-z]|\s){0,16})\.(?:"|')?$/)?.[1]?.toLowerCase();
     if (!terminal) continue;
     const safe = SAFE_ABBREVIATIONS.has(terminal.replace(/\.$/, ''));
     if (!safe && INCOMPLETE_TERMINALS.has(terminal)) {
@@ -69,6 +79,18 @@ export function detectTruncationArtifacts(text = '', options = {}) {
     ok: artifacts.length === 0,
     artifacts: [...new Set(artifacts)],
   };
+}
+
+export function sentenceCompletionScore(text = '') {
+  const normalized = normalizeText(text);
+  if (!normalized) return 0;
+  const fragments = detectTruncationArtifacts(normalized, { allowEllipsis: true });
+  const sentences = normalized.split(/(?<=[.!?])\s+/).map((sentence) => sentence.trim()).filter(Boolean);
+  const complete = sentences.filter((sentence) => /[.!?]["')\]]?$/.test(sentence)).length;
+  const terminal = /[.!?]["')\]]?$/.test(normalized) ? 1 : 0;
+  const base = sentences.length ? complete / sentences.length : terminal;
+  const penalty = fragments.artifacts.length ? Math.min(0.5, fragments.artifacts.length * 0.18) : 0;
+  return Number(Math.max(0, Math.min(1, base * 0.85 + terminal * 0.15 - penalty)).toFixed(3));
 }
 
 export function hasTruncationArtifacts(text = '', options = {}) {

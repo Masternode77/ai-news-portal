@@ -108,7 +108,7 @@ function sourceQualityProblem(article = {}) {
   const result = analyzeSourceTextCompleteness(article);
   if (result.ok) return false;
   return result.reasons.some((reason) =>
-    /boilerplate|navigation|copyright|truncated|source_evidence_length_below_280/.test(reason)
+    /boilerplate|navigation|copyright|truncated|source_evidence_length_below_(500|1200)|cleaned_source_text_below_(500|1200)/.test(reason)
   );
 }
 

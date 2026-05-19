@@ -5,6 +5,7 @@ import { fileURLToPath } from 'node:url';
 import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 import { articleCanonicalPath, shouldNoindexArticle } from './src/lib/seo-safeguards.js';
+import { sitemapArticleEligible } from './scripts/lib/sitemap-quality-filter.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const loadArticles = (filename) => {
@@ -16,7 +17,7 @@ const loadArticles = (filename) => {
 };
 const noindexArticlePaths = new Set(
   [...loadArticles('latest-news.json'), ...loadArticles('archived-news.json')]
-    .filter((article) => article?.id && shouldNoindexArticle(article))
+    .filter((article) => article?.id && (shouldNoindexArticle(article) || !sitemapArticleEligible(article)))
     .map((article) => articleCanonicalPath(article))
 );
 
