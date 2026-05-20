@@ -1,1 +1,0 @@
-Extract 3-8 source-backed facts, named actors, affected infrastructure layer, operating implication, commercial implication, counterargument, and 2-3 watch metrics. Do not use boilerplate or truncated text.

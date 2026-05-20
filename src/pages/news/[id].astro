@@ -1,32 +1,13 @@
 ---
 import Layout from '../../layouts/Layout.astro';
-import PublicArticleHeader from '../../components/PublicArticleHeader.astro';
-import PublicArticleBody from '../../components/PublicArticleBody.astro';
-import PublicAtAGlance from '../../components/PublicAtAGlance.astro';
-import PublicWhatToWatch from '../../components/PublicWhatToWatch.astro';
-import PublicBottomLine from '../../components/PublicBottomLine.astro';
-import NewsletterCapture from '../../components/NewsletterCapture.astro';
 import latestNews from '../../data/latest-news.json';
 import archivedNews from '../../data/archived-news.json';
 import { SITE } from '../../config/site';
-import { buildPublicArticleModel, publicArticleIsPublishable } from '../../lib/publicArticleModel.js';
-import {
-  articleCanonicalPath,
-  buildArticleStructuredData,
-  shouldNoindexArticle,
-} from '../../lib/seo-safeguards.js';
+import { cleanEditorialText, displayHeadline, executiveSummaryLines } from '../../lib/editorial-display.js';
 
 export function getStaticPaths() {
   return [...latestNews, ...archivedNews]
-    .filter((article) =>
-      article?.id
-      && article['articlePagePublished'] !== false
-      && article.public_status !== 'quarantined'
-      && article.public_status !== 'archive_only_noindex'
-      && article.archiveOnly !== true
-      && !shouldNoindexArticle(article)
-      && publicArticleIsPublishable(article)
-    )
+    .filter((article) => article?.id)
     .map((article) => ({
       params: { id: article.id },
       props: { article },
@@ -34,36 +15,42 @@ export function getStaticPaths() {
 }
 
 const { article } = Astro.props;
-const articleRecord = article as any;
-const publicArticle = buildPublicArticleModel(articleRecord);
 
-if (!article || !publicArticle.ok) {
+if (!article) {
   throw new Error('Article not found');
 }
 
-const displayTitle = publicArticle.title;
-const detailImage = articleRecord.sourceImage || articleRecord.generatedImage || SITE.defaultOgImage;
-const canonicalPath = articleCanonicalPath(articleRecord);
+const lens = article.expertLensFull || null;
+const lensTeaser = article.expertLensShort || article.expertLens || lens?.thesis || null;
+const displayTitle = displayHeadline(article);
+const detailImage = article.sourceImage || article.generatedImage || SITE.defaultOgImage;
+const articleDescription = cleanEditorialText(lens?.metaDescription || article.summary || article.snippet || article.title);
+const canonicalPath = `/news/${article.id}/`;
 const articleUrl = `${SITE.url}${canonicalPath}`;
-const taxonomy = publicArticle.taxonomy;
-const publicPresentation = publicArticle.publicPresentation;
-const articleDescription = publicArticle.deck || articleRecord.title;
-const sourceAttribution = publicArticle.sourceAttribution;
-const noindexArticle = shouldNoindexArticle(articleRecord);
-const articleBodyBlocks = publicArticle.articleBodyBlocks;
-const atAGlanceItems = publicArticle.atAGlance;
-const watchMetrics = publicArticle.whatToWatch;
-const bottomLine = publicArticle.bottomLine;
-const structuredData = buildArticleStructuredData({
-  article: articleRecord,
-  site: SITE,
-  title: displayTitle,
+const executiveSummary = executiveSummaryLines(article);
+const articleBody = (lens?.finalArticleBody || article.articleText || article.snippet || article.summary || '')
+  .split(/\n{2,}/)
+  .map((paragraph) => cleanEditorialText(paragraph))
+  .filter((paragraph) => !/^(why it matters|pressure points|market implications|what to watch)$/i.test(paragraph))
+  .filter(Boolean);
+const structuredData = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: displayTitle,
   description: articleDescription,
-  image: detailImage,
-  canonicalUrl: articleUrl,
-  taxonomy,
-  articleBody: articleBodyBlocks,
-});
+  image: detailImage.startsWith('http') ? detailImage : `${SITE.url}${detailImage}`,
+  datePublished: article.publishedAt,
+  dateModified: article['updatedAt'] || article.publishedAt,
+  author: {
+    '@type': 'Organization',
+    name: SITE.name,
+  },
+  publisher: {
+    '@type': 'Organization',
+    name: SITE.name,
+  },
+  mainEntityOfPage: articleUrl,
+};
 ---
 <Layout
   title={`${displayTitle} | ${SITE.name}`}
@@ -71,7 +58,6 @@ const structuredData = buildArticleStructuredData({
   type="article"
   canonicalPath={canonicalPath}
   image={detailImage}
-  noindex={noindexArticle}
 >
   <script is:inline type="application/ld+json" set:html={JSON.stringify(structuredData)}></script>
   <main class="detail-shell">
@@ -83,49 +69,41 @@ const structuredData = buildArticleStructuredData({
       </div>
 
       <div class="detail-body">
-        <PublicArticleHeader
-          title={displayTitle}
-          deck={publicArticle.deck}
-          byline={publicArticle.byline}
-          sourceAttribution={sourceAttribution}
-          taxonomy={taxonomy}
-          presentation={publicPresentation}
-          publishedAt={article.publishedAt}
-        />
+        <div class="meta-strip">
+          <span class="category-badge">{article.category || 'Infrastructure'}</span>
+          <span class="source-pill">{article.source}</span>
+          <span class="region-pill">{article.region || 'Global'}</span>
+          <time>{new Date(article.publishedAt).toLocaleString('en-US')}</time>
+        </div>
 
-        <PublicAtAGlance items={atAGlanceItems} />
+        <h1>{displayTitle}</h1>
+        <p class="detail-summary">{cleanEditorialText(lensTeaser || article.summary || article.snippet)}</p>
 
-        <PublicArticleBody blocks={articleBodyBlocks} />
+        {executiveSummary.length ? (
+          <section class="executive-summary" aria-label="Executive summary">
+            <span>Editor&apos;s Brief</span>
+            <ol>
+              {executiveSummary.map((line) => (
+                <li>{line}</li>
+              ))}
+            </ol>
+          </section>
+        ) : null}
 
-        <NewsletterCapture compact={true} />
+        {articleBody.length ? (
+          <section class="detail-section detail-article-copy">
+            {articleBody.map((paragraph) => (
+              <p>{paragraph}</p>
+            ))}
+          </section>
+        ) : null}
 
-        <PublicWhatToWatch items={watchMetrics} />
-
-        <PublicBottomLine bottomLine={bottomLine} />
-
-        <section class="detail-section source-attribution-panel">
+        <section class="detail-section">
           <h2>Source</h2>
           <p>
-            Source link for verification: <strong>{sourceAttribution.name}</strong>
-            {sourceAttribution.domain ? <> ({sourceAttribution.domain})</> : null}. Compute Current links to the original source for attribution and reader verification.
-          </p>
-          <p>
-            <a href={sourceAttribution.url} target="_blank" rel="noopener noreferrer">
-              Read the original source
+            <a href={lens?.sourceLink || article.sourceUrl || article.url} target="_blank" rel="noreferrer">
+              Read the original report
             </a>
-          </p>
-          <p>
-            Canonical page: <a href={articleUrl}>{articleUrl}</a>
-          </p>
-        </section>
-
-        <section class="detail-section disclosure-panel">
-          <h2>AI-assisted disclosure</h2>
-          <p>
-            {SITE.name} uses AI-assisted extraction, classification, summarization, and drafting workflows. The source article remains the authoritative record; this page is an editorial intelligence memo derived from that source and internal quality gates.
-          </p>
-          <p>
-            Read the full <a href="/ai-disclosure/">AI-assisted content disclosure</a> and <a href="/methodology/">methodology</a>.
           </p>
         </section>
 
@@ -141,7 +119,7 @@ const structuredData = buildArticleStructuredData({
           <a class="detail-button" href="/">
             Browse latest board
           </a>
-          <a class="source-cta" href={sourceAttribution.url} target="_blank" rel="noopener noreferrer">
+          <a class="source-cta" href={article.sourceUrl || article.url} target="_blank" rel="noreferrer">
             Read crawled source article
           </a>
         </div>

@@ -6,24 +6,11 @@ import {
   LATEST_NEWS_LIMIT,
 } from './lib/constants.mjs';
 import { readArchiveSnapshot, syncArchiveArtifacts } from './lib/archive-store.mjs';
-import { applyAntiTemplateRewrite } from './lib/anti-template-rewrite.mjs';
 import { enrichContent } from './lib/content.mjs';
 import { planForToday, pickItemsForRun, updatePlanAfterRun } from './lib/curate.mjs';
-import {
-  attachExpertLens,
-  blueprintHistoryFromRecords,
-  hydrateExpertLens,
-  mergeArticleRecords,
-} from './lib/expert-lens.mjs';
+import { attachExpertLens, hydrateExpertLens, mergeArticleRecords } from './lib/expert-lens.mjs';
 import { fetchNewsPool } from './lib/fetch-feeds.mjs';
 import { ensureArticleImage, needsImageRefresh } from './lib/image-generator.mjs';
-import { splitByExpertInsightGate } from './lib/expert-insight-engine.mjs';
-import {
-  ARTICLE_PAGE_QUALITY_THRESHOLD,
-  splitByArticleQualityGate,
-} from './lib/quality-gate.mjs';
-import { splitByInfrastructureRelevance } from './lib/relevance-classifier.mjs';
-import { splitByRepetitionGate } from './lib/repetition-detector.mjs';
 import {
   readJsonFile,
   readPipelineState,
@@ -76,12 +63,6 @@ function normalizeExistingArticle(item) {
     sourceImage: item.sourceImage || item.image || null,
     region: item.region || 'Global',
     language: item.language || 'en',
-    primary_category: item.primary_category || item.category || item.defaultCategory || null,
-    secondary_category: item.secondary_category || null,
-    infrastructure_layer: item.infrastructure_layer || null,
-    affected_stakeholders: item.affected_stakeholders || [],
-    article_type: item.article_type || null,
-    urgency_score: item.urgency_score ?? null,
     defaultCategory: item.defaultCategory || item.category || null,
     sourceUrl: item.sourceUrl || item.url,
   });
@@ -103,20 +84,6 @@ function dedupeById(items) {
   }
 
   return orderedIds.map((id) => merged.get(id));
-}
-
-function isHomepageSuppressed(article = {}) {
-  if (article.homepageApproved === true || article.manualHomepageApproved === true) return false;
-  return article.homepagePublished === false || article.archiveOnly === true;
-}
-
-function sortForPipelineVisibility(articles = []) {
-  return [...articles].sort((a, b) => {
-    const aSuppressed = isHomepageSuppressed(a);
-    const bSuppressed = isHomepageSuppressed(b);
-    if (aSuppressed !== bSuppressed) return aSuppressed ? 1 : -1;
-    return new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime();
-  });
 }
 
 async function loadPoolWithFallback(existingLatest) {
@@ -158,7 +125,7 @@ async function backfillLocalImages(articles) {
   );
 }
 
-async function attachExpertLensToVisibleWindow(articles, focusArticleIds = [], recentBlueprintIds = []) {
+async function attachExpertLensToVisibleWindow(articles, focusArticleIds = []) {
   const visible = articles.slice(0, LATEST_NEWS_LIMIT);
   const overflow = articles.slice(LATEST_NEWS_LIMIT);
   const focusIds = new Set(focusArticleIds);
@@ -175,7 +142,7 @@ async function attachExpertLensToVisibleWindow(articles, focusArticleIds = [], r
   if (focusTargets.length) {
     enrichedFocus = await withTimeout(
       'attach expert lens to focused articles',
-      () => attachExpertLens(focusTargets, { recentBlueprintIds }),
+      () => attachExpertLens(focusTargets),
       90_000
     ).catch((error) => {
       console.warn(`[pipeline] expert lens fallback -> ${error.message}`);
@@ -218,140 +185,6 @@ async function enrichPickedArticles(picked) {
   return results;
 }
 
-function logBlockedArticles(blocked = []) {
-  for (const article of blocked) {
-    const qa = article.extraction_qa || {};
-    console.warn(
-      [
-        `[pipeline] blocked article page ${article.id} :: ${article.title}`,
-        `adapter=${qa.source_domain_adapter || article.source_domain_adapter || 'unknown'}`,
-        `length=${qa.content_length ?? article.content_length ?? 0}`,
-        `boilerplate=${qa.boilerplate_ratio ?? article.boilerplate_ratio ?? 'n/a'}`,
-        `reason=${article.qualityGateReason}`,
-      ].join(' -> ')
-    );
-  }
-}
-
-function logArchiveOnlyArticles(archiveOnly = []) {
-  for (const article of archiveOnly) {
-    console.warn(
-      [
-        `[pipeline] archive-only relevance ${article.id} :: ${article.title}`,
-        `score=${article.infrastructure_relevance_score ?? 'n/a'}`,
-        `tier=${article.infrastructure_relevance_tier || 'archive_only'}`,
-        `reason=${(article.infrastructure_relevance_reasons || []).join('; ')}`,
-      ].join(' -> ')
-    );
-  }
-}
-
-function logExpertInsightBlockedArticles(blocked = []) {
-  for (const article of blocked) {
-    const insight = article.expert_insight || {};
-    console.warn(
-      [
-        `[pipeline] expert insight blocked ${article.id} :: ${article.title}`,
-        `missing=${(insight.expert_insight_missing_fields || []).join(',') || 'unknown'}`,
-        `facts=${(insight.concrete_facts || []).length}`,
-        `companies=${(insight.named_companies || []).join(',') || 'none'}`,
-        `reason=${article.expertInsightBlockReason || 'expert_insight_incomplete'}`,
-      ].join(' -> ')
-    );
-  }
-}
-
-function logRepetitionBlockedArticles(blocked = []) {
-  for (const article of blocked) {
-    const repetition = article.repetition_check || {};
-    console.warn(
-      [
-        `[pipeline] repetition blocked ${article.id} :: ${article.title}`,
-        `sentenceRatio=${Number(repetition.repeated_sentence_ratio || 0).toFixed(3)}`,
-        `headingSimilarity=${Number(repetition.heading_sequence_similarity || 0).toFixed(3)}`,
-        `conclusionSimilarity=${Number(repetition.conclusion_similarity || 0).toFixed(3)}`,
-        `bannedCount=${repetition.banned_phrase_count || 0}`,
-        `reason=${(article.repetition_block_reasons || []).join('; ')}`,
-      ].join(' -> ')
-    );
-  }
-}
-
-function asSignalCard(article, reason) {
-  return {
-    ...article,
-    articlePagePublished: false,
-    homepagePublished: true,
-    archiveOnly: false,
-    signalCardOnly: true,
-    signalCardReason: reason,
-  };
-}
-
-function toRunHistoryItem(article) {
-  return {
-    id: article.id,
-    title: article.title,
-    infrastructure_relevance_score: article.infrastructure_relevance_score ?? null,
-    infrastructure_relevance_tier: article.infrastructure_relevance_tier ?? null,
-    infrastructure_relevance_action: article.infrastructure_relevance_action ?? null,
-    infrastructure_relevance_reasons: article.infrastructure_relevance_reasons || [],
-    extraction_quality_score: article.extraction_quality_score ?? null,
-    source_domain_adapter: article.source_domain_adapter ?? article.extraction_qa?.source_domain_adapter ?? null,
-    content_length: article.content_length ?? article.extraction_qa?.content_length ?? null,
-    boilerplate_ratio: article.boilerplate_ratio ?? article.extraction_qa?.boilerplate_ratio ?? null,
-    repetition_blocked: article.repetition_blocked || false,
-    repetition_block_reasons: article.repetition_block_reasons || [],
-    repetition_check: article.repetition_check || null,
-    expert_insight_complete: article.expert_insight_complete ?? article.expert_insight?.expert_insight_complete ?? null,
-    expert_insight_missing_fields: article.expert_insight_missing_fields || article.expert_insight?.expert_insight_missing_fields || [],
-    reason: article.qualityGateReason || article.expertInsightBlockReason || article.signalCardReason || article.archiveOnlyReason || null,
-  };
-}
-
-async function publishExistingOnly({
-  existingLatest,
-  existingArchive,
-  signalOnly = [],
-  archiveOnly = [],
-  processedItems = [],
-  plan,
-  state,
-  todayKey,
-  slot,
-  now,
-  blocked = [],
-}) {
-  const recentBlueprintIds = blueprintHistoryFromRecords([...(existingLatest || []), ...(existingArchive || [])]);
-  const normalizedExisting = dedupeById((existingLatest || []).map((item) => normalizeExistingArticle(item)));
-  const signalMerged = sortForPipelineVisibility(dedupeById([...signalOnly, ...archiveOnly, ...normalizedExisting]));
-  const imageBackfilled = await backfillLocalImages(signalMerged);
-  const withExpertLens = await attachExpertLensToVisibleWindow(imageBackfilled, [], recentBlueprintIds);
-  const templateChecked = applyAntiTemplateRewrite(withExpertLens, [...existingLatest, ...existingArchive]);
-  const { latest, supabaseStatus } = await syncArchiveArtifacts(templateChecked, existingArchive);
-  await writeJsonFile(LATEST_NEWS_PATH, latest);
-
-  state.dayPlans[todayKey] = updatePlanAfterRun(plan, processedItems, slot);
-  state.publishedIds = [...new Set([...(state.publishedIds || []), ...processedItems.map((x) => x.id)])].slice(-1000);
-  state.lastRunAt = now.toISOString();
-  state.runHistory.push({
-    at: now.toISOString(),
-    day: todayKey,
-    slot,
-    publishedCount: 0,
-    signalCardCount: signalOnly.length,
-    archiveOnlyCount: archiveOnly.length,
-    processedIds: processedItems.map((x) => x.id),
-    blockedCount: blocked.length,
-    blockedItems: blocked.map(toRunHistoryItem),
-    archiveOnlyItems: archiveOnly.map(toRunHistoryItem),
-  });
-  state.runHistory = state.runHistory.slice(-120);
-  await writePipelineState(PIPELINE_STATE_PATH, state);
-
-  return supabaseStatus;
-}
-
 async function main() {
   const now = new Date();
   console.log(`[pipeline] run started at ${now.toISOString()}`);
@@ -361,7 +194,6 @@ async function main() {
     readJsonFile(LATEST_NEWS_PATH, []),
     readArchiveSnapshot(),
   ]);
-  const recentBlueprintIds = blueprintHistoryFromRecords([...(existingLatest || []), ...(existingArchive || [])]);
 
   const pool = await loadPoolWithFallback(existingLatest);
   console.log(`[pipeline] pool loaded: ${pool.length} items`);
@@ -379,9 +211,8 @@ async function main() {
     console.log(`[pipeline] no publishable items for slot ${slot} on ${todayKey}`);
     const normalizedExisting = dedupeById((existingLatest || []).map((item) => normalizeExistingArticle(item)));
     const imageBackfilled = await backfillLocalImages(normalizedExisting);
-    const withExpertLens = await attachExpertLensToVisibleWindow(imageBackfilled, [], recentBlueprintIds);
-    const templateChecked = applyAntiTemplateRewrite(withExpertLens, [...existingLatest, ...existingArchive]);
-    const { latest, supabaseStatus } = await syncArchiveArtifacts(templateChecked, existingArchive);
+    const withExpertLens = await attachExpertLensToVisibleWindow(imageBackfilled, []);
+    const { latest, supabaseStatus } = await syncArchiveArtifacts(withExpertLens, existingArchive);
     await writeJsonFile(LATEST_NEWS_PATH, latest);
 
     state.dayPlans[todayKey] = {
@@ -406,119 +237,43 @@ async function main() {
 
   const enriched = await enrichPickedArticles(picked);
   console.log(`[pipeline] article enrichment complete: ${enriched.length} items`);
-  const {
-    fullMemoCandidates,
-    signalCards: relevanceSignalCards,
-    archiveOnly,
-  } = splitByInfrastructureRelevance(enriched);
-  const { publishable: qualityPublishable, blocked: qualityBlocked } = splitByArticleQualityGate(
-    fullMemoCandidates,
-    ARTICLE_PAGE_QUALITY_THRESHOLD
-  );
-  const { publishable, blocked: insightBlocked } = splitByExpertInsightGate(qualityPublishable);
-  const signalCards = [
-    ...relevanceSignalCards.map((article) => asSignalCard(article, 'infrastructure_relevance_signal_card_threshold')),
-    ...qualityBlocked.map((article) => asSignalCard(article, article.qualityGateReason || 'extraction_quality_blocked')),
-    ...insightBlocked.map((article) => asSignalCard(article, article.expertInsightBlockReason || 'expert_insight_incomplete')),
-  ];
-  const blocked = [...qualityBlocked, ...insightBlocked];
-  const processedItems = [...publishable, ...signalCards, ...archiveOnly];
-
-  console.log(
-    [
-      `[pipeline] relevance gate: fullMemoCandidates=${fullMemoCandidates.length}`,
-      `signalCards=${relevanceSignalCards.length}`,
-      `archiveOnly=${archiveOnly.length}`,
-    ].join(' ')
-  );
-  console.log(
-    `[pipeline] quality gate: threshold=${ARTICLE_PAGE_QUALITY_THRESHOLD.toFixed(2)} qualityPublishable=${qualityPublishable.length} publishable=${publishable.length} blocked=${blocked.length}`
-  );
-  logBlockedArticles(qualityBlocked);
-  logExpertInsightBlockedArticles(insightBlocked);
-  logArchiveOnlyArticles(archiveOnly);
-
-  if (!publishable.length) {
-    const supabaseStatus = await publishExistingOnly({
-      existingLatest,
-      existingArchive,
-      signalOnly: signalCards,
-      archiveOnly,
-      processedItems,
-      plan,
-      state,
-      todayKey,
-      slot,
-      now,
-      blocked,
-    });
-    console.log(
-      `[pipeline] completed with no new article pages published; quality gate blocked ${blocked.length}. archive push: ${JSON.stringify(supabaseStatus)}`
-    );
-    return;
-  }
 
   const normalizedExisting = dedupeById((existingLatest || []).map((item) => normalizeExistingArticle(item)));
   const dedupedExisting = normalizedExisting.filter(
-    (item) => !processedItems.some((fresh) => fresh.id === item.id)
+    (item) => !enriched.some((fresh) => fresh.id === item.id)
   );
 
-  const merged = sortForPipelineVisibility(
-    dedupeById([...publishable, ...signalCards, ...archiveOnly, ...dedupedExisting, ...(existingArchive || [])])
+  const merged = dedupeById([...enriched, ...dedupedExisting, ...(existingArchive || [])]).sort(
+    (a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime()
   );
   console.log(`[pipeline] merged article set: ${merged.length}`);
 
   const imageBackfilled = await backfillLocalImages(merged);
   const withExpertLens = await attachExpertLensToVisibleWindow(
     imageBackfilled,
-    publishable.map((article) => article.id),
-    recentBlueprintIds
+    enriched.map((article) => article.id)
   );
-  const templateChecked = applyAntiTemplateRewrite(withExpertLens, [...existingLatest, ...existingArchive]);
-  const focusedPublishIds = new Set(publishable.map((article) => article.id));
-  const generatedDrafts = templateChecked.filter((article) => focusedPublishIds.has(article.id));
-  const {
-    passed: repetitionPassed,
-    blocked: repetitionBlocked,
-  } = splitByRepetitionGate(generatedDrafts, [...existingLatest, ...existingArchive]);
-  const repetitionById = new Map(
-    [...repetitionPassed, ...repetitionBlocked].map((article) => [article.id, article])
-  );
-  const repetitionChecked = templateChecked.map((article) => repetitionById.get(article.id) || article);
-  const finalProcessedItems = [...repetitionPassed, ...signalCards, ...archiveOnly, ...repetitionBlocked];
-
-  logRepetitionBlockedArticles(repetitionBlocked);
-
-  const { latest, supabaseStatus } = await syncArchiveArtifacts(repetitionChecked, existingArchive);
+  const { latest, supabaseStatus } = await syncArchiveArtifacts(withExpertLens, existingArchive);
 
   await writeJsonFile(LATEST_NEWS_PATH, latest);
 
-  const updatedPlan = updatePlanAfterRun(plan, finalProcessedItems, slot);
+  const updatedPlan = updatePlanAfterRun(plan, enriched, slot);
   state.dayPlans[todayKey] = updatedPlan;
-  state.publishedIds = [...new Set([...(state.publishedIds || []), ...finalProcessedItems.map((x) => x.id)])].slice(-1000);
+  state.publishedIds = [...new Set([...(state.publishedIds || []), ...enriched.map((x) => x.id)])].slice(-1000);
   state.lastRunAt = now.toISOString();
   state.runHistory.push({
     at: now.toISOString(),
     day: todayKey,
     slot,
-    publishedCount: repetitionPassed.length,
-    signalCardCount: signalCards.length,
-    archiveOnlyCount: archiveOnly.length,
-    repetitionBlockedCount: repetitionBlocked.length,
-    publishedIds: repetitionPassed.map((x) => x.id),
-    processedIds: finalProcessedItems.map((x) => x.id),
-    blockedCount: blocked.length,
-    blockedItems: blocked.map(toRunHistoryItem),
-    repetitionBlockedItems: repetitionBlocked.map(toRunHistoryItem),
-    signalCardItems: signalCards.map(toRunHistoryItem),
-    archiveOnlyItems: archiveOnly.map(toRunHistoryItem),
+    publishedCount: enriched.length,
+    publishedIds: enriched.map((x) => x.id),
   });
   state.runHistory = state.runHistory.slice(-120);
 
   await writePipelineState(PIPELINE_STATE_PATH, state);
 
   console.log(
-    `[pipeline] completed. published ${repetitionPassed.length} full memos, ${signalCards.length} signal cards, ${archiveOnly.length} archive-only items for slot ${slot} (${todayKey}); blocked ${blocked.length}, repetition-blocked ${repetitionBlocked.length}. archive push: ${JSON.stringify(supabaseStatus)}`
+    `[pipeline] completed. published ${enriched.length} articles for slot ${slot} (${todayKey}). archive push: ${JSON.stringify(supabaseStatus)}`
   );
 }
 

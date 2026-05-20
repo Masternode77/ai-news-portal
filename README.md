@@ -131,22 +131,6 @@ The published image contract is unchanged: generated assets are written under `p
 - `SUPABASE_SERVICE_ROLE_KEY` *(optional)*: service role key for archive upserts
 - `SUPABASE_ARCHIVE_TABLE` *(optional)*: defaults to `archived_articles`
 
-### Private article editor
-- `ADMIN_USERNAME` *(optional)*: username required by the private editor. If omitted, any username is accepted as long as the password is correct.
-- `ADMIN_PASSWORD` *(required for editor)*: password for `/admin/edit/<article-id>/`.
-- `ADMIN_AUTH_SECRET` *(recommended)*: long random string used to sign the admin session cookie. If omitted, `ADMIN_PASSWORD` is used as the signing secret.
-- `GITHUB_TOKEN` *(required for editor saves)*: GitHub token with contents write access to this repository.
-- `GITHUB_REPO` *(optional)*: defaults to `Masternode77/ai-news-portal`.
-- `GITHUB_BRANCH` *(optional)*: defaults to `main`.
-
-The private editor is not linked from the public site and is marked `noindex`. Open an article editor directly at:
-
-```text
-https://www.computecurrent.com/admin/edit/<article-id>/
-```
-
-Saving creates a Git commit that updates the matching item in `src/data/latest-news.json` or `src/data/archived-news.json`, plus `src/data/search-index.json`. The public article changes after the connected Vercel deployment rebuilds.
-
 ### Telegram preview
 - `TELEGRAM_BOT_TOKEN` *(optional)*: Telegram bot token
 - `TELEGRAM_CHAT_ID` *(optional)*: chat/channel id

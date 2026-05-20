@@ -1,8 +1,6 @@
 import Parser from 'rss-parser';
 import { FEEDS, MAX_ITEMS_FETCHED, MIN_ITEMS_PER_SOURCE_IN_POOL } from './constants.mjs';
 import { guessLanguage, normalizeUrl, stableArticleId, stripHtml, truncate } from './normalize.mjs';
-import { classifyInfrastructureRelevance } from './relevance-classifier.mjs';
-import { classifyTaxonomy } from './taxonomy.mjs';
 
 const parser = new Parser({
   timeout: 20000,
@@ -32,7 +30,7 @@ function parseItem(feed, item) {
   const rawSnippet = stripHtml(item.contentSnippet || item.summary || rawBody || '');
   const publishedAt = item.isoDate || item.pubDate || new Date().toISOString();
 
-  const baseItem = {
+  return {
     id: stableArticleId(url, title),
     source: feed.source,
     url,
@@ -44,35 +42,6 @@ function parseItem(feed, item) {
     region: feed.region || 'Global',
     language: feed.language || guessLanguage(`${title} ${rawSnippet}`),
     defaultCategory: feed.defaultCategory || null,
-  };
-  const infrastructureRelevance = classifyInfrastructureRelevance(baseItem);
-  const taxonomy = classifyTaxonomy({ ...baseItem, ...infrastructureRelevance });
-
-  return {
-    ...baseItem,
-    category: taxonomy.primary_category,
-    primary_category: taxonomy.primary_category,
-    secondary_category: taxonomy.secondary_category,
-    infrastructure_layer: taxonomy.infrastructure_layer,
-    affected_stakeholders: taxonomy.affected_stakeholders,
-    article_type: taxonomy.article_type,
-    region: taxonomy.region,
-    urgency_score: taxonomy.urgency_score,
-    taxonomy_confidence: taxonomy.taxonomy_confidence,
-    taxonomy_reasons: taxonomy.taxonomy_reasons,
-    direct_ai_infrastructure_relevance: infrastructureRelevance.direct_ai_infrastructure_relevance,
-    data_center_relevance: infrastructureRelevance.data_center_relevance,
-    cloud_capacity_relevance: infrastructureRelevance.cloud_capacity_relevance,
-    semiconductor_relevance: infrastructureRelevance.semiconductor_relevance,
-    power_grid_relevance: infrastructureRelevance.power_grid_relevance,
-    cooling_relevance: infrastructureRelevance.cooling_relevance,
-    capital_markets_relevance: infrastructureRelevance.capital_markets_relevance,
-    enterprise_ai_infrastructure_relevance: infrastructureRelevance.enterprise_ai_infrastructure_relevance,
-    infrastructure_relevance_score: infrastructureRelevance.infrastructure_relevance_score,
-    infrastructure_relevance_tier: infrastructureRelevance.infrastructure_relevance_tier,
-    infrastructure_relevance_action: infrastructureRelevance.infrastructure_relevance_action,
-    infrastructure_relevance_reasons: infrastructureRelevance.infrastructure_relevance_reasons,
-    infrastructure_relevance: infrastructureRelevance,
   };
 }
 

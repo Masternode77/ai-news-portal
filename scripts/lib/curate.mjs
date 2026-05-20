@@ -11,7 +11,7 @@ async function curateWithLlm(items) {
     title: item.title,
     snippet: item.snippet,
     publishedAt: item.publishedAt,
-    categoryHint: item.primary_category || item.defaultCategory || item.categoryHint || null,
+    categoryHint: item.defaultCategory || item.categoryHint || null,
     region: item.region || null,
     score: item.score,
   }));
@@ -40,12 +40,11 @@ function fallbackCurate(ranked) {
   for (const item of ranked) {
     if (selected.length >= DAILY_CURATION_TARGET) break;
     const sourceOkay = !sourceSeen.has(item.source) || sourceSeen.size >= 4;
-    const taxonomyCategory = item.primary_category || item.defaultCategory || item.categoryHint;
-    const categoryOkay = !categorySeen.has(taxonomyCategory) || categorySeen.size >= 4;
+    const categoryOkay = !categorySeen.has(item.defaultCategory || item.categoryHint) || categorySeen.size >= 4;
     if (sourceOkay || categoryOkay) {
       selected.push(item.id);
       sourceSeen.add(item.source);
-      categorySeen.add(taxonomyCategory);
+      categorySeen.add(item.defaultCategory || item.categoryHint);
     }
   }
 

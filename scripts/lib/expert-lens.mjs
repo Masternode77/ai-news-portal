@@ -3,37 +3,36 @@ import {
   EDITORIAL_HUMANIZER_MODE,
   EDITORIAL_HUMANIZER_PROMPT,
   HUMANIZED_ARTICLE_MIN_CHARS,
+  buildHumanizedArticleBody,
   containsTemplateLanguage,
+  humanizedFallbackSections,
   normalizeEditorialParagraphs,
   normalizeEditorialVoice,
 } from './editorial-humanizer.mjs';
-import {
-  bodyUsesBlueprint,
-  blueprintFallbackBody,
-  blueprintHistoryFromRecords,
-  blueprintPrompt,
-  blueprintSnapshot,
-  getArticleBlueprint,
-  selectArticleBlueprint,
-} from './article-blueprints.mjs';
-import {
-  articleHasExpertInsight,
-  expertInsightUsageScore,
-  insightFieldSummary,
-} from './expert-insight-engine.mjs';
 import { callExpertLensText } from './openrouter.mjs';
-import { BANNED_PHRASES, BLOCKED_HOOK_STARTS, hasBannedPhrase } from './banned-phrases.mjs';
-import {
-  GENERATION_VERSION,
-  buildNarrativeLensFields,
-  extractNarrativeDNA,
-} from './narrative-dna.mjs';
 import { safeJsonParse, sanitizeGeneratedText, slugify, truncate } from './normalize.mjs';
 
 const EXPERT_LENS_MODE = EDITORIAL_HUMANIZER_MODE;
 
 function splitParagraphs(text = '') {
   return normalizeEditorialParagraphs(sanitizeGeneratedText(text));
+}
+
+function inferSignal(article) {
+  const text = `${article.title} ${article.summary || ''} ${article.articleText || ''}`.toLowerCase();
+  if (/(power|grid|utility|substation|energy|ppa|transformer)/.test(text)) {
+    return 'Power access and interconnection timing are likely to matter more than the announced demand signal itself.';
+  }
+  if (/(cooling|thermal|liquid|cdu|rack|density)/.test(text)) {
+    return 'Cooling design standardization may determine who can actually monetize higher-density deployments on schedule.';
+  }
+  if (/(nvidia|gpu|hbm|inference|training|semiconductor|chip|silicon)/.test(text)) {
+    return 'The underappreciated variable is deployment readiness across networking, power, and packaging, not just chip availability.';
+  }
+  if (/(funding|bond|financing|acquisition|merger|valuation|capital)/.test(text)) {
+    return 'Capital formation here should be read as a proxy for who is being trusted to secure future capacity, not only as a balance-sheet event.';
+  }
+  return 'Execution speed, supply-chain coordination, and regional delivery risk remain more important than headline ambition.';
 }
 
 function buildHeadlineOptions(article) {
@@ -48,23 +47,14 @@ function buildHeadlineOptions(article) {
   ].map((headline) => truncate(headline, 110));
 }
 
-function finalArticleBody(article, sections, candidate = '', blueprint, enforceBlueprint = false) {
+function finalArticleBody(article, sections, candidate = '') {
   const body = normalizeEditorialParagraphs(candidate)
     .filter((paragraph) => !/^(why it matters|pressure points|market implications|what to watch)$/i.test(paragraph))
     .join('\n\n');
-  const minChars = enforceBlueprint ? blueprint?.minChars || HUMANIZED_ARTICLE_MIN_CHARS : Math.min(HUMANIZED_ARTICLE_MIN_CHARS, 850);
-  const maxChars = blueprint?.maxChars ? blueprint.maxChars + 400 : Number.POSITIVE_INFINITY;
-  if (
-    body.length >= minChars &&
-    (!enforceBlueprint || body.length <= maxChars) &&
-    (!enforceBlueprint || bodyUsesBlueprint(body, blueprint)) &&
-    (!enforceBlueprint || !articleHasExpertInsight(article) || expertInsightUsageScore(body, article.expert_insight || article.expertInsight) >= 0.55) &&
-    !containsTemplateLanguage(body) &&
-    !hasBannedPhrase(body)
-  ) {
+  if (body.length >= HUMANIZED_ARTICLE_MIN_CHARS && !containsTemplateLanguage(body)) {
     return body;
   }
-  return blueprintFallbackBody(article, sections, blueprint);
+  return buildHumanizedArticleBody(article, sections);
 }
 
 function normalizeExecutiveSummary(value = [], fallback = []) {
@@ -76,23 +66,8 @@ function normalizeExecutiveSummary(value = [], fallback = []) {
     .slice(0, 3);
 }
 
-function resolveArticleBlueprint(article = {}, recentBlueprintIds = []) {
-  return getArticleBlueprint(
-    article.article_blueprint || article.articleBlueprint?.id || article.expertLensFull?.blueprintId
-  ) || selectArticleBlueprint(article, recentBlueprintIds);
-}
-
-function withBlueprintFields(article = {}, blueprint) {
-  const selected = blueprint || resolveArticleBlueprint(article);
-  return {
-    ...article,
-    article_blueprint: selected.id,
-    articleBlueprint: blueprintSnapshot(selected),
-  };
-}
-
-function fallbackExpertLensFull(article, blueprint = resolveArticleBlueprint(article)) {
-  const humanized = buildNarrativeLensFields(article);
+function fallbackExpertLensFull(article) {
+  const humanized = humanizedFallbackSections(article, inferSignal(article));
   const thesis = truncate(humanized.thesis, 160);
   const whatHappened = truncate(humanized.whatHappened, 500);
   const whyThisMatters = truncate(humanized.whyThisMatters, 500);
@@ -130,12 +105,6 @@ function fallbackExpertLensFull(article, blueprint = resolveArticleBlueprint(art
     version: EXPERT_LENS_VERSION,
     mode: EXPERT_LENS_MODE,
     generatedAt: new Date().toISOString(),
-    generation_version: GENERATION_VERSION,
-    narrative_dna: humanized.narrative_dna,
-    dynamicBriefLabel: humanized.dynamicBriefLabel,
-    blueprintId: blueprint.id,
-    blueprintName: blueprint.name,
-    blueprint: blueprintSnapshot(blueprint),
     thesis,
     whatHappened,
     whyThisMatters,
@@ -148,7 +117,7 @@ function fallbackExpertLensFull(article, blueprint = resolveArticleBlueprint(art
     headlineOptions,
     finalHeadline,
     metaDescription,
-    finalArticleBody: finalArticleBody(article, sections, humanized.finalArticleBody, blueprint, false),
+    finalArticleBody: finalArticleBody(article, sections),
     sourceLink: article.sourceUrl || article.url || '',
   };
 }
@@ -161,24 +130,17 @@ function normalizeHeadlineOptions(headlineOptions = [], fallback = []) {
   return cleaned.slice(0, 5);
 }
 
-function normalizeExpertLensFull(article, payload, blueprint = resolveArticleBlueprint(article), options = {}) {
-  const fallback = fallbackExpertLensFull(article, blueprint);
+function normalizeExpertLensFull(article, payload) {
+  const fallback = fallbackExpertLensFull(article);
   const parsed = typeof payload === 'string' ? safeJsonParse(payload, null) : payload;
   if (!parsed || typeof parsed !== 'object') {
     return fallback;
   }
-  const selectedBlueprint = getArticleBlueprint(parsed.blueprintId) || blueprint;
 
   const normalized = {
     version: EXPERT_LENS_VERSION,
     mode: parsed.mode || fallback.mode,
     generatedAt: parsed.generatedAt || new Date().toISOString(),
-    generation_version: GENERATION_VERSION,
-    narrative_dna: parsed.narrative_dna || fallback.narrative_dna || extractNarrativeDNA(article),
-    dynamicBriefLabel: parsed.dynamicBriefLabel || parsed.briefLabel || fallback.dynamicBriefLabel || fallback.narrative_dna?.brief_label,
-    blueprintId: selectedBlueprint.id,
-    blueprintName: selectedBlueprint.name,
-    blueprint: blueprintSnapshot(selectedBlueprint),
     thesis: truncate(parsed.thesis || fallback.thesis, 160),
     whatHappened: truncate(parsed.whatHappened || fallback.whatHappened, 500),
     whyThisMatters: truncate(parsed.whyThisMatters || fallback.whyThisMatters, 500),
@@ -197,30 +159,13 @@ function normalizeExpertLensFull(article, payload, blueprint = resolveArticleBlu
 
   for (const key of ['thesis', 'whatHappened', 'whyThisMatters', 'marketMissing', 'investors', 'operators', 'hyperscalers', 'watchNext', 'finalHeadline', 'metaDescription']) {
     normalized[key] = normalizeEditorialVoice(sanitizeGeneratedText(normalized[key]));
-    if (hasBannedPhrase(normalized[key])) {
-      normalized[key] = fallback[key] || '';
-    }
   }
 
-  normalized.headlineOptions = normalized.headlineOptions
-    .map((headline) => normalizeEditorialVoice(sanitizeGeneratedText(headline)))
-    .filter((headline) => headline && !hasBannedPhrase(headline));
+  normalized.headlineOptions = normalized.headlineOptions.map((headline) => normalizeEditorialVoice(sanitizeGeneratedText(headline))).filter(Boolean);
 
-  normalized.finalArticleBody = finalArticleBody(
-    article,
-    normalized,
-    parsed.finalArticleBody || fallback.finalArticleBody || '',
-    selectedBlueprint,
-    parsed.generation_version === GENERATION_VERSION || parsed.narrative_dna
-      ? false
-      : options.enforceBlueprint || Boolean(parsed.blueprintId || article.article_blueprint || article.articleBlueprint?.id)
-  );
+  normalized.finalArticleBody = finalArticleBody(article, normalized, parsed.finalArticleBody || fallback.finalArticleBody || '');
 
   if (!normalized.finalArticleBody) {
-    normalized.finalArticleBody = fallback.finalArticleBody;
-  }
-
-  if (hasBannedPhrase(normalized.finalArticleBody)) {
     normalized.finalArticleBody = fallback.finalArticleBody;
   }
 
@@ -239,20 +184,13 @@ function buildExpertLensShort(fullLens, fallbackShort = '') {
 }
 
 export function hydrateExpertLens(article = {}) {
-  const existingBlueprint = getArticleBlueprint(
-    article.article_blueprint || article.articleBlueprint?.id || article.expertLensFull?.blueprintId
-  );
-  const blueprint = existingBlueprint || resolveArticleBlueprint(article);
   const short = truncate(article.expertLensShort || article.expertLens || '', 220) || null;
   const full = article.expertLensFull && typeof article.expertLensFull === 'object'
-    ? normalizeExpertLensFull(article, article.expertLensFull, blueprint)
+    ? normalizeExpertLensFull(article, article.expertLensFull)
     : null;
-  const persistedBlueprint = existingBlueprint || (full ? getArticleBlueprint(full.blueprintId) : null);
 
   return {
     ...article,
-    article_blueprint: article.article_blueprint || full?.blueprintId || null,
-    articleBlueprint: article.articleBlueprint || full?.blueprint || (persistedBlueprint ? blueprintSnapshot(persistedBlueprint) : null),
     expertLensShort: short || (full ? buildExpertLensShort(full) : null),
     expertLensFull: full,
     expertLens: short || (full ? buildExpertLensShort(full) : null),
@@ -283,8 +221,6 @@ export function mergeArticleRecords(primary = {}, secondary = {}) {
     expertLensShort: mergedShort || null,
     expertLensFull: mergedFull,
     expertLens: mergedShort || null,
-    article_blueprint: merged.article_blueprint || mergedFull?.blueprintId || null,
-    articleBlueprint: merged.articleBlueprint || mergedFull?.blueprint || null,
   };
 }
 
@@ -293,37 +229,24 @@ function needsExpertLens(article) {
   return !hydrated.expertLensFull || !hydrated.expertLensShort;
 }
 
-async function generateExpertLensFull(article, blueprint) {
-  if (!articleHasExpertInsight(article)) {
-    throw new Error('expert insight fields are incomplete; refusing generic long-form article generation');
-  }
-  const fallback = fallbackExpertLensFull(article, blueprint);
-  const expertInsight = article.expert_insight || article.expertInsight || {};
+async function generateExpertLensFull(article) {
+  const fallback = fallbackExpertLensFull(article);
   const content = await callExpertLensText({
     systemPrompt: [
       'You are the editorial voice for an AI infrastructure intelligence publication.',
       'Write like a top-tier business technology editor covering AI, data centers, power, semiconductors, and cloud infrastructure.',
       EDITORIAL_HUMANIZER_PROMPT,
-      `Use NarrativeDNA before writing: protagonist, antagonist_or_constraint, core_tension, reader_role, infrastructure_layer, time_horizon, story_archetype, hook_style, evidence_anchor, counterpoint, next_observable_signal.`,
-      `Do not use any banned phrase: ${BANNED_PHRASES.join(' | ')}.`,
-      `No hook or lead sentence may begin with: ${BLOCKED_HOOK_STARTS.join(' | ')}.`,
       'The output must be decision-grade, accurate, skeptical, and free of generic hype or unsupported certainty.',
       'Use this logic in order: report what changed, explain why the development matters now, identify 1-2 underappreciated constraints, name practical implications for the most relevant audience, then end with what to watch next.',
-      'The article must use the extracted expert insight fields. Do not substitute generic infrastructure analysis for missing details.',
-      'Every finalArticleBody must explicitly use at least one concrete fact, one named company, the infrastructure layer, bottleneck type, leverage holder, execution-risk holder, timing dependency, counterargument, and next observable signal.',
-      blueprintPrompt(blueprint),
-      'Return strict JSON only with keys: blueprintId, generation_version, narrative_dna, dynamicBriefLabel, thesis, whatHappened, whyThisMatters, marketMissing, investors, operators, hyperscalers, watchNext, executiveSummary, headlineOptions, finalHeadline, metaDescription, finalArticleBody, sourceLink.',
-      `generation_version must be "${GENERATION_VERSION}". dynamicBriefLabel must be one of the allowed NarrativeDNA brief labels.`,
-      `blueprintId must be "${blueprint.id}".`,
+      'Return strict JSON only with keys: thesis, whatHappened, whyThisMatters, marketMissing, investors, operators, hyperscalers, watchNext, executiveSummary, headlineOptions, finalHeadline, metaDescription, finalArticleBody, sourceLink.',
       'executiveSummary must be exactly 3 short lines for busy readers: what changed, why it matters, and what to watch.',
       'headlineOptions must be an array of exactly 5 concise headline ideas written in English, each with a concrete hook that invites a click without hype.',
       'finalHeadline must use the strongest hook while preserving the source facts.',
       'Keep each section concise but substantive. Do not invent facts or numbers not grounded in the provided context.',
-      `The finalArticleBody is the primary deliverable. It must include the selected blueprint headings as standalone lines and otherwise be reported analysis, not bullets and not a repeated section template.`,
+      `The finalArticleBody is the primary deliverable. It must be at least ${HUMANIZED_ARTICLE_MIN_CHARS} characters and 6-9 paragraphs of reported analysis, not bullets, not a memo, and not a repeated section template.`,
       'Do not include the headings "Why it matters", "Pressure points", "Market implications", or "What to watch" anywhere in reader-facing copy.',
     ].join(' '),
     userPrompt: JSON.stringify({
-      selectedBlueprint: blueprintSnapshot(blueprint),
       title: article.title,
       source: article.source,
       category: article.category,
@@ -333,57 +256,34 @@ async function generateExpertLensFull(article, blueprint) {
       snippet: article.snippet,
       articleText: article.articleText,
       sourceLink: article.sourceUrl || article.url,
-      expertInsight,
-      expertInsightFieldSummary: insightFieldSummary(expertInsight),
-      narrativeDNA: extractNarrativeDNA(article),
     }),
     maxTokens: 2600,
   }).catch(() => '');
 
-  return normalizeExpertLensFull(article, content || fallback, blueprint, { enforceBlueprint: true });
+  return normalizeExpertLensFull(article, content || fallback);
 }
 
-async function enrichSingleArticle(article, options = {}) {
+async function enrichSingleArticle(article) {
   const hydrated = hydrateExpertLens(article);
-  const blueprint = resolveArticleBlueprint(hydrated, options.recentBlueprintIds || []);
-  const articleWithBlueprint = withBlueprintFields(hydrated, blueprint);
   if (!needsExpertLens(hydrated)) {
-    return articleWithBlueprint;
+    return hydrated;
   }
 
-  const full = articleWithBlueprint.expertLensFull || await generateExpertLensFull(articleWithBlueprint, blueprint);
-  const short = articleWithBlueprint.expertLensShort || buildExpertLensShort(full, hydrated.summary || hydrated.snippet || hydrated.title);
+  const full = hydrated.expertLensFull || await generateExpertLensFull(hydrated);
+  const short = hydrated.expertLensShort || buildExpertLensShort(full, hydrated.summary || hydrated.snippet || hydrated.title);
 
   return {
-    ...articleWithBlueprint,
+    ...hydrated,
     expertLensShort: short,
     expertLensFull: full,
     expertLens: short,
-    generation_version: GENERATION_VERSION,
-    narrative_dna: full.narrative_dna || extractNarrativeDNA(articleWithBlueprint),
-    dynamic_brief_label: full.dynamicBriefLabel || full.narrative_dna?.brief_label || null,
-    article_blueprint: full.blueprintId || blueprint.id,
-    articleBlueprint: full.blueprint || blueprintSnapshot(blueprint),
   };
 }
 
-export async function attachExpertLens(articles = [], options = {}) {
-  const results = [];
-  const recentBlueprintIds = [...(options.recentBlueprintIds || [])];
-
-  for (const article of articles) {
-    const enriched = await enrichSingleArticle(article, { recentBlueprintIds });
-    results.push(enriched);
-    if (enriched.article_blueprint) {
-      recentBlueprintIds.unshift(enriched.article_blueprint);
-    }
-  }
-
-  return results;
+export async function attachExpertLens(articles = []) {
+  return Promise.all(articles.map((article) => enrichSingleArticle(article)));
 }
 
 export function expertLensBodyParagraphs(article = {}) {
   return splitParagraphs(article?.expertLensFull?.finalArticleBody || article?.articleText || '');
 }
-
-export { blueprintHistoryFromRecords };
