@@ -21,7 +21,7 @@ export function writeNarrativeLede({ article = {}, evidencePack = {}, angle = {}
   const title = article.title || fact || actor;
 
   return [
-    sentence(`${title} is not just another AI headline for ${actor}; it sits in the ${layer} layer where capacity plans depend on delivery, cost, and control`),
+    sentence(`${actor} is now tied to a ${layer} decision where delivery, cost, and control matter more than headline demand`),
     sentence(`${source}'s reporting centers on ${fact.replace(/\.$/, '')}, giving infrastructure readers an observable event to place against procurement calendars and operating risk`),
     tone === 'Skeptical columnist'
       ? sentence(`A cautious reading starts with the limit: ${secondFact.replace(/\.$/, '')}`)

@@ -1,0 +1,23 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import claims from '../../data/claim-ledger.json';
+---
+<Layout title="Claim Ledger Admin" noindex={true}>
+  <main class="admin-shell">
+    <header class="admin-header">
+      <a class="admin-back" href="/admin/editorial-cycles/">Editorial cycles</a>
+      <h1>Claim Ledger</h1>
+      <p class="admin-deck">Internal claim-level verification records for published analyses.</p>
+    </header>
+    <section class="admin-panel">
+      <div class="quality-list">
+        {claims.slice(0, 200).map((claim) => (
+          <article class="quality-list-item">
+            <h2>{claim.claim_type}: {claim.claim_text}</h2>
+            <p>{claim.verification_status} · confidence {claim.confidence}</p>
+          </article>
+        ))}
+      </div>
+    </section>
+  </main>
+</Layout>

@@ -4,7 +4,7 @@ import { auditBlogSurfaceV4 } from '../scripts/audit-blog-surface-v4.mjs';
 import { generateBlogArticle } from '../scripts/lib/blog-engine-v4.mjs';
 import { routeGradedPublishing } from '../scripts/lib/graded-publishing-router.mjs';
 
-test('blog surface audit helper accepts 20 varied local blog fixtures', async () => {
+test('legacy blog surface audit flags repeated fixture openings under autonomous desk policy', async () => {
   const latest = [];
   for (let index = 0; index < 20; index += 1) {
     const item = {
@@ -20,5 +20,6 @@ test('blog surface audit helper accepts 20 varied local blog fixtures', async ()
     latest.push(generated.article);
   }
   const result = await auditBlogSurfaceV4({ latest, archived: [] });
-  assert.equal(result.ok, true);
+  assert.equal(result.ok, false);
+  assert.ok(result.reasons.includes('duplicate_first_10_opening_words'));
 });

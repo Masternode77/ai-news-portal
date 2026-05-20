@@ -42,6 +42,15 @@
     "audit:content-quality": "npm run build && node ./scripts/audit-public-content-quality.mjs",
     "audit:public-surface": "npm run build && node ./scripts/audit-public-surface.mjs",
     "audit:blog-surface-v4": "npm run build && node ./scripts/audit-blog-surface-v4.mjs",
+    "audit:autonomous-current": "node ./scripts/audit-autonomous-current-state.mjs",
+    "run:editorial-cycle": "node ./scripts/run-editorial-cycle.mjs",
+    "test:signal-clusters": "node --test tests/signal-clusterer.test.mjs tests/signal-scoring-engine.test.mjs tests/editorial-selection-engine.test.mjs",
+    "test:claim-ledger": "node --test tests/claim-ledger.test.mjs tests/numeric-claim-verifier.test.mjs tests/unsupported-claim-guard.test.mjs",
+    "test:autonomous-desk": "node --test tests/editorial-cycle.test.mjs tests/global-source-scan.test.mjs tests/evidence-pack-builder-v2.test.mjs tests/editorial-thesis-generator.test.mjs tests/autonomous-blog-writer-v1.test.mjs tests/voice-variation-engine.test.mjs tests/editorial-archetype-router-v2.test.mjs tests/anti-template-guard-v2.test.mjs tests/human-style-score.test.mjs tests/insight-density-score.test.mjs tests/freshness-monitor.test.mjs tests/homepage-editorial-model.test.mjs tests/taxonomy-page-builder.test.mjs tests/company-entity-index.test.mjs tests/region-index.test.mjs tests/rss-builder.test.mjs tests/sitemap-builder.test.mjs tests/article-page-autonomous.test.mjs tests/copyright-safe-copy-guard.test.mjs tests/autonomous-public-surface.test.mjs",
+    "migrate:autonomous-desk-v1": "node ./scripts/migrate-autonomous-editorial-desk-v1.mjs",
+    "regenerate:autonomous-analyses-v1": "node ./scripts/regenerate-autonomous-analyses-v1.mjs",
+    "rebuild:taxonomy-pages": "node ./scripts/rebuild-taxonomy-pages.mjs",
+    "audit:autonomous-public": "npm run build && node ./scripts/audit-autonomous-public-surface.mjs",
     "eval:articles": "node ./scripts/eval-article-generation.mjs"
   },
   "dependencies": {

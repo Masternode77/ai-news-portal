@@ -1,0 +1,23 @@
+---
+import PublicSignalCard from './PublicSignalCard.astro';
+const { items = [], statusLabel = '' } = Astro.props;
+---
+<section class="featured-cycle" aria-label="Featured analysis from latest editorial cycle">
+  <div class="lane-heading">
+    <div>
+      <p class="eyebrow">Featured Analysis</p>
+      <h2>Selected by the latest 8-hour desk cycle</h2>
+    </div>
+    <p>Compute Current publishes only the strongest verified clusters from each cycle.</p>
+  </div>
+  {items.length ? (
+    <div class="lane-grid featured-grid">
+      {items.map((item) => <PublicSignalCard signal={item.publicSignal} />)}
+    </div>
+  ) : (
+    <div class="cycle-empty">
+      <h3>No new qualifying signals in the latest 8-hour cycle.</h3>
+      <p>{statusLabel || 'The crawler ran, but no cluster cleared evidence, verification, and relevance gates.'}</p>
+    </div>
+  )}
+</section>

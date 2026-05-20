@@ -1,0 +1,30 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import PublicSignalCard from '../../components/PublicSignalCard.astro';
+import taxonomyPages from '../../data/taxonomy-pages.json';
+import { SITE } from '../../config/site';
+import { buildPublicPresentation } from '../../../scripts/lib/public-presentation.mjs';
+import { routePublicLane } from '../../../scripts/lib/public-lane-router.mjs';
+
+export function getStaticPaths() {
+  return (taxonomyPages.archive || []).filter((page) => page.page > 1).map((page) => ({ params: { page: String(page.page) }, props: { page } }));
+}
+
+const { page } = Astro.props;
+const items = (page.items || []).map((article) => ({
+  publicSignal: buildPublicPresentation(article, { route: article.public_routing || routePublicLane(article) }),
+}));
+---
+<Layout title={`Archive page ${page.page} | ${SITE.name}`} description="Public Compute Current archive page." canonicalPath={`/archive/${page.page}/`}>
+  <main class="policy-shell taxonomy-page">
+    <a class="back-link" href="/archive/">Archive</a>
+    <section class="policy-page">
+      <p class="eyebrow">Public Archive</p>
+      <h1>Archive page {page.page}</h1>
+      <p class="policy-lede">{page.total} accessible public items. Internal raw source records are excluded.</p>
+    </section>
+    <div class="lane-grid taxonomy-grid">
+      {items.map((item) => <PublicSignalCard signal={item.publicSignal} />)}
+    </div>
+  </main>
+</Layout>

@@ -28,14 +28,14 @@ function buildSectionParagraphs({ heading, article, evidencePack, angle, tone, r
 
   const common = {
     sourceRead: paragraph(`${source} supplies the reporting base: ${fact.replace(/\.$/, '')}. Compute Current reads that event through ${layer}, where timing, site readiness, and control over scarce inputs matter more than headline volume.`),
-    layerRead: paragraph(`In ${layer}, the useful distinction is whether this changes capacity availability, deployment timing, operating cost, or ownership of a constrained input.`),
+    layerRead: paragraph(`In ${layer}, the decisive question is whether capacity availability, deployment timing, operating cost, or ownership of a constrained input has changed.`),
     stakeholderRead: paragraph(`${actors} do not share the same exposure. What looks like an opening for one side can become schedule risk, margin pressure, or procurement friction for another.`),
     commercialRead: paragraph(evidencePack.commercialImplication),
     operatingRead: paragraph(evidencePack.operatingImplication),
     counterRead: paragraph(evidencePack.counterargument),
     watchRead: paragraph(`Track ${watch.join('; ') || evidencePack.whatWouldChangeOurView}. These indicators matter because they translate a public report into the procurement, financing, and operations signals readers can act on.`),
     secondEvidenceRead: paragraph(`${nextFact.replace(/\.$/, '')} gives the article a second anchor, which keeps the analysis tied to observable infrastructure behavior rather than broad market excitement.`),
-    bottomLine: paragraph(`${angle.thesis} Bottom line: this belongs as a ${route.label || 'blog'} while the evidence remains clean, specific, and tied to ${layer}.`),
+    bottomLine: paragraph(`${angle.thesis} The article stays in ${route.label || 'blog'} territory while the evidence remains clean, specific, and tied to ${layer}.`),
   };
 
   if (/Counter|Bear|Break|Risk Boundary|Who Carries|Limitation|Not Prove|Still Missing|Mislead|Volatility|Offset/i.test(heading)) {

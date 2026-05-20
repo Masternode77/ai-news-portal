@@ -57,7 +57,7 @@ function deckFor(article = {}, evidencePack = {}, angle = {}) {
   const actor = evidencePack.namedActors?.[0] || article.source || 'AI infrastructure buyers';
   const layer = evidencePack.affectedInfrastructureLayer || 'AI infrastructure';
   const lens = angle.lens || 'execution risk';
-  return guardPublicCopy(sentence(`${actor} puts ${layer} under a ${lens.toLowerCase()} lens for infrastructure readers`)).text;
+  return guardPublicCopy(sentence(`${actor} turns ${layer} into a ${lens.toLowerCase()} decision point for capacity planners`)).text;
 }
 
 function whyFor(article = {}, evidencePack = {}) {
@@ -265,7 +265,7 @@ export function generateBlogArticle(article = {}, options = {}) {
       sourceLink: article.sourceUrl || article.url || '',
       atAGlance: atAGlance(evidencePack),
       watchMetrics: evidencePack.watchMetrics,
-      bottomLine: `Compute Current treats this as ${labelForRoute(route.route).toLowerCase()} because the evidence ties ${article.source || 'the source'} to ${evidencePack.affectedInfrastructureLayer}.`,
+      bottomLine: `Compute Current treats this as ${labelForRoute(route.route).toLowerCase()} because the evidence ties ${article.source || 'the source'} to ${evidencePack.affectedInfrastructureLayer} decisions.`,
     },
     blog_metadata: {
       tone,

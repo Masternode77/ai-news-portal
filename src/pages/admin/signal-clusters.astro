@@ -1,0 +1,24 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import clusters from '../../data/signal-clusters.json';
+---
+<Layout title="Signal Clusters Admin" noindex={true}>
+  <main class="admin-shell">
+    <header class="admin-header">
+      <a class="admin-back" href="/admin/editorial-cycles/">Editorial cycles</a>
+      <h1>Signal Clusters</h1>
+      <p class="admin-deck">Internal cluster scores, sources, facts, and publish decisions.</p>
+    </header>
+    <section class="admin-panel">
+      <div class="quality-list">
+        {clusters.slice(0, 100).map((cluster) => (
+          <article class="quality-list-item">
+            <h2>{cluster.cluster_title}</h2>
+            <p>Score {cluster.signal_score} · {cluster.editorial_route} · {cluster.source_count} sources</p>
+            <pre>{JSON.stringify(cluster.score_dimensions || {}, null, 2)}</pre>
+          </article>
+        ))}
+      </div>
+    </section>
+  </main>
+</Layout>

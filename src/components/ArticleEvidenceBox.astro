@@ -1,0 +1,23 @@
+---
+const { evidence = {}, claimSummary = {} } = Astro.props;
+const facts = evidence.verifiedFacts || evidence.verified_facts || [];
+const keyNumbers = evidence.keyNumbers || [];
+---
+<section class="article-evidence-box">
+  <div>
+    <p class="eyebrow">Evidence</p>
+    <h2>Verification frame</h2>
+  </div>
+  <div class="evidence-grid">
+    <div><span>Verified facts</span><strong>{facts.length}</strong></div>
+    <div><span>Key numbers</span><strong>{keyNumbers.length}</strong></div>
+    <div><span>Source count</span><strong>{evidence.sourceCount || evidence.source_count || 1}</strong></div>
+    <div><span>Unsupported claims</span><strong>{claimSummary.unsupported_claim_count || 0}</strong></div>
+  </div>
+  {facts.length ? (
+    <ul>
+      {facts.slice(0, 4).map((fact) => <li>{fact}</li>)}
+    </ul>
+  ) : null}
+  {evidence.uncertainty ? <p>{evidence.uncertainty}</p> : null}
+</section>

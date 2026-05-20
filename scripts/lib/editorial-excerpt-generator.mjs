@@ -112,13 +112,15 @@ function sourceSpecificDeck(article = {}, route = routePublicLane(article), arch
   }
 
   const actor = primaryActor(article);
-  const layer = compact(article.infrastructure_layer || route.editorial_lens || archetype.editorialLens || 'infrastructure');
+  const laneTitle = compact(route.laneTitle || 'infrastructure');
+  const editorialLens = compact(route.editorial_lens || archetype.editorialLens || 'Infrastructure Signal');
+  const layer = compact(article.infrastructure_layer || editorialLens || 'infrastructure');
   const event = compact(article.summary || article.snippet || article.title || '').replace(/[.!?]+$/, '');
   const variants = [
     `${actor} puts ${layer.toLowerCase()} planning in focus as ${event.toLowerCase()}`,
-    `${actor} gives ${route.laneTitle.toLowerCase()} readers a concrete ${layer.toLowerCase()} signal to test against source evidence`,
+    `${actor} gives ${laneTitle.toLowerCase()} readers a concrete ${layer.toLowerCase()} signal to test against source evidence`,
     `${layer} is the useful lens on ${actor} because the source points to a specific operating decision`,
-    `${actor} turns the reported move into a ${archetype.editorialLens.toLowerCase()} question for infrastructure buyers`,
+    `${actor} turns the reported move into a ${editorialLens.toLowerCase()} question for infrastructure buyers`,
   ];
   return cleanSentence(variants[stableIndex(`${article.id || ''}|${article.title || ''}`, variants.length)]);
 }
@@ -161,9 +163,11 @@ function ensureUniqueDeck(deck = '', article = {}, recentDecks = []) {
   if (!used.has(firstWords(deck, 8))) return deck;
   const route = routePublicLane(article);
   const actor = primaryActor(article);
-  const alternate = cleanSentence(`${route.editorial_lens} is the sharper read on ${actor} because the source names a decision point rather than a generic AI trend`);
+  const editorialLens = compact(route.editorial_lens || 'Infrastructure Signal');
+  const laneTitle = compact(route.laneTitle || 'infrastructure');
+  const alternate = cleanSentence(`${editorialLens} is the sharper read on ${actor} because the source names a decision point rather than a generic AI trend`);
   return used.has(firstWords(alternate, 8))
-    ? cleanSentence(`${actor} adds a source-specific ${route.editorial_lens.toLowerCase()} signal for ${route.laneTitle.toLowerCase()} readers`)
+    ? cleanSentence(`${actor} adds a source-specific ${editorialLens.toLowerCase()} signal for ${laneTitle.toLowerCase()} readers`)
     : alternate;
 }
 
@@ -194,7 +198,9 @@ export function generateEditorialExcerpt(article = {}, options = {}) {
   const truncation = detectTruncationArtifacts(`${deck} ${why}`);
   if (!deckGuard.ok || !whyGuard.ok || !truncation.ok || hasForbiddenPublicPhrase(`${deck} ${why}`)) {
     const actor = primaryActor(article);
-    deck = cleanSentence(`${actor} is a ${route.editorial_lens.toLowerCase()} item for ${route.laneTitle.toLowerCase()} readers, with the infrastructure read limited to source-backed facts`);
+    const editorialLens = compact(route.editorial_lens || 'Infrastructure Signal');
+    const laneTitle = compact(route.laneTitle || 'infrastructure');
+    deck = cleanSentence(`${actor} is a ${editorialLens.toLowerCase()} item for ${laneTitle.toLowerCase()} readers, with the infrastructure read limited to source-backed facts`);
     why = cleanSentence(`The public card stays short because the available evidence supports a watchlist signal more than a full infrastructure memo`);
   }
 
