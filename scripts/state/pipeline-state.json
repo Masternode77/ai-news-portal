@@ -313,7 +313,9 @@
     "1fbd2acc35cad9b3",
     "af45a6f9a7a983f9",
     "ebbdd50f6259511c",
-    "c8fd1d25f9a85fc7"
+    "c8fd1d25f9a85fc7",
+    "6769926516897425",
+    "37d8121043268f92"
   ],
   "dayPlans": {
     "2026-03-24": {
@@ -6216,19 +6218,444 @@
         "1": true,
         "2": true
       }
+    },
+    "2026-05-20": {
+      "date": "2026-05-20",
+      "createdAt": "2026-05-20T00:09:42.797Z",
+      "refreshedAt": "2026-05-20T00:09:42.797Z",
+      "candidateWindowHours": 24,
+      "curatedItems": [
+        {
+          "id": "6769926516897425",
+          "source": "NVIDIA Blog",
+          "url": "https://blogs.nvidia.com/blog/google-cloud-developer-community-ai-builders/",
+          "title": "NVIDIA and Google Cloud Empower the Next Wave of AI Builders",
+          "snippet": "At this year’s Google I/O conference, NVIDIA and Google Cloud are accelerating the work of more than 100,000 developers in the companies’ joint developer community, which provides curated learning paths, hands-on labs a…",
+          "contentText": "At this year’s Google I/O conference, NVIDIA and Google Cloud are accelerating the work of more than 100,000 developers in the companies’ joint developer community , which provides curated learning paths, hands-on labs and events that help them build using the full-stack NVIDIA AI platform on Google Cloud. Launched at Google I/O last year, the community brings together developers, data scientists and machine learning engineers who want to sharpen their AI skills on the latest NVIDIA and Google Cloud technologies. New additions for the community are rolling out this year, including a learning path for using the JAX library on NVIDIA GPUs, a new NVIDIA Dynamo codelab focused on inference optimizations, as well as monthly developer livestreams . Over the last year, the community has become a…",
+          "publishedAt": "2026-05-19T20:30:09.000Z",
+          "sourceImage": "https://blogs.nvidia.com/wp-content/uploads/2026/05/google-cloud-nvidia-1920x1080-1.jpg",
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "category": "AI Infrastructure",
+          "primary_category": "AI Infrastructure",
+          "secondary_category": "GPU clusters and deployment readiness",
+          "infrastructure_layer": "Compute",
+          "affected_stakeholders": [
+            "operators",
+            "hyperscalers",
+            "cloud buyers",
+            "investors"
+          ],
+          "article_type": "Product / Platform Update",
+          "urgency_score": 0.47,
+          "taxonomy_confidence": 0.77,
+          "taxonomy_reasons": [
+            "ai infrastructure",
+            "neocloud"
+          ],
+          "direct_ai_infrastructure_relevance": 1,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0.324,
+          "semiconductor_relevance": 0.598,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.897,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "cloud_capacity_relevance:0.32(google cloud)",
+            "semiconductor_relevance:0.60(nvidia, gpu)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 1,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0.324,
+            "semiconductor_relevance": 0.598,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.897,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+              "cloud_capacity_relevance:0.32(google cloud)",
+              "semiconductor_relevance:0.60(nvidia, gpu)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 76
+        },
+        {
+          "id": "37d8121043268f92",
+          "source": "Toms Hardware",
+          "url": "https://www.tomshardware.com/laptops/new-microsoft-surface-for-business-pcs-pair-panther-lake-chips-with-as-little-as-8gb-of-ram-13-inch-surface-laptop-goes-light-on-memory-but-still-starts-at-usd1-299",
+          "title": "New Microsoft Surface for Business PCs pair Panther Lake chips with as little as 8GB of RAM — 13-inch Surface Laptop goes light on memory but still starts at $1,299",
+          "snippet": "Microsoft has announced the Surface Laptop 8 and Surface Pro 12 for Business, both starting at $1,949 and featuring Intel's Panther Lake silicon. There's also a new Surface Laptop 13-inch that comes with as little as 8G…",
+          "contentText": "Microsoft has announced the Surface Laptop 8 and Surface Pro 12 for Business, both starting at $1,949 and featuring Intel's Panther Lake silicon. There's also a new Surface Laptop 13-inch that comes with as little as 8GB RAM coming later this year and starting at $1,299.",
+          "publishedAt": "2026-05-19T19:35:42.000Z",
+          "sourceImage": "https://cdn.mos.cms.futurecdn.net/5JZNPfdYEQmGAruBdiFZVU-1280-80.png",
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "category": "AI Infrastructure",
+          "primary_category": "AI Infrastructure",
+          "secondary_category": "GPU clusters and deployment readiness",
+          "infrastructure_layer": "Compute",
+          "affected_stakeholders": [
+            "operators",
+            "hyperscalers",
+            "cloud buyers",
+            "investors"
+          ],
+          "article_type": "Supply Chain",
+          "urgency_score": 0.44,
+          "taxonomy_confidence": 0.77,
+          "taxonomy_reasons": [
+            "ai infrastructure",
+            "neocloud"
+          ],
+          "direct_ai_infrastructure_relevance": 1,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0.42,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.822,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "semiconductor_relevance:0.42(intel, gpu)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 1,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0.42,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.822,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+              "semiconductor_relevance:0.42(intel, gpu)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 73
+        },
+        {
+          "id": "2e02ecbff8276968",
+          "source": "Data Center POST",
+          "url": "https://datacenterpost.com/green-capital-and-prime-capital-partner-on-300-mw-battery-storage-portfolio-in-poland/",
+          "title": "Green Capital and Prime Capital Partner on 300 MW Battery Storage Portfolio in Poland",
+          "snippet": "TL;DR Green Capital S.A. and Prime Capital AG are partnering to develop a 300 MW battery storage portfolio in Poland. The project will span multiple sites in Poland and is designed to support grid stability, renewable i…",
+          "contentText": "TL;DR Green Capital S.A. and Prime Capital AG are partnering to develop a 300 MW battery storage portfolio in Poland. The project will span multiple sites in Poland and is designed to support grid stability, renewable integration, and energy flexibility within the European market. The collaboration combines local development expertise and infrastructure investment experience to accelerate delivery and long-term growth. Green Capital S.A. and Prime Capital AG are partnering to develop a 300 MW portfolio of Battery Energy Storage Systems (BESS) in Poland, marking a notable addition to the country’s growing energy storage market. The portfolio is designed to support grid stability, renewable integration, and the broader shift toward a more flexible power system. Project Scope The buildout is…",
+          "publishedAt": "2026-05-19T18:07:50.000Z",
+          "sourceImage": "https://d3qut6qyo6tw2j.cloudfront.net/bin/uploads/2026/05/19140701/Green-Capital-and-Prime-Capital-Partner-on-300-MW-Battery-Storage-Portfolio-in-Poland.png",
+          "region": "EU",
+          "language": "en",
+          "defaultCategory": "Colocation & Wholesale",
+          "category": "Power & Grid",
+          "primary_category": "Power & Grid",
+          "secondary_category": "Interconnection and power procurement",
+          "infrastructure_layer": "Power",
+          "affected_stakeholders": [
+            "data center operators",
+            "utilities",
+            "cloud capacity teams",
+            "investors"
+          ],
+          "article_type": "Partnership",
+          "urgency_score": 0.62,
+          "taxonomy_confidence": 0.76,
+          "taxonomy_reasons": [
+            "power",
+            "grid"
+          ],
+          "direct_ai_infrastructure_relevance": 0,
+          "data_center_relevance": 0.76,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0,
+          "power_grid_relevance": 0.95,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0.243,
+          "infrastructure_relevance_score": 0.823,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "data_center_relevance:0.76(data center, colocation)",
+            "power_grid_relevance:0.95(power, grid, mw)",
+            "enterprise_ai_infrastructure_relevance:0.24(storage)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 0,
+            "data_center_relevance": 0.76,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0,
+            "power_grid_relevance": 0.95,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0.243,
+            "infrastructure_relevance_score": 0.823,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "data_center_relevance:0.76(data center, colocation)",
+              "power_grid_relevance:0.95(power, grid, mw)",
+              "enterprise_ai_infrastructure_relevance:0.24(storage)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 73
+        },
+        {
+          "id": "6a0afe34d5f7e6b4",
+          "source": "ServeTheHome",
+          "url": "https://www.servethehome.com/amd-epyc-8005-is-out-with-up-to-84-zen-5-cores-in-a-225w-tdp/",
+          "title": "AMD EPYC 8005 is Out with Up to 84 Zen 5 Cores in a 225W TDP Package",
+          "snippet": "AMD is out with the SKUs and new details on the AMD EPYC 8005 series, which is a massive shift in the line's capabilities The post AMD EPYC 8005 is Out with Up to 84 Zen 5 Cores in a 225W TDP Package appeared first on S…",
+          "contentText": "AMD is out with the SKUs and new details on the AMD EPYC 8005 series, which is a massive shift in the line's capabilities The post AMD EPYC 8005 is Out with Up to 84 Zen 5 Cores in a 225W TDP Package appeared first on ServeTheHome .",
+          "publishedAt": "2026-05-19T17:48:03.000Z",
+          "sourceImage": null,
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "category": "AI Infrastructure",
+          "primary_category": "AI Infrastructure",
+          "secondary_category": "GPU clusters and deployment readiness",
+          "infrastructure_layer": "Compute",
+          "affected_stakeholders": [
+            "operators",
+            "hyperscalers",
+            "cloud buyers",
+            "investors"
+          ],
+          "article_type": "Other",
+          "urgency_score": 0.45,
+          "taxonomy_confidence": 0.77,
+          "taxonomy_reasons": [
+            "ai infrastructure",
+            "neocloud"
+          ],
+          "direct_ai_infrastructure_relevance": 1,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0.517,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.844,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "semiconductor_relevance:0.52(amd, gpu)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 1,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0.517,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.844,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+              "semiconductor_relevance:0.52(amd, gpu)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 73
+        },
+        {
+          "id": "6c2d49084011c31e",
+          "source": "TechCrunch AI",
+          "url": "https://techcrunch.com/2026/05/19/ai-design-tools-are-the-next-big-battleground-and-google-is-going-all-in-at-io-2026/",
+          "title": "Google just declared itself a contender in AI design at IO 2026",
+          "snippet": "Google says it's designed the app to be accessible to everyone, from teachers to small business owners.",
+          "contentText": "Google says it's designed the app to be accessible to everyone, from teachers to small business owners.",
+          "publishedAt": "2026-05-19T21:33:30.000Z",
+          "sourceImage": null,
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "category": "AI Infrastructure",
+          "primary_category": "AI Infrastructure",
+          "secondary_category": "GPU clusters and deployment readiness",
+          "infrastructure_layer": "Compute",
+          "affected_stakeholders": [
+            "operators",
+            "hyperscalers",
+            "cloud buyers",
+            "investors"
+          ],
+          "article_type": "Other",
+          "urgency_score": 0.43,
+          "taxonomy_confidence": 0.77,
+          "taxonomy_reasons": [
+            "ai infrastructure",
+            "neocloud"
+          ],
+          "direct_ai_infrastructure_relevance": 1,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0.22,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.778,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "semiconductor_relevance:0.22(gpu)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 1,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0.22,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.778,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+              "semiconductor_relevance:0.22(gpu)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 72
+        },
+        {
+          "id": "4de0b4a128aee2d6",
+          "source": "TechCrunch AI",
+          "url": "https://techcrunch.com/2026/05/19/you-can-now-talk-to-your-gmail-inbox-as-seen-at-google-io-2026/",
+          "title": "You can now talk to your Gmail inbox, as seen at Google IO 2026",
+          "snippet": "Google expands Gmail’s AI Inbox with conversational voice search, letting users ask Gemini to find buried email details.",
+          "contentText": "Google expands Gmail’s AI Inbox with conversational voice search, letting users ask Gemini to find buried email details.",
+          "publishedAt": "2026-05-19T21:25:31.000Z",
+          "sourceImage": null,
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "category": "AI Infrastructure",
+          "primary_category": "AI Infrastructure",
+          "secondary_category": "GPU clusters and deployment readiness",
+          "infrastructure_layer": "Compute",
+          "affected_stakeholders": [
+            "operators",
+            "hyperscalers",
+            "cloud buyers",
+            "investors"
+          ],
+          "article_type": "Capacity Expansion",
+          "urgency_score": 0.49,
+          "taxonomy_confidence": 0.77,
+          "taxonomy_reasons": [
+            "ai infrastructure",
+            "neocloud"
+          ],
+          "direct_ai_infrastructure_relevance": 1,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0.22,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.778,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "semiconductor_relevance:0.22(gpu)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 1,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0.22,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.778,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+              "semiconductor_relevance:0.22(gpu)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 72
+        }
+      ],
+      "curatedIds": [
+        "6769926516897425",
+        "37d8121043268f92",
+        "2e02ecbff8276968",
+        "6a0afe34d5f7e6b4",
+        "6c2d49084011c31e",
+        "4de0b4a128aee2d6"
+      ],
+      "publishedIds": [
+        "6769926516897425",
+        "37d8121043268f92"
+      ],
+      "slotPublications": {
+        "1": true
+      }
     }
   },
   "runHistory": [
-    {
-      "at": "2026-04-07T08:18:10.739Z",
-      "day": "2026-04-07",
-      "slot": 2,
-      "publishedCount": 2,
-      "publishedIds": [
-        "b11139b8b7993f8b",
-        "5e4193934f8322f1"
-      ]
-    },
     {
       "at": "2026-04-07T16:14:41.384Z",
       "day": "2026-04-08",
@@ -7410,7 +7837,77 @@
         "ebbdd50f6259511c",
         "c8fd1d25f9a85fc7"
       ]
+    },
+    {
+      "at": "2026-05-20T00:09:42.797Z",
+      "day": "2026-05-20",
+      "slot": 1,
+      "publishedCount": 1,
+      "signalCardCount": 0,
+      "archiveOnlyCount": 0,
+      "repetitionBlockedCount": 1,
+      "publishedIds": [
+        "6769926516897425"
+      ],
+      "processedIds": [
+        "6769926516897425",
+        "37d8121043268f92"
+      ],
+      "blockedCount": 0,
+      "blockedItems": [],
+      "repetitionBlockedItems": [
+        {
+          "id": "37d8121043268f92",
+          "title": "New Microsoft Surface for Business PCs pair Panther Lake chips with as little as 8GB of RAM — 13-inch Surface Laptop goes light on memory but still starts at $1,299",
+          "infrastructure_relevance_score": 0.892,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "cloud_capacity_relevance:0.32(hyperscalers)",
+            "semiconductor_relevance:0.42(intel, gpu)",
+            "power_grid_relevance:0.22(power)"
+          ],
+          "extraction_quality_score": 1,
+          "source_domain_adapter": "generic",
+          "content_length": 1693,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": true,
+          "repetition_block_reasons": [
+            "conclusion_similarity>0.7"
+          ],
+          "repetition_check": {
+            "compared_article_count": 1,
+            "repeated_sentence_ratio": 0,
+            "repeated_paragraph_ratio": 0,
+            "heading_sequence_similarity": 0,
+            "banned_phrase_count": 0,
+            "banned_phrase_counts": {},
+            "recent_banned_phrase_counts": {},
+            "ngram_overlap": 0.2857142857142857,
+            "blueprint_repetition": 1,
+            "conclusion_similarity": 0.8783100656536799,
+            "repeated_sentence_count": 0,
+            "repeated_paragraph_count": 0,
+            "heading_sequence": [
+              "System Change",
+              "Bottleneck",
+              "Engineering Tradeoff",
+              "Validation Metric"
+            ],
+            "blocked": true,
+            "reasons": [
+              "conclusion_similarity>0.7"
+            ]
+          },
+          "expert_insight_complete": true,
+          "expert_insight_missing_fields": [],
+          "reason": "conclusion_similarity>0.7"
+        }
+      ],
+      "signalCardItems": [],
+      "archiveOnlyItems": []
     }
   ],
-  "lastRunAt": "2026-05-16T08:56:43.876Z"
+  "lastRunAt": "2026-05-20T00:09:42.797Z"
 }
