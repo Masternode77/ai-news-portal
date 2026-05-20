@@ -43,6 +43,7 @@
     "audit:public-surface": "npm run build && node ./scripts/audit-public-surface.mjs",
     "audit:blog-surface-v4": "npm run build && node ./scripts/audit-blog-surface-v4.mjs",
     "audit:autonomous-current": "node ./scripts/audit-autonomous-current-state.mjs",
+    "audit:final-current-state": "node ./scripts/audit-final-current-state.mjs",
     "run:editorial-cycle": "node ./scripts/run-editorial-cycle.mjs",
     "test:signal-clusters": "node --test tests/signal-clusterer.test.mjs tests/signal-scoring-engine.test.mjs tests/editorial-selection-engine.test.mjs",
     "test:claim-ledger": "node --test tests/claim-ledger.test.mjs tests/numeric-claim-verifier.test.mjs tests/unsupported-claim-guard.test.mjs",
@@ -54,11 +55,19 @@
     "test:public-editorial-v2": "node --test tests/source-scope-policy.test.mjs tests/public-publish-quality-gate.test.mjs tests/article-page-autonomous.test.mjs tests/autonomous-public-surface.test.mjs",
     "regenerate:editorial-articles-v2": "node ./scripts/regenerate-editorial-articles-v2.mjs",
     "audit:public-editorial-v2": "npm run build && node ./scripts/audit-autonomous-public-surface.mjs",
+    "test:editorial-v3": "node --test tests/editorial-article-engine-v3.test.mjs tests/quality-safe-backfill.test.mjs tests/evidence-triangulation.test.mjs tests/homepage-launch-model.test.mjs tests/vendor-roundup-routing-rule.test.mjs",
+    "test:public-admin-separation": "node --test tests/public-admin-separation.test.mjs",
+    "test:public-publish-gate-v3": "node --test tests/public-publish-quality-gate-v3.test.mjs tests/seo-launch-policy.test.mjs tests/launch-readiness.test.mjs",
+    "regenerate:launch-surface-v1": "node ./scripts/regenerate-launch-surface-v1.mjs",
+    "audit:launch-readiness": "node ./scripts/audit-launch-readiness.mjs",
+    "audit:deployed-production": "node ./scripts/audit-deployed-production.mjs",
+    "verify:deployment": "node ./scripts/verify-deployment.mjs",
     "eval:articles": "node ./scripts/eval-article-generation.mjs"
   },
   "dependencies": {
     "@astrojs/rss": "^4.0.12",
     "@astrojs/sitemap": "^3.6.0",
+    "@vercel/analytics": "^2.0.1",
     "astro": "^5.17.1",
     "sharp": "^0.34.5"
   },

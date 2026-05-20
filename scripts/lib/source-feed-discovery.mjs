@@ -9,12 +9,23 @@ const COMMON_FEED_PATHS = [
   '/headlines.atom',
 ];
 
+const COMMON_SITEMAP_PATHS = [
+  '/sitemap.xml',
+  '/sitemap_index.xml',
+  '/news-sitemap.xml',
+  '/sitemap-news.xml',
+];
+
 function compact(value = '') {
   return String(value || '').replace(/\s+/g, ' ').trim();
 }
 
 function looksLikeFeed(text = '') {
   return /<(rss|feed|rdf:RDF)\b/i.test(text) && /<item\b|<entry\b/i.test(text);
+}
+
+function looksLikeSitemap(text = '') {
+  return /<urlset\b|<sitemapindex\b/i.test(text) && /<loc>/i.test(text);
 }
 
 function absoluteUrl(domain = '', maybePath = '') {
@@ -86,6 +97,23 @@ export async function discoverSourceFeed(source = {}, options = {}) {
     }
   }
 
+  const sitemapCandidates = [
+    source.sitemap,
+    ...COMMON_SITEMAP_PATHS.map((sitemapPath) => absoluteUrl(source.domain, sitemapPath)),
+  ].filter(Boolean);
+  for (const url of sitemapCandidates) {
+    if (seen.has(url)) continue;
+    seen.add(url);
+    try {
+      const response = await fetchText(url, fetcher, options.timeoutMs || 10000);
+      if (response.ok && looksLikeSitemap(response.text)) {
+        return { source, status: 'active_sitemap', discoveredUrl: url, httpStatus: response.status };
+      }
+    } catch {
+      // Continue through bounded sitemap candidates.
+    }
+  }
+
   const homepageUrl = absoluteUrl(source.domain, '/');
   try {
     const response = await fetchText(homepageUrl, fetcher, options.timeoutMs || 10000);
@@ -100,8 +128,17 @@ export async function discoverSourceFeed(source = {}, options = {}) {
           // Keep discovery bounded and quiet.
         }
       }
-      if (/sitemap/i.test(response.text)) {
-        return { source, status: 'active_sitemap', discoveredUrl: homepageUrl, httpStatus: response.status };
+      const sitemapLink = response.text.match(/href=["']([^"']*sitemap[^"']*\.xml[^"']*)["']/i)?.[1];
+      if (sitemapLink) {
+        try {
+          const sitemapUrl = new URL(sitemapLink, homepageUrl).toString();
+          const sitemapResponse = await fetchText(sitemapUrl, fetcher, options.timeoutMs || 10000);
+          if (sitemapResponse.ok && looksLikeSitemap(sitemapResponse.text)) {
+            return { source, status: 'active_sitemap', discoveredUrl: sitemapUrl, httpStatus: sitemapResponse.status };
+          }
+        } catch {
+          // Homepage hinted at a sitemap, but the bounded fetch did not validate it.
+        }
       }
       return { source, status: 'landing_page_only', discoveredUrl: homepageUrl, httpStatus: response.status };
     }

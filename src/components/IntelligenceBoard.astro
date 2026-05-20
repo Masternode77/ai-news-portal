@@ -1,0 +1,39 @@
+---
+import LocalArticleCard from './LocalArticleCard.astro';
+import SignalLane from './SignalLane.astro';
+import NewsletterCapture from './NewsletterCapture.astro';
+const { model } = Astro.props;
+---
+<section class="launch-hero">
+  <div>
+    <p class="eyebrow">{model.hero.subtitle}</p>
+    <h1>{model.hero.title}</h1>
+    <p>{model.hero.positioning}</p>
+  </div>
+  <a class="hero-cta" href="/subscribe/">{model.hero.cta}</a>
+</section>
+
+<section class="live-brief-stats" aria-label="Live Brief stats">
+  <span><strong>{model.stats.liveLocalArticles}</strong> live local articles</span>
+  <span><strong>{model.stats.watchlistSignals}</strong> watchlist signals</span>
+  <span><strong>{model.stats.archiveCount}</strong> archive/noindex records</span>
+  <span><strong>{model.stats.sourceHealth}</strong> source health paths</span>
+</section>
+
+{model.featured.length ? (
+  <section class="signal-lane featured-launch-lane">
+    <div class="lane-heading">
+      <div>
+        <p class="eyebrow">Today&apos;s Constraint</p>
+        <h2>Lead local analysis</h2>
+      </div>
+    </div>
+    <div class="lane-grid launch-grid featured-grid">
+      {model.featured.map((item) => <LocalArticleCard item={item} />)}
+    </div>
+  </section>
+) : null}
+
+<NewsletterCapture compact={true} />
+
+{model.lanes.map((lane) => <SignalLane lane={lane} />)}

@@ -39,7 +39,7 @@ test('homepage editorial model separates latest cycle from backfilled analysis',
   };
   const model = buildHomepageEditorialModel({
     latest: [article],
-    cycles: [{ published_analyses: [], status: 'completed_no_qualifying_signals', cycle_completed_at: '2026-05-20T05:00:00Z' }],
+    cycles: [{ published_analyses: [], status: 'completed_no_qualifying_signals', cycle_completed_at: new Date().toISOString() }],
   });
   assert.equal(model.featuredAnalyses.length, 0);
   assert.equal(model.recentAnalysis.length, 1);

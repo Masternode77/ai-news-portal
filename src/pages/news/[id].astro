@@ -1,10 +1,11 @@
 ---
 import Layout from '../../layouts/Layout.astro';
-import BlogArticleBody from '../../components/BlogArticleBody.astro';
-import SourceAttribution from '../../components/SourceAttribution.astro';
-import AtAGlanceBox from '../../components/AtAGlanceBox.astro';
-import ArticleBottomLine from '../../components/ArticleBottomLine.astro';
-import ArticleWatchMetrics from '../../components/ArticleWatchMetrics.astro';
+import PublicArticleHeader from '../../components/PublicArticleHeader.astro';
+import PublicArticleBody from '../../components/PublicArticleBody.astro';
+import PublicAtAGlance from '../../components/PublicAtAGlance.astro';
+import PublicWhatToWatch from '../../components/PublicWhatToWatch.astro';
+import PublicBottomLine from '../../components/PublicBottomLine.astro';
+import NewsletterCapture from '../../components/NewsletterCapture.astro';
 import latestNews from '../../data/latest-news.json';
 import archivedNews from '../../data/archived-news.json';
 import { SITE } from '../../config/site';
@@ -82,31 +83,25 @@ const structuredData = buildArticleStructuredData({
       </div>
 
       <div class="detail-body">
-        <nav class="breadcrumb" aria-label="Breadcrumb">
-          <a href="/">Home</a>
-          <span>/</span>
-          <span>{taxonomy.primary}</span>
-        </nav>
+        <PublicArticleHeader
+          title={displayTitle}
+          deck={publicArticle.deck}
+          byline={publicArticle.byline}
+          sourceAttribution={sourceAttribution}
+          taxonomy={taxonomy}
+          presentation={publicPresentation}
+          publishedAt={article.publishedAt}
+        />
 
-        <div class="meta-strip">
-          <span class="category-badge">{taxonomy.primary}</span>
-          <span class="source-pill">{publicPresentation.signal_label}</span>
-          <span class="region-pill">{publicPresentation.region}</span>
-          <time>{new Date(article.publishedAt).toLocaleString('en-US')}</time>
-        </div>
+        <PublicAtAGlance items={atAGlanceItems} />
 
-        <h1>{displayTitle}</h1>
-        <p class="detail-summary">{publicArticle.deck}</p>
-        <p class="byline">{publicArticle.byline || 'By Compute Current Editorial Desk'}</p>
-        <SourceAttribution source={sourceAttribution} />
+        <PublicArticleBody blocks={articleBodyBlocks} />
 
-        <AtAGlanceBox items={atAGlanceItems} />
+        <NewsletterCapture compact={true} />
 
-        {articleBodyBlocks.length ? <BlogArticleBody blocks={articleBodyBlocks} /> : null}
+        <PublicWhatToWatch items={watchMetrics} />
 
-        <ArticleWatchMetrics metrics={watchMetrics} />
-
-        <ArticleBottomLine bottomLine={bottomLine} />
+        <PublicBottomLine bottomLine={bottomLine} />
 
         <section class="detail-section source-attribution-panel">
           <h2>Source</h2>

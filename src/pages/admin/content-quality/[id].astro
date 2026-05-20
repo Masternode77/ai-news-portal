@@ -9,7 +9,7 @@ import { SITE } from '../../../config/site';
 import { buildAdminQualityModel } from '../../../lib/adminQualityModel.js';
 
 export function getStaticPaths() {
-  return [...latestNews, ...archivedNews]
+  return ([...latestNews, ...archivedNews] as any[])
     .filter((article) => article?.id)
     .map((article) => ({
       params: { id: article.id },
@@ -18,12 +18,13 @@ export function getStaticPaths() {
 }
 
 const { article } = Astro.props;
-const quality = buildAdminQualityModel(article);
+const articleRecord = article as any;
+const quality = buildAdminQualityModel(articleRecord);
 ---
 <Layout
-  title={`Quality: ${article.title} | ${SITE.name}`}
+  title={`Quality: ${articleRecord.title} | ${SITE.name}`}
   description="Private Compute Current content quality detail"
-  canonicalPath={`/admin/content-quality/${article.id}/`}
+  canonicalPath={`/admin/content-quality/${articleRecord.id}/`}
   noindex={true}
 >
   <main class="admin-shell">
@@ -31,16 +32,16 @@ const quality = buildAdminQualityModel(article);
       <a class="back-link admin-back" href="/admin/content-quality/">Content quality</a>
       <div>
         <p class="eyebrow">Admin Debug</p>
-        <h1>{article.title}</h1>
+        <h1>{articleRecord.title}</h1>
       </div>
-      <p class="admin-deck">{article.source} · {article.sourceUrl || article.url}</p>
+      <p class="admin-deck">{articleRecord.source} · {articleRecord.sourceUrl || articleRecord.url}</p>
     </header>
 
     <section class="admin-panel">
       <InternalQualityPanel quality={quality} />
     </section>
 
-    {article.backfilledAnalysis ? (
+    {articleRecord.backfilledAnalysis ? (
       <section class="admin-panel">
         <p class="eyebrow">Backfilled Analysis</p>
       </section>

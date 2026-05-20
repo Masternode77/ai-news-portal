@@ -1,0 +1,27 @@
+---
+const { item } = Astro.props;
+const signal = item.publicSignal;
+const impact = Array.isArray(signal.reader_impact) ? signal.reader_impact.slice(0, 4) : [];
+---
+<article class="launch-card local-article-card" data-public-card data-card-kind="local" data-lane={signal.lane_key}>
+  <div class="story-meta">
+    <span class="public-signal-label">{signal.signal_label}</span>
+    <span>{signal.editorial_lens}</span>
+    <span>{signal.region}</span>
+  </div>
+  <h3><a href={signal.view_detail}>{signal.title}</a></h3>
+  <p class="signal-deck">{signal.deck}</p>
+  <p class="signal-why">{signal.why_it_matters}</p>
+  {impact.length ? (
+    <div class="reader-impact" aria-label="Reader impact">
+      {impact.map((label) => <span>{label}</span>)}
+    </div>
+  ) : null}
+  <div class="source-line">
+    <span>{signal.source}</span>
+  </div>
+  <div class="card-footer">
+    <a class="detail-link" href={signal.view_detail}>Read analysis</a>
+    {signal.read_source ? <a class="source-cta" href={signal.read_source} target="_blank" rel="noreferrer">Source</a> : null}
+  </div>
+</article>

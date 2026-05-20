@@ -5,6 +5,7 @@ import { buildRssItems } from './lib/rss-builder.mjs';
 import { buildSitemapEntries } from './lib/sitemap-builder.mjs';
 import { cleanArticleBodyBlocks } from './lib/article-body-cleaner.mjs';
 import { publicPublishQualityGate, PUBLIC_INTERNAL_LABELS } from './lib/public-publish-quality-gate.mjs';
+import { publicPublishQualityGateV3 } from './lib/public-publish-quality-gate-v3.mjs';
 import { routePublicLane } from './lib/public-lane-router.mjs';
 import {
   hasExplicitInfrastructureCapacityEvidence,
@@ -70,6 +71,17 @@ function publicText(article = {}) {
   ].filter(Boolean).join('\n\n');
 }
 
+function isLaunchV3Article(article = {}) {
+  return article.public_generation_version === 'launch_ready_v1'
+    || article.editorial_engine_version === 'editorial_article_engine_v3';
+}
+
+function gateForArticle(article = {}, options = {}) {
+  return isLaunchV3Article(article)
+    ? publicPublishQualityGateV3(article, options)
+    : publicPublishQualityGate(article, options);
+}
+
 function forbiddenHits(text = '') {
   return FORBIDDEN
     .map((phrase) => ({
@@ -129,6 +141,7 @@ function publicArticleCandidates(records = []) {
 }
 
 function routeReasons(article = {}) {
+  if (isLaunchV3Article(article)) return [];
   const strict = routePublicLane(article);
   const current = article.public_routing || {};
   const reasons = [];
@@ -145,8 +158,8 @@ function sourceScopeAuditReasons(article = {}) {
   const policy = sourceScopePolicyResult(article);
   const reasons = [];
   const label = article.public_signal_label || article.public_routing?.public_signal_label || article.public_presentation?.signal_label;
-  if (isSingleSourceVendorOrProductPost(article) && label === 'Core Signal') {
-    reasons.push('source_count=1 vendor/product post routed as Core Signal');
+  if (isSingleSourceVendorOrProductPost(article) && label === 'Core Signal' && !hasExplicitInfrastructureCapacityEvidence(article)) {
+    reasons.push('source_count=1 vendor/product post routed as Core Signal without explicit capacity evidence');
   }
   if ((article.primary_category === 'Cloud Capacity' || article.category === 'Cloud Capacity')
     && !hasExplicitInfrastructureCapacityEvidence(article)) {
@@ -159,7 +172,7 @@ function sourceScopeAuditReasons(article = {}) {
 }
 
 function articleQualityReasons(article = {}, recent = []) {
-  const gate = publicPublishQualityGate(article, { recent });
+  const gate = gateForArticle(article, { recent });
   const reasons = gate.ok ? [] : gate.reasons.map((reason) => `public publish gate: ${reason}`);
   const body = publicBody(article);
   const bodyBlocks = cleanArticleBodyBlocks(body);
@@ -272,7 +285,7 @@ export async function auditAutonomousPublicSurface() {
     '| Title | Route | Words | Paragraphs | Source summary ratio |',
     '| --- | --- | ---: | ---: | ---: |',
     ...latest50.map((article) => {
-      const gate = publicPublishQualityGate(article);
+      const gate = gateForArticle(article);
       return `| ${String(article.title).replace(/\|/g, '/')} | ${article.public_route || article.public_routing?.routing_decision || ''} | ${gate.metrics.word_count} | ${gate.metrics.paragraph_count} | ${Number(gate.metrics.source_summary_ratio || 0).toFixed(2)} |`;
     }),
     '',

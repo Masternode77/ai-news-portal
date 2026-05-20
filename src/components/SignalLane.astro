@@ -1,0 +1,18 @@
+---
+import LocalArticleCard from './LocalArticleCard.astro';
+import SourceWatchCard from './SourceWatchCard.astro';
+const { lane } = Astro.props;
+---
+<section class:list={['signal-lane', lane.key === 'source-watch' && 'source-watch-lane']}>
+  <div class="lane-heading">
+    <div>
+      <p class="eyebrow">{lane.key === 'source-watch' ? 'Source Watch' : 'Intelligence Lane'}</p>
+      <h2>{lane.title}</h2>
+    </div>
+  </div>
+  <div class="lane-grid launch-grid">
+    {lane.items.map((item) => lane.key === 'source-watch' || item.publicSignal.source_only
+      ? <SourceWatchCard item={item} />
+      : <LocalArticleCard item={item} />)}
+  </div>
+</section>

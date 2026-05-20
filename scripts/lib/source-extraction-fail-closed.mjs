@@ -10,7 +10,17 @@ function compact(value = '') {
 }
 
 export function analyzeSourceExtractionFailClosed(article = {}) {
-  const rawText = compact(article.rawText || article.articleText || article.contentText || article.fullArticleText || article.summary || article.snippet || '');
+  const rawText = compact(
+    article.cleaned_source_text
+      || article.source_evidence_text
+      || article.rawText
+      || article.articleText
+      || article.contentText
+      || article.fullArticleText
+      || article.summary
+      || article.snippet
+      || ''
+  );
   const boilerplate = detectBoilerplate(rawText);
   const cleaned_source_text = compact(boilerplate.cleaned_text || rawText);
   const truncation = detectTruncationArtifacts(cleaned_source_text || rawText);

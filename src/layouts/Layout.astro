@@ -47,6 +47,7 @@ const ogImage = image.startsWith('http') ? image : joinUrl(SITE.url, image);
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImage} />
+    <script is:inline defer src="/_vercel/insights/script.js"></script>
   </head>
   <body>
     <slot />

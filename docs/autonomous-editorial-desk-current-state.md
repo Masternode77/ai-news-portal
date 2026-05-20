@@ -1,36 +1,36 @@
 # Autonomous Editorial Desk Current State Audit
 
-Generated at: 2026-05-20T05:34:03.837Z
+Generated at: 2026-05-20T13:13:33.032Z
 
 ## Pipeline And Public Counts
 
 - latest pipeline run time: 2026-05-20T00:09:42.797Z
 - latest source scan time: not_found
 - latest source article date: 2026-05-19T23:39:27.000Z
-- latest published Compute Current analysis date: 2026-05-20T05:31:55.795Z
-- articles crawled in last 8h / 24h / 7d: 8 / 27 / 30
+- latest published Compute Current analysis date: 2026-05-20T05:14:39.705Z
+- articles crawled in last 8h / 24h / 7d: 0 / 24 / 29
 - items passing extraction QA: 311
 - items passing relevance QA: 401
 - generated local articles: 3
 - homepage-visible cards: 8
-- source-only/direct-link cards: 5
+- source-only/direct-link cards: 6
 - archived-only items: 437
 - RSS-eligible items: 3
 - sitemap-indexable items: 3
 - category/tag pages: 0 real dynamic category/tag routes currently present
 - company/region pages: 0 real company/region routes currently present
-- current homepage local blog count: 3
+- current homepage local blog count: 8
 
 ## Why Items Are Not Local Blog Posts
 
 - extraction quality below threshold or failed extraction: 134
 - relevance below threshold or archive action: 44
-- articlePagePublished false: 442
+- articlePagePublished false: 437
 - homepagePublished false: 437
 - archiveOnly true/public archive-only: 437
 - noindex true/policy noindex: 442
 - missing local slug/id: 0
-- stale generation version not autonomous_editorial_desk_v1: 359
+- stale generation version not autonomous_editorial_desk_v1: 445
 
 ## Repeated AI Phrase Counts
 
@@ -49,7 +49,7 @@ Generated at: 2026-05-20T05:34:03.837Z
 
 - latest public/local articles with numeric claims but no claim ledger: 0
 - repeated opening first 10 words in latest 30 public articles: 0
-- repeated heading sequences in latest 30 public articles: 1
+- repeated heading sequences in latest 30 public articles: 0
 
 ## Where Current Copy Comes From
 

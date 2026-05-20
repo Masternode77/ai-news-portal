@@ -5,7 +5,7 @@ import archivedNews from '../../../data/archived-news.json';
 import { SITE } from '../../../config/site';
 
 export function getStaticPaths() {
-  return [...latestNews, ...archivedNews]
+  return ([...latestNews, ...archivedNews] as any[])
     .filter((article) => article?.id)
     .map((article) => ({
       params: { id: article.id },

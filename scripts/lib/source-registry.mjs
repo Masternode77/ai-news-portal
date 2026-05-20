@@ -7,15 +7,34 @@ export const SOURCE_REGISTRY_PATH = path.join(ROOT, 'config/sourceRegistry.yml')
 
 export const REQUESTED_SOURCE_IDS = [
   'datacenterdynamics',
+  'datacenterfrontier',
+  'datacenterknowledge',
+  'datacenterpost',
   'uptime-institute-journal',
   'hpcwire',
   'insidehpc',
+  'servethehome',
+  'storagereview',
   'blocks-and-files',
+  'semiconductor-engineering',
   'siliconangle-ai',
   'theregister-data-centre',
   'utility-dive',
   'power-engineering',
   'capacity-media',
+  'light-reading',
+  'fierce-network',
+  'ieee-spectrum',
+  'reuters-technology',
+  'reuters-energy',
+  'aws-news-blog',
+  'google-cloud-blog',
+  'microsoft-azure-blog',
+  'nvidia-blog',
+  'amd-newsroom',
+  'intel-newsroom',
+  'schneider-electric-data-centers',
+  'vertiv-news',
 ];
 
 function coerceValue(raw = '') {
@@ -64,12 +83,28 @@ export function requestedSourceCoverage(sources = []) {
 
 export function activeRegistryFeeds(sources = []) {
   return sources
-    .filter((source) => source.feed && !['blocked', 'paywalled', 'extraction_failed'].includes(source.status))
+    .filter((source) => source.feed && !['blocked', 'paywalled', 'extraction_failed', 'landing_page_only', 'manual_source'].includes(source.status))
     .map((source) => ({
       source: source.name,
       url: source.feed,
+      source_id: source.id,
+      domain: source.domain,
       region: source.region || 'Global',
       language: source.language || 'en',
       defaultCategory: source.defaultCategory || 'AI Infrastructure (GPU/Neocloud)',
     }));
+}
+
+export function sourceRegistrySummary(sources = []) {
+  const activeFeed = sources.filter((source) => source.status === 'active_feed' && source.feed).length;
+  const activeSitemap = sources.filter((source) => source.status === 'active_sitemap' && source.sitemap).length;
+  const landingOnly = sources.filter((source) => source.status === 'landing_page_only').length;
+  const inactive = sources.length - activeFeed - activeSitemap - landingOnly;
+  return {
+    total_sources: sources.length,
+    active_feed_sources: activeFeed,
+    active_sitemap_sources: activeSitemap,
+    landing_page_only_sources: landingOnly,
+    inactive_sources: inactive,
+  };
 }

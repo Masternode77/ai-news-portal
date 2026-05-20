@@ -242,3 +242,84 @@ sources:
     defaultCategory: Hyperscalers & Cloud
     region: Global
     status: active_feed
+  - id: light-reading
+    name: Light Reading
+    domain: lightreading.com
+    coverage: telecom networks, fiber, cloud connectivity, AI traffic demand
+    priority: P1
+    feed: https://www.lightreading.com/rss.xml
+    defaultCategory: Hyperscalers & Cloud
+    region: Global
+    status: active_feed
+  - id: fierce-network
+    name: Fierce Network
+    domain: fierce-network.com
+    coverage: telecom, fiber, enterprise networking, digital infrastructure
+    priority: P1
+    feed: https://www.fierce-network.com/rss/xml
+    defaultCategory: Hyperscalers & Cloud
+    region: US
+    status: active_feed
+  - id: ieee-spectrum
+    name: IEEE Spectrum
+    domain: spectrum.ieee.org
+    coverage: semiconductors, power systems, AI systems, engineering
+    priority: P1
+    feed: https://spectrum.ieee.org/feeds/feed.rss
+    defaultCategory: AI Infrastructure (GPU/Neocloud)
+    region: Global
+    status: active_feed
+  - id: reuters-technology
+    name: Reuters Technology
+    domain: reuters.com
+    coverage: technology markets, cloud providers, chips, AI infrastructure
+    priority: P1
+    feed: https://www.reutersagency.com/feed/?best-topics=technology
+    defaultCategory: Market / M&A / Financing
+    region: Global
+    status: active_feed
+  - id: reuters-energy
+    name: Reuters Energy
+    domain: reuters.com
+    coverage: energy markets, utilities, power supply, grid constraints
+    priority: P1
+    feed: https://www.reutersagency.com/feed/?best-topics=energy
+    defaultCategory: Power / Grid / Energy
+    region: Global
+    status: active_feed
+  - id: amd-newsroom
+    name: AMD Newsroom
+    domain: amd.com
+    coverage: server CPUs, accelerators, AI systems, silicon roadmap
+    priority: P1
+    feed: https://www.amd.com/en/newsroom/rss.xml
+    defaultCategory: AI Infrastructure (GPU/Neocloud)
+    region: Global
+    status: active_feed
+  - id: intel-newsroom
+    name: Intel Newsroom
+    domain: intel.com
+    coverage: data center CPUs, AI accelerators, foundry, networking silicon
+    priority: P1
+    feed: https://www.intel.com/content/www/us/en/newsroom/rss.xml
+    defaultCategory: AI Infrastructure (GPU/Neocloud)
+    region: Global
+    status: active_feed
+  - id: schneider-electric-data-centers
+    name: Schneider Electric Data Centers
+    domain: se.com
+    coverage: data center power, cooling, electrical infrastructure, operations
+    priority: P1
+    feed: https://blog.se.com/datacenter/feed/
+    defaultCategory: Cooling / MEP / Engineering
+    region: Global
+    status: active_feed
+  - id: vertiv-news
+    name: Vertiv News
+    domain: vertiv.com
+    coverage: power systems, thermal management, rack infrastructure, data centers
+    priority: P1
+    feed: https://www.vertiv.com/en-us/about/news-and-insights/news-releases/rss/
+    defaultCategory: Cooling / MEP / Engineering
+    region: Global
+    status: active_feed

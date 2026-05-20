@@ -11,16 +11,18 @@ export function getStaticPaths() {
 }
 
 const { page } = Astro.props;
-const items = (page.items || []).map((article) => ({
+const pageRecord = page as any;
+const pageTitle = pageRecord.name || pageRecord.title;
+const items = (pageRecord.items || []).map((article) => ({
   publicSignal: buildPublicPresentation(article, { route: article.public_routing || routePublicLane(article) }),
 }));
 ---
-<Layout title={`${page.name} | ${SITE.name}`} description={`Compute Current entity page for ${page.name}.`} canonicalPath={`/company/${page.slug}/`}>
+<Layout title={`${pageTitle} | ${SITE.name}`} description={`Compute Current entity page for ${pageTitle}.`} canonicalPath={`/company/${pageRecord.slug}/`}>
   <main class="policy-shell taxonomy-page">
     <a class="back-link" href="/">Latest board</a>
     <section class="policy-page">
       <p class="eyebrow">Company / Entity</p>
-      <h1>{page.name}</h1>
+      <h1>{pageTitle}</h1>
       <p class="policy-lede">Public Compute Current analysis and watchlist references involving this entity.</p>
     </section>
     <div class="lane-grid taxonomy-grid">

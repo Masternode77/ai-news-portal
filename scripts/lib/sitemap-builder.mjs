@@ -1,4 +1,5 @@
 import { shouldNoindexArticle } from '../../src/lib/seo-safeguards.js';
+import { isIndexableLocalArticle } from './seo-launch-policy.mjs';
 import { CATEGORY_PAGES } from './taxonomy-page-builder.mjs';
 import { DEFAULT_COMPANIES } from './company-entity-index.mjs';
 import { DEFAULT_REGIONS } from './region-index.mjs';
@@ -9,9 +10,9 @@ function slugify(value = '') {
 
 export function buildSitemapEntries(items = []) {
   const now = new Date().toISOString();
-  const staticPages = ['/', '/about/', '/methodology/', '/editorial-policy/', '/ai-disclosure/', '/archive/'];
+  const staticPages = ['/', '/about/', '/methodology/', '/editorial-policy/', '/ai-disclosure/', '/subscribe/', '/archive/'];
   const articlePages = items
-    .filter((item) => item?.id && item.articlePagePublished !== false && item.archiveOnly !== true && item.public_status !== 'archive_only_noindex' && item.public_status !== 'quarantined' && !shouldNoindexArticle(item))
+    .filter((item) => isIndexableLocalArticle(item) && !shouldNoindexArticle(item))
     .map((item) => ({ loc: `/news/${item.id}/`, lastmod: item.updatedAt || item.analysisPublishedAt || item.publishedAt || now }));
   const taxonomy = [
     ...CATEGORY_PAGES.map(([slug]) => `/category/${slug}/`),

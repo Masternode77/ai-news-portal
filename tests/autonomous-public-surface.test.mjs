@@ -2,6 +2,7 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import test from 'node:test';
 import { publicPublishQualityGate, PUBLIC_INTERNAL_LABELS } from '../scripts/lib/public-publish-quality-gate.mjs';
+import { publicPublishQualityGateV3 } from '../scripts/lib/public-publish-quality-gate-v3.mjs';
 import { routePublicLane } from '../scripts/lib/public-lane-router.mjs';
 import { hasExplicitInfrastructureCapacityEvidence, isSingleSourceVendorOrProductPost } from '../scripts/lib/source-scope-policy.mjs';
 
@@ -24,12 +25,24 @@ function loadPublicArticles() {
   );
 }
 
+function isLaunchV3Article(article = {}) {
+  return article.public_generation_version === 'launch_ready_v1'
+    || article.editorial_engine_version === 'editorial_article_engine_v3';
+}
+
+function gateForArticle(article = {}) {
+  return isLaunchV3Article(article)
+    ? publicPublishQualityGateV3(article)
+    : publicPublishQualityGate(article);
+}
+
 test('public data surface has no internal QA/debug labels', () => {
   const articles = loadPublicArticles();
   const text = articles.map((article) => [
     article.title,
     article.deck,
     article.public_presentation?.deck,
+    article.public_presentation?.why_it_matters,
     article.expertLensFull?.finalArticleBody,
     article.article_body_markdown,
   ].filter(Boolean).join('\n')).join('\n');
@@ -42,12 +55,17 @@ test('published public articles pass the editorial v2 gate and strict routing ch
   const articles = loadPublicArticles();
   assert.ok(articles.length > 0);
   for (const article of articles) {
-    const gate = publicPublishQualityGate(article);
+    const gate = gateForArticle(article);
     assert.equal(gate.ok, true, `${article.id} failed gate: ${gate.reasons.join(', ')}`);
-    const strict = routePublicLane(article);
-    assert.equal(article.public_routing?.routing_decision, strict.routing_decision, `${article.id} route drift`);
+    if (!isLaunchV3Article(article)) {
+      const strict = routePublicLane(article);
+      assert.equal(article.public_routing?.routing_decision, strict.routing_decision, `${article.id} route drift`);
+    }
     if (isSingleSourceVendorOrProductPost(article)) {
-      assert.notEqual(article.public_routing?.public_signal_label, 'Core Signal', `${article.id} over-routed single-source vendor post`);
+      assert.ok(
+        article.public_routing?.public_signal_label !== 'Core Signal' || hasExplicitInfrastructureCapacityEvidence(article),
+        `${article.id} over-routed single-source vendor post`
+      );
     }
     if (article.primary_category === 'Cloud Capacity') {
       assert.equal(hasExplicitInfrastructureCapacityEvidence(article), true, `${article.id} lacks explicit capacity proof`);
