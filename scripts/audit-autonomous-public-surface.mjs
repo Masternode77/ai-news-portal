@@ -3,38 +3,91 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { buildRssItems } from './lib/rss-builder.mjs';
 import { buildSitemapEntries } from './lib/sitemap-builder.mjs';
-import { articleDetailQualityEligible } from './lib/article-detail-quality-gate.mjs';
+import { cleanArticleBodyBlocks } from './lib/article-body-cleaner.mjs';
+import { publicPublishQualityGate, PUBLIC_INTERNAL_LABELS } from './lib/public-publish-quality-gate.mjs';
+import { routePublicLane } from './lib/public-lane-router.mjs';
+import {
+  hasExplicitInfrastructureCapacityEvidence,
+  isSingleSourceVendorOrProductPost,
+  sourceScopePolicyResult,
+} from './lib/source-scope-policy.mjs';
+import { sourceSummaryRatio } from './lib/source-summary-ratio.mjs';
 import { shouldNoindexArticle } from '../src/lib/seo-safeguards.js';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const REPORT_PATH = path.join(ROOT, 'docs/autonomous-public-surface-audit-report.md');
 
 const FORBIDDEN = [
-  'Commercially,',
-  'Operationally,',
-  'worth a local Compute Current read',
-  'puts power under',
-  'lens for infrastructure readers',
-  'reported item can translate into',
-  'readers should test whether',
-  'not just another AI headline',
-  'pending clearer execution evidence',
-  'The source evidence is clean enough to monitor',
-  'The issue is no longer',
-  'in the rapidly evolving',
-  'underscores',
-  'highlights the importance',
-  'as AI continues to',
+  ...PUBLIC_INTERNAL_LABELS,
+  'evidence anchor',
+  'infrastructure lane',
+  'cluster clears the desk bar',
+  'source item centers on',
+  'control point in this story',
+  'Why the desk selected it',
 ];
+
+function escapeRegExp(value = '') {
+  return String(value).replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
+function byDateDesc(a, b) {
+  return new Date(b.publishedAt || 0).getTime() - new Date(a.publishedAt || 0).getTime();
+}
+
+function uniqueById(items = []) {
+  const byId = new Map();
+  for (const item of items) {
+    if (!item?.id) continue;
+    byId.set(item.id, { ...(byId.get(item.id) || {}), ...item });
+  }
+  return [...byId.values()];
+}
+
+function publicBody(article = {}) {
+  return String(
+    article.article_body_markdown
+    || article.expertLensFull?.finalArticleBody
+    || article.fullArticleText
+    || article.contentText
+    || article.articleText
+    || ''
+  );
+}
+
+function publicText(article = {}) {
+  return [
+    article.title,
+    article.deck,
+    article.summary,
+    article.snippet,
+    article.why_it_matters,
+    article.public_presentation?.deck,
+    article.public_presentation?.why_it_matters,
+    publicBody(article),
+    article.bottom_line,
+    article.expertLensFull?.bottomLine,
+  ].filter(Boolean).join('\n\n');
+}
+
+function forbiddenHits(text = '') {
+  return FORBIDDEN
+    .map((phrase) => ({
+      phrase,
+      count: (String(text).match(new RegExp(escapeRegExp(phrase), phrase === 'claim ledger' ? 'gi' : 'g')) || []).length,
+    }))
+    .filter((hit) => hit.count);
+}
 
 function firstWords(text = '', count = 10) {
   return String(text || '').toLowerCase().replace(/[^a-z0-9\s]/g, ' ').replace(/\s+/g, ' ').trim().split(' ').slice(0, count).join(' ');
 }
 
-function headingsFor(article = {}) {
-  return String(article.expertLensFull?.finalArticleBody || '')
+function headingSequence(article = {}) {
+  return publicBody(article)
     .split(/\n{2,}/)
-    .filter((block) => /^[A-Z][A-Za-z0-9 /&'-]{2,70}$/.test(block.trim()))
+    .map((block) => block.trim())
+    .filter((block) => /^[A-Z][A-Za-z0-9 /&'-]{2,70}$/.test(block))
     .join(' > ');
 }
 
@@ -61,55 +114,119 @@ function distPathFor(loc = '/') {
   return path.join(ROOT, 'dist', clean.replace(/^\//, ''), 'index.html');
 }
 
+function publicArticleCandidates(records = []) {
+  return records
+    .filter((item) =>
+      item?.id
+      && item.articlePagePublished === true
+      && item.archiveOnly !== true
+      && item.public_status !== 'quarantined'
+      && item.public_status !== 'archive_only_noindex'
+      && item.noindex !== true
+      && !shouldNoindexArticle(item)
+    )
+    .sort(byDateDesc);
+}
+
+function routeReasons(article = {}) {
+  const strict = routePublicLane(article);
+  const current = article.public_routing || {};
+  const reasons = [];
+  if (current.routing_decision && strict.routing_decision && current.routing_decision !== strict.routing_decision) {
+    reasons.push(`public route differs from strict router decision: ${current.routing_decision} -> ${strict.routing_decision}`);
+  }
+  if (current.public_signal_label && strict.public_signal_label && current.public_signal_label !== strict.public_signal_label) {
+    reasons.push(`public signal label differs from strict router decision: ${current.public_signal_label} -> ${strict.public_signal_label}`);
+  }
+  return reasons;
+}
+
+function sourceScopeAuditReasons(article = {}) {
+  const policy = sourceScopePolicyResult(article);
+  const reasons = [];
+  const label = article.public_signal_label || article.public_routing?.public_signal_label || article.public_presentation?.signal_label;
+  if (isSingleSourceVendorOrProductPost(article) && label === 'Core Signal') {
+    reasons.push('source_count=1 vendor/product post routed as Core Signal');
+  }
+  if ((article.primary_category === 'Cloud Capacity' || article.category === 'Cloud Capacity')
+    && !hasExplicitInfrastructureCapacityEvidence(article)) {
+    reasons.push('primary_category=Cloud Capacity without explicit capacity evidence');
+  }
+  if (policy.force_non_core_signal && !['Cloud Product Read', 'Enterprise Platform Note'].includes(article.public_route || article.public_routing?.routing_decision)) {
+    reasons.push('public route differs from source scope policy');
+  }
+  return reasons;
+}
+
+function articleQualityReasons(article = {}, recent = []) {
+  const gate = publicPublishQualityGate(article, { recent });
+  const reasons = gate.ok ? [] : gate.reasons.map((reason) => `public publish gate: ${reason}`);
+  const body = publicBody(article);
+  const bodyBlocks = cleanArticleBodyBlocks(body);
+  const summary = sourceSummaryRatio(body, [
+    article.cleaned_source_text,
+    article.source_evidence_text,
+    ...(article.evidence_pack?.verified_facts || []),
+    ...(article.evidence_pack?.facts || []),
+  ].filter(Boolean).join(' '));
+
+  if (bodyBlocks.length < 8) reasons.push('article body has fewer than 8 meaningful paragraphs');
+  if (!/\b(what this does not prove|does not prove|limitation|the open question|counterargument)\b/i.test(publicText(article))) {
+    reasons.push('full article has no limitation/counterargument');
+  }
+  if (!/\bbottom line\b/i.test(publicText(article)) && !article.bottom_line && !article.expertLensFull?.bottomLine) {
+    reasons.push('full article has no bottom line');
+  }
+  if (summary.source_summary_ratio > 0.4) reasons.push('source summary ratio > 40%');
+  if ((1 - summary.source_summary_ratio) < 0.6) reasons.push('analysis ratio < 60%');
+  reasons.push(...routeReasons(article));
+  reasons.push(...sourceScopeAuditReasons(article));
+  return [...new Set(reasons)];
+}
+
 export async function auditAutonomousPublicSurface() {
   const latest = await readJson('src/data/latest-news.json', []);
+  const archive = await readJson('src/data/archived-news.json', []);
   const search = await readJson('src/data/search-index.json', []);
-  const cycles = await readJson('src/data/editorial-cycles.json', []);
-  const publicAnalyses = latest.filter((item) =>
-    item.articlePagePublished === true
-    && item.archiveOnly !== true
-    && item.noindex !== true
-    && !shouldNoindexArticle(item)
-    && articleDetailQualityEligible(item)
-  );
-  const publicPayload = JSON.stringify([latest, search]);
+  const allRecords = uniqueById([...latest, ...archive, ...search]);
+  const candidates = publicArticleCandidates(allRecords);
+  const latest50 = candidates.slice(0, 50);
   const failures = [];
-  const forbiddenHits = FORBIDDEN.map((phrase) => ({ phrase, count: (publicPayload.match(new RegExp(phrase.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'g')) || []).length })).filter((hit) => hit.count);
 
-  for (const hit of forbiddenHits) failures.push(`Forbidden phrase leaked: ${hit.phrase} (${hit.count})`);
-  for (const article of publicAnalyses) {
-    if ((article.claim_ledger || []).length < 4) failures.push(`${article.title} has fewer than 4 claim-ledger records`);
-    if ((article.evidence_pack?.verified_facts || []).length < 4) failures.push(`${article.title} has fewer than 4 verified facts`);
-    if (!article.editorial_thesis?.counterargument) failures.push(`${article.title} has no counterargument`);
-    if (!article.editorial_thesis?.bottom_line && !article.expertLensFull?.bottomLine) failures.push(`${article.title} has no bottom-line thesis`);
-    if ((article.blog_metadata?.source_summary_ratio ?? 1) > 0.35) failures.push(`${article.title} is source-summary dominant`);
-    if ((article.blog_metadata?.unsupported_claim_count || 0) !== 0) failures.push(`${article.title} has unsupported claims`);
-    if ((article.blog_metadata?.forbidden_phrase_count || 0) !== 0) failures.push(`${article.title} has forbidden phrase metadata`);
-    if ((article.blog_metadata?.repeated_paragraph_count || 0) !== 0) failures.push(`${article.title} repeats paragraphs`);
+  for (const hit of forbiddenHits(latest.filter((item) => item.homepagePublished !== false).map(publicText).join('\n'))) {
+    failures.push(`Forbidden phrase leaked on homepage data: ${hit.phrase} (${hit.count})`);
+  }
+
+  const recent = [];
+  for (const article of latest50) {
+    const reasons = articleQualityReasons(article, recent);
+    for (const reason of reasons) failures.push(`${article.id}: ${reason}`);
+    recent.push(article);
   }
 
   const openingCounts = new Map();
-  for (const article of publicAnalyses) {
-    const opening = firstWords(article.expertLensFull?.finalArticleBody || '', 10);
+  for (const article of latest50) {
+    const opening = firstWords(publicBody(article), 10);
     if (!opening) continue;
     openingCounts.set(opening, (openingCounts.get(opening) || 0) + 1);
   }
-  const duplicateOpenings = [...openingCounts.entries()].filter(([, count]) => count > 1);
-  for (const [opening, count] of duplicateOpenings) failures.push(`Duplicate opening first 10 words: ${opening} (${count})`);
+  for (const [opening, count] of [...openingCounts.entries()].filter(([, count]) => count > 1)) {
+    failures.push(`Duplicate opening first 10 words: ${opening} (${count})`);
+  }
 
   const headingCounts = new Map();
-  for (const article of publicAnalyses) {
-    const sequence = headingsFor(article);
+  for (const article of latest50) {
+    const sequence = headingSequence(article);
     if (!sequence) continue;
     headingCounts.set(sequence, (headingCounts.get(sequence) || 0) + 1);
   }
-  const duplicateHeadings = [...headingCounts.entries()].filter(([, count]) => count > 2);
-  for (const [, count] of duplicateHeadings) failures.push(`Heading sequence repeated more than twice (${count})`);
+  for (const [, count] of [...headingCounts.entries()].filter(([, count]) => count > 2)) {
+    failures.push(`Heading sequence repeated more than twice (${count})`);
+  }
 
   const rssItems = buildRssItems(latest);
-  const sitemapEntries = buildSitemapEntries([...latest, ...search]);
+  const sitemapEntries = buildSitemapEntries(allRecords);
   if (!sitemapEntries.some((entry) => entry.loc === '/')) failures.push('Sitemap entries missing homepage');
-  if (rssItems.some((item) => item.link.startsWith('http'))) failures.push('RSS contains source-only external primary link');
   const sitemapFile = await readTextIfExists(path.join(ROOT, 'dist/sitemap.xml'));
   const rssFile = await readTextIfExists(path.join(ROOT, 'dist/rss.xml'));
   if (!sitemapFile) failures.push('Built /sitemap.xml is missing');
@@ -120,7 +237,7 @@ export async function auditAutonomousPublicSurface() {
     '/rss.xml',
     '/sitemap.xml',
     '/archive/',
-    ...publicAnalyses.map((article) => `/news/${article.id}/`),
+    ...latest50.map((article) => `/news/${article.id}/`),
     ...sitemapEntries
       .map((entry) => entry.loc)
       .filter((loc) => /^\/(?:category|region|company)\//.test(loc))
@@ -130,21 +247,12 @@ export async function auditAutonomousPublicSurface() {
   for (const loc of [...new Set(publicHtmlPaths)]) {
     const text = await readTextIfExists(distPathFor(loc));
     if (text) publicHtmlPairs.push([loc, text]);
-    else if (loc === '/' || loc === '/sitemap.xml') failures.push(`Built public route missing: ${loc}`);
+    else if (loc === '/' || loc === '/sitemap.xml' || loc.startsWith('/news/')) failures.push(`Built public route missing: ${loc}`);
   }
-  const publicHtmlPayload = publicHtmlPairs.map(([, text]) => text).join('\n');
-  const htmlForbiddenHits = FORBIDDEN
-    .map((phrase) => ({ phrase, count: (publicHtmlPayload.match(new RegExp(phrase.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'g')) || []).length }))
-    .filter((hit) => hit.count);
-  for (const hit of htmlForbiddenHits) failures.push(`Forbidden phrase leaked in built HTML: ${hit.phrase} (${hit.count})`);
-  const missingArticleHtml = publicAnalyses
-    .filter((article) => !(publicHtmlPairs.find(([loc]) => loc === `/news/${article.id}/`)))
-    .map((article) => article.id);
-  for (const id of missingArticleHtml) failures.push(`Published analysis missing built article HTML: ${id}`);
 
-  const latestCycle = cycles[0] || null;
-  if (latestCycle?.status === 'completed_no_qualifying_signals' && latestCycle.published_analyses?.length) {
-    failures.push('No-qualifying cycle contains published analyses');
+  const htmlPayload = publicHtmlPairs.map(([, text]) => text).join('\n');
+  for (const hit of forbiddenHits(htmlPayload)) {
+    failures.push(`Forbidden phrase leaked in built HTML: ${hit.phrase} (${hit.count})`);
   }
 
   const lines = [
@@ -152,22 +260,21 @@ export async function auditAutonomousPublicSurface() {
     '',
     `Generated at: ${new Date().toISOString()}`,
     '',
-    `Public analyses audited: ${publicAnalyses.length}`,
-    `Homepage-visible items audited: ${latest.filter((item) => item.homepagePublished).length}`,
+    `Latest article pages audited: ${latest50.length}`,
+    `Homepage-visible items audited: ${latest.filter((item) => item.homepagePublished !== false).length}`,
     `RSS items: ${rssItems.length}`,
     `Sitemap entries: ${sitemapEntries.length}`,
-    `Forbidden phrase leaks: ${forbiddenHits.reduce((sum, hit) => sum + hit.count, 0)}`,
-    `Built HTML forbidden phrase leaks: ${htmlForbiddenHits.reduce((sum, hit) => sum + hit.count, 0)}`,
     `Built public files audited: ${publicHtmlPairs.length}`,
-    `Duplicate openings: ${duplicateOpenings.length}`,
-    `Repeated heading sequences: ${duplicateHeadings.length}`,
-    `Latest cycle status: ${latestCycle?.status || 'missing'}`,
+    `Failures: ${failures.length}`,
     '',
-    '## Published Analyses',
+    '## Published Article Pages',
     '',
-    '| Title | Route | Words | Facts | Claims | Source summary ratio |',
-    '| --- | --- | --- | --- | --- | --- |',
-    ...publicAnalyses.map((article) => `| ${String(article.title).replace(/\|/g, '/')} | ${article.publishing_route || ''} | ${article.blog_metadata?.word_count || 0} | ${article.evidence_pack?.verified_facts?.length || 0} | ${article.claim_ledger?.length || 0} | ${Number(article.blog_metadata?.source_summary_ratio || 0).toFixed(2)} |`),
+    '| Title | Route | Words | Paragraphs | Source summary ratio |',
+    '| --- | --- | ---: | ---: | ---: |',
+    ...latest50.map((article) => {
+      const gate = publicPublishQualityGate(article);
+      return `| ${String(article.title).replace(/\|/g, '/')} | ${article.public_route || article.public_routing?.routing_decision || ''} | ${gate.metrics.word_count} | ${gate.metrics.paragraph_count} | ${Number(gate.metrics.source_summary_ratio || 0).toFixed(2)} |`;
+    }),
     '',
     '## Failures',
     '',

@@ -34,6 +34,14 @@ function normalizedRoute(article = {}, route = undefined) {
   };
 }
 
+function approvedPublicText(...candidates) {
+  for (const candidate of candidates) {
+    const result = guardPublicCopy(candidate || '');
+    if (result.ok && result.text) return result.text;
+  }
+  return '';
+}
+
 export function publicDetailHref(article = {}) {
   const sourceUrl = article.sourceUrl || article.url || '';
   if (article.articlePagePublished === false || article.archiveOnly === true || article.signalCardOnly === true) {
@@ -50,8 +58,8 @@ export function buildPublicPresentation(article = {}, options = {}) {
     recentDecks: options.recentDecks || [],
   });
   const title = compact(article.expertLensFull?.finalHeadline || article.title || '');
-  const deck = guardPublicCopy(article.deck || persisted.deck || generated.deck).text;
-  const why = guardPublicCopy(article.why_it_matters || persisted.why_it_matters || generated.why_it_matters).text;
+  const deck = approvedPublicText(article.deck, persisted.deck, generated.deck);
+  const why = approvedPublicText(article.why_it_matters, persisted.why_it_matters, generated.why_it_matters);
   const detailHref = publicDetailHref(article);
 
   return {

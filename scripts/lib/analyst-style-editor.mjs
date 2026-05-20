@@ -25,7 +25,10 @@ export function editAnalystStyle(text = '') {
   for (const [pattern, replacement] of REPLACEMENTS) out = out.replace(pattern, replacement);
   return out
     .split(/\n{2,}/)
-    .map((block) => guardPublicCopy(block).text)
+    .map((block) => {
+      const guarded = guardPublicCopy(block);
+      return guarded.ok ? guarded.text : '';
+    })
     .filter(Boolean)
     .join('\n\n');
 }

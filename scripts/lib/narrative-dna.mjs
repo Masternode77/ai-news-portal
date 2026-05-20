@@ -280,7 +280,8 @@ function paragraphForHeading(heading = '', article = {}, dna = extractNarrativeD
 export function buildNarrativeArticleBody(article = {}, options = {}) {
   const dna = options.narrativeDNA || extractNarrativeDNA(article);
   const { headings } = sectionArchitectureFor(article, dna.story_archetype_id);
-  const opening = guardPublicCopy(buildNarrativeHook(article, dna, options.recentHooks || [])).text;
+  const openingGuard = guardPublicCopy(buildNarrativeHook(article, dna, options.recentHooks || []));
+  const opening = openingGuard.ok ? openingGuard.text : '';
   const lines = [opening];
   for (const heading of headings) {
     lines.push(heading);
@@ -289,7 +290,10 @@ export function buildNarrativeArticleBody(article = {}, options = {}) {
   const closing = sentence(`Readers should track ${dna.watch_metric} before treating the item as a planning assumption for ${dna.infrastructure_layer.toLowerCase()}`);
   lines.push(closing);
   return lines
-    .map((line) => guardPublicCopy(line).text)
+    .map((line) => {
+      const guarded = guardPublicCopy(line);
+      return guarded.ok ? guarded.text : '';
+    })
     .filter(Boolean)
     .join('\n\n')
     .replace(/\n{3,}/g, '\n\n')

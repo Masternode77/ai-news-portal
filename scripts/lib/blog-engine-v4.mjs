@@ -57,11 +57,13 @@ function deckFor(article = {}, evidencePack = {}, angle = {}) {
   const actor = evidencePack.namedActors?.[0] || article.source || 'AI infrastructure buyers';
   const layer = evidencePack.affectedInfrastructureLayer || 'AI infrastructure';
   const lens = angle.lens || 'execution risk';
-  return guardPublicCopy(sentence(`${actor} turns ${layer} into a ${lens.toLowerCase()} decision point for capacity planners`)).text;
+  const guarded = guardPublicCopy(sentence(`${actor} turns ${layer} into a ${lens.toLowerCase()} decision point for capacity planners`));
+  return guarded.ok ? guarded.text : '';
 }
 
 function whyFor(article = {}, evidencePack = {}) {
-  return guardPublicCopy(sentence(`${evidencePack.commercialImplication} ${evidencePack.operatingImplication}`)).text;
+  const guarded = guardPublicCopy(sentence(`${evidencePack.commercialImplication} ${evidencePack.operatingImplication}`));
+  return guarded.ok ? guarded.text : '';
 }
 
 function atAGlance(evidencePack = {}) {

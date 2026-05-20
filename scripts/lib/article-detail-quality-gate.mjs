@@ -5,6 +5,7 @@ import { guardPublicCopy } from './copy-quality-guard.mjs';
 import { detectBoilerplate } from './boilerplate-detector.mjs';
 import { detectTruncationArtifacts } from './truncation-detector.mjs';
 import { cleanArticleBodyBlocks } from './article-body-cleaner.mjs';
+import { publicPublishQualityGate } from './public-publish-quality-gate.mjs';
 
 function publicDetailText(article = {}) {
   return [
@@ -34,6 +35,10 @@ export function articleDetailQualityResult(article = {}, options = {}) {
   const boilerplate = detectBoilerplate(text);
   const truncation = detectTruncationArtifacts(text);
   const bodyBlocks = cleanArticleBodyBlocks(article.expertLensFull?.finalArticleBody || article.articleText || '');
+  const shouldEnforcePublicGate = options.enforcePublicPublishGate === true
+    || article.generation_version === 'editorial_article_v2'
+    || article.public_generation_version === 'editorial_article_v2';
+  const publicGate = shouldEnforcePublicGate ? publicPublishQualityGate(article, options) : null;
   const reasons = [];
 
   if (article.public_status === 'quarantined') reasons.push('quarantined');
@@ -46,6 +51,7 @@ export function articleDetailQualityResult(article = {}, options = {}) {
   if (!truncation.ok) reasons.push(...truncation.artifacts);
   if (/editor'?s brief/i.test(text)) reasons.push('fixed_editors_brief_template');
   if (bodyBlocks.join(' ').length < 500) reasons.push('article_body_too_short_after_cleaning');
+  if (publicGate && !publicGate.ok) reasons.push(...publicGate.reasons);
 
   return {
     ok: reasons.length === 0,
@@ -57,6 +63,7 @@ export function articleDetailQualityResult(article = {}, options = {}) {
     boilerplate,
     truncation,
     bodyBlocks,
+    publicGate,
   };
 }
 

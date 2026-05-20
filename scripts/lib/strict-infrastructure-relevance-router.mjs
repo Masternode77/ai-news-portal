@@ -2,6 +2,7 @@ import { classifyInfrastructureRelevance } from './relevance-classifier.mjs';
 import { normalizeProperNouns } from './proper-noun-normalizer.mjs';
 import { routeStoryArchetype } from './story-archetype-router.mjs';
 import { detectBoilerplate } from './boilerplate-detector.mjs';
+import { sourceScopePolicyResult } from './source-scope-policy.mjs';
 
 export const CORE_RELEVANCE_THRESHOLD = 0.75;
 export const ADJACENT_RELEVANCE_THRESHOLD = 0.55;
@@ -275,6 +276,7 @@ export function routeStrictInfrastructureRelevance(article = {}) {
   const adjacentOnly = isAdjacentBoundary(text) || archetype.id === 'adjacent-signal';
   const hasLayer = namesConcreteInfrastructureLayer(article);
   const conditionalArchive = CONDITIONAL_ARCHIVE_PATTERNS.some((pattern) => pattern.test(text)) && !hasLayer;
+  const sourceScope = sourceScopePolicyResult(article);
 
   if (isHardArchive(text) || conditionalArchive || archetype.id === 'archive-only') {
     return {
@@ -301,6 +303,21 @@ export function routeStrictInfrastructureRelevance(article = {}) {
       story_archetype: archetype.name,
       routing_decision: 'archive_only',
       blocked_reasons: ['relevance_below_adjacent_threshold'],
+    };
+  }
+
+  if (sourceScope.force_non_core_signal) {
+    return {
+      score,
+      visibility: 'core',
+      laneKey: sourceScope.public_route === 'Enterprise Platform Note' ? 'enterprise-platform-notes' : 'cloud-product-reads',
+      laneTitle: sourceScope.public_route,
+      public_signal_label: sourceScope.public_signal_label,
+      editorial_lens: sourceScope.public_route,
+      story_archetype: sourceScope.public_route,
+      routing_decision: sourceScope.public_route,
+      blocked_reasons: sourceScope.reasons,
+      source_scope_policy: sourceScope,
     };
   }
 

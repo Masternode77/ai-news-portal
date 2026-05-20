@@ -51,6 +51,9 @@
     "regenerate:autonomous-analyses-v1": "node ./scripts/regenerate-autonomous-analyses-v1.mjs",
     "rebuild:taxonomy-pages": "node ./scripts/rebuild-taxonomy-pages.mjs",
     "audit:autonomous-public": "npm run build && node ./scripts/audit-autonomous-public-surface.mjs",
+    "test:public-editorial-v2": "node --test tests/source-scope-policy.test.mjs tests/public-publish-quality-gate.test.mjs tests/article-page-autonomous.test.mjs tests/autonomous-public-surface.test.mjs",
+    "regenerate:editorial-articles-v2": "node ./scripts/regenerate-editorial-articles-v2.mjs",
+    "audit:public-editorial-v2": "npm run build && node ./scripts/audit-autonomous-public-surface.mjs",
     "eval:articles": "node ./scripts/eval-article-generation.mjs"
   },
   "dependencies": {

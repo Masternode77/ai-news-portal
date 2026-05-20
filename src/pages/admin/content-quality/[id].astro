@@ -1,10 +1,12 @@
 ---
 import Layout from '../../../layouts/Layout.astro';
 import InternalQualityPanel from '../../../components/InternalQualityPanel.astro';
+import AdminEvidenceBox from '../../../components/admin/AdminEvidenceBox.astro';
+import AdminClaimVerificationNote from '../../../components/admin/AdminClaimVerificationNote.astro';
 import latestNews from '../../../data/latest-news.json';
 import archivedNews from '../../../data/archived-news.json';
 import { SITE } from '../../../config/site';
-import { buildAdminQualityModel } from '../../../../scripts/lib/admin-quality-model.mjs';
+import { buildAdminQualityModel } from '../../../lib/adminQualityModel.js';
 
 export function getStaticPaths() {
   return [...latestNews, ...archivedNews]
@@ -36,6 +38,20 @@ const quality = buildAdminQualityModel(article);
 
     <section class="admin-panel">
       <InternalQualityPanel quality={quality} />
+    </section>
+
+    {article.backfilledAnalysis ? (
+      <section class="admin-panel">
+        <p class="eyebrow">Backfilled Analysis</p>
+      </section>
+    ) : null}
+
+    <section class="admin-panel">
+      <AdminEvidenceBox evidence={quality.evidence} claimSummary={quality.claim_ledger_summary} />
+    </section>
+
+    <section class="admin-panel">
+      <AdminClaimVerificationNote claims={quality.claim_ledger} />
     </section>
   </main>
 </Layout>

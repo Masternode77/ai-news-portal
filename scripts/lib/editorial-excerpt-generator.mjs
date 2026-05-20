@@ -200,8 +200,8 @@ export function generateEditorialExcerpt(article = {}, options = {}) {
     const actor = primaryActor(article);
     const editorialLens = compact(route.editorial_lens || 'Infrastructure Signal');
     const laneTitle = compact(route.laneTitle || 'infrastructure');
-    deck = cleanSentence(`${actor} is a ${editorialLens.toLowerCase()} item for ${laneTitle.toLowerCase()} readers, with the infrastructure read limited to source-backed facts`);
-    why = cleanSentence(`The public card stays short because the available evidence supports a watchlist signal more than a full infrastructure memo`);
+    deck = cleanSentence(`${actor} gives ${laneTitle.toLowerCase()} readers a ${editorialLens.toLowerCase()} update to assess against their own operating plans`);
+    why = cleanSentence(`The public read stays narrow because the source supports a planning note, not a broad market conclusion`);
   }
 
   return {

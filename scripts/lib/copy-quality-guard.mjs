@@ -36,15 +36,40 @@ export function loadForbiddenPublicPhrases() {
 
 export const FORBIDDEN_PUBLIC_PHRASES = loadForbiddenPublicPhrases();
 
+const CASE_SENSITIVE_INTERNAL_LABELS = new Set([
+  'Backfilled Analysis',
+  'Evidence',
+  'Verification frame',
+  'Verified facts',
+  'Key numbers',
+  'Source count',
+  'Unsupported claims',
+  'Claim verification',
+]);
+
 function escapeRegExp(value = '') {
   return String(value).replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 }
 
 function phrasePattern(phrase = '') {
-  const escaped = escapeRegExp(phrase)
-    .replace(/\\\[source\\\]/gi, '[^.]{2,80}')
-    .replace(/\\ /g, '\\s+');
-  return new RegExp(escaped, 'i');
+  const trimmed = String(phrase || '').trim();
+  if (!trimmed) return /$a/;
+  if (CASE_SENSITIVE_INTERNAL_LABELS.has(trimmed)) {
+    const pattern = escapeRegExp(trimmed).replace(/\\ /g, '[\\s\\W_]+');
+    return new RegExp(`(^|[^A-Za-z0-9])${pattern}([^A-Za-z0-9]|$)`);
+  }
+  if (/\[source\]/i.test(trimmed)) {
+    const escaped = escapeRegExp(trimmed)
+      .replace(/\\\[source\\\]/gi, '[^.]{2,80}')
+      .replace(/\\ /g, '[\\s\\W_]+');
+    return new RegExp(escaped, 'i');
+  }
+  const tokens = trimmed
+    .split(/\s+/)
+    .map((token) => escapeRegExp(token).replace(/\\'/g, "['’]"))
+    .map((token) => token.replace(/s\\?$/i, 's?'));
+  const pattern = tokens.join('[\\s\\W_]+');
+  return new RegExp(`(^|[^A-Za-z0-9])${pattern}([^A-Za-z0-9]|$)`, 'i');
 }
 
 export function forbiddenPublicPhraseMatches(text = '') {

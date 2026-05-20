@@ -1,25 +1,21 @@
 # Autonomous Public Surface Audit Report
 
-Generated at: 2026-05-20T05:43:32.982Z
+Generated at: 2026-05-20T08:14:39.454Z
 
-Public analyses audited: 3
+Latest article pages audited: 3
 Homepage-visible items audited: 8
-RSS items: 3
-Sitemap entries: 42
-Forbidden phrase leaks: 0
-Built HTML forbidden phrase leaks: 0
+RSS items: 8
+Sitemap entries: 39
 Built public files audited: 37
-Duplicate openings: 0
-Repeated heading sequences: 0
-Latest cycle status: completed_no_qualifying_signals
+Failures: 0
 
-## Published Analyses
+## Published Article Pages
 
-| Title | Route | Words | Facts | Claims | Source summary ratio |
-| --- | --- | --- | --- | --- | --- |
-| Green Capital: Green Capital and Prime Capital Partner on 300 MW Battery Storage Portfolio in Poland | Featured Analysis | 816 | 7 | 6 | 0.08 |
-| Dell PowerStore Gen: Dell PowerStore Gen 3: Inside the Most Aggressive Enterprise Storage Reset in Years | Featured Analysis | 765 | 7 | 8 | 0.11 |
-| AWS: AWS Weekly Roundup: AWS Transform at 1 year, Claude Platform on AWS, EC2 M3 Ultra Mac instances, and more (May 18, 2026) | Featured Analysis | 804 | 7 | 6 | 0.14 |
+| Title | Route | Words | Paragraphs | Source summary ratio |
+| --- | --- | ---: | ---: | ---: |
+| NVIDIA and Google Cloud Empower the Next Wave of AI Builders | Cloud Product Read | 563 | 14 | 0.11 |
+| Microsoft: New Microsoft Surface for Business PCs pair Panther Lake chips with as little as 8GB of RAM — 13-inch Surface Laptop goes light on memory but still starts at $1,299 | Cloud Product Read | 562 | 14 | 0.11 |
+| New Microsoft Surface for Business PCs pair Panther Lake chips with as little as 8GB of RAM — 13-inch Surface Laptop goes light on memory but still starts at $1,299 | Cloud Product Read | 578 | 14 | 0.11 |
 
 ## Failures
 

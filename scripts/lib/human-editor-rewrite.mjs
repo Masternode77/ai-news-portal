@@ -21,7 +21,10 @@ export function humanEditorRewrite(draft = '') {
   }
   return text
     .split(/\n{2,}/)
-    .map((block) => guardPublicCopy(block).text)
+    .map((block) => {
+      const guarded = guardPublicCopy(block);
+      return guarded.ok ? guarded.text : '';
+    })
     .filter(Boolean)
     .join('\n\n');
 }

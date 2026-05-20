@@ -31,9 +31,12 @@ function phraseMatches(text = '') {
   const haystack = String(text || '');
   return FORBIDDEN_AI_PHRASES.filter((phrase) => {
     const escaped = phrase
-      .replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+      .trim()
+      .split(/\s+/)
+      .map((token) => token.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'))
+      .join('[\\s\\W_]+')
       .replace(/\\\[layer\\\]/gi, '[a-z\\s/-]{2,80}');
-    return new RegExp(escaped, 'i').test(haystack);
+    return new RegExp(`(^|[^A-Za-z0-9])${escaped}([^A-Za-z0-9]|$)`, 'i').test(haystack);
   });
 }
 

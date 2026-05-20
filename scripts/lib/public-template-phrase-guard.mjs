@@ -40,6 +40,17 @@ export function loadForbiddenPublicTemplatePhrases() {
 
 export const PUBLIC_TEMPLATE_PHRASES = loadForbiddenPublicTemplatePhrases();
 
+const CASE_SENSITIVE_INTERNAL_LABELS = new Set([
+  'Backfilled Analysis',
+  'Evidence',
+  'Verification frame',
+  'Verified facts',
+  'Key numbers',
+  'Source count',
+  'Unsupported claims',
+  'Claim verification',
+]);
+
 function normalizeForExact(value = '') {
   return String(value || '')
     .toLowerCase()
@@ -49,12 +60,24 @@ function normalizeForExact(value = '') {
     .trim();
 }
 
+function escapeRegExp(value = '') {
+  return String(value).replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
+function exactPhraseMatch(text = '', phrase = '') {
+  if (CASE_SENSITIVE_INTERNAL_LABELS.has(phrase)) {
+    const pattern = escapeRegExp(phrase).replace(/\\ /g, '[\\s\\W_]+');
+    return new RegExp(`(^|[^A-Za-z0-9])${pattern}([^A-Za-z0-9]|$)`).test(text);
+  }
+  return normalizeForExact(text).includes(normalizeForExact(phrase));
+}
+
 export function publicTemplatePhraseMatches(text = '', phrases = PUBLIC_TEMPLATE_PHRASES) {
-  const normalized = normalizeForExact(text);
   const exact = phrases
-    .filter((phrase) => normalizeForExact(phrase) && normalized.includes(normalizeForExact(phrase)))
+    .filter((phrase) => normalizeForExact(phrase) && exactPhraseMatch(text, phrase))
     .map((phrase) => ({ phrase, method: 'exact', score: 1 }));
-  const near = nearDuplicatePhraseMatches(text, phrases)
+  const nearPhrases = phrases.filter((phrase) => !CASE_SENSITIVE_INTERNAL_LABELS.has(phrase));
+  const near = nearDuplicatePhraseMatches(text, nearPhrases)
     .filter((match) => !exact.some((item) => item.phrase === match.phrase));
   return [...exact, ...near];
 }
