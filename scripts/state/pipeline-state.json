@@ -317,7 +317,9 @@
     "6769926516897425",
     "37d8121043268f92",
     "49d695fe73f4559c",
-    "5990b273d2cf3e55"
+    "5990b273d2cf3e55",
+    "99d21e28b9bea090",
+    "bed0fa9b7684069d"
   ],
   "dayPlans": {
     "2026-03-24": {
@@ -6657,19 +6659,453 @@
         "1": true,
         "2": true
       }
+    },
+    "2026-05-21": {
+      "date": "2026-05-21",
+      "createdAt": "2026-05-20T17:55:57.864Z",
+      "refreshedAt": "2026-05-20T17:55:57.864Z",
+      "candidateWindowHours": 24,
+      "curatedItems": [
+        {
+          "id": "bed0fa9b7684069d",
+          "source": "Data Center POST",
+          "url": "https://datacenterpost.com/structure-research-examines-the-environmental-impact-of-ai-infrastructure-growth-in-new-esg-report/",
+          "title": "Structure Research Examines the Environmental Impact of AI Infrastructure Growth in New ESG Report",
+          "snippet": "TL;DR AI infrastructure growth is significantly increasing global data center energy consumption and operational capacity requirements. Renewable and carbon-free energy adoption continues to accelerate across hyperscale…",
+          "contentText": "TL;DR AI infrastructure growth is significantly increasing global data center energy consumption and operational capacity requirements. Renewable and carbon-free energy adoption continues to accelerate across hyperscale data centers and colocation environments. AI-driven liquid cooling deployments in data centers are increasing industry focus on water consumption, closed-loop cooling systems, and water efficiency strategies. Data center operators are making measurable progress in operational efficiency and emissions reduction despite rising AI workloads. # # # The rapid expansion of AI infrastructure is reshaping the global data center industry and bringing renewed focus to sustainability, energy consumption, water usage, and operational efficiency. A newly released report from Structure…",
+          "publishedAt": "2026-05-20T15:00:24.000Z",
+          "sourceImage": "https://d3qut6qyo6tw2j.cloudfront.net/bin/uploads/2026/05/20095955/Structure-Research_Env-Impact-Report-2026-DCP-PR-Blog-5-19-26-1024x512.png",
+          "region": "APAC",
+          "language": "en",
+          "defaultCategory": "Colocation & Wholesale",
+          "category": "Data Centers",
+          "primary_category": "Data Centers",
+          "secondary_category": "Campus development and colocation capacity",
+          "infrastructure_layer": "Facility",
+          "affected_stakeholders": [
+            "data center operators",
+            "developers",
+            "site selectors",
+            "investors"
+          ],
+          "article_type": "Capacity Expansion",
+          "urgency_score": 0.58,
+          "taxonomy_confidence": 0.85,
+          "taxonomy_reasons": [
+            "data center",
+            "colocation",
+            "wholesale"
+          ],
+          "direct_ai_infrastructure_relevance": 0.78,
+          "data_center_relevance": 1,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0,
+          "power_grid_relevance": 0.18,
+          "cooling_relevance": 1,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0.24,
+          "infrastructure_relevance_score": 1,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:0.78(ai infrastructure)",
+            "data_center_relevance:1.00(data center, data centers, colocation)",
+            "cooling_relevance:1.00(cooling, liquid cooling, water usage)",
+            "enterprise_ai_infrastructure_relevance:0.24(ai workloads)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 0.78,
+            "data_center_relevance": 1,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0,
+            "power_grid_relevance": 0.18,
+            "cooling_relevance": 1,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0.24,
+            "infrastructure_relevance_score": 1,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:0.78(ai infrastructure)",
+              "data_center_relevance:1.00(data center, data centers, colocation)",
+              "cooling_relevance:1.00(cooling, liquid cooling, water usage)",
+              "enterprise_ai_infrastructure_relevance:0.24(ai workloads)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 88
+        },
+        {
+          "id": "99d21e28b9bea090",
+          "source": "HPCwire",
+          "url": "https://www.hpcwire.com/off-the-wire/nvidia-and-google-cloud-empower-the-next-wave-of-ai-builders/",
+          "title": "NVIDIA and Google Cloud Empower the Next Wave of AI Builders",
+          "snippet": "Over 100,000 developers have joined the companies’ joint developer community, tapping into NVIDIA and Google Cloud technologies, learning paths and hands-on labs to build what’s next in AI. May 20, 2026 — At this year’s…",
+          "contentText": "Over 100,000 developers have joined the companies’ joint developer community, tapping into NVIDIA and Google Cloud technologies, learning paths and hands-on labs to build what’s next in AI. May 20, 2026 &#8212; At this year’s Google I/O conference, NVIDIA and Google Cloud are accelerating the work of more than 100,000 developers in the companies’ joint developer community , which provides curated learning paths, hands-on labs and events that help them build using the full-stack NVIDIA AI platform on Google Cloud. Launched at Google I/O last year, the community brings together developers, data scientists and machine learning engineers who want to sharpen their AI skills on the latest NVIDIA and Google Cloud technologies. New additions for the community are rolling out this year, including…",
+          "publishedAt": "2026-05-20T17:48:24.000Z",
+          "sourceImage": "https://www.hpcwire.com/wp-content/uploads/2024/03/nvidia-google-cloud-300x276.png",
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "category": "AI Infrastructure",
+          "primary_category": "AI Infrastructure",
+          "secondary_category": "GPU clusters and deployment readiness",
+          "infrastructure_layer": "Compute",
+          "affected_stakeholders": [
+            "operators",
+            "hyperscalers",
+            "cloud buyers",
+            "investors"
+          ],
+          "article_type": "Product / Platform Update",
+          "urgency_score": 0.47,
+          "taxonomy_confidence": 0.77,
+          "taxonomy_reasons": [
+            "ai infrastructure",
+            "neocloud"
+          ],
+          "direct_ai_infrastructure_relevance": 1,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0.324,
+          "semiconductor_relevance": 0.598,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.897,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "cloud_capacity_relevance:0.32(google cloud)",
+            "semiconductor_relevance:0.60(nvidia, gpu)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 1,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0.324,
+            "semiconductor_relevance": 0.598,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.897,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+              "cloud_capacity_relevance:0.32(google cloud)",
+              "semiconductor_relevance:0.60(nvidia, gpu)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 84
+        },
+        {
+          "id": "fa6424f16edda8ba",
+          "source": "Toms Hardware",
+          "url": "https://www.tomshardware.com/tech-industry/big-tech/samsung-narrowly-avoids-18-day-chip-strike-after-last-minute-wage-deal-with-48-000-worker-union-tentative-deal-subject-to-workers-vote-suspends-billions-of-dollars-worth-of-potential-losses",
+          "title": "Samsung narrowly avoids 18-day chip strike after last-minute wage deal with 48,000-worker union — tentative deal, subject to workers' vote, suspends billions of dollars worth of potential losses",
+          "snippet": "Samsung Electronics has temporarily avoided a major 18-day strike at its South Korean semiconductor operations after reaching a tentative wage agreement with its 48,000-member union.",
+          "contentText": "Samsung Electronics has temporarily avoided a major 18-day strike at its South Korean semiconductor operations after reaching a tentative wage agreement with its 48,000-member union.",
+          "publishedAt": "2026-05-20T17:53:18.000Z",
+          "sourceImage": "https://cdn.mos.cms.futurecdn.net/XDew5PH77yhn9xwzd2vfei-1280-80.jpg",
+          "region": "Korea",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "category": "Semiconductors",
+          "primary_category": "Semiconductors",
+          "secondary_category": "Accelerators, memory, and advanced packaging",
+          "infrastructure_layer": "Silicon",
+          "affected_stakeholders": [
+            "semiconductor suppliers",
+            "hyperscalers",
+            "server OEMs",
+            "investors"
+          ],
+          "article_type": "Operations Update",
+          "urgency_score": 0.45,
+          "taxonomy_confidence": 0.81,
+          "taxonomy_reasons": [
+            "semiconductor",
+            "chip",
+            "gpu"
+          ],
+          "direct_ai_infrastructure_relevance": 1,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0.58,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.858,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "semiconductor_relevance:0.58(semiconductor, gpu)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 1,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0.58,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.858,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+              "semiconductor_relevance:0.58(semiconductor, gpu)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 82
+        },
+        {
+          "id": "587c5db35a13c6f9",
+          "source": "Capacity Media",
+          "url": "https://capacityglobal.com/news/power-execution-and-the-edge-itw/",
+          "title": "Power, execution and the edge: ITW panel warns AI infrastructure race demands faster industry alignment",
+          "snippet": "Senior figures from across the data centre, fibre and wholesale connectivity sectors gathered at International Telecoms Week in Washington to debate the infrastructure realities of the AI surge. The post Power, executio…",
+          "contentText": "The conversation at ITW 2026&#8217;s Digital Infrastructure Stage keynote panel on AI infrastructure was blunt in places. Panellists representing fibre operators, data centre providers and AI infrastructure advisors were broadly aligned on one point: the industry is moving into a new phase in which execution matters more than ambition, and where the geography of AI compute is being dictated not by latency requirements or enterprise clusters but by where power can be found. Scott Willis, CEO of DartPoints, argued that 2026 is shaping up as the year inference workloads become commercially real at scale. The shift from training to inference, he said, changes the calculus around location. AI inference does not carry the same latency sensitivity as traditional cloud workloads, which means deve…",
+          "publishedAt": "2026-05-20T17:07:28.000Z",
+          "sourceImage": "https://capacityglobal.com/wp-content/uploads/2025/09/ITW-2026-327x218.png",
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "Hyperscalers & Cloud",
+          "category": "AI Infrastructure",
+          "primary_category": "AI Infrastructure",
+          "secondary_category": "GPU clusters and deployment readiness",
+          "infrastructure_layer": "Compute",
+          "affected_stakeholders": [
+            "operators",
+            "hyperscalers",
+            "cloud buyers",
+            "investors"
+          ],
+          "article_type": "Other",
+          "urgency_score": 0.53,
+          "taxonomy_confidence": 0.68,
+          "taxonomy_reasons": [
+            "ai infrastructure"
+          ],
+          "direct_ai_infrastructure_relevance": 0.77,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0.76,
+          "semiconductor_relevance": 0,
+          "power_grid_relevance": 0.297,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0.3,
+          "infrastructure_relevance_score": 0.834,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:0.77(ai infrastructure)",
+            "cloud_capacity_relevance:0.76(cloud capacity, hyperscalers)",
+            "power_grid_relevance:0.30(power)",
+            "enterprise_ai_infrastructure_relevance:0.30(inference workloads)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 0.77,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0.76,
+            "semiconductor_relevance": 0,
+            "power_grid_relevance": 0.297,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0.3,
+            "infrastructure_relevance_score": 0.834,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:0.77(ai infrastructure)",
+              "cloud_capacity_relevance:0.76(cloud capacity, hyperscalers)",
+              "power_grid_relevance:0.30(power)",
+              "enterprise_ai_infrastructure_relevance:0.30(inference workloads)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 81
+        },
+        {
+          "id": "9a56464a2643e413",
+          "source": "HPCwire",
+          "url": "https://www.hpcwire.com/off-the-wire/bull-orange-scaleway-and-partners-unite-on-french-ai-gigafactory-bid/",
+          "title": "Bull, Orange, Scaleway and Partners Unite on French AI Gigafactory Bid",
+          "snippet": "PARIS, May 20, 2026 — Ardian, Artefact, Bull, Capgemini, the EDF group, the iliad Group, Orange and Scaleway have teamed up within the AION consortium to launch an ambitious bid for France under the European Union’s AI…",
+          "contentText": "PARIS, May 20, 2026 &#8212; Ardian, Artefact, Bull , Capgemini, the EDF group, the iliad Group, Orange and Scaleway have teamed up within the AION consortium to launch an ambitious bid for France under the European Union’s AI Gigafactories initiative. In the coming years, the competitiveness of EU economies will directly depend on their ability to access massive computing power that is available, affordable and sovereign. The challenge is industrial, financial and strategic: enabling European companies to train, deploy and operate their AI models under controlled conditions in terms of performance, cost and sovereignty. This is precisely the aim of the project put forward by the AION consortium. Mobilizing French Excellence to Build World-Leading AI Infrastructure In response to the rapid…",
+          "publishedAt": "2026-05-20T17:20:49.000Z",
+          "sourceImage": "https://www.hpcwire.com/wp-content/uploads/2026/01/bull-300x163.png",
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "category": "AI Infrastructure",
+          "primary_category": "AI Infrastructure",
+          "secondary_category": "GPU clusters and deployment readiness",
+          "infrastructure_layer": "Compute",
+          "affected_stakeholders": [
+            "operators",
+            "hyperscalers",
+            "cloud buyers",
+            "investors"
+          ],
+          "article_type": "Other",
+          "urgency_score": 0.56,
+          "taxonomy_confidence": 0.77,
+          "taxonomy_reasons": [
+            "ai infrastructure",
+            "neocloud"
+          ],
+          "direct_ai_infrastructure_relevance": 1,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0.22,
+          "power_grid_relevance": 0.22,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.813,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "semiconductor_relevance:0.22(gpu)",
+            "power_grid_relevance:0.22(power)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 1,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0.22,
+            "power_grid_relevance": 0.22,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.813,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+              "semiconductor_relevance:0.22(gpu)",
+              "power_grid_relevance:0.22(power)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 80
+        },
+        {
+          "id": "0f8da104604879cf",
+          "source": "HPCwire",
+          "url": "https://www.hpcwire.com/off-the-wire/mathworks-launches-new-renesas-hardware-support-packages/",
+          "title": "MathWorks Launches New Renesas Hardware Support Packages",
+          "snippet": "New Integration Enables MATLAB and Simulink Workflows on Renesas RA and RH850 Microcontrollers, Streamlining Code Generation, Deployment, and On-Hardware Execution for Faster Validation and Iteration NATICK, Mass., May…",
+          "contentText": "New Integration Enables MATLAB and Simulink Workflows on Renesas RA and RH850 Microcontrollers, Streamlining Code Generation, Deployment, and On-Hardware Execution for Faster Validation and Iteration NATICK, Mass., May 20, 2026 &#8212; MathWorks today announced new Hardware Support Packages that directly connect Model‑Based Design and simulation to execution on Renesas’ RH850/U2A microcontroller for automotive applications and the RA6T2 microcontroller for industrial controls. The new MATLAB and Simulink integrations enable engineering teams to move from simulation to running embedded code on hardware with automated build, flashing, and on‑target execution while also accelerating development cycles through the elimination of many manual integration steps. “Our customers expect a straightf…",
+          "publishedAt": "2026-05-20T17:12:53.000Z",
+          "sourceImage": "https://www.hpcwire.com/wp-content/uploads/2025/10/mathworks_logo_new-300x176.png",
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "category": "AI Infrastructure",
+          "primary_category": "AI Infrastructure",
+          "secondary_category": "GPU clusters and deployment readiness",
+          "infrastructure_layer": "Compute",
+          "affected_stakeholders": [
+            "operators",
+            "hyperscalers",
+            "cloud buyers",
+            "investors"
+          ],
+          "article_type": "Product / Platform Update",
+          "urgency_score": 0.43,
+          "taxonomy_confidence": 0.77,
+          "taxonomy_reasons": [
+            "ai infrastructure",
+            "neocloud"
+          ],
+          "direct_ai_infrastructure_relevance": 1,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0.22,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.778,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "semiconductor_relevance:0.22(gpu)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 1,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0.22,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.778,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+              "semiconductor_relevance:0.22(gpu)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 75
+        }
+      ],
+      "curatedIds": [
+        "bed0fa9b7684069d",
+        "99d21e28b9bea090",
+        "fa6424f16edda8ba",
+        "587c5db35a13c6f9",
+        "9a56464a2643e413",
+        "0f8da104604879cf"
+      ],
+      "publishedIds": [
+        "99d21e28b9bea090",
+        "bed0fa9b7684069d"
+      ],
+      "slotPublications": {
+        "0": true
+      }
     }
   },
   "runHistory": [
-    {
-      "at": "2026-04-07T23:39:52.902Z",
-      "day": "2026-04-08",
-      "slot": 1,
-      "publishedCount": 2,
-      "publishedIds": [
-        "9b0f7cfb55870bd1",
-        "a95c2c0983546c28"
-      ]
-    },
     {
       "at": "2026-04-08T08:17:55.011Z",
       "day": "2026-04-08",
@@ -7978,7 +8414,75 @@
         }
       ],
       "archiveOnlyItems": []
+    },
+    {
+      "at": "2026-05-20T17:55:57.864Z",
+      "day": "2026-05-21",
+      "slot": 0,
+      "publishedCount": 0,
+      "signalCardCount": 2,
+      "archiveOnlyCount": 0,
+      "processedIds": [
+        "99d21e28b9bea090",
+        "bed0fa9b7684069d"
+      ],
+      "blockedCount": 2,
+      "blockedItems": [
+        {
+          "id": "99d21e28b9bea090",
+          "title": "NVIDIA and Google Cloud Empower the Next Wave of AI Builders",
+          "infrastructure_relevance_score": 0.98,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud, hpc)",
+            "cloud_capacity_relevance:0.64(hyperscalers, google cloud)",
+            "semiconductor_relevance:0.82(nvidia, amd, gpu)",
+            "power_grid_relevance:0.22(power)",
+            "capital_markets_relevance:0.30(acquisition)"
+          ],
+          "extraction_quality_score": 1,
+          "source_domain_adapter": "generic",
+          "content_length": 1714,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": false,
+          "repetition_block_reasons": [],
+          "repetition_check": null,
+          "expert_insight_complete": true,
+          "expert_insight_missing_fields": [],
+          "reason": "fail_closed: source_text_incomplete:ellipsis_truncation_artifact, ellipsis_truncation_artifact"
+        },
+        {
+          "id": "bed0fa9b7684069d",
+          "title": "Structure Research Examines the Environmental Impact of AI Infrastructure Growth in New ESG Report",
+          "infrastructure_relevance_score": 1,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:0.82(ai infrastructure)",
+            "data_center_relevance:1.00(data center, data centers, colocation)",
+            "cloud_capacity_relevance:0.32(hyperscalers)",
+            "power_grid_relevance:0.60(power, mw, renewable)",
+            "cooling_relevance:1.00(cooling, liquid cooling, water usage)",
+            "capital_markets_relevance:0.28(capex)",
+            "enterprise_ai_infrastructure_relevance:0.24(ai workloads)"
+          ],
+          "extraction_quality_score": 1,
+          "source_domain_adapter": "datacenterpost",
+          "content_length": 1706,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": false,
+          "repetition_block_reasons": [],
+          "repetition_check": null,
+          "expert_insight_complete": false,
+          "expert_insight_missing_fields": [
+            "named_companies"
+          ],
+          "reason": "expert_insight_missing_fields named_companies"
+        }
+      ],
+      "archiveOnlyItems": []
     }
   ],
-  "lastRunAt": "2026-05-20T10:28:51.100Z"
+  "lastRunAt": "2026-05-20T17:55:57.864Z"
 }
