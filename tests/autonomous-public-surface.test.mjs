@@ -11,6 +11,8 @@ const FORBIDDEN = [
   'readers should test whether',
   'not just another AI headline',
   'puts power under',
+  'pending clearer execution evidence',
+  'The source evidence is clean enough to monitor',
 ];
 
 test('current autonomous public data surface has no banned AI-summary phrases', () => {

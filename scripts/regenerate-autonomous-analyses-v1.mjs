@@ -57,6 +57,82 @@ function searchText(article = {}) {
   ].filter(Boolean).join(' ');
 }
 
+const KNOWN_ACTORS = [
+  'AWS',
+  'AMD',
+  'NVIDIA',
+  'Dell',
+  'Microsoft',
+  'Google',
+  'Oracle',
+  'Meta',
+  'OpenAI',
+  'CoreWeave',
+  'Blackstone',
+  'Applied Digital',
+  'Virginia',
+  'Fiber Connect',
+  'Green Capital',
+  'Prime Capital',
+];
+
+function sourceTitle(cluster = {}) {
+  const title = cluster.representative_source?.original?.title || cluster.cluster_title || '';
+  return String(title)
+    .replace(/\s+\|\s+.*$/, '')
+    .replace(/^([^:]{3,80}):\s+\1[:\s-]*/i, '$1 ')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+function cleanActor(actor = '') {
+  return String(actor)
+    .replace(/\b(The Close|Today|Company|SKUs|Out|Up|Cores|At)\b/gi, '')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+function watchlistActor(cluster = {}) {
+  const title = sourceTitle(cluster);
+  if (/^chip stocks bounce/i.test(title)) return 'The chip-stock rebound';
+  const titleMatch = KNOWN_ACTORS.find((actor) => new RegExp(`\\b${actor.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\b`, 'i').test(title));
+  if (titleMatch) return titleMatch;
+  const companyMatch = (cluster.companies || []).map(cleanActor).find((name) => name && name.length <= 28 && /^[A-Z0-9]/.test(name));
+  if (companyMatch) return companyMatch;
+  return title.split(/\s+/).slice(0, 4).join(' ') || cluster.cluster_topic || 'This signal';
+}
+
+function watchlistFocus(cluster = {}) {
+  const title = sourceTitle(cluster);
+  if (/generator|permitting|community|deq|zoning|moratorium/i.test(title)) return 'generator permitting and local approval risk';
+  if (/fiber|network|connectivity|quantum/i.test(title)) return 'AI-era fiber and network readiness';
+  if (/powerstore|storage|poweredge/i.test(title)) return 'storage and server refresh timing';
+  if (/epyc|cpu|server|cores|tdp/i.test(title)) return 'lower-power server CPU planning';
+  if (/chip|semiconductor|yield|foundry/i.test(title)) return 'semiconductor market risk';
+  return `${String(cluster.primary_infrastructure_layer || cluster.cluster_topic || 'infrastructure').toLowerCase()} planning`;
+}
+
+function watchlistGap(cluster = {}) {
+  const title = sourceTitle(cluster);
+  if (/generator|permitting|community|deq|zoning|moratorium/i.test(title)) return 'verified compliance deadlines, operator exposure, and permitting outcomes';
+  if (/fiber|network|connectivity|quantum/i.test(title)) return 'verified deployment locations, buyer commitments, and network-capacity impact';
+  if (/powerstore|storage|poweredge/i.test(title)) return 'verified enterprise adoption, refresh timing, and capacity-management impact';
+  if (/epyc|cpu|server|cores|tdp/i.test(title)) return 'verified OEM adoption, pricing, and workload-density evidence';
+  if (/chip|semiconductor|yield|foundry/i.test(title)) return 'evidence linking market pricing to capacity plans or supplier capex';
+  return 'verified timing, cost, capacity, or customer impact';
+}
+
+function watchlistCopy(cluster = {}) {
+  const actor = watchlistActor(cluster);
+  const focus = watchlistFocus(cluster);
+  const gap = watchlistGap(cluster);
+  const source = cluster.representative_source?.source_name || cluster.representative_source?.original?.source || 'The source';
+  const count = Number(cluster.source_count || cluster.sources?.length || 1);
+  const deck = `${actor}'s ${focus} signal needs ${gap} before it becomes a full Compute Current analysis.`;
+  const why = `${source} is useful for monitoring ${focus}, but the desk held the item until ${gap} ${count > 1 ? 'appears consistently across the cluster' : 'appears beyond the representative source'}.`;
+  return { deck, why };
+}
+
 export async function regenerateAutonomousAnalysesV1(options = {}) {
   const [latest, archived, cycles] = await Promise.all([
     readJsonFile(LATEST_NEWS_PATH, []),
@@ -101,8 +177,7 @@ export async function regenerateAutonomousAnalysesV1(options = {}) {
     .filter((article) => article.generation_version === AUTONOMOUS_VERSION && latestCyclePublished.has(article.id) && article.backfilledAnalysis !== true);
   const watchlist = selection.held_signals.slice(0, 20).map((cluster, index) => {
     const rep = cluster.representative_source?.original || {};
-    const deck = `${cluster.cluster_topic} remains on the watchlist pending clearer execution evidence.`;
-    const why = 'The source evidence is clean enough to monitor but not deep enough for a full Compute Current analysis.';
+    const { deck, why } = watchlistCopy(cluster);
     const sourceUrl = cluster.representative_source?.source_url || rep.sourceUrl || rep.url;
     return {
       id: `watch_${cluster.cluster_id}`,

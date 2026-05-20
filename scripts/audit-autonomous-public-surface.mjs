@@ -18,6 +18,8 @@ const FORBIDDEN = [
   'reported item can translate into',
   'readers should test whether',
   'not just another AI headline',
+  'pending clearer execution evidence',
+  'The source evidence is clean enough to monitor',
   'The issue is no longer',
   'in the rapidly evolving',
   'underscores',
