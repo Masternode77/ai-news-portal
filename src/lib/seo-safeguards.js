@@ -54,6 +54,10 @@ export const articleSeoSignals = (article = {}) => {
 
 export const articleNoindexReasons = (article = {}) => {
   const signals = articleSeoSignals(article);
+  const routeLabel = String(article.blog_route || article.publishing_route || '').toLowerCase();
+  const relevanceThreshold = routeLabel.includes('standard')
+    ? 0.68
+    : ARTICLE_INDEXING_THRESHOLDS.infrastructureRelevance;
   const reasons = [];
   const addReason = (reason) => {
     if (reason && !reasons.includes(reason)) reasons.push(reason);
@@ -95,9 +99,9 @@ export const articleNoindexReasons = (article = {}) => {
 
   if (
     signals.hasInfrastructureRelevance
-    && signals.infrastructureRelevance < ARTICLE_INDEXING_THRESHOLDS.infrastructureRelevance
+    && signals.infrastructureRelevance < relevanceThreshold
   ) {
-    addReason(`infrastructure_relevance_below_${ARTICLE_INDEXING_THRESHOLDS.infrastructureRelevance}`);
+    addReason(`infrastructure_relevance_below_${relevanceThreshold}`);
   }
 
   qualityNoindexReasons(article).forEach(addReason);

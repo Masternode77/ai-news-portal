@@ -25,7 +25,7 @@ function publicSeoText(article = {}) {
 }
 
 export function seoNoindexReasons(article = {}, options = {}) {
-  const route = options.route || routePublicLane(article);
+  const route = options.route || article.public_routing || routePublicLane(article);
   const text = publicSeoText(article);
   const publicExtraction = sourceExtractionPassesPublicGate(article);
   const longformExtraction = sourceExtractionPassesLongformGate(article);
@@ -60,14 +60,14 @@ export function shouldNoindexPublicArticle(article = {}, options = {}) {
 }
 
 export function sitemapArticleEligible(article = {}, options = {}) {
-  const route = options.route || routePublicLane(article);
+  const route = options.route || article.public_routing || routePublicLane(article);
   return route.visibility === 'core'
     && article.articlePagePublished !== false
     && !shouldNoindexPublicArticle(article, { route });
 }
 
 export function rssItemEligible(article = {}, options = {}) {
-  const route = options.route || routePublicLane(article);
+  const route = options.route || article.public_routing || routePublicLane(article);
   return (route.visibility === 'core' || route.visibility === 'adjacent')
     && article.homepagePublished !== false
     && article.archiveOnly !== true

@@ -229,7 +229,7 @@ function textBundle(article = {}) {
     article.article_type,
     article.region,
     ...(article.tags || []),
-  ].filter(Boolean).join(' ')).toLowerCase();
+  ].filter(Boolean).map((value) => String(value).slice(0, 2200)).join(' ')).toLowerCase();
 }
 
 export function routeStoryArchetype(article = {}) {

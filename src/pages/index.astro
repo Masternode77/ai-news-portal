@@ -94,7 +94,14 @@ const topConstraint = [...coreLatest].sort((a: any, b: any) => {
   return bScore - aScore;
 })[0];
 const topConstraintHref = topConstraint ? (topConstraint.detailHref || topConstraint.sourceUrl || '#') : '#';
+const isHomepageBlog = (item: any) =>
+  item?.hasArticlePage
+  && item.detailHref?.startsWith('/news/')
+  && /core_longform_blog|standard_blog|core longform blog|standard blog/i.test(`${item.blog_route || item.publishing_route || item.route || ''}`);
+const localBlogItems = latest.filter(isHomepageBlog);
+const localBlogSurfaceItems = localBlogItems.filter((item: any) => item.id !== topConstraint?.id).slice(0, 19);
 const usedIds = new Set(topConstraint ? [topConstraint.id] : []);
+localBlogItems.forEach((item: any) => usedIds.add(item.id));
 const sectionDefinitions = [
   {
     key: 'operator-alerts',
@@ -274,6 +281,23 @@ const stats = [
             <div><span>Coverage</span><strong>{topConstraint.publicSignal.view_detail ? 'Full memo approved' : 'Source card'}</strong></div>
           </div>
         </article>
+
+        {localBlogSurfaceItems.length ? (
+          <section class="intelligence-section local-blog-surface" aria-label="Local Compute Current blog analysis">
+            <div class="lane-heading">
+              <div>
+                <p class="eyebrow">Local Analysis</p>
+                <h2>Compute Current Blog Posts</h2>
+              </div>
+              <p>Rewritten local analysis from clean source evidence, with source links kept secondary for verification.</p>
+            </div>
+            <div class="lane-grid">
+              {localBlogSurfaceItems.map((item: any) => (
+                <PublicSignalCard signal={item.publicSignal} />
+              ))}
+            </div>
+          </section>
+        ) : null}
 
         <section class="intelligence-lanes" aria-label="Compute Current intelligence lanes">
           {intelligenceSections.map((section) => (

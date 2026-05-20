@@ -171,7 +171,7 @@ function textBundle(article = {}) {
     article.article_type,
     article.region,
     ...(article.tags || []),
-  ].filter(Boolean).join(' '));
+  ].filter(Boolean).map((value) => String(value).slice(0, 2200)).join(' '));
 }
 
 function relevanceScore(article = {}) {
@@ -256,7 +256,7 @@ export function routeStrictInfrastructureRelevance(article = {}) {
     article.cleaned_source_text,
     article.summary,
     article.snippet,
-  ].filter(Boolean).join('\n\n'));
+  ].filter(Boolean).map((value) => String(value).slice(0, 2200)).join('\n\n'));
 
   if (boilerplate.copyright_footer_detected && boilerplate.cleaned_text.length < 500) {
     return {

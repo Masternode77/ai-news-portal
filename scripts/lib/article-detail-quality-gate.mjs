@@ -26,7 +26,7 @@ function unique(values = []) {
 }
 
 export function articleDetailQualityResult(article = {}, options = {}) {
-  const route = options.route || routePublicLane(article);
+  const route = options.route || article.public_routing || routePublicLane(article);
   const extraction = sourceExtractionPassesLongformGate(article);
   const text = publicDetailText(article);
   const copyGuard = guardPublicCopy(text);

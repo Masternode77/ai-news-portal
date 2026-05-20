@@ -1,0 +1,1 @@
+Every article needs a thesis, contextual lede, analysis beyond summary, stakeholder impact, operating/commercial implication, counterargument, watch metrics, and bottom line. Avoid schema-like sentences and generic AI phrasing.

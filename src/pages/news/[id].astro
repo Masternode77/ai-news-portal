@@ -1,5 +1,9 @@
 ---
 import Layout from '../../layouts/Layout.astro';
+import BlogArticleBody from '../../components/BlogArticleBody.astro';
+import SourceAttribution from '../../components/SourceAttribution.astro';
+import AtAGlanceBox from '../../components/AtAGlanceBox.astro';
+import ArticleBottomLine from '../../components/ArticleBottomLine.astro';
 import latestNews from '../../data/latest-news.json';
 import archivedNews from '../../data/archived-news.json';
 import { SITE } from '../../config/site';
@@ -52,7 +56,6 @@ const executiveSummary = executiveSummaryLines(article)
   .map((line) => guardPublicCopy(line).text)
   .filter((line) => !forbiddenPublicPhraseMatches(line).length)
   .slice(0, 3);
-const executiveSummaryLabel = lens?.dynamicBriefLabel || article.dynamic_brief_label || article.narrative_dna?.brief_label || 'Operator Note';
 const taxonomy = taxonomyDisplay(articleRecord);
 const publicRouting = article.public_routing || routePublicLane(articleRecord);
 const publicPresentation = buildPublicPresentation(articleRecord, { route: publicRouting });
@@ -65,10 +68,20 @@ const articleBodyBlocks = cleanArticleBodyBlocks(lens?.finalArticleBody || '')
   .filter((paragraph) => !/^(why it matters|pressure points|market implications|what to watch)$/i.test(paragraph))
   .filter((paragraph) => !forbiddenPublicPhraseMatches(paragraph).length)
   .filter(Boolean);
-const isBodyHeading = (paragraph: string) =>
-  paragraph.length <= 72 &&
-  !/[.!?]$/.test(paragraph) &&
-  /^[A-Z0-9][A-Za-z0-9 &:/+-]+$/.test(paragraph);
+const rawAtAGlanceItems = Array.isArray(lens?.atAGlance) ? lens.atAGlance : executiveSummary;
+const atAGlanceItems = rawAtAGlanceItems
+  .map((line: string) => guardPublicCopy(cleanEditorialText(line)).text)
+  .filter((line: string) => !forbiddenPublicPhraseMatches(line).length)
+  .slice(0, 3);
+const watchMetrics = (lens?.watchMetrics || articleRecord.evidence_pack?.watchMetrics || [])
+  .map((line: string) => guardPublicCopy(cleanEditorialText(line)).text)
+  .filter(Boolean)
+  .slice(0, 3);
+const bottomLine = guardPublicCopy(cleanEditorialText(
+  lens?.bottomLine
+  || articleRecord.blog_metadata?.thesis
+  || publicPresentation.why_it_matters
+)).text;
 const structuredData = buildArticleStructuredData({
   article: articleRecord,
   site: SITE,
@@ -98,6 +111,12 @@ const structuredData = buildArticleStructuredData({
       </div>
 
       <div class="detail-body">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+          <a href="/">Home</a>
+          <span>/</span>
+          <span>{taxonomy.primary}</span>
+        </nav>
+
         <div class="meta-strip">
           <span class="category-badge">{taxonomy.primary}</span>
           <span class="source-pill">{publicPresentation.signal_label}</span>
@@ -107,59 +126,23 @@ const structuredData = buildArticleStructuredData({
 
         <h1>{displayTitle}</h1>
         <p class="detail-summary">{publicPresentation.deck || cleanEditorialText(lensTeaser || article.summary || article.snippet)}</p>
+        <p class="byline">By Compute Current Editorial Desk</p>
+        <SourceAttribution source={sourceAttribution} />
 
-        <section class="taxonomy-panel" aria-label="Infrastructure taxonomy">
-          <div>
-            <span>Signal</span>
-            <strong>{publicPresentation.signal_label}</strong>
-          </div>
-          <div>
-            <span>Editorial Lens</span>
-            <strong>{publicPresentation.editorial_lens}</strong>
-          </div>
-          <div>
-            <span>Layer</span>
-            <strong>{taxonomy.layer}</strong>
-          </div>
-          <div>
-            <span>Type</span>
-            <strong>{taxonomy.articleType}</strong>
-          </div>
-          <div>
-            <span>Region</span>
-            <strong>{publicPresentation.region}</strong>
-          </div>
-          {publicPresentation.reader_impact.length ? (
-            <div class="taxonomy-panel-wide">
-              <span>Reader Impact</span>
-              <strong>{publicPresentation.reader_impact.join(', ')}</strong>
-            </div>
-          ) : null}
-        </section>
+        <AtAGlanceBox items={atAGlanceItems} />
 
-        <section class="detail-section public-why-panel">
-          <h2>Editorial Read</h2>
-          <p>{publicPresentation.why_it_matters}</p>
-        </section>
+        {articleBodyBlocks.length ? <BlogArticleBody blocks={articleBodyBlocks} /> : null}
 
-        {executiveSummary.length ? (
-          <section class="executive-summary" aria-label="Executive summary">
-            <span>{executiveSummaryLabel}</span>
-            <ol>
-              {executiveSummary.map((line) => (
-                <li>{line}</li>
-              ))}
-            </ol>
+        {watchMetrics.length ? (
+          <section class="detail-section what-to-watch">
+            <h2>What to watch</h2>
+            <ul>
+              {watchMetrics.map((metric: string) => <li>{metric}</li>)}
+            </ul>
           </section>
         ) : null}
 
-        {articleBodyBlocks.length ? (
-          <section class="detail-section detail-article-copy">
-            {articleBodyBlocks.map((paragraph) => (
-              isBodyHeading(paragraph) ? <h2>{paragraph}</h2> : <p>{paragraph}</p>
-            ))}
-          </section>
-        ) : null}
+        <ArticleBottomLine bottomLine={bottomLine} />
 
         <section class="detail-section disclosure-panel">
           <h2>AI-assisted disclosure</h2>
@@ -182,7 +165,7 @@ const structuredData = buildArticleStructuredData({
         <section class="detail-section source-attribution-panel">
           <h2>Source</h2>
           <p>
-            Analysis is based on reporting from <strong>{sourceAttribution.name}</strong>
+            Source link for verification: <strong>{sourceAttribution.name}</strong>
             {sourceAttribution.domain ? <> ({sourceAttribution.domain})</> : null}. Compute Current links to the original source for attribution and reader verification.
           </p>
           <p>
