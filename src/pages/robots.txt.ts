@@ -3,6 +3,7 @@ import { SITE } from '../config/site';
 export function GET() {
   return new Response(`User-agent: *
 Allow: /
+Disallow: /admin/
 
 Sitemap: ${SITE.url}/sitemap-index.xml
 `, {

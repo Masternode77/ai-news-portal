@@ -9,6 +9,7 @@ import {
 import { hydrateExpertLens, mergeArticleRecords } from './expert-lens.mjs';
 import { readJsonFile, writeJsonFile } from './state-store.mjs';
 import { slugify, unique } from './normalize.mjs';
+import { taxonomySearchFields } from './taxonomy.mjs';
 
 function mergeUniqueArticles(articles) {
   const merged = new Map();
@@ -37,6 +38,16 @@ function toSearchableArticle(article) {
       [
         hydrated.title,
         hydrated.source,
+        hydrated.primary_category,
+        hydrated.secondary_category,
+        hydrated.infrastructure_layer,
+        hydrated.article_type,
+        hydrated.expert_insight?.bottleneck_type,
+        hydrated.expert_insight?.who_gains_leverage,
+        hydrated.expert_insight?.who_takes_execution_risk,
+        hydrated.expert_insight?.timing_dependency,
+        hydrated.expert_insight?.counterargument,
+        hydrated.expert_insight?.next_observable_signal,
         hydrated.category,
         hydrated.region,
         hydrated.summary,
@@ -52,6 +63,10 @@ function toSearchableArticle(article) {
         fullLens.finalHeadline,
         fullLens.metaDescription,
         hydrated.articleText,
+        ...(hydrated.affected_stakeholders || []),
+        ...(hydrated.expert_insight?.concrete_facts || []),
+        ...(hydrated.expert_insight?.named_companies || []),
+        ...taxonomySearchFields(hydrated),
         ...(hydrated.tags || []),
       ].filter(Boolean)
     ).join(' '),
@@ -119,13 +134,21 @@ export async function readArchiveSnapshot() {
   return readJsonFile(ARCHIVE_NEWS_PATH, []);
 }
 
+function isHomepageSuppressed(article = {}) {
+  if (article.homepageApproved === true || article.manualHomepageApproved === true) return false;
+  return article.homepagePublished === false || article.archiveOnly === true;
+}
+
 export function splitLatestAndArchive(articles) {
   const sorted = mergeUniqueArticles(articles).sort(
     (a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime()
   );
+  const homepageEligible = sorted.filter((article) => !isHomepageSuppressed(article));
+  const forcedArchive = sorted.filter(isHomepageSuppressed);
+
   return {
-    latest: sorted.slice(0, LATEST_NEWS_LIMIT),
-    overflow: sorted.slice(LATEST_NEWS_LIMIT),
+    latest: homepageEligible.slice(0, LATEST_NEWS_LIMIT),
+    overflow: mergeUniqueArticles([...homepageEligible.slice(LATEST_NEWS_LIMIT), ...forcedArchive]),
   };
 }
 

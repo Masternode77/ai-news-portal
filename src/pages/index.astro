@@ -1,14 +1,19 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import PublicSignalCard from '../components/PublicSignalCard.astro';
 import latestNews from '../data/latest-news.json';
 import archivedNews from '../data/archived-news.json';
 import searchIndex from '../data/search-index.json';
 import { SITE } from '../config/site';
 import { cleanEditorialText, displayHeadline } from '../lib/editorial-display.js';
+import { buildPublicPresentation } from '../lib/publicPresentation.js';
+import { shouldNoindexArticle } from '../lib/seo-safeguards.js';
+import { taxonomyDisplay } from '../lib/taxonomy-display.js';
+import { routePublicLane } from '../../scripts/lib/public-lane-router.mjs';
 
 const boardTitle = SITE.name;
 
-const formatTimeAgo = (iso) => {
+const formatTimeAgo = (iso: string) => {
   const ms = Date.now() - new Date(iso).getTime();
   const mins = Math.max(1, Math.floor(ms / 60000));
   if (mins < 60) return `${mins}m ago`;
@@ -18,52 +23,159 @@ const formatTimeAgo = (iso) => {
   return `${days}d ago`;
 };
 
-const getLensTeaser = (item) => item.expertLensShort || item.expertLens || item.expertLensFull?.thesis || '';
+const homepageEligibleNews = (latestNews || []).filter((item: any) =>
+  item.homepagePublished !== false
+  && item.archiveOnly !== true
+  && item.infrastructure_relevance_action !== 'archive_only'
+);
 
-const latest = (latestNews || []).map((item, idx) => ({
-  ...item,
-  title: displayHeadline(item),
-  summary: cleanEditorialText(item.summary || item.snippet || ''),
-  expertLensTeaser: cleanEditorialText(getLensTeaser(item)),
-  displayImage: item.sourceImage || item.generatedImage || '/generated/default.svg',
-  detailHref: `/news/${item.id}/`,
-  sourceUrl: item.sourceUrl || item.url,
-  timeAgo: formatTimeAgo(item.publishedAt),
-  isHero: idx === 0,
-  hasExpertLens: Boolean(getLensTeaser(item)),
-}));
+const recentDecks: string[] = [];
+const latest = homepageEligibleNews.map((item: any, idx) => {
+  const sourceUrl = item.sourceUrl || item.url;
+  const route = item.public_routing || routePublicLane(item);
+  if (route.visibility === 'archive') return null;
+  const hasArticlePage = route.visibility === 'core' && item['articlePagePublished'] !== false && !shouldNoindexArticle(item);
+  const publicSignal = buildPublicPresentation(
+    {
+      ...item,
+      articlePagePublished: hasArticlePage ? item.articlePagePublished : false,
+    },
+    { route, recentDecks }
+  );
+  recentDecks.push(publicSignal.deck);
+  return {
+    ...item,
+    taxonomy: taxonomyDisplay(item),
+    hasArticlePage,
+    publicRouting: route,
+    publicSignal: {
+      ...publicSignal,
+      id: item.id,
+      displayImage: item.sourceImage || item.generatedImage || '/generated/default.svg',
+    },
+    title: displayHeadline(item),
+    summary: cleanEditorialText(publicSignal.why_it_matters || item.summary || item.snippet || ''),
+    deck: cleanEditorialText(publicSignal.deck || ''),
+    displayImage: item.sourceImage || item.generatedImage || '/generated/default.svg',
+    detailHref: hasArticlePage ? `/news/${item.id}/` : '',
+    sourceUrl,
+    timeAgo: formatTimeAgo(item.publishedAt),
+    isHero: idx === 0,
+  };
+}).filter(Boolean);
 
 const archiveCount = archivedNews.length;
-const hero = latest[0];
-const briefing = latest.slice(1, 5);
-const feed = latest.slice(5);
-const categories = [...new Set(latest.map((item) => item.category).filter(Boolean))];
-const searchPayload = (searchIndex || []).slice(0, 400).map((item) => ({
+const intelligenceNav = [
+  "Today's Constraint",
+  'Operator Alerts',
+  'Investor Signals',
+  'Stack Shifts',
+  'Policy/Risk Watch',
+  'Technical Bottlenecks',
+  'Market Maps',
+  'Adjacent Watchlist',
+];
+const coreLatest = latest.filter((item: any) => item.publicRouting.visibility === 'core' && item.hasArticlePage);
+const topConstraint = [...coreLatest].sort((a: any, b: any) => {
+  const aScore = (a.taxonomy.urgency || 0) * 0.58 + (a.publicRouting.score || 0) * 0.42;
+  const bScore = (b.taxonomy.urgency || 0) * 0.58 + (b.publicRouting.score || 0) * 0.42;
+  return bScore - aScore;
+})[0];
+const usedIds = new Set(topConstraint ? [topConstraint.id] : []);
+const sectionDefinitions = [
+  {
+    key: 'operator-alerts',
+    title: 'Operator Alerts',
+    deck: 'Capacity, uptime, procurement, and site execution items that change operating plans.',
+  },
+  {
+    key: 'investor-signals',
+    title: 'Investor Signals',
+    deck: 'Capital formation, contract quality, pricing power, and exposure signals for infrastructure investors.',
+  },
+  {
+    key: 'stack-shifts',
+    title: 'Stack Shifts',
+    deck: 'Changes in cloud, silicon, network, platform, and workload architecture that alter the AI infrastructure stack.',
+  },
+  {
+    key: 'policy-risk-watch',
+    title: 'Policy/Risk Watch',
+    deck: 'Permitting, grid cost allocation, regulatory, siting, and regional risk items worth tracking.',
+  },
+  {
+    key: 'technical-bottlenecks',
+    title: 'Technical Bottlenecks',
+    deck: 'Physical and systems constraints across power, cooling, networking, memory, facility design, and deployment readiness.',
+  },
+  {
+    key: 'market-maps',
+    title: 'Market Maps',
+    deck: 'Multi-actor roundups separated by control point: land, power, capital, chips, and demand.',
+  },
+  {
+    key: 'adjacent-watchlist',
+    title: 'Adjacent Watchlist',
+    deck: 'AI items near the infrastructure boundary that need more evidence before entering core lanes.',
+  },
+];
+const pickSectionItems = (definition: any) => {
+  const matched = latest
+    .filter((item: any) => !usedIds.has(item.id) && item.publicSignal.lane_key === definition.key)
+    .sort((a: any, b: any) => ((b.publicRouting.score || 0) + (b.taxonomy.urgency || 0)) - ((a.publicRouting.score || 0) + (a.taxonomy.urgency || 0)));
+  const picked = matched.slice(0, 4);
+  picked.forEach((item) => usedIds.add(item.id));
+  return picked;
+};
+const intelligenceSections = sectionDefinitions.map((definition) => ({
+  ...definition,
+  items: pickSectionItems(definition),
+})).filter((section) => section.items.length);
+const searchPayload = (searchIndex || []).slice(0, 400).map((item: any) => ({
+  ...(() => {
+    const route = item.public_routing || routePublicLane(item);
+    const presentation = buildPublicPresentation(item, { route });
+    return {
+      signal_label: presentation.signal_label,
+      editorial_lens: presentation.editorial_lens,
+      public_deck: presentation.deck,
+      why_it_matters: presentation.why_it_matters,
+    };
+  })(),
   id: item.id,
   title: displayHeadline(item),
   source: item.source,
-  category: item.category,
+  category: item.primary_category || item.category,
+  primary_category: item.primary_category || item.category,
+  secondary_category: item.secondary_category,
+  infrastructure_layer: item.infrastructure_layer,
+  affected_stakeholders: item.affected_stakeholders || [],
+  article_type: item.article_type,
   region: item.region,
-  summary: cleanEditorialText(item.summary || item.snippet || ''),
-  expertLensTeaser: cleanEditorialText(getLensTeaser(item)),
-  searchText: item.searchText || [
+  summary: cleanEditorialText(item.public_presentation?.why_it_matters || item.summary || item.snippet || ''),
+  expertLensTeaser: cleanEditorialText(item.public_presentation?.deck || item.summary || item.snippet || ''),
+  searchText: [
     item.title,
     item.source,
+    item.primary_category,
+    item.secondary_category,
+    item.infrastructure_layer,
+    item.article_type,
+    ...(item.affected_stakeholders || []),
     item.category,
     item.region,
-    item.summary,
-    item.expertLensShort,
-    item.expertLens,
-    item.expertLensFull?.thesis,
-    item.expertLensFull?.whyThisMatters,
+    item.public_presentation?.deck,
+    item.public_presentation?.why_it_matters,
+    ...(item.tags || []),
   ].filter(Boolean).join(' '),
   publishedAt: item.publishedAt,
-  href: `/news/${item.id}/`,
+  href: item['articlePagePublished'] === false || shouldNoindexArticle(item) ? item.sourceUrl || item.url : `/news/${item.id}/`,
   sourceUrl: item.sourceUrl || item.url,
 }));
 const stats = [
-  { label: 'Live Surface', value: `${latest.length}` },
+  { label: 'Live Signals', value: `${latest.length}` },
   { label: 'Archived', value: `${archiveCount}` },
+  { label: 'IA Lanes', value: `${sectionDefinitions.length + 1}` },
   { label: 'Refresh', value: '8h' },
 ];
 ---
@@ -97,7 +209,7 @@ const stats = [
       </div>
 
       <div class="nav-strip">
-        {categories.length > 0 ? categories.slice(0, 6).map((category) => <span>{category}</span>) : null}
+        {intelligenceNav.map((item) => <span>{item}</span>)}
       </div>
     </header>
 
@@ -111,53 +223,57 @@ const stats = [
       </div>
     </section>
 
-    {hero ? (
-      <section class="frontpage-grid">
-        <article class="lead-story">
-          <a class="lead-media" href={hero.detailHref} aria-label={hero.title}>
-            <img src={hero.displayImage} alt={hero.title} loading="eager" />
-          </a>
-          <div class="lead-copy">
+    {topConstraint ? (
+      <section class="constraint-board">
+        <article class="constraint-lead">
+          <div class="constraint-label">
+            <p class="eyebrow">Today's Constraint</p>
+            <span>{topConstraint.publicSignal.editorial_lens}</span>
+            <a class="constraint-media" href={topConstraint.detailHref} aria-label={topConstraint.title}>
+              <img src={topConstraint.displayImage} alt={topConstraint.title} loading="eager" />
+            </a>
+          </div>
+          <div class="constraint-copy">
             <div class="story-meta">
-              <span>{hero.category || 'Infrastructure'}</span>
-              <span>{hero.source}</span>
-              <span>{hero.region || 'Global'}</span>
-              <time>{hero.timeAgo}</time>
+              <span>{topConstraint.source}</span>
+              <span>{topConstraint.taxonomy.primary}</span>
+              <span>{topConstraint.taxonomy.region}</span>
+              <time>{topConstraint.timeAgo}</time>
             </div>
             <h2>
-              <a href={hero.detailHref}>{hero.title}</a>
+              <a href={topConstraint.detailHref}>{topConstraint.title}</a>
             </h2>
-            <p>{hero.summary}</p>
-            {hero.hasExpertLens ? (
-              <div class="editor-note">
-                <span>Editor's Read</span>
-                <p>{hero.expertLensTeaser}</p>
-              </div>
-            ) : null}
+            <p class="signal-deck">{topConstraint.publicSignal.deck}</p>
+            <p>{topConstraint.publicSignal.why_it_matters}</p>
+          </div>
+          <div class="metric-grid">
+            <div><span>Signal</span><strong>{topConstraint.publicSignal.signal_label}</strong></div>
+            <div><span>Editorial Lens</span><strong>{topConstraint.publicSignal.editorial_lens}</strong></div>
+            <div><span>Reader Impact</span><strong>{topConstraint.publicSignal.reader_impact.join(', ')}</strong></div>
+            <div><span>Region</span><strong>{topConstraint.publicSignal.region}</strong></div>
+            <div><span>Source</span><strong>{topConstraint.publicSignal.source}</strong></div>
+            <div><span>Coverage</span><strong>{topConstraint.publicSignal.view_detail ? 'Full memo approved' : 'Source card'}</strong></div>
           </div>
         </article>
 
-        <aside class="briefing-rail">
-          <div class="rail-heading">
-            <p class="eyebrow">Top Stories</p>
-            <h2>What matters now</h2>
-          </div>
-          {briefing.map((item, index) => (
-            <article class="rail-story">
-              <span class="rail-index">{String(index + 1).padStart(2, '0')}</span>
-              <div>
-                <div class="story-meta">
-                  <span>{item.category || 'Infrastructure'}</span>
-                  <time>{item.timeAgo}</time>
+        <section class="intelligence-lanes" aria-label="Compute Current intelligence lanes">
+          {intelligenceSections.map((section) => (
+            <section class="intelligence-section">
+              <div class="lane-heading">
+                <div>
+                  <p class="eyebrow">{section.title}</p>
+                  <h2>{section.title}</h2>
                 </div>
-                <h3>
-                  <a href={item.detailHref}>{item.title}</a>
-                </h3>
-                <p>{item.summary}</p>
+                <p>{section.deck}</p>
               </div>
-            </article>
+              <div class="lane-grid">
+                {section.items.map((item: any) => (
+                  <PublicSignalCard signal={item.publicSignal} />
+                ))}
+              </div>
+            </section>
           ))}
-        </aside>
+        </section>
       </section>
     ) : (
       <section class="empty-board panel">
@@ -179,45 +295,21 @@ const stats = [
       <div id="search-results" class="search-results"></div>
     </section>
 
-    <section class="feed-header">
+    <footer class="transparency-footer" aria-label="Editorial transparency">
       <div>
-        <p class="eyebrow">Latest Dispatches</p>
-        <h2>Signal feed</h2>
+        <p class="eyebrow">Transparency</p>
+        <p>
+          AI-assisted infrastructure intelligence with source attribution, extraction QA, relevance gates, and noindex safeguards for low-quality generated pages.
+        </p>
       </div>
-      <p class="feed-copy">A continuously refreshed front page for operators, investors, and infrastructure teams tracking the AI buildout, refreshed every 8 hours.</p>
-    </section>
+      <nav class="policy-link-row" aria-label="Transparency pages">
+        <a href="/about/">About</a>
+        <a href="/editorial-policy/">Editorial Policy</a>
+        <a href="/methodology/">Methodology</a>
+        <a href="/ai-disclosure/">AI-assisted Disclosure</a>
+      </nav>
+    </footer>
 
-    <section class="news-grid">
-      {feed.map((item) => (
-        <article class="news-card">
-          <div class="card-media">
-            <img src={item.displayImage} alt={item.title} loading="lazy" />
-          </div>
-
-          <div class="card-content">
-            <div class="story-meta">
-              <span>{item.category || 'Infrastructure'}</span>
-              <time>{item.timeAgo}</time>
-            </div>
-
-            <h4>
-              <a href={item.detailHref}>{item.title}</a>
-            </h4>
-
-            <p class="summary">{item.summary}</p>
-
-            <div class="card-footer">
-              <a class="detail-link" href={item.detailHref}>
-                View detail
-              </a>
-              <a class="source-cta" href={item.sourceUrl} target="_blank" rel="noreferrer">
-                Read source
-              </a>
-            </div>
-          </div>
-        </article>
-      ))}
-    </section>
   </main>
 
   <script is:inline type="application/json" id="search-index-data" set:html={JSON.stringify(searchPayload)}></script>
@@ -255,7 +347,7 @@ const stats = [
           (item) => `
             <article class="search-result-card">
               <div>
-                <div class="search-result-meta">${item.source} · ${item.category || 'Infrastructure'} · ${formatDate(item.publishedAt)}</div>
+                <div class="search-result-meta">${item.source} · ${item.primary_category || item.category || 'Infrastructure'} · ${item.infrastructure_layer || 'Layer n/a'} · ${formatDate(item.publishedAt)}</div>
                 <h3><a href="${item.href}">${item.title}</a></h3>
                 <p>${item.expertLensTeaser || item.summary || ''}</p>
               </div>
@@ -271,7 +363,7 @@ const stats = [
       if (!(target instanceof HTMLInputElement)) return;
       const query = target.value.toLowerCase().trim();
       const matches = payload.filter((item) =>
-        `${item.searchText || ''} ${item.title} ${item.source} ${item.category || ''} ${item.region || ''} ${item.summary || ''}`
+        `${item.searchText || ''} ${item.title} ${item.source} ${item.primary_category || item.category || ''} ${item.secondary_category || ''} ${item.infrastructure_layer || ''} ${item.article_type || ''} ${(item.affected_stakeholders || []).join(' ')} ${item.region || ''} ${item.summary || ''}`
           .toLowerCase()
           .includes(query)
       );

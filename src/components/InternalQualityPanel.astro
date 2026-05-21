@@ -1,0 +1,36 @@
+---
+const { quality } = Astro.props;
+const dna = quality?.narrative_dna || {};
+const blocked = Array.isArray(quality?.blocked_reasons) ? quality.blocked_reasons : [];
+---
+<section class="internal-quality-panel" aria-label="Internal quality panel">
+  <div class="quality-grid">
+    <div><span>Relevance Score</span><strong>{quality?.relevance_score ?? 'n/a'}</strong></div>
+    <div><span>Urgency Score</span><strong>{quality?.urgency_score ?? 'n/a'}</strong></div>
+    <div><span>Extraction Quality</span><strong>{quality?.extraction_quality_score ?? 'n/a'}</strong></div>
+    <div><span>Article Blueprint</span><strong>{quality?.article_blueprint || 'n/a'}</strong></div>
+    <div><span>Routing Decision</span><strong>{quality?.routing_decision || 'n/a'}</strong></div>
+    <div><span>Source Adapter</span><strong>{quality?.source_adapter || 'n/a'}</strong></div>
+    <div><span>Generation Version</span><strong>{quality?.generation_version || 'n/a'}</strong></div>
+    <div><span>Source Evidence Length</span><strong>{quality?.source_evidence_length ?? 'n/a'}</strong></div>
+  </div>
+  {blocked.length ? (
+    <div class="quality-block">
+      <h2>Blocked reasons</h2>
+      <ul>
+        {blocked.map((reason) => <li>{reason}</li>)}
+      </ul>
+    </div>
+  ) : null}
+  <div class="quality-block">
+    <h2>NarrativeDNA</h2>
+    <dl>
+      {Object.entries(dna).map(([key, value]) => (
+        <div>
+          <dt>{key}</dt>
+          <dd>{Array.isArray(value) ? value.join(', ') : String(value ?? '')}</dd>
+        </div>
+      ))}
+    </dl>
+  </div>
+</section>

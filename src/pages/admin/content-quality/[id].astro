@@ -1,0 +1,41 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import InternalQualityPanel from '../../../components/InternalQualityPanel.astro';
+import latestNews from '../../../data/latest-news.json';
+import archivedNews from '../../../data/archived-news.json';
+import { SITE } from '../../../config/site';
+import { buildAdminQualityModel } from '../../../../scripts/lib/admin-quality-model.mjs';
+
+export function getStaticPaths() {
+  return [...latestNews, ...archivedNews]
+    .filter((article) => article?.id)
+    .map((article) => ({
+      params: { id: article.id },
+      props: { article },
+    }));
+}
+
+const { article } = Astro.props;
+const quality = buildAdminQualityModel(article);
+---
+<Layout
+  title={`Quality: ${article.title} | ${SITE.name}`}
+  description="Private Compute Current content quality detail"
+  canonicalPath={`/admin/content-quality/${article.id}/`}
+  noindex={true}
+>
+  <main class="admin-shell">
+    <header class="admin-header">
+      <a class="back-link admin-back" href="/admin/content-quality/">Content quality</a>
+      <div>
+        <p class="eyebrow">Admin Debug</p>
+        <h1>{article.title}</h1>
+      </div>
+      <p class="admin-deck">{article.source} · {article.sourceUrl || article.url}</p>
+    </header>
+
+    <section class="admin-panel">
+      <InternalQualityPanel quality={quality} />
+    </section>
+  </main>
+</Layout>

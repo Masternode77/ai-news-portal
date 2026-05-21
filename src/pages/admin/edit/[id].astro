@@ -1,0 +1,244 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import latestNews from '../../../data/latest-news.json';
+import archivedNews from '../../../data/archived-news.json';
+import { SITE } from '../../../config/site';
+
+export function getStaticPaths() {
+  return [...latestNews, ...archivedNews]
+    .filter((article) => article?.id)
+    .map((article) => ({
+      params: { id: article.id },
+      props: {
+        articleId: article.id,
+        fallbackTitle: article.expertLensFull?.finalHeadline || article.title || article.id,
+      },
+    }));
+}
+
+const { articleId, fallbackTitle } = Astro.props;
+---
+<Layout
+  title={`Edit ${fallbackTitle} | ${SITE.name}`}
+  description="Private Compute Current article editor"
+  canonicalPath={`/admin/edit/${articleId}/`}
+  noindex={true}
+>
+  <main class="admin-shell" data-article-id={articleId}>
+    <header class="admin-header">
+      <a class="back-link admin-back" href={`/news/${articleId}/`}>View public article</a>
+      <div>
+        <p class="eyebrow">Private Editor</p>
+        <h1>Compute Current article edit</h1>
+      </div>
+      <p class="admin-deck">Sign in to edit the article copy stored in GitHub. Saving creates a commit on the configured branch and lets Vercel rebuild the public page.</p>
+    </header>
+
+    <section id="admin-login" class="admin-panel">
+      <div>
+        <p class="eyebrow">Admin Login</p>
+        <h2>Restricted access</h2>
+      </div>
+      <form class="admin-form" id="login-form">
+        <label>
+          <span>Username</span>
+          <input name="username" autocomplete="username" />
+        </label>
+        <label>
+          <span>Password</span>
+          <input name="password" type="password" autocomplete="current-password" required />
+        </label>
+        <button type="submit">Sign in</button>
+      </form>
+    </section>
+
+    <section id="admin-editor" class="admin-panel admin-editor" hidden>
+      <div class="admin-editor-top">
+        <div>
+          <p class="eyebrow">Article</p>
+          <h2 id="editor-title">{fallbackTitle}</h2>
+        </div>
+        <button id="logout-button" class="admin-secondary" type="button">Sign out</button>
+      </div>
+
+      <form class="admin-form admin-edit-form" id="article-form">
+        <label>
+          <span>Headline</span>
+          <input name="title" required />
+        </label>
+
+        <label>
+          <span>Deck summary</span>
+          <textarea name="summary" rows="3"></textarea>
+        </label>
+
+        <label>
+          <span>Editor's read</span>
+          <textarea name="expertLensShort" rows="3"></textarea>
+        </label>
+
+        <label>
+          <span>Article body</span>
+          <textarea name="finalArticleBody" rows="18" required></textarea>
+        </label>
+
+        <div class="admin-field-grid">
+          <label>
+            <span>Category</span>
+            <input name="category" />
+          </label>
+          <label>
+            <span>Region</span>
+            <input name="region" />
+          </label>
+        </div>
+
+        <label>
+          <span>Tags</span>
+          <input name="tags" placeholder="power, chips, cloud" />
+        </label>
+
+        <label>
+          <span>Meta description</span>
+          <textarea name="metaDescription" rows="2"></textarea>
+        </label>
+
+        <label>
+          <span>Source image URL</span>
+          <input name="sourceImage" />
+        </label>
+
+        <label>
+          <span>Generated image path</span>
+          <input name="generatedImage" placeholder="/generated/example.jpg" />
+        </label>
+
+        <div class="admin-save-row">
+          <div id="article-meta" class="admin-meta"></div>
+          <button type="submit">Save article</button>
+        </div>
+      </form>
+    </section>
+
+    <p id="admin-status" class="admin-status" role="status" aria-live="polite"></p>
+  </main>
+
+  <script>
+    // @ts-nocheck
+    const shell = document.querySelector('.admin-shell');
+    const articleId = shell?.getAttribute('data-article-id') || '';
+    const loginPanel = document.getElementById('admin-login');
+    const editorPanel = document.getElementById('admin-editor');
+    const loginForm = document.getElementById('login-form');
+    const articleForm = document.getElementById('article-form');
+    const status = document.getElementById('admin-status');
+    const meta = document.getElementById('article-meta');
+    const editorTitle = document.getElementById('editor-title');
+    const logoutButton = document.getElementById('logout-button');
+
+    const setStatus = (message, type = '') => {
+      if (!status) return;
+      status.textContent = message;
+      status.dataset.type = type;
+    };
+
+    const requestJson = async (url, options = {}) => {
+      const response = await fetch(url, {
+        ...options,
+        headers: {
+          'Content-Type': 'application/json',
+          ...(options.headers || {}),
+        },
+      });
+      const payload = await response.json().catch(() => ({}));
+      if (!response.ok) throw new Error(payload.error || 'Request failed.');
+      return payload;
+    };
+
+    const fillForm = (article) => {
+      if (!articleForm) return;
+      articleForm.title.value = article.title || '';
+      articleForm.summary.value = article.summary || '';
+      articleForm.expertLensShort.value = article.expertLensShort || '';
+      articleForm.finalArticleBody.value = article.finalArticleBody || '';
+      articleForm.category.value = article.category || '';
+      articleForm.region.value = article.region || '';
+      articleForm.tags.value = (article.tags || []).join(', ');
+      articleForm.metaDescription.value = article.metaDescription || '';
+      articleForm.sourceImage.value = article.sourceImage || '';
+      articleForm.generatedImage.value = article.generatedImage || '';
+      if (editorTitle) editorTitle.textContent = article.title || article.id;
+      if (meta) {
+        const published = article.publishedAt ? new Date(article.publishedAt).toLocaleString('en-US') : 'Unknown date';
+        meta.textContent = `${article.source || 'Unknown source'} · ${published}`;
+      }
+    };
+
+    const showEditor = async () => {
+      setStatus('Loading article...');
+      const payload = await requestJson(`/api/admin/article?id=${encodeURIComponent(articleId)}`);
+      fillForm(payload.article);
+      if (loginPanel) loginPanel.hidden = true;
+      if (editorPanel) editorPanel.hidden = false;
+      setStatus(`Loaded from ${payload.sourceFile}.`, 'success');
+    };
+
+    const checkSession = async () => {
+      try {
+        await requestJson('/api/admin/login');
+        await showEditor();
+      } catch {
+        if (loginPanel) loginPanel.hidden = false;
+        if (editorPanel) editorPanel.hidden = true;
+        setStatus('Sign in to edit this article.');
+      }
+    };
+
+    loginForm?.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      const data = Object.fromEntries(new FormData(loginForm));
+      try {
+        setStatus('Signing in...');
+        await requestJson('/api/admin/login', {
+          method: 'POST',
+          body: JSON.stringify(data),
+        });
+        await showEditor();
+      } catch (error) {
+        setStatus(error.message, 'error');
+      }
+    });
+
+    articleForm?.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      const data = Object.fromEntries(new FormData(articleForm));
+      data.id = articleId;
+      data.tags = String(data.tags || '')
+        .split(',')
+        .map((tag) => tag.trim())
+        .filter(Boolean);
+
+      try {
+        setStatus('Saving article...');
+        const payload = await requestJson('/api/admin/article', {
+          method: 'POST',
+          body: JSON.stringify(data),
+        });
+        fillForm(payload.article);
+        const commit = payload.commitUrl ? ` Commit: ${payload.commitUrl}` : '';
+        setStatus(`Saved. Vercel should redeploy after GitHub receives the commit.${commit}`, 'success');
+      } catch (error) {
+        setStatus(error.message, 'error');
+      }
+    });
+
+    logoutButton?.addEventListener('click', async () => {
+      await requestJson('/api/admin/login', { method: 'DELETE' }).catch(() => {});
+      if (loginPanel) loginPanel.hidden = false;
+      if (editorPanel) editorPanel.hidden = true;
+      setStatus('Signed out.');
+    });
+
+    checkSession();
+  </script>
+</Layout>

@@ -1,0 +1,47 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { SITE } from '../config/site';
+---
+<Layout
+  title={`About | ${SITE.name}`}
+  description="About Compute Current, an AI infrastructure intelligence product for operators, investors, cloud capacity teams, data center developers, and infrastructure strategists."
+  canonicalPath="/about/"
+>
+  <main class="policy-shell">
+    <a class="back-link" href="/">Intelligence board</a>
+    <article class="policy-page">
+      <p class="eyebrow">About</p>
+      <h1>Compute Current tracks the infrastructure behind AI.</h1>
+      <p class="policy-lede">
+        Compute Current is an AI infrastructure intelligence product for operators, investors, cloud capacity teams, data center developers, and infrastructure strategists.
+      </p>
+
+      <section>
+        <h2>What We Cover</h2>
+        <p>
+          We focus on data center capacity, cloud infrastructure, semiconductors, power availability, grid constraints, cooling, capital markets, enterprise AI deployment, policy, and operational risk.
+        </p>
+      </section>
+
+      <section>
+        <h2>What We Do Not Try To Be</h2>
+        <p>
+          Compute Current is not a generic AI blog. We do not force weakly related AI news into an infrastructure frame, and we do not publish long-form generated memos from sources that fail extraction quality checks.
+        </p>
+      </section>
+
+      <section>
+        <h2>Reader Promise</h2>
+        <p>
+          Every full memo is intended to answer what changed, why it matters for AI infrastructure, who benefits, who is exposed, and what bottleneck or decision point readers should watch next.
+        </p>
+      </section>
+
+      <nav class="policy-link-row" aria-label="Transparency pages">
+        <a href="/editorial-policy/">Editorial Policy</a>
+        <a href="/methodology/">Methodology</a>
+        <a href="/ai-disclosure/">AI-assisted Disclosure</a>
+      </nav>
+    </article>
+  </main>
+</Layout>
