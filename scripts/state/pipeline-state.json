@@ -315,7 +315,9 @@
     "ebbdd50f6259511c",
     "c8fd1d25f9a85fc7",
     "3455be0d4676b616",
-    "91b776d4c711c38c"
+    "91b776d4c711c38c",
+    "bb6621f07b2ff647",
+    "e9f49273042ac85e"
   ],
   "dayPlans": {
     "2026-03-24": {
@@ -6628,19 +6630,448 @@
       "slotPublications": {
         "2": true
       }
+    },
+    "2026-05-22": {
+      "date": "2026-05-22",
+      "createdAt": "2026-05-21T17:32:35.855Z",
+      "refreshedAt": "2026-05-21T17:32:35.855Z",
+      "candidateWindowHours": 24,
+      "curatedItems": [
+        {
+          "id": "e9f49273042ac85e",
+          "source": "Semiconductor Engineering",
+          "url": "https://semiengineering.com/large-scale-sram-based-llm-inference-deployment-groq/",
+          "title": "Large-scale, SRAM-based LLM Inference Deployment (Groq)",
+          "snippet": "A new technical paper, “SHIP: SRAM-Based Huge Inference Pipelines for Fast LLM Serving,” was published by researchers at Nvidia, with work done while at Groq. Abstract “The proliferation of large language models (LLMs)…",
+          "contentText": "A new technical paper, &#8220;SHIP: SRAM-Based Huge Inference Pipelines for Fast LLM Serving,&#8221; was published by researchers at Nvidia, with work done while at Groq. Abstract &#8220;The proliferation of large language models (LLMs) demands inference systems with both low latency and high efficiency at scale. GPU-based serving relies on HBM for model weights and KV caches, creating a memory bandwidth bottleneck during decode. To break through this bottleneck, we present the first large-scale, SRAM-based LLM inference deployment—Groq’s public cloud—serving hundreds of billions of tokens daily. This paper reviews Groq’s first-generation SRAM-based Huge Inference Pipelines (SHIP), highlighting: (1) a synchronous, low-diameter interconnect enabling low-latency scaling across thousands of…",
+          "publishedAt": "2026-05-21T16:02:35.000Z",
+          "sourceImage": null,
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "category": "Semiconductors",
+          "primary_category": "Semiconductors",
+          "secondary_category": "Accelerators, memory, and advanced packaging",
+          "infrastructure_layer": "Silicon",
+          "affected_stakeholders": [
+            "semiconductor suppliers",
+            "hyperscalers",
+            "server OEMs",
+            "investors"
+          ],
+          "article_type": "Supply Chain",
+          "urgency_score": 0.48,
+          "taxonomy_confidence": 0.85,
+          "taxonomy_reasons": [
+            "gpu",
+            "nvidia",
+            "hbm"
+          ],
+          "direct_ai_infrastructure_relevance": 1,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 1,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.95,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "semiconductor_relevance:1.00(semiconductor, nvidia, hbm)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 1,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 1,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.95,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+              "semiconductor_relevance:1.00(semiconductor, nvidia, hbm)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 86
+        },
+        {
+          "id": "bb6621f07b2ff647",
+          "source": "Data Center POST",
+          "url": "https://datacenterpost.com/kasi-cloud-commissions-west-africas-first-hyperscale-ready-ai-capable-campus-in-lagos/",
+          "title": "Kasi Cloud Commissions West Africa’s First Hyperscale-Ready, AI-Capable Campus in Lagos",
+          "snippet": "TL;DR Kasi Cloud commissioned West Africa’s first hyperscale-ready, AI-capable, carrier-neutral data center campus in Lagos, Nigeria. The Lekki campus is strategically located near major subsea cable landing stations an…",
+          "contentText": "TL;DR Kasi Cloud commissioned West Africa’s first hyperscale-ready, AI-capable, carrier-neutral data center campus in Lagos, Nigeria. The Lekki campus is strategically located near major subsea cable landing stations and is expected to scale to approximately 100MW of IT capacity. LOS1 gives Nigerian enterprises, financial institutions, and government agencies a sovereign, in-country cloud and AI infrastructure alternative aligned with Nigeria’s National Cloud Policy 2025. Leaders across Lagos State, the Federal Government, and NSIA say the project positions Nigeria and Lagos as a major digital and AI gateway for Africa’s future growth. # # # Kasi Cloud Datacenters has officially commissioned West Africa’s first hyperscale-ready, AI-capable, carrier-neutral data centre campus in Lagos, mar…",
+          "publishedAt": "2026-05-21T16:00:56.000Z",
+          "sourceImage": "https://d3qut6qyo6tw2j.cloudfront.net/bin/uploads/2026/05/21083253/Kasi-DC-DCP-Blog-Submission_5.19.26-1024x512.png",
+          "region": "APAC",
+          "language": "en",
+          "defaultCategory": "Colocation & Wholesale",
+          "category": "Data Centers",
+          "primary_category": "Data Centers",
+          "secondary_category": "Campus development and colocation capacity",
+          "infrastructure_layer": "Facility",
+          "affected_stakeholders": [
+            "data center operators",
+            "developers",
+            "site selectors",
+            "investors"
+          ],
+          "article_type": "Capacity Expansion",
+          "urgency_score": 0.54,
+          "taxonomy_confidence": 0.95,
+          "taxonomy_reasons": [
+            "data center",
+            "colocation",
+            "campus",
+            "wholesale"
+          ],
+          "direct_ai_infrastructure_relevance": 0.78,
+          "data_center_relevance": 0.976,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.888,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:0.78(ai infrastructure)",
+            "data_center_relevance:0.98(data center, colocation, campus)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 0.78,
+            "data_center_relevance": 0.976,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.888,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:0.78(ai infrastructure)",
+              "data_center_relevance:0.98(data center, colocation, campus)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 83
+        },
+        {
+          "id": "17648fa3050b7529",
+          "source": "StorageReview",
+          "url": "https://www.storagereview.com/news/proxmox-virtual-environment-9-2-released-with-dynamic-load-balancer-and-expanded-sdn-features",
+          "title": "Proxmox Virtual Environment 9.2 Released With Dynamic Load Balancer And Expanded SDN Features",
+          "snippet": "Proxmox has released Proxmox VE 9.2, the newest version of its open-source virtualization platform for enterprise deployments. The update introduces a dynamic load balancer, broader software-defined networking capabilit…",
+          "contentText": "Proxmox has released Proxmox VE 9.2, the newest version of its open-source virtualization platform for enterprise deployments. The update introduces a dynamic load balancer, broader software-defined networking capabilities, and more detailed controls for custom CPU models, while also updating the platform&#8217;s underlying software stack. The release is primarily focused on improving how clusters distribute workloads and how administrators manage maintenance and networking tasks across larger environments. Several of the new additions are designed to reduce manual intervention during routine operations while maintaining administrative controls. Dynamic Load Balancer Introduced For Cluster Resource Management One of the bigger additions in version 9.2 is the new Dynamic Load Balancer, whi…",
+          "publishedAt": "2026-05-21T16:56:06.000Z",
+          "sourceImage": "https://www.storagereview.com/wp-content/uploads/2026/05/StorageReview-Proxmox-VE-9-2-SDN-WireGuard-Fabrics.png",
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "category": "AI Infrastructure",
+          "primary_category": "AI Infrastructure",
+          "secondary_category": "GPU clusters and deployment readiness",
+          "infrastructure_layer": "Compute",
+          "affected_stakeholders": [
+            "operators",
+            "hyperscalers",
+            "cloud buyers",
+            "investors"
+          ],
+          "article_type": "Product / Platform Update",
+          "urgency_score": 0.45,
+          "taxonomy_confidence": 0.77,
+          "taxonomy_reasons": [
+            "ai infrastructure",
+            "neocloud"
+          ],
+          "direct_ai_infrastructure_relevance": 1,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0.22,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0.38,
+          "infrastructure_relevance_score": 0.849,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "semiconductor_relevance:0.22(gpu)",
+            "enterprise_ai_infrastructure_relevance:0.38(virtualization, networking)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 1,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0.22,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0.38,
+            "infrastructure_relevance_score": 0.849,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+              "semiconductor_relevance:0.22(gpu)",
+              "enterprise_ai_infrastructure_relevance:0.38(virtualization, networking)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 82
+        },
+        {
+          "id": "6823cd5c15f67456",
+          "source": "NVIDIA Blog",
+          "url": "https://blogs.nvidia.com/blog/nvidia-gtc-taipei-computex-2026-news/",
+          "title": "NVIDIA GTC Taipei at COMPUTEX: Live Updates on What’s Next in AI",
+          "snippet": "At NVIDIA GTC Taipei at COMPUTEX, the world’s developers, researchers and industry leaders are converging to dive into the latest breakthroughs shaping every industry, covering topics spanning AI factories and scaling i…",
+          "contentText": "The future of AI is landing in Taiwan. At NVIDIA GTC Taipei at COMPUTEX, the world’s developers, researchers and industry leaders are converging to dive into the latest breakthroughs shaping every industry, covering topics spanning AI factories and scaling infrastructure to agentic and physical AI and more. Hear from NVIDIA founder and CEO Jensen Huang live on stage at Taipei Music Center on Monday, June 1, 11 a.m. Taiwan time. Tune in early to catch the GTC Live at Taipei 2026 pregame show, featuring lively conversations with industry leaders about the latest innovations in AI and accelerated computing. This is the place to find all the latest — stay tuned to the blog for live updates. Thursday, May 21, 9 a.m. PT NVIDIA Wins COMPUTEX 2026 Best Choice Awards for Innovations Spanning AI Fa…",
+          "publishedAt": "2026-05-21T16:00:17.000Z",
+          "sourceImage": "https://blogs.nvidia.com/wp-content/uploads/2026/05/computex-rolling-blog-kickoff.jpg",
+          "region": "APAC",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "category": "AI Infrastructure",
+          "primary_category": "AI Infrastructure",
+          "secondary_category": "GPU clusters and deployment readiness",
+          "infrastructure_layer": "Compute",
+          "affected_stakeholders": [
+            "operators",
+            "hyperscalers",
+            "cloud buyers",
+            "investors"
+          ],
+          "article_type": "Other",
+          "urgency_score": 0.46,
+          "taxonomy_confidence": 0.77,
+          "taxonomy_reasons": [
+            "ai infrastructure",
+            "neocloud"
+          ],
+          "direct_ai_infrastructure_relevance": 1,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0.598,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.862,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "semiconductor_relevance:0.60(nvidia, gpu)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 1,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0.598,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.862,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+              "semiconductor_relevance:0.60(nvidia, gpu)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 82
+        },
+        {
+          "id": "f32257bca0225000",
+          "source": "StorageReview",
+          "url": "https://www.storagereview.com/podcast/podcast-148-linkedin-live-ai-is-a-data-problem",
+          "title": "Podcast #148: LinkedIn Live – AI is a Data Problem",
+          "snippet": "StorageReview has published several review pieces and a podcast based on research conducted at Oregon State University. You can find links to those articles at the bottom of this transcript. The articles have generated…",
+          "contentText": "StorageReview has published several review pieces and a podcast based on research conducted at Oregon State University. You can find links to those articles at the bottom of this transcript. The articles have generated significant interest not only in research but also across the vendor community. The conversation then expanded to how educators use and track AI in the classroom and during testing, with a focus on how they measure knowledge and learning quality. The discussion centers on how all this technology is coming together to create real AI outcomes, not just in the scientific research realm, which we&#8217;ll get into, but student outcomes at Oregon State, and how these components all come together to make phenomenal solutions. Due to the overwhelming response to the initial review…",
+          "publishedAt": "2026-05-21T16:41:25.000Z",
+          "sourceImage": "https://www.storagereview.com/wp-content/uploads/2026/05/69a3518a-39b1-451e-9076-47c7f43f487c.png",
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "category": "AI Infrastructure",
+          "primary_category": "AI Infrastructure",
+          "secondary_category": "GPU clusters and deployment readiness",
+          "infrastructure_layer": "Compute",
+          "affected_stakeholders": [
+            "operators",
+            "hyperscalers",
+            "cloud buyers",
+            "investors"
+          ],
+          "article_type": "Research / Technical",
+          "urgency_score": 0.43,
+          "taxonomy_confidence": 0.77,
+          "taxonomy_reasons": [
+            "ai infrastructure",
+            "neocloud"
+          ],
+          "direct_ai_infrastructure_relevance": 1,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0.22,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.778,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "semiconductor_relevance:0.22(gpu)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 1,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0.22,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.778,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+              "semiconductor_relevance:0.22(gpu)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 79
+        },
+        {
+          "id": "5c8de20a60c85472",
+          "source": "Bloomberg Technology",
+          "url": "https://www.bloomberg.com/news/videos/2026-05-21/nvidia-investing-strategy-is-smart-t-rowe-price-s-wang-video",
+          "title": "Nvidia's Investing Strategy Is 'Smart', Says T. Rowe Price's Wang",
+          "snippet": "Nvidia aims to rely less on giant data center operators and predicts other businesses and governments will become a bigger source of revenue for its chips and computing products to support AI ambitions. Tony Wang, portf…",
+          "contentText": "Nvidia aims to rely less on giant data center operators and predicts other businesses and governments will become a bigger source of revenue for its chips and computing products to support AI ambitions. Tony Wang, portfolio manager of the T. Rowe Price Science and Technology Fund, joins Ed Ludlow on \"Bloomberg Tech.\" (Source: Bloomberg)",
+          "publishedAt": "2026-05-21T17:02:23.000Z",
+          "sourceImage": "https://assets.bwbx.io/images/users/iqjWHBFdfxIU/iIaUZlj3EWG4/v3/1200x-1.jpg",
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "Hyperscalers & Cloud",
+          "category": "Semiconductors",
+          "primary_category": "Semiconductors",
+          "secondary_category": "Accelerators, memory, and advanced packaging",
+          "infrastructure_layer": "Silicon",
+          "affected_stakeholders": [
+            "semiconductor suppliers",
+            "hyperscalers",
+            "server OEMs",
+            "investors"
+          ],
+          "article_type": "Earnings / Guidance",
+          "urgency_score": 0.42,
+          "taxonomy_confidence": 0.62,
+          "taxonomy_reasons": [
+            "nvidia"
+          ],
+          "direct_ai_infrastructure_relevance": 0.78,
+          "data_center_relevance": 0.42,
+          "cloud_capacity_relevance": 0.32,
+          "semiconductor_relevance": 0.378,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.765,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:0.78",
+            "data_center_relevance:0.42(data center)",
+            "cloud_capacity_relevance:0.32(hyperscalers)",
+            "semiconductor_relevance:0.38(nvidia)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 0.78,
+            "data_center_relevance": 0.42,
+            "cloud_capacity_relevance": 0.32,
+            "semiconductor_relevance": 0.378,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.765,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:0.78",
+              "data_center_relevance:0.42(data center)",
+              "cloud_capacity_relevance:0.32(hyperscalers)",
+              "semiconductor_relevance:0.38(nvidia)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 78
+        }
+      ],
+      "curatedIds": [
+        "e9f49273042ac85e",
+        "bb6621f07b2ff647",
+        "17648fa3050b7529",
+        "6823cd5c15f67456",
+        "f32257bca0225000",
+        "5c8de20a60c85472"
+      ],
+      "publishedIds": [
+        "bb6621f07b2ff647",
+        "e9f49273042ac85e"
+      ],
+      "slotPublications": {
+        "0": true
+      }
     }
   },
   "runHistory": [
-    {
-      "at": "2026-04-07T16:14:41.384Z",
-      "day": "2026-04-08",
-      "slot": 0,
-      "publishedCount": 2,
-      "publishedIds": [
-        "827a0563d3be25cc",
-        "f71165ba1ae8debe"
-      ]
-    },
     {
       "at": "2026-04-07T23:39:52.902Z",
       "day": "2026-04-08",
@@ -7938,7 +8369,79 @@
         }
       ],
       "archiveOnlyItems": []
+    },
+    {
+      "at": "2026-05-21T17:32:35.855Z",
+      "day": "2026-05-22",
+      "slot": 0,
+      "publishedCount": 1,
+      "signalCardCount": 0,
+      "archiveOnlyCount": 0,
+      "repetitionBlockedCount": 1,
+      "publishedIds": [
+        "bb6621f07b2ff647"
+      ],
+      "processedIds": [
+        "bb6621f07b2ff647",
+        "e9f49273042ac85e"
+      ],
+      "blockedCount": 0,
+      "blockedItems": [],
+      "repetitionBlockedItems": [
+        {
+          "id": "e9f49273042ac85e",
+          "title": "Large-scale, SRAM-based LLM Inference Deployment (Groq)",
+          "infrastructure_relevance_score": 1,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "cloud_capacity_relevance:0.32(hyperscalers)",
+            "semiconductor_relevance:1.00(semiconductor, nvidia, hbm)",
+            "power_grid_relevance:0.22(power)"
+          ],
+          "extraction_quality_score": 1,
+          "source_domain_adapter": "semiengineering",
+          "content_length": 1521,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": true,
+          "repetition_block_reasons": [
+            "repeated_sentence_ratio>0.12",
+            "heading_sequence_similarity>0.75"
+          ],
+          "repetition_check": {
+            "compared_article_count": 48,
+            "repeated_sentence_ratio": 0.14285714285714285,
+            "repeated_paragraph_ratio": 0.16666666666666666,
+            "heading_sequence_similarity": 1,
+            "banned_phrase_count": 0,
+            "banned_phrase_counts": {},
+            "recent_banned_phrase_counts": {},
+            "ngram_overlap": 0.28,
+            "blueprint_repetition": 1,
+            "conclusion_similarity": 0.6275716324421889,
+            "repeated_sentence_count": 1,
+            "repeated_paragraph_count": 1,
+            "heading_sequence": [
+              "Cost Signal",
+              "Below The Accelerator Layer",
+              "Buyer Exposure",
+              "Planning Metric"
+            ],
+            "blocked": true,
+            "reasons": [
+              "repeated_sentence_ratio>0.12",
+              "heading_sequence_similarity>0.75"
+            ]
+          },
+          "expert_insight_complete": true,
+          "expert_insight_missing_fields": [],
+          "reason": "repeated_sentence_ratio>0.12; heading_sequence_similarity>0.75"
+        }
+      ],
+      "signalCardItems": [],
+      "archiveOnlyItems": []
     }
   ],
-  "lastRunAt": "2026-05-21T10:47:42.278Z"
+  "lastRunAt": "2026-05-21T17:32:35.855Z"
 }
