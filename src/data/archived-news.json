@@ -1,5 +1,304 @@
 [
   {
+    "id": "c3309d794df18c21",
+    "source": "Google Cloud Blog",
+    "url": "https://cloud.google.com/blog/products/storage-data-transfer/cloud-storage-rapid-turbocharges-object-storage-for-ai-analytics/",
+    "title": "Cloud Storage Rapid: Turbocharged object storage for AI and analytics",
+    "snippet": "At Google Cloud Next ’26 we announced Cloud Storage Rapid, a family of object storage capabilities for data-intensive workloads like AI and analytics. Out of the gate, Cloud Storage Rapid consists of Rapid Bucket (forme",
+    "contentText": "At Google Cloud Next ’26 we announced Cloud Storage Rapid, a family of object storage capabilities for data-intensive workloads like AI and analytics. Out of the gate, Cloud Storage Rapid consists of Rapid Bucket (formerly Rapid Storage), a high-performance zonal object storage offering, and Rapid Cache (formerly Anywhere Cache), which accelerates reads on-demand and colocates compute and data for workloads in existing buckets. Cloud Storage Rapid: Turbocharged object storage for AI and analytics Cloud Storage Rapid is our response to the generational shift in how organizations build with AI. Teams are training trillion-parameter models, deploying inference at global scale, and building autonomous agents that reason over vast amounts of enterprise data. While accelerators like GPUs and TP…",
+    "publishedAt": "2026-05-11T17:00:00.000Z",
+    "sourceImage": "https://storage.googleapis.com/gweb-cloudblog-publish/images/1_5x_faster_checkpoint_restores_with_Rapid.max-1000x1000.png",
+    "region": "US",
+    "language": "en",
+    "defaultCategory": "Hyperscalers & Cloud",
+    "score": 74,
+    "slug": "cloud-storage-rapid-turbocharged-object-storage-for-ai-and-analytics",
+    "summary": "Storage is the engine that feeds accelerators during training, and the fast-access layer that makes real-time inference responsive. But as models scale, storage performance can be",
+    "insight": "The practical effect is on compute supply, deployment speed, and network orchestration; operators and investors that align power, facility design, network topology, and silicon timing will compound the advantage faster than teams opti",
+    "category": "Enterprise AI Infrastructure",
+    "tags": [
+      "gpu",
+      "cloud"
+    ],
+    "imagePrompt": "Editorial hero image for enterprise technology news. No logos, no text, no watermark, no brand marks. Topic: Cloud Storage Rapid: Turbocharged object storage for AI and analytics. Category: Hyperscalers & Cloud. Mood: premium, cinematic, monochrome glass dashboard aesthetic. Context: Storage is the engine that feeds accelerators during training, and the fast-access layer that makes real-time inference responsive. But as models scale, storage performance can be…. Include modern data center, network, semiconductor, cloud, or grid motifs only when relevant. 16:9 composition.",
+    "lang": "en",
+    "articleText": "Storage is the engine that feeds accelerators during training, and the fast-access layer that makes real-time inference responsive. But as models scale, storage performance can be a bottleneck. Every time an AI/ML cluster waits on a data read or a checkpoint write stalls, you are paying for expensive compute cycles that aren't doing useful work. Historically, AI/ML practitioners have had to choose between the specialized performance of a niche, zonal storage system, and the reliability and scale of a global object store like Google Cloud Storage. Many developers value Cloud Storage for its simplicity, scalability, reliability, and cost-effectiveness, but as the AI era has progressed, they’ve been throwing hotter and hotter workloads at it, running training and inference workloads with thousands of GPUs and TPUs. We’ve reached a performance tipping point that traditional object storage was never meant to handle. The Rapid family provides multiple options for co-locating compute workloads directly with high-performance zonal storage. It minimizes I/O bottlenecks that can block accelerators, so that your GPUs and TPUs stay fully saturated and productive. In this blog, let’s take a closer look at Cloud Storage Rapid’s capabilities. Rapid Bucket (GA), helps Cloud Storage meet the evolving demands of massive-scale generative AI, analytics, and other high-performance workloads. It d",
+    "sourceUrl": "https://cloud.google.com/blog/products/storage-data-transfer/cloud-storage-rapid-turbocharges-object-storage-for-ai-analytics/",
+    "generatedImage": "/generated/c3309d794df18c21.jpg",
+    "expertLensShort": "Google turns the reported move into a technical bottleneck question for infrastructure buyers.",
+    "expertLensFull": {
+      "version": 2,
+      "mode": "editorial-story-engine-v2",
+      "generatedAt": "2026-05-22T10:28:22.990Z",
+      "generation_version": "editorial_surface_v2",
+      "narrative_dna": {
+        "protagonist": "Google",
+        "concrete_event": "Storage is the engine that feeds accelerators during training, and the fast-access layer that makes real-time inference responsive. But as models scale, storage performance can be",
+        "core_tension": "Google has to translate storage is the engine that feeds accelerators during training, and the fast-access layer that makes real-time inference responsive. but as models scale, storage performance can be into an enterprise platform decision that survives cost, timing, or operating constraints",
+        "infrastructure_layer": "Enterprise Platform",
+        "reader_role": [
+          "enterprise IT",
+          "cloud buyers",
+          "platform teams",
+          "software vendors"
+        ],
+        "decision_relevance": "enterprise IT and cloud buyers can use the item to test technical bottleneck before changing procurement, deployment, or risk assumptions",
+        "evidence_anchor": "Storage is the engine that feeds accelerators during training, and the fast-access layer that makes real-time inference responsive. But as models scale, storage performance can be a bottleneck. Every time an AI/ML cluster waits on a data read or a checkpoint write stalls, you are paying for expensive compute cycles that aren't doing useful work. Historically, AI/ML",
+        "counterpoint": "Storage is the engine that feeds accelerators during training, and the fast-access layer that makes real-time inference responsive. But as models scale, storage performance can be only changes decisions if the enterprise platform evidence is specific enough to affect timing, procurement, or operating plans",
+        "watch_metric": "technical bottleneck evidence tied to a named customer, deployment milestone, cost metric, or operating constraint",
+        "time_horizon": "next few quarters",
+        "public_signal_label": "Stack Shift",
+        "editorial_lens": "Technical Bottleneck",
+        "story_archetype": "Technical Teardown",
+        "story_archetype_id": "technical-teardown",
+        "routing_decision": "core_lane",
+        "valid_for_full_article": true,
+        "missing_fields": [],
+        "truncation": {
+          "ok": true,
+          "artifacts": []
+        }
+      },
+      "dynamicBriefLabel": "Stack Shift",
+      "blueprintId": "capacity-chain",
+      "blueprintName": "Capacity Chain",
+      "blueprint": {
+        "id": "capacity-chain",
+        "name": "Capacity Chain",
+        "sectionHeadings": [
+          "Signal",
+          "Capacity Chain",
+          "Commercial Stakes",
+          "Next Constraint"
+        ],
+        "paragraphRhythm": [
+          1,
+          3,
+          1,
+          2
+        ],
+        "targetParagraphs": 7,
+        "minChars": 1400,
+        "maxChars": 2200
+      },
+      "thesis": "Google turns the reported move into a technical bottleneck question for infrastructure buyers.",
+      "whatHappened": "Storage is the engine that feeds accelerators during training, and the fast-access layer that makes real-time inference responsive. But as models scale, storage performance can be.",
+      "whyThisMatters": "enterprise IT and cloud buyers should care because Google links storage is the engine that feeds accelerators during training, and the fast-access layer that makes real-time inference responsive. but as models scale, storage performance can be to a enterprise platform decision that can affect timing, vendor leverage, or operating readiness.",
+      "marketMissing": "Storage is the engine that feeds accelerators during training, and the fast-access layer that makes real-time inference responsive. But as models scale, storage performance can be only changes decisions if the enterprise platform evidence is specific enough to affect timing, procurement, or operating plans.",
+      "investors": "Enterprise IT and cloud buyers can use the item to test technical bottleneck before changing procurement, deployment, or risk assumptions.",
+      "operators": "Enterprise Platform teams should track technical bottleneck evidence tied to a named customer, deployment milestone, cost metric, or operating constraint.",
+      "hyperscalers": "Cloud and platform buyers should separate source evidence from generic AI demand before changing deployment plans.",
+      "watchNext": "Technical bottleneck evidence tied to a named customer, deployment milestone, cost metric, or operating constraint.",
+      "executiveSummary": [
+        "Storage is the engine that feeds accelerators during training, and the fast-access layer that makes real-time inference responsive. But as models scale, storage performance can be.",
+        "Enterprise IT and cloud buyers can use the item to test technical bottleneck before changing procurement, deployment, or risk assumptions.",
+        "Watch technical bottleneck evidence tied to a named customer, deployment milestone, cost metric, or operating constraint."
+      ],
+      "headlineOptions": [
+        "Cloud Storage Rapid: Turbocharged object storage for AI and analytics",
+        "Google Cloud Blog: the execution test behind the latest enterprise AI infrastructure move",
+        "The bottleneck behind Cloud Storage Rapid: Turbocharged object storage for AI and analytics",
+        "Cloud Storage Rapid: Turbocharged object storage for AI and analytics puts execution back in focus",
+        "What to watch after Cloud Storage Rapid: Turbocharged object storage for AI and analytics"
+      ],
+      "finalHeadline": "Cloud Storage Rapid: Turbocharged object storage for AI and analytics",
+      "metaDescription": "Google turns the reported move into a technical bottleneck question for infrastructure buyers.",
+      "finalArticleBody": "Google turns the reported move into a technical bottleneck question for infrastructure buyers.\n\nTechnical Signal\n\nStorage is the engine that feeds accelerators during training, and the fast-access layer that makes real-time inference responsive. But as models scale, storage performance can be is the source-backed change, with Google as the actor readers can track.\n\nFailure Domain\n\nEnterprise Platform is the operating layer that turns the update into technical bottleneck, especially for enterprise IT, cloud buyers, platform teams.\n\nOperator Exposure\n\nStorage is the engine that feeds accelerators during training, and the fast-access layer that makes real-time inference responsive. But as models scale, storage performance can be only changes decisions if the enterprise platform evidence is specific enough to affect timing, procurement, or operating plans; that keeps the public read tied to evidence instead of treating the announcement as finished capacity.\n\nBenchmark To Watch\n\nThe watch metric is technical bottleneck evidence tied to a named customer, deployment milestone, cost metric, or operating constraint over the next few quarters window.\n\nFor Compute Current readers, the decision point is whether technical bottleneck evidence tied to a named customer, deployment milestone, cost metric, or operating constraint changes enterprise platform planning before the story is treated as core capacity.",
+      "sourceLink": "https://cloud.google.com/blog/products/storage-data-transfer/cloud-storage-rapid-turbocharges-object-storage-for-ai-analytics/"
+    },
+    "expertLens": "Google turns the reported move into a technical bottleneck question for infrastructure buyers.",
+    "primary_category": "Enterprise AI Infrastructure",
+    "secondary_category": "Enterprise deployment operations",
+    "infrastructure_layer": "Enterprise Platform",
+    "affected_stakeholders": [
+      "enterprise IT",
+      "cloud buyers",
+      "platform teams",
+      "software vendors"
+    ],
+    "article_type": "Supply Chain",
+    "urgency_score": 0.62,
+    "taxonomy_confidence": 0.64,
+    "taxonomy_reasons": [
+      "storage"
+    ],
+    "content_length": 2599,
+    "boilerplate_ratio": 0,
+    "title_body_similarity": 1,
+    "copyright_footer_detected": false,
+    "nav_or_cta_detected": false,
+    "sentence_completion_score": 0.81,
+    "source_domain_adapter": "googlecloud",
+    "extraction_quality_score": 1,
+    "extraction_qa": {
+      "content_length": 2599,
+      "boilerplate_ratio": 0,
+      "title_body_similarity": 1,
+      "copyright_footer_detected": false,
+      "nav_or_cta_detected": false,
+      "sentence_completion_score": 0.81,
+      "source_domain_adapter": "googlecloud",
+      "extraction_quality_score": 1,
+      "extraction_failure_reason": null,
+      "extraction_quality_reasons": []
+    },
+    "direct_ai_infrastructure_relevance": 0.7,
+    "data_center_relevance": 0,
+    "cloud_capacity_relevance": 0.56,
+    "semiconductor_relevance": 0,
+    "power_grid_relevance": 0.22,
+    "cooling_relevance": 0,
+    "capital_markets_relevance": 0,
+    "enterprise_ai_infrastructure_relevance": 0.863,
+    "infrastructure_relevance_score": 0.795,
+    "infrastructure_relevance_tier": "full_memo",
+    "infrastructure_relevance_action": "generate_full_memo",
+    "infrastructure_relevance_reasons": [
+      "direct_ai_infrastructure_relevance:0.70(ai infrastructure)",
+      "cloud_capacity_relevance:0.56(hyperscalers, google cloud)",
+      "power_grid_relevance:0.22(power)",
+      "enterprise_ai_infrastructure_relevance:0.86(enterprise ai, storage, inference workloads)"
+    ],
+    "infrastructure_relevance": {
+      "direct_ai_infrastructure_relevance": 0.7,
+      "data_center_relevance": 0,
+      "cloud_capacity_relevance": 0.56,
+      "semiconductor_relevance": 0,
+      "power_grid_relevance": 0.22,
+      "cooling_relevance": 0,
+      "capital_markets_relevance": 0,
+      "enterprise_ai_infrastructure_relevance": 0.863,
+      "infrastructure_relevance_score": 0.795,
+      "infrastructure_relevance_tier": "full_memo",
+      "infrastructure_relevance_action": "generate_full_memo",
+      "infrastructure_relevance_reasons": [
+        "direct_ai_infrastructure_relevance:0.70(ai infrastructure)",
+        "cloud_capacity_relevance:0.56(hyperscalers, google cloud)",
+        "power_grid_relevance:0.22(power)",
+        "enterprise_ai_infrastructure_relevance:0.86(enterprise ai, storage, inference workloads)"
+      ],
+      "infrastructureRelevanceAction": "generate_full_memo",
+      "articlePagePublished": true,
+      "homepagePublished": true,
+      "archiveOnly": false,
+      "archiveOnlyReason": null
+    },
+    "homepagePublished": true,
+    "archiveOnly": false,
+    "archiveOnlyReason": null,
+    "article_blueprint": "capacity-chain",
+    "articleBlueprint": {
+      "id": "capacity-chain",
+      "name": "Capacity Chain",
+      "sectionHeadings": [
+        "Signal",
+        "Capacity Chain",
+        "Commercial Stakes",
+        "Next Constraint"
+      ],
+      "paragraphRhythm": [
+        1,
+        3,
+        1,
+        2
+      ],
+      "targetParagraphs": 7,
+      "minChars": 1400,
+      "maxChars": 2200
+    },
+    "seo_noindex": true,
+    "seo_noindex_reasons": [
+      "infrastructure_relevance_below_0.75"
+    ],
+    "seo_backfill_version": 1,
+    "articlePagePublished": true,
+    "noindex": true,
+    "noindex_reason": "infrastructure_relevance_score 0.63 routes to publish_signal_card_only",
+    "signalCardReason": "infrastructure_relevance_score 0.63 routes to publish_signal_card_only",
+    "generation_version": "editorial_surface_v2",
+    "narrative_dna": {
+      "protagonist": "Google",
+      "concrete_event": "Storage is the engine that feeds accelerators during training, and the fast-access layer that makes real-time inference responsive. But as models scale, storage performance can be",
+      "core_tension": "Google has to translate storage is the engine that feeds accelerators during training, and the fast-access layer that makes real-time inference responsive. but as models scale, storage performance can be into an enterprise platform decision that survives cost, timing, or operating constraints",
+      "infrastructure_layer": "Enterprise Platform",
+      "reader_role": [
+        "enterprise IT",
+        "cloud buyers",
+        "platform teams",
+        "software vendors"
+      ],
+      "decision_relevance": "enterprise IT and cloud buyers can use the item to test technical bottleneck before changing procurement, deployment, or risk assumptions",
+      "evidence_anchor": "Storage is the engine that feeds accelerators during training, and the fast-access layer that makes real-time inference responsive. But as models scale, storage performance can be a bottleneck. Every time an AI/ML cluster waits on a data read or a checkpoint write stalls, you are paying for expensive compute cycles that aren't doing useful work. Historically, AI/ML",
+      "counterpoint": "Storage is the engine that feeds accelerators during training, and the fast-access layer that makes real-time inference responsive. But as models scale, storage performance can be only changes decisions if the enterprise platform evidence is specific enough to affect timing, procurement, or operating plans",
+      "watch_metric": "technical bottleneck evidence tied to a named customer, deployment milestone, cost metric, or operating constraint",
+      "time_horizon": "next few quarters",
+      "public_signal_label": "Stack Shift",
+      "editorial_lens": "Technical Bottleneck",
+      "story_archetype": "Technical Teardown",
+      "story_archetype_id": "technical-teardown",
+      "routing_decision": "core_lane",
+      "valid_for_full_article": true,
+      "missing_fields": [],
+      "truncation": {
+        "ok": true,
+        "artifacts": []
+      }
+    },
+    "public_copy_stale": false,
+    "infrastructureRelevanceAction": "generate_full_memo",
+    "signalCardOnly": false,
+    "public_routing": {
+      "score": 0.795,
+      "visibility": "core",
+      "laneKey": "stack-shifts",
+      "laneTitle": "Stack Shifts",
+      "public_signal_label": "Stack Shift",
+      "editorial_lens": "Technical Bottleneck",
+      "story_archetype": "Technical Teardown",
+      "routing_decision": "core_lane",
+      "blocked_reasons": []
+    },
+    "routing_decision": "core_lane",
+    "dynamic_brief_label": "Stack Shift",
+    "public_generation_version": "editorial_surface_v2",
+    "public_presentation": {
+      "signal_label": "Stack Shift",
+      "editorial_lens": "Technical Bottleneck",
+      "title": "Cloud Storage Rapid: Turbocharged object storage for AI and analytics",
+      "deck": "Google turns the reported move into a technical bottleneck question for infrastructure buyers.",
+      "why_it_matters": "enterprise IT and cloud buyers should care because Google links storage is the engine that feeds accelerators during training, and the fast-access layer that makes real-time inference responsive. but as models scale, storage performance can be to a enterprise platform decision that can affect timing, vendor leverage, or operating readiness.",
+      "reader_impact": [
+        "Enterprise IT",
+        "Cloud Buyers",
+        "Platform Teams",
+        "Software Vendors"
+      ],
+      "region": "US",
+      "source": "Google Cloud Blog",
+      "view_detail": "/news/c3309d794df18c21/",
+      "read_source": "https://cloud.google.com/blog/products/storage-data-transfer/cloud-storage-rapid-turbocharges-object-storage-for-ai-analytics/",
+      "lane_key": "stack-shifts",
+      "lane_title": "Stack Shifts",
+      "visibility": "core",
+      "story_archetype": "Technical Teardown"
+    },
+    "deck": "Google turns the reported move into a technical bottleneck question for infrastructure buyers.",
+    "why_it_matters": "enterprise IT and cloud buyers should care because Google links storage is the engine that feeds accelerators during training, and the fast-access layer that makes real-time inference responsive. but as models scale, storage performance can be to a enterprise platform decision that can affect timing, vendor leverage, or operating readiness.",
+    "regeneration_v2_audit": {
+      "old_public_deck": "Google turns the reported move into a technical bottleneck question for infrastructure buyers.",
+      "old_lane": "Stack Shifts",
+      "old_public_metadata_fields": [
+        "relevance_score",
+        "urgency_score",
+        "extraction_quality_score",
+        "article_blueprint",
+        "taxonomy_confidence"
+      ]
+    },
+    "anti_template_rewrite": true,
+    "searchText": "Cloud Storage Rapid: Turbocharged object storage for AI and analytics Google Cloud Blog Enterprise AI Infrastructure Enterprise deployment operations Enterprise Platform Supply Chain US Storage is the engine that feeds accelerators during training, and the fast-access layer that makes real-time inference responsive. But as models scale, storage performance can be Google turns the reported move into a technical bottleneck question for infrastructure buyers. Storage is the engine that feeds accelerators during training, and the fast-access layer that makes real-time inference responsive. But as models scale, storage performance can be. enterprise IT and cloud buyers should care because Google links storage is the engine that feeds accelerators during training, and the fast-access layer that makes real-time inference responsive. but as models scale, storage performance can be to a enterprise platform decision that can affect timing, vendor leverage, or operating readiness. Storage is the engine that feeds accelerators during training, and the fast-access layer that makes real-time inference responsive. But as models scale, storage performance can be only changes decisions if the enterprise platform evidence is specific enough to affect timing, procurement, or operating plans. Enterprise IT and cloud buyers can use the item to test technical bottleneck before changing procurement, deployment, or risk assumptions. Enterprise Platform teams should track technical bottleneck evidence tied to a named customer, deployment milestone, cost metric, or operating constraint. Cloud and platform buyers should separate source evidence from generic AI demand before changing deployment plans. Technical bottleneck evidence tied to a named customer, deployment milestone, cost metric, or operating constraint. Storage is the engine that feeds accelerators during training, and the fast-access layer that makes real-time inference responsive. But as models scale, storage performance can be a bottleneck. Every time an AI/ML cluster waits on a data read or a checkpoint write stalls, you are paying for expensive compute cycles that aren't doing useful work. Historically, AI/ML practitioners have had to choose between the specialized performance of a niche, zonal storage system, and the reliability and scale of a global object store like Google Cloud Storage. Many developers value Cloud Storage for its simplicity, scalability, reliability, and cost-effectiveness, but as the AI era has progressed, they’ve been throwing hotter and hotter workloads at it, running training and inference workloads with thousands of GPUs and TPUs. We’ve reached a performance tipping point that traditional object storage was never meant to handle. The Rapid family provides multiple options for co-locating compute workloads directly with high-performance zonal storage. It minimizes I/O bottlenecks that can block accelerators, so that your GPUs and TPUs stay fully saturated and productive. In this blog, let’s take a closer look at Cloud Storage Rapid’s capabilities. Rapid Bucket (GA), helps Cloud Storage meet the evolving demands of massive-scale generative AI, analytics, and other high-performance workloads. It d enterprise IT cloud buyers platform teams software vendors gpu cloud"
+  },
+  {
     "id": "080548f8c96249b6",
     "source": "Data Center POST",
     "url": "https://datacenterpost.com/when-ai-manages-infrastructure-the-case-for-a-data-center-ai-governance-framework/",
@@ -31,7 +330,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "editorial-story-engine-v2",
-      "generatedAt": "2026-05-22T00:05:21.423Z",
+      "generatedAt": "2026-05-22T10:28:23.138Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Data Center AI Governance Framework Data",
@@ -356,7 +655,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "editorial-story-engine-v2",
-      "generatedAt": "2026-05-22T00:05:21.628Z",
+      "generatedAt": "2026-05-22T10:28:23.287Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "AMD",
@@ -901,7 +1200,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "editorial-story-engine-v2",
-      "generatedAt": "2026-05-22T00:05:21.927Z",
+      "generatedAt": "2026-05-22T10:28:23.503Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Intel",
@@ -1237,7 +1536,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "editorial-story-engine-v2",
-      "generatedAt": "2026-05-22T00:05:22.133Z",
+      "generatedAt": "2026-05-22T10:28:23.650Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "NVIDIA",
@@ -1559,7 +1858,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "editorial-story-engine-v2",
-      "generatedAt": "2026-05-22T00:05:22.335Z",
+      "generatedAt": "2026-05-22T10:28:23.796Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Anthropic",
@@ -1888,7 +2187,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "editorial-story-engine-v2",
-      "generatedAt": "2026-05-22T00:05:22.539Z",
+      "generatedAt": "2026-05-22T10:28:23.945Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "AMD",
@@ -2422,7 +2721,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "editorial-story-engine-v2",
-      "generatedAt": "2026-05-22T00:05:22.838Z",
+      "generatedAt": "2026-05-22T10:28:24.160Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Oracle",
@@ -2754,7 +3053,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "editorial-story-engine-v2",
-      "generatedAt": "2026-05-22T00:05:23.042Z",
+      "generatedAt": "2026-05-22T10:28:24.311Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Anthropic",
@@ -4369,7 +4668,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "editorial-story-engine-v2",
-      "generatedAt": "2026-05-22T00:05:23.813Z",
+      "generatedAt": "2026-05-22T10:28:24.866Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Google",
@@ -4705,7 +5004,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "editorial-story-engine-v2",
-      "generatedAt": "2026-05-22T00:05:24.019Z",
+      "generatedAt": "2026-05-22T10:28:25.013Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Anthropic",
@@ -5038,7 +5337,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "editorial-story-engine-v2",
-      "generatedAt": "2026-05-22T00:05:24.220Z",
+      "generatedAt": "2026-05-22T10:28:25.157Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Google",
@@ -5585,7 +5884,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "editorial-story-engine-v2",
-      "generatedAt": "2026-05-22T00:05:24.519Z",
+      "generatedAt": "2026-05-22T10:28:25.370Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Apple",
@@ -6135,7 +6434,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "editorial-story-engine-v2",
-      "generatedAt": "2026-05-22T00:05:24.819Z",
+      "generatedAt": "2026-05-22T10:28:25.585Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "AMD",
@@ -6473,7 +6772,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "editorial-story-engine-v2",
-      "generatedAt": "2026-05-22T00:05:25.026Z",
+      "generatedAt": "2026-05-22T10:28:25.734Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Corpus Christi Edge Data",
@@ -6804,7 +7103,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "editorial-story-engine-v2",
-      "generatedAt": "2026-05-22T00:05:25.233Z",
+      "generatedAt": "2026-05-22T10:28:25.882Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Demand A New Approach To Power",
@@ -7141,7 +7440,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "editorial-story-engine-v2",
-      "generatedAt": "2026-05-22T00:05:25.439Z",
+      "generatedAt": "2026-05-22T10:28:26.030Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "arm",
@@ -7472,7 +7771,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "editorial-story-engine-v2",
-      "generatedAt": "2026-05-22T00:05:25.646Z",
+      "generatedAt": "2026-05-22T10:28:26.177Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Why Community Alignment Is Reshaping Data",
@@ -7805,7 +8104,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "editorial-story-engine-v2",
-      "generatedAt": "2026-05-22T00:05:25.854Z",
+      "generatedAt": "2026-05-22T10:28:26.326Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Broadcom",
@@ -8139,7 +8438,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "editorial-story-engine-v2",
-      "generatedAt": "2026-05-22T00:05:26.061Z",
+      "generatedAt": "2026-05-22T10:28:26.473Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "NVIDIA",
@@ -8905,7 +9204,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "editorial-story-engine-v2",
-      "generatedAt": "2026-05-22T00:05:26.458Z",
+      "generatedAt": "2026-05-22T10:28:26.755Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Google",
@@ -9204,7 +9503,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "editorial-story-engine-v2",
-      "generatedAt": "2026-05-22T00:05:26.664Z",
+      "generatedAt": "2026-05-22T10:28:26.902Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "NVIDIA",
@@ -9538,7 +9837,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "editorial-story-engine-v2",
-      "generatedAt": "2026-05-22T00:05:26.870Z",
+      "generatedAt": "2026-05-22T10:28:27.049Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "NVIDIA",
@@ -10092,7 +10391,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "editorial-story-engine-v2",
-      "generatedAt": "2026-05-22T00:05:27.179Z",
+      "generatedAt": "2026-05-22T10:28:27.264Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Research Bits: May 5",
@@ -11170,7 +11469,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "editorial-story-engine-v2",
-      "generatedAt": "2026-05-22T00:05:27.668Z",
+      "generatedAt": "2026-05-22T10:28:27.613Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Google",
@@ -11509,7 +11808,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "editorial-story-engine-v2",
-      "generatedAt": "2026-05-22T00:05:27.875Z",
+      "generatedAt": "2026-05-22T10:28:27.761Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Should Ask Their Infrastructure Partner Data",
@@ -12270,7 +12569,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "editorial-story-engine-v2",
-      "generatedAt": "2026-05-22T00:05:28.268Z",
+      "generatedAt": "2026-05-22T10:28:28.042Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "AMD",
@@ -12809,7 +13108,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "editorial-story-engine-v2",
-      "generatedAt": "2026-05-22T00:05:28.572Z",
+      "generatedAt": "2026-05-22T10:28:28.257Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "NVIDIA",
@@ -14211,7 +14510,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "editorial-story-engine-v2",
-      "generatedAt": "2026-05-22T00:05:29.261Z",
+      "generatedAt": "2026-05-22T10:28:28.748Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Google",
@@ -14544,7 +14843,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "editorial-story-engine-v2",
-      "generatedAt": "2026-05-22T00:05:29.465Z",
+      "generatedAt": "2026-05-22T10:28:28.895Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "The Register Data",
@@ -15527,7 +15826,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "editorial-story-engine-v2",
-      "generatedAt": "2026-05-22T00:05:29.953Z",
+      "generatedAt": "2026-05-22T10:28:29.246Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "The Register Data",
@@ -16044,7 +16343,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "editorial-story-engine-v2",
-      "generatedAt": "2026-05-22T00:05:30.250Z",
+      "generatedAt": "2026-05-22T10:28:29.459Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "xAI",
@@ -17226,7 +17525,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "editorial-story-engine-v2",
-      "generatedAt": "2026-05-22T00:05:30.828Z",
+      "generatedAt": "2026-05-22T10:28:29.876Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Google",
@@ -21168,6 +21467,353 @@
     "public_copy_stale": true
   },
   {
+    "id": "34c8fda58e2e7894",
+    "source": "Toms Hardware",
+    "url": "https://www.tomshardware.com/pc-components/get-rtx-power-for-less-at-lenovos-epic-memorial-day-gaming-sale-save-big-on-legion-gaming-pcs-and-laptops",
+    "title": "Get RTX power for less at Lenovo’s epic Memorial Day gaming sale — save big on Legion gaming PCs and laptops",
+    "snippet": "Discover a wide range of fantastic deals on Lenovo's gaming systems and laptops this Memorial Day! Don't miss out on these exciting savings.",
+    "contentText": "Discover a wide range of fantastic deals on Lenovo's gaming systems and laptops this Memorial Day! Don't miss out on these exciting savings.",
+    "publishedAt": "2026-05-22T10:01:08.000Z",
+    "sourceImage": "https://cdn.mos.cms.futurecdn.net/vbsLzroXo5QjvqHyemGSeB-1280-80.jpg",
+    "region": "US",
+    "language": "en",
+    "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+    "category": "AI Infrastructure",
+    "primary_category": "AI Infrastructure",
+    "secondary_category": "GPU clusters and deployment readiness",
+    "infrastructure_layer": "Compute",
+    "affected_stakeholders": [
+      "operators",
+      "hyperscalers",
+      "cloud buyers",
+      "investors"
+    ],
+    "article_type": "Supply Chain",
+    "urgency_score": 0.56,
+    "taxonomy_confidence": 0.85,
+    "taxonomy_reasons": [
+      "ai infrastructure",
+      "neocloud",
+      "deployment readiness"
+    ],
+    "direct_ai_infrastructure_relevance": 1,
+    "data_center_relevance": 0,
+    "cloud_capacity_relevance": 0.32,
+    "semiconductor_relevance": 0.64,
+    "power_grid_relevance": 0.297,
+    "cooling_relevance": 0,
+    "capital_markets_relevance": 0,
+    "enterprise_ai_infrastructure_relevance": 0.18,
+    "infrastructure_relevance_score": 0.941,
+    "infrastructure_relevance_tier": "full_memo",
+    "infrastructure_relevance_action": "generate_full_memo",
+    "infrastructure_relevance_reasons": [
+      "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+      "cloud_capacity_relevance:0.32(hyperscalers)",
+      "semiconductor_relevance:0.64(amd, intel, gpu)",
+      "power_grid_relevance:0.30(power)"
+    ],
+    "infrastructure_relevance": {
+      "direct_ai_infrastructure_relevance": 1,
+      "data_center_relevance": 0,
+      "cloud_capacity_relevance": 0.32,
+      "semiconductor_relevance": 0.64,
+      "power_grid_relevance": 0.297,
+      "cooling_relevance": 0,
+      "capital_markets_relevance": 0,
+      "enterprise_ai_infrastructure_relevance": 0.18,
+      "infrastructure_relevance_score": 0.941,
+      "infrastructure_relevance_tier": "full_memo",
+      "infrastructure_relevance_action": "generate_full_memo",
+      "infrastructure_relevance_reasons": [
+        "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+        "cloud_capacity_relevance:0.32(hyperscalers)",
+        "semiconductor_relevance:0.64(amd, intel, gpu)",
+        "power_grid_relevance:0.30(power)"
+      ],
+      "infrastructureRelevanceAction": "generate_full_memo",
+      "articlePagePublished": true,
+      "homepagePublished": true,
+      "archiveOnly": false,
+      "archiveOnlyReason": null
+    },
+    "score": 74,
+    "slug": "get-rtx-power-for-less-at-lenovo-s-epic-memorial-day-gaming-sale-save-big-on-legion-gaming-pcs-and-laptops",
+    "summary": "The Legion 9i Gen 10 is a premium gaming laptop in every sense of the word. It's built for high-performance gaming and features a 24-core Core Ultra 9 275HX processor and a GeForc…",
+    "insight": "The practical effect is on compute supply, deployment speed, and network orchestration. The advantage goes to teams that line up power, facility design, network topology, and silicon timing instead of optimizing one layer in isolation.",
+    "expert_insight": {
+      "concrete_facts": [
+        "It also comes with a high-quality six-speaker system, Intel Killer Wi-Fi 7, Bluetooth 5.4, and a 99.99 Whr battery that charges from 0 to 70% in just 30 minutes.",
+        "Nonetheless, the gaming system will bring some solid hardware to the table.",
+        "The Legion Tower 5 Gen 10 30L's specifications ensure that it will comply with the requirements of current and upcoming games.",
+        "The Legion Tower 7i Gen 10 is a gaming system that will make any serious game jealous."
+      ],
+      "named_companies": [
+        "Intel",
+        "AMD"
+      ],
+      "infrastructure_layer": "Compute",
+      "bottleneck_type": "power_grid",
+      "who_gains_leverage": "utilities, power-secured developers, and operators with firm interconnection positions",
+      "who_takes_execution_risk": "developers and cloud buyers whose delivery dates depend on utility upgrades or energization schedules",
+      "timing_dependency": "utility interconnection, equipment procurement, and energization milestones",
+      "counterargument": "A power-side development can still be too narrow to change the broader delivery curve unless it scales across sites.",
+      "next_observable_signal": "interconnection approvals, substation equipment dates, power purchase agreements, or disclosed energization windows",
+      "expert_insight_complete": true,
+      "expert_insight_missing_fields": []
+    },
+    "expertInsight": {
+      "concrete_facts": [
+        "It also comes with a high-quality six-speaker system, Intel Killer Wi-Fi 7, Bluetooth 5.4, and a 99.99 Whr battery that charges from 0 to 70% in just 30 minutes.",
+        "Nonetheless, the gaming system will bring some solid hardware to the table.",
+        "The Legion Tower 5 Gen 10 30L's specifications ensure that it will comply with the requirements of current and upcoming games.",
+        "The Legion Tower 7i Gen 10 is a gaming system that will make any serious game jealous."
+      ],
+      "named_companies": [
+        "Intel",
+        "AMD"
+      ],
+      "infrastructure_layer": "Compute",
+      "bottleneck_type": "power_grid",
+      "who_gains_leverage": "utilities, power-secured developers, and operators with firm interconnection positions",
+      "who_takes_execution_risk": "developers and cloud buyers whose delivery dates depend on utility upgrades or energization schedules",
+      "timing_dependency": "utility interconnection, equipment procurement, and energization milestones",
+      "counterargument": "A power-side development can still be too narrow to change the broader delivery curve unless it scales across sites.",
+      "next_observable_signal": "interconnection approvals, substation equipment dates, power purchase agreements, or disclosed energization windows",
+      "expert_insight_complete": true,
+      "expert_insight_missing_fields": []
+    },
+    "concrete_facts": [
+      "It also comes with a high-quality six-speaker system, Intel Killer Wi-Fi 7, Bluetooth 5.4, and a 99.99 Whr battery that charges from 0 to 70% in just 30 minutes.",
+      "Nonetheless, the gaming system will bring some solid hardware to the table.",
+      "The Legion Tower 5 Gen 10 30L's specifications ensure that it will comply with the requirements of current and upcoming games.",
+      "The Legion Tower 7i Gen 10 is a gaming system that will make any serious game jealous."
+    ],
+    "named_companies": [
+      "Intel",
+      "AMD"
+    ],
+    "bottleneck_type": "power_grid",
+    "who_gains_leverage": "utilities, power-secured developers, and operators with firm interconnection positions",
+    "who_takes_execution_risk": "developers and cloud buyers whose delivery dates depend on utility upgrades or energization schedules",
+    "timing_dependency": "utility interconnection, equipment procurement, and energization milestones",
+    "counterargument": "A power-side development can still be too narrow to change the broader delivery curve unless it scales across sites.",
+    "next_observable_signal": "interconnection approvals, substation equipment dates, power purchase agreements, or disclosed energization windows",
+    "expert_insight_complete": true,
+    "expert_insight_missing_fields": [],
+    "tags": [
+      "gpu",
+      "power"
+    ],
+    "imagePrompt": "Editorial hero image for enterprise technology news. No logos, no text, no watermark, no brand marks. Topic: Get RTX power for less at Lenovo’s epic Memorial Day gaming sale — save big on Legion gaming PCs and laptops. Category: Hyperscalers & Cloud. Mood: premium, cinematic, monochrome glass dashboard aesthetic. Context: The Legion 9i Gen 10 is a premium gaming laptop in every sense of the word. It's built for high-performance gaming and features a 24-core Core Ultra 9 275HX processor and a GeForc…. Include modern data center, network, semiconductor, cloud, or grid motifs only when relevant. 16:9 composition.",
+    "lang": "en",
+    "articleText": "The Legion 9i Gen 10 is a premium gaming laptop in every sense of the word. It's built for high-performance gaming and features a 24-core Core Ultra 9 275HX processor and a GeForce RTX 5080 graphics card. There's also 32GB of DDR5-5200 SODIMM memory onboard, along with a 1TB PCIe 5.0 SSD for fast, ample storage. The gaming laptop also offers a sizeable 18-inch IPS display with a WQUXGA (3840 x 2400) resolution and a 240 Hz refresh rate. It also comes with a high-quality six-speaker system, Intel Killer Wi-Fi 7, Bluetooth 5.4, and a 99.99 Whr battery that charges from 0 to 70% in just 30 minutes. With specifications like a Core Ultra 9 275HX and a GeForce RTX 5080, it's hard not to love the Legion 9i Gen 10. Remember to use the EXTRAFIVE coupon code at checkout. Not all gaming PCs have to be huge and flashy. The Legion Tower 5 Gen 10 30L, on the other hand, is a compact system with a 30-liter footprint. Nonetheless, the gaming system will bring some solid hardware to the table. It features AMD's. Ryzen 7 7800X3D , one of the best CPUs for gaming, and a performant GeForce RTX 5070 Ti graphics card for pushing the latest titles. The Legion Tower 5 Gen 10 30L's specifications ensure that it will comply with the requirements of current and upcoming games. The system complements the Ryzen 7 7800X3D and the GeForce RTX 5070 Ti with 32GB (2x16GB) of DDR5-5600 memory and a 1TB M.2 SSD. Don't let the size fool you. The Legion Tower 7i Gen 10 30L is a very capable gaming PC with a Ryzen 7 7800X3D, GeForce RTX 5070 Ti, and 32GB of memory. Remember to use the GAMEON10 coupon code at checkout. The Legion Tower 7i Gen 10 is a gaming system that will make any serious game jealous.",
+    "content_length": 1693,
+    "boilerplate_ratio": 0,
+    "title_body_similarity": 0.27,
+    "copyright_footer_detected": false,
+    "nav_or_cta_detected": false,
+    "sentence_completion_score": 1,
+    "source_domain_adapter": "generic",
+    "extraction_quality_score": 1,
+    "extraction_qa": {
+      "content_length": 1693,
+      "boilerplate_ratio": 0,
+      "title_body_similarity": 0.27,
+      "copyright_footer_detected": false,
+      "legal_boilerplate_detected": false,
+      "nav_or_cta_detected": false,
+      "sentence_completion_score": 1,
+      "source_domain_adapter": "generic",
+      "extraction_quality_score": 1,
+      "extraction_failure_reason": null,
+      "extraction_quality_reasons": []
+    },
+    "sourceUrl": "https://www.tomshardware.com/pc-components/get-rtx-power-for-less-at-lenovos-epic-memorial-day-gaming-sale-save-big-on-legion-gaming-pcs-and-laptops",
+    "generatedImage": "/generated/34c8fda58e2e7894.jpg",
+    "infrastructureRelevanceAction": "generate_full_memo",
+    "articlePagePublished": false,
+    "homepagePublished": false,
+    "archiveOnly": true,
+    "archiveOnlyReason": "repeated_sentence_ratio>0.12; heading_sequence_similarity>0.75; conclusion_similarity>0.7",
+    "article_blueprint": "capacity-chain",
+    "articleBlueprint": {
+      "id": "capacity-chain",
+      "name": "Capacity Chain",
+      "sectionHeadings": [
+        "Signal",
+        "Capacity Chain",
+        "Commercial Stakes",
+        "Next Constraint"
+      ],
+      "paragraphRhythm": [
+        1,
+        3,
+        1,
+        2
+      ],
+      "targetParagraphs": 7,
+      "minChars": 1400,
+      "maxChars": 2200
+    },
+    "expertLensShort": "Intel is a technical bottleneck item for stack shifts readers, with the infrastructure read limited to source-backed facts.",
+    "expertLensFull": {
+      "version": 2,
+      "mode": "narrative-dna-editorial-v1",
+      "generatedAt": "2026-05-22T10:28:19.164Z",
+      "generation_version": "editorial_surface_v2",
+      "narrative_dna": {
+        "protagonist": "Intel",
+        "concrete_event": "The Legion 9i Gen 10 is a premium gaming laptop in every sense of the word. It's built for high-performance gaming and features a 24-core Core Ultra 9 275HX processor and a GeForc…",
+        "core_tension": "Intel has to translate the legion 9i gen 10 is a premium gaming laptop in every sense of the word. it's built for high-performance gaming and features a 24-core core ultra 9 275hx processor and a geforc… into a technical bottleneck decision that survives cost, timing, or operating constraints",
+        "infrastructure_layer": "Technical Bottleneck",
+        "reader_role": [
+          "operators",
+          "hyperscalers",
+          "cloud buyers",
+          "investors"
+        ],
+        "decision_relevance": "operators and hyperscalers can use the item to test technical bottleneck before changing procurement, deployment, or risk assumptions",
+        "evidence_anchor": "It also comes with a high-quality six-speaker system, Intel Killer Wi-Fi 7, Bluetooth 5.4, and a 99.99 Whr battery that charges from 0 to 70% in just 30 minutes.",
+        "counterpoint": "A power-side development can still be too narrow to change the broader delivery curve unless it scales across sites.",
+        "watch_metric": "interconnection approvals, substation equipment dates, power purchase agreements, or disclosed energization windows",
+        "time_horizon": "next few quarters",
+        "public_signal_label": "Stack Shift",
+        "editorial_lens": "Technical Bottleneck",
+        "story_archetype": "Technical Teardown",
+        "story_archetype_id": "technical-teardown",
+        "routing_decision": "core_lane",
+        "valid_for_full_article": false,
+        "missing_fields": [
+          "concrete_event",
+          "core_tension"
+        ],
+        "truncation": {
+          "ok": false,
+          "artifacts": [
+            "ellipsis_truncation_artifact"
+          ]
+        }
+      },
+      "dynamicBriefLabel": "Stack Shift",
+      "blueprintId": "capacity-chain",
+      "blueprintName": "Capacity Chain",
+      "blueprint": {
+        "id": "capacity-chain",
+        "name": "Capacity Chain",
+        "sectionHeadings": [
+          "Signal",
+          "Capacity Chain",
+          "Commercial Stakes",
+          "Next Constraint"
+        ],
+        "paragraphRhythm": [
+          1,
+          3,
+          1,
+          2
+        ],
+        "targetParagraphs": 7,
+        "minChars": 1400,
+        "maxChars": 2200
+      },
+      "thesis": "Intel is a technical bottleneck item for stack shifts readers, with the infrastructure read limited to source-backed facts.",
+      "whatHappened": "The Legion 9i Gen 10 is a premium gaming laptop in every sense of the word. It's built for high-performance gaming and features a 24-core Core Ultra 9 275HX processor and a GeForc",
+      "whyThisMatters": "The public card stays short because the available evidence supports a watchlist signal more than a full infrastructure memo.",
+      "marketMissing": "A power-side development can still be too narrow to change the broader delivery curve unless it scales across sites.",
+      "investors": "Operators and hyperscalers can use the item to test technical bottleneck before changing procurement, deployment, or risk assumptions.",
+      "operators": "Technical Bottleneck teams should track interconnection approvals, substation equipment dates, power purchase agreements, or disclosed energization windows.",
+      "hyperscalers": "Cloud and platform buyers should separate source evidence from generic AI demand before changing deployment plans.",
+      "watchNext": "Interconnection approvals, substation equipment dates, power purchase agreements, or disclosed energization windows.",
+      "executiveSummary": [
+        "The Legion 9i Gen 10 is a premium gaming laptop in every sense of the word. It's built for high-performance gaming and features a 24-core Core Ultra 9 275HX processor and a GeForc",
+        "Operators and hyperscalers can use the item to test technical bottleneck before changing procurement, deployment, or risk assumptions.",
+        "Watch interconnection approvals, substation equipment dates, power purchase agreements, or disclosed energization windows."
+      ],
+      "headlineOptions": [
+        "Get RTX power for less at Lenovo’s epic Memorial Day gaming sale — save big on Legion gaming PCs and laptops",
+        "Toms Hardware: the execution test behind the latest AI infrastructure move",
+        "The bottleneck behind Get RTX power for less at Lenovo’s epic Memorial Day gaming sale — save big on Legion g",
+        "Get RTX power for less at Lenovo’s epic Memorial Day gaming sale — save big on Legion gaming PCs and laptops",
+        "What to watch after Get RTX power for less at Lenovo’s epic Memorial Day gaming sale — save big on Legion gam"
+      ],
+      "finalHeadline": "Get RTX power for less at Lenovo’s epic Memorial Day gaming sale — save big on Legion gaming PCs and laptops",
+      "metaDescription": "Intel is a technical bottleneck item for stack shifts readers, with the infrastructure read limited to source-backed facts.",
+      "finalArticleBody": "Intel is a technical bottleneck item for stack shifts readers, with the infrastructure read limited to source-backed facts.\n\nTechnical Signal\n\nThe Legion 9i Gen 10 is a premium gaming laptop in every sense of the word. It's built for high-performance gaming and features a 24-core Core Ultra 9 275HX processor and a GeForc… is the source-backed change, with Intel as the actor readers can track.\n\nFailure Domain\n\nTechnical Bottleneck is the operating layer that turns the update into technical bottleneck, especially for operators, hyperscalers, cloud buyers.\n\nOperator Exposure\n\nA power-side development can still be too narrow to change the broader delivery curve unless it scales across sites.; that keeps the public read tied to evidence instead of treating the announcement as finished capacity.\n\nBenchmark To Watch\n\nThe watch metric is interconnection approvals, substation equipment dates, power purchase agreements, or disclosed energization windows over the next few quarters window.\n\nFor Compute Current readers, the decision point is whether interconnection approvals, substation equipment dates, power purchase agreements, or disclosed energization windows changes technical bottleneck planning before the story is treated as core capacity.",
+      "sourceLink": "https://www.tomshardware.com/pc-components/get-rtx-power-for-less-at-lenovos-epic-memorial-day-gaming-sale-save-big-on-legion-gaming-pcs-and-laptops"
+    },
+    "expertLens": "Intel is a technical bottleneck item for stack shifts readers, with the infrastructure read limited to source-backed facts.",
+    "generation_version": "editorial_surface_v2",
+    "narrative_dna": {
+      "protagonist": "Intel",
+      "concrete_event": "The Legion 9i Gen 10 is a premium gaming laptop in every sense of the word. It's built for high-performance gaming and features a 24-core Core Ultra 9 275HX processor and a GeForc…",
+      "core_tension": "Intel has to translate the legion 9i gen 10 is a premium gaming laptop in every sense of the word. it's built for high-performance gaming and features a 24-core core ultra 9 275hx processor and a geforc… into a technical bottleneck decision that survives cost, timing, or operating constraints",
+      "infrastructure_layer": "Technical Bottleneck",
+      "reader_role": [
+        "operators",
+        "hyperscalers",
+        "cloud buyers",
+        "investors"
+      ],
+      "decision_relevance": "operators and hyperscalers can use the item to test technical bottleneck before changing procurement, deployment, or risk assumptions",
+      "evidence_anchor": "It also comes with a high-quality six-speaker system, Intel Killer Wi-Fi 7, Bluetooth 5.4, and a 99.99 Whr battery that charges from 0 to 70% in just 30 minutes.",
+      "counterpoint": "A power-side development can still be too narrow to change the broader delivery curve unless it scales across sites.",
+      "watch_metric": "interconnection approvals, substation equipment dates, power purchase agreements, or disclosed energization windows",
+      "time_horizon": "next few quarters",
+      "public_signal_label": "Stack Shift",
+      "editorial_lens": "Technical Bottleneck",
+      "story_archetype": "Technical Teardown",
+      "story_archetype_id": "technical-teardown",
+      "routing_decision": "core_lane",
+      "valid_for_full_article": false,
+      "missing_fields": [
+        "concrete_event",
+        "core_tension"
+      ],
+      "truncation": {
+        "ok": false,
+        "artifacts": [
+          "ellipsis_truncation_artifact"
+        ]
+      }
+    },
+    "dynamic_brief_label": "Stack Shift",
+    "anti_template_rewrite": true,
+    "repetition_check": {
+      "compared_article_count": 49,
+      "repeated_sentence_ratio": 0.2857142857142857,
+      "repeated_paragraph_ratio": 0.3333333333333333,
+      "heading_sequence_similarity": 1,
+      "banned_phrase_count": 0,
+      "banned_phrase_counts": {},
+      "recent_banned_phrase_counts": {},
+      "ngram_overlap": 0.4016393442622951,
+      "blueprint_repetition": 1,
+      "conclusion_similarity": 0.9413574486632833,
+      "repeated_sentence_count": 2,
+      "repeated_paragraph_count": 2,
+      "heading_sequence": [
+        "Technical Signal",
+        "Failure Domain",
+        "Operator Exposure",
+        "Benchmark To Watch"
+      ],
+      "blocked": true,
+      "reasons": [
+        "repeated_sentence_ratio>0.12",
+        "heading_sequence_similarity>0.75",
+        "conclusion_similarity>0.7"
+      ]
+    },
+    "repetition_blocked": true,
+    "repetition_block_reasons": [
+      "repeated_sentence_ratio>0.12",
+      "heading_sequence_similarity>0.75",
+      "conclusion_similarity>0.7"
+    ],
+    "searchText": "Get RTX power for less at Lenovo’s epic Memorial Day gaming sale — save big on Legion gaming PCs and laptops Toms Hardware AI Infrastructure GPU clusters and deployment readiness Compute Supply Chain power_grid utilities, power-secured developers, and operators with firm interconnection positions developers and cloud buyers whose delivery dates depend on utility upgrades or energization schedules utility interconnection, equipment procurement, and energization milestones A power-side development can still be too narrow to change the broader delivery curve unless it scales across sites. interconnection approvals, substation equipment dates, power purchase agreements, or disclosed energization windows US The Legion 9i Gen 10 is a premium gaming laptop in every sense of the word. It's built for high-performance gaming and features a 24-core Core Ultra 9 275HX processor and a GeForc… Intel is a technical bottleneck item for stack shifts readers, with the infrastructure read limited to source-backed facts. The Legion 9i Gen 10 is a premium gaming laptop in every sense of the word. It's built for high-performance gaming and features a 24-core Core Ultra 9 275HX processor and a GeForc The public card stays short because the available evidence supports a watchlist signal more than a full infrastructure memo. Operators and hyperscalers can use the item to test technical bottleneck before changing procurement, deployment, or risk assumptions. Technical Bottleneck teams should track interconnection approvals, substation equipment dates, power purchase agreements, or disclosed energization windows. Cloud and platform buyers should separate source evidence from generic AI demand before changing deployment plans. Interconnection approvals, substation equipment dates, power purchase agreements, or disclosed energization windows. The Legion 9i Gen 10 is a premium gaming laptop in every sense of the word. It's built for high-performance gaming and features a 24-core Core Ultra 9 275HX processor and a GeForce RTX 5080 graphics card. There's also 32GB of DDR5-5200 SODIMM memory onboard, along with a 1TB PCIe 5.0 SSD for fast, ample storage. The gaming laptop also offers a sizeable 18-inch IPS display with a WQUXGA (3840 x 2400) resolution and a 240 Hz refresh rate. It also comes with a high-quality six-speaker system, Intel Killer Wi-Fi 7, Bluetooth 5.4, and a 99.99 Whr battery that charges from 0 to 70% in just 30 minutes. With specifications like a Core Ultra 9 275HX and a GeForce RTX 5080, it's hard not to love the Legion 9i Gen 10. Remember to use the EXTRAFIVE coupon code at checkout. Not all gaming PCs have to be huge and flashy. The Legion Tower 5 Gen 10 30L, on the other hand, is a compact system with a 30-liter footprint. Nonetheless, the gaming system will bring some solid hardware to the table. It features AMD's. Ryzen 7 7800X3D , one of the best CPUs for gaming, and a performant GeForce RTX 5070 Ti graphics card for pushing the latest titles. The Legion Tower 5 Gen 10 30L's specifications ensure that it will comply with the requirements of current and upcoming games. The system complements the Ryzen 7 7800X3D and the GeForce RTX 5070 Ti with 32GB (2x16GB) of DDR5-5600 memory and a 1TB M.2 SSD. Don't let the size fool you. The Legion Tower 7i Gen 10 30L is a very capable gaming PC with a Ryzen 7 7800X3D, GeForce RTX 5070 Ti, and 32GB of memory. Remember to use the GAMEON10 coupon code at checkout. The Legion Tower 7i Gen 10 is a gaming system that will make any serious game jealous. operators hyperscalers cloud buyers investors It also comes with a high-quality six-speaker system, Intel Killer Wi-Fi 7, Bluetooth 5.4, and a 99.99 Whr battery that charges from 0 to 70% in just 30 minutes. Nonetheless, the gaming system will bring some solid hardware to the table. The Legion Tower 5 Gen 10 30L's specifications ensure that it will comply with the requirements of current and upcoming games. The Legion Tower 7i Gen 10 is a gaming system that will make any serious game jealous. Intel AMD gpu power"
+  },
+  {
     "id": "09f49f72fe20c9f8",
     "source": "StorageReview",
     "url": "https://www.storagereview.com/news/amd-targets-edge-telco-and-dense-storage-with-epyc-8005-single-socket-cpus",
@@ -21376,7 +22022,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-05-22T00:05:16.111Z",
+      "generatedAt": "2026-05-22T10:28:31.518Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "AMD",
@@ -21722,7 +22368,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-05-22T00:05:33.049Z",
+      "generatedAt": "2026-05-22T10:28:31.667Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "NVIDIA",
@@ -22079,7 +22725,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-05-22T00:05:33.257Z",
+      "generatedAt": "2026-05-22T10:28:31.815Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Intel",
@@ -24233,7 +24879,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "industry-editor-v2",
-      "generatedAt": "2026-05-22T00:05:34.407Z",
+      "generatedAt": "2026-05-22T10:28:32.638Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Semiconductor Engineering",
@@ -31544,7 +32190,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "industry-editor-v2",
-      "generatedAt": "2026-05-22T00:05:38.047Z",
+      "generatedAt": "2026-05-22T10:28:35.234Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "AMD",
@@ -34981,7 +35627,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "industry-editor-v2",
-      "generatedAt": "2026-05-22T00:05:39.776Z",
+      "generatedAt": "2026-05-22T10:28:36.469Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "OpenAI",
@@ -35429,7 +36075,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "industry-editor-v2",
-      "generatedAt": "2026-05-22T00:05:40.076Z",
+      "generatedAt": "2026-05-22T10:28:36.684Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Emulation-based SoC Security Verification (U. of Florida)",
@@ -35707,7 +36353,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "industry-editor-v2",
-      "generatedAt": "2026-05-22T00:05:40.281Z",
+      "generatedAt": "2026-05-22T10:28:36.831Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "InsightFinder",
@@ -39048,7 +39694,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "industry-editor-v2",
-      "generatedAt": "2026-05-22T00:05:42.010Z",
+      "generatedAt": "2026-05-22T10:28:38.065Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Amazon",
@@ -39749,7 +40395,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "industry-editor-v2",
-      "generatedAt": "2026-05-22T00:05:42.406Z",
+      "generatedAt": "2026-05-22T10:28:38.348Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "AMD",
@@ -43658,7 +44304,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "industry-editor-v2",
-      "generatedAt": "2026-05-22T00:05:44.418Z",
+      "generatedAt": "2026-05-22T10:28:39.791Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "OpenAI",
@@ -43939,7 +44585,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "industry-editor-v2",
-      "generatedAt": "2026-05-22T00:05:44.621Z",
+      "generatedAt": "2026-05-22T10:28:39.938Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Amazon",
