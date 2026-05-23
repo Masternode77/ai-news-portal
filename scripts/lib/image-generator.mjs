@@ -102,7 +102,7 @@ async function writePlaceholderSvg(item) {
   <text x="118" y="164" fill="#F6F8FF" font-family="Inter, Arial, sans-serif" font-size="20" font-weight="700" letter-spacing="0.12em">${safeText(item.category || 'AI / DATA CENTER SIGNAL')}</text>
   ${svgTextLines(titleLines, { x: 118, y: 236, size: 50, lineHeight: 58, fill: '#F6F8FF', weight: 800 })}
   <text x="118" y="${292 + Math.max(0, titleLines.length - 1) * 58}" fill="#CBD8F5" font-family="Inter, Arial, sans-serif" font-size="26" font-weight="600">${safeText(item.source || 'Curated infrastructure briefing', 44)}</text>
-  <text x="118" y="612" fill="#C1CDE6" font-family="Inter, Arial, sans-serif" font-size="20" font-weight="600">Fallback editorial artwork generated locally</text>
+  <text x="118" y="612" fill="#C1CDE6" font-family="Inter, Arial, sans-serif" font-size="20" font-weight="600">Compute Current</text>
   <rect width="1344" height="768" rx="40" filter="url(#noise)"/>
 </svg>`;
 
@@ -176,7 +176,12 @@ export async function needsImageRefresh(item) {
   if (!item?.generatedImage) return true;
   if (/^https?:\/\//i.test(item.generatedImage)) return true;
   const localPath = path.join(process.cwd(), 'public', item.generatedImage.replace(/^\//, ''));
-  return !(await fileExists(localPath));
+  if (!(await fileExists(localPath))) return true;
+  if (localPath.endsWith('.svg')) {
+    const svg = await fs.readFile(localPath, 'utf8').catch(() => '');
+    if (svg.includes('Fallback editorial artwork generated locally')) return true;
+  }
+  return false;
 }
 
 export async function ensureArticleImage(item) {

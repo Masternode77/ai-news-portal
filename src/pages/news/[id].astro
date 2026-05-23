@@ -45,7 +45,7 @@ if (!article) {
 const displayTitle = displayHeadline(articleRecord);
 const publicRouting = articleRecord.public_routing || routePublicLane(articleRecord);
 const publicPresentation = buildPublicPresentation(articleRecord, { route: publicRouting });
-const detailImage = articleRecord.sourceImage || articleRecord.generatedImage || SITE.defaultOgImage;
+const detailImage = articleRecord.generatedImage || articleRecord.sourceImage || articleRecord.image || SITE.defaultOgImage;
 const canonicalPath = articleCanonicalPath(articleRecord);
 const articleUrl = `${SITE.url}${canonicalPath}`;
 const taxonomy = taxonomyDisplay(articleRecord);
@@ -96,6 +96,8 @@ const structuredData = buildArticleStructuredData({
           source={sourceAttribution}
           title={displayTitle}
           deck={publicPresentation.deck || articleDescription}
+          image={detailImage}
+          imageAlt={publicPresentation.image_alt || `${displayTitle} editorial visual`}
         />
 
         {articleBodyBlocks.length ? <ArticleBody blocks={articleBodyBlocks} /> : null}

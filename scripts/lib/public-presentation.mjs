@@ -23,8 +23,9 @@ function stakeholderLabels(article = {}) {
 
 function publicImage(article = {}) {
   return compact(
-    article.sourceImage
-      || article.generatedImage
+    article.generatedImage
+      || article.sourceImage
+      || article.image
       || article.imageUrl
       || article.image_url
       || article.thumbnail
