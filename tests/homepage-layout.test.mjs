@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import fs from 'node:fs';
 import test from 'node:test';
 import { buildHomepageFeed } from '../scripts/lib/homepage-feed-builder.mjs';
 
@@ -38,4 +39,14 @@ test('homepage feed mixes longform and short public items without internal bucke
 
   assert.deepEqual(labels.sort(), ['Analysis', 'Brief', 'Signal'].sort());
   assert.equal(feed.items.some((entry) => /Signals being monitored|Published deskwork|Cycle status/i.test(JSON.stringify(entry))), false);
+});
+
+test('homepage cards use a public board layout', () => {
+  const cardSource = fs.readFileSync('src/components/ArticleListCard.astro', 'utf8');
+  const styles = fs.readFileSync('src/styles/global.css', 'utf8');
+
+  assert.match(styles, /\.article-list\s*{[^}]*grid-template-columns:\s*repeat\(3,\s*minmax\(0,\s*1fr\)\)/s);
+  assert.match(styles, /\.article-list-card\s*{[^}]*flex-direction:\s*column/s);
+  assert.match(cardSource, /article-impact-pills/);
+  assert.equal(/Cycle status|qualifying signal|Published deskwork/i.test(cardSource), false);
 });
