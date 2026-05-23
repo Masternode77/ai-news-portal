@@ -1,0 +1,12 @@
+---
+const { blocks = [] } = Astro.props;
+const isHeading = (paragraph: string) =>
+  paragraph.length <= 86 &&
+  !/[.!?]$/.test(paragraph) &&
+  /^[A-Z0-9][A-Za-z0-9 &:/+-]+$/.test(paragraph);
+---
+<section class="detail-section detail-article-copy blog-article-body">
+  {blocks.map((paragraph: string) => (
+    isHeading(paragraph) ? <h2>{paragraph}</h2> : <p>{paragraph}</p>
+  ))}
+</section>

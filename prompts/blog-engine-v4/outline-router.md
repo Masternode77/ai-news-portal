@@ -1,0 +1,1 @@
+Select an article archetype and section architecture that fits the evidence. Vary structure across articles and do not force every article into the same What Changed / Why It Matters / What To Watch sequence.

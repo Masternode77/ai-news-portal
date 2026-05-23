@@ -1,0 +1,36 @@
+routes:
+  - id: core_longform_blog
+    label: Core Longform Blog
+    relevance_min: 0.75
+    min_facts: 4
+    min_visible_body_characters: 3500
+    target_words: 900-1400
+    homepage_eligible: true
+    local_article_required: true
+  - id: standard_blog
+    label: Standard Blog
+    relevance_min: 0.68
+    min_facts: 3
+    min_visible_body_characters: 2200
+    target_words: 650-1000
+    homepage_eligible: true
+    local_article_required: true
+  - id: short_signal
+    label: Short Signal
+    relevance_min: 0.55
+    min_facts: 2
+    target_words: 150-250
+    homepage_eligible: true
+    local_article_required: false
+  - id: source_card
+    label: Source Card
+    relevance_min: 0.55
+    min_facts: 1
+    homepage_eligible: false
+    local_article_required: false
+  - id: archive_only
+    label: Archive Only
+    relevance_min: 0
+    min_facts: 0
+    homepage_eligible: false
+    local_article_required: false

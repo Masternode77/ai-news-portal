@@ -1,0 +1,9 @@
+---
+const { claims = [] } = Astro.props;
+const numeric = claims.filter((claim) => claim.numeric_value !== null && claim.numeric_value !== undefined);
+const verified = numeric.filter((claim) => /verified/.test(claim.verification_status || ''));
+---
+<section class="detail-section claim-note">
+  <h2>Claim verification</h2>
+  <p>{numeric.length ? `${verified.length} of ${numeric.length} numeric claims are verified in the claim ledger.` : 'No unsupported numeric claim is used in this analysis.'}</p>
+</section>

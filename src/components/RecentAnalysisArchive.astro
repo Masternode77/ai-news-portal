@@ -1,0 +1,16 @@
+---
+import PublicSignalCard from './PublicSignalCard.astro';
+const { items = [] } = Astro.props;
+---
+<section class="intelligence-section recent-analysis">
+  <div class="lane-heading">
+    <div>
+      <p class="eyebrow">Recent Analysis</p>
+      <h2>Published desk work</h2>
+    </div>
+    <p>Older local analyses remain available, with backfilled pieces labeled on article pages.</p>
+  </div>
+  <div class="lane-grid">
+    {items.map((item) => <PublicSignalCard signal={item.publicSignal} />)}
+  </div>
+</section>

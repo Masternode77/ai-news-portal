@@ -1,186 +1,46 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import PublicSignalCard from '../components/PublicSignalCard.astro';
+import EditorialCycleStatus from '../components/EditorialCycleStatus.astro';
+import FeaturedCycleAnalysis from '../components/FeaturedCycleAnalysis.astro';
+import ActiveWatchlist from '../components/ActiveWatchlist.astro';
+import RecentAnalysisArchive from '../components/RecentAnalysisArchive.astro';
 import latestNews from '../data/latest-news.json';
 import archivedNews from '../data/archived-news.json';
-import searchIndex from '../data/search-index.json';
+import editorialCycles from '../data/editorial-cycles.json';
+import signalClusters from '../data/signal-clusters.json';
+import sourceHealth from '../data/source-health.json';
 import { SITE } from '../config/site';
-import { cleanEditorialText, displayHeadline } from '../lib/editorial-display.js';
-import { buildPublicPresentation } from '../lib/publicPresentation.js';
-import { shouldNoindexArticle } from '../lib/seo-safeguards.js';
-import { taxonomyDisplay } from '../lib/taxonomy-display.js';
-import { routePublicLane } from '../../scripts/lib/public-lane-router.mjs';
+import { buildHomepageEditorialModel } from '../../scripts/lib/homepage-editorial-model.mjs';
 
 const boardTitle = SITE.name;
+const model = buildHomepageEditorialModel({
+  latest: latestNews,
+  archived: archivedNews,
+  cycles: editorialCycles,
+  clusters: signalClusters,
+  sourceHealth,
+});
 
-const formatTimeAgo = (iso: string) => {
-  const ms = Date.now() - new Date(iso).getTime();
-  const mins = Math.max(1, Math.floor(ms / 60000));
-  if (mins < 60) return `${mins}m ago`;
-  const hours = Math.floor(mins / 60);
-  if (hours < 24) return `${hours}h ago`;
-  const days = Math.floor(hours / 24);
-  return `${days}d ago`;
-};
-
-const homepageEligibleNews = (latestNews || []).filter((item: any) =>
-  item.homepagePublished !== false
-  && item.archiveOnly !== true
-  && item.infrastructure_relevance_action !== 'archive_only'
-);
-
-const recentDecks: string[] = [];
-const latest = homepageEligibleNews.map((item: any, idx) => {
-  const sourceUrl = item.sourceUrl || item.url;
-  const route = item.public_routing || routePublicLane(item);
-  if (route.visibility === 'archive') return null;
-  const hasArticlePage = route.visibility === 'core' && item['articlePagePublished'] !== false && !shouldNoindexArticle(item);
-  const publicSignal = buildPublicPresentation(
-    {
-      ...item,
-      articlePagePublished: hasArticlePage ? item.articlePagePublished : false,
-    },
-    { route, recentDecks }
-  );
-  recentDecks.push(publicSignal.deck);
-  return {
-    ...item,
-    taxonomy: taxonomyDisplay(item),
-    hasArticlePage,
-    publicRouting: route,
-    publicSignal: {
-      ...publicSignal,
-      id: item.id,
-      displayImage: item.sourceImage || item.generatedImage || '/generated/default.svg',
-    },
-    title: displayHeadline(item),
-    summary: cleanEditorialText(publicSignal.why_it_matters || item.summary || item.snippet || ''),
-    deck: cleanEditorialText(publicSignal.deck || ''),
-    displayImage: item.sourceImage || item.generatedImage || '/generated/default.svg',
-    detailHref: hasArticlePage ? `/news/${item.id}/` : '',
-    sourceUrl,
-    timeAgo: formatTimeAgo(item.publishedAt),
-    isHero: idx === 0,
-  };
-}).filter(Boolean);
-
-const archiveCount = archivedNews.length;
-const intelligenceNav = [
-  "Today's Constraint",
-  'Operator Alerts',
-  'Investor Signals',
-  'Stack Shifts',
-  'Policy/Risk Watch',
-  'Technical Bottlenecks',
-  'Market Maps',
-  'Adjacent Watchlist',
+const navLinks = [
+  ['Power & Grid', '/category/power-grid/'],
+  ['Data Centers', '/category/data-centers/'],
+  ['Cloud Capacity', '/category/cloud-capacity/'],
+  ['Semiconductors', '/category/semiconductors/'],
+  ['Cooling', '/category/cooling/'],
+  ['Capital Markets', '/category/capital-markets/'],
+  ['Regulation', '/category/regulation/'],
+  ['Archive', '/archive/'],
 ];
-const coreLatest = latest.filter((item: any) => item.publicRouting.visibility === 'core' && item.hasArticlePage);
-const topConstraint = [...coreLatest].sort((a: any, b: any) => {
-  const aScore = (a.taxonomy.urgency || 0) * 0.58 + (a.publicRouting.score || 0) * 0.42;
-  const bScore = (b.taxonomy.urgency || 0) * 0.58 + (b.publicRouting.score || 0) * 0.42;
-  return bScore - aScore;
-})[0];
-const usedIds = new Set(topConstraint ? [topConstraint.id] : []);
-const sectionDefinitions = [
-  {
-    key: 'operator-alerts',
-    title: 'Operator Alerts',
-    deck: 'Capacity, uptime, procurement, and site execution items that change operating plans.',
-  },
-  {
-    key: 'investor-signals',
-    title: 'Investor Signals',
-    deck: 'Capital formation, contract quality, pricing power, and exposure signals for infrastructure investors.',
-  },
-  {
-    key: 'stack-shifts',
-    title: 'Stack Shifts',
-    deck: 'Changes in cloud, silicon, network, platform, and workload architecture that alter the AI infrastructure stack.',
-  },
-  {
-    key: 'policy-risk-watch',
-    title: 'Policy/Risk Watch',
-    deck: 'Permitting, grid cost allocation, regulatory, siting, and regional risk items worth tracking.',
-  },
-  {
-    key: 'technical-bottlenecks',
-    title: 'Technical Bottlenecks',
-    deck: 'Physical and systems constraints across power, cooling, networking, memory, facility design, and deployment readiness.',
-  },
-  {
-    key: 'market-maps',
-    title: 'Market Maps',
-    deck: 'Multi-actor roundups separated by control point: land, power, capital, chips, and demand.',
-  },
-  {
-    key: 'adjacent-watchlist',
-    title: 'Adjacent Watchlist',
-    deck: 'AI items near the infrastructure boundary that need more evidence before entering core lanes.',
-  },
-];
-const pickSectionItems = (definition: any) => {
-  const matched = latest
-    .filter((item: any) => !usedIds.has(item.id) && item.publicSignal.lane_key === definition.key)
-    .sort((a: any, b: any) => ((b.publicRouting.score || 0) + (b.taxonomy.urgency || 0)) - ((a.publicRouting.score || 0) + (a.taxonomy.urgency || 0)));
-  const picked = matched.slice(0, 4);
-  picked.forEach((item) => usedIds.add(item.id));
-  return picked;
-};
-const intelligenceSections = sectionDefinitions.map((definition) => ({
-  ...definition,
-  items: pickSectionItems(definition),
-})).filter((section) => section.items.length);
-const searchPayload = (searchIndex || []).slice(0, 400).map((item: any) => ({
-  ...(() => {
-    const route = item.public_routing || routePublicLane(item);
-    const presentation = buildPublicPresentation(item, { route });
-    return {
-      signal_label: presentation.signal_label,
-      editorial_lens: presentation.editorial_lens,
-      public_deck: presentation.deck,
-      why_it_matters: presentation.why_it_matters,
-    };
-  })(),
-  id: item.id,
-  title: displayHeadline(item),
-  source: item.source,
-  category: item.primary_category || item.category,
-  primary_category: item.primary_category || item.category,
-  secondary_category: item.secondary_category,
-  infrastructure_layer: item.infrastructure_layer,
-  affected_stakeholders: item.affected_stakeholders || [],
-  article_type: item.article_type,
-  region: item.region,
-  summary: cleanEditorialText(item.public_presentation?.why_it_matters || item.summary || item.snippet || ''),
-  expertLensTeaser: cleanEditorialText(item.public_presentation?.deck || item.summary || item.snippet || ''),
-  searchText: [
-    item.title,
-    item.source,
-    item.primary_category,
-    item.secondary_category,
-    item.infrastructure_layer,
-    item.article_type,
-    ...(item.affected_stakeholders || []),
-    item.category,
-    item.region,
-    item.public_presentation?.deck,
-    item.public_presentation?.why_it_matters,
-    ...(item.tags || []),
-  ].filter(Boolean).join(' '),
-  publishedAt: item.publishedAt,
-  href: item['articlePagePublished'] === false || shouldNoindexArticle(item) ? item.sourceUrl || item.url : `/news/${item.id}/`,
-  sourceUrl: item.sourceUrl || item.url,
-}));
+
 const stats = [
-  { label: 'Live Signals', value: `${latest.length}` },
-  { label: 'Archived', value: `${archiveCount}` },
-  { label: 'IA Lanes', value: `${sectionDefinitions.length + 1}` },
-  { label: 'Refresh', value: '8h' },
+  { label: 'Active Signals', value: model.stats.activeSignals },
+  { label: 'Sources Monitored', value: model.stats.sourcesMonitored || 'configured' },
+  { label: 'Pipeline', value: 'runs every 8h' },
+  { label: 'Published Analyses Indexed', value: model.stats.publishedAnalysesIndexed },
 ];
 ---
 <Layout title={boardTitle} description={SITE.description} canonicalPath="/">
-  <main class="page-shell">
+  <main class="page-shell autonomous-home">
     <div class="ambient ambient-a"></div>
     <div class="ambient ambient-b"></div>
     <div class="ambient-grid"></div>
@@ -204,102 +64,48 @@ const stats = [
           <span>Current</span>
         </h1>
         <p>
-          {SITE.description}
+          Autonomous editorial desk tracking the constraints behind the AI buildout: power, cooling, silicon, cloud capacity, data centers, capital, and policy risk.
         </p>
       </div>
 
-      <div class="nav-strip">
-        {intelligenceNav.map((item) => <span>{item}</span>)}
-      </div>
+      <nav class="nav-strip" aria-label="Coverage navigation">
+        {navLinks.map(([label, href]) => <a href={href}>{label}</a>)}
+      </nav>
     </header>
 
-    <section class="live-brief">
-      <div class="brief-kicker">Live Brief</div>
+    <section class="cycle-brief" aria-label="Desk statistics">
+      <div class="brief-kicker">Desk Cycle</div>
       <div class="brief-track">
         {stats.map((stat) => (
           <span><strong>{stat.value}</strong> {stat.label}</span>
         ))}
-        <span><strong>{searchPayload.length}</strong> Indexed archive</span>
       </div>
     </section>
 
-    {topConstraint ? (
-      <section class="constraint-board">
-        <article class="constraint-lead">
-          <div class="constraint-label">
-            <p class="eyebrow">Today's Constraint</p>
-            <span>{topConstraint.publicSignal.editorial_lens}</span>
-            <a class="constraint-media" href={topConstraint.detailHref} aria-label={topConstraint.title}>
-              <img src={topConstraint.displayImage} alt={topConstraint.title} loading="eager" />
-            </a>
-          </div>
-          <div class="constraint-copy">
-            <div class="story-meta">
-              <span>{topConstraint.source}</span>
-              <span>{topConstraint.taxonomy.primary}</span>
-              <span>{topConstraint.taxonomy.region}</span>
-              <time>{topConstraint.timeAgo}</time>
-            </div>
-            <h2>
-              <a href={topConstraint.detailHref}>{topConstraint.title}</a>
-            </h2>
-            <p class="signal-deck">{topConstraint.publicSignal.deck}</p>
-            <p>{topConstraint.publicSignal.why_it_matters}</p>
-          </div>
-          <div class="metric-grid">
-            <div><span>Signal</span><strong>{topConstraint.publicSignal.signal_label}</strong></div>
-            <div><span>Editorial Lens</span><strong>{topConstraint.publicSignal.editorial_lens}</strong></div>
-            <div><span>Reader Impact</span><strong>{topConstraint.publicSignal.reader_impact.join(', ')}</strong></div>
-            <div><span>Region</span><strong>{topConstraint.publicSignal.region}</strong></div>
-            <div><span>Source</span><strong>{topConstraint.publicSignal.source}</strong></div>
-            <div><span>Coverage</span><strong>{topConstraint.publicSignal.view_detail ? 'Full memo approved' : 'Source card'}</strong></div>
-          </div>
-        </article>
+    <EditorialCycleStatus model={model} />
 
-        <section class="intelligence-lanes" aria-label="Compute Current intelligence lanes">
-          {intelligenceSections.map((section) => (
-            <section class="intelligence-section">
-              <div class="lane-heading">
-                <div>
-                  <p class="eyebrow">{section.title}</p>
-                  <h2>{section.title}</h2>
-                </div>
-                <p>{section.deck}</p>
-              </div>
-              <div class="lane-grid">
-                {section.items.map((item: any) => (
-                  <PublicSignalCard signal={item.publicSignal} />
-                ))}
-              </div>
-            </section>
-          ))}
-        </section>
-      </section>
-    ) : (
-      <section class="empty-board panel">
-        <h2>Pipeline ready</h2>
-        <p>The board will fill automatically after the next 8-hour pipeline run.</p>
-      </section>
-    )}
+    <FeaturedCycleAnalysis items={model.featuredAnalyses} statusLabel={model.freshness.label} />
+
+    {model.activeWatchlist.length ? <ActiveWatchlist items={model.activeWatchlist} /> : null}
+
+    {model.recentAnalysis.length ? <RecentAnalysisArchive items={model.recentAnalysis} /> : null}
 
     <section class="search-shell">
       <div class="search-copy">
-        <p class="eyebrow">Archive Search</p>
-        <h2>Search live and archived coverage</h2>
+        <p class="eyebrow">Public Archive</p>
+        <h2>Find published analysis</h2>
       </div>
-      <label class="search-input-wrap">
-        <span class="sr-only">Search news archive</span>
-        <input id="news-search" class="search-input" type="search" placeholder="Search topics, companies, regions, power, cooling, chips..." />
-      </label>
-      <div id="search-meta" class="search-meta">Loaded {searchPayload.length} indexed items</div>
-      <div id="search-results" class="search-results"></div>
+      <p class="archive-note">
+        The public archive contains published analyses and clean watchlist items. Internal raw source volume is tracked separately in admin quality views.
+      </p>
+      <a class="detail-link archive-link" href="/archive/">Browse archive</a>
     </section>
 
     <footer class="transparency-footer" aria-label="Editorial transparency">
       <div>
         <p class="eyebrow">Transparency</p>
         <p>
-          AI-assisted infrastructure intelligence with source attribution, extraction QA, relevance gates, and noindex safeguards for low-quality generated pages.
+          AI-assisted infrastructure intelligence with source attribution, extraction QA, signal clustering, claim verification, and publish gates for low-quality generated pages.
         </p>
       </div>
       <nav class="policy-link-row" aria-label="Transparency pages">
@@ -307,67 +113,9 @@ const stats = [
         <a href="/editorial-policy/">Editorial Policy</a>
         <a href="/methodology/">Methodology</a>
         <a href="/ai-disclosure/">AI-assisted Disclosure</a>
+        <a href="/rss.xml">RSS</a>
+        <a href="/sitemap.xml">Sitemap</a>
       </nav>
     </footer>
-
   </main>
-
-  <script is:inline type="application/json" id="search-index-data" set:html={JSON.stringify(searchPayload)}></script>
-  <script>
-    const input = document.getElementById('news-search');
-    const results = document.getElementById('search-results');
-    const meta = document.getElementById('search-meta');
-    const payload = JSON.parse(document.getElementById('search-index-data')?.textContent || '[]');
-
-    const formatDate = (value) =>
-      new Date(value).toLocaleDateString('en-US', {
-        month: 'short',
-        day: 'numeric',
-      });
-
-    const render = (items, query = '') => {
-      if (!results || !meta) return;
-
-      if (!query.trim()) {
-        results.innerHTML = '';
-        meta.textContent = `Loaded ${payload.length} indexed items`;
-        return;
-      }
-
-      if (!items.length) {
-        results.innerHTML = '<p class="search-empty">No matching results found.</p>';
-        meta.textContent = `0 results for "${query}"`;
-        return;
-      }
-
-      meta.textContent = `${items.length} results for "${query}"`;
-      results.innerHTML = items
-        .slice(0, 12)
-        .map(
-          (item) => `
-            <article class="search-result-card">
-              <div>
-                <div class="search-result-meta">${item.source} · ${item.primary_category || item.category || 'Infrastructure'} · ${item.infrastructure_layer || 'Layer n/a'} · ${formatDate(item.publishedAt)}</div>
-                <h3><a href="${item.href}">${item.title}</a></h3>
-                <p>${item.expertLensTeaser || item.summary || ''}</p>
-              </div>
-              <a class="source-cta" href="${item.sourceUrl}" target="_blank" rel="noreferrer">Source</a>
-            </article>
-          `
-        )
-        .join('');
-    };
-
-    input?.addEventListener('input', (event) => {
-      const target = event.target;
-      if (!(target instanceof HTMLInputElement)) return;
-      const query = target.value.toLowerCase().trim();
-      const matches = payload.filter((item) =>
-        `${item.searchText || ''} ${item.title} ${item.source} ${item.primary_category || item.category || ''} ${item.secondary_category || ''} ${item.infrastructure_layer || ''} ${item.article_type || ''} ${(item.affected_stakeholders || []).join(' ')} ${item.region || ''} ${item.summary || ''}`
-          .toLowerCase()
-          .includes(query)
-      );
-      render(matches, query);
-    });
-  </script>
 </Layout>

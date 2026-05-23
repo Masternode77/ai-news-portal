@@ -1,0 +1,37 @@
+tiers:
+  tier_1:
+    description: primary company/regulatory filings, official corporate blogs, regulatory sources, major financial wires
+    domains:
+      - sec.gov
+      - investor.*
+      - nvidia.com
+      - cloud.google.com
+      - aws.amazon.com
+      - azure.microsoft.com
+      - bloomberg.com
+  tier_2:
+    description: specialist infrastructure, data center, power/grid, semiconductor, and HPC publications
+    domains:
+      - datacenterdynamics.com
+      - datacenterfrontier.com
+      - datacenterknowledge.com
+      - uptimeinstitute.com
+      - hpcwire.com
+      - insidehpc.com
+      - semiengineering.com
+      - servethehome.com
+      - utilitydive.com
+      - power-eng.com
+      - capacitymedia.com
+      - blocksandfiles.com
+  tier_3:
+    description: general technology and enterprise publications
+    domains:
+      - siliconangle.com
+      - theregister.com
+      - techcrunch.com
+      - venturebeat.com
+  tier_4:
+    description: low-signal consumer technology or generic AI content
+    domains:
+      - tomshardware.com

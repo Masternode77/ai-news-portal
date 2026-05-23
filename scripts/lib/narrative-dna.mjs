@@ -263,7 +263,7 @@ function paragraphForHeading(heading = '', article = {}, dna = extractNarrativeD
     return sentence(`${dna.concrete_event} is more useful as a map of control points than as one broad capacity claim`);
   }
   if (/changed|move|signal|product|system|architecture|field|deal|policy|power-market|cost/.test(lower)) {
-    return sentence(`${dna.concrete_event} is the source-backed change, with ${dna.protagonist} as the actor readers can track`);
+    return sentence(`${dna.concrete_event} is the evidence anchor, with ${dna.protagonist} as the actor readers can track`);
   }
   if (/constraint|bottleneck|resilience|impact|lever|dependency|path|supply|below|design|failure/.test(lower)) {
     return sentence(`${dna.infrastructure_layer} is the operating layer that turns the update into ${dna.editorial_lens.toLowerCase()}, especially for ${roleText}`);
@@ -272,7 +272,7 @@ function paragraphForHeading(heading = '', article = {}, dna = extractNarrativeD
     return sentence(`${dna.counterpoint}; that keeps the public read tied to evidence instead of treating the announcement as finished capacity`);
   }
   if (/watch|metric|proof|checkpoint|validation|test|decision|filing|adoption|delivery|planning/.test(lower)) {
-    return sentence(`The watch metric is ${dna.watch_metric} over the ${dna.time_horizon} window`);
+    return sentence(`The next useful checkpoint is ${dna.watch_metric} over the ${dna.time_horizon} window`);
   }
   return sentence(dna.decision_relevance);
 }
@@ -286,7 +286,7 @@ export function buildNarrativeArticleBody(article = {}, options = {}) {
     lines.push(heading);
     lines.push(paragraphForHeading(heading, article, dna));
   }
-  const closing = sentence(`For Compute Current readers, the decision point is whether ${dna.watch_metric} changes ${dna.infrastructure_layer.toLowerCase()} planning before the story is treated as core capacity`);
+  const closing = sentence(`Readers should track ${dna.watch_metric} before treating the item as a planning assumption for ${dna.infrastructure_layer.toLowerCase()}`);
   lines.push(closing);
   return lines
     .map((line) => guardPublicCopy(line).text)

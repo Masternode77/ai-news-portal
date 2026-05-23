@@ -1,0 +1,9 @@
+---
+const { bottomLine = '' } = Astro.props;
+---
+{bottomLine ? (
+  <section class="detail-section article-bottom-line">
+    <h2>Bottom line</h2>
+    <p>{bottomLine}</p>
+  </section>
+) : null}

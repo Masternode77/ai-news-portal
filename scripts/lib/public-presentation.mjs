@@ -20,6 +20,20 @@ function stakeholderLabels(article = {}) {
   return normalized.length ? normalized : FALLBACK_READER_IMPACT;
 }
 
+function normalizedRoute(article = {}, route = undefined) {
+  const fallback = routePublicLane(article);
+  return {
+    ...fallback,
+    ...(route || {}),
+    public_signal_label: route?.public_signal_label || fallback.public_signal_label || 'Watchlist',
+    editorial_lens: route?.editorial_lens || fallback.editorial_lens || 'Infrastructure Signal',
+    laneKey: route?.laneKey || fallback.laneKey || 'adjacent-watchlist',
+    laneTitle: route?.laneTitle || fallback.laneTitle || 'Active Watchlist',
+    visibility: route?.visibility || fallback.visibility || 'adjacent',
+    story_archetype: route?.story_archetype || fallback.story_archetype || 'Adjacent Signal',
+  };
+}
+
 export function publicDetailHref(article = {}) {
   const sourceUrl = article.sourceUrl || article.url || '';
   if (article.articlePagePublished === false || article.archiveOnly === true || article.signalCardOnly === true) {
@@ -29,7 +43,7 @@ export function publicDetailHref(article = {}) {
 }
 
 export function buildPublicPresentation(article = {}, options = {}) {
-  const route = options.route || article.public_routing || routePublicLane(article);
+  const route = normalizedRoute(article, options.route || article.public_routing);
   const persisted = article.public_presentation || {};
   const generated = generateEditorialExcerpt(article, {
     route,

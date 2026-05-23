@@ -1,16 +1,7 @@
 ---
 const { quality } = Astro.props;
 const dna = quality?.narrative_dna || {};
-const blocked: string[] = Array.isArray(quality?.blocked_reasons)
-  ? (quality.blocked_reasons as unknown[]).map((reason: unknown) => String(reason))
-  : [];
-const sanitizeAdminLabel = (value = '') => String(value)
-  .replaceAll('source_evidence_length', 'source_text_length')
-  .replaceAll('evidence_anchor', 'source_anchor')
-  .replaceAll('Evidence', 'Source');
-const formatAdminKey = (key = '') => sanitizeAdminLabel(key)
-  .replace(/_/g, ' ')
-  .replace(/\b\w/g, (letter) => letter.toUpperCase());
+const blocked = Array.isArray(quality?.blocked_reasons) ? quality.blocked_reasons : [];
 ---
 <section class="internal-quality-panel" aria-label="Internal quality panel">
   <div class="quality-grid">
@@ -21,13 +12,13 @@ const formatAdminKey = (key = '') => sanitizeAdminLabel(key)
     <div><span>Routing Decision</span><strong>{quality?.routing_decision || 'n/a'}</strong></div>
     <div><span>Source Adapter</span><strong>{quality?.source_adapter || 'n/a'}</strong></div>
     <div><span>Generation Version</span><strong>{quality?.generation_version || 'n/a'}</strong></div>
-    <div><span>Source Text Length</span><strong>{quality?.source_evidence_length ?? 'n/a'}</strong></div>
+    <div><span>Source Evidence Length</span><strong>{quality?.source_evidence_length ?? 'n/a'}</strong></div>
   </div>
   {blocked.length ? (
     <div class="quality-block">
       <h2>Blocked reasons</h2>
       <ul>
-        {blocked.map((reason: string) => <li>{sanitizeAdminLabel(reason)}</li>)}
+        {blocked.map((reason) => <li>{reason}</li>)}
       </ul>
     </div>
   ) : null}
@@ -36,7 +27,7 @@ const formatAdminKey = (key = '') => sanitizeAdminLabel(key)
     <dl>
       {Object.entries(dna).map(([key, value]) => (
         <div>
-          <dt>{formatAdminKey(key)}</dt>
+          <dt>{key}</dt>
           <dd>{Array.isArray(value) ? value.join(', ') : String(value ?? '')}</dd>
         </div>
       ))}

@@ -1,0 +1,23 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import sourceHealth from '../../data/source-health.json';
+---
+<Layout title="Source Health Admin" noindex={true}>
+  <main class="admin-shell">
+    <header class="admin-header">
+      <a class="admin-back" href="/admin/editorial-cycles/">Editorial cycles</a>
+      <h1>Source Health</h1>
+      <p class="admin-deck">Internal crawler health and staleness view.</p>
+    </header>
+    <section class="admin-panel">
+      <div class="quality-list">
+        {sourceHealth.map((source) => (
+          <article class="quality-list-item">
+            <h2>{source.source_name}</h2>
+            <p>{source.status} · {source.domain} · latest {source.latest_item_at || 'n/a'} · {source.item_count} items</p>
+          </article>
+        ))}
+      </div>
+    </section>
+  </main>
+</Layout>
