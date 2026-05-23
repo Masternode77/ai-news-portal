@@ -24,9 +24,17 @@ import { isPublicLongformArticle } from '../../../scripts/lib/public-surface-eli
 
 export function getStaticPaths() {
   const allArticles = [...latestNews, ...archivedNews];
+  const seenArticleIds = new Set<string>();
 
   return allArticles
     .filter(isPublicLongformArticle)
+    .filter((article) => {
+      if (seenArticleIds.has(article.id)) {
+        return false;
+      }
+      seenArticleIds.add(article.id);
+      return true;
+    })
     .map((article) => ({
       params: { id: article.id },
       props: { article },
