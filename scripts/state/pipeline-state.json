@@ -315,7 +315,9 @@
     "ebbdd50f6259511c",
     "c8fd1d25f9a85fc7",
     "6769926516897425",
-    "37d8121043268f92"
+    "37d8121043268f92",
+    "3cee3bc0d79430f1",
+    "ee2d2c3dac319926"
   ],
   "dayPlans": {
     "2026-03-24": {
@@ -6653,19 +6655,451 @@
       "slotPublications": {
         "1": true
       }
+    },
+    "2026-05-24": {
+      "date": "2026-05-24",
+      "createdAt": "2026-05-23T16:06:37.917Z",
+      "refreshedAt": "2026-05-23T16:06:37.917Z",
+      "candidateWindowHours": 24,
+      "curatedItems": [
+        {
+          "id": "3cee3bc0d79430f1",
+          "source": "Toms Hardware",
+          "url": "https://www.tomshardware.com/tech-industry/samsungs-bonus-dispute-spreads-to-chip-packaging-divisions-threatening-hbm-delivery-schedules",
+          "title": "Samsung's $400,000 payout for memory workers sparks revolt as other divisions get only $4,000, fueling intentional production slowdowns — internal resentment disrupts packaging operations, major AI chip project decisions to a complete halt",
+          "snippet": "It’s understood that meetings are being canceled across Samsung's non-memory and shared business units.",
+          "contentText": "It’s understood that meetings are being canceled across Samsung's non-memory and shared business units.",
+          "publishedAt": "2026-05-23T13:49:57.000Z",
+          "sourceImage": "https://cdn.mos.cms.futurecdn.net/tRrvFL7XAZrRiJiCFASp6E-1280-80.jpg",
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "category": "AI Infrastructure",
+          "primary_category": "AI Infrastructure",
+          "secondary_category": "GPU clusters and deployment readiness",
+          "infrastructure_layer": "Compute",
+          "affected_stakeholders": [
+            "operators",
+            "hyperscalers",
+            "cloud buyers",
+            "investors"
+          ],
+          "article_type": "Supply Chain",
+          "urgency_score": 0.45,
+          "taxonomy_confidence": 0.77,
+          "taxonomy_reasons": [
+            "ai infrastructure",
+            "neocloud"
+          ],
+          "direct_ai_infrastructure_relevance": 1,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0.58,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.858,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "semiconductor_relevance:0.58(hbm, gpu)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 1,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0.58,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.858,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+              "semiconductor_relevance:0.58(hbm, gpu)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 75
+        },
+        {
+          "id": "ee2d2c3dac319926",
+          "source": "TechCrunch AI",
+          "url": "https://techcrunch.com/2026/05/23/ferrari-is-using-ai-to-create-f1-superfans/",
+          "title": "Ferrari is using IBM’s AI to create F1 superfans",
+          "snippet": "IBM and Scuderia Ferrari HP take TechCrunch inside how they are redefining the fan experience.",
+          "contentText": "IBM and Scuderia Ferrari HP take TechCrunch inside how they are redefining the fan experience.",
+          "publishedAt": "2026-05-23T15:08:00.000Z",
+          "sourceImage": null,
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "category": "AI Infrastructure",
+          "primary_category": "AI Infrastructure",
+          "secondary_category": "GPU clusters and deployment readiness",
+          "infrastructure_layer": "Compute",
+          "affected_stakeholders": [
+            "operators",
+            "hyperscalers",
+            "cloud buyers",
+            "investors"
+          ],
+          "article_type": "Other",
+          "urgency_score": 0.43,
+          "taxonomy_confidence": 0.77,
+          "taxonomy_reasons": [
+            "ai infrastructure",
+            "neocloud"
+          ],
+          "direct_ai_infrastructure_relevance": 1,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0.22,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.778,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "semiconductor_relevance:0.22(gpu)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 1,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0.22,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.778,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+              "semiconductor_relevance:0.22(gpu)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 72
+        },
+        {
+          "id": "7f764272333cfe51",
+          "source": "StorageReview",
+          "url": "https://www.storagereview.com/news/amd-epyc-venice-enters-2nm-production-at-tsmc-extends-cpu-roadmap-for-ai-infrastructure",
+          "title": "AMD EPYC “Venice” Enters 2nm Production at TSMC, Extends CPU Roadmap for AI Infrastructure",
+          "snippet": "AMD announced that its next-generation EPYC processor, codenamed “Venice,” has entered production on TSMC’s 2nm process in Taiwan. The company also plans to expand manufacturing at TSMC’s Arizona facility, signaling a b…",
+          "contentText": "AMD announced that its next-generation EPYC processor, codenamed &#8220;Venice,&#8221; has entered production on TSMC&#8217;s 2nm process in Taiwan. The company also plans to expand manufacturing at TSMC&#8217;s Arizona facility, signaling a broader strategy to diversify its advanced-node capacity and scale supply for cloud and AI deployments. &#8220;Venice&#8221; is positioned as the first HPC-class processor to ramp on TSMC&#8217;s 2nm node. The transition to 2nm is expected to improve performance per watt and transistor density, both of which are critical for data center operators facing power and cooling constraints. AMD framed this milestone as part of its ongoing EPYC roadmap execution, with a focus on enabling higher core density, improved efficiency, and tighter integration across…",
+          "publishedAt": "2026-05-22T20:48:44.000Z",
+          "sourceImage": "https://www.storagereview.com/wp-content/uploads/2026/05/Storagereview-AMD-EPYV-Venice.png",
+          "region": "APAC",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "category": "Semiconductors",
+          "primary_category": "Semiconductors",
+          "secondary_category": "Accelerators, memory, and advanced packaging",
+          "infrastructure_layer": "Silicon",
+          "affected_stakeholders": [
+            "semiconductor suppliers",
+            "hyperscalers",
+            "server OEMs",
+            "investors"
+          ],
+          "article_type": "Capacity Expansion",
+          "urgency_score": 0.66,
+          "taxonomy_confidence": 0.89,
+          "taxonomy_reasons": [
+            "gpu",
+            "amd",
+            "tsmc"
+          ],
+          "direct_ai_infrastructure_relevance": 1,
+          "data_center_relevance": 0.42,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0.895,
+          "power_grid_relevance": 0.22,
+          "cooling_relevance": 0.34,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.997,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud, hpc)",
+            "data_center_relevance:0.42(data center)",
+            "semiconductor_relevance:0.90(amd, tsmc, gpu)",
+            "power_grid_relevance:0.22(power)",
+            "cooling_relevance:0.34(cooling)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 1,
+            "data_center_relevance": 0.42,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0.895,
+            "power_grid_relevance": 0.22,
+            "cooling_relevance": 0.34,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.997,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud, hpc)",
+              "data_center_relevance:0.42(data center)",
+              "semiconductor_relevance:0.90(amd, tsmc, gpu)",
+              "power_grid_relevance:0.22(power)",
+              "cooling_relevance:0.34(cooling)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 68
+        },
+        {
+          "id": "a9f7054c97974425",
+          "source": "HPCwire",
+          "url": "https://www.hpcwire.com/2026/05/22/commerce-takes-portfolio-approach-with-2b-quantum-investment-initiative/",
+          "title": "Commerce Takes Portfolio Approach with $2B Quantum Investment Initiative",
+          "snippet": "Yesterday the U.S. Department of Commerce announced letters of intent (LOIs) with nine quantum computing and manufacturing companies for more than $2 billion in proposed CHIPS and Science Act incentives, backing a wide…",
+          "contentText": "Yesterday the U.S. Department of Commerce announced letters of intent (LOIs) with nine quantum computing and manufacturing companies for more than $2 billion in proposed CHIPS and Science Act incentives, backing a wide range of quantum technologies while introducing an increasingly prominent feature of Trump administration industrial policy: federal equity stakes. The package totals approximately $2.013 billion in planned support and spans two domestic quantum manufacturing initiatives alongside seven quantum technology developers pursuing architectures including neutral atom, silicon spin, superconducting, annealing, photonic and trapped-ion quantum computing. While the scale of the investment is significant, the structure of the program is equally noteworthy. Unlike traditional federal…",
+          "publishedAt": "2026-05-23T00:20:26.000Z",
+          "sourceImage": "https://www.hpcwire.com/wp-content/uploads/2018/05/white-house_shutterstock-114757342_700x-300x189.jpg",
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "category": "AI Infrastructure",
+          "primary_category": "AI Infrastructure",
+          "secondary_category": "GPU clusters and deployment readiness",
+          "infrastructure_layer": "Compute",
+          "affected_stakeholders": [
+            "operators",
+            "hyperscalers",
+            "cloud buyers",
+            "investors"
+          ],
+          "article_type": "Financing / M&A",
+          "urgency_score": 0.44,
+          "taxonomy_confidence": 0.77,
+          "taxonomy_reasons": [
+            "ai infrastructure",
+            "neocloud"
+          ],
+          "direct_ai_infrastructure_relevance": 1,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0.22,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0.26,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.822,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "semiconductor_relevance:0.22(gpu)",
+            "capital_markets_relevance:0.26(equity)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 1,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0.22,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0.26,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.822,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+              "semiconductor_relevance:0.22(gpu)",
+              "capital_markets_relevance:0.26(equity)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 67
+        },
+        {
+          "id": "ea7c824f9474271e",
+          "source": "Data Center Knowledge",
+          "url": "https://www.datacenterknowledge.com/events/gitex-ai-europe",
+          "title": "GITEX AI EUROPE",
+          "snippet": "",
+          "contentText": "",
+          "publishedAt": "2026-06-30T11:00:00.000Z",
+          "sourceImage": "https://eu-images.contentstack.com/v3/assets/blt8eb3cdfc1fce5194/blt6884bd9eb2327fdc/6a0dc34f130b7c5518cc0c2d/GITEX_AI_EUROPE_-_300x250_px_(1).jpg?width=1280&auto=webp&quality=80&disable=upscale",
+          "region": "EU",
+          "language": "en",
+          "defaultCategory": "Colocation & Wholesale",
+          "category": "Data Centers",
+          "primary_category": "Data Centers",
+          "secondary_category": "Campus development and colocation capacity",
+          "infrastructure_layer": "Facility",
+          "affected_stakeholders": [
+            "data center operators",
+            "developers",
+            "site selectors",
+            "investors"
+          ],
+          "article_type": "Other",
+          "urgency_score": 0.43,
+          "taxonomy_confidence": 0.73,
+          "taxonomy_reasons": [
+            "colocation",
+            "wholesale"
+          ],
+          "direct_ai_infrastructure_relevance": 0.78,
+          "data_center_relevance": 0.76,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.77,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:0.78",
+            "data_center_relevance:0.76(data center, colocation)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 0.78,
+            "data_center_relevance": 0.76,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.77,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:0.78",
+              "data_center_relevance:0.76(data center, colocation)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 66
+        },
+        {
+          "id": "1716485100f56090",
+          "source": "ServeTheHome",
+          "url": "https://www.servethehome.com/dell-showcases-upcoming-epyc-venice-poweredge-systems-adds-new-5-8pb-powerstore-elite/",
+          "title": "Dell Showcases Upcoming EPYC Venice PowerEdge Systems, Adds New 5.8PB PowerStore Elite",
+          "snippet": "Outlining their hardware plans for the modern data center, Dell has announced their EPYC and Xeon-based 18th generation PowerEdge servers, as well as a next-gen storage server, the PowerStore Elite The post Dell Showcas…",
+          "contentText": "Outlining their hardware plans for the modern data center, Dell has announced their EPYC and Xeon-based 18th generation PowerEdge servers, as well as a next-gen storage server, the PowerStore Elite The post Dell Showcases Upcoming EPYC Venice PowerEdge Systems, Adds New 5.8PB PowerStore Elite appeared first on ServeTheHome .",
+          "publishedAt": "2026-05-22T21:00:10.000Z",
+          "sourceImage": null,
+          "region": "Global",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "category": "AI Infrastructure",
+          "primary_category": "AI Infrastructure",
+          "secondary_category": "GPU clusters and deployment readiness",
+          "infrastructure_layer": "Compute",
+          "affected_stakeholders": [
+            "operators",
+            "hyperscalers",
+            "cloud buyers",
+            "investors"
+          ],
+          "article_type": "Capacity Expansion",
+          "urgency_score": 0.45,
+          "taxonomy_confidence": 0.77,
+          "taxonomy_reasons": [
+            "ai infrastructure",
+            "neocloud"
+          ],
+          "direct_ai_infrastructure_relevance": 1,
+          "data_center_relevance": 0.42,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0.22,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0.18,
+          "infrastructure_relevance_score": 0.857,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "data_center_relevance:0.42(data center)",
+            "semiconductor_relevance:0.22(gpu)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 1,
+            "data_center_relevance": 0.42,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0.22,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0.18,
+            "infrastructure_relevance_score": 0.857,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+              "data_center_relevance:0.42(data center)",
+              "semiconductor_relevance:0.22(gpu)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 62
+        }
+      ],
+      "curatedIds": [
+        "3cee3bc0d79430f1",
+        "ee2d2c3dac319926",
+        "7f764272333cfe51",
+        "a9f7054c97974425",
+        "ea7c824f9474271e",
+        "1716485100f56090"
+      ],
+      "publishedIds": [
+        "3cee3bc0d79430f1",
+        "ee2d2c3dac319926"
+      ],
+      "slotPublications": {
+        "0": true
+      }
     }
   },
   "runHistory": [
-    {
-      "at": "2026-04-07T16:14:41.384Z",
-      "day": "2026-04-08",
-      "slot": 0,
-      "publishedCount": 2,
-      "publishedIds": [
-        "827a0563d3be25cc",
-        "f71165ba1ae8debe"
-      ]
-    },
     {
       "at": "2026-04-07T23:39:52.902Z",
       "day": "2026-04-08",
@@ -7907,7 +8341,82 @@
       ],
       "signalCardItems": [],
       "archiveOnlyItems": []
+    },
+    {
+      "at": "2026-05-23T16:06:37.917Z",
+      "day": "2026-05-24",
+      "slot": 0,
+      "publishedCount": 1,
+      "signalCardCount": 1,
+      "archiveOnlyCount": 0,
+      "repetitionBlockedCount": 0,
+      "publishedIds": [
+        "3cee3bc0d79430f1"
+      ],
+      "processedIds": [
+        "3cee3bc0d79430f1",
+        "ee2d2c3dac319926"
+      ],
+      "blockedCount": 1,
+      "blockedItems": [
+        {
+          "id": "ee2d2c3dac319926",
+          "title": "Ferrari is using IBM’s AI to create F1 superfans",
+          "infrastructure_relevance_score": 0.87,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "cloud_capacity_relevance:0.32(hyperscalers)",
+            "semiconductor_relevance:0.22(gpu)",
+            "power_grid_relevance:0.22(power)"
+          ],
+          "extraction_quality_score": 0.16,
+          "source_domain_adapter": "techcrunch",
+          "content_length": 151,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": false,
+          "repetition_block_reasons": [],
+          "repetition_check": null,
+          "expert_insight_complete": false,
+          "expert_insight_missing_fields": [
+            "concrete_facts",
+            "named_companies"
+          ],
+          "reason": "fail_closed: source_text_incomplete:source_evidence_length_below_500, source_evidence_length_below_1200, sentence_completion_score_below_0.92:0.425"
+        }
+      ],
+      "repetitionBlockedItems": [],
+      "signalCardItems": [
+        {
+          "id": "ee2d2c3dac319926",
+          "title": "Ferrari is using IBM’s AI to create F1 superfans",
+          "infrastructure_relevance_score": 0.87,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "cloud_capacity_relevance:0.32(hyperscalers)",
+            "semiconductor_relevance:0.22(gpu)",
+            "power_grid_relevance:0.22(power)"
+          ],
+          "extraction_quality_score": 0.16,
+          "source_domain_adapter": "techcrunch",
+          "content_length": 151,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": false,
+          "repetition_block_reasons": [],
+          "repetition_check": null,
+          "expert_insight_complete": false,
+          "expert_insight_missing_fields": [
+            "concrete_facts",
+            "named_companies"
+          ],
+          "reason": "fail_closed: source_text_incomplete:source_evidence_length_below_500, source_evidence_length_below_1200, sentence_completion_score_below_0.92:0.425"
+        }
+      ],
+      "archiveOnlyItems": []
     }
   ],
-  "lastRunAt": "2026-05-20T00:09:42.797Z"
+  "lastRunAt": "2026-05-23T16:06:37.917Z"
 }
