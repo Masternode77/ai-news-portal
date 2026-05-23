@@ -16,7 +16,7 @@ export const IMAGE_PROVIDER = process.env.IMAGE_PROVIDER || 'chatgpt';
 export const CHATGPT_IMAGE_OAUTH_ENDPOINT = process.env.CHATGPT_IMAGE_OAUTH_ENDPOINT || '';
 export const CHATGPT_IMAGE_OAUTH_ACCESS_TOKEN = process.env.CHATGPT_IMAGE_OAUTH_ACCESS_TOKEN || '';
 export const OPENAI_IMAGE_API_URL = process.env.OPENAI_IMAGE_API_URL || 'https://api.openai.com/v1/images/generations';
-export const OPENAI_IMAGE_MODEL = process.env.OPENAI_IMAGE_MODEL || 'gpt-image-1';
+export const OPENAI_IMAGE_MODEL = process.env.OPENAI_IMAGE_MODEL || 'gpt-image-2';
 export const OPENAI_IMAGE_SIZE = process.env.OPENAI_IMAGE_SIZE || '1536x1024';
 export const OPENAI_IMAGE_QUALITY = process.env.OPENAI_IMAGE_QUALITY || 'medium';
 

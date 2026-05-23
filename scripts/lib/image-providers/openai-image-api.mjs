@@ -31,7 +31,8 @@ export function createOpenAiImageApiProvider() {
       }, 45000);
 
       if (!response.ok) {
-        throw new Error(`OpenAI image request failed: ${response.status}`);
+        const detail = await response.text().catch(() => '');
+        throw new Error(`OpenAI image request failed: ${response.status}${detail ? ` ${detail.slice(0, 400)}` : ''}`);
       }
 
       const payload = await response.json();

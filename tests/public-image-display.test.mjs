@@ -4,12 +4,14 @@ import test from 'node:test';
 import latestNews from '../src/data/latest-news.json' with { type: 'json' };
 import archivedNews from '../src/data/archived-news.json' with { type: 'json' };
 import { buildHomepageFeed } from '../scripts/lib/homepage-feed-builder.mjs';
+import { isStockDerivedCardImage } from '../scripts/lib/stock-card-image-detector.mjs';
 
 test('public feed cards carry displayable editorial images', () => {
   const feed = buildHomepageFeed([...latestNews, ...archivedNews], { limit: 50, minimumVisible: 30 });
   assert.ok(feed.items.length >= 30);
   assert.equal(feed.items.filter((item) => !item.publicSignal?.image).length, 0);
   assert.equal(feed.items.filter((item) => !item.publicSignal?.image_alt).length, 0);
+  assert.equal(feed.items.filter(isStockDerivedCardImage).length, 0);
 });
 
 test('article card and header templates render images', () => {

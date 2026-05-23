@@ -1,7 +1,7 @@
 # Taxonomy Pages Report
 
-Generated at: 2026-05-20T05:43:11.452Z
+Generated at: 2026-05-23T15:28:55.252Z
 Category pages: 9
-Company pages: 19
+Company pages: 21
 Region pages: 6
-Archive pages: 1
+Archive pages: 3
