@@ -323,7 +323,9 @@
     "86ded6709406996a",
     "34c8fda58e2e7894",
     "67c4afa4268ab39a",
-    "591e567b8323435b"
+    "591e567b8323435b",
+    "1716485100f56090",
+    "7f764272333cfe51"
   ],
   "dayPlans": {
     "2026-03-24": {
@@ -7086,70 +7088,75 @@
     "2026-05-23": {
       "date": "2026-05-23",
       "createdAt": "2026-05-22T17:14:16.123Z",
-      "refreshedAt": "2026-05-22T17:14:16.123Z",
+      "refreshedAt": "2026-05-23T00:09:10.729Z",
       "candidateWindowHours": 24,
       "curatedItems": [
         {
-          "id": "591e567b8323435b",
-          "source": "Toms Hardware",
-          "url": "https://www.tomshardware.com/pc-components/ddr5/chinese-memory-maker-cxmt-enters-the-mainstream-consumer-memory-with-corsair-vengeance-ddr5-kit-chinese-made-dram-emerges-as-an-antidote-for-crushing-shortages",
-          "title": "Chinese memory maker CXMT enters the mainstream consumer memory with Corsair Vengeance DDR5 kit — Chinese-made DRAM emerges as an antidote for crushing shortages",
-          "snippet": "Is the answer to the RAM crisis Chinese-made DRAM that's much cheaper to source since those companies aren't tied up in AI data center contracts? It's too early to say yet, but when a manufacturer as big as Corsair star…",
-          "contentText": "Is the answer to the RAM crisis Chinese-made DRAM that's much cheaper to source since those companies aren't tied up in AI data center contracts? It's too early to say yet, but when a manufacturer as big as Corsair starts using DDR5 modules from ChangXing Memory Technologies (CXMT), that notion gains a lot of merit.",
-          "publishedAt": "2026-05-22T15:45:08.000Z",
-          "sourceImage": "https://cdn.mos.cms.futurecdn.net/4ooHVFYv9eGQp5U6CY7T2c-1280-80.jpg",
-          "region": "US",
+          "id": "7f764272333cfe51",
+          "source": "StorageReview",
+          "url": "https://www.storagereview.com/news/amd-epyc-venice-enters-2nm-production-at-tsmc-extends-cpu-roadmap-for-ai-infrastructure",
+          "title": "AMD EPYC “Venice” Enters 2nm Production at TSMC, Extends CPU Roadmap for AI Infrastructure",
+          "snippet": "AMD announced that its next-generation EPYC processor, codenamed “Venice,” has entered production on TSMC’s 2nm process in Taiwan. The company also plans to expand manufacturing at TSMC’s Arizona facility, signaling a b…",
+          "contentText": "AMD announced that its next-generation EPYC processor, codenamed &#8220;Venice,&#8221; has entered production on TSMC&#8217;s 2nm process in Taiwan. The company also plans to expand manufacturing at TSMC&#8217;s Arizona facility, signaling a broader strategy to diversify its advanced-node capacity and scale supply for cloud and AI deployments. &#8220;Venice&#8221; is positioned as the first HPC-class processor to ramp on TSMC&#8217;s 2nm node. The transition to 2nm is expected to improve performance per watt and transistor density, both of which are critical for data center operators facing power and cooling constraints. AMD framed this milestone as part of its ongoing EPYC roadmap execution, with a focus on enabling higher core density, improved efficiency, and tighter integration across…",
+          "publishedAt": "2026-05-22T20:48:44.000Z",
+          "sourceImage": "https://www.storagereview.com/wp-content/uploads/2026/05/Storagereview-AMD-EPYV-Venice.png",
+          "region": "APAC",
           "language": "en",
           "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
-          "category": "AI Infrastructure",
-          "primary_category": "AI Infrastructure",
-          "secondary_category": "GPU clusters and deployment readiness",
-          "infrastructure_layer": "Compute",
+          "category": "Semiconductors",
+          "primary_category": "Semiconductors",
+          "secondary_category": "Accelerators, memory, and advanced packaging",
+          "infrastructure_layer": "Silicon",
           "affected_stakeholders": [
-            "operators",
+            "semiconductor suppliers",
             "hyperscalers",
-            "cloud buyers",
+            "server OEMs",
             "investors"
           ],
-          "article_type": "Supply Chain",
-          "urgency_score": 0.45,
-          "taxonomy_confidence": 0.77,
+          "article_type": "Capacity Expansion",
+          "urgency_score": 0.66,
+          "taxonomy_confidence": 0.89,
           "taxonomy_reasons": [
-            "ai infrastructure",
-            "neocloud"
+            "gpu",
+            "amd",
+            "tsmc"
           ],
           "direct_ai_infrastructure_relevance": 1,
           "data_center_relevance": 0.42,
           "cloud_capacity_relevance": 0,
-          "semiconductor_relevance": 0.22,
-          "power_grid_relevance": 0,
-          "cooling_relevance": 0,
+          "semiconductor_relevance": 0.895,
+          "power_grid_relevance": 0.22,
+          "cooling_relevance": 0.34,
           "capital_markets_relevance": 0,
           "enterprise_ai_infrastructure_relevance": 0,
-          "infrastructure_relevance_score": 0.857,
+          "infrastructure_relevance_score": 0.997,
           "infrastructure_relevance_tier": "full_memo",
           "infrastructure_relevance_action": "generate_full_memo",
           "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, ai data center, neocloud)",
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud, hpc)",
             "data_center_relevance:0.42(data center)",
-            "semiconductor_relevance:0.22(gpu)"
+            "semiconductor_relevance:0.90(amd, tsmc, gpu)",
+            "power_grid_relevance:0.22(power)",
+            "cooling_relevance:0.34(cooling)"
           ],
           "infrastructure_relevance": {
             "direct_ai_infrastructure_relevance": 1,
             "data_center_relevance": 0.42,
             "cloud_capacity_relevance": 0,
-            "semiconductor_relevance": 0.22,
-            "power_grid_relevance": 0,
-            "cooling_relevance": 0,
+            "semiconductor_relevance": 0.895,
+            "power_grid_relevance": 0.22,
+            "cooling_relevance": 0.34,
             "capital_markets_relevance": 0,
             "enterprise_ai_infrastructure_relevance": 0,
-            "infrastructure_relevance_score": 0.857,
+            "infrastructure_relevance_score": 0.997,
             "infrastructure_relevance_tier": "full_memo",
             "infrastructure_relevance_action": "generate_full_memo",
             "infrastructure_relevance_reasons": [
-              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, ai data center, neocloud)",
+              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud, hpc)",
               "data_center_relevance:0.42(data center)",
-              "semiconductor_relevance:0.22(gpu)"
+              "semiconductor_relevance:0.90(amd, tsmc, gpu)",
+              "power_grid_relevance:0.22(power)",
+              "cooling_relevance:0.34(cooling)"
             ],
             "infrastructureRelevanceAction": "generate_full_memo",
             "articlePagePublished": true,
@@ -7157,16 +7164,16 @@
             "archiveOnly": false,
             "archiveOnlyReason": null
           },
-          "score": 82
+          "score": 80
         },
         {
-          "id": "67c4afa4268ab39a",
-          "source": "TechCrunch AI",
-          "url": "https://techcrunch.com/2026/05/22/you-can-no-longer-google-the-word-disregard/",
-          "title": "You can no longer Google the word ‘disregard’",
-          "snippet": "After Google Search's AI update, the word \"disregard\" now effectively breaks the search interface.",
-          "contentText": "After Google Search's AI update, the word \"disregard\" now effectively breaks the search interface.",
-          "publishedAt": "2026-05-22T16:16:48.000Z",
+          "id": "1716485100f56090",
+          "source": "ServeTheHome",
+          "url": "https://www.servethehome.com/dell-showcases-upcoming-epyc-venice-poweredge-systems-adds-new-5-8pb-powerstore-elite/",
+          "title": "Dell Showcases Upcoming EPYC Venice PowerEdge Systems, Adds New 5.8PB PowerStore Elite",
+          "snippet": "Outlining their hardware plans for the modern data center, Dell has announced their EPYC and Xeon-based 18th generation PowerEdge servers, as well as a next-gen storage server, the PowerStore Elite The post Dell Showcas…",
+          "contentText": "Outlining their hardware plans for the modern data center, Dell has announced their EPYC and Xeon-based 18th generation PowerEdge servers, as well as a next-gen storage server, the PowerStore Elite The post Dell Showcases Upcoming EPYC Venice PowerEdge Systems, Adds New 5.8PB PowerStore Elite appeared first on ServeTheHome .",
+          "publishedAt": "2026-05-22T21:00:10.000Z",
           "sourceImage": null,
           "region": "Global",
           "language": "en",
@@ -7181,8 +7188,78 @@
             "cloud buyers",
             "investors"
           ],
-          "article_type": "Product / Platform Update",
-          "urgency_score": 0.43,
+          "article_type": "Capacity Expansion",
+          "urgency_score": 0.45,
+          "taxonomy_confidence": 0.77,
+          "taxonomy_reasons": [
+            "ai infrastructure",
+            "neocloud"
+          ],
+          "direct_ai_infrastructure_relevance": 1,
+          "data_center_relevance": 0.42,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0.22,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0.18,
+          "infrastructure_relevance_score": 0.857,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "data_center_relevance:0.42(data center)",
+            "semiconductor_relevance:0.22(gpu)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 1,
+            "data_center_relevance": 0.42,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0.22,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0.18,
+            "infrastructure_relevance_score": 0.857,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+              "data_center_relevance:0.42(data center)",
+              "semiconductor_relevance:0.22(gpu)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 74
+        },
+        {
+          "id": "77f48657fd8ed6e0",
+          "source": "TechCrunch AI",
+          "url": "https://techcrunch.com/2026/05/22/ai-is-being-used-to-resurrect-the-voices-of-dead-pilots/",
+          "title": "AI is being used to resurrect the voices of dead pilots",
+          "snippet": "People used AI on a spectrogram image of cockpit recordings to reconstruct them, forcing the NTSB to temporarily block access to its docket system.",
+          "contentText": "People used AI on a spectrogram image of cockpit recordings to reconstruct them, forcing the NTSB to temporarily block access to its docket system.",
+          "publishedAt": "2026-05-22T23:03:33.000Z",
+          "sourceImage": null,
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "category": "AI Infrastructure",
+          "primary_category": "AI Infrastructure",
+          "secondary_category": "GPU clusters and deployment readiness",
+          "infrastructure_layer": "Compute",
+          "affected_stakeholders": [
+            "operators",
+            "hyperscalers",
+            "cloud buyers",
+            "investors"
+          ],
+          "article_type": "Other",
+          "urgency_score": 0.59,
           "taxonomy_confidence": 0.77,
           "taxonomy_reasons": [
             "ai infrastructure",
@@ -7228,82 +7305,15 @@
           "score": 72
         },
         {
-          "id": "9c2d53342061aace",
-          "source": "Google Cloud Blog",
-          "url": "https://cloud.google.com/blog/topics/inside-google-cloud/whats-new-google-cloud/",
-          "title": "What’s new with Google Cloud",
-          "snippet": "Want to know the latest from Google Cloud? Find it here in one handy location. Check back regularly for our newest updates, announcements, resources, events, learning opportunities, and more. Tip: Not sure where to find…",
-          "contentText": "Want to know the latest from Google Cloud? Find it here in one handy location. Check back regularly for our newest updates, announcements, resources, events, learning opportunities, and more. Tip : Not sure where to find what you’re looking for on the Google Cloud blog? Start here: Google Cloud blog 101: Full list of topics, links, and resources . aside_block &lt;ListValue: []&gt; May 18 - May 22 Chinese Webinar | June 4: AI Command and Control As AI agents move from experimental pilots to core enterprise functions, governance has become a critical next step. Join Google Cloud on June 4th at 10:00 AM (Beijing Time) to learn how to build a secure AI management layer architecture. We'll explore how to develop governed MCP (Model Context Protocol) endpoints, manage tool access to enterprise…",
-          "publishedAt": "2026-05-22T16:00:00.000Z",
-          "sourceImage": "https://storage.googleapis.com/gweb-cloudblog-publish/images/whats_new_2026_CfhxFWX.max-600x600.jpg",
-          "region": "Global",
-          "language": "en",
-          "defaultCategory": "Hyperscalers & Cloud",
-          "category": "Cloud Capacity",
-          "primary_category": "Cloud Capacity",
-          "secondary_category": "Hyperscale regions and accelerator availability",
-          "infrastructure_layer": "Cloud Platform",
-          "affected_stakeholders": [
-            "hyperscalers",
-            "cloud buyers",
-            "enterprise IT",
-            "operators"
-          ],
-          "article_type": "Research / Technical",
-          "urgency_score": 0.53,
-          "taxonomy_confidence": 0.66,
-          "taxonomy_reasons": [
-            "google cloud"
-          ],
-          "direct_ai_infrastructure_relevance": 0.64,
-          "data_center_relevance": 0,
-          "cloud_capacity_relevance": 0.644,
-          "semiconductor_relevance": 0,
-          "power_grid_relevance": 0,
-          "cooling_relevance": 0,
-          "capital_markets_relevance": 0,
-          "enterprise_ai_infrastructure_relevance": 0,
-          "infrastructure_relevance_score": 0.584,
-          "infrastructure_relevance_tier": "signal_card",
-          "infrastructure_relevance_action": "publish_signal_card_only",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:0.64",
-            "cloud_capacity_relevance:0.64(hyperscalers, google cloud)"
-          ],
-          "infrastructure_relevance": {
-            "direct_ai_infrastructure_relevance": 0.64,
-            "data_center_relevance": 0,
-            "cloud_capacity_relevance": 0.644,
-            "semiconductor_relevance": 0,
-            "power_grid_relevance": 0,
-            "cooling_relevance": 0,
-            "capital_markets_relevance": 0,
-            "enterprise_ai_infrastructure_relevance": 0,
-            "infrastructure_relevance_score": 0.584,
-            "infrastructure_relevance_tier": "signal_card",
-            "infrastructure_relevance_action": "publish_signal_card_only",
-            "infrastructure_relevance_reasons": [
-              "direct_ai_infrastructure_relevance:0.64",
-              "cloud_capacity_relevance:0.64(hyperscalers, google cloud)"
-            ],
-            "infrastructureRelevanceAction": "publish_signal_card_only",
-            "articlePagePublished": false,
-            "homepagePublished": true,
-            "archiveOnly": false,
-            "archiveOnlyReason": null
-          },
-          "score": 71
-        },
-        {
-          "id": "413664c94a2804e7",
-          "source": "ServeTheHome",
-          "url": "https://www.servethehome.com/equal1-single-rack-quantum-computer-at-dell-tech-world-2026/",
-          "title": "Equal1 Single Rack Quantum Computer at Dell Tech World 2026",
-          "snippet": "At Dell Tech World 2026, we saw an Equal1 single rack quantum computer that allows quantum deployment in standard data center racks The post Equal1 Single Rack Quantum Computer at Dell Tech World 2026 appeared first on…",
-          "contentText": "At Dell Tech World 2026, we saw an Equal1 single rack quantum computer that allows quantum deployment in standard data center racks The post Equal1 Single Rack Quantum Computer at Dell Tech World 2026 appeared first on ServeTheHome .",
-          "publishedAt": "2026-05-22T04:19:43.000Z",
+          "id": "5b8f82ba31570b31",
+          "source": "Hugging Face Blog",
+          "url": "https://huggingface.co/blog/nvidia/nemotron-labs-diffusion",
+          "title": "Towards Speed-of-Light Text Generation with Nemotron-Labs Diffusion Language Models",
+          "snippet": "",
+          "contentText": "",
+          "publishedAt": "2026-05-23T00:02:03.000Z",
           "sourceImage": null,
-          "region": "Global",
+          "region": "US",
           "language": "en",
           "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
           "category": "AI Infrastructure",
@@ -7316,7 +7326,7 @@
             "cloud buyers",
             "investors"
           ],
-          "article_type": "Operations Update",
+          "article_type": "Other",
           "urgency_score": 0.45,
           "taxonomy_confidence": 0.77,
           "taxonomy_reasons": [
@@ -7324,37 +7334,35 @@
             "neocloud"
           ],
           "direct_ai_infrastructure_relevance": 1,
-          "data_center_relevance": 0.42,
+          "data_center_relevance": 0,
           "cloud_capacity_relevance": 0,
-          "semiconductor_relevance": 0.22,
+          "semiconductor_relevance": 0.5,
           "power_grid_relevance": 0,
           "cooling_relevance": 0,
           "capital_markets_relevance": 0,
           "enterprise_ai_infrastructure_relevance": 0,
-          "infrastructure_relevance_score": 0.857,
+          "infrastructure_relevance_score": 0.84,
           "infrastructure_relevance_tier": "full_memo",
           "infrastructure_relevance_action": "generate_full_memo",
           "infrastructure_relevance_reasons": [
             "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "data_center_relevance:0.42(data center)",
-            "semiconductor_relevance:0.22(gpu)"
+            "semiconductor_relevance:0.50(nvidia, gpu)"
           ],
           "infrastructure_relevance": {
             "direct_ai_infrastructure_relevance": 1,
-            "data_center_relevance": 0.42,
+            "data_center_relevance": 0,
             "cloud_capacity_relevance": 0,
-            "semiconductor_relevance": 0.22,
+            "semiconductor_relevance": 0.5,
             "power_grid_relevance": 0,
             "cooling_relevance": 0,
             "capital_markets_relevance": 0,
             "enterprise_ai_infrastructure_relevance": 0,
-            "infrastructure_relevance_score": 0.857,
+            "infrastructure_relevance_score": 0.84,
             "infrastructure_relevance_tier": "full_memo",
             "infrastructure_relevance_action": "generate_full_memo",
             "infrastructure_relevance_reasons": [
               "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-              "data_center_relevance:0.42(data center)",
-              "semiconductor_relevance:0.22(gpu)"
+              "semiconductor_relevance:0.50(nvidia, gpu)"
             ],
             "infrastructureRelevanceAction": "generate_full_memo",
             "articlePagePublished": true,
@@ -7362,17 +7370,85 @@
             "archiveOnly": false,
             "archiveOnlyReason": null
           },
-          "score": 68
+          "score": 69
         },
         {
-          "id": "befd47dfc4a336af",
+          "id": "ea7c824f9474271e",
+          "source": "Data Center Knowledge",
+          "url": "https://www.datacenterknowledge.com/events/gitex-ai-europe",
+          "title": "GITEX AI EUROPE",
+          "snippet": "",
+          "contentText": "",
+          "publishedAt": "2026-06-30T11:00:00.000Z",
+          "sourceImage": "https://eu-images.contentstack.com/v3/assets/blt8eb3cdfc1fce5194/blt6884bd9eb2327fdc/6a0dc34f130b7c5518cc0c2d/GITEX_AI_EUROPE_-_300x250_px_(1).jpg?width=1280&auto=webp&quality=80&disable=upscale",
+          "region": "EU",
+          "language": "en",
+          "defaultCategory": "Colocation & Wholesale",
+          "category": "Data Centers",
+          "primary_category": "Data Centers",
+          "secondary_category": "Campus development and colocation capacity",
+          "infrastructure_layer": "Facility",
+          "affected_stakeholders": [
+            "data center operators",
+            "developers",
+            "site selectors",
+            "investors"
+          ],
+          "article_type": "Other",
+          "urgency_score": 0.43,
+          "taxonomy_confidence": 0.73,
+          "taxonomy_reasons": [
+            "colocation",
+            "wholesale"
+          ],
+          "direct_ai_infrastructure_relevance": 0.78,
+          "data_center_relevance": 0.76,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.77,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:0.78",
+            "data_center_relevance:0.76(data center, colocation)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 0.78,
+            "data_center_relevance": 0.76,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.77,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:0.78",
+              "data_center_relevance:0.76(data center, colocation)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 66
+        },
+        {
+          "id": "5c8ba1c324a5f812",
           "source": "Toms Hardware",
-          "url": "https://www.tomshardware.com/pc-components/hdds/class-action-price-fixing-lawsuit-targets-hard-drive-component-makers-as-costs-skyrocket-13-year-scheme-allegedly-drove-up-prices-for-major-hdd-brands",
-          "title": "Class-action price-fixing lawsuit targets hard drive component makers as costs skyrocket — 13-year scheme allegedly drove up prices for major HDD brands",
-          "snippet": "Class-action lawsuit filed against HDD suspension assembly makers",
-          "contentText": "Class-action lawsuit filed against HDD suspension assembly makers",
-          "publishedAt": "2026-05-22T16:30:27.000Z",
-          "sourceImage": "https://cdn.mos.cms.futurecdn.net/QBrRzDRS6ePUCvwuoY83uE-1280-80.jpg",
+          "url": "https://www.tomshardware.com/gift-guides-seasonal-sales/save-on-your-favorite-tech-over-the-2026-memorial-day-weekend-grab-deals-on-gpus-gaming-laptops-oled-monitors-and-more",
+          "title": "Save on your favorite tech over the 2026 Memorial Day weekend — grab deals on GPUs, gaming laptops, OLED monitors, and more",
+          "snippet": "Our favorite tech deals over the Memorial Day 2026 sales. PC components, Gaming PCs, Gaming Laptops, and Peripherals at discounted prices.",
+          "contentText": "Our favorite tech deals over the Memorial Day 2026 sales. PC components, Gaming PCs, Gaming Laptops, and Peripherals at discounted prices.",
+          "publishedAt": "2026-05-22T21:07:22.000Z",
+          "sourceImage": "https://cdn.mos.cms.futurecdn.net/v6gSx2aid4sgJ8Q2wf58XR-1280-80.jpg",
           "region": "US",
           "language": "en",
           "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
@@ -7430,105 +7506,30 @@
             "archiveOnly": false,
             "archiveOnlyReason": null
           },
-          "score": 67
-        },
-        {
-          "id": "4c03fef4d9c51852",
-          "source": "Hugging Face Blog",
-          "url": "https://huggingface.co/blog/Dharma-AI/specialization-beats-scale",
-          "title": "Specialization Beats Scale: A Strategic Variable Most AI Procurement Decisions Overlook",
-          "snippet": "",
-          "contentText": "",
-          "publishedAt": "2026-05-22T15:25:59.000Z",
-          "sourceImage": null,
-          "region": "Global",
-          "language": "en",
-          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
-          "category": "AI Infrastructure",
-          "primary_category": "AI Infrastructure",
-          "secondary_category": "GPU clusters and deployment readiness",
-          "infrastructure_layer": "Compute",
-          "affected_stakeholders": [
-            "operators",
-            "hyperscalers",
-            "cloud buyers",
-            "investors"
-          ],
-          "article_type": "Supply Chain",
-          "urgency_score": 0.43,
-          "taxonomy_confidence": 0.77,
-          "taxonomy_reasons": [
-            "ai infrastructure",
-            "neocloud"
-          ],
-          "direct_ai_infrastructure_relevance": 1,
-          "data_center_relevance": 0,
-          "cloud_capacity_relevance": 0,
-          "semiconductor_relevance": 0.22,
-          "power_grid_relevance": 0,
-          "cooling_relevance": 0,
-          "capital_markets_relevance": 0,
-          "enterprise_ai_infrastructure_relevance": 0,
-          "infrastructure_relevance_score": 0.778,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "semiconductor_relevance:0.22(gpu)"
-          ],
-          "infrastructure_relevance": {
-            "direct_ai_infrastructure_relevance": 1,
-            "data_center_relevance": 0,
-            "cloud_capacity_relevance": 0,
-            "semiconductor_relevance": 0.22,
-            "power_grid_relevance": 0,
-            "cooling_relevance": 0,
-            "capital_markets_relevance": 0,
-            "enterprise_ai_infrastructure_relevance": 0,
-            "infrastructure_relevance_score": 0.778,
-            "infrastructure_relevance_tier": "full_memo",
-            "infrastructure_relevance_action": "generate_full_memo",
-            "infrastructure_relevance_reasons": [
-              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-              "semiconductor_relevance:0.22(gpu)"
-            ],
-            "infrastructureRelevanceAction": "generate_full_memo",
-            "articlePagePublished": true,
-            "homepagePublished": true,
-            "archiveOnly": false,
-            "archiveOnlyReason": null
-          },
-          "score": 67
+          "score": 64
         }
       ],
       "curatedIds": [
-        "591e567b8323435b",
-        "67c4afa4268ab39a",
-        "9c2d53342061aace",
-        "413664c94a2804e7",
-        "befd47dfc4a336af",
-        "4c03fef4d9c51852"
+        "7f764272333cfe51",
+        "1716485100f56090",
+        "77f48657fd8ed6e0",
+        "5b8f82ba31570b31",
+        "ea7c824f9474271e",
+        "5c8ba1c324a5f812"
       ],
       "publishedIds": [
         "67c4afa4268ab39a",
-        "591e567b8323435b"
+        "591e567b8323435b",
+        "1716485100f56090",
+        "7f764272333cfe51"
       ],
       "slotPublications": {
-        "0": true
+        "0": true,
+        "1": true
       }
     }
   },
   "runHistory": [
-    {
-      "at": "2026-04-08T23:40:52.252Z",
-      "day": "2026-04-09",
-      "slot": 1,
-      "publishedCount": 2,
-      "publishedIds": [
-        "8cdc61350da668aa",
-        "d41e449f777046d0"
-      ]
-    },
     {
       "at": "2026-04-09T08:25:03.080Z",
       "day": "2026-04-09",
@@ -9230,7 +9231,138 @@
       ],
       "signalCardItems": [],
       "archiveOnlyItems": []
+    },
+    {
+      "at": "2026-05-23T00:09:10.729Z",
+      "day": "2026-05-23",
+      "slot": 1,
+      "publishedCount": 0,
+      "signalCardCount": 0,
+      "archiveOnlyCount": 0,
+      "repetitionBlockedCount": 2,
+      "publishedIds": [],
+      "processedIds": [
+        "1716485100f56090",
+        "7f764272333cfe51"
+      ],
+      "blockedCount": 0,
+      "blockedItems": [],
+      "repetitionBlockedItems": [
+        {
+          "id": "1716485100f56090",
+          "title": "Dell Showcases Upcoming EPYC Venice PowerEdge Systems, Adds New 5.8PB PowerStore Elite",
+          "infrastructure_relevance_score": 1,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "data_center_relevance:0.42(data center)",
+            "cloud_capacity_relevance:0.32(hyperscalers)",
+            "semiconductor_relevance:1.00(nvidia, amd, intel)",
+            "power_grid_relevance:0.22(power)",
+            "cooling_relevance:0.34(cooling)"
+          ],
+          "extraction_quality_score": 1,
+          "source_domain_adapter": "servethehome",
+          "content_length": 1753,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": true,
+          "repetition_block_reasons": [
+            "repeated_sentence_ratio>0.12",
+            "heading_sequence_similarity>0.75",
+            "conclusion_similarity>0.7",
+            "blueprint_repetition>2"
+          ],
+          "repetition_check": {
+            "compared_article_count": 49,
+            "repeated_sentence_ratio": 0.16666666666666666,
+            "repeated_paragraph_ratio": 0.16666666666666666,
+            "heading_sequence_similarity": 1,
+            "banned_phrase_count": 0,
+            "banned_phrase_counts": {},
+            "recent_banned_phrase_counts": {},
+            "ngram_overlap": 0.31932773109243695,
+            "blueprint_repetition": 3,
+            "conclusion_similarity": 0.96,
+            "repeated_sentence_count": 1,
+            "repeated_paragraph_count": 1,
+            "heading_sequence": [
+              "Technical Signal",
+              "Failure Domain",
+              "Operator Exposure",
+              "Benchmark To Watch"
+            ],
+            "blocked": true,
+            "reasons": [
+              "repeated_sentence_ratio>0.12",
+              "heading_sequence_similarity>0.75",
+              "conclusion_similarity>0.7",
+              "blueprint_repetition>2"
+            ]
+          },
+          "expert_insight_complete": true,
+          "expert_insight_missing_fields": [],
+          "reason": "repeated_sentence_ratio>0.12; heading_sequence_similarity>0.75; conclusion_similarity>0.7; blueprint_repetition>2"
+        },
+        {
+          "id": "7f764272333cfe51",
+          "title": "AMD EPYC “Venice” Enters 2nm Production at TSMC, Extends CPU Roadmap for AI Infrastructure",
+          "infrastructure_relevance_score": 0.997,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud, hpc)",
+            "data_center_relevance:0.42(data center)",
+            "cloud_capacity_relevance:0.32(hyperscalers)",
+            "semiconductor_relevance:0.90(amd, tsmc, gpu)",
+            "power_grid_relevance:0.22(power)",
+            "cooling_relevance:0.34(cooling)",
+            "enterprise_ai_infrastructure_relevance:0.36(storage, networking)"
+          ],
+          "extraction_quality_score": 1,
+          "source_domain_adapter": "storagereview",
+          "content_length": 1750,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": true,
+          "repetition_block_reasons": [
+            "repeated_sentence_ratio>0.12",
+            "heading_sequence_similarity>0.75",
+            "conclusion_similarity>0.7"
+          ],
+          "repetition_check": {
+            "compared_article_count": 49,
+            "repeated_sentence_ratio": 0.2857142857142857,
+            "repeated_paragraph_ratio": 0.3333333333333333,
+            "heading_sequence_similarity": 1,
+            "banned_phrase_count": 0,
+            "banned_phrase_counts": {},
+            "recent_banned_phrase_counts": {},
+            "ngram_overlap": 0.38596491228070173,
+            "blueprint_repetition": 1,
+            "conclusion_similarity": 0.96,
+            "repeated_sentence_count": 2,
+            "repeated_paragraph_count": 2,
+            "heading_sequence": [
+              "System Change",
+              "Bottleneck",
+              "Engineering Tradeoff",
+              "Validation Metric"
+            ],
+            "blocked": true,
+            "reasons": [
+              "repeated_sentence_ratio>0.12",
+              "heading_sequence_similarity>0.75",
+              "conclusion_similarity>0.7"
+            ]
+          },
+          "expert_insight_complete": true,
+          "expert_insight_missing_fields": [],
+          "reason": "repeated_sentence_ratio>0.12; heading_sequence_similarity>0.75; conclusion_similarity>0.7"
+        }
+      ],
+      "signalCardItems": [],
+      "archiveOnlyItems": []
     }
   ],
-  "lastRunAt": "2026-05-22T17:14:16.123Z"
+  "lastRunAt": "2026-05-23T00:09:10.729Z"
 }
