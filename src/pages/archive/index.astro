@@ -1,26 +1,21 @@
 ---
 import Layout from '../../layouts/Layout.astro';
-import PublicSignalCard from '../../components/PublicSignalCard.astro';
-import taxonomyPages from '../../data/taxonomy-pages.json';
+import LatestAnalysisFeed from '../../components/LatestAnalysisFeed.astro';
+import latestNews from '../../data/latest-news.json';
+import archivedNews from '../../data/archived-news.json';
 import { SITE } from '../../config/site';
-import { buildPublicPresentation } from '../../../scripts/lib/public-presentation.mjs';
-import { routePublicLane } from '../../../scripts/lib/public-lane-router.mjs';
+import { buildArchiveFeed } from '../../../scripts/lib/archive-feed-builder.mjs';
 
-const page = (taxonomyPages.archive || [])[0] || { page: 1, items: [], total: 0 };
-const items = (page.items || []).map((article) => ({
-  publicSignal: buildPublicPresentation(article, { route: article.public_routing || routePublicLane(article) }),
-}));
+const feed = buildArchiveFeed([...latestNews, ...archivedNews], { page: 1, pageSize: 50 });
 ---
-<Layout title={`Archive | ${SITE.name}`} description="Public Compute Current archive." canonicalPath="/archive/">
-  <main class="policy-shell taxonomy-page">
-    <a class="back-link" href="/">Latest board</a>
+<Layout title={`Archive | ${SITE.name}`} description="Search the Compute Current archive." canonicalPath="/archive/">
+  <main class="policy-shell taxonomy-page publication-archive">
+    <a class="back-link" href="/">Latest analysis</a>
     <section class="policy-page">
-      <p class="eyebrow">Public Archive</p>
-      <h1>Published analysis archive</h1>
-      <p class="policy-lede">{page.total} accessible public items. Internal raw source records are not counted as public archive pages.</p>
+      <p class="eyebrow">Archive</p>
+      <h1>Search the archive</h1>
+      <p class="policy-lede">Browse recent AI infrastructure analysis, briefs, and signals.</p>
     </section>
-    <div class="lane-grid taxonomy-grid">
-      {items.map((item) => <PublicSignalCard signal={item.publicSignal} />)}
-    </div>
+    <LatestAnalysisFeed feed={feed} title="Browse Recent Analysis" dek="" />
   </main>
 </Layout>

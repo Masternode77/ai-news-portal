@@ -108,5 +108,12 @@ export function executiveSummaryLines(article = {}) {
 }
 
 export function displayHeadline(article = {}) {
-  return cleanEditorialText(article.expertLensFull?.finalHeadline || article.title || '');
+  const headline = cleanEditorialText(article.expertLensFull?.finalHeadline || article.title || '');
+  const exactDuplicate = headline.replace(/^([^:]{3,80}):\s+\1:\s*/i, '$1: ');
+  const match = exactDuplicate.match(/^([^:]{2,60}):\s+(.+)$/);
+  if (!match) return exactDuplicate;
+  const firstPrefixWord = match[1].trim().split(/\s+/)[0]?.toLowerCase();
+  return firstPrefixWord && match[2].trim().toLowerCase().startsWith(firstPrefixWord)
+    ? match[2].trim()
+    : exactDuplicate;
 }

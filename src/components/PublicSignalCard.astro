@@ -1,6 +1,8 @@
 ---
-const { signal, compact = false } = Astro.props;
+const { signal, compact = false, priority = false } = Astro.props;
 const impact = Array.isArray(signal.reader_impact) ? signal.reader_impact.slice(0, 4) : [];
+const image = signal.image || signal.image_url || '';
+const imageAlt = signal.image_alt || `${signal.title || 'Compute Current signal'} visual`;
 ---
 <article
   class:list={['intel-card', compact && 'intel-card-compact']}
@@ -9,6 +11,17 @@ const impact = Array.isArray(signal.reader_impact) ? signal.reader_impact.slice(
   data-lane={signal.lane_key}
   data-deck={signal.deck}
 >
+  {image ? (
+    signal.view_detail ? (
+      <a class="signal-media" href={signal.view_detail} aria-label={`Open ${signal.title}`}>
+        <img src={image} alt={imageAlt} loading={priority ? 'eager' : 'lazy'} decoding="async" />
+      </a>
+    ) : (
+      <div class="signal-media" aria-hidden="true">
+        <img src={image} alt="" loading="lazy" decoding="async" />
+      </div>
+    )
+  ) : null}
   <div class="story-meta">
     <span class="public-signal-label">{signal.signal_label}</span>
     <span>{signal.editorial_lens}</span>

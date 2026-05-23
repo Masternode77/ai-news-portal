@@ -34,7 +34,7 @@ async function main() {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
-      reason: 'editorial_surface_v2_regeneration',
+      reason: 'public_editorial_feed_regeneration',
       at: new Date().toISOString(),
     }),
   });

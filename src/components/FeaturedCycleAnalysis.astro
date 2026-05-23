@@ -1,23 +1,29 @@
 ---
 import PublicSignalCard from './PublicSignalCard.astro';
-const { items = [], statusLabel = '' } = Astro.props;
+const { items = [], fallbackItems = [], statusLabel = '' } = Astro.props;
+const displayItems = items.length ? items : fallbackItems;
+const showingFallback = !items.length && fallbackItems.length;
 ---
 <section class="featured-cycle" aria-label="Featured analysis from latest editorial cycle">
   <div class="lane-heading">
     <div>
-      <p class="eyebrow">Featured Analysis</p>
-      <h2>Selected by the latest 8-hour desk cycle</h2>
+      <p class="eyebrow">{showingFallback ? 'Latest Analysis' : 'Featured Analysis'}</p>
+      <h2>{showingFallback ? 'Latest articles' : 'Editor-selected analysis'}</h2>
     </div>
-    <p>Compute Current publishes only the strongest verified clusters from each cycle.</p>
+    <p>
+      {showingFallback
+        ? 'Recent article pages and briefs from the public archive.'
+        : 'Recent AI infrastructure analysis with source attribution.'}
+    </p>
   </div>
-  {items.length ? (
+  {displayItems.length ? (
     <div class="lane-grid featured-grid">
-      {items.map((item) => <PublicSignalCard signal={item.publicSignal} />)}
+      {displayItems.map((item, index) => <PublicSignalCard signal={item.publicSignal} priority={index === 0} />)}
     </div>
   ) : (
     <div class="cycle-empty">
-      <h3>No new qualifying signals in the latest 8-hour cycle.</h3>
-      <p>{statusLabel || 'The crawler ran, but no cluster cleared evidence, verification, and relevance gates.'}</p>
+      <h3>No new stories yet.</h3>
+      <p>{statusLabel || 'More analysis is coming soon.'}</p>
     </div>
   )}
 </section>

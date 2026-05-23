@@ -1,4 +1,4 @@
-import { shouldNoindexArticle } from '../../src/lib/seo-safeguards.js';
+import { publicArchiveEligible } from './archive-feed-builder.mjs';
 
 export const CATEGORY_PAGES = [
   ['power-grid', 'Power & Grid'],
@@ -17,7 +17,7 @@ function slugify(value = '') {
 }
 
 export function publicTaxonomyItems(items = []) {
-  return items.filter((article) => article?.id && article.archiveOnly !== true && article.public_status !== 'archive_only_noindex' && article.public_status !== 'quarantined' && !shouldNoindexArticle(article));
+  return items.filter(publicArchiveEligible);
 }
 
 export function categoryForArticle(article = {}) {

@@ -4,18 +4,14 @@ const freshness = model?.freshness || {};
 const cycle = model?.latestCycle || {};
 const fmt = (value) => value ? new Date(value).toLocaleString('en-US', { month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' }) : 'n/a';
 ---
-<section class="cycle-status" aria-label="Editorial cycle status">
+<section class="cycle-status" aria-label="Latest update">
   <div>
-    <p class="eyebrow">Editorial Cycle</p>
-    <h2>{freshness.state === 'fresh' ? 'Autonomous desk is current' : freshness.label || 'Cycle status unavailable'}</h2>
+    <p class="eyebrow">Latest Update</p>
+    <h2>{freshness.state === 'fresh' ? 'Latest coverage is current' : freshness.label || 'More analysis is coming soon'}</h2>
   </div>
   <div class="cycle-grid">
-    <div><span>Last pipeline run</span><strong>{fmt(freshness.last_pipeline_run_at)}</strong></div>
-    <div><span>Latest source scanned</span><strong>{fmt(freshness.latest_source_scanned_at)}</strong></div>
-    <div><span>Latest qualifying signal</span><strong>{fmt(freshness.latest_qualifying_signal_at)}</strong></div>
-    <div><span>Latest published analysis</span><strong>{fmt(freshness.latest_published_analysis_at)}</strong></div>
-    <div><span>Published this cycle</span><strong>{model?.stats?.publishedThisCycle ?? cycle?.published_analyses?.length ?? 0}</strong></div>
-    <div><span>Held this cycle</span><strong>{model?.stats?.heldThisCycle ?? cycle?.held_signals?.length ?? 0}</strong></div>
-    <div><span>Cycle status</span><strong>{cycle?.status || freshness.state || 'not started'}</strong></div>
+    <div><span>Recent source time</span><strong>{fmt(freshness.latest_source_scanned_at)}</strong></div>
+    <div><span>Recent analysis time</span><strong>{fmt(freshness.latest_published_analysis_at)}</strong></div>
+    <div><span>Recent stories</span><strong>{model?.stats?.publishedThisCycle ?? cycle?.published_analyses?.length ?? 0}</strong></div>
   </div>
 </section>

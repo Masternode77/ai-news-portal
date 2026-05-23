@@ -1,0 +1,22 @@
+---
+const { filters = [] } = Astro.props;
+const hrefFor = (label: string) => {
+  const map: Record<string, string> = {
+    All: '/',
+    'Power & Grid': '/category/power-grid/',
+    'Data Centers': '/category/data-centers/',
+    Cooling: '/category/cooling/',
+    'Silicon & Systems': '/category/semiconductors/',
+    'Cloud Capacity': '/category/cloud-capacity/',
+    'Capital & Deals': '/category/capital-markets/',
+    'Policy & Siting': '/category/regulation/',
+    'Enterprise Infrastructure': '/category/ai-infrastructure/',
+  };
+  return map[label] || '/archive/';
+};
+---
+<nav class="feed-filter-bar" aria-label="Coverage filters">
+  {filters.map((label: string) => (
+    <a href={hrefFor(label)}>{label}</a>
+  ))}
+</nav>

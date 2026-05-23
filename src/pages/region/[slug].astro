@@ -1,30 +1,25 @@
 ---
 import Layout from '../../layouts/Layout.astro';
-import PublicSignalCard from '../../components/PublicSignalCard.astro';
+import LatestAnalysisFeed from '../../components/LatestAnalysisFeed.astro';
 import taxonomyPages from '../../data/taxonomy-pages.json';
 import { SITE } from '../../config/site';
-import { buildPublicPresentation } from '../../../scripts/lib/public-presentation.mjs';
-import { routePublicLane } from '../../../scripts/lib/public-lane-router.mjs';
+import { buildHomepageFeed } from '../../../scripts/lib/homepage-feed-builder.mjs';
 
 export function getStaticPaths() {
   return (taxonomyPages.regions || []).map((page) => ({ params: { slug: page.slug }, props: { page } }));
 }
 
 const { page } = Astro.props;
-const items = (page.items || []).map((article) => ({
-  publicSignal: buildPublicPresentation(article, { route: article.public_routing || routePublicLane(article) }),
-}));
+const feed = buildHomepageFeed(page.items || [], { limit: 50, minimumVisible: 0 });
 ---
 <Layout title={`${page.name} | ${SITE.name}`} description={`Compute Current regional coverage for ${page.name}.`} canonicalPath={`/region/${page.slug}/`}>
   <main class="policy-shell taxonomy-page">
-    <a class="back-link" href="/">Latest board</a>
+    <a class="back-link" href="/">Latest analysis</a>
     <section class="policy-page">
       <p class="eyebrow">Region</p>
       <h1>{page.name}</h1>
-      <p class="policy-lede">Regional signals for AI infrastructure operators, investors, and capacity teams.</p>
+      <p class="policy-lede">Regional AI infrastructure analysis and briefs.</p>
     </section>
-    <div class="lane-grid taxonomy-grid">
-      {items.map((item) => <PublicSignalCard signal={item.publicSignal} />)}
-    </div>
+    <LatestAnalysisFeed feed={feed} title={page.name} dek="" />
   </main>
 </Layout>

@@ -9,6 +9,7 @@ function unique(values = []) {
 }
 
 function publicSeoText(article = {}) {
+  const finalBody = article.expertLensFull?.finalArticleBody || '';
   return [
     article.title,
     article.summary,
@@ -19,8 +20,8 @@ function publicSeoText(article = {}) {
     article.public_presentation?.why_it_matters,
     article.expertLensShort,
     article.expertLensFull?.metaDescription,
-    article.expertLensFull?.finalArticleBody,
-    article.articleText,
+    finalBody,
+    finalBody ? '' : article.articleText,
   ].filter(Boolean).join('\n\n');
 }
 

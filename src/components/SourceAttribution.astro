@@ -2,5 +2,8 @@
 const { source } = Astro.props;
 ---
 <p class="source-attribution">
-  Based on reporting from <strong>{source.name}</strong>. Analysis by Compute Current.
+  Based on reporting from <strong>{source.name}</strong>{source.domain ? <> ({source.domain})</> : null}.
+  {source.url ? (
+    <a href={source.url} target="_blank" rel="noopener noreferrer">Read the source</a>
+  ) : null}
 </p>

@@ -7,6 +7,7 @@ import { detectTruncationArtifacts } from './truncation-detector.mjs';
 import { cleanArticleBodyBlocks } from './article-body-cleaner.mjs';
 
 function publicDetailText(article = {}) {
+  const finalBody = article.expertLensFull?.finalArticleBody || '';
   return [
     article.title,
     article.summary,
@@ -16,8 +17,8 @@ function publicDetailText(article = {}) {
     article.expertLensShort,
     article.expertLensFull?.finalHeadline,
     article.expertLensFull?.metaDescription,
-    article.expertLensFull?.finalArticleBody,
-    article.articleText,
+    finalBody,
+    finalBody ? '' : article.articleText,
   ].filter(Boolean).join('\n\n');
 }
 

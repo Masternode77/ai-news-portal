@@ -1,25 +1,13 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import EditorialCycleStatus from '../components/EditorialCycleStatus.astro';
-import FeaturedCycleAnalysis from '../components/FeaturedCycleAnalysis.astro';
-import ActiveWatchlist from '../components/ActiveWatchlist.astro';
-import RecentAnalysisArchive from '../components/RecentAnalysisArchive.astro';
+import LatestAnalysisFeed from '../components/LatestAnalysisFeed.astro';
 import latestNews from '../data/latest-news.json';
 import archivedNews from '../data/archived-news.json';
-import editorialCycles from '../data/editorial-cycles.json';
-import signalClusters from '../data/signal-clusters.json';
-import sourceHealth from '../data/source-health.json';
 import { SITE } from '../config/site';
-import { buildHomepageEditorialModel } from '../../scripts/lib/homepage-editorial-model.mjs';
+import { buildHomepageFeed } from '../../scripts/lib/homepage-feed-builder.mjs';
 
 const boardTitle = SITE.name;
-const model = buildHomepageEditorialModel({
-  latest: latestNews,
-  archived: archivedNews,
-  cycles: editorialCycles,
-  clusters: signalClusters,
-  sourceHealth,
-});
+const feed = buildHomepageFeed([...latestNews, ...archivedNews], { limit: 50, minimumVisible: 30 });
 
 const navLinks = [
   ['Power & Grid', '/category/power-grid/'],
@@ -28,34 +16,16 @@ const navLinks = [
   ['Semiconductors', '/category/semiconductors/'],
   ['Cooling', '/category/cooling/'],
   ['Capital Markets', '/category/capital-markets/'],
-  ['Regulation', '/category/regulation/'],
+  ['Policy & Siting', '/category/regulation/'],
   ['Archive', '/archive/'],
 ];
-
-const stats = [
-  { label: 'Active Signals', value: model.stats.activeSignals },
-  { label: 'Sources Monitored', value: model.stats.sourcesMonitored || 'configured' },
-  { label: 'Pipeline', value: 'runs every 8h' },
-  { label: 'Published Analyses Indexed', value: model.stats.publishedAnalysesIndexed },
-];
 ---
-<Layout title={boardTitle} description={SITE.description} canonicalPath="/">
-  <main class="page-shell autonomous-home">
-    <div class="ambient ambient-a"></div>
-    <div class="ambient ambient-b"></div>
-    <div class="ambient-grid"></div>
-
+<Layout title={boardTitle} description="AI infrastructure intelligence for power, data centers, chips, cloud capacity, cooling, and capital." canonicalPath="/">
+  <main class="page-shell autonomous-home publication-home">
     <header class="publication-header">
       <div class="edition-line">
         <span>AI Infrastructure Intelligence</span>
-        <time>
-          {new Date().toLocaleString('en-US', {
-            month: 'short',
-            day: 'numeric',
-            hour: 'numeric',
-            minute: '2-digit',
-          })}
-        </time>
+        <a href="/rss.xml">RSS</a>
       </div>
 
       <div class="masthead-row">
@@ -63,9 +33,12 @@ const stats = [
           <span>Compute</span>
           <span>Current</span>
         </h1>
-        <p>
-          Autonomous editorial desk tracking the constraints behind the AI buildout: power, cooling, silicon, cloud capacity, data centers, capital, and policy risk.
-        </p>
+        <div class="hero-copy">
+          <p>
+            AI infrastructure intelligence for power, data centers, chips, cloud capacity, cooling, and capital.
+          </p>
+          <a class="newsletter-cta" href="/archive/">Browse recent analysis</a>
+        </div>
       </div>
 
       <nav class="nav-strip" aria-label="Coverage navigation">
@@ -73,42 +46,25 @@ const stats = [
       </nav>
     </header>
 
-    <section class="cycle-brief" aria-label="Desk statistics">
-      <div class="brief-kicker">Desk Cycle</div>
-      <div class="brief-track">
-        {stats.map((stat) => (
-          <span><strong>{stat.value}</strong> {stat.label}</span>
-        ))}
-      </div>
-    </section>
+    <LatestAnalysisFeed
+      feed={feed}
+      title="Latest Analysis"
+      dek="Analysis, briefs, and source-linked signals from the AI infrastructure buildout."
+    />
 
-    <EditorialCycleStatus model={model} />
-
-    <FeaturedCycleAnalysis items={model.featuredAnalyses} statusLabel={model.freshness.label} />
-
-    {model.activeWatchlist.length ? <ActiveWatchlist items={model.activeWatchlist} /> : null}
-
-    {model.recentAnalysis.length ? <RecentAnalysisArchive items={model.recentAnalysis} /> : null}
-
-    <section class="search-shell">
+    <section class="search-shell publication-search">
       <div class="search-copy">
-        <p class="eyebrow">Public Archive</p>
-        <h2>Find published analysis</h2>
+        <p class="eyebrow">Archive</p>
+        <h2>Search the archive</h2>
       </div>
       <p class="archive-note">
-        The public archive contains published analyses and clean watchlist items. Internal raw source volume is tracked separately in admin quality views.
+        Browse recent AI infrastructure coverage by source, date, and category.
       </p>
-      <a class="detail-link archive-link" href="/archive/">Browse archive</a>
+      <a class="detail-link archive-link" href="/archive/">Explore all posts</a>
     </section>
 
-    <footer class="transparency-footer" aria-label="Editorial transparency">
-      <div>
-        <p class="eyebrow">Transparency</p>
-        <p>
-          AI-assisted infrastructure intelligence with source attribution, extraction QA, signal clustering, claim verification, and publish gates for low-quality generated pages.
-        </p>
-      </div>
-      <nav class="policy-link-row" aria-label="Transparency pages">
+    <footer class="transparency-footer" aria-label="Editorial links">
+      <nav class="policy-link-row" aria-label="Publication pages">
         <a href="/about/">About</a>
         <a href="/editorial-policy/">Editorial Policy</a>
         <a href="/methodology/">Methodology</a>

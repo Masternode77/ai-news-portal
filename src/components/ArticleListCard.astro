@@ -1,0 +1,36 @@
+---
+const { signal } = Astro.props;
+const href = signal.view_detail || signal.read_source || '';
+const isExternal = href && !href.startsWith('/');
+const date = signal.date || signal.publishedAt || '';
+const formattedDate = date
+  ? new Date(date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
+  : '';
+const cta = signal.cta || (signal.view_detail ? 'Read analysis' : 'Source');
+---
+<article class="article-list-card" data-public-card>
+  <div class="article-list-card-main">
+    <div class="story-meta">
+      <span class="public-signal-label">{signal.signal_label || signal.label || 'Brief'}</span>
+      {signal.category ? <span>{signal.category}</span> : null}
+      {formattedDate ? <time datetime={date}>{formattedDate}</time> : null}
+      {signal.source ? <span>{signal.source}</span> : null}
+    </div>
+    <h3>
+      {href ? (
+        <a href={href} target={isExternal ? '_blank' : undefined} rel={isExternal ? 'noopener noreferrer' : undefined}>
+          {signal.title}
+        </a>
+      ) : signal.title}
+    </h3>
+    {signal.deck ? <p class="article-deck">{signal.deck}</p> : null}
+    {signal.why_it_matters ? (
+      <p class="article-why"><strong>Why it matters:</strong> {String(signal.why_it_matters).replace(/^Why it matters:\s*/i, '')}</p>
+    ) : null}
+  </div>
+  {href ? (
+    <a class="article-card-cta" href={href} target={isExternal ? '_blank' : undefined} rel={isExternal ? 'noopener noreferrer' : undefined}>
+      {cta}
+    </a>
+  ) : null}
+</article>

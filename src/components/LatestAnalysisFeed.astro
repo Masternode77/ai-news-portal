@@ -1,0 +1,31 @@
+---
+import ArticleListCard from './ArticleListCard.astro';
+import FeedFilterBar from './FeedFilterBar.astro';
+
+const {
+  feed = { items: [], filters: [], emptyState: 'No new stories yet.' },
+  title = 'Latest Analysis',
+  dek = 'A live stream of AI infrastructure analysis, briefs, and market signals.',
+  showFilters = true,
+} = Astro.props;
+const items = feed.items || [];
+---
+<section class="latest-analysis-feed" aria-label={title}>
+  <div class="feed-heading">
+    <div>
+      <p class="eyebrow">Latest Analysis</p>
+      <h2>{title}</h2>
+    </div>
+    {dek ? <p>{dek}</p> : null}
+  </div>
+  {showFilters && feed.filters?.length ? <FeedFilterBar filters={feed.filters} /> : null}
+  {items.length ? (
+    <div class="article-list">
+      {items.map((item: any) => <ArticleListCard signal={item.publicSignal} />)}
+    </div>
+  ) : (
+    <div class="public-empty-state">
+      <p>{feed.emptyState || 'No new stories yet.'}</p>
+    </div>
+  )}
+</section>

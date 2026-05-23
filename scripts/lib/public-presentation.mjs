@@ -1,5 +1,6 @@
 import { generateEditorialExcerpt } from './editorial-excerpt-generator.mjs';
 import { guardPublicCopy } from './copy-quality-guard.mjs';
+import { generateCardCopy } from './card-copy-quality-gate.mjs';
 import { normalizeProperNouns } from './proper-noun-normalizer.mjs';
 import { routePublicLane } from './public-lane-router.mjs';
 
@@ -20,12 +21,30 @@ function stakeholderLabels(article = {}) {
   return normalized.length ? normalized : FALLBACK_READER_IMPACT;
 }
 
+function publicImage(article = {}) {
+  return compact(
+    article.sourceImage
+      || article.generatedImage
+      || article.imageUrl
+      || article.image_url
+      || article.thumbnail
+      || ''
+  );
+}
+
 function normalizedRoute(article = {}, route = undefined) {
   const fallback = routePublicLane(article);
+  const tierLabel = article.public_content_tier === 'longform_analysis'
+    ? 'Analysis'
+    : article.public_content_tier === 'editorial_brief'
+      ? 'Brief'
+      : article.public_content_tier === 'signal_card'
+        ? 'Signal'
+        : '';
   return {
     ...fallback,
     ...(route || {}),
-    public_signal_label: route?.public_signal_label || fallback.public_signal_label || 'Watchlist',
+    public_signal_label: tierLabel || route?.public_signal_label || fallback.public_signal_label || 'Brief',
     editorial_lens: route?.editorial_lens || fallback.editorial_lens || 'Infrastructure Signal',
     laneKey: route?.laneKey || fallback.laneKey || 'adjacent-watchlist',
     laneTitle: route?.laneTitle || fallback.laneTitle || 'Active Watchlist',
@@ -36,7 +55,7 @@ function normalizedRoute(article = {}, route = undefined) {
 
 export function publicDetailHref(article = {}) {
   const sourceUrl = article.sourceUrl || article.url || '';
-  if (article.articlePagePublished === false || article.archiveOnly === true || article.signalCardOnly === true) {
+  if (article.articlePagePublished === false || article.archiveOnly === true || article.signalCardOnly === true || article.public_content_tier === 'editorial_brief' || article.public_content_tier === 'signal_card') {
     return '';
   }
   return article.id ? `/news/${article.id}/` : '';
@@ -49,10 +68,12 @@ export function buildPublicPresentation(article = {}, options = {}) {
     route,
     recentDecks: options.recentDecks || [],
   });
+  const cardCopy = generateCardCopy(article);
   const title = compact(article.expertLensFull?.finalHeadline || article.title || '');
-  const deck = guardPublicCopy(article.deck || persisted.deck || generated.deck).text;
-  const why = guardPublicCopy(article.why_it_matters || persisted.why_it_matters || generated.why_it_matters).text;
+  const deck = guardPublicCopy(cardCopy.deck || article.deck || persisted.deck || generated.deck).text;
+  const why = guardPublicCopy(cardCopy.why_it_matters || article.why_it_matters || persisted.why_it_matters || generated.why_it_matters).text;
   const detailHref = publicDetailHref(article);
+  const image = publicImage(article);
 
   return {
     signal_label: route.public_signal_label || persisted.signal_label,
@@ -60,6 +81,8 @@ export function buildPublicPresentation(article = {}, options = {}) {
     title,
     deck,
     why_it_matters: why,
+    image,
+    image_alt: title ? `${title} editorial visual` : 'Compute Current editorial visual',
     reader_impact: persisted.reader_impact || stakeholderLabels(article),
     region: compact(article.region || 'Global'),
     source: compact(article.source || 'Source'),

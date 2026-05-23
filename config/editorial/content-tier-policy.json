@@ -1,0 +1,34 @@
+{
+  "longform_analysis": {
+    "minRelevance": 0.75,
+    "minExtractionQuality": 0.8,
+    "minEvidenceCharacters": 900,
+    "minFacts": 4,
+    "homepageVisible": true,
+    "detailPage": true,
+    "noindex": false
+  },
+  "editorial_brief": {
+    "minRelevance": 0.58,
+    "minExtractionQuality": 0.75,
+    "minEvidenceCharacters": 360,
+    "minFacts": 2,
+    "homepageVisible": true,
+    "detailPage": false,
+    "noindex": false
+  },
+  "signal_card": {
+    "minRelevance": 0.55,
+    "minExtractionQuality": 0.75,
+    "minEvidenceCharacters": 60,
+    "minFacts": 1,
+    "homepageVisible": true,
+    "detailPage": false,
+    "noindex": true
+  },
+  "hidden": {
+    "homepageVisible": false,
+    "detailPage": false,
+    "noindex": true
+  }
+}
