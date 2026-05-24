@@ -3,6 +3,7 @@ import { guardPublicCopy } from './copy-quality-guard.mjs';
 import { generateCardCopy } from './card-copy-quality-gate.mjs';
 import { normalizeProperNouns } from './proper-noun-normalizer.mjs';
 import { routePublicLane } from './public-lane-router.mjs';
+import { articleDisplayImage, articleImageAlt } from './article-image-surface.mjs';
 
 const FALLBACK_READER_IMPACT = ['Operators', 'Capacity planners'];
 
@@ -22,15 +23,7 @@ function stakeholderLabels(article = {}) {
 }
 
 function publicImage(article = {}) {
-  return compact(
-    article.generatedImage
-      || article.sourceImage
-      || article.image
-      || article.imageUrl
-      || article.image_url
-      || article.thumbnail
-      || ''
-  );
+  return articleDisplayImage(article);
 }
 
 function normalizedRoute(article = {}, route = undefined) {
@@ -77,13 +70,14 @@ export function buildPublicPresentation(article = {}, options = {}) {
   const image = publicImage(article);
 
   return {
+    id: article.id || persisted.id,
     signal_label: route.public_signal_label || persisted.signal_label,
     editorial_lens: route.editorial_lens || persisted.editorial_lens,
     title,
     deck,
     why_it_matters: why,
     image,
-    image_alt: title ? `${title} editorial visual` : 'Compute Current editorial visual',
+    image_alt: persisted.image_alt || articleImageAlt({ ...article, title }),
     reader_impact: persisted.reader_impact || stakeholderLabels(article),
     region: compact(article.region || 'Global'),
     source: compact(article.source || 'Source'),

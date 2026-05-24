@@ -5,6 +5,8 @@ import latestNews from '../src/data/latest-news.json' with { type: 'json' };
 import archivedNews from '../src/data/archived-news.json' with { type: 'json' };
 import { buildHomepageFeed } from '../scripts/lib/homepage-feed-builder.mjs';
 import { isStockDerivedCardImage } from '../scripts/lib/stock-card-image-detector.mjs';
+import { articleDisplayImage } from '../scripts/lib/article-image-surface.mjs';
+import { buildPublicPresentation } from '../scripts/lib/public-presentation.mjs';
 
 test('public feed cards carry displayable editorial images', () => {
   const feed = buildHomepageFeed([...latestNews, ...archivedNews], { limit: 50, minimumVisible: 30 });
@@ -22,4 +24,18 @@ test('article card and header templates render images', () => {
   assert.match(cardSource, /class="article-card-image"/);
   assert.match(headerSource, /class="article-hero-image"/);
   assert.match(articlePageSource, /image=\{detailImage\}/);
+});
+
+test('article image surface falls back to generated per-article artwork', () => {
+  const article = {
+    id: 'image_surface_fixture',
+    title: 'Utility capacity queue forces new AI campus timing',
+  };
+
+  assert.equal(articleDisplayImage(article), '/generated/image_surface_fixture.svg');
+
+  const presentation = buildPublicPresentation(article);
+  assert.equal(presentation.id, article.id);
+  assert.equal(presentation.image, '/generated/image_surface_fixture.svg');
+  assert.match(presentation.image_alt, /Utility capacity queue/);
 });

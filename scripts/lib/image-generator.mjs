@@ -4,6 +4,7 @@ import sharp from 'sharp';
 import { IMAGE_PROVIDER, PIPELINE_OFFLINE } from './constants.mjs';
 import { createImageProvider } from './image-providers/index.mjs';
 import { fetchWithTimeout } from './image-providers/shared.mjs';
+import { isStockDerivedCardImage } from './stock-card-image-detector.mjs';
 
 const OUT_DIR = path.join(process.cwd(), 'public/generated');
 
@@ -173,6 +174,7 @@ async function generateLocalPoster(item) {
 
 export async function needsImageRefresh(item) {
   if (item?.forceImageRefresh || item?.forceAiImage) return true;
+  if (isStockDerivedCardImage(item)) return true;
   if (!item?.generatedImage) return true;
   if (/^https?:\/\//i.test(item.generatedImage)) return true;
   const localPath = path.join(process.cwd(), 'public', item.generatedImage.replace(/^\//, ''));

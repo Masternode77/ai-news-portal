@@ -35,6 +35,7 @@ export const LATEST_NEWS_PATH = 'src/data/latest-news.json';
 export const NEWS_POOL_PATH = 'src/data/news-pool.json';
 export const ARCHIVE_NEWS_PATH = 'src/data/archived-news.json';
 export const SEARCH_INDEX_PATH = 'src/data/search-index.json';
+export const TAXONOMY_PAGES_PATH = 'src/data/taxonomy-pages.json';
 
 export const SUPABASE_URL = process.env.SUPABASE_URL || '';
 export const SUPABASE_SERVICE_ROLE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY || '';

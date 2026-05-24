@@ -21,6 +21,7 @@ import { routePublicLane } from '../../../scripts/lib/public-lane-router.mjs';
 import { cleanArticleBodyBlocks } from '../../../scripts/lib/article-body-cleaner.mjs';
 import { buildHomepageFeed } from '../../../scripts/lib/homepage-feed-builder.mjs';
 import { isPublicLongformArticle } from '../../../scripts/lib/public-surface-eligibility.mjs';
+import { articleDisplayImage, articleImageAlt } from '../../../scripts/lib/article-image-surface.mjs';
 
 export function getStaticPaths() {
   const allArticles = [...latestNews, ...archivedNews];
@@ -53,7 +54,7 @@ if (!article) {
 const displayTitle = displayHeadline(articleRecord);
 const publicRouting = articleRecord.public_routing || routePublicLane(articleRecord);
 const publicPresentation = buildPublicPresentation(articleRecord, { route: publicRouting });
-const detailImage = articleRecord.generatedImage || articleRecord.sourceImage || articleRecord.image || SITE.defaultOgImage;
+const detailImage = articleDisplayImage(articleRecord) || SITE.defaultOgImage;
 const canonicalPath = articleCanonicalPath(articleRecord);
 const articleUrl = `${SITE.url}${canonicalPath}`;
 const taxonomy = taxonomyDisplay(articleRecord);
@@ -105,7 +106,7 @@ const structuredData = buildArticleStructuredData({
           title={displayTitle}
           deck={publicPresentation.deck || articleDescription}
           image={detailImage}
-          imageAlt={publicPresentation.image_alt || `${displayTitle} editorial visual`}
+          imageAlt={publicPresentation.image_alt || articleImageAlt({ ...articleRecord, title: displayTitle })}
         />
 
         {articleBodyBlocks.length ? <ArticleBody blocks={articleBodyBlocks} /> : null}
