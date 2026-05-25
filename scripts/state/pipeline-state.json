@@ -325,7 +325,9 @@
     "6d10c684b4100b4b",
     "af44c4d440e3d001",
     "8f3d8f6ec5737ba7",
-    "ca3ad8830d2e8c6b"
+    "ca3ad8830d2e8c6b",
+    "cdfa3306d7879d20",
+    "1a96668b50f090e9"
   ],
   "dayPlans": {
     "2026-03-24": {
@@ -7108,18 +7110,18 @@
     "2026-05-25": {
       "date": "2026-05-25",
       "createdAt": "2026-05-24T16:07:54.752Z",
-      "refreshedAt": "2026-05-25T00:02:22.704Z",
+      "refreshedAt": "2026-05-25T11:16:26.441Z",
       "candidateWindowHours": 24,
       "curatedItems": [
         {
-          "id": "ca3ad8830d2e8c6b",
-          "source": "ServeTheHome",
-          "url": "https://www.servethehome.com/apc-powerforge-with-dell-and-nvidia-at-dtw-2026/",
-          "title": "APC PowerForge with Dell and NVIDIA at DTW 2026",
-          "snippet": "At Dell Tech World 2026, we saw the APC PowerForge rack that went from a text prompt to 3D printed models on the show floor The post APC PowerForge with Dell and NVIDIA at DTW 2026 appeared first on ServeTheHome.",
-          "contentText": "At Dell Tech World 2026, we saw the APC PowerForge rack that went from a text prompt to 3D printed models on the show floor The post APC PowerForge with Dell and NVIDIA at DTW 2026 appeared first on ServeTheHome .",
-          "publishedAt": "2026-05-24T20:14:23.000Z",
-          "sourceImage": null,
+          "id": "1a96668b50f090e9",
+          "source": "Toms Hardware",
+          "url": "https://www.tomshardware.com/pc-components/power-supplies/super-flower-leadex-2800w-atx-3-1-power-supply-review",
+          "title": "Super Flower Leadex 2800W ATX 3.1 power supply review: Top-notch build quality, exceptional efficiency",
+          "snippet": "The Super Flower Leadex 2800W is a technical statement rather than a conventional product. It delivers extraordinary efficiency, exemplary power quality, and an internal design that leaves nothing on the table. The aski…",
+          "contentText": "The Super Flower Leadex 2800W is a technical statement rather than a conventional product. It delivers extraordinary efficiency, exemplary power quality, and an internal design that leaves nothing on the table. The asking price is extreme, but so is everything else about this unit.",
+          "publishedAt": "2026-05-25T11:00:00.000Z",
+          "sourceImage": "https://cdn.mos.cms.futurecdn.net/mfrHHQxLmyDkef2uRA8mpW-1280-80.jpg",
           "region": "Global",
           "language": "en",
           "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
@@ -7133,76 +7135,8 @@
             "cloud buyers",
             "investors"
           ],
-          "article_type": "Other",
-          "urgency_score": 0.46,
-          "taxonomy_confidence": 0.77,
-          "taxonomy_reasons": [
-            "ai infrastructure",
-            "neocloud"
-          ],
-          "direct_ai_infrastructure_relevance": 1,
-          "data_center_relevance": 0,
-          "cloud_capacity_relevance": 0,
-          "semiconductor_relevance": 0.598,
-          "power_grid_relevance": 0,
-          "cooling_relevance": 0,
-          "capital_markets_relevance": 0,
-          "enterprise_ai_infrastructure_relevance": 0,
-          "infrastructure_relevance_score": 0.862,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "semiconductor_relevance:0.60(nvidia, gpu)"
-          ],
-          "infrastructure_relevance": {
-            "direct_ai_infrastructure_relevance": 1,
-            "data_center_relevance": 0,
-            "cloud_capacity_relevance": 0,
-            "semiconductor_relevance": 0.598,
-            "power_grid_relevance": 0,
-            "cooling_relevance": 0,
-            "capital_markets_relevance": 0,
-            "enterprise_ai_infrastructure_relevance": 0,
-            "infrastructure_relevance_score": 0.862,
-            "infrastructure_relevance_tier": "full_memo",
-            "infrastructure_relevance_action": "generate_full_memo",
-            "infrastructure_relevance_reasons": [
-              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-              "semiconductor_relevance:0.60(nvidia, gpu)"
-            ],
-            "infrastructureRelevanceAction": "generate_full_memo",
-            "articlePagePublished": true,
-            "homepagePublished": true,
-            "archiveOnly": false,
-            "archiveOnlyReason": null
-          },
-          "score": 74
-        },
-        {
-          "id": "8f3d8f6ec5737ba7",
-          "source": "TechCrunch AI",
-          "url": "https://techcrunch.com/2026/05/24/everyone-is-navigating-ai-security-in-real-time-even-google/",
-          "title": "Everyone is navigating AI security in real time — even Google",
-          "snippet": "We're in the transition period -- all of us.",
-          "contentText": "We're in the transition period -- all of us.",
-          "publishedAt": "2026-05-24T21:39:21.000Z",
-          "sourceImage": null,
-          "region": "US",
-          "language": "en",
-          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
-          "category": "AI Infrastructure",
-          "primary_category": "AI Infrastructure",
-          "secondary_category": "GPU clusters and deployment readiness",
-          "infrastructure_layer": "Compute",
-          "affected_stakeholders": [
-            "operators",
-            "hyperscalers",
-            "cloud buyers",
-            "investors"
-          ],
-          "article_type": "Other",
-          "urgency_score": 0.43,
+          "article_type": "Supply Chain",
+          "urgency_score": 0.53,
           "taxonomy_confidence": 0.77,
           "taxonomy_reasons": [
             "ai infrastructure",
@@ -7212,32 +7146,34 @@
           "data_center_relevance": 0,
           "cloud_capacity_relevance": 0,
           "semiconductor_relevance": 0.22,
-          "power_grid_relevance": 0,
+          "power_grid_relevance": 0.297,
           "cooling_relevance": 0,
           "capital_markets_relevance": 0,
           "enterprise_ai_infrastructure_relevance": 0,
-          "infrastructure_relevance_score": 0.778,
+          "infrastructure_relevance_score": 0.83,
           "infrastructure_relevance_tier": "full_memo",
           "infrastructure_relevance_action": "generate_full_memo",
           "infrastructure_relevance_reasons": [
             "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "semiconductor_relevance:0.22(gpu)"
+            "semiconductor_relevance:0.22(gpu)",
+            "power_grid_relevance:0.30(power)"
           ],
           "infrastructure_relevance": {
             "direct_ai_infrastructure_relevance": 1,
             "data_center_relevance": 0,
             "cloud_capacity_relevance": 0,
             "semiconductor_relevance": 0.22,
-            "power_grid_relevance": 0,
+            "power_grid_relevance": 0.297,
             "cooling_relevance": 0,
             "capital_markets_relevance": 0,
             "enterprise_ai_infrastructure_relevance": 0,
-            "infrastructure_relevance_score": 0.778,
+            "infrastructure_relevance_score": 0.83,
             "infrastructure_relevance_tier": "full_memo",
             "infrastructure_relevance_action": "generate_full_memo",
             "infrastructure_relevance_reasons": [
               "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-              "semiconductor_relevance:0.22(gpu)"
+              "semiconductor_relevance:0.22(gpu)",
+              "power_grid_relevance:0.30(power)"
             ],
             "infrastructureRelevanceAction": "generate_full_memo",
             "articlePagePublished": true,
@@ -7245,223 +7181,18 @@
             "archiveOnly": false,
             "archiveOnlyReason": null
           },
-          "score": 67
+          "score": 81
         },
         {
-          "id": "a1c45e830e5f2df0",
-          "source": "Toms Hardware",
-          "url": "https://www.tomshardware.com/tech-industry/drone-breaks-world-speed-record-with-453-mph-in-test-run-exotic-sawtooth-carbon-fiber-propeller-blades-one-of-the-key-advances-in-the-blackbird-design",
-          "title": "Drone breaks world speed record with 453 mph in test run — exotic sawtooth carbon fiber propeller blades one of the key advances in the Blackbird design",
-          "snippet": "A YouTuber duo unofficially broke the world record using a custom-made carbon fiber propeller blade that featured exotic sawtooth leading edges. The first test ended in a disaster, though, after the drone lost contact a…",
-          "contentText": "A YouTuber duo unofficially broke the world record using a custom-made carbon fiber propeller blade that featured exotic sawtooth leading edges. The first test ended in a disaster, though, after the drone lost contact and crashed at 393 mph.",
-          "publishedAt": "2026-05-24T15:09:06.000Z",
-          "sourceImage": "https://cdn.mos.cms.futurecdn.net/cNB68HwbNPD6xnC8xZMxtj-1280-80.png",
+          "id": "cdfa3306d7879d20",
+          "source": "Google Cloud Blog",
+          "url": "https://cloud.google.com/blog/topics/threat-intelligence/chinese-language-phishing-services/",
+          "title": "2 PhaaS 2 Furious: The Evolution of Chinese-language Phishing Services",
+          "snippet": "Written by: Jamie Collier While Russian-speaking threat actors have historically dominated the phishing-as-a-service (PhaaS) landscape, a rival ecosystem is rapidly growing within the Chinese-language underground. Googl…",
+          "contentText": "Written by: Jamie Collier While Russian-speaking threat actors have historically dominated the phishing-as-a-service (PhaaS) landscape, a rival ecosystem is rapidly growing within the Chinese-language underground. Google Threat Intelligence Group (GTIG) analyzed a dozen current PhaaS offerings in the Chinese underground, all of them mature services and many likely tied intricately to the broader criminal ecosystem in that region. These services not only lower the barrier to entry for Chinese cyber criminals, but reveal broader patterns on the evolution of social engineering and credential theft. Late last year , Google took legal action against one PhaaS provider and has worked since then to endorse legislation and enact technical safeguards against these types of scams. Within this ecosy…",
+          "publishedAt": "2026-05-25T14:00:00.000Z",
+          "sourceImage": "https://storage.googleapis.com/gweb-cloudblog-publish/images/phaas-fig1.max-1000x1000.png",
           "region": "US",
-          "language": "en",
-          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
-          "category": "AI Infrastructure",
-          "primary_category": "AI Infrastructure",
-          "secondary_category": "GPU clusters and deployment readiness",
-          "infrastructure_layer": "Compute",
-          "affected_stakeholders": [
-            "operators",
-            "hyperscalers",
-            "cloud buyers",
-            "investors"
-          ],
-          "article_type": "Other",
-          "urgency_score": 0.43,
-          "taxonomy_confidence": 0.77,
-          "taxonomy_reasons": [
-            "ai infrastructure",
-            "neocloud"
-          ],
-          "direct_ai_infrastructure_relevance": 1,
-          "data_center_relevance": 0,
-          "cloud_capacity_relevance": 0,
-          "semiconductor_relevance": 0.22,
-          "power_grid_relevance": 0,
-          "cooling_relevance": 0,
-          "capital_markets_relevance": 0,
-          "enterprise_ai_infrastructure_relevance": 0,
-          "infrastructure_relevance_score": 0.778,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "semiconductor_relevance:0.22(gpu)"
-          ],
-          "infrastructure_relevance": {
-            "direct_ai_infrastructure_relevance": 1,
-            "data_center_relevance": 0,
-            "cloud_capacity_relevance": 0,
-            "semiconductor_relevance": 0.22,
-            "power_grid_relevance": 0,
-            "cooling_relevance": 0,
-            "capital_markets_relevance": 0,
-            "enterprise_ai_infrastructure_relevance": 0,
-            "infrastructure_relevance_score": 0.778,
-            "infrastructure_relevance_tier": "full_memo",
-            "infrastructure_relevance_action": "generate_full_memo",
-            "infrastructure_relevance_reasons": [
-              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-              "semiconductor_relevance:0.22(gpu)"
-            ],
-            "infrastructureRelevanceAction": "generate_full_memo",
-            "articlePagePublished": true,
-            "homepagePublished": true,
-            "archiveOnly": false,
-            "archiveOnlyReason": null
-          },
-          "score": 65
-        },
-        {
-          "id": "b1bc1a206061f469",
-          "source": "Toms Hardware",
-          "url": "https://www.tomshardware.com/tech-industry/jensen-huang-urges-super-micro-to-tighten-compliance",
-          "title": "After $2.5 billion Supermicro smuggling bust, Nvidia CEO urges company to fix export control compliance — Taiwan also begins to crack down on AI GPU chip smuggling to China",
-          "snippet": "Huang told reporters at Songshan Airport that Nvidia insists its partners follow U.S. trade rules.",
-          "contentText": "Huang told reporters at Songshan Airport that Nvidia insists its partners follow U.S. trade rules.",
-          "publishedAt": "2026-05-24T14:20:29.000Z",
-          "sourceImage": "https://cdn.mos.cms.futurecdn.net/Hdv8mZ6kFHJcQnFcDeqwqR-1280-80.jpg",
-          "region": "APAC",
-          "language": "en",
-          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
-          "category": "Semiconductors",
-          "primary_category": "Semiconductors",
-          "secondary_category": "Accelerators, memory, and advanced packaging",
-          "infrastructure_layer": "Silicon",
-          "affected_stakeholders": [
-            "semiconductor suppliers",
-            "hyperscalers",
-            "server OEMs",
-            "investors"
-          ],
-          "article_type": "Policy / Regulation",
-          "urgency_score": 0.46,
-          "taxonomy_confidence": 0.88,
-          "taxonomy_reasons": [
-            "chip",
-            "gpu",
-            "nvidia"
-          ],
-          "direct_ai_infrastructure_relevance": 1,
-          "data_center_relevance": 0,
-          "cloud_capacity_relevance": 0,
-          "semiconductor_relevance": 0.675,
-          "power_grid_relevance": 0,
-          "cooling_relevance": 0,
-          "capital_markets_relevance": 0,
-          "enterprise_ai_infrastructure_relevance": 0,
-          "infrastructure_relevance_score": 0.878,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "semiconductor_relevance:0.68(nvidia, gpu)"
-          ],
-          "infrastructure_relevance": {
-            "direct_ai_infrastructure_relevance": 1,
-            "data_center_relevance": 0,
-            "cloud_capacity_relevance": 0,
-            "semiconductor_relevance": 0.675,
-            "power_grid_relevance": 0,
-            "cooling_relevance": 0,
-            "capital_markets_relevance": 0,
-            "enterprise_ai_infrastructure_relevance": 0,
-            "infrastructure_relevance_score": 0.878,
-            "infrastructure_relevance_tier": "full_memo",
-            "infrastructure_relevance_action": "generate_full_memo",
-            "infrastructure_relevance_reasons": [
-              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-              "semiconductor_relevance:0.68(nvidia, gpu)"
-            ],
-            "infrastructureRelevanceAction": "generate_full_memo",
-            "articlePagePublished": true,
-            "homepagePublished": true,
-            "archiveOnly": false,
-            "archiveOnlyReason": null
-          },
-          "score": 58
-        },
-        {
-          "id": "65fc21b93d650cdd",
-          "source": "Data Center Dynamics",
-          "url": "https://www.datacenterdynamics.com/en/opinions/ai-factories-have-a-fiber-problem/",
-          "title": "AI factories have a fiber problem",
-          "snippet": "Best get connected",
-          "contentText": "Best get connected",
-          "publishedAt": "2026-05-24T11:00:27.000Z",
-          "sourceImage": "https://media.datacenterdynamics.com/media/images/Joda_Schaumberg_Headshot.2e16d0ba.fill-750x500.png",
-          "region": "Global",
-          "language": "en",
-          "defaultCategory": "Colocation & Wholesale",
-          "category": "Data Centers",
-          "primary_category": "Data Centers",
-          "secondary_category": "Campus development and colocation capacity",
-          "infrastructure_layer": "Facility",
-          "affected_stakeholders": [
-            "data center operators",
-            "developers",
-            "site selectors",
-            "investors"
-          ],
-          "article_type": "Other",
-          "urgency_score": 0.43,
-          "taxonomy_confidence": 0.73,
-          "taxonomy_reasons": [
-            "colocation",
-            "wholesale"
-          ],
-          "direct_ai_infrastructure_relevance": 0.78,
-          "data_center_relevance": 0.76,
-          "cloud_capacity_relevance": 0,
-          "semiconductor_relevance": 0,
-          "power_grid_relevance": 0,
-          "cooling_relevance": 0,
-          "capital_markets_relevance": 0,
-          "enterprise_ai_infrastructure_relevance": 0,
-          "infrastructure_relevance_score": 0.77,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:0.78",
-            "data_center_relevance:0.76(data center, colocation)"
-          ],
-          "infrastructure_relevance": {
-            "direct_ai_infrastructure_relevance": 0.78,
-            "data_center_relevance": 0.76,
-            "cloud_capacity_relevance": 0,
-            "semiconductor_relevance": 0,
-            "power_grid_relevance": 0,
-            "cooling_relevance": 0,
-            "capital_markets_relevance": 0,
-            "enterprise_ai_infrastructure_relevance": 0,
-            "infrastructure_relevance_score": 0.77,
-            "infrastructure_relevance_tier": "full_memo",
-            "infrastructure_relevance_action": "generate_full_memo",
-            "infrastructure_relevance_reasons": [
-              "direct_ai_infrastructure_relevance:0.78",
-              "data_center_relevance:0.76(data center, colocation)"
-            ],
-            "infrastructureRelevanceAction": "generate_full_memo",
-            "articlePagePublished": true,
-            "homepagePublished": true,
-            "archiveOnly": false,
-            "archiveOnlyReason": null
-          },
-          "score": 52
-        },
-        {
-          "id": "a84be313eea6306a",
-          "source": "Bloomberg Technology",
-          "url": "https://www.bloomberg.com/news/articles/2026-05-24/ecb-convenes-banks-to-fix-flaws-exposed-by-ai-models-ft-says",
-          "title": "ECB Convenes Banks to Fix Flaws Exposed by AI Models, FT Says",
-          "snippet": "The European Central Bank plans to press lenders to accelerate efforts to secure their IT systems after organizing a meeting on cybersecurity risks with the latest artificial intelligence models, the Financial Times rep…",
-          "contentText": "The European Central Bank plans to press lenders to accelerate efforts to secure their IT systems after organizing a meeting on cybersecurity risks with the latest artificial intelligence models, the Financial Times reported.",
-          "publishedAt": "2026-05-24T18:32:23.000Z",
-          "sourceImage": "https://assets.bwbx.io/images/users/iqjWHBFdfxIU/i9S.RB9MGPsI/v1/1200x-1.jpg",
-          "region": "EU",
           "language": "en",
           "defaultCategory": "Hyperscalers & Cloud",
           "category": "Cloud Capacity",
@@ -7474,42 +7205,40 @@
             "enterprise IT",
             "operators"
           ],
-          "article_type": "Other",
-          "urgency_score": 0.28,
-          "taxonomy_confidence": 0.5,
+          "article_type": "Product / Platform Update",
+          "urgency_score": 0.3,
+          "taxonomy_confidence": 0.54,
           "taxonomy_reasons": [
             "fallback_taxonomy"
           ],
-          "direct_ai_infrastructure_relevance": 0.22,
+          "direct_ai_infrastructure_relevance": 0,
           "data_center_relevance": 0,
-          "cloud_capacity_relevance": 0.32,
+          "cloud_capacity_relevance": 0.56,
           "semiconductor_relevance": 0,
           "power_grid_relevance": 0,
           "cooling_relevance": 0,
           "capital_markets_relevance": 0,
           "enterprise_ai_infrastructure_relevance": 0,
-          "infrastructure_relevance_score": 0.304,
+          "infrastructure_relevance_score": 0.36,
           "infrastructure_relevance_tier": "archive_only",
           "infrastructure_relevance_action": "archive_only",
           "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:0.22",
-            "cloud_capacity_relevance:0.32(hyperscalers)"
+            "cloud_capacity_relevance:0.56(hyperscalers, google cloud)"
           ],
           "infrastructure_relevance": {
-            "direct_ai_infrastructure_relevance": 0.22,
+            "direct_ai_infrastructure_relevance": 0,
             "data_center_relevance": 0,
-            "cloud_capacity_relevance": 0.32,
+            "cloud_capacity_relevance": 0.56,
             "semiconductor_relevance": 0,
             "power_grid_relevance": 0,
             "cooling_relevance": 0,
             "capital_markets_relevance": 0,
             "enterprise_ai_infrastructure_relevance": 0,
-            "infrastructure_relevance_score": 0.304,
+            "infrastructure_relevance_score": 0.36,
             "infrastructure_relevance_tier": "archive_only",
             "infrastructure_relevance_action": "archive_only",
             "infrastructure_relevance_reasons": [
-              "direct_ai_infrastructure_relevance:0.22",
-              "cloud_capacity_relevance:0.32(hyperscalers)"
+              "cloud_capacity_relevance:0.56(hyperscalers, google cloud)"
             ],
             "infrastructureRelevanceAction": "archive_only",
             "articlePagePublished": false,
@@ -7517,40 +7246,301 @@
             "archiveOnly": true,
             "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
           },
-          "score": 51
+          "score": 61
+        },
+        {
+          "id": "bff256c3ad55d2bb",
+          "source": "Bloomberg Technology",
+          "url": "https://www.bloomberg.com/news/articles/2026-05-25/zepto-said-to-plan-june-public-filing-for-1-billion-india-ipo",
+          "title": "Zepto Said to Plan June Public Filing for $1 Billion India IPO",
+          "snippet": "Rapid-commerce firm Zepto Ltd. is preparing to publicly file in the first half of June for an initial public offering that may raise up to $1 billion, according to people familiar with the matter.",
+          "contentText": "Rapid-commerce firm Zepto Ltd. is preparing to publicly file in the first half of June for an initial public offering that may raise up to $1 billion, according to people familiar with the matter.",
+          "publishedAt": "2026-05-25T10:23:52.000Z",
+          "sourceImage": "https://assets.bwbx.io/images/users/iqjWHBFdfxIU/iWPhxrtnOxhc/v1/1200x-1.jpg",
+          "region": "APAC",
+          "language": "en",
+          "defaultCategory": "Hyperscalers & Cloud",
+          "category": "Capital Markets",
+          "primary_category": "Capital Markets",
+          "secondary_category": "Financing, valuation, and capital structure",
+          "infrastructure_layer": "Capital",
+          "affected_stakeholders": [
+            "investors",
+            "lenders",
+            "developers",
+            "operators"
+          ],
+          "article_type": "Financing / M&A",
+          "urgency_score": 0.28,
+          "taxonomy_confidence": 0.61,
+          "taxonomy_reasons": [
+            "ipo"
+          ],
+          "direct_ai_infrastructure_relevance": 0,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0.32,
+          "semiconductor_relevance": 0,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0.324,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.328,
+          "infrastructure_relevance_tier": "archive_only",
+          "infrastructure_relevance_action": "archive_only",
+          "infrastructure_relevance_reasons": [
+            "cloud_capacity_relevance:0.32(hyperscalers)",
+            "capital_markets_relevance:0.32(ipo)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 0,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0.32,
+            "semiconductor_relevance": 0,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0.324,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.328,
+            "infrastructure_relevance_tier": "archive_only",
+            "infrastructure_relevance_action": "archive_only",
+            "infrastructure_relevance_reasons": [
+              "cloud_capacity_relevance:0.32(hyperscalers)",
+              "capital_markets_relevance:0.32(ipo)"
+            ],
+            "infrastructureRelevanceAction": "archive_only",
+            "articlePagePublished": false,
+            "homepagePublished": false,
+            "archiveOnly": true,
+            "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
+          },
+          "score": 60
+        },
+        {
+          "id": "b6386410a2ab068a",
+          "source": "Data Center Dynamics",
+          "url": "https://www.datacenterdynamics.com/en/news/future-publishing-selects-telehouse-as-colocation-partner/",
+          "title": "Future Publishing selects Telehouse as colocation partner",
+          "snippet": "Specialist media platform will use Telehouse South facility",
+          "contentText": "Specialist media platform will use Telehouse South facility",
+          "publishedAt": "2026-05-25T08:00:34.000Z",
+          "sourceImage": "https://media.datacenterdynamics.com/media/images/Telehouse_Docklands_South_II.2e16d0ba.fill-750x500.jpg",
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "Colocation & Wholesale",
+          "category": "Data Centers",
+          "primary_category": "Data Centers",
+          "secondary_category": "Campus development and colocation capacity",
+          "infrastructure_layer": "Facility",
+          "affected_stakeholders": [
+            "data center operators",
+            "developers",
+            "site selectors",
+            "investors"
+          ],
+          "article_type": "Product / Platform Update",
+          "urgency_score": 0.35,
+          "taxonomy_confidence": 0.78,
+          "taxonomy_reasons": [
+            "colocation",
+            "wholesale"
+          ],
+          "direct_ai_infrastructure_relevance": 0,
+          "data_center_relevance": 0.879,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.545,
+          "infrastructure_relevance_tier": "archive_only",
+          "infrastructure_relevance_action": "archive_only",
+          "infrastructure_relevance_reasons": [
+            "data_center_relevance:0.88(data center, colocation)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 0,
+            "data_center_relevance": 0.879,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.545,
+            "infrastructure_relevance_tier": "archive_only",
+            "infrastructure_relevance_action": "archive_only",
+            "infrastructure_relevance_reasons": [
+              "data_center_relevance:0.88(data center, colocation)"
+            ],
+            "infrastructureRelevanceAction": "archive_only",
+            "articlePagePublished": false,
+            "homepagePublished": false,
+            "archiveOnly": true,
+            "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
+          },
+          "score": 49
+        },
+        {
+          "id": "98379a82de48e133",
+          "source": "Bloomberg Technology",
+          "url": "https://www.bloomberg.com/news/articles/2026-05-25/softbank-shares-hit-record-high-with-lift-from-openai-ipo-hopes",
+          "title": "SoftBank Shares Hit Record With Lift From OpenAI IPO Hopes",
+          "snippet": "SoftBank Group Corp. shares climbed to a record high, spurred by hopes of big returns from the Japanese investor’s stakes in OpenAI and SB Energy Corp., should the two go public.",
+          "contentText": "SoftBank Group Corp. shares climbed to a record high, spurred by hopes of big returns from the Japanese investor’s stakes in OpenAI and SB Energy Corp., should the two go public.",
+          "publishedAt": "2026-05-25T06:37:01.000Z",
+          "sourceImage": "https://assets.bwbx.io/images/users/iqjWHBFdfxIU/ie9wvoHnGcSo/v1/1200x-1.jpg",
+          "region": "APAC",
+          "language": "en",
+          "defaultCategory": "Hyperscalers & Cloud",
+          "category": "Capital Markets",
+          "primary_category": "Capital Markets",
+          "secondary_category": "Financing, valuation, and capital structure",
+          "infrastructure_layer": "Capital",
+          "affected_stakeholders": [
+            "investors",
+            "lenders",
+            "developers",
+            "operators"
+          ],
+          "article_type": "Financing / M&A",
+          "urgency_score": 0.28,
+          "taxonomy_confidence": 0.61,
+          "taxonomy_reasons": [
+            "ipo"
+          ],
+          "direct_ai_infrastructure_relevance": 0,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0.32,
+          "semiconductor_relevance": 0,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0.324,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.328,
+          "infrastructure_relevance_tier": "archive_only",
+          "infrastructure_relevance_action": "archive_only",
+          "infrastructure_relevance_reasons": [
+            "cloud_capacity_relevance:0.32(hyperscalers)",
+            "capital_markets_relevance:0.32(ipo)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 0,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0.32,
+            "semiconductor_relevance": 0,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0.324,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.328,
+            "infrastructure_relevance_tier": "archive_only",
+            "infrastructure_relevance_action": "archive_only",
+            "infrastructure_relevance_reasons": [
+              "cloud_capacity_relevance:0.32(hyperscalers)",
+              "capital_markets_relevance:0.32(ipo)"
+            ],
+            "infrastructureRelevanceAction": "archive_only",
+            "articlePagePublished": false,
+            "homepagePublished": false,
+            "archiveOnly": true,
+            "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
+          },
+          "score": 37
+        },
+        {
+          "id": "c77aa1a7c9f767d8",
+          "source": "Toms Hardware",
+          "url": "https://www.tomshardware.com/tech-industry/researchers-identify-people-through-ordinary-wi-fi-routers-with-99-percent-accuracy",
+          "title": "Researchers identify people through ordinary Wi-Fi routers with 99.5% accuracy — technique works with standard Wi-Fi routers",
+          "snippet": "The system requires no specialized hardware, no access to the target Wi-Fi network, and works even if the person being tracked isn't carrying a wireless device.",
+          "contentText": "The system requires no specialized hardware, no access to the target Wi-Fi network, and works even if the person being tracked isn't carrying a wireless device.",
+          "publishedAt": "2026-05-25T10:41:00.000Z",
+          "sourceImage": "https://cdn.mos.cms.futurecdn.net/kfvNwDT4D6jpoBvqVwPdcE-1280-80.webp",
+          "region": "Global",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "category": "AI Infrastructure",
+          "primary_category": "AI Infrastructure",
+          "secondary_category": "GPU clusters and deployment readiness",
+          "infrastructure_layer": "Compute",
+          "affected_stakeholders": [
+            "operators",
+            "hyperscalers",
+            "cloud buyers",
+            "investors"
+          ],
+          "article_type": "Research / Technical",
+          "urgency_score": 0.43,
+          "taxonomy_confidence": 0.77,
+          "taxonomy_reasons": [
+            "ai infrastructure",
+            "neocloud"
+          ],
+          "direct_ai_infrastructure_relevance": 1,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0.22,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.778,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "semiconductor_relevance:0.22(gpu)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 1,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0.22,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.778,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+              "semiconductor_relevance:0.22(gpu)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 72
         }
       ],
       "curatedIds": [
-        "ca3ad8830d2e8c6b",
-        "8f3d8f6ec5737ba7",
-        "a1c45e830e5f2df0",
-        "b1bc1a206061f469",
-        "65fc21b93d650cdd",
-        "a84be313eea6306a"
+        "1a96668b50f090e9",
+        "cdfa3306d7879d20",
+        "bff256c3ad55d2bb",
+        "b6386410a2ab068a",
+        "98379a82de48e133",
+        "c77aa1a7c9f767d8"
       ],
       "publishedIds": [
         "6d10c684b4100b4b",
         "af44c4d440e3d001",
         "8f3d8f6ec5737ba7",
-        "ca3ad8830d2e8c6b"
+        "ca3ad8830d2e8c6b",
+        "cdfa3306d7879d20",
+        "1a96668b50f090e9"
       ],
       "slotPublications": {
         "0": true,
-        "1": true
+        "1": true,
+        "2": true
       }
     }
   },
   "runHistory": [
-    {
-      "at": "2026-04-09T08:25:03.080Z",
-      "day": "2026-04-09",
-      "slot": 2,
-      "publishedCount": 2,
-      "publishedIds": [
-        "a3d96ff68d9f3e3c",
-        "589ff6b848fb9ace"
-      ]
-    },
     {
       "at": "2026-04-09T16:22:43.225Z",
       "day": "2026-04-10",
@@ -9095,7 +9085,102 @@
       ],
       "signalCardItems": [],
       "archiveOnlyItems": []
+    },
+    {
+      "at": "2026-05-25T11:16:26.441Z",
+      "day": "2026-05-25",
+      "slot": 2,
+      "publishedCount": 0,
+      "signalCardCount": 1,
+      "archiveOnlyCount": 0,
+      "repetitionBlockedCount": 1,
+      "publishedIds": [],
+      "processedIds": [
+        "cdfa3306d7879d20",
+        "1a96668b50f090e9"
+      ],
+      "blockedCount": 0,
+      "blockedItems": [],
+      "repetitionBlockedItems": [
+        {
+          "id": "1a96668b50f090e9",
+          "title": "Super Flower Leadex 2800W ATX 3.1 power supply review: Top-notch build quality, exceptional efficiency",
+          "infrastructure_relevance_score": 0.87,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "cloud_capacity_relevance:0.32(hyperscalers)",
+            "semiconductor_relevance:0.22(gpu)",
+            "power_grid_relevance:0.30(power)"
+          ],
+          "extraction_quality_score": 1,
+          "source_domain_adapter": "generic",
+          "content_length": 1562,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": true,
+          "repetition_block_reasons": [
+            "repeated_sentence_ratio>0.12",
+            "heading_sequence_similarity>0.75",
+            "conclusion_similarity>0.7"
+          ],
+          "repetition_check": {
+            "compared_article_count": 17,
+            "repeated_sentence_ratio": 0.14285714285714285,
+            "repeated_paragraph_ratio": 0.16666666666666666,
+            "heading_sequence_similarity": 1,
+            "banned_phrase_count": 0,
+            "banned_phrase_counts": {},
+            "recent_banned_phrase_counts": {},
+            "ngram_overlap": 0.3951612903225806,
+            "blueprint_repetition": 2,
+            "conclusion_similarity": 0.8999999999999998,
+            "repeated_sentence_count": 1,
+            "repeated_paragraph_count": 1,
+            "heading_sequence": [
+              "Deal Signal",
+              "Contract Quality",
+              "Operating Dependency",
+              "Investor Test"
+            ],
+            "blocked": true,
+            "reasons": [
+              "repeated_sentence_ratio>0.12",
+              "heading_sequence_similarity>0.75",
+              "conclusion_similarity>0.7"
+            ]
+          },
+          "expert_insight_complete": true,
+          "expert_insight_missing_fields": [],
+          "reason": "repeated_sentence_ratio>0.12; heading_sequence_similarity>0.75; conclusion_similarity>0.7"
+        }
+      ],
+      "signalCardItems": [
+        {
+          "id": "cdfa3306d7879d20",
+          "title": "2 PhaaS 2 Furious: The Evolution of Chinese-language Phishing Services",
+          "infrastructure_relevance_score": 0.7,
+          "infrastructure_relevance_tier": "signal_card",
+          "infrastructure_relevance_action": "publish_signal_card_only",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:0.70(ai infrastructure)",
+            "cloud_capacity_relevance:0.76(hyperscalers, google cloud, provisioning)",
+            "power_grid_relevance:0.22(power)"
+          ],
+          "extraction_quality_score": 1,
+          "source_domain_adapter": "googlecloud",
+          "content_length": 1740,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": false,
+          "repetition_block_reasons": [],
+          "repetition_check": null,
+          "expert_insight_complete": true,
+          "expert_insight_missing_fields": [],
+          "reason": "infrastructure_relevance_signal_card_threshold"
+        }
+      ],
+      "archiveOnlyItems": []
     }
   ],
-  "lastRunAt": "2026-05-25T00:02:22.704Z"
+  "lastRunAt": "2026-05-25T11:16:26.441Z"
 }
