@@ -166,6 +166,203 @@
     "generatedImageModel": "local-svg"
   },
   {
+    "id": "4d21b727a5d2e275",
+    "source": "HPCwire",
+    "url": "https://www.hpcwire.com/2026/05/26/inside-memkv-minios-3-5g-solution-for-kv-cache-acceleration/",
+    "title": "Inside MemKV, MinIO’s 3.5G Solution for KV Cache Acceleration",
+    "snippet": "MinIO rolled out its second major product earlier this month. Dubbed MemKV, the software expands the KV cache layer in AI inference clusters, thereby enabling bigger context windows. Living at the 3.5G layer in Nvidia’s…",
+    "contentText": "MinIO rolled out its second major product earlier this month. Dubbed MemKV, the software expands the KV cache layer in AI inference clusters, thereby enabling bigger context windows. Living at the 3.5G layer in Nvidia’s CMX stack, MinIO says MemKV will give customers microsecond context retrieval latencies on petabyte-scale data sets. As AI inference workloads scale up, systems are quickly running out of memory to store AI state, or the responses to questions that have already been computed by the GPU during the initial prefill stage and other information that the user or agent added for context. This state data is stored as a key-value (KV) pair in a cache. As the KV cache fills up, it spills over from fast HBM and DRAM memory to slower storage medium, which increases the wait times that…",
+    "publishedAt": "2026-05-26T22:32:59.000Z",
+    "sourceImage": "https://www.hpcwire.com/wp-content/uploads/2026/05/Nvidia-CMX-300x265.png",
+    "region": "APAC",
+    "language": "en",
+    "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+    "category": "Semiconductors",
+    "primary_category": "Semiconductors",
+    "secondary_category": "Accelerators, memory, and advanced packaging",
+    "infrastructure_layer": "Silicon",
+    "affected_stakeholders": [
+      "semiconductor suppliers",
+      "hyperscalers",
+      "server OEMs",
+      "investors"
+    ],
+    "article_type": "Capacity Expansion",
+    "urgency_score": 0.72,
+    "taxonomy_confidence": 0.95,
+    "taxonomy_reasons": [
+      "semiconductor",
+      "chip",
+      "gpu",
+      "nvidia",
+      "amd",
+      "hbm"
+    ],
+    "direct_ai_infrastructure_relevance": 1,
+    "data_center_relevance": 0,
+    "cloud_capacity_relevance": 0.32,
+    "semiconductor_relevance": 1,
+    "power_grid_relevance": 0.22,
+    "cooling_relevance": 0,
+    "capital_markets_relevance": 0,
+    "enterprise_ai_infrastructure_relevance": 0.48,
+    "infrastructure_relevance_score": 1,
+    "infrastructure_relevance_tier": "full_memo",
+    "infrastructure_relevance_action": "generate_full_memo",
+    "infrastructure_relevance_reasons": [
+      "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+      "cloud_capacity_relevance:0.32(hyperscalers)",
+      "semiconductor_relevance:1.00(nvidia, amd, hbm)",
+      "power_grid_relevance:0.22(power)",
+      "enterprise_ai_infrastructure_relevance:0.48(storage, inference workloads)"
+    ],
+    "infrastructure_relevance": {
+      "direct_ai_infrastructure_relevance": 1,
+      "data_center_relevance": 0,
+      "cloud_capacity_relevance": 0.32,
+      "semiconductor_relevance": 1,
+      "power_grid_relevance": 0.22,
+      "cooling_relevance": 0,
+      "capital_markets_relevance": 0,
+      "enterprise_ai_infrastructure_relevance": 0.48,
+      "infrastructure_relevance_score": 1,
+      "infrastructure_relevance_tier": "full_memo",
+      "infrastructure_relevance_action": "generate_full_memo",
+      "infrastructure_relevance_reasons": [
+        "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+        "cloud_capacity_relevance:0.32(hyperscalers)",
+        "semiconductor_relevance:1.00(nvidia, amd, hbm)",
+        "power_grid_relevance:0.22(power)",
+        "enterprise_ai_infrastructure_relevance:0.48(storage, inference workloads)"
+      ],
+      "infrastructureRelevanceAction": "generate_full_memo",
+      "articlePagePublished": true,
+      "homepagePublished": true,
+      "archiveOnly": false,
+      "archiveOnlyReason": null
+    },
+    "score": 86,
+    "slug": "inside-memkv-minio-s-3-5g-solution-for-kv-cache-acceleration",
+    "summary": "There is a certain rhythm to the technology industry that I&rsquo;ve observed over several decades:... Something about building GenAI LLMs bugs me. Before I begin, let me be clear…",
+    "insight": "The practical effect is on compute supply, deployment speed, and network orchestration. The advantage goes to teams that line up power, facility design, network topology, and silicon timing instead of optimizing one layer in isolation.",
+    "expert_insight": {
+      "concrete_facts": [
+        "Living at the 3.5G layer in Nvidia’s CMX stack, MinIO says MemKV will give customers microsecond context retrieval latencies on petabyte-scale data sets.",
+        "Living at the 3.5G layer in Nvidia’s… The practical effect is on compute supply, deployment speed, and network orchestration.",
+        "Google is launching a series of new tools to help scientists leverage AI technology as...",
+        "AI infrastructure and software company Scale AI has signed an MOU with the Department of...",
+        "Concerns with Ozaki Scheme emulation have led AMD chip designers to conclude there&rsquo;s currently no..."
+      ],
+      "named_companies": [
+        "Nvidia",
+        "Google",
+        "AMD"
+      ],
+      "infrastructure_layer": "Silicon",
+      "bottleneck_type": "power_grid",
+      "who_gains_leverage": "utilities, power-secured developers, and operators with firm interconnection positions",
+      "who_takes_execution_risk": "developers and cloud buyers whose delivery dates depend on utility upgrades or energization schedules",
+      "timing_dependency": "utility interconnection, equipment procurement, and energization milestones",
+      "counterargument": "More compute supply does not automatically become useful capacity if facilities, power, networking, and software readiness lag.",
+      "next_observable_signal": "interconnection approvals, substation equipment dates, power purchase agreements, or disclosed energization windows",
+      "expert_insight_complete": true,
+      "expert_insight_missing_fields": []
+    },
+    "expertInsight": {
+      "concrete_facts": [
+        "Living at the 3.5G layer in Nvidia’s CMX stack, MinIO says MemKV will give customers microsecond context retrieval latencies on petabyte-scale data sets.",
+        "Living at the 3.5G layer in Nvidia’s… The practical effect is on compute supply, deployment speed, and network orchestration.",
+        "Google is launching a series of new tools to help scientists leverage AI technology as...",
+        "AI infrastructure and software company Scale AI has signed an MOU with the Department of...",
+        "Concerns with Ozaki Scheme emulation have led AMD chip designers to conclude there&rsquo;s currently no..."
+      ],
+      "named_companies": [
+        "Nvidia",
+        "Google",
+        "AMD"
+      ],
+      "infrastructure_layer": "Silicon",
+      "bottleneck_type": "power_grid",
+      "who_gains_leverage": "utilities, power-secured developers, and operators with firm interconnection positions",
+      "who_takes_execution_risk": "developers and cloud buyers whose delivery dates depend on utility upgrades or energization schedules",
+      "timing_dependency": "utility interconnection, equipment procurement, and energization milestones",
+      "counterargument": "More compute supply does not automatically become useful capacity if facilities, power, networking, and software readiness lag.",
+      "next_observable_signal": "interconnection approvals, substation equipment dates, power purchase agreements, or disclosed energization windows",
+      "expert_insight_complete": true,
+      "expert_insight_missing_fields": []
+    },
+    "concrete_facts": [
+      "Living at the 3.5G layer in Nvidia’s CMX stack, MinIO says MemKV will give customers microsecond context retrieval latencies on petabyte-scale data sets.",
+      "Living at the 3.5G layer in Nvidia’s… The practical effect is on compute supply, deployment speed, and network orchestration.",
+      "Google is launching a series of new tools to help scientists leverage AI technology as...",
+      "AI infrastructure and software company Scale AI has signed an MOU with the Department of...",
+      "Concerns with Ozaki Scheme emulation have led AMD chip designers to conclude there&rsquo;s currently no..."
+    ],
+    "named_companies": [
+      "Nvidia",
+      "Google",
+      "AMD"
+    ],
+    "bottleneck_type": "power_grid",
+    "who_gains_leverage": "utilities, power-secured developers, and operators with firm interconnection positions",
+    "who_takes_execution_risk": "developers and cloud buyers whose delivery dates depend on utility upgrades or energization schedules",
+    "timing_dependency": "utility interconnection, equipment procurement, and energization milestones",
+    "counterargument": "More compute supply does not automatically become useful capacity if facilities, power, networking, and software readiness lag.",
+    "next_observable_signal": "interconnection approvals, substation equipment dates, power purchase agreements, or disclosed energization windows",
+    "expert_insight_complete": true,
+    "expert_insight_missing_fields": [],
+    "tags": [
+      "gpu",
+      "cloud",
+      "semiconductor"
+    ],
+    "imagePrompt": "Editorial hero image for enterprise technology news. No logos, no text, no watermark, no brand marks. Topic: Inside MemKV, MinIO’s 3.5G Solution for KV Cache Acceleration. Category: Hyperscalers & Cloud. Mood: premium, cinematic, monochrome glass dashboard aesthetic. Context: There is a certain rhythm to the technology industry that I&rsquo;ve observed over several decades:... Something about building GenAI LLMs bugs me. Before I begin, let me be clear…. Include modern data center, network, semiconductor, cloud, or grid motifs only when relevant. 16:9 composition.",
+    "lang": "en",
+    "articleText": "There is a certain rhythm to the technology industry that I&rsquo;ve observed over several decades:... Something about building GenAI LLMs bugs me. Before I begin, let me be clear: I... Google is launching a series of new tools to help scientists leverage AI technology as... AI infrastructure and software company Scale AI has signed an MOU with the Department of... For most of the AI boom, the general assumption regarding AI hardware was to keep... At HPCwire we have covered how the race to deploy agentic AI is already heavily... Concerns with Ozaki Scheme emulation have led AMD chip designers to conclude there&rsquo;s currently no... China&rsquo;s National Supercomputing Center in Shenzhen last week introduced LineShine, a new supercomputer that it... The incredible demand that AI is placing on technology is forcing changes to be made... After several months of radio silence on the matter, Honeywell announced today that Quantinuum confidentially... IBM and RIKEN today announced they have successfully used a quantum computer to simulate a... The first stage of GenAI largely focused on training massive models and deploying chat interfaces.... Yesterday the U.S. Department of Commerce announced letters of intent (LOIs) with nine quantum computing... For years, hyperscalers built infrastructure largely for their own cloud ecosystems. However, AI is starting...",
+    "content_length": 1379,
+    "boilerplate_ratio": 0,
+    "title_body_similarity": 0,
+    "copyright_footer_detected": false,
+    "nav_or_cta_detected": false,
+    "sentence_completion_score": 1,
+    "source_domain_adapter": "generic",
+    "extraction_quality_score": 0.95,
+    "extraction_qa": {
+      "content_length": 1379,
+      "boilerplate_ratio": 0,
+      "title_body_similarity": 0,
+      "copyright_footer_detected": false,
+      "legal_boilerplate_detected": false,
+      "nav_or_cta_detected": false,
+      "sentence_completion_score": 1,
+      "source_domain_adapter": "generic",
+      "extraction_quality_score": 0.95,
+      "extraction_failure_reason": null,
+      "extraction_quality_reasons": [
+        "title_body_similarity 0.00 low"
+      ]
+    },
+    "sourceUrl": "https://www.hpcwire.com/2026/05/26/inside-memkv-minios-3-5g-solution-for-kv-cache-acceleration/",
+    "generatedImage": "/generated/4d21b727a5d2e275.svg",
+    "infrastructureRelevanceAction": "generate_full_memo",
+    "articlePagePublished": false,
+    "homepagePublished": true,
+    "archiveOnly": false,
+    "archiveOnlyReason": null,
+    "qualityGateBlocked": true,
+    "qualityGateReason": "fail_closed: source_text_incomplete:ellipsis_truncation_artifact, ellipsis_truncation_artifact",
+    "qualityGateBlockedAt": "2026-05-27T00:09:03.703Z",
+    "signalCardOnly": true,
+    "signalCardReason": "fail_closed: source_text_incomplete:ellipsis_truncation_artifact, ellipsis_truncation_artifact",
+    "article_blueprint": null,
+    "articleBlueprint": null,
+    "expertLensShort": null,
+    "expertLensFull": null,
+    "expertLens": null,
+    "generatedImageProvider": "local-placeholder",
+    "generatedImageModel": "local-svg"
+  },
+  {
     "id": "cf753845198cd7d0",
     "source": "HPCwire",
     "url": "https://www.hpcwire.com/off-the-wire/qumulo-introduces-cloud-ai-accelerator-to-create-gpu-liquidity-for-the-enterprise/",
@@ -733,7 +930,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-05-26T17:58:22.543Z",
+      "generatedAt": "2026-05-27T00:09:21.846Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Google",
@@ -1813,7 +2010,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-05-26T17:58:23.166Z",
+      "generatedAt": "2026-05-27T00:09:22.520Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Samsung",
@@ -2340,7 +2537,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-05-26T17:58:23.421Z",
+      "generatedAt": "2026-05-27T00:09:22.788Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Poland Data",
@@ -2548,7 +2745,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-05-26T00:08:40.247Z",
+      "generatedAt": "2026-05-27T00:09:23.024Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "AMD",
@@ -3105,7 +3302,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-05-26T17:58:23.787Z",
+      "generatedAt": "2026-05-27T00:09:23.295Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "StorageReview",
@@ -3313,7 +3510,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-05-26T17:58:24.011Z",
+      "generatedAt": "2026-05-27T00:09:23.530Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "StorageReview",
@@ -3529,7 +3726,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-05-26T17:58:24.233Z",
+      "generatedAt": "2026-05-27T00:09:23.767Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Dell: Dell",
@@ -3741,7 +3938,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-05-26T17:58:24.456Z",
+      "generatedAt": "2026-05-27T00:09:24.006Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Virginia Tightens Data",
@@ -3951,7 +4148,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-05-26T17:58:24.677Z",
+      "generatedAt": "2026-05-27T00:09:24.244Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Quantum Networking Era Data",
@@ -4580,7 +4777,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-05-26T17:58:24.936Z",
+      "generatedAt": "2026-05-27T00:09:24.527Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "AWS",
@@ -5028,7 +5225,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "editorial-story-engine-v2",
-      "generatedAt": "2026-05-26T17:58:25.265Z",
+      "generatedAt": "2026-05-27T00:09:24.878Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "NetApp",
@@ -5386,7 +5583,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "editorial-story-engine-v2",
-      "generatedAt": "2026-05-26T17:58:25.495Z",
+      "generatedAt": "2026-05-27T00:09:25.119Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "NetApp",
@@ -5744,7 +5941,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "editorial-story-engine-v2",
-      "generatedAt": "2026-05-26T17:58:25.722Z",
+      "generatedAt": "2026-05-27T00:09:25.360Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Supermicro",
@@ -6111,7 +6308,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "editorial-story-engine-v2",
-      "generatedAt": "2026-05-26T17:58:25.949Z",
+      "generatedAt": "2026-05-27T00:09:25.606Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Supermicro",
@@ -6476,7 +6673,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "editorial-story-engine-v2",
-      "generatedAt": "2026-05-26T17:58:26.180Z",
+      "generatedAt": "2026-05-27T00:09:25.852Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Veeam Expands Data",
@@ -6844,7 +7041,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "editorial-story-engine-v2",
-      "generatedAt": "2026-05-26T17:58:26.411Z",
+      "generatedAt": "2026-05-27T00:09:26.099Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Veeam Expands Data",
@@ -7210,7 +7407,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "editorial-story-engine-v2",
-      "generatedAt": "2026-05-26T17:58:26.631Z",
+      "generatedAt": "2026-05-27T00:09:26.332Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "CoreWeave",
@@ -7611,7 +7808,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "editorial-story-engine-v2",
-      "generatedAt": "2026-05-26T17:58:26.858Z",
+      "generatedAt": "2026-05-27T00:09:26.573Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "NVIDIA",
@@ -7975,7 +8172,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "editorial-story-engine-v2",
-      "generatedAt": "2026-05-26T17:58:27.088Z",
+      "generatedAt": "2026-05-27T00:09:26.817Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Digital Infrastructure Data",
@@ -8347,7 +8544,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "editorial-story-engine-v2",
-      "generatedAt": "2026-05-26T17:58:27.319Z",
+      "generatedAt": "2026-05-27T00:09:27.063Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Digital Infrastructure Data",
@@ -8714,11 +8911,11 @@
     "articleText": "Charting the Future of Data Center, Cloud, and AI Infrastructure The latest wave of AI infrastructure expansion is no longer defined solely by hyperscale land grabs and new data center campuses. Increasingly, the industry&rsquo;s &ldquo;land and expand&rdquo; strategy now encompasses the broader industrial ecosystem required to deploy AI at scale. That ecosystem now spans power, optical manufacturing, accelerated compute architecture, supply chains, and vertically integrated infrastructure partnerships. The useful read is which stakeholder controls land, power, capital, chips, and customer demand, not whether every item points to the same bottleneck. Charting the Future of Data Center, Cloud, and AI Infrastructure The latest wave of AI infrastructure expansion is no longer defined solely by hyperscale land grabs and new data center campuses. Increasingly, the industry&rsquo;s &ldquo;land and expand&rdquo; strategy now encompasses the broader industrial ecosystem required to deploy AI at scale. That ecosystem now spans power, optical manufacturing, accelerated compute architecture, supply chains, and vertically integrated infrastructure partnerships. The useful read is which stakeholder controls land, power, capital, chips, and customer demand, not whether every item points to the same bottleneck. Charting the Future of Data Center, Cloud, and AI Infrastructure The latest wave o Data Center Frontier reported: Land and Expand: NVIDIA, IREN, Coatue, Microsoft, Switch, Cerebras, Core Scientific. Commercially, the item changes how buyers, operators, or investors should read capacity, cost, or execution risk around power.",
     "sourceUrl": "https://www.datacenterfrontier.com/machine-learning/news/55377695/land-and-expand-nvidia-iren-coatue-microsoft-switch-cerebras-core-scientific",
     "generatedImage": "/generated/c1fb0077cc25e13b.svg",
-    "expertLensShort": "NVIDIA, IREN, Coatue, Microsoft, Switch, Cerebras, and Core Scientific belong in a market map, not a single forced capacity thesis.",
+    "expertLensShort": "Market Map is the sharper read on NVIDIA because the source names a decision point rather than a generic AI trend.",
     "expertLensFull": {
       "version": 2,
       "mode": "editorial-story-engine-v2",
-      "generatedAt": "2026-05-26T17:58:27.547Z",
+      "generatedAt": "2026-05-27T00:09:27.320Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "NVIDIA",
@@ -8770,7 +8967,7 @@
         "minChars": 1200,
         "maxChars": 1900
       },
-      "thesis": "NVIDIA, IREN, Coatue, Microsoft, Switch, Cerebras, and Core Scientific belong in a market map, not a single forced capacity thesis.",
+      "thesis": "Market Map is the sharper read on NVIDIA because the source names a decision point rather than a generic AI trend.",
       "whatHappened": "A Data Center Frontier roundup grouped NVIDIA, IREN, Coatue, Microsoft, Switch, Cerebras, and Core Scientific into one market view.",
       "whyThisMatters": "The useful read is which stakeholder controls land, power, capital, chips, and customer demand, not whether every item points to the same bottleneck.",
       "marketMissing": "A Data Center Frontier roundup grouped NVIDIA, IREN, Coatue, Microsoft, Switch, Cerebras, and Core Scientific into one market view should be separated by control point before readers treat the source as one capacity thesis.",
@@ -8791,11 +8988,11 @@
         "Land and Expand: NVIDIA, IREN, Coatue, Microsoft, Switch, Cerebras, Core Scientific: the strategic read-throu"
       ],
       "finalHeadline": "Land and Expand: NVIDIA, IREN, Coatue, Microsoft, Switch, Cerebras, Core Scientific",
-      "metaDescription": "NVIDIA, IREN, Coatue, Microsoft, Switch, Cerebras, and Core Scientific belong in a market map, not a single forced capacity thesis.",
-      "finalArticleBody": "NVIDIA, IREN, Coatue, Microsoft, Switch, Cerebras, and Core Scientific belong in a market map, not a single forced capacity thesis.\n\nThe Map\n\nA Data Center Frontier roundup grouped NVIDIA, IREN, Coatue, Microsoft, Switch, Cerebras, and Core Scientific into one market view is more useful as a map of control points than as one broad capacity claim.\n\nControl Points\n\nData center operators and developers can use the item to test market map before changing procurement, deployment, or risk assumptions.\n\nWho Is Exposed\n\nA Data Center Frontier roundup grouped NVIDIA, IREN, Coatue, Microsoft, Switch, Cerebras, and Core Scientific into one market view should be separated by control point before readers treat the source as one capacity thesis; that keeps the public read tied to evidence instead of treating the announcement as finished capacity.\n\nSignals To Separate\n\nReaders should track which named actor controls land, power, capital, chips, or contracted customer demand before treating the item as a planning assumption for power.",
+      "metaDescription": "Market Map is the sharper read on NVIDIA because the source names a decision point rather than a generic AI trend.",
+      "finalArticleBody": "Market Map is the sharper read on NVIDIA because the source names a decision point rather than a generic AI trend.\n\nThe Map\n\nA Data Center Frontier roundup grouped NVIDIA, IREN, Coatue, Microsoft, Switch, Cerebras, and Core Scientific into one market view is more useful as a map of control points than as one broad capacity claim.\n\nControl Points\n\nData center operators and developers can use the item to test market map before changing procurement, deployment, or risk assumptions.\n\nWho Is Exposed\n\nA Data Center Frontier roundup grouped NVIDIA, IREN, Coatue, Microsoft, Switch, Cerebras, and Core Scientific into one market view should be separated by control point before readers treat the source as one capacity thesis; that keeps the public read tied to evidence instead of treating the announcement as finished capacity.\n\nSignals To Separate\n\nReaders should track which named actor controls land, power, capital, chips, or contracted customer demand before treating the item as a planning assumption for power.",
       "sourceLink": "https://www.datacenterfrontier.com/machine-learning/news/55377695/land-and-expand-nvidia-iren-coatue-microsoft-switch-cerebras-core-scientific"
     },
-    "expertLens": "NVIDIA, IREN, Coatue, Microsoft, Switch, Cerebras, and Core Scientific belong in a market map, not a single forced capacity thesis.",
+    "expertLens": "Market Map is the sharper read on NVIDIA because the source names a decision point rather than a generic AI trend.",
     "primary_category": "Data Centers",
     "secondary_category": "Campus development and colocation capacity",
     "infrastructure_layer": "power",
@@ -9114,426 +9311,5 @@
     "generatedImageModel": "local-svg",
     "stockImageReplacedAt": "2026-05-23T15:28:43.159Z",
     "updatedAt": "2026-05-23T16:17:17.456Z"
-  },
-  {
-    "id": "watch_sig_67388f7424faba26",
-    "source": "Data Center Frontier",
-    "url": "https://www.datacenterfrontier.com/machine-learning/news/55377695/land-and-expand-nvidia-iren-coatue-microsoft-switch-cerebras-core-scientific",
-    "title": "Microsoft: Land and Expand: NVIDIA, IREN, Coatue, Microsoft, Switch, Cerebras, Core Scientific",
-    "snippet": "Microsoft: Land and Expand: NVIDIA, IREN, Coatue, Microsoft, Switch, Cerebras, Core Scientific keeps power availability near the center of AI campus timing, interconnection risk, and buyer commitments.",
-    "contentText": "Charting the Future of Data Center, Cloud, and AI Infrastructure The latest wave of AI infrastructure expansion is no longer defined solely by hyperscale land grabs and new data center campuses. Increasingly, the industry&rsquo;s &ldquo;land and expand&rdquo; strategy now encompasses the broader industrial ecosystem required to deploy AI at scale. That ecosystem now spans power, optical manufacturing, accelerated compute architecture, supply chains, and vertically integrated infrastructure partnerships. The useful read is which stakeholder controls land, power, capital, chips, and customer demand, not whether every item points to the same bottleneck. Charting the Future of Data Center, Cloud, and AI Infrastructure The latest wave of AI infrastructure expansion is no longer defined solely by hyperscale land grabs and new data center campuses. Increasingly, the industry&rsquo;s &ldquo;land and expand&rdquo; strategy now encompasses the broader industrial ecosystem required to deploy AI at scale. That ecosystem now spans power, optical manufacturing, accelerated compute architecture, supply chains, and vertically integrated infrastructure partnerships. The useful read is which stakeholder controls land, power, capital, chips, and customer demand, not whether every item points to the same bottleneck. Charting the Future of Data Center, Cloud, and AI Infrastructure The latest wave o Data Center Frontier reported: Land and Expand: NVIDIA, IREN, Coatue, Microsoft, Switch, Cerebras, Core Scientific. Commercially, the item changes how buyers, operators, or investors should read capacity, cost, or execution risk around power.",
-    "publishedAt": "2026-05-14T15:27:57.000Z",
-    "sourceImage": "https://img.datacenterfrontier.com/files/base/ebm/datacenterfrontier/image/2026/05/6a05d5f28cc18faa87d986e4-nvidiaendeavorbuildinglogo.png",
-    "region": "APAC",
-    "language": "en",
-    "defaultCategory": "Colocation & Wholesale",
-    "score": 70,
-    "slug": "land-and-expand-nvidia-iren-coatue-microsoft-switch-cerebras-core-scientific",
-    "summary": "Why it matters: grid access is becoming a gating condition for AI buildouts, not a back-office procurement detail.",
-    "insight": "The practical effect is on compute supply, deployment speed, and network orchestration; operators and investors that align power, facility design, network topology, and silicon timing will compound the advantage faster than teams opti",
-    "category": "Data Centers",
-    "tags": [
-      "gpu",
-      "cloud",
-      "power"
-    ],
-    "imagePrompt": "Editorial hero image for enterprise technology news. No logos, no text, no watermark, no brand marks. Topic: Land and Expand: NVIDIA, IREN, Coatue, Microsoft, Switch, Cerebras, Core Scientific. Category: Hyperscalers & Cloud. Mood: premium, cinematic, monochrome glass dashboard aesthetic. Context: Charting the Future of Data Center, Cloud, and AI Infrastructure The latest wave of AI infrastructure expansion is no longer defined solely by hyperscale land grabs and new data c…. Include modern data center, network, semiconductor, cloud, or grid motifs only when relevant. 16:9 composition.",
-    "lang": "en",
-    "articleText": "Charting the Future of Data Center, Cloud, and AI Infrastructure The latest wave of AI infrastructure expansion is no longer defined solely by hyperscale land grabs and new data center campuses. Increasingly, the industry&rsquo;s &ldquo;land and expand&rdquo; strategy now encompasses the broader industrial ecosystem required to deploy AI at scale. That ecosystem now spans power, optical manufacturing, accelerated compute architecture, supply chains, and vertically integrated infrastructure partnerships. The useful read is which stakeholder controls land, power, capital, chips, and customer demand, not whether every item points to the same bottleneck. Charting the Future of Data Center, Cloud, and AI Infrastructure The latest wave of AI infrastructure expansion is no longer defined solely by hyperscale land grabs and new data center campuses. Increasingly, the industry&rsquo;s &ldquo;land and expand&rdquo; strategy now encompasses the broader industrial ecosystem required to deploy AI at scale. That ecosystem now spans power, optical manufacturing, accelerated compute architecture, supply chains, and vertically integrated infrastructure partnerships. The useful read is which stakeholder controls land, power, capital, chips, and customer demand, not whether every item points to the same bottleneck. Charting the Future of Data Center, Cloud, and AI Infrastructure The latest wave o Data Center Frontier reported: Land and Expand: NVIDIA, IREN, Coatue, Microsoft, Switch, Cerebras, Core Scientific. Commercially, the item changes how buyers, operators, or investors should read capacity, cost, or execution risk around power.",
-    "sourceUrl": "https://www.datacenterfrontier.com/machine-learning/news/55377695/land-and-expand-nvidia-iren-coatue-microsoft-switch-cerebras-core-scientific",
-    "generatedImage": "/generated/c1fb0077cc25e13b.svg",
-    "expertLensShort": "Market Map is the sharper read on Microsoft because the source names a decision point rather than a generic AI trend.",
-    "expertLensFull": {
-      "version": 2,
-      "mode": "editorial-story-engine-v2",
-      "generatedAt": "2026-05-26T17:58:27.787Z",
-      "generation_version": "editorial_surface_v2",
-      "narrative_dna": {
-        "protagonist": "Microsoft",
-        "concrete_event": "a Data Center Frontier roundup grouped NVIDIA, IREN, Coatue, Microsoft, Switch, Cerebras, and Core Scientific into one market view",
-        "core_tension": "Microsoft has to translate a data center frontier roundup grouped nvidia, iren, coatue, microsoft, switch, cerebras, and core scientific into one market view into a power decision that survives cost, timing, or operating constraints",
-        "infrastructure_layer": "power",
-        "reader_role": [
-          "data center operators",
-          "developers",
-          "site selectors",
-          "investors"
-        ],
-        "decision_relevance": "data center operators and developers can use the item to test market map before changing procurement, deployment, or risk assumptions",
-        "evidence_anchor": "Charting the Future of Data Center, Cloud, and AI Infrastructure The latest wave of AI infrastructure expansion is no longer defined solely by hyperscale land grabs and new data center campuses. Increasingly, the industry&rsquo;s &ldquo;land and expand&rdquo; strategy now encompasses the broader industrial ecosystem required to deploy AI at scale. That ecosystem now spans",
-        "counterpoint": "a Data Center Frontier roundup grouped NVIDIA, IREN, Coatue, Microsoft, Switch, Cerebras, and Core Scientific into one market view should be separated by control point before readers treat the source as one capacity thesis",
-        "watch_metric": "which named actor controls land, power, capital, chips, or contracted customer demand",
-        "time_horizon": "near term",
-        "public_signal_label": "Adjacent Signal",
-        "editorial_lens": "Market Map",
-        "story_archetype": "Market Map",
-        "story_archetype_id": "market-map",
-        "routing_decision": "adjacent_watchlist",
-        "valid_for_full_article": false,
-        "missing_fields": [],
-        "truncation": {
-          "ok": true,
-          "artifacts": []
-        }
-      },
-      "dynamicBriefLabel": "Adjacent Signal",
-      "blueprintId": "constraint-ledger",
-      "blueprintName": "Constraint Ledger",
-      "blueprint": {
-        "id": "constraint-ledger",
-        "name": "Constraint Ledger",
-        "sectionHeadings": [
-          "Change",
-          "Infrastructure Read",
-          "Exposed Edges",
-          "Decision Point"
-        ],
-        "paragraphRhythm": [
-          1,
-          2,
-          2,
-          1
-        ],
-        "targetParagraphs": 6,
-        "minChars": 1200,
-        "maxChars": 1900
-      },
-      "thesis": "Market Map is the sharper read on Microsoft because the source names a decision point rather than a generic AI trend.",
-      "whatHappened": "A Data Center Frontier roundup grouped NVIDIA, IREN, Coatue, Microsoft, Switch, Cerebras, and Core Scientific into one market view.",
-      "whyThisMatters": "The useful read is which stakeholder controls land, power, capital, chips, and customer demand, not whether every item points to the same bottleneck.",
-      "marketMissing": "A Data Center Frontier roundup grouped NVIDIA, IREN, Coatue, Microsoft, Switch, Cerebras, and Core Scientific into one market view should be separated by control point before readers treat the source as one capacity thesis.",
-      "investors": "Data center operators and developers can use the item to test market map before changing procurement, deployment, or risk assumptions.",
-      "operators": "Power teams should track which named actor controls land, power, capital, chips, or contracted customer demand.",
-      "hyperscalers": "Cloud and platform buyers should separate source evidence from generic AI demand before changing deployment plans.",
-      "watchNext": "Which named actor controls land, power, capital, chips, or contracted customer demand.",
-      "executiveSummary": [
-        "A Data Center Frontier roundup grouped NVIDIA, IREN, Coatue, Microsoft, Switch, Cerebras, and Core Scientific into one market view.",
-        "Data center operators and developers can use the item to test market map before changing procurement, deployment, or risk assumptions.",
-        "Watch which named actor controls land, power, capital, chips, or contracted customer demand."
-      ],
-      "headlineOptions": [
-        "Land and Expand: NVIDIA, IREN, Coatue, Microsoft, Switch, Cerebras, Core Scientific",
-        "Data Center Frontier signal: why this move matters beyond the headline",
-        "Land and Expand: NVIDIA, IREN, Coatue, Microsoft, Switch, Cerebras, Core Scientific raises the stakes for ope",
-        "What Land and Expand: NVIDIA, IREN, Coatue, Microsoft, Switch, Cerebras, Core Scientific says about the next",
-        "Land and Expand: NVIDIA, IREN, Coatue, Microsoft, Switch, Cerebras, Core Scientific: the strategic read-throu"
-      ],
-      "finalHeadline": "Microsoft: Land and Expand: NVIDIA, IREN, Coatue, Microsoft, Switch, Cerebras, Core Scientific",
-      "metaDescription": "Market Map is the sharper read on Microsoft because the source names a decision point rather than a generic AI trend.",
-      "finalArticleBody": "Market Map is the sharper read on Microsoft because the source names a decision point rather than a generic AI trend.\n\nMarket Pieces\n\nA Data Center Frontier roundup grouped NVIDIA, IREN, Coatue, Microsoft, Switch, Cerebras, and Core Scientific into one market view is more useful as a map of control points than as one broad capacity claim.\n\nLand Power Capital Chips\n\nA Data Center Frontier roundup grouped NVIDIA, IREN, Coatue, Microsoft, Switch, Cerebras, and Core Scientific into one market view should be separated by control point before readers treat the source as one capacity thesis; that keeps the public read tied to evidence instead of treating the announcement as finished capacity.\n\nDemand Test\n\nThe next useful checkpoint is which named actor controls land, power, capital, chips, or contracted customer demand over the near term window.\n\nWhat To Split Out\n\nReaders should track which named actor controls land, power, capital, chips, or contracted customer demand before treating the item as a planning assumption for power.",
-      "sourceLink": "https://www.datacenterfrontier.com/machine-learning/news/55377695/land-and-expand-nvidia-iren-coatue-microsoft-switch-cerebras-core-scientific"
-    },
-    "expertLens": "Market Map is the sharper read on Microsoft because the source names a decision point rather than a generic AI trend.",
-    "primary_category": "power",
-    "secondary_category": "Campus development and colocation capacity",
-    "infrastructure_layer": "power",
-    "affected_stakeholders": [
-      "data center operators",
-      "developers",
-      "site selectors",
-      "investors"
-    ],
-    "article_type": "Watchlist Signal",
-    "urgency_score": 0.72,
-    "taxonomy_confidence": 0.81,
-    "taxonomy_reasons": [
-      "data center",
-      "colocation",
-      "wholesale"
-    ],
-    "content_length": 2088,
-    "boilerplate_ratio": 0,
-    "title_body_similarity": 0.8,
-    "copyright_footer_detected": false,
-    "nav_or_cta_detected": false,
-    "sentence_completion_score": 0.74,
-    "source_domain_adapter": "datacenterfrontier",
-    "extraction_quality_score": 0.9,
-    "extraction_qa": {
-      "content_length": 2088,
-      "boilerplate_ratio": 0,
-      "title_body_similarity": 0.8,
-      "copyright_footer_detected": false,
-      "nav_or_cta_detected": false,
-      "sentence_completion_score": 0.74,
-      "source_domain_adapter": "datacenterfrontier",
-      "extraction_quality_score": 1,
-      "extraction_failure_reason": null,
-      "extraction_quality_reasons": []
-    },
-    "direct_ai_infrastructure_relevance": 0.82,
-    "data_center_relevance": 1,
-    "cloud_capacity_relevance": 0,
-    "semiconductor_relevance": 0.378,
-    "power_grid_relevance": 0.84,
-    "cooling_relevance": 0,
-    "capital_markets_relevance": 0,
-    "enterprise_ai_infrastructure_relevance": 0.18,
-    "infrastructure_relevance_score": 0.72,
-    "infrastructure_relevance_tier": "full_memo",
-    "infrastructure_relevance_action": "generate_full_memo",
-    "infrastructure_relevance_reasons": [
-      "direct_ai_infrastructure_relevance:0.82(ai infrastructure)",
-      "data_center_relevance:1.00(data center, data centers, colocation)",
-      "semiconductor_relevance:0.38(nvidia)",
-      "power_grid_relevance:0.84(power, grid, gigawatt)"
-    ],
-    "infrastructure_relevance": {
-      "direct_ai_infrastructure_relevance": 0.82,
-      "data_center_relevance": 1,
-      "cloud_capacity_relevance": 0,
-      "semiconductor_relevance": 0.378,
-      "power_grid_relevance": 0.84,
-      "cooling_relevance": 0,
-      "capital_markets_relevance": 0,
-      "enterprise_ai_infrastructure_relevance": 0.18,
-      "infrastructure_relevance_score": 0.985,
-      "infrastructure_relevance_tier": "full_memo",
-      "infrastructure_relevance_action": "generate_full_memo",
-      "infrastructure_relevance_reasons": [
-        "direct_ai_infrastructure_relevance:0.82(ai infrastructure)",
-        "data_center_relevance:1.00(data center, data centers, colocation)",
-        "semiconductor_relevance:0.38(nvidia)",
-        "power_grid_relevance:0.84(power, grid, gigawatt)"
-      ],
-      "infrastructureRelevanceAction": "generate_full_memo",
-      "articlePagePublished": true,
-      "homepagePublished": true,
-      "archiveOnly": false,
-      "archiveOnlyReason": null
-    },
-    "homepagePublished": true,
-    "archiveOnly": false,
-    "archiveOnlyReason": null,
-    "article_blueprint": "constraint-ledger",
-    "articleBlueprint": {
-      "id": "constraint-ledger",
-      "name": "Constraint Ledger",
-      "sectionHeadings": [
-        "Change",
-        "Infrastructure Read",
-        "Exposed Edges",
-        "Decision Point"
-      ],
-      "paragraphRhythm": [
-        1,
-        2,
-        2,
-        1
-      ],
-      "targetParagraphs": 6,
-      "minChars": 1200,
-      "maxChars": 1900
-    },
-    "seo_noindex": false,
-    "seo_noindex_reasons": [
-      "stale_autonomous_editorial_desk_batch"
-    ],
-    "seo_backfill_version": 1,
-    "articlePagePublished": false,
-    "noindex": false,
-    "generation_version": "editorial_surface_v2",
-    "narrative_dna": {
-      "protagonist": "Microsoft",
-      "concrete_event": "a Data Center Frontier roundup grouped NVIDIA, IREN, Coatue, Microsoft, Switch, Cerebras, and Core Scientific into one market view",
-      "core_tension": "Microsoft has to translate a data center frontier roundup grouped nvidia, iren, coatue, microsoft, switch, cerebras, and core scientific into one market view into a power decision that survives cost, timing, or operating constraints",
-      "infrastructure_layer": "power",
-      "reader_role": [
-        "data center operators",
-        "developers",
-        "site selectors",
-        "investors"
-      ],
-      "decision_relevance": "data center operators and developers can use the item to test market map before changing procurement, deployment, or risk assumptions",
-      "evidence_anchor": "Charting the Future of Data Center, Cloud, and AI Infrastructure The latest wave of AI infrastructure expansion is no longer defined solely by hyperscale land grabs and new data center campuses. Increasingly, the industry&rsquo;s &ldquo;land and expand&rdquo; strategy now encompasses the broader industrial ecosystem required to deploy AI at scale. That ecosystem now spans",
-      "counterpoint": "a Data Center Frontier roundup grouped NVIDIA, IREN, Coatue, Microsoft, Switch, Cerebras, and Core Scientific into one market view should be separated by control point before readers treat the source as one capacity thesis",
-      "watch_metric": "which named actor controls land, power, capital, chips, or contracted customer demand",
-      "time_horizon": "near term",
-      "public_signal_label": "Adjacent Signal",
-      "editorial_lens": "Market Map",
-      "story_archetype": "Market Map",
-      "story_archetype_id": "market-map",
-      "routing_decision": "adjacent_watchlist",
-      "valid_for_full_article": false,
-      "missing_fields": [],
-      "truncation": {
-        "ok": true,
-        "artifacts": []
-      }
-    },
-    "dynamic_brief_label": "Adjacent Signal",
-    "anti_template_rewrite": true,
-    "repetition_check": {
-      "compared_article_count": 35,
-      "repeated_sentence_ratio": 0,
-      "repeated_paragraph_ratio": 0,
-      "heading_sequence_similarity": 0,
-      "banned_phrase_count": 0,
-      "banned_phrase_counts": {},
-      "recent_banned_phrase_counts": {},
-      "ngram_overlap": 0.15168539325842698,
-      "blueprint_repetition": 1,
-      "conclusion_similarity": 0.6450818772851873,
-      "repeated_sentence_count": 0,
-      "repeated_paragraph_count": 0,
-      "heading_sequence": [
-        "Architecture Signal",
-        "System Constraint",
-        "Technical Read",
-        "Engineering Watch"
-      ],
-      "blocked": false,
-      "reasons": []
-    },
-    "repetition_blocked": false,
-    "repetition_block_reasons": [],
-    "qualityGateBlocked": false,
-    "qualityGateReason": null,
-    "signalCardReason": "sentence_completion_score_below_0.92:0.708",
-    "public_copy_stale": false,
-    "infrastructureRelevanceAction": "generate_full_memo",
-    "signalCardOnly": true,
-    "public_routing": {
-      "score": 0.72,
-      "visibility": "adjacent",
-      "laneKey": "power-grid",
-      "laneTitle": "Power & Grid",
-      "editorial_lens": "Power & Grid",
-      "public_signal_label": "Brief",
-      "story_archetype": "Editorial Brief",
-      "blocked_reasons": []
-    },
-    "routing_decision": "core_lane",
-    "public_generation_version": "blog_engine_v4",
-    "public_presentation": {
-      "signal_label": "Brief",
-      "editorial_lens": "Power & Grid",
-      "title": "Microsoft: Land and Expand: NVIDIA, IREN, Coatue, Microsoft, Switch, Cerebras, Core Scientific",
-      "deck": "Microsoft: Land and Expand: NVIDIA, IREN, Coatue, Microsoft, Switch, Cerebras, Core Scientific keeps power availability near the center of AI campus timing, interconnection risk, and buyer commitments.",
-      "why_it_matters": "Why it matters: grid access is becoming a gating condition for AI buildouts, not a back-office procurement detail.",
-      "reader_impact": [
-        "Operators",
-        "Capacity planners"
-      ],
-      "region": "APAC",
-      "source": "Data Center Frontier",
-      "view_detail": "",
-      "read_source": "https://www.datacenterfrontier.com/machine-learning/news/55377695/land-and-expand-nvidia-iren-coatue-microsoft-switch-cerebras-core-scientific",
-      "lane_key": "power-grid",
-      "lane_title": "Power & Grid",
-      "visibility": "adjacent",
-      "story_archetype": "Editorial Brief"
-    },
-    "deck": "Microsoft: Land and Expand: NVIDIA, IREN, Coatue, Microsoft, Switch, Cerebras, Core Scientific keeps power availability near the center of AI campus timing, interconnection risk, and buyer commitments.",
-    "why_it_matters": "Why it matters: grid access is becoming a gating condition for AI buildouts, not a back-office procurement detail.",
-    "regeneration_v2_audit": {
-      "old_public_deck": "NVIDIA, IREN, Coatue, Microsoft, Switch, Cerebras, and Core Scientific belong in a market map, not a single forced capacity thesis.",
-      "old_lane": "Market Maps",
-      "old_public_metadata_fields": [
-        "relevance_score",
-        "urgency_score",
-        "extraction_quality_score",
-        "article_blueprint",
-        "taxonomy_confidence"
-      ]
-    },
-    "public_status": "brief",
-    "emergency_cleanup_audit": {
-      "old_public_deck": "NVIDIA, IREN, Coatue, Microsoft, Switch, Cerebras, and Core Scientific belong in a market map, not a single forced capacity thesis.",
-      "old_lane": "Market Maps",
-      "old_homepagePublished": true,
-      "old_articlePagePublished": false,
-      "old_noindex": true,
-      "classification": "keep_as_short_signal",
-      "cleaned_at": "2026-05-19T23:51:06.653Z"
-    },
-    "blog_route": "editorial_brief",
-    "publishing_route": "Editorial Brief",
-    "route": "Core Longform Blog",
-    "source_link_secondary": true,
-    "primaryHref": "/news/c1fb0077cc25e13b/",
-    "cleaned_source_text": "Charting the Future of Data Center, Cloud, and AI Infrastructure The latest wave of AI infrastructure expansion is no longer defined solely by hyperscale land grabs and new data center campuses. Increasingly, the industry&rsquo;s &ldquo;land and expand&rdquo; strategy now encompasses the broader industrial ecosystem required to deploy AI at scale. That ecosystem now spans power, optical manufacturing, accelerated compute architecture, supply chains, and vertically integrated infrastructure partnerships. The useful read is which stakeholder controls land, power, capital, chips, and customer demand, not whether every item points to the same bottleneck. Charting the Future of Data Center, Cloud, and AI Infrastructure The latest wave of AI infrastructure expansion is no longer defined solely by hyperscale land grabs and new data center campuses. Increasingly, the industry&rsquo;s &ldquo;land and expand&rdquo; strategy now encompasses the broader industrial ecosystem required to deploy AI at scale. That ecosystem now spans power, optical manufacturing, accelerated compute architecture, supply chains, and vertically integrated infrastructure partnerships. The useful read is which stakeholder controls land, power, capital, chips, and customer demand, not whether every item points to the same bottleneck. Charting the Future of Data Center, Cloud, and AI Infrastructure The latest wave o Data Center Frontier reported: Land and Expand: NVIDIA, IREN, Coatue, Microsoft, Switch, Cerebras, Core Scientific. Commercially, the item changes how buyers, operators, or investors should read capacity, cost, or execution risk around power.",
-    "source_evidence_text": "Charting the Future of Data Center, Cloud, and AI Infrastructure The latest wave of AI infrastructure expansion is no longer defined solely by hyperscale land grabs and new data center campuses. Increasingly, the industry&rsquo;s &ldquo;land and expand&rdquo; strategy now encompasses the broader industrial ecosystem required to deploy AI at scale. That ecosystem now spans power, optical manufacturing, accelerated compute architecture, supply chains, and vertically integrated infrastructure partnerships. The useful read is which stakeholder controls land, power, capital, chips, and customer demand, not whether every item points to the same bottleneck. Charting the Future of Data Center, Cloud, and AI Infrastructure The latest wave of AI infrastructure expansion is no longer defined solely by hyperscale land grabs and new data center campuses. Increasingly, the industry&rsquo;s &ldquo;land and expand&rdquo; strategy now encompasses the broader industrial ecosystem required to deploy AI at scale. That ecosystem now spans power, optical manufacturing, accelerated compute architecture, supply chains, and vertically integrated infrastructure partnerships. The useful read is which stakeholder controls land, power, capital, chips, and customer demand, not whether every item points to the same bottleneck. Charting the Future of Data Center, Cloud, and AI Infrastructure The latest wave o Data Center Frontier reported: Land and Expand: NVIDIA, IREN, Coatue, Microsoft, Switch, Cerebras, Core Scientific. Commercially, the item changes how buyers, operators, or investors should read capacity, cost, or execution risk around power.",
-    "rawText": "Charting the Future of Data Center, Cloud, and AI Infrastructure The latest wave of AI infrastructure expansion is no longer defined solely by hyperscale land grabs and new data center campuses. Increasingly, the industry&rsquo;s &ldquo;land and expand&rdquo; strategy now encompasses the broader industrial ecosystem required to deploy AI at scale. That ecosystem now spans power, optical manufacturing, accelerated compute architecture, supply chains, and vertically integrated infrastructure partnerships. The useful read is which stakeholder controls land, power, capital, chips, and customer demand, not whether every item points to the same bottleneck. Charting the Future of Data Center, Cloud, and AI Infrastructure The latest wave of AI infrastructure expansion is no longer defined solely by hyperscale land grabs and new data center campuses. Increasingly, the industry&rsquo;s &ldquo;land and expand&rdquo; strategy now encompasses the broader industrial ecosystem required to deploy AI at scale. That ecosystem now spans power, optical manufacturing, accelerated compute architecture, supply chains, and vertically integrated infrastructure partnerships. The useful read is which stakeholder controls land, power, capital, chips, and customer demand, not whether every item points to the same bottleneck. Charting the Future of Data Center, Cloud, and AI Infrastructure The latest wave o Data Center Frontier reported: Land and Expand: NVIDIA, IREN, Coatue, Microsoft, Switch, Cerebras, Core Scientific. Commercially, the item changes how buyers, operators, or investors should read capacity, cost, or execution risk around power.",
-    "fullArticleText": "Charting the Future of Data Center, Cloud, and AI Infrastructure The latest wave of AI infrastructure expansion is no longer defined solely by hyperscale land grabs and new data center campuses. Increasingly, the industry&rsquo;s &ldquo;land and expand&rdquo; strategy now encompasses the broader industrial ecosystem required to deploy AI at scale. That ecosystem now spans power, optical manufacturing, accelerated compute architecture, supply chains, and vertically integrated infrastructure partnerships. The useful read is which stakeholder controls land, power, capital, chips, and customer demand, not whether every item points to the same bottleneck. Charting the Future of Data Center, Cloud, and AI Infrastructure The latest wave of AI infrastructure expansion is no longer defined solely by hyperscale land grabs and new data center campuses. Increasingly, the industry&rsquo;s &ldquo;land and expand&rdquo; strategy now encompasses the broader industrial ecosystem required to deploy AI at scale. That ecosystem now spans power, optical manufacturing, accelerated compute architecture, supply chains, and vertically integrated infrastructure partnerships. The useful read is which stakeholder controls land, power, capital, chips, and customer demand, not whether every item points to the same bottleneck. Charting the Future of Data Center, Cloud, and AI Infrastructure The latest wave o Data Center Frontier reported: Land and Expand: NVIDIA, IREN, Coatue, Microsoft, Switch, Cerebras, Core Scientific. Commercially, the item changes how buyers, operators, or investors should read capacity, cost, or execution risk around power.",
-    "blog_metadata": {
-      "tone": "Procurement advisor",
-      "archetype": "Board-Level Briefing",
-      "archetype_id": "board-level-briefing",
-      "thesis": "Land and Expand: NVIDIA, IREN, Coatue, Microsoft, Switch, Cerebras, Core Scientific is worth a local Compute Current read because Land is touching the power layer, not merely adding another generic AI headline.",
-      "evidence_fact_count": 8,
-      "visible_body_characters": 6196,
-      "word_count": 915,
-      "paragraph_count": 27,
-      "section_count": 11,
-      "source_summary_ratio": 0.28,
-      "analysis_ratio": 0.72,
-      "human_blog_quality_score": 0.938,
-      "insight_density_score": 0.81,
-      "source_fidelity_score": 1,
-      "anti_template_score": 0.94
-    },
-    "evidence_pack": {
-      "ok": true,
-      "blockReasons": [],
-      "source": "Data Center Frontier",
-      "title": "Land and Expand: NVIDIA, IREN, Coatue, Microsoft, Switch, Cerebras, Core Scientific",
-      "evidenceText": "Charting the Future of Data Center, Cloud, and AI Infrastructure The latest wave of AI infrastructure expansion is no longer defined solely by hyperscale land grabs and new data center campuses. Increasingly, the industry&rsquo;s &ldquo;land and expand&rdquo; strategy now encompasses the broader industrial ecosystem required to deploy AI at scale. That ecosystem now spans power, optical manufacturing, accelerated compute architecture, supply chains, and vertically integrated infrastructure partnerships. The useful read is which stakeholder controls land, power, capital, chips, and customer demand, not whether every item points to the same bottleneck. Charting the Future of Data Center, Cloud, and AI Infrastructure The latest wave of AI infrastructure expansion is no longer defined solely by hyperscale land grabs and new data center campuses. Increasingly, the industry&rsquo;s &ldquo;land and expand&rdquo; strategy now encompasses the broader industrial ecosystem required to deploy AI at scale. That ecosystem now spans power, optical manufacturing, accelerated compute architecture, supply chains, and vertically integrated infrastructure partnerships. The useful read is which stakeholder controls land, power, capital, chips, and customer demand, not whether every item points to the same bottleneck. Charting the Future of Data Center, Cloud, and AI Infrastructure The latest wave o Data Center Frontier reported: Land and Expand: NVIDIA, IREN, Coatue, Microsoft, Switch, Cerebras, Core Scientific. Commercially, the item changes how buyers, operators, or investors should read capacity, cost, or execution risk around power. Charting the Future of Data Center, Cloud, and AI Infrastructure The latest wave of AI infrastructure expansion is no longer defined solely by hyperscale land grabs and new data center campuses. Increasingly, the industry&rsquo;s &ldquo;land and expand&rdquo; strategy now encompasses the broader industrial ecosystem required to deploy AI at scale. That ecosystem now spans power, optical manufacturing, accelerated compute architecture, supply chains, and vertically integrated infrastructure partnerships. The useful read is which stakeholder controls land, power, capital, chips, and customer demand, not whether every item points to the same bottleneck. Charting the Future of Data Center, Cloud, and AI Infrastructure The latest wave of AI infrastructure expansion is no longer defined solely by hyperscale land grabs and new data center campuses. Increasingly, the industry&rsquo;s &ldquo;land and expand&rdquo; strategy now encompasses the broader industrial ecosystem required to deploy AI at scale. That ecosystem now spans power, optical manufacturing, accelerated compute architecture, supply chains, and vertically integrated infrastructure partnerships. The useful read is which stakeholder controls land, power, capital, chips, and customer demand, not whether every item points to the same bottleneck. Charting the Future of Data Center, Cloud, and AI Infrastructure The latest wave o Data Center Frontier reported: Land and Expand: NVIDIA, IREN, Coatue, Microsoft, Switch, Cerebras, Core Scientific. Commercially, the item changes how buyers, operators, or investors should read capacity, cost, or execution risk around power. Charting the Future of Data Center, Cloud, and AI Infrastructure The latest wave of AI infrastructure expansion is no longer defined solely by hyperscale land grabs and new data center campuses. Increasingly, the industry&rsquo;s &ldquo;land and expand&rdquo; strategy now encompasses the broader industrial ecosystem required to deploy AI at scale. That ecosystem now spans power, optical manufacturing, accelerated compute architecture, supply chains, and vertically integrated infrastructure partnerships. The useful read is which stakeholder controls land, power, capital, chips, and customer demand, not whether every item points to the same bottleneck. Charting the Future of Data Center, Cloud, and AI Infrastructure The latest wave of AI infrastructure expansion is no longer defined solely by hyperscale land grabs and new data center campuses. Increasingly, the industry&rsquo;s &ldquo;land and expand&rdquo; strategy now encompasses the broader industrial ecosystem required to deploy AI at scale. That ecosystem now spans power, optical manufacturing, accelerated compute architecture, supply chains, and vertically integrated infrastructure partnerships. The useful read is which stakeholder controls land, power, capital, chips, and customer demand, not whether every item points to the same bottleneck. Charting the Future of Data Center, Cloud, and AI Infrastructure The latest wave o Data Center Frontier reported: Land and Expand: NVIDIA, IREN, Coatue, Microsoft, Switch, Cerebras, Core Scientific. Commercially, the item changes how buyers, operators, or investors should read capacity, cost, or execution risk around power.",
-      "facts": [
-        "Data Center Frontier reported: Land and Expand: NVIDIA, IREN, Coatue, Microsoft, Switch, Cerebras, Core Scientific.",
-        "Commercially, the item changes how buyers, operators, or investors should read capacity, cost, or execution risk around power.",
-        "Operationally, readers should test whether the reported item can translate into deployable capacity, resilient platforms, or lower execution risk.",
-        "Land puts power under a market map lens for infrastructure readers.",
-        "Charting the Future of Data Center, Cloud, and AI Infrastructure The latest wave of AI infrastructure expansion is no longer defined solely by hyperscale land grabs and new data center campuses.",
-        "Increasingly, the industry&rsquo;s &ldquo;land and expand&rdquo; strategy now encompasses the broader industrial ecosystem required to deploy AI at scale.",
-        "That ecosystem now spans power, optical manufacturing, accelerated compute architecture, supply chains, and vertically integrated infrastructure partnerships.",
-        "The useful read is which stakeholder controls land, power, capital, chips, and customer demand, not whether every item points to the same bottleneck."
-      ],
-      "namedActors": [
-        "Land",
-        "Expand",
-        "NVIDIA",
-        "IREN",
-        "Coatue",
-        "Microsoft",
-        "Switch",
-        "Cerebras"
-      ],
-      "affectedInfrastructureLayer": "power",
-      "whyThisMattersNow": "Land and Expand: NVIDIA, IREN, Coatue, Microsoft, Switch, Cerebras, Core Scientific matters now because infrastructure buyers need to separate credible capacity signals from unsupported market noise.",
-      "commercialImplication": "Commercially, the item changes how buyers, operators, or investors should read capacity, cost, or execution risk around power.",
-      "operatingImplication": "Operationally, readers should test whether the reported item can translate into deployable capacity, resilient platforms, or lower execution risk.",
-      "whoBenefits": [
-        "Land",
-        "Expand",
-        "NVIDIA"
-      ],
-      "whoIsExposed": [
-        "buyers relying on unsupported capacity signals",
-        "teams with weak source evidence"
-      ],
-      "counterargument": "The limitation is that the source may describe a useful signal without proving that timing, economics, or deployment risk has changed yet.",
-      "whatWouldChangeOurView": "interconnection queue movement and tariff exposure",
-      "watchMetrics": [
-        "interconnection queue movement and tariff exposure",
-        "contracted capacity, delivery timing, and operating cost variance"
-      ],
-      "sourceLimitations": "The extracted evidence is sufficient for local analysis, but source attribution remains necessary."
-    },
-    "searchText": "Microsoft: Land and Expand: NVIDIA, IREN, Coatue, Microsoft, Switch, Cerebras, Core Scientific Data Center Frontier power Campus development and colocation capacity Watchlist Signal Data Centers APAC Why it matters: grid access is becoming a gating condition for AI buildouts, not a back-office procurement detail. Market Map is the sharper read on Microsoft because the source names a decision point rather than a generic AI trend. A Data Center Frontier roundup grouped NVIDIA, IREN, Coatue, Microsoft, Switch, Cerebras, and Core Scientific into one market view. The useful read is which stakeholder controls land, power, capital, chips, and customer demand, not whether every item points to the same bottleneck. A Data Center Frontier roundup grouped NVIDIA, IREN, Coatue, Microsoft, Switch, Cerebras, and Core Scientific into one market view should be separated by control point before readers treat the source as one capacity thesis. Data center operators and developers can use the item to test market map before changing procurement, deployment, or risk assumptions. Power teams should track which named actor controls land, power, capital, chips, or contracted customer demand. Cloud and platform buyers should separate source evidence from generic AI demand before changing deployment plans. Which named actor controls land, power, capital, chips, or contracted customer demand. Charting the Future of Data Center, Cloud, and AI Infrastructure The latest wave of AI infrastructure expansion is no longer defined solely by hyperscale land grabs and new data center campuses. Increasingly, the industry&rsquo;s &ldquo;land and expand&rdquo; strategy now encompasses the broader industrial ecosystem required to deploy AI at scale. That ecosystem now spans power, optical manufacturing, accelerated compute architecture, supply chains, and vertically integrated infrastructure partnerships. The useful read is which stakeholder controls land, power, capital, chips, and customer demand, not whether every item points to the same bottleneck. Charting the Future of Data Center, Cloud, and AI Infrastructure The latest wave of AI infrastructure expansion is no longer defined solely by hyperscale land grabs and new data center campuses. Increasingly, the industry&rsquo;s &ldquo;land and expand&rdquo; strategy now encompasses the broader industrial ecosystem required to deploy AI at scale. That ecosystem now spans power, optical manufacturing, accelerated compute architecture, supply chains, and vertically integrated infrastructure partnerships. The useful read is which stakeholder controls land, power, capital, chips, and customer demand, not whether every item points to the same bottleneck. Charting the Future of Data Center, Cloud, and AI Infrastructure The latest wave o Data Center Frontier reported: Land and Expand: NVIDIA, IREN, Coatue, Microsoft, Switch, Cerebras, Core Scientific. Commercially, the item changes how buyers, operators, or investors should read capacity, cost, or execution risk around power. data center operators developers site selectors investors gpu cloud",
-    "excerpt": "Land puts power under a market map lens for infrastructure readers.",
-    "quarantined": false,
-    "quarantine_reason": [],
-    "stale_generation": true,
-    "stale_generation_reason": "old_template_expanded_article",
-    "previous_generation_version": "blog_engine_v4",
-    "signal_cluster_id": "sig_67388f7424faba26",
-    "sort_index": 7,
-    "public_content_tier": "editorial_brief",
-    "regeneration_rank": 24,
-    "public_tier_reasons": [],
-    "generatedImageProvider": "local-placeholder",
-    "generatedImageModel": "local-svg",
-    "stockImageReplacedAt": "2026-05-23T15:28:43.159Z"
   }
 ]
