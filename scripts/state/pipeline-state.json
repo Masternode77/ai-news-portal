@@ -341,7 +341,9 @@
     "e40a1864f5a8b8e8",
     "9182bb64a456afc1",
     "0737340e51a0cfb0",
-    "64e25c4eff0d5e2d"
+    "64e25c4eff0d5e2d",
+    "756a62d047d436b1",
+    "1d18f53cb6749a7c"
   ],
   "dayPlans": {
     "2026-03-24": {
@@ -8436,91 +8438,18 @@
     "2026-05-28": {
       "date": "2026-05-28",
       "createdAt": "2026-05-27T18:06:41.529Z",
-      "refreshedAt": "2026-05-28T00:02:14.346Z",
+      "refreshedAt": "2026-05-28T11:01:49.153Z",
       "candidateWindowHours": 24,
       "curatedItems": [
         {
-          "id": "0737340e51a0cfb0",
-          "source": "HPCwire",
-          "url": "https://www.hpcwire.com/off-the-wire/nvidia-vera-cpu-is-packing-a-heavy-hitting-punch-against-competition/",
-          "title": "NVIDIA Vera CPU Is ‘Packing a Heavy-Hitting Punch’ Against Competition",
-          "snippet": "In the new Phoronix benchmark, Vera delivers winning performance and memory results for agentic AI. May 27, 2026 — The shift to agentic AI creates a new CPU requirement for the AI factory: fast cores, massive memory ban…",
-          "contentText": "In the new Phoronix benchmark, Vera delivers winning performance and memory results for agentic AI. May 27, 2026 &#8212; The shift to agentic AI creates a new CPU requirement for the AI factory: fast cores, massive memory bandwidth and the ability to sustain high performance when all cores are active. Credit: NVIDIA Initial benchmark results published by Phoronix thi week show that the NVIDIA Vera CPU meets this need. For this first public look, the benchmark scope was centered on the agentic workloads Vera was designed for in the modern data center. The Vera CPU delivers the throughput AI factories need while optimizing platform power. Eighty-eight NVIDIA custom Olympus cores, 1.2TB/s of memory bandwidth and a high-speed, on-chip fabric results in a CPU platform that combines core perfor…",
-          "publishedAt": "2026-05-27T22:43:03.000Z",
-          "sourceImage": "https://www.hpcwire.com/wp-content/uploads/2026/05/cpu-corp-blog-vera-activation-no-logos-1280x680-1-300x159.jpg",
-          "region": "US",
-          "language": "en",
-          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
-          "category": "Semiconductors",
-          "primary_category": "Semiconductors",
-          "secondary_category": "Accelerators, memory, and advanced packaging",
-          "infrastructure_layer": "Silicon",
-          "affected_stakeholders": [
-            "semiconductor suppliers",
-            "hyperscalers",
-            "server OEMs",
-            "investors"
-          ],
-          "article_type": "Product / Platform Update",
-          "urgency_score": 0.56,
-          "taxonomy_confidence": 0.81,
-          "taxonomy_reasons": [
-            "chip",
-            "gpu",
-            "nvidia"
-          ],
-          "direct_ai_infrastructure_relevance": 1,
-          "data_center_relevance": 0.42,
-          "cloud_capacity_relevance": 0,
-          "semiconductor_relevance": 0.598,
-          "power_grid_relevance": 0.22,
-          "cooling_relevance": 0,
-          "capital_markets_relevance": 0,
-          "enterprise_ai_infrastructure_relevance": 0,
-          "infrastructure_relevance_score": 0.932,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "data_center_relevance:0.42(data center)",
-            "semiconductor_relevance:0.60(nvidia, gpu)",
-            "power_grid_relevance:0.22(power)"
-          ],
-          "infrastructure_relevance": {
-            "direct_ai_infrastructure_relevance": 1,
-            "data_center_relevance": 0.42,
-            "cloud_capacity_relevance": 0,
-            "semiconductor_relevance": 0.598,
-            "power_grid_relevance": 0.22,
-            "cooling_relevance": 0,
-            "capital_markets_relevance": 0,
-            "enterprise_ai_infrastructure_relevance": 0,
-            "infrastructure_relevance_score": 0.932,
-            "infrastructure_relevance_tier": "full_memo",
-            "infrastructure_relevance_action": "generate_full_memo",
-            "infrastructure_relevance_reasons": [
-              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-              "data_center_relevance:0.42(data center)",
-              "semiconductor_relevance:0.60(nvidia, gpu)",
-              "power_grid_relevance:0.22(power)"
-            ],
-            "infrastructureRelevanceAction": "generate_full_memo",
-            "articlePagePublished": true,
-            "homepagePublished": true,
-            "archiveOnly": false,
-            "archiveOnlyReason": null
-          },
-          "score": 85
-        },
-        {
-          "id": "64e25c4eff0d5e2d",
-          "source": "StorageReview",
-          "url": "https://www.storagereview.com/news/qumulo-and-cisco-pitch-gpu-liquidity-with-updated-cloud-ai-accelerator",
-          "title": "Qumulo and Cisco Pitch GPU Liquidity With Updated Cloud AI Accelerator",
-          "snippet": "Qumulo announced the Cloud AI Accelerator, a new architecture designed to improve the efficiency of enterprise AI infrastructure by eliminating data movement bottlenecks. The platform presents distributed datasets to GP…",
-          "contentText": "Qumulo announced the Cloud AI Accelerator, a new architecture designed to improve the efficiency of enterprise AI infrastructure by eliminating data movement bottlenecks. The platform presents distributed datasets to GPU resources in real time across regions, clouds, and hybrid environments without requiring replication or staging. The release builds on a well-documented inefficiency in enterprise AI infrastructure. Citing Cast AI&#8217;s 2026 State of Kubernetes Optimization Report, Qumulo points to average enterprise GPU utilization of around 5 percent, with the remaining 95 percent of accelerated compute sitting idle because data must be staged, replicated, and moved into position before workloads can begin. Qumulo CEO Doug Gourlay framed the problem in the announcement: &#8220;Every e…",
-          "publishedAt": "2026-05-27T21:09:23.000Z",
-          "sourceImage": "https://www.storagereview.com/wp-content/uploads/2026/05/Storagereview-qumulo-cloud-data-platform.png",
+          "id": "1d18f53cb6749a7c",
+          "source": "Toms Hardware",
+          "url": "https://www.tomshardware.com/monitors/gaming-monitors/samsung-display-announces-worlds-first-360-hz-4k-qd-oled-panel-dual-mode-support-also-offers-680hz-at-fhd-10-customers-reportedly-lined-up",
+          "title": "Samsung Display announces world's first 360 Hz 4K QD-OLED panel — dual-mode support also offers 680Hz at FHD, 10 customers reportedly lined up",
+          "snippet": "Samsung just announced that it will launch a 360 Hz 4K QD-OLED panel at Computex 2026. The company says that this is the first panel that can hit those refresh rates at a native 4K, and that it's already in talks with s…",
+          "contentText": "Samsung just announced that it will launch a 360 Hz 4K QD-OLED panel at Computex 2026. The company says that this is the first panel that can hit those refresh rates at a native 4K, and that it's already in talks with several potential clients to supply future premium gaming monitors.",
+          "publishedAt": "2026-05-28T10:59:00.000Z",
+          "sourceImage": "https://cdn.mos.cms.futurecdn.net/Mz4Dy4S37VdGonx4ryynSR-1280-80.png",
           "region": "US",
           "language": "en",
           "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
@@ -8536,76 +8465,6 @@
           ],
           "article_type": "Product / Platform Update",
           "urgency_score": 0.47,
-          "taxonomy_confidence": 0.77,
-          "taxonomy_reasons": [
-            "ai infrastructure",
-            "neocloud"
-          ],
-          "direct_ai_infrastructure_relevance": 1,
-          "data_center_relevance": 0,
-          "cloud_capacity_relevance": 0,
-          "semiconductor_relevance": 0.594,
-          "power_grid_relevance": 0,
-          "cooling_relevance": 0,
-          "capital_markets_relevance": 0,
-          "enterprise_ai_infrastructure_relevance": 0.54,
-          "infrastructure_relevance_score": 0.896,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "semiconductor_relevance:0.59(accelerator, gpu)",
-            "enterprise_ai_infrastructure_relevance:0.54(enterprise ai, kubernetes)"
-          ],
-          "infrastructure_relevance": {
-            "direct_ai_infrastructure_relevance": 1,
-            "data_center_relevance": 0,
-            "cloud_capacity_relevance": 0,
-            "semiconductor_relevance": 0.594,
-            "power_grid_relevance": 0,
-            "cooling_relevance": 0,
-            "capital_markets_relevance": 0,
-            "enterprise_ai_infrastructure_relevance": 0.54,
-            "infrastructure_relevance_score": 0.896,
-            "infrastructure_relevance_tier": "full_memo",
-            "infrastructure_relevance_action": "generate_full_memo",
-            "infrastructure_relevance_reasons": [
-              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-              "semiconductor_relevance:0.59(accelerator, gpu)",
-              "enterprise_ai_infrastructure_relevance:0.54(enterprise ai, kubernetes)"
-            ],
-            "infrastructureRelevanceAction": "generate_full_memo",
-            "articlePagePublished": true,
-            "homepagePublished": true,
-            "archiveOnly": false,
-            "archiveOnlyReason": null
-          },
-          "score": 84
-        },
-        {
-          "id": "d8bcc360440adc97",
-          "source": "ServeTheHome",
-          "url": "https://www.servethehome.com/quick-look-joyjom-stackable-pc-test-bench-cheap-but-cheap/",
-          "title": "Quick Look JOYJOM Stackable PC Test Bench Cheap But Cheap",
-          "snippet": "We take a quick look at the JOYJOM stackable PC test bench as an alternative to running motherboards bare on a desk for testing The post Quick Look JOYJOM Stackable PC Test Bench Cheap But Cheap appeared first on ServeT…",
-          "contentText": "We take a quick look at the JOYJOM stackable PC test bench as an alternative to running motherboards bare on a desk for testing The post Quick Look JOYJOM Stackable PC Test Bench Cheap But Cheap appeared first on ServeTheHome .",
-          "publishedAt": "2026-05-27T23:00:49.000Z",
-          "sourceImage": null,
-          "region": "Global",
-          "language": "en",
-          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
-          "category": "AI Infrastructure",
-          "primary_category": "AI Infrastructure",
-          "secondary_category": "GPU clusters and deployment readiness",
-          "infrastructure_layer": "Compute",
-          "affected_stakeholders": [
-            "operators",
-            "hyperscalers",
-            "cloud buyers",
-            "investors"
-          ],
-          "article_type": "Other",
-          "urgency_score": 0.43,
           "taxonomy_confidence": 0.77,
           "taxonomy_reasons": [
             "ai infrastructure",
@@ -8651,64 +8510,133 @@
           "score": 79
         },
         {
-          "id": "34ec37cb55de40cb",
-          "source": "Power Engineering",
-          "url": "https://www.power-eng.com/business/specialist-investor-arclight-to-be-acquired-by-global-asset-manager-for-up-to-1b/",
-          "title": "Specialist investor ArcLight to be acquired by global asset manager for up to $1B",
-          "snippet": "DigitalBridge will acquire ArcLight Capital Partners for up to $1.05 billion, forming a firm with over $150 billion in assets.",
-          "contentText": "DigitalBridge, a global alternative asset manager investing in digital infrastructure, announced that it has entered into a definitive agreement to acquire ArcLight Capital Partners, a specialist investor in power and electric infrastructure, for a total transaction value of up to $1.05 billion. The consideration includes a base purchase price of $650 million, plus up to an additional $400 million of contingent consideration. The combination would form an alternative asset manager with combined assets representing more than $150 billion. Since ArcLight’s founding in 2001, ArcLight has owned, controlled, or operated over 70 GW of generation assets and 48,000 miles of electric and gas transmission and storage infrastructure, representing more than $90 billion of enterprise value. The transa…",
-          "publishedAt": "2026-05-27T21:48:44.000Z",
-          "sourceImage": "https://www.power-eng.com/wp-content/uploads/2026/05/arclight.png",
+          "id": "756a62d047d436b1",
+          "source": "Semiconductor Engineering",
+          "url": "https://semiengineering.com/swapping-out-chiplets-i-os-vs-compute/",
+          "title": "Swapping Out Chiplets: I/Os Vs. Compute",
+          "snippet": "Multi-die assemblies give chip architects the option to change some dies while keeping the rest of the system intact, but which is best to keep? The post Swapping Out Chiplets: I/Os Vs. Compute appeared first on Semicon…",
+          "contentText": "Key Takeaways : Companies can save time and money by swapping out a compute, memory, or I/O chiplet to gain technology improvements, while keeping the other dies stable. Chip architects may choose to keep their I/Os stable and swap out compute to move from a 5nm process node to 3nm to achieve performance and power improvements, or swap out memory from LPDDR5X to LPDDR6. Swapping out I/Os makes sense if chip architects want to keep the die on a less advanced node than the compute, but upgrade to a protocol such as 224G SerDes. Despite initial design and verification challenges, chiplet-based architectures are proving to be a cost-effective way of reusing large portions of a design while staying current with the latest I/O protocols and logic. Early discussions about chiplets were largely t…",
+          "publishedAt": "2026-05-28T07:12:57.000Z",
+          "sourceImage": "https://i0.wp.com/semiengineering.com/wp-content/uploads/2026/05/Keysight-A-multi-die-chiplets-from-different-vendors.png?resize=1520%2C834&#038;ssl=1",
           "region": "US",
           "language": "en",
-          "defaultCategory": "Power / Grid / Energy",
-          "category": "Power & Grid",
-          "primary_category": "Power & Grid",
-          "secondary_category": "Interconnection and power procurement",
-          "infrastructure_layer": "Power",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "category": "AI Infrastructure",
+          "primary_category": "AI Infrastructure",
+          "secondary_category": "GPU clusters and deployment readiness",
+          "infrastructure_layer": "Compute",
           "affected_stakeholders": [
-            "data center operators",
-            "utilities",
-            "cloud capacity teams",
+            "operators",
+            "hyperscalers",
+            "cloud buyers",
             "investors"
           ],
-          "article_type": "Other",
-          "urgency_score": 0.57,
-          "taxonomy_confidence": 0.93,
+          "article_type": "Supply Chain",
+          "urgency_score": 0.55,
+          "taxonomy_confidence": 0.77,
           "taxonomy_reasons": [
-            "power",
-            "grid",
-            "transmission",
-            "gw"
+            "ai infrastructure",
+            "neocloud"
           ],
-          "direct_ai_infrastructure_relevance": 0,
+          "direct_ai_infrastructure_relevance": 1,
           "data_center_relevance": 0,
           "cloud_capacity_relevance": 0,
-          "semiconductor_relevance": 0,
-          "power_grid_relevance": 1,
+          "semiconductor_relevance": 0.58,
+          "power_grid_relevance": 0.22,
           "cooling_relevance": 0,
           "capital_markets_relevance": 0,
-          "enterprise_ai_infrastructure_relevance": 0.18,
-          "infrastructure_relevance_score": 0.655,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.893,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "semiconductor_relevance:0.58(semiconductor, gpu)",
+            "power_grid_relevance:0.22(power)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 1,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0.58,
+            "power_grid_relevance": 0.22,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.893,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+              "semiconductor_relevance:0.58(semiconductor, gpu)",
+              "power_grid_relevance:0.22(power)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 76
+        },
+        {
+          "id": "3e7a42c8395d68a7",
+          "source": "Capacity Media",
+          "url": "https://capacityglobal.com/news/how-uniti-wholesale-is-expanding-for-the-ai-era/",
+          "title": "How Uniti Wholesale is expanding for the AI era",
+          "snippet": "At ITW 2026, Uniti Wholesale leaders Greg Ortyl, EVP & President, and John Nishimoto, SVP Products, Marketing, and Strategy, discuss how AI demand is accelerating fibre infrastructure investment across the US. The post…",
+          "contentText": "At ITW 2026, Uniti Wholesale leaders Greg Ortyl, EVP & President, and John Nishimoto, SVP Products, Marketing, and Strategy, discuss how AI demand is accelerating fibre infrastructure investment across the US. In this interview, they share how Uniti is expanding its footprint, supporting hyperscalers and enterprise customers, scaling dark fibre and high-capacity services, and differentiating through disciplined builds, local expertise, and faster service delivery. Capacity Europe 2026 13 October 2026 The 24th anniversary edition of Capacity Europe 2025 will bring together 3,500+ decision-makers from the global connectivity and digital infrastructure community. Register now See event details The post How Uniti Wholesale is expanding for the AI era appeared first on Capacity .",
+          "publishedAt": "2026-05-28T09:53:27.000Z",
+          "sourceImage": "https://capacityglobal.com/wp-content/uploads/2025/09/54075740660_ee73a351a0_c-327x218.jpg",
+          "region": "APAC",
+          "language": "en",
+          "defaultCategory": "Hyperscalers & Cloud",
+          "category": "Cloud Capacity",
+          "primary_category": "Cloud Capacity",
+          "secondary_category": "Hyperscale regions and accelerator availability",
+          "infrastructure_layer": "Cloud Platform",
+          "affected_stakeholders": [
+            "hyperscalers",
+            "cloud buyers",
+            "enterprise IT",
+            "operators"
+          ],
+          "article_type": "Capacity Expansion",
+          "urgency_score": 0.47,
+          "taxonomy_confidence": 0.57,
+          "taxonomy_reasons": [
+            "fallback_taxonomy"
+          ],
+          "direct_ai_infrastructure_relevance": 0.64,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0.76,
+          "semiconductor_relevance": 0,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.652,
           "infrastructure_relevance_tier": "signal_card",
           "infrastructure_relevance_action": "publish_signal_card_only",
           "infrastructure_relevance_reasons": [
-            "power_grid_relevance:1.00(power, grid, gw)"
+            "direct_ai_infrastructure_relevance:0.64",
+            "cloud_capacity_relevance:0.76(cloud capacity, hyperscalers)"
           ],
           "infrastructure_relevance": {
-            "direct_ai_infrastructure_relevance": 0,
+            "direct_ai_infrastructure_relevance": 0.64,
             "data_center_relevance": 0,
-            "cloud_capacity_relevance": 0,
+            "cloud_capacity_relevance": 0.76,
             "semiconductor_relevance": 0,
-            "power_grid_relevance": 1,
+            "power_grid_relevance": 0,
             "cooling_relevance": 0,
             "capital_markets_relevance": 0,
-            "enterprise_ai_infrastructure_relevance": 0.18,
-            "infrastructure_relevance_score": 0.655,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.652,
             "infrastructure_relevance_tier": "signal_card",
             "infrastructure_relevance_action": "publish_signal_card_only",
             "infrastructure_relevance_reasons": [
-              "power_grid_relevance:1.00(power, grid, gw)"
+              "direct_ai_infrastructure_relevance:0.64",
+              "cloud_capacity_relevance:0.76(cloud capacity, hyperscalers)"
             ],
             "infrastructureRelevanceAction": "publish_signal_card_only",
             "articlePagePublished": false,
@@ -8716,7 +8644,7 @@
             "archiveOnly": false,
             "archiveOnlyReason": null
           },
-          "score": 74
+          "score": 73
         },
         {
           "id": "1b287eda9b2f32ed",
@@ -8786,18 +8714,18 @@
             "archiveOnly": false,
             "archiveOnlyReason": null
           },
-          "score": 72
+          "score": 66
         },
         {
-          "id": "4987ef798c4e219e",
-          "source": "Toms Hardware",
-          "url": "https://www.tomshardware.com/tech-industry/artificial-intelligence/ai-costs-begin-to-bite-as-agents-may-increase-token-demand-by-24-times-says-goldman-sachs-report-uber-and-microsoft-among-companies-feeling-the-bite-of-tokenized-billing",
-          "title": "AI costs begin to bite as agents may increase token demand by 24 times, says Goldman Sachs report — Uber and Microsoft among companies feeling the bite of tokenized billing",
-          "snippet": "Major tech companies are considering refining their approaches to AI, as rising token costs and increased token demand from AI agents make the costs harder to justify, with limited return on the investment.",
-          "contentText": "Major tech companies are considering refining their approaches to AI, as rising token costs and increased token demand from AI agents make the costs harder to justify, with limited return on the investment.",
-          "publishedAt": "2026-05-27T20:52:46.000Z",
-          "sourceImage": "https://cdn.mos.cms.futurecdn.net/izGqeAVabXUojLqWse4oWK-1280-80.jpg",
-          "region": "US",
+          "id": "6a3b7728ef32fda1",
+          "source": "HPCwire",
+          "url": "https://www.hpcwire.com/2026/05/27/inside-argonnes-plan-to-build-robot-scientific-assistants/",
+          "title": "Inside Argonne’s Plan to Build Robot Scientific Assistants",
+          "snippet": "Artificial intelligence is poised to give scientists a leg up with abstract components of scientific reasoning. That’s the target for the Genesis Mission, the DOE’s project for accelerating science and engineering with…",
+          "contentText": "Artificial intelligence is poised to give scientists a leg up with abstract components of scientific reasoning. That’s the target for the Genesis Mission, the DOE’s project for accelerating science and engineering with AI. But what about having an extra set of hands in the lab to run actual experiments conjured up in part by AI? That’s the goal of a new project unveiled by Argonne National Laboratory called RoSA.. ANL is testing the Vega robot from Dexmate as part of its RoSA project (Image courtesy Dexmate) Dubbed “Robot Scientific Assistant for Accelerating Experimental Workflows,” or RoSA for short, the new project aims to explore what it would take to ramp up the presence of robots in the lab. The goal of the project, which is taking place in Argonne’s Rapid Prototyping Lab (RPL) and…",
+          "publishedAt": "2026-05-27T23:50:29.000Z",
+          "sourceImage": "https://www.hpcwire.com/wp-content/uploads/2026/05/Vega_Dexmate-270x300.png",
+          "region": "Global",
           "language": "en",
           "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
           "category": "AI Infrastructure",
@@ -8810,7 +8738,7 @@
             "cloud buyers",
             "investors"
           ],
-          "article_type": "Market Analysis",
+          "article_type": "Research / Technical",
           "urgency_score": 0.43,
           "taxonomy_confidence": 0.77,
           "taxonomy_reasons": [
@@ -8854,40 +8782,101 @@
             "archiveOnly": false,
             "archiveOnlyReason": null
           },
-          "score": 71
+          "score": 65
+        },
+        {
+          "id": "d8bcc360440adc97",
+          "source": "ServeTheHome",
+          "url": "https://www.servethehome.com/quick-look-joyjom-stackable-pc-test-bench-cheap-but-cheap/",
+          "title": "Quick Look JOYJOM Stackable PC Test Bench Cheap But Cheap",
+          "snippet": "We take a quick look at the JOYJOM stackable PC test bench as an alternative to running motherboards bare on a desk for testing The post Quick Look JOYJOM Stackable PC Test Bench Cheap But Cheap appeared first on ServeT…",
+          "contentText": "We take a quick look at the JOYJOM stackable PC test bench as an alternative to running motherboards bare on a desk for testing The post Quick Look JOYJOM Stackable PC Test Bench Cheap But Cheap appeared first on ServeTheHome .",
+          "publishedAt": "2026-05-27T23:00:49.000Z",
+          "sourceImage": null,
+          "region": "Global",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "category": "AI Infrastructure",
+          "primary_category": "AI Infrastructure",
+          "secondary_category": "GPU clusters and deployment readiness",
+          "infrastructure_layer": "Compute",
+          "affected_stakeholders": [
+            "operators",
+            "hyperscalers",
+            "cloud buyers",
+            "investors"
+          ],
+          "article_type": "Other",
+          "urgency_score": 0.43,
+          "taxonomy_confidence": 0.77,
+          "taxonomy_reasons": [
+            "ai infrastructure",
+            "neocloud"
+          ],
+          "direct_ai_infrastructure_relevance": 1,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0.22,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.778,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "semiconductor_relevance:0.22(gpu)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 1,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0.22,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.778,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+              "semiconductor_relevance:0.22(gpu)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 65
         }
       ],
       "curatedIds": [
-        "0737340e51a0cfb0",
-        "64e25c4eff0d5e2d",
-        "d8bcc360440adc97",
-        "34ec37cb55de40cb",
+        "1d18f53cb6749a7c",
+        "756a62d047d436b1",
+        "3e7a42c8395d68a7",
         "1b287eda9b2f32ed",
-        "4987ef798c4e219e"
+        "6a3b7728ef32fda1",
+        "d8bcc360440adc97"
       ],
       "publishedIds": [
         "e40a1864f5a8b8e8",
         "9182bb64a456afc1",
         "0737340e51a0cfb0",
-        "64e25c4eff0d5e2d"
+        "64e25c4eff0d5e2d",
+        "756a62d047d436b1",
+        "1d18f53cb6749a7c"
       ],
       "slotPublications": {
         "0": true,
-        "1": true
+        "1": true,
+        "2": true
       }
     }
   },
   "runHistory": [
-    {
-      "at": "2026-04-11T23:37:42.950Z",
-      "day": "2026-04-12",
-      "slot": 1,
-      "publishedCount": 2,
-      "publishedIds": [
-        "0745f4a3ef80e42e",
-        "6b4847b049298e2e"
-      ]
-    },
     {
       "at": "2026-04-12T08:07:49.024Z",
       "day": "2026-04-12",
@@ -11222,7 +11211,135 @@
         }
       ],
       "archiveOnlyItems": []
+    },
+    {
+      "at": "2026-05-28T11:01:49.153Z",
+      "day": "2026-05-28",
+      "slot": 2,
+      "publishedCount": 0,
+      "signalCardCount": 1,
+      "archiveOnlyCount": 0,
+      "repetitionBlockedCount": 1,
+      "publishedIds": [],
+      "processedIds": [
+        "756a62d047d436b1",
+        "1d18f53cb6749a7c"
+      ],
+      "blockedCount": 1,
+      "blockedItems": [
+        {
+          "id": "756a62d047d436b1",
+          "title": "Swapping Out Chiplets: I/Os Vs. Compute",
+          "infrastructure_relevance_score": 0.928,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud, high-performance computing)",
+            "cloud_capacity_relevance:0.32(hyperscalers)",
+            "semiconductor_relevance:0.58(semiconductor, gpu)",
+            "power_grid_relevance:0.22(power)",
+            "capital_markets_relevance:0.28(capex)"
+          ],
+          "extraction_quality_score": 1,
+          "source_domain_adapter": "semiengineering",
+          "content_length": 1711,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": false,
+          "repetition_block_reasons": [],
+          "repetition_check": null,
+          "expert_insight_complete": false,
+          "expert_insight_missing_fields": [
+            "concrete_facts",
+            "named_companies"
+          ],
+          "reason": "expert_insight_missing_fields concrete_facts, named_companies"
+        }
+      ],
+      "repetitionBlockedItems": [
+        {
+          "id": "1d18f53cb6749a7c",
+          "title": "Samsung Display announces world's first 360 Hz 4K QD-OLED panel — dual-mode support also offers 680Hz at FHD, 10 customers reportedly lined up",
+          "infrastructure_relevance_score": 0.87,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "cloud_capacity_relevance:0.32(hyperscalers)",
+            "semiconductor_relevance:0.22(gpu)",
+            "power_grid_relevance:0.22(power)"
+          ],
+          "extraction_quality_score": 1,
+          "source_domain_adapter": "generic",
+          "content_length": 1689,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": true,
+          "repetition_block_reasons": [
+            "repeated_sentence_ratio>0.12",
+            "heading_sequence_similarity>0.75",
+            "conclusion_similarity>0.7"
+          ],
+          "repetition_check": {
+            "compared_article_count": 16,
+            "repeated_sentence_ratio": 0.14285714285714285,
+            "repeated_paragraph_ratio": 0.16666666666666666,
+            "heading_sequence_similarity": 1,
+            "banned_phrase_count": 0,
+            "banned_phrase_counts": {},
+            "recent_banned_phrase_counts": {},
+            "ngram_overlap": 0.47413793103448276,
+            "blueprint_repetition": 1,
+            "conclusion_similarity": 0.9999999999999998,
+            "repeated_sentence_count": 1,
+            "repeated_paragraph_count": 1,
+            "heading_sequence": [
+              "Technical Signal",
+              "Failure Domain",
+              "Operator Exposure",
+              "Benchmark To Watch"
+            ],
+            "blocked": true,
+            "reasons": [
+              "repeated_sentence_ratio>0.12",
+              "heading_sequence_similarity>0.75",
+              "conclusion_similarity>0.7"
+            ]
+          },
+          "expert_insight_complete": true,
+          "expert_insight_missing_fields": [],
+          "reason": "repeated_sentence_ratio>0.12; heading_sequence_similarity>0.75; conclusion_similarity>0.7"
+        }
+      ],
+      "signalCardItems": [
+        {
+          "id": "756a62d047d436b1",
+          "title": "Swapping Out Chiplets: I/Os Vs. Compute",
+          "infrastructure_relevance_score": 0.928,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud, high-performance computing)",
+            "cloud_capacity_relevance:0.32(hyperscalers)",
+            "semiconductor_relevance:0.58(semiconductor, gpu)",
+            "power_grid_relevance:0.22(power)",
+            "capital_markets_relevance:0.28(capex)"
+          ],
+          "extraction_quality_score": 1,
+          "source_domain_adapter": "semiengineering",
+          "content_length": 1711,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": false,
+          "repetition_block_reasons": [],
+          "repetition_check": null,
+          "expert_insight_complete": false,
+          "expert_insight_missing_fields": [
+            "concrete_facts",
+            "named_companies"
+          ],
+          "reason": "expert_insight_missing_fields concrete_facts, named_companies"
+        }
+      ],
+      "archiveOnlyItems": []
     }
   ],
-  "lastRunAt": "2026-05-28T00:02:14.346Z"
+  "lastRunAt": "2026-05-28T11:01:49.153Z"
 }

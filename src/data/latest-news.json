@@ -166,6 +166,177 @@
     "generatedImageModel": "local-svg"
   },
   {
+    "id": "756a62d047d436b1",
+    "source": "Semiconductor Engineering",
+    "url": "https://semiengineering.com/swapping-out-chiplets-i-os-vs-compute/",
+    "title": "Swapping Out Chiplets: I/Os Vs. Compute",
+    "snippet": "Multi-die assemblies give chip architects the option to change some dies while keeping the rest of the system intact, but which is best to keep? The post Swapping Out Chiplets: I/Os Vs. Compute appeared first on Semicon…",
+    "contentText": "Key Takeaways : Companies can save time and money by swapping out a compute, memory, or I/O chiplet to gain technology improvements, while keeping the other dies stable. Chip architects may choose to keep their I/Os stable and swap out compute to move from a 5nm process node to 3nm to achieve performance and power improvements, or swap out memory from LPDDR5X to LPDDR6. Swapping out I/Os makes sense if chip architects want to keep the die on a less advanced node than the compute, but upgrade to a protocol such as 224G SerDes. Despite initial design and verification challenges, chiplet-based architectures are proving to be a cost-effective way of reusing large portions of a design while staying current with the latest I/O protocols and logic. Early discussions about chiplets were largely t…",
+    "publishedAt": "2026-05-28T07:12:57.000Z",
+    "sourceImage": "https://i0.wp.com/semiengineering.com/wp-content/uploads/2026/05/Keysight-A-multi-die-chiplets-from-different-vendors.png?resize=1520%2C834&#038;ssl=1",
+    "region": "US",
+    "language": "en",
+    "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+    "category": "AI Infrastructure",
+    "primary_category": "AI Infrastructure",
+    "secondary_category": "GPU clusters and deployment readiness",
+    "infrastructure_layer": "Compute",
+    "affected_stakeholders": [
+      "operators",
+      "hyperscalers",
+      "cloud buyers",
+      "investors"
+    ],
+    "article_type": "Supply Chain",
+    "urgency_score": 0.56,
+    "taxonomy_confidence": 0.93,
+    "taxonomy_reasons": [
+      "ai infrastructure",
+      "neocloud",
+      "hpc",
+      "deployment readiness"
+    ],
+    "direct_ai_infrastructure_relevance": 1,
+    "data_center_relevance": 0.16,
+    "cloud_capacity_relevance": 0.32,
+    "semiconductor_relevance": 0.58,
+    "power_grid_relevance": 0.22,
+    "cooling_relevance": 0,
+    "capital_markets_relevance": 0.28,
+    "enterprise_ai_infrastructure_relevance": 0,
+    "infrastructure_relevance_score": 0.928,
+    "infrastructure_relevance_tier": "full_memo",
+    "infrastructure_relevance_action": "generate_full_memo",
+    "infrastructure_relevance_reasons": [
+      "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud, high-performance computing)",
+      "cloud_capacity_relevance:0.32(hyperscalers)",
+      "semiconductor_relevance:0.58(semiconductor, gpu)",
+      "power_grid_relevance:0.22(power)",
+      "capital_markets_relevance:0.28(capex)"
+    ],
+    "infrastructure_relevance": {
+      "direct_ai_infrastructure_relevance": 1,
+      "data_center_relevance": 0.16,
+      "cloud_capacity_relevance": 0.32,
+      "semiconductor_relevance": 0.58,
+      "power_grid_relevance": 0.22,
+      "cooling_relevance": 0,
+      "capital_markets_relevance": 0.28,
+      "enterprise_ai_infrastructure_relevance": 0,
+      "infrastructure_relevance_score": 0.928,
+      "infrastructure_relevance_tier": "full_memo",
+      "infrastructure_relevance_action": "generate_full_memo",
+      "infrastructure_relevance_reasons": [
+        "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud, high-performance computing)",
+        "cloud_capacity_relevance:0.32(hyperscalers)",
+        "semiconductor_relevance:0.58(semiconductor, gpu)",
+        "power_grid_relevance:0.22(power)",
+        "capital_markets_relevance:0.28(capex)"
+      ],
+      "infrastructureRelevanceAction": "generate_full_memo",
+      "articlePagePublished": true,
+      "homepagePublished": true,
+      "archiveOnly": false,
+      "archiveOnlyReason": null
+    },
+    "score": 76,
+    "slug": "swapping-out-chiplets-i-os-vs-compute",
+    "summary": "Multi-die assemblies give chip architects the option to change some dies while keeping the rest of the system intact, but which is best to keep? Despite initial design and verific…",
+    "insight": "The practical effect is on time-to-power, campus sequencing, and capex timing. The advantage goes to teams that line up power, facility design, network topology, and silicon timing instead of optimizing one layer in isolation.",
+    "expert_insight": {
+      "concrete_facts": [],
+      "named_companies": [],
+      "infrastructure_layer": "Compute",
+      "bottleneck_type": "power_grid",
+      "who_gains_leverage": "utilities, power-secured developers, and operators with firm interconnection positions",
+      "who_takes_execution_risk": "developers and cloud buyers whose delivery dates depend on utility upgrades or energization schedules",
+      "timing_dependency": "utility interconnection, equipment procurement, and energization milestones",
+      "counterargument": "The source may still describe intent rather than delivered capacity, so the operating impact depends on follow-through.",
+      "next_observable_signal": "interconnection approvals, substation equipment dates, power purchase agreements, or disclosed energization windows",
+      "expert_insight_complete": false,
+      "expert_insight_missing_fields": [
+        "concrete_facts",
+        "named_companies"
+      ]
+    },
+    "expertInsight": {
+      "concrete_facts": [],
+      "named_companies": [],
+      "infrastructure_layer": "Compute",
+      "bottleneck_type": "power_grid",
+      "who_gains_leverage": "utilities, power-secured developers, and operators with firm interconnection positions",
+      "who_takes_execution_risk": "developers and cloud buyers whose delivery dates depend on utility upgrades or energization schedules",
+      "timing_dependency": "utility interconnection, equipment procurement, and energization milestones",
+      "counterargument": "The source may still describe intent rather than delivered capacity, so the operating impact depends on follow-through.",
+      "next_observable_signal": "interconnection approvals, substation equipment dates, power purchase agreements, or disclosed energization windows",
+      "expert_insight_complete": false,
+      "expert_insight_missing_fields": [
+        "concrete_facts",
+        "named_companies"
+      ]
+    },
+    "concrete_facts": [],
+    "named_companies": [],
+    "bottleneck_type": "power_grid",
+    "who_gains_leverage": "utilities, power-secured developers, and operators with firm interconnection positions",
+    "who_takes_execution_risk": "developers and cloud buyers whose delivery dates depend on utility upgrades or energization schedules",
+    "timing_dependency": "utility interconnection, equipment procurement, and energization milestones",
+    "counterargument": "The source may still describe intent rather than delivered capacity, so the operating impact depends on follow-through.",
+    "next_observable_signal": "interconnection approvals, substation equipment dates, power purchase agreements, or disclosed energization windows",
+    "expert_insight_complete": false,
+    "expert_insight_missing_fields": [
+      "concrete_facts",
+      "named_companies"
+    ],
+    "tags": [
+      "power",
+      "semiconductor"
+    ],
+    "imagePrompt": "Editorial hero image for enterprise technology news. No logos, no text, no watermark, no brand marks. Topic: Swapping Out Chiplets: I/Os Vs. Compute. Category: Hyperscalers & Cloud. Mood: premium, cinematic, monochrome glass dashboard aesthetic. Context: Multi-die assemblies give chip architects the option to change some dies while keeping the rest of the system intact, but which is best to keep? Despite initial design and verific…. Include modern data center, network, semiconductor, cloud, or grid motifs only when relevant. 16:9 composition.",
+    "lang": "en",
+    "articleText": "Multi-die assemblies give chip architects the option to change some dies while keeping the rest of the system intact, but which is best to keep? Despite initial design and verification challenges, chiplet-based architectures are proving to be a cost-effective way of reusing large portions of a design while staying current with the latest I/O protocols and logic. Early discussions about chiplets were largely targeted at developing different functional blocks and IP in whatever node made the most sense, especially analog components. While that is still the case, the bigger economic benefit may be the ability to selectively incorporate new IP, support protocol or memory transitions, and/or create product variants without a full multi-die respin. In effect, the architecture supports modular recomposition — preserving stable portions of the design while updating the blocks that deliver the greatest system-level benefit. One element that can be swapped out — or kept — is the I/O chiplet. This is important because interface protocols, interconnect standards, physical input/output (I/O) connectors, processors, and memories are all evolving quickly in order to keep up with the demands of artificial intelligence (AI), machine learning (ML), and high-performance computing (HPC). In a chiplet-based system, the logic and memory can stay the same while the I/O chiplet is replaced with one that takes advantage of higher speeds or more optimized interconnect protocols for specific workloads. Alternatively, the I/Os can remain while logic or memory are changed out for manufacturing process improvements or scaling to increase logic density and reduce power. Chip architects are exploring both options.",
+    "content_length": 1711,
+    "boilerplate_ratio": 0,
+    "title_body_similarity": 0.5,
+    "copyright_footer_detected": false,
+    "nav_or_cta_detected": false,
+    "sentence_completion_score": 1,
+    "source_domain_adapter": "semiengineering",
+    "extraction_quality_score": 1,
+    "extraction_qa": {
+      "content_length": 1711,
+      "boilerplate_ratio": 0,
+      "title_body_similarity": 0.5,
+      "copyright_footer_detected": false,
+      "legal_boilerplate_detected": false,
+      "nav_or_cta_detected": false,
+      "sentence_completion_score": 1,
+      "source_domain_adapter": "semiengineering",
+      "extraction_quality_score": 1,
+      "extraction_failure_reason": null,
+      "extraction_quality_reasons": []
+    },
+    "sourceUrl": "https://semiengineering.com/swapping-out-chiplets-i-os-vs-compute/",
+    "generatedImage": "/generated/756a62d047d436b1.svg",
+    "infrastructureRelevanceAction": "generate_full_memo",
+    "articlePagePublished": false,
+    "homepagePublished": true,
+    "archiveOnly": false,
+    "archiveOnlyReason": null,
+    "expertInsightBlocked": true,
+    "expertInsightBlockedAt": "2026-05-28T11:02:00.790Z",
+    "expertInsightBlockReason": "expert_insight_missing_fields concrete_facts, named_companies",
+    "signalCardOnly": true,
+    "signalCardReason": "expert_insight_missing_fields concrete_facts, named_companies",
+    "article_blueprint": null,
+    "articleBlueprint": null,
+    "expertLensShort": null,
+    "expertLensFull": null,
+    "expertLens": null,
+    "generatedImageProvider": "local-placeholder",
+    "generatedImageModel": "local-svg"
+  },
+  {
     "id": "0737340e51a0cfb0",
     "source": "HPCwire",
     "url": "https://www.hpcwire.com/off-the-wire/nvidia-vera-cpu-is-packing-a-heavy-hitting-punch-against-competition/",
@@ -1697,7 +1868,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-05-28T00:02:52.079Z",
+      "generatedAt": "2026-05-28T11:02:17.965Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Google",
@@ -2777,7 +2948,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-05-28T00:02:52.570Z",
+      "generatedAt": "2026-05-28T11:02:18.487Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Samsung",
@@ -3304,7 +3475,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-05-28T00:02:52.779Z",
+      "generatedAt": "2026-05-28T11:02:18.706Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Poland Data",
@@ -4069,7 +4240,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-05-28T00:02:53.071Z",
+      "generatedAt": "2026-05-28T11:02:19.011Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "StorageReview",
@@ -4277,7 +4448,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-05-28T00:02:53.254Z",
+      "generatedAt": "2026-05-28T11:02:19.205Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "StorageReview",
@@ -4493,7 +4664,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-05-28T00:02:53.440Z",
+      "generatedAt": "2026-05-28T11:02:19.398Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Dell: Dell",
@@ -4705,7 +4876,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-05-28T00:02:53.625Z",
+      "generatedAt": "2026-05-28T11:02:19.591Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Virginia Tightens Data",
@@ -4915,7 +5086,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-05-28T00:02:53.813Z",
+      "generatedAt": "2026-05-28T11:02:19.787Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Quantum Networking Era Data",
@@ -5544,7 +5715,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-05-28T00:02:54.033Z",
+      "generatedAt": "2026-05-28T11:02:20.021Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "AWS",
@@ -5992,7 +6163,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "editorial-story-engine-v2",
-      "generatedAt": "2026-05-28T00:02:54.309Z",
+      "generatedAt": "2026-05-28T11:02:20.308Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "NetApp",
@@ -6350,7 +6521,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "editorial-story-engine-v2",
-      "generatedAt": "2026-05-28T00:02:54.500Z",
+      "generatedAt": "2026-05-28T11:02:20.507Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "NetApp",
@@ -6708,7 +6879,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "editorial-story-engine-v2",
-      "generatedAt": "2026-05-28T00:02:54.690Z",
+      "generatedAt": "2026-05-28T11:02:20.706Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Supermicro",
@@ -7075,7 +7246,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "editorial-story-engine-v2",
-      "generatedAt": "2026-05-28T00:02:54.881Z",
+      "generatedAt": "2026-05-28T11:02:20.905Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Supermicro",
@@ -7440,7 +7611,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "editorial-story-engine-v2",
-      "generatedAt": "2026-05-28T00:02:55.078Z",
+      "generatedAt": "2026-05-28T11:02:21.107Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Veeam Expands Data",
@@ -7808,7 +7979,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "editorial-story-engine-v2",
-      "generatedAt": "2026-05-28T00:02:55.274Z",
+      "generatedAt": "2026-05-28T11:02:21.311Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Veeam Expands Data",
@@ -8138,408 +8309,6 @@
       "dirty_extraction"
     ],
     "regeneration_rank": 19,
-    "generatedImageProvider": "local-placeholder",
-    "generatedImageModel": "local-svg",
-    "stockImageReplacedAt": "2026-05-23T15:28:43.158Z"
-  },
-  {
-    "id": "watch_sig_c8ca4bfa01dae7ae",
-    "source": "Data Center Knowledge",
-    "url": "https://www.datacenterknowledge.com/cloud/earnings-roundup-neoclouds-shift-from-gpu-race-to-power-wars",
-    "title": "CoreWeave: Earnings Roundup: Neoclouds Shift From GPU Race to Power Wars",
-    "snippet": "Earnings Roundup: Neoclouds Shift From GPU Race to Power Wars is a capacity signal for operators tracking where AI demand is turning into real data center commitments.",
-    "contentText": "CoreWeave and Nebius earnings show the AI infrastructure race increasingly centers on power, networking, cooling, and deployment speed – not GPU supply alone.",
-    "publishedAt": "2026-05-15T08:50:00.000Z",
-    "sourceImage": "https://eu-images.contentstack.com/v3/assets/blt8eb3cdfc1fce5194/blt6c72f9df56609df1/6a062beddc88b1fad3472014/GPUs-Neocloud.jpg?width=1280&auto=webp&quality=80&disable=upscale",
-    "region": "US",
-    "language": "en",
-    "defaultCategory": "Colocation & Wholesale",
-    "score": 67,
-    "slug": "earnings-roundup-neoclouds-shift-from-gpu-race-to-power-wars",
-    "summary": "Why it matters: facility constraints can change build schedules, buyer commitments, and cost assumptions before demand shows up in revenue.",
-    "insight": "The practical effect is on compute supply, deployment speed, and network orchestration; operators and investors that align power, facility design, network topology, and silicon timing will compound the advantage faster than teams opti",
-    "category": "Data Centers",
-    "tags": [
-      "gpu",
-      "cloud",
-      "power",
-      "cooling"
-    ],
-    "imagePrompt": "Editorial hero image for enterprise technology news. No logos, no text, no watermark, no brand marks. Topic: Earnings Roundup: Neoclouds Shift From GPU Race to Power Wars. Category: Hyperscalers & Cloud. Mood: premium, cinematic, monochrome glass dashboard aesthetic. Context: Want more Data Center Knowledge stories in your Google search results? Copyright © 2026 TechTarget, Inc. d/b/a Informa TechTarget. This website is owned and operated by Informa Te…. Include modern data center, network, semiconductor, cloud, or grid motifs only when relevant. 16:9 composition.",
-    "lang": "en",
-    "articleText": "Want more Data Center Knowledge stories in your Google search results? Copyright © 2026 TechTarget, Inc. d/b/a Informa TechTarget. This website is owned and operated by Informa TechTarget, part of a global network that informs, influences and connects the world’s technology buyers and sellers. All copyright resides with them. Informa PLC’s registered office is 5 Howick Place, London SW1P 1WG. Registered in England and Wales. TechTarget, Inc.’s registered office is 275 Grove St. Newton, MA 02466.",
-    "sourceUrl": "https://www.datacenterknowledge.com/cloud/earnings-roundup-neoclouds-shift-from-gpu-race-to-power-wars",
-    "generatedImage": "/generated/watch_sig_c8ca4bfa01dae7ae.svg",
-    "expertLensShort": "CoreWeave is a quarantined item for archive only readers, with the infrastructure read limited to source-backed facts.",
-    "expertLensFull": {
-      "version": 2,
-      "mode": "editorial-story-engine-v2",
-      "generatedAt": "2026-05-28T00:02:55.454Z",
-      "generation_version": "editorial_surface_v2",
-      "narrative_dna": {
-        "protagonist": "CoreWeave",
-        "concrete_event": "Why it matters: facility constraints can change build schedules, buyer commitments, and cost assumptions before demand shows up in revenue.",
-        "core_tension": "CoreWeave has to translate why it matters: facility constraints can change build schedules, buyer commitments, and cost assumptions before demand shows up in revenue. into a facility decision that survives cost, timing, or operating constraints",
-        "infrastructure_layer": "Facility",
-        "reader_role": [
-          "data center operators",
-          "developers",
-          "site selectors",
-          "investors"
-        ],
-        "decision_relevance": "data center operators and developers can use the item to test quarantined before changing procurement, deployment, or risk assumptions",
-        "evidence_anchor": "Want more Data Center Knowledge stories in your Google search results? Copyright © 2026 TechTarget, Inc. d/b/a Informa TechTarget. This website is owned and operated by Informa TechTarget, part of a global network that informs, influences and connects the world’s technology buyers and sellers. All copyright resides with them. Informa PLC’s registered office is 5 Howick Place",
-        "counterpoint": "Why it matters: facility constraints can change build schedules, buyer commitments, and cost assumptions before demand shows up in revenue. only changes decisions if the facility evidence is specific enough to affect timing, procurement, or operating plans",
-        "watch_metric": "market map evidence tied to a named customer, deployment milestone, cost metric, or operating constraint",
-        "time_horizon": "near term",
-        "public_signal_label": "Adjacent Signal",
-        "editorial_lens": "Quarantined",
-        "story_archetype": "Market Map",
-        "story_archetype_id": "market-map",
-        "routing_decision": "quarantine",
-        "valid_for_full_article": false,
-        "missing_fields": [],
-        "truncation": {
-          "ok": true,
-          "artifacts": []
-        }
-      },
-      "dynamicBriefLabel": "Adjacent Signal",
-      "blueprintId": "capital-operator-brief",
-      "blueprintName": "Capital Operator Brief",
-      "blueprint": {
-        "id": "capital-operator-brief",
-        "name": "Capital Operator Brief",
-        "sectionHeadings": [
-          "Report",
-          "Capital Read",
-          "Operator Read",
-          "Watch Item"
-        ],
-        "paragraphRhythm": [
-          1,
-          1,
-          2,
-          1
-        ],
-        "targetParagraphs": 5,
-        "minChars": 900,
-        "maxChars": 1500
-      },
-      "thesis": "CoreWeave is a quarantined item for archive only readers, with the infrastructure read limited to source-backed facts.",
-      "whatHappened": "Why it matters: facility constraints can change build schedules, buyer commitments, and cost assumptions before demand shows up in revenue.",
-      "whyThisMatters": "The public card stays short because the available evidence supports a watchlist signal more than a full infrastructure memo.",
-      "marketMissing": "Why it matters: facility constraints can change build schedules, buyer commitments, and cost assumptions before demand shows up in revenue. only changes decisions if the facility evidence is specific enough to affect timing, procurement, or operating plans.",
-      "investors": "Data center operators and developers can use the item to test quarantined before changing procurement, deployment, or risk assumptions.",
-      "operators": "Facility teams should track market map evidence tied to a named customer, deployment milestone, cost metric, or operating constraint.",
-      "hyperscalers": "Cloud and platform buyers should separate source evidence from generic AI demand before changing deployment plans.",
-      "watchNext": "Market map evidence tied to a named customer, deployment milestone, cost metric, or operating constraint.",
-      "executiveSummary": [
-        "Why it matters: facility constraints can change build schedules, buyer commitments, and cost assumptions before demand shows up in revenue.",
-        "Data center operators and developers can use the item to test quarantined before changing procurement, deployment, or risk assumptions.",
-        "Watch market map evidence tied to a named customer, deployment milestone, cost metric, or operating constraint."
-      ],
-      "headlineOptions": [
-        "Earnings Roundup: Neoclouds Shift From GPU Race to Power Wars",
-        "Data Center Knowledge: the execution test behind the latest data centers move",
-        "The bottleneck behind Earnings Roundup: Neoclouds Shift From GPU Race to Power Wars",
-        "Earnings Roundup: Neoclouds Shift From GPU Race to Power Wars puts execution back in focus",
-        "What to watch after Earnings Roundup: Neoclouds Shift From GPU Race to Power Wars"
-      ],
-      "finalHeadline": "CoreWeave: Earnings Roundup: Neoclouds Shift From GPU Race to Power Wars",
-      "metaDescription": "CoreWeave is a quarantined item for archive only readers, with the infrastructure read limited to source-backed facts.",
-      "finalArticleBody": "CoreWeave is a quarantined item for archive only readers, with the infrastructure read limited to source-backed facts.\n\nThe Map\n\nWhy it matters: facility constraints can change build schedules, buyer commitments, and cost assumptions before demand shows up in revenue. is more useful as a map of control points than as one broad capacity claim.\n\nControl Points\n\nData center operators and developers can use the item to test quarantined before changing procurement, deployment, or risk assumptions.\n\nWho Is Exposed\n\nWhy it matters: facility constraints can change build schedules, buyer commitments, and cost assumptions before demand shows up in revenue. only changes decisions if the facility evidence is specific enough to affect timing, procurement, or operating plans; that keeps the public read tied to evidence instead of treating the announcement as finished capacity.\n\nSignals To Separate\n\nReaders should track market map evidence tied to a named customer, deployment milestone, cost metric, or operating constraint before treating the item as a planning assumption for facility.",
-      "sourceLink": "https://www.datacenterknowledge.com/cloud/earnings-roundup-neoclouds-shift-from-gpu-race-to-power-wars"
-    },
-    "expertLens": "CoreWeave is a quarantined item for archive only readers, with the infrastructure read limited to source-backed facts.",
-    "primary_category": "Facility",
-    "secondary_category": "Campus development and colocation capacity",
-    "infrastructure_layer": "Facility",
-    "affected_stakeholders": [
-      "data center operators",
-      "developers",
-      "site selectors",
-      "investors"
-    ],
-    "article_type": "Watchlist Signal",
-    "urgency_score": 0.53,
-    "taxonomy_confidence": 0.81,
-    "taxonomy_reasons": [
-      "data center",
-      "colocation",
-      "wholesale"
-    ],
-    "content_length": 998,
-    "boilerplate_ratio": 0,
-    "title_body_similarity": 0.5,
-    "copyright_footer_detected": false,
-    "nav_or_cta_detected": false,
-    "sentence_completion_score": 0.8,
-    "source_domain_adapter": "datacenterknowledge",
-    "extraction_quality_score": 0.9,
-    "extraction_qa": {
-      "content_length": 998,
-      "boilerplate_ratio": 0,
-      "title_body_similarity": 0.5,
-      "copyright_footer_detected": false,
-      "nav_or_cta_detected": false,
-      "sentence_completion_score": 0.8,
-      "source_domain_adapter": "datacenterknowledge",
-      "extraction_quality_score": 0.9,
-      "extraction_failure_reason": null,
-      "extraction_quality_reasons": []
-    },
-    "direct_ai_infrastructure_relevance": 0.78,
-    "data_center_relevance": 1,
-    "cloud_capacity_relevance": 0,
-    "semiconductor_relevance": 0.297,
-    "power_grid_relevance": 0.297,
-    "cooling_relevance": 0.34,
-    "capital_markets_relevance": 0,
-    "enterprise_ai_infrastructure_relevance": 0.18,
-    "infrastructure_relevance_score": 0.69,
-    "infrastructure_relevance_tier": "full_memo",
-    "infrastructure_relevance_action": "generate_full_memo",
-    "infrastructure_relevance_reasons": [
-      "direct_ai_infrastructure_relevance:0.78(ai infrastructure)",
-      "data_center_relevance:1.00(data center, data centers, colocation)",
-      "semiconductor_relevance:0.30(gpu)",
-      "power_grid_relevance:0.30(power)",
-      "cooling_relevance:0.34(cooling)"
-    ],
-    "infrastructure_relevance": {
-      "direct_ai_infrastructure_relevance": 0.78,
-      "data_center_relevance": 1,
-      "cloud_capacity_relevance": 0,
-      "semiconductor_relevance": 0.297,
-      "power_grid_relevance": 0.297,
-      "cooling_relevance": 0.34,
-      "capital_markets_relevance": 0,
-      "enterprise_ai_infrastructure_relevance": 0.18,
-      "infrastructure_relevance_score": 0.972,
-      "infrastructure_relevance_tier": "full_memo",
-      "infrastructure_relevance_action": "generate_full_memo",
-      "infrastructure_relevance_reasons": [
-        "direct_ai_infrastructure_relevance:0.78(ai infrastructure)",
-        "data_center_relevance:1.00(data center, data centers, colocation)",
-        "semiconductor_relevance:0.30(gpu)",
-        "power_grid_relevance:0.30(power)",
-        "cooling_relevance:0.34(cooling)"
-      ],
-      "infrastructureRelevanceAction": "generate_full_memo",
-      "articlePagePublished": true,
-      "homepagePublished": true,
-      "archiveOnly": false,
-      "archiveOnlyReason": null
-    },
-    "homepagePublished": true,
-    "archiveOnly": false,
-    "archiveOnlyReason": null,
-    "article_blueprint": "capital-operator-brief",
-    "articleBlueprint": {
-      "id": "capital-operator-brief",
-      "name": "Capital Operator Brief",
-      "sectionHeadings": [
-        "Report",
-        "Capital Read",
-        "Operator Read",
-        "Watch Item"
-      ],
-      "paragraphRhythm": [
-        1,
-        1,
-        2,
-        1
-      ],
-      "targetParagraphs": 5,
-      "minChars": 900,
-      "maxChars": 1500
-    },
-    "seo_noindex": false,
-    "seo_noindex_reasons": [
-      "source_boilerplate_only",
-      "unclean_or_short_evidence",
-      "pre_autonomous_editorial_desk",
-      "stale_autonomous_editorial_desk_batch"
-    ],
-    "seo_backfill_version": 1,
-    "searchText": "CoreWeave: Earnings Roundup: Neoclouds Shift From GPU Race to Power Wars Data Center Knowledge Facility Campus development and colocation capacity Watchlist Signal Data Centers US Why it matters: facility constraints can change build schedules, buyer commitments, and cost assumptions before demand shows up in revenue. Facility is the useful lens on Google because the source points to a specific operating decision. Want more Data Center Knowledge stories in your Google search results? Copyright © 2026 TechTarget, Inc. d/b/a Informa TechTarget. This website is owned and operated by Informa Te. data center operators and developers should care because Google links Want more Data Center Knowledge stories in your Google search results? Copyright © 2026 TechTarget, Inc. d/b/a Informa TechTarget. This website is owned and operated by Informa Te only changes decisions if the facility evidence is specific enough to affect timing, procurement, or operating plans. Data center operators and developers can use the item to test operating readiness before changing procurement, deployment, or risk assumptions. Facility teams should track operating readiness evidence tied to a named customer, deployment milestone, cost metric, or operating constraint. Cloud and platform buyers should separate source evidence from generic AI demand before changing deployment plans. Operating readiness evidence tied to a named customer, deployment milestone, cost metric, or operating constraint. Earnings Roundup: Neoclouds Shift From GPU Race to Power Wars Want more Data Center Knowledge stories in your Google search results? Copyright © 2026 TechTarget, Inc. d/b/a Informa TechTarget. This website is owned and operated by Informa TechTarget, part of a global network that informs, influences and connects the world’s technology buyers and sellers. All copyright resides with them. Informa PLC’s registered office is 5 Howick Place, London SW1P 1WG. Registered in England and Wales. TechTarget, Inc.’s registered office is 275 Grove St. Newton, MA 02466. data center operators developers site selectors investors gpu cloud power cooling",
-    "articlePagePublished": false,
-    "noindex": false,
-    "generation_version": "editorial_surface_v2",
-    "narrative_dna": {
-      "protagonist": "CoreWeave",
-      "concrete_event": "Why it matters: facility constraints can change build schedules, buyer commitments, and cost assumptions before demand shows up in revenue.",
-      "core_tension": "CoreWeave has to translate why it matters: facility constraints can change build schedules, buyer commitments, and cost assumptions before demand shows up in revenue. into a facility decision that survives cost, timing, or operating constraints",
-      "infrastructure_layer": "Facility",
-      "reader_role": [
-        "data center operators",
-        "developers",
-        "site selectors",
-        "investors"
-      ],
-      "decision_relevance": "data center operators and developers can use the item to test quarantined before changing procurement, deployment, or risk assumptions",
-      "evidence_anchor": "Want more Data Center Knowledge stories in your Google search results? Copyright © 2026 TechTarget, Inc. d/b/a Informa TechTarget. This website is owned and operated by Informa TechTarget, part of a global network that informs, influences and connects the world’s technology buyers and sellers. All copyright resides with them. Informa PLC’s registered office is 5 Howick Place",
-      "counterpoint": "Why it matters: facility constraints can change build schedules, buyer commitments, and cost assumptions before demand shows up in revenue. only changes decisions if the facility evidence is specific enough to affect timing, procurement, or operating plans",
-      "watch_metric": "market map evidence tied to a named customer, deployment milestone, cost metric, or operating constraint",
-      "time_horizon": "near term",
-      "public_signal_label": "Adjacent Signal",
-      "editorial_lens": "Quarantined",
-      "story_archetype": "Market Map",
-      "story_archetype_id": "market-map",
-      "routing_decision": "quarantine",
-      "valid_for_full_article": false,
-      "missing_fields": [],
-      "truncation": {
-        "ok": true,
-        "artifacts": []
-      }
-    },
-    "dynamic_brief_label": "Adjacent Signal",
-    "anti_template_rewrite": true,
-    "repetition_check": {
-      "compared_article_count": 23,
-      "repeated_sentence_ratio": 0.3333333333333333,
-      "repeated_paragraph_ratio": 0.2,
-      "heading_sequence_similarity": 0.25,
-      "banned_phrase_count": 0,
-      "banned_phrase_counts": {},
-      "recent_banned_phrase_counts": {},
-      "ngram_overlap": 0.41509433962264153,
-      "blueprint_repetition": 2,
-      "conclusion_similarity": 0.8750000000000001,
-      "repeated_sentence_count": 4,
-      "repeated_paragraph_count": 1,
-      "heading_sequence": [
-        "Field Signal",
-        "Execution Friction",
-        "Technical Read",
-        "Operating Watch"
-      ],
-      "blocked": true,
-      "reasons": [
-        "repeated_sentence_ratio>0.12",
-        "conclusion_similarity>0.7"
-      ]
-    },
-    "repetition_blocked": true,
-    "repetition_block_reasons": [
-      "repeated_sentence_ratio>0.12",
-      "conclusion_similarity>0.7"
-    ],
-    "qualityGateBlocked": true,
-    "qualityGateReason": "source_extraction_fail_closed:fail_closed: copyright_footer_detected",
-    "noindex_reason": "banned_phrase_store_scrub",
-    "banned_phrase_scrubbed": true,
-    "public_copy_stale": false,
-    "infrastructureRelevanceAction": "generate_full_memo",
-    "signalCardOnly": true,
-    "public_routing": {
-      "score": 0.69,
-      "visibility": "adjacent",
-      "laneKey": "power-grid",
-      "laneTitle": "Power & Grid",
-      "editorial_lens": "Power & Grid",
-      "public_signal_label": "Signal",
-      "story_archetype": "Signal",
-      "blocked_reasons": []
-    },
-    "routing_decision": "quarantine",
-    "public_generation_version": "editorial_surface_v2",
-    "public_presentation": {
-      "signal_label": "Signal",
-      "editorial_lens": "Power & Grid",
-      "title": "CoreWeave: Earnings Roundup: Neoclouds Shift From GPU Race to Power Wars",
-      "deck": "Earnings Roundup: Neoclouds Shift From GPU Race to Power Wars is a capacity signal for operators tracking where AI demand is turning into real data center commitments.",
-      "why_it_matters": "Why it matters: facility constraints can change build schedules, buyer commitments, and cost assumptions before demand shows up in revenue.",
-      "reader_impact": [
-        "Operators",
-        "Capacity planners"
-      ],
-      "region": "US",
-      "source": "Data Center Knowledge",
-      "view_detail": "",
-      "read_source": "https://www.datacenterknowledge.com/cloud/earnings-roundup-neoclouds-shift-from-gpu-race-to-power-wars",
-      "lane_key": "power-grid",
-      "lane_title": "Power & Grid",
-      "visibility": "adjacent",
-      "story_archetype": "Signal"
-    },
-    "deck": "Earnings Roundup: Neoclouds Shift From GPU Race to Power Wars is a capacity signal for operators tracking where AI demand is turning into real data center commitments.",
-    "why_it_matters": "Why it matters: facility constraints can change build schedules, buyer commitments, and cost assumptions before demand shows up in revenue.",
-    "regeneration_v2_audit": {
-      "old_public_deck": "Google stays on the public watchlist until clean source evidence ties it to a concrete infrastructure decision.",
-      "old_lane": "Adjacent Watchlist",
-      "old_public_metadata_fields": [
-        "relevance_score",
-        "urgency_score",
-        "extraction_quality_score",
-        "article_blueprint",
-        "taxonomy_confidence"
-      ]
-    },
-    "signalCardReason": "source_boilerplate_detected; source_boilerplate_detected",
-    "public_status": "signal",
-    "quarantined": true,
-    "quarantine_reason": [
-      "source_boilerplate_only",
-      "source_extraction:boilerplate_ratio_above_0.08",
-      "source_extraction:copyright_footer_detected",
-      "source_extraction:nav_or_cta_detected_with_weak_evidence",
-      "source_extraction:cleaned_source_text_below_1200",
-      "source_extraction:source_evidence_length_below_1200",
-      "source_extraction:source_boilerplate_detected",
-      "public_template_phrase:Want more Data Center Knowledge",
-      "public_template_phrase:owned and operated by",
-      "public_template_phrase:Informa TechTarget",
-      "public_template_phrase:Copyright ©",
-      "public_template_phrase:stays on the public watchlist until clean source evidence",
-      "public_template_phrase:available source text contains clipped, boilerplate, or incomplete evidence",
-      "public_template_phrase:Compute Current is keeping the card short",
-      "public_template_phrase:Want more Data Center Knowledge stories",
-      "public_template_phrase:Copyright © 2026 TechTarget",
-      "public_template_phrase:TechTarget, Inc.",
-      "public_template_phrase:registered office",
-      "public_template_phrase:Registered in England and Wales",
-      "public_template_phrase:This website is owned and operated",
-      "public_template_phrase:All copyright resides",
-      "forbidden_phrase:Want more Data Center Knowledge",
-      "forbidden_phrase:owned and operated by",
-      "forbidden_phrase:Informa TechTarget",
-      "forbidden_phrase:Copyright ©",
-      "forbidden_phrase:stays on the public watchlist until clean source evidence",
-      "forbidden_phrase:available source text contains clipped, boilerplate, or incomplete evidence",
-      "forbidden_phrase:Compute Current is keeping the card short",
-      "forbidden_phrase:Want more Data Center Knowledge stories",
-      "forbidden_phrase:Copyright © 2026 TechTarget",
-      "forbidden_phrase:TechTarget, Inc.",
-      "forbidden_phrase:registered office",
-      "forbidden_phrase:Registered in England and Wales",
-      "forbidden_phrase:This website is owned and operated",
-      "forbidden_phrase:All copyright resides",
-      "public_boilerplate_leakage"
-    ],
-    "emergency_cleanup_audit": {
-      "old_public_deck": "Google stays on the public watchlist until clean source evidence ties it to a concrete infrastructure decision.",
-      "old_lane": "Archive Only",
-      "old_homepagePublished": false,
-      "old_articlePagePublished": false,
-      "old_noindex": true,
-      "classification": "quarantine",
-      "cleaned_at": "2026-05-19T23:51:06.452Z"
-    },
-    "blog_route": "signal_card",
-    "publishing_route": "Signal Card",
-    "stale_generation": true,
-    "stale_generation_reason": "pre_autonomous_editorial_desk",
-    "previous_generation_version": "editorial_surface_v2",
-    "signal_cluster_id": "sig_c8ca4bfa01dae7ae",
-    "sort_index": 15,
-    "public_content_tier": "signal_card",
-    "public_tier_reasons": [
-      "dirty_extraction"
-    ],
-    "regeneration_rank": 20,
     "generatedImageProvider": "local-placeholder",
     "generatedImageModel": "local-svg",
     "stockImageReplacedAt": "2026-05-23T15:28:43.158Z"
