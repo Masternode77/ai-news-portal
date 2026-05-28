@@ -339,7 +339,9 @@
     "51c2ac92c77262f5",
     "43bfb1d4d4b67121",
     "e40a1864f5a8b8e8",
-    "9182bb64a456afc1"
+    "9182bb64a456afc1",
+    "0737340e51a0cfb0",
+    "64e25c4eff0d5e2d"
   ],
   "dayPlans": {
     "2026-03-24": {
@@ -8434,72 +8436,73 @@
     "2026-05-28": {
       "date": "2026-05-28",
       "createdAt": "2026-05-27T18:06:41.529Z",
-      "refreshedAt": "2026-05-27T18:06:41.529Z",
+      "refreshedAt": "2026-05-28T00:02:14.346Z",
       "candidateWindowHours": 24,
       "curatedItems": [
         {
-          "id": "e40a1864f5a8b8e8",
+          "id": "0737340e51a0cfb0",
           "source": "HPCwire",
-          "url": "https://www.hpcwire.com/off-the-wire/supermicro-and-verda-deliver-sustainable-full-stack-ai-cloud-infrastructure-for-next-gen-ai-workloads/",
-          "title": "Supermicro and Verda Deliver Sustainable, Full-Stack AI Cloud Infrastructure for Next-Gen AI Workloads",
-          "snippet": "SAN JOSE, Calif., May 27, 2026 — Super Micro Computer, Inc. today announced that Verda, a leading European AI cloud provider, has selected Supermicro’s NVIDIA GPU-accelerated, rack-scale systems to power its modern AI c…",
-          "contentText": "SAN JOSE, Calif., May 27, 2026 &#8212; Super Micro Computer, Inc. today announced that Verda, a leading European AI cloud provider, has selected Supermicro&#8217;s NVIDIA GPU-accelerated, rack-scale systems to power its modern AI cloud infrastructure across Europe. The deployment enables Verda to deliver high-performance AI-native infrastructure serving frontier model developers, AI-native scaleups, and regulated enterprises, across Europe, the US, and Asia. Credit: Supermicro &#8220;Supermicro is happy to collaborate with Verda to bring the next generation of AI infrastructure to the world,&#8221; said Charles Liang, president and CEO of Supermicro. &#8220;Our DCBBS design, engineering, and support expertise, combined with the latest NVIDIA Blackwell-based systems, enable customers like…",
-          "publishedAt": "2026-05-27T18:06:29.000Z",
-          "sourceImage": "https://www.hpcwire.com/wp-content/uploads/2026/05/SUPERMICRO__Accelerated_AI_Cloud_Infrastructure-300x300.jpg",
+          "url": "https://www.hpcwire.com/off-the-wire/nvidia-vera-cpu-is-packing-a-heavy-hitting-punch-against-competition/",
+          "title": "NVIDIA Vera CPU Is ‘Packing a Heavy-Hitting Punch’ Against Competition",
+          "snippet": "In the new Phoronix benchmark, Vera delivers winning performance and memory results for agentic AI. May 27, 2026 — The shift to agentic AI creates a new CPU requirement for the AI factory: fast cores, massive memory ban…",
+          "contentText": "In the new Phoronix benchmark, Vera delivers winning performance and memory results for agentic AI. May 27, 2026 &#8212; The shift to agentic AI creates a new CPU requirement for the AI factory: fast cores, massive memory bandwidth and the ability to sustain high performance when all cores are active. Credit: NVIDIA Initial benchmark results published by Phoronix thi week show that the NVIDIA Vera CPU meets this need. For this first public look, the benchmark scope was centered on the agentic workloads Vera was designed for in the modern data center. The Vera CPU delivers the throughput AI factories need while optimizing platform power. Eighty-eight NVIDIA custom Olympus cores, 1.2TB/s of memory bandwidth and a high-speed, on-chip fabric results in a CPU platform that combines core perfor…",
+          "publishedAt": "2026-05-27T22:43:03.000Z",
+          "sourceImage": "https://www.hpcwire.com/wp-content/uploads/2026/05/cpu-corp-blog-vera-activation-no-logos-1280x680-1-300x159.jpg",
           "region": "US",
           "language": "en",
           "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
-          "category": "AI Infrastructure",
-          "primary_category": "AI Infrastructure",
-          "secondary_category": "GPU clusters and deployment readiness",
-          "infrastructure_layer": "Compute",
+          "category": "Semiconductors",
+          "primary_category": "Semiconductors",
+          "secondary_category": "Accelerators, memory, and advanced packaging",
+          "infrastructure_layer": "Silicon",
           "affected_stakeholders": [
-            "operators",
+            "semiconductor suppliers",
             "hyperscalers",
-            "cloud buyers",
+            "server OEMs",
             "investors"
           ],
-          "article_type": "Operations Update",
-          "urgency_score": 0.55,
-          "taxonomy_confidence": 0.77,
+          "article_type": "Product / Platform Update",
+          "urgency_score": 0.56,
+          "taxonomy_confidence": 0.81,
           "taxonomy_reasons": [
-            "ai infrastructure",
-            "neocloud"
+            "chip",
+            "gpu",
+            "nvidia"
           ],
           "direct_ai_infrastructure_relevance": 1,
-          "data_center_relevance": 0,
+          "data_center_relevance": 0.42,
           "cloud_capacity_relevance": 0,
-          "semiconductor_relevance": 0.5,
+          "semiconductor_relevance": 0.598,
           "power_grid_relevance": 0.22,
           "cooling_relevance": 0,
           "capital_markets_relevance": 0,
-          "enterprise_ai_infrastructure_relevance": 0.324,
-          "infrastructure_relevance_score": 0.91,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.932,
           "infrastructure_relevance_tier": "full_memo",
           "infrastructure_relevance_action": "generate_full_memo",
           "infrastructure_relevance_reasons": [
             "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "semiconductor_relevance:0.50(nvidia, gpu)",
-            "power_grid_relevance:0.22(power)",
-            "enterprise_ai_infrastructure_relevance:0.32(ai workloads)"
+            "data_center_relevance:0.42(data center)",
+            "semiconductor_relevance:0.60(nvidia, gpu)",
+            "power_grid_relevance:0.22(power)"
           ],
           "infrastructure_relevance": {
             "direct_ai_infrastructure_relevance": 1,
-            "data_center_relevance": 0,
+            "data_center_relevance": 0.42,
             "cloud_capacity_relevance": 0,
-            "semiconductor_relevance": 0.5,
+            "semiconductor_relevance": 0.598,
             "power_grid_relevance": 0.22,
             "cooling_relevance": 0,
             "capital_markets_relevance": 0,
-            "enterprise_ai_infrastructure_relevance": 0.324,
-            "infrastructure_relevance_score": 0.91,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.932,
             "infrastructure_relevance_tier": "full_memo",
             "infrastructure_relevance_action": "generate_full_memo",
             "infrastructure_relevance_reasons": [
               "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-              "semiconductor_relevance:0.50(nvidia, gpu)",
-              "power_grid_relevance:0.22(power)",
-              "enterprise_ai_infrastructure_relevance:0.32(ai workloads)"
+              "data_center_relevance:0.42(data center)",
+              "semiconductor_relevance:0.60(nvidia, gpu)",
+              "power_grid_relevance:0.22(power)"
             ],
             "infrastructureRelevanceAction": "generate_full_memo",
             "articlePagePublished": true,
@@ -8507,87 +8510,17 @@
             "archiveOnly": false,
             "archiveOnlyReason": null
           },
-          "score": 84
+          "score": 85
         },
         {
-          "id": "9182bb64a456afc1",
-          "source": "Data Center POST",
-          "url": "https://datacenterpost.com/the-hidden-reliability-problem-behind-edge-ai-and-industrial-iot/",
-          "title": "The Hidden Reliability Problem Behind Edge AI and Industrial IoT",
-          "snippet": "TL;DR As edge AI increasingly automates industrial infrastructure monitoring, a critical reliability problem has emerged: these AI systems are only as accurate as the observations feeding them. Facilities face a dangero…",
-          "contentText": "TL;DR As edge AI increasingly automates industrial infrastructure monitoring, a critical reliability problem has emerged: these AI systems are only as accurate as the observations feeding them. Facilities face a dangerous &#8220;ground truth gap&#8221; because isolated sensors and static deployments often fail to capture true environmental conditions, missing localized issues like thermal layering or airflow disruptions. Faster analytics cannot solve this blind spot; increased processing speed only accelerates responses to observed events and completely fails to compensate for anomalies the sensing layer misses. # # # Modern edge infrastructure monitoring environment showing real-time telemetry dashboards, connected industrial systems, and AI-driven operational analytics inside a data cen…",
-          "publishedAt": "2026-05-27T17:30:56.000Z",
-          "sourceImage": "https://d3qut6qyo6tw2j.cloudfront.net/bin/uploads/2026/05/27105744/DCP-Blog-Submission_5.20.2026-1024x512.png",
-          "region": "US",
-          "language": "en",
-          "defaultCategory": "Colocation & Wholesale",
-          "category": "Data Centers",
-          "primary_category": "Data Centers",
-          "secondary_category": "Campus development and colocation capacity",
-          "infrastructure_layer": "Facility",
-          "affected_stakeholders": [
-            "data center operators",
-            "developers",
-            "site selectors",
-            "investors"
-          ],
-          "article_type": "Other",
-          "urgency_score": 0.44,
-          "taxonomy_confidence": 0.73,
-          "taxonomy_reasons": [
-            "colocation",
-            "wholesale"
-          ],
-          "direct_ai_infrastructure_relevance": 0.78,
-          "data_center_relevance": 0.76,
-          "cloud_capacity_relevance": 0,
-          "semiconductor_relevance": 0,
-          "power_grid_relevance": 0,
-          "cooling_relevance": 0.3,
-          "capital_markets_relevance": 0,
-          "enterprise_ai_infrastructure_relevance": 0,
-          "infrastructure_relevance_score": 0.805,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:0.78",
-            "data_center_relevance:0.76(data center, colocation)",
-            "cooling_relevance:0.30(thermal)"
-          ],
-          "infrastructure_relevance": {
-            "direct_ai_infrastructure_relevance": 0.78,
-            "data_center_relevance": 0.76,
-            "cloud_capacity_relevance": 0,
-            "semiconductor_relevance": 0,
-            "power_grid_relevance": 0,
-            "cooling_relevance": 0.3,
-            "capital_markets_relevance": 0,
-            "enterprise_ai_infrastructure_relevance": 0,
-            "infrastructure_relevance_score": 0.805,
-            "infrastructure_relevance_tier": "full_memo",
-            "infrastructure_relevance_action": "generate_full_memo",
-            "infrastructure_relevance_reasons": [
-              "direct_ai_infrastructure_relevance:0.78",
-              "data_center_relevance:0.76(data center, colocation)",
-              "cooling_relevance:0.30(thermal)"
-            ],
-            "infrastructureRelevanceAction": "generate_full_memo",
-            "articlePagePublished": true,
-            "homepagePublished": true,
-            "archiveOnly": false,
-            "archiveOnlyReason": null
-          },
-          "score": 80
-        },
-        {
-          "id": "69f3a7756ab93655",
-          "source": "TechCrunch AI",
-          "url": "https://techcrunch.com/2026/05/27/meta-officially-launches-instagram-facebook-and-whatsapp-subscriptions-with-more-to-come-including-ai-plans/",
-          "title": "Meta launches Instagram, Facebook, and WhatsApp subscriptions, with more to come, including AI plans",
-          "snippet": "Meta is rolling out paid subscription plans for Instagram, Facebook, and WhatsApp worldwide, while also testing new AI, creator, and business-focused offerings under its broader “Meta One” subscription brand.",
-          "contentText": "Meta is rolling out paid subscription plans for Instagram, Facebook, and WhatsApp worldwide, while also testing new AI, creator, and business-focused offerings under its broader “Meta One” subscription brand.",
-          "publishedAt": "2026-05-27T18:00:00.000Z",
-          "sourceImage": null,
+          "id": "64e25c4eff0d5e2d",
+          "source": "StorageReview",
+          "url": "https://www.storagereview.com/news/qumulo-and-cisco-pitch-gpu-liquidity-with-updated-cloud-ai-accelerator",
+          "title": "Qumulo and Cisco Pitch GPU Liquidity With Updated Cloud AI Accelerator",
+          "snippet": "Qumulo announced the Cloud AI Accelerator, a new architecture designed to improve the efficiency of enterprise AI infrastructure by eliminating data movement bottlenecks. The platform presents distributed datasets to GP…",
+          "contentText": "Qumulo announced the Cloud AI Accelerator, a new architecture designed to improve the efficiency of enterprise AI infrastructure by eliminating data movement bottlenecks. The platform presents distributed datasets to GPU resources in real time across regions, clouds, and hybrid environments without requiring replication or staging. The release builds on a well-documented inefficiency in enterprise AI infrastructure. Citing Cast AI&#8217;s 2026 State of Kubernetes Optimization Report, Qumulo points to average enterprise GPU utilization of around 5 percent, with the remaining 95 percent of accelerated compute sitting idle because data must be staged, replicated, and moved into position before workloads can begin. Qumulo CEO Doug Gourlay framed the problem in the announcement: &#8220;Every e…",
+          "publishedAt": "2026-05-27T21:09:23.000Z",
+          "sourceImage": "https://www.storagereview.com/wp-content/uploads/2026/05/Storagereview-qumulo-cloud-data-platform.png",
           "region": "US",
           "language": "en",
           "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
@@ -8602,6 +8535,76 @@
             "investors"
           ],
           "article_type": "Product / Platform Update",
+          "urgency_score": 0.47,
+          "taxonomy_confidence": 0.77,
+          "taxonomy_reasons": [
+            "ai infrastructure",
+            "neocloud"
+          ],
+          "direct_ai_infrastructure_relevance": 1,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0.594,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0.54,
+          "infrastructure_relevance_score": 0.896,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "semiconductor_relevance:0.59(accelerator, gpu)",
+            "enterprise_ai_infrastructure_relevance:0.54(enterprise ai, kubernetes)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 1,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0.594,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0.54,
+            "infrastructure_relevance_score": 0.896,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+              "semiconductor_relevance:0.59(accelerator, gpu)",
+              "enterprise_ai_infrastructure_relevance:0.54(enterprise ai, kubernetes)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 84
+        },
+        {
+          "id": "d8bcc360440adc97",
+          "source": "ServeTheHome",
+          "url": "https://www.servethehome.com/quick-look-joyjom-stackable-pc-test-bench-cheap-but-cheap/",
+          "title": "Quick Look JOYJOM Stackable PC Test Bench Cheap But Cheap",
+          "snippet": "We take a quick look at the JOYJOM stackable PC test bench as an alternative to running motherboards bare on a desk for testing The post Quick Look JOYJOM Stackable PC Test Bench Cheap But Cheap appeared first on ServeT…",
+          "contentText": "We take a quick look at the JOYJOM stackable PC test bench as an alternative to running motherboards bare on a desk for testing The post Quick Look JOYJOM Stackable PC Test Bench Cheap But Cheap appeared first on ServeTheHome .",
+          "publishedAt": "2026-05-27T23:00:49.000Z",
+          "sourceImage": null,
+          "region": "Global",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "category": "AI Infrastructure",
+          "primary_category": "AI Infrastructure",
+          "secondary_category": "GPU clusters and deployment readiness",
+          "infrastructure_layer": "Compute",
+          "affected_stakeholders": [
+            "operators",
+            "hyperscalers",
+            "cloud buyers",
+            "investors"
+          ],
+          "article_type": "Other",
           "urgency_score": 0.43,
           "taxonomy_confidence": 0.77,
           "taxonomy_reasons": [
@@ -8646,6 +8649,74 @@
             "archiveOnlyReason": null
           },
           "score": 79
+        },
+        {
+          "id": "34ec37cb55de40cb",
+          "source": "Power Engineering",
+          "url": "https://www.power-eng.com/business/specialist-investor-arclight-to-be-acquired-by-global-asset-manager-for-up-to-1b/",
+          "title": "Specialist investor ArcLight to be acquired by global asset manager for up to $1B",
+          "snippet": "DigitalBridge will acquire ArcLight Capital Partners for up to $1.05 billion, forming a firm with over $150 billion in assets.",
+          "contentText": "DigitalBridge, a global alternative asset manager investing in digital infrastructure, announced that it has entered into a definitive agreement to acquire ArcLight Capital Partners, a specialist investor in power and electric infrastructure, for a total transaction value of up to $1.05 billion. The consideration includes a base purchase price of $650 million, plus up to an additional $400 million of contingent consideration. The combination would form an alternative asset manager with combined assets representing more than $150 billion. Since ArcLight’s founding in 2001, ArcLight has owned, controlled, or operated over 70 GW of generation assets and 48,000 miles of electric and gas transmission and storage infrastructure, representing more than $90 billion of enterprise value. The transa…",
+          "publishedAt": "2026-05-27T21:48:44.000Z",
+          "sourceImage": "https://www.power-eng.com/wp-content/uploads/2026/05/arclight.png",
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "Power / Grid / Energy",
+          "category": "Power & Grid",
+          "primary_category": "Power & Grid",
+          "secondary_category": "Interconnection and power procurement",
+          "infrastructure_layer": "Power",
+          "affected_stakeholders": [
+            "data center operators",
+            "utilities",
+            "cloud capacity teams",
+            "investors"
+          ],
+          "article_type": "Other",
+          "urgency_score": 0.57,
+          "taxonomy_confidence": 0.93,
+          "taxonomy_reasons": [
+            "power",
+            "grid",
+            "transmission",
+            "gw"
+          ],
+          "direct_ai_infrastructure_relevance": 0,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0,
+          "power_grid_relevance": 1,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0.18,
+          "infrastructure_relevance_score": 0.655,
+          "infrastructure_relevance_tier": "signal_card",
+          "infrastructure_relevance_action": "publish_signal_card_only",
+          "infrastructure_relevance_reasons": [
+            "power_grid_relevance:1.00(power, grid, gw)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 0,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0,
+            "power_grid_relevance": 1,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0.18,
+            "infrastructure_relevance_score": 0.655,
+            "infrastructure_relevance_tier": "signal_card",
+            "infrastructure_relevance_action": "publish_signal_card_only",
+            "infrastructure_relevance_reasons": [
+              "power_grid_relevance:1.00(power, grid, gw)"
+            ],
+            "infrastructureRelevanceAction": "publish_signal_card_only",
+            "articlePagePublished": false,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 74
         },
         {
           "id": "1b287eda9b2f32ed",
@@ -8715,17 +8786,17 @@
             "archiveOnly": false,
             "archiveOnlyReason": null
           },
-          "score": 78
+          "score": 72
         },
         {
-          "id": "de62166efe0e9f66",
+          "id": "4987ef798c4e219e",
           "source": "Toms Hardware",
-          "url": "https://www.tomshardware.com/tech-industry/artificial-intelligence/italian-council-sets-200-percent-tax-on-data-center-development-in-agricultural-zones-aims-to-spur-the-use-of-old-industrial-areas-instead-and-limit-environmental-impact",
-          "title": "Italian council sets 200% tax on data center development in agricultural zones — aims to spur the use of old industrial areas instead and limit environmental impact",
-          "snippet": "This 200% tax will make it more expensive to build in rural areas and is aimed at spurring data center development in disused industrial zones instead.",
-          "contentText": "This 200% tax will make it more expensive to build in rural areas and is aimed at spurring data center development in disused industrial zones instead.",
-          "publishedAt": "2026-05-27T16:40:27.000Z",
-          "sourceImage": "https://cdn.mos.cms.futurecdn.net/zJ9ZuTa8TZQqPgypFTN5Kf-1280-80.png",
+          "url": "https://www.tomshardware.com/tech-industry/artificial-intelligence/ai-costs-begin-to-bite-as-agents-may-increase-token-demand-by-24-times-says-goldman-sachs-report-uber-and-microsoft-among-companies-feeling-the-bite-of-tokenized-billing",
+          "title": "AI costs begin to bite as agents may increase token demand by 24 times, says Goldman Sachs report — Uber and Microsoft among companies feeling the bite of tokenized billing",
+          "snippet": "Major tech companies are considering refining their approaches to AI, as rising token costs and increased token demand from AI agents make the costs harder to justify, with limited return on the investment.",
+          "contentText": "Major tech companies are considering refining their approaches to AI, as rising token costs and increased token demand from AI agents make the costs harder to justify, with limited return on the investment.",
+          "publishedAt": "2026-05-27T20:52:46.000Z",
+          "sourceImage": "https://cdn.mos.cms.futurecdn.net/izGqeAVabXUojLqWse4oWK-1280-80.jpg",
           "region": "US",
           "language": "en",
           "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
@@ -8739,78 +8810,8 @@
             "cloud buyers",
             "investors"
           ],
-          "article_type": "Other",
-          "urgency_score": 0.46,
-          "taxonomy_confidence": 0.77,
-          "taxonomy_reasons": [
-            "ai infrastructure",
-            "neocloud"
-          ],
-          "direct_ai_infrastructure_relevance": 1,
-          "data_center_relevance": 0.55,
-          "cloud_capacity_relevance": 0,
-          "semiconductor_relevance": 0.22,
-          "power_grid_relevance": 0,
-          "cooling_relevance": 0,
-          "capital_markets_relevance": 0,
-          "enterprise_ai_infrastructure_relevance": 0,
-          "infrastructure_relevance_score": 0.886,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "data_center_relevance:0.55(data center)",
-            "semiconductor_relevance:0.22(gpu)"
-          ],
-          "infrastructure_relevance": {
-            "direct_ai_infrastructure_relevance": 1,
-            "data_center_relevance": 0.55,
-            "cloud_capacity_relevance": 0,
-            "semiconductor_relevance": 0.22,
-            "power_grid_relevance": 0,
-            "cooling_relevance": 0,
-            "capital_markets_relevance": 0,
-            "enterprise_ai_infrastructure_relevance": 0,
-            "infrastructure_relevance_score": 0.886,
-            "infrastructure_relevance_tier": "full_memo",
-            "infrastructure_relevance_action": "generate_full_memo",
-            "infrastructure_relevance_reasons": [
-              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-              "data_center_relevance:0.55(data center)",
-              "semiconductor_relevance:0.22(gpu)"
-            ],
-            "infrastructureRelevanceAction": "generate_full_memo",
-            "articlePagePublished": true,
-            "homepagePublished": true,
-            "archiveOnly": false,
-            "archiveOnlyReason": null
-          },
-          "score": 76
-        },
-        {
-          "id": "bf041a8bdfb18829",
-          "source": "NVIDIA Blog",
-          "url": "https://blogs.nvidia.com/blog/ai-factories-the-new-infrastructure-of-intelligence/",
-          "title": "AI Factories: The New Infrastructure of Intelligence",
-          "snippet": "AI factories are token factories, converting power into intelligence in real time. And as agentic AI scales and autonomous, always-on special agents are deployed in the enterprise, performance per watt and cost per toke…",
-          "contentText": "",
-          "publishedAt": "2026-05-27T16:00:36.000Z",
-          "sourceImage": "https://blogs.nvidia.com/wp-content/uploads/2026/05/AI_v001-scaled.png",
-          "region": "US",
-          "language": "en",
-          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
-          "category": "AI Infrastructure",
-          "primary_category": "AI Infrastructure",
-          "secondary_category": "GPU clusters and deployment readiness",
-          "infrastructure_layer": "Compute",
-          "affected_stakeholders": [
-            "operators",
-            "hyperscalers",
-            "cloud buyers",
-            "investors"
-          ],
-          "article_type": "Other",
-          "urgency_score": 0.54,
+          "article_type": "Market Analysis",
+          "urgency_score": 0.43,
           "taxonomy_confidence": 0.77,
           "taxonomy_reasons": [
             "ai infrastructure",
@@ -8819,35 +8820,33 @@
           "direct_ai_infrastructure_relevance": 1,
           "data_center_relevance": 0,
           "cloud_capacity_relevance": 0,
-          "semiconductor_relevance": 0.5,
-          "power_grid_relevance": 0.22,
+          "semiconductor_relevance": 0.22,
+          "power_grid_relevance": 0,
           "cooling_relevance": 0,
           "capital_markets_relevance": 0,
           "enterprise_ai_infrastructure_relevance": 0,
-          "infrastructure_relevance_score": 0.875,
+          "infrastructure_relevance_score": 0.778,
           "infrastructure_relevance_tier": "full_memo",
           "infrastructure_relevance_action": "generate_full_memo",
           "infrastructure_relevance_reasons": [
             "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "semiconductor_relevance:0.50(nvidia, gpu)",
-            "power_grid_relevance:0.22(power)"
+            "semiconductor_relevance:0.22(gpu)"
           ],
           "infrastructure_relevance": {
             "direct_ai_infrastructure_relevance": 1,
             "data_center_relevance": 0,
             "cloud_capacity_relevance": 0,
-            "semiconductor_relevance": 0.5,
-            "power_grid_relevance": 0.22,
+            "semiconductor_relevance": 0.22,
+            "power_grid_relevance": 0,
             "cooling_relevance": 0,
             "capital_markets_relevance": 0,
             "enterprise_ai_infrastructure_relevance": 0,
-            "infrastructure_relevance_score": 0.875,
+            "infrastructure_relevance_score": 0.778,
             "infrastructure_relevance_tier": "full_memo",
             "infrastructure_relevance_action": "generate_full_memo",
             "infrastructure_relevance_reasons": [
               "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-              "semiconductor_relevance:0.50(nvidia, gpu)",
-              "power_grid_relevance:0.22(power)"
+              "semiconductor_relevance:0.22(gpu)"
             ],
             "infrastructureRelevanceAction": "generate_full_memo",
             "articlePagePublished": true,
@@ -8855,37 +8854,30 @@
             "archiveOnly": false,
             "archiveOnlyReason": null
           },
-          "score": 76
+          "score": 71
         }
       ],
       "curatedIds": [
-        "e40a1864f5a8b8e8",
-        "9182bb64a456afc1",
-        "69f3a7756ab93655",
+        "0737340e51a0cfb0",
+        "64e25c4eff0d5e2d",
+        "d8bcc360440adc97",
+        "34ec37cb55de40cb",
         "1b287eda9b2f32ed",
-        "de62166efe0e9f66",
-        "bf041a8bdfb18829"
+        "4987ef798c4e219e"
       ],
       "publishedIds": [
         "e40a1864f5a8b8e8",
-        "9182bb64a456afc1"
+        "9182bb64a456afc1",
+        "0737340e51a0cfb0",
+        "64e25c4eff0d5e2d"
       ],
       "slotPublications": {
-        "0": true
+        "0": true,
+        "1": true
       }
     }
   },
   "runHistory": [
-    {
-      "at": "2026-04-11T15:40:35.423Z",
-      "day": "2026-04-12",
-      "slot": 0,
-      "publishedCount": 2,
-      "publishedIds": [
-        "fc523d539a05f10e",
-        "5c6ba34457ecdb74"
-      ]
-    },
     {
       "at": "2026-04-11T23:37:42.950Z",
       "day": "2026-04-12",
@@ -11107,7 +11099,130 @@
         }
       ],
       "archiveOnlyItems": []
+    },
+    {
+      "at": "2026-05-28T00:02:14.346Z",
+      "day": "2026-05-28",
+      "slot": 1,
+      "publishedCount": 0,
+      "signalCardCount": 1,
+      "archiveOnlyCount": 0,
+      "repetitionBlockedCount": 1,
+      "publishedIds": [],
+      "processedIds": [
+        "0737340e51a0cfb0",
+        "64e25c4eff0d5e2d"
+      ],
+      "blockedCount": 1,
+      "blockedItems": [
+        {
+          "id": "0737340e51a0cfb0",
+          "title": "NVIDIA Vera CPU Is ‘Packing a Heavy-Hitting Punch’ Against Competition",
+          "infrastructure_relevance_score": 0.98,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud, hpc)",
+            "data_center_relevance:0.42(data center)",
+            "cloud_capacity_relevance:0.32(hyperscalers)",
+            "semiconductor_relevance:0.82(nvidia, amd, gpu)",
+            "power_grid_relevance:0.22(power)",
+            "capital_markets_relevance:0.28(funding)",
+            "enterprise_ai_infrastructure_relevance:0.24(ai workloads)"
+          ],
+          "extraction_quality_score": 1,
+          "source_domain_adapter": "generic",
+          "content_length": 1794,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": false,
+          "repetition_block_reasons": [],
+          "repetition_check": null,
+          "expert_insight_complete": true,
+          "expert_insight_missing_fields": [],
+          "reason": "fail_closed: source_text_incomplete:ellipsis_truncation_artifact, ellipsis_truncation_artifact"
+        }
+      ],
+      "repetitionBlockedItems": [
+        {
+          "id": "64e25c4eff0d5e2d",
+          "title": "Qumulo and Cisco Pitch GPU Liquidity With Updated Cloud AI Accelerator",
+          "infrastructure_relevance_score": 0.958,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, gpu clusters, neocloud)",
+            "cloud_capacity_relevance:0.32(hyperscalers)",
+            "semiconductor_relevance:0.59(accelerator, gpu)",
+            "power_grid_relevance:0.22(power)",
+            "enterprise_ai_infrastructure_relevance:0.72(enterprise ai, kubernetes, storage)"
+          ],
+          "extraction_quality_score": 1,
+          "source_domain_adapter": "storagereview",
+          "content_length": 1696,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": true,
+          "repetition_block_reasons": [
+            "conclusion_similarity>0.7"
+          ],
+          "repetition_check": {
+            "compared_article_count": 16,
+            "repeated_sentence_ratio": 0,
+            "repeated_paragraph_ratio": 0,
+            "heading_sequence_similarity": 0,
+            "banned_phrase_count": 0,
+            "banned_phrase_counts": {},
+            "recent_banned_phrase_counts": {},
+            "ngram_overlap": 0.30952380952380953,
+            "blueprint_repetition": 1,
+            "conclusion_similarity": 0.8783100656536799,
+            "repeated_sentence_count": 0,
+            "repeated_paragraph_count": 0,
+            "heading_sequence": [
+              "Platform Move",
+              "Resilience Read",
+              "Enterprise Exposure",
+              "Proof Point"
+            ],
+            "blocked": true,
+            "reasons": [
+              "conclusion_similarity>0.7"
+            ]
+          },
+          "expert_insight_complete": true,
+          "expert_insight_missing_fields": [],
+          "reason": "conclusion_similarity>0.7"
+        }
+      ],
+      "signalCardItems": [
+        {
+          "id": "0737340e51a0cfb0",
+          "title": "NVIDIA Vera CPU Is ‘Packing a Heavy-Hitting Punch’ Against Competition",
+          "infrastructure_relevance_score": 0.98,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud, hpc)",
+            "data_center_relevance:0.42(data center)",
+            "cloud_capacity_relevance:0.32(hyperscalers)",
+            "semiconductor_relevance:0.82(nvidia, amd, gpu)",
+            "power_grid_relevance:0.22(power)",
+            "capital_markets_relevance:0.28(funding)",
+            "enterprise_ai_infrastructure_relevance:0.24(ai workloads)"
+          ],
+          "extraction_quality_score": 1,
+          "source_domain_adapter": "generic",
+          "content_length": 1794,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": false,
+          "repetition_block_reasons": [],
+          "repetition_check": null,
+          "expert_insight_complete": true,
+          "expert_insight_missing_fields": [],
+          "reason": "fail_closed: source_text_incomplete:ellipsis_truncation_artifact, ellipsis_truncation_artifact"
+        }
+      ],
+      "archiveOnlyItems": []
     }
   ],
-  "lastRunAt": "2026-05-27T18:06:41.529Z"
+  "lastRunAt": "2026-05-28T00:02:14.346Z"
 }
