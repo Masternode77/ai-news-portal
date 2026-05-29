@@ -349,7 +349,9 @@
     "5dfe2c90f563f185",
     "0f09271dfb075cf4",
     "8707adda8dacb727",
-    "519fe68555c78740"
+    "519fe68555c78740",
+    "9183f88475b53473",
+    "028858f9156b3255"
   ],
   "dayPlans": {
     "2026-03-24": {
@@ -9320,19 +9322,447 @@
         "1": true,
         "2": true
       }
+    },
+    "2026-05-30": {
+      "date": "2026-05-30",
+      "createdAt": "2026-05-29T18:15:19.267Z",
+      "refreshedAt": "2026-05-29T18:15:19.267Z",
+      "candidateWindowHours": 24,
+      "curatedItems": [
+        {
+          "id": "028858f9156b3255",
+          "source": "TechCrunch AI",
+          "url": "https://techcrunch.com/2026/05/29/after-nvidias-20b-not-aqui-hire-ai-chip-startup-groq-reportedly-raising-650m/",
+          "title": "After Nvidia’s $20B not-aqui-hire, AI chip startup Groq reportedly raising $650M",
+          "snippet": "Chipmaker Groq is looking to raise $650 million in internal funding as it pivots from hardware to focus more on AI inference, the process of refining the way AI models respond to prompted requests, per Axios.",
+          "contentText": "Chipmaker Groq is looking to raise $650 million in internal funding as it pivots from hardware to focus more on AI inference, the process of refining the way AI models respond to prompted requests, per Axios.",
+          "publishedAt": "2026-05-29T17:27:13.000Z",
+          "sourceImage": null,
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "category": "Semiconductors",
+          "primary_category": "Semiconductors",
+          "secondary_category": "Accelerators, memory, and advanced packaging",
+          "infrastructure_layer": "Silicon",
+          "affected_stakeholders": [
+            "semiconductor suppliers",
+            "hyperscalers",
+            "server OEMs",
+            "investors"
+          ],
+          "article_type": "Financing / M&A",
+          "urgency_score": 0.55,
+          "taxonomy_confidence": 0.84,
+          "taxonomy_reasons": [
+            "chip",
+            "gpu",
+            "nvidia"
+          ],
+          "direct_ai_infrastructure_relevance": 1,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0.598,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0.28,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.897,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "semiconductor_relevance:0.60(nvidia, gpu)",
+            "capital_markets_relevance:0.28(funding)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 1,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0.598,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0.28,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.897,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+              "semiconductor_relevance:0.60(nvidia, gpu)",
+              "capital_markets_relevance:0.28(funding)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 84
+        },
+        {
+          "id": "9183f88475b53473",
+          "source": "Semiconductor Engineering",
+          "url": "https://semiengineering.com/building-fixed-hw-implementations-of-neural-networks-yale-cornell-et-al/",
+          "title": "Building Fixed HW Implementations of Neural Networks (Yale, Cornell et al.)",
+          "snippet": "Researchers from Yale University, Cornell University, Boston University, and NTT Research have released “Physical Foundation Models: Fixed hardware implementations of large-scale neural networks”. Abstract “Foundation m…",
+          "contentText": "Researchers from Yale University , Cornell University , Boston University , and NTT Research have released “Physical Foundation Models: Fixed hardware implementations of large-scale neural networks”. Abstract &#8220;Foundation models are deep neural networks (such as GPT-5, Gemini~3, and Opus~4) trained on large datasets that can perform diverse downstream tasks &#8212; text and code generation, question answering, summarization, image classification, and so on. The philosophy of foundation models is to put effort into a single, large (∼10 12 -parameter) general-purpose model that can be adapted to many downstream tasks with no or minimal additional training. We argue that the rise of foundation models presents an opportunity for hardware engineers: in contrast to when different models we…",
+          "publishedAt": "2026-05-29T18:01:22.000Z",
+          "sourceImage": null,
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "category": "AI Infrastructure",
+          "primary_category": "AI Infrastructure",
+          "secondary_category": "GPU clusters and deployment readiness",
+          "infrastructure_layer": "Compute",
+          "affected_stakeholders": [
+            "operators",
+            "hyperscalers",
+            "cloud buyers",
+            "investors"
+          ],
+          "article_type": "Research / Technical",
+          "urgency_score": 0.45,
+          "taxonomy_confidence": 0.77,
+          "taxonomy_reasons": [
+            "ai infrastructure",
+            "neocloud"
+          ],
+          "direct_ai_infrastructure_relevance": 1,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0.58,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.858,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "semiconductor_relevance:0.58(semiconductor, gpu)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 1,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0.58,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.858,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+              "semiconductor_relevance:0.58(semiconductor, gpu)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 82
+        },
+        {
+          "id": "00c9fdb696a7aa2c",
+          "source": "HPCwire",
+          "url": "https://www.hpcwire.com/off-the-wire/ornl-researchers-champion-open-source-hpc-development-at-hpsf-conference/",
+          "title": "ORNL Researchers Champion Open-Source HPC Development at HPSF Conference",
+          "snippet": "May 29, 2026 — National Center for Computational Sciences teams turned out to support the High Performance Software Foundation’s second annual conference on March 19-20 in Chicago. The organization, founded in 2024 as p…",
+          "contentText": "May 29, 2026 &#8212; National Center for Computational Sciences teams turned out to support the High Performance Software Foundation ’s second annual conference on March 19-20 in Chicago. The organization, founded in 2024 as part of the nonprofit Linux Foundation, works to lower barriers to productive use of existing and future high-performance computing (HPC) systems. The HPSF serves as a neutral hub that enables industry, government agencies and academia to collaborate on open-source scientific software for HPC. Members of the National Center for Computational Sciences’ System Acceptance and User Environment Group supported the second annual High Performance Software Foundation conference March 19-20, 2026, in Chicago. Credit: Fernando Posada Correa, ORNL “For our group, this is the mos…",
+          "publishedAt": "2026-05-29T17:57:01.000Z",
+          "sourceImage": "https://www.hpcwire.com/wp-content/uploads/2026/05/HPSF-2048x1536-1-300x225.jpg",
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "category": "AI Infrastructure",
+          "primary_category": "AI Infrastructure",
+          "secondary_category": "GPU clusters and deployment readiness",
+          "infrastructure_layer": "Compute",
+          "affected_stakeholders": [
+            "operators",
+            "hyperscalers",
+            "cloud buyers",
+            "investors"
+          ],
+          "article_type": "Product / Platform Update",
+          "urgency_score": 0.43,
+          "taxonomy_confidence": 0.88,
+          "taxonomy_reasons": [
+            "ai infrastructure",
+            "neocloud",
+            "hpc"
+          ],
+          "direct_ai_infrastructure_relevance": 1,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0.22,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.778,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud, high-performance computing)",
+            "semiconductor_relevance:0.22(gpu)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 1,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0.22,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.778,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud, high-performance computing)",
+              "semiconductor_relevance:0.22(gpu)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 79
+        },
+        {
+          "id": "364c314df12c02c8",
+          "source": "StorageReview",
+          "url": "https://www.storagereview.com/podcast/podcast-149-dell-powerstore-elite-hands-on-deep-dive-from-the-hopkinton-lab",
+          "title": "Podcast #149: Dell PowerStore Elite: Hands-on Deep Dive From the Hopkinton Lab",
+          "snippet": "The Storage Review team visited the Dell campus in Hopkinton to go hands-on with the latest advancements in enterprise storage. This podcast takes place in one of our favorite places, the Hopkinton Dell Lab. Brian conne…",
+          "contentText": "The Storage Review team visited the Dell campus in Hopkinton to go hands-on with the latest advancements in enterprise storage. This podcast takes place in one of our favorite places, the Hopkinton Dell Lab. Brian connects with Scott Delandy, an Engineering Technologist at Dell, for this interaction to go in-depth on the PowerStore Elite . This discussion covers the transition from PowerStore Gen 2 to the new PowerStore Elite, exploring the hardware architectural shifts and the software-driven intelligence defined by PowerStore OS 5.0. While in the Hopkinton lab, we filmed a deep dive with Dell&#8217;s Technical Marketing Engineer, Stephen Granger, where Kevin and Steve tear down the 9500 controller and compare it to the 1500 controller. It gets technical with details around PCIe lanes, d…",
+          "publishedAt": "2026-05-29T16:59:56.000Z",
+          "sourceImage": "https://www.storagereview.com/wp-content/uploads/2026/05/Storagereview-dell-powerstore-elite-pod.jpg",
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "category": "AI Infrastructure",
+          "primary_category": "AI Infrastructure",
+          "secondary_category": "GPU clusters and deployment readiness",
+          "infrastructure_layer": "Compute",
+          "affected_stakeholders": [
+            "operators",
+            "hyperscalers",
+            "cloud buyers",
+            "investors"
+          ],
+          "article_type": "Product / Platform Update",
+          "urgency_score": 0.43,
+          "taxonomy_confidence": 0.77,
+          "taxonomy_reasons": [
+            "ai infrastructure",
+            "neocloud"
+          ],
+          "direct_ai_infrastructure_relevance": 1,
+          "data_center_relevance": 0.16,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0.22,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0.18,
+          "infrastructure_relevance_score": 0.778,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "semiconductor_relevance:0.22(gpu)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 1,
+            "data_center_relevance": 0.16,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0.22,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0.18,
+            "infrastructure_relevance_score": 0.778,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+              "semiconductor_relevance:0.22(gpu)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 79
+        },
+        {
+          "id": "3e4697b037928bf9",
+          "source": "Toms Hardware",
+          "url": "https://www.tomshardware.com/tech-industry/semiconductors/tiktok-owner-bytedance-is-reportedly-developing-its-own-custom-ai-cpus-company-looks-to-ease-chinas-dependence-on-us-chipmakers",
+          "title": "TikTok owner ByteDance is reportedly developing its own custom AI CPUs — company looks to ease China's dependence on US chipmakers",
+          "snippet": "TikTok owner Bytedance reportedly developing its own custom CPUs in a bid to reduce costs and dependence from US chipmakers",
+          "contentText": "TikTok owner Bytedance reportedly developing its own custom CPUs in a bid to reduce costs and dependence from US chipmakers",
+          "publishedAt": "2026-05-29T16:24:49.000Z",
+          "sourceImage": "https://cdn.mos.cms.futurecdn.net/adVwcJnwbx2jdyHWYU4LhZ-1280-80.jpg",
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "category": "AI Infrastructure",
+          "primary_category": "AI Infrastructure",
+          "secondary_category": "GPU clusters and deployment readiness",
+          "infrastructure_layer": "Compute",
+          "affected_stakeholders": [
+            "operators",
+            "hyperscalers",
+            "cloud buyers",
+            "investors"
+          ],
+          "article_type": "Other",
+          "urgency_score": 0.45,
+          "taxonomy_confidence": 0.77,
+          "taxonomy_reasons": [
+            "ai infrastructure",
+            "neocloud"
+          ],
+          "direct_ai_infrastructure_relevance": 1,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0.58,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.858,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "semiconductor_relevance:0.58(semiconductors, gpu)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 1,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0.58,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.858,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+              "semiconductor_relevance:0.58(semiconductors, gpu)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 75
+        },
+        {
+          "id": "02a1af2f7b339a6e",
+          "source": "Bloomberg Technology",
+          "url": "https://www.bloomberg.com/news/videos/2026-05-29/bloomberg-tech-5-29-2026-video",
+          "title": "SpaceX Lowers IPO Valuation Target | Bloomberg Tech 5/29/2026",
+          "snippet": "Bloomberg’s Tim Stenovec breaks down why SpaceX is coming back down to Earth with a slightly lower valuation in its IPO. Plus, Anthropic closes a funding round at a whopping $965 billion valuation, surpassing OpenAI for…",
+          "contentText": "Bloomberg’s Tim Stenovec breaks down why SpaceX is coming back down to Earth with a slightly lower valuation in its IPO. Plus, Anthropic closes a funding round at a whopping $965 billion valuation, surpassing OpenAI for the first time in the AI race; and Dell surges after the hardware giant's outlook far surpassed Wall Street estimates. (Source: Bloomberg)",
+          "publishedAt": "2026-05-29T17:29:06.000Z",
+          "sourceImage": "https://assets.bwbx.io/images/users/iqjWHBFdfxIU/iSWlvAFk9fm0/v3/1200x-1.jpg",
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "Hyperscalers & Cloud",
+          "category": "Capital Markets",
+          "primary_category": "Capital Markets",
+          "secondary_category": "Financing, valuation, and capital structure",
+          "infrastructure_layer": "Capital",
+          "affected_stakeholders": [
+            "investors",
+            "lenders",
+            "developers",
+            "operators"
+          ],
+          "article_type": "Financing / M&A",
+          "urgency_score": 0.49,
+          "taxonomy_confidence": 0.9,
+          "taxonomy_reasons": [
+            "funding",
+            "valuation",
+            "ipo"
+          ],
+          "direct_ai_infrastructure_relevance": 0.22,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0.32,
+          "semiconductor_relevance": 0,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0.955,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.729,
+          "infrastructure_relevance_tier": "signal_card",
+          "infrastructure_relevance_action": "publish_signal_card_only",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:0.22",
+            "cloud_capacity_relevance:0.32(hyperscalers)",
+            "capital_markets_relevance:0.95(funding, valuation, ipo)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 0.22,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0.32,
+            "semiconductor_relevance": 0,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0.955,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.729,
+            "infrastructure_relevance_tier": "signal_card",
+            "infrastructure_relevance_action": "publish_signal_card_only",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:0.22",
+              "cloud_capacity_relevance:0.32(hyperscalers)",
+              "capital_markets_relevance:0.95(funding, valuation, ipo)"
+            ],
+            "infrastructureRelevanceAction": "publish_signal_card_only",
+            "articlePagePublished": false,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 73
+        }
+      ],
+      "curatedIds": [
+        "028858f9156b3255",
+        "9183f88475b53473",
+        "00c9fdb696a7aa2c",
+        "364c314df12c02c8",
+        "3e4697b037928bf9",
+        "02a1af2f7b339a6e"
+      ],
+      "publishedIds": [
+        "9183f88475b53473",
+        "028858f9156b3255"
+      ],
+      "slotPublications": {
+        "0": true
+      }
     }
   },
   "runHistory": [
-    {
-      "at": "2026-04-13T09:07:39.682Z",
-      "day": "2026-04-13",
-      "slot": 2,
-      "publishedCount": 2,
-      "publishedIds": [
-        "10bb0d1194132dbe",
-        "71f36b75e9490100"
-      ]
-    },
     {
       "at": "2026-04-13T16:19:57.543Z",
       "day": "2026-04-14",
@@ -12066,7 +12496,134 @@
         }
       ],
       "archiveOnlyItems": []
+    },
+    {
+      "at": "2026-05-29T18:15:19.267Z",
+      "day": "2026-05-30",
+      "slot": 0,
+      "publishedCount": 0,
+      "signalCardCount": 1,
+      "archiveOnlyCount": 0,
+      "repetitionBlockedCount": 1,
+      "publishedIds": [],
+      "processedIds": [
+        "9183f88475b53473",
+        "028858f9156b3255"
+      ],
+      "blockedCount": 1,
+      "blockedItems": [
+        {
+          "id": "9183f88475b53473",
+          "title": "Building Fixed HW Implementations of Neural Networks (Yale, Cornell et al.)",
+          "infrastructure_relevance_score": 0.928,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "cloud_capacity_relevance:0.32(hyperscalers)",
+            "semiconductor_relevance:0.58(semiconductor, gpu)",
+            "power_grid_relevance:0.22(power)"
+          ],
+          "extraction_quality_score": 1,
+          "source_domain_adapter": "semiengineering",
+          "content_length": 1797,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": false,
+          "repetition_block_reasons": [],
+          "repetition_check": null,
+          "expert_insight_complete": false,
+          "expert_insight_missing_fields": [
+            "concrete_facts",
+            "named_companies"
+          ],
+          "reason": "expert_insight_missing_fields concrete_facts, named_companies"
+        }
+      ],
+      "repetitionBlockedItems": [
+        {
+          "id": "028858f9156b3255",
+          "title": "After Nvidia’s $20B not-aqui-hire, AI chip startup Groq reportedly raising $650M",
+          "infrastructure_relevance_score": 0.932,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "cloud_capacity_relevance:0.32(hyperscalers)",
+            "semiconductor_relevance:0.60(nvidia, gpu)",
+            "power_grid_relevance:0.22(power)",
+            "capital_markets_relevance:0.58(funding, acquisition)"
+          ],
+          "extraction_quality_score": 1,
+          "source_domain_adapter": "techcrunch",
+          "content_length": 1509,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": true,
+          "repetition_block_reasons": [
+            "repeated_sentence_ratio>0.12",
+            "heading_sequence_similarity>0.75",
+            "conclusion_similarity>0.7"
+          ],
+          "repetition_check": {
+            "compared_article_count": 16,
+            "repeated_sentence_ratio": 0.16666666666666666,
+            "repeated_paragraph_ratio": 0.16666666666666666,
+            "heading_sequence_similarity": 1,
+            "banned_phrase_count": 0,
+            "banned_phrase_counts": {},
+            "recent_banned_phrase_counts": {},
+            "ngram_overlap": 0.3504273504273504,
+            "blueprint_repetition": 2,
+            "conclusion_similarity": 0.9233805168766386,
+            "repeated_sentence_count": 1,
+            "repeated_paragraph_count": 1,
+            "heading_sequence": [
+              "Deal Signal",
+              "Contract Quality",
+              "Operating Dependency",
+              "Investor Test"
+            ],
+            "blocked": true,
+            "reasons": [
+              "repeated_sentence_ratio>0.12",
+              "heading_sequence_similarity>0.75",
+              "conclusion_similarity>0.7"
+            ]
+          },
+          "expert_insight_complete": true,
+          "expert_insight_missing_fields": [],
+          "reason": "repeated_sentence_ratio>0.12; heading_sequence_similarity>0.75; conclusion_similarity>0.7"
+        }
+      ],
+      "signalCardItems": [
+        {
+          "id": "9183f88475b53473",
+          "title": "Building Fixed HW Implementations of Neural Networks (Yale, Cornell et al.)",
+          "infrastructure_relevance_score": 0.928,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "cloud_capacity_relevance:0.32(hyperscalers)",
+            "semiconductor_relevance:0.58(semiconductor, gpu)",
+            "power_grid_relevance:0.22(power)"
+          ],
+          "extraction_quality_score": 1,
+          "source_domain_adapter": "semiengineering",
+          "content_length": 1797,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": false,
+          "repetition_block_reasons": [],
+          "repetition_check": null,
+          "expert_insight_complete": false,
+          "expert_insight_missing_fields": [
+            "concrete_facts",
+            "named_companies"
+          ],
+          "reason": "expert_insight_missing_fields concrete_facts, named_companies"
+        }
+      ],
+      "archiveOnlyItems": []
     }
   ],
-  "lastRunAt": "2026-05-29T10:53:17.927Z"
+  "lastRunAt": "2026-05-29T18:15:19.267Z"
 }

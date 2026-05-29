@@ -166,6 +166,171 @@
     "generatedImageModel": "local-svg"
   },
   {
+    "id": "9183f88475b53473",
+    "source": "Semiconductor Engineering",
+    "url": "https://semiengineering.com/building-fixed-hw-implementations-of-neural-networks-yale-cornell-et-al/",
+    "title": "Building Fixed HW Implementations of Neural Networks (Yale, Cornell et al.)",
+    "snippet": "Researchers from Yale University, Cornell University, Boston University, and NTT Research have released “Physical Foundation Models: Fixed hardware implementations of large-scale neural networks”. Abstract “Foundation m…",
+    "contentText": "Researchers from Yale University , Cornell University , Boston University , and NTT Research have released “Physical Foundation Models: Fixed hardware implementations of large-scale neural networks”. Abstract &#8220;Foundation models are deep neural networks (such as GPT-5, Gemini~3, and Opus~4) trained on large datasets that can perform diverse downstream tasks &#8212; text and code generation, question answering, summarization, image classification, and so on. The philosophy of foundation models is to put effort into a single, large (∼10 12 -parameter) general-purpose model that can be adapted to many downstream tasks with no or minimal additional training. We argue that the rise of foundation models presents an opportunity for hardware engineers: in contrast to when different models we…",
+    "publishedAt": "2026-05-29T18:01:22.000Z",
+    "sourceImage": null,
+    "region": "US",
+    "language": "en",
+    "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+    "category": "AI Infrastructure",
+    "primary_category": "AI Infrastructure",
+    "secondary_category": "GPU clusters and deployment readiness",
+    "infrastructure_layer": "Compute",
+    "affected_stakeholders": [
+      "operators",
+      "hyperscalers",
+      "cloud buyers",
+      "investors"
+    ],
+    "article_type": "Supply Chain",
+    "urgency_score": 0.56,
+    "taxonomy_confidence": 0.85,
+    "taxonomy_reasons": [
+      "ai infrastructure",
+      "neocloud",
+      "deployment readiness"
+    ],
+    "direct_ai_infrastructure_relevance": 1,
+    "data_center_relevance": 0,
+    "cloud_capacity_relevance": 0.32,
+    "semiconductor_relevance": 0.58,
+    "power_grid_relevance": 0.22,
+    "cooling_relevance": 0,
+    "capital_markets_relevance": 0,
+    "enterprise_ai_infrastructure_relevance": 0,
+    "infrastructure_relevance_score": 0.928,
+    "infrastructure_relevance_tier": "full_memo",
+    "infrastructure_relevance_action": "generate_full_memo",
+    "infrastructure_relevance_reasons": [
+      "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+      "cloud_capacity_relevance:0.32(hyperscalers)",
+      "semiconductor_relevance:0.58(semiconductor, gpu)",
+      "power_grid_relevance:0.22(power)"
+    ],
+    "infrastructure_relevance": {
+      "direct_ai_infrastructure_relevance": 1,
+      "data_center_relevance": 0,
+      "cloud_capacity_relevance": 0.32,
+      "semiconductor_relevance": 0.58,
+      "power_grid_relevance": 0.22,
+      "cooling_relevance": 0,
+      "capital_markets_relevance": 0,
+      "enterprise_ai_infrastructure_relevance": 0,
+      "infrastructure_relevance_score": 0.928,
+      "infrastructure_relevance_tier": "full_memo",
+      "infrastructure_relevance_action": "generate_full_memo",
+      "infrastructure_relevance_reasons": [
+        "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+        "cloud_capacity_relevance:0.32(hyperscalers)",
+        "semiconductor_relevance:0.58(semiconductor, gpu)",
+        "power_grid_relevance:0.22(power)"
+      ],
+      "infrastructureRelevanceAction": "generate_full_memo",
+      "articlePagePublished": true,
+      "homepagePublished": true,
+      "archiveOnly": false,
+      "archiveOnlyReason": null
+    },
+    "score": 82,
+    "slug": "building-fixed-hw-implementations-of-neural-networks-yale-cornell-et-al",
+    "summary": "Researchers from Yale University , Cornell University , Boston University , and NTT Research have released “Physical Foundation Models: Fixed hardware implementations of large-sca…",
+    "insight": "The practical effect is on compute supply, deployment speed, and network orchestration. The advantage goes to teams that line up power, facility design, network topology, and silicon timing instead of optimizing one layer in isolation.",
+    "expert_insight": {
+      "concrete_facts": [],
+      "named_companies": [],
+      "infrastructure_layer": "Compute",
+      "bottleneck_type": "power_grid",
+      "who_gains_leverage": "utilities, power-secured developers, and operators with firm interconnection positions",
+      "who_takes_execution_risk": "developers and cloud buyers whose delivery dates depend on utility upgrades or energization schedules",
+      "timing_dependency": "utility interconnection, equipment procurement, and energization milestones",
+      "counterargument": "The source may still describe intent rather than delivered capacity, so the operating impact depends on follow-through.",
+      "next_observable_signal": "interconnection approvals, substation equipment dates, power purchase agreements, or disclosed energization windows",
+      "expert_insight_complete": false,
+      "expert_insight_missing_fields": [
+        "concrete_facts",
+        "named_companies"
+      ]
+    },
+    "expertInsight": {
+      "concrete_facts": [],
+      "named_companies": [],
+      "infrastructure_layer": "Compute",
+      "bottleneck_type": "power_grid",
+      "who_gains_leverage": "utilities, power-secured developers, and operators with firm interconnection positions",
+      "who_takes_execution_risk": "developers and cloud buyers whose delivery dates depend on utility upgrades or energization schedules",
+      "timing_dependency": "utility interconnection, equipment procurement, and energization milestones",
+      "counterargument": "The source may still describe intent rather than delivered capacity, so the operating impact depends on follow-through.",
+      "next_observable_signal": "interconnection approvals, substation equipment dates, power purchase agreements, or disclosed energization windows",
+      "expert_insight_complete": false,
+      "expert_insight_missing_fields": [
+        "concrete_facts",
+        "named_companies"
+      ]
+    },
+    "concrete_facts": [],
+    "named_companies": [],
+    "bottleneck_type": "power_grid",
+    "who_gains_leverage": "utilities, power-secured developers, and operators with firm interconnection positions",
+    "who_takes_execution_risk": "developers and cloud buyers whose delivery dates depend on utility upgrades or energization schedules",
+    "timing_dependency": "utility interconnection, equipment procurement, and energization milestones",
+    "counterargument": "The source may still describe intent rather than delivered capacity, so the operating impact depends on follow-through.",
+    "next_observable_signal": "interconnection approvals, substation equipment dates, power purchase agreements, or disclosed energization windows",
+    "expert_insight_complete": false,
+    "expert_insight_missing_fields": [
+      "concrete_facts",
+      "named_companies"
+    ],
+    "tags": [
+      "power"
+    ],
+    "imagePrompt": "Editorial hero image for enterprise technology news. No logos, no text, no watermark, no brand marks. Topic: Building Fixed HW Implementations of Neural Networks (Yale, Cornell et al.). Category: Hyperscalers & Cloud. Mood: premium, cinematic, monochrome glass dashboard aesthetic. Context: Researchers from Yale University , Cornell University , Boston University , and NTT Research have released “Physical Foundation Models: Fixed hardware implementations of large-sca…. Include modern data center, network, semiconductor, cloud, or grid motifs only when relevant. 16:9 composition.",
+    "lang": "en",
+    "articleText": "Researchers from Yale University , Cornell University , Boston University , and NTT Research have released “Physical Foundation Models: Fixed hardware implementations of large-scale neural networks”. &#8220;Foundation models are deep neural networks (such as GPT-5, Gemini~3, and Opus~4) trained on large datasets that can perform diverse downstream tasks &#8212; text and code generation, question answering, summarization, image classification, and so on. The philosophy of foundation models is to put effort into a single, large (∼10 12 -parameter) general-purpose model that can be adapted to many downstream tasks with no or minimal additional training. We argue that the rise of foundation models presents an opportunity for hardware engineers: in contrast to when different models were used for different tasks, it now makes sense to build special-purpose, fixed hardware implementations of neural networks, manufactured and released at the roughly 1-year cadence of major new foundation-model versions. Beyond conventional digital-electronic inference hardware with read-only weight memory, we advocate a more radical re-thinking: hardware in which the neural network is realized directly at the level of the physical design and operates via the hardware&#8217;s natural physical dynamics &#8211;Physical Foundation Models (PFMs). PFMs could enable orders-of-magnitude advantages in energy efficiency, speed, and parameter density. For ∼10 12 -parameter models, this would both reduce the high energy burden of AI in datacenters and enable AI in edge devices that today are power-constrained to far smaller models. PFMs could also enable inference hardware for models much larger than current ones: 10 15 -parameter- or even 10 18 -parameter-parameter PFMs seem plausible by some measures.",
+    "content_length": 1797,
+    "boilerplate_ratio": 0,
+    "title_body_similarity": 0.86,
+    "copyright_footer_detected": false,
+    "nav_or_cta_detected": false,
+    "sentence_completion_score": 1,
+    "source_domain_adapter": "semiengineering",
+    "extraction_quality_score": 1,
+    "extraction_qa": {
+      "content_length": 1797,
+      "boilerplate_ratio": 0,
+      "title_body_similarity": 0.86,
+      "copyright_footer_detected": false,
+      "legal_boilerplate_detected": false,
+      "nav_or_cta_detected": false,
+      "sentence_completion_score": 1,
+      "source_domain_adapter": "semiengineering",
+      "extraction_quality_score": 1,
+      "extraction_failure_reason": null,
+      "extraction_quality_reasons": []
+    },
+    "sourceUrl": "https://semiengineering.com/building-fixed-hw-implementations-of-neural-networks-yale-cornell-et-al/",
+    "generatedImage": "/generated/9183f88475b53473.svg",
+    "infrastructureRelevanceAction": "generate_full_memo",
+    "articlePagePublished": false,
+    "homepagePublished": true,
+    "archiveOnly": false,
+    "archiveOnlyReason": null,
+    "expertInsightBlocked": true,
+    "expertInsightBlockedAt": "2026-05-29T18:15:28.876Z",
+    "expertInsightBlockReason": "expert_insight_missing_fields concrete_facts, named_companies",
+    "signalCardOnly": true,
+    "signalCardReason": "expert_insight_missing_fields concrete_facts, named_companies",
+    "article_blueprint": null,
+    "articleBlueprint": null,
+    "expertLensShort": null,
+    "expertLensFull": null,
+    "expertLens": null
+  },
+  {
     "id": "8707adda8dacb727",
     "source": "Data Center Dynamics",
     "url": "https://www.datacenterdynamics.com/en/news/nov-terraflow-partner-on-fiberglass-solutions-for-ai-data-center-energy-storage/",
@@ -2416,7 +2581,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-05-29T10:53:33.384Z",
+      "generatedAt": "2026-05-29T18:15:45.357Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Google",
@@ -3496,7 +3661,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-05-29T10:53:33.873Z",
+      "generatedAt": "2026-05-29T18:15:45.882Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Samsung",
@@ -4023,7 +4188,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-05-29T10:53:34.083Z",
+      "generatedAt": "2026-05-29T18:15:46.101Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Poland Data",
@@ -4788,7 +4953,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-05-29T10:53:34.373Z",
+      "generatedAt": "2026-05-29T18:15:46.408Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "StorageReview",
@@ -4996,7 +5161,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-05-29T10:53:34.561Z",
+      "generatedAt": "2026-05-29T18:15:46.603Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "StorageReview",
@@ -5212,7 +5377,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-05-29T10:53:34.754Z",
+      "generatedAt": "2026-05-29T18:15:46.802Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Dell: Dell",
@@ -5424,7 +5589,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-05-29T10:53:34.941Z",
+      "generatedAt": "2026-05-29T18:15:46.999Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Virginia Tightens Data",
@@ -5634,7 +5799,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-05-29T10:53:35.129Z",
+      "generatedAt": "2026-05-29T18:15:47.194Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Quantum Networking Era Data",
@@ -6263,7 +6428,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-05-29T10:53:35.349Z",
+      "generatedAt": "2026-05-29T18:15:47.426Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "AWS",
@@ -6711,7 +6876,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "editorial-story-engine-v2",
-      "generatedAt": "2026-05-29T10:53:35.623Z",
+      "generatedAt": "2026-05-29T18:15:47.717Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "NetApp",
@@ -7069,7 +7234,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "editorial-story-engine-v2",
-      "generatedAt": "2026-05-29T10:53:35.813Z",
+      "generatedAt": "2026-05-29T18:15:47.918Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "NetApp",
@@ -7392,373 +7557,6 @@
       "dirty_extraction"
     ],
     "regeneration_rank": 15,
-    "generatedImageProvider": "local-placeholder",
-    "generatedImageModel": "local-svg",
-    "stockImageReplacedAt": "2026-05-23T15:28:43.157Z"
-  },
-  {
-    "id": "watch_sig_322c04e77d3930a0",
-    "source": "Data Center Frontier",
-    "url": "https://www.datacenterfrontier.com/energy/article/55377066/ai-data-centers-are-driving-nuclears-next-commercial-test",
-    "title": "Texas: AI Data Centers Are Driving Nuclear's Next Commercial Test",
-    "snippet": "AI Data Centers Are Driving Nuclear's Next Commercial Test is a capacity signal for operators tracking where AI demand is turning into real data center commitments.",
-    "contentText": "From SMRs and microreactors to reactor restarts, uprates, and gas-plus-nuclear energy strategies, AI data center growth is accelerating a broad commercial push toward firm nuclear-backed power infrastructure.",
-    "publishedAt": "2026-05-15T15:48:38.000Z",
-    "sourceImage": "https://img.datacenterfrontier.com/files/base/ebm/datacenterfrontier/image/2026/05/6a073f542beaeebd44ae3d00-riotplatformsbitcoin.png",
-    "region": "US",
-    "language": "en",
-    "defaultCategory": "Colocation & Wholesale",
-    "score": 52,
-    "slug": "ai-data-centers-are-driving-nuclear-s-next-commercial-test",
-    "summary": "Why it matters: facility constraints can change build schedules, buyer commitments, and cost assumptions before demand shows up in revenue.",
-    "insight": "The practical effect is on time-to-power, campus sequencing, and capex timing; operators and investors that align power, facility design, network topology, and silicon timing will compound the advantage faster than teams optimizing an",
-    "category": "Data Centers",
-    "tags": [
-      "cloud",
-      "power",
-      "cooling"
-    ],
-    "imagePrompt": "Editorial hero image for enterprise technology news. No logos, no text, no watermark, no brand marks. Topic: AI Data Centers Are Driving Nuclear's Next Commercial Test. Category: Hyperscalers & Cloud. Mood: premium, cinematic, monochrome glass dashboard aesthetic. Context: Charting the Future of Data Center, Cloud, and AI Infrastructure Riot Platforms operates large-scale Bitcoin mining facilities in Texas and Kentucky and is increasingly positionin…. Include modern data center, network, semiconductor, cloud, or grid motifs only when relevant. 16:9 composition.",
-    "lang": "en",
-    "articleText": "Charting the Future of Data Center, Cloud, and AI Infrastructure Riot Platforms operates large-scale Bitcoin mining facilities in Texas and Kentucky and is increasingly positioning itself as a power-first digital infrastructure developer for AI and high-performance computing workloads, including potential nuclear-powered campuses with Terrestrial Energy. Nuclear power is rapidly moving from speculative talking point to active AI infrastructure strategy. Over the past several weeks, and especially in the last ten days, the industry has seen a wave of announcements pointing in the same direction: data center developers, reactor startups, utilities, server manufacturers, industrial suppliers, and large power producers are all attempting to define what nuclear-backed digital infrastructure might actually look like. The May 6 memorandum of understanding between NANO Nuclear Energy and Supermicro remains one of the clearest signals. The agreement links a microreactor developer with a major AI server and infrastructure supplier, framing nuclear power as part of an integrated compute, cooling, and power stack. But the deal now looks less like an isolated experiment and more like part of a rapidly expanding category. That same day, Terrestrial Energy and Riot Platforms announced a collaboration to evaluate nuclear-powered large-scale data center projects using Terrestrial&rsquo;s Integ",
-    "sourceUrl": "https://www.datacenterfrontier.com/energy/article/55377066/ai-data-centers-are-driving-nuclears-next-commercial-test",
-    "generatedImage": "/generated/watch_sig_322c04e77d3930a0.svg",
-    "expertLensShort": "Supermicro is a technical bottleneck item for adjacent watchlist readers, with the infrastructure read limited to source-backed facts.",
-    "expertLensFull": {
-      "version": 2,
-      "mode": "editorial-story-engine-v2",
-      "generatedAt": "2026-05-29T10:53:36.001Z",
-      "generation_version": "editorial_surface_v2",
-      "narrative_dna": {
-        "protagonist": "Supermicro",
-        "concrete_event": "Why it matters: facility constraints can change build schedules, buyer commitments, and cost assumptions before demand shows up in revenue.",
-        "core_tension": "Supermicro has to translate why it matters: facility constraints can change build schedules, buyer commitments, and cost assumptions before demand shows up in revenue. into a facility decision that survives cost, timing, or operating constraints",
-        "infrastructure_layer": "Facility",
-        "reader_role": [
-          "data center operators",
-          "developers",
-          "site selectors",
-          "investors"
-        ],
-        "decision_relevance": "data center operators and developers can use the item to test technical bottleneck before changing procurement, deployment, or risk assumptions",
-        "evidence_anchor": "Charting the Future of Data Center, Cloud, and AI Infrastructure Riot Platforms operates large-scale Bitcoin mining facilities in Texas and Kentucky and is increasingly positioning itself as a power-first digital infrastructure developer for AI and high-performance computing workloads, including potential nuclear-powered campuses with Terrestrial Energy. Nuclear power is",
-        "counterpoint": "Why it matters: facility constraints can change build schedules, buyer commitments, and cost assumptions before demand shows up in revenue. only changes decisions if the facility evidence is specific enough to affect timing, procurement, or operating plans",
-        "watch_metric": "a concrete infrastructure dependency named by the next source update",
-        "time_horizon": "near term",
-        "public_signal_label": "Adjacent Signal",
-        "editorial_lens": "Technical Bottleneck",
-        "story_archetype": "Technical Teardown",
-        "story_archetype_id": "technical-teardown",
-        "routing_decision": "adjacent_watchlist",
-        "valid_for_full_article": false,
-        "missing_fields": [],
-        "truncation": {
-          "ok": true,
-          "artifacts": []
-        }
-      },
-      "dynamicBriefLabel": "Adjacent Signal",
-      "blueprintId": "capacity-chain",
-      "blueprintName": "Capacity Chain",
-      "blueprint": {
-        "id": "capacity-chain",
-        "name": "Capacity Chain",
-        "sectionHeadings": [
-          "Signal",
-          "Capacity Chain",
-          "Commercial Stakes",
-          "Next Constraint"
-        ],
-        "paragraphRhythm": [
-          1,
-          3,
-          1,
-          2
-        ],
-        "targetParagraphs": 7,
-        "minChars": 1400,
-        "maxChars": 2200
-      },
-      "thesis": "Supermicro is a technical bottleneck item for adjacent watchlist readers, with the infrastructure read limited to source-backed facts.",
-      "whatHappened": "Why it matters: facility constraints can change build schedules, buyer commitments, and cost assumptions before demand shows up in revenue.",
-      "whyThisMatters": "The public card stays short because the available evidence supports a watchlist signal more than a full infrastructure memo.",
-      "marketMissing": "Why it matters: facility constraints can change build schedules, buyer commitments, and cost assumptions before demand shows up in revenue. only changes decisions if the facility evidence is specific enough to affect timing, procurement, or operating plans.",
-      "investors": "Data center operators and developers can use the item to test technical bottleneck before changing procurement, deployment, or risk assumptions.",
-      "operators": "Facility teams should track a concrete infrastructure dependency named by the next source update.",
-      "hyperscalers": "Cloud and platform buyers should separate source evidence from generic AI demand before changing deployment plans.",
-      "watchNext": "A concrete infrastructure dependency named by the next source update.",
-      "executiveSummary": [
-        "Why it matters: facility constraints can change build schedules, buyer commitments, and cost assumptions before demand shows up in revenue.",
-        "Data center operators and developers can use the item to test technical bottleneck before changing procurement, deployment, or risk assumptions.",
-        "Watch a concrete infrastructure dependency named by the next source update."
-      ],
-      "headlineOptions": [
-        "AI Data Centers Are Driving Nuclear's Next Commercial Test",
-        "Data Center Frontier signal: why this move matters beyond the headline",
-        "AI Data Centers Are Driving Nuclear's Next Commercial Test raises the stakes for operators and investors",
-        "What AI Data Centers Are Driving Nuclear's Next Commercial Test says about the next bottleneck",
-        "AI Data Centers Are Driving Nuclear's Next Commercial Test: the strategic implication for cloud and infrastr"
-      ],
-      "finalHeadline": "Texas: AI Data Centers Are Driving Nuclear's Next Commercial Test",
-      "metaDescription": "Supermicro is a technical bottleneck item for adjacent watchlist readers, with the infrastructure read limited to source-backed facts.",
-      "finalArticleBody": "Supermicro is a technical bottleneck item for adjacent watchlist readers, with the infrastructure read limited to source-backed facts.\n\nSystem Change\n\nWhy it matters: facility constraints can change build schedules, buyer commitments, and cost assumptions before demand shows up in revenue. is the evidence anchor, with Supermicro as the actor readers can track.\n\nBottleneck\n\nFacility is the operating layer that turns the update into technical bottleneck, especially for data center operators, developers, site selectors.\n\nEngineering Tradeoff\n\nData center operators and developers can use the item to test technical bottleneck before changing procurement, deployment, or risk assumptions.\n\nValidation Metric\n\nThe next useful checkpoint is a concrete infrastructure dependency named by the next source update over the near term window.\n\nReaders should track a concrete infrastructure dependency named by the next source update before treating the item as a planning assumption for facility.",
-      "sourceLink": "https://www.datacenterfrontier.com/energy/article/55377066/ai-data-centers-are-driving-nuclears-next-commercial-test"
-    },
-    "expertLens": "Supermicro is a technical bottleneck item for adjacent watchlist readers, with the infrastructure read limited to source-backed facts.",
-    "primary_category": "Facility",
-    "secondary_category": "Campus development and colocation capacity",
-    "infrastructure_layer": "Facility",
-    "affected_stakeholders": [
-      "data center operators",
-      "developers",
-      "site selectors",
-      "investors"
-    ],
-    "article_type": "Watchlist Signal",
-    "urgency_score": 0.58,
-    "taxonomy_confidence": 0.93,
-    "taxonomy_reasons": [
-      "data center",
-      "colocation",
-      "campus",
-      "wholesale"
-    ],
-    "content_length": 1997,
-    "boilerplate_ratio": 0,
-    "title_body_similarity": 0.43,
-    "copyright_footer_detected": false,
-    "nav_or_cta_detected": false,
-    "sentence_completion_score": 0.77,
-    "source_domain_adapter": "datacenterfrontier",
-    "extraction_quality_score": 0.9,
-    "extraction_qa": {
-      "content_length": 1997,
-      "boilerplate_ratio": 0,
-      "title_body_similarity": 0.43,
-      "copyright_footer_detected": false,
-      "nav_or_cta_detected": false,
-      "sentence_completion_score": 0.77,
-      "source_domain_adapter": "datacenterfrontier",
-      "extraction_quality_score": 1,
-      "extraction_failure_reason": null,
-      "extraction_quality_reasons": []
-    },
-    "direct_ai_infrastructure_relevance": 1,
-    "data_center_relevance": 1,
-    "cloud_capacity_relevance": 0,
-    "semiconductor_relevance": 0,
-    "power_grid_relevance": 0.831,
-    "cooling_relevance": 0.34,
-    "capital_markets_relevance": 0.28,
-    "enterprise_ai_infrastructure_relevance": 0,
-    "infrastructure_relevance_score": 0.72,
-    "infrastructure_relevance_tier": "full_memo",
-    "infrastructure_relevance_action": "generate_full_memo",
-    "infrastructure_relevance_reasons": [
-      "direct_ai_infrastructure_relevance:1.00(ai infrastructure, ai data center, high-performance computing)",
-      "data_center_relevance:1.00(data center, data centers, colocation)",
-      "power_grid_relevance:0.83(power, utilities, nuclear)",
-      "cooling_relevance:0.34(cooling)",
-      "capital_markets_relevance:0.28(capex)"
-    ],
-    "infrastructure_relevance": {
-      "direct_ai_infrastructure_relevance": 1,
-      "data_center_relevance": 1,
-      "cloud_capacity_relevance": 0,
-      "semiconductor_relevance": 0,
-      "power_grid_relevance": 0.831,
-      "cooling_relevance": 0.34,
-      "capital_markets_relevance": 0.28,
-      "enterprise_ai_infrastructure_relevance": 0,
-      "infrastructure_relevance_score": 1,
-      "infrastructure_relevance_tier": "full_memo",
-      "infrastructure_relevance_action": "generate_full_memo",
-      "infrastructure_relevance_reasons": [
-        "direct_ai_infrastructure_relevance:1.00(ai infrastructure, ai data center, high-performance computing)",
-        "data_center_relevance:1.00(data center, data centers, colocation)",
-        "power_grid_relevance:0.83(power, utilities, nuclear)",
-        "cooling_relevance:0.34(cooling)",
-        "capital_markets_relevance:0.28(capex)"
-      ],
-      "infrastructureRelevanceAction": "generate_full_memo",
-      "articlePagePublished": true,
-      "homepagePublished": true,
-      "archiveOnly": false,
-      "archiveOnlyReason": null
-    },
-    "homepagePublished": true,
-    "archiveOnly": false,
-    "archiveOnlyReason": null,
-    "article_blueprint": "capacity-chain",
-    "articleBlueprint": {
-      "id": "capacity-chain",
-      "name": "Capacity Chain",
-      "sectionHeadings": [
-        "Signal",
-        "Capacity Chain",
-        "Commercial Stakes",
-        "Next Constraint"
-      ],
-      "paragraphRhythm": [
-        1,
-        3,
-        1,
-        2
-      ],
-      "targetParagraphs": 7,
-      "minChars": 1400,
-      "maxChars": 2200
-    },
-    "seo_noindex": false,
-    "seo_noindex_reasons": [
-      "short_signal_not_counted_as_blog",
-      "stale_autonomous_editorial_desk_batch"
-    ],
-    "seo_backfill_version": 1,
-    "searchText": "Texas: AI Data Centers Are Driving Nuclear's Next Commercial Test Data Center Frontier Facility Campus development and colocation capacity Watchlist Signal Data Centers US Why it matters: facility constraints can change build schedules, buyer commitments, and cost assumptions before demand shows up in revenue. Supermicro is a technical bottleneck item for operator alerts readers, with the infrastructure read limited to source-backed facts. Supermicro puts facility planning in focus as charting the future of data center, cloud, and AI infrastructure riot platforms operates large-scale bitcoin mini Charting the Future of Data Center, Cloud, and AI Infrastructure Riot Platforms operates large-scale Bitcoin mining facilities in Texas and Kentucky and is increasingly positionin. data center operators and developers should care because Supermicro links charting the future of data center, cloud, and AI infrastructure riot platforms operates large-scale bitcoin mining facilities in texas and kentucky and is increasingly positionin to a facility decision that can affect timing, vendor leverage, or operating readiness. Charting the Future of Data Center, Cloud, and AI Infrastructure Riot Platforms operates large-scale Bitcoin mining facilities in Texas and Kentucky and is increasingly positionin only changes decisions if the facility evidence is specific enough to affect timing, procurement, or operating plans. Data center operators and developers can use the item to test technical bottleneck before changing procurement, deployment, or risk assumptions. Facility teams should track technical bottleneck evidence tied to a named customer, deployment milestone, cost metric, or operating constraint. Cloud and platform buyers should separate source evidence from generic AI demand before changing deployment plans. Technical bottleneck evidence tied to a named customer, deployment milestone, cost metric, or operating constraint. AI Data Centers Are Driving Nuclear's Next Commercial Test Supermicro puts facility planning in focus as charting the future of data center, cloud, and AI infrastructure riot platforms operates large-scale bitcoin mining Charting the Future of Data Center, Cloud, and AI Infrastructure Riot Platforms operates large-scale Bitcoin mining facilities in Texas and Kentucky and is increasingly positioning itself as a power-first digital infrastructure developer for AI and high-performance computing workloads, including potential nuclear-powered campuses with Terrestrial Energy. Nuclear power is rapidly moving from speculative talking point to active AI infrastructure strategy. Over the past several weeks, and especially in the last ten days, the industry has seen a wave of announcements pointing in the same direction: data center developers, reactor startups, utilities, server manufacturers, industrial suppliers, and large power producers are all attempting to define what nuclear-backed digital infrastructure might actually look like. The May 6 memorandum of understanding between NANO Nuclear Energy and Supermicro remains one of the clearest signals. The agreement links a microreactor developer with a major AI server and infrastructure supplier, framing nuclear power as part of an integrated compute, cooling, and power stack. But the deal now looks less like an isolated experiment and more like part of a rapidly expanding category. That same day, Terrestrial Energy and Riot Platforms announced a collaboration to evaluate nuclear-powered large-scale data center projects using Terrestrial&rsquo;s Integ data center operators developers site selectors investors cloud power cooling",
-    "articlePagePublished": false,
-    "noindex": false,
-    "generation_version": "editorial_surface_v2",
-    "narrative_dna": {
-      "protagonist": "Supermicro",
-      "concrete_event": "Why it matters: facility constraints can change build schedules, buyer commitments, and cost assumptions before demand shows up in revenue.",
-      "core_tension": "Supermicro has to translate why it matters: facility constraints can change build schedules, buyer commitments, and cost assumptions before demand shows up in revenue. into a facility decision that survives cost, timing, or operating constraints",
-      "infrastructure_layer": "Facility",
-      "reader_role": [
-        "data center operators",
-        "developers",
-        "site selectors",
-        "investors"
-      ],
-      "decision_relevance": "data center operators and developers can use the item to test technical bottleneck before changing procurement, deployment, or risk assumptions",
-      "evidence_anchor": "Charting the Future of Data Center, Cloud, and AI Infrastructure Riot Platforms operates large-scale Bitcoin mining facilities in Texas and Kentucky and is increasingly positioning itself as a power-first digital infrastructure developer for AI and high-performance computing workloads, including potential nuclear-powered campuses with Terrestrial Energy. Nuclear power is",
-      "counterpoint": "Why it matters: facility constraints can change build schedules, buyer commitments, and cost assumptions before demand shows up in revenue. only changes decisions if the facility evidence is specific enough to affect timing, procurement, or operating plans",
-      "watch_metric": "a concrete infrastructure dependency named by the next source update",
-      "time_horizon": "near term",
-      "public_signal_label": "Adjacent Signal",
-      "editorial_lens": "Technical Bottleneck",
-      "story_archetype": "Technical Teardown",
-      "story_archetype_id": "technical-teardown",
-      "routing_decision": "adjacent_watchlist",
-      "valid_for_full_article": false,
-      "missing_fields": [],
-      "truncation": {
-        "ok": true,
-        "artifacts": []
-      }
-    },
-    "dynamic_brief_label": "Adjacent Signal",
-    "anti_template_rewrite": true,
-    "repetition_check": {
-      "compared_article_count": 34,
-      "repeated_sentence_ratio": 0,
-      "repeated_paragraph_ratio": 0,
-      "heading_sequence_similarity": 0.75,
-      "banned_phrase_count": 0,
-      "banned_phrase_counts": {},
-      "recent_banned_phrase_counts": {},
-      "ngram_overlap": 0.14035087719298245,
-      "blueprint_repetition": 1,
-      "conclusion_similarity": 0.723404255319149,
-      "repeated_sentence_count": 0,
-      "repeated_paragraph_count": 0,
-      "heading_sequence": [
-        "Stack Shift",
-        "Buyer Impact",
-        "Technical Read",
-        "Platform Watch"
-      ],
-      "blocked": true,
-      "reasons": [
-        "conclusion_similarity>0.7"
-      ]
-    },
-    "repetition_blocked": true,
-    "repetition_block_reasons": [
-      "conclusion_similarity>0.7"
-    ],
-    "qualityGateBlocked": false,
-    "qualityGateReason": "repetition_gate:conclusion_similarity>0.7",
-    "signalCardReason": "sentence_completion_score_below_0.92:0.729",
-    "public_copy_stale": false,
-    "infrastructureRelevanceAction": "generate_full_memo",
-    "signalCardOnly": true,
-    "public_routing": {
-      "score": 0.72,
-      "visibility": "adjacent",
-      "laneKey": "data-centers",
-      "laneTitle": "Data Centers",
-      "editorial_lens": "Data Centers",
-      "public_signal_label": "Signal",
-      "story_archetype": "Signal",
-      "blocked_reasons": []
-    },
-    "routing_decision": "quarantine",
-    "public_generation_version": "emergency_content_quality_cleanup_v1",
-    "public_presentation": {
-      "signal_label": "Signal",
-      "editorial_lens": "Data Centers",
-      "title": "Texas: AI Data Centers Are Driving Nuclear's Next Commercial Test",
-      "deck": "AI Data Centers Are Driving Nuclear's Next Commercial Test is a capacity signal for operators tracking where AI demand is turning into real data center commitments.",
-      "why_it_matters": "Why it matters: facility constraints can change build schedules, buyer commitments, and cost assumptions before demand shows up in revenue.",
-      "reader_impact": [
-        "Operators",
-        "Capacity planners"
-      ],
-      "region": "US",
-      "source": "Data Center Frontier",
-      "view_detail": "",
-      "read_source": "https://www.datacenterfrontier.com/energy/article/55377066/ai-data-centers-are-driving-nuclears-next-commercial-test",
-      "lane_key": "data-centers",
-      "lane_title": "Data Centers",
-      "visibility": "adjacent",
-      "story_archetype": "Signal"
-    },
-    "deck": "AI Data Centers Are Driving Nuclear's Next Commercial Test is a capacity signal for operators tracking where AI demand is turning into real data center commitments.",
-    "why_it_matters": "Why it matters: facility constraints can change build schedules, buyer commitments, and cost assumptions before demand shows up in revenue.",
-    "regeneration_v2_audit": {
-      "old_public_deck": "Supermicro puts facility planning in focus as charting the future of data center, cloud, and AI infrastructure riot platforms operates large-scale bitcoin mining facilities in texas and kentucky and is increasingly positionin.",
-      "old_lane": "Stack Shifts",
-      "old_public_metadata_fields": [
-        "relevance_score",
-        "urgency_score",
-        "extraction_quality_score",
-        "article_blueprint",
-        "taxonomy_confidence"
-      ]
-    },
-    "public_status": "signal",
-    "quarantined": true,
-    "quarantine_reason": [
-      "deck:forbidden_phrase:with the infrastructure read limited to source-backed facts",
-      "deck:public_template_phrase:with the infrastructure read limited to source-backed facts",
-      "public_copy:forbidden_phrase:with the infrastructure read limited to source-backed facts",
-      "public_copy:forbidden_phrase:The public card stays short because the available evidence",
-      "public_copy:public_template_phrase:with the infrastructure read limited to source-backed facts",
-      "public_copy:public_template_phrase:The public card stays short because the available evidence",
-      "public_visibility_blocked"
-    ],
-    "emergency_cleanup_audit": {
-      "old_public_deck": "Supermicro is a technical bottleneck item for operator alerts readers, with the infrastructure read limited to source-backed facts.",
-      "old_lane": "Archive Only",
-      "old_homepagePublished": false,
-      "old_articlePagePublished": false,
-      "old_noindex": true,
-      "classification": "quarantine",
-      "cleaned_at": "2026-05-19T23:51:06.362Z"
-    },
-    "blog_route": "signal_card",
-    "publishing_route": "Signal Card",
-    "stale_generation": true,
-    "stale_generation_reason": "pre_autonomous_editorial_desk",
-    "previous_generation_version": "editorial_surface_v2",
-    "signal_cluster_id": "sig_322c04e77d3930a0",
-    "sort_index": 11,
-    "public_content_tier": "signal_card",
-    "regeneration_rank": 16,
-    "public_tier_reasons": [
-      "dirty_extraction"
-    ],
     "generatedImageProvider": "local-placeholder",
     "generatedImageModel": "local-svg",
     "stockImageReplacedAt": "2026-05-23T15:28:43.157Z"
