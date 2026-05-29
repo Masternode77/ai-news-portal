@@ -347,7 +347,9 @@
     "deede025a79929a9",
     "e1b69d4c0ff19ba0",
     "5dfe2c90f563f185",
-    "0f09271dfb075cf4"
+    "0f09271dfb075cf4",
+    "8707adda8dacb727",
+    "519fe68555c78740"
   ],
   "dayPlans": {
     "2026-03-24": {
@@ -8882,21 +8884,161 @@
     "2026-05-29": {
       "date": "2026-05-29",
       "createdAt": "2026-05-28T18:16:30.634Z",
-      "refreshedAt": "2026-05-29T00:13:35.225Z",
+      "refreshedAt": "2026-05-29T10:53:17.927Z",
       "candidateWindowHours": 24,
       "curatedItems": [
         {
-          "id": "5dfe2c90f563f185",
-          "source": "HPCwire",
-          "url": "https://www.hpcwire.com/2026/05/28/harness-the-power-of-rack-scale-performance-for-large-scale-ai/",
-          "title": "Harness the Power of Rack-Scale Performance for Large-Scale AI",
-          "snippet": "AI has entered an industrial phase, no longer confined to isolated models or experimental deployments. AI now operates as always-on AI factories that continuously transform electricity and data into intelligence at scal…",
-          "contentText": "AI has entered an industrial phase, no longer confined to isolated models or experimental deployments. AI now operates as always-on AI factories that continuously transform electricity and data into intelligence at scale. For service providers and neoclouds, this shift introduces a new class of infrastructure demands. Modern AI workloads require processing hundreds of thousands of input tokens while sustaining real time inference across complex pipelines. Unlike traditional data centers built around intermittent, human-driven requests, AI factories depend on constant, high-efficiency data movement, low-latency communication, and massive memory bandwidth to remain competitive. Even minor inefficiencies, multiplied across trillions of tokens, can significantly impact throughput and costs—cr…",
-          "publishedAt": "2026-05-28T21:53:26.000Z",
+          "id": "8707adda8dacb727",
+          "source": "Data Center Dynamics",
+          "url": "https://www.datacenterdynamics.com/en/news/nov-terraflow-partner-on-fiberglass-solutions-for-ai-data-center-energy-storage/",
+          "title": "NOV, TerraFlow partner on fiberglass solutions for AI data center energy storage",
+          "snippet": "Will combine TerraFlow’s long-duration energy storage technology with NOV’s fiberglass expertise",
+          "contentText": "Will combine TerraFlow’s long-duration energy storage technology with NOV’s fiberglass expertise",
+          "publishedAt": "2026-05-29T10:50:44.000Z",
+          "sourceImage": "https://media.datacenterdynamics.com/media/images/NOV-FGS-DataCenter-illustration-Ve.2e16d0ba.fill-750x500.png",
+          "region": "Global",
+          "language": "en",
+          "defaultCategory": "Colocation & Wholesale",
+          "category": "Data Centers",
+          "primary_category": "Data Centers",
+          "secondary_category": "Campus development and colocation capacity",
+          "infrastructure_layer": "Facility",
+          "affected_stakeholders": [
+            "data center operators",
+            "developers",
+            "site selectors",
+            "investors"
+          ],
+          "article_type": "Partnership",
+          "urgency_score": 0.46,
+          "taxonomy_confidence": 0.86,
+          "taxonomy_reasons": [
+            "data center",
+            "colocation",
+            "wholesale"
+          ],
+          "direct_ai_infrastructure_relevance": 0.78,
+          "data_center_relevance": 0.89,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0.243,
+          "infrastructure_relevance_score": 0.873,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:0.78(ai data center)",
+            "data_center_relevance:0.89(data center, colocation)",
+            "enterprise_ai_infrastructure_relevance:0.24(storage)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 0.78,
+            "data_center_relevance": 0.89,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0.243,
+            "infrastructure_relevance_score": 0.873,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:0.78(ai data center)",
+              "data_center_relevance:0.89(data center, colocation)",
+              "enterprise_ai_infrastructure_relevance:0.24(storage)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 76
+        },
+        {
+          "id": "519fe68555c78740",
+          "source": "Semiconductor Engineering",
+          "url": "https://semiengineering.com/moving-defect-detection-and-classification-to-the-edge/",
+          "title": "Moving Defect Detection And Classification To The Edge",
+          "snippet": "Explosion in defectivity requires much faster determination of critical and non-critical defects. The post Moving Defect Detection And Classification To The Edge appeared first on Semiconductor Engineering.",
+          "contentText": "The number of defects detected through inspection is exploding at each new process node. There are now millions of defects being identified on each wafer, but only a fraction of those can cause problems. Prasad Bachiraju, senior director of business development at Onto Innovation, talks about the different types of images being captured using different illumination modes at different touch points, how that data gets classified, and how AI and machine learning at the edge can be used to identify critical errors and separate out the nuisance errors that may be caused by process variation and neighborhood noise. The post Moving Defect Detection And Classification To The Edge appeared first on Semiconductor Engineering .",
+          "publishedAt": "2026-05-29T07:15:12.000Z",
           "sourceImage": null,
           "region": "US",
           "language": "en",
           "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "category": "Semiconductors",
+          "primary_category": "Semiconductors",
+          "secondary_category": "Accelerators, memory, and advanced packaging",
+          "infrastructure_layer": "Silicon",
+          "affected_stakeholders": [
+            "semiconductor suppliers",
+            "hyperscalers",
+            "server OEMs",
+            "investors"
+          ],
+          "article_type": "Supply Chain",
+          "urgency_score": 0.47,
+          "taxonomy_confidence": 0.82,
+          "taxonomy_reasons": [
+            "semiconductor",
+            "gpu",
+            "wafer"
+          ],
+          "direct_ai_infrastructure_relevance": 1,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0.82,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.91,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "semiconductor_relevance:0.82(semiconductor, wafer, gpu)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 1,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0.82,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.91,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+              "semiconductor_relevance:0.82(semiconductor, wafer, gpu)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 76
+        },
+        {
+          "id": "657314e844c917a6",
+          "source": "Capacity Media",
+          "url": "https://capacityglobal.com/news/bytedance-custom-cpu-ai-chips/",
+          "title": "ByteDance custom CPUs rumoured to support AI rollout",
+          "snippet": "ByteDance is reportedly developing its own custom CPU chips to support the development of its AI capabilities, according to people familiar with the matter. The post ByteDance custom CPUs rumoured to support AI rollout…",
+          "contentText": "First reported by Reuters, ByteDance , the parent company of TikTok, is developing the CPUs to support its growing AI infrastructure needs – a move that comes as chip prices continue to rise and supply shortages persist. The company is perhaps eager not to fall behind in its own development, with its decision reflecting how the wider industry is shifting towards the inference phase in AI development. It is reportedly targeting deployments of its proprietary CPU in its own servers and data centres to support internal operations as it prepares a rollout of agent-based products, including its Coze platform, the sources said. They added that ByteDance has also apparently approached several external partners to assist with these plans, who are expected to contribute to the chip’s design work a…",
+          "publishedAt": "2026-05-29T09:33:58.000Z",
+          "sourceImage": "https://capacityglobal.com/wp-content/uploads/2025/10/14-327x218.png",
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "Hyperscalers & Cloud",
           "category": "AI Infrastructure",
           "primary_category": "AI Infrastructure",
           "secondary_category": "GPU clusters and deployment readiness",
@@ -8908,67 +9050,60 @@
             "investors"
           ],
           "article_type": "Product / Platform Update",
-          "urgency_score": 0.55,
-          "taxonomy_confidence": 0.77,
+          "urgency_score": 0.39,
+          "taxonomy_confidence": 0.64,
           "taxonomy_reasons": [
-            "ai infrastructure",
-            "neocloud"
+            "ai infrastructure"
           ],
-          "direct_ai_infrastructure_relevance": 1,
-          "data_center_relevance": 0.42,
-          "cloud_capacity_relevance": 0,
-          "semiconductor_relevance": 0.22,
-          "power_grid_relevance": 0.537,
+          "direct_ai_infrastructure_relevance": 0.7,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0.76,
+          "semiconductor_relevance": 0,
+          "power_grid_relevance": 0,
           "cooling_relevance": 0,
           "capital_markets_relevance": 0,
-          "enterprise_ai_infrastructure_relevance": 0.24,
-          "infrastructure_relevance_score": 0.918,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.665,
+          "infrastructure_relevance_tier": "signal_card",
+          "infrastructure_relevance_action": "publish_signal_card_only",
           "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "data_center_relevance:0.42(data centers)",
-            "semiconductor_relevance:0.22(gpu)",
-            "power_grid_relevance:0.54(power, electricity)",
-            "enterprise_ai_infrastructure_relevance:0.24(ai workloads)"
+            "direct_ai_infrastructure_relevance:0.70(ai infrastructure)",
+            "cloud_capacity_relevance:0.76(cloud capacity, hyperscalers)"
           ],
           "infrastructure_relevance": {
-            "direct_ai_infrastructure_relevance": 1,
-            "data_center_relevance": 0.42,
-            "cloud_capacity_relevance": 0,
-            "semiconductor_relevance": 0.22,
-            "power_grid_relevance": 0.537,
+            "direct_ai_infrastructure_relevance": 0.7,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0.76,
+            "semiconductor_relevance": 0,
+            "power_grid_relevance": 0,
             "cooling_relevance": 0,
             "capital_markets_relevance": 0,
-            "enterprise_ai_infrastructure_relevance": 0.24,
-            "infrastructure_relevance_score": 0.918,
-            "infrastructure_relevance_tier": "full_memo",
-            "infrastructure_relevance_action": "generate_full_memo",
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.665,
+            "infrastructure_relevance_tier": "signal_card",
+            "infrastructure_relevance_action": "publish_signal_card_only",
             "infrastructure_relevance_reasons": [
-              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-              "data_center_relevance:0.42(data centers)",
-              "semiconductor_relevance:0.22(gpu)",
-              "power_grid_relevance:0.54(power, electricity)",
-              "enterprise_ai_infrastructure_relevance:0.24(ai workloads)"
+              "direct_ai_infrastructure_relevance:0.70(ai infrastructure)",
+              "cloud_capacity_relevance:0.76(cloud capacity, hyperscalers)"
             ],
-            "infrastructureRelevanceAction": "generate_full_memo",
-            "articlePagePublished": true,
+            "infrastructureRelevanceAction": "publish_signal_card_only",
+            "articlePagePublished": false,
             "homepagePublished": true,
             "archiveOnly": false,
             "archiveOnlyReason": null
           },
-          "score": 85
+          "score": 74
         },
         {
-          "id": "0f09271dfb075cf4",
-          "source": "TechCrunch AI",
-          "url": "https://techcrunch.com/2026/05/28/the-internet-is-being-rebuilt-for-machines/",
-          "title": "The internet is being rebuilt for machines",
-          "snippet": "As AI agents move from experiments to production, AWS, Cloudflare, and others are redesigning cloud infrastructure for a future dominated by machine-generated internet traffic instead of human users.",
-          "contentText": "As AI agents move from experiments to production, AWS, Cloudflare, and others are redesigning cloud infrastructure for a future dominated by machine-generated internet traffic instead of human users.",
-          "publishedAt": "2026-05-28T21:24:01.000Z",
-          "sourceImage": null,
-          "region": "US",
+          "id": "aa6bcdd0843703f6",
+          "source": "Toms Hardware",
+          "url": "https://www.tomshardware.com/video-games/handheld-gaming/gaming-handhelds-are-quietly-losing-ram-vendors-aggressively-trim-memory-specs-as-supply-dries-up",
+          "title": "Ambernic's retro gaming handhelds are quietly losing RAM capacity and being downgraded to older LPDDR3 memory — firm reportedly aggressively trimming memory specs as supply dries up amid global shortage",
+          "snippet": "Anbernic silently ships some retro gaming handhelds with less memory than initially advertised, without notifying customers.",
+          "contentText": "Anbernic silently ships some retro gaming handhelds with less memory than initially advertised, without notifying customers.",
+          "publishedAt": "2026-05-29T10:40:00.000Z",
+          "sourceImage": "https://cdn.mos.cms.futurecdn.net/Laa2Kaz2pWKBLuTVWU4oub-1280-80.jpg",
+          "region": "APAC",
           "language": "en",
           "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
           "category": "AI Infrastructure",
@@ -8981,8 +9116,8 @@
             "cloud buyers",
             "investors"
           ],
-          "article_type": "Other",
-          "urgency_score": 0.44,
+          "article_type": "Capacity Expansion",
+          "urgency_score": 0.67,
           "taxonomy_confidence": 0.77,
           "taxonomy_reasons": [
             "ai infrastructure",
@@ -8990,35 +9125,33 @@
           ],
           "direct_ai_infrastructure_relevance": 1,
           "data_center_relevance": 0,
-          "cloud_capacity_relevance": 0.22,
+          "cloud_capacity_relevance": 0,
           "semiconductor_relevance": 0.22,
           "power_grid_relevance": 0,
           "cooling_relevance": 0,
           "capital_markets_relevance": 0,
           "enterprise_ai_infrastructure_relevance": 0,
-          "infrastructure_relevance_score": 0.813,
+          "infrastructure_relevance_score": 0.778,
           "infrastructure_relevance_tier": "full_memo",
           "infrastructure_relevance_action": "generate_full_memo",
           "infrastructure_relevance_reasons": [
             "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "cloud_capacity_relevance:0.22(aws)",
             "semiconductor_relevance:0.22(gpu)"
           ],
           "infrastructure_relevance": {
             "direct_ai_infrastructure_relevance": 1,
             "data_center_relevance": 0,
-            "cloud_capacity_relevance": 0.22,
+            "cloud_capacity_relevance": 0,
             "semiconductor_relevance": 0.22,
             "power_grid_relevance": 0,
             "cooling_relevance": 0,
             "capital_markets_relevance": 0,
             "enterprise_ai_infrastructure_relevance": 0,
-            "infrastructure_relevance_score": 0.813,
+            "infrastructure_relevance_score": 0.778,
             "infrastructure_relevance_tier": "full_memo",
             "infrastructure_relevance_action": "generate_full_memo",
             "infrastructure_relevance_reasons": [
               "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-              "cloud_capacity_relevance:0.22(aws)",
               "semiconductor_relevance:0.22(gpu)"
             ],
             "infrastructureRelevanceAction": "generate_full_memo",
@@ -9027,18 +9160,18 @@
             "archiveOnly": false,
             "archiveOnlyReason": null
           },
-          "score": 80
+          "score": 72
         },
         {
-          "id": "c6b5f08ed445059c",
-          "source": "ServeTheHome",
-          "url": "https://www.servethehome.com/silicon-motions-sm2524xt-is-a-new-pcie-gen5-dram-less-ssd-controller-for-ai-pcs/",
-          "title": "Silicon Motion’s SM2524XT is a New PCIe Gen5 DRAM-less SSD Controller for AI PCs",
-          "snippet": "The new Silicon Motion SM2524XT is a quad core Arm SSD controller for newer faster DRAM-less PCIe Gen5 SSDs The post Silicon Motion’s SM2524XT is a New PCIe Gen5 DRAM-less SSD Controller for AI PCs appeared first on Ser…",
-          "contentText": "The new Silicon Motion SM2524XT is a quad core Arm SSD controller for newer faster DRAM-less PCIe Gen5 SSDs The post Silicon Motion&#8217;s SM2524XT is a New PCIe Gen5 DRAM-less SSD Controller for AI PCs appeared first on ServeTheHome .",
-          "publishedAt": "2026-05-28T23:42:43.000Z",
-          "sourceImage": null,
-          "region": "Global",
+          "id": "2460526bda44de3f",
+          "source": "Toms Hardware",
+          "url": "https://www.tomshardware.com/software/windows/ibm-thinkpad-t43-enthusiast-installs-almost-every-version-of-windows-on-the-device-without-using-virtual-machine-1996-windows-nt-4-0-to-windows-10-22h2-working-on-legendary-hardware",
+          "title": "IBM ThinkPad T43 enthusiast installs 'almost' every version of Windows on the single-core laptop without using virtual machine — 26 years of Windows running bare metal, from 1996 Windows NT 4.0 to Windows 10 22H2 working on legendary hardware",
+          "snippet": "An IBM ThinkPad user boasts that they can install '(almost) all versions of Windows from NT 4 to 10 22H2' with driver support, without resorting to virtual machine (VM) technology.",
+          "contentText": "An IBM ThinkPad user boasts that they can install '(almost) all versions of Windows from NT 4 to 10 22H2' with driver support, without resorting to virtual machine (VM) technology.",
+          "publishedAt": "2026-05-29T10:20:00.000Z",
+          "sourceImage": "https://cdn.mos.cms.futurecdn.net/UEAkfmBYuGztRQRAvsUeQn-1280-80.jpg",
+          "region": "US",
           "language": "en",
           "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
           "category": "AI Infrastructure",
@@ -9095,18 +9228,18 @@
             "archiveOnly": false,
             "archiveOnlyReason": null
           },
-          "score": 79
+          "score": 72
         },
         {
-          "id": "be548e91006370f0",
-          "source": "NVIDIA Blog",
-          "url": "https://blogs.nvidia.com/blog/geforce-now-thursday-007-first-light-launch/",
-          "title": "The Name’s Gaming … Cloud Gaming: ‘007 First Light’ Launches on GeForce NOW",
-          "snippet": "License to stream, shaken and stirred. GeForce NOW is dialing up the espionage with the launch of 007 First Light, letting members slip into James Bond’s reimagined origin story from almost any device — no tux or preloa…",
-          "contentText": "License to stream, shaken and stirred. GeForce NOW is dialing up the espionage with the launch of 007 First Light , letting members slip into James Bond’s reimagined origin story from almost any device — no tux or preloads required. For a limited time , the game is included with the purchase of a 12‑month GeForce NOW Ultimate membership, letting members lock in Bond’s next mission and a year of top-tier cloud gaming in one shot. And for those stepping into the role, the look comes with it. Daring Elite Outfit, a signature look capturing the spirit of a rising agent, is now available for Ultimate members — equal parts discipline, ambition and edge. And catch Capcom’s Resident Evil Requiem demo in the cloud — catch an early portion of the game and discover its two sides: terrifying survival…",
-          "publishedAt": "2026-05-28T13:00:37.000Z",
-          "sourceImage": "https://blogs.nvidia.com/wp-content/uploads/2026/05/gfn-thursday-5-28-nv-blog-1280x680-logo-1.jpg",
-          "region": "Global",
+          "id": "4f599680705450bd",
+          "source": "HPCwire",
+          "url": "https://www.hpcwire.com/2026/05/28/furiosaai-and-broadcom-team-up-to-build-rack-scale-inference-clusters/",
+          "title": "FuriosaAI and Broadcom Team Up to Build Rack-Scale Inference Clusters",
+          "snippet": "FuriosaAI and Broadcom are teaming up to develop a next-generation AI inference cluster that combines hundreds of FuriosaAI’s third-generation chips with Broadcom’s high-bandwidth, low-latency Ethernet interconnect. The…",
+          "contentText": "FuriosaAI and Broadcom are teaming up to develop a next-generation AI inference cluster that combines hundreds of FuriosaAI’s third-generation chips with Broadcom’s high-bandwidth, low-latency Ethernet interconnect. The as-yet unnamed system will start sampling in early 2028. FuriosaAI is a South Korean chip company founded in 2017 by June Paik, a former Samsung and AMD engineer who saw that emerging deep learning workloads could benefit from specialized chips. Paik built his Tensor Contraction Processor (TCP) architecture to process tensor contractions as opposed to the matrix multiplication math that GPUs are designed to process. FuriosaAI says the TCP architecture in its neural processing units (NPUs) significantly minimize data movement compared to GPUs. By keeping the data resident i…",
+          "publishedAt": "2026-05-28T22:31:04.000Z",
+          "sourceImage": "https://www.hpcwire.com/wp-content/uploads/2025/09/FuriosaAI_PCI_card-300x126.png",
+          "region": "Korea",
           "language": "en",
           "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
           "category": "AI Infrastructure",
@@ -9119,8 +9252,8 @@
             "cloud buyers",
             "investors"
           ],
-          "article_type": "Financing / M&A",
-          "urgency_score": 0.5,
+          "article_type": "Research / Technical",
+          "urgency_score": 0.44,
           "taxonomy_confidence": 0.77,
           "taxonomy_reasons": [
             "ai infrastructure",
@@ -9129,35 +9262,33 @@
           "direct_ai_infrastructure_relevance": 1,
           "data_center_relevance": 0,
           "cloud_capacity_relevance": 0,
-          "semiconductor_relevance": 0.5,
+          "semiconductor_relevance": 0.44,
           "power_grid_relevance": 0,
           "cooling_relevance": 0,
-          "capital_markets_relevance": 0.24,
+          "capital_markets_relevance": 0,
           "enterprise_ai_infrastructure_relevance": 0,
-          "infrastructure_relevance_score": 0.875,
+          "infrastructure_relevance_score": 0.827,
           "infrastructure_relevance_tier": "full_memo",
           "infrastructure_relevance_action": "generate_full_memo",
           "infrastructure_relevance_reasons": [
             "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "semiconductor_relevance:0.50(nvidia, gpu)",
-            "capital_markets_relevance:0.24(bond)"
+            "semiconductor_relevance:0.44(amd, gpu)"
           ],
           "infrastructure_relevance": {
             "direct_ai_infrastructure_relevance": 1,
             "data_center_relevance": 0,
             "cloud_capacity_relevance": 0,
-            "semiconductor_relevance": 0.5,
+            "semiconductor_relevance": 0.44,
             "power_grid_relevance": 0,
             "cooling_relevance": 0,
-            "capital_markets_relevance": 0.24,
+            "capital_markets_relevance": 0,
             "enterprise_ai_infrastructure_relevance": 0,
-            "infrastructure_relevance_score": 0.875,
+            "infrastructure_relevance_score": 0.827,
             "infrastructure_relevance_tier": "full_memo",
             "infrastructure_relevance_action": "generate_full_memo",
             "infrastructure_relevance_reasons": [
               "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-              "semiconductor_relevance:0.50(nvidia, gpu)",
-              "capital_markets_relevance:0.24(bond)"
+              "semiconductor_relevance:0.44(amd, gpu)"
             ],
             "infrastructureRelevanceAction": "generate_full_memo",
             "articlePagePublished": true,
@@ -9165,175 +9296,33 @@
             "archiveOnly": false,
             "archiveOnlyReason": null
           },
-          "score": 69
-        },
-        {
-          "id": "8d11b1aaff1fc7ec",
-          "source": "Utility Dive",
-          "url": "https://www.utilitydive.com/news/new-mexico-der-interconnection-irec-vote-solar/821397/",
-          "title": "New Mexico has the nation’s best DER interconnection policy: report",
-          "snippet": "The state received high marks for its robust energy storage interconnection framework, frequent public reports on its interconnection queue and incorporating IEEE’s technical standard for DER interconnections.",
-          "contentText": "The state received high marks for its robust energy storage interconnection framework, frequent public reports on its interconnection queue and incorporating IEEE&rsquo;s technical standard for DER interconnections.",
-          "publishedAt": "2026-05-28T19:11:30.000Z",
-          "sourceImage": "https://imgproxy.divecdn.com/LgCZV9F_KbIBG_SNBH2Q3HcUKv-B0IMdeY7NndFrcBQ/g:ce/rs:fill:1600:900:1/Z3M6Ly9kaXZlc2l0ZS1zdG9yYWdlL2RpdmVpbWFnZS9HZXR0eUltYWdlcy0xODMyODcxOTYuanBn.webp",
-          "region": "US",
-          "language": "en",
-          "defaultCategory": "Power / Grid / Energy",
-          "category": "Power & Grid",
-          "primary_category": "Power & Grid",
-          "secondary_category": "Interconnection and power procurement",
-          "infrastructure_layer": "Power",
-          "affected_stakeholders": [
-            "data center operators",
-            "utilities",
-            "cloud capacity teams",
-            "investors"
-          ],
-          "article_type": "Policy / Regulation",
-          "urgency_score": 0.71,
-          "taxonomy_confidence": 0.88,
-          "taxonomy_reasons": [
-            "power",
-            "grid",
-            "interconnection"
-          ],
-          "direct_ai_infrastructure_relevance": 0,
-          "data_center_relevance": 0,
-          "cloud_capacity_relevance": 0,
-          "semiconductor_relevance": 0,
-          "power_grid_relevance": 1,
-          "cooling_relevance": 0,
-          "capital_markets_relevance": 0,
-          "enterprise_ai_infrastructure_relevance": 0.18,
-          "infrastructure_relevance_score": 0.655,
-          "infrastructure_relevance_tier": "signal_card",
-          "infrastructure_relevance_action": "publish_signal_card_only",
-          "infrastructure_relevance_reasons": [
-            "power_grid_relevance:1.00(power, grid, interconnection)"
-          ],
-          "infrastructure_relevance": {
-            "direct_ai_infrastructure_relevance": 0,
-            "data_center_relevance": 0,
-            "cloud_capacity_relevance": 0,
-            "semiconductor_relevance": 0,
-            "power_grid_relevance": 1,
-            "cooling_relevance": 0,
-            "capital_markets_relevance": 0,
-            "enterprise_ai_infrastructure_relevance": 0.18,
-            "infrastructure_relevance_score": 0.655,
-            "infrastructure_relevance_tier": "signal_card",
-            "infrastructure_relevance_action": "publish_signal_card_only",
-            "infrastructure_relevance_reasons": [
-              "power_grid_relevance:1.00(power, grid, interconnection)"
-            ],
-            "infrastructureRelevanceAction": "publish_signal_card_only",
-            "articlePagePublished": false,
-            "homepagePublished": true,
-            "archiveOnly": false,
-            "archiveOnlyReason": null
-          },
-          "score": 66
-        },
-        {
-          "id": "ff6ef7847828bbe9",
-          "source": "Toms Hardware",
-          "url": "https://www.tomshardware.com/tech-industry/supermicro-says-it-assisted-taiwanese-authorities-in-server-smuggling-bust-that-led-to-three-arrests-company-issues-statement-on-working-with-us-taiwan-to-block-illicit-diversion-of-servers-to-china",
-          "title": "Supermicro says it assisted Taiwanese authorities in server smuggling bust that led to three arrests — company issues statement on working with US, Taiwan to block illicit diversion of servers to China",
-          "snippet": "Supermicro says it worked directly with Taiwanese authorities on a server smuggling bust that led to the seizure of 50 servers and three arrests.",
-          "contentText": "Supermicro says it worked directly with Taiwanese authorities on a server smuggling bust that led to the seizure of 50 servers and three arrests.",
-          "publishedAt": "2026-05-28T17:33:09.000Z",
-          "sourceImage": "https://cdn.mos.cms.futurecdn.net/t8B2SvB56prYQussPsCRAj-1280-80.jpg",
-          "region": "APAC",
-          "language": "en",
-          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
-          "category": "AI Infrastructure",
-          "primary_category": "AI Infrastructure",
-          "secondary_category": "GPU clusters and deployment readiness",
-          "infrastructure_layer": "Compute",
-          "affected_stakeholders": [
-            "operators",
-            "hyperscalers",
-            "cloud buyers",
-            "investors"
-          ],
-          "article_type": "Other",
-          "urgency_score": 0.59,
-          "taxonomy_confidence": 0.77,
-          "taxonomy_reasons": [
-            "ai infrastructure",
-            "neocloud"
-          ],
-          "direct_ai_infrastructure_relevance": 1,
-          "data_center_relevance": 0,
-          "cloud_capacity_relevance": 0,
-          "semiconductor_relevance": 0.22,
-          "power_grid_relevance": 0,
-          "cooling_relevance": 0,
-          "capital_markets_relevance": 0,
-          "enterprise_ai_infrastructure_relevance": 0,
-          "infrastructure_relevance_score": 0.778,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "semiconductor_relevance:0.22(gpu)"
-          ],
-          "infrastructure_relevance": {
-            "direct_ai_infrastructure_relevance": 1,
-            "data_center_relevance": 0,
-            "cloud_capacity_relevance": 0,
-            "semiconductor_relevance": 0.22,
-            "power_grid_relevance": 0,
-            "cooling_relevance": 0,
-            "capital_markets_relevance": 0,
-            "enterprise_ai_infrastructure_relevance": 0,
-            "infrastructure_relevance_score": 0.778,
-            "infrastructure_relevance_tier": "full_memo",
-            "infrastructure_relevance_action": "generate_full_memo",
-            "infrastructure_relevance_reasons": [
-              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-              "semiconductor_relevance:0.22(gpu)"
-            ],
-            "infrastructureRelevanceAction": "generate_full_memo",
-            "articlePagePublished": true,
-            "homepagePublished": true,
-            "archiveOnly": false,
-            "archiveOnlyReason": null
-          },
-          "score": 64
+          "score": 67
         }
       ],
       "curatedIds": [
-        "5dfe2c90f563f185",
-        "0f09271dfb075cf4",
-        "c6b5f08ed445059c",
-        "be548e91006370f0",
-        "8d11b1aaff1fc7ec",
-        "ff6ef7847828bbe9"
+        "8707adda8dacb727",
+        "519fe68555c78740",
+        "657314e844c917a6",
+        "aa6bcdd0843703f6",
+        "2460526bda44de3f",
+        "4f599680705450bd"
       ],
       "publishedIds": [
         "deede025a79929a9",
         "e1b69d4c0ff19ba0",
         "5dfe2c90f563f185",
-        "0f09271dfb075cf4"
+        "0f09271dfb075cf4",
+        "8707adda8dacb727",
+        "519fe68555c78740"
       ],
       "slotPublications": {
         "0": true,
-        "1": true
+        "1": true,
+        "2": true
       }
     }
   },
   "runHistory": [
-    {
-      "at": "2026-04-12T23:38:36.091Z",
-      "day": "2026-04-13",
-      "slot": 1,
-      "publishedCount": 2,
-      "publishedIds": [
-        "4910497112b2861c",
-        "ef0658085b806284"
-      ]
-    },
     {
       "at": "2026-04-13T09:07:39.682Z",
       "day": "2026-04-13",
@@ -12011,7 +12000,73 @@
         }
       ],
       "archiveOnlyItems": []
+    },
+    {
+      "at": "2026-05-29T10:53:17.927Z",
+      "day": "2026-05-29",
+      "slot": 2,
+      "publishedCount": 0,
+      "signalCardCount": 2,
+      "archiveOnlyCount": 0,
+      "processedIds": [
+        "8707adda8dacb727",
+        "519fe68555c78740"
+      ],
+      "blockedCount": 2,
+      "blockedItems": [
+        {
+          "id": "8707adda8dacb727",
+          "title": "NOV, TerraFlow partner on fiberglass solutions for AI data center energy storage",
+          "infrastructure_relevance_score": 0.972,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:0.78(ai data center)",
+            "data_center_relevance:1.00(data center, colocation, campus)",
+            "power_grid_relevance:0.22(power)",
+            "capital_markets_relevance:0.28(capex)",
+            "enterprise_ai_infrastructure_relevance:0.24(storage)"
+          ],
+          "extraction_quality_score": 0.95,
+          "source_domain_adapter": "generic",
+          "content_length": 1800,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": false,
+          "repetition_block_reasons": [],
+          "repetition_check": null,
+          "expert_insight_complete": true,
+          "expert_insight_missing_fields": [],
+          "reason": "fail_closed: source_text_incomplete:ellipsis_truncation_artifact, ellipsis_truncation_artifact, sentence_completion_score_below_0.92:0.567"
+        },
+        {
+          "id": "519fe68555c78740",
+          "title": "Moving Defect Detection And Classification To The Edge",
+          "infrastructure_relevance_score": 0.98,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "cloud_capacity_relevance:0.32(hyperscalers)",
+            "semiconductor_relevance:0.82(semiconductor, wafer, gpu)",
+            "power_grid_relevance:0.22(power)"
+          ],
+          "extraction_quality_score": 0.79,
+          "source_domain_adapter": "semiengineering",
+          "content_length": 714,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": false,
+          "repetition_block_reasons": [],
+          "repetition_check": null,
+          "expert_insight_complete": false,
+          "expert_insight_missing_fields": [
+            "concrete_facts",
+            "named_companies"
+          ],
+          "reason": "fail_closed: source_text_incomplete:source_evidence_length_below_1200"
+        }
+      ],
+      "archiveOnlyItems": []
     }
   ],
-  "lastRunAt": "2026-05-29T00:13:35.225Z"
+  "lastRunAt": "2026-05-29T10:53:17.927Z"
 }
