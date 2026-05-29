@@ -345,7 +345,9 @@
     "756a62d047d436b1",
     "1d18f53cb6749a7c",
     "deede025a79929a9",
-    "e1b69d4c0ff19ba0"
+    "e1b69d4c0ff19ba0",
+    "5dfe2c90f563f185",
+    "0f09271dfb075cf4"
   ],
   "dayPlans": {
     "2026-03-24": {
@@ -8880,159 +8882,19 @@
     "2026-05-29": {
       "date": "2026-05-29",
       "createdAt": "2026-05-28T18:16:30.634Z",
-      "refreshedAt": "2026-05-28T18:16:30.634Z",
+      "refreshedAt": "2026-05-29T00:13:35.225Z",
       "candidateWindowHours": 24,
       "curatedItems": [
         {
-          "id": "deede025a79929a9",
-          "source": "StorageReview",
-          "url": "https://www.storagereview.com/news/proxmox-datacenter-manager-1-1-adds-automated-installs-and-unified-ceph-monitoring",
-          "title": "Proxmox Datacenter Manager 1.1 Adds Automated Installs and Unified Ceph Monitoring",
-          "snippet": "Proxmox has released Proxmox Datacenter Manager 1.1, a new update to its centralized management platform for overseeing distributed Proxmox environments. The release adds automated installation workflows, centralized su…",
-          "contentText": "Proxmox has released Proxmox Datacenter Manager 1.1, a new update to its centralized management platform for overseeing distributed Proxmox environments. The release adds automated installation workflows, centralized subscription management, unified Ceph monitoring, and broader guest and snapshot management capabilities, and updates the underlying software stack. The update is mostly focused on simplifying administration across larger deployments where clusters and infrastructure may be spread across multiple sites. Several of the new additions aim to reduce repetitive setup work while improving visibility into storage, resource usage, and guest operations. Automated Installation Workflows Added For Provisioning Version 1.1 introduces integrated, automated installation workflows that enab…",
-          "publishedAt": "2026-05-28T18:11:14.000Z",
-          "sourceImage": "https://www.storagereview.com/wp-content/uploads/2026/05/StorageReview-Proxmox-Datacenter-Manager-1-0-Overview-Dashboard.png",
-          "region": "US",
-          "language": "en",
-          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
-          "category": "AI Infrastructure",
-          "primary_category": "AI Infrastructure",
-          "secondary_category": "GPU clusters and deployment readiness",
-          "infrastructure_layer": "Compute",
-          "affected_stakeholders": [
-            "operators",
-            "hyperscalers",
-            "cloud buyers",
-            "investors"
-          ],
-          "article_type": "Capacity Expansion",
-          "urgency_score": 0.46,
-          "taxonomy_confidence": 0.77,
-          "taxonomy_reasons": [
-            "ai infrastructure",
-            "neocloud"
-          ],
-          "direct_ai_infrastructure_relevance": 1,
-          "data_center_relevance": 0.55,
-          "cloud_capacity_relevance": 0.2,
-          "semiconductor_relevance": 0.22,
-          "power_grid_relevance": 0,
-          "cooling_relevance": 0,
-          "capital_markets_relevance": 0,
-          "enterprise_ai_infrastructure_relevance": 0.18,
-          "infrastructure_relevance_score": 0.886,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "data_center_relevance:0.55(datacenter)",
-            "semiconductor_relevance:0.22(gpu)"
-          ],
-          "infrastructure_relevance": {
-            "direct_ai_infrastructure_relevance": 1,
-            "data_center_relevance": 0.55,
-            "cloud_capacity_relevance": 0.2,
-            "semiconductor_relevance": 0.22,
-            "power_grid_relevance": 0,
-            "cooling_relevance": 0,
-            "capital_markets_relevance": 0,
-            "enterprise_ai_infrastructure_relevance": 0.18,
-            "infrastructure_relevance_score": 0.886,
-            "infrastructure_relevance_tier": "full_memo",
-            "infrastructure_relevance_action": "generate_full_memo",
-            "infrastructure_relevance_reasons": [
-              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-              "data_center_relevance:0.55(datacenter)",
-              "semiconductor_relevance:0.22(gpu)"
-            ],
-            "infrastructureRelevanceAction": "generate_full_memo",
-            "articlePagePublished": true,
-            "homepagePublished": true,
-            "archiveOnly": false,
-            "archiveOnlyReason": null
-          },
-          "score": 83
-        },
-        {
-          "id": "e1b69d4c0ff19ba0",
-          "source": "Power Engineering",
-          "url": "https://www.power-eng.com/gas/turbines/wyoming-data-center-power-projects-highlight-new-entrants-partnerships-in-power-generation-market/",
-          "title": "Wyoming data center power projects highlight new entrants, partnerships in power generation market",
-          "snippet": "Tallgrass Energy’s Cheyenne Power Hub reflects a broader shift reshaping the generation market, as pipeline operators increasingly step into the role of power producer.",
-          "contentText": "Tallgrass Energy&#8217;s Cheyenne Power Hub in southeast Wyoming is projected to exceed $7 billion in investment and will include two combined cycle power plants and a fuel cell yard, serving a data center identified as Project Jade. Midstream infrastructure companies are increasingly leveraging their existing infrastructure to develop and operate power plants serving data center load. Electricity demand in the Western U.S. is expected to grow over 20 percent this decade, with data centers alone accounting for an estimated 90 GW of projected demand, particularly in fast-growing markets like Utah, Arizona and Colorado. A cluster of large-scale data center power projects taking shape in southeast Wyoming is drawing attention to a broader shift in the power generation industry. Midstream inf…",
-          "publishedAt": "2026-05-28T16:18:33.000Z",
-          "sourceImage": "https://www.power-eng.com/wp-content/uploads/2026/05/image-2-5.jpg",
-          "region": "US",
-          "language": "en",
-          "defaultCategory": "Power / Grid / Energy",
-          "category": "Power & Grid",
-          "primary_category": "Power & Grid",
-          "secondary_category": "Interconnection and power procurement",
-          "infrastructure_layer": "Power",
-          "affected_stakeholders": [
-            "data center operators",
-            "utilities",
-            "cloud capacity teams",
-            "investors"
-          ],
-          "article_type": "Market Analysis",
-          "urgency_score": 0.64,
-          "taxonomy_confidence": 0.95,
-          "taxonomy_reasons": [
-            "power",
-            "grid",
-            "electricity",
-            "gw"
-          ],
-          "direct_ai_infrastructure_relevance": 0,
-          "data_center_relevance": 0.97,
-          "cloud_capacity_relevance": 0,
-          "semiconductor_relevance": 0,
-          "power_grid_relevance": 1,
-          "cooling_relevance": 0,
-          "capital_markets_relevance": 0,
-          "enterprise_ai_infrastructure_relevance": 0,
-          "infrastructure_relevance_score": 0.863,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "data_center_relevance:0.97(data center, data centers)",
-            "power_grid_relevance:1.00(power, grid, gw)"
-          ],
-          "infrastructure_relevance": {
-            "direct_ai_infrastructure_relevance": 0,
-            "data_center_relevance": 0.97,
-            "cloud_capacity_relevance": 0,
-            "semiconductor_relevance": 0,
-            "power_grid_relevance": 1,
-            "cooling_relevance": 0,
-            "capital_markets_relevance": 0,
-            "enterprise_ai_infrastructure_relevance": 0,
-            "infrastructure_relevance_score": 0.863,
-            "infrastructure_relevance_tier": "full_memo",
-            "infrastructure_relevance_action": "generate_full_memo",
-            "infrastructure_relevance_reasons": [
-              "data_center_relevance:0.97(data center, data centers)",
-              "power_grid_relevance:1.00(power, grid, gw)"
-            ],
-            "infrastructureRelevanceAction": "generate_full_memo",
-            "articlePagePublished": true,
-            "homepagePublished": true,
-            "archiveOnly": false,
-            "archiveOnlyReason": null
-          },
-          "score": 82
-        },
-        {
-          "id": "eca9015f4333b892",
+          "id": "5dfe2c90f563f185",
           "source": "HPCwire",
-          "url": "https://www.hpcwire.com/off-the-wire/lightbits-labs-announces-early-initial-interoperability-with-microsoft-windows-server-nvme-of-initiator-preview/",
-          "title": "Lightbits Labs Announces Early, Initial Interoperability with Microsoft Windows Server NVMe-oF Initiator Preview",
-          "snippet": "Inventor of NVMe/TCP & KV Cache accelerator Validates Initial Connectivity to Bring High-Performance Block Storage to Windows Server Environments SAN JOSE, Calif., May 28, 2026 — Lightbits Labs today announced the initi…",
-          "contentText": "Inventor of NVMe/TCP & KV Cache accelerator Validates Initial Connectivity to Bring High-Performance Block Storage to Windows Server Environments SAN JOSE, Calif., May 28, 2026 &#8212; Lightbits Labs today announced the initial interoperability with the new Microsoft Windows Server NVMe-over-Fabrics (NVMe-oF) Initiator Preview . Available in Lightbits v3.19.1, this early milestone will enable storage administrators to deliver high-performance, native NVMe over TCP block storage to Windows Server Insider hosts over standard Ethernet once Microsoft releases it. The introduction of a native NVMe-oF initiator in Windows Server represents a significant shift for data infrastructure. By removing the need for legacy SCSI-based protocols or specialized hardware, organizations can achieve better a…",
-          "publishedAt": "2026-05-28T18:01:39.000Z",
-          "sourceImage": "https://www.hpcwire.com/wp-content/uploads/2026/03/Lightbits_logo-300x169.jpg",
-          "region": "Global",
+          "url": "https://www.hpcwire.com/2026/05/28/harness-the-power-of-rack-scale-performance-for-large-scale-ai/",
+          "title": "Harness the Power of Rack-Scale Performance for Large-Scale AI",
+          "snippet": "AI has entered an industrial phase, no longer confined to isolated models or experimental deployments. AI now operates as always-on AI factories that continuously transform electricity and data into intelligence at scal…",
+          "contentText": "AI has entered an industrial phase, no longer confined to isolated models or experimental deployments. AI now operates as always-on AI factories that continuously transform electricity and data into intelligence at scale. For service providers and neoclouds, this shift introduces a new class of infrastructure demands. Modern AI workloads require processing hundreds of thousands of input tokens while sustaining real time inference across complex pipelines. Unlike traditional data centers built around intermittent, human-driven requests, AI factories depend on constant, high-efficiency data movement, low-latency communication, and massive memory bandwidth to remain competitive. Even minor inefficiencies, multiplied across trillions of tokens, can significantly impact throughput and costs—cr…",
+          "publishedAt": "2026-05-28T21:53:26.000Z",
+          "sourceImage": null,
+          "region": "US",
           "language": "en",
           "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
           "category": "AI Infrastructure",
@@ -9046,7 +8908,81 @@
             "investors"
           ],
           "article_type": "Product / Platform Update",
-          "urgency_score": 0.6,
+          "urgency_score": 0.55,
+          "taxonomy_confidence": 0.77,
+          "taxonomy_reasons": [
+            "ai infrastructure",
+            "neocloud"
+          ],
+          "direct_ai_infrastructure_relevance": 1,
+          "data_center_relevance": 0.42,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0.22,
+          "power_grid_relevance": 0.537,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0.24,
+          "infrastructure_relevance_score": 0.918,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "data_center_relevance:0.42(data centers)",
+            "semiconductor_relevance:0.22(gpu)",
+            "power_grid_relevance:0.54(power, electricity)",
+            "enterprise_ai_infrastructure_relevance:0.24(ai workloads)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 1,
+            "data_center_relevance": 0.42,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0.22,
+            "power_grid_relevance": 0.537,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0.24,
+            "infrastructure_relevance_score": 0.918,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+              "data_center_relevance:0.42(data centers)",
+              "semiconductor_relevance:0.22(gpu)",
+              "power_grid_relevance:0.54(power, electricity)",
+              "enterprise_ai_infrastructure_relevance:0.24(ai workloads)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 85
+        },
+        {
+          "id": "0f09271dfb075cf4",
+          "source": "TechCrunch AI",
+          "url": "https://techcrunch.com/2026/05/28/the-internet-is-being-rebuilt-for-machines/",
+          "title": "The internet is being rebuilt for machines",
+          "snippet": "As AI agents move from experiments to production, AWS, Cloudflare, and others are redesigning cloud infrastructure for a future dominated by machine-generated internet traffic instead of human users.",
+          "contentText": "As AI agents move from experiments to production, AWS, Cloudflare, and others are redesigning cloud infrastructure for a future dominated by machine-generated internet traffic instead of human users.",
+          "publishedAt": "2026-05-28T21:24:01.000Z",
+          "sourceImage": null,
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "category": "AI Infrastructure",
+          "primary_category": "AI Infrastructure",
+          "secondary_category": "GPU clusters and deployment readiness",
+          "infrastructure_layer": "Compute",
+          "affected_stakeholders": [
+            "operators",
+            "hyperscalers",
+            "cloud buyers",
+            "investors"
+          ],
+          "article_type": "Other",
+          "urgency_score": 0.44,
           "taxonomy_confidence": 0.77,
           "taxonomy_reasons": [
             "ai infrastructure",
@@ -9054,34 +8990,36 @@
           ],
           "direct_ai_infrastructure_relevance": 1,
           "data_center_relevance": 0,
-          "cloud_capacity_relevance": 0,
-          "semiconductor_relevance": 0.44,
+          "cloud_capacity_relevance": 0.22,
+          "semiconductor_relevance": 0.22,
           "power_grid_relevance": 0,
           "cooling_relevance": 0,
           "capital_markets_relevance": 0,
-          "enterprise_ai_infrastructure_relevance": 0.18,
-          "infrastructure_relevance_score": 0.827,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.813,
           "infrastructure_relevance_tier": "full_memo",
           "infrastructure_relevance_action": "generate_full_memo",
           "infrastructure_relevance_reasons": [
             "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "semiconductor_relevance:0.44(accelerator, gpu)"
+            "cloud_capacity_relevance:0.22(aws)",
+            "semiconductor_relevance:0.22(gpu)"
           ],
           "infrastructure_relevance": {
             "direct_ai_infrastructure_relevance": 1,
             "data_center_relevance": 0,
-            "cloud_capacity_relevance": 0,
-            "semiconductor_relevance": 0.44,
+            "cloud_capacity_relevance": 0.22,
+            "semiconductor_relevance": 0.22,
             "power_grid_relevance": 0,
             "cooling_relevance": 0,
             "capital_markets_relevance": 0,
-            "enterprise_ai_infrastructure_relevance": 0.18,
-            "infrastructure_relevance_score": 0.827,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.813,
             "infrastructure_relevance_tier": "full_memo",
             "infrastructure_relevance_action": "generate_full_memo",
             "infrastructure_relevance_reasons": [
               "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-              "semiconductor_relevance:0.44(accelerator, gpu)"
+              "cloud_capacity_relevance:0.22(aws)",
+              "semiconductor_relevance:0.22(gpu)"
             ],
             "infrastructureRelevanceAction": "generate_full_memo",
             "articlePagePublished": true,
@@ -9089,88 +9027,17 @@
             "archiveOnly": false,
             "archiveOnlyReason": null
           },
-          "score": 81
+          "score": 80
         },
         {
-          "id": "e58b11e1934ac598",
-          "source": "Data Center POST",
-          "url": "https://datacenterpost.com/powerbridge-strengthens-leadership-team-as-ai-infrastructure-demand-accelerates/",
-          "title": "PowerBridge Strengthens Leadership Team as AI Infrastructure Demand Accelerates",
-          "snippet": "TL;DR PowerBridge appointed Scott Hanna as Chief Revenue Officer to lead revenue strategy and hyperscale customer engagement. Hanna previously held leadership roles at Cumulus Data and CyrusOne, bringing experience in h…",
-          "contentText": "TL;DR PowerBridge appointed Scott Hanna as Chief Revenue Officer to lead revenue strategy and hyperscale customer engagement. Hanna previously held leadership roles at Cumulus Data and CyrusOne, bringing experience in hyperscale and powered campus development. The company is advancing several multi-gigawatt powered digital infrastructure campuses across West Texas, including its planned Alpha Digital Powered Campus near Pecos, Texas. PowerBridge says the appointment supports its strategy of combining power, connectivity and digital infrastructure to meet growing AI and hyperscale demand. The growth of AI infrastructure is forcing the digital infrastructure industry to rethink how large-scale campuses are developed, powered and delivered. Speed to deployment still matters, but increasingly…",
-          "publishedAt": "2026-05-28T14:00:09.000Z",
-          "sourceImage": "https://d3qut6qyo6tw2j.cloudfront.net/bin/uploads/2026/05/27192237/PB-Scott-Hanna-PR-Blog_5.28.26-2-1024x512.png",
-          "region": "US",
-          "language": "en",
-          "defaultCategory": "Colocation & Wholesale",
-          "category": "Data Centers",
-          "primary_category": "Data Centers",
-          "secondary_category": "Campus development and colocation capacity",
-          "infrastructure_layer": "Facility",
-          "affected_stakeholders": [
-            "data center operators",
-            "developers",
-            "site selectors",
-            "investors"
-          ],
-          "article_type": "Operations Update",
-          "urgency_score": 0.55,
-          "taxonomy_confidence": 0.84,
-          "taxonomy_reasons": [
-            "colocation",
-            "campus",
-            "wholesale"
-          ],
-          "direct_ai_infrastructure_relevance": 0.82,
-          "data_center_relevance": 0.92,
-          "cloud_capacity_relevance": 0,
-          "semiconductor_relevance": 0,
-          "power_grid_relevance": 0.56,
-          "cooling_relevance": 0,
-          "capital_markets_relevance": 0,
-          "enterprise_ai_infrastructure_relevance": 0,
-          "infrastructure_relevance_score": 0.899,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:0.82(ai infrastructure)",
-            "data_center_relevance:0.92(data center, colocation, campus)",
-            "power_grid_relevance:0.56(power, gigawatt)"
-          ],
-          "infrastructure_relevance": {
-            "direct_ai_infrastructure_relevance": 0.82,
-            "data_center_relevance": 0.92,
-            "cloud_capacity_relevance": 0,
-            "semiconductor_relevance": 0,
-            "power_grid_relevance": 0.56,
-            "cooling_relevance": 0,
-            "capital_markets_relevance": 0,
-            "enterprise_ai_infrastructure_relevance": 0,
-            "infrastructure_relevance_score": 0.899,
-            "infrastructure_relevance_tier": "full_memo",
-            "infrastructure_relevance_action": "generate_full_memo",
-            "infrastructure_relevance_reasons": [
-              "direct_ai_infrastructure_relevance:0.82(ai infrastructure)",
-              "data_center_relevance:0.92(data center, colocation, campus)",
-              "power_grid_relevance:0.56(power, gigawatt)"
-            ],
-            "infrastructureRelevanceAction": "generate_full_memo",
-            "articlePagePublished": true,
-            "homepagePublished": true,
-            "archiveOnly": false,
-            "archiveOnlyReason": null
-          },
-          "score": 76
-        },
-        {
-          "id": "aecb58b85806632c",
-          "source": "NVIDIA Blog",
-          "url": "https://blogs.nvidia.com/blog/icra-research-robotics-simulation-to-real-world/",
-          "title": "NVIDIA Research Advances Robotics From Simulation to the Real World",
-          "snippet": "Robotics is entering a new phase: moving from controlled demos and scripted automation toward generalizable, reliable embodied autonomy in the real world. At the International Conference on Robotics and Automation (ICRA…",
-          "contentText": "Robotics is entering a new phase: moving from controlled demos and scripted automation toward generalizable, reliable embodied autonomy in the real world. At the International Conference on Robotics and Automation (ICRA) , eight of NVIDIA Research’s 28 accepted papers show how simulation-to-real transfer is becoming a foundation for that shift, helping robots perceive, reason, plan and act across dynamic, unpredictable environments. Together, the papers span the full stack of challenges robot developers face: coordinating multiple arms in parallel, building policies that generalize across robot bodies, grasping novel objects in clutter, performing precise assembly and developing vision-language-action models that reason before they move. The throughline is clear: sim-to-real is becoming a…",
-          "publishedAt": "2026-05-28T13:00:51.000Z",
-          "sourceImage": "https://blogs.nvidia.com/wp-content/uploads/2026/05/ICRA2026Blog-scaled.jpg",
+          "id": "c6b5f08ed445059c",
+          "source": "ServeTheHome",
+          "url": "https://www.servethehome.com/silicon-motions-sm2524xt-is-a-new-pcie-gen5-dram-less-ssd-controller-for-ai-pcs/",
+          "title": "Silicon Motion’s SM2524XT is a New PCIe Gen5 DRAM-less SSD Controller for AI PCs",
+          "snippet": "The new Silicon Motion SM2524XT is a quad core Arm SSD controller for newer faster DRAM-less PCIe Gen5 SSDs The post Silicon Motion’s SM2524XT is a New PCIe Gen5 DRAM-less SSD Controller for AI PCs appeared first on Ser…",
+          "contentText": "The new Silicon Motion SM2524XT is a quad core Arm SSD controller for newer faster DRAM-less PCIe Gen5 SSDs The post Silicon Motion&#8217;s SM2524XT is a New PCIe Gen5 DRAM-less SSD Controller for AI PCs appeared first on ServeTheHome .",
+          "publishedAt": "2026-05-28T23:42:43.000Z",
+          "sourceImage": null,
           "region": "Global",
           "language": "en",
           "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
@@ -9184,8 +9051,8 @@
             "cloud buyers",
             "investors"
           ],
-          "article_type": "Research / Technical",
-          "urgency_score": 0.46,
+          "article_type": "Other",
+          "urgency_score": 0.43,
           "taxonomy_confidence": 0.77,
           "taxonomy_reasons": [
             "ai infrastructure",
@@ -9194,33 +9061,33 @@
           "direct_ai_infrastructure_relevance": 1,
           "data_center_relevance": 0,
           "cloud_capacity_relevance": 0,
-          "semiconductor_relevance": 0.598,
+          "semiconductor_relevance": 0.22,
           "power_grid_relevance": 0,
           "cooling_relevance": 0,
           "capital_markets_relevance": 0,
           "enterprise_ai_infrastructure_relevance": 0,
-          "infrastructure_relevance_score": 0.862,
+          "infrastructure_relevance_score": 0.778,
           "infrastructure_relevance_tier": "full_memo",
           "infrastructure_relevance_action": "generate_full_memo",
           "infrastructure_relevance_reasons": [
             "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "semiconductor_relevance:0.60(nvidia, gpu)"
+            "semiconductor_relevance:0.22(gpu)"
           ],
           "infrastructure_relevance": {
             "direct_ai_infrastructure_relevance": 1,
             "data_center_relevance": 0,
             "cloud_capacity_relevance": 0,
-            "semiconductor_relevance": 0.598,
+            "semiconductor_relevance": 0.22,
             "power_grid_relevance": 0,
             "cooling_relevance": 0,
             "capital_markets_relevance": 0,
             "enterprise_ai_infrastructure_relevance": 0,
-            "infrastructure_relevance_score": 0.862,
+            "infrastructure_relevance_score": 0.778,
             "infrastructure_relevance_tier": "full_memo",
             "infrastructure_relevance_action": "generate_full_memo",
             "infrastructure_relevance_reasons": [
               "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-              "semiconductor_relevance:0.60(nvidia, gpu)"
+              "semiconductor_relevance:0.22(gpu)"
             ],
             "infrastructureRelevanceAction": "generate_full_memo",
             "articlePagePublished": true,
@@ -9228,7 +9095,144 @@
             "archiveOnly": false,
             "archiveOnlyReason": null
           },
-          "score": 74
+          "score": 79
+        },
+        {
+          "id": "be548e91006370f0",
+          "source": "NVIDIA Blog",
+          "url": "https://blogs.nvidia.com/blog/geforce-now-thursday-007-first-light-launch/",
+          "title": "The Name’s Gaming … Cloud Gaming: ‘007 First Light’ Launches on GeForce NOW",
+          "snippet": "License to stream, shaken and stirred. GeForce NOW is dialing up the espionage with the launch of 007 First Light, letting members slip into James Bond’s reimagined origin story from almost any device — no tux or preloa…",
+          "contentText": "License to stream, shaken and stirred. GeForce NOW is dialing up the espionage with the launch of 007 First Light , letting members slip into James Bond’s reimagined origin story from almost any device — no tux or preloads required. For a limited time , the game is included with the purchase of a 12‑month GeForce NOW Ultimate membership, letting members lock in Bond’s next mission and a year of top-tier cloud gaming in one shot. And for those stepping into the role, the look comes with it. Daring Elite Outfit, a signature look capturing the spirit of a rising agent, is now available for Ultimate members — equal parts discipline, ambition and edge. And catch Capcom’s Resident Evil Requiem demo in the cloud — catch an early portion of the game and discover its two sides: terrifying survival…",
+          "publishedAt": "2026-05-28T13:00:37.000Z",
+          "sourceImage": "https://blogs.nvidia.com/wp-content/uploads/2026/05/gfn-thursday-5-28-nv-blog-1280x680-logo-1.jpg",
+          "region": "Global",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "category": "AI Infrastructure",
+          "primary_category": "AI Infrastructure",
+          "secondary_category": "GPU clusters and deployment readiness",
+          "infrastructure_layer": "Compute",
+          "affected_stakeholders": [
+            "operators",
+            "hyperscalers",
+            "cloud buyers",
+            "investors"
+          ],
+          "article_type": "Financing / M&A",
+          "urgency_score": 0.5,
+          "taxonomy_confidence": 0.77,
+          "taxonomy_reasons": [
+            "ai infrastructure",
+            "neocloud"
+          ],
+          "direct_ai_infrastructure_relevance": 1,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0.5,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0.24,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.875,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "semiconductor_relevance:0.50(nvidia, gpu)",
+            "capital_markets_relevance:0.24(bond)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 1,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0.5,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0.24,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.875,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+              "semiconductor_relevance:0.50(nvidia, gpu)",
+              "capital_markets_relevance:0.24(bond)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 69
+        },
+        {
+          "id": "8d11b1aaff1fc7ec",
+          "source": "Utility Dive",
+          "url": "https://www.utilitydive.com/news/new-mexico-der-interconnection-irec-vote-solar/821397/",
+          "title": "New Mexico has the nation’s best DER interconnection policy: report",
+          "snippet": "The state received high marks for its robust energy storage interconnection framework, frequent public reports on its interconnection queue and incorporating IEEE’s technical standard for DER interconnections.",
+          "contentText": "The state received high marks for its robust energy storage interconnection framework, frequent public reports on its interconnection queue and incorporating IEEE&rsquo;s technical standard for DER interconnections.",
+          "publishedAt": "2026-05-28T19:11:30.000Z",
+          "sourceImage": "https://imgproxy.divecdn.com/LgCZV9F_KbIBG_SNBH2Q3HcUKv-B0IMdeY7NndFrcBQ/g:ce/rs:fill:1600:900:1/Z3M6Ly9kaXZlc2l0ZS1zdG9yYWdlL2RpdmVpbWFnZS9HZXR0eUltYWdlcy0xODMyODcxOTYuanBn.webp",
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "Power / Grid / Energy",
+          "category": "Power & Grid",
+          "primary_category": "Power & Grid",
+          "secondary_category": "Interconnection and power procurement",
+          "infrastructure_layer": "Power",
+          "affected_stakeholders": [
+            "data center operators",
+            "utilities",
+            "cloud capacity teams",
+            "investors"
+          ],
+          "article_type": "Policy / Regulation",
+          "urgency_score": 0.71,
+          "taxonomy_confidence": 0.88,
+          "taxonomy_reasons": [
+            "power",
+            "grid",
+            "interconnection"
+          ],
+          "direct_ai_infrastructure_relevance": 0,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0,
+          "power_grid_relevance": 1,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0.18,
+          "infrastructure_relevance_score": 0.655,
+          "infrastructure_relevance_tier": "signal_card",
+          "infrastructure_relevance_action": "publish_signal_card_only",
+          "infrastructure_relevance_reasons": [
+            "power_grid_relevance:1.00(power, grid, interconnection)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 0,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0,
+            "power_grid_relevance": 1,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0.18,
+            "infrastructure_relevance_score": 0.655,
+            "infrastructure_relevance_tier": "signal_card",
+            "infrastructure_relevance_action": "publish_signal_card_only",
+            "infrastructure_relevance_reasons": [
+              "power_grid_relevance:1.00(power, grid, interconnection)"
+            ],
+            "infrastructureRelevanceAction": "publish_signal_card_only",
+            "articlePagePublished": false,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 66
         },
         {
           "id": "ff6ef7847828bbe9",
@@ -9296,37 +9300,30 @@
             "archiveOnly": false,
             "archiveOnlyReason": null
           },
-          "score": 72
+          "score": 64
         }
       ],
       "curatedIds": [
-        "deede025a79929a9",
-        "e1b69d4c0ff19ba0",
-        "eca9015f4333b892",
-        "e58b11e1934ac598",
-        "aecb58b85806632c",
+        "5dfe2c90f563f185",
+        "0f09271dfb075cf4",
+        "c6b5f08ed445059c",
+        "be548e91006370f0",
+        "8d11b1aaff1fc7ec",
         "ff6ef7847828bbe9"
       ],
       "publishedIds": [
         "deede025a79929a9",
-        "e1b69d4c0ff19ba0"
+        "e1b69d4c0ff19ba0",
+        "5dfe2c90f563f185",
+        "0f09271dfb075cf4"
       ],
       "slotPublications": {
-        "0": true
+        "0": true,
+        "1": true
       }
     }
   },
   "runHistory": [
-    {
-      "at": "2026-04-12T15:43:15.607Z",
-      "day": "2026-04-13",
-      "slot": 0,
-      "publishedCount": 2,
-      "publishedIds": [
-        "f61e0636111a2178",
-        "e946b929f31923ef"
-      ]
-    },
     {
       "at": "2026-04-12T23:38:36.091Z",
       "day": "2026-04-13",
@@ -11890,7 +11887,131 @@
       ],
       "signalCardItems": [],
       "archiveOnlyItems": []
+    },
+    {
+      "at": "2026-05-29T00:13:35.225Z",
+      "day": "2026-05-29",
+      "slot": 1,
+      "publishedCount": 0,
+      "signalCardCount": 1,
+      "archiveOnlyCount": 0,
+      "repetitionBlockedCount": 1,
+      "publishedIds": [],
+      "processedIds": [
+        "5dfe2c90f563f185",
+        "0f09271dfb075cf4"
+      ],
+      "blockedCount": 1,
+      "blockedItems": [
+        {
+          "id": "5dfe2c90f563f185",
+          "title": "Harness the Power of Rack-Scale Performance for Large-Scale AI",
+          "infrastructure_relevance_score": 0.985,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "data_center_relevance:0.84(data center, data centers)",
+            "cloud_capacity_relevance:0.32(hyperscalers)",
+            "semiconductor_relevance:0.72(nvidia, amd, gpu)",
+            "power_grid_relevance:0.54(power, electricity)",
+            "enterprise_ai_infrastructure_relevance:0.42(networking, ai workloads)"
+          ],
+          "extraction_quality_score": 0.95,
+          "source_domain_adapter": "generic",
+          "content_length": 1371,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": false,
+          "repetition_block_reasons": [],
+          "repetition_check": null,
+          "expert_insight_complete": true,
+          "expert_insight_missing_fields": [],
+          "reason": "fail_closed: source_text_incomplete:ellipsis_truncation_artifact, ellipsis_truncation_artifact"
+        }
+      ],
+      "repetitionBlockedItems": [
+        {
+          "id": "0f09271dfb075cf4",
+          "title": "The internet is being rebuilt for machines",
+          "infrastructure_relevance_score": 0.919,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "cloud_capacity_relevance:0.54(hyperscalers, aws)",
+            "semiconductor_relevance:0.22(gpu)",
+            "power_grid_relevance:0.22(power)"
+          ],
+          "extraction_quality_score": 1,
+          "source_domain_adapter": "techcrunch",
+          "content_length": 1767,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": true,
+          "repetition_block_reasons": [
+            "repeated_sentence_ratio>0.12",
+            "heading_sequence_similarity>0.75",
+            "conclusion_similarity>0.7"
+          ],
+          "repetition_check": {
+            "compared_article_count": 16,
+            "repeated_sentence_ratio": 0.42857142857142855,
+            "repeated_paragraph_ratio": 0.5,
+            "heading_sequence_similarity": 1,
+            "banned_phrase_count": 0,
+            "banned_phrase_counts": {},
+            "recent_banned_phrase_counts": {},
+            "ngram_overlap": 0.6974789915966386,
+            "blueprint_repetition": 2,
+            "conclusion_similarity": 0.9999999999999998,
+            "repeated_sentence_count": 3,
+            "repeated_paragraph_count": 3,
+            "heading_sequence": [
+              "Technical Signal",
+              "Failure Domain",
+              "Operator Exposure",
+              "Benchmark To Watch"
+            ],
+            "blocked": true,
+            "reasons": [
+              "repeated_sentence_ratio>0.12",
+              "heading_sequence_similarity>0.75",
+              "conclusion_similarity>0.7"
+            ]
+          },
+          "expert_insight_complete": true,
+          "expert_insight_missing_fields": [],
+          "reason": "repeated_sentence_ratio>0.12; heading_sequence_similarity>0.75; conclusion_similarity>0.7"
+        }
+      ],
+      "signalCardItems": [
+        {
+          "id": "5dfe2c90f563f185",
+          "title": "Harness the Power of Rack-Scale Performance for Large-Scale AI",
+          "infrastructure_relevance_score": 0.985,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "data_center_relevance:0.84(data center, data centers)",
+            "cloud_capacity_relevance:0.32(hyperscalers)",
+            "semiconductor_relevance:0.72(nvidia, amd, gpu)",
+            "power_grid_relevance:0.54(power, electricity)",
+            "enterprise_ai_infrastructure_relevance:0.42(networking, ai workloads)"
+          ],
+          "extraction_quality_score": 0.95,
+          "source_domain_adapter": "generic",
+          "content_length": 1371,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": false,
+          "repetition_block_reasons": [],
+          "repetition_check": null,
+          "expert_insight_complete": true,
+          "expert_insight_missing_fields": [],
+          "reason": "fail_closed: source_text_incomplete:ellipsis_truncation_artifact, ellipsis_truncation_artifact"
+        }
+      ],
+      "archiveOnlyItems": []
     }
   ],
-  "lastRunAt": "2026-05-28T18:16:30.634Z"
+  "lastRunAt": "2026-05-29T00:13:35.225Z"
 }
