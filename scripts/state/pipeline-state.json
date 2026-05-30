@@ -355,7 +355,9 @@
     "b188de1945f6f50c",
     "a75b770ece602a55",
     "0ccf1e3f69f2b513",
-    "54652826bb6c24c9"
+    "54652826bb6c24c9",
+    "87e7d3df840192e1",
+    "40e4460619d1f600"
   ],
   "dayPlans": {
     "2026-03-24": {
@@ -9765,19 +9767,441 @@
         "1": true,
         "2": true
       }
+    },
+    "2026-05-31": {
+      "date": "2026-05-31",
+      "createdAt": "2026-05-30T16:10:17.745Z",
+      "refreshedAt": "2026-05-30T16:10:17.745Z",
+      "candidateWindowHours": 24,
+      "curatedItems": [
+        {
+          "id": "87e7d3df840192e1",
+          "source": "Toms Hardware",
+          "url": "https://www.tomshardware.com/pc-components/cpus/amd-ryzen-7-5800x-and-nvidia-rtx-5060-combo-is-only-usd439-deal-includes-a-free-cpu-cooler-totaling-out-to-usd150-in-savings-for-a-great-budget-setup",
+          "title": "AMD Ryzen 7 5800X and Nvidia RTX 5060 combo is only $439 — deal includes a free CPU cooler, totaling out to $150 in savings for a great budget setup",
+          "snippet": "If you've been looking to upgrade from an older system or just want to build a new one but 2026 prices have stopped you, we've got just the deal. The CPU and GPU are the two most important parts of a PC build, and Neweg…",
+          "contentText": "If you've been looking to upgrade from an older system or just want to build a new one but 2026 prices have stopped you, we've got just the deal. The CPU and GPU are the two most important parts of a PC build, and Newegg is offering a solid 8-core processor paired with a strong 1080p graphics card for just over $400.",
+          "publishedAt": "2026-05-30T14:49:34.000Z",
+          "sourceImage": "https://cdn.mos.cms.futurecdn.net/3R8ZKZYph6Dh5B5VVd5ze5-1280-80.png",
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "category": "Semiconductors",
+          "primary_category": "Semiconductors",
+          "secondary_category": "Accelerators, memory, and advanced packaging",
+          "infrastructure_layer": "Silicon",
+          "affected_stakeholders": [
+            "semiconductor suppliers",
+            "hyperscalers",
+            "server OEMs",
+            "investors"
+          ],
+          "article_type": "Other",
+          "urgency_score": 0.48,
+          "taxonomy_confidence": 0.89,
+          "taxonomy_reasons": [
+            "gpu",
+            "nvidia",
+            "amd"
+          ],
+          "direct_ai_infrastructure_relevance": 1,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0.895,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.927,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "semiconductor_relevance:0.90(nvidia, amd, gpu)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 1,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0.895,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.927,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+              "semiconductor_relevance:0.90(nvidia, amd, gpu)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 85
+        },
+        {
+          "id": "40e4460619d1f600",
+          "source": "Toms Hardware",
+          "url": "https://www.tomshardware.com/pc-components/power-supplies/atx12vo-v3-standard-shrinks-the-connector-and-maximizes-power-efficiency-new-8-pin-connector-also-brings-smarter-power-supply-monitoring",
+          "title": "ATX12VO V3 standard shrinks the connector and maximizes power efficiency — new 8-pin connector also brings smarter power supply monitoring",
+          "snippet": "Intel's next-generation 12V-only PSU standard reportedly adds PMBus support, smaller connectors, and improved power efficiency.",
+          "contentText": "Intel's next-generation 12V-only PSU standard reportedly adds PMBus support, smaller connectors, and improved power efficiency.",
+          "publishedAt": "2026-05-30T14:10:35.000Z",
+          "sourceImage": "https://cdn.mos.cms.futurecdn.net/T3UcjvcDjiuR74xYRsvZ7D-1280-80.jpg",
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "category": "AI Infrastructure",
+          "primary_category": "AI Infrastructure",
+          "secondary_category": "GPU clusters and deployment readiness",
+          "infrastructure_layer": "Compute",
+          "affected_stakeholders": [
+            "operators",
+            "hyperscalers",
+            "cloud buyers",
+            "investors"
+          ],
+          "article_type": "Capacity Expansion",
+          "urgency_score": 0.53,
+          "taxonomy_confidence": 0.77,
+          "taxonomy_reasons": [
+            "ai infrastructure",
+            "neocloud"
+          ],
+          "direct_ai_infrastructure_relevance": 1,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0.42,
+          "power_grid_relevance": 0.297,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.857,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "semiconductor_relevance:0.42(intel, gpu)",
+            "power_grid_relevance:0.30(power)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 1,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0.42,
+            "power_grid_relevance": 0.297,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.857,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+              "semiconductor_relevance:0.42(intel, gpu)",
+              "power_grid_relevance:0.30(power)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 75
+        },
+        {
+          "id": "93586c3e9e897ec2",
+          "source": "TechCrunch AI",
+          "url": "https://techcrunch.com/2026/05/30/i-put-googles-24-7-ai-assistant-gemini-spark-to-work-and-its-actually-pretty-useful/",
+          "title": "I put Google’s 24/7 AI assistant Gemini Spark to work, and it’s actually pretty useful",
+          "snippet": "Gemini Spark helps automate everyday tasks, from inbox summaries to local event planning, but it’s unclear why Google made it a separate product.",
+          "contentText": "Gemini Spark helps automate everyday tasks, from inbox summaries to local event planning, but it’s unclear why Google made it a separate product.",
+          "publishedAt": "2026-05-30T15:30:00.000Z",
+          "sourceImage": null,
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "category": "AI Infrastructure",
+          "primary_category": "AI Infrastructure",
+          "secondary_category": "GPU clusters and deployment readiness",
+          "infrastructure_layer": "Compute",
+          "affected_stakeholders": [
+            "operators",
+            "hyperscalers",
+            "cloud buyers",
+            "investors"
+          ],
+          "article_type": "Other",
+          "urgency_score": 0.43,
+          "taxonomy_confidence": 0.77,
+          "taxonomy_reasons": [
+            "ai infrastructure",
+            "neocloud"
+          ],
+          "direct_ai_infrastructure_relevance": 1,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0.22,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.778,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "semiconductor_relevance:0.22(gpu)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 1,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0.22,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.778,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+              "semiconductor_relevance:0.22(gpu)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 72
+        },
+        {
+          "id": "ce06e640a2c613d0",
+          "source": "Bloomberg Technology",
+          "url": "https://www.bloomberg.com/news/videos/2026-05-30/legacy-tech-stocks-surge-on-ai-pivot-video",
+          "title": "Legacy Tech Stocks Surge on AI Pivot",
+          "snippet": "Bloomberg Intelligence Global Head of Technology Research Mandeep Singh joined Christina Ruffini and David Gura on Bloomberg This Weekend to discuss so-called \"legacy\" tech companies like Dell, Intel and Nokia seeing th…",
+          "contentText": "Bloomberg Intelligence Global Head of Technology Research Mandeep Singh joined Christina Ruffini and David Gura on Bloomberg This Weekend to discuss so-called \"legacy\" tech companies like Dell, Intel and Nokia seeing their stocks surge as they turn to AI. (Source: Bloomberg)",
+          "publishedAt": "2026-05-30T13:23:33.000Z",
+          "sourceImage": "https://assets.bwbx.io/images/users/iqjWHBFdfxIU/ixbMtaTrj1Gk/v3/1200x-1.jpg",
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "Hyperscalers & Cloud",
+          "category": "Semiconductors",
+          "primary_category": "Semiconductors",
+          "secondary_category": "Accelerators, memory, and advanced packaging",
+          "infrastructure_layer": "Silicon",
+          "affected_stakeholders": [
+            "semiconductor suppliers",
+            "hyperscalers",
+            "server OEMs",
+            "investors"
+          ],
+          "article_type": "Research / Technical",
+          "urgency_score": 0.28,
+          "taxonomy_confidence": 0.56,
+          "taxonomy_reasons": [
+            "intel"
+          ],
+          "direct_ai_infrastructure_relevance": 0.22,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0.32,
+          "semiconductor_relevance": 0.2,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.304,
+          "infrastructure_relevance_tier": "archive_only",
+          "infrastructure_relevance_action": "archive_only",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:0.22",
+            "cloud_capacity_relevance:0.32(hyperscalers)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 0.22,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0.32,
+            "semiconductor_relevance": 0.2,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.304,
+            "infrastructure_relevance_tier": "archive_only",
+            "infrastructure_relevance_action": "archive_only",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:0.22",
+              "cloud_capacity_relevance:0.32(hyperscalers)"
+            ],
+            "infrastructureRelevanceAction": "archive_only",
+            "articlePagePublished": false,
+            "homepagePublished": false,
+            "archiveOnly": true,
+            "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
+          },
+          "score": 59
+        },
+        {
+          "id": "f4508d3933b0580d",
+          "source": "Bloomberg Technology",
+          "url": "https://www.bloomberg.com/news/articles/2026-05-30/fed-s-williams-quips-economist-jobs-are-safe-as-ai-shift-unfolds",
+          "title": "Fed’s Williams Quips Economist Jobs Are Safe as AI Shift Unfolds",
+          "snippet": "The implications of artificial intelligence gripped global central bankers in Iceland this week, with one Federal Reserve official joking that it won’t put economists out of business.",
+          "contentText": "The implications of artificial intelligence gripped global central bankers in Iceland this week, with one Federal Reserve official joking that it won’t put economists out of business.",
+          "publishedAt": "2026-05-30T13:03:16.000Z",
+          "sourceImage": "https://assets.bwbx.io/images/users/iqjWHBFdfxIU/iaY_4vp9cfGk/v1/1200x-1.jpg",
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "Hyperscalers & Cloud",
+          "category": "Cloud Capacity",
+          "primary_category": "Cloud Capacity",
+          "secondary_category": "Hyperscale regions and accelerator availability",
+          "infrastructure_layer": "Cloud Platform",
+          "affected_stakeholders": [
+            "hyperscalers",
+            "cloud buyers",
+            "enterprise IT",
+            "operators"
+          ],
+          "article_type": "Other",
+          "urgency_score": 0.28,
+          "taxonomy_confidence": 0.5,
+          "taxonomy_reasons": [
+            "fallback_taxonomy"
+          ],
+          "direct_ai_infrastructure_relevance": 0.22,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0.32,
+          "semiconductor_relevance": 0,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.304,
+          "infrastructure_relevance_tier": "archive_only",
+          "infrastructure_relevance_action": "archive_only",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:0.22",
+            "cloud_capacity_relevance:0.32(hyperscalers)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 0.22,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0.32,
+            "semiconductor_relevance": 0,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.304,
+            "infrastructure_relevance_tier": "archive_only",
+            "infrastructure_relevance_action": "archive_only",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:0.22",
+              "cloud_capacity_relevance:0.32(hyperscalers)"
+            ],
+            "infrastructureRelevanceAction": "archive_only",
+            "articlePagePublished": false,
+            "homepagePublished": false,
+            "archiveOnly": true,
+            "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
+          },
+          "score": 51
+        },
+        {
+          "id": "a622383f46bb7bce",
+          "source": "Data Center Dynamics",
+          "url": "https://www.datacenterdynamics.com/en/opinions/technical-developments-in-optical-fiber/",
+          "title": "Sponsored: Technical developments in optical fiber",
+          "snippet": "Over the last twenty years the increasing transmission speed of optical fiber has been transformational, but what's next on the horizon?",
+          "contentText": "Over the last twenty years the increasing transmission speed of optical fiber has been transformational, but what's next on the horizon?",
+          "publishedAt": "2026-05-30T05:35:27.000Z",
+          "sourceImage": "https://media.datacenterdynamics.com/media/images/Ian_Griffiths-0063.2e16d0ba.fill-750x500.jpg",
+          "region": "Global",
+          "language": "en",
+          "defaultCategory": "Colocation & Wholesale",
+          "category": "Data Centers",
+          "primary_category": "Data Centers",
+          "secondary_category": "Campus development and colocation capacity",
+          "infrastructure_layer": "Facility",
+          "affected_stakeholders": [
+            "data center operators",
+            "developers",
+            "site selectors",
+            "investors"
+          ],
+          "article_type": "Research / Technical",
+          "urgency_score": 0.36,
+          "taxonomy_confidence": 0.73,
+          "taxonomy_reasons": [
+            "colocation",
+            "wholesale"
+          ],
+          "direct_ai_infrastructure_relevance": 0,
+          "data_center_relevance": 0.76,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0,
+          "power_grid_relevance": 0.28,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.572,
+          "infrastructure_relevance_tier": "signal_card",
+          "infrastructure_relevance_action": "publish_signal_card_only",
+          "infrastructure_relevance_reasons": [
+            "data_center_relevance:0.76(data center, colocation)",
+            "power_grid_relevance:0.28(transmission)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 0,
+            "data_center_relevance": 0.76,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0,
+            "power_grid_relevance": 0.28,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.572,
+            "infrastructure_relevance_tier": "signal_card",
+            "infrastructure_relevance_action": "publish_signal_card_only",
+            "infrastructure_relevance_reasons": [
+              "data_center_relevance:0.76(data center, colocation)",
+              "power_grid_relevance:0.28(transmission)"
+            ],
+            "infrastructureRelevanceAction": "publish_signal_card_only",
+            "articlePagePublished": false,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 49
+        }
+      ],
+      "curatedIds": [
+        "87e7d3df840192e1",
+        "40e4460619d1f600",
+        "93586c3e9e897ec2",
+        "ce06e640a2c613d0",
+        "f4508d3933b0580d",
+        "a622383f46bb7bce"
+      ],
+      "publishedIds": [
+        "87e7d3df840192e1",
+        "40e4460619d1f600"
+      ],
+      "slotPublications": {
+        "0": true
+      }
     }
   },
   "runHistory": [
-    {
-      "at": "2026-04-14T08:50:41.103Z",
-      "day": "2026-04-14",
-      "slot": 2,
-      "publishedCount": 2,
-      "publishedIds": [
-        "1cb04015e4328c28",
-        "95057841b5112e1e"
-      ]
-    },
     {
       "at": "2026-04-14T16:16:03.882Z",
       "day": "2026-04-15",
@@ -12850,7 +13274,130 @@
         }
       ],
       "archiveOnlyItems": []
+    },
+    {
+      "at": "2026-05-30T16:10:17.745Z",
+      "day": "2026-05-31",
+      "slot": 0,
+      "publishedCount": 0,
+      "signalCardCount": 0,
+      "archiveOnlyCount": 0,
+      "repetitionBlockedCount": 2,
+      "publishedIds": [],
+      "processedIds": [
+        "87e7d3df840192e1",
+        "40e4460619d1f600"
+      ],
+      "blockedCount": 0,
+      "blockedItems": [],
+      "repetitionBlockedItems": [
+        {
+          "id": "87e7d3df840192e1",
+          "title": "AMD Ryzen 7 5800X and Nvidia RTX 5060 combo is only $439 — deal includes a free CPU cooler, totaling out to $150 in savings for a great budget setup",
+          "infrastructure_relevance_score": 0.997,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "cloud_capacity_relevance:0.32(hyperscalers)",
+            "semiconductor_relevance:0.90(nvidia, amd, gpu)",
+            "power_grid_relevance:0.22(power)"
+          ],
+          "extraction_quality_score": 1,
+          "source_domain_adapter": "generic",
+          "content_length": 1710,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": true,
+          "repetition_block_reasons": [
+            "repeated_sentence_ratio>0.12",
+            "heading_sequence_similarity>0.75",
+            "conclusion_similarity>0.7"
+          ],
+          "repetition_check": {
+            "compared_article_count": 16,
+            "repeated_sentence_ratio": 0.14285714285714285,
+            "repeated_paragraph_ratio": 0.16666666666666666,
+            "heading_sequence_similarity": 1,
+            "banned_phrase_count": 0,
+            "banned_phrase_counts": {},
+            "recent_banned_phrase_counts": {},
+            "ngram_overlap": 0.42735042735042733,
+            "blueprint_repetition": 2,
+            "conclusion_similarity": 0.9233805168766386,
+            "repeated_sentence_count": 1,
+            "repeated_paragraph_count": 1,
+            "heading_sequence": [
+              "Technical Signal",
+              "Failure Domain",
+              "Operator Exposure",
+              "Benchmark To Watch"
+            ],
+            "blocked": true,
+            "reasons": [
+              "repeated_sentence_ratio>0.12",
+              "heading_sequence_similarity>0.75",
+              "conclusion_similarity>0.7"
+            ]
+          },
+          "expert_insight_complete": true,
+          "expert_insight_missing_fields": [],
+          "reason": "repeated_sentence_ratio>0.12; heading_sequence_similarity>0.75; conclusion_similarity>0.7"
+        },
+        {
+          "id": "40e4460619d1f600",
+          "title": "ATX12VO V3 standard shrinks the connector and maximizes power efficiency — new 8-pin connector also brings smarter power supply monitoring",
+          "infrastructure_relevance_score": 0.892,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "cloud_capacity_relevance:0.32(hyperscalers)",
+            "semiconductor_relevance:0.42(intel, gpu)",
+            "power_grid_relevance:0.30(power)",
+            "capital_markets_relevance:0.28(capex)"
+          ],
+          "extraction_quality_score": 1,
+          "source_domain_adapter": "generic",
+          "content_length": 1731,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": true,
+          "repetition_block_reasons": [
+            "repeated_sentence_ratio>0.12",
+            "conclusion_similarity>0.7"
+          ],
+          "repetition_check": {
+            "compared_article_count": 16,
+            "repeated_sentence_ratio": 0.42857142857142855,
+            "repeated_paragraph_ratio": 0.5,
+            "heading_sequence_similarity": 0,
+            "banned_phrase_count": 0,
+            "banned_phrase_counts": {},
+            "recent_banned_phrase_counts": {},
+            "ngram_overlap": 0.4423076923076923,
+            "blueprint_repetition": 2,
+            "conclusion_similarity": 0.9999999999999998,
+            "repeated_sentence_count": 3,
+            "repeated_paragraph_count": 3,
+            "heading_sequence": [
+              "System Change",
+              "Bottleneck",
+              "Engineering Tradeoff",
+              "Validation Metric"
+            ],
+            "blocked": true,
+            "reasons": [
+              "repeated_sentence_ratio>0.12",
+              "conclusion_similarity>0.7"
+            ]
+          },
+          "expert_insight_complete": true,
+          "expert_insight_missing_fields": [],
+          "reason": "repeated_sentence_ratio>0.12; conclusion_similarity>0.7"
+        }
+      ],
+      "signalCardItems": [],
+      "archiveOnlyItems": []
     }
   ],
-  "lastRunAt": "2026-05-30T09:25:09.075Z"
+  "lastRunAt": "2026-05-30T16:10:17.745Z"
 }
