@@ -2,7 +2,24 @@ import fs from 'node:fs';
 import path from 'node:path';
 
 export const ARTICLE_IMAGE_FIELDS = [
+  'heroImage',
+  'thumbnailImage',
+  'ogImage',
   'generatedImage',
+  'sourceImage',
+  'image',
+  'imageUrl',
+  'image_url',
+  'thumbnail',
+];
+
+const VARIANT_FIELDS = {
+  hero: ['heroImage', 'generatedImage', 'image', 'thumbnailImage', 'ogImage', 'sourceImage', 'imageUrl', 'image_url', 'thumbnail'],
+  thumbnail: ['thumbnailImage', 'heroImage', 'generatedImage', 'image', 'ogImage', 'sourceImage', 'imageUrl', 'image_url', 'thumbnail'],
+  og: ['ogImage', 'heroImage', 'generatedImage', 'image', 'thumbnailImage', 'sourceImage', 'imageUrl', 'image_url', 'thumbnail'],
+};
+
+const SOURCE_IMAGE_FIELDS = [
   'sourceImage',
   'image',
   'imageUrl',
@@ -18,16 +35,15 @@ const IMAGE_METADATA_FIELDS = [
   'imagePrompt',
 ];
 
+const AI_IMAGE_PROVIDER_RE = /\b(?:chatgpt|image2|openai|gpt-image|nano|nanobanana|gemini|legacy-gemini)\b/i;
+const PLACEHOLDER_IMAGE_PROVIDER_RE = /\b(?:local-placeholder|local-svg|category-fallback)\b/i;
+
 function clean(value = '') {
   return String(value || '').trim();
 }
 
-function firstExistingImage(article = {}) {
-  for (const field of ARTICLE_IMAGE_FIELDS) {
-    const value = clean(article[field]);
-    if (value) return value;
-  }
-  return '';
+function unique(values = []) {
+  return [...new Set(values.map(clean).filter(Boolean))];
 }
 
 export function fallbackGeneratedImagePath(article = {}) {
@@ -35,8 +51,146 @@ export function fallbackGeneratedImagePath(article = {}) {
   return id ? `/generated/${id}.svg` : '';
 }
 
+function variantCandidates(article = {}, variant = 'hero') {
+  const fields = VARIANT_FIELDS[variant] || VARIANT_FIELDS.hero;
+  return unique([
+    ...fields.map((field) => article[field]),
+    fallbackGeneratedImagePath(article),
+  ]);
+}
+
+function sourceImageCandidates(article = {}, variant = 'hero') {
+  const fields = unique([
+    ...SOURCE_IMAGE_FIELDS,
+    ...(VARIANT_FIELDS[variant] || VARIANT_FIELDS.hero),
+  ]);
+  return unique(fields.map((field) => article[field])).filter(isRemoteImage);
+}
+
+function imageProviderText(article = {}) {
+  return [
+    article.generatedImageProvider,
+    article.imageProvider,
+    article.image_source_provider,
+    article.generatedImageModel,
+    article.imageModel,
+    article.imageStatus,
+    article.image_status,
+  ].map(clean).filter(Boolean).join(' ');
+}
+
+function imageProviderLooksAi(article = {}) {
+  return AI_IMAGE_PROVIDER_RE.test(imageProviderText(article));
+}
+
+function imageProviderLooksPlaceholder(article = {}) {
+  return PLACEHOLDER_IMAGE_PROVIDER_RE.test(imageProviderText(article));
+}
+
+function sourceImageProviderFor(article = {}) {
+  return clean(article.image_source_provider) || 'source-image';
+}
+
+function imageProviderFor(article = {}, status = 'available') {
+  if (status === 'source') return sourceImageProviderFor(article);
+  if (status === 'placeholder' || status === 'fallback') return 'local-placeholder';
+  return clean(article.generatedImageProvider || article.imageProvider || article.image_source_provider) || 'local';
+}
+
+function isGeneratedPath(image = '') {
+  return /^\/generated\//i.test(clean(image));
+}
+
+function articleHasSourceImage(article = {}) {
+  return sourceImageCandidates(article).length > 0;
+}
+
+function isPlaceholderGeneratedCandidate(article = {}, image = '') {
+  const value = clean(image);
+  if (!isGeneratedPath(value)) return false;
+  if (imageProviderLooksAi(article)) return false;
+  if (imageProviderLooksPlaceholder(article)) return true;
+  return articleHasSourceImage(article) || /\.svg(?:$|[?#])/i.test(value);
+}
+
+function isTrustedPublicImage(image = '') {
+  const value = clean(image);
+  return Boolean(value && (isRemoteImage(value) || value.startsWith('/')));
+}
+
+function imageVariantObject(article = {}, variant = 'hero') {
+  const candidates = variantCandidates(article, variant);
+  const sourceCandidates = sourceImageCandidates(article, variant);
+
+  for (const candidate of candidates) {
+    if (sourceCandidates.includes(candidate)) continue;
+    if (!isTrustedPublicImage(candidate) || isPlaceholderGeneratedCandidate(article, candidate)) continue;
+    return {
+      url: candidate,
+      alt: articleImageAlt(article),
+      status: clean(article.imageStatus || article.image_status) || 'available',
+      provider: imageProviderFor(article),
+      variant,
+      fallback: false,
+    };
+  }
+
+  for (const candidate of sourceCandidates) {
+    return {
+      url: candidate,
+      alt: articleImageAlt(article),
+      status: 'source',
+      provider: sourceImageProviderFor(article),
+      variant,
+      fallback: false,
+    };
+  }
+
+  for (const candidate of candidates) {
+    if (!isTrustedPublicImage(candidate)) continue;
+    const placeholder = isPlaceholderGeneratedCandidate(article, candidate);
+    return {
+      url: candidate,
+      alt: articleImageAlt(article),
+      status: clean(article.imageStatus || article.image_status) || (placeholder ? 'placeholder' : 'available'),
+      provider: imageProviderFor(article, placeholder ? 'placeholder' : 'available'),
+      variant,
+      fallback: placeholder,
+    };
+  }
+
+  return {
+    url: '',
+    alt: articleImageAlt(article),
+    status: 'missing',
+    provider: '',
+    variant,
+    fallback: true,
+  };
+}
+
+export function articleImageVariants(article = {}) {
+  return {
+    hero: imageVariantObject(article, 'hero'),
+    thumbnail: imageVariantObject(article, 'thumbnail'),
+    og: imageVariantObject(article, 'og'),
+  };
+}
+
+export function articleHeroImage(article = {}) {
+  return articleImageVariants(article).hero.url;
+}
+
+export function articleCardImage(article = {}) {
+  return articleImageVariants(article).thumbnail.url;
+}
+
+export function articleOpenGraphImage(article = {}) {
+  return articleImageVariants(article).og.url;
+}
+
 export function articleDisplayImage(article = {}) {
-  return firstExistingImage(article) || fallbackGeneratedImagePath(article);
+  return articleHeroImage(article);
 }
 
 export function articleImageAlt(article = {}) {
@@ -56,7 +210,7 @@ export function localArticleImagePath(image = '') {
 
 export function localArticleImageExists(image = '') {
   const localPath = localArticleImagePath(image);
-  return !localPath || fs.existsSync(localPath);
+  return Boolean(localPath && fs.existsSync(localPath));
 }
 
 function imagePatchFrom(article = {}) {
