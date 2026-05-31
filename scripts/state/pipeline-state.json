@@ -361,7 +361,9 @@
     "8f979011a389995b",
     "83e0fcbe0c581ad0",
     "6f8a9d4238186791",
-    "7563abbf0cb8ff82"
+    "7563abbf0cb8ff82",
+    "0e103bb699df772c",
+    "91ca78d97f6dfe2c"
   ],
   "dayPlans": {
     "2026-03-24": {
@@ -10207,19 +10209,447 @@
         "1": true,
         "2": true
       }
+    },
+    "2026-06-01": {
+      "date": "2026-06-01",
+      "createdAt": "2026-05-31T16:18:49.202Z",
+      "refreshedAt": "2026-05-31T16:18:49.202Z",
+      "candidateWindowHours": 24,
+      "curatedItems": [
+        {
+          "id": "0e103bb699df772c",
+          "source": "Toms Hardware",
+          "url": "https://www.tomshardware.com/pc-components/cpus/nvidias-long-awaited-n1-n1x-soc-specs-leak-ahead-of-computex-launch-n1-to-feature-up-to-20-arm-based-cores-standard-n1-equipped-with-12-and-10-core-configs",
+          "title": "Nvidia's long-awaited N1/N1X SoC specs leak ahead of Computex launch — N1 to feature up to 20 Arm-based cores, standard N1 equipped with 12- and 10-core configs",
+          "snippet": "The N1X reportedly comes in two SKUs: a top-end 20-core option with 6,144 CUDA cores matching the desktop RTX 5070, and a cut-down 18-core option with 5,120 CUDA cores. The standard N1 also has two configs, one with a 1…",
+          "contentText": "The N1X reportedly comes in two SKUs: a top-end 20-core option with 6,144 CUDA cores matching the desktop RTX 5070, and a cut-down 18-core option with 5,120 CUDA cores. The standard N1 also has two configs, one with a 12-core CPU and 2,560 CUDA cores and a 10-core model with 2,048 CUDA cores.",
+          "publishedAt": "2026-05-31T15:47:07.000Z",
+          "sourceImage": "https://cdn.mos.cms.futurecdn.net/BTBLXoJ6tF2ZZnoNuABN2F-1280-80.jpg",
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "category": "AI Infrastructure",
+          "primary_category": "AI Infrastructure",
+          "secondary_category": "GPU clusters and deployment readiness",
+          "infrastructure_layer": "Compute",
+          "affected_stakeholders": [
+            "operators",
+            "hyperscalers",
+            "cloud buyers",
+            "investors"
+          ],
+          "article_type": "Research / Technical",
+          "urgency_score": 0.5,
+          "taxonomy_confidence": 0.77,
+          "taxonomy_reasons": [
+            "ai infrastructure",
+            "neocloud"
+          ],
+          "direct_ai_infrastructure_relevance": 1,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0.598,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.862,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "semiconductor_relevance:0.60(nvidia, gpu)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 1,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0.598,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.862,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+              "semiconductor_relevance:0.60(nvidia, gpu)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 82
+        },
+        {
+          "id": "91ca78d97f6dfe2c",
+          "source": "Toms Hardware",
+          "url": "https://www.tomshardware.com/desktops/gaming-pcs/core-i7-14700f-gaming-pc-with-rtx-5060-32gb-of-ram-and-1tb-of-storage-gets-usd470-discount-neweggs-abs-cyclone-aqua-prebuilt-is-usd1-329-with-code",
+          "title": "Core i7-14700F gaming PC with RTX 5060, 32GB of RAM, and 1TB of storage gets $470 discount — Newegg's ABS Cyclone Aqua prebuilt is $1,329 with code",
+          "snippet": "Newegg's ABS Cyclone Aqua prebuilt combines Intel's 20-core Core i7-14700F with Nvidia's RTX 5060, and 32GB of DDR5 memory for less than the cost of building a comparable system",
+          "contentText": "Newegg's ABS Cyclone Aqua prebuilt combines Intel's 20-core Core i7-14700F with Nvidia's RTX 5060, and 32GB of DDR5 memory for less than the cost of building a comparable system",
+          "publishedAt": "2026-05-31T15:01:35.000Z",
+          "sourceImage": "https://cdn.mos.cms.futurecdn.net/SJREsDNwD3HY3nFQ9B6i7J-1280-80.jpg",
+          "region": "Global",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "category": "Semiconductors",
+          "primary_category": "Semiconductors",
+          "secondary_category": "Accelerators, memory, and advanced packaging",
+          "infrastructure_layer": "Silicon",
+          "affected_stakeholders": [
+            "semiconductor suppliers",
+            "hyperscalers",
+            "server OEMs",
+            "investors"
+          ],
+          "article_type": "Supply Chain",
+          "urgency_score": 0.47,
+          "taxonomy_confidence": 0.8,
+          "taxonomy_reasons": [
+            "gpu",
+            "nvidia",
+            "intel"
+          ],
+          "direct_ai_infrastructure_relevance": 1,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0.7,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0.243,
+          "infrastructure_relevance_score": 0.919,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "semiconductor_relevance:0.70(nvidia, intel, gpu)",
+            "enterprise_ai_infrastructure_relevance:0.24(storage)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 1,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0.7,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0.243,
+            "infrastructure_relevance_score": 0.919,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+              "semiconductor_relevance:0.70(nvidia, intel, gpu)",
+              "enterprise_ai_infrastructure_relevance:0.24(storage)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 78
+        },
+        {
+          "id": "9957421810eb788b",
+          "source": "Toms Hardware",
+          "url": "https://www.tomshardware.com/tech-industry/softbank-to-spend-up-to-75-billion-on-french-ai-data-centers",
+          "title": "SoftBank to spend up to $87 billion on French AI data centers — country offers ample nuclear grid that US sites lack",
+          "snippet": "SoftBank carries over $130 billion in debt and took a $40 billion bridge loan in March to fund its latest OpenAI investment.",
+          "contentText": "SoftBank carries over $130 billion in debt and took a $40 billion bridge loan in March to fund its latest OpenAI investment.",
+          "publishedAt": "2026-05-31T14:48:09.000Z",
+          "sourceImage": "https://cdn.mos.cms.futurecdn.net/DWK343Hd4XaLdbBxt6uQAW-1280-80.jpg",
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "category": "Power & Grid",
+          "primary_category": "Power & Grid",
+          "secondary_category": "Interconnection and power procurement",
+          "infrastructure_layer": "Power",
+          "affected_stakeholders": [
+            "data center operators",
+            "utilities",
+            "cloud capacity teams",
+            "investors"
+          ],
+          "article_type": "Financing / M&A",
+          "urgency_score": 0.67,
+          "taxonomy_confidence": 0.78,
+          "taxonomy_reasons": [
+            "grid",
+            "nuclear"
+          ],
+          "direct_ai_infrastructure_relevance": 1,
+          "data_center_relevance": 0.55,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0.22,
+          "power_grid_relevance": 0.729,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0.28,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.96,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "data_center_relevance:0.55(data centers)",
+            "semiconductor_relevance:0.22(gpu)",
+            "power_grid_relevance:0.73(grid, nuclear)",
+            "capital_markets_relevance:0.28(debt)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 1,
+            "data_center_relevance": 0.55,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0.22,
+            "power_grid_relevance": 0.729,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0.28,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.96,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+              "data_center_relevance:0.55(data centers)",
+              "semiconductor_relevance:0.22(gpu)",
+              "power_grid_relevance:0.73(grid, nuclear)",
+              "capital_markets_relevance:0.28(debt)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 75
+        },
+        {
+          "id": "035a797f528e2b26",
+          "source": "TechCrunch AI",
+          "url": "https://techcrunch.com/2026/05/31/making-sense-of-the-debate-over-ai-psychosis/",
+          "title": "Making sense of the debate over AI psychosis",
+          "snippet": "On the latest episode of Equity, we debate whether tech CEOs are \"uniquely prone to AI psychosis.\"",
+          "contentText": "On the latest episode of Equity, we debate whether tech CEOs are \"uniquely prone to AI psychosis.\"",
+          "publishedAt": "2026-05-31T15:30:00.000Z",
+          "sourceImage": null,
+          "region": "Global",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "category": "AI Infrastructure",
+          "primary_category": "AI Infrastructure",
+          "secondary_category": "GPU clusters and deployment readiness",
+          "infrastructure_layer": "Compute",
+          "affected_stakeholders": [
+            "operators",
+            "hyperscalers",
+            "cloud buyers",
+            "investors"
+          ],
+          "article_type": "Financing / M&A",
+          "urgency_score": 0.44,
+          "taxonomy_confidence": 0.77,
+          "taxonomy_reasons": [
+            "ai infrastructure",
+            "neocloud"
+          ],
+          "direct_ai_infrastructure_relevance": 1,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0.22,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0.26,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.822,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "semiconductor_relevance:0.22(gpu)",
+            "capital_markets_relevance:0.26(equity)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 1,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0.22,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0.26,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.822,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+              "semiconductor_relevance:0.22(gpu)",
+              "capital_markets_relevance:0.26(equity)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 74
+        },
+        {
+          "id": "d5c0460fab98af46",
+          "source": "Bloomberg Technology",
+          "url": "https://www.bloomberg.com/news/videos/2026-05-31/major-companies-reconsider-ai-costs-video",
+          "title": "Major Companies Reconsider AI Costs",
+          "snippet": "Chipmakers are by far the hottest stocks in the market, but their recent surge is lending urgency to the debate over whether investors are buying into an artificial-intelligence bubble that could be due to burst. Harvar…",
+          "contentText": "Chipmakers are by far the hottest stocks in the market, but their recent surge is lending urgency to the debate over whether investors are buying into an artificial-intelligence bubble that could be due to burst. Harvard Kennedy School’s Center for Public Leadership Research Fellow Gautam Mukunda joined David Gura and Christina Ruffini on Bloomberg This Weekend to discuss. (Source: Bloomberg)",
+          "publishedAt": "2026-05-31T16:10:06.000Z",
+          "sourceImage": "https://assets.bwbx.io/images/users/iqjWHBFdfxIU/ijrRYOc9VKNs/v3/1200x-1.jpg",
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "Hyperscalers & Cloud",
+          "category": "Cloud Capacity",
+          "primary_category": "Cloud Capacity",
+          "secondary_category": "Hyperscale regions and accelerator availability",
+          "infrastructure_layer": "Cloud Platform",
+          "affected_stakeholders": [
+            "hyperscalers",
+            "cloud buyers",
+            "enterprise IT",
+            "operators"
+          ],
+          "article_type": "Research / Technical",
+          "urgency_score": 0.28,
+          "taxonomy_confidence": 0.5,
+          "taxonomy_reasons": [
+            "fallback_taxonomy"
+          ],
+          "direct_ai_infrastructure_relevance": 0.22,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0.32,
+          "semiconductor_relevance": 0,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.304,
+          "infrastructure_relevance_tier": "archive_only",
+          "infrastructure_relevance_action": "archive_only",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:0.22",
+            "cloud_capacity_relevance:0.32(hyperscalers)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 0.22,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0.32,
+            "semiconductor_relevance": 0,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.304,
+            "infrastructure_relevance_tier": "archive_only",
+            "infrastructure_relevance_action": "archive_only",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:0.22",
+              "cloud_capacity_relevance:0.32(hyperscalers)"
+            ],
+            "infrastructureRelevanceAction": "archive_only",
+            "articlePagePublished": false,
+            "homepagePublished": false,
+            "archiveOnly": true,
+            "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
+          },
+          "score": 59
+        },
+        {
+          "id": "da675381fa8297ed",
+          "source": "Bloomberg Technology",
+          "url": "https://www.bloomberg.com/news/articles/2026-05-31/indian-exam-board-fixes-cybersecurity-flaws-found-by-teen",
+          "title": "Indian Exam Board Admits to Cybersecurity Holes Found by Teen",
+          "snippet": "A national school exam board in India said it has been monitoring and has contained vulnerabilities in its online grading portal for one of the country’s most important school-leaving exams that were first flagged by a…",
+          "contentText": "A national school exam board in India said it has been monitoring and has contained vulnerabilities in its online grading portal for one of the country’s most important school-leaving exams that were first flagged by a teenage cybersecurity researcher.",
+          "publishedAt": "2026-05-31T14:33:13.000Z",
+          "sourceImage": "https://assets.bwbx.io/images/users/iqjWHBFdfxIU/i.ApaneWlaag/v1/1200x-1.jpg",
+          "region": "APAC",
+          "language": "en",
+          "defaultCategory": "Hyperscalers & Cloud",
+          "category": "Cloud Capacity",
+          "primary_category": "Cloud Capacity",
+          "secondary_category": "Hyperscale regions and accelerator availability",
+          "infrastructure_layer": "Cloud Platform",
+          "affected_stakeholders": [
+            "hyperscalers",
+            "cloud buyers",
+            "enterprise IT",
+            "operators"
+          ],
+          "article_type": "Other",
+          "urgency_score": 0.25,
+          "taxonomy_confidence": 0.5,
+          "taxonomy_reasons": [
+            "fallback_taxonomy"
+          ],
+          "direct_ai_infrastructure_relevance": 0,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0.32,
+          "semiconductor_relevance": 0,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.221,
+          "infrastructure_relevance_tier": "archive_only",
+          "infrastructure_relevance_action": "archive_only",
+          "infrastructure_relevance_reasons": [
+            "cloud_capacity_relevance:0.32(hyperscalers)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 0,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0.32,
+            "semiconductor_relevance": 0,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.221,
+            "infrastructure_relevance_tier": "archive_only",
+            "infrastructure_relevance_action": "archive_only",
+            "infrastructure_relevance_reasons": [
+              "cloud_capacity_relevance:0.32(hyperscalers)"
+            ],
+            "infrastructureRelevanceAction": "archive_only",
+            "articlePagePublished": false,
+            "homepagePublished": false,
+            "archiveOnly": true,
+            "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
+          },
+          "score": 55
+        }
+      ],
+      "curatedIds": [
+        "0e103bb699df772c",
+        "91ca78d97f6dfe2c",
+        "9957421810eb788b",
+        "035a797f528e2b26",
+        "d5c0460fab98af46",
+        "da675381fa8297ed"
+      ],
+      "publishedIds": [
+        "0e103bb699df772c",
+        "91ca78d97f6dfe2c"
+      ],
+      "slotPublications": {
+        "0": true
+      }
     }
   },
   "runHistory": [
-    {
-      "at": "2026-04-15T08:51:31.493Z",
-      "day": "2026-04-15",
-      "slot": 2,
-      "publishedCount": 2,
-      "publishedIds": [
-        "6b942c6a639339a0",
-        "a8fbaa3050c6f962"
-      ]
-    },
     {
       "at": "2026-04-15T16:10:52.168Z",
       "day": "2026-04-16",
@@ -13583,7 +14013,128 @@
       ],
       "signalCardItems": [],
       "archiveOnlyItems": []
+    },
+    {
+      "at": "2026-05-31T16:18:49.202Z",
+      "day": "2026-06-01",
+      "slot": 0,
+      "publishedCount": 0,
+      "signalCardCount": 0,
+      "archiveOnlyCount": 0,
+      "repetitionBlockedCount": 2,
+      "publishedIds": [],
+      "processedIds": [
+        "0e103bb699df772c",
+        "91ca78d97f6dfe2c"
+      ],
+      "blockedCount": 0,
+      "blockedItems": [],
+      "repetitionBlockedItems": [
+        {
+          "id": "0e103bb699df772c",
+          "title": "Nvidia's long-awaited N1/N1X SoC specs leak ahead of Computex launch — N1 to feature up to 20 Arm-based cores, standard N1 equipped with 12- and 10-core configs",
+          "infrastructure_relevance_score": 1,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "cloud_capacity_relevance:0.32(hyperscalers)",
+            "semiconductor_relevance:1.00(nvidia, amd, intel)",
+            "power_grid_relevance:0.22(power)"
+          ],
+          "extraction_quality_score": 1,
+          "source_domain_adapter": "generic",
+          "content_length": 1792,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": true,
+          "repetition_block_reasons": [
+            "repeated_sentence_ratio>0.12",
+            "conclusion_similarity>0.7"
+          ],
+          "repetition_check": {
+            "compared_article_count": 15,
+            "repeated_sentence_ratio": 0.25,
+            "repeated_paragraph_ratio": 0.3333333333333333,
+            "heading_sequence_similarity": 0,
+            "banned_phrase_count": 0,
+            "banned_phrase_counts": {},
+            "recent_banned_phrase_counts": {},
+            "ngram_overlap": 0.4380952380952381,
+            "blueprint_repetition": 1,
+            "conclusion_similarity": 0.9233805168766386,
+            "repeated_sentence_count": 2,
+            "repeated_paragraph_count": 2,
+            "heading_sequence": [
+              "System Change",
+              "Bottleneck",
+              "Engineering Tradeoff",
+              "Validation Metric"
+            ],
+            "blocked": true,
+            "reasons": [
+              "repeated_sentence_ratio>0.12",
+              "conclusion_similarity>0.7"
+            ]
+          },
+          "expert_insight_complete": true,
+          "expert_insight_missing_fields": [],
+          "reason": "repeated_sentence_ratio>0.12; conclusion_similarity>0.7"
+        },
+        {
+          "id": "91ca78d97f6dfe2c",
+          "title": "Core i7-14700F gaming PC with RTX 5060, 32GB of RAM, and 1TB of storage gets $470 discount — Newegg's ABS Cyclone Aqua prebuilt is $1,329 with code",
+          "infrastructure_relevance_score": 0.954,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "cloud_capacity_relevance:0.32(hyperscalers)",
+            "semiconductor_relevance:0.70(nvidia, intel, gpu)",
+            "power_grid_relevance:0.22(power)",
+            "enterprise_ai_infrastructure_relevance:0.24(storage)"
+          ],
+          "extraction_quality_score": 1,
+          "source_domain_adapter": "generic",
+          "content_length": 1559,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": true,
+          "repetition_block_reasons": [
+            "heading_sequence_similarity>0.75",
+            "conclusion_similarity>0.7"
+          ],
+          "repetition_check": {
+            "compared_article_count": 15,
+            "repeated_sentence_ratio": 0,
+            "repeated_paragraph_ratio": 0,
+            "heading_sequence_similarity": 1,
+            "banned_phrase_count": 0,
+            "banned_phrase_counts": {},
+            "recent_banned_phrase_counts": {},
+            "ngram_overlap": 0.37606837606837606,
+            "blueprint_repetition": 1,
+            "conclusion_similarity": 0.9233805168766386,
+            "repeated_sentence_count": 0,
+            "repeated_paragraph_count": 0,
+            "heading_sequence": [
+              "Technical Signal",
+              "Failure Domain",
+              "Operator Exposure",
+              "Benchmark To Watch"
+            ],
+            "blocked": true,
+            "reasons": [
+              "heading_sequence_similarity>0.75",
+              "conclusion_similarity>0.7"
+            ]
+          },
+          "expert_insight_complete": true,
+          "expert_insight_missing_fields": [],
+          "reason": "heading_sequence_similarity>0.75; conclusion_similarity>0.7"
+        }
+      ],
+      "signalCardItems": [],
+      "archiveOnlyItems": []
     }
   ],
-  "lastRunAt": "2026-05-31T09:50:29.634Z"
+  "lastRunAt": "2026-05-31T16:18:49.202Z"
 }
