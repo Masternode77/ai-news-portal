@@ -357,7 +357,9 @@
     "0ccf1e3f69f2b513",
     "54652826bb6c24c9",
     "87e7d3df840192e1",
-    "40e4460619d1f600"
+    "40e4460619d1f600",
+    "8f979011a389995b",
+    "83e0fcbe0c581ad0"
   ],
   "dayPlans": {
     "2026-03-24": {
@@ -9771,88 +9773,19 @@
     "2026-05-31": {
       "date": "2026-05-31",
       "createdAt": "2026-05-30T16:10:17.745Z",
-      "refreshedAt": "2026-05-30T16:10:17.745Z",
+      "refreshedAt": "2026-05-31T00:03:45.068Z",
       "candidateWindowHours": 24,
       "curatedItems": [
         {
-          "id": "87e7d3df840192e1",
-          "source": "Toms Hardware",
-          "url": "https://www.tomshardware.com/pc-components/cpus/amd-ryzen-7-5800x-and-nvidia-rtx-5060-combo-is-only-usd439-deal-includes-a-free-cpu-cooler-totaling-out-to-usd150-in-savings-for-a-great-budget-setup",
-          "title": "AMD Ryzen 7 5800X and Nvidia RTX 5060 combo is only $439 — deal includes a free CPU cooler, totaling out to $150 in savings for a great budget setup",
-          "snippet": "If you've been looking to upgrade from an older system or just want to build a new one but 2026 prices have stopped you, we've got just the deal. The CPU and GPU are the two most important parts of a PC build, and Neweg…",
-          "contentText": "If you've been looking to upgrade from an older system or just want to build a new one but 2026 prices have stopped you, we've got just the deal. The CPU and GPU are the two most important parts of a PC build, and Newegg is offering a solid 8-core processor paired with a strong 1080p graphics card for just over $400.",
-          "publishedAt": "2026-05-30T14:49:34.000Z",
-          "sourceImage": "https://cdn.mos.cms.futurecdn.net/3R8ZKZYph6Dh5B5VVd5ze5-1280-80.png",
-          "region": "US",
-          "language": "en",
-          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
-          "category": "Semiconductors",
-          "primary_category": "Semiconductors",
-          "secondary_category": "Accelerators, memory, and advanced packaging",
-          "infrastructure_layer": "Silicon",
-          "affected_stakeholders": [
-            "semiconductor suppliers",
-            "hyperscalers",
-            "server OEMs",
-            "investors"
-          ],
-          "article_type": "Other",
-          "urgency_score": 0.48,
-          "taxonomy_confidence": 0.89,
-          "taxonomy_reasons": [
-            "gpu",
-            "nvidia",
-            "amd"
-          ],
-          "direct_ai_infrastructure_relevance": 1,
-          "data_center_relevance": 0,
-          "cloud_capacity_relevance": 0,
-          "semiconductor_relevance": 0.895,
-          "power_grid_relevance": 0,
-          "cooling_relevance": 0,
-          "capital_markets_relevance": 0,
-          "enterprise_ai_infrastructure_relevance": 0,
-          "infrastructure_relevance_score": 0.927,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "semiconductor_relevance:0.90(nvidia, amd, gpu)"
-          ],
-          "infrastructure_relevance": {
-            "direct_ai_infrastructure_relevance": 1,
-            "data_center_relevance": 0,
-            "cloud_capacity_relevance": 0,
-            "semiconductor_relevance": 0.895,
-            "power_grid_relevance": 0,
-            "cooling_relevance": 0,
-            "capital_markets_relevance": 0,
-            "enterprise_ai_infrastructure_relevance": 0,
-            "infrastructure_relevance_score": 0.927,
-            "infrastructure_relevance_tier": "full_memo",
-            "infrastructure_relevance_action": "generate_full_memo",
-            "infrastructure_relevance_reasons": [
-              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-              "semiconductor_relevance:0.90(nvidia, amd, gpu)"
-            ],
-            "infrastructureRelevanceAction": "generate_full_memo",
-            "articlePagePublished": true,
-            "homepagePublished": true,
-            "archiveOnly": false,
-            "archiveOnlyReason": null
-          },
-          "score": 85
-        },
-        {
-          "id": "40e4460619d1f600",
-          "source": "Toms Hardware",
-          "url": "https://www.tomshardware.com/pc-components/power-supplies/atx12vo-v3-standard-shrinks-the-connector-and-maximizes-power-efficiency-new-8-pin-connector-also-brings-smarter-power-supply-monitoring",
-          "title": "ATX12VO V3 standard shrinks the connector and maximizes power efficiency — new 8-pin connector also brings smarter power supply monitoring",
-          "snippet": "Intel's next-generation 12V-only PSU standard reportedly adds PMBus support, smaller connectors, and improved power efficiency.",
-          "contentText": "Intel's next-generation 12V-only PSU standard reportedly adds PMBus support, smaller connectors, and improved power efficiency.",
-          "publishedAt": "2026-05-30T14:10:35.000Z",
-          "sourceImage": "https://cdn.mos.cms.futurecdn.net/T3UcjvcDjiuR74xYRsvZ7D-1280-80.jpg",
-          "region": "US",
+          "id": "8f979011a389995b",
+          "source": "TechCrunch AI",
+          "url": "https://techcrunch.com/2026/05/30/softbank-says-it-will-invest-up-to-e75-billion-to-build-french-data-centers/",
+          "title": "SoftBank says it will invest up to €75 billion to build French data centers",
+          "snippet": "The goal, the firm said, is to develop and operate up to 5 gigawatts of additional data center capacity.",
+          "contentText": "The goal, the firm said, is to develop and operate up to 5 gigawatts of additional data center capacity.",
+          "publishedAt": "2026-05-30T21:45:00.000Z",
+          "sourceImage": null,
+          "region": "APAC",
           "language": "en",
           "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
           "category": "AI Infrastructure",
@@ -9866,44 +9799,114 @@
             "investors"
           ],
           "article_type": "Capacity Expansion",
-          "urgency_score": 0.53,
+          "urgency_score": 0.58,
           "taxonomy_confidence": 0.77,
           "taxonomy_reasons": [
             "ai infrastructure",
             "neocloud"
           ],
           "direct_ai_infrastructure_relevance": 1,
-          "data_center_relevance": 0,
+          "data_center_relevance": 0.97,
           "cloud_capacity_relevance": 0,
-          "semiconductor_relevance": 0.42,
-          "power_grid_relevance": 0.297,
+          "semiconductor_relevance": 0.22,
+          "power_grid_relevance": 0.34,
           "cooling_relevance": 0,
           "capital_markets_relevance": 0,
           "enterprise_ai_infrastructure_relevance": 0,
-          "infrastructure_relevance_score": 0.857,
+          "infrastructure_relevance_score": 1,
           "infrastructure_relevance_tier": "full_memo",
           "infrastructure_relevance_action": "generate_full_memo",
           "infrastructure_relevance_reasons": [
             "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "semiconductor_relevance:0.42(intel, gpu)",
-            "power_grid_relevance:0.30(power)"
+            "data_center_relevance:0.97(data center, data centers)",
+            "semiconductor_relevance:0.22(gpu)",
+            "power_grid_relevance:0.34(gigawatts)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 1,
+            "data_center_relevance": 0.97,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0.22,
+            "power_grid_relevance": 0.34,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 1,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+              "data_center_relevance:0.97(data center, data centers)",
+              "semiconductor_relevance:0.22(gpu)",
+              "power_grid_relevance:0.34(gigawatts)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 81
+        },
+        {
+          "id": "83e0fcbe0c581ad0",
+          "source": "ServeTheHome",
+          "url": "https://www.servethehome.com/asus-xa-nb3i-e12-review-a-massive-8x-nvidia-b300-gpu-server/",
+          "title": "ASUS XA NB3I-E12 Review A Massive 8x NVIDIA B300 GPU Server",
+          "snippet": "In our ASUS XA NB3I-E12 review, we see what makes this massive NVIDIA Blackwell Ultra platform with over 6.4Tbps of networking different The post ASUS XA NB3I-E12 Review A Massive 8x NVIDIA B300 GPU Server appeared firs…",
+          "contentText": "In our ASUS XA NB3I-E12 review, we see what makes this massive NVIDIA Blackwell Ultra platform with over 6.4Tbps of networking different The post ASUS XA NB3I-E12 Review A Massive 8x NVIDIA B300 GPU Server appeared first on ServeTheHome .",
+          "publishedAt": "2026-05-30T17:00:09.000Z",
+          "sourceImage": null,
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "category": "Semiconductors",
+          "primary_category": "Semiconductors",
+          "secondary_category": "Accelerators, memory, and advanced packaging",
+          "infrastructure_layer": "Silicon",
+          "affected_stakeholders": [
+            "semiconductor suppliers",
+            "hyperscalers",
+            "server OEMs",
+            "investors"
+          ],
+          "article_type": "Product / Platform Update",
+          "urgency_score": 0.46,
+          "taxonomy_confidence": 0.77,
+          "taxonomy_reasons": [
+            "gpu",
+            "nvidia"
+          ],
+          "direct_ai_infrastructure_relevance": 1,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0.675,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0.18,
+          "infrastructure_relevance_score": 0.878,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "semiconductor_relevance:0.68(nvidia, gpu)"
           ],
           "infrastructure_relevance": {
             "direct_ai_infrastructure_relevance": 1,
             "data_center_relevance": 0,
             "cloud_capacity_relevance": 0,
-            "semiconductor_relevance": 0.42,
-            "power_grid_relevance": 0.297,
+            "semiconductor_relevance": 0.675,
+            "power_grid_relevance": 0,
             "cooling_relevance": 0,
             "capital_markets_relevance": 0,
-            "enterprise_ai_infrastructure_relevance": 0,
-            "infrastructure_relevance_score": 0.857,
+            "enterprise_ai_infrastructure_relevance": 0.18,
+            "infrastructure_relevance_score": 0.878,
             "infrastructure_relevance_tier": "full_memo",
             "infrastructure_relevance_action": "generate_full_memo",
             "infrastructure_relevance_reasons": [
               "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-              "semiconductor_relevance:0.42(intel, gpu)",
-              "power_grid_relevance:0.30(power)"
+              "semiconductor_relevance:0.68(nvidia, gpu)"
             ],
             "infrastructureRelevanceAction": "generate_full_memo",
             "articlePagePublished": true,
@@ -9914,14 +9917,82 @@
           "score": 75
         },
         {
-          "id": "93586c3e9e897ec2",
-          "source": "TechCrunch AI",
-          "url": "https://techcrunch.com/2026/05/30/i-put-googles-24-7-ai-assistant-gemini-spark-to-work-and-its-actually-pretty-useful/",
-          "title": "I put Google’s 24/7 AI assistant Gemini Spark to work, and it’s actually pretty useful",
-          "snippet": "Gemini Spark helps automate everyday tasks, from inbox summaries to local event planning, but it’s unclear why Google made it a separate product.",
-          "contentText": "Gemini Spark helps automate everyday tasks, from inbox summaries to local event planning, but it’s unclear why Google made it a separate product.",
-          "publishedAt": "2026-05-30T15:30:00.000Z",
-          "sourceImage": null,
+          "id": "6f8a9d4238186791",
+          "source": "StorageReview",
+          "url": "https://www.storagereview.com/news/vast-data-powers-mistral-compute-ai-factories-on-nvidia-gb300-nvl72",
+          "title": "VAST Data Powers Mistral Compute AI Factories on NVIDIA GB300 NVL72",
+          "snippet": "At the Mistral AI NOW Summit, VAST Data outlined its partnership with Mistral AI and Mistral Compute, detailing a joint effort to deploy NVIDIA-accelerated AI factories in Europe. The collaboration aligns three core lay…",
+          "contentText": "At the Mistral AI NOW Summit, VAST Data outlined its partnership with Mistral AI and Mistral Compute, detailing a joint effort to deploy NVIDIA-accelerated AI factories in Europe. The collaboration aligns three core layers required for production AI: NVIDIA accelerated compute, Mistral&#8217;s frontier models, and the VAST AI Operating System as the unified data platform. At the center of the deployment is a large-scale implementation of NVIDIA GB300 NVL72 systems, representing one of the highest-density concentrations of this architecture in Europe. Mistral Compute will operate the infrastructure as part of its AI cloud platform, while VAST provides the data layer that manages data access, movement, governance, and performance across the environment. Data Platform for Production AI Workl…",
+          "publishedAt": "2026-05-30T19:49:31.000Z",
+          "sourceImage": "https://www.storagereview.com/wp-content/uploads/2026/05/Storagereview-vast-ai-os-core-components-v4.png",
+          "region": "EU",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "category": "AI Infrastructure",
+          "primary_category": "AI Infrastructure",
+          "secondary_category": "GPU clusters and deployment readiness",
+          "infrastructure_layer": "Compute",
+          "affected_stakeholders": [
+            "operators",
+            "hyperscalers",
+            "cloud buyers",
+            "investors"
+          ],
+          "article_type": "Product / Platform Update",
+          "urgency_score": 0.46,
+          "taxonomy_confidence": 0.77,
+          "taxonomy_reasons": [
+            "ai infrastructure",
+            "neocloud"
+          ],
+          "direct_ai_infrastructure_relevance": 1,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0.598,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.862,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "semiconductor_relevance:0.60(nvidia, gpu)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 1,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0.598,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.862,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+              "semiconductor_relevance:0.60(nvidia, gpu)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 74
+        },
+        {
+          "id": "7563abbf0cb8ff82",
+          "source": "Toms Hardware",
+          "url": "https://www.tomshardware.com/tech-industry/a-robot-startup-is-wreaking-havoc-on-short-term-rentals-in-san-francisco-airbnb-hosts-allege-guests-secretly-tested-robots-indoors-left-the-units-completely-trashed",
+          "title": "A robot startup is wreaking havoc on short-term rentals in San Francisco — Airbnb hosts allege 'guests' secretly tested robots indoors, left the units completely trashed",
+          "snippet": "Picture this: you're the owner of a dainty place in San Francisco. You put it up on Airbnb, considering the area is sprawling with AI bros, thinking you'd get a pretty good return on your investment. What you actually g…",
+          "contentText": "Picture this: you're the owner of a dainty place in San Francisco. You put it up on Airbnb, considering the area is sprawling with AI bros, thinking you'd get a pretty good return on your investment. What you actually get in return are scratched kitchens, damaged appliances, bizarre rearrangements, and just straight up missing items.",
+          "publishedAt": "2026-05-30T17:09:50.000Z",
+          "sourceImage": "https://cdn.mos.cms.futurecdn.net/fhJ2wuHBx9aNgN8TVrRc4i-1280-80.jpg",
           "region": "US",
           "language": "en",
           "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
@@ -9979,239 +10050,169 @@
             "archiveOnly": false,
             "archiveOnlyReason": null
           },
-          "score": 72
+          "score": 71
         },
         {
-          "id": "ce06e640a2c613d0",
+          "id": "774fe2e8280e9a58",
           "source": "Bloomberg Technology",
-          "url": "https://www.bloomberg.com/news/videos/2026-05-30/legacy-tech-stocks-surge-on-ai-pivot-video",
-          "title": "Legacy Tech Stocks Surge on AI Pivot",
-          "snippet": "Bloomberg Intelligence Global Head of Technology Research Mandeep Singh joined Christina Ruffini and David Gura on Bloomberg This Weekend to discuss so-called \"legacy\" tech companies like Dell, Intel and Nokia seeing th…",
-          "contentText": "Bloomberg Intelligence Global Head of Technology Research Mandeep Singh joined Christina Ruffini and David Gura on Bloomberg This Weekend to discuss so-called \"legacy\" tech companies like Dell, Intel and Nokia seeing their stocks surge as they turn to AI. (Source: Bloomberg)",
-          "publishedAt": "2026-05-30T13:23:33.000Z",
-          "sourceImage": "https://assets.bwbx.io/images/users/iqjWHBFdfxIU/ixbMtaTrj1Gk/v3/1200x-1.jpg",
-          "region": "US",
+          "url": "https://www.bloomberg.com/news/articles/2026-05-30/softbank-to-invest-some-75-billion-in-ai-in-france-reports-say",
+          "title": "SoftBank Plans Up to €75 Billion Investment in French AI Centers",
+          "snippet": "SoftBank Group Corp. plans to invest as much as €75 billion ($87 billion) to build 5 gigawatts of artificial intelligence data center capacity in France, saying the country is poised to become a top European hub for AI…",
+          "contentText": "SoftBank Group Corp. plans to invest as much as €75 billion ($87 billion) to build 5 gigawatts of artificial intelligence data center capacity in France, saying the country is poised to become a top European hub for AI infrastructure.",
+          "publishedAt": "2026-05-30T18:55:33.000Z",
+          "sourceImage": "https://assets.bwbx.io/images/users/iqjWHBFdfxIU/iexJcnWHQtMs/v1/1200x-1.jpg",
+          "region": "APAC",
           "language": "en",
           "defaultCategory": "Hyperscalers & Cloud",
-          "category": "Semiconductors",
-          "primary_category": "Semiconductors",
-          "secondary_category": "Accelerators, memory, and advanced packaging",
-          "infrastructure_layer": "Silicon",
+          "category": "AI Infrastructure",
+          "primary_category": "AI Infrastructure",
+          "secondary_category": "GPU clusters and deployment readiness",
+          "infrastructure_layer": "Compute",
           "affected_stakeholders": [
-            "semiconductor suppliers",
-            "hyperscalers",
-            "server OEMs",
-            "investors"
-          ],
-          "article_type": "Research / Technical",
-          "urgency_score": 0.28,
-          "taxonomy_confidence": 0.56,
-          "taxonomy_reasons": [
-            "intel"
-          ],
-          "direct_ai_infrastructure_relevance": 0.22,
-          "data_center_relevance": 0,
-          "cloud_capacity_relevance": 0.32,
-          "semiconductor_relevance": 0.2,
-          "power_grid_relevance": 0,
-          "cooling_relevance": 0,
-          "capital_markets_relevance": 0,
-          "enterprise_ai_infrastructure_relevance": 0,
-          "infrastructure_relevance_score": 0.304,
-          "infrastructure_relevance_tier": "archive_only",
-          "infrastructure_relevance_action": "archive_only",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:0.22",
-            "cloud_capacity_relevance:0.32(hyperscalers)"
-          ],
-          "infrastructure_relevance": {
-            "direct_ai_infrastructure_relevance": 0.22,
-            "data_center_relevance": 0,
-            "cloud_capacity_relevance": 0.32,
-            "semiconductor_relevance": 0.2,
-            "power_grid_relevance": 0,
-            "cooling_relevance": 0,
-            "capital_markets_relevance": 0,
-            "enterprise_ai_infrastructure_relevance": 0,
-            "infrastructure_relevance_score": 0.304,
-            "infrastructure_relevance_tier": "archive_only",
-            "infrastructure_relevance_action": "archive_only",
-            "infrastructure_relevance_reasons": [
-              "direct_ai_infrastructure_relevance:0.22",
-              "cloud_capacity_relevance:0.32(hyperscalers)"
-            ],
-            "infrastructureRelevanceAction": "archive_only",
-            "articlePagePublished": false,
-            "homepagePublished": false,
-            "archiveOnly": true,
-            "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
-          },
-          "score": 59
-        },
-        {
-          "id": "f4508d3933b0580d",
-          "source": "Bloomberg Technology",
-          "url": "https://www.bloomberg.com/news/articles/2026-05-30/fed-s-williams-quips-economist-jobs-are-safe-as-ai-shift-unfolds",
-          "title": "Fed’s Williams Quips Economist Jobs Are Safe as AI Shift Unfolds",
-          "snippet": "The implications of artificial intelligence gripped global central bankers in Iceland this week, with one Federal Reserve official joking that it won’t put economists out of business.",
-          "contentText": "The implications of artificial intelligence gripped global central bankers in Iceland this week, with one Federal Reserve official joking that it won’t put economists out of business.",
-          "publishedAt": "2026-05-30T13:03:16.000Z",
-          "sourceImage": "https://assets.bwbx.io/images/users/iqjWHBFdfxIU/iaY_4vp9cfGk/v1/1200x-1.jpg",
-          "region": "US",
-          "language": "en",
-          "defaultCategory": "Hyperscalers & Cloud",
-          "category": "Cloud Capacity",
-          "primary_category": "Cloud Capacity",
-          "secondary_category": "Hyperscale regions and accelerator availability",
-          "infrastructure_layer": "Cloud Platform",
-          "affected_stakeholders": [
+            "operators",
             "hyperscalers",
             "cloud buyers",
-            "enterprise IT",
-            "operators"
-          ],
-          "article_type": "Other",
-          "urgency_score": 0.28,
-          "taxonomy_confidence": 0.5,
-          "taxonomy_reasons": [
-            "fallback_taxonomy"
-          ],
-          "direct_ai_infrastructure_relevance": 0.22,
-          "data_center_relevance": 0,
-          "cloud_capacity_relevance": 0.32,
-          "semiconductor_relevance": 0,
-          "power_grid_relevance": 0,
-          "cooling_relevance": 0,
-          "capital_markets_relevance": 0,
-          "enterprise_ai_infrastructure_relevance": 0,
-          "infrastructure_relevance_score": 0.304,
-          "infrastructure_relevance_tier": "archive_only",
-          "infrastructure_relevance_action": "archive_only",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:0.22",
-            "cloud_capacity_relevance:0.32(hyperscalers)"
-          ],
-          "infrastructure_relevance": {
-            "direct_ai_infrastructure_relevance": 0.22,
-            "data_center_relevance": 0,
-            "cloud_capacity_relevance": 0.32,
-            "semiconductor_relevance": 0,
-            "power_grid_relevance": 0,
-            "cooling_relevance": 0,
-            "capital_markets_relevance": 0,
-            "enterprise_ai_infrastructure_relevance": 0,
-            "infrastructure_relevance_score": 0.304,
-            "infrastructure_relevance_tier": "archive_only",
-            "infrastructure_relevance_action": "archive_only",
-            "infrastructure_relevance_reasons": [
-              "direct_ai_infrastructure_relevance:0.22",
-              "cloud_capacity_relevance:0.32(hyperscalers)"
-            ],
-            "infrastructureRelevanceAction": "archive_only",
-            "articlePagePublished": false,
-            "homepagePublished": false,
-            "archiveOnly": true,
-            "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
-          },
-          "score": 51
-        },
-        {
-          "id": "a622383f46bb7bce",
-          "source": "Data Center Dynamics",
-          "url": "https://www.datacenterdynamics.com/en/opinions/technical-developments-in-optical-fiber/",
-          "title": "Sponsored: Technical developments in optical fiber",
-          "snippet": "Over the last twenty years the increasing transmission speed of optical fiber has been transformational, but what's next on the horizon?",
-          "contentText": "Over the last twenty years the increasing transmission speed of optical fiber has been transformational, but what's next on the horizon?",
-          "publishedAt": "2026-05-30T05:35:27.000Z",
-          "sourceImage": "https://media.datacenterdynamics.com/media/images/Ian_Griffiths-0063.2e16d0ba.fill-750x500.jpg",
-          "region": "Global",
-          "language": "en",
-          "defaultCategory": "Colocation & Wholesale",
-          "category": "Data Centers",
-          "primary_category": "Data Centers",
-          "secondary_category": "Campus development and colocation capacity",
-          "infrastructure_layer": "Facility",
-          "affected_stakeholders": [
-            "data center operators",
-            "developers",
-            "site selectors",
             "investors"
           ],
-          "article_type": "Research / Technical",
-          "urgency_score": 0.36,
-          "taxonomy_confidence": 0.73,
+          "article_type": "Capacity Expansion",
+          "urgency_score": 0.5,
+          "taxonomy_confidence": 0.65,
           "taxonomy_reasons": [
-            "colocation",
-            "wholesale"
+            "ai infrastructure"
           ],
-          "direct_ai_infrastructure_relevance": 0,
-          "data_center_relevance": 0.76,
-          "cloud_capacity_relevance": 0,
+          "direct_ai_infrastructure_relevance": 0.78,
+          "data_center_relevance": 0.42,
+          "cloud_capacity_relevance": 0.32,
           "semiconductor_relevance": 0,
-          "power_grid_relevance": 0.28,
+          "power_grid_relevance": 0.34,
           "cooling_relevance": 0,
           "capital_markets_relevance": 0,
           "enterprise_ai_infrastructure_relevance": 0,
-          "infrastructure_relevance_score": 0.572,
-          "infrastructure_relevance_tier": "signal_card",
-          "infrastructure_relevance_action": "publish_signal_card_only",
+          "infrastructure_relevance_score": 0.765,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
           "infrastructure_relevance_reasons": [
-            "data_center_relevance:0.76(data center, colocation)",
-            "power_grid_relevance:0.28(transmission)"
+            "direct_ai_infrastructure_relevance:0.78(ai infrastructure)",
+            "data_center_relevance:0.42(data center)",
+            "cloud_capacity_relevance:0.32(hyperscalers)",
+            "power_grid_relevance:0.34(gigawatts)"
           ],
           "infrastructure_relevance": {
-            "direct_ai_infrastructure_relevance": 0,
-            "data_center_relevance": 0.76,
-            "cloud_capacity_relevance": 0,
+            "direct_ai_infrastructure_relevance": 0.78,
+            "data_center_relevance": 0.42,
+            "cloud_capacity_relevance": 0.32,
             "semiconductor_relevance": 0,
-            "power_grid_relevance": 0.28,
+            "power_grid_relevance": 0.34,
             "cooling_relevance": 0,
             "capital_markets_relevance": 0,
             "enterprise_ai_infrastructure_relevance": 0,
-            "infrastructure_relevance_score": 0.572,
-            "infrastructure_relevance_tier": "signal_card",
-            "infrastructure_relevance_action": "publish_signal_card_only",
+            "infrastructure_relevance_score": 0.765,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
             "infrastructure_relevance_reasons": [
-              "data_center_relevance:0.76(data center, colocation)",
-              "power_grid_relevance:0.28(transmission)"
+              "direct_ai_infrastructure_relevance:0.78(ai infrastructure)",
+              "data_center_relevance:0.42(data center)",
+              "cloud_capacity_relevance:0.32(hyperscalers)",
+              "power_grid_relevance:0.34(gigawatts)"
             ],
-            "infrastructureRelevanceAction": "publish_signal_card_only",
-            "articlePagePublished": false,
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
             "homepagePublished": true,
             "archiveOnly": false,
             "archiveOnlyReason": null
           },
-          "score": 49
+          "score": 70
+        },
+        {
+          "id": "e2ee234e788aac9a",
+          "source": "Toms Hardware",
+          "url": "https://www.tomshardware.com/3d-printing/california-assembly-passes-3d-printer-bill-that-would-criminalize-bypassing-mandated-gun-blocking-software",
+          "title": "California Assembly passes 3D printer bill that would criminalize bypassing mandated gun-blocking software",
+          "snippet": "California's Assembly has passed AB 2047, the California Firearm Printing Prevention Act, sending the amended bill to the state Senate.",
+          "contentText": "California's Assembly has passed AB 2047, the California Firearm Printing Prevention Act, sending the amended bill to the state Senate.",
+          "publishedAt": "2026-05-30T17:10:16.000Z",
+          "sourceImage": "https://cdn.mos.cms.futurecdn.net/wjLjoYzc7zwep9AkKMyz7G-1280-80.jpg",
+          "region": "Global",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "category": "AI Infrastructure",
+          "primary_category": "AI Infrastructure",
+          "secondary_category": "GPU clusters and deployment readiness",
+          "infrastructure_layer": "Compute",
+          "affected_stakeholders": [
+            "operators",
+            "hyperscalers",
+            "cloud buyers",
+            "investors"
+          ],
+          "article_type": "Product / Platform Update",
+          "urgency_score": 0.43,
+          "taxonomy_confidence": 0.77,
+          "taxonomy_reasons": [
+            "ai infrastructure",
+            "neocloud"
+          ],
+          "direct_ai_infrastructure_relevance": 1,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0.22,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.778,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "semiconductor_relevance:0.22(gpu)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 1,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0.22,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.778,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+              "semiconductor_relevance:0.22(gpu)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 64
         }
       ],
       "curatedIds": [
-        "87e7d3df840192e1",
-        "40e4460619d1f600",
-        "93586c3e9e897ec2",
-        "ce06e640a2c613d0",
-        "f4508d3933b0580d",
-        "a622383f46bb7bce"
+        "8f979011a389995b",
+        "83e0fcbe0c581ad0",
+        "6f8a9d4238186791",
+        "7563abbf0cb8ff82",
+        "774fe2e8280e9a58",
+        "e2ee234e788aac9a"
       ],
       "publishedIds": [
         "87e7d3df840192e1",
-        "40e4460619d1f600"
+        "40e4460619d1f600",
+        "8f979011a389995b",
+        "83e0fcbe0c581ad0"
       ],
       "slotPublications": {
-        "0": true
+        "0": true,
+        "1": true
       }
     }
   },
   "runHistory": [
-    {
-      "at": "2026-04-14T16:16:03.882Z",
-      "day": "2026-04-15",
-      "slot": 0,
-      "publishedCount": 2,
-      "publishedIds": [
-        "afaad725a6884408",
-        "693b36d6de52e9c0"
-      ]
-    },
     {
       "at": "2026-04-14T23:44:25.678Z",
       "day": "2026-04-15",
@@ -13397,7 +13398,135 @@
       ],
       "signalCardItems": [],
       "archiveOnlyItems": []
+    },
+    {
+      "at": "2026-05-31T00:03:45.068Z",
+      "day": "2026-05-31",
+      "slot": 1,
+      "publishedCount": 0,
+      "signalCardCount": 0,
+      "archiveOnlyCount": 0,
+      "repetitionBlockedCount": 2,
+      "publishedIds": [],
+      "processedIds": [
+        "8f979011a389995b",
+        "83e0fcbe0c581ad0"
+      ],
+      "blockedCount": 0,
+      "blockedItems": [],
+      "repetitionBlockedItems": [
+        {
+          "id": "8f979011a389995b",
+          "title": "SoftBank says it will invest up to €75 billion to build French data centers",
+          "infrastructure_relevance_score": 1,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "data_center_relevance:1.00(data center, data centers, campus)",
+            "cloud_capacity_relevance:0.32(hyperscalers)",
+            "semiconductor_relevance:0.22(gpu)",
+            "power_grid_relevance:1.00(power, grid, utility)",
+            "capital_markets_relevance:0.28(capex)"
+          ],
+          "extraction_quality_score": 1,
+          "source_domain_adapter": "techcrunch",
+          "content_length": 1343,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": true,
+          "repetition_block_reasons": [
+            "repeated_sentence_ratio>0.12",
+            "heading_sequence_similarity>0.75",
+            "conclusion_similarity>0.7"
+          ],
+          "repetition_check": {
+            "compared_article_count": 16,
+            "repeated_sentence_ratio": 0.14285714285714285,
+            "repeated_paragraph_ratio": 0.16666666666666666,
+            "heading_sequence_similarity": 1,
+            "banned_phrase_count": 0,
+            "banned_phrase_counts": {},
+            "recent_banned_phrase_counts": {},
+            "ngram_overlap": 0.3706896551724138,
+            "blueprint_repetition": 1,
+            "conclusion_similarity": 0.9271050693011066,
+            "repeated_sentence_count": 1,
+            "repeated_paragraph_count": 1,
+            "heading_sequence": [
+              "Power-Market Move",
+              "Operating Lever",
+              "Grid Exposure",
+              "Metric To Watch"
+            ],
+            "blocked": true,
+            "reasons": [
+              "repeated_sentence_ratio>0.12",
+              "heading_sequence_similarity>0.75",
+              "conclusion_similarity>0.7"
+            ]
+          },
+          "expert_insight_complete": true,
+          "expert_insight_missing_fields": [],
+          "reason": "repeated_sentence_ratio>0.12; heading_sequence_similarity>0.75; conclusion_similarity>0.7"
+        },
+        {
+          "id": "83e0fcbe0c581ad0",
+          "title": "ASUS XA NB3I-E12 Review A Massive 8x NVIDIA B300 GPU Server",
+          "infrastructure_relevance_score": 0.992,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "data_center_relevance:0.84(data center, data centers)",
+            "cloud_capacity_relevance:0.32(hyperscalers)",
+            "semiconductor_relevance:0.88(nvidia, intel, gpu)",
+            "power_grid_relevance:0.22(power)",
+            "cooling_relevance:0.34(cooling)"
+          ],
+          "extraction_quality_score": 1,
+          "source_domain_adapter": "servethehome",
+          "content_length": 1753,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": true,
+          "repetition_block_reasons": [
+            "repeated_sentence_ratio>0.12",
+            "heading_sequence_similarity>0.75",
+            "conclusion_similarity>0.7"
+          ],
+          "repetition_check": {
+            "compared_article_count": 16,
+            "repeated_sentence_ratio": 0.14285714285714285,
+            "repeated_paragraph_ratio": 0.16666666666666666,
+            "heading_sequence_similarity": 1,
+            "banned_phrase_count": 0,
+            "banned_phrase_counts": {},
+            "recent_banned_phrase_counts": {},
+            "ngram_overlap": 0.33613445378151263,
+            "blueprint_repetition": 1,
+            "conclusion_similarity": 0.9233805168766386,
+            "repeated_sentence_count": 1,
+            "repeated_paragraph_count": 1,
+            "heading_sequence": [
+              "What Changed",
+              "Energy Procurement Read",
+              "Volatility Risk",
+              "Next Market Test"
+            ],
+            "blocked": true,
+            "reasons": [
+              "repeated_sentence_ratio>0.12",
+              "heading_sequence_similarity>0.75",
+              "conclusion_similarity>0.7"
+            ]
+          },
+          "expert_insight_complete": true,
+          "expert_insight_missing_fields": [],
+          "reason": "repeated_sentence_ratio>0.12; heading_sequence_similarity>0.75; conclusion_similarity>0.7"
+        }
+      ],
+      "signalCardItems": [],
+      "archiveOnlyItems": []
     }
   ],
-  "lastRunAt": "2026-05-30T16:10:17.745Z"
+  "lastRunAt": "2026-05-31T00:03:45.068Z"
 }
