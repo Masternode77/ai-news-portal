@@ -1,8 +1,12 @@
 import fs from 'node:fs';
 import path from 'node:path';
+import { canonicalArticleImagePaths } from './image-store.mjs';
 
 export const ARTICLE_IMAGE_FIELDS = [
+  'heroImage',
   'generatedImage',
+  'thumbnailImage',
+  'ogImage',
   'sourceImage',
   'image',
   'imageUrl',
@@ -10,7 +14,34 @@ export const ARTICLE_IMAGE_FIELDS = [
   'thumbnail',
 ];
 
+export const PUBLIC_IMAGE_FALLBACK_SLUGS = [
+  'power-grid',
+  'data-centers',
+  'cloud-capacity',
+  'semiconductors',
+  'cooling',
+  'capital-markets',
+  'regulation',
+  'supply-chain',
+  'ai-infrastructure',
+];
+
+const VARIANT_FIELDS = {
+  hero: ['heroImage', 'generatedImage', 'image', 'thumbnailImage', 'ogImage', 'sourceImage', 'imageUrl', 'image_url', 'thumbnail'],
+  thumbnail: ['thumbnailImage', 'heroImage', 'generatedImage', 'image', 'ogImage', 'sourceImage', 'imageUrl', 'image_url', 'thumbnail'],
+  og: ['ogImage', 'heroImage', 'generatedImage', 'image', 'thumbnailImage', 'sourceImage', 'imageUrl', 'image_url', 'thumbnail'],
+};
+
 const IMAGE_METADATA_FIELDS = [
+  'imageAlt',
+  'heroImage',
+  'thumbnailImage',
+  'ogImage',
+  'legacyImage',
+  'imageStatus',
+  'imageError',
+  'imageGeneratedAt',
+  'imageModel',
   'generatedImageProvider',
   'generatedImageModel',
   'imageProvider',
@@ -22,12 +53,50 @@ function clean(value = '') {
   return String(value || '').trim();
 }
 
-function firstExistingImage(article = {}) {
-  for (const field of ARTICLE_IMAGE_FIELDS) {
-    const value = clean(article[field]);
-    if (value) return value;
+function unique(values = []) {
+  return [...new Set(values.map(clean).filter(Boolean))];
+}
+
+function slugify(value = '') {
+  return clean(value).toLowerCase().replace(/&/g, 'and').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+}
+
+function categoryText(article = {}) {
+  return [
+    article.primary_category,
+    article.category,
+    article.defaultCategory,
+    article.infrastructure_layer,
+    article.public_routing?.laneTitle,
+    ...(Array.isArray(article.tags) ? article.tags : []),
+  ].map(clean).filter(Boolean).join(' ').toLowerCase();
+}
+
+export function fallbackCategorySlug(article = {}) {
+  const values = [
+    article.primary_category,
+    article.category,
+    article.defaultCategory,
+    article.infrastructure_layer,
+  ].map(slugify).filter(Boolean);
+  for (const value of values) {
+    if (PUBLIC_IMAGE_FALLBACK_SLUGS.includes(value)) return value;
   }
-  return '';
+
+  const text = categoryText(article);
+  if (/power|grid|energy|utility/.test(text)) return 'power-grid';
+  if (/data[\s-]?center|colocation|facility|campus/.test(text)) return 'data-centers';
+  if (/cloud|hyperscaler|region/.test(text)) return 'cloud-capacity';
+  if (/semiconductor|chip|gpu|hbm|memory|accelerator|silicon/.test(text)) return 'semiconductors';
+  if (/cooling|thermal/.test(text)) return 'cooling';
+  if (/capital|finance|reit|deal|ipo|markets/.test(text)) return 'capital-markets';
+  if (/policy|regulation|permit|siting|zoning/.test(text)) return 'regulation';
+  if (/supply|supplier|equipment|construction/.test(text)) return 'supply-chain';
+  return 'ai-infrastructure';
+}
+
+export function fallbackCategoryImagePath(article = {}) {
+  return `/generated/fallbacks/${fallbackCategorySlug(article)}.svg`;
 }
 
 export function fallbackGeneratedImagePath(article = {}) {
@@ -35,11 +104,81 @@ export function fallbackGeneratedImagePath(article = {}) {
   return id ? `/generated/${id}.svg` : '';
 }
 
+function canonicalVariantPath(article = {}, variant = 'hero') {
+  const paths = canonicalArticleImagePaths(article, { extension: 'webp', legacyExtension: 'webp' });
+  return paths[`${variant}Image`] || '';
+}
+
+function variantCandidates(article = {}, variant = 'hero') {
+  const fields = VARIANT_FIELDS[variant] || VARIANT_FIELDS.hero;
+  const explicit = fields.map((field) => article[field]);
+  return unique([
+    canonicalVariantPath(article, variant),
+    ...explicit,
+    fallbackGeneratedImagePath(article),
+  ]);
+}
+
+function imageProviderFor(article = {}, status = 'available') {
+  if (status === 'fallback') return 'category-fallback';
+  return clean(article.generatedImageProvider || article.imageProvider || article.image_source_provider) || 'local';
+}
+
+function imageVariantObject(article = {}, variant = 'hero') {
+  for (const candidate of variantCandidates(article, variant)) {
+    if (isTrustedPublicImage(candidate)) {
+      return {
+        url: candidate,
+        alt: articleImageAlt(article),
+        status: clean(article.imageStatus || article.image_status) || 'available',
+        provider: imageProviderFor(article),
+        variant,
+        fallback: false,
+      };
+    }
+  }
+
+  const fallback = fallbackCategoryImagePath(article);
+  const safeFallback = isTrustedPublicImage(fallback)
+    ? fallback
+    : '/generated/fallbacks/ai-infrastructure.svg';
+  return {
+    url: safeFallback,
+    alt: articleImageAlt(article),
+    status: 'fallback',
+    provider: 'category-fallback',
+    variant,
+    fallback: true,
+  };
+}
+
+export function articleImageVariants(article = {}) {
+  return {
+    hero: imageVariantObject(article, 'hero'),
+    thumbnail: imageVariantObject(article, 'thumbnail'),
+    og: imageVariantObject(article, 'og'),
+  };
+}
+
+export function articleHeroImage(article = {}) {
+  return articleImageVariants(article).hero.url;
+}
+
+export function articleCardImage(article = {}) {
+  return articleImageVariants(article).thumbnail.url;
+}
+
+export function articleOpenGraphImage(article = {}) {
+  return articleImageVariants(article).og.url;
+}
+
 export function articleDisplayImage(article = {}) {
-  return firstExistingImage(article) || fallbackGeneratedImagePath(article);
+  return articleHeroImage(article);
 }
 
 export function articleImageAlt(article = {}) {
+  const explicit = clean(article.imageAlt || article.image_alt);
+  if (explicit) return explicit;
   const title = clean(article.expertLensFull?.finalHeadline || article.title);
   return title ? `${title} editorial visual` : 'Compute Current editorial visual';
 }
@@ -51,12 +190,21 @@ export function isRemoteImage(image = '') {
 export function localArticleImagePath(image = '') {
   const value = clean(image);
   if (!value || isRemoteImage(value)) return '';
+  if (!value.startsWith('/')) return '';
   return path.join(process.cwd(), 'public', value.replace(/^\//, ''));
 }
 
 export function localArticleImageExists(image = '') {
   const localPath = localArticleImagePath(image);
-  return !localPath || fs.existsSync(localPath);
+  return Boolean(localPath && fs.existsSync(localPath));
+}
+
+export function isTrustedPublicImage(image = '', options = {}) {
+  const value = clean(image);
+  if (!value) return false;
+  if (/^\/admin(?:\/|$)/i.test(value)) return false;
+  if (isRemoteImage(value)) return Boolean(options.allowRemote === true && options.remoteValidated === true);
+  return localArticleImageExists(value);
 }
 
 function imagePatchFrom(article = {}) {
@@ -104,6 +252,9 @@ export function withGeneratedArticleImage(article = {}, generatedImage = '', met
   if (!image) return article;
   return withPresentationImage({
     ...article,
+    ...(metadata.heroImage ? { heroImage: metadata.heroImage } : {}),
+    ...(metadata.thumbnailImage ? { thumbnailImage: metadata.thumbnailImage } : {}),
+    ...(metadata.ogImage ? { ogImage: metadata.ogImage } : {}),
     generatedImage: image,
     ...metadata,
   });
