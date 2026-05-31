@@ -32,6 +32,14 @@ const VARIANT_FIELDS = {
   og: ['ogImage', 'heroImage', 'generatedImage', 'image', 'thumbnailImage', 'sourceImage', 'imageUrl', 'image_url', 'thumbnail'],
 };
 
+const SOURCE_IMAGE_FIELDS = [
+  'sourceImage',
+  'image',
+  'imageUrl',
+  'image_url',
+  'thumbnail',
+];
+
 const IMAGE_METADATA_FIELDS = [
   'imageAlt',
   'heroImage',
@@ -48,6 +56,9 @@ const IMAGE_METADATA_FIELDS = [
   'image_source_provider',
   'imagePrompt',
 ];
+
+const AI_IMAGE_PROVIDER_RE = /\b(?:chatgpt|image2|openai|gpt-image|nano|nanobanana)\b/i;
+const PLACEHOLDER_IMAGE_PROVIDER_RE = /\b(?:local-placeholder|local-svg|category-fallback)\b/i;
 
 function clean(value = '') {
   return String(value || '').trim();
@@ -113,8 +124,8 @@ function variantCandidates(article = {}, variant = 'hero') {
   const fields = VARIANT_FIELDS[variant] || VARIANT_FIELDS.hero;
   const explicit = fields.map((field) => article[field]);
   return unique([
-    canonicalVariantPath(article, variant),
     ...explicit,
+    canonicalVariantPath(article, variant),
     fallbackGeneratedImagePath(article),
   ]);
 }
@@ -124,9 +135,47 @@ function imageProviderFor(article = {}, status = 'available') {
   return clean(article.generatedImageProvider || article.imageProvider || article.image_source_provider) || 'local';
 }
 
+function sourceImageProviderFor(article = {}) {
+  return clean(article.image_source_provider) || 'source-image';
+}
+
+function imageProviderText(article = {}) {
+  return [
+    article.generatedImageProvider,
+    article.imageProvider,
+    article.image_source_provider,
+    article.generatedImageModel,
+    article.imageModel,
+    article.imageStatus,
+    article.image_status,
+  ].map(clean).filter(Boolean).join(' ');
+}
+
+function imageProviderLooksAi(article = {}) {
+  return AI_IMAGE_PROVIDER_RE.test(imageProviderText(article));
+}
+
+function imageProviderLooksPlaceholder(article = {}) {
+  return PLACEHOLDER_IMAGE_PROVIDER_RE.test(imageProviderText(article));
+}
+
+function isPlaceholderGeneratedCandidate(article = {}, image = '') {
+  const value = clean(image);
+  if (!/^\/generated\//i.test(value)) return false;
+  if (imageProviderLooksAi(article)) return false;
+  if (imageProviderLooksPlaceholder(article)) return true;
+  return /^\/generated\/fallbacks\//i.test(value) || /\.svg(?:$|[?#])/i.test(value);
+}
+
+function sourceImageCandidates(article = {}, variant = 'hero') {
+  const fields = unique([...(VARIANT_FIELDS[variant] || VARIANT_FIELDS.hero), ...SOURCE_IMAGE_FIELDS]);
+  return unique(fields.map((field) => article[field])).filter(isRemoteImage);
+}
+
 function imageVariantObject(article = {}, variant = 'hero') {
-  for (const candidate of variantCandidates(article, variant)) {
-    if (isTrustedPublicImage(candidate)) {
+  const generatedCandidates = variantCandidates(article, variant);
+  for (const candidate of generatedCandidates) {
+    if (isTrustedPublicImage(candidate) && !isPlaceholderGeneratedCandidate(article, candidate)) {
       return {
         url: candidate,
         alt: articleImageAlt(article),
@@ -134,6 +183,31 @@ function imageVariantObject(article = {}, variant = 'hero') {
         provider: imageProviderFor(article),
         variant,
         fallback: false,
+      };
+    }
+  }
+
+  for (const candidate of sourceImageCandidates(article, variant)) {
+    return {
+      url: candidate,
+      alt: articleImageAlt(article),
+      status: 'source',
+      provider: sourceImageProviderFor(article),
+      variant,
+      fallback: false,
+    };
+  }
+
+  for (const candidate of generatedCandidates) {
+    if (isTrustedPublicImage(candidate)) {
+      const placeholder = isPlaceholderGeneratedCandidate(article, candidate);
+      return {
+        url: candidate,
+        alt: articleImageAlt(article),
+        status: clean(article.imageStatus || article.image_status) || (placeholder ? 'placeholder' : 'available'),
+        provider: imageProviderFor(article),
+        variant,
+        fallback: placeholder,
       };
     }
   }

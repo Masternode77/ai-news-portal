@@ -5,7 +5,7 @@ import taxonomyPages from '../src/data/taxonomy-pages.json' with { type: 'json' 
 import { buildArchiveFeed } from './lib/archive-feed-builder.mjs';
 import { buildHomepageFeed } from './lib/homepage-feed-builder.mjs';
 import { isPublicLongformArticle } from './lib/public-surface-eligibility.mjs';
-import { articleDisplayImage, localArticleImageExists } from './lib/article-image-surface.mjs';
+import { articleDisplayImage, isRemoteImage, localArticleImageExists } from './lib/article-image-surface.mjs';
 import { isStockDerivedCardImage, stockDerivedImageReason } from './lib/stock-card-image-detector.mjs';
 
 function uniqueById(items = []) {
@@ -37,7 +37,7 @@ function imageFailures(label, items = []) {
       failures.push(`${label}:${item.id}:missing_image`);
       continue;
     }
-    if (!localArticleImageExists(image)) {
+    if (!isRemoteImage(image) && !localArticleImageExists(image)) {
       failures.push(`${label}:${item.id}:missing_local_asset:${image}`);
     }
     if (isStockDerivedCardImage(item)) {
