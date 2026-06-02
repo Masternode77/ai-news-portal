@@ -371,7 +371,9 @@
     "e01818cecf27f6d6",
     "c80c600f9b105aaa",
     "518f7863439aecd8",
-    "9ce58ee319dd3da9"
+    "9ce58ee319dd3da9",
+    "6811295c56a5c699",
+    "274897e20c9e79c2"
   ],
   "dayPlans": {
     "2026-03-24": {
@@ -10661,19 +10663,89 @@
     "2026-06-02": {
       "date": "2026-06-02",
       "createdAt": "2026-06-01T19:57:25.072Z",
-      "refreshedAt": "2026-06-02T00:16:07.581Z",
+      "refreshedAt": "2026-06-02T11:24:51.421Z",
       "candidateWindowHours": 24,
       "curatedItems": [
         {
-          "id": "518f7863439aecd8",
+          "id": "274897e20c9e79c2",
+          "source": "Capacity Media",
+          "url": "https://capacityglobal.com/news/damac-digital-targets-6g2/",
+          "title": "DAMAC Digital targets 6GW global data centre pipeline as AI demand accelerates",
+          "snippet": "DAMAC Digital has revealed plans for 6,000MW of IT capacity across a global portfolio spanning more than 35 data centre sites in 13 countries, as demand for AI infrastructure continues to reshape investment priorities a…",
+          "contentText": "Speaking at Datacloud Congress in Cannes, DAMAC Group founder Hussain Sajwani said the company is positioning itself to address growing requirements for land, power and deployment speed as hyperscalers and governments race to secure compute capacity. “ AI is an infrastructure race,” said Sajwani. “The next generation of computing needs land, power, fibre, capital and construction certainty. DAMAC Digital brings those capabilities together in one platform.” The planned portfolio spans markets across North America, Europe, Asia and the Middle East, including the US, Spain, Italy, Greece, Turkey, Saudi Arabia and the UAE. The company said it has signed agreements with five global hyperscalers and expects eight sites to be operational by the end of 2026. DAMAC Digital is targeting more than 7…",
+          "publishedAt": "2026-06-02T10:12:01.000Z",
+          "sourceImage": "https://capacityglobal.com/wp-content/uploads/2025/09/Capacity-Middle-East-CM-327x218.png",
+          "region": "APAC",
+          "language": "en",
+          "defaultCategory": "Hyperscalers & Cloud",
+          "category": "AI Infrastructure",
+          "primary_category": "AI Infrastructure",
+          "secondary_category": "GPU clusters and deployment readiness",
+          "infrastructure_layer": "Compute",
+          "affected_stakeholders": [
+            "operators",
+            "hyperscalers",
+            "cloud buyers",
+            "investors"
+          ],
+          "article_type": "Capacity Expansion",
+          "urgency_score": 0.64,
+          "taxonomy_confidence": 0.77,
+          "taxonomy_reasons": [
+            "ai infrastructure",
+            "compute capacity"
+          ],
+          "direct_ai_infrastructure_relevance": 1,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0.76,
+          "semiconductor_relevance": 0,
+          "power_grid_relevance": 0.22,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.932,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, compute capacity)",
+            "cloud_capacity_relevance:0.76(cloud capacity, hyperscalers)",
+            "power_grid_relevance:0.22(power)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 1,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0.76,
+            "semiconductor_relevance": 0,
+            "power_grid_relevance": 0.22,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.932,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, compute capacity)",
+              "cloud_capacity_relevance:0.76(cloud capacity, hyperscalers)",
+              "power_grid_relevance:0.22(power)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 85
+        },
+        {
+          "id": "6811295c56a5c699",
           "source": "Toms Hardware",
-          "url": "https://www.tomshardware.com/pc-components/gpus/amd-radeon-rx-9070-gre-review",
-          "title": "AMD Radeon RX 9070 GRE review: thoroughly midrange",
-          "snippet": "AMD's $549 Radeon RX 9070 GRE offers strong high-refresh-rate 1080p and 1440p gaming performance as it launches globally at Computex 2026. But a lower price tag could have truly changed the midrange game.",
-          "contentText": "AMD's $549 Radeon RX 9070 GRE offers strong high-refresh-rate 1080p and 1440p gaming performance as it launches globally at Computex 2026. But a lower price tag could have truly changed the midrange game.",
-          "publishedAt": "2026-06-02T00:00:00.000Z",
-          "sourceImage": "https://cdn.mos.cms.futurecdn.net/DE5ftnPBSaFyUzG6qo5MoH-1280-80.jpg",
-          "region": "Global",
+          "url": "https://www.tomshardware.com/tech-industry/artificial-intelligence/jensen-huang-says-nvidia-wants-to-reinvent-the-single-most-important-tool-of-humanity-with-rtx-spark-nvidia-ceo-touts-support-of-literally-every-computer-maker-in-the-world-for-its-agentic-ai-pc-platform",
+          "title": "Jensen Huang says Nvidia wants to 'reinvent the single most important tool of humanity' with RTX Spark — Nvidia CEO touts support of 'literally every computer maker in the world' for its agentic AI PC platform",
+          "snippet": "In a press Q&A held at Computex 2026, Nvidia CEO Jensen Huang discussed why the company is entering the PC market now and its ambitions for the future of computing.",
+          "contentText": "In a press Q&A held at Computex 2026, Nvidia CEO Jensen Huang discussed why the company is entering the PC market now and its ambitions for the future of computing.",
+          "publishedAt": "2026-06-02T11:20:00.000Z",
+          "sourceImage": "https://cdn.mos.cms.futurecdn.net/e4nHqRWu6AkHKhFz9QVnLZ-1280-80.jpg",
+          "region": "US",
           "language": "en",
           "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
           "category": "AI Infrastructure",
@@ -10687,6 +10759,74 @@
             "investors"
           ],
           "article_type": "Product / Platform Update",
+          "urgency_score": 0.46,
+          "taxonomy_confidence": 0.77,
+          "taxonomy_reasons": [
+            "ai infrastructure",
+            "neocloud"
+          ],
+          "direct_ai_infrastructure_relevance": 1,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0.598,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.862,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "semiconductor_relevance:0.60(nvidia, gpu)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 1,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0.598,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.862,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+              "semiconductor_relevance:0.60(nvidia, gpu)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 75
+        },
+        {
+          "id": "179c4cb017d2ce84",
+          "source": "Semiconductor Engineering",
+          "url": "https://semiengineering.com/the-evolution-of-ucie/",
+          "title": "The Evolution Of UCIe",
+          "snippet": "How the standard matured from simple connectivity to secure data movement across multiple chiplets and packaging approaches. The post The Evolution Of UCIe appeared first on Semiconductor Engineering.",
+          "contentText": "Since it was released in March 2022, the Universal Chiplet Interconnect Express (UCIe) has grown from a basic way of connecting two dies together into a comprehensive specification that can ensure the handoff of data between various components in an advanced package, as well as validate the chiplets within that package. Mayank Bhatnagar, director of product marketing at Cadence, talks about the physical elements in UCIe, the logical view of how it appears to design engineers, and how this can be customized for anything from a simple connection to a complex collection of chiplets that can come from multiple foundries and operate at different speeds. The post The Evolution Of UCIe appeared first on Semiconductor Engineering .",
+          "publishedAt": "2026-06-02T07:15:30.000Z",
+          "sourceImage": null,
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "category": "AI Infrastructure",
+          "primary_category": "AI Infrastructure",
+          "secondary_category": "GPU clusters and deployment readiness",
+          "infrastructure_layer": "Compute",
+          "affected_stakeholders": [
+            "operators",
+            "hyperscalers",
+            "cloud buyers",
+            "investors"
+          ],
+          "article_type": "Supply Chain",
           "urgency_score": 0.45,
           "taxonomy_confidence": 0.77,
           "taxonomy_reasons": [
@@ -10696,33 +10836,33 @@
           "direct_ai_infrastructure_relevance": 1,
           "data_center_relevance": 0,
           "cloud_capacity_relevance": 0,
-          "semiconductor_relevance": 0.517,
+          "semiconductor_relevance": 0.58,
           "power_grid_relevance": 0,
           "cooling_relevance": 0,
           "capital_markets_relevance": 0,
           "enterprise_ai_infrastructure_relevance": 0,
-          "infrastructure_relevance_score": 0.844,
+          "infrastructure_relevance_score": 0.858,
           "infrastructure_relevance_tier": "full_memo",
           "infrastructure_relevance_action": "generate_full_memo",
           "infrastructure_relevance_reasons": [
             "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "semiconductor_relevance:0.52(amd, gpu)"
+            "semiconductor_relevance:0.58(semiconductor, gpu)"
           ],
           "infrastructure_relevance": {
             "direct_ai_infrastructure_relevance": 1,
             "data_center_relevance": 0,
             "cloud_capacity_relevance": 0,
-            "semiconductor_relevance": 0.517,
+            "semiconductor_relevance": 0.58,
             "power_grid_relevance": 0,
             "cooling_relevance": 0,
             "capital_markets_relevance": 0,
             "enterprise_ai_infrastructure_relevance": 0,
-            "infrastructure_relevance_score": 0.844,
+            "infrastructure_relevance_score": 0.858,
             "infrastructure_relevance_tier": "full_memo",
             "infrastructure_relevance_action": "generate_full_memo",
             "infrastructure_relevance_reasons": [
               "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-              "semiconductor_relevance:0.52(amd, gpu)"
+              "semiconductor_relevance:0.58(semiconductor, gpu)"
             ],
             "infrastructureRelevanceAction": "generate_full_memo",
             "articlePagePublished": true,
@@ -10730,16 +10870,84 @@
             "archiveOnly": false,
             "archiveOnlyReason": null
           },
-          "score": 81
+          "score": 74
         },
         {
-          "id": "9ce58ee319dd3da9",
-          "source": "TechCrunch AI",
-          "url": "https://techcrunch.com/2026/06/01/alphabet-plans-to-raise-80-billion-to-pay-for-ai-buildout/",
-          "title": "Alphabet plans to raise $80B to pay for AI buildout",
-          "snippet": "\"The company is experiencing strong demand for its AI solutions and services from enterprises and consumers, at levels that are exceeding the company’s available supply,\" Alphabet said in its statement.",
-          "contentText": "\"The company is experiencing strong demand for its AI solutions and services from enterprises and consumers, at levels that are exceeding the company’s available supply,\" Alphabet said in its statement.",
-          "publishedAt": "2026-06-01T22:55:09.000Z",
+          "id": "bb60dc7827d0f498",
+          "source": "NVIDIA Blog",
+          "url": "https://blogs.nvidia.com/blog/financial-institutions-transaction-foundation-models/",
+          "title": "Why Financial Institutions Are Converging on Transaction Foundation Models to Build Their Own Intelligence",
+          "snippet": "Financial institutions have spent years building AI: fraud models, credit models, recommendation engines and risk systems. While this sprawl of task-specific models has been effective, it’s also constrained by siloed sy…",
+          "contentText": "Financial institutions have spent years building AI: fraud models, credit models, recommendation engines and risk systems. While this sprawl of task-specific models has been effective, it’s also constrained by siloed systems. Siloed systems prevent institutions from developing a unified understanding of consumers’ financial behavior. As enterprise datasets keep growing, so does the gap between what institutions know and what their AI can reason over — creating a major opportunity for the industry to build intelligence using proprietary data. NVIDIA’s 2026 State of AI in Financial Services report shows 65% of institutions now use AI, with nearly 90% deploying or assessing it and almost all maintaining or increasing spend. But as AI scales, so does complexity, and fragmented model architect…",
+          "publishedAt": "2026-06-02T06:00:36.000Z",
+          "sourceImage": "https://blogs.nvidia.com/wp-content/uploads/2026/06/fsi-press-new-payments-kv-1920x1080-5150250-1.jpg",
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "category": "AI Infrastructure",
+          "primary_category": "AI Infrastructure",
+          "secondary_category": "GPU clusters and deployment readiness",
+          "infrastructure_layer": "Compute",
+          "affected_stakeholders": [
+            "operators",
+            "hyperscalers",
+            "cloud buyers",
+            "investors"
+          ],
+          "article_type": "Other",
+          "urgency_score": 0.45,
+          "taxonomy_confidence": 0.77,
+          "taxonomy_reasons": [
+            "ai infrastructure",
+            "neocloud"
+          ],
+          "direct_ai_infrastructure_relevance": 1,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0.5,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.84,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "semiconductor_relevance:0.50(nvidia, gpu)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 1,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0.5,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.84,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+              "semiconductor_relevance:0.50(nvidia, gpu)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 73
+        },
+        {
+          "id": "fd1185c4eeb1e980",
+          "source": "ServeTheHome",
+          "url": "https://www.servethehome.com/intel-computex-2026-keynote-live-coverage/",
+          "title": "Intel Computex 2026 Keynote Live Coverage",
+          "snippet": "Closing out Computex's day 2 keynotes is Intel, where CEO Lip-Bu Tan will be outlining Intel's vision for the Intelligence Era and engineering AI hardware across multiple markets. Come join ServeTheHome for our live blo…",
+          "contentText": "Closing out Computex's day 2 keynotes is Intel, where CEO Lip-Bu Tan will be outlining Intel's vision for the Intelligence Era and engineering AI hardware across multiple markets. Come join ServeTheHome for our live blog coverage of the keynote The post Intel Computex 2026 Keynote Live Coverage appeared first on ServeTheHome .",
+          "publishedAt": "2026-06-02T04:30:30.000Z",
           "sourceImage": null,
           "region": "Global",
           "language": "en",
@@ -10754,7 +10962,75 @@
             "cloud buyers",
             "investors"
           ],
-          "article_type": "Supply Chain",
+          "article_type": "Research / Technical",
+          "urgency_score": 0.45,
+          "taxonomy_confidence": 0.77,
+          "taxonomy_reasons": [
+            "ai infrastructure",
+            "neocloud"
+          ],
+          "direct_ai_infrastructure_relevance": 1,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0.49,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.838,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "semiconductor_relevance:0.49(intel, gpu)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 1,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0.49,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.838,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+              "semiconductor_relevance:0.49(intel, gpu)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 73
+        },
+        {
+          "id": "dcecbf1e93596c1b",
+          "source": "Toms Hardware",
+          "url": "https://www.tomshardware.com/tech-industry/toms-hardware-unfiltered-computex-2026-day-1-night-markets-taking-the-mrt-train-and-a-slew-of-demos",
+          "title": "Tom's Hardware Unfiltered: Computex 2026, Day 1 — night markets, taking the MRT train, and a slew of demos",
+          "snippet": "The Tom's Hardware team in Taipei reports back on what they've been up to as Computex 2026 begins to gather momentum. Take a look at how we're making",
+          "contentText": "The Tom's Hardware team in Taipei reports back on what they've been up to as Computex 2026 begins to gather momentum. Take a look at how we're making",
+          "publishedAt": "2026-06-02T11:06:04.000Z",
+          "sourceImage": "https://cdn.mos.cms.futurecdn.net/HvhePgpR6iRvGznQmnuwzK-1280-80.jpg",
+          "region": "Global",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "category": "AI Infrastructure",
+          "primary_category": "AI Infrastructure",
+          "secondary_category": "GPU clusters and deployment readiness",
+          "infrastructure_layer": "Compute",
+          "affected_stakeholders": [
+            "operators",
+            "hyperscalers",
+            "cloud buyers",
+            "investors"
+          ],
+          "article_type": "Other",
           "urgency_score": 0.43,
           "taxonomy_confidence": 0.77,
           "taxonomy_reasons": [
@@ -10798,311 +11074,33 @@
             "archiveOnly": false,
             "archiveOnlyReason": null
           },
-          "score": 79
-        },
-        {
-          "id": "3a6cc6b5eacefa11",
-          "source": "HPCwire",
-          "url": "https://www.hpcwire.com/off-the-wire/nvidia-dsx-gives-infrastructure-builders-the-playbook-for-ai-factories/",
-          "title": "NVIDIA DSX Gives Infrastructure Builders the Playbook for AI Factories",
-          "snippet": "Engineered from the ground up for AI factories, the NVIDIA DSX platform defines how next-generation infrastructure is designed, built and operated — driving lowest token cost and accelerating time to first production ac…",
-          "contentText": "Engineered from the ground up for AI factories, the NVIDIA DSX platform defines how next-generation infrastructure is designed, built and operated — driving lowest token cost and accelerating time to first production across NVIDIA chips, systems, software, facilities and partner technologies. TAIPEI, Taiwan, June 1, 2026 &#8212; NVIDIA has announced the NVIDIA DSX platform, which gives infrastructure builders a complete playbook to create AI factories. Credit: NVIDIA NVIDIA DSX brings together open source, modular software libraries, application programming interfaces, reference designs, NVIDIA accelerated computing platforms and partner technologies into a common, codesigned platform for AI factory design, deployment and operations. NVIDIA is the only company that builds the full AI fact…",
-          "publishedAt": "2026-06-01T20:42:04.000Z",
-          "sourceImage": "https://www.hpcwire.com/wp-content/uploads/2026/06/nvidia-dsx-platform-300x169.png",
-          "region": "APAC",
-          "language": "en",
-          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
-          "category": "AI Infrastructure",
-          "primary_category": "AI Infrastructure",
-          "secondary_category": "GPU clusters and deployment readiness",
-          "infrastructure_layer": "Compute",
-          "affected_stakeholders": [
-            "operators",
-            "hyperscalers",
-            "cloud buyers",
-            "investors"
-          ],
-          "article_type": "Product / Platform Update",
-          "urgency_score": 0.46,
-          "taxonomy_confidence": 0.77,
-          "taxonomy_reasons": [
-            "ai infrastructure",
-            "neocloud"
-          ],
-          "direct_ai_infrastructure_relevance": 1,
-          "data_center_relevance": 0,
-          "cloud_capacity_relevance": 0,
-          "semiconductor_relevance": 0.598,
-          "power_grid_relevance": 0,
-          "cooling_relevance": 0,
-          "capital_markets_relevance": 0,
-          "enterprise_ai_infrastructure_relevance": 0,
-          "infrastructure_relevance_score": 0.862,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "semiconductor_relevance:0.60(nvidia, gpu)"
-          ],
-          "infrastructure_relevance": {
-            "direct_ai_infrastructure_relevance": 1,
-            "data_center_relevance": 0,
-            "cloud_capacity_relevance": 0,
-            "semiconductor_relevance": 0.598,
-            "power_grid_relevance": 0,
-            "cooling_relevance": 0,
-            "capital_markets_relevance": 0,
-            "enterprise_ai_infrastructure_relevance": 0,
-            "infrastructure_relevance_score": 0.862,
-            "infrastructure_relevance_tier": "full_memo",
-            "infrastructure_relevance_action": "generate_full_memo",
-            "infrastructure_relevance_reasons": [
-              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-              "semiconductor_relevance:0.60(nvidia, gpu)"
-            ],
-            "infrastructureRelevanceAction": "generate_full_memo",
-            "articlePagePublished": true,
-            "homepagePublished": true,
-            "archiveOnly": false,
-            "archiveOnlyReason": null
-          },
-          "score": 74
-        },
-        {
-          "id": "cc25a65de28d71aa",
-          "source": "ServeTheHome",
-          "url": "https://www.servethehome.com/nvidia-computex-2026-news-bytes-vera-rubin-now-in-production-dgx-station-gets-windows/",
-          "title": "NVIDIA Computex 2026 News Bytes: Vera Rubin Now In Production, DGX Station Gets Windows",
-          "snippet": "At Computex 2026, NVIDIA announced that its next-gen Vera Rubin platform is now in full production. The company is also bringing Windows to its high-end DGX Station systems, which will be available in Q4 The post NVIDIA…",
-          "contentText": "At Computex 2026, NVIDIA announced that its next-gen Vera Rubin platform is now in full production. The company is also bringing Windows to its high-end DGX Station systems, which will be available in Q4 The post NVIDIA Computex 2026 News Bytes: Vera Rubin Now In Production, DGX Station Gets Windows appeared first on ServeTheHome .",
-          "publishedAt": "2026-06-01T17:00:06.000Z",
-          "sourceImage": null,
-          "region": "Global",
-          "language": "en",
-          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
-          "category": "AI Infrastructure",
-          "primary_category": "AI Infrastructure",
-          "secondary_category": "GPU clusters and deployment readiness",
-          "infrastructure_layer": "Compute",
-          "affected_stakeholders": [
-            "operators",
-            "hyperscalers",
-            "cloud buyers",
-            "investors"
-          ],
-          "article_type": "Product / Platform Update",
-          "urgency_score": 0.46,
-          "taxonomy_confidence": 0.77,
-          "taxonomy_reasons": [
-            "ai infrastructure",
-            "neocloud"
-          ],
-          "direct_ai_infrastructure_relevance": 1,
-          "data_center_relevance": 0,
-          "cloud_capacity_relevance": 0,
-          "semiconductor_relevance": 0.598,
-          "power_grid_relevance": 0,
-          "cooling_relevance": 0,
-          "capital_markets_relevance": 0,
-          "enterprise_ai_infrastructure_relevance": 0,
-          "infrastructure_relevance_score": 0.862,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "semiconductor_relevance:0.60(nvidia, gpu)"
-          ],
-          "infrastructure_relevance": {
-            "direct_ai_infrastructure_relevance": 1,
-            "data_center_relevance": 0,
-            "cloud_capacity_relevance": 0,
-            "semiconductor_relevance": 0.598,
-            "power_grid_relevance": 0,
-            "cooling_relevance": 0,
-            "capital_markets_relevance": 0,
-            "enterprise_ai_infrastructure_relevance": 0,
-            "infrastructure_relevance_score": 0.862,
-            "infrastructure_relevance_tier": "full_memo",
-            "infrastructure_relevance_action": "generate_full_memo",
-            "infrastructure_relevance_reasons": [
-              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-              "semiconductor_relevance:0.60(nvidia, gpu)"
-            ],
-            "infrastructureRelevanceAction": "generate_full_memo",
-            "articlePagePublished": true,
-            "homepagePublished": true,
-            "archiveOnly": false,
-            "archiveOnlyReason": null
-          },
-          "score": 74
-        },
-        {
-          "id": "181cb30384636c03",
-          "source": "AWS News Blog",
-          "url": "https://aws.amazon.com/blogs/aws/get-started-with-openai-gpt-5-5-gpt-5-4-models-and-codex-on-amazon-bedrock/",
-          "title": "Get started with OpenAI GPT-5.5, GPT-5.4 models, and Codex on Amazon Bedrock",
-          "snippet": "OpenAI frontier models GPT-5.5 and GPT-5.4, and Codex, the OpenAI coding agent, are now generally available on Amazon Bedrock. Deploy frontier models on Bedrock's high performance inference engine with built-in security…",
-          "contentText": "As we previewed in What’s Next with AWS 2026 , we’re announcing the general availability of OpenAI GPT-5.5, GPT-5.4 models, and Codex on Amazon Bedrock , giving you access to frontier models and a coding agent for software development. According to OpenAI, GPT-5.5 and GPT-5.4 models are excellent for coding, reasoning, agentic workflows, and complex professional work. You can use GPT-5.5 for the hardest customer workloads and GPT-5.4 for the best price-performance. You can call them through Responses API on Amazon Bedrock’s next-generation inference engine built for high performance, reliability, and security. Codex is the OpenAI coding agent for AI-powered software development. According to OpenAI, more than 4 million developers use Codex every week to write, refactor, debug, test, and v…",
-          "publishedAt": "2026-06-01T21:33:28.000Z",
-          "sourceImage": "https://d2908q01vomqb2.cloudfront.net/da4b9237bacccdf19c0760cab7aec4a8359010b0/2026/06/01/2026-codex-on-bedrock.png",
-          "region": "US",
-          "language": "en",
-          "defaultCategory": "Hyperscalers & Cloud",
-          "category": "Cloud Capacity",
-          "primary_category": "Cloud Capacity",
-          "secondary_category": "Hyperscale regions and accelerator availability",
-          "infrastructure_layer": "Cloud Platform",
-          "affected_stakeholders": [
-            "hyperscalers",
-            "cloud buyers",
-            "enterprise IT",
-            "operators"
-          ],
-          "article_type": "Product / Platform Update",
-          "urgency_score": 0.36,
-          "taxonomy_confidence": 0.62,
-          "taxonomy_reasons": [
-            "aws"
-          ],
-          "direct_ai_infrastructure_relevance": 0.64,
-          "data_center_relevance": 0,
-          "cloud_capacity_relevance": 0.54,
-          "semiconductor_relevance": 0,
-          "power_grid_relevance": 0,
-          "cooling_relevance": 0,
-          "capital_markets_relevance": 0,
-          "enterprise_ai_infrastructure_relevance": 0,
-          "infrastructure_relevance_score": 0.56,
-          "infrastructure_relevance_tier": "signal_card",
-          "infrastructure_relevance_action": "publish_signal_card_only",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:0.64",
-            "cloud_capacity_relevance:0.54(hyperscalers, aws)"
-          ],
-          "infrastructure_relevance": {
-            "direct_ai_infrastructure_relevance": 0.64,
-            "data_center_relevance": 0,
-            "cloud_capacity_relevance": 0.54,
-            "semiconductor_relevance": 0,
-            "power_grid_relevance": 0,
-            "cooling_relevance": 0,
-            "capital_markets_relevance": 0,
-            "enterprise_ai_infrastructure_relevance": 0,
-            "infrastructure_relevance_score": 0.56,
-            "infrastructure_relevance_tier": "signal_card",
-            "infrastructure_relevance_action": "publish_signal_card_only",
-            "infrastructure_relevance_reasons": [
-              "direct_ai_infrastructure_relevance:0.64",
-              "cloud_capacity_relevance:0.54(hyperscalers, aws)"
-            ],
-            "infrastructureRelevanceAction": "publish_signal_card_only",
-            "articlePagePublished": false,
-            "homepagePublished": true,
-            "archiveOnly": false,
-            "archiveOnlyReason": null
-          },
-          "score": 70
-        },
-        {
-          "id": "41eac5aed1cebd27",
-          "source": "Data Center POST",
-          "url": "https://datacenterpost.com/the-inference-reckoning-ais-new-bottleneck-isnt-strategy-its-time/",
-          "title": "The Inference Reckoning: AI’s New Bottleneck Isn’t Strategy, It’s Time",
-          "snippet": "By Mike Hodge, AI Solutions Lead, Keysight Technologies TL;DR The Shift to Inference: The AI industry is rapidly transitioning from episodic model training to continuous, 24/7 inference operations, which are projected t…",
-          "contentText": "By Mike Hodge, AI Solutions Lead, Keysight Technologies TL;DR The Shift to Inference: The AI industry is rapidly transitioning from episodic model training to continuous, 24/7 inference operations, which are projected to soon account for two-thirds of all AI computational workloads. Compounding Financial Risks: Because inference runs constantly, even minor network inefficiencies or latency issues compound over billions of runs, directly eroding operating margins and inflating the cost per token. The Danger of Late Validation: Waiting to test inference infrastructure until after it is physically installed is a massive financial risk; discovering bottlenecks late leads to expensive remediation, extends deployment timelines, and delays revenue. # # # Over the past few years, AI has dominated…",
-          "publishedAt": "2026-06-01T18:30:39.000Z",
-          "sourceImage": "https://d3qut6qyo6tw2j.cloudfront.net/bin/uploads/2026/06/01135341/DCP-Blog-Submission_6.1.2026-2-1024x512.png",
-          "region": "US",
-          "language": "en",
-          "defaultCategory": "Colocation & Wholesale",
-          "category": "Data Centers",
-          "primary_category": "Data Centers",
-          "secondary_category": "Campus development and colocation capacity",
-          "infrastructure_layer": "Facility",
-          "affected_stakeholders": [
-            "data center operators",
-            "developers",
-            "site selectors",
-            "investors"
-          ],
-          "article_type": "Operations Update",
-          "urgency_score": 0.43,
-          "taxonomy_confidence": 0.73,
-          "taxonomy_reasons": [
-            "colocation",
-            "wholesale"
-          ],
-          "direct_ai_infrastructure_relevance": 0.78,
-          "data_center_relevance": 0.76,
-          "cloud_capacity_relevance": 0,
-          "semiconductor_relevance": 0,
-          "power_grid_relevance": 0,
-          "cooling_relevance": 0,
-          "capital_markets_relevance": 0,
-          "enterprise_ai_infrastructure_relevance": 0,
-          "infrastructure_relevance_score": 0.77,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:0.78",
-            "data_center_relevance:0.76(data center, colocation)"
-          ],
-          "infrastructure_relevance": {
-            "direct_ai_infrastructure_relevance": 0.78,
-            "data_center_relevance": 0.76,
-            "cloud_capacity_relevance": 0,
-            "semiconductor_relevance": 0,
-            "power_grid_relevance": 0,
-            "cooling_relevance": 0,
-            "capital_markets_relevance": 0,
-            "enterprise_ai_infrastructure_relevance": 0,
-            "infrastructure_relevance_score": 0.77,
-            "infrastructure_relevance_tier": "full_memo",
-            "infrastructure_relevance_action": "generate_full_memo",
-            "infrastructure_relevance_reasons": [
-              "direct_ai_infrastructure_relevance:0.78",
-              "data_center_relevance:0.76(data center, colocation)"
-            ],
-            "infrastructureRelevanceAction": "generate_full_memo",
-            "articlePagePublished": true,
-            "homepagePublished": true,
-            "archiveOnly": false,
-            "archiveOnlyReason": null
-          },
-          "score": 70
+          "score": 72
         }
       ],
       "curatedIds": [
-        "518f7863439aecd8",
-        "9ce58ee319dd3da9",
-        "3a6cc6b5eacefa11",
-        "cc25a65de28d71aa",
-        "181cb30384636c03",
-        "41eac5aed1cebd27"
+        "274897e20c9e79c2",
+        "6811295c56a5c699",
+        "179c4cb017d2ce84",
+        "bb60dc7827d0f498",
+        "fd1185c4eeb1e980",
+        "dcecbf1e93596c1b"
       ],
       "publishedIds": [
         "e01818cecf27f6d6",
         "c80c600f9b105aaa",
         "518f7863439aecd8",
-        "9ce58ee319dd3da9"
+        "9ce58ee319dd3da9",
+        "6811295c56a5c699",
+        "274897e20c9e79c2"
       ],
       "slotPublications": {
         "0": true,
-        "1": true
+        "1": true,
+        "2": true
       }
     }
   },
   "runHistory": [
-    {
-      "at": "2026-04-16T23:42:59.891Z",
-      "day": "2026-04-17",
-      "slot": 1,
-      "publishedCount": 2,
-      "publishedIds": [
-        "199cd3b90cb0a63f",
-        "36a510d87677fb0b"
-      ]
-    },
     {
       "at": "2026-04-17T08:50:48.004Z",
       "day": "2026-04-17",
@@ -14878,7 +14876,131 @@
       ],
       "signalCardItems": [],
       "archiveOnlyItems": []
+    },
+    {
+      "at": "2026-06-02T11:24:51.421Z",
+      "day": "2026-06-02",
+      "slot": 2,
+      "publishedCount": 0,
+      "signalCardCount": 1,
+      "archiveOnlyCount": 0,
+      "repetitionBlockedCount": 1,
+      "publishedIds": [],
+      "processedIds": [
+        "6811295c56a5c699",
+        "274897e20c9e79c2"
+      ],
+      "blockedCount": 1,
+      "blockedItems": [
+        {
+          "id": "6811295c56a5c699",
+          "title": "Jensen Huang says Nvidia wants to 'reinvent the single most important tool of humanity' with RTX Spark — Nvidia CEO touts support of 'literally every computer maker in the world' for its agentic AI PC platform",
+          "infrastructure_relevance_score": 0.932,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "data_center_relevance:0.42(data center)",
+            "cloud_capacity_relevance:0.32(hyperscalers)",
+            "semiconductor_relevance:0.60(nvidia, gpu)",
+            "power_grid_relevance:0.22(power)"
+          ],
+          "extraction_quality_score": 0.92,
+          "source_domain_adapter": "generic",
+          "content_length": 1049,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": false,
+          "repetition_block_reasons": [],
+          "repetition_check": null,
+          "expert_insight_complete": true,
+          "expert_insight_missing_fields": [],
+          "reason": "fail_closed: source_text_incomplete:source_evidence_length_below_1200"
+        }
+      ],
+      "repetitionBlockedItems": [
+        {
+          "id": "274897e20c9e79c2",
+          "title": "DAMAC Digital targets 6GW global data centre pipeline as AI demand accelerates",
+          "infrastructure_relevance_score": 0.98,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, compute capacity)",
+            "cloud_capacity_relevance:0.76(cloud capacity, hyperscalers)",
+            "power_grid_relevance:0.22(power)",
+            "cooling_relevance:0.82(cooling, liquid cooling)",
+            "capital_markets_relevance:0.58(capex, acquisition)",
+            "enterprise_ai_infrastructure_relevance:0.24(ai workloads)"
+          ],
+          "extraction_quality_score": 1,
+          "source_domain_adapter": "generic",
+          "content_length": 1662,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": true,
+          "repetition_block_reasons": [
+            "repeated_sentence_ratio>0.12",
+            "heading_sequence_similarity>0.75",
+            "conclusion_similarity>0.7"
+          ],
+          "repetition_check": {
+            "compared_article_count": 15,
+            "repeated_sentence_ratio": 0.16666666666666666,
+            "repeated_paragraph_ratio": 0.16666666666666666,
+            "heading_sequence_similarity": 1,
+            "banned_phrase_count": 0,
+            "banned_phrase_counts": {},
+            "recent_banned_phrase_counts": {},
+            "ngram_overlap": 0.3220338983050847,
+            "blueprint_repetition": 1,
+            "conclusion_similarity": 0.8999999999999998,
+            "repeated_sentence_count": 1,
+            "repeated_paragraph_count": 1,
+            "heading_sequence": [
+              "Capital Move",
+              "Demand Evidence",
+              "Execution Risk",
+              "Milestone To Watch"
+            ],
+            "blocked": true,
+            "reasons": [
+              "repeated_sentence_ratio>0.12",
+              "heading_sequence_similarity>0.75",
+              "conclusion_similarity>0.7"
+            ]
+          },
+          "expert_insight_complete": true,
+          "expert_insight_missing_fields": [],
+          "reason": "repeated_sentence_ratio>0.12; heading_sequence_similarity>0.75; conclusion_similarity>0.7"
+        }
+      ],
+      "signalCardItems": [
+        {
+          "id": "6811295c56a5c699",
+          "title": "Jensen Huang says Nvidia wants to 'reinvent the single most important tool of humanity' with RTX Spark — Nvidia CEO touts support of 'literally every computer maker in the world' for its agentic AI PC platform",
+          "infrastructure_relevance_score": 0.932,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "data_center_relevance:0.42(data center)",
+            "cloud_capacity_relevance:0.32(hyperscalers)",
+            "semiconductor_relevance:0.60(nvidia, gpu)",
+            "power_grid_relevance:0.22(power)"
+          ],
+          "extraction_quality_score": 0.92,
+          "source_domain_adapter": "generic",
+          "content_length": 1049,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": false,
+          "repetition_block_reasons": [],
+          "repetition_check": null,
+          "expert_insight_complete": true,
+          "expert_insight_missing_fields": [],
+          "reason": "fail_closed: source_text_incomplete:source_evidence_length_below_1200"
+        }
+      ],
+      "archiveOnlyItems": []
     }
   ],
-  "lastRunAt": "2026-06-02T00:16:07.581Z"
+  "lastRunAt": "2026-06-02T11:24:51.421Z"
 }
