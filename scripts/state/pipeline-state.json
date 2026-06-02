@@ -369,7 +369,9 @@
     "15792b758e874b1c",
     "b5f5330fda64d583",
     "e01818cecf27f6d6",
-    "c80c600f9b105aaa"
+    "c80c600f9b105aaa",
+    "518f7863439aecd8",
+    "9ce58ee319dd3da9"
   ],
   "dayPlans": {
     "2026-03-24": {
@@ -10659,90 +10661,19 @@
     "2026-06-02": {
       "date": "2026-06-02",
       "createdAt": "2026-06-01T19:57:25.072Z",
-      "refreshedAt": "2026-06-01T19:57:25.072Z",
+      "refreshedAt": "2026-06-02T00:16:07.581Z",
       "candidateWindowHours": 24,
       "curatedItems": [
         {
-          "id": "e01818cecf27f6d6",
-          "source": "HPCwire",
-          "url": "https://www.hpcwire.com/off-the-wire/nvidia-and-tsmc-bring-ai-into-fabs-to-advance-semiconductor-design-and-manufacturing/",
-          "title": "NVIDIA and TSMC Bring AI into Fabs to Advance Semiconductor Design and Manufacturing",
-          "snippet": "TAIPEI, Taiwan, June 1, 2026 — NVIDIA today announced that TSMC is using NVIDIA accelerated computing and AI to advance semiconductor design and manufacturing. As chips move to more advanced nodes, bringing them from de…",
-          "contentText": "TAIPEI, Taiwan, June 1, 2026 &#8212; NVIDIA today announced that TSMC is using NVIDIA accelerated computing and AI to advance semiconductor design and manufacturing. As chips move to more advanced nodes, bringing them from design to high-volume production has become one of the world’s most complex computing challenges. Computational lithography, transistor simulation, process control and wafer inspection now require massive-scale simulation and real-time optimization, and AI systems that can provide support across physics, images and other applications. Credit: NVIDIA TSMC is using NVIDIA technologies to accelerate this transformation, applying accelerated computing and AI across the semiconductor design and manufacturing lifecycle to improve turnaround time, energy efficiency, yield and…",
-          "publishedAt": "2026-06-01T19:36:48.000Z",
-          "sourceImage": "https://www.hpcwire.com/wp-content/uploads/2026/06/nvidia-tsmc-300x169.jpg",
-          "region": "APAC",
-          "language": "en",
-          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
-          "category": "Semiconductors",
-          "primary_category": "Semiconductors",
-          "secondary_category": "Accelerators, memory, and advanced packaging",
-          "infrastructure_layer": "Silicon",
-          "affected_stakeholders": [
-            "semiconductor suppliers",
-            "hyperscalers",
-            "server OEMs",
-            "investors"
-          ],
-          "article_type": "Supply Chain",
-          "urgency_score": 0.48,
-          "taxonomy_confidence": 0.95,
-          "taxonomy_reasons": [
-            "semiconductor",
-            "gpu",
-            "nvidia",
-            "tsmc",
-            "wafer"
-          ],
-          "direct_ai_infrastructure_relevance": 1,
-          "data_center_relevance": 0,
-          "cloud_capacity_relevance": 0,
-          "semiconductor_relevance": 1,
-          "power_grid_relevance": 0,
-          "cooling_relevance": 0,
-          "capital_markets_relevance": 0,
-          "enterprise_ai_infrastructure_relevance": 0,
-          "infrastructure_relevance_score": 0.95,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "semiconductor_relevance:1.00(semiconductor, nvidia, tsmc)"
-          ],
-          "infrastructure_relevance": {
-            "direct_ai_infrastructure_relevance": 1,
-            "data_center_relevance": 0,
-            "cloud_capacity_relevance": 0,
-            "semiconductor_relevance": 1,
-            "power_grid_relevance": 0,
-            "cooling_relevance": 0,
-            "capital_markets_relevance": 0,
-            "enterprise_ai_infrastructure_relevance": 0,
-            "infrastructure_relevance_score": 0.95,
-            "infrastructure_relevance_tier": "full_memo",
-            "infrastructure_relevance_action": "generate_full_memo",
-            "infrastructure_relevance_reasons": [
-              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-              "semiconductor_relevance:1.00(semiconductor, nvidia, tsmc)"
-            ],
-            "infrastructureRelevanceAction": "generate_full_memo",
-            "articlePagePublished": true,
-            "homepagePublished": true,
-            "archiveOnly": false,
-            "archiveOnlyReason": null
-          },
-          "score": 86
-        },
-        {
-          "id": "c80c600f9b105aaa",
-          "source": "StorageReview",
-          "url": "https://www.storagereview.com/news/nvidia-computex-2026-keynote-the-rtx-spark-pc-family-dgx-station-and-physical-ai",
-          "title": "NVIDIA Computex 2026 Keynote: The RTX Spark PC Family, DGX Station, and Physical AI",
-          "snippet": "Computex 2026 has kicked off in Taipei, and as usual, NVIDIA set the tone with a Jensen Huang keynote that ran the length of the company’s roadmap. A good chunk of it was the datacenter GPU goodness we had already seen,…",
-          "contentText": "Computex 2026 has kicked off in Taipei, and as usual, NVIDIA set the tone with a Jensen Huang keynote that ran the length of the company&#8217;s roadmap. A good chunk of it was the datacenter GPU goodness we had already seen, with Vera Rubin now in full production and the by-now-familiar messaging about agents reshaping every layer of computing. We will not rehash all of that here. The genuinely new material, and the reason this keynote mattered for anyone who lives on the client side, was the PC. NVIDIA and Microsoft used Computex to announce a reinvention of the Windows machine, doing so across an entire product family rather than a single device. Before we get to that, though, one piece of the data center story is worth a closer look. A Closer Look at the LPX Rack One data center item…",
-          "publishedAt": "2026-06-01T19:08:01.000Z",
-          "sourceImage": "https://www.storagereview.com/wp-content/uploads/2026/06/NVIDIA_COMPUTEX_2026_WINDOWS_PCS-scaled.jpg",
-          "region": "US",
+          "id": "518f7863439aecd8",
+          "source": "Toms Hardware",
+          "url": "https://www.tomshardware.com/pc-components/gpus/amd-radeon-rx-9070-gre-review",
+          "title": "AMD Radeon RX 9070 GRE review: thoroughly midrange",
+          "snippet": "AMD's $549 Radeon RX 9070 GRE offers strong high-refresh-rate 1080p and 1440p gaming performance as it launches globally at Computex 2026. But a lower price tag could have truly changed the midrange game.",
+          "contentText": "AMD's $549 Radeon RX 9070 GRE offers strong high-refresh-rate 1080p and 1440p gaming performance as it launches globally at Computex 2026. But a lower price tag could have truly changed the midrange game.",
+          "publishedAt": "2026-06-02T00:00:00.000Z",
+          "sourceImage": "https://cdn.mos.cms.futurecdn.net/DE5ftnPBSaFyUzG6qo5MoH-1280-80.jpg",
+          "region": "Global",
           "language": "en",
           "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
           "category": "AI Infrastructure",
@@ -10755,44 +10686,178 @@
             "cloud buyers",
             "investors"
           ],
-          "article_type": "Other",
-          "urgency_score": 0.48,
+          "article_type": "Product / Platform Update",
+          "urgency_score": 0.45,
           "taxonomy_confidence": 0.77,
           "taxonomy_reasons": [
             "ai infrastructure",
             "neocloud"
           ],
           "direct_ai_infrastructure_relevance": 1,
-          "data_center_relevance": 0.84,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0.517,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.844,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "semiconductor_relevance:0.52(amd, gpu)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 1,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0.517,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.844,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+              "semiconductor_relevance:0.52(amd, gpu)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 81
+        },
+        {
+          "id": "9ce58ee319dd3da9",
+          "source": "TechCrunch AI",
+          "url": "https://techcrunch.com/2026/06/01/alphabet-plans-to-raise-80-billion-to-pay-for-ai-buildout/",
+          "title": "Alphabet plans to raise $80B to pay for AI buildout",
+          "snippet": "\"The company is experiencing strong demand for its AI solutions and services from enterprises and consumers, at levels that are exceeding the company’s available supply,\" Alphabet said in its statement.",
+          "contentText": "\"The company is experiencing strong demand for its AI solutions and services from enterprises and consumers, at levels that are exceeding the company’s available supply,\" Alphabet said in its statement.",
+          "publishedAt": "2026-06-01T22:55:09.000Z",
+          "sourceImage": null,
+          "region": "Global",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "category": "AI Infrastructure",
+          "primary_category": "AI Infrastructure",
+          "secondary_category": "GPU clusters and deployment readiness",
+          "infrastructure_layer": "Compute",
+          "affected_stakeholders": [
+            "operators",
+            "hyperscalers",
+            "cloud buyers",
+            "investors"
+          ],
+          "article_type": "Supply Chain",
+          "urgency_score": 0.43,
+          "taxonomy_confidence": 0.77,
+          "taxonomy_reasons": [
+            "ai infrastructure",
+            "neocloud"
+          ],
+          "direct_ai_infrastructure_relevance": 1,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0.22,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.778,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "semiconductor_relevance:0.22(gpu)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 1,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0.22,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.778,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+              "semiconductor_relevance:0.22(gpu)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 79
+        },
+        {
+          "id": "3a6cc6b5eacefa11",
+          "source": "HPCwire",
+          "url": "https://www.hpcwire.com/off-the-wire/nvidia-dsx-gives-infrastructure-builders-the-playbook-for-ai-factories/",
+          "title": "NVIDIA DSX Gives Infrastructure Builders the Playbook for AI Factories",
+          "snippet": "Engineered from the ground up for AI factories, the NVIDIA DSX platform defines how next-generation infrastructure is designed, built and operated — driving lowest token cost and accelerating time to first production ac…",
+          "contentText": "Engineered from the ground up for AI factories, the NVIDIA DSX platform defines how next-generation infrastructure is designed, built and operated — driving lowest token cost and accelerating time to first production across NVIDIA chips, systems, software, facilities and partner technologies. TAIPEI, Taiwan, June 1, 2026 &#8212; NVIDIA has announced the NVIDIA DSX platform, which gives infrastructure builders a complete playbook to create AI factories. Credit: NVIDIA NVIDIA DSX brings together open source, modular software libraries, application programming interfaces, reference designs, NVIDIA accelerated computing platforms and partner technologies into a common, codesigned platform for AI factory design, deployment and operations. NVIDIA is the only company that builds the full AI fact…",
+          "publishedAt": "2026-06-01T20:42:04.000Z",
+          "sourceImage": "https://www.hpcwire.com/wp-content/uploads/2026/06/nvidia-dsx-platform-300x169.png",
+          "region": "APAC",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "category": "AI Infrastructure",
+          "primary_category": "AI Infrastructure",
+          "secondary_category": "GPU clusters and deployment readiness",
+          "infrastructure_layer": "Compute",
+          "affected_stakeholders": [
+            "operators",
+            "hyperscalers",
+            "cloud buyers",
+            "investors"
+          ],
+          "article_type": "Product / Platform Update",
+          "urgency_score": 0.46,
+          "taxonomy_confidence": 0.77,
+          "taxonomy_reasons": [
+            "ai infrastructure",
+            "neocloud"
+          ],
+          "direct_ai_infrastructure_relevance": 1,
+          "data_center_relevance": 0,
           "cloud_capacity_relevance": 0,
           "semiconductor_relevance": 0.598,
           "power_grid_relevance": 0,
           "cooling_relevance": 0,
           "capital_markets_relevance": 0,
           "enterprise_ai_infrastructure_relevance": 0,
-          "infrastructure_relevance_score": 0.95,
+          "infrastructure_relevance_score": 0.862,
           "infrastructure_relevance_tier": "full_memo",
           "infrastructure_relevance_action": "generate_full_memo",
           "infrastructure_relevance_reasons": [
             "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "data_center_relevance:0.84(data center, datacenter)",
             "semiconductor_relevance:0.60(nvidia, gpu)"
           ],
           "infrastructure_relevance": {
             "direct_ai_infrastructure_relevance": 1,
-            "data_center_relevance": 0.84,
+            "data_center_relevance": 0,
             "cloud_capacity_relevance": 0,
             "semiconductor_relevance": 0.598,
             "power_grid_relevance": 0,
             "cooling_relevance": 0,
             "capital_markets_relevance": 0,
             "enterprise_ai_infrastructure_relevance": 0,
-            "infrastructure_relevance_score": 0.95,
+            "infrastructure_relevance_score": 0.862,
             "infrastructure_relevance_tier": "full_memo",
             "infrastructure_relevance_action": "generate_full_memo",
             "infrastructure_relevance_reasons": [
               "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-              "data_center_relevance:0.84(data center, datacenter)",
               "semiconductor_relevance:0.60(nvidia, gpu)"
             ],
             "infrastructureRelevanceAction": "generate_full_memo",
@@ -10801,7 +10866,7 @@
             "archiveOnly": false,
             "archiveOnlyReason": null
           },
-          "score": 86
+          "score": 74
         },
         {
           "id": "cc25a65de28d71aa",
@@ -10869,7 +10934,74 @@
             "archiveOnly": false,
             "archiveOnlyReason": null
           },
-          "score": 82
+          "score": 74
+        },
+        {
+          "id": "181cb30384636c03",
+          "source": "AWS News Blog",
+          "url": "https://aws.amazon.com/blogs/aws/get-started-with-openai-gpt-5-5-gpt-5-4-models-and-codex-on-amazon-bedrock/",
+          "title": "Get started with OpenAI GPT-5.5, GPT-5.4 models, and Codex on Amazon Bedrock",
+          "snippet": "OpenAI frontier models GPT-5.5 and GPT-5.4, and Codex, the OpenAI coding agent, are now generally available on Amazon Bedrock. Deploy frontier models on Bedrock's high performance inference engine with built-in security…",
+          "contentText": "As we previewed in What’s Next with AWS 2026 , we’re announcing the general availability of OpenAI GPT-5.5, GPT-5.4 models, and Codex on Amazon Bedrock , giving you access to frontier models and a coding agent for software development. According to OpenAI, GPT-5.5 and GPT-5.4 models are excellent for coding, reasoning, agentic workflows, and complex professional work. You can use GPT-5.5 for the hardest customer workloads and GPT-5.4 for the best price-performance. You can call them through Responses API on Amazon Bedrock’s next-generation inference engine built for high performance, reliability, and security. Codex is the OpenAI coding agent for AI-powered software development. According to OpenAI, more than 4 million developers use Codex every week to write, refactor, debug, test, and v…",
+          "publishedAt": "2026-06-01T21:33:28.000Z",
+          "sourceImage": "https://d2908q01vomqb2.cloudfront.net/da4b9237bacccdf19c0760cab7aec4a8359010b0/2026/06/01/2026-codex-on-bedrock.png",
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "Hyperscalers & Cloud",
+          "category": "Cloud Capacity",
+          "primary_category": "Cloud Capacity",
+          "secondary_category": "Hyperscale regions and accelerator availability",
+          "infrastructure_layer": "Cloud Platform",
+          "affected_stakeholders": [
+            "hyperscalers",
+            "cloud buyers",
+            "enterprise IT",
+            "operators"
+          ],
+          "article_type": "Product / Platform Update",
+          "urgency_score": 0.36,
+          "taxonomy_confidence": 0.62,
+          "taxonomy_reasons": [
+            "aws"
+          ],
+          "direct_ai_infrastructure_relevance": 0.64,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0.54,
+          "semiconductor_relevance": 0,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.56,
+          "infrastructure_relevance_tier": "signal_card",
+          "infrastructure_relevance_action": "publish_signal_card_only",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:0.64",
+            "cloud_capacity_relevance:0.54(hyperscalers, aws)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 0.64,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0.54,
+            "semiconductor_relevance": 0,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.56,
+            "infrastructure_relevance_tier": "signal_card",
+            "infrastructure_relevance_action": "publish_signal_card_only",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:0.64",
+              "cloud_capacity_relevance:0.54(hyperscalers, aws)"
+            ],
+            "infrastructureRelevanceAction": "publish_signal_card_only",
+            "articlePagePublished": false,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 70
         },
         {
           "id": "41eac5aed1cebd27",
@@ -10937,180 +11069,30 @@
             "archiveOnly": false,
             "archiveOnlyReason": null
           },
-          "score": 78
-        },
-        {
-          "id": "a7bb96de3ed4e5a6",
-          "source": "TechCrunch AI",
-          "url": "https://techcrunch.com/2026/06/01/water-access-is-now-a-risk-factor-in-spacexs-ipo/",
-          "title": "Water access is now a risk factor in SpaceX’s IPO",
-          "snippet": "The company says it needs \"significant\" water resources to cool its data centers, and that access to abundant, affordable water is a challenge.",
-          "contentText": "The company says it needs \"significant\" water resources to cool its data centers, and that access to abundant, affordable water is a challenge.",
-          "publishedAt": "2026-06-01T18:19:53.000Z",
-          "sourceImage": null,
-          "region": "Global",
-          "language": "en",
-          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
-          "category": "AI Infrastructure",
-          "primary_category": "AI Infrastructure",
-          "secondary_category": "GPU clusters and deployment readiness",
-          "infrastructure_layer": "Compute",
-          "affected_stakeholders": [
-            "operators",
-            "hyperscalers",
-            "cloud buyers",
-            "investors"
-          ],
-          "article_type": "Financing / M&A",
-          "urgency_score": 0.47,
-          "taxonomy_confidence": 0.77,
-          "taxonomy_reasons": [
-            "ai infrastructure",
-            "neocloud"
-          ],
-          "direct_ai_infrastructure_relevance": 1,
-          "data_center_relevance": 0.42,
-          "cloud_capacity_relevance": 0,
-          "semiconductor_relevance": 0.22,
-          "power_grid_relevance": 0,
-          "cooling_relevance": 0,
-          "capital_markets_relevance": 0.324,
-          "enterprise_ai_infrastructure_relevance": 0,
-          "infrastructure_relevance_score": 0.892,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "data_center_relevance:0.42(data centers)",
-            "semiconductor_relevance:0.22(gpu)",
-            "capital_markets_relevance:0.32(ipo)"
-          ],
-          "infrastructure_relevance": {
-            "direct_ai_infrastructure_relevance": 1,
-            "data_center_relevance": 0.42,
-            "cloud_capacity_relevance": 0,
-            "semiconductor_relevance": 0.22,
-            "power_grid_relevance": 0,
-            "cooling_relevance": 0,
-            "capital_markets_relevance": 0.324,
-            "enterprise_ai_infrastructure_relevance": 0,
-            "infrastructure_relevance_score": 0.892,
-            "infrastructure_relevance_tier": "full_memo",
-            "infrastructure_relevance_action": "generate_full_memo",
-            "infrastructure_relevance_reasons": [
-              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-              "data_center_relevance:0.42(data centers)",
-              "semiconductor_relevance:0.22(gpu)",
-              "capital_markets_relevance:0.32(ipo)"
-            ],
-            "infrastructureRelevanceAction": "generate_full_memo",
-            "articlePagePublished": true,
-            "homepagePublished": true,
-            "archiveOnly": false,
-            "archiveOnlyReason": null
-          },
-          "score": 76
-        },
-        {
-          "id": "0a087f9db65a19b9",
-          "source": "Semiconductor Engineering",
-          "url": "https://semiengineering.com/the-sub-2nm-paradox/",
-          "title": "The Sub-2nm Paradox",
-          "snippet": "Reducing variation in manufacturing, monitoring behavior over time, and targeting specific workloads can have a big impact on power, performance, and area/cost. The post The Sub-2nm Paradox appeared first on Semiconduct…",
-          "contentText": "Key Takeaways: Process variation and physics are changing semiconductor design, manufacturing, and economics at 2nm and below. Even though new manufacturing processes are being introduced, it&#8217;s taking longer for them to mature. The focus for many chip designs is faster data movement and more efficient computing, rather than just relying on more transistors per mm 2 . At 2nm and below, Moore is more, but more is also less. In theory, the more transistors that can be packed onto a reticle-sized die, the faster a chip can process data and move it back and forth from memory. But theory and reality are diverging. Historically, the best way to achieve that was to shrink the transistors, the wires, and the memory cells. At 2nm and below, this formula is under stress. The wires are so thin…",
-          "publishedAt": "2026-06-01T07:01:10.000Z",
-          "sourceImage": "https://i0.wp.com/semiengineering.com/wp-content/uploads/2026/05/CFET1.png.webp?resize=640%2C360&#038;ssl=1",
-          "region": "US",
-          "language": "en",
-          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
-          "category": "Semiconductors",
-          "primary_category": "Semiconductors",
-          "secondary_category": "Accelerators, memory, and advanced packaging",
-          "infrastructure_layer": "Silicon",
-          "affected_stakeholders": [
-            "semiconductor suppliers",
-            "hyperscalers",
-            "server OEMs",
-            "investors"
-          ],
-          "article_type": "Supply Chain",
-          "urgency_score": 0.55,
-          "taxonomy_confidence": 0.78,
-          "taxonomy_reasons": [
-            "semiconductor",
-            "chip",
-            "gpu"
-          ],
-          "direct_ai_infrastructure_relevance": 1,
-          "data_center_relevance": 0,
-          "cloud_capacity_relevance": 0,
-          "semiconductor_relevance": 0.58,
-          "power_grid_relevance": 0.22,
-          "cooling_relevance": 0,
-          "capital_markets_relevance": 0,
-          "enterprise_ai_infrastructure_relevance": 0,
-          "infrastructure_relevance_score": 0.893,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "semiconductor_relevance:0.58(semiconductor, gpu)",
-            "power_grid_relevance:0.22(power)"
-          ],
-          "infrastructure_relevance": {
-            "direct_ai_infrastructure_relevance": 1,
-            "data_center_relevance": 0,
-            "cloud_capacity_relevance": 0,
-            "semiconductor_relevance": 0.58,
-            "power_grid_relevance": 0.22,
-            "cooling_relevance": 0,
-            "capital_markets_relevance": 0,
-            "enterprise_ai_infrastructure_relevance": 0,
-            "infrastructure_relevance_score": 0.893,
-            "infrastructure_relevance_tier": "full_memo",
-            "infrastructure_relevance_action": "generate_full_memo",
-            "infrastructure_relevance_reasons": [
-              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-              "semiconductor_relevance:0.58(semiconductor, gpu)",
-              "power_grid_relevance:0.22(power)"
-            ],
-            "infrastructureRelevanceAction": "generate_full_memo",
-            "articlePagePublished": true,
-            "homepagePublished": true,
-            "archiveOnly": false,
-            "archiveOnlyReason": null
-          },
           "score": 70
         }
       ],
       "curatedIds": [
-        "e01818cecf27f6d6",
-        "c80c600f9b105aaa",
+        "518f7863439aecd8",
+        "9ce58ee319dd3da9",
+        "3a6cc6b5eacefa11",
         "cc25a65de28d71aa",
-        "41eac5aed1cebd27",
-        "a7bb96de3ed4e5a6",
-        "0a087f9db65a19b9"
+        "181cb30384636c03",
+        "41eac5aed1cebd27"
       ],
       "publishedIds": [
         "e01818cecf27f6d6",
-        "c80c600f9b105aaa"
+        "c80c600f9b105aaa",
+        "518f7863439aecd8",
+        "9ce58ee319dd3da9"
       ],
       "slotPublications": {
-        "0": true
+        "0": true,
+        "1": true
       }
     }
   },
   "runHistory": [
-    {
-      "at": "2026-04-16T16:27:03.028Z",
-      "day": "2026-04-17",
-      "slot": 0,
-      "publishedCount": 2,
-      "publishedIds": [
-        "f1d6ca1a9c2d1f1a",
-        "bc9997eb21520b9f"
-      ]
-    },
     {
       "at": "2026-04-16T23:42:59.891Z",
       "day": "2026-04-17",
@@ -14775,7 +14757,128 @@
         }
       ],
       "archiveOnlyItems": []
+    },
+    {
+      "at": "2026-06-02T00:16:07.581Z",
+      "day": "2026-06-02",
+      "slot": 1,
+      "publishedCount": 0,
+      "signalCardCount": 0,
+      "archiveOnlyCount": 0,
+      "repetitionBlockedCount": 2,
+      "publishedIds": [],
+      "processedIds": [
+        "518f7863439aecd8",
+        "9ce58ee319dd3da9"
+      ],
+      "blockedCount": 0,
+      "blockedItems": [],
+      "repetitionBlockedItems": [
+        {
+          "id": "518f7863439aecd8",
+          "title": "AMD Radeon RX 9070 GRE review: thoroughly midrange",
+          "infrastructure_relevance_score": 0.975,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "cloud_capacity_relevance:0.32(hyperscalers)",
+            "semiconductor_relevance:0.80(nvidia, amd, gpu)",
+            "power_grid_relevance:0.22(power)"
+          ],
+          "extraction_quality_score": 1,
+          "source_domain_adapter": "generic",
+          "content_length": 1791,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": true,
+          "repetition_block_reasons": [
+            "repeated_sentence_ratio>0.12",
+            "conclusion_similarity>0.7"
+          ],
+          "repetition_check": {
+            "compared_article_count": 15,
+            "repeated_sentence_ratio": 0.14285714285714285,
+            "repeated_paragraph_ratio": 0.16666666666666666,
+            "heading_sequence_similarity": 0,
+            "banned_phrase_count": 0,
+            "banned_phrase_counts": {},
+            "recent_banned_phrase_counts": {},
+            "ngram_overlap": 0.330188679245283,
+            "blueprint_repetition": 2,
+            "conclusion_similarity": 0.9233805168766386,
+            "repeated_sentence_count": 1,
+            "repeated_paragraph_count": 1,
+            "heading_sequence": [
+              "System Change",
+              "Bottleneck",
+              "Engineering Tradeoff",
+              "Validation Metric"
+            ],
+            "blocked": true,
+            "reasons": [
+              "repeated_sentence_ratio>0.12",
+              "conclusion_similarity>0.7"
+            ]
+          },
+          "expert_insight_complete": true,
+          "expert_insight_missing_fields": [],
+          "reason": "repeated_sentence_ratio>0.12; conclusion_similarity>0.7"
+        },
+        {
+          "id": "9ce58ee319dd3da9",
+          "title": "Alphabet plans to raise $80B to pay for AI buildout",
+          "infrastructure_relevance_score": 0.87,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "cloud_capacity_relevance:0.32(hyperscalers)",
+            "semiconductor_relevance:0.22(gpu)",
+            "power_grid_relevance:0.22(power)",
+            "capital_markets_relevance:0.28(capex)"
+          ],
+          "extraction_quality_score": 1,
+          "source_domain_adapter": "techcrunch",
+          "content_length": 1727,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": true,
+          "repetition_block_reasons": [
+            "heading_sequence_similarity>0.75",
+            "conclusion_similarity>0.7"
+          ],
+          "repetition_check": {
+            "compared_article_count": 15,
+            "repeated_sentence_ratio": 0,
+            "repeated_paragraph_ratio": 0,
+            "heading_sequence_similarity": 1,
+            "banned_phrase_count": 0,
+            "banned_phrase_counts": {},
+            "recent_banned_phrase_counts": {},
+            "ngram_overlap": 0.3076923076923077,
+            "blueprint_repetition": 1,
+            "conclusion_similarity": 0.8999999999999998,
+            "repeated_sentence_count": 0,
+            "repeated_paragraph_count": 0,
+            "heading_sequence": [
+              "Deal Signal",
+              "Contract Quality",
+              "Operating Dependency",
+              "Investor Test"
+            ],
+            "blocked": true,
+            "reasons": [
+              "heading_sequence_similarity>0.75",
+              "conclusion_similarity>0.7"
+            ]
+          },
+          "expert_insight_complete": true,
+          "expert_insight_missing_fields": [],
+          "reason": "heading_sequence_similarity>0.75; conclusion_similarity>0.7"
+        }
+      ],
+      "signalCardItems": [],
+      "archiveOnlyItems": []
     }
   ],
-  "lastRunAt": "2026-06-01T19:57:25.072Z"
+  "lastRunAt": "2026-06-02T00:16:07.581Z"
 }
