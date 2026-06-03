@@ -2253,7 +2253,80 @@
     "repetition_block_reasons": [],
     "generatedImageProvider": "local-placeholder",
     "generatedImageModel": "local-svg",
-    "anti_template_rewrite": true
+    "anti_template_rewrite": true,
+    "claim_ledger": [
+      {
+        "claim": "At the Mistral AI NOW Summit, VAST Data outlined its partnership with Mistral AI and Mistral Compute, detailing a joint effort to deploy NVIDIA-accelerated AI factories in Europe.",
+        "source": "StorageReview",
+        "source_url": "https://www.storagereview.com/news/vast-data-powers-mistral-compute-ai-factories-on-nvidia-gb300-nvl72",
+        "verification_status": "verified",
+        "evidence": "At the Mistral AI NOW Summit, VAST Data outlined its partnership with Mistral AI and Mistral Compute, detailing a joint effort to deploy NVIDIA-accelerated AI factories in Europe.",
+        "confidence": "high",
+        "claim_type": "source_fact"
+      },
+      {
+        "claim": "At the center of the deployment is a large-scale implementation of NVIDIA GB300 NVL72 systems, representing one of the highest-density concentrations of this architecture in Europe.",
+        "source": "StorageReview",
+        "source_url": "https://www.storagereview.com/news/vast-data-powers-mistral-compute-ai-factories-on-nvidia-gb300-nvl72",
+        "verification_status": "verified",
+        "evidence": "At the center of the deployment is a large-scale implementation of NVIDIA GB300 NVL72 systems, representing one of the highest-density concentrations of this architecture in Europe.",
+        "confidence": "high",
+        "claim_type": "deployment_scale"
+      },
+      {
+        "claim": "Mistral Compute will operate the infrastructure as part of its AI cloud platform, while VAST provides the data layer that manages data access, movement, governance, and performance across the environment.",
+        "source": "StorageReview",
+        "source_url": "https://www.storagereview.com/news/vast-data-powers-mistral-compute-ai-factories-on-nvidia-gb300-nvl72",
+        "verification_status": "verified",
+        "evidence": "Mistral Compute will operate the infrastructure as part of its AI cloud platform, while VAST provides the data layer that manages data access, movement, governance, and performance across the environment.",
+        "confidence": "high",
+        "claim_type": "source_fact"
+      },
+      {
+        "claim": "The collaboration aligns three core layers required for production AI: NVIDIA accelerated compute, Mistral&#8217;s frontier models, and the VAST AI Operating System as the unified data platform.",
+        "source": "StorageReview",
+        "source_url": "https://www.storagereview.com/news/vast-data-powers-mistral-compute-ai-factories-on-nvidia-gb300-nvl72",
+        "verification_status": "verified",
+        "evidence": "The collaboration aligns three core layers required for production AI: NVIDIA accelerated compute, Mistral&#8217;s frontier models, and the VAST AI Operating System as the unified data platform.",
+        "confidence": "high",
+        "claim_type": "source_fact"
+      }
+    ],
+    "claim_ledger_summary": {
+      "total_claims": 4,
+      "verified_claims": 4,
+      "unsupported_claims": 0,
+      "primary_source": "StorageReview"
+    },
+    "evidence_pack": {
+      "source": "StorageReview",
+      "source_url": "https://www.storagereview.com/news/vast-data-powers-mistral-compute-ai-factories-on-nvidia-gb300-nvl72",
+      "verified_facts": [
+        "At the Mistral AI NOW Summit, VAST Data outlined its partnership with Mistral AI and Mistral Compute, detailing a joint effort to deploy NVIDIA-accelerated AI factories in Europe.",
+        "At the center of the deployment is a large-scale implementation of NVIDIA GB300 NVL72 systems, representing one of the highest-density concentrations of this architecture in Europe.",
+        "Mistral Compute will operate the infrastructure as part of its AI cloud platform, while VAST provides the data layer that manages data access, movement, governance, and performance across the environment.",
+        "The collaboration aligns three core layers required for production AI: NVIDIA accelerated compute, Mistral&#8217;s frontier models, and the VAST AI Operating System as the unified data platform."
+      ],
+      "named_companies": [
+        "NVIDIA",
+        "VAST Data"
+      ],
+      "infrastructure_layer": "Compute",
+      "affected_stakeholders": [
+        "operators",
+        "hyperscalers",
+        "cloud buyers",
+        "investors"
+      ],
+      "watch_metric": "interconnection approvals, substation equipment dates, power purchase agreements, or disclosed energization windows"
+    },
+    "editorial_thesis": {
+      "bottom_line": "VAST and Mistral are tying GB300-class compute, frontier models, and a unified data layer into a European AI factory stack, making data movement and governance part of the deployment bottleneck rather than a back-office storage detail.",
+      "decision_point": "interconnection approvals, substation equipment dates, power purchase agreements, or disclosed energization windows"
+    },
+    "blog_metadata": {
+      "source_summary_ratio": 0.28
+    }
   },
   {
     "id": "83e0fcbe0c581ad0",
