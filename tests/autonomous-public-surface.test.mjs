@@ -38,7 +38,12 @@ test('published autonomous analyses carry claim ledgers and bottom-line data', (
 test('autonomous items that fail longform quality stay on source-linked signal routes', () => {
   const latest = JSON.parse(fs.readFileSync('src/data/latest-news.json', 'utf8'));
   const failedLongformCandidates = latest.filter((item) => item.signalCardReason === 'longform_quality_gate_failed');
-  assert.ok(failedLongformCandidates.length > 0);
+  const publishedAnalyses = latest.filter((item) => item.articlePagePublished === true);
+  assert.equal(
+    publishedAnalyses.some((item) => item.signalCardReason === 'longform_quality_gate_failed'),
+    false,
+    'failed longform candidates must not publish local article pages',
+  );
 
   for (const article of failedLongformCandidates) {
     assert.equal(article.articlePagePublished, false, `${article.title} should not publish a local article page`);

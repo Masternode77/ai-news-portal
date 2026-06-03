@@ -11,7 +11,7 @@ export const BLOG_LENGTH_POLICY = {
   },
   standard_blog: {
     label: 'Standard Blog',
-    minVisibleBodyCharacters: 2200,
+    minVisibleBodyCharacters: 4500,
     targetWordsMin: 650,
     targetWordsMax: 1000,
     minParagraphs: 8,

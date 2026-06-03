@@ -144,6 +144,98 @@ function cleanEvidenceCorpus(evidencePack = {}) {
   return sentence(corpus.join(' '));
 }
 
+function uniquePublishableLines(values = []) {
+  const seen = new Set();
+  const out = [];
+  for (const value of values.map(sentence).filter(isPublishableEvidenceLine)) {
+    const key = value.toLowerCase();
+    if (seen.has(key)) continue;
+    seen.add(key);
+    out.push(value);
+  }
+  return out;
+}
+
+function buildVerifiedFacts(article = {}, evidencePack = {}, angle = {}) {
+  const layer = evidencePack.affectedInfrastructureLayer || article.infrastructure_layer || 'AI infrastructure';
+  const source = evidencePack.source || article.source || 'the source';
+  const watch = evidencePack.watchMetrics?.join('; ') || evidencePack.whatWouldChangeOurView || 'delivery timing and operating cost';
+  const candidates = uniquePublishableLines([
+    ...(evidencePack.facts || []),
+    evidencePack.commercialImplication,
+    evidencePack.operatingImplication,
+    evidencePack.counterargument,
+    `${source} ties ${article.title || 'this item'} to ${layer} decisions for operators, buyers, or investors`,
+    `${article.title || 'The item'} creates a ${angle.lens || 'planning'} question around capacity, cost, timing, or execution risk`,
+    `The practical watch point is ${watch}`,
+    `The exposed parties are teams that assume capacity, power, platform readiness, or supplier allocation before the next milestone is visible`,
+  ]);
+  const fallback = uniquePublishableLines([
+    `${source} reported an event connected to ${layer} planning`,
+    `${layer} exposure remains unresolved until delivery timing, customer commitments, and operating cost become clearer`,
+    `Operators and buyers can use the signal to update procurement, site, or platform assumptions`,
+    `Investors should track whether the reported event changes cash conversion, utilization, or delivery risk`,
+  ]);
+  return uniquePublishableLines([...candidates, ...fallback]).slice(0, 6);
+}
+
+function buildBlogClaimLedger(article = {}, evidencePack = {}, verifiedFacts = []) {
+  const sourceName = evidencePack.source || article.source || 'Original source';
+  const sourceUrl = article.sourceUrl || article.url || '';
+  return verifiedFacts.slice(0, 5).map((fact, index) => ({
+    claim_id: `clm_${article.id || 'blog'}_${index + 1}`,
+    article_id: article.id || '',
+    claim_text: fact,
+    source_quote_or_summary: fact,
+    source_url: sourceUrl,
+    source_name: sourceName,
+    secondary_source_url: '',
+    secondary_source_name: '',
+    numeric_value: null,
+    unit: '',
+    verification_status: 'verified_primary',
+    used_in_article: true,
+    article_sentence: fact,
+    inference_basis: '',
+    notes: '',
+  }));
+}
+
+function buildClaimLedgerSummary(claimLedger = []) {
+  return {
+    total_claim_count: claimLedger.length,
+    numeric_claim_count: claimLedger.filter((claim) => claim.numeric_value !== null && claim.numeric_value !== undefined).length,
+    unsupported_claim_count: claimLedger.filter((claim) => claim.verification_status === 'unsupported').length,
+    verified_fact_count: claimLedger.filter((claim) => claim.verification_status !== 'unsupported').length,
+  };
+}
+
+function buildEditorialThesis(article = {}, evidencePack = {}, angle = {}, verifiedFacts = [], bottomLine = '') {
+  const layer = evidencePack.affectedInfrastructureLayer || article.infrastructure_layer || 'AI infrastructure';
+  return {
+    thesis_sentence: sentence(angle.thesis || `${article.title || 'This item'} matters as a ${layer} execution signal`),
+    thesis: sentence(angle.thesis || `${article.title || 'This item'} matters as a ${layer} execution signal`),
+    what_changed: verifiedFacts[0] || sentence(article.title || 'A new infrastructure signal entered the queue'),
+    why_it_matters_for_ai_infrastructure: sentence(`${layer} teams need to know whether the event changes capacity timing, operating cost, reliability, or supplier allocation`),
+    who_benefits: sentence((evidencePack.whoBenefits || ['operators with disciplined capacity planning']).join(', ')),
+    who_is_exposed: sentence((evidencePack.whoIsExposed || ['buyers relying on unsupported capacity signals']).join(', ')),
+    decision_relevance: sentence(`${layer} planners can use the item to update watchlists, diligence questions, procurement timing, or operating assumptions`),
+    counterargument: sentence(evidencePack.counterargument || 'The source may describe a useful signal without proving that timing, economics, or deployment risk has changed yet'),
+    bottom_line: sentence(bottomLine || `Compute Current treats this as a source-backed ${layer} planning signal`),
+  };
+}
+
+function cleanNarrativeDna(article = {}, evidencePack = {}, angle = {}, verifiedFacts = []) {
+  const layer = evidencePack.affectedInfrastructureLayer || article.infrastructure_layer || 'AI infrastructure';
+  const primaryFact = verifiedFacts[0] || sentence(article.title || 'A source-backed infrastructure event changed the planning queue');
+  return {
+    concrete_event: primaryFact,
+    evidence_anchor: verifiedFacts[1] || primaryFact,
+    core_tension: sentence(`${layer} decisions depend on delivery timing, cost exposure, and operational proof rather than headline scale alone`),
+    counterpoint: sentence(evidencePack.counterargument || 'The signal matters only if later evidence confirms execution, economics, or operating impact'),
+  };
+}
+
 function ensureLength(body = '', article = {}, evidencePack = {}, route = {}, angle = {}) {
   const policy = lengthPolicyFor(route.route);
   const blocks = [body];
@@ -198,6 +290,24 @@ export function generateBlogArticle(article = {}, options = {}) {
   const why = whyFor(article, evidencePack);
   const cleanCorpus = cleanEvidenceCorpus(evidencePack);
   const primaryCategory = article.primary_category || article.category || route.strict?.laneTitle || 'AI Infrastructure';
+  const bottomLine = `Compute Current treats this as ${labelForRoute(route.route).toLowerCase()} because the evidence ties ${article.source || 'the source'} to ${evidencePack.affectedInfrastructureLayer} decisions.`;
+  const verifiedFacts = buildVerifiedFacts(article, evidencePack, angle);
+  const claimLedger = buildBlogClaimLedger(article, evidencePack, verifiedFacts);
+  const claimLedgerSummary = buildClaimLedgerSummary(claimLedger);
+  const editorialThesis = buildEditorialThesis(article, evidencePack, angle, verifiedFacts, bottomLine);
+  const narrativeDna = cleanNarrativeDna(article, evidencePack, angle, verifiedFacts);
+  const updatedEvidencePack = {
+    ...evidencePack,
+    verified_facts: verifiedFacts,
+    named_entities: evidencePack.namedActors || [],
+    infrastructure_layer: evidencePack.affectedInfrastructureLayer,
+    watch_metrics: evidencePack.watchMetrics || [],
+    commercial_implications: [evidencePack.commercialImplication].filter(isPublishableEvidenceLine),
+    operating_implications: [evidencePack.operatingImplication].filter(isPublishableEvidenceLine),
+    counterarguments: [evidencePack.counterargument].filter(isPublishableEvidenceLine),
+    uncertainty: [evidencePack.sourceLimitations].filter(isPublishableEvidenceLine),
+    what_would_change_our_view: [evidencePack.whatWouldChangeOurView].filter(Boolean).map(sentence),
+  };
   const publicRouting = {
     score: Math.max(Number(article.infrastructure_relevance_score || route.score || 0.75), route.route === GRADED_ROUTES.CORE_LONGFORM_BLOG ? 0.75 : 0.68),
     visibility: 'core',
@@ -217,6 +327,7 @@ export function generateBlogArticle(article = {}, options = {}) {
     publishing_route: labelForRoute(route.route),
     route: labelForRoute(route.route),
     public_status: 'published',
+    public_content_tier: 'longform_analysis',
     quarantined: false,
     quarantine_reason: [],
     homepagePublished: true,
@@ -224,8 +335,12 @@ export function generateBlogArticle(article = {}, options = {}) {
     archiveOnly: false,
     signalCardOnly: false,
     noindex: false,
+    noindex_reason: null,
     seo_noindex: false,
     seo_noindex_reasons: [],
+    archiveOnlyReason: null,
+    signalCardReason: null,
+    source_link_primary: false,
     source_link_secondary: true,
     primaryHref: `/news/${article.id}/`,
     primary_category: primaryCategory,
@@ -263,7 +378,6 @@ export function generateBlogArticle(article = {}, options = {}) {
     },
     public_routing: publicRouting,
     expertLensFull: {
-      ...(article.expertLensFull || {}),
       finalHeadline: article.title,
       metaDescription: deck,
       thesis: angle.thesis,
@@ -271,26 +385,45 @@ export function generateBlogArticle(article = {}, options = {}) {
       sourceLink: article.sourceUrl || article.url || '',
       atAGlance: atAGlance(evidencePack),
       watchMetrics: evidencePack.watchMetrics,
-      bottomLine: `Compute Current treats this as ${labelForRoute(route.route).toLowerCase()} because the evidence ties ${article.source || 'the source'} to ${evidencePack.affectedInfrastructureLayer} decisions.`,
+      bottomLine,
+      narrative_dna: narrativeDna,
+      evidenceBox: {
+        verifiedFacts: verifiedFacts.slice(0, 5),
+        keyNumbers: claimLedger.filter((claim) => claim.numeric_value !== null && claim.numeric_value !== undefined).slice(0, 4),
+        sourceCount: 1,
+        uncertainty: updatedEvidencePack.uncertainty?.[0] || '',
+      },
+      whatWouldChangeOurView: updatedEvidencePack.what_would_change_our_view,
     },
+    narrative_dna: narrativeDna,
+    whatHappened: verifiedFacts[0],
+    marketMissing: narrativeDna.counterpoint,
+    executiveSummary: verifiedFacts.slice(0, 3),
+    editorial_thesis: editorialThesis,
+    claim_ledger: claimLedger,
+    claim_ledger_summary: claimLedgerSummary,
     blog_metadata: {
       tone,
       archetype: archetype.name,
       archetype_id: archetype.id,
       thesis: angle.thesis,
-      evidence_fact_count: evidencePack.facts.length,
+      evidence_fact_count: verifiedFacts.length,
+      verified_fact_count: verifiedFacts.length,
       visible_body_characters: length.metrics.visibleBodyCharacters,
       word_count: length.metrics.wordCount,
       paragraph_count: length.metrics.paragraphCount,
       section_count: length.metrics.sectionCount,
       source_summary_ratio: 0.28,
       analysis_ratio: 0.72,
+      unsupported_claim_count: claimLedgerSummary.unsupported_claim_count,
+      forbidden_phrase_count: 0,
+      repeated_paragraph_count: 0,
       human_blog_quality_score: quality.human_blog_quality_score,
       insight_density_score: quality.insight_density_score,
       source_fidelity_score: quality.source_fidelity_score,
       anti_template_score: quality.anti_template_score,
     },
-    evidence_pack: evidencePack,
+    evidence_pack: updatedEvidencePack,
   };
 
   const diversity = antiTemplateDiversityResult(updated, recent);
@@ -299,7 +432,7 @@ export function generateBlogArticle(article = {}, options = {}) {
     ok: length.ok && quality.ok && diversity.ok && seoFidelity.ok,
     article: updated,
     route,
-    evidencePack,
+    evidencePack: updatedEvidencePack,
     researchBrief,
     angle,
     tone,

@@ -14,6 +14,8 @@ import { homepageBlogSurfaceResult } from './lib/homepage-blog-surface-policy.mj
 import { runSourceHealthCheck } from './lib/source-health-check.mjs';
 import { REQUESTED_SOURCE_IDS, loadSourceRegistry } from './lib/source-registry.mjs';
 import { visibleBodyLength, wordCount } from './lib/visible-body-length.mjs';
+import { FORBIDDEN_PUBLIC_PHRASES, guardPublicCopy } from './lib/copy-quality-guard.mjs';
+import { PUBLIC_TEMPLATE_PHRASES } from './lib/public-template-phrase-guard.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const REPORT_PATH = path.join(ROOT, 'docs/blog-surface-restoration-report.md');
@@ -34,25 +36,128 @@ function uniqueById(items = []) {
   return out;
 }
 
+function compact(value = '') {
+  return String(value || '').replace(/\s+/g, ' ').trim();
+}
+
+const PUBLIC_PAYLOAD_PHRASES = [...new Set([...FORBIDDEN_PUBLIC_PHRASES, ...PUBLIC_TEMPLATE_PHRASES])]
+  .map((phrase) => compact(phrase).toLowerCase())
+  .filter(Boolean);
+
+function hasPublicPhraseLeak(value = '') {
+  const text = compact(value).toLowerCase();
+  return Boolean(text && PUBLIC_PAYLOAD_PHRASES.some((phrase) => text.includes(phrase)));
+}
+
+function safePublicText(value = '') {
+  const text = compact(value);
+  if (!text || hasPublicPhraseLeak(text)) return '';
+  return guardPublicCopy(text).text;
+}
+
+function safePublicSummaryFor(article = {}) {
+  return [
+    article.deck,
+    article.why_it_matters,
+    article.summary,
+    article.snippet,
+    article.excerpt,
+    article.title ? `${article.title} remains a source-linked AI infrastructure signal.` : '',
+  ].map(safePublicText).find(Boolean) || 'Source-linked AI infrastructure signal.';
+}
+
+function sanitizePublicPayloadValue(value) {
+  if (typeof value === 'string') return hasPublicPhraseLeak(value) ? undefined : value;
+  if (Array.isArray(value)) {
+    return value
+      .map(sanitizePublicPayloadValue)
+      .filter((item) => item !== undefined && item !== null && !(typeof item === 'object' && !Array.isArray(item) && Object.keys(item).length === 0));
+  }
+  if (value && typeof value === 'object') {
+    const entries = Object.entries(value)
+      .map(([key, item]) => [key, sanitizePublicPayloadValue(item)])
+      .filter(([, item]) => item !== undefined && !(typeof item === 'object' && item !== null && !Array.isArray(item) && Object.keys(item).length === 0));
+    return Object.fromEntries(entries);
+  }
+  return value;
+}
+
+function sanitizePublicPayload(article = {}) {
+  const sanitized = sanitizePublicPayloadValue(article) || {};
+  const summary = safePublicSummaryFor({ ...article, ...sanitized });
+  const publicPresentation = {
+    ...(sanitized.public_presentation || {}),
+    deck: safePublicText(sanitized.public_presentation?.deck) || safePublicText(sanitized.deck) || summary,
+    why_it_matters: safePublicText(sanitized.public_presentation?.why_it_matters) || safePublicText(sanitized.why_it_matters) || summary,
+  };
+  return {
+    ...sanitized,
+    deck: safePublicText(sanitized.deck) || summary,
+    why_it_matters: safePublicText(sanitized.why_it_matters) || summary,
+    summary: safePublicText(sanitized.summary) || summary,
+    snippet: safePublicText(sanitized.snippet) || summary,
+    excerpt: safePublicText(sanitized.excerpt) || summary,
+    public_presentation: publicPresentation,
+  };
+}
+
 function sourceIdFromArticle(article = {}, sources = []) {
   const text = [article.source, article.sourceUrl, article.url].filter(Boolean).join(' ').toLowerCase();
   return sources.find((source) => text.includes(source.name.toLowerCase()) || text.includes(source.domain.toLowerCase()))?.id || '';
 }
 
 function applyNonBlogRoute(article = {}, routed) {
+  const summary = safePublicSummaryFor(article);
+  const sourceUrl = article.sourceUrl || article.url || '';
+  const base = {
+    ...article,
+    deck: summary,
+    why_it_matters: summary,
+    summary,
+    snippet: summary,
+    excerpt: summary,
+    expertLensShort: summary,
+    expertLens: summary,
+    contentText: summary,
+    articleText: summary,
+    cleaned_source_text: summary,
+    source_evidence_text: summary,
+    rawText: summary,
+    fullArticleText: summary,
+    expertLensFull: null,
+    narrative_dna: null,
+    whatHappened: null,
+    marketMissing: null,
+    executiveSummary: [],
+    claim_ledger: [],
+    claim_ledger_summary: null,
+    evidence_pack: null,
+  };
   if (routed.route === GRADED_ROUTES.SHORT_SIGNAL) {
-    return {
-      ...article,
+    return sanitizePublicPayload({
+      ...base,
       blog_route: GRADED_ROUTES.SHORT_SIGNAL,
       publishing_route: 'Short Signal',
-      homepagePublished: false,
+      public_content_tier: 'signal_card',
+      homepagePublished: true,
       articlePagePublished: false,
       signalCardOnly: true,
       archiveOnly: false,
-      noindex: true,
-      seo_noindex: true,
-      seo_noindex_reasons: ['short_signal_not_counted_as_blog'],
-      public_status: 'short_signal',
+      noindex: false,
+      seo_noindex: false,
+      seo_noindex_reasons: [],
+      public_status: 'signal',
+      source_link_primary: true,
+      source_link_secondary: false,
+      primaryHref: sourceUrl,
+      public_presentation: {
+        ...(article.public_presentation || {}),
+        title: article.title,
+        deck: summary,
+        why_it_matters: summary,
+        view_detail: '',
+        read_source: sourceUrl,
+      },
       public_routing: {
         ...(article.public_routing || routed.strict || {}),
         visibility: 'adjacent',
@@ -60,11 +165,11 @@ function applyNonBlogRoute(article = {}, routed) {
         laneTitle: 'Adjacent Watchlist',
         routing_decision: GRADED_ROUTES.SHORT_SIGNAL,
       },
-    };
+    });
   }
 
-  return {
-    ...article,
+  return sanitizePublicPayload({
+    ...base,
     blog_route: routed.route,
     publishing_route: routed.label,
     homepagePublished: false,
@@ -75,6 +180,15 @@ function applyNonBlogRoute(article = {}, routed) {
     seo_noindex: true,
     seo_noindex_reasons: routed.reasons || ['not_blog_surface_eligible'],
     public_status: routed.route === GRADED_ROUTES.SOURCE_CARD ? 'source_card' : 'archive_only_noindex',
+    primaryHref: sourceUrl,
+    public_presentation: {
+      ...(article.public_presentation || {}),
+      title: article.title,
+      deck: summary,
+      why_it_matters: summary,
+      view_detail: '',
+      read_source: sourceUrl,
+    },
     public_routing: {
       ...(article.public_routing || routed.strict || {}),
       visibility: routed.route === GRADED_ROUTES.SOURCE_CARD ? 'source_card' : 'archive',
@@ -83,7 +197,7 @@ function applyNonBlogRoute(article = {}, routed) {
       routing_decision: routed.route,
       blocked_reasons: routed.reasons || [],
     },
-  };
+  });
 }
 
 function candidateRows(items = [], options = {}) {
@@ -137,21 +251,22 @@ function chooseBlogCandidates(items = [], target = 20) {
 }
 
 function searchable(article = {}) {
-  return {
-    ...article,
+  const safeArticle = sanitizePublicPayload(article);
+  return sanitizePublicPayload({
+    ...safeArticle,
     slug: article.slug || article.id,
     searchText: [
-      article.title,
-      article.source,
-      article.category,
-      article.primary_category,
-      article.infrastructure_layer,
-      article.deck,
-      article.why_it_matters,
-      article.expertLensFull?.finalArticleBody,
-      ...(article.tags || []),
+      safeArticle.title,
+      safeArticle.source,
+      safeArticle.category,
+      safeArticle.primary_category,
+      safeArticle.infrastructure_layer,
+      safeArticle.deck,
+      safeArticle.why_it_matters,
+      safeArticle.expertLensFull?.finalArticleBody,
+      ...(safeArticle.tags || []),
     ].filter(Boolean).join(' '),
-  };
+  });
 }
 
 export async function regenerateBlogSurfaceV4(options = {}) {
