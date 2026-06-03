@@ -1,10 +1,13 @@
 import { IMAGE_PROVIDER } from '../constants.mjs';
 import { createChatGptOauthRuntimeProvider } from './chatgpt-oauth-runtime.mjs';
 import { createGeminiImageProvider } from './gemini.mjs';
+import { createImage2Provider } from '../image2-provider.mjs';
 import { createOpenAiImageApiProvider } from './openai-image-api.mjs';
 
 export function createImageProvider(providerName = IMAGE_PROVIDER) {
   switch (providerName) {
+    case 'image2':
+      return createImage2Provider();
     case 'chatgpt':
       return createChatGptOauthRuntimeProvider();
     case 'openai-api':

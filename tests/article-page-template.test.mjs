@@ -5,10 +5,28 @@ import fs from 'node:fs/promises';
 test('article page template presents Compute Current blog analysis before source link', async () => {
   const template = await fs.readFile('src/pages/news/[id].astro', 'utf8');
   const header = await fs.readFile('src/components/ArticleHeader.astro', 'utf8');
+  const body = await fs.readFile('src/components/LongformArticleBody.astro', 'utf8');
+  const hero = await fs.readFile('src/components/ArticleHeroImage.astro', 'utf8');
+  const related = await fs.readFile('src/components/RelatedArticles.astro', 'utf8');
+  const source = await fs.readFile('src/components/SourceAttribution.astro', 'utf8');
+
   assert.match(header, /Compute Current Editorial Desk/);
+  assert.match(header, /aria-label="Breadcrumb"/);
   assert.match(template, /ArticleHeader/);
-  assert.match(template, /ArticleBody/);
+  assert.match(template, /ArticleHeroImage/);
+  assert.match(template, /LongformArticleBody/);
   assert.match(template, /SourceAttribution/);
   assert.match(template, /AIDisclosureFooter/);
+  assert.match(template, /RelatedArticles/);
+  assert.ok(
+    template.indexOf('ArticleHeroImage') > template.indexOf('ArticleHeader')
+      && template.indexOf('ArticleHeroImage') < template.indexOf('LongformArticleBody'),
+    'hero image should render near the headline before the longform body'
+  );
+  assert.match(hero, /<figure class="[^"]*\barticle-hero-image\b[^"]*"/);
+  assert.match(hero, /decoding="async"/);
+  assert.match(body, /<section class="detail-section detail-article-copy longform-article-body"/);
+  assert.match(related, /article\.id !== currentId/);
+  assert.match(source, /<section class="source-attribution"/);
   assert.doesNotMatch(template, /Relevance Score|Urgency Score|Article Blueprint|Extraction Quality/);
 });

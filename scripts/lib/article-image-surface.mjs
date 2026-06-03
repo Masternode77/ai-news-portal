@@ -1,16 +1,29 @@
 import fs from 'node:fs';
 import path from 'node:path';
+import { canonicalArticleImagePaths } from './image-store.mjs';
 
 export const ARTICLE_IMAGE_FIELDS = [
   'heroImage',
+  'generatedImage',
   'thumbnailImage',
   'ogImage',
-  'generatedImage',
   'sourceImage',
   'image',
   'imageUrl',
   'image_url',
   'thumbnail',
+];
+
+export const PUBLIC_IMAGE_FALLBACK_SLUGS = [
+  'power-grid',
+  'data-centers',
+  'cloud-capacity',
+  'semiconductors',
+  'cooling',
+  'capital-markets',
+  'regulation',
+  'supply-chain',
+  'ai-infrastructure',
 ];
 
 const VARIANT_FIELDS = {
@@ -28,6 +41,15 @@ const SOURCE_IMAGE_FIELDS = [
 ];
 
 const IMAGE_METADATA_FIELDS = [
+  'imageAlt',
+  'heroImage',
+  'thumbnailImage',
+  'ogImage',
+  'legacyImage',
+  'imageStatus',
+  'imageError',
+  'imageGeneratedAt',
+  'imageModel',
   'generatedImageProvider',
   'generatedImageModel',
   'imageProvider',
@@ -46,25 +68,75 @@ function unique(values = []) {
   return [...new Set(values.map(clean).filter(Boolean))];
 }
 
+function slugify(value = '') {
+  return clean(value).toLowerCase().replace(/&/g, 'and').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+}
+
+function categoryText(article = {}) {
+  return [
+    article.primary_category,
+    article.category,
+    article.defaultCategory,
+    article.infrastructure_layer,
+    article.public_routing?.laneTitle,
+    ...(Array.isArray(article.tags) ? article.tags : []),
+  ].map(clean).filter(Boolean).join(' ').toLowerCase();
+}
+
+export function fallbackCategorySlug(article = {}) {
+  const values = [
+    article.primary_category,
+    article.category,
+    article.defaultCategory,
+    article.infrastructure_layer,
+  ].map(slugify).filter(Boolean);
+  for (const value of values) {
+    if (PUBLIC_IMAGE_FALLBACK_SLUGS.includes(value)) return value;
+  }
+
+  const text = categoryText(article);
+  if (/power|grid|energy|utility/.test(text)) return 'power-grid';
+  if (/data[\s-]?center|colocation|facility|campus/.test(text)) return 'data-centers';
+  if (/cloud|hyperscaler|region/.test(text)) return 'cloud-capacity';
+  if (/semiconductor|chip|gpu|hbm|memory|accelerator|silicon/.test(text)) return 'semiconductors';
+  if (/cooling|thermal/.test(text)) return 'cooling';
+  if (/capital|finance|reit|deal|ipo|markets/.test(text)) return 'capital-markets';
+  if (/policy|regulation|permit|siting|zoning/.test(text)) return 'regulation';
+  if (/supply|supplier|equipment|construction/.test(text)) return 'supply-chain';
+  return 'ai-infrastructure';
+}
+
+export function fallbackCategoryImagePath(article = {}) {
+  return `/generated/fallbacks/${fallbackCategorySlug(article)}.svg`;
+}
+
 export function fallbackGeneratedImagePath(article = {}) {
   const id = clean(article.id).replace(/[^a-zA-Z0-9_-]/g, '');
   return id ? `/generated/${id}.svg` : '';
 }
 
+function canonicalVariantPath(article = {}, variant = 'hero') {
+  const paths = canonicalArticleImagePaths(article, { extension: 'webp', legacyExtension: 'webp' });
+  return paths[`${variant}Image`] || '';
+}
+
 function variantCandidates(article = {}, variant = 'hero') {
   const fields = VARIANT_FIELDS[variant] || VARIANT_FIELDS.hero;
+  const explicit = fields.map((field) => article[field]);
   return unique([
-    ...fields.map((field) => article[field]),
+    ...explicit,
+    canonicalVariantPath(article, variant),
     fallbackGeneratedImagePath(article),
   ]);
 }
 
-function sourceImageCandidates(article = {}, variant = 'hero') {
-  const fields = unique([
-    ...SOURCE_IMAGE_FIELDS,
-    ...(VARIANT_FIELDS[variant] || VARIANT_FIELDS.hero),
-  ]);
-  return unique(fields.map((field) => article[field])).filter(isRemoteImage);
+function imageProviderFor(article = {}, status = 'available') {
+  if (status === 'fallback') return 'category-fallback';
+  return clean(article.generatedImageProvider || article.imageProvider || article.image_source_provider) || 'local';
+}
+
+function sourceImageProviderFor(article = {}) {
+  return clean(article.image_source_provider) || 'source-image';
 }
 
 function imageProviderText(article = {}) {
@@ -87,55 +159,50 @@ function imageProviderLooksPlaceholder(article = {}) {
   return PLACEHOLDER_IMAGE_PROVIDER_RE.test(imageProviderText(article));
 }
 
-function sourceImageProviderFor(article = {}) {
-  return clean(article.image_source_provider) || 'source-image';
-}
-
-function imageProviderFor(article = {}, status = 'available') {
-  if (status === 'source') return sourceImageProviderFor(article);
-  if (status === 'placeholder' || status === 'fallback') return 'local-placeholder';
-  return clean(article.generatedImageProvider || article.imageProvider || article.image_source_provider) || 'local';
-}
-
-function isGeneratedPath(image = '') {
-  return /^\/generated\//i.test(clean(image));
-}
-
-function articleHasSourceImage(article = {}) {
-  return sourceImageCandidates(article).length > 0;
-}
-
 function isPlaceholderGeneratedCandidate(article = {}, image = '') {
   const value = clean(image);
-  if (!isGeneratedPath(value)) return false;
-  if (imageProviderLooksAi(article)) return false;
+  if (!/^\/generated\//i.test(value)) return false;
+  if (/^\/generated\/fallbacks\//i.test(value)) return true;
   if (imageProviderLooksPlaceholder(article)) return true;
-  return articleHasSourceImage(article) || /\.svg(?:$|[?#])/i.test(value);
+  if (imageProviderLooksAi(article)) return false;
+  return /\.svg(?:$|[?#])/i.test(value);
 }
 
-function isTrustedPublicImage(image = '') {
-  const value = clean(image);
-  return Boolean(value && (isRemoteImage(value) || value.startsWith('/')));
+function sourceImageCandidates(article = {}, variant = 'hero') {
+  const fields = unique([...(VARIANT_FIELDS[variant] || VARIANT_FIELDS.hero), ...SOURCE_IMAGE_FIELDS]);
+  return unique(fields.map((field) => article[field])).filter(isRemoteImage);
 }
 
 function imageVariantObject(article = {}, variant = 'hero') {
-  const candidates = variantCandidates(article, variant);
-  const sourceCandidates = sourceImageCandidates(article, variant);
-
-  for (const candidate of candidates) {
-    if (sourceCandidates.includes(candidate)) continue;
-    if (!isTrustedPublicImage(candidate) || isPlaceholderGeneratedCandidate(article, candidate)) continue;
-    return {
-      url: candidate,
-      alt: articleImageAlt(article),
-      status: clean(article.imageStatus || article.image_status) || 'available',
-      provider: imageProviderFor(article),
-      variant,
-      fallback: false,
-    };
+  const generatedCandidates = variantCandidates(article, variant);
+  for (const candidate of generatedCandidates) {
+    if (isTrustedPublicImage(candidate) && !isPlaceholderGeneratedCandidate(article, candidate)) {
+      return {
+        url: candidate,
+        alt: articleImageAlt(article),
+        status: clean(article.imageStatus || article.image_status) || 'available',
+        provider: imageProviderFor(article),
+        variant,
+        fallback: false,
+      };
+    }
   }
 
-  for (const candidate of sourceCandidates) {
+  for (const candidate of generatedCandidates) {
+    if (isTrustedPublicImage(candidate)) {
+      const placeholder = isPlaceholderGeneratedCandidate(article, candidate);
+      return {
+        url: candidate,
+        alt: articleImageAlt(article),
+        status: clean(article.imageStatus || article.image_status) || (placeholder ? 'placeholder' : 'available'),
+        provider: imageProviderFor(article),
+        variant,
+        fallback: placeholder,
+      };
+    }
+  }
+
+  for (const candidate of sourceImageCandidates(article, variant)) {
     return {
       url: candidate,
       alt: articleImageAlt(article),
@@ -146,24 +213,15 @@ function imageVariantObject(article = {}, variant = 'hero') {
     };
   }
 
-  for (const candidate of candidates) {
-    if (!isTrustedPublicImage(candidate)) continue;
-    const placeholder = isPlaceholderGeneratedCandidate(article, candidate);
-    return {
-      url: candidate,
-      alt: articleImageAlt(article),
-      status: clean(article.imageStatus || article.image_status) || (placeholder ? 'placeholder' : 'available'),
-      provider: imageProviderFor(article, placeholder ? 'placeholder' : 'available'),
-      variant,
-      fallback: placeholder,
-    };
-  }
-
+  const fallback = fallbackCategoryImagePath(article);
+  const safeFallback = isTrustedPublicImage(fallback)
+    ? fallback
+    : '/generated/fallbacks/ai-infrastructure.svg';
   return {
-    url: '',
+    url: safeFallback,
     alt: articleImageAlt(article),
-    status: 'missing',
-    provider: '',
+    status: 'fallback',
+    provider: 'category-fallback',
     variant,
     fallback: true,
   };
@@ -194,6 +252,8 @@ export function articleDisplayImage(article = {}) {
 }
 
 export function articleImageAlt(article = {}) {
+  const explicit = clean(article.imageAlt || article.image_alt);
+  if (explicit) return explicit;
   const title = clean(article.expertLensFull?.finalHeadline || article.title);
   return title ? `${title} editorial visual` : 'Compute Current editorial visual';
 }
@@ -205,12 +265,21 @@ export function isRemoteImage(image = '') {
 export function localArticleImagePath(image = '') {
   const value = clean(image);
   if (!value || isRemoteImage(value)) return '';
+  if (!value.startsWith('/')) return '';
   return path.join(process.cwd(), 'public', value.replace(/^\//, ''));
 }
 
 export function localArticleImageExists(image = '') {
   const localPath = localArticleImagePath(image);
   return Boolean(localPath && fs.existsSync(localPath));
+}
+
+export function isTrustedPublicImage(image = '', options = {}) {
+  const value = clean(image);
+  if (!value) return false;
+  if (/^\/admin(?:\/|$)/i.test(value)) return false;
+  if (isRemoteImage(value)) return Boolean(options.allowRemote === true && options.remoteValidated === true);
+  return localArticleImageExists(value);
 }
 
 function imagePatchFrom(article = {}) {
@@ -258,6 +327,9 @@ export function withGeneratedArticleImage(article = {}, generatedImage = '', met
   if (!image) return article;
   return withPresentationImage({
     ...article,
+    ...(metadata.heroImage ? { heroImage: metadata.heroImage } : {}),
+    ...(metadata.thumbnailImage ? { thumbnailImage: metadata.thumbnailImage } : {}),
+    ...(metadata.ogImage ? { ogImage: metadata.ogImage } : {}),
     generatedImage: image,
     ...metadata,
   });

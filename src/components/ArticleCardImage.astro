@@ -1,0 +1,32 @@
+---
+const {
+  image = '/generated/fallbacks/ai-infrastructure.svg',
+  imageAlt = 'Compute Current editorial visual',
+  href = '',
+  className = 'article-card-image',
+  linkClassName = 'article-card-image-link',
+  priority = false,
+  decorative = false,
+  ariaLabel = '',
+} = Astro.props;
+
+const safeImage = image || '/generated/fallbacks/ai-infrastructure.svg';
+const isExternal = href && !href.startsWith('/');
+const loading = priority ? 'eager' : 'lazy';
+const alt = decorative ? '' : imageAlt;
+---
+{href ? (
+  <a
+    class={linkClassName}
+    href={href}
+    target={isExternal ? '_blank' : undefined}
+    rel={isExternal ? 'noopener noreferrer' : undefined}
+    aria-label={ariaLabel || undefined}
+  >
+    <img class={className} src={safeImage} alt={alt} loading={loading} decoding="async" />
+  </a>
+) : (
+  <div class={linkClassName} aria-hidden={decorative ? 'true' : undefined}>
+    <img class={className} src={safeImage} alt={alt} loading={loading} decoding="async" />
+  </div>
+)}

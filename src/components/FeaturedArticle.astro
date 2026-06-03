@@ -1,0 +1,69 @@
+---
+import ArticleCardImage from './ArticleCardImage.astro';
+
+const { signal = null } = Astro.props;
+const hasSignal = Boolean(signal?.title);
+const detailHref = signal?.view_detail || '';
+const sourceHref = signal?.read_source || '';
+const href = detailHref || sourceHref || '';
+const isExternal = href && !href.startsWith('/');
+const sourceIsExternal = sourceHref && !sourceHref.startsWith('/');
+const image = signal?.image || '/generated/fallbacks/ai-infrastructure.svg';
+const imageAlt = signal?.image_alt || (signal?.title ? `${signal.title} editorial visual` : 'Compute Current editorial visual');
+const date = signal?.date || signal?.publishedAt || '';
+const formattedDate = date
+  ? new Date(date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
+  : '';
+const readerImpact = Array.isArray(signal?.reader_impact) ? signal.reader_impact.slice(0, 3) : [];
+---
+{hasSignal ? (
+  <section class="featured-article" aria-label="Featured analysis" data-featured-article>
+    <div class="featured-article-copy">
+      <p class="eyebrow">Featured Analysis</p>
+      <div class="story-meta">
+        {signal.signal_label ? <span>{signal.signal_label}</span> : null}
+        {signal.category ? <span>{signal.category}</span> : null}
+        {formattedDate ? <time datetime={date}>{formattedDate}</time> : null}
+        {signal.source ? <span>{signal.source}</span> : null}
+      </div>
+      <h2>
+        {href ? (
+          <a href={href} target={isExternal ? '_blank' : undefined} rel={isExternal ? 'noopener noreferrer' : undefined}>
+            {signal.title}
+          </a>
+        ) : signal.title}
+      </h2>
+      {signal.deck ? <p class="featured-deck">{signal.deck}</p> : null}
+      {signal.why_it_matters ? (
+        <p class="featured-why"><strong>Why it matters:</strong>{' '}{String(signal.why_it_matters).replace(/^Why it matters:\s*/i, '')}</p>
+      ) : null}
+      {readerImpact.length ? (
+        <div class="article-impact-pills" aria-label="Reader impact">
+          {readerImpact.map((impact: string) => <span>{impact}</span>)}
+        </div>
+      ) : null}
+      <div class="featured-actions">
+        {detailHref ? <a class="article-card-cta" href={detailHref}>Read analysis</a> : null}
+        {sourceHref ? (
+          <a
+            class={detailHref ? 'article-card-source' : 'article-card-cta article-card-source'}
+            href={sourceHref}
+            target={sourceIsExternal ? '_blank' : undefined}
+            rel={sourceIsExternal ? 'noopener noreferrer' : undefined}
+          >
+            {detailHref ? 'Read source' : 'Source'}
+          </a>
+        ) : null}
+      </div>
+    </div>
+    <ArticleCardImage
+      image={image}
+      imageAlt={imageAlt}
+      href={href}
+      className="featured-article-image"
+      linkClassName="featured-article-media"
+      priority={true}
+      ariaLabel={href ? signal.title : ''}
+    />
+  </section>
+) : null}

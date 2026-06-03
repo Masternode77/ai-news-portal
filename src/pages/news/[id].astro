@@ -1,10 +1,11 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import ArticleHeader from '../../components/ArticleHeader.astro';
-import ArticleBody from '../../components/ArticleBody.astro';
+import ArticleHeroImage from '../../components/ArticleHeroImage.astro';
+import LongformArticleBody from '../../components/LongformArticleBody.astro';
 import SourceAttribution from '../../components/SourceAttribution.astro';
 import AIDisclosureFooter from '../../components/AIDisclosureFooter.astro';
-import ArticleListCard from '../../components/ArticleListCard.astro';
+import RelatedArticles from '../../components/RelatedArticles.astro';
 import latestNews from '../../data/latest-news.json';
 import archivedNews from '../../data/archived-news.json';
 import { SITE } from '../../config/site';
@@ -21,7 +22,12 @@ import { routePublicLane } from '../../../scripts/lib/public-lane-router.mjs';
 import { cleanArticleBodyBlocks } from '../../../scripts/lib/article-body-cleaner.mjs';
 import { buildHomepageFeed } from '../../../scripts/lib/homepage-feed-builder.mjs';
 import { isPublicLongformArticle } from '../../../scripts/lib/public-surface-eligibility.mjs';
-import { articleDisplayImage, articleImageAlt } from '../../../scripts/lib/article-image-surface.mjs';
+import {
+  articleHeroImage,
+  articleImageAlt,
+  articleOpenGraphImage,
+} from '../../../scripts/lib/article-image-surface.mjs';
+import { relatedArticlesFor } from '../../../scripts/lib/related-articles.mjs';
 
 export function getStaticPaths() {
   const allArticles = [...latestNews, ...archivedNews];
@@ -54,7 +60,8 @@ if (!article) {
 const displayTitle = displayHeadline(articleRecord);
 const publicRouting = articleRecord.public_routing || routePublicLane(articleRecord);
 const publicPresentation = buildPublicPresentation(articleRecord, { route: publicRouting });
-const detailImage = articleDisplayImage(articleRecord) || SITE.defaultOgImage;
+const detailImage = articleHeroImage(articleRecord) || SITE.defaultOgImage;
+const openGraphImage = articleOpenGraphImage(articleRecord) || detailImage;
 const canonicalPath = articleCanonicalPath(articleRecord);
 const articleUrl = `${SITE.url}${canonicalPath}`;
 const taxonomy = taxonomyDisplay(articleRecord);
@@ -70,19 +77,23 @@ const articleBodyBlocks = cleanArticleBodyBlocks(articleRecord.expertLensFull?.f
   .map((paragraph: string) => guardPublicCopy(cleanEditorialText(paragraph)).text)
   .filter((paragraph: string) => !forbiddenPublicPhraseMatches(paragraph).length)
   .filter(Boolean);
-const related = buildHomepageFeed(
-  allArticles
-    .filter((item: any) => item.id !== articleRecord.id)
-    .filter((item: any) => (item.primary_category || item.category) === (articleRecord.primary_category || articleRecord.category))
-    .slice(0, 6),
-  { limit: 3, minimumVisible: 0 }
-).items.slice(0, 3);
+const relatedCandidates = relatedArticlesFor(
+  articleRecord,
+  allArticles.filter((item: any) => isPublicLongformArticle(item)),
+  { limit: 8 }
+);
+const relatedDecorated = buildHomepageFeed(relatedCandidates, { limit: relatedCandidates.length, minimumVisible: 0 }).items;
+const relatedById = new Map(relatedDecorated.map((item: any) => [item.id, item]));
+const related = relatedCandidates
+  .map((item: any) => relatedById.get(item.id))
+  .filter(Boolean)
+  .slice(0, 3);
 const structuredData = buildArticleStructuredData({
   article: articleRecord,
   site: SITE,
   title: displayTitle,
   description: articleDescription,
-  image: detailImage,
+  image: openGraphImage,
   canonicalUrl: articleUrl,
   taxonomy,
   articleBody: articleBodyBlocks,
@@ -93,11 +104,11 @@ const structuredData = buildArticleStructuredData({
   description={articleDescription}
   type="article"
   canonicalPath={canonicalPath}
-  image={detailImage}
+  image={openGraphImage}
 >
   <script is:inline type="application/ld+json" set:html={JSON.stringify(structuredData)}></script>
   <main class="detail-shell publication-article">
-    <article class="detail-card">
+    <article class="detail-card publication-article-card">
       <div class="detail-body">
         <ArticleHeader
           category={taxonomy.primary}
@@ -105,11 +116,15 @@ const structuredData = buildArticleStructuredData({
           source={sourceAttribution}
           title={displayTitle}
           deck={publicPresentation.deck || articleDescription}
-          image={detailImage}
-          imageAlt={publicPresentation.image_alt || articleImageAlt({ ...articleRecord, title: displayTitle })}
         />
 
-        {articleBodyBlocks.length ? <ArticleBody blocks={articleBodyBlocks} /> : null}
+        <ArticleHeroImage
+          image={detailImage}
+          imageAlt={publicPresentation.image_alt || articleImageAlt({ ...articleRecord, title: displayTitle })}
+          caption={sourceAttribution.name ? `Visual analysis for reporting from ${sourceAttribution.name}.` : ''}
+        />
+
+        {articleBodyBlocks.length ? <LongformArticleBody blocks={articleBodyBlocks} /> : null}
 
         <SourceAttribution source={sourceAttribution} />
 
@@ -123,14 +138,7 @@ const structuredData = buildArticleStructuredData({
           </div>
         ) : null}
 
-        {related.length ? (
-          <section class="detail-section related-articles">
-            <h2>Related articles</h2>
-            <div class="article-list related-list">
-              {related.map((item: any) => <ArticleListCard signal={item.publicSignal} />)}
-            </div>
-          </section>
-        ) : null}
+        <RelatedArticles articles={related} currentId={articleRecord.id} />
       </div>
     </article>
   </main>

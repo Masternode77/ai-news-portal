@@ -24,7 +24,7 @@ test('article image surface uses source artwork when no generated image exists',
   assert.equal(variants.thumbnail.provider, 'source-image');
 });
 
-test('article image surface prefers source artwork over local placeholder cards', () => {
+test('article image surface prefers local placeholder cards over unvalidated source artwork', () => {
   const article = {
     id: 'placeholder_with_source_fixture',
     title: 'GITEX AI EUROPE',
@@ -37,11 +37,12 @@ test('article image surface prefers source artwork over local placeholder cards'
 
   const variants = articleImageVariants(article);
 
-  assert.equal(articleCardImage(article), article.sourceImage);
-  assert.equal(articleHeroImage(article), article.sourceImage);
-  assert.equal(articleOpenGraphImage(article), article.sourceImage);
-  assert.equal(variants.thumbnail.status, 'source');
-  assert.equal(variants.thumbnail.provider, 'source-image');
+  assert.equal(articleCardImage(article), article.generatedImage);
+  assert.equal(articleHeroImage(article), article.generatedImage);
+  assert.equal(articleOpenGraphImage(article), article.generatedImage);
+  assert.equal(variants.thumbnail.status, 'placeholder');
+  assert.equal(variants.thumbnail.provider, 'local-placeholder');
+  assert.equal(variants.thumbnail.fallback, true);
 });
 
 test('article image surface keeps image2 artwork ahead of source artwork', () => {
@@ -58,4 +59,46 @@ test('article image surface keeps image2 artwork ahead of source artwork', () =>
   assert.equal(articleHeroImage(article), article.heroImage);
   assert.equal(articleCardImage(article), article.thumbnailImage);
   assert.equal(articleOpenGraphImage(article), article.ogImage);
+});
+
+test('article image surface uses canonical article variants ahead of source artwork', () => {
+  const article = {
+    id: '94f36086ed1f0aa2',
+    title: 'Intel swipes Qualcomm veteran of 25 years to lead client computing Alex Katouzian jumps ship',
+    sourceImage: 'https://example.com/source-should-not-win-over-canonical.jpg',
+  };
+
+  assert.equal(
+    articleHeroImage(article),
+    '/generated/articles/94f36086ed1f0aa2-intel-swipes-qualcomm-veteran-of-25-years-to-lead-client-computing-alex-katouzian-jumps-sh/hero.webp',
+  );
+  assert.equal(
+    articleCardImage(article),
+    '/generated/articles/94f36086ed1f0aa2-intel-swipes-qualcomm-veteran-of-25-years-to-lead-client-computing-alex-katouzian-jumps-sh/thumbnail.webp',
+  );
+  assert.equal(
+    articleOpenGraphImage(article),
+    '/generated/articles/94f36086ed1f0aa2-intel-swipes-qualcomm-veteran-of-25-years-to-lead-client-computing-alex-katouzian-jumps-sh/og.webp',
+  );
+});
+
+test('article image surface treats explicit fallback SVGs as placeholders even with AI metadata', () => {
+  const article = {
+    id: 'fallback_svg_with_ai_metadata_fixture',
+    title: 'Campus power queues reshape accelerator deployment',
+    category: 'Power & Grid',
+    sourceImage: 'https://example.com/unvalidated-source-image.jpg',
+    generatedImage: '/generated/fallbacks/power-grid.svg',
+    generatedImageProvider: 'image2',
+    generatedImageModel: 'gpt-image-1',
+    imageModel: 'openai-image',
+  };
+
+  const variants = articleImageVariants(article);
+
+  assert.equal(articleCardImage(article), article.generatedImage);
+  assert.equal(articleHeroImage(article), article.generatedImage);
+  assert.equal(articleOpenGraphImage(article), article.generatedImage);
+  assert.equal(variants.thumbnail.status, 'placeholder');
+  assert.equal(variants.thumbnail.fallback, true);
 });

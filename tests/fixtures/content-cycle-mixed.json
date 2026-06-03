@@ -1,0 +1,55 @@
+{
+  "articles": [
+    {
+      "id": "fact-rich-ai-campus",
+      "title": "Utility schedule now controls a 620 MW AI campus",
+      "source": "Utility Dive",
+      "sourceUrl": "https://example.com/fact-rich-ai-campus",
+      "publishedAt": "2026-05-30T00:00:00.000Z",
+      "primary_category": "Power & Grid",
+      "category": "Power Grid",
+      "infrastructure_layer": "power",
+      "infrastructure_relevance_score": 0.94,
+      "expectedTier": "longform_analysis",
+      "summary": "A 620 MW AI campus depends on substations, interconnection timing, water permits, transformer lead times, financing terms, and anchor cloud customers.",
+      "articleText": "A utility filing says a 620 MW AI data center campus cannot energize its first phase until two new substations are delivered. The developer said the first 180 MW phase is tied to reserved cloud capacity for AI training workloads. County documents identify water permits, road upgrades, and power delivery as dependencies before construction can move to commissioning. Transformer suppliers told the project team that high-voltage equipment lead times remain the limiting schedule factor. The power provider said the interconnection agreement will determine which customers receive firm service first. The financing memo says debt pricing changes if the first energization milestone slips beyond the target service window. The source notes that anchor customers can delay workload migration if site readiness or utility milestones move. Regional officials said construction sequencing depends on power delivery, stormwater approvals, and substation land acquisition. The developer told county staff that backup generation limits affect how much temporary capacity can support early AI workloads. The utility said tariff exposure and queue position will remain open questions until the interconnection agreement is executed. The lender presentation says the project benefits if firm service dates arrive before the next procurement cycle for anchor cloud customers. Operators tracking the project should watch the substation delivery date, the executed interconnection agreement, and the first firm power commitment."
+    },
+    {
+      "id": "thin-power-brief",
+      "title": "Regional utility opens AI data center tariff review",
+      "source": "Utility Dive",
+      "sourceUrl": "https://example.com/thin-power-brief",
+      "publishedAt": "2026-05-30T01:00:00.000Z",
+      "primary_category": "Power & Grid",
+      "category": "Power Grid",
+      "infrastructure_layer": "power",
+      "infrastructure_relevance_score": 0.72,
+      "expectedTier": "editorial_brief",
+      "summary": "A regional utility opened a tariff review for large AI data center loads, but the filing does not include customer names or delivery dates.",
+      "articleText": "A regional utility opened a tariff review for large AI data center loads. The filing says new rate structures may be needed when large customers request firm power service. The utility did not name the customers or give delivery dates for new capacity. Regulators asked for comments on cost allocation, interconnection timing, and how grid upgrades should be assigned. The source gives operators a useful watch item, but it does not yet prove that a specific data center campus has committed capacity or a firm energization schedule."
+    },
+    {
+      "id": "consumer-ai",
+      "title": "Wearable AI gadget gets a photo app and gaming features",
+      "source": "Consumer Gadgets",
+      "sourceUrl": "https://example.com/consumer-ai",
+      "publishedAt": "2026-05-30T02:00:00.000Z",
+      "infrastructure_relevance_score": 0.21,
+      "extraction_quality_score": 0.91,
+      "expectedTier": "hidden",
+      "summary": "A consumer AI feature update with no infrastructure purchasing signal.",
+      "articleText": "The consumer wearable update adds a social photo app, gaming features, and chatbot controls for shoppers. It does not describe cloud capacity, data center power, semiconductor supply, enterprise deployment, or infrastructure purchasing decisions. The consumer wearable update adds a social photo app, gaming features, and chatbot controls for shoppers. It does not describe cloud capacity, data center power, semiconductor supply, enterprise deployment, or infrastructure purchasing decisions."
+    },
+    {
+      "id": "failed-extraction",
+      "title": "AI campus source extraction fails",
+      "source": "Broken Feed",
+      "sourceUrl": "https://example.com/failed-extraction",
+      "publishedAt": "2026-05-30T03:00:00.000Z",
+      "infrastructure_relevance_score": 0.8,
+      "expectedTier": "hidden",
+      "summary": "Extraction should fail closed.",
+      "articleText": "Too short."
+    }
+  ]
+}

@@ -112,8 +112,17 @@ export function extractNamedActors(article = {}) {
   const text = compact([article.title, article.source, article.summary, article.snippet, article.articleText].filter(Boolean).map((value) => String(value).slice(0, 2200)).join(' '));
   const matches = text.match(/\b(?:[A-Z][A-Za-z0-9&.-]+(?:\s+[A-Z][A-Za-z0-9&.-]+){0,3}|NVIDIA|AMD|HBM|KVM|CDU|PPA|REIT)\b/g) || [];
   return unique(matches)
-    .filter((actor) => !/^(The|This|That|A|An|In|For|With|Source|Global|US|AI)$/.test(actor))
+    .filter(isUsableActorName)
     .slice(0, 8);
+}
+
+function isUsableActorName(actor = '') {
+  const text = compact(actor);
+  if (!text) return false;
+  if (/^(The|This|That|A|An|In|For|With|Source|Global|US|AI)$/.test(text)) return false;
+  if (/\b(commercially|operationally)\b/i.test(text)) return false;
+  if (forbiddenPublicPhraseMatches(text).length || publicTemplatePhraseMatches(text).length) return false;
+  return true;
 }
 
 export function buildEvidencePack(article = {}, options = {}) {

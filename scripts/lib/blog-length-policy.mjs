@@ -3,7 +3,7 @@ import { paragraphCount, sectionCount, visibleBodyLength, wordCount } from './vi
 export const BLOG_LENGTH_POLICY = {
   core_longform_blog: {
     label: 'Core Longform Blog',
-    minVisibleBodyCharacters: 3500,
+    minVisibleBodyCharacters: 4500,
     targetWordsMin: 900,
     targetWordsMax: 1400,
     minParagraphs: 12,
@@ -11,7 +11,7 @@ export const BLOG_LENGTH_POLICY = {
   },
   standard_blog: {
     label: 'Standard Blog',
-    minVisibleBodyCharacters: 2200,
+    minVisibleBodyCharacters: 4500,
     targetWordsMin: 650,
     targetWordsMax: 1000,
     minParagraphs: 8,

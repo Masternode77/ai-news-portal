@@ -3,6 +3,7 @@ import { visibleBodyLength, wordCount } from './visible-body-length.mjs';
 import { selectHookFamily } from './hook-diversity.mjs';
 import { seniorEditorRewrite } from './senior-editor-rewrite.mjs';
 import { normalizeProperNouns } from './proper-noun-normalizer.mjs';
+import { detectTruncationArtifacts } from './truncation-detector.mjs';
 
 const SECTION_SETS = [
   ['The Constraint Behind the Headline', 'What Has To Be True', 'Who Gains Leverage', 'Who Carries The Exposure', 'The Decision Point'],
@@ -130,6 +131,7 @@ export function longformQualityResult(article = {}) {
   const paragraphs = body.split(/\n{2,}/).map((block) => block.trim()).filter((block) => /[.!?]$/.test(block));
   const sections = body.split(/\n{2,}/).map((block) => block.trim()).filter((block) => block && !/[.!?]$/.test(block));
   const forbiddenSkeleton = /^(What Changed|Why Teams Care|Metric To Watch|Editorial Read|At a Glance)$/im.test(body);
+  const truncation = detectTruncationArtifacts(body);
   const visibleBodyCharacters = visibleBodyLength(body);
   const metrics = {
     visibleBodyCharacters,
@@ -142,6 +144,7 @@ export function longformQualityResult(article = {}) {
   if (paragraphs.length < 6) reasons.push('paragraph_count_below_6');
   if (sections.length < 4) reasons.push('section_count_below_4');
   if (forbiddenSkeleton) reasons.push('memo_skeleton_heading');
+  if (!truncation.ok) reasons.push(...truncation.artifacts);
   if (/should care because|source-backed change|turns the reported move into|the practical issue is whether|the next signal to watch is|the watch metric is|for Compute Current readers/i.test(body)) {
     reasons.push('forbidden_longform_phrase');
   }

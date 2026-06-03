@@ -1,0 +1,12 @@
+---
+const {
+  image = '/generated/fallbacks/ai-infrastructure.svg',
+  imageAlt = 'Compute Current editorial visual',
+  caption = '',
+} = Astro.props;
+const safeImage = image || '/generated/fallbacks/ai-infrastructure.svg';
+---
+<figure class="article-hero-image publication-hero-image">
+  <img src={safeImage} alt={imageAlt} loading="eager" decoding="async" fetchpriority="high" />
+  {caption ? <figcaption>{caption}</figcaption> : null}
+</figure>

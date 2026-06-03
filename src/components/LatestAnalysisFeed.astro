@@ -1,5 +1,5 @@
 ---
-import ArticleListCard from './ArticleListCard.astro';
+import ArticleCard from './ArticleCard.astro';
 import FeedFilterBar from './FeedFilterBar.astro';
 
 const {
@@ -21,7 +21,7 @@ const items = feed.items || [];
   {showFilters && feed.filters?.length ? <FeedFilterBar filters={feed.filters} /> : null}
   {items.length ? (
     <div class="article-list">
-      {items.map((item: any) => <ArticleListCard signal={item.publicSignal} />)}
+      {items.map((item: any) => <ArticleCard signal={item.publicSignal} />)}
     </div>
   ) : (
     <div class="public-empty-state">

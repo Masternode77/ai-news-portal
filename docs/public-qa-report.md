@@ -1,42 +1,43 @@
 # Public QA Report
 
-Generated at: 2026-05-23T13:08:34Z
+Generated at: 2026-05-31T08:00:00.000Z
 
-## Feed QA
-
-- Homepage card count: 37
-- Longform article count: 15
-- Editorial brief count: 1
-- Homepage-visible short signal count: 24
-- Generated signal card count: 34
-- Archive public count: 37
-- RSS item count: 16
-- Sitemap news entries: 15
-
-## Copy QA
-
-- Forbidden internal phrase hits: 0
-- Public metadata internal-language hits: 0
-- Homepage internal section labels: 0
-- Card qualification-logic explanations: 0
-
-## Article QA
-
-- Public article routes: 15
-- Minimum visible article body length: 4,734 characters
-- Maximum visible article body length: 5,113 characters
-- Clipped source text failures: 0
-- Repeated template phrase failures: 0
-- Duplicate source URLs removed from homepage/archive display.
+Public QA covers rendered pages, public copy, article quality, homepage volume, feed output, image output, and admin exclusion. The current gate is intentionally build-backed so stale source-only assertions do not hide rendered failures.
 
 ## Commands Run
 
-- `npm run build`
 - `npm run content:gate`
-- `node --test tests/public-internal-language-guard.test.mjs tests/public-content-tier-router.test.mjs tests/card-copy-quality-gate.test.mjs tests/homepage-layout.test.mjs tests/public-empty-state-copy.test.mjs tests/archive-public-copy.test.mjs tests/longform-quality.test.mjs tests/public-homepage-regression.test.mjs tests/public-copy-regression.test.mjs tests/article-page-template.test.mjs tests/article-page-autonomous.test.mjs tests/rss-builder.test.mjs tests/sitemap-builder.test.mjs tests/taxonomy-page-builder.test.mjs`
-- `npm run check`
-- `npm run purge:public-cache`
+- `node ./scripts/audit-rendered-public-output.mjs`
+- `node ./scripts/audit-public-copy.mjs`
+- `node ./scripts/audit-public-article-quality.mjs`
+- `npm run audit:homepage`
+- `npm run audit:feed-volume`
+- `npm run audit:images`
+- `npm run audit:admin`
 
-## Notes
+## Artifacts
 
-`npm run check` completed with no errors. Astro reported pre-existing implicit-any hints in several legacy/admin components.
+- Rendered output report: `docs/rendered-public-output-report.md`
+- Admin exclusion report: `docs/admin-exclusion-report.md`
+- Content gate log: `evidence/compute-current-omo-ultra-rebuild/task-14-content-gate.log`
+- Homepage screenshot: `evidence/compute-current-omo-ultra-rebuild/task-14-homepage.png`
+- Article screenshot: `evidence/compute-current-omo-ultra-rebuild/task-14-article.png`
+- Browser QA JSON: `evidence/compute-current-omo-ultra-rebuild/task-14-browser-qa.json`
+
+## Pass/Fail
+
+- Passed: content gate completed with Astro check, build, public-output tests, image audit, rendered public audit, and admin audit.
+- Passed: rendered audit checked 20 pages, 14 article pages, 46 cards, and 0 broken images.
+- Passed: admin exclusion audit reported no sitemap/RSS/admin noindex failures.
+
+## Remaining Risks
+
+- Public QA is a local build result until deployment verification confirms the live URL and cache purge state.
+- Existing Astro check hints are not build blockers but should be tracked before tightening compiler settings.
+- Additional mobile viewport coverage would further reduce layout regression risk.
+
+## Cleanup Receipts
+
+- Browser contexts used for Task 14 screenshots were closed after capture.
+- No long-running local server is required by the recorded content gate evidence.
+- Generated `public/dashboard-data.json` was restored after build-time timestamp changes.

@@ -92,8 +92,10 @@ export function buildHomepageFeed(items = [], options = {}) {
     if (entry?.publicSignal?.deck) recentDecks.push(entry.publicSignal.deck);
     return entry;
   }).filter(Boolean);
+  const featured = decorated[0] || null;
   return {
     items: decorated,
+    featured,
     sections: [
       {
         id: 'latest-analysis',

@@ -1,0 +1,74 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { SITE } from '../config/site';
+---
+<Layout
+  title={`Admin Login | ${SITE.name}`}
+  description="Private Compute Current admin login"
+  canonicalPath="/admin.html"
+  noindex={true}
+>
+  <main class="admin-shell">
+    <section class="admin-panel">
+      <p class="eyebrow">Admin</p>
+      <h1>Restricted access</h1>
+      <form class="admin-form" id="admin-login-form">
+        <label>
+          <span>Username</span>
+          <input name="username" autocomplete="username" required />
+        </label>
+        <label>
+          <span>Password</span>
+          <input name="password" type="password" autocomplete="current-password" required />
+        </label>
+        <button type="submit">Sign in</button>
+      </form>
+      <p id="admin-login-status" class="admin-status" role="status" aria-live="polite">Sign in to continue.</p>
+    </section>
+  </main>
+
+  <script>
+    // @ts-nocheck
+    const form = document.getElementById('admin-login-form');
+    const status = document.getElementById('admin-login-status');
+
+    const setStatus = (message, type = '') => {
+      if (!status) return;
+      status.textContent = message;
+      status.dataset.type = type;
+    };
+
+    const requestJson = async (url, options = {}) => {
+      const response = await fetch(url, {
+        ...options,
+        headers: {
+          'Content-Type': 'application/json',
+          ...(options.headers || {}),
+        },
+      });
+      const payload = await response.json().catch(() => ({}));
+      if (!response.ok) throw new Error(payload.error || 'Request failed.');
+      return payload;
+    };
+
+    requestJson('/api/admin/login')
+      .then(() => {
+        window.location.assign('/admin/dashboard/');
+      })
+      .catch(() => setStatus('Sign in to continue.'));
+
+    form?.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      try {
+        setStatus('Signing in...');
+        await requestJson('/api/admin/login', {
+          method: 'POST',
+          body: JSON.stringify(Object.fromEntries(new FormData(form))),
+        });
+        window.location.assign('/admin/dashboard/');
+      } catch (error) {
+        setStatus(error.message, 'error');
+      }
+    });
+  </script>
+</Layout>

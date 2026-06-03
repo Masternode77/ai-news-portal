@@ -3,7 +3,7 @@ import { detectBoilerplate } from './boilerplate-detector.mjs';
 import { detectTruncationArtifacts } from './truncation-detector.mjs';
 
 export const ROUTE_FACT_REQUIREMENTS = {
-  core_longform_blog: 4,
+  core_longform_blog: 5,
   standard_blog: 3,
   short_signal: 2,
 };

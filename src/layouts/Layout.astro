@@ -1,4 +1,5 @@
 ---
+import OpenGraphImage from '../components/OpenGraphImage.astro';
 import '../styles/global.css';
 import { SITE } from '../config/site';
 
@@ -23,7 +24,6 @@ const {
 const joinUrl = (base: string, path: string) =>
   `${base.replace(/\/$/, '')}/${path.replace(/^\//, '')}`;
 const canonical = canonicalPath ? joinUrl(SITE.url, canonicalPath) : joinUrl(SITE.url, Astro.url.pathname);
-const ogImage = image.startsWith('http') ? image : joinUrl(SITE.url, image);
 ---
 <!doctype html>
 <html lang="en">
@@ -41,12 +41,11 @@ const ogImage = image.startsWith('http') ? image : joinUrl(SITE.url, image);
     <meta property="og:description" content={description} />
     <meta property="og:type" content={type} />
     <meta property="og:url" content={canonical} />
-    <meta property="og:image" content={ogImage} />
+    <OpenGraphImage image={image} alt={description} />
     <meta property="og:site_name" content={SITE.name} />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
-    <meta name="twitter:image" content={ogImage} />
   </head>
   <body>
     <slot />

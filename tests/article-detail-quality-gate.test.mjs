@@ -35,3 +35,19 @@ test('accepts clean longform infrastructure article body', () => {
   const result = articleDetailQualityResult(article);
   assert.equal(result.ok, true);
 });
+
+test('rejects detail pages without enough visible article sections', () => {
+  const body = `${'Power procurement and delivery timing remain the operating constraint for AI infrastructure buyers and data center developers. '.repeat(10)}Final sentence complete.`;
+  const article = {
+    id: 'flat-detail',
+    title: 'Power procurement shifts data center timing',
+    infrastructure_relevance_score: 0.9,
+    articleText: `${'Power procurement and delivery timing remain the operating constraint for AI infrastructure buyers and data center developers. '.repeat(25)}Final sentence complete.`,
+    expertLensFull: { finalArticleBody: body },
+  };
+
+  const result = articleDetailQualityResult(article);
+
+  assert.equal(result.ok, false);
+  assert.ok(result.reasons.includes('article_body_too_few_sections'));
+});

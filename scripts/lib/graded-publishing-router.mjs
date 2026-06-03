@@ -100,7 +100,7 @@ export function routeGradedPublishing(article = {}, options = {}) {
   }
 
   const coreEligibility = blogEligibilityResult(article, GRADED_ROUTES.CORE_LONGFORM_BLOG);
-  if (score >= 0.75 && strict.visibility === 'core' && coreEligibility.ok && evidencePack.facts.length >= 4) {
+  if (score >= 0.75 && strict.visibility === 'core' && coreEligibility.ok && evidencePack.facts.length >= 5) {
     return {
       route: GRADED_ROUTES.CORE_LONGFORM_BLOG,
       label: 'Core Longform Blog',

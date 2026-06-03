@@ -3,6 +3,7 @@ const LOCAL_GENERATED_RE = /^\/generated\//i;
 
 const AI_IMAGE_PROVIDERS = new Set([
   'chatgpt',
+  'image2',
   'openai-api',
   'gpt-image',
   'gpt-image-2',
@@ -11,10 +12,20 @@ const AI_IMAGE_PROVIDERS = new Set([
   'gpt-image-1-mini',
 ]);
 
+const LOCAL_EDITORIAL_IMAGE_PROVIDERS = new Set([
+  'local-placeholder',
+  'category-fallback',
+]);
+
 export function imageProviderLooksAi(provider = '') {
   const normalized = String(provider || '').trim().toLowerCase();
   if (!normalized) return false;
   return AI_IMAGE_PROVIDERS.has(normalized) || normalized.includes('gpt-image') || normalized.includes('openai');
+}
+
+export function imageProviderLooksEditorial(provider = '') {
+  const normalized = String(provider || '').trim().toLowerCase();
+  return imageProviderLooksAi(normalized) || LOCAL_EDITORIAL_IMAGE_PROVIDERS.has(normalized);
 }
 
 export function isLocalGeneratedRaster(image = '') {
@@ -25,7 +36,7 @@ export function isLocalGeneratedRaster(image = '') {
 export function isStockDerivedCardImage(article = {}) {
   const generatedImage = article.publicSignal?.image || article.generatedImage || article.image || '';
   if (!isLocalGeneratedRaster(generatedImage)) return false;
-  if (imageProviderLooksAi(article.generatedImageProvider || article.imageProvider || article.image_source_provider)) return false;
+  if (imageProviderLooksEditorial(article.generatedImageProvider || article.imageProvider || article.image_source_provider)) return false;
   return Boolean(article.sourceImage || article.imageUrl || article.image_url || article.thumbnail);
 }
 

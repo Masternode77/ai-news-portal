@@ -1,0 +1,278 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { SITE } from '../../config/site';
+---
+<Layout
+  title={'Admin Dashboard | ' + SITE.name}
+  description="Private Compute Current editorial operations dashboard"
+  canonicalPath="/admin/dashboard/"
+  noindex={true}
+>
+  <main class="admin-shell admin-dashboard" data-admin-dashboard>
+    <header class="admin-header">
+      <a class="back-link admin-back" href="/">Public site</a>
+      <div>
+        <p class="eyebrow">Admin</p>
+        <h1>Editorial dashboard</h1>
+      </div>
+      <p class="admin-deck">Private article operations, review queues, generation logs, source health, and edit routing.</p>
+    </header>
+
+    <section id="admin-login" class="admin-panel">
+      <div>
+        <p class="eyebrow">Restricted</p>
+        <h2>Sign in</h2>
+      </div>
+      <form class="admin-form" id="login-form">
+        <label>
+          <span>Username</span>
+          <input name="username" autocomplete="username" required />
+        </label>
+        <label>
+          <span>Password</span>
+          <input name="password" type="password" autocomplete="current-password" required />
+        </label>
+        <button type="submit">Sign in</button>
+      </form>
+    </section>
+
+    <section id="admin-dashboard-panel" class="admin-panel" hidden>
+      <div class="admin-editor-top">
+        <div>
+          <p class="eyebrow">Private Ops</p>
+          <h2>Article manager</h2>
+        </div>
+        <button id="logout-button" class="admin-secondary" type="button">Sign out</button>
+      </div>
+
+      <form class="admin-form admin-toolbar" id="article-filter-form">
+        <label>
+          <span>Search</span>
+          <input name="q" placeholder="title, source, id" />
+        </label>
+        <label>
+          <span>Status</span>
+          <select name="status" id="status-filter"><option value="">All</option></select>
+        </label>
+        <label>
+          <span>Category</span>
+          <select name="category" id="category-filter"><option value="">All</option></select>
+        </label>
+        <label>
+          <span>Source</span>
+          <select name="source" id="source-filter"><option value="">All</option></select>
+        </label>
+        <button type="submit">Filter</button>
+      </form>
+
+      <div id="count-tiles" class="metric-grid admin-count-grid"></div>
+      <div id="review-queues" class="admin-queue-grid"></div>
+
+      <div class="admin-table-wrap">
+        <table class="admin-table">
+          <thead>
+            <tr>
+              <th>Article</th>
+              <th>Status</th>
+              <th>Quality</th>
+              <th>Source</th>
+              <th>Updated</th>
+            </tr>
+          </thead>
+          <tbody id="article-table-body"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="admin-logs-panel" class="admin-panel" hidden>
+      <div>
+        <p class="eyebrow">Private Logs</p>
+        <h2>Generation and audit logs</h2>
+      </div>
+      <div id="admin-logs" class="admin-log-grid"></div>
+    </section>
+
+    <p id="admin-status" class="admin-status" role="status" aria-live="polite">Checking session...</p>
+  </main>
+
+  <script>
+    // @ts-nocheck
+    const loginPanel = document.getElementById('admin-login');
+    const dashboardPanel = document.getElementById('admin-dashboard-panel');
+    const logsPanel = document.getElementById('admin-logs-panel');
+    const loginForm = document.getElementById('login-form');
+    const filterForm = document.getElementById('article-filter-form');
+    const statusFilter = document.getElementById('status-filter');
+    const categoryFilter = document.getElementById('category-filter');
+    const sourceFilter = document.getElementById('source-filter');
+    const countTiles = document.getElementById('count-tiles');
+    const reviewQueues = document.getElementById('review-queues');
+    const articleTableBody = document.getElementById('article-table-body');
+    const logsContainer = document.getElementById('admin-logs');
+    const status = document.getElementById('admin-status');
+    const logoutButton = document.getElementById('logout-button');
+    let csrfToken = '';
+
+    const labels = {
+      total: 'Total',
+      published: 'Published',
+      drafts: 'Drafts',
+      hidden: 'Hidden',
+      failedExtraction: 'Failed extraction',
+      missingImage: 'Missing image',
+      lowRelevance: 'Low relevance',
+      regenerationNeeded: 'Regeneration needed',
+      latestGenerated: 'Latest generated',
+      latestEdited: 'Latest edited',
+    };
+
+    const queueLabels = {
+      failedExtraction: 'Failed extraction',
+      lowRelevance: 'Low relevance',
+      missingImage: 'Missing image',
+      regenerationNeeded: 'Regeneration needed',
+    };
+
+    const setStatus = (message, type = '') => {
+      if (!status) return;
+      status.textContent = message;
+      status.dataset.type = type;
+    };
+
+    const escapeHtml = (value) => String(value ?? '')
+      .replaceAll('&', '&amp;')
+      .replaceAll('<', '&lt;')
+      .replaceAll('>', '&gt;')
+      .replaceAll('"', '&quot;')
+      .replaceAll("'", '&#39;');
+
+    const requestJson = async (url, options = {}) => {
+      const method = String(options.method || 'GET').toUpperCase();
+      const headers = { 'Content-Type': 'application/json', ...(options.headers || {}) };
+      if (!['GET', 'HEAD', 'OPTIONS'].includes(method) && csrfToken) headers['X-CSRF-Token'] = csrfToken;
+      const response = await fetch(url, { ...options, headers });
+      const payload = await response.json().catch(() => ({}));
+      if (!response.ok) throw new Error(payload.error || 'Request failed.');
+      return payload;
+    };
+
+    const showLogin = () => {
+      loginPanel.hidden = false;
+      dashboardPanel.hidden = true;
+      logsPanel.hidden = true;
+      setStatus('Sign in to view dashboard.');
+    };
+
+    const showDashboard = () => {
+      loginPanel.hidden = true;
+      dashboardPanel.hidden = false;
+      logsPanel.hidden = false;
+    };
+
+    const optionHtml = (value, selected) => '<option value="' + escapeHtml(value) + '" ' + (value === selected ? 'selected' : '') + '>' + escapeHtml(value) + '</option>';
+
+    const fillSelect = (select, values, selected) => {
+      select.innerHTML = '<option value="">All</option>' + values.map((value) => optionHtml(value, selected)).join('');
+    };
+
+    const syncForm = (payload) => {
+      const params = new URLSearchParams(window.location.search);
+      filterForm.q.value = params.get('q') || '';
+      fillSelect(statusFilter, payload.dashboard.facets.statuses || [], params.get('status') || '');
+      fillSelect(categoryFilter, payload.dashboard.facets.categories || [], params.get('category') || '');
+      fillSelect(sourceFilter, payload.dashboard.facets.sources || [], params.get('source') || '');
+    };
+
+    const renderCounts = (counts) => {
+      countTiles.innerHTML = Object.entries(labels).map(([key, label]) => (
+        '<div><span>' + escapeHtml(label) + '</span><strong>' + Number(counts[key] || 0).toLocaleString('en-US') + '</strong></div>'
+      )).join('');
+    };
+
+    const renderQueues = (queues) => {
+      reviewQueues.innerHTML = Object.entries(queueLabels).map(([key, label]) => {
+        const queue = queues[key] || { count: 0, items: [] };
+        const links = queue.items.slice(0, 5).map((item) => '<li><a href="' + escapeHtml(item.qualityHref) + '">' + escapeHtml(item.title) + '</a></li>').join('');
+        return '<article class="admin-queue"><h3>' + escapeHtml(label) + ' <span>' + queue.count + '</span></h3><ul>' + (links || '<li>Clear</li>') + '</ul></article>';
+      }).join('');
+    };
+
+    const renderArticles = (articles) => {
+      articleTableBody.innerHTML = articles.map((article) => (
+        '<tr>'
+          + '<td><a href="' + escapeHtml(article.editHref) + '">' + escapeHtml(article.title) + '</a><small>' + escapeHtml(article.id) + '</small></td>'
+          + '<td>' + escapeHtml(article.status) + '</td>'
+          + '<td>' + escapeHtml(article.qualityStatus) + '</td>'
+          + '<td>' + escapeHtml(article.source) + '<small>' + escapeHtml(article.category) + '</small></td>'
+          + '<td>' + escapeHtml(article.updatedAt || article.publishedAt || 'n/a') + '</td>'
+        + '</tr>'
+      )).join('') || '<tr><td colspan="5">No matching articles.</td></tr>';
+    };
+
+    const renderLogs = (logs) => {
+      const generation = (logs.generation || []).slice(0, 5).map((entry) => '<li>' + escapeHtml(entry.id) + ' · ' + escapeHtml(entry.status) + ' · published ' + Number(entry.published || 0) + '</li>').join('');
+      const published = (logs.publish || []).slice(0, 5).map((entry) => '<li>' + escapeHtml(entry.cycleId) + ' · ' + entry.articleIds.map(escapeHtml).join(', ') + '</li>').join('');
+      const images = (logs.image || []).slice(0, 5).map((entry) => '<li>' + escapeHtml(entry.articleId) + ' · ' + escapeHtml(entry.provider) + '</li>').join('');
+      const audit = logs.audit || {};
+      logsContainer.innerHTML =
+        '<article><h3>Generation</h3><ul>' + (generation || '<li>No generation cycles</li>') + '</ul></article>'
+        + '<article><h3>Publishing</h3><ul>' + (published || '<li>No published analyses in recent cycles</li>') + '</ul></article>'
+        + '<article><h3>Images</h3><ul>' + (images || '<li>No image events</li>') + '</ul></article>'
+        + '<article><h3>Audit</h3><p>' + Number(audit.unsupportedClaims || 0) + ' unsupported claims · ' + Number(audit.staleSources || 0) + ' stale sources</p></article>';
+    };
+
+    const loadDashboard = async () => {
+      const payload = await requestJson('/api/admin/dashboard' + window.location.search);
+      syncForm(payload);
+      renderCounts(payload.dashboard.counts || {});
+      renderQueues(payload.dashboard.reviewQueues || {});
+      renderArticles(payload.articles || []);
+      renderLogs(payload.dashboard.logs || {});
+      showDashboard();
+      setStatus('Showing ' + (payload.articles || []).length + ' article rows.');
+    };
+
+    const checkSession = async () => {
+      try {
+        const session = await requestJson('/api/admin/login');
+        csrfToken = session.csrfToken || '';
+        await loadDashboard();
+      } catch {
+        showLogin();
+      }
+    };
+
+    loginForm?.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      try {
+        setStatus('Signing in...');
+        const payload = await requestJson('/api/admin/login', {
+          method: 'POST',
+          body: JSON.stringify(Object.fromEntries(new FormData(loginForm))),
+        });
+        csrfToken = payload.csrfToken || '';
+        await loadDashboard();
+      } catch (error) {
+        setStatus(error.message, 'error');
+      }
+    });
+
+    filterForm?.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      const params = new URLSearchParams(new FormData(filterForm));
+      for (const [key, value] of [...params.entries()]) {
+        if (!String(value).trim()) params.delete(key);
+      }
+      window.history.replaceState({}, '', window.location.pathname + (params.toString() ? '?' + params.toString() : ''));
+      await loadDashboard();
+    });
+
+    logoutButton?.addEventListener('click', async () => {
+      await requestJson('/api/admin/login', { method: 'DELETE' }).catch(() => ({}));
+      csrfToken = '';
+      showLogin();
+    });
+
+    checkSession();
+  </script>
+</Layout>

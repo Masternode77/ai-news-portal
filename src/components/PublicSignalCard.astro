@@ -1,7 +1,7 @@
 ---
 const { signal, compact = false, priority = false } = Astro.props;
 const impact = Array.isArray(signal.reader_impact) ? signal.reader_impact.slice(0, 4) : [];
-const image = signal.image || signal.image_url || (signal.id ? `/generated/${signal.id}.svg` : '');
+const image = signal.image || signal.image_url || '/generated/fallbacks/ai-infrastructure.svg';
 const imageAlt = signal.image_alt || `${signal.title || 'Compute Current signal'} visual`;
 ---
 <article
