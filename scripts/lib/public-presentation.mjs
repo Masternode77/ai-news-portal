@@ -3,7 +3,11 @@ import { guardPublicCopy } from './copy-quality-guard.mjs';
 import { generateCardCopy } from './card-copy-quality-gate.mjs';
 import { normalizeProperNouns } from './proper-noun-normalizer.mjs';
 import { routePublicLane } from './public-lane-router.mjs';
-import { articleDisplayImage, articleImageAlt } from './article-image-surface.mjs';
+import {
+  articleCardImage,
+  articleImageAlt,
+  articleImageVariants,
+} from './article-image-surface.mjs';
 
 const FALLBACK_READER_IMPACT = ['Operators', 'Capacity planners'];
 
@@ -23,7 +27,7 @@ function stakeholderLabels(article = {}) {
 }
 
 function publicImage(article = {}) {
-  return articleDisplayImage(article);
+  return articleCardImage(article);
 }
 
 function normalizedRoute(article = {}, route = undefined) {
@@ -64,10 +68,11 @@ export function buildPublicPresentation(article = {}, options = {}) {
   });
   const cardCopy = generateCardCopy(article);
   const title = compact(article.expertLensFull?.finalHeadline || article.title || '');
-  const deck = guardPublicCopy(cardCopy.deck || article.deck || persisted.deck || generated.deck).text;
-  const why = guardPublicCopy(cardCopy.why_it_matters || article.why_it_matters || persisted.why_it_matters || generated.why_it_matters).text;
+  const deck = guardPublicCopy(persisted.deck || article.deck || generated.deck || cardCopy.deck).text;
+  const why = guardPublicCopy(persisted.why_it_matters || article.why_it_matters || generated.why_it_matters || cardCopy.why_it_matters).text;
   const detailHref = publicDetailHref(article);
   const image = publicImage(article);
+  const imageMeta = articleImageVariants(article).thumbnail;
 
   return {
     id: article.id || persisted.id,
@@ -78,6 +83,9 @@ export function buildPublicPresentation(article = {}, options = {}) {
     why_it_matters: why,
     image,
     image_alt: persisted.image_alt || articleImageAlt({ ...article, title }),
+    image_status: imageMeta.status,
+    image_provider: imageMeta.provider,
+    image_variant: imageMeta.variant,
     reader_impact: persisted.reader_impact || stakeholderLabels(article),
     region: compact(article.region || 'Global'),
     source: compact(article.source || 'Source'),

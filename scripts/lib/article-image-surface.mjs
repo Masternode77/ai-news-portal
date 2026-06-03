@@ -162,9 +162,10 @@ function imageProviderLooksPlaceholder(article = {}) {
 function isPlaceholderGeneratedCandidate(article = {}, image = '') {
   const value = clean(image);
   if (!/^\/generated\//i.test(value)) return false;
-  if (imageProviderLooksAi(article)) return false;
+  if (/^\/generated\/fallbacks\//i.test(value)) return true;
   if (imageProviderLooksPlaceholder(article)) return true;
-  return /^\/generated\/fallbacks\//i.test(value) || /\.svg(?:$|[?#])/i.test(value);
+  if (imageProviderLooksAi(article)) return false;
+  return /\.svg(?:$|[?#])/i.test(value);
 }
 
 function sourceImageCandidates(article = {}, variant = 'hero') {
@@ -187,17 +188,6 @@ function imageVariantObject(article = {}, variant = 'hero') {
     }
   }
 
-  for (const candidate of sourceImageCandidates(article, variant)) {
-    return {
-      url: candidate,
-      alt: articleImageAlt(article),
-      status: 'source',
-      provider: sourceImageProviderFor(article),
-      variant,
-      fallback: false,
-    };
-  }
-
   for (const candidate of generatedCandidates) {
     if (isTrustedPublicImage(candidate)) {
       const placeholder = isPlaceholderGeneratedCandidate(article, candidate);
@@ -210,6 +200,17 @@ function imageVariantObject(article = {}, variant = 'hero') {
         fallback: placeholder,
       };
     }
+  }
+
+  for (const candidate of sourceImageCandidates(article, variant)) {
+    return {
+      url: candidate,
+      alt: articleImageAlt(article),
+      status: 'source',
+      provider: sourceImageProviderFor(article),
+      variant,
+      fallback: false,
+    };
   }
 
   const fallback = fallbackCategoryImagePath(article);

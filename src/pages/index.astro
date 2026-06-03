@@ -1,5 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import CategoryNav from '../components/CategoryNav.astro';
+import FeaturedArticle from '../components/FeaturedArticle.astro';
 import LatestAnalysisFeed from '../components/LatestAnalysisFeed.astro';
 import latestNews from '../data/latest-news.json';
 import archivedNews from '../data/archived-news.json';
@@ -7,7 +9,9 @@ import { SITE } from '../config/site';
 import { buildHomepageFeed } from '../../scripts/lib/homepage-feed-builder.mjs';
 
 const boardTitle = SITE.name;
-const feed = buildHomepageFeed([...latestNews, ...archivedNews], { limit: 50, minimumVisible: 30 });
+const homepageArticles = process.env.HOMEPAGE_FIXTURE === 'empty' ? [] : [...latestNews, ...archivedNews];
+const feed = buildHomepageFeed(homepageArticles, { limit: 50, minimumVisible: 30 });
+const latestFeed = { ...feed, items: feed.featured ? feed.items.slice(1) : feed.items };
 
 const navLinks = [
   ['Power & Grid', '/category/power-grid/'],
@@ -41,13 +45,13 @@ const navLinks = [
         </div>
       </div>
 
-      <nav class="nav-strip" aria-label="Coverage navigation">
-        {navLinks.map(([label, href]) => <a href={href}>{label}</a>)}
-      </nav>
+      <CategoryNav links={navLinks} />
     </header>
 
+    <FeaturedArticle signal={feed.featured?.publicSignal} />
+
     <LatestAnalysisFeed
-      feed={feed}
+      feed={latestFeed}
       title="Latest Analysis"
       dek="Analysis, briefs, and source-linked signals from the AI infrastructure buildout."
     />

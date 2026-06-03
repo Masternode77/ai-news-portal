@@ -16,13 +16,19 @@ test('sitemap builder includes article and taxonomy pages while excluding archiv
       public_routing: { visibility: 'core' },
       extraction_quality_score: 0.95,
       infrastructure_relevance_score: 0.9,
+      category: 'Power & Grid',
       articleText,
       expertLensFull: { finalArticleBody: articleText },
       updatedAt: '2026-05-20T00:00:00Z',
     },
     { id: 'b', articlePagePublished: false, archiveOnly: true, public_status: 'archive_only_noindex', noindex: true },
   ]);
-  assert.ok(entries.some((entry) => entry.loc === '/news/a/'));
+  const articleEntry = entries.find((entry) => entry.loc === '/news/a/');
+  assert.ok(articleEntry);
+  assert.equal(articleEntry.image, '/generated/fallbacks/power-grid.svg');
   assert.equal(entries.some((entry) => entry.loc === '/news/b/'), false);
-  assert.match(sitemapXml(entries), /<urlset/);
+  const xml = sitemapXml(entries);
+  assert.match(xml, /<urlset/);
+  assert.match(xml, /<image:image>/);
+  assert.doesNotMatch(xml, /\/admin\//);
 });

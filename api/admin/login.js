@@ -1,10 +1,20 @@
-import { clearSessionCookie, createSessionCookie, credentialsMatch, json, readJson, requireAdmin } from './_auth.js';
+import {
+  clearSessionCookie,
+  createSession,
+  credentialsMatch,
+  json,
+  loginThrottleResult,
+  readJson,
+  recordFailedLogin,
+  recordSuccessfulLogin,
+  requireAdmin,
+} from './_auth.js';
 
 export default async function handler(req, res) {
   if (req.method === 'GET') {
     const session = requireAdmin(req, res);
     if (!session) return;
-    json(res, 200, { ok: true, user: session.sub });
+    json(res, 200, { ok: true, user: session.sub, csrfToken: session.csrf });
     return;
   }
 
@@ -19,13 +29,22 @@ export default async function handler(req, res) {
   }
 
   try {
+    const throttle = loginThrottleResult(req);
+    if (throttle.blocked) {
+      json(res, 429, { error: 'Too many failed login attempts. Try again later.' }, { 'Retry-After': String(throttle.retryAfterSeconds) });
+      return;
+    }
+
     const body = await readJson(req);
     if (!credentialsMatch(body)) {
+      recordFailedLogin(req, body.username || '', 'invalid_credentials');
       json(res, 401, { error: 'Invalid username or password.' });
       return;
     }
 
-    json(res, 200, { ok: true }, { 'Set-Cookie': createSessionCookie(body.username || 'admin') });
+    recordSuccessfulLogin(req);
+    const session = createSession(body.username || 'admin');
+    json(res, 200, { ok: true, csrfToken: session.csrfToken }, { 'Set-Cookie': session.cookie });
   } catch {
     json(res, 400, { error: 'Invalid login request.' });
   }

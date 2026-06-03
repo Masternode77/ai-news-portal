@@ -20,4 +20,17 @@ test('stock detector does not flag SVG placeholders or OpenAI generated rasters'
     sourceImage: 'https://stock.example.com/photo.jpg',
     generatedImageProvider: 'openai-api',
   }), false);
+
+  assert.equal(isStockDerivedCardImage({
+    generatedImage: '/generated/articles/example/hero.webp',
+    sourceImage: 'https://stock.example.com/photo.jpg',
+    generatedImageProvider: 'image2',
+  }), false);
+
+  assert.equal(isStockDerivedCardImage({
+    publicSignal: { image: '/generated/articles/example/thumbnail.webp' },
+    generatedImage: '/generated/example.svg',
+    sourceImage: 'https://stock.example.com/photo.jpg',
+    generatedImageProvider: 'local-placeholder',
+  }), false);
 });

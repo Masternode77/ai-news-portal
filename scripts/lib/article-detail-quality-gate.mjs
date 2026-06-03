@@ -26,6 +26,16 @@ function unique(values = []) {
   return [...new Set(values.filter(Boolean).map((value) => String(value)))];
 }
 
+function isBodyHeading(block = '') {
+  return block.length <= 86 && !/[.!?]$/.test(block) && /^[A-Z0-9][A-Za-z0-9 &:/+-]+$/.test(block);
+}
+
+function visibleSectionCount(blocks = []) {
+  const headings = blocks.filter(isBodyHeading);
+  if (headings.length) return headings.length;
+  return blocks.filter((block) => String(block).trim().length >= 80).length;
+}
+
 export function articleDetailQualityResult(article = {}, options = {}) {
   const route = options.route || article.public_routing || routePublicLane(article);
   const extraction = sourceExtractionPassesLongformGate(article);
@@ -47,6 +57,7 @@ export function articleDetailQualityResult(article = {}, options = {}) {
   if (!truncation.ok) reasons.push(...truncation.artifacts);
   if (/editor'?s brief/i.test(text)) reasons.push('fixed_editors_brief_template');
   if (bodyBlocks.join(' ').length < 500) reasons.push('article_body_too_short_after_cleaning');
+  if (visibleSectionCount(bodyBlocks) < 4) reasons.push('article_body_too_few_sections');
 
   return {
     ok: reasons.length === 0,

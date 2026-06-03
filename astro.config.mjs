@@ -34,7 +34,8 @@ export default defineConfig({
     sitemap({
       filter: (page) => {
         const pathname = pagePath(page);
-        return !pathname.includes('/admin/')
+        return !pathname.startsWith('/admin')
+          && !pathname.startsWith('/api/admin')
           && pathname !== '/dashboard/'
           && !noindexArticlePaths.has(pathname);
       },

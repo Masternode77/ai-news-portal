@@ -3,7 +3,17 @@ import test from 'node:test';
 import { buildHomepageEditorialModel } from '../scripts/lib/homepage-editorial-model.mjs';
 
 test('homepage editorial model separates latest cycle from backfilled analysis', () => {
-  const body = 'Grid operators are weighing a verified 300 MW data center power request against interconnection timing, equipment availability, and local permitting risk. The source identifies the operator, the capacity figure, the affected region, and the procurement decision facing infrastructure buyers. '.repeat(8);
+  const section = 'Grid operators are weighing a verified 300 MW data center power request against interconnection timing, equipment availability, and local permitting risk. The source identifies the operator, the capacity figure, the affected region, and the procurement decision facing infrastructure buyers.';
+  const body = [
+    'Grid Capacity Signal',
+    section,
+    'Interconnection Timing',
+    section,
+    'Equipment Constraint',
+    section,
+    'Buyer Decision',
+    section,
+  ].join('\n\n');
   const article = {
     id: 'a',
     title: 'Verified grid capacity signal for data center operators',
@@ -39,7 +49,7 @@ test('homepage editorial model separates latest cycle from backfilled analysis',
   };
   const model = buildHomepageEditorialModel({
     latest: [article],
-    cycles: [{ published_analyses: [], status: 'completed_no_qualifying_signals', cycle_completed_at: '2026-05-20T05:00:00Z' }],
+    cycles: [{ published_analyses: [], status: 'completed_no_qualifying_signals', cycle_completed_at: new Date().toISOString() }],
   });
   assert.equal(model.featuredAnalyses.length, 0);
   assert.equal(model.recentAnalysis.length, 1);

@@ -1,9 +1,12 @@
 ---
 const { source } = Astro.props;
 ---
-<p class="source-attribution">
-  Based on reporting from <strong>{source.name}</strong>{source.domain ? <> ({source.domain})</> : null}.
-  {source.url ? (
-    <a href={source.url} target="_blank" rel="noopener noreferrer">Read the source</a>
-  ) : null}
-</p>
+<section class="source-attribution" aria-label="Source attribution">
+  <span>Source</span>
+  <p>
+    Based on reporting from <strong>{source.name}</strong>{source.domain ? <> ({source.domain})</> : null}.
+    {source.url ? (
+      <a href={source.url} target="_blank" rel="noopener noreferrer">Read the source</a>
+    ) : null}
+  </p>
+</section>

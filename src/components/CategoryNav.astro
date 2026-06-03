@@ -1,0 +1,6 @@
+---
+const { links = [] } = Astro.props;
+---
+<nav class="category-nav nav-strip" aria-label="Coverage navigation">
+  {links.map(([label, href]: [string, string]) => <a href={href}>{label}</a>)}
+</nav>

@@ -1,0 +1,70 @@
+---
+import ArticleCardImage from './ArticleCardImage.astro';
+
+const { signal = {} } = Astro.props;
+const detailHref = signal.view_detail || '';
+const sourceHref = signal.read_source || '';
+const href = detailHref || sourceHref || '';
+const isExternal = href && !href.startsWith('/');
+const sourceIsExternal = sourceHref && !sourceHref.startsWith('/');
+const date = signal.date || signal.publishedAt || '';
+const formattedDate = date
+  ? new Date(date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
+  : '';
+const cta = signal.cta || (signal.view_detail ? 'Read analysis' : 'Source');
+const image = signal.image || '/generated/fallbacks/ai-infrastructure.svg';
+const imageAlt = signal.image_alt || (signal.title ? `${signal.title} editorial visual` : 'Compute Current editorial visual');
+const readerImpact = Array.isArray(signal.reader_impact) ? signal.reader_impact.slice(0, 4) : [];
+---
+<article class="article-list-card" data-public-card>
+  <ArticleCardImage
+    image={image}
+    imageAlt={imageAlt}
+    href={href}
+    decorative={!href}
+    ariaLabel={href ? signal.title : ''}
+  />
+  <div class="article-list-card-main">
+    <div class="story-meta">
+      <span class="public-signal-label">{signal.signal_label || signal.label || 'Brief'}</span>
+      {signal.category ? <span>{signal.category}</span> : null}
+      {formattedDate ? <time datetime={date}>{formattedDate}</time> : null}
+      {signal.source ? <span>{signal.source}</span> : null}
+    </div>
+    <h3>
+      {href ? (
+        <a href={href} target={isExternal ? '_blank' : undefined} rel={isExternal ? 'noopener noreferrer' : undefined}>
+          {signal.title}
+        </a>
+      ) : signal.title}
+    </h3>
+    {signal.deck ? <p class="article-deck">{signal.deck}</p> : null}
+    {signal.why_it_matters ? (
+      <p class="article-why"><strong>Why it matters:</strong>{' '}{String(signal.why_it_matters).replace(/^Why it matters:\s*/i, '')}</p>
+    ) : null}
+    {readerImpact.length ? (
+      <div class="article-impact-pills" aria-label="Reader impact">
+        {readerImpact.map((impact: string) => <span>{impact}</span>)}
+      </div>
+    ) : null}
+  </div>
+  {detailHref || sourceHref ? (
+    <div class="article-card-actions">
+      {detailHref ? (
+        <a class="article-card-cta" href={detailHref}>
+          {cta}
+        </a>
+      ) : null}
+      {sourceHref ? (
+        <a
+          class={detailHref ? 'article-card-source' : 'article-card-cta article-card-source'}
+          href={sourceHref}
+          target={sourceIsExternal ? '_blank' : undefined}
+          rel={sourceIsExternal ? 'noopener noreferrer' : undefined}
+        >
+          {detailHref ? 'Read source' : 'Source'}
+        </a>
+      ) : null}
+    </div>
+  ) : null}
+</article>

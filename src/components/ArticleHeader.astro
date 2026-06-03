@@ -1,11 +1,15 @@
 ---
-const { category, date, source, title, deck, image, imageAlt } = Astro.props;
+const { category, date, source, title, deck } = Astro.props;
 const formattedDate = date
   ? new Date(date).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })
   : '';
 ---
 <header class="article-header">
-  <a class="back-link" href="/">Latest analysis</a>
+  <nav class="article-breadcrumb" aria-label="Breadcrumb">
+    <a href="/">Compute Current</a>
+    <span aria-hidden="true">/</span>
+    <a href="/">Latest analysis</a>
+  </nav>
   <div class="meta-strip article-meta-strip">
     {category ? <span class="category-badge">{category}</span> : null}
     {formattedDate ? <time datetime={date}>{formattedDate}</time> : null}
@@ -14,9 +18,4 @@ const formattedDate = date
   <h1>{title}</h1>
   {deck ? <p class="detail-summary">{deck}</p> : null}
   <p class="byline">By Compute Current Editorial Desk</p>
-  {image ? (
-    <figure class="article-hero-image">
-      <img src={image} alt={imageAlt || `${title} editorial visual`} loading="eager" decoding="async" />
-    </figure>
-  ) : null}
 </header>

@@ -4,7 +4,78 @@ import {
   OPENAI_IMAGE_QUALITY,
   OPENAI_IMAGE_SIZE,
 } from '../constants.mjs';
-import { buildImagePrompt, fetchWithTimeout, writeBase64Image, writeFetchedImage } from './shared.mjs';
+import { buildImagePrompt, fetchWithTimeout, writeImageBytes } from './shared.mjs';
+
+function mimeTypeForFormat(format = 'png') {
+  if (format === 'jpeg' || format === 'jpg') return 'image/jpeg';
+  if (format === 'webp') return 'image/webp';
+  return 'image/png';
+}
+
+export function extractOpenAiImagePayload(payload = {}, fallbackMime = 'image/png') {
+  const image = payload?.data?.[0] || {};
+  return {
+    base64: image.b64_json || payload.b64_json || '',
+    url: image.url || payload.url || '',
+    mimeType: image.mime_type || payload.mime_type || fallbackMime,
+    raw: payload,
+  };
+}
+
+export async function requestOpenAiImage(options = {}) {
+  const apiKey = options.apiKey || process.env.OPENAI_API_KEY;
+  if (!apiKey) {
+    throw new Error('OPENAI_API_KEY is required for OpenAI image generation');
+  }
+
+  const outputFormat = options.outputFormat || 'png';
+  const response = await fetchWithTimeout(OPENAI_IMAGE_API_URL, {
+    method: 'POST',
+    headers: {
+      Authorization: `Bearer ${apiKey}`,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      model: options.model || OPENAI_IMAGE_MODEL,
+      prompt: options.prompt,
+      n: 1,
+      size: options.size || OPENAI_IMAGE_SIZE,
+      quality: options.quality || OPENAI_IMAGE_QUALITY,
+      output_format: outputFormat,
+      ...(options.background ? { background: options.background } : {}),
+    }),
+  }, options.timeoutMs || 45000);
+
+  if (!response.ok) {
+    const detail = await response.text().catch(() => '');
+    throw new Error(`OpenAI image request failed: ${response.status}${detail ? ` ${detail.slice(0, 400)}` : ''}`);
+  }
+
+  const payload = await response.json();
+  const image = extractOpenAiImagePayload(payload, mimeTypeForFormat(outputFormat));
+
+  if (image.base64) {
+    return {
+      bytes: Buffer.from(image.base64, 'base64'),
+      mimeType: image.mimeType,
+      raw: image.raw,
+    };
+  }
+
+  if (image.url) {
+    const imageResponse = await fetchWithTimeout(image.url, {}, 20000);
+    if (!imageResponse.ok) {
+      throw new Error(`Generated image fetch failed: ${imageResponse.status}`);
+    }
+    return {
+      bytes: Buffer.from(await imageResponse.arrayBuffer()),
+      mimeType: imageResponse.headers.get('content-type') || image.mimeType,
+      raw: image.raw,
+    };
+  }
+
+  throw new Error('No image bytes returned by OpenAI image API');
+}
 
 export function createOpenAiImageApiProvider() {
   const apiKey = process.env.OPENAI_API_KEY;
@@ -15,38 +86,15 @@ export function createOpenAiImageApiProvider() {
   return {
     name: 'openai-api',
     async generate(item) {
-      const response = await fetchWithTimeout(OPENAI_IMAGE_API_URL, {
-        method: 'POST',
-        headers: {
-          Authorization: `Bearer ${apiKey}`,
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          model: OPENAI_IMAGE_MODEL,
-          prompt: buildImagePrompt(item),
-          n: 1,
-          size: OPENAI_IMAGE_SIZE,
-          quality: OPENAI_IMAGE_QUALITY,
-        }),
-      }, 45000);
+      const image = await requestOpenAiImage({
+        apiKey,
+        model: OPENAI_IMAGE_MODEL,
+        prompt: buildImagePrompt(item),
+        size: OPENAI_IMAGE_SIZE,
+        quality: OPENAI_IMAGE_QUALITY,
+      });
 
-      if (!response.ok) {
-        const detail = await response.text().catch(() => '');
-        throw new Error(`OpenAI image request failed: ${response.status}${detail ? ` ${detail.slice(0, 400)}` : ''}`);
-      }
-
-      const payload = await response.json();
-      const image = payload?.data?.[0] || {};
-
-      if (image.b64_json) {
-        return writeBase64Image(item, image.b64_json, image.mime_type || 'image/png');
-      }
-
-      if (image.url) {
-        return writeFetchedImage(item, image.url);
-      }
-
-      throw new Error('No image bytes returned by OpenAI image API');
+      return writeImageBytes(item, image.bytes, image.mimeType);
     },
   };
 }

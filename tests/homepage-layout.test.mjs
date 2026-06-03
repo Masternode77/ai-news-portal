@@ -23,6 +23,8 @@ test('homepage feed exposes 30 to 50 public cards when enough eligible items exi
   const feed = buildHomepageFeed(Array.from({ length: 36 }, (_, index) => item(index)));
 
   assert.equal(feed.items.length, 36);
+  assert.ok(feed.featured.publicSignal.title);
+  assert.equal(feed.featured.publicSignal.title, feed.items[0].publicSignal.title);
   assert.equal(feed.items.every((entry) => entry.publicSignal.title), true);
   assert.equal(feed.sections.length, 1);
   assert.equal(feed.sections[0].title, 'Latest Analysis');
@@ -42,11 +44,23 @@ test('homepage feed mixes longform and short public items without internal bucke
 });
 
 test('homepage cards use a public board layout', () => {
-  const cardSource = fs.readFileSync('src/components/ArticleListCard.astro', 'utf8');
+  const cardSource = fs.readFileSync('src/components/ArticleCard.astro', 'utf8');
   const styles = fs.readFileSync('src/styles/global.css', 'utf8');
 
   assert.match(styles, /\.article-list\s*{[^}]*grid-template-columns:\s*repeat\(3,\s*minmax\(0,\s*1fr\)\)/s);
   assert.match(styles, /\.article-list-card\s*{[^}]*flex-direction:\s*column/s);
   assert.match(cardSource, /article-impact-pills/);
   assert.equal(/Cycle status|qualifying signal|Published deskwork/i.test(cardSource), false);
+});
+
+test('homepage composes dedicated publication components', () => {
+  const source = fs.readFileSync('src/pages/index.astro', 'utf8');
+  const feedSource = fs.readFileSync('src/components/LatestAnalysisFeed.astro', 'utf8');
+  const styles = fs.readFileSync('src/styles/global.css', 'utf8');
+
+  assert.match(source, /FeaturedArticle/);
+  assert.match(source, /CategoryNav/);
+  assert.match(feedSource, /ArticleCard/);
+  assert.match(styles, /\.featured-article\s*{/);
+  assert.match(styles, /\.category-nav\s*{/);
 });

@@ -1,0 +1,20 @@
+---
+import { SITE } from '../config/site';
+
+const {
+  image = SITE.defaultOgImage,
+  alt = 'Compute Current editorial visual',
+  siteUrl = SITE.url,
+} = Astro.props;
+
+const joinUrl = (base: string, publicPath: string) =>
+  `${base.replace(/\/$/, '')}/${publicPath.replace(/^\//, '')}`;
+const safeImage = image || SITE.defaultOgImage;
+const imageUrl = safeImage.startsWith('http') ? safeImage : joinUrl(siteUrl, safeImage);
+---
+<meta property="og:image" content={imageUrl} />
+<meta property="og:image:alt" content={alt} />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta name="twitter:image" content={imageUrl} />
+<meta name="twitter:image:alt" content={alt} />

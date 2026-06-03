@@ -1,0 +1,28 @@
+---
+import ArticleCard from './ArticleCard.astro';
+
+const { articles = [], currentId = '' } = Astro.props;
+const visibleArticles = articles
+  .filter((article: any) => article && article.id !== currentId)
+  .slice(0, 3);
+const relatedSignal = (article: any) => {
+  const signal = article.publicSignal || article;
+  const image = signal.image || signal.thumbnailImage || article.thumbnailImage || article.heroImage || '';
+  return {
+    ...signal,
+    image,
+    id: image ? signal.id : '',
+  };
+};
+---
+{visibleArticles.length ? (
+  <section class="detail-section related-articles" aria-labelledby="related-articles-heading">
+    <div class="related-articles-heading">
+      <span>Continue Reading</span>
+      <h2 id="related-articles-heading">Related analysis</h2>
+    </div>
+    <div class="article-list related-list">
+      {visibleArticles.map((article: any) => <ArticleCard signal={relatedSignal(article)} />)}
+    </div>
+  </section>
+) : null}

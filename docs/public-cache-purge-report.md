@@ -1,6 +1,6 @@
 # Public Cache Purge Report
 
-Generated at: 2026-05-23T13:18:41.524Z
+Generated at: 2026-05-31T07:37:38.560Z
 Status: skipped
 Reason: missing COMPUTE_CURRENT_CACHE_PURGE_URL or VERCEL_DEPLOY_HOOK_URL.
 

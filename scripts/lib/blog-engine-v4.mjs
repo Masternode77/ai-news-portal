@@ -14,6 +14,7 @@ import { selectBlogArchetype } from './blog-archetype-selector.mjs';
 import { normalizeProperNouns } from './proper-noun-normalizer.mjs';
 import { forbiddenPublicPhraseMatches, guardPublicCopy } from './copy-quality-guard.mjs';
 import { publicTemplatePhraseMatches } from './public-template-phrase-guard.mjs';
+import { seoMetadataClaimsSupported } from './source-fidelity-claim-check.mjs';
 
 const GENERATION_VERSION = 'blog_engine_v4';
 
@@ -61,7 +62,12 @@ function deckFor(article = {}, evidencePack = {}, angle = {}) {
 }
 
 function whyFor(article = {}, evidencePack = {}) {
-  return guardPublicCopy(sentence(`${evidencePack.commercialImplication} ${evidencePack.operatingImplication}`)).text;
+  const fact = (evidencePack.facts || []).find(isPublishableEvidenceLine)
+    || evidencePack.evidenceText
+    || article.summary
+    || article.title
+    || '';
+  return guardPublicCopy(sentence(fact)).text;
 }
 
 function atAGlance(evidencePack = {}) {
@@ -171,7 +177,7 @@ export function generateBlogArticle(article = {}, options = {}) {
 
   const route = initialRoute;
   const evidencePack = options.evidencePack || route.evidencePack || buildEvidencePack(article, {
-    factTarget: route.route === GRADED_ROUTES.CORE_LONGFORM_BLOG ? 4 : 3,
+    factTarget: route.route === GRADED_ROUTES.CORE_LONGFORM_BLOG ? 5 : 3,
   });
   const recent = options.recent || [];
   const tone = options.tone || selectBlogTone(article, { recent, index: options.index || 0 });
@@ -288,8 +294,9 @@ export function generateBlogArticle(article = {}, options = {}) {
   };
 
   const diversity = antiTemplateDiversityResult(updated, recent);
+  const seoFidelity = seoMetadataClaimsSupported(updated, evidencePack);
   return {
-    ok: length.ok && quality.ok && diversity.ok,
+    ok: length.ok && quality.ok && diversity.ok && seoFidelity.ok,
     article: updated,
     route,
     evidencePack,
@@ -300,7 +307,13 @@ export function generateBlogArticle(article = {}, options = {}) {
     length,
     quality,
     diversity,
-    reasons: [...length.reasons, ...quality.reasons, ...diversity.reasons],
+    seoFidelity,
+    reasons: [
+      ...length.reasons,
+      ...quality.reasons,
+      ...diversity.reasons,
+      ...seoFidelity.unsupportedClaims.map((claim) => `seo_unsupported_claim:${claim}`),
+    ],
   };
 }
 
