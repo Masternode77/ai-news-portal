@@ -57,7 +57,7 @@ const IMAGE_METADATA_FIELDS = [
   'imagePrompt',
 ];
 
-const AI_IMAGE_PROVIDER_RE = /\b(?:chatgpt|image2|openai|gpt-image|nano|nanobanana)\b/i;
+const AI_IMAGE_PROVIDER_RE = /\b(?:chatgpt|image2|openai|gpt-image|nano|nanobanana|gemini|legacy-gemini)\b/i;
 const PLACEHOLDER_IMAGE_PROVIDER_RE = /\b(?:local-placeholder|local-svg|category-fallback)\b/i;
 
 function clean(value = '') {
