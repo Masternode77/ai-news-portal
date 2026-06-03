@@ -375,7 +375,9 @@
     "6811295c56a5c699",
     "274897e20c9e79c2",
     "e73abb438d46cb73",
-    "1226fdcab1257571"
+    "1226fdcab1257571",
+    "4fff4b21ed915a3f",
+    "f952c2591afb32a4"
   ],
   "dayPlans": {
     "2026-03-24": {
@@ -11104,303 +11106,18 @@
     "2026-06-03": {
       "date": "2026-06-03",
       "createdAt": "2026-06-02T18:48:11.592Z",
-      "refreshedAt": "2026-06-02T18:48:11.592Z",
+      "refreshedAt": "2026-06-03T01:41:34.961Z",
       "candidateWindowHours": 24,
       "curatedItems": [
         {
-          "id": "1226fdcab1257571",
-          "source": "StorageReview",
-          "url": "https://www.storagereview.com/news/jetcool-brings-smartplate-liquid-cooling-to-dell-poweredge-r770-and-r7725",
-          "title": "JetCool Brings SmartPlate Liquid Cooling to Dell PowerEdge R770 and R7725",
-          "snippet": "JetCool has launched its SmartPlate System for Dell PowerEdge R770 and R7725 servers, expanding its direct-to-chip liquid cooling portfolio to align with next-generation server platforms based on 5th Gen AMD EPYC and In…",
-          "contentText": "JetCool has launched its SmartPlate System for Dell PowerEdge R770 and R7725 server s, expanding its direct-to-chip liquid cooling portfolio to align with next-generation server platforms based on 5th Gen AMD EPYC and Intel Xeon 6 processors. The company originally announced the Dell PowerEdge support at Dell Technologies World in May, positioning the solution for enterprise data centers and distributed edge deployments where power, heat, and rack space are increasingly limiting factors. The move extends an existing relationship: JetCool, a Flex company, is a Dell OEM partner whose prior-generation SmartPlate already shipped on the PowerEdge R670 and R760 , and the R770 and R7725 bring the sealed cooling approach to Dell&#8217;s next-gen Intel and AMD platforms. At a high level, SmartPlat…",
-          "publishedAt": "2026-06-02T17:59:38.000Z",
-          "sourceImage": "https://www.storagereview.com/wp-content/uploads/2024/07/StorageReview-Jetcool-Dell-R760-08.jpg",
-          "region": "Global",
-          "language": "en",
-          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
-          "category": "Cooling & Facility Engineering",
-          "primary_category": "Cooling & Facility Engineering",
-          "secondary_category": "Thermal design and rack density",
-          "infrastructure_layer": "Cooling",
-          "affected_stakeholders": [
-            "operators",
-            "equipment vendors",
-            "data center developers",
-            "enterprise IT"
-          ],
-          "article_type": "Partnership",
-          "urgency_score": 0.58,
-          "taxonomy_confidence": 0.91,
-          "taxonomy_reasons": [
-            "cooling",
-            "liquid cooling",
-            "direct-to-chip"
-          ],
-          "direct_ai_infrastructure_relevance": 1,
-          "data_center_relevance": 0.42,
-          "cloud_capacity_relevance": 0,
-          "semiconductor_relevance": 0.64,
-          "power_grid_relevance": 0.22,
-          "cooling_relevance": 1,
-          "capital_markets_relevance": 0,
-          "enterprise_ai_infrastructure_relevance": 0,
-          "infrastructure_relevance_score": 1,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "data_center_relevance:0.42(data centers)",
-            "semiconductor_relevance:0.64(amd, intel, gpu)",
-            "power_grid_relevance:0.22(power)",
-            "cooling_relevance:1.00(cooling, liquid cooling, direct-to-chip)"
-          ],
-          "infrastructure_relevance": {
-            "direct_ai_infrastructure_relevance": 1,
-            "data_center_relevance": 0.42,
-            "cloud_capacity_relevance": 0,
-            "semiconductor_relevance": 0.64,
-            "power_grid_relevance": 0.22,
-            "cooling_relevance": 1,
-            "capital_markets_relevance": 0,
-            "enterprise_ai_infrastructure_relevance": 0,
-            "infrastructure_relevance_score": 1,
-            "infrastructure_relevance_tier": "full_memo",
-            "infrastructure_relevance_action": "generate_full_memo",
-            "infrastructure_relevance_reasons": [
-              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-              "data_center_relevance:0.42(data centers)",
-              "semiconductor_relevance:0.64(amd, intel, gpu)",
-              "power_grid_relevance:0.22(power)",
-              "cooling_relevance:1.00(cooling, liquid cooling, direct-to-chip)"
-            ],
-            "infrastructureRelevanceAction": "generate_full_memo",
-            "articlePagePublished": true,
-            "homepagePublished": true,
-            "archiveOnly": false,
-            "archiveOnlyReason": null
-          },
-          "score": 88
-        },
-        {
-          "id": "e73abb438d46cb73",
-          "source": "HPCwire",
-          "url": "https://www.hpcwire.com/off-the-wire/intel-announces-new-ai-innovations-at-computex/",
-          "title": "Intel Announces New AI Innovations at Computex",
-          "snippet": "Chip to Rackscale AI Solutions Delivered to Customers with the Help of Strategic Industry Partners TAIPEI, Taiwan, June 2, 2026 — Today at Computex 2026, Intel unveiled new innovations that address customers’ chip-to-sy…",
-          "contentText": "Chip to Rackscale AI Solutions Delivered to Customers with the Help of Strategic Industry Partners TAIPEI, Taiwan, June 2, 2026 &#8212; Today at Computex 2026, Intel unveiled new innovations that address customers’ chip-to-systems-level AI needs with solutions tailored to address their specific industry challenges, including: New rackscale AI infrastructure : Intel announced rackscale AI infrastructure for customers interested in scaling their inference and agentic workloads based on Intel Xeon processors and SambaNova SN-50 Reconfigurable Dataflow Units (RDUs). Agentic Cloud Offering for Disaggregated Inference : Vector Core Compute, a new purpose-built enterprise inference cloud formed by Vista Equity Partners and Cambium Capital, unveiled fully disaggregated inference running on Intel…",
-          "publishedAt": "2026-06-02T18:18:50.000Z",
-          "sourceImage": "https://www.hpcwire.com/wp-content/uploads/2026/06/intel_logo-300x200.jpg",
-          "region": "APAC",
-          "language": "en",
-          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
-          "category": "Semiconductors",
-          "primary_category": "Semiconductors",
-          "secondary_category": "Accelerators, memory, and advanced packaging",
-          "infrastructure_layer": "Silicon",
-          "affected_stakeholders": [
-            "semiconductor suppliers",
-            "hyperscalers",
-            "server OEMs",
-            "investors"
-          ],
-          "article_type": "Financing / M&A",
-          "urgency_score": 0.46,
-          "taxonomy_confidence": 0.8,
-          "taxonomy_reasons": [
-            "chip",
-            "gpu",
-            "intel"
-          ],
-          "direct_ai_infrastructure_relevance": 1,
-          "data_center_relevance": 0,
-          "cloud_capacity_relevance": 0,
-          "semiconductor_relevance": 0.49,
-          "power_grid_relevance": 0,
-          "cooling_relevance": 0,
-          "capital_markets_relevance": 0.26,
-          "enterprise_ai_infrastructure_relevance": 0,
-          "infrastructure_relevance_score": 0.873,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "semiconductor_relevance:0.49(intel, gpu)",
-            "capital_markets_relevance:0.26(equity)"
-          ],
-          "infrastructure_relevance": {
-            "direct_ai_infrastructure_relevance": 1,
-            "data_center_relevance": 0,
-            "cloud_capacity_relevance": 0,
-            "semiconductor_relevance": 0.49,
-            "power_grid_relevance": 0,
-            "cooling_relevance": 0,
-            "capital_markets_relevance": 0.26,
-            "enterprise_ai_infrastructure_relevance": 0,
-            "infrastructure_relevance_score": 0.873,
-            "infrastructure_relevance_tier": "full_memo",
-            "infrastructure_relevance_action": "generate_full_memo",
-            "infrastructure_relevance_reasons": [
-              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-              "semiconductor_relevance:0.49(intel, gpu)",
-              "capital_markets_relevance:0.26(equity)"
-            ],
-            "infrastructureRelevanceAction": "generate_full_memo",
-            "articlePagePublished": true,
-            "homepagePublished": true,
-            "archiveOnly": false,
-            "archiveOnlyReason": null
-          },
-          "score": 83
-        },
-        {
-          "id": "ab6a38fd1dd3fe12",
-          "source": "HPCwire",
-          "url": "https://www.hpcwire.com/off-the-wire/qstar-integrates-with-beegfs-to-reduce-storage-costs-through-intelligent-archiving/",
-          "title": "QStar Integrates with BeeGFS to Reduce Storage Costs Through Intelligent Archiving",
-          "snippet": "DENVER, June 2, 2026 — QStar Technologies today announced integration between QStar Network Migrator and the BeeGFS parallel file system, enabling organizations to reduce primary storage costs through intelligent policy…",
-          "contentText": "DENVER, June 2, 2026 &#8212; QStar Technologies today announced integration between QStar Network Migrator and the BeeGFS parallel file system, enabling organizations to reduce primary storage costs through intelligent policy-based archiving for HPC, AI, analytics and research environments. BeeGFS is a high-performance parallel file system widely used in HPC, AI, analytics and large-scale research applications that require fast, scalable access to shared data. QStar Network Migrator is an enterprise-class hierarchical storage management (HSM) solution that automates the migration of infrequently accessed files using policy-based data management to lower-cost archive storage, including tape, cloud and object storage platforms. The integration uses the BeeGFS Data Management API (DMAPI) to…",
-          "publishedAt": "2026-06-02T18:26:59.000Z",
-          "sourceImage": "https://www.hpcwire.com/wp-content/uploads/2026/06/beegfs-logo-800x492-1-300x185.png",
-          "region": "US",
-          "language": "en",
-          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
-          "category": "AI Infrastructure",
-          "primary_category": "AI Infrastructure",
-          "secondary_category": "GPU clusters and deployment readiness",
-          "infrastructure_layer": "Compute",
-          "affected_stakeholders": [
-            "operators",
-            "hyperscalers",
-            "cloud buyers",
-            "investors"
-          ],
-          "article_type": "Policy / Regulation",
-          "urgency_score": 0.45,
-          "taxonomy_confidence": 0.85,
-          "taxonomy_reasons": [
-            "ai infrastructure",
-            "neocloud",
-            "hpc"
-          ],
-          "direct_ai_infrastructure_relevance": 1,
-          "data_center_relevance": 0,
-          "cloud_capacity_relevance": 0,
-          "semiconductor_relevance": 0.22,
-          "power_grid_relevance": 0,
-          "cooling_relevance": 0,
-          "capital_markets_relevance": 0,
-          "enterprise_ai_infrastructure_relevance": 0.423,
-          "infrastructure_relevance_score": 0.858,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud, hpc)",
-            "semiconductor_relevance:0.22(gpu)",
-            "enterprise_ai_infrastructure_relevance:0.42(data management, storage)"
-          ],
-          "infrastructure_relevance": {
-            "direct_ai_infrastructure_relevance": 1,
-            "data_center_relevance": 0,
-            "cloud_capacity_relevance": 0,
-            "semiconductor_relevance": 0.22,
-            "power_grid_relevance": 0,
-            "cooling_relevance": 0,
-            "capital_markets_relevance": 0,
-            "enterprise_ai_infrastructure_relevance": 0.423,
-            "infrastructure_relevance_score": 0.858,
-            "infrastructure_relevance_tier": "full_memo",
-            "infrastructure_relevance_action": "generate_full_memo",
-            "infrastructure_relevance_reasons": [
-              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud, hpc)",
-              "semiconductor_relevance:0.22(gpu)",
-              "enterprise_ai_infrastructure_relevance:0.42(data management, storage)"
-            ],
-            "infrastructureRelevanceAction": "generate_full_memo",
-            "articlePagePublished": true,
-            "homepagePublished": true,
-            "archiveOnly": false,
-            "archiveOnlyReason": null
-          },
-          "score": 82
-        },
-        {
-          "id": "09fc5f1ef0399e54",
+          "id": "4fff4b21ed915a3f",
           "source": "Toms Hardware",
-          "url": "https://www.tomshardware.com/pc-components/cpus/intels-next-gen-lga1954-socket-will-support-nova-lake-razor-lake-and-beyond-finally-an-intel-socket-that-outlives-its-cpus",
-          "title": "Intel’s next-gen LGA1954 socket will support Nova Lake, Razor Lake, and beyond — finally an Intel socket that outlives its CPUs",
-          "snippet": "Reputable Intel hardware leaker Jaykihn reveals new information about Intel's next-generation LGA1954 socket.",
-          "contentText": "Reputable Intel hardware leaker Jaykihn reveals new information about Intel's next-generation LGA1954 socket.",
-          "publishedAt": "2026-06-02T17:32:36.000Z",
-          "sourceImage": "https://cdn.mos.cms.futurecdn.net/Je4tmZfALZLnDNf88wFM2H-1280-80.jpg",
-          "region": "US",
-          "language": "en",
-          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
-          "category": "AI Infrastructure",
-          "primary_category": "AI Infrastructure",
-          "secondary_category": "GPU clusters and deployment readiness",
-          "infrastructure_layer": "Compute",
-          "affected_stakeholders": [
-            "operators",
-            "hyperscalers",
-            "cloud buyers",
-            "investors"
-          ],
-          "article_type": "Other",
-          "urgency_score": 0.45,
-          "taxonomy_confidence": 0.77,
-          "taxonomy_reasons": [
-            "ai infrastructure",
-            "neocloud"
-          ],
-          "direct_ai_infrastructure_relevance": 1,
-          "data_center_relevance": 0,
-          "cloud_capacity_relevance": 0,
-          "semiconductor_relevance": 0.49,
-          "power_grid_relevance": 0,
-          "cooling_relevance": 0,
-          "capital_markets_relevance": 0,
-          "enterprise_ai_infrastructure_relevance": 0,
-          "infrastructure_relevance_score": 0.838,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "semiconductor_relevance:0.49(intel, gpu)"
-          ],
-          "infrastructure_relevance": {
-            "direct_ai_infrastructure_relevance": 1,
-            "data_center_relevance": 0,
-            "cloud_capacity_relevance": 0,
-            "semiconductor_relevance": 0.49,
-            "power_grid_relevance": 0,
-            "cooling_relevance": 0,
-            "capital_markets_relevance": 0,
-            "enterprise_ai_infrastructure_relevance": 0,
-            "infrastructure_relevance_score": 0.838,
-            "infrastructure_relevance_tier": "full_memo",
-            "infrastructure_relevance_action": "generate_full_memo",
-            "infrastructure_relevance_reasons": [
-              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-              "semiconductor_relevance:0.49(intel, gpu)"
-            ],
-            "infrastructureRelevanceAction": "generate_full_memo",
-            "articlePagePublished": true,
-            "homepagePublished": true,
-            "archiveOnly": false,
-            "archiveOnlyReason": null
-          },
-          "score": 74
-        },
-        {
-          "id": "97693201964ac546",
-          "source": "TechCrunch AI",
-          "url": "https://techcrunch.com/2026/06/02/microsoft-launches-scout-an-openclaw-inspired-personal-assistant/",
-          "title": "Microsoft launches Scout, an OpenClaw-inspired personal assistant",
-          "snippet": "Launched at Build, Microsoft Scout is a new AI assistant meant to bring the power and flexibility of OpenClaw into the Microsoft 365 system.",
-          "contentText": "Launched at Build, Microsoft Scout is a new AI assistant meant to bring the power and flexibility of OpenClaw into the Microsoft 365 system.",
-          "publishedAt": "2026-06-02T18:02:44.000Z",
-          "sourceImage": null,
+          "url": "https://www.tomshardware.com/peripherals/gaming-keyboards/cherry-xtrfy-launches-first-8k-ultra-wideband-gaming-keyboard-featuring-more-compact-70-percent-layout",
+          "title": "Cherry XTRFY launches first 8K ultra-wideband gaming keyboard — featuring more compact 70-percent layout",
+          "snippet": "Cherry XTRFY launched the first 8K ultra-wideband wireless gaming keyboard at Computex 2026. The keyboard features a 70-percent layout, low-profile switches, and a gasket mount design.",
+          "contentText": "Cherry XTRFY launched the first 8K ultra-wideband wireless gaming keyboard at Computex 2026. The keyboard features a 70-percent layout, low-profile switches, and a gasket mount design.",
+          "publishedAt": "2026-06-02T23:11:02.000Z",
+          "sourceImage": "https://cdn.mos.cms.futurecdn.net/gbdwTJGgfLodhv3ac22GwM-1280-80.webp",
           "region": "Global",
           "language": "en",
           "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
@@ -11415,7 +11132,7 @@
             "investors"
           ],
           "article_type": "Product / Platform Update",
-          "urgency_score": 0.52,
+          "urgency_score": 0.43,
           "taxonomy_confidence": 0.77,
           "taxonomy_reasons": [
             "ai infrastructure",
@@ -11425,34 +11142,32 @@
           "data_center_relevance": 0,
           "cloud_capacity_relevance": 0,
           "semiconductor_relevance": 0.22,
-          "power_grid_relevance": 0.22,
+          "power_grid_relevance": 0,
           "cooling_relevance": 0,
           "capital_markets_relevance": 0,
           "enterprise_ai_infrastructure_relevance": 0,
-          "infrastructure_relevance_score": 0.813,
+          "infrastructure_relevance_score": 0.778,
           "infrastructure_relevance_tier": "full_memo",
           "infrastructure_relevance_action": "generate_full_memo",
           "infrastructure_relevance_reasons": [
             "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "semiconductor_relevance:0.22(gpu)",
-            "power_grid_relevance:0.22(power)"
+            "semiconductor_relevance:0.22(gpu)"
           ],
           "infrastructure_relevance": {
             "direct_ai_infrastructure_relevance": 1,
             "data_center_relevance": 0,
             "cloud_capacity_relevance": 0,
             "semiconductor_relevance": 0.22,
-            "power_grid_relevance": 0.22,
+            "power_grid_relevance": 0,
             "cooling_relevance": 0,
             "capital_markets_relevance": 0,
             "enterprise_ai_infrastructure_relevance": 0,
-            "infrastructure_relevance_score": 0.813,
+            "infrastructure_relevance_score": 0.778,
             "infrastructure_relevance_tier": "full_memo",
             "infrastructure_relevance_action": "generate_full_memo",
             "infrastructure_relevance_reasons": [
               "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-              "semiconductor_relevance:0.22(gpu)",
-              "power_grid_relevance:0.22(power)"
+              "semiconductor_relevance:0.22(gpu)"
             ],
             "infrastructureRelevanceAction": "generate_full_memo",
             "articlePagePublished": true,
@@ -11460,7 +11175,285 @@
             "archiveOnly": false,
             "archiveOnlyReason": null
           },
-          "score": 73
+          "score": 79
+        },
+        {
+          "id": "f952c2591afb32a4",
+          "source": "Semiconductor Engineering",
+          "url": "https://semiengineering.com/using-graph-attention-for-virtual-metrology-in-semiconductor-manufacturing-asu-intel-foundry/",
+          "title": "Using Graph Attention for Virtual Metrology in Semiconductor Manufacturing (Intel Foundry, ASU)",
+          "snippet": "Researchers from Arizona State University and Intel Foundry have published “Graph Attention-Based Virtual Metrology for Film Deposition Processes in Semiconductor Manufacturing”. Abstract “Artificial intelligence-driven…",
+          "contentText": "Researchers from Arizona State University and Intel Foundry have published “Graph Attention-Based Virtual Metrology for Film Deposition Processes in Semiconductor Manufacturing”. Abstract “Artificial intelligence-driven semiconductor manufacturing increasingly operates at nanometer and angstrom scales, where precise process control depends on accurate and timely metrology. However, physical metrology is limited by measurement latency, cost, and sampling constraints, restricting its scalability in high-volume production. Virtual metrology (VM) has emerged as an effective alternative by predicting wafer-level characteristics from equipment sensor data. Despite recent advances, many existing VM models remain correlation-driven and lack the ability to capture structured dependencies among het…",
+          "publishedAt": "2026-06-02T20:58:30.000Z",
+          "sourceImage": null,
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "category": "Semiconductors",
+          "primary_category": "Semiconductors",
+          "secondary_category": "Accelerators, memory, and advanced packaging",
+          "infrastructure_layer": "Silicon",
+          "affected_stakeholders": [
+            "semiconductor suppliers",
+            "hyperscalers",
+            "server OEMs",
+            "investors"
+          ],
+          "article_type": "Supply Chain",
+          "urgency_score": 0.48,
+          "taxonomy_confidence": 0.95,
+          "taxonomy_reasons": [
+            "semiconductor",
+            "gpu",
+            "intel",
+            "wafer"
+          ],
+          "direct_ai_infrastructure_relevance": 1,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 1,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.95,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "semiconductor_relevance:1.00(semiconductor, intel, wafer)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 1,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 1,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.95,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+              "semiconductor_relevance:1.00(semiconductor, intel, wafer)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 78
+        },
+        {
+          "id": "c29304a21f97127d",
+          "source": "TechCrunch AI",
+          "url": "https://techcrunch.com/2026/06/02/cyera-eyes-12b-valuation-at-80x-arr-multiple-despite-operating-losses/",
+          "title": "Cyera eyes $12B valuation at 80x ARR multiple despite operating losses",
+          "snippet": "The cybersecurity company is nearing a $300 million round led by Evolution Equity Partners.",
+          "contentText": "The cybersecurity company is nearing a $300 million round led by Evolution Equity Partners.",
+          "publishedAt": "2026-06-02T22:50:56.000Z",
+          "sourceImage": null,
+          "region": "Global",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "category": "AI Infrastructure",
+          "primary_category": "AI Infrastructure",
+          "secondary_category": "GPU clusters and deployment readiness",
+          "infrastructure_layer": "Compute",
+          "affected_stakeholders": [
+            "operators",
+            "hyperscalers",
+            "cloud buyers",
+            "investors"
+          ],
+          "article_type": "Financing / M&A",
+          "urgency_score": 0.47,
+          "taxonomy_confidence": 0.77,
+          "taxonomy_reasons": [
+            "ai infrastructure",
+            "neocloud"
+          ],
+          "direct_ai_infrastructure_relevance": 1,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0.22,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0.611,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.899,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "semiconductor_relevance:0.22(gpu)",
+            "capital_markets_relevance:0.61(equity, valuation)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 1,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0.22,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0.611,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.899,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+              "semiconductor_relevance:0.22(gpu)",
+              "capital_markets_relevance:0.61(equity, valuation)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 77
+        },
+        {
+          "id": "7daf6c198aa29cc7",
+          "source": "NVIDIA Blog",
+          "url": "https://blogs.nvidia.com/blog/industrial-software-leaders-secure-autonomous-ai-engineers-nemoclaw/",
+          "title": "Industrial Software Leaders Build Secure, Autonomous AI Engineers With NVIDIA NemoClaw",
+          "snippet": "Accelerated computing has revolutionized industrial engineering, compressing simulation times from weeks to hours. Today’s remaining challenges sit in the end-to-end workflow surrounding the simulations: computer-aided…",
+          "contentText": "Accelerated computing has revolutionized industrial engineering, compressing simulation times from weeks to hours. Today’s remaining challenges sit in the end-to-end workflow surrounding the simulations: computer-aided design, meshing, simulation setup and debugging, as well as post-processing and generating summary reports of these processes. At GTC Taipei at COMPUTEX, NVIDIA and more than a dozen engineering software providers are showcasing how autonomous AI agents automate this entire workflow. These AI engineers are based on NVIDIA NemoClaw , an open blueprint for building specialized, long-running agents with a secure runtime and frontier models. NemoClaw includes a choice of harness — meaning it can be integrated with various orchestration frameworks enterprises use to deploy and c…",
+          "publishedAt": "2026-06-02T22:00:58.000Z",
+          "sourceImage": "https://blogs.nvidia.com/wp-content/uploads/2026/06/industrial-ai-engineers-kv-1920x1080-1.jpg",
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "category": "AI Infrastructure",
+          "primary_category": "AI Infrastructure",
+          "secondary_category": "GPU clusters and deployment readiness",
+          "infrastructure_layer": "Compute",
+          "affected_stakeholders": [
+            "operators",
+            "hyperscalers",
+            "cloud buyers",
+            "investors"
+          ],
+          "article_type": "Product / Platform Update",
+          "urgency_score": 0.46,
+          "taxonomy_confidence": 0.77,
+          "taxonomy_reasons": [
+            "ai infrastructure",
+            "neocloud"
+          ],
+          "direct_ai_infrastructure_relevance": 1,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0.598,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.862,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "semiconductor_relevance:0.60(nvidia, gpu)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 1,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0.598,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.862,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+              "semiconductor_relevance:0.60(nvidia, gpu)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 74
+        },
+        {
+          "id": "44bc8eb31a034f37",
+          "source": "StorageReview",
+          "url": "https://www.storagereview.com/review/micron-6600-ion-245tb-ssd-review-a-quarter-petabyte-per-drive-bay",
+          "title": "Micron 6600 ION 245TB SSD Review: A Quarter Petabyte Per Drive Bay",
+          "snippet": "Micron’s 6600 ION NVMe SSD has reached 245.76TB, pushing the company’s capacity-focused PCIe Gen5 QLC line into quarter-petabyte territory. Micron began shipping the 245TB model on May 5, 2026, and is positioning it as…",
+          "contentText": "Micron&#8217;s 6600 ION NVMe SSD has reached 245.76TB, pushing the company&#8217;s capacity-focused PCIe Gen5 QLC line into quarter-petabyte territory. Micron began shipping the 245TB model on May 5, 2026, and is positioning it as the highest-capacity commercially available SSD. The drive sits at the top of the 6600 ION family, uses Micron&#8217;s ninth-generation G9 QLC NAND, and is available at this capacity in E3.L 9.5mm and U.2 15mm form factors. The 30.72TB, 61.44TB, and 122.88TB models also support E3.S. Micron&#8217;s G9 QLC uses a six-plane architecture and pushes NAND I/O to 3.6 GB/s, which the company says makes it the fastest QLC currently shipping in a data center SSD. That gives Micron a useful platform for a drive that is clearly aimed at hyperscale object storage, AI data l…",
+          "publishedAt": "2026-06-02T19:16:34.000Z",
+          "sourceImage": "https://www.storagereview.com/wp-content/uploads/2026/05/StorageReview-Micron-6600-ION-4.jpg",
+          "region": "APAC",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "category": "AI Infrastructure",
+          "primary_category": "AI Infrastructure",
+          "secondary_category": "GPU clusters and deployment readiness",
+          "infrastructure_layer": "Compute",
+          "affected_stakeholders": [
+            "operators",
+            "hyperscalers",
+            "cloud buyers",
+            "investors"
+          ],
+          "article_type": "Capacity Expansion",
+          "urgency_score": 0.53,
+          "taxonomy_confidence": 0.77,
+          "taxonomy_reasons": [
+            "ai infrastructure",
+            "neocloud"
+          ],
+          "direct_ai_infrastructure_relevance": 1,
+          "data_center_relevance": 0.42,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0.22,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0.18,
+          "infrastructure_relevance_score": 0.857,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "data_center_relevance:0.42(data center)",
+            "semiconductor_relevance:0.22(gpu)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 1,
+            "data_center_relevance": 0.42,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0.22,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0.18,
+            "infrastructure_relevance_score": 0.857,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+              "data_center_relevance:0.42(data center)",
+              "semiconductor_relevance:0.22(gpu)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 74
         },
         {
           "id": "02db72c2e626a045",
@@ -11532,37 +11525,30 @@
             "archiveOnly": false,
             "archiveOnlyReason": null
           },
-          "score": 73
+          "score": 67
         }
       ],
       "curatedIds": [
-        "1226fdcab1257571",
-        "e73abb438d46cb73",
-        "ab6a38fd1dd3fe12",
-        "09fc5f1ef0399e54",
-        "97693201964ac546",
+        "4fff4b21ed915a3f",
+        "f952c2591afb32a4",
+        "c29304a21f97127d",
+        "7daf6c198aa29cc7",
+        "44bc8eb31a034f37",
         "02db72c2e626a045"
       ],
       "publishedIds": [
         "e73abb438d46cb73",
-        "1226fdcab1257571"
+        "1226fdcab1257571",
+        "4fff4b21ed915a3f",
+        "f952c2591afb32a4"
       ],
       "slotPublications": {
-        "0": true
+        "0": true,
+        "1": true
       }
     }
   },
   "runHistory": [
-    {
-      "at": "2026-04-17T16:06:08.658Z",
-      "day": "2026-04-18",
-      "slot": 0,
-      "publishedCount": 2,
-      "publishedIds": [
-        "fed42ed274fab732",
-        "3e4ff121d12e5c18"
-      ]
-    },
     {
       "at": "2026-04-17T23:41:30.492Z",
       "day": "2026-04-18",
@@ -15568,7 +15554,127 @@
         }
       ],
       "archiveOnlyItems": []
+    },
+    {
+      "at": "2026-06-03T01:41:34.961Z",
+      "day": "2026-06-03",
+      "slot": 1,
+      "publishedCount": 0,
+      "signalCardCount": 1,
+      "archiveOnlyCount": 0,
+      "repetitionBlockedCount": 1,
+      "publishedIds": [],
+      "processedIds": [
+        "4fff4b21ed915a3f",
+        "f952c2591afb32a4"
+      ],
+      "blockedCount": 1,
+      "blockedItems": [
+        {
+          "id": "4fff4b21ed915a3f",
+          "title": "Cherry XTRFY launches first 8K ultra-wideband gaming keyboard — featuring more compact 70-percent layout",
+          "infrastructure_relevance_score": 0.87,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "cloud_capacity_relevance:0.32(hyperscalers)",
+            "semiconductor_relevance:0.22(gpu)",
+            "power_grid_relevance:0.22(power)"
+          ],
+          "extraction_quality_score": 1,
+          "source_domain_adapter": "generic",
+          "content_length": 1696,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": false,
+          "repetition_block_reasons": [],
+          "repetition_check": null,
+          "expert_insight_complete": false,
+          "expert_insight_missing_fields": [
+            "named_companies"
+          ],
+          "reason": "expert_insight_missing_fields named_companies"
+        }
+      ],
+      "repetitionBlockedItems": [
+        {
+          "id": "f952c2591afb32a4",
+          "title": "Using Graph Attention for Virtual Metrology in Semiconductor Manufacturing (Intel Foundry, ASU)",
+          "infrastructure_relevance_score": 1,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "cloud_capacity_relevance:0.32(hyperscalers)",
+            "semiconductor_relevance:1.00(semiconductor, intel, wafer)",
+            "power_grid_relevance:0.22(power)"
+          ],
+          "extraction_quality_score": 1,
+          "source_domain_adapter": "semiengineering",
+          "content_length": 1652,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": true,
+          "repetition_block_reasons": [
+            "conclusion_similarity>0.7"
+          ],
+          "repetition_check": {
+            "compared_article_count": 15,
+            "repeated_sentence_ratio": 0,
+            "repeated_paragraph_ratio": 0,
+            "heading_sequence_similarity": 0,
+            "banned_phrase_count": 0,
+            "banned_phrase_counts": {},
+            "recent_banned_phrase_counts": {},
+            "ngram_overlap": 0.3076923076923077,
+            "blueprint_repetition": 1,
+            "conclusion_similarity": 0.9233805168766386,
+            "repeated_sentence_count": 0,
+            "repeated_paragraph_count": 0,
+            "heading_sequence": [
+              "System Change",
+              "Bottleneck",
+              "Engineering Tradeoff",
+              "Validation Metric"
+            ],
+            "blocked": true,
+            "reasons": [
+              "conclusion_similarity>0.7"
+            ]
+          },
+          "expert_insight_complete": true,
+          "expert_insight_missing_fields": [],
+          "reason": "conclusion_similarity>0.7"
+        }
+      ],
+      "signalCardItems": [
+        {
+          "id": "4fff4b21ed915a3f",
+          "title": "Cherry XTRFY launches first 8K ultra-wideband gaming keyboard — featuring more compact 70-percent layout",
+          "infrastructure_relevance_score": 0.87,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "cloud_capacity_relevance:0.32(hyperscalers)",
+            "semiconductor_relevance:0.22(gpu)",
+            "power_grid_relevance:0.22(power)"
+          ],
+          "extraction_quality_score": 1,
+          "source_domain_adapter": "generic",
+          "content_length": 1696,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": false,
+          "repetition_block_reasons": [],
+          "repetition_check": null,
+          "expert_insight_complete": false,
+          "expert_insight_missing_fields": [
+            "named_companies"
+          ],
+          "reason": "expert_insight_missing_fields named_companies"
+        }
+      ],
+      "archiveOnlyItems": []
     }
   ],
-  "lastRunAt": "2026-06-02T18:48:11.592Z"
+  "lastRunAt": "2026-06-03T01:41:34.961Z"
 }
