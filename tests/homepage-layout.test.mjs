@@ -60,7 +60,10 @@ test('homepage composes dedicated publication components', () => {
 
   assert.match(source, /FeaturedArticle/);
   assert.match(source, /CategoryNav/);
+  assert.match(source, /hero-brief/);
+  assert.match(source, /Latest Signals/);
   assert.match(feedSource, /ArticleCard/);
   assert.match(styles, /\.featured-article\s*{/);
   assert.match(styles, /\.category-nav\s*{/);
+  assert.match(styles, /\.publication-home\s*{/);
 });

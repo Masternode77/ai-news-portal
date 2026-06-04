@@ -12,6 +12,26 @@ const boardTitle = SITE.name;
 const homepageArticles = process.env.HOMEPAGE_FIXTURE === 'empty' ? [] : [...latestNews, ...archivedNews];
 const feed = buildHomepageFeed(homepageArticles, { limit: 50, minimumVisible: 30 });
 const latestFeed = { ...feed, items: feed.featured ? feed.items.slice(1) : feed.items };
+const featuredSignal = feed.featured?.publicSignal || null;
+const dateFormatter = new Intl.DateTimeFormat('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+const topSources = Array.from(new Set(feed.items.map((entry) => entry.publicSignal?.source).filter(Boolean))).slice(0, 3);
+const leadSignal = feed.featured?.publicSignal || feed.items[0]?.publicSignal || null;
+const leadHref = leadSignal?.view_detail || leadSignal?.read_source || '/archive/';
+const leadDate = leadSignal?.date ? dateFormatter.format(new Date(leadSignal.date)) : 'Latest desk signal';
+const marketContext = [
+  {
+    label: 'Constraint watched',
+    value: featuredSignal?.category || 'Capacity stack',
+  },
+  {
+    label: 'Reader impact',
+    value: featuredSignal?.signal_label || 'Operator signal',
+  },
+  {
+    label: 'Source mix',
+    value: topSources.length ? topSources.join(', ') : 'Pipeline sources',
+  },
+];
 
 const navLinks = [
   ['Power & Grid', '/category/power-grid/'],
@@ -29,20 +49,68 @@ const navLinks = [
     <header class="publication-header">
       <div class="edition-line">
         <span>AI Infrastructure Intelligence</span>
+        <span>Updated every 8 hours</span>
         <a href="/rss.xml">RSS</a>
       </div>
 
       <div class="masthead-row">
-        <h1 aria-label={boardTitle}>
-          <span>Compute</span>
-          <span>Current</span>
-        </h1>
         <div class="hero-copy">
+          <p class="eyebrow">Operator briefing</p>
+          <h1 aria-label={boardTitle}>
+            <span>Compute</span>
+            <span>Current</span>
+          </h1>
           <p>
-            AI infrastructure intelligence for power, data centers, chips, cloud capacity, cooling, and capital.
+            Decision-grade coverage of the AI infrastructure stack. We track the constraint that moves power,
+            cooling, silicon, cloud capacity, and capital from headline noise to real operating decisions.
+          </p>
+          <p class="hero-deck">
+            No generic AI news feed, no hype cycle packaging. Just the board that shows what changed, who gains
+            leverage, and which bottleneck should be watched next.
           </p>
           <a class="newsletter-cta" href="/archive/">Browse recent analysis</a>
         </div>
+        <aside
+          class="hero-brief premium-intelligence-desk"
+          data-homepage-premium-surface="intelligence-desk"
+          aria-labelledby="premium-desk-heading"
+        >
+          <div class="premium-desk-kicker">
+            <span>Infrastructure Intelligence Desk</span>
+            <em>{leadDate}</em>
+          </div>
+          <div class="premium-desk-grid">
+            <div class="premium-desk-primary">
+              <p class="eyebrow">Market read</p>
+              <h2 id="premium-desk-heading" data-premium-hero-headline>
+                Track the constraint before it resets capacity plans.
+              </h2>
+              <p>
+                Compute Current ranks AI infrastructure signals by their effect on power access, site delivery,
+                accelerated compute supply, cooling strategy, and capital exposure.
+              </p>
+            </div>
+
+            <div class="premium-market-context" data-premium-market-context aria-label="Current market context">
+              {marketContext.map((item) => (
+                <article>
+                  <span>{item.label}</span>
+                  <strong>{item.value}</strong>
+                </article>
+              ))}
+            </div>
+
+            <article class="premium-lead-card" data-premium-lead-card>
+              <span>{leadSignal?.source || 'Editorial desk'}</span>
+              <h3>{leadSignal?.title || 'AI infrastructure signals are being prepared for publication.'}</h3>
+              <p>
+                {leadSignal?.deck ||
+                  'The desk is monitoring infrastructure decisions that affect capacity buyers, data center developers, and capital allocators.'}
+              </p>
+              <a class="detail-link" href={leadHref}>Open lead signal</a>
+            </article>
+          </div>
+        </aside>
       </div>
 
       <CategoryNav links={navLinks} />
@@ -52,7 +120,8 @@ const navLinks = [
 
     <LatestAnalysisFeed
       feed={latestFeed}
-      title="Latest Analysis"
+      title="Latest Signals"
+      eyebrow="Live analysis"
       dek="Analysis, briefs, and source-linked signals from the AI infrastructure buildout."
     />
 
@@ -62,7 +131,7 @@ const navLinks = [
         <h2>Search the archive</h2>
       </div>
       <p class="archive-note">
-        Browse recent AI infrastructure coverage by source, date, and category.
+        Browse recent AI infrastructure coverage by source, date, and category without losing the operating context.
       </p>
       <a class="detail-link archive-link" href="/archive/">Explore all posts</a>
     </section>
