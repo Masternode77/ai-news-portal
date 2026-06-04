@@ -1469,7 +1469,7 @@
     "sourceUrl": "https://techcrunch.com/2026/05/30/softbank-says-it-will-invest-up-to-e75-billion-to-build-french-data-centers/",
     "generatedImage": "/generated/8f979011a389995b.svg",
     "infrastructureRelevanceAction": "generate_full_memo",
-    "articlePagePublished": true,
+    "articlePagePublished": false,
     "homepagePublished": true,
     "archiveOnly": false,
     "article_blueprint": "stakeholder-map",
@@ -1636,25 +1636,27 @@
       "conclusion_similarity>0.7"
     ],
     "searchText": "SoftBank says it will invest up to €75 billion to build French data centers TechCrunch AI AI Infrastructure AI Infrastructure power SoftBank turns power into a contract quality decision point for capacity planners. TechCrunch AI reported: SoftBank says it will invest up to €75 billion to build French data centers. SoftBank is now tied to a power decision where delivery, cost, and control matter more than headline demand.\n\nTechCrunch AI's reporting centers on TechCrunch AI reported: SoftBank says it will invest up to €75 billion to build French data centers, giving infrastructure readers an observable event to place against procurement calendars and operating risk.\n\nSoftBank turns power into a contract quality decision point for capacity planners is where operators, buyers, and investors can compare the report with their own exposure.\n\nThesis\n\nSoftBank says it will invest up to €75 billion to build French data centers matters because SoftBank is changing the control point around power, where timing, cost, and delivery risk decide whether demand becomes usable capacity.\n\nMarket Mechanism\n\nThe operating read is whether the reported event changes deployable capacity, platform resilience, or execution risk in a measurable way.\n\nIn power, the decisive question is whether capacity availability, deployment timing, operating cost, or ownership of a constrained input has changed.\n\nSoftBank turns power into a contract quality decision point for capacity planners gives the article a second anchor, which keeps the analysis tied to observable infrastructure behavior rather than broad market excitement.\n\nOperator Leverage\n\nThe operating read is whether the reported event changes deployable capacity, platform resilience, or execution risk in a measurable way.\n\nIn power, the decisive question is whether capacity availability, deployment timing, operating cost, or ownership of a constrained input has changed.\n\nCost And Reliability Risk\n\nThe operating read is whether the reported event changes deployable capacity, platform resilience, or execution risk in a measurable way.\n\nIn power, the decisive question is whether capacity availability, deployment timing, operating cost, or ownership of a constrained input has changed.\n\nSoftBank Group announced today that it plans to spend up to €75 billion (around $87 billion) to expand data center capacity in France gives the article a second anchor, which keeps the analysis tied to observable infrastructure behavior rather than broad market excitement.\n\nWhere Volatility Bites\n\nThe limitation is that the source may describe a useful signal without proving that timing, economics, or deployment risk has changed yet.\n\nThat limit matters. A named project, product, or capital move can still miss schedule, economics, customer adoption, or grid reality; the article keeps those unknowns visible instead of smoothing them away.\n\nSignals To Track\n\nTrack interconnection queue movement and tariff exposure; contracted capacity, delivery timing, and operating cost variance. These indicators matter because they translate a public report into the procurement, financing, and operations signals readers can act on.\n\nIf those signals move in the wrong direction, the story should be downgraded from an infrastructure thesis to a watchlist item. If they improve, it can support procurement, capital, or operating decisions.\n\nBottom Line\n\nSoftBank says it will invest up to €75 billion to build French data centers matters because SoftBank is changing the control point around power, where timing, cost, and delivery risk decide whether demand becomes usable capacity. The article stays in Core Longform Blog territory while the evidence remains clean, specific, and tied to power.\n\nOperating Context\n\nTechCrunch AI supplies the event, while the local analysis follows how power constraints move through planning models, contracts, and operating calendars.\n\nSoftBank, French, TechCrunch AI TechCrunch AI matter because control over one layer rarely solves the whole stack. Power availability, platform resilience, capital timing, and buyer commitments still have to line up before capacity becomes useful.\n\nThe stronger version of the thesis would show named customers, committed sites, clearer delivery dates, or measurable cost changes. Without that, the article stays disciplined: useful signal, not proof of a finished infrastructure shift.\n\nCommercial Context\n\nFor readers, the action is to compare this item with their own watchlist: interconnection queue movement and tariff exposure; contracted capacity, delivery timing, and operating cost variance. Those measures keep the read tied to decisions rather than market enthusiasm.\n\nContract Quality also changes the risk conversation. The exposed party is not always the vendor in the headline; it can be the buyer counting on capacity, the operator absorbing site risk, or the investor underwriting a timeline.\n\nTechCrunch AI reported: SoftBank says it will invest up to €75 billion to build French data centers is useful because it gives the piece a concrete anchor instead of a generic forecast.\n\nRisk Context\n\nProcurement teams should translate the story into calendar risk: what has been committed, what still needs equipment or power, and what milestone would make the claim more durable.\n\nInvestors should separate the announced asset, product, or policy move from the cash conversion path behind it, especially where delivery schedules depend on third parties.\n\nOperators should ask whether this changes their own constraint stack or simply confirms a pressure they already track across sites, platforms, suppliers, and customers.\n\nReader Takeaway\n\nThe planning read is deliberately practical. If the reported event does not change a build schedule, a platform migration, a financing assumption, or a supplier allocation, it belongs lower in the operating stack even when the headline sounds large.\n\nThe commercial read is also narrower than market excitement. Buyers need to know whether the cost, capacity, or reliability profile changes soon enough to affect procurement, while sellers need proof that demand can become durable contracted work.\n\nThe risk read is where the article earns its keep. A clean source can still leave unanswered questions about permitting, power delivery, customer concentration, supply availability, or technology readiness, and those gaps define what readers should verify next. cloud power financing",
-    "public_content_tier": "longform_analysis",
+    "public_content_tier": "signal_card",
     "blog_route": "core_longform_blog",
     "publishing_route": "Core Longform Blog",
-    "public_status": "published",
-    "signalCardOnly": false,
+    "public_status": "signal",
+    "signalCardOnly": true,
     "seo_noindex": false,
     "noindex": false,
     "deck": "SoftBank turns power into a contract quality decision point for capacity planners.",
     "why_it_matters": "TechCrunch AI reported: SoftBank says it will invest up to €75 billion to build French data centers.",
     "public_routing": {
       "score": 1,
-      "visibility": "core",
-      "laneKey": "operator-alerts",
-      "laneTitle": "Operator Alerts",
-      "public_signal_label": "Core Signal",
+      "visibility": "adjacent",
+      "laneKey": "adjacent-watchlist",
+      "laneTitle": "Adjacent Watchlist",
+      "public_signal_label": "Signal",
       "editorial_lens": "Contract Quality",
       "story_archetype": "Power Market Signal",
-      "routing_decision": "core_longform_blog",
-      "blocked_reasons": []
+      "routing_decision": "short_signal",
+      "blocked_reasons": [
+        "longform_quality_gate_failed"
+      ]
     },
     "public_presentation": {
       "signal_label": "Core Signal",
@@ -1683,7 +1685,7 @@
     "quarantine_reason": [],
     "seo_noindex_reasons": [],
     "source_link_secondary": true,
-    "primaryHref": "/news/8f979011a389995b/",
+    "primaryHref": "https://techcrunch.com/2026/05/30/softbank-says-it-will-invest-up-to-e75-billion-to-build-french-data-centers/",
     "cleaned_source_text": "The goal, the firm said, is to develop and operate up to 5 gigawatts of additional data center capacity. SoftBank Group announced today that it plans to spend up to €75 billion (around $87 billion) to expand data center capacity in France. The goal, the firm said, is to develop and operate up to 5 gigawatts of additional data center capacity. The first phase of the plan involves building data centers in Dunkirk (Loon-Plage), Bosquel, and Bouchain to deliver 3.1 gigawatts of capacity to the Hauts-de-France region by 2031. SoftBank, which is both an investor in and customer of OpenAI , says this will be its largest AI infrastructure investment in Europe. Nonetheless, SoftBank earlier announced plans to build a data center in Ohio, powered by a new 9.2 gigawatt natural gas plant . Get an inside look at what it takes to scale and succeed from leaders at Mach Industries, Founders Fund, and Shinkei Systems. Through candid fireside chats and high-impact networking, you&#8217;ll walk away with valuable insights and new connections. Why it matters: compute constraints can change build schedules, buyer commitments, and cost assumptions before demand shows up in revenue. SoftBank says it will invest up to €75 billion to build French data centers is a capacity signal for operators tracking where AI demand is turning into real data center commitments. TechCrunch AI reported: SoftBank says i TechCrunch AI reported: SoftBank says it will invest up to €75 billion to build French data centers. SoftBank turns power into a contract quality decision point for capacity planners. The goal, the firm said, is to develop and operate up to 5 gigawatts of additional data center capacity.",
     "source_evidence_text": "The goal, the firm said, is to develop and operate up to 5 gigawatts of additional data center capacity. SoftBank Group announced today that it plans to spend up to €75 billion (around $87 billion) to expand data center capacity in France. The goal, the firm said, is to develop and operate up to 5 gigawatts of additional data center capacity. The first phase of the plan involves building data centers in Dunkirk (Loon-Plage), Bosquel, and Bouchain to deliver 3.1 gigawatts of capacity to the Hauts-de-France region by 2031. SoftBank, which is both an investor in and customer of OpenAI , says this will be its largest AI infrastructure investment in Europe. Nonetheless, SoftBank earlier announced plans to build a data center in Ohio, powered by a new 9.2 gigawatt natural gas plant . Get an inside look at what it takes to scale and succeed from leaders at Mach Industries, Founders Fund, and Shinkei Systems. Through candid fireside chats and high-impact networking, you&#8217;ll walk away with valuable insights and new connections. Why it matters: compute constraints can change build schedules, buyer commitments, and cost assumptions before demand shows up in revenue. SoftBank says it will invest up to €75 billion to build French data centers is a capacity signal for operators tracking where AI demand is turning into real data center commitments. TechCrunch AI reported: SoftBank says i TechCrunch AI reported: SoftBank says it will invest up to €75 billion to build French data centers. SoftBank turns power into a contract quality decision point for capacity planners. The goal, the firm said, is to develop and operate up to 5 gigawatts of additional data center capacity.",
     "rawText": "The goal, the firm said, is to develop and operate up to 5 gigawatts of additional data center capacity. SoftBank Group announced today that it plans to spend up to €75 billion (around $87 billion) to expand data center capacity in France. The goal, the firm said, is to develop and operate up to 5 gigawatts of additional data center capacity. The first phase of the plan involves building data centers in Dunkirk (Loon-Plage), Bosquel, and Bouchain to deliver 3.1 gigawatts of capacity to the Hauts-de-France region by 2031. SoftBank, which is both an investor in and customer of OpenAI , says this will be its largest AI infrastructure investment in Europe. Nonetheless, SoftBank earlier announced plans to build a data center in Ohio, powered by a new 9.2 gigawatt natural gas plant . Get an inside look at what it takes to scale and succeed from leaders at Mach Industries, Founders Fund, and Shinkei Systems. Through candid fireside chats and high-impact networking, you&#8217;ll walk away with valuable insights and new connections. Why it matters: compute constraints can change build schedules, buyer commitments, and cost assumptions before demand shows up in revenue. SoftBank says it will invest up to €75 billion to build French data centers is a capacity signal for operators tracking where AI demand is turning into real data center commitments. TechCrunch AI reported: SoftBank says i TechCrunch AI reported: SoftBank says it will invest up to €75 billion to build French data centers. SoftBank turns power into a contract quality decision point for capacity planners. The goal, the firm said, is to develop and operate up to 5 gigawatts of additional data center capacity.",
@@ -1909,8 +1911,10 @@
     },
     "noindex_reason": null,
     "archiveOnlyReason": null,
-    "signalCardReason": null,
-    "sourceImage": null
+    "signalCardReason": "longform_quality_gate_failed",
+    "sourceImage": null,
+    "detailPage": false,
+    "routing_decision": "short_signal"
   },
   {
     "id": "83e0fcbe0c581ad0",
@@ -2083,7 +2087,7 @@
     "sourceUrl": "https://www.servethehome.com/asus-xa-nb3i-e12-review-a-massive-8x-nvidia-b300-gpu-server/",
     "generatedImage": "/generated/83e0fcbe0c581ad0.svg",
     "infrastructureRelevanceAction": "generate_full_memo",
-    "articlePagePublished": true,
+    "articlePagePublished": false,
     "homepagePublished": true,
     "archiveOnly": false,
     "article_blueprint": "capacity-chain",
@@ -2254,25 +2258,27 @@
       "conclusion_similarity>0.7"
     ],
     "searchText": "ASUS XA NB3I-E12 Review A Massive 8x NVIDIA B300 GPU Server ServeTheHome Semiconductors Semiconductors power ASUS XA NB3I-E12 Review turns power into a memory economics decision point for capacity planners. ServeTheHome reported: ASUS XA NB3I-E12 Review A Massive 8x NVIDIA B300 GPU Server. ASUS XA NB3I-E12 Review is now tied to a power decision where delivery, cost, and control matter more than headline demand.\n\nServeTheHome's reporting centers on ServeTheHome reported: ASUS XA NB3I-E12 Review A Massive 8x NVIDIA B300 GPU Server, giving infrastructure readers an observable event to place against procurement calendars and operating risk.\n\nASUS XA NB3I-E12 Review turns power into a memory economics decision point for capacity planners is where operators, buyers, and investors can compare the report with their own exposure.\n\nThesis\n\nASUS XA NB3I-E12 Review A Massive 8x NVIDIA B300 GPU Server matters because ASUS XA NB3I-E12 Review is changing the control point around power, where timing, cost, and delivery risk decide whether demand becomes usable capacity.\n\nPlatform Readiness\n\nThe operating read is whether the reported event changes deployable capacity, platform resilience, or execution risk in a measurable way.\n\nIn power, the decisive question is whether capacity availability, deployment timing, operating cost, or ownership of a constrained input has changed.\n\nASUS XA NB3I-E12 Review turns power into a memory economics decision point for capacity planners gives the article a second anchor, which keeps the analysis tied to observable infrastructure behavior rather than broad market excitement.\n\nOperational Dependency\n\nThe operating read is whether the reported event changes deployable capacity, platform resilience, or execution risk in a measurable way.\n\nIn power, the decisive question is whether capacity availability, deployment timing, operating cost, or ownership of a constrained input has changed.\n\nEnterprise Buyer Impact\n\nThe commercial read is how buyers, operators, and investors should price capacity, cost, or execution risk around power.\n\nASUS XA NB3I-E12 Review, Massive, NVIDIA B300 GPU Server, ServeTheHome ServeTheHome do not share the same exposure. What looks like an opening for one side can become schedule risk, margin pressure, or procurement friction for another.\n\nWhat Is Still Missing\n\nThe limitation is that the source may describe a useful signal without proving that timing, economics, or deployment risk has changed yet.\n\nThat limit matters. A named project, product, or capital move can still miss schedule, economics, customer adoption, or grid reality; the article keeps those unknowns visible instead of smoothing them away.\n\nSignals To Track\n\nTrack interconnection queue movement and tariff exposure; contracted capacity, delivery timing, and operating cost variance. These indicators matter because they translate a public report into the procurement, financing, and operations signals readers can act on.\n\nIf those signals move in the wrong direction, the story should be downgraded from an infrastructure thesis to a watchlist item. If they improve, it can support procurement, capital, or operating decisions.\n\nBottom Line\n\nASUS XA NB3I-E12 Review A Massive 8x NVIDIA B300 GPU Server matters because ASUS XA NB3I-E12 Review is changing the control point around power, where timing, cost, and delivery risk decide whether demand becomes usable capacity. The article stays in Core Longform Blog territory while the evidence remains clean, specific, and tied to power.\n\nOperating Context\n\nServeTheHome supplies the event, while the local analysis follows how power constraints move through planning models, contracts, and operating calendars.\n\nASUS XA NB3I-E12 Review, Massive, NVIDIA B300 GPU Server matter because control over one layer rarely solves the whole stack. Power availability, platform resilience, capital timing, and buyer commitments still have to line up before capacity becomes useful.\n\nThe stronger version of the thesis would show named customers, committed sites, clearer delivery dates, or measurable cost changes. Without that, the article stays disciplined: useful signal, not proof of a finished infrastructure shift.\n\nCommercial Context\n\nFor readers, the action is to compare this item with their own watchlist: interconnection queue movement and tariff exposure; contracted capacity, delivery timing, and operating cost variance. Those measures keep the read tied to decisions rather than market enthusiasm.\n\nMemory Economics also changes the risk conversation. The exposed party is not always the vendor in the headline; it can be the buyer counting on capacity, the operator absorbing site risk, or the investor underwriting a timeline.\n\nServeTheHome reported: ASUS XA NB3I-E12 Review A Massive 8x NVIDIA B300 GPU Server is useful because it gives the piece a concrete anchor instead of a generic forecast.\n\nRisk Context\n\nProcurement teams should translate the story into calendar risk: what has been committed, what still needs equipment or power, and what milestone would make the claim more durable.\n\nInvestors should separate the announced asset, product, or policy move from the cash conversion path behind it, especially where delivery schedules depend on third parties.\n\nOperators should ask whether this changes their own constraint stack or simply confirms a pressure they already track across sites, platforms, suppliers, and customers.\n\nReader Takeaway\n\nThe planning read is deliberately practical. If the reported event does not change a build schedule, a platform migration, a financing assumption, or a supplier allocation, it belongs lower in the operating stack even when the headline sounds large.\n\nThe commercial read is also narrower than market excitement. Buyers need to know whether the cost, capacity, or reliability profile changes soon enough to affect procurement, while sellers need proof that demand can become durable contracted work.\n\nThe risk read is where the article earns its keep. A clean source can still leave unanswered questions about permitting, power delivery, customer concentration, supply availability, or technology readiness, and those gaps define what readers should verify next.\n\nAdditional Context\n\nThe editorial judgment is to keep the local article anchored to those operational tests. That gives readers a blog post with a point of view while avoiding a leap from a single source item to an unsupported market thesis. gpu cooling",
-    "public_content_tier": "longform_analysis",
+    "public_content_tier": "signal_card",
     "blog_route": "core_longform_blog",
     "publishing_route": "Core Longform Blog",
-    "public_status": "published",
-    "signalCardOnly": false,
+    "public_status": "signal",
+    "signalCardOnly": true,
     "seo_noindex": false,
     "noindex": false,
     "deck": "ASUS XA NB3I-E12 Review turns power into a memory economics decision point for capacity planners.",
     "why_it_matters": "ServeTheHome reported: ASUS XA NB3I-E12 Review A Massive 8x NVIDIA B300 GPU Server.",
     "public_routing": {
       "score": 0.992,
-      "visibility": "core",
-      "laneKey": "operator-alerts",
-      "laneTitle": "Operator Alerts",
-      "public_signal_label": "Core Signal",
+      "visibility": "adjacent",
+      "laneKey": "adjacent-watchlist",
+      "laneTitle": "Adjacent Watchlist",
+      "public_signal_label": "Signal",
       "editorial_lens": "Memory Economics",
       "story_archetype": "Platform Resilience Note",
-      "routing_decision": "core_longform_blog",
-      "blocked_reasons": []
+      "routing_decision": "short_signal",
+      "blocked_reasons": [
+        "longform_quality_gate_failed"
+      ]
     },
     "public_presentation": {
       "signal_label": "Core Signal",
@@ -2301,7 +2307,7 @@
     "quarantine_reason": [],
     "seo_noindex_reasons": [],
     "source_link_secondary": true,
-    "primaryHref": "/news/83e0fcbe0c581ad0/",
+    "primaryHref": "https://www.servethehome.com/asus-xa-nb3i-e12-review-a-massive-8x-nvidia-b300-gpu-server/",
     "cleaned_source_text": "In our ASUS XA NB3I-E12 review, we see what makes this massive NVIDIA Blackwell Ultra platform with over 6.4Tbps of networking different The post ASUS XA NB3I-E12 Review A Massive 8x NVIDIA B300 GPU Server appeared first on ServeTheHome . The ASUS XA NB3I-E12 is a huge server. Occupying 9U of rack space, it brings a cutting-edge NVIDIA Blackwell Ultra subsystem along with Intel Xeon processors and over 6.4Tbps of networking in a form factor that is relatively easy to integrate into data center racks. Today, we are taking a look at this NVIDIA HGX B300 8-GPU platform to see just how much it offers in an air-cooled chassis, and what makes it different from previous versions. If you prefer to listen, we have a quick short above. Note that we got access to this server when in Taiwan a few weeks ago, so we have to say it is sponsored. We had our own conference room to take apart the server before putting it in the racks to test. The system itself is giant, at 9U in size. This view shows that more than half of the height is dedicated to the heatsinks on NVIDIA B300 GPUs. Liquid-cooling makes a lot of sense for AI servers, but air-cooled GPUs can mean systems fit into existing racks and data centers. Next up is one of the major changes between the NVIDIA HGX B200 and HGX B300 platforms. Namely, the HGX B300 8 GPU baseboard has eight NVIDIA ConnectX-8 NICs onboard. Each of those provid ServeTheHome reported: ASUS XA NB3I-E12 Review A Massive 8x NVIDIA B300 GPU Server. ASUS XA NB3I-E12 Review turns power into a memory economics decision point for capacity planners.",
     "source_evidence_text": "In our ASUS XA NB3I-E12 review, we see what makes this massive NVIDIA Blackwell Ultra platform with over 6.4Tbps of networking different The post ASUS XA NB3I-E12 Review A Massive 8x NVIDIA B300 GPU Server appeared first on ServeTheHome . The ASUS XA NB3I-E12 is a huge server. Occupying 9U of rack space, it brings a cutting-edge NVIDIA Blackwell Ultra subsystem along with Intel Xeon processors and over 6.4Tbps of networking in a form factor that is relatively easy to integrate into data center racks. Today, we are taking a look at this NVIDIA HGX B300 8-GPU platform to see just how much it offers in an air-cooled chassis, and what makes it different from previous versions. If you prefer to listen, we have a quick short above. Note that we got access to this server when in Taiwan a few weeks ago, so we have to say it is sponsored. We had our own conference room to take apart the server before putting it in the racks to test. The system itself is giant, at 9U in size. This view shows that more than half of the height is dedicated to the heatsinks on NVIDIA B300 GPUs. Liquid-cooling makes a lot of sense for AI servers, but air-cooled GPUs can mean systems fit into existing racks and data centers. Next up is one of the major changes between the NVIDIA HGX B200 and HGX B300 platforms. Namely, the HGX B300 8 GPU baseboard has eight NVIDIA ConnectX-8 NICs onboard. Each of those provid ServeTheHome reported: ASUS XA NB3I-E12 Review A Massive 8x NVIDIA B300 GPU Server. ASUS XA NB3I-E12 Review turns power into a memory economics decision point for capacity planners.",
     "rawText": "In our ASUS XA NB3I-E12 review, we see what makes this massive NVIDIA Blackwell Ultra platform with over 6.4Tbps of networking different The post ASUS XA NB3I-E12 Review A Massive 8x NVIDIA B300 GPU Server appeared first on ServeTheHome . The ASUS XA NB3I-E12 is a huge server. Occupying 9U of rack space, it brings a cutting-edge NVIDIA Blackwell Ultra subsystem along with Intel Xeon processors and over 6.4Tbps of networking in a form factor that is relatively easy to integrate into data center racks. Today, we are taking a look at this NVIDIA HGX B300 8-GPU platform to see just how much it offers in an air-cooled chassis, and what makes it different from previous versions. If you prefer to listen, we have a quick short above. Note that we got access to this server when in Taiwan a few weeks ago, so we have to say it is sponsored. We had our own conference room to take apart the server before putting it in the racks to test. The system itself is giant, at 9U in size. This view shows that more than half of the height is dedicated to the heatsinks on NVIDIA B300 GPUs. Liquid-cooling makes a lot of sense for AI servers, but air-cooled GPUs can mean systems fit into existing racks and data centers. Next up is one of the major changes between the NVIDIA HGX B200 and HGX B300 platforms. Namely, the HGX B300 8 GPU baseboard has eight NVIDIA ConnectX-8 NICs onboard. Each of those provid ServeTheHome reported: ASUS XA NB3I-E12 Review A Massive 8x NVIDIA B300 GPU Server. ASUS XA NB3I-E12 Review turns power into a memory economics decision point for capacity planners.",
@@ -2527,8 +2533,10 @@
     },
     "noindex_reason": null,
     "archiveOnlyReason": null,
-    "signalCardReason": null,
-    "sourceImage": null
+    "signalCardReason": "longform_quality_gate_failed",
+    "sourceImage": null,
+    "detailPage": false,
+    "routing_decision": "short_signal"
   },
   {
     "id": "519fe68555c78740",
@@ -2680,13 +2688,13 @@
     "sourceUrl": "https://semiengineering.com/moving-defect-detection-and-classification-to-the-edge/",
     "generatedImage": "/generated/519fe68555c78740.svg",
     "infrastructureRelevanceAction": "generate_full_memo",
-    "articlePagePublished": true,
+    "articlePagePublished": false,
     "homepagePublished": true,
     "archiveOnly": false,
     "qualityGateBlocked": true,
     "qualityGateReason": "fail_closed: source_text_incomplete:source_evidence_length_below_1200",
     "qualityGateBlockedAt": "2026-05-29T10:53:29.800Z",
-    "signalCardOnly": false,
+    "signalCardOnly": true,
     "expertLensShort": "Moving Defect Detection And Classification To The Edge is a memory economics item for stack shifts readers, with the infrastructure read limited to source-backed facts.",
     "expertLensFull": {
       "version": 2,
@@ -2769,24 +2777,26 @@
       "sourceLink": "https://semiengineering.com/moving-defect-detection-and-classification-to-the-edge/"
     },
     "expertLens": "Moving Defect Detection And Classification To The Edge is a memory economics item for stack shifts readers, with the infrastructure read limited to source-backed facts.",
-    "public_content_tier": "longform_analysis",
+    "public_content_tier": "signal_card",
     "blog_route": "core_longform_blog",
     "publishing_route": "Core Longform Blog",
-    "public_status": "published",
+    "public_status": "signal",
     "seo_noindex": false,
     "noindex": false,
     "deck": "Moving Defect Detection And turns semiconductor supply into a memory economics decision point for capacity planners.",
     "why_it_matters": "Semiconductor Engineering reported: Moving Defect Detection And Classification To The Edge.",
     "public_routing": {
       "score": 0.98,
-      "visibility": "core",
-      "laneKey": "stack-shifts",
-      "laneTitle": "Stack Shifts",
-      "public_signal_label": "Stack Shift",
+      "visibility": "adjacent",
+      "laneKey": "adjacent-watchlist",
+      "laneTitle": "Adjacent Watchlist",
+      "public_signal_label": "Signal",
       "editorial_lens": "Memory Economics",
       "story_archetype": "Operator Field Note",
-      "routing_decision": "core_longform_blog",
-      "blocked_reasons": []
+      "routing_decision": "short_signal",
+      "blocked_reasons": [
+        "longform_quality_gate_failed"
+      ]
     },
     "public_presentation": {
       "signal_label": "Stack Shift",
@@ -2817,7 +2827,7 @@
     "quarantine_reason": [],
     "seo_noindex_reasons": [],
     "source_link_secondary": true,
-    "primaryHref": "/news/519fe68555c78740/",
+    "primaryHref": "https://semiengineering.com/moving-defect-detection-and-classification-to-the-edge/",
     "cleaned_source_text": "The number of defects detected through inspection is exploding at each new process node. There are now millions of defects being identified on each wafer, but only a fraction of those can cause problems. The post Moving Defect Detection And Classification To The Edge appeared first on Semiconductor Engineering . Explosion in defectivity requires much faster determination of critical and non-critical defects. The number of defects detected through inspection is exploding at each new process node. There are now millions of defects being identified on each wafer, but only a fraction of those can cause problems. Why it matters: chip availability and performance per watt can reset cloud margins, buyer queues, and refresh timing. Moving Defect Detection And Classification To The Edge matters most for capacity-per-watt planning, supplier leverage, and the timing of AI hardware refresh cycles. Semiconductor Engineering reported: Moving Defect Detection And Classification To The Edge. Why it matters: chip availability and performance per watt can reset cloud margins, buyer queues, and refresh timing. Moving Defect Detection And Classification To The Edge matters most for capacity-per-watt planning, supplier leverage, and the timing of AI hardware refresh cycles. The number of defects detected through inspection is exploding at each new process node. There are now millions of defects bei Semiconductor Engineering reported: Moving Defect Detection And Classification To The Edge. Moving Defect Detection And turns semiconductor supply into a memory economics decision point for capacity planners. The number of defects detected through inspection is exploding at each new process node.",
     "source_evidence_text": "The number of defects detected through inspection is exploding at each new process node. There are now millions of defects being identified on each wafer, but only a fraction of those can cause problems. The post Moving Defect Detection And Classification To The Edge appeared first on Semiconductor Engineering . Explosion in defectivity requires much faster determination of critical and non-critical defects. The number of defects detected through inspection is exploding at each new process node. There are now millions of defects being identified on each wafer, but only a fraction of those can cause problems. Why it matters: chip availability and performance per watt can reset cloud margins, buyer queues, and refresh timing. Moving Defect Detection And Classification To The Edge matters most for capacity-per-watt planning, supplier leverage, and the timing of AI hardware refresh cycles. Semiconductor Engineering reported: Moving Defect Detection And Classification To The Edge. Why it matters: chip availability and performance per watt can reset cloud margins, buyer queues, and refresh timing. Moving Defect Detection And Classification To The Edge matters most for capacity-per-watt planning, supplier leverage, and the timing of AI hardware refresh cycles. The number of defects detected through inspection is exploding at each new process node. There are now millions of defects bei Semiconductor Engineering reported: Moving Defect Detection And Classification To The Edge. Moving Defect Detection And turns semiconductor supply into a memory economics decision point for capacity planners. The number of defects detected through inspection is exploding at each new process node.",
     "rawText": "The number of defects detected through inspection is exploding at each new process node. There are now millions of defects being identified on each wafer, but only a fraction of those can cause problems. The post Moving Defect Detection And Classification To The Edge appeared first on Semiconductor Engineering . Explosion in defectivity requires much faster determination of critical and non-critical defects. The number of defects detected through inspection is exploding at each new process node. There are now millions of defects being identified on each wafer, but only a fraction of those can cause problems. Why it matters: chip availability and performance per watt can reset cloud margins, buyer queues, and refresh timing. Moving Defect Detection And Classification To The Edge matters most for capacity-per-watt planning, supplier leverage, and the timing of AI hardware refresh cycles. Semiconductor Engineering reported: Moving Defect Detection And Classification To The Edge. Why it matters: chip availability and performance per watt can reset cloud margins, buyer queues, and refresh timing. Moving Defect Detection And Classification To The Edge matters most for capacity-per-watt planning, supplier leverage, and the timing of AI hardware refresh cycles. The number of defects detected through inspection is exploding at each new process node. There are now millions of defects bei Semiconductor Engineering reported: Moving Defect Detection And Classification To The Edge. Moving Defect Detection And turns semiconductor supply into a memory economics decision point for capacity planners. The number of defects detected through inspection is exploding at each new process node.",
@@ -3069,7 +3079,7 @@
     },
     "noindex_reason": null,
     "archiveOnlyReason": null,
-    "signalCardReason": null,
+    "signalCardReason": "longform_quality_gate_failed",
     "sourceImage": null,
     "article_blueprint": "constraint-ledger",
     "articleBlueprint": {
@@ -3092,7 +3102,9 @@
       "maxChars": 1900
     },
     "dynamic_brief_label": "Stack Shift",
-    "anti_template_rewrite": true
+    "anti_template_rewrite": true,
+    "detailPage": false,
+    "routing_decision": "short_signal"
   },
   {
     "id": "e40a1864f5a8b8e8",
@@ -3285,36 +3297,38 @@
     "sourceUrl": "https://www.hpcwire.com/off-the-wire/supermicro-and-verda-deliver-sustainable-full-stack-ai-cloud-infrastructure-for-next-gen-ai-workloads/",
     "generatedImage": "/generated/e40a1864f5a8b8e8.svg",
     "infrastructureRelevanceAction": "generate_full_memo",
-    "articlePagePublished": true,
+    "articlePagePublished": false,
     "homepagePublished": true,
     "archiveOnly": false,
     "qualityGateBlocked": true,
     "qualityGateReason": "fail_closed: source_text_incomplete:ellipsis_truncation_artifact, ellipsis_truncation_artifact",
     "qualityGateBlockedAt": "2026-05-27T18:06:53.622Z",
-    "signalCardOnly": false,
-    "signalCardReason": null,
+    "signalCardOnly": true,
+    "signalCardReason": "longform_quality_gate_failed",
     "expertLensShort": "Supermicro is a memory economics item for operator alerts readers, with the infrastructure read limited to source-backed facts.",
     "expertLens": "Supermicro is a memory economics item for operator alerts readers, with the infrastructure read limited to source-backed facts.",
     "generatedImageProvider": "local-placeholder",
     "generatedImageModel": "local-svg",
-    "public_content_tier": "longform_analysis",
+    "public_content_tier": "signal_card",
     "blog_route": "standard_blog",
     "publishing_route": "Standard Blog",
-    "public_status": "published",
+    "public_status": "signal",
     "seo_noindex": false,
     "noindex": false,
     "deck": "Supermicro turns AI infrastructure into a memory economics decision point for capacity planners.",
     "why_it_matters": "HPCwire reported: Supermicro and Verda Deliver Sustainable, Full-Stack AI Cloud Infrastructure for Next-Gen AI Workloads.",
     "public_routing": {
       "score": 1,
-      "visibility": "core",
-      "laneKey": "operator-alerts",
-      "laneTitle": "Operator Alerts",
-      "public_signal_label": "Core Signal",
+      "visibility": "adjacent",
+      "laneKey": "adjacent-watchlist",
+      "laneTitle": "Adjacent Watchlist",
+      "public_signal_label": "Signal",
       "editorial_lens": "Memory Economics",
       "story_archetype": "Supply Chain Fault Line",
-      "routing_decision": "standard_blog",
-      "blocked_reasons": []
+      "routing_decision": "short_signal",
+      "blocked_reasons": [
+        "longform_quality_gate_failed"
+      ]
     },
     "public_presentation": {
       "signal_label": "Core Signal",
@@ -3436,7 +3450,7 @@
         "notes": ""
       }
     ],
-    "primaryHref": "/news/e40a1864f5a8b8e8/",
+    "primaryHref": "https://www.hpcwire.com/off-the-wire/supermicro-and-verda-deliver-sustainable-full-stack-ai-cloud-infrastructure-for-next-gen-ai-workloads/",
     "generation_version": "editorial_surface_v2",
     "public_generation_version": "blog_engine_v4",
     "route": "Standard Blog",
@@ -3688,7 +3702,9 @@
       "maxChars": 1650
     },
     "dynamic_brief_label": "Core Signal",
-    "anti_template_rewrite": true
+    "anti_template_rewrite": true,
+    "detailPage": false,
+    "routing_decision": "short_signal"
   },
   {
     "id": "43bfb1d4d4b67121",
@@ -3866,7 +3882,7 @@
     "sourceUrl": "https://www.tomshardware.com/tech-industry/samsung-chip-workers-vote-to-accept-340000-average-bonus-ending-months-long-strike-threat",
     "generatedImage": "/generated/43bfb1d4d4b67121.svg",
     "infrastructureRelevanceAction": "generate_full_memo",
-    "articlePagePublished": true,
+    "articlePagePublished": false,
     "homepagePublished": true,
     "archiveOnly": false,
     "article_blueprint": "capacity-chain",
@@ -4031,25 +4047,27 @@
     "searchText": "Samsung chip workers vote to accept $340,000 average bonus, ending months-long strike threat — resentment over deal has slowed down Samsung foundry division Toms Hardware Semiconductors Semiconductors semiconductor supply Samsung turns semiconductor supply into a memory economics decision point for capacity planners. Tom's Hardware reported: Samsung chip workers vote to accept $340,000 average bonus, ending months-long strike threat — resentment over deal has slowed down Samsung foundry division. Samsung is now tied to a semiconductor supply decision where delivery, cost, and control matter more than headline demand.\n\nTom's Hardware's reporting centers on Tom's Hardware reported: Samsung chip workers vote to accept $340,000 average bonus, ending months-long strike threat — resentment over deal has slowed down Samsung foundry division, giving infrastructure readers an observable event to place against procurement calendars and operating risk.\n\nSamsung turns semiconductor supply into a memory economics decision point for capacity planners is where operators, buyers, and investors can compare the report with their own exposure.\n\nThesis\n\nSamsung chip workers vote to accept $340,000 average bonus, ending months-long strike threat — resentment over deal has slowed down Samsung foundry division matters because Samsung is changing the control point around semiconductor supply, where timing, cost, and delivery risk decide whether demand becomes usable capacity.\n\nMemory As A Cost Line\n\nThe operating read is whether the reported event changes deployable capacity, platform resilience, or execution risk in a measurable way.\n\nIn semiconductor supply, the decisive question is whether capacity availability, deployment timing, operating cost, or ownership of a constrained input has changed.\n\nSamsung turns semiconductor supply into a memory economics decision point for capacity planners gives the article a second anchor, which keeps the analysis tied to observable infrastructure behavior rather than broad market excitement.\n\nPlatform Implication\n\nThe operating read is whether the reported event changes deployable capacity, platform resilience, or execution risk in a measurable way.\n\nIn semiconductor supply, the decisive question is whether capacity availability, deployment timing, operating cost, or ownership of a constrained input has changed.\n\nProcurement Exposure\n\nTom's Hardware supplies the reporting base: The agreement allocates 10.5% of Samsung's semiconductor division operating profit as stock-based bonuses. Compute Current reads that event through semiconductor supply, where timing, site readiness, and control over scarce inputs matter more than headline volume.\n\nBut a pay gap between divisions has already disrupted chip packaging gives the article a second anchor, which keeps the analysis tied to observable infrastructure behavior rather than broad market excitement.\n\nWhat Could Offset It\n\nThe limitation is that the source may describe a useful signal without proving that timing, economics, or deployment risk has changed yet.\n\nThat limit matters. A named project, product, or capital move can still miss schedule, economics, customer adoption, or grid reality; the article keeps those unknowns visible instead of smoothing them away.\n\nSignals To Track\n\nTrack equipment lead times, packaging capacity, and buyer allocation; contracted capacity, delivery timing, and operating cost variance. These indicators matter because they translate a public report into the procurement, financing, and operations signals readers can act on.\n\nIf those signals move in the wrong direction, the story should be downgraded from an infrastructure thesis to a watchlist item. If they improve, it can support procurement, capital, or operating decisions.\n\nBottom Line\n\nSamsung chip workers vote to accept $340,000 average bonus, ending months-long strike threat — resentment over deal has slowed down Samsung foundry division matters because Samsung is changing the control point around semiconductor supply, where timing, cost, and delivery risk decide whether demand becomes usable capacity. The article stays in Core Longform Blog territory while the evidence remains clean, specific, and tied to semiconductor supply.\n\nOperating Context\n\nTom's Hardware supplies the event, while the local analysis follows how semiconductor supply constraints move through planning models, contracts, and operating calendars.\n\nSamsung, Tom, Hardware Tom matter because control over one layer rarely solves the whole stack. Power availability, platform resilience, capital timing, and buyer commitments still have to line up before capacity becomes useful.\n\nThe stronger version of the thesis would show named customers, committed sites, clearer delivery dates, or measurable cost changes. Without that, the article stays disciplined: useful signal, not proof of a finished infrastructure shift.\n\nCommercial Context\n\nFor readers, the action is to compare this item with their own watchlist: equipment lead times, packaging capacity, and buyer allocation; contracted capacity, delivery timing, and operating cost variance. Those measures keep the read tied to decisions rather than market enthusiasm.\n\nMemory Economics also changes the risk conversation. The exposed party is not always the vendor in the headline; it can be the buyer counting on capacity, the operator absorbing site risk, or the investor underwriting a timeline.\n\nTom's Hardware reported: Samsung chip workers vote to accept $340,000 average bonus, ending months-long strike threat — resentment over deal has slowed down Samsung foundry division is useful because it gives the piece a concrete anchor instead of a generic forecast.\n\nRisk Context\n\nProcurement teams should translate the story into calendar risk: what has been committed, what still needs equipment or power, and what milestone would make the claim more durable.\n\nInvestors should separate the announced asset, product, or policy move from the cash conversion path behind it, especially where delivery schedules depend on third parties.\n\nOperators should ask whether this changes their own constraint stack or simply confirms a pressure they already track across sites, platforms, suppliers, and customers.\n\nReader Takeaway\n\nThe planning read is deliberately practical. If the reported event does not change a build schedule, a platform migration, a financing assumption, or a supplier allocation, it belongs lower in the operating stack even when the headline sounds large.\n\nThe commercial read is also narrower than market excitement. Buyers need to know whether the cost, capacity, or reliability profile changes soon enough to affect procurement, while sellers need proof that demand can become durable contracted work. gpu semiconductor",
     "generatedImageProvider": "local-placeholder",
     "generatedImageModel": "local-svg",
-    "public_content_tier": "longform_analysis",
+    "public_content_tier": "signal_card",
     "blog_route": "core_longform_blog",
     "publishing_route": "Core Longform Blog",
-    "public_status": "published",
-    "signalCardOnly": false,
+    "public_status": "signal",
+    "signalCardOnly": true,
     "seo_noindex": false,
     "noindex": false,
     "deck": "Samsung turns semiconductor supply into a memory economics decision point for capacity planners.",
     "why_it_matters": "Tom's Hardware reported: Samsung chip workers vote to accept $340,000 average bonus, ending months-long strike threat — resentment over deal has slowed down Samsung foundry division.",
     "public_routing": {
       "score": 1,
-      "visibility": "core",
-      "laneKey": "stack-shifts",
-      "laneTitle": "Stack Shifts",
-      "public_signal_label": "Stack Shift",
+      "visibility": "adjacent",
+      "laneKey": "adjacent-watchlist",
+      "laneTitle": "Adjacent Watchlist",
+      "public_signal_label": "Signal",
       "editorial_lens": "Memory Economics",
       "story_archetype": "Memory Economics Brief",
-      "routing_decision": "core_longform_blog",
-      "blocked_reasons": []
+      "routing_decision": "short_signal",
+      "blocked_reasons": [
+        "longform_quality_gate_failed"
+      ]
     },
     "public_presentation": {
       "signal_label": "Stack Shift",
@@ -4078,7 +4096,7 @@
     "quarantine_reason": [],
     "seo_noindex_reasons": [],
     "source_link_secondary": true,
-    "primaryHref": "/news/43bfb1d4d4b67121/",
+    "primaryHref": "https://www.tomshardware.com/tech-industry/samsung-chip-workers-vote-to-accept-340000-average-bonus-ending-months-long-strike-threat",
     "cleaned_source_text": "The agreement allocates 10.5% of Samsung's semiconductor division operating profit as stock-based bonuses. But a pay gap between divisions has already disrupted chip packaging. The agreement allocates 10.5% of Samsung's semiconductor division operating profit as stock-based bonuses, with an additional 1.5% in cash, plus a 6.2% average wage increase. The program runs for 10 years, contingent on the division hitting some lofty annual operating profit targets. Based on Bloomberg's projections of Samsung's 2026 operating profit at approximately 330 trillion won, the total bonus pool for the company's 78,000 semiconductor employees could reach roughly 40 trillion won ($26.6 billion). The vote puts months of escalating labor unrest to an end, unrest that saw more than 40,000 workers rally in April , causing night-shift fab output to fall by 58%. Workers had compared their compensation unfavorably to rival SK hynix, which offered more generous bonuses last year. But while the strike threat is over, the resentment it exposed isn&rsquo;t; only about 21% of Samsung's smaller union, which represents mostly non-chip staff, approved the agreement. This resentment has led to work slowdowns that have spread to Samsung&rsquo;s foundry and TSP (Test & Package) divisions, with meetings being canceled and decision-making on major projects reportedly at a standstill. TSP handles the back-end packa Tom's Hardware reported: Samsung chip workers vote to accept $340,000 average bonus, ending months-long strike threat — resentment over deal has slowed down Samsung foundry division. Samsung turns semiconductor supply into a memory economics decision point for capacity planners.",
     "source_evidence_text": "The agreement allocates 10.5% of Samsung's semiconductor division operating profit as stock-based bonuses. But a pay gap between divisions has already disrupted chip packaging. The agreement allocates 10.5% of Samsung's semiconductor division operating profit as stock-based bonuses, with an additional 1.5% in cash, plus a 6.2% average wage increase. The program runs for 10 years, contingent on the division hitting some lofty annual operating profit targets. Based on Bloomberg's projections of Samsung's 2026 operating profit at approximately 330 trillion won, the total bonus pool for the company's 78,000 semiconductor employees could reach roughly 40 trillion won ($26.6 billion). The vote puts months of escalating labor unrest to an end, unrest that saw more than 40,000 workers rally in April , causing night-shift fab output to fall by 58%. Workers had compared their compensation unfavorably to rival SK hynix, which offered more generous bonuses last year. But while the strike threat is over, the resentment it exposed isn&rsquo;t; only about 21% of Samsung's smaller union, which represents mostly non-chip staff, approved the agreement. This resentment has led to work slowdowns that have spread to Samsung&rsquo;s foundry and TSP (Test & Package) divisions, with meetings being canceled and decision-making on major projects reportedly at a standstill. TSP handles the back-end packa Tom's Hardware reported: Samsung chip workers vote to accept $340,000 average bonus, ending months-long strike threat — resentment over deal has slowed down Samsung foundry division. Samsung turns semiconductor supply into a memory economics decision point for capacity planners.",
     "rawText": "The agreement allocates 10.5% of Samsung's semiconductor division operating profit as stock-based bonuses. But a pay gap between divisions has already disrupted chip packaging. The agreement allocates 10.5% of Samsung's semiconductor division operating profit as stock-based bonuses, with an additional 1.5% in cash, plus a 6.2% average wage increase. The program runs for 10 years, contingent on the division hitting some lofty annual operating profit targets. Based on Bloomberg's projections of Samsung's 2026 operating profit at approximately 330 trillion won, the total bonus pool for the company's 78,000 semiconductor employees could reach roughly 40 trillion won ($26.6 billion). The vote puts months of escalating labor unrest to an end, unrest that saw more than 40,000 workers rally in April , causing night-shift fab output to fall by 58%. Workers had compared their compensation unfavorably to rival SK hynix, which offered more generous bonuses last year. But while the strike threat is over, the resentment it exposed isn&rsquo;t; only about 21% of Samsung's smaller union, which represents mostly non-chip staff, approved the agreement. This resentment has led to work slowdowns that have spread to Samsung&rsquo;s foundry and TSP (Test & Package) divisions, with meetings being canceled and decision-making on major projects reportedly at a standstill. TSP handles the back-end packa Tom's Hardware reported: Samsung chip workers vote to accept $340,000 average bonus, ending months-long strike threat — resentment over deal has slowed down Samsung foundry division. Samsung turns semiconductor supply into a memory economics decision point for capacity planners.",
@@ -4304,7 +4322,9 @@
     },
     "noindex_reason": null,
     "archiveOnlyReason": null,
-    "signalCardReason": null
+    "signalCardReason": "longform_quality_gate_failed",
+    "detailPage": false,
+    "routing_decision": "short_signal"
   },
   {
     "id": "4d21b727a5d2e275",
@@ -4484,36 +4504,38 @@
     "sourceUrl": "https://www.hpcwire.com/2026/05/26/inside-memkv-minios-3-5g-solution-for-kv-cache-acceleration/",
     "generatedImage": "/generated/4d21b727a5d2e275.svg",
     "infrastructureRelevanceAction": "generate_full_memo",
-    "articlePagePublished": true,
+    "articlePagePublished": false,
     "homepagePublished": true,
     "archiveOnly": false,
     "qualityGateBlocked": true,
     "qualityGateReason": "fail_closed: source_text_incomplete:ellipsis_truncation_artifact, ellipsis_truncation_artifact",
     "qualityGateBlockedAt": "2026-05-27T00:09:03.703Z",
-    "signalCardOnly": false,
-    "signalCardReason": null,
+    "signalCardOnly": true,
+    "signalCardReason": "longform_quality_gate_failed",
     "expertLensShort": "NVIDIA is a memory economics item for stack shifts readers, with the infrastructure read limited to source-backed facts.",
     "expertLens": "NVIDIA is a memory economics item for stack shifts readers, with the infrastructure read limited to source-backed facts.",
     "generatedImageProvider": "local-placeholder",
     "generatedImageModel": "local-svg",
-    "public_content_tier": "longform_analysis",
+    "public_content_tier": "signal_card",
     "blog_route": "standard_blog",
     "publishing_route": "Standard Blog",
-    "public_status": "published",
+    "public_status": "signal",
     "seo_noindex": false,
     "noindex": false,
     "deck": "Inside MemKV turns AI infrastructure into a memory economics decision point for capacity planners.",
     "why_it_matters": "HPCwire reported: Inside MemKV, MinIO’s 3.5G Solution for KV Cache Acceleration.",
     "public_routing": {
       "score": 1,
-      "visibility": "core",
-      "laneKey": "stack-shifts",
-      "laneTitle": "Stack Shifts",
-      "public_signal_label": "Stack Shift",
+      "visibility": "adjacent",
+      "laneKey": "adjacent-watchlist",
+      "laneTitle": "Adjacent Watchlist",
+      "public_signal_label": "Signal",
       "editorial_lens": "Memory Economics",
       "story_archetype": "Policy / Local Risk Note",
-      "routing_decision": "standard_blog",
-      "blocked_reasons": []
+      "routing_decision": "short_signal",
+      "blocked_reasons": [
+        "longform_quality_gate_failed"
+      ]
     },
     "public_presentation": {
       "signal_label": "Stack Shift",
@@ -4635,7 +4657,7 @@
         "notes": ""
       }
     ],
-    "primaryHref": "/news/4d21b727a5d2e275/",
+    "primaryHref": "https://www.hpcwire.com/2026/05/26/inside-memkv-minios-3-5g-solution-for-kv-cache-acceleration/",
     "generation_version": "editorial_surface_v2",
     "public_generation_version": "blog_engine_v4",
     "route": "Standard Blog",
@@ -4887,7 +4909,9 @@
       "maxChars": 2200
     },
     "dynamic_brief_label": "Stack Shift",
-    "anti_template_rewrite": true
+    "anti_template_rewrite": true,
+    "detailPage": false,
+    "routing_decision": "short_signal"
   },
   {
     "id": "cf753845198cd7d0",
@@ -5076,36 +5100,38 @@
     "sourceUrl": "https://www.hpcwire.com/off-the-wire/qumulo-introduces-cloud-ai-accelerator-to-create-gpu-liquidity-for-the-enterprise/",
     "generatedImage": "/generated/cf753845198cd7d0.svg",
     "infrastructureRelevanceAction": "generate_full_memo",
-    "articlePagePublished": true,
+    "articlePagePublished": false,
     "homepagePublished": true,
     "archiveOnly": false,
     "qualityGateBlocked": true,
     "qualityGateReason": "fail_closed: source_text_incomplete:ellipsis_truncation_artifact, ellipsis_truncation_artifact",
     "qualityGateBlockedAt": "2026-05-26T17:58:05.698Z",
-    "signalCardOnly": false,
-    "signalCardReason": null,
+    "signalCardOnly": true,
+    "signalCardReason": "longform_quality_gate_failed",
     "expertLensShort": "Broadcom is a memory economics item for stack shifts readers, with the infrastructure read limited to source-backed facts.",
     "expertLens": "Broadcom is a memory economics item for stack shifts readers, with the infrastructure read limited to source-backed facts.",
     "generatedImageProvider": "local-placeholder",
     "generatedImageModel": "local-svg",
-    "public_content_tier": "longform_analysis",
+    "public_content_tier": "signal_card",
     "blog_route": "standard_blog",
     "publishing_route": "Standard Blog",
-    "public_status": "published",
+    "public_status": "signal",
     "seo_noindex": false,
     "noindex": false,
     "deck": "Qumulo Introduces Cloud AI turns accelerator systems into a memory economics decision point for capacity planners.",
     "why_it_matters": "HPCwire reported: Qumulo Introduces Cloud AI Accelerator to Create GPU Liquidity for the Enterprise.",
     "public_routing": {
       "score": 1,
-      "visibility": "core",
-      "laneKey": "stack-shifts",
-      "laneTitle": "Stack Shifts",
-      "public_signal_label": "Stack Shift",
+      "visibility": "adjacent",
+      "laneKey": "adjacent-watchlist",
+      "laneTitle": "Adjacent Watchlist",
+      "public_signal_label": "Signal",
       "editorial_lens": "Memory Economics",
       "story_archetype": "Skeptic's Read",
-      "routing_decision": "standard_blog",
-      "blocked_reasons": []
+      "routing_decision": "short_signal",
+      "blocked_reasons": [
+        "longform_quality_gate_failed"
+      ]
     },
     "public_presentation": {
       "signal_label": "Stack Shift",
@@ -5227,7 +5253,7 @@
         "notes": ""
       }
     ],
-    "primaryHref": "/news/cf753845198cd7d0/",
+    "primaryHref": "https://www.hpcwire.com/off-the-wire/qumulo-introduces-cloud-ai-accelerator-to-create-gpu-liquidity-for-the-enterprise/",
     "generation_version": "editorial_surface_v2",
     "public_generation_version": "blog_engine_v4",
     "route": "Standard Blog",
@@ -5485,7 +5511,9 @@
       "maxChars": 1650
     },
     "dynamic_brief_label": "Stack Shift",
-    "anti_template_rewrite": true
+    "anti_template_rewrite": true,
+    "detailPage": false,
+    "routing_decision": "short_signal"
   },
   {
     "id": "e07def5e2ea6d1c3",
@@ -5638,7 +5666,7 @@
     "sourceUrl": "https://www.tomshardware.com/tech-industry/semiconductors/imec-builds-worlds-first-high-na-euv-fabricated-quantum-dot-qubit-device-breakthrough-could-pull-quantum-computing-onto-the-same-manufacturing-roadmap-as-next-gen-ai-processors-compressing-timelines",
     "generatedImage": "/generated/e07def5e2ea6d1c3.svg",
     "infrastructureRelevanceAction": "generate_full_memo",
-    "articlePagePublished": true,
+    "articlePagePublished": false,
     "homepagePublished": true,
     "archiveOnly": false,
     "article_blueprint": "capital-operator-brief",
@@ -5807,25 +5835,27 @@
     "searchText": "Imec builds world's first High-NA EUV-fabricated quantum dot qubit device — breakthrough could pull quantum computing onto the same manufacturing roadmap as next-gen AI processors, compressing timelines Toms Hardware AI Infrastructure AI Infrastructure semiconductor supply Imec turns semiconductor supply into a technical bottleneck decision point for capacity planners. Tom's Hardware reported: Imec builds world's first High-NA EUV-fabricated quantum dot qubit device — breakthrough could pull quantum computing onto the same manufacturing roadmap as next-gen AI processors, compressing timelines. Imec is now tied to a semiconductor supply decision where delivery, cost, and control matter more than headline demand.\n\nTom's Hardware's reporting centers on Tom's Hardware reported: Imec builds world's first High-NA EUV-fabricated quantum dot qubit device — breakthrough could pull quantum computing onto the same manufacturing roadmap as next-gen AI processors, compressing timelines, giving infrastructure readers an observable event to place against procurement calendars and operating risk.\n\nImec turns semiconductor supply into a technical bottleneck decision point for capacity planners is where operators, buyers, and investors can compare the report with their own exposure.\n\nThesis\n\nImec builds world's first High-NA EUV-fabricated quantum dot qubit device — breakthrough could pull quantum computing onto the same manufacturing roadmap as next-gen AI processors, compressing timelines matters because Imec is changing the control point around semiconductor supply, where timing, cost, and delivery risk decide whether demand becomes usable capacity.\n\nSupply Chain Pressure\n\nTom's Hardware supplies the reporting base: Tom's Hardware reported: Imec builds world's first High-NA EUV-fabricated quantum dot qubit device — breakthrough could pull quantum computing onto the same manufacturing roadmap as next-gen AI processors, compressing timelines. Compute Current reads that event through semiconductor supply, where timing, site readiness, and control over scarce inputs matter more than headline volume.\n\nImec turns semiconductor supply into a technical bottleneck decision point for capacity planners gives the article a second anchor, which keeps the analysis tied to observable infrastructure behavior rather than broad market excitement.\n\nCapacity Translation\n\nThe operating read is whether the reported event changes deployable capacity, platform resilience, or execution risk in a measurable way.\n\nIn semiconductor supply, the decisive question is whether capacity availability, deployment timing, operating cost, or ownership of a constrained input has changed.\n\nBuyer Exposure\n\nThe commercial read is how buyers, operators, and investors should price capacity, cost, or execution risk around semiconductor supply.\n\nImec, High-NA EUV-fabricated, Tom, Hardware Tom do not share the same exposure. What looks like an opening for one side can become schedule risk, margin pressure, or procurement friction for another.\n\nCounterpressure\n\nThe limitation is that the source may describe a useful signal without proving that timing, economics, or deployment risk has changed yet.\n\nThat limit matters. A named project, product, or capital move can still miss schedule, economics, customer adoption, or grid reality; the article keeps those unknowns visible instead of smoothing them away.\n\nSignals To Track\n\nTrack equipment lead times, packaging capacity, and buyer allocation; contracted capacity, delivery timing, and operating cost variance. These indicators matter because they translate a public report into the procurement, financing, and operations signals readers can act on.\n\nIf those signals move in the wrong direction, the story should be downgraded from an infrastructure thesis to a watchlist item. If they improve, it can support procurement, capital, or operating decisions.\n\nBottom Line\n\nImec builds world's first High-NA EUV-fabricated quantum dot qubit device — breakthrough could pull quantum computing onto the same manufacturing roadmap as next-gen AI processors, compressing timelines matters because Imec is changing the control point around semiconductor supply, where timing, cost, and delivery risk decide whether demand becomes usable capacity. The article stays in Core Longform Blog territory while the evidence remains clean, specific, and tied to semiconductor supply.\n\nOperating Context\n\nTom's Hardware supplies the event, while the local analysis follows how semiconductor supply constraints move through planning models, contracts, and operating calendars.\n\nImec, High-NA EUV-fabricated, Tom matter because control over one layer rarely solves the whole stack. Power availability, platform resilience, capital timing, and buyer commitments still have to line up before capacity becomes useful.\n\nThe stronger version of the thesis would show named customers, committed sites, clearer delivery dates, or measurable cost changes. Without that, the article stays disciplined: useful signal, not proof of a finished infrastructure shift.\n\nCommercial Context\n\nFor readers, the action is to compare this item with their own watchlist: equipment lead times, packaging capacity, and buyer allocation; contracted capacity, delivery timing, and operating cost variance. Those measures keep the read tied to decisions rather than market enthusiasm.\n\nTechnical Bottleneck also changes the risk conversation. The exposed party is not always the vendor in the headline; it can be the buyer counting on capacity, the operator absorbing site risk, or the investor underwriting a timeline.\n\nTom's Hardware reported: Imec builds world's first High-NA EUV-fabricated quantum dot qubit device — breakthrough could pull quantum computing onto the same manufacturing roadmap as next-gen AI processors, compressing timelines is useful because it gives the piece a concrete anchor instead of a generic forecast.\n\nRisk Context\n\nProcurement teams should translate the story into calendar risk: what has been committed, what still needs equipment or power, and what milestone would make the claim more durable.\n\nInvestors should separate the announced asset, product, or policy move from the cash conversion path behind it, especially where delivery schedules depend on third parties.\n\nOperators should ask whether this changes their own constraint stack or simply confirms a pressure they already track across sites, platforms, suppliers, and customers.\n\nReader Takeaway\n\nThe planning read is deliberately practical. If the reported event does not change a build schedule, a platform migration, a financing assumption, or a supplier allocation, it belongs lower in the operating stack even when the headline sounds large.\n\nThe commercial read is also narrower than market excitement. Buyers need to know whether the cost, capacity, or reliability profile changes soon enough to affect procurement, while sellers need proof that demand can become durable contracted work. semiconductor",
     "generatedImageProvider": "local-placeholder",
     "generatedImageModel": "local-svg",
-    "public_content_tier": "longform_analysis",
+    "public_content_tier": "signal_card",
     "blog_route": "core_longform_blog",
     "publishing_route": "Core Longform Blog",
-    "public_status": "published",
-    "signalCardOnly": false,
+    "public_status": "signal",
+    "signalCardOnly": true,
     "seo_noindex": false,
     "noindex": false,
     "deck": "Imec turns semiconductor supply into a technical bottleneck decision point for capacity planners.",
     "why_it_matters": "Tom's Hardware reported: Imec builds world's first High-NA EUV-fabricated quantum dot qubit device — breakthrough could pull quantum computing onto the same manufacturing roadmap as next-gen AI processors, compressing timelines.",
     "public_routing": {
       "score": 1,
-      "visibility": "core",
-      "laneKey": "stack-shifts",
-      "laneTitle": "Stack Shifts",
-      "public_signal_label": "Stack Shift",
+      "visibility": "adjacent",
+      "laneKey": "adjacent-watchlist",
+      "laneTitle": "Adjacent Watchlist",
+      "public_signal_label": "Signal",
       "editorial_lens": "Technical Bottleneck",
       "story_archetype": "Supply Chain Fault Line",
-      "routing_decision": "core_longform_blog",
-      "blocked_reasons": []
+      "routing_decision": "short_signal",
+      "blocked_reasons": [
+        "longform_quality_gate_failed"
+      ]
     },
     "public_presentation": {
       "signal_label": "Stack Shift",
@@ -5854,7 +5884,7 @@
     "quarantine_reason": [],
     "seo_noindex_reasons": [],
     "source_link_secondary": true,
-    "primaryHref": "/news/e07def5e2ea6d1c3/",
+    "primaryHref": "https://www.tomshardware.com/tech-industry/semiconductors/imec-builds-worlds-first-high-na-euv-fabricated-quantum-dot-qubit-device-breakthrough-could-pull-quantum-computing-onto-the-same-manufacturing-roadmap-as-next-gen-ai-processors-compressing-timelines",
     "cleaned_source_text": "Imec unveiled the world’s first silicon quantum dot qubit device fabricated with High-NA EUV lithography, suggesting quantum computing may eventually scale using the semiconductor industry’s existing advanced manufacturing ecosystem. At first glance, the announcement may seem like another entry in the increasingly crowded quantum computing race. Qubits can theoretically solve computational problems that would take classical supercomputers longer than the age of the universe, but only at a scale nobody has yet achieved. With several advancements in the physics side of quantum computing, manufacturing now represents the major limitation. Imec claims to have addressed that directly by using the semiconductor industry's latest and most advanced lithography tool to fabricate silicon quantum dot spin qubits with tolerances compatible with industrial chip production for the first time. If that holds up, the implications for quantum scaling could be tremendous. It&rsquo;s a significant step towards quantum computing, but we are still not quite there. Quantum computing&rsquo;s central problem is no longer simply whether researchers can create functioning quantum systems. The problem is scaling those systems into reliable machines containing millions of reproducible, controllable qubits. Imec unveiled the world’s first silicon quantum dot qubit device fabricated with High-NA EUV lithogra Tom's Hardware reported: Imec builds world's first High-NA EUV-fabricated quantum dot qubit device — breakthrough could pull quantum computing onto the same manufacturing roadmap as next-gen AI processors, compressing timelines.",
     "source_evidence_text": "Imec unveiled the world’s first silicon quantum dot qubit device fabricated with High-NA EUV lithography, suggesting quantum computing may eventually scale using the semiconductor industry’s existing advanced manufacturing ecosystem. At first glance, the announcement may seem like another entry in the increasingly crowded quantum computing race. Qubits can theoretically solve computational problems that would take classical supercomputers longer than the age of the universe, but only at a scale nobody has yet achieved. With several advancements in the physics side of quantum computing, manufacturing now represents the major limitation. Imec claims to have addressed that directly by using the semiconductor industry's latest and most advanced lithography tool to fabricate silicon quantum dot spin qubits with tolerances compatible with industrial chip production for the first time. If that holds up, the implications for quantum scaling could be tremendous. It&rsquo;s a significant step towards quantum computing, but we are still not quite there. Quantum computing&rsquo;s central problem is no longer simply whether researchers can create functioning quantum systems. The problem is scaling those systems into reliable machines containing millions of reproducible, controllable qubits. Imec unveiled the world’s first silicon quantum dot qubit device fabricated with High-NA EUV lithogra Tom's Hardware reported: Imec builds world's first High-NA EUV-fabricated quantum dot qubit device — breakthrough could pull quantum computing onto the same manufacturing roadmap as next-gen AI processors, compressing timelines.",
     "rawText": "Imec unveiled the world’s first silicon quantum dot qubit device fabricated with High-NA EUV lithography, suggesting quantum computing may eventually scale using the semiconductor industry’s existing advanced manufacturing ecosystem. At first glance, the announcement may seem like another entry in the increasingly crowded quantum computing race. Qubits can theoretically solve computational problems that would take classical supercomputers longer than the age of the universe, but only at a scale nobody has yet achieved. With several advancements in the physics side of quantum computing, manufacturing now represents the major limitation. Imec claims to have addressed that directly by using the semiconductor industry's latest and most advanced lithography tool to fabricate silicon quantum dot spin qubits with tolerances compatible with industrial chip production for the first time. If that holds up, the implications for quantum scaling could be tremendous. It&rsquo;s a significant step towards quantum computing, but we are still not quite there. Quantum computing&rsquo;s central problem is no longer simply whether researchers can create functioning quantum systems. The problem is scaling those systems into reliable machines containing millions of reproducible, controllable qubits. Imec unveiled the world’s first silicon quantum dot qubit device fabricated with High-NA EUV lithogra Tom's Hardware reported: Imec builds world's first High-NA EUV-fabricated quantum dot qubit device — breakthrough could pull quantum computing onto the same manufacturing roadmap as next-gen AI processors, compressing timelines.",
@@ -6080,7 +6110,9 @@
     },
     "noindex_reason": null,
     "archiveOnlyReason": null,
-    "signalCardReason": null
+    "signalCardReason": "longform_quality_gate_failed",
+    "detailPage": false,
+    "routing_decision": "short_signal"
   },
   {
     "id": "watch_sig_4aac0298fca786fa",

@@ -1,7 +1,6 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import { pathToFileURL } from 'node:url';
-import sharp from 'sharp';
 import {
   LATEST_NEWS_PATH,
   ARCHIVE_NEWS_PATH,
@@ -9,25 +8,27 @@ import {
   TAXONOMY_PAGES_PATH,
 } from './lib/constants.mjs';
 import { ensureArticleImage, needsImageRefresh } from './lib/image-generator.mjs';
+import { generateArticleImageSet, metadataPatchFromImageSet } from './lib/image2-provider.mjs';
 import {
   PUBLIC_IMAGE_FALLBACK_SLUGS,
   fallbackCategoryImagePath,
-  localArticleImageExists,
-  localArticleImagePath,
   syncArticleImagesById,
   syncTaxonomyArticleImagesById,
   withGeneratedArticleImage,
 } from './lib/article-image-surface.mjs';
-import {
-  ARTICLE_IMAGE_VARIANTS,
-  canonicalArticleImagePaths,
-} from './lib/image-store.mjs';
+import { ensureCanonicalArticleImageSet } from './lib/article-origin-image-canonicalizer.mjs';
 import { readJsonFile, writeJsonFile } from './lib/state-store.mjs';
+
+export { ensureCanonicalArticleImageSet } from './lib/article-origin-image-canonicalizer.mjs';
 
 const LOCAL_PLACEHOLDER_METADATA = {
   generatedImageProvider: 'local-placeholder',
   generatedImageModel: 'local-svg',
 };
+
+function shouldGenerateImage2First(item = {}) {
+  return Boolean(item?.forceAiImage || item?.forceImageRefresh);
+}
 
 function fallbackLabel(slug = 'ai-infrastructure') {
   const labels = {
@@ -133,56 +134,6 @@ export async function ensurePublicFallbackImages(options = {}) {
   return { ensured, created, missing };
 }
 
-function sourceImageFileFor(item = {}) {
-  const candidates = [
-    item.heroImage,
-    item.generatedImage,
-    item.image,
-    item.thumbnailImage,
-    item.ogImage,
-  ];
-  for (const candidate of candidates) {
-    if (!localArticleImageExists(candidate)) continue;
-    const filePath = localArticleImagePath(candidate);
-    if (filePath) return filePath;
-  }
-  return '';
-}
-
-export async function ensureCanonicalArticleImageSet(item = {}, options = {}) {
-  const publicDir = options.publicDir || path.join(process.cwd(), 'public');
-  const paths = canonicalArticleImagePaths(item, { extension: 'webp', legacyExtension: 'webp' });
-  const missing = [];
-
-  for (const [key] of Object.entries(ARTICLE_IMAGE_VARIANTS)) {
-    const publicPath = paths[`${key}Image`];
-    const filePath = path.join(publicDir, publicPath.replace(/^\//, ''));
-    if (!(await fileExists(filePath))) {
-      missing.push({ key, publicPath, filePath });
-    }
-  }
-
-  if (!missing.length) {
-    return { changed: 0, skipped: false, paths };
-  }
-
-  const sourceFile = sourceImageFileFor(item);
-  if (!(await fileExists(sourceFile))) {
-    return { changed: 0, skipped: true, reason: 'missing_local_source_image', paths };
-  }
-
-  await Promise.all(missing.map(async (entry) => {
-    const variant = ARTICLE_IMAGE_VARIANTS[entry.key];
-    await fs.mkdir(path.dirname(entry.filePath), { recursive: true });
-    await sharp(sourceFile)
-      .resize(variant.width, variant.height, { fit: 'cover', position: 'attention' })
-      .webp({ quality: 88 })
-      .toFile(entry.filePath);
-  }));
-
-  return { changed: missing.length, skipped: false, paths };
-}
-
 export async function refreshCollection(label, filePath) {
   const items = await readJsonFile(filePath, []);
   if (!Array.isArray(items) || items.length === 0) {
@@ -206,6 +157,44 @@ export async function refreshCollection(label, filePath) {
       }
       updated.push(nextItem);
       continue;
+    }
+
+    if (shouldGenerateImage2First(item)) {
+      try {
+        const imageSet = await generateArticleImageSet(nextItem);
+        const metadata = metadataPatchFromImageSet(imageSet);
+        if (metadata.generatedImage) {
+          nextItem = withGeneratedArticleImage(item, metadata.generatedImage, metadata);
+          changed += 1;
+          console.log(`[prepare-static-images] ${label}: image2 refreshed ${item.id} -> ${metadata.generatedImage}`);
+          updated.push(nextItem);
+          continue;
+        }
+      } catch (error) {
+        console.warn(`[prepare-static-images] ${label}: image2 skipped ${item.id} -> ${error.message}`);
+      }
+    }
+
+    try {
+      const canonical = await ensureCanonicalArticleImageSet(nextItem);
+      if (!canonical.skipped) {
+        nextItem = withGeneratedArticleImage(item, canonical.paths.heroImage, {
+          heroImage: canonical.paths.heroImage,
+          thumbnailImage: canonical.paths.thumbnailImage,
+          ogImage: canonical.paths.ogImage,
+          legacyImage: canonical.paths.legacyImage,
+          generatedImageProvider: 'source-image',
+          generatedImageModel: 'origin-canonical',
+          imageStatus: 'source-canonical',
+        });
+        changed += 1;
+        canonicalChanged += canonical.changed;
+        console.log(`[prepare-static-images] ${label}: canonicalized source ${item.id} -> ${canonical.paths.heroImage}`);
+        updated.push(nextItem);
+        continue;
+      }
+    } catch (error) {
+      console.warn(`[prepare-static-images] ${label}: source canonical skipped ${item.id} -> ${error.message}`);
     }
 
     try {
