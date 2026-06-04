@@ -381,7 +381,9 @@
     "cdbfc43e525a9f0a",
     "7c134ffe7093d5d3",
     "b68cf157d441c6b7",
-    "f04fd46c0a7a2789"
+    "f04fd46c0a7a2789",
+    "765b73bd6d1a360d",
+    "0cb4cb6214ae6b14"
   ],
   "dayPlans": {
     "2026-03-24": {
@@ -11557,17 +11559,17 @@
     "2026-06-04": {
       "date": "2026-06-04",
       "createdAt": "2026-06-03T18:52:20.455Z",
-      "refreshedAt": "2026-06-03T18:52:20.455Z",
+      "refreshedAt": "2026-06-04T01:43:59.981Z",
       "candidateWindowHours": 24,
       "curatedItems": [
         {
-          "id": "b68cf157d441c6b7",
-          "source": "Semiconductor Engineering",
-          "url": "https://semiengineering.com/scaling-nanoribbon-transistors-with-monolayer-tmds-stanford-chalmers-horiba-slac/",
-          "title": "Scaling Nanoribbon Transistors with Monolayer TMDs (Stanford, Chalmers, Horiba, SLAC)",
-          "snippet": "Researchers from Stanford University, Chalmers University of Technology, HORIBA Scientific, and SLAC National Accelerator Laboratory have published “Scaling nanoribbon transistors with monolayer transition metal dichalc…",
-          "contentText": "Researchers from Stanford University , Chalmers University of Technology , HORIBA Scientific , and SLAC National Accelerator Laboratory have published “Scaling nanoribbon transistors with monolayer transition metal dichalcogenides”. Abstract “Nanoscale transistors demand aggressive scaling of all channel dimensions—length, width and thickness. Two-dimensional semiconductors (2DS) provide the ultimate thickness limit, yet good device performance has largely remained restricted to micrometre-wide channels. Here we report monolayer 2DS nanoribbon transistors with both n- and p-type operation, fabricated by a top-down multipatterning process that includes ‘anchored’ contacts to limit nanoribbon delamination. This approach achieves channel lengths and widths down to 25–30 nm, with minimal edge…",
-          "publishedAt": "2026-06-03T17:45:15.000Z",
+          "id": "0cb4cb6214ae6b14",
+          "source": "ServeTheHome",
+          "url": "https://www.servethehome.com/qualcomm-announces-dragonfly-brand-for-data-center-products/",
+          "title": "Qualcomm Announces Dragonfly Brand for Data Center Products, More Info to Come June 24th",
+          "snippet": "Qualcomm this week has introduced its Dragonfly brand for its upcoming data center products. The brief teaser promised more details to come on June 24th, during Qualcomm's 2026 Investor's Day The post Qualcomm Announces…",
+          "contentText": "Qualcomm this week has introduced its Dragonfly brand for its upcoming data center products. The brief teaser promised more details to come on June 24th, during Qualcomm's 2026 Investor's Day The post Qualcomm Announces Dragonfly Brand for Data Center Products, More Info to Come June 24th appeared first on ServeTheHome .",
+          "publishedAt": "2026-06-03T23:26:39.000Z",
           "sourceImage": null,
           "region": "Global",
           "language": "en",
@@ -11582,43 +11584,45 @@
             "cloud buyers",
             "investors"
           ],
-          "article_type": "Market Analysis",
-          "urgency_score": 0.48,
+          "article_type": "Product / Platform Update",
+          "urgency_score": 0.46,
           "taxonomy_confidence": 0.77,
           "taxonomy_reasons": [
             "ai infrastructure",
             "neocloud"
           ],
           "direct_ai_infrastructure_relevance": 1,
-          "data_center_relevance": 0,
+          "data_center_relevance": 0.55,
           "cloud_capacity_relevance": 0,
-          "semiconductor_relevance": 1,
+          "semiconductor_relevance": 0.22,
           "power_grid_relevance": 0,
           "cooling_relevance": 0,
           "capital_markets_relevance": 0,
           "enterprise_ai_infrastructure_relevance": 0,
-          "infrastructure_relevance_score": 0.95,
+          "infrastructure_relevance_score": 0.886,
           "infrastructure_relevance_tier": "full_memo",
           "infrastructure_relevance_action": "generate_full_memo",
           "infrastructure_relevance_reasons": [
             "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "semiconductor_relevance:1.00(semiconductor, semiconductors, accelerator)"
+            "data_center_relevance:0.55(data center)",
+            "semiconductor_relevance:0.22(gpu)"
           ],
           "infrastructure_relevance": {
             "direct_ai_infrastructure_relevance": 1,
-            "data_center_relevance": 0,
+            "data_center_relevance": 0.55,
             "cloud_capacity_relevance": 0,
-            "semiconductor_relevance": 1,
+            "semiconductor_relevance": 0.22,
             "power_grid_relevance": 0,
             "cooling_relevance": 0,
             "capital_markets_relevance": 0,
             "enterprise_ai_infrastructure_relevance": 0,
-            "infrastructure_relevance_score": 0.95,
+            "infrastructure_relevance_score": 0.886,
             "infrastructure_relevance_tier": "full_memo",
             "infrastructure_relevance_action": "generate_full_memo",
             "infrastructure_relevance_reasons": [
               "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-              "semiconductor_relevance:1.00(semiconductor, semiconductors, accelerator)"
+              "data_center_relevance:0.55(data center)",
+              "semiconductor_relevance:0.22(gpu)"
             ],
             "infrastructureRelevanceAction": "generate_full_memo",
             "articlePagePublished": true,
@@ -11626,158 +11630,17 @@
             "archiveOnly": false,
             "archiveOnlyReason": null
           },
-          "score": 86
+          "score": 83
         },
         {
-          "id": "f04fd46c0a7a2789",
+          "id": "765b73bd6d1a360d",
           "source": "HPCwire",
-          "url": "https://www.hpcwire.com/off-the-wire/globalfoundries-joins-does-genesis-mission-as-industry-partner/",
-          "title": "GlobalFoundries Joins DOE’s Genesis Mission as Industry Partner",
-          "snippet": "Partnership paves the way to pair AI-enabled semiconductor design with GF’s U.S. manufacturing platform to bridge the gap from research to prototype for next-generation computing initiatives MALTA, N.Y., June 3, 2026 —…",
-          "contentText": "Partnership paves the way to pair AI-enabled semiconductor design with GF&#8217;s U.S. manufacturing platform to bridge the gap from research to prototype for next-generation computing initiatives MALTA, N.Y., June 3, 2026 &#8212; GlobalFoundries today announced a strategic partnership with the U.S. Department of Energy&#8217;s Genesis Mission , the department&#8217;s initiative to accelerate scientific discovery through artificial intelligence and advanced computing. Through the agreement, GF will open its U.S. manufacturing platform and design enablement resources to Genesis Mission researchers — giving the nation&#8217;s National Laboratories, universities, industry partners and startups a direct path from AI-enabled chip design to working prototype silicon. GF Labs, the company&#8217;…",
-          "publishedAt": "2026-06-03T18:11:39.000Z",
-          "sourceImage": "https://www.hpcwire.com/wp-content/uploads/2025/07/globalfoundries-hires-300x128.png",
-          "region": "US",
-          "language": "en",
-          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
-          "category": "Semiconductors",
-          "primary_category": "Semiconductors",
-          "secondary_category": "Accelerators, memory, and advanced packaging",
-          "infrastructure_layer": "Silicon",
-          "affected_stakeholders": [
-            "semiconductor suppliers",
-            "hyperscalers",
-            "server OEMs",
-            "investors"
-          ],
-          "article_type": "Product / Platform Update",
-          "urgency_score": 0.45,
-          "taxonomy_confidence": 0.78,
-          "taxonomy_reasons": [
-            "semiconductor",
-            "chip",
-            "gpu"
-          ],
-          "direct_ai_infrastructure_relevance": 1,
-          "data_center_relevance": 0,
-          "cloud_capacity_relevance": 0,
-          "semiconductor_relevance": 0.58,
-          "power_grid_relevance": 0,
-          "cooling_relevance": 0,
-          "capital_markets_relevance": 0,
-          "enterprise_ai_infrastructure_relevance": 0,
-          "infrastructure_relevance_score": 0.858,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "semiconductor_relevance:0.58(semiconductor, gpu)"
-          ],
-          "infrastructure_relevance": {
-            "direct_ai_infrastructure_relevance": 1,
-            "data_center_relevance": 0,
-            "cloud_capacity_relevance": 0,
-            "semiconductor_relevance": 0.58,
-            "power_grid_relevance": 0,
-            "cooling_relevance": 0,
-            "capital_markets_relevance": 0,
-            "enterprise_ai_infrastructure_relevance": 0,
-            "infrastructure_relevance_score": 0.858,
-            "infrastructure_relevance_tier": "full_memo",
-            "infrastructure_relevance_action": "generate_full_memo",
-            "infrastructure_relevance_reasons": [
-              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-              "semiconductor_relevance:0.58(semiconductor, gpu)"
-            ],
-            "infrastructureRelevanceAction": "generate_full_memo",
-            "articlePagePublished": true,
-            "homepagePublished": true,
-            "archiveOnly": false,
-            "archiveOnlyReason": null
-          },
-          "score": 82
-        },
-        {
-          "id": "16b1c3cf52003ee1",
-          "source": "Bloomberg Technology",
-          "url": "https://www.bloomberg.com/news/videos/2026-06-03/how-duke-energy-plans-to-meet-ai-demand-video",
-          "title": "How Duke Energy Plans to Meet AI Demand",
-          "snippet": "Duke Energy President Harry Sideris says the utility is focused on keeping power affordable for customers while meeting surging demand from AI and data centers. Sideris spoke with Bloomberg’s Tyler Kendall at the Edison…",
-          "contentText": "Duke Energy President Harry Sideris says the utility is focused on keeping power affordable for customers while meeting surging demand from AI and data centers. Sideris spoke with Bloomberg’s Tyler Kendall at the Edison Electric Institute Conference in Las Vegas. (Source: Bloomberg)",
-          "publishedAt": "2026-06-03T18:37:58.000Z",
-          "sourceImage": "https://assets.bwbx.io/images/users/iqjWHBFdfxIU/iKK.jDyRIjo0/v3/1200x-1.jpg",
-          "region": "US",
-          "language": "en",
-          "defaultCategory": "Hyperscalers & Cloud",
-          "category": "Power & Grid",
-          "primary_category": "Power & Grid",
-          "secondary_category": "Interconnection and power procurement",
-          "infrastructure_layer": "Power",
-          "affected_stakeholders": [
-            "data center operators",
-            "utilities",
-            "cloud capacity teams",
-            "investors"
-          ],
-          "article_type": "Market Analysis",
-          "urgency_score": 0.52,
-          "taxonomy_confidence": 0.69,
-          "taxonomy_reasons": [
-            "power",
-            "utility"
-          ],
-          "direct_ai_infrastructure_relevance": 0.82,
-          "data_center_relevance": 0.42,
-          "cloud_capacity_relevance": 0.32,
-          "semiconductor_relevance": 0,
-          "power_grid_relevance": 0.48,
-          "cooling_relevance": 0,
-          "capital_markets_relevance": 0,
-          "enterprise_ai_infrastructure_relevance": 0,
-          "infrastructure_relevance_score": 0.801,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:0.82",
-            "data_center_relevance:0.42(data centers)",
-            "cloud_capacity_relevance:0.32(hyperscalers)",
-            "power_grid_relevance:0.48(power, utility)"
-          ],
-          "infrastructure_relevance": {
-            "direct_ai_infrastructure_relevance": 0.82,
-            "data_center_relevance": 0.42,
-            "cloud_capacity_relevance": 0.32,
-            "semiconductor_relevance": 0,
-            "power_grid_relevance": 0.48,
-            "cooling_relevance": 0,
-            "capital_markets_relevance": 0,
-            "enterprise_ai_infrastructure_relevance": 0,
-            "infrastructure_relevance_score": 0.801,
-            "infrastructure_relevance_tier": "full_memo",
-            "infrastructure_relevance_action": "generate_full_memo",
-            "infrastructure_relevance_reasons": [
-              "direct_ai_infrastructure_relevance:0.82",
-              "data_center_relevance:0.42(data centers)",
-              "cloud_capacity_relevance:0.32(hyperscalers)",
-              "power_grid_relevance:0.48(power, utility)"
-            ],
-            "infrastructureRelevanceAction": "generate_full_memo",
-            "articlePagePublished": true,
-            "homepagePublished": true,
-            "archiveOnly": false,
-            "archiveOnlyReason": null
-          },
-          "score": 80
-        },
-        {
-          "id": "6ebe8a8afa520691",
-          "source": "StorageReview",
-          "url": "https://www.storagereview.com/news/ibm-and-red-hat-launch-5b-project-lightwell-join-anthropics-project-glasswing",
-          "title": "IBM and Red Hat Launch $5B Project Lightwell, Join Anthropic’s Project Glasswing",
-          "snippet": "IBM and Red Hat have expanded their enterprise security strategy with two announcements in quick succession: joining Anthropic’s Project Glasswing on May 19 and introducing Project Lightwell on May 28, aligning large-sc…",
-          "contentText": "IBM and Red Hat have expanded their enterprise security strategy with two announcements in quick succession: joining Anthropic&#8217;s Project Glasswing on May 19 and introducing Project Lightwell on May 28, aligning large-scale engineering investment with industry collaboration to address growing risks in open-source and AI-driven environments. IBM and Red Hat Launch Project Lightwell Project Lightwell represents a $5 billion commitment focused on securing open source software across its full lifecycle, from upstream development through enterprise production. The initiative combines advanced AI capabilities with a global workforce of more than 20,000 engineers to create a coordinated model for identifying, validating, and remediating vulnerabilities at scale. At the center of the effort…",
-          "publishedAt": "2026-06-03T17:59:52.000Z",
-          "sourceImage": "https://www.storagereview.com/wp-content/uploads/2026/05/Storagereview-IBM-Red-Hat-Lightwell.png",
+          "url": "https://www.hpcwire.com/off-the-wire/berkeley-labs-modmd-approach-advances-quantum-simulations-beyond-ground-states/",
+          "title": "Berkeley Lab’s MODMD Approach Advances Quantum Simulations Beyond Ground States",
+          "snippet": "By combining streamlined quantum ‘snapshots’ with classical data analysis, a new hybrid framework helps today’s early-stage quantum computers probe complex molecular energy states with far fewer computational resources.…",
+          "contentText": "By combining streamlined quantum &#8216;snapshots&#8217; with classical data analysis, a new hybrid framework helps today&#8217;s early-stage quantum computers probe complex molecular energy states with far fewer computational resources. June 3, 2026 &#8212; Quantum computers offer a powerful tool for discovering new materials and chemical processes. But hardware limitations have largely confined computational studies of molecules to their most basic, resting states. Berkeley Lab researchers have now developed a highly efficient hybrid framework called multiobservable dynamic mode decomposition (MODMD) to tackle this central challenge. This schematic illustrates a hybrid workflow that efficiently calculates the fundamental energy levels of complex systems by dividing the computational lab…",
+          "publishedAt": "2026-06-03T23:50:01.000Z",
+          "sourceImage": "https://www.hpcwire.com/wp-content/uploads/2026/06/MODMD-300x200.jpg",
           "region": "US",
           "language": "en",
           "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
@@ -11791,8 +11654,8 @@
             "cloud buyers",
             "investors"
           ],
-          "article_type": "Product / Platform Update",
-          "urgency_score": 0.47,
+          "article_type": "Market Analysis",
+          "urgency_score": 0.43,
           "taxonomy_confidence": 0.77,
           "taxonomy_reasons": [
             "ai infrastructure",
@@ -11836,6 +11699,215 @@
             "archiveOnlyReason": null
           },
           "score": 79
+        },
+        {
+          "id": "726b8f550554f6b1",
+          "source": "StorageReview",
+          "url": "https://www.storagereview.com/news/hpe-xd230-stac-a2-record-intel-xeon-6980p-and-micron-mrdimms-lead-financial-risk-benchmarks",
+          "title": "HPE XD230 STAC-A2 Record: Intel Xeon 6980P and Micron MRDIMMs Lead Financial Risk Benchmarks",
+          "snippet": "Financial services infrastructure continues to be defined by the need to process larger risk models within fixed power and space constraints. As Monte Carlo-based analytics scale, system bottlenecks increasingly shift f…",
+          "contentText": "Financial services infrastructure continues to be defined by the need to process larger risk models within fixed power and space constraints. As Monte Carlo-based analytics scale, system bottlenecks increasingly shift from compute to memory bandwidth, where data movement dominates runtime. Monte Carlo methods use repeated random sampling to calculate the probability of different outcomes in complex systems, quantifying risk across thousands of scenarios under high uncertainty. A newly audited STAC-A2 benchmark result demonstrates the impact of pairing high-core-count processors with next-generation memory. An HPE ProLiant Compute XD230 1U server, configured with Intel Xeon 6980P processors and Micron 8800 MT/s DDR5 MRDIMMs, achieved the highest recorded performance for STAC-A2 cold runs a…",
+          "publishedAt": "2026-06-03T21:00:44.000Z",
+          "sourceImage": "https://www.storagereview.com/wp-content/uploads/2026/05/HPE-ProLiant-Compute-XD230-1U-server.jpeg",
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "category": "AI Infrastructure",
+          "primary_category": "AI Infrastructure",
+          "secondary_category": "GPU clusters and deployment readiness",
+          "infrastructure_layer": "Compute",
+          "affected_stakeholders": [
+            "operators",
+            "hyperscalers",
+            "cloud buyers",
+            "investors"
+          ],
+          "article_type": "Supply Chain",
+          "urgency_score": 0.54,
+          "taxonomy_confidence": 0.77,
+          "taxonomy_reasons": [
+            "ai infrastructure",
+            "neocloud"
+          ],
+          "direct_ai_infrastructure_relevance": 1,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0.49,
+          "power_grid_relevance": 0.22,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.873,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "semiconductor_relevance:0.49(intel, gpu)",
+            "power_grid_relevance:0.22(power)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 1,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0.49,
+            "power_grid_relevance": 0.22,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.873,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+              "semiconductor_relevance:0.49(intel, gpu)",
+              "power_grid_relevance:0.22(power)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 75
+        },
+        {
+          "id": "f82e0d5dad48fb04",
+          "source": "TechCrunch AI",
+          "url": "https://techcrunch.com/2026/06/03/lovable-signs-multi-year-deal-with-google-cloud-to-up-usage-5x-source-says/",
+          "title": "Lovable signs multiyear deal with Google Cloud to up usage 5x, source says",
+          "snippet": "Lovable and Google signed an expanded multiyear deal that involves a 5x expansion of Lovable's footprint on Google Cloud, and expanded access to Anthropic Claude.",
+          "contentText": "Lovable and Google signed an expanded multiyear deal that involves a 5x expansion of Lovable's footprint on Google Cloud, and expanded access to Anthropic Claude.",
+          "publishedAt": "2026-06-03T22:56:51.000Z",
+          "sourceImage": null,
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "category": "AI Infrastructure",
+          "primary_category": "AI Infrastructure",
+          "secondary_category": "GPU clusters and deployment readiness",
+          "infrastructure_layer": "Compute",
+          "affected_stakeholders": [
+            "operators",
+            "hyperscalers",
+            "cloud buyers",
+            "investors"
+          ],
+          "article_type": "Capacity Expansion",
+          "urgency_score": 0.45,
+          "taxonomy_confidence": 0.77,
+          "taxonomy_reasons": [
+            "ai infrastructure",
+            "neocloud"
+          ],
+          "direct_ai_infrastructure_relevance": 1,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0.324,
+          "semiconductor_relevance": 0.22,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.836,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "cloud_capacity_relevance:0.32(google cloud)",
+            "semiconductor_relevance:0.22(gpu)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 1,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0.324,
+            "semiconductor_relevance": 0.22,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.836,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+              "cloud_capacity_relevance:0.32(google cloud)",
+              "semiconductor_relevance:0.22(gpu)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 74
+        },
+        {
+          "id": "b8b7e87b27f87bf6",
+          "source": "Data Center POST",
+          "url": "https://datacenterpost.com/to-boost-crucial-developments-in-medical-research-heres-how-missouris-data-center-infrastructure-can-lead-not-lag/",
+          "title": "To Boost Crucial Developments in Medical Research, Here’s How Missouri’s Data Center Infrastructure Can Lead, Not Lag",
+          "snippet": "TL;DR The Modern Economy’s “Oil Fields”: Data centers are the foundational engines of 21st-century prosperity; regions that embrace them will secure vital talent and investment, while those that resist risk falling behi…",
+          "contentText": "TL;DR The Modern Economy&#8217;s &#8220;Oil Fields&#8221;: Data centers are the foundational engines of 21st-century prosperity; regions that embrace them will secure vital talent and investment, while those that resist risk falling behind. Accelerating Medical Breakthroughs: In healthcare hubs like Greater St. Louis, immense computing power is essential for processing massive biological datasets, which speeds up drug discovery and precision oncology. Responsible Community Development: To build public trust, data center projects must prioritize transparency and offer direct local benefits, such as investments in grid modernization and innovative utility-sharing agreements. # # # When oil was first discovered in Texas in the early 1900s, many people saw it as dirty, disruptive, and uncerta…",
+          "publishedAt": "2026-06-03T19:00:33.000Z",
+          "sourceImage": "https://d3qut6qyo6tw2j.cloudfront.net/bin/uploads/2026/06/03095343/DCP-Blog-Submission_6.2.2026-1024x512.png",
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "Colocation & Wholesale",
+          "category": "Data Centers",
+          "primary_category": "Data Centers",
+          "secondary_category": "Campus development and colocation capacity",
+          "infrastructure_layer": "Facility",
+          "affected_stakeholders": [
+            "data center operators",
+            "developers",
+            "site selectors",
+            "investors"
+          ],
+          "article_type": "Research / Technical",
+          "urgency_score": 0.62,
+          "taxonomy_confidence": 0.88,
+          "taxonomy_reasons": [
+            "data center",
+            "colocation",
+            "wholesale"
+          ],
+          "direct_ai_infrastructure_relevance": 0,
+          "data_center_relevance": 1,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0,
+          "power_grid_relevance": 0.76,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.817,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "data_center_relevance:1.00(data center, data centers, colocation)",
+            "power_grid_relevance:0.76(power, grid, utility)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 0,
+            "data_center_relevance": 1,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0,
+            "power_grid_relevance": 0.76,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.817,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "data_center_relevance:1.00(data center, data centers, colocation)",
+              "power_grid_relevance:0.76(power, grid, utility)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 72
         },
         {
           "id": "d43e4ee4fd82547c",
@@ -11912,105 +11984,30 @@
             "archiveOnly": false,
             "archiveOnlyReason": null
           },
-          "score": 78
-        },
-        {
-          "id": "22d2a683fee146ed",
-          "source": "Toms Hardware",
-          "url": "https://www.tomshardware.com/video-games/handheld-gaming/msi-claw-8-ex-ai-brings-intel-arc-g3-extreme-to-handhelds-8-inch-120-hz-display-and-new-ergonomic-grips",
-          "title": "MSI Claw 8 EX AI+ brings Intel Arc G3 Extreme to handhelds — 8-inch, 120 Hz display and new ergonomic grips",
-          "snippet": "The MSI Claw 8 EX AI+ brought comfort and performance to Computex with massive prongs and Intel Arc G3 Extreme.",
-          "contentText": "The MSI Claw 8 EX AI+ brought comfort and performance to Computex with massive prongs and Intel Arc G3 Extreme.",
-          "publishedAt": "2026-06-03T16:48:46.000Z",
-          "sourceImage": "https://cdn.mos.cms.futurecdn.net/gnczQhhzVo4rTRBGTKH2G7-1280-80.jpg",
-          "region": "Global",
-          "language": "en",
-          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
-          "category": "AI Infrastructure",
-          "primary_category": "AI Infrastructure",
-          "secondary_category": "GPU clusters and deployment readiness",
-          "infrastructure_layer": "Compute",
-          "affected_stakeholders": [
-            "operators",
-            "hyperscalers",
-            "cloud buyers",
-            "investors"
-          ],
-          "article_type": "Other",
-          "urgency_score": 0.45,
-          "taxonomy_confidence": 0.77,
-          "taxonomy_reasons": [
-            "ai infrastructure",
-            "neocloud"
-          ],
-          "direct_ai_infrastructure_relevance": 1,
-          "data_center_relevance": 0,
-          "cloud_capacity_relevance": 0,
-          "semiconductor_relevance": 0.49,
-          "power_grid_relevance": 0,
-          "cooling_relevance": 0,
-          "capital_markets_relevance": 0,
-          "enterprise_ai_infrastructure_relevance": 0,
-          "infrastructure_relevance_score": 0.838,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "semiconductor_relevance:0.49(intel, gpu)"
-          ],
-          "infrastructure_relevance": {
-            "direct_ai_infrastructure_relevance": 1,
-            "data_center_relevance": 0,
-            "cloud_capacity_relevance": 0,
-            "semiconductor_relevance": 0.49,
-            "power_grid_relevance": 0,
-            "cooling_relevance": 0,
-            "capital_markets_relevance": 0,
-            "enterprise_ai_infrastructure_relevance": 0,
-            "infrastructure_relevance_score": 0.838,
-            "infrastructure_relevance_tier": "full_memo",
-            "infrastructure_relevance_action": "generate_full_memo",
-            "infrastructure_relevance_reasons": [
-              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-              "semiconductor_relevance:0.49(intel, gpu)"
-            ],
-            "infrastructureRelevanceAction": "generate_full_memo",
-            "articlePagePublished": true,
-            "homepagePublished": true,
-            "archiveOnly": false,
-            "archiveOnlyReason": null
-          },
-          "score": 74
+          "score": 72
         }
       ],
       "curatedIds": [
-        "b68cf157d441c6b7",
-        "f04fd46c0a7a2789",
-        "16b1c3cf52003ee1",
-        "6ebe8a8afa520691",
-        "d43e4ee4fd82547c",
-        "22d2a683fee146ed"
+        "0cb4cb6214ae6b14",
+        "765b73bd6d1a360d",
+        "726b8f550554f6b1",
+        "f82e0d5dad48fb04",
+        "b8b7e87b27f87bf6",
+        "d43e4ee4fd82547c"
       ],
       "publishedIds": [
         "b68cf157d441c6b7",
-        "f04fd46c0a7a2789"
+        "f04fd46c0a7a2789",
+        "765b73bd6d1a360d",
+        "0cb4cb6214ae6b14"
       ],
       "slotPublications": {
-        "0": true
+        "0": true,
+        "1": true
       }
     }
   },
   "runHistory": [
-    {
-      "at": "2026-04-18T15:46:15.002Z",
-      "day": "2026-04-19",
-      "slot": 0,
-      "publishedCount": 2,
-      "publishedIds": [
-        "35501006bab1e176",
-        "fbfb9f6d6ba54d4d"
-      ]
-    },
     {
       "at": "2026-04-18T23:38:29.373Z",
       "day": "2026-04-19",
@@ -16239,7 +16236,74 @@
         }
       ],
       "archiveOnlyItems": []
+    },
+    {
+      "at": "2026-06-04T01:43:59.981Z",
+      "day": "2026-06-04",
+      "slot": 1,
+      "publishedCount": 0,
+      "signalCardCount": 2,
+      "archiveOnlyCount": 0,
+      "processedIds": [
+        "765b73bd6d1a360d",
+        "0cb4cb6214ae6b14"
+      ],
+      "blockedCount": 2,
+      "blockedItems": [
+        {
+          "id": "765b73bd6d1a360d",
+          "title": "Berkeley Lab’s MODMD Approach Advances Quantum Simulations Beyond Ground States",
+          "infrastructure_relevance_score": 1,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud, hpc)",
+            "data_center_relevance:0.42(data centers)",
+            "cloud_capacity_relevance:0.32(hyperscalers)",
+            "semiconductor_relevance:1.00(semiconductor, nvidia, amd)",
+            "power_grid_relevance:0.22(power)",
+            "capital_markets_relevance:0.28(funding)"
+          ],
+          "extraction_quality_score": 1,
+          "source_domain_adapter": "generic",
+          "content_length": 1670,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": false,
+          "repetition_block_reasons": [],
+          "repetition_check": null,
+          "expert_insight_complete": true,
+          "expert_insight_missing_fields": [],
+          "reason": "fail_closed: source_text_incomplete:ellipsis_truncation_artifact, ellipsis_truncation_artifact"
+        },
+        {
+          "id": "0cb4cb6214ae6b14",
+          "title": "Qualcomm Announces Dragonfly Brand for Data Center Products, More Info to Come June 24th",
+          "infrastructure_relevance_score": 0.921,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "data_center_relevance:0.55(data center)",
+            "cloud_capacity_relevance:0.32(hyperscalers)",
+            "semiconductor_relevance:0.22(gpu)",
+            "power_grid_relevance:0.22(power)"
+          ],
+          "extraction_quality_score": 1,
+          "source_domain_adapter": "servethehome",
+          "content_length": 1773,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": false,
+          "repetition_block_reasons": [],
+          "repetition_check": null,
+          "expert_insight_complete": false,
+          "expert_insight_missing_fields": [
+            "named_companies"
+          ],
+          "reason": "expert_insight_missing_fields named_companies"
+        }
+      ],
+      "archiveOnlyItems": []
     }
   ],
-  "lastRunAt": "2026-06-03T18:52:20.455Z"
+  "lastRunAt": "2026-06-04T01:43:59.981Z"
 }
