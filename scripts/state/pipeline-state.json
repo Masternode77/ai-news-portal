@@ -387,7 +387,9 @@
     "d88b475419d77865",
     "fb2d77e0b7038f53",
     "505eebbbd007231a",
-    "01b8b1d203605f0e"
+    "01b8b1d203605f0e",
+    "331125addaf44173",
+    "8cdd57e5da08a699"
   ],
   "dayPlans": {
     "2026-03-24": {
@@ -12019,19 +12021,89 @@
     "2026-06-05": {
       "date": "2026-06-05",
       "createdAt": "2026-06-04T17:48:48.391Z",
-      "refreshedAt": "2026-06-04T17:48:48.391Z",
+      "refreshedAt": "2026-06-05T00:11:32.395Z",
       "candidateWindowHours": 24,
       "curatedItems": [
         {
-          "id": "01b8b1d203605f0e",
+          "id": "331125addaf44173",
+          "source": "TechCrunch AI",
+          "url": "https://techcrunch.com/2026/06/04/ahead-of-its-ipo-anthropics-daniela-amodei-shrugs-off-doubts-about-ais-returns/",
+          "title": "Ahead of its IPO, Anthropic’s Daniela Amodei shrugs off doubts about AI’s returns",
+          "snippet": "Anthropic has been growing at a breakneck pace. The company announced that annualized revenue crossed $47 billion in May, up dramatically from roughly $9 billion at the end of 2025. That trajectory faces a real test, th…",
+          "contentText": "Anthropic has been growing at a breakneck pace. The company announced that annualized revenue crossed $47 billion in May, up dramatically from roughly $9 billion at the end of 2025. That trajectory faces a real test, though.",
+          "publishedAt": "2026-06-04T22:43:26.000Z",
+          "sourceImage": null,
+          "region": "Global",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "category": "AI Infrastructure",
+          "primary_category": "AI Infrastructure",
+          "secondary_category": "GPU clusters and deployment readiness",
+          "infrastructure_layer": "Compute",
+          "affected_stakeholders": [
+            "operators",
+            "hyperscalers",
+            "cloud buyers",
+            "investors"
+          ],
+          "article_type": "Financing / M&A",
+          "urgency_score": 0.45,
+          "taxonomy_confidence": 0.77,
+          "taxonomy_reasons": [
+            "ai infrastructure",
+            "neocloud"
+          ],
+          "direct_ai_infrastructure_relevance": 1,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0.22,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0.324,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.836,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "semiconductor_relevance:0.22(gpu)",
+            "capital_markets_relevance:0.32(ipo)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 1,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0.22,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0.324,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.836,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+              "semiconductor_relevance:0.22(gpu)",
+              "capital_markets_relevance:0.32(ipo)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 81
+        },
+        {
+          "id": "8cdd57e5da08a699",
           "source": "StorageReview",
-          "url": "https://www.storagereview.com/news/coolit-systems-demonstrates-15kw-coldplate-extending-single-phase-dlc-beyond-2030",
-          "title": "CoolIT Systems Demonstrates 15kW Coldplate, Extending Single-Phase DLC Beyond 2030",
-          "snippet": "CoolIT Systems has announced the development of what it describes as the first 15kW direct liquid cooling (DLC) coldplate design, positioning single-phase liquid cooling as a viable path for AI infrastructure well beyon…",
-          "contentText": "CoolIT Systems has announced the development of what it describes as the first 15kW direct liquid cooling (DLC) coldplate design, positioning single-phase liquid cooling as a viable path for AI infrastructure well beyond 2030. The company reports that the design delivers nearly four times the performance of earlier single-phase coldplates, indicating that the architecture can scale alongside increasing GPU and accelerator power levels. Single-phase DLC is already widely deployed across AI data centers, particularly in hyperscale environments. This latest development focuses on extending that model to support significantly higher thermal design power targets without requiring a transition to more complex cooling approaches. Scaling Thermal Capacity for AI Accelerators The 15kW coldplate re…",
-          "publishedAt": "2026-06-04T15:25:32.000Z",
-          "sourceImage": "https://www.storagereview.com/wp-content/uploads/2026/05/Storagereview-CoolIT-15kW-DLC.jpg",
-          "region": "APAC",
+          "url": "https://www.storagereview.com/news/zutacore-raises-100m-series-c-to-scale-waterless-two-phase-cooling-for-ai-data-centers",
+          "title": "ZutaCore Raises $100M Series C to Scale Waterless Two-Phase Cooling for AI Data Centers",
+          "snippet": "ZutaCore has secured $100 million in Series C funding, with participation from Mitsubishi Electric, Carrier Ventures, Samsung Electronics, and others through its corporate venture arm, Samsung Ventures. The investment i…",
+          "contentText": "ZutaCore has secured $100 million in Series C funding, with participation from Mitsubishi Electric, Carrier Ventures, Samsung Electronics, and others through its corporate venture arm, Samsung Ventures. The investment is aimed at accelerating global commercialization, expanding deployments, and advancing research and development as demand for high-density AI and HPC infrastructure continues to rise. The funding comes as data center operators face increasing thermal challenges driven by next-generation processors that are pushing well beyond traditional power envelopes. Liquid cooling adoption has accelerated across hyperscale and enterprise environments, a trend StorageReview has covered extensively as operators shift from air to direct liquid cooling to manage higher rack densities and i…",
+          "publishedAt": "2026-06-04T17:59:03.000Z",
+          "sourceImage": "https://www.storagereview.com/wp-content/uploads/2025/10/Storagereview-zutacore-flextubing.png",
+          "region": "US",
           "language": "en",
           "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
           "category": "Cooling & Facility Engineering",
@@ -12044,50 +12116,52 @@
             "data center developers",
             "enterprise IT"
           ],
-          "article_type": "Capacity Expansion",
+          "article_type": "Financing / M&A",
           "urgency_score": 0.66,
-          "taxonomy_confidence": 0.85,
+          "taxonomy_confidence": 0.88,
           "taxonomy_reasons": [
             "cooling",
             "liquid cooling",
             "thermal"
           ],
           "direct_ai_infrastructure_relevance": 1,
-          "data_center_relevance": 0.42,
+          "data_center_relevance": 0.97,
           "cloud_capacity_relevance": 0,
-          "semiconductor_relevance": 0.44,
+          "semiconductor_relevance": 0.22,
           "power_grid_relevance": 0.22,
           "cooling_relevance": 1,
-          "capital_markets_relevance": 0,
+          "capital_markets_relevance": 0.28,
           "enterprise_ai_infrastructure_relevance": 0,
           "infrastructure_relevance_score": 1,
           "infrastructure_relevance_tier": "full_memo",
           "infrastructure_relevance_action": "generate_full_memo",
           "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "data_center_relevance:0.42(data centers)",
-            "semiconductor_relevance:0.44(accelerator, gpu)",
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud, hpc)",
+            "data_center_relevance:0.97(data center, data centers)",
+            "semiconductor_relevance:0.22(gpu)",
             "power_grid_relevance:0.22(power)",
-            "cooling_relevance:1.00(cooling, liquid cooling, thermal)"
+            "cooling_relevance:1.00(cooling, liquid cooling, thermal)",
+            "capital_markets_relevance:0.28(funding)"
           ],
           "infrastructure_relevance": {
             "direct_ai_infrastructure_relevance": 1,
-            "data_center_relevance": 0.42,
+            "data_center_relevance": 0.97,
             "cloud_capacity_relevance": 0,
-            "semiconductor_relevance": 0.44,
+            "semiconductor_relevance": 0.22,
             "power_grid_relevance": 0.22,
             "cooling_relevance": 1,
-            "capital_markets_relevance": 0,
+            "capital_markets_relevance": 0.28,
             "enterprise_ai_infrastructure_relevance": 0,
             "infrastructure_relevance_score": 1,
             "infrastructure_relevance_tier": "full_memo",
             "infrastructure_relevance_action": "generate_full_memo",
             "infrastructure_relevance_reasons": [
-              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-              "data_center_relevance:0.42(data centers)",
-              "semiconductor_relevance:0.44(accelerator, gpu)",
+              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud, hpc)",
+              "data_center_relevance:0.97(data center, data centers)",
+              "semiconductor_relevance:0.22(gpu)",
               "power_grid_relevance:0.22(power)",
-              "cooling_relevance:1.00(cooling, liquid cooling, thermal)"
+              "cooling_relevance:1.00(cooling, liquid cooling, thermal)",
+              "capital_markets_relevance:0.28(funding)"
             ],
             "infrastructureRelevanceAction": "generate_full_memo",
             "articlePagePublished": true,
@@ -12095,70 +12169,67 @@
             "archiveOnly": false,
             "archiveOnlyReason": null
           },
-          "score": 88
+          "score": 80
         },
         {
-          "id": "505eebbbd007231a",
-          "source": "Toms Hardware",
-          "url": "https://www.tomshardware.com/tech-industry/semiconductors/tsmc-ceo-c-c-wei-says-it-will-be-a-long-time-before-we-can-meet-customer-demand-tells-shareholders-that-he-will-keep-prices-stable-refrain-from-implementing-price-hikes",
-          "title": "TSMC CEO C.C. Wei says, ‘It will be a long time before we can meet customer demand’ — tells shareholders that he will keep prices stable, refrain from implementing price hikes",
-          "snippet": "TSMC says it does not have enough capacity to handle all the demand from AI hyperscalers, with CEO C.C. Wei saying that it will take a long time before it can match customer demand. This is an opportunity for Intel, tho…",
-          "contentText": "TSMC says it does not have enough capacity to handle all the demand from AI hyperscalers, with CEO C.C. Wei saying that it will take a long time before it can match customer demand. This is an opportunity for Intel, though, as companies desperate to get their hands on advanced chips might be willing to use Intel 18A or 14A nodes for their needs instead.",
-          "publishedAt": "2026-06-04T16:18:52.000Z",
-          "sourceImage": "https://cdn.mos.cms.futurecdn.net/SpeNpucwHBm8U557LVpCAi-1280-80.png",
+          "id": "457a24335a811d4d",
+          "source": "HPCwire",
+          "url": "https://www.hpcwire.com/off-the-wire/doe-genesis-mission-adds-japan-as-1st-international-partner-in-1b-research-initiative/",
+          "title": "DOE Genesis Mission Adds Japan as 1st International Partner in $1B Research Initiative",
+          "snippet": "WASHINGTON, June 4, 2026 — The U.S. Department of Energy (DOE) and Japan’s Ministry of Education, Culture, Sports, Science and Technology (MEXT) and Ministry of Economy, Trade and Industry (METI), today announced an his…",
+          "contentText": "WASHINGTON, June 4, 2026 &#8212; The U.S. Department of Energy (DOE) and Japan’s Ministry of Education, Culture, Sports, Science and Technology (MEXT) and Ministry of Economy, Trade and Industry (METI), today announced an historic $1 billion strategic partnership making Japan the first international partner in the DOE’s Genesis Mission . Today’s announcement marks one of the most significant scientific and technological collaborations between the United States and Japan. Under the partnership, eleven joint scientific teams will unite twelve DOE National Laboratories, one DOE Office of Science User Facility, and twelve leading Japanese research institutions—bringing together some of the world’s most advanced scientific facilities, computing resources, and research talent—to advance breakth…",
+          "publishedAt": "2026-06-04T21:35:33.000Z",
+          "sourceImage": "https://www.hpcwire.com/wp-content/uploads/2026/02/doe-genesis-mission-black-1-300x200.png",
           "region": "APAC",
           "language": "en",
           "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
-          "category": "Semiconductors",
-          "primary_category": "Semiconductors",
-          "secondary_category": "Accelerators, memory, and advanced packaging",
-          "infrastructure_layer": "Silicon",
+          "category": "AI Infrastructure",
+          "primary_category": "AI Infrastructure",
+          "secondary_category": "GPU clusters and deployment readiness",
+          "infrastructure_layer": "Compute",
           "affected_stakeholders": [
-            "semiconductor suppliers",
+            "operators",
             "hyperscalers",
-            "server OEMs",
+            "cloud buyers",
             "investors"
           ],
           "article_type": "Capacity Expansion",
-          "urgency_score": 0.58,
-          "taxonomy_confidence": 0.88,
+          "urgency_score": 0.43,
+          "taxonomy_confidence": 0.77,
           "taxonomy_reasons": [
-            "gpu",
-            "intel",
-            "tsmc"
+            "ai infrastructure",
+            "neocloud"
           ],
           "direct_ai_infrastructure_relevance": 1,
           "data_center_relevance": 0,
-          "cloud_capacity_relevance": 0.32,
-          "semiconductor_relevance": 1,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0.22,
           "power_grid_relevance": 0,
           "cooling_relevance": 0,
           "capital_markets_relevance": 0,
           "enterprise_ai_infrastructure_relevance": 0,
-          "infrastructure_relevance_score": 0.985,
+          "infrastructure_relevance_score": 0.778,
           "infrastructure_relevance_tier": "full_memo",
           "infrastructure_relevance_action": "generate_full_memo",
           "infrastructure_relevance_reasons": [
             "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "cloud_capacity_relevance:0.32(hyperscalers)",
-            "semiconductor_relevance:1.00(semiconductors, intel, tsmc)"
+            "semiconductor_relevance:0.22(gpu)"
           ],
           "infrastructure_relevance": {
             "direct_ai_infrastructure_relevance": 1,
             "data_center_relevance": 0,
-            "cloud_capacity_relevance": 0.32,
-            "semiconductor_relevance": 1,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0.22,
             "power_grid_relevance": 0,
             "cooling_relevance": 0,
             "capital_markets_relevance": 0,
             "enterprise_ai_infrastructure_relevance": 0,
-            "infrastructure_relevance_score": 0.985,
+            "infrastructure_relevance_score": 0.778,
             "infrastructure_relevance_tier": "full_memo",
             "infrastructure_relevance_action": "generate_full_memo",
             "infrastructure_relevance_reasons": [
               "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-              "cloud_capacity_relevance:0.32(hyperscalers)",
-              "semiconductor_relevance:1.00(semiconductors, intel, tsmc)"
+              "semiconductor_relevance:0.22(gpu)"
             ],
             "infrastructureRelevanceAction": "generate_full_memo",
             "articlePagePublished": true,
@@ -12166,86 +12237,17 @@
             "archiveOnly": false,
             "archiveOnlyReason": null
           },
-          "score": 87
+          "score": 79
         },
         {
-          "id": "b66b06d43dba3e5f",
-          "source": "Data Center POST",
-          "url": "https://datacenterpost.com/predictive-schedule-governance-for-hyperscale-ai-data-center-delivery/",
-          "title": "Predictive Schedule Governance for Hyperscale AI Data Center Delivery",
-          "snippet": "Integrating IMS, DCMA Diagnostics, OFCI Visibility, TIA Governance, and Executive Risk Analytics TL;DR The Shift to Predictive Governance: Traditional, reactive scheduling is inadequate for the complexity of multi-billi…",
-          "contentText": "Integrating IMS, DCMA Diagnostics, OFCI Visibility, TIA Governance, and Executive Risk Analytics TL;DR The Shift to Predictive Governance: Traditional, reactive scheduling is inadequate for the complexity of multi-billion-dollar hyperscale AI data centers; operators must adopt a system of predictive, portfolio-level schedule governance. Managing Critical Constraints: Major project bottlenecks, specifically long-lead Owner Furnished Contractor Installed (OFCI) equipment and commissioning capacity, must be integrated into the schedule early to prevent late-stage conflicts and supply chain misalignments. Proactive Diagnostics and Delay Tracking: Instead of merely reporting past issues, operators should utilize DCMA 14-point diagnostics to continuously measure schedule health and enforce stan…",
-          "publishedAt": "2026-06-04T17:00:12.000Z",
-          "sourceImage": "https://d3qut6qyo6tw2j.cloudfront.net/bin/uploads/2026/06/03102324/DCP-Blog-Submission_6.2.26-3-1024x512.png",
-          "region": "APAC",
-          "language": "en",
-          "defaultCategory": "Colocation & Wholesale",
-          "category": "Data Centers",
-          "primary_category": "Data Centers",
-          "secondary_category": "Campus development and colocation capacity",
-          "infrastructure_layer": "Facility",
-          "affected_stakeholders": [
-            "data center operators",
-            "developers",
-            "site selectors",
-            "investors"
-          ],
-          "article_type": "Capacity Expansion",
-          "urgency_score": 0.69,
-          "taxonomy_confidence": 0.88,
-          "taxonomy_reasons": [
-            "data center",
-            "colocation",
-            "wholesale"
-          ],
-          "direct_ai_infrastructure_relevance": 0.78,
-          "data_center_relevance": 1,
-          "cloud_capacity_relevance": 0,
-          "semiconductor_relevance": 0,
-          "power_grid_relevance": 0,
-          "cooling_relevance": 0,
-          "capital_markets_relevance": 0,
-          "enterprise_ai_infrastructure_relevance": 0,
-          "infrastructure_relevance_score": 0.902,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:0.78(ai data center)",
-            "data_center_relevance:1.00(data center, data centers, colocation)"
-          ],
-          "infrastructure_relevance": {
-            "direct_ai_infrastructure_relevance": 0.78,
-            "data_center_relevance": 1,
-            "cloud_capacity_relevance": 0,
-            "semiconductor_relevance": 0,
-            "power_grid_relevance": 0,
-            "cooling_relevance": 0,
-            "capital_markets_relevance": 0,
-            "enterprise_ai_infrastructure_relevance": 0,
-            "infrastructure_relevance_score": 0.902,
-            "infrastructure_relevance_tier": "full_memo",
-            "infrastructure_relevance_action": "generate_full_memo",
-            "infrastructure_relevance_reasons": [
-              "direct_ai_infrastructure_relevance:0.78(ai data center)",
-              "data_center_relevance:1.00(data center, data centers, colocation)"
-            ],
-            "infrastructureRelevanceAction": "generate_full_memo",
-            "articlePagePublished": true,
-            "homepagePublished": true,
-            "archiveOnly": false,
-            "archiveOnlyReason": null
-          },
-          "score": 84
-        },
-        {
-          "id": "25b126a07311da5c",
-          "source": "HPCwire",
-          "url": "https://www.hpcwire.com/off-the-wire/llnl-highlights-the-cooling-network-supporting-el-capitans-performance/",
-          "title": "LLNL Highlights the Cooling Network Supporting El Capitan’s Performance",
-          "snippet": "June 4, 2026 — When most people picture a supercomputer, they imagine endless rows of compute and storage racks, blinking lights and machines thinking faster than humans can conceive. What they don’t visualize is the sy…",
-          "contentText": "June 4, 2026 &#8212; When most people picture a supercomputer, they imagine endless rows of compute and storage racks, blinking lights and machines thinking faster than humans can conceive. What they don’t visualize is the system quietly working underneath it all — a complicated, choreographed dance that keeps all that processing power from turning into heat, and from heat into failure. A complex system of cooling towers, chillers, pumps, heat exchangers, sensors and more than 2,000 feet of pipes all work together to remove heat from the liquid-cooled exascale supercomputer El Capitan. Graphic credit: Dan Herchek/LLNL. At Lawrence Livermore National Laboratory (LLNL), the exascale El Capitan supercomputer — capable of over 1.8 quintillion calculations per second on real-world benchmarks —…",
-          "publishedAt": "2026-06-04T16:46:49.000Z",
-          "sourceImage": "https://www.hpcwire.com/wp-content/uploads/2026/06/Ext_MTMCooling_1200x800-1-300x200.jpg",
+          "id": "421d55f0d2c0e4d4",
+          "source": "Toms Hardware",
+          "url": "https://www.tomshardware.com/peripherals/docking-stations-hubs/take-your-openclaw-box-back-to-the-future-with-retro-mac-mini-mac-studio-docks-wokyis-tempts-nintendo-and-apple-lawyers-while-adding-a-screen-ports-and-style-to-your-modern-mini-mac",
+          "title": "Take your OpenClaw box back to the future with retro Mac Mini, Mac Studio docks — Wokyis tempts Nintendo and Apple lawyers, while adding a screen, ports, and style to your modern Mac",
+          "snippet": "Wokyis is already selling its M5 dock that turns your Mac Mini into a mini Macintosh. But it plans to add G7 NES-themed docks, as well, with up to 80Gbps of throughput and larger 7-inch screens.",
+          "contentText": "Wokyis is already selling its M5 dock that turns your Mac Mini into a mini Macintosh. But it plans to add G7 NES-themed docks, as well, with up to 80Gbps of throughput and larger 7-inch screens.",
+          "publishedAt": "2026-06-04T20:00:00.000Z",
+          "sourceImage": "https://cdn.mos.cms.futurecdn.net/gyiqjESLi9tJFhgubAx2p8-1280-80.jpg",
           "region": "Global",
           "language": "en",
           "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
@@ -12260,7 +12262,7 @@
             "investors"
           ],
           "article_type": "Other",
-          "urgency_score": 0.55,
+          "urgency_score": 0.43,
           "taxonomy_confidence": 0.77,
           "taxonomy_reasons": [
             "ai infrastructure",
@@ -12270,36 +12272,32 @@
           "data_center_relevance": 0,
           "cloud_capacity_relevance": 0,
           "semiconductor_relevance": 0.22,
-          "power_grid_relevance": 0.22,
-          "cooling_relevance": 0.459,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
           "capital_markets_relevance": 0,
-          "enterprise_ai_infrastructure_relevance": 0.18,
-          "infrastructure_relevance_score": 0.901,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.778,
           "infrastructure_relevance_tier": "full_memo",
           "infrastructure_relevance_action": "generate_full_memo",
           "infrastructure_relevance_reasons": [
             "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "semiconductor_relevance:0.22(gpu)",
-            "power_grid_relevance:0.22(power)",
-            "cooling_relevance:0.46(cooling)"
+            "semiconductor_relevance:0.22(gpu)"
           ],
           "infrastructure_relevance": {
             "direct_ai_infrastructure_relevance": 1,
             "data_center_relevance": 0,
             "cloud_capacity_relevance": 0,
             "semiconductor_relevance": 0.22,
-            "power_grid_relevance": 0.22,
-            "cooling_relevance": 0.459,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
             "capital_markets_relevance": 0,
-            "enterprise_ai_infrastructure_relevance": 0.18,
-            "infrastructure_relevance_score": 0.901,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.778,
             "infrastructure_relevance_tier": "full_memo",
             "infrastructure_relevance_action": "generate_full_memo",
             "infrastructure_relevance_reasons": [
               "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-              "semiconductor_relevance:0.22(gpu)",
-              "power_grid_relevance:0.22(power)",
-              "cooling_relevance:0.46(cooling)"
+              "semiconductor_relevance:0.22(gpu)"
             ],
             "infrastructureRelevanceAction": "generate_full_memo",
             "articlePagePublished": true,
@@ -12307,7 +12305,81 @@
             "archiveOnly": false,
             "archiveOnlyReason": null
           },
-          "score": 84
+          "score": 71
+        },
+        {
+          "id": "1fee2d8db7fab1c7",
+          "source": "Semiconductor Engineering",
+          "url": "https://semiengineering.com/orbital-data-centers-are-souped-up-satellites-for-now/",
+          "title": "Orbital Data Centers Are Souped-Up Satellites – For Now",
+          "snippet": "Satellite constellations with extra onboard compute are several steps away from handling full AI workloads for people on Earth. The post Orbital Data Centers Are Souped-Up Satellites – For Now appeared first on Semicond…",
+          "contentText": "Key Takeaways : Today’s orbital data centers are better described as compute centers in space, as they resemble satellite constellations more than terrestrial data centers. The most common power solution is sun-synchronous solar at the poles, but this requires a multi-hop data relay from power-hungry compute to standard satellite constellations in the low-orbit mesh, then to Earth. Earth’s magnetic field is weakest at the poles, heightening the effects of radiation and single-event upsets. Memories in advanced node architectures are especially vulnerable here, and triple redundancy of FinFET and GAA chips is very costly. AI data centers need vast amounts of electricity, water, and space, but that space doesn&#8217;t have to be terrestrial or even have an atmosphere. Launching servers into…",
+          "publishedAt": "2026-06-04T07:13:53.000Z",
+          "sourceImage": "https://i0.wp.com/semiengineering.com/wp-content/uploads/2026/06/Picture1.png?resize=880%2C440&#038;ssl=1",
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "category": "AI Infrastructure",
+          "primary_category": "AI Infrastructure",
+          "secondary_category": "GPU clusters and deployment readiness",
+          "infrastructure_layer": "Compute",
+          "affected_stakeholders": [
+            "operators",
+            "hyperscalers",
+            "cloud buyers",
+            "investors"
+          ],
+          "article_type": "Research / Technical",
+          "urgency_score": 0.56,
+          "taxonomy_confidence": 0.77,
+          "taxonomy_reasons": [
+            "ai infrastructure",
+            "neocloud"
+          ],
+          "direct_ai_infrastructure_relevance": 1,
+          "data_center_relevance": 0.55,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0.58,
+          "power_grid_relevance": 0.46,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0.24,
+          "infrastructure_relevance_score": 0.928,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "data_center_relevance:0.55(data centers)",
+            "semiconductor_relevance:0.58(semiconductor, gpu)",
+            "power_grid_relevance:0.46(power, electricity)",
+            "enterprise_ai_infrastructure_relevance:0.24(ai workloads)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 1,
+            "data_center_relevance": 0.55,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0.58,
+            "power_grid_relevance": 0.46,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0.24,
+            "infrastructure_relevance_score": 0.928,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+              "data_center_relevance:0.55(data centers)",
+              "semiconductor_relevance:0.58(semiconductor, gpu)",
+              "power_grid_relevance:0.46(power, electricity)",
+              "enterprise_ai_infrastructure_relevance:0.24(ai workloads)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 71
         },
         {
           "id": "22d9f16efb99b1c9",
@@ -12375,105 +12447,30 @@
             "archiveOnly": false,
             "archiveOnlyReason": null
           },
-          "score": 81
-        },
-        {
-          "id": "457a24335a811d4d",
-          "source": "HPCwire",
-          "url": "https://www.hpcwire.com/off-the-wire/doe-genesis-mission-adds-japan-as-1st-international-partner-in-1b-research-initiative/",
-          "title": "DOE Genesis Mission Adds Japan as 1st International Partner in $1B Research Initiative",
-          "snippet": "WASHINGTON, June 4, 2026 — The U.S. Department of Energy (DOE) and Japan’s Ministry of Education, Culture, Sports, Science and Technology (MEXT) and Ministry of Economy, Trade and Industry (METI), today announced an his…",
-          "contentText": "WASHINGTON, June 4, 2026 &#8212; The U.S. Department of Energy (DOE) and Japan’s Ministry of Education, Culture, Sports, Science and Technology (MEXT) and Ministry of Economy, Trade and Industry (METI), today announced an historic $1 billion strategic partnership making Japan the first international partner in the DOE’s Genesis Mission . Today’s announcement marks one of the most significant scientific and technological collaborations between the United States and Japan. Under the partnership, eleven joint scientific teams will unite twelve DOE National Laboratories, one DOE Office of Science User Facility, and twelve leading Japanese research institutions—bringing together some of the world’s most advanced scientific facilities, computing resources, and research talent—to advance breakth…",
-          "publishedAt": "2026-06-04T17:27:33.000Z",
-          "sourceImage": "https://www.hpcwire.com/wp-content/uploads/2026/02/doe-genesis-mission-black-1-300x200.png",
-          "region": "APAC",
-          "language": "en",
-          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
-          "category": "AI Infrastructure",
-          "primary_category": "AI Infrastructure",
-          "secondary_category": "GPU clusters and deployment readiness",
-          "infrastructure_layer": "Compute",
-          "affected_stakeholders": [
-            "operators",
-            "hyperscalers",
-            "cloud buyers",
-            "investors"
-          ],
-          "article_type": "Capacity Expansion",
-          "urgency_score": 0.43,
-          "taxonomy_confidence": 0.77,
-          "taxonomy_reasons": [
-            "ai infrastructure",
-            "neocloud"
-          ],
-          "direct_ai_infrastructure_relevance": 1,
-          "data_center_relevance": 0,
-          "cloud_capacity_relevance": 0,
-          "semiconductor_relevance": 0.22,
-          "power_grid_relevance": 0,
-          "cooling_relevance": 0,
-          "capital_markets_relevance": 0,
-          "enterprise_ai_infrastructure_relevance": 0,
-          "infrastructure_relevance_score": 0.778,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "semiconductor_relevance:0.22(gpu)"
-          ],
-          "infrastructure_relevance": {
-            "direct_ai_infrastructure_relevance": 1,
-            "data_center_relevance": 0,
-            "cloud_capacity_relevance": 0,
-            "semiconductor_relevance": 0.22,
-            "power_grid_relevance": 0,
-            "cooling_relevance": 0,
-            "capital_markets_relevance": 0,
-            "enterprise_ai_infrastructure_relevance": 0,
-            "infrastructure_relevance_score": 0.778,
-            "infrastructure_relevance_tier": "full_memo",
-            "infrastructure_relevance_action": "generate_full_memo",
-            "infrastructure_relevance_reasons": [
-              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-              "semiconductor_relevance:0.22(gpu)"
-            ],
-            "infrastructureRelevanceAction": "generate_full_memo",
-            "articlePagePublished": true,
-            "homepagePublished": true,
-            "archiveOnly": false,
-            "archiveOnlyReason": null
-          },
-          "score": 79
+          "score": 67
         }
       ],
       "curatedIds": [
-        "01b8b1d203605f0e",
-        "505eebbbd007231a",
-        "b66b06d43dba3e5f",
-        "25b126a07311da5c",
-        "22d9f16efb99b1c9",
-        "457a24335a811d4d"
+        "331125addaf44173",
+        "8cdd57e5da08a699",
+        "457a24335a811d4d",
+        "421d55f0d2c0e4d4",
+        "1fee2d8db7fab1c7",
+        "22d9f16efb99b1c9"
       ],
       "publishedIds": [
         "505eebbbd007231a",
-        "01b8b1d203605f0e"
+        "01b8b1d203605f0e",
+        "331125addaf44173",
+        "8cdd57e5da08a699"
       ],
       "slotPublications": {
-        "0": true
+        "0": true,
+        "1": true
       }
     }
   },
   "runHistory": [
-    {
-      "at": "2026-04-19T15:46:39.510Z",
-      "day": "2026-04-20",
-      "slot": 0,
-      "publishedCount": 2,
-      "publishedIds": [
-        "fae43d4401dbdd2f",
-        "309077dd35366623"
-      ]
-    },
     {
       "at": "2026-04-19T23:40:15.815Z",
       "day": "2026-04-20",
@@ -16985,7 +16982,136 @@
         }
       ],
       "archiveOnlyItems": []
+    },
+    {
+      "at": "2026-06-05T00:11:32.395Z",
+      "day": "2026-06-05",
+      "slot": 1,
+      "publishedCount": 0,
+      "signalCardCount": 0,
+      "archiveOnlyCount": 0,
+      "repetitionBlockedCount": 2,
+      "publishedIds": [],
+      "processedIds": [
+        "331125addaf44173",
+        "8cdd57e5da08a699"
+      ],
+      "blockedCount": 0,
+      "blockedItems": [],
+      "repetitionBlockedItems": [
+        {
+          "id": "331125addaf44173",
+          "title": "Ahead of its IPO, Anthropic’s Daniela Amodei shrugs off doubts about AI’s returns",
+          "infrastructure_relevance_score": 0.892,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "data_center_relevance:0.42(data centers)",
+            "cloud_capacity_relevance:0.32(hyperscalers)",
+            "semiconductor_relevance:0.22(gpu)",
+            "power_grid_relevance:0.22(power)",
+            "capital_markets_relevance:0.32(ipo)"
+          ],
+          "extraction_quality_score": 1,
+          "source_domain_adapter": "techcrunch",
+          "content_length": 1627,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": true,
+          "repetition_block_reasons": [
+            "repeated_sentence_ratio>0.12",
+            "heading_sequence_similarity>0.75",
+            "conclusion_similarity>0.7"
+          ],
+          "repetition_check": {
+            "compared_article_count": 20,
+            "repeated_sentence_ratio": 0.2857142857142857,
+            "repeated_paragraph_ratio": 0.3333333333333333,
+            "heading_sequence_similarity": 1,
+            "banned_phrase_count": 0,
+            "banned_phrase_counts": {},
+            "recent_banned_phrase_counts": {},
+            "ngram_overlap": 0.4576271186440678,
+            "blueprint_repetition": 1,
+            "conclusion_similarity": 0.9511897312113418,
+            "repeated_sentence_count": 2,
+            "repeated_paragraph_count": 2,
+            "heading_sequence": [
+              "Cost Signal",
+              "Below The Accelerator Layer",
+              "Buyer Exposure",
+              "Planning Metric"
+            ],
+            "blocked": true,
+            "reasons": [
+              "repeated_sentence_ratio>0.12",
+              "heading_sequence_similarity>0.75",
+              "conclusion_similarity>0.7"
+            ]
+          },
+          "expert_insight_complete": true,
+          "expert_insight_missing_fields": [],
+          "reason": "repeated_sentence_ratio>0.12; heading_sequence_similarity>0.75; conclusion_similarity>0.7"
+        },
+        {
+          "id": "8cdd57e5da08a699",
+          "title": "ZutaCore Raises $100M Series C to Scale Waterless Two-Phase Cooling for AI Data Centers",
+          "infrastructure_relevance_score": 1,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud, hpc)",
+            "data_center_relevance:1.00(data center, data centers, campus)",
+            "cloud_capacity_relevance:0.32(hyperscalers)",
+            "semiconductor_relevance:0.22(gpu)",
+            "power_grid_relevance:0.22(power)",
+            "cooling_relevance:1.00(cooling, liquid cooling, direct-to-chip)",
+            "capital_markets_relevance:0.56(funding, capex)"
+          ],
+          "extraction_quality_score": 1,
+          "source_domain_adapter": "storagereview",
+          "content_length": 1679,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": true,
+          "repetition_block_reasons": [
+            "repeated_sentence_ratio>0.12",
+            "heading_sequence_similarity>0.75",
+            "conclusion_similarity>0.7"
+          ],
+          "repetition_check": {
+            "compared_article_count": 20,
+            "repeated_sentence_ratio": 0.16666666666666666,
+            "repeated_paragraph_ratio": 0.16666666666666666,
+            "heading_sequence_similarity": 1,
+            "banned_phrase_count": 0,
+            "banned_phrase_counts": {},
+            "recent_banned_phrase_counts": {},
+            "ngram_overlap": 0.3305084745762712,
+            "blueprint_repetition": 2,
+            "conclusion_similarity": 0.9511897312113418,
+            "repeated_sentence_count": 1,
+            "repeated_paragraph_count": 1,
+            "heading_sequence": [
+              "Deal Signal",
+              "Contract Quality",
+              "Operating Dependency",
+              "Investor Test"
+            ],
+            "blocked": true,
+            "reasons": [
+              "repeated_sentence_ratio>0.12",
+              "heading_sequence_similarity>0.75",
+              "conclusion_similarity>0.7"
+            ]
+          },
+          "expert_insight_complete": true,
+          "expert_insight_missing_fields": [],
+          "reason": "repeated_sentence_ratio>0.12; heading_sequence_similarity>0.75; conclusion_similarity>0.7"
+        }
+      ],
+      "signalCardItems": [],
+      "archiveOnlyItems": []
     }
   ],
-  "lastRunAt": "2026-06-04T17:48:48.391Z"
+  "lastRunAt": "2026-06-05T00:11:32.395Z"
 }
