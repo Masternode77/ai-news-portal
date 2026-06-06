@@ -393,7 +393,9 @@
     "ff19a60ff4691fd6",
     "100115ec8124e387",
     "da9d562d2c17db2c",
-    "79aa6fba92ac803f"
+    "79aa6fba92ac803f",
+    "11e5a8688f0a263b",
+    "2c0269e1c13b0ed9"
   ],
   "dayPlans": {
     "2026-03-24": {
@@ -12464,70 +12466,70 @@
     "2026-06-06": {
       "date": "2026-06-06",
       "createdAt": "2026-06-05T17:22:44.567Z",
-      "refreshedAt": "2026-06-05T17:22:44.567Z",
+      "refreshedAt": "2026-06-06T00:09:10.411Z",
       "candidateWindowHours": 24,
       "curatedItems": [
         {
-          "id": "da9d562d2c17db2c",
+          "id": "2c0269e1c13b0ed9",
           "source": "StorageReview",
-          "url": "https://www.storagereview.com/news/netapp-and-cisco-expand-flexpod-with-validated-ai-architectures-and-splunk-soar-storage-response",
-          "title": "NetApp and Cisco Expand FlexPod With Validated AI Architectures and Splunk SOAR Storage Response",
-          "snippet": "NetApp and Cisco have introduced an expanded set of FlexPod-validated solutions to simplify the deployment of secure, scalable AI infrastructure. The announcement builds on the long-standing FlexPod partnership, positio…",
-          "contentText": "NetApp and Cisco have introduced an expanded set of FlexPod-validated solutions to simplify the deployment of secure, scalable AI infrastructure. The announcement builds on the long-standing FlexPod partnership, positioning the platform as a pre-validated foundation for organizations looking to address the performance, data management, and security demands of modern AI workloads. The companies are targeting enterprises that need predictable infrastructure outcomes without the integration overhead typically associated with AI environments. FlexPod continues to serve as a converged architecture that combines compute, networking, and storage, now extended with capabilities aligned with AI training and inference pipelines. NetApp highlighted that AI workloads are placing increasing demands on…",
-          "publishedAt": "2026-06-05T16:37:47.000Z",
-          "sourceImage": "https://www.storagereview.com/wp-content/uploads/2026/06/Storagereview-cisco-netapp-flexpod.png",
-          "region": "Global",
+          "url": "https://www.storagereview.com/news/intel-launches-xeon-6-on-18a-with-288-e-cores-e835-200gbe-ethernet-and-crescent-island-gpu-details",
+          "title": "Intel Launches Xeon 6+ on 18A With 288 E-Cores, E835 200GbE Ethernet, and Crescent Island GPU Details",
+          "snippet": "Intel announced a set of data center updates at Computex 2026 in Taipei spanning compute, networking, and its AI accelerator roadmap. The headline item is the introduction of Intel Xeon 6+ processors, paired with an exp…",
+          "contentText": "Intel announced a set of data center updates at Computex 2026 in Taipei spanning compute, networking, and its AI accelerator roadmap. The headline item is the introduction of Intel Xeon 6+ processors, paired with an expanded 800 Series Ethernet lineup based on Intel Ethernet E835 controllers and adapters. Intel also provided an update on its next data center GPU, code-named Crescent Island. Collectively, the announcements reflect Intel&#8217;s positioning around agentic AI, in which the CPU increasingly serves as the control plane for orchestration, concurrency, and data movement across clusters. Intel data center leadership framed AI scaling as a coordinated systems problem rather than a component upgrade cycle. As AI agents become more autonomous and workloads become more distributed, I…",
+          "publishedAt": "2026-06-05T18:03:21.000Z",
+          "sourceImage": "https://www.storagereview.com/wp-content/uploads/2026/06/Kevork-Clearwater-1920x1080-1.jpeg",
+          "region": "US",
           "language": "en",
           "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
-          "category": "AI Infrastructure",
-          "primary_category": "AI Infrastructure",
-          "secondary_category": "GPU clusters and deployment readiness",
-          "infrastructure_layer": "Compute",
+          "category": "Semiconductors",
+          "primary_category": "Semiconductors",
+          "secondary_category": "Accelerators, memory, and advanced packaging",
+          "infrastructure_layer": "Silicon",
           "affected_stakeholders": [
-            "operators",
+            "semiconductor suppliers",
             "hyperscalers",
-            "cloud buyers",
+            "server OEMs",
             "investors"
           ],
           "article_type": "Product / Platform Update",
           "urgency_score": 0.48,
-          "taxonomy_confidence": 0.77,
+          "taxonomy_confidence": 0.79,
           "taxonomy_reasons": [
-            "ai infrastructure",
-            "neocloud"
+            "gpu",
+            "intel"
           ],
           "direct_ai_infrastructure_relevance": 1,
-          "data_center_relevance": 0,
+          "data_center_relevance": 0.42,
           "cloud_capacity_relevance": 0,
-          "semiconductor_relevance": 0.22,
+          "semiconductor_relevance": 0.787,
           "power_grid_relevance": 0,
           "cooling_relevance": 0,
           "capital_markets_relevance": 0,
-          "enterprise_ai_infrastructure_relevance": 0.843,
-          "infrastructure_relevance_score": 0.95,
+          "enterprise_ai_infrastructure_relevance": 0.18,
+          "infrastructure_relevance_score": 0.938,
           "infrastructure_relevance_tier": "full_memo",
           "infrastructure_relevance_action": "generate_full_memo",
           "infrastructure_relevance_reasons": [
             "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "semiconductor_relevance:0.22(gpu)",
-            "enterprise_ai_infrastructure_relevance:0.84(data management, storage, networking)"
+            "data_center_relevance:0.42(data center)",
+            "semiconductor_relevance:0.79(intel, accelerator, gpu)"
           ],
           "infrastructure_relevance": {
             "direct_ai_infrastructure_relevance": 1,
-            "data_center_relevance": 0,
+            "data_center_relevance": 0.42,
             "cloud_capacity_relevance": 0,
-            "semiconductor_relevance": 0.22,
+            "semiconductor_relevance": 0.787,
             "power_grid_relevance": 0,
             "cooling_relevance": 0,
             "capital_markets_relevance": 0,
-            "enterprise_ai_infrastructure_relevance": 0.843,
-            "infrastructure_relevance_score": 0.95,
+            "enterprise_ai_infrastructure_relevance": 0.18,
+            "infrastructure_relevance_score": 0.938,
             "infrastructure_relevance_tier": "full_memo",
             "infrastructure_relevance_action": "generate_full_memo",
             "infrastructure_relevance_reasons": [
               "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-              "semiconductor_relevance:0.22(gpu)",
-              "enterprise_ai_infrastructure_relevance:0.84(data management, storage, networking)"
+              "data_center_relevance:0.42(data center)",
+              "semiconductor_relevance:0.79(intel, accelerator, gpu)"
             ],
             "infrastructureRelevanceAction": "generate_full_memo",
             "articlePagePublished": true,
@@ -12535,78 +12537,7 @@
             "archiveOnly": false,
             "archiveOnlyReason": null
           },
-          "score": 86
-        },
-        {
-          "id": "79aa6fba92ac803f",
-          "source": "Data Center POST",
-          "url": "https://datacenterpost.com/duos-edge-ai-to-host-dumas-edge-data-center-open-house/",
-          "title": "Duos Edge AI to Host Dumas Edge Data Center Open House",
-          "snippet": "TL;DR Open house announced: Duos Edge AI will host a Dumas open house on June 16 to showcase its newly operational Edge Data Center. Infrastructure in action: The facility delivers critical IT load capacity supporting h…",
-          "contentText": "TL;DR Open house announced: Duos Edge AI will host a Dumas open house on June 16 to showcase its newly operational Edge Data Center. Infrastructure in action: The facility delivers critical IT load capacity supporting high-performance compute, AI workloads, network infrastructure, and disaster recovery solutions. Regional connectivity boost: The project strengthens digital infrastructure in the Texas Panhandle and expands Duos Edge AI&#8217;s modular edge footprint. # # # Duos Technologies Group Inc . (Nasdaq: DUOT), through subsidiary Duos Edge AI , Inc., has announced the deployment of a newly operational Edge Data Center in Dumas, Texas, bringing advanced data center capabilities to an underserved Panhandle market with a compact footprint and zero operational water consumption. The dep…",
-          "publishedAt": "2026-06-05T16:00:24.000Z",
-          "sourceImage": "https://d3qut6qyo6tw2j.cloudfront.net/bin/uploads/2026/06/05105905/DUOS-Dumas-PR-Blog-6.4.26-1024x512.png",
-          "region": "APAC",
-          "language": "en",
-          "defaultCategory": "Colocation & Wholesale",
-          "category": "Data Centers",
-          "primary_category": "Data Centers",
-          "secondary_category": "Campus development and colocation capacity",
-          "infrastructure_layer": "Facility",
-          "affected_stakeholders": [
-            "data center operators",
-            "developers",
-            "site selectors",
-            "investors"
-          ],
-          "article_type": "Capacity Expansion",
-          "urgency_score": 0.6,
-          "taxonomy_confidence": 0.86,
-          "taxonomy_reasons": [
-            "data center",
-            "colocation",
-            "wholesale"
-          ],
-          "direct_ai_infrastructure_relevance": 0.78,
-          "data_center_relevance": 0.89,
-          "cloud_capacity_relevance": 0,
-          "semiconductor_relevance": 0,
-          "power_grid_relevance": 0,
-          "cooling_relevance": 0,
-          "capital_markets_relevance": 0,
-          "enterprise_ai_infrastructure_relevance": 0.44,
-          "infrastructure_relevance_score": 0.873,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:0.78",
-            "data_center_relevance:0.89(data center, colocation)",
-            "enterprise_ai_infrastructure_relevance:0.44(disaster recovery, ai workloads)"
-          ],
-          "infrastructure_relevance": {
-            "direct_ai_infrastructure_relevance": 0.78,
-            "data_center_relevance": 0.89,
-            "cloud_capacity_relevance": 0,
-            "semiconductor_relevance": 0,
-            "power_grid_relevance": 0,
-            "cooling_relevance": 0,
-            "capital_markets_relevance": 0,
-            "enterprise_ai_infrastructure_relevance": 0.44,
-            "infrastructure_relevance_score": 0.873,
-            "infrastructure_relevance_tier": "full_memo",
-            "infrastructure_relevance_action": "generate_full_memo",
-            "infrastructure_relevance_reasons": [
-              "direct_ai_infrastructure_relevance:0.78",
-              "data_center_relevance:0.89(data center, colocation)",
-              "enterprise_ai_infrastructure_relevance:0.44(disaster recovery, ai workloads)"
-            ],
-            "infrastructureRelevanceAction": "generate_full_memo",
-            "articlePagePublished": true,
-            "homepagePublished": true,
-            "archiveOnly": false,
-            "archiveOnlyReason": null
-          },
-          "score": 83
+          "score": 77
         },
         {
           "id": "11e5a8688f0a263b",
@@ -12674,7 +12605,211 @@
             "archiveOnly": false,
             "archiveOnlyReason": null
           },
-          "score": 82
+          "score": 74
+        },
+        {
+          "id": "8103c81d39138454",
+          "source": "TechCrunch AI",
+          "url": "https://techcrunch.com/2026/06/05/startup-battlefield-200-applications-officially-close-in-3-days/",
+          "title": "Startup Battlefield 200 applications officially close in 3 days",
+          "snippet": "Applications for Startup Battlefield 200 officially close on June 8, 11:59 p.m. PT. Don't wait any longer. Secure your shot at competing on the Disrupt Stage at TechCrunch Disrupt 2026 this October at San Francisco's Mo…",
+          "contentText": "Applications for Startup Battlefield 200 officially close on June 8, 11:59 p.m. PT. Don't wait any longer. Secure your shot at competing on the Disrupt Stage at TechCrunch Disrupt 2026 this October at San Francisco's Moscone West.",
+          "publishedAt": "2026-06-05T20:00:00.000Z",
+          "sourceImage": null,
+          "region": "Global",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "category": "AI Infrastructure",
+          "primary_category": "AI Infrastructure",
+          "secondary_category": "GPU clusters and deployment readiness",
+          "infrastructure_layer": "Compute",
+          "affected_stakeholders": [
+            "operators",
+            "hyperscalers",
+            "cloud buyers",
+            "investors"
+          ],
+          "article_type": "Other",
+          "urgency_score": 0.43,
+          "taxonomy_confidence": 0.77,
+          "taxonomy_reasons": [
+            "ai infrastructure",
+            "neocloud"
+          ],
+          "direct_ai_infrastructure_relevance": 1,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0.22,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.778,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "semiconductor_relevance:0.22(gpu)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 1,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0.22,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.778,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+              "semiconductor_relevance:0.22(gpu)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 71
+        },
+        {
+          "id": "6d8b5540e1000ca5",
+          "source": "HPCwire",
+          "url": "https://www.hpcwire.com/off-the-wire/wright-state-expands-research-and-teaching-capabilities-with-ohio-supercomputer-center/",
+          "title": "Wright State Expands Research and Teaching Capabilities with Ohio Supercomputer Center",
+          "snippet": "Shared high performance computing resources enable work across disciplines and create new opportunities for students and faculty COLUMBUS, Ohio, June 5, 2026 — At Wright State University, a public university in Dayton,…",
+          "contentText": "Shared high performance computing resources enable work across disciplines and create new opportunities for students and faculty COLUMBUS, Ohio, June 5, 2026 &#8212; At Wright State University , a public university in Dayton, Ohio, faculty and students are using the Ohio Supercomputer Center (OSC) to support hands-on coursework and data-driven research across campus. Hands-on research and collaboration helps prepare Wright State students for work in modern research computing environments. Image Credit: Wright State University For Mike VanHorn, Wright State’s Campus Champion for OSC, connecting users with these resources is a central part of his role. As senior computer systems administrator at the College of Engineering and Computer Science, VanHorn works closely with faculty and students…",
+          "publishedAt": "2026-06-05T19:27:12.000Z",
+          "sourceImage": "https://www.hpcwire.com/wp-content/uploads/2026/06/Wright-State__042225_1716-300x200.jpg",
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "category": "AI Infrastructure",
+          "primary_category": "AI Infrastructure",
+          "secondary_category": "GPU clusters and deployment readiness",
+          "infrastructure_layer": "Compute",
+          "affected_stakeholders": [
+            "operators",
+            "hyperscalers",
+            "cloud buyers",
+            "investors"
+          ],
+          "article_type": "Capacity Expansion",
+          "urgency_score": 0.49,
+          "taxonomy_confidence": 0.77,
+          "taxonomy_reasons": [
+            "ai infrastructure",
+            "neocloud"
+          ],
+          "direct_ai_infrastructure_relevance": 1,
+          "data_center_relevance": 0.16,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0.22,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.778,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "semiconductor_relevance:0.22(gpu)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 1,
+            "data_center_relevance": 0.16,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0.22,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.778,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+              "semiconductor_relevance:0.22(gpu)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 71
+        },
+        {
+          "id": "dd6cba020db13029",
+          "source": "Hugging Face Blog",
+          "url": "https://huggingface.co/blog/build-small-hackathon/thousand-token-wood-sim",
+          "title": "Thousand Token Wood: shipping a multi-agent economy on a 3B model",
+          "snippet": "",
+          "contentText": "",
+          "publishedAt": "2026-06-05T22:18:46.000Z",
+          "sourceImage": null,
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "category": "AI Infrastructure",
+          "primary_category": "AI Infrastructure",
+          "secondary_category": "GPU clusters and deployment readiness",
+          "infrastructure_layer": "Compute",
+          "affected_stakeholders": [
+            "operators",
+            "hyperscalers",
+            "cloud buyers",
+            "investors"
+          ],
+          "article_type": "Other",
+          "urgency_score": 0.43,
+          "taxonomy_confidence": 0.77,
+          "taxonomy_reasons": [
+            "ai infrastructure",
+            "neocloud"
+          ],
+          "direct_ai_infrastructure_relevance": 1,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0.22,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.778,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "semiconductor_relevance:0.22(gpu)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 1,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0.22,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.778,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+              "semiconductor_relevance:0.22(gpu)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 67
         },
         {
           "id": "6ab16d77487638e4",
@@ -12742,173 +12877,30 @@
             "archiveOnly": false,
             "archiveOnlyReason": null
           },
-          "score": 81
-        },
-        {
-          "id": "0ec02a216314b96d",
-          "source": "TechCrunch AI",
-          "url": "https://techcrunch.com/video/the-most-interesting-startups-right-now-want-to-get-you-off-your-phone/",
-          "title": "The most interesting startups right now want to get you off your phone",
-          "snippet": "While the AI fundraising machine keeps breaking its own records, some founders are building in the other direction. Mirror founder Brynn Putnam just raised money for Board, a startup focused on bringing people together…",
-          "contentText": "While the AI fundraising machine&#160;keeps breaking its own records, some founders are building in the other direction.&#160; Mirror founder Brynn Putnam just raised money for&#160;Board, a startup focused on bringing people together through in-person games and social experiences.&#160;Cyberdeck creators are going viral&#160;crafting whimsical DIY computers that&#160;literally encourage&#160;users to touch grass. Unlike the&#160;AI-free browser crowd, this&#160;doesn&#8217;t&#160;just&#160;feel&#160;like&#160;backlash, [&#8230;]",
-          "publishedAt": "2026-06-05T17:17:06.000Z",
-          "sourceImage": null,
-          "region": "US",
-          "language": "en",
-          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
-          "category": "AI Infrastructure",
-          "primary_category": "AI Infrastructure",
-          "secondary_category": "GPU clusters and deployment readiness",
-          "infrastructure_layer": "Compute",
-          "affected_stakeholders": [
-            "operators",
-            "hyperscalers",
-            "cloud buyers",
-            "investors"
-          ],
-          "article_type": "Other",
-          "urgency_score": 0.43,
-          "taxonomy_confidence": 0.77,
-          "taxonomy_reasons": [
-            "ai infrastructure",
-            "neocloud"
-          ],
-          "direct_ai_infrastructure_relevance": 1,
-          "data_center_relevance": 0,
-          "cloud_capacity_relevance": 0,
-          "semiconductor_relevance": 0.22,
-          "power_grid_relevance": 0,
-          "cooling_relevance": 0,
-          "capital_markets_relevance": 0,
-          "enterprise_ai_infrastructure_relevance": 0,
-          "infrastructure_relevance_score": 0.778,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "semiconductor_relevance:0.22(gpu)"
-          ],
-          "infrastructure_relevance": {
-            "direct_ai_infrastructure_relevance": 1,
-            "data_center_relevance": 0,
-            "cloud_capacity_relevance": 0,
-            "semiconductor_relevance": 0.22,
-            "power_grid_relevance": 0,
-            "cooling_relevance": 0,
-            "capital_markets_relevance": 0,
-            "enterprise_ai_infrastructure_relevance": 0,
-            "infrastructure_relevance_score": 0.778,
-            "infrastructure_relevance_tier": "full_memo",
-            "infrastructure_relevance_action": "generate_full_memo",
-            "infrastructure_relevance_reasons": [
-              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-              "semiconductor_relevance:0.22(gpu)"
-            ],
-            "infrastructureRelevanceAction": "generate_full_memo",
-            "articlePagePublished": true,
-            "homepagePublished": true,
-            "archiveOnly": false,
-            "archiveOnlyReason": null
-          },
-          "score": 79
-        },
-        {
-          "id": "c86fdbe1ba6ef4cb",
-          "source": "HPCwire",
-          "url": "https://www.hpcwire.com/off-the-wire/johns-hopkins-team-models-quantum-noise-on-superconducting-processors/",
-          "title": "Johns Hopkins Team Models Quantum Noise on Superconducting Processors",
-          "snippet": "June 5, 2026 — Researchers from the Johns Hopkins Applied Physics Laboratory (APL) in Laurel, Maryland, and Johns Hopkins University in Baltimore have developed a practical, comprehensive noise-modeling framework for a…",
-          "contentText": "June 5, 2026 &#8212; Researchers from the Johns Hopkins Applied Physics Laboratory (APL) in Laurel, Maryland, and Johns Hopkins University in Baltimore have developed a practical, comprehensive noise-modeling framework for a popular class of superconducting quantum processors. Their work, published in the journal PRX Quantum, offers a sevenfold improvement in predictive accuracy over existing approaches. Quantum bits, or qubits, are intrinsically prone to noise — interference arising from environmental factors such as electrical and magnetic fields or temperature fluctuations — as a result of the extreme sensitivity that makes them so valuable for computing. Developing accurate noise models is key to creating the robust quantum algorithms and resilient error-correction protocols required…",
-          "publishedAt": "2026-06-05T16:31:22.000Z",
-          "sourceImage": "https://www.hpcwire.com/wp-content/uploads/2026/06/Johns-Hopkins_500x500-300x300.png",
-          "region": "US",
-          "language": "en",
-          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
-          "category": "AI Infrastructure",
-          "primary_category": "AI Infrastructure",
-          "secondary_category": "GPU clusters and deployment readiness",
-          "infrastructure_layer": "Compute",
-          "affected_stakeholders": [
-            "operators",
-            "hyperscalers",
-            "cloud buyers",
-            "investors"
-          ],
-          "article_type": "Other",
-          "urgency_score": 0.43,
-          "taxonomy_confidence": 0.77,
-          "taxonomy_reasons": [
-            "ai infrastructure",
-            "neocloud"
-          ],
-          "direct_ai_infrastructure_relevance": 1,
-          "data_center_relevance": 0,
-          "cloud_capacity_relevance": 0,
-          "semiconductor_relevance": 0.22,
-          "power_grid_relevance": 0,
-          "cooling_relevance": 0,
-          "capital_markets_relevance": 0,
-          "enterprise_ai_infrastructure_relevance": 0,
-          "infrastructure_relevance_score": 0.778,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "semiconductor_relevance:0.22(gpu)"
-          ],
-          "infrastructure_relevance": {
-            "direct_ai_infrastructure_relevance": 1,
-            "data_center_relevance": 0,
-            "cloud_capacity_relevance": 0,
-            "semiconductor_relevance": 0.22,
-            "power_grid_relevance": 0,
-            "cooling_relevance": 0,
-            "capital_markets_relevance": 0,
-            "enterprise_ai_infrastructure_relevance": 0,
-            "infrastructure_relevance_score": 0.778,
-            "infrastructure_relevance_tier": "full_memo",
-            "infrastructure_relevance_action": "generate_full_memo",
-            "infrastructure_relevance_reasons": [
-              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-              "semiconductor_relevance:0.22(gpu)"
-            ],
-            "infrastructureRelevanceAction": "generate_full_memo",
-            "articlePagePublished": true,
-            "homepagePublished": true,
-            "archiveOnly": false,
-            "archiveOnlyReason": null
-          },
-          "score": 79
+          "score": 67
         }
       ],
       "curatedIds": [
-        "da9d562d2c17db2c",
-        "79aa6fba92ac803f",
+        "2c0269e1c13b0ed9",
         "11e5a8688f0a263b",
-        "6ab16d77487638e4",
-        "0ec02a216314b96d",
-        "c86fdbe1ba6ef4cb"
+        "8103c81d39138454",
+        "6d8b5540e1000ca5",
+        "dd6cba020db13029",
+        "6ab16d77487638e4"
       ],
       "publishedIds": [
         "da9d562d2c17db2c",
-        "79aa6fba92ac803f"
+        "79aa6fba92ac803f",
+        "11e5a8688f0a263b",
+        "2c0269e1c13b0ed9"
       ],
       "slotPublications": {
-        "0": true
+        "0": true,
+        "1": true
       }
     }
   },
   "runHistory": [
-    {
-      "at": "2026-04-20T16:17:02.589Z",
-      "day": "2026-04-21",
-      "slot": 0,
-      "publishedCount": 2,
-      "publishedIds": [
-        "d48053c60fc90600",
-        "115bfa42c09bb396"
-      ]
-    },
     {
       "at": "2026-04-20T23:45:03.493Z",
       "day": "2026-04-21",
@@ -17769,7 +17761,132 @@
       ],
       "signalCardItems": [],
       "archiveOnlyItems": []
+    },
+    {
+      "at": "2026-06-06T00:09:10.411Z",
+      "day": "2026-06-06",
+      "slot": 1,
+      "publishedCount": 0,
+      "signalCardCount": 1,
+      "archiveOnlyCount": 0,
+      "repetitionBlockedCount": 1,
+      "publishedIds": [],
+      "processedIds": [
+        "11e5a8688f0a263b",
+        "2c0269e1c13b0ed9"
+      ],
+      "blockedCount": 1,
+      "blockedItems": [
+        {
+          "id": "11e5a8688f0a263b",
+          "title": "Read-Centric DTCO for IGZO FeFETs 3D Heterogeneous AI memories (imec, KU Leuven)",
+          "infrastructure_relevance_score": 0.928,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "cloud_capacity_relevance:0.32(hyperscalers)",
+            "semiconductor_relevance:0.58(semiconductor, gpu)",
+            "power_grid_relevance:0.22(power)"
+          ],
+          "extraction_quality_score": 0.84,
+          "source_domain_adapter": "semiengineering",
+          "content_length": 761,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": false,
+          "repetition_block_reasons": [],
+          "repetition_check": null,
+          "expert_insight_complete": false,
+          "expert_insight_missing_fields": [
+            "concrete_facts",
+            "named_companies"
+          ],
+          "reason": "fail_closed: source_text_incomplete:source_evidence_length_below_1200"
+        }
+      ],
+      "repetitionBlockedItems": [
+        {
+          "id": "2c0269e1c13b0ed9",
+          "title": "Intel Launches Xeon 6+ on 18A With 288 E-Cores, E835 200GbE Ethernet, and Crescent Island GPU Details",
+          "infrastructure_relevance_score": 0.973,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "data_center_relevance:0.42(data center)",
+            "cloud_capacity_relevance:0.32(hyperscalers)",
+            "semiconductor_relevance:0.79(intel, accelerator, gpu)",
+            "power_grid_relevance:0.22(power)"
+          ],
+          "extraction_quality_score": 1,
+          "source_domain_adapter": "storagereview",
+          "content_length": 1585,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": true,
+          "repetition_block_reasons": [
+            "heading_sequence_similarity>0.75",
+            "conclusion_similarity>0.7"
+          ],
+          "repetition_check": {
+            "compared_article_count": 20,
+            "repeated_sentence_ratio": 0,
+            "repeated_paragraph_ratio": 0,
+            "heading_sequence_similarity": 1,
+            "banned_phrase_count": 0,
+            "banned_phrase_counts": {},
+            "recent_banned_phrase_counts": {},
+            "ngram_overlap": 0.5042735042735043,
+            "blueprint_repetition": 1,
+            "conclusion_similarity": 0.9511897312113418,
+            "repeated_sentence_count": 0,
+            "repeated_paragraph_count": 0,
+            "heading_sequence": [
+              "Technical Signal",
+              "Failure Domain",
+              "Operator Exposure",
+              "Benchmark To Watch"
+            ],
+            "blocked": true,
+            "reasons": [
+              "heading_sequence_similarity>0.75",
+              "conclusion_similarity>0.7"
+            ]
+          },
+          "expert_insight_complete": true,
+          "expert_insight_missing_fields": [],
+          "reason": "heading_sequence_similarity>0.75; conclusion_similarity>0.7"
+        }
+      ],
+      "signalCardItems": [
+        {
+          "id": "11e5a8688f0a263b",
+          "title": "Read-Centric DTCO for IGZO FeFETs 3D Heterogeneous AI memories (imec, KU Leuven)",
+          "infrastructure_relevance_score": 0.928,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "cloud_capacity_relevance:0.32(hyperscalers)",
+            "semiconductor_relevance:0.58(semiconductor, gpu)",
+            "power_grid_relevance:0.22(power)"
+          ],
+          "extraction_quality_score": 0.84,
+          "source_domain_adapter": "semiengineering",
+          "content_length": 761,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": false,
+          "repetition_block_reasons": [],
+          "repetition_check": null,
+          "expert_insight_complete": false,
+          "expert_insight_missing_fields": [
+            "concrete_facts",
+            "named_companies"
+          ],
+          "reason": "fail_closed: source_text_incomplete:source_evidence_length_below_1200"
+        }
+      ],
+      "archiveOnlyItems": []
     }
   ],
-  "lastRunAt": "2026-06-05T17:22:44.567Z"
+  "lastRunAt": "2026-06-06T00:09:10.411Z"
 }
