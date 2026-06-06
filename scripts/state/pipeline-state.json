@@ -397,7 +397,9 @@
     "11e5a8688f0a263b",
     "2c0269e1c13b0ed9",
     "6d8b5540e1000ca5",
-    "8103c81d39138454"
+    "8103c81d39138454",
+    "9eeeea62277c46fe",
+    "19f065fb91c27e79"
   ],
   "dayPlans": {
     "2026-03-24": {
@@ -12900,19 +12902,444 @@
         "1": true,
         "2": true
       }
+    },
+    "2026-06-07": {
+      "date": "2026-06-07",
+      "createdAt": "2026-06-06T16:13:36.274Z",
+      "refreshedAt": "2026-06-06T16:13:36.274Z",
+      "candidateWindowHours": 24,
+      "curatedItems": [
+        {
+          "id": "9eeeea62277c46fe",
+          "source": "Toms Hardware",
+          "url": "https://www.tomshardware.com/pc-components/upgrade-your-pc-with-a-2tb-pcie-4-0-ssd-750w-power-supply-and-240mm-aio-for-usd300-hardware-bundle-saves-you-nearly-usd200",
+          "title": "Upgrade your PC with a 2TB PCIe 4.0 SSD, 750W power supply, and 240mm AIO for $300 — hardware bundle saves you nearly $200",
+          "snippet": "Even though power supplies and CPU coolers have remained unaffected by the AI boom, storage costs have skyrocketed, which makes this deal even more lucrative. You're getting a blazing-fast 2TB SSD, a genuinely solid pow…",
+          "contentText": "Even though power supplies and CPU coolers have remained unaffected by the AI boom, storage costs have skyrocketed, which makes this deal even more lucrative. You're getting a blazing-fast 2TB SSD, a genuinely solid power supply, and a decent AIO that can help you stop worrying about the small things and focus on sourcing cheaper memory and GPUs.",
+          "publishedAt": "2026-06-06T15:33:18.000Z",
+          "sourceImage": "https://cdn.mos.cms.futurecdn.net/ahmo3nU3cXQiVAnWvEvhP7-1280-80.png",
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "category": "AI Infrastructure",
+          "primary_category": "AI Infrastructure",
+          "secondary_category": "GPU clusters and deployment readiness",
+          "infrastructure_layer": "Compute",
+          "affected_stakeholders": [
+            "operators",
+            "hyperscalers",
+            "cloud buyers",
+            "investors"
+          ],
+          "article_type": "Supply Chain",
+          "urgency_score": 0.53,
+          "taxonomy_confidence": 0.77,
+          "taxonomy_reasons": [
+            "ai infrastructure",
+            "neocloud"
+          ],
+          "direct_ai_infrastructure_relevance": 1,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0.22,
+          "power_grid_relevance": 0.297,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0.18,
+          "infrastructure_relevance_score": 0.83,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "semiconductor_relevance:0.22(gpu)",
+            "power_grid_relevance:0.30(power)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 1,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0.22,
+            "power_grid_relevance": 0.297,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0.18,
+            "infrastructure_relevance_score": 0.83,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+              "semiconductor_relevance:0.22(gpu)",
+              "power_grid_relevance:0.30(power)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 81
+        },
+        {
+          "id": "19f065fb91c27e79",
+          "source": "ServeTheHome",
+          "url": "https://www.servethehome.com/a-40-node-1u-cluster-gigabyte-r1c7-k0a-as1/",
+          "title": "A 40-Node 1U Cluster Gigabyte R1C7-K0A-AS1",
+          "snippet": "At Computex 2026, we found the Gigabyte R1C7-K0A-AS1 which can put 40 nodes with 320 cores, 40 iGPUs and 80 SSDs in just 1U The post A 40-Node 1U Cluster Gigabyte R1C7-K0A-AS1 appeared first on ServeTheHome.",
+          "contentText": "At Computex 2026, we found the Gigabyte R1C7-K0A-AS1 which can put 40 nodes with 320 cores, 40 iGPUs and 80 SSDs in just 1U The post A 40-Node 1U Cluster Gigabyte R1C7-K0A-AS1 appeared first on ServeTheHome .",
+          "publishedAt": "2026-06-06T15:00:37.000Z",
+          "sourceImage": null,
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "category": "AI Infrastructure",
+          "primary_category": "AI Infrastructure",
+          "secondary_category": "GPU clusters and deployment readiness",
+          "infrastructure_layer": "Compute",
+          "affected_stakeholders": [
+            "operators",
+            "hyperscalers",
+            "cloud buyers",
+            "investors"
+          ],
+          "article_type": "Other",
+          "urgency_score": 0.43,
+          "taxonomy_confidence": 0.77,
+          "taxonomy_reasons": [
+            "ai infrastructure",
+            "neocloud"
+          ],
+          "direct_ai_infrastructure_relevance": 1,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0.22,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.778,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "semiconductor_relevance:0.22(gpu)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 1,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0.22,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.778,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+              "semiconductor_relevance:0.22(gpu)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 79
+        },
+        {
+          "id": "1ef3f0088b5a5659",
+          "source": "Hugging Face Blog",
+          "url": "https://huggingface.co/blog/build-small-hackathon/job-search-blog",
+          "title": "Job Searcher",
+          "snippet": "",
+          "contentText": "",
+          "publishedAt": "2026-06-06T15:36:51.000Z",
+          "sourceImage": null,
+          "region": "Global",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "category": "AI Infrastructure",
+          "primary_category": "AI Infrastructure",
+          "secondary_category": "GPU clusters and deployment readiness",
+          "infrastructure_layer": "Compute",
+          "affected_stakeholders": [
+            "operators",
+            "hyperscalers",
+            "cloud buyers",
+            "investors"
+          ],
+          "article_type": "Other",
+          "urgency_score": 0.43,
+          "taxonomy_confidence": 0.77,
+          "taxonomy_reasons": [
+            "ai infrastructure",
+            "neocloud"
+          ],
+          "direct_ai_infrastructure_relevance": 1,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0.22,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.778,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "semiconductor_relevance:0.22(gpu)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 1,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0.22,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.778,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+              "semiconductor_relevance:0.22(gpu)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 67
+        },
+        {
+          "id": "50d0ed23475d976c",
+          "source": "Data Center Dynamics",
+          "url": "https://www.datacenterdynamics.com/en/news/space-solar-agrees-to-host-lonestar-data-storage-aboard-orbital-power-stations/",
+          "title": "Space Solar agrees to host Lonestar data storage aboard orbital power stations",
+          "snippet": "Two ambitious space startups join forces to align with orbital data center trend",
+          "contentText": "Two ambitious space startups join forces to align with orbital data center trend",
+          "publishedAt": "2026-06-06T16:00:28.000Z",
+          "sourceImage": "https://media.datacenterdynamics.com/media/images/StarVault_001_April_2026.2e16d0ba.fill-750x500.jpg",
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "Colocation & Wholesale",
+          "category": "Data Centers",
+          "primary_category": "Data Centers",
+          "secondary_category": "Campus development and colocation capacity",
+          "infrastructure_layer": "Facility",
+          "affected_stakeholders": [
+            "data center operators",
+            "developers",
+            "site selectors",
+            "investors"
+          ],
+          "article_type": "Other",
+          "urgency_score": 0.46,
+          "taxonomy_confidence": 0.81,
+          "taxonomy_reasons": [
+            "data center",
+            "colocation",
+            "wholesale"
+          ],
+          "direct_ai_infrastructure_relevance": 0,
+          "data_center_relevance": 0.76,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0,
+          "power_grid_relevance": 0.297,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0.243,
+          "infrastructure_relevance_score": 0.611,
+          "infrastructure_relevance_tier": "signal_card",
+          "infrastructure_relevance_action": "publish_signal_card_only",
+          "infrastructure_relevance_reasons": [
+            "data_center_relevance:0.76(data center, colocation)",
+            "power_grid_relevance:0.30(power)",
+            "enterprise_ai_infrastructure_relevance:0.24(storage)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 0,
+            "data_center_relevance": 0.76,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0,
+            "power_grid_relevance": 0.297,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0.243,
+            "infrastructure_relevance_score": 0.611,
+            "infrastructure_relevance_tier": "signal_card",
+            "infrastructure_relevance_action": "publish_signal_card_only",
+            "infrastructure_relevance_reasons": [
+              "data_center_relevance:0.76(data center, colocation)",
+              "power_grid_relevance:0.30(power)",
+              "enterprise_ai_infrastructure_relevance:0.24(storage)"
+            ],
+            "infrastructureRelevanceAction": "publish_signal_card_only",
+            "articlePagePublished": false,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 60
+        },
+        {
+          "id": "8bee36743820bafa",
+          "source": "Toms Hardware",
+          "url": "https://www.tomshardware.com/3d-printing/prusa-research-goes-full-spectrum-in-anticipation-of-indx",
+          "title": "Prusa Research goes full spectrum in anticipation of INDX",
+          "snippet": "Prusa Research has announced a new open-source ColorMix engine for both PrusaSlicer and its web-based EasyPrint slicer.",
+          "contentText": "Prusa Research has announced a new open-source ColorMix engine for both PrusaSlicer and its web-based EasyPrint slicer.",
+          "publishedAt": "2026-06-06T13:34:49.000Z",
+          "sourceImage": "https://cdn.mos.cms.futurecdn.net/e4SFyKqKL8hB4XqzGfd8UT-1280-80.png",
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "category": "AI Infrastructure",
+          "primary_category": "AI Infrastructure",
+          "secondary_category": "GPU clusters and deployment readiness",
+          "infrastructure_layer": "Compute",
+          "affected_stakeholders": [
+            "operators",
+            "hyperscalers",
+            "cloud buyers",
+            "investors"
+          ],
+          "article_type": "Research / Technical",
+          "urgency_score": 0.43,
+          "taxonomy_confidence": 0.77,
+          "taxonomy_reasons": [
+            "ai infrastructure",
+            "neocloud"
+          ],
+          "direct_ai_infrastructure_relevance": 1,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0.22,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.778,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "semiconductor_relevance:0.22(gpu)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 1,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0.22,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.778,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+              "semiconductor_relevance:0.22(gpu)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 60
+        },
+        {
+          "id": "76d52f1311834250",
+          "source": "Bloomberg Technology",
+          "url": "https://www.bloomberg.com/news/videos/2026-06-06/grindr-growing-from-just-dating-app-to-politics-ai-video",
+          "title": "Grindr Growing From Just Dating App to Politics, AI",
+          "snippet": "Grindr Inc. unveiled a handful of new app features and shared more details around its premium subscription tier as part of a larger effort to integrate artificial intelligence across its LGBTQ dating platform. The premi…",
+          "contentText": "Grindr Inc. unveiled a handful of new app features and shared more details around its premium subscription tier as part of a larger effort to integrate artificial intelligence across its LGBTQ dating platform. The premium plan unlocks access to new AI features and deeper personalization, Grindr said Monday in a statement. The company is also investing further in AI-powered safety tools and in behind-the-scenes operations, Chief Executive Officer George Arison said in an interview with Bloomberg This Weekend. (Source: Bloomberg)",
+          "publishedAt": "2026-06-06T13:54:10.000Z",
+          "sourceImage": "https://assets.bwbx.io/images/users/iqjWHBFdfxIU/iMJa57MNaqdg/v3/1200x-1.jpg",
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "Hyperscalers & Cloud",
+          "category": "Cloud Capacity",
+          "primary_category": "Cloud Capacity",
+          "secondary_category": "Hyperscale regions and accelerator availability",
+          "infrastructure_layer": "Cloud Platform",
+          "affected_stakeholders": [
+            "hyperscalers",
+            "cloud buyers",
+            "enterprise IT",
+            "operators"
+          ],
+          "article_type": "Product / Platform Update",
+          "urgency_score": 0.28,
+          "taxonomy_confidence": 0.5,
+          "taxonomy_reasons": [
+            "fallback_taxonomy"
+          ],
+          "direct_ai_infrastructure_relevance": 0.22,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0.32,
+          "semiconductor_relevance": 0,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.304,
+          "infrastructure_relevance_tier": "archive_only",
+          "infrastructure_relevance_action": "archive_only",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:0.22",
+            "cloud_capacity_relevance:0.32(hyperscalers)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 0.22,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0.32,
+            "semiconductor_relevance": 0,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.304,
+            "infrastructure_relevance_tier": "archive_only",
+            "infrastructure_relevance_action": "archive_only",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:0.22",
+              "cloud_capacity_relevance:0.32(hyperscalers)"
+            ],
+            "infrastructureRelevanceAction": "archive_only",
+            "articlePagePublished": false,
+            "homepagePublished": false,
+            "archiveOnly": true,
+            "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
+          },
+          "score": 59
+        }
+      ],
+      "curatedIds": [
+        "9eeeea62277c46fe",
+        "19f065fb91c27e79",
+        "1ef3f0088b5a5659",
+        "50d0ed23475d976c",
+        "8bee36743820bafa",
+        "76d52f1311834250"
+      ],
+      "publishedIds": [
+        "9eeeea62277c46fe",
+        "19f065fb91c27e79"
+      ],
+      "slotPublications": {
+        "0": true
+      }
     }
   },
   "runHistory": [
-    {
-      "at": "2026-04-21T08:58:31.200Z",
-      "day": "2026-04-21",
-      "slot": 2,
-      "publishedCount": 2,
-      "publishedIds": [
-        "51fe8e2484b280ec",
-        "79ef819a306493b8"
-      ]
-    },
     {
       "at": "2026-04-21T16:16:47.063Z",
       "day": "2026-04-22",
@@ -18001,7 +18428,133 @@
         }
       ],
       "archiveOnlyItems": []
+    },
+    {
+      "at": "2026-06-06T16:13:36.274Z",
+      "day": "2026-06-07",
+      "slot": 0,
+      "publishedCount": 0,
+      "signalCardCount": 1,
+      "archiveOnlyCount": 0,
+      "repetitionBlockedCount": 1,
+      "publishedIds": [],
+      "processedIds": [
+        "9eeeea62277c46fe",
+        "19f065fb91c27e79"
+      ],
+      "blockedCount": 1,
+      "blockedItems": [
+        {
+          "id": "9eeeea62277c46fe",
+          "title": "Upgrade your PC with a 2TB PCIe 4.0 SSD, 750W power supply, and 240mm AIO for $300 — hardware bundle saves you nearly $200",
+          "infrastructure_relevance_score": 0.87,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "cloud_capacity_relevance:0.32(hyperscalers)",
+            "semiconductor_relevance:0.22(gpu)",
+            "power_grid_relevance:0.30(power)"
+          ],
+          "extraction_quality_score": 1,
+          "source_domain_adapter": "generic",
+          "content_length": 1762,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": false,
+          "repetition_block_reasons": [],
+          "repetition_check": null,
+          "expert_insight_complete": false,
+          "expert_insight_missing_fields": [
+            "concrete_facts",
+            "named_companies"
+          ],
+          "reason": "expert_insight_missing_fields concrete_facts, named_companies"
+        }
+      ],
+      "repetitionBlockedItems": [
+        {
+          "id": "19f065fb91c27e79",
+          "title": "A 40-Node 1U Cluster Gigabyte R1C7-K0A-AS1",
+          "infrastructure_relevance_score": 0.892,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "cloud_capacity_relevance:0.32(hyperscalers)",
+            "semiconductor_relevance:0.42(intel, gpu)",
+            "power_grid_relevance:0.22(power)"
+          ],
+          "extraction_quality_score": 1,
+          "source_domain_adapter": "servethehome",
+          "content_length": 1690,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": true,
+          "repetition_block_reasons": [
+            "repeated_sentence_ratio>0.12",
+            "heading_sequence_similarity>0.75",
+            "conclusion_similarity>0.7"
+          ],
+          "repetition_check": {
+            "compared_article_count": 20,
+            "repeated_sentence_ratio": 0.14285714285714285,
+            "repeated_paragraph_ratio": 0.16666666666666666,
+            "heading_sequence_similarity": 1,
+            "banned_phrase_count": 0,
+            "banned_phrase_counts": {},
+            "recent_banned_phrase_counts": {},
+            "ngram_overlap": 0.5092592592592593,
+            "blueprint_repetition": 1,
+            "conclusion_similarity": 0.9271050693011066,
+            "repeated_sentence_count": 1,
+            "repeated_paragraph_count": 1,
+            "heading_sequence": [
+              "System Change",
+              "Bottleneck",
+              "Engineering Tradeoff",
+              "Validation Metric"
+            ],
+            "blocked": true,
+            "reasons": [
+              "repeated_sentence_ratio>0.12",
+              "heading_sequence_similarity>0.75",
+              "conclusion_similarity>0.7"
+            ]
+          },
+          "expert_insight_complete": true,
+          "expert_insight_missing_fields": [],
+          "reason": "repeated_sentence_ratio>0.12; heading_sequence_similarity>0.75; conclusion_similarity>0.7"
+        }
+      ],
+      "signalCardItems": [
+        {
+          "id": "9eeeea62277c46fe",
+          "title": "Upgrade your PC with a 2TB PCIe 4.0 SSD, 750W power supply, and 240mm AIO for $300 — hardware bundle saves you nearly $200",
+          "infrastructure_relevance_score": 0.87,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "cloud_capacity_relevance:0.32(hyperscalers)",
+            "semiconductor_relevance:0.22(gpu)",
+            "power_grid_relevance:0.30(power)"
+          ],
+          "extraction_quality_score": 1,
+          "source_domain_adapter": "generic",
+          "content_length": 1762,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": false,
+          "repetition_block_reasons": [],
+          "repetition_check": null,
+          "expert_insight_complete": false,
+          "expert_insight_missing_fields": [
+            "concrete_facts",
+            "named_companies"
+          ],
+          "reason": "expert_insight_missing_fields concrete_facts, named_companies"
+        }
+      ],
+      "archiveOnlyItems": []
     }
   ],
-  "lastRunAt": "2026-06-06T09:30:07.195Z"
+  "lastRunAt": "2026-06-06T16:13:36.274Z"
 }
