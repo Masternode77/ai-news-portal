@@ -407,7 +407,9 @@
     "e0024c9d17b3c365",
     "5f42d66372cb51ff",
     "277a1c4f7494323f",
-    "c8d63fd87f023c67"
+    "c8d63fd87f023c67",
+    "4156574a03ed622e",
+    "4b923832280e243e"
   ],
   "dayPlans": {
     "2026-03-24": {
@@ -13350,18 +13352,231 @@
     "2026-06-08": {
       "date": "2026-06-08",
       "createdAt": "2026-06-07T16:24:12.857Z",
-      "refreshedAt": "2026-06-08T00:11:59.161Z",
+      "refreshedAt": "2026-06-08T12:06:48.990Z",
       "candidateWindowHours": 24,
       "curatedItems": [
         {
-          "id": "c8d63fd87f023c67",
-          "source": "NVIDIA Blog",
-          "url": "https://blogs.nvidia.com/blog/nvidia-and-doosan-group-physical-ai/",
-          "title": "NVIDIA and Doosan Group Collaborate to Advance Physical AI and AI Factory Infrastructure",
-          "snippet": "NVIDIA and Doosan Group are expanding their collaboration to advance new opportunities across physical AI, robotics and AI factory infrastructure, spanning Doosan Robotics, Doosan Bobcat, Doosan Enerbility and Doosan Co…",
-          "contentText": "NVIDIA and Doosan Group are expanding their collaboration to advance new opportunities across physical AI, robotics and AI factory infrastructure, spanning Doosan Robotics, Doosan Bobcat, Doosan Enerbility and Doosan Corporation Electro-Materials BG. The collaboration will bring together NVIDIA’s full-stack accelerated computing platforms with Doosan Group’s capabilities in industrial automation, power generation and advanced electronics materials to support next-generation AI infrastructure. Doosan Group’s businesses span several layers of the AI factory ecosystem, from intelligent robotics systems to the full spectrum of large-scale power solutions and advanced electronics materials for AI data center equipment. NVIDIA and Doosan will explore how NVIDIA’s physical AI stack, NVIDIA DSX A…",
-          "publishedAt": "2026-06-07T23:00:36.000Z",
-          "sourceImage": "https://blogs.nvidia.com/wp-content/uploads/2026/06/kr-visit-blog-doosan-robotics-1920x1080-noncredit.jpg",
+          "id": "4156574a03ed622e",
+          "source": "Data Center Dynamics",
+          "url": "https://www.datacenterdynamics.com/en/videos/dcdstudio-designing-ai-infrastructure-as-a-complete-system-with-peter-de-bock-eaton/",
+          "title": "DCD>Studio: Designing AI infrastructure as a complete system, with Peter De Bock, Eaton",
+          "snippet": "Emma Strutton speaks with Peter De Bock of Eaton on AI infrastructure, integrated power and cooling design, liquid cooling adoption, and high-voltage architectures supporting future high-density, megawatt-scale data cen…",
+          "contentText": "Emma Strutton speaks with Peter De Bock of Eaton on AI infrastructure, integrated power and cooling design, liquid cooling adoption, and high-voltage architectures supporting future high-density, megawatt-scale data center racks.",
+          "publishedAt": "2026-06-08T10:59:07.000Z",
+          "sourceImage": "https://media.datacenterdynamics.com/media/images/thumb_5_L0bpCKg.2e16d0ba.fill-750x500.jpg",
+          "region": "Global",
+          "language": "en",
+          "defaultCategory": "Colocation & Wholesale",
+          "category": "Data Centers",
+          "primary_category": "Data Centers",
+          "secondary_category": "Campus development and colocation capacity",
+          "infrastructure_layer": "Facility",
+          "affected_stakeholders": [
+            "data center operators",
+            "developers",
+            "site selectors",
+            "investors"
+          ],
+          "article_type": "Other",
+          "urgency_score": 0.54,
+          "taxonomy_confidence": 0.81,
+          "taxonomy_reasons": [
+            "data center",
+            "colocation",
+            "wholesale"
+          ],
+          "direct_ai_infrastructure_relevance": 0.82,
+          "data_center_relevance": 0.76,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0,
+          "power_grid_relevance": 0.52,
+          "cooling_relevance": 0.82,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.876,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:0.82(ai infrastructure)",
+            "data_center_relevance:0.76(data center, colocation)",
+            "power_grid_relevance:0.52(power, megawatt)",
+            "cooling_relevance:0.82(cooling, liquid cooling)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 0.82,
+            "data_center_relevance": 0.76,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0,
+            "power_grid_relevance": 0.52,
+            "cooling_relevance": 0.82,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.876,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:0.82(ai infrastructure)",
+              "data_center_relevance:0.76(data center, colocation)",
+              "power_grid_relevance:0.52(power, megawatt)",
+              "cooling_relevance:0.82(cooling, liquid cooling)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 83
+        },
+        {
+          "id": "4b923832280e243e",
+          "source": "Toms Hardware",
+          "url": "https://www.tomshardware.com/pc-components/dram/nvidia-and-sk-hynix-ink-multi-year-memory-co-development-and-supply-agreement-seeks-to-address-extended-development-cycles",
+          "title": "Nvidia and SK hynix ink multi-year memory co-development and supply agreement — seeks to address extended development cycles",
+          "snippet": "Nvidia and SK hynix have inked a multi-year collaboration agreement under which the companies will co-develop next-generation memory technologies for Nvidia's upcoming platforms and SK hynix will supply them to Nvidia.",
+          "contentText": "Nvidia and SK hynix have inked a multi-year collaboration agreement under which the companies will co-develop next-generation memory technologies for Nvidia's upcoming platforms and SK hynix will supply them to Nvidia.",
+          "publishedAt": "2026-06-08T11:23:57.000Z",
+          "sourceImage": "https://cdn.mos.cms.futurecdn.net/sTwGjAwyv4JF2J8cALVrvF-1280-80.png",
+          "region": "Global",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "category": "AI Infrastructure",
+          "primary_category": "AI Infrastructure",
+          "secondary_category": "GPU clusters and deployment readiness",
+          "infrastructure_layer": "Compute",
+          "affected_stakeholders": [
+            "operators",
+            "hyperscalers",
+            "cloud buyers",
+            "investors"
+          ],
+          "article_type": "Supply Chain",
+          "urgency_score": 0.46,
+          "taxonomy_confidence": 0.77,
+          "taxonomy_reasons": [
+            "ai infrastructure",
+            "neocloud"
+          ],
+          "direct_ai_infrastructure_relevance": 1,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0.598,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.862,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "semiconductor_relevance:0.60(nvidia, gpu)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 1,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0.598,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.862,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+              "semiconductor_relevance:0.60(nvidia, gpu)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 82
+        },
+        {
+          "id": "9bd8db205edd4de9",
+          "source": "Capacity Media",
+          "url": "https://capacityglobal.com/news/chinese-military-circled-taiwan/",
+          "title": "Chinese military jets circled Taiwan as the world’s AI supply chain chiefs gathered at Computex",
+          "snippet": "79 Chinese warplanes operated near Taiwan during this year's Computex conference, as the chief executives of Nvidia, Intel and AMD were on the island affirming their deepest-ever commitments to a technology supply chain…",
+          "contentText": "During the event in Taipei last week, Taiwan&#8217;s defence ministry reported 79 Chinese warplanes operating near the island. On the final day, Taiwan&#8217;s coast guard faced off against Chinese counterparts in the contested South China Sea near the Taiwan-controlled Pratas Islands, broadcasting a warning that peace in the Taiwan Strait was vital to the stability of the global economy and the lifeline of the technology industry. The military activity formed a backdrop to some of the most significant investment commitments the island has received. Nvidia chief executive Jensen Huang said the company plans to spend approximately $150 billion annually in Taiwan, up from roughly $10 to $15 billion five years ago. Huang also said Nvidia&#8217;s new Vera Rubin chip design has twice as many s…",
+          "publishedAt": "2026-06-08T11:23:28.000Z",
+          "sourceImage": "https://capacityglobal.com/wp-content/uploads/2025/09/54195379714_ad0b118cc4_k-327x218.jpg",
+          "region": "APAC",
+          "language": "en",
+          "defaultCategory": "Hyperscalers & Cloud",
+          "category": "Semiconductors",
+          "primary_category": "Semiconductors",
+          "secondary_category": "Accelerators, memory, and advanced packaging",
+          "infrastructure_layer": "Silicon",
+          "affected_stakeholders": [
+            "semiconductor suppliers",
+            "hyperscalers",
+            "server OEMs",
+            "investors"
+          ],
+          "article_type": "Supply Chain",
+          "urgency_score": 0.4,
+          "taxonomy_confidence": 0.88,
+          "taxonomy_reasons": [
+            "chip",
+            "nvidia",
+            "amd",
+            "intel"
+          ],
+          "direct_ai_infrastructure_relevance": 0.64,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0.76,
+          "semiconductor_relevance": 0.7,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.7,
+          "infrastructure_relevance_tier": "signal_card",
+          "infrastructure_relevance_action": "publish_signal_card_only",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:0.64",
+            "cloud_capacity_relevance:0.76(cloud capacity, hyperscalers)",
+            "semiconductor_relevance:0.70(nvidia, amd, intel)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 0.64,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0.76,
+            "semiconductor_relevance": 0.7,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.7,
+            "infrastructure_relevance_tier": "signal_card",
+            "infrastructure_relevance_action": "publish_signal_card_only",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:0.64",
+              "cloud_capacity_relevance:0.76(cloud capacity, hyperscalers)",
+              "semiconductor_relevance:0.70(nvidia, amd, intel)"
+            ],
+            "infrastructureRelevanceAction": "publish_signal_card_only",
+            "articlePagePublished": false,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 75
+        },
+        {
+          "id": "e2c3b1f4b9c076ba",
+          "source": "Semiconductor Engineering",
+          "url": "https://semiengineering.com/disturbance-in-verification/",
+          "title": "Disturbance In Verification",
+          "snippet": "We have started to see what may be the largest disturbance in the role of a verification engineer since the founding of the industry. Should you be worried? The post Disturbance In Verification appeared first on Semicon…",
+          "contentText": "When writing my recent story about agentic verification , there was one quote from Abhi Kolpekwa, senior vice-president and general manager at Siemens EDA, that really struck a chord. He was talking about the additional token costs that would be consumed when a verification engineer starts asking the agents to do what was considered to be part of their job. &#8220;Consider the total cost of ownership,&#8221; he said. &#8220;This is where you&#8217;re able to get the maximum out of your processes by applying the minimum of your hardware.&#8221; This is not the first time that verification teams have had to completely reformulate their methodology and work out if new technology is cost-effective. When I first started in my career, test generation was one of the big tasks for the industry. W…",
+          "publishedAt": "2026-06-08T07:01:42.000Z",
+          "sourceImage": null,
           "region": "US",
           "language": "en",
           "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
@@ -13375,186 +13590,111 @@
             "cloud buyers",
             "investors"
           ],
-          "article_type": "Partnership",
-          "urgency_score": 0.56,
+          "article_type": "Other",
+          "urgency_score": 0.45,
           "taxonomy_confidence": 0.77,
           "taxonomy_reasons": [
             "ai infrastructure",
             "neocloud"
           ],
           "direct_ai_infrastructure_relevance": 1,
-          "data_center_relevance": 0.42,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0.58,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.858,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "semiconductor_relevance:0.58(semiconductor, gpu)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 1,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0.58,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.858,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+              "semiconductor_relevance:0.58(semiconductor, gpu)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 74
+        },
+        {
+          "id": "af40c75110862b28",
+          "source": "NVIDIA Blog",
+          "url": "https://blogs.nvidia.com/blog/uk-sovereign-ai-advancements/",
+          "title": "How the UK Is Turning Sovereign AI Ambition Into Action With NVIDIA Technologies",
+          "snippet": "A year ago at London Tech Week, NVIDIA founder and CEO Jensen Huang and U.K. Prime Minister Keir Starmer made a declaration: the U.K. would be an AI maker, not an AI taker. At this year’s event, NVIDIA and its partners…",
+          "contentText": "A year ago at London Tech Week, NVIDIA founder and CEO Jensen Huang and U.K. Prime Minister Keir Starmer made a declaration : the U.K. would be an AI maker, not an AI taker. At this year’s event, NVIDIA and its partners are showcasing how that commitment is producing real momentum across the nation’s infrastructure, startups and enterprises. U.K. technology leaders are innovating across healthcare and life sciences, coding, agentic AI, inference and more — all running on sovereign AI deployments. AI Minister Kanishka Narayan said: &#8220;A year ago, we said the UK would be an AI maker, not an AI taker. Today we&#8217;re delivering on that — with sovereign compute powering British startups to push the boundaries of what AI can do, from drug discovery to healthcare to robotics. This is what…",
+          "publishedAt": "2026-06-08T06:00:57.000Z",
+          "sourceImage": "https://blogs.nvidia.com/wp-content/uploads/2026/06/london-tech-week-2026-key-visual.jpeg",
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "category": "AI Infrastructure",
+          "primary_category": "AI Infrastructure",
+          "secondary_category": "GPU clusters and deployment readiness",
+          "infrastructure_layer": "Compute",
+          "affected_stakeholders": [
+            "operators",
+            "hyperscalers",
+            "cloud buyers",
+            "investors"
+          ],
+          "article_type": "Other",
+          "urgency_score": 0.46,
+          "taxonomy_confidence": 0.77,
+          "taxonomy_reasons": [
+            "ai infrastructure",
+            "neocloud"
+          ],
+          "direct_ai_infrastructure_relevance": 1,
+          "data_center_relevance": 0,
           "cloud_capacity_relevance": 0,
           "semiconductor_relevance": 0.598,
-          "power_grid_relevance": 0.22,
+          "power_grid_relevance": 0,
           "cooling_relevance": 0,
           "capital_markets_relevance": 0,
           "enterprise_ai_infrastructure_relevance": 0,
-          "infrastructure_relevance_score": 0.932,
+          "infrastructure_relevance_score": 0.862,
           "infrastructure_relevance_tier": "full_memo",
           "infrastructure_relevance_action": "generate_full_memo",
           "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, ai data center, neocloud)",
-            "data_center_relevance:0.42(data center)",
-            "semiconductor_relevance:0.60(nvidia, gpu)",
-            "power_grid_relevance:0.22(power)"
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "semiconductor_relevance:0.60(nvidia, gpu)"
           ],
           "infrastructure_relevance": {
             "direct_ai_infrastructure_relevance": 1,
-            "data_center_relevance": 0.42,
+            "data_center_relevance": 0,
             "cloud_capacity_relevance": 0,
             "semiconductor_relevance": 0.598,
-            "power_grid_relevance": 0.22,
-            "cooling_relevance": 0,
-            "capital_markets_relevance": 0,
-            "enterprise_ai_infrastructure_relevance": 0,
-            "infrastructure_relevance_score": 0.932,
-            "infrastructure_relevance_tier": "full_memo",
-            "infrastructure_relevance_action": "generate_full_memo",
-            "infrastructure_relevance_reasons": [
-              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, ai data center, neocloud)",
-              "data_center_relevance:0.42(data center)",
-              "semiconductor_relevance:0.60(nvidia, gpu)",
-              "power_grid_relevance:0.22(power)"
-            ],
-            "infrastructureRelevanceAction": "generate_full_memo",
-            "articlePagePublished": true,
-            "homepagePublished": true,
-            "archiveOnly": false,
-            "archiveOnlyReason": null
-          },
-          "score": 85
-        },
-        {
-          "id": "277a1c4f7494323f",
-          "source": "Bloomberg Technology",
-          "url": "https://www.bloomberg.com/news/articles/2026-06-07/naver-to-use-nvidia-s-ai-models-in-bid-to-cement-lead-in-korea",
-          "title": "Naver to Use Nvidia’s AI Models in Bid to Cement Lead in Korea",
-          "snippet": "South Korea’s Naver Corp. agreed to build data centers based on Nvidia Corp.’s models in a move to clinch its dominance in the country’s artificial intelligence landscape.",
-          "contentText": "South Korea’s Naver Corp. agreed to build data centers based on Nvidia Corp.’s models in a move to clinch its dominance in the country’s artificial intelligence landscape.",
-          "publishedAt": "2026-06-07T23:09:34.000Z",
-          "sourceImage": "https://assets.bwbx.io/images/users/iqjWHBFdfxIU/iNHi290iOEwU/v0/1200x-1.jpg",
-          "region": "Korea",
-          "language": "en",
-          "defaultCategory": "Hyperscalers & Cloud",
-          "category": "Semiconductors",
-          "primary_category": "Semiconductors",
-          "secondary_category": "Accelerators, memory, and advanced packaging",
-          "infrastructure_layer": "Silicon",
-          "affected_stakeholders": [
-            "semiconductor suppliers",
-            "hyperscalers",
-            "server OEMs",
-            "investors"
-          ],
-          "article_type": "Other",
-          "urgency_score": 0.42,
-          "taxonomy_confidence": 0.62,
-          "taxonomy_reasons": [
-            "nvidia"
-          ],
-          "direct_ai_infrastructure_relevance": 0.78,
-          "data_center_relevance": 0.42,
-          "cloud_capacity_relevance": 0.32,
-          "semiconductor_relevance": 0.378,
-          "power_grid_relevance": 0,
-          "cooling_relevance": 0,
-          "capital_markets_relevance": 0,
-          "enterprise_ai_infrastructure_relevance": 0,
-          "infrastructure_relevance_score": 0.765,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:0.78",
-            "data_center_relevance:0.42(data centers)",
-            "cloud_capacity_relevance:0.32(hyperscalers)",
-            "semiconductor_relevance:0.38(nvidia)"
-          ],
-          "infrastructure_relevance": {
-            "direct_ai_infrastructure_relevance": 0.78,
-            "data_center_relevance": 0.42,
-            "cloud_capacity_relevance": 0.32,
-            "semiconductor_relevance": 0.378,
             "power_grid_relevance": 0,
             "cooling_relevance": 0,
             "capital_markets_relevance": 0,
             "enterprise_ai_infrastructure_relevance": 0,
-            "infrastructure_relevance_score": 0.765,
-            "infrastructure_relevance_tier": "full_memo",
-            "infrastructure_relevance_action": "generate_full_memo",
-            "infrastructure_relevance_reasons": [
-              "direct_ai_infrastructure_relevance:0.78",
-              "data_center_relevance:0.42(data centers)",
-              "cloud_capacity_relevance:0.32(hyperscalers)",
-              "semiconductor_relevance:0.38(nvidia)"
-            ],
-            "infrastructureRelevanceAction": "generate_full_memo",
-            "articlePagePublished": true,
-            "homepagePublished": true,
-            "archiveOnly": false,
-            "archiveOnlyReason": null
-          },
-          "score": 67
-        },
-        {
-          "id": "74afba7d94227d5b",
-          "source": "TechCrunch AI",
-          "url": "https://techcrunch.com/2026/06/07/is-this-the-dawn-of-the-tokenpocalypse/",
-          "title": "Is this the dawn of the Tokenpocalypse?",
-          "snippet": "We're likely to see more price increases as the big AI companies plan to go public.",
-          "contentText": "We're likely to see more price increases as the big AI companies plan to go public.",
-          "publishedAt": "2026-06-07T20:26:13.000Z",
-          "sourceImage": null,
-          "region": "Global",
-          "language": "en",
-          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
-          "category": "AI Infrastructure",
-          "primary_category": "AI Infrastructure",
-          "secondary_category": "GPU clusters and deployment readiness",
-          "infrastructure_layer": "Compute",
-          "affected_stakeholders": [
-            "operators",
-            "hyperscalers",
-            "cloud buyers",
-            "investors"
-          ],
-          "article_type": "Other",
-          "urgency_score": 0.43,
-          "taxonomy_confidence": 0.77,
-          "taxonomy_reasons": [
-            "ai infrastructure",
-            "neocloud"
-          ],
-          "direct_ai_infrastructure_relevance": 1,
-          "data_center_relevance": 0,
-          "cloud_capacity_relevance": 0,
-          "semiconductor_relevance": 0.22,
-          "power_grid_relevance": 0,
-          "cooling_relevance": 0,
-          "capital_markets_relevance": 0,
-          "enterprise_ai_infrastructure_relevance": 0,
-          "infrastructure_relevance_score": 0.778,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "semiconductor_relevance:0.22(gpu)"
-          ],
-          "infrastructure_relevance": {
-            "direct_ai_infrastructure_relevance": 1,
-            "data_center_relevance": 0,
-            "cloud_capacity_relevance": 0,
-            "semiconductor_relevance": 0.22,
-            "power_grid_relevance": 0,
-            "cooling_relevance": 0,
-            "capital_markets_relevance": 0,
-            "enterprise_ai_infrastructure_relevance": 0,
-            "infrastructure_relevance_score": 0.778,
+            "infrastructure_relevance_score": 0.862,
             "infrastructure_relevance_tier": "full_memo",
             "infrastructure_relevance_action": "generate_full_memo",
             "infrastructure_relevance_reasons": [
               "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-              "semiconductor_relevance:0.22(gpu)"
+              "semiconductor_relevance:0.60(nvidia, gpu)"
             ],
             "infrastructureRelevanceAction": "generate_full_memo",
             "articlePagePublished": true,
@@ -13562,17 +13702,17 @@
             "archiveOnly": false,
             "archiveOnlyReason": null
           },
-          "score": 64
+          "score": 74
         },
         {
-          "id": "79f0d52b74c9526c",
+          "id": "07966cfa1273d8db",
           "source": "Toms Hardware",
-          "url": "https://www.tomshardware.com/pc-components/anycubic-photon-mono-4-dips-below-usd190-saving-you-21-percent-off-its-retail-price-amazon-deal-saves-usd50-on-this-entry-level-resin-3d-printer",
-          "title": "Anycubic Photon Mono 4 dips below $190 saving you 21% off its retail price — Amazon deal saves $50 on this entry-level resin 3D printer",
-          "snippet": "The Anycubic Photon Mono 4 is on-sale at $189.99, giving you a $50 discount and saving you 21% off its retail price.",
-          "contentText": "The Anycubic Photon Mono 4 is on-sale at $189.99, giving you a $50 discount and saving you 21% off its retail price.",
-          "publishedAt": "2026-06-07T14:22:50.000Z",
-          "sourceImage": "https://cdn.mos.cms.futurecdn.net/BgoUTajwsGL58K7C9GqrZW-1280-80.png",
+          "url": "https://www.tomshardware.com/tech-industry/artificial-intelligence/executives-are-cutting-jobs-for-an-ai-future-that-hasnt-fully-arrived-yet-even-as-productivity-gains-remain-difficult-to-prove-data-neither-confirms-nor-refutes-an-ai-unemployment-apocalypse",
+          "title": "Executives are cutting jobs for an AI future that hasn't fully arrived yet, even as productivity gains remain difficult to prove — data neither confirms nor refutes an AI unemployment apocalypse",
+          "snippet": "A growing number of CEOs expect AI-driven layoffs, but economic data paints a more complex picture as companies cut junior roles before proving AI delivers meaningful productivity gains.",
+          "contentText": "A growing number of CEOs expect AI-driven layoffs, but economic data paints a more complex picture as companies cut junior roles before proving AI delivers meaningful productivity gains.",
+          "publishedAt": "2026-06-08T11:20:00.000Z",
+          "sourceImage": "https://cdn.mos.cms.futurecdn.net/RuKxLbmpevQWEgBjvLLEzM-1280-80.jpg",
           "region": "Global",
           "language": "en",
           "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
@@ -13630,173 +13770,33 @@
             "archiveOnly": false,
             "archiveOnlyReason": null
           },
-          "score": 58
-        },
-        {
-          "id": "423c91bf2295eb24",
-          "source": "Bloomberg Technology",
-          "url": "https://www.bloomberg.com/news/articles/2026-06-07/sheinbaum-unveils-affordable-ev-prototype-backed-by-government",
-          "title": "Sheinbaum Unveils Affordable EV Prototype Backed by Government",
-          "snippet": "An electric vehicle startup backed by the Mexican government unveiled its first prototype in a ceremony featuring President Claudia Sheinbaum, who praised the project as an affordable mobility option and a showcase for…",
-          "contentText": "An electric vehicle startup backed by the Mexican government unveiled its first prototype in a ceremony featuring President Claudia Sheinbaum, who praised the project as an affordable mobility option and a showcase for homegrown engineering.",
-          "publishedAt": "2026-06-07T23:36:25.000Z",
-          "sourceImage": "https://assets.bwbx.io/images/users/iqjWHBFdfxIU/iQB8_muDyts8/v5/1200x-1.jpg",
-          "region": "Global",
-          "language": "en",
-          "defaultCategory": "Hyperscalers & Cloud",
-          "category": "Cloud Capacity",
-          "primary_category": "Cloud Capacity",
-          "secondary_category": "Hyperscale regions and accelerator availability",
-          "infrastructure_layer": "Cloud Platform",
-          "affected_stakeholders": [
-            "hyperscalers",
-            "cloud buyers",
-            "enterprise IT",
-            "operators"
-          ],
-          "article_type": "Research / Technical",
-          "urgency_score": 0.25,
-          "taxonomy_confidence": 0.5,
-          "taxonomy_reasons": [
-            "fallback_taxonomy"
-          ],
-          "direct_ai_infrastructure_relevance": 0,
-          "data_center_relevance": 0,
-          "cloud_capacity_relevance": 0.32,
-          "semiconductor_relevance": 0,
-          "power_grid_relevance": 0,
-          "cooling_relevance": 0,
-          "capital_markets_relevance": 0,
-          "enterprise_ai_infrastructure_relevance": 0,
-          "infrastructure_relevance_score": 0.221,
-          "infrastructure_relevance_tier": "archive_only",
-          "infrastructure_relevance_action": "archive_only",
-          "infrastructure_relevance_reasons": [
-            "cloud_capacity_relevance:0.32(hyperscalers)"
-          ],
-          "infrastructure_relevance": {
-            "direct_ai_infrastructure_relevance": 0,
-            "data_center_relevance": 0,
-            "cloud_capacity_relevance": 0.32,
-            "semiconductor_relevance": 0,
-            "power_grid_relevance": 0,
-            "cooling_relevance": 0,
-            "capital_markets_relevance": 0,
-            "enterprise_ai_infrastructure_relevance": 0,
-            "infrastructure_relevance_score": 0.221,
-            "infrastructure_relevance_tier": "archive_only",
-            "infrastructure_relevance_action": "archive_only",
-            "infrastructure_relevance_reasons": [
-              "cloud_capacity_relevance:0.32(hyperscalers)"
-            ],
-            "infrastructureRelevanceAction": "archive_only",
-            "articlePagePublished": false,
-            "homepagePublished": false,
-            "archiveOnly": true,
-            "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
-          },
-          "score": 55
-        },
-        {
-          "id": "376793fdf681bdd7",
-          "source": "TechCrunch AI",
-          "url": "https://techcrunch.com/2026/06/07/openai-is-still-working-on-that-super-app/",
-          "title": "OpenAI is still working on that ‘super app’",
-          "snippet": "\"Chat is dead\" — at least, according to a senior OpenAI employee.",
-          "contentText": "\"Chat is dead\" — at least, according to a senior OpenAI employee.",
-          "publishedAt": "2026-06-07T16:23:22.000Z",
-          "sourceImage": null,
-          "region": "Global",
-          "language": "en",
-          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
-          "category": "AI Infrastructure",
-          "primary_category": "AI Infrastructure",
-          "secondary_category": "GPU clusters and deployment readiness",
-          "infrastructure_layer": "Compute",
-          "affected_stakeholders": [
-            "operators",
-            "hyperscalers",
-            "cloud buyers",
-            "investors"
-          ],
-          "article_type": "Other",
-          "urgency_score": 0.43,
-          "taxonomy_confidence": 0.77,
-          "taxonomy_reasons": [
-            "ai infrastructure",
-            "neocloud"
-          ],
-          "direct_ai_infrastructure_relevance": 1,
-          "data_center_relevance": 0,
-          "cloud_capacity_relevance": 0,
-          "semiconductor_relevance": 0.22,
-          "power_grid_relevance": 0,
-          "cooling_relevance": 0,
-          "capital_markets_relevance": 0,
-          "enterprise_ai_infrastructure_relevance": 0,
-          "infrastructure_relevance_score": 0.778,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "semiconductor_relevance:0.22(gpu)"
-          ],
-          "infrastructure_relevance": {
-            "direct_ai_infrastructure_relevance": 1,
-            "data_center_relevance": 0,
-            "cloud_capacity_relevance": 0,
-            "semiconductor_relevance": 0.22,
-            "power_grid_relevance": 0,
-            "cooling_relevance": 0,
-            "capital_markets_relevance": 0,
-            "enterprise_ai_infrastructure_relevance": 0,
-            "infrastructure_relevance_score": 0.778,
-            "infrastructure_relevance_tier": "full_memo",
-            "infrastructure_relevance_action": "generate_full_memo",
-            "infrastructure_relevance_reasons": [
-              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-              "semiconductor_relevance:0.22(gpu)"
-            ],
-            "infrastructureRelevanceAction": "generate_full_memo",
-            "articlePagePublished": true,
-            "homepagePublished": true,
-            "archiveOnly": false,
-            "archiveOnlyReason": null
-          },
-          "score": 55
+          "score": 71
         }
       ],
       "curatedIds": [
-        "c8d63fd87f023c67",
-        "277a1c4f7494323f",
-        "74afba7d94227d5b",
-        "79f0d52b74c9526c",
-        "423c91bf2295eb24",
-        "376793fdf681bdd7"
+        "4156574a03ed622e",
+        "4b923832280e243e",
+        "9bd8db205edd4de9",
+        "e2c3b1f4b9c076ba",
+        "af40c75110862b28",
+        "07966cfa1273d8db"
       ],
       "publishedIds": [
         "e0024c9d17b3c365",
         "5f42d66372cb51ff",
         "277a1c4f7494323f",
-        "c8d63fd87f023c67"
+        "c8d63fd87f023c67",
+        "4156574a03ed622e",
+        "4b923832280e243e"
       ],
       "slotPublications": {
         "0": true,
-        "1": true
+        "1": true,
+        "2": true
       }
     }
   },
   "runHistory": [
-    {
-      "at": "2026-04-22T23:49:52.393Z",
-      "day": "2026-04-23",
-      "slot": 1,
-      "publishedCount": 2,
-      "publishedIds": [
-        "0d0ae9a6fb7a42c3",
-        "21088d839326152e"
-      ]
-    },
     {
       "at": "2026-04-23T09:00:08.307Z",
       "day": "2026-04-23",
@@ -19397,7 +19397,135 @@
         }
       ],
       "archiveOnlyItems": []
+    },
+    {
+      "at": "2026-06-08T12:06:48.990Z",
+      "day": "2026-06-08",
+      "slot": 2,
+      "publishedCount": 0,
+      "signalCardCount": 1,
+      "archiveOnlyCount": 0,
+      "repetitionBlockedCount": 1,
+      "publishedIds": [],
+      "processedIds": [
+        "4156574a03ed622e",
+        "4b923832280e243e"
+      ],
+      "blockedCount": 1,
+      "blockedItems": [
+        {
+          "id": "4156574a03ed622e",
+          "title": "DCD>Studio: Designing AI infrastructure as a complete system, with Peter De Bock, Eaton",
+          "infrastructure_relevance_score": 0.934,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:0.82(ai infrastructure)",
+            "data_center_relevance:0.92(data center, colocation, campus)",
+            "power_grid_relevance:0.52(power, megawatt)",
+            "cooling_relevance:0.82(cooling, liquid cooling)",
+            "capital_markets_relevance:0.28(capex)"
+          ],
+          "extraction_quality_score": 0.25,
+          "source_domain_adapter": "generic",
+          "content_length": 229,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": false,
+          "repetition_block_reasons": [],
+          "repetition_check": null,
+          "expert_insight_complete": false,
+          "expert_insight_missing_fields": [
+            "concrete_facts",
+            "named_companies"
+          ],
+          "reason": "fail_closed: source_text_incomplete:source_evidence_length_below_500, source_evidence_length_below_1200"
+        }
+      ],
+      "repetitionBlockedItems": [
+        {
+          "id": "4b923832280e243e",
+          "title": "Nvidia and SK hynix ink multi-year memory co-development and supply agreement — seeks to address extended development cycles",
+          "infrastructure_relevance_score": 1,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "cloud_capacity_relevance:0.32(hyperscalers)",
+            "semiconductor_relevance:1.00(semiconductor, nvidia, hbm)",
+            "power_grid_relevance:0.22(power)"
+          ],
+          "extraction_quality_score": 1,
+          "source_domain_adapter": "generic",
+          "content_length": 1677,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": true,
+          "repetition_block_reasons": [
+            "repeated_sentence_ratio>0.12",
+            "heading_sequence_similarity>0.75",
+            "conclusion_similarity>0.7"
+          ],
+          "repetition_check": {
+            "compared_article_count": 20,
+            "repeated_sentence_ratio": 0.14285714285714285,
+            "repeated_paragraph_ratio": 0.16666666666666666,
+            "heading_sequence_similarity": 1,
+            "banned_phrase_count": 0,
+            "banned_phrase_counts": {},
+            "recent_banned_phrase_counts": {},
+            "ngram_overlap": 0.41025641025641024,
+            "blueprint_repetition": 1,
+            "conclusion_similarity": 0.9511897312113418,
+            "repeated_sentence_count": 1,
+            "repeated_paragraph_count": 1,
+            "heading_sequence": [
+              "Cost Signal",
+              "Below The Accelerator Layer",
+              "Buyer Exposure",
+              "Planning Metric"
+            ],
+            "blocked": true,
+            "reasons": [
+              "repeated_sentence_ratio>0.12",
+              "heading_sequence_similarity>0.75",
+              "conclusion_similarity>0.7"
+            ]
+          },
+          "expert_insight_complete": true,
+          "expert_insight_missing_fields": [],
+          "reason": "repeated_sentence_ratio>0.12; heading_sequence_similarity>0.75; conclusion_similarity>0.7"
+        }
+      ],
+      "signalCardItems": [
+        {
+          "id": "4156574a03ed622e",
+          "title": "DCD>Studio: Designing AI infrastructure as a complete system, with Peter De Bock, Eaton",
+          "infrastructure_relevance_score": 0.934,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:0.82(ai infrastructure)",
+            "data_center_relevance:0.92(data center, colocation, campus)",
+            "power_grid_relevance:0.52(power, megawatt)",
+            "cooling_relevance:0.82(cooling, liquid cooling)",
+            "capital_markets_relevance:0.28(capex)"
+          ],
+          "extraction_quality_score": 0.25,
+          "source_domain_adapter": "generic",
+          "content_length": 229,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": false,
+          "repetition_block_reasons": [],
+          "repetition_check": null,
+          "expert_insight_complete": false,
+          "expert_insight_missing_fields": [
+            "concrete_facts",
+            "named_companies"
+          ],
+          "reason": "fail_closed: source_text_incomplete:source_evidence_length_below_500, source_evidence_length_below_1200"
+        }
+      ],
+      "archiveOnlyItems": []
     }
   ],
-  "lastRunAt": "2026-06-08T00:11:59.161Z"
+  "lastRunAt": "2026-06-08T12:06:48.990Z"
 }
