@@ -417,7 +417,9 @@
     "142734567a0b2b80",
     "42293ea53a96955b",
     "112a6e73c00fb4d3",
-    "4b9cc8fefe132a5a"
+    "4b9cc8fefe132a5a",
+    "26aaf08709ba30d1",
+    "4c428773e8397c86"
   ],
   "dayPlans": {
     "2026-03-24": {
@@ -14260,141 +14262,72 @@
     "2026-06-10": {
       "date": "2026-06-10",
       "createdAt": "2026-06-09T17:27:19.589Z",
-      "refreshedAt": "2026-06-09T17:27:19.589Z",
+      "refreshedAt": "2026-06-10T00:17:46.338Z",
       "candidateWindowHours": 24,
       "curatedItems": [
         {
-          "id": "112a6e73c00fb4d3",
-          "source": "Data Center POST",
-          "url": "https://datacenterpost.com/powerbridge-adds-hyperscale-sales-leadership-as-ai-infrastructure-demand-accelerates/",
-          "title": "PowerBridge Adds Hyperscale Sales Leadership as AI Infrastructure Demand Accelerates",
-          "snippet": "TL;DR PowerBridge appointed Melissa Podesto as Vice President of Hyperscale Leasing and Data Center Sales to lead customer engagement and sales strategy. Podesto brings more than 20 years of hyperscale and digital infra…",
-          "contentText": "TL;DR PowerBridge appointed Melissa Podesto as Vice President of Hyperscale Leasing and Data Center Sales to lead customer engagement and sales strategy. Podesto brings more than 20 years of hyperscale and digital infrastructure sales experience, most recently at Aligned Data Centers and previously at Digital Realty. The company is advancing its Alpha Digital Campus in Pecos, West Texas, a planned two-gigawatt project anticipated as part of ERCOT&#8217;s Batch 0. PowerBridge says the appointment supports its integrated strategy of converging power, connectivity and digital infrastructure to serve hyperscale and AI customers. # # # As hyperscale and AI infrastructure demand continues accelerating, customers are increasingly prioritizing speed to power, long-term scalability and integrated…",
-          "publishedAt": "2026-06-09T17:00:06.000Z",
-          "sourceImage": "https://d3qut6qyo6tw2j.cloudfront.net/bin/uploads/2026/06/09092445/PB-Melissa-Podesto-PR-Blog_6.8.26-1024x512.png",
+          "id": "4c428773e8397c86",
+          "source": "NVIDIA Blog",
+          "url": "https://blogs.nvidia.com/blog/nvidia-confidential-computing-apple-private-cloud-compute/",
+          "title": "NVIDIA Confidential Computing to Help Expand Apple’s Private Cloud Compute",
+          "snippet": "NVIDIA GPUs with Confidential Computing are now used for confidential inference in Apple’s Private Cloud Compute (PCC), as it expands beyond Apple’s data centers to Google Cloud. Unveiled during Apple’s annual WWDC gath…",
+          "contentText": "NVIDIA GPUs with Confidential Computing are now used for confidential inference in Apple’s Private Cloud Compute (PCC), as it expands beyond Apple’s data centers to Google Cloud. Unveiled during Apple’s annual WWDC gathering for developers from around the globe, NVIDIA GPUs will support server-side inference for Apple Foundation Models , custom-built by Apple and Google, leveraging the technologies behind the Gemini family of models. NVIDIA is collaborating with Apple and Google to support some of the next-generation Apple Intelligence features, using NVIDIA Blackwell GPUs with Confidential Computing integrated into Private Cloud Compute’s hardware security architecture running on Google Cloud. Confidential Computing Matters for the Era of AI Experiences NVIDIA Confidential Computing prov…",
+          "publishedAt": "2026-06-09T22:34:27.000Z",
+          "sourceImage": "https://blogs.nvidia.com/wp-content/uploads/2026/06/nvidia-confidential-computing-apple-pcc.jpeg",
           "region": "US",
           "language": "en",
-          "defaultCategory": "Colocation & Wholesale",
-          "category": "Data Centers",
-          "primary_category": "Data Centers",
-          "secondary_category": "Campus development and colocation capacity",
-          "infrastructure_layer": "Facility",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "category": "AI Infrastructure",
+          "primary_category": "AI Infrastructure",
+          "secondary_category": "GPU clusters and deployment readiness",
+          "infrastructure_layer": "Compute",
           "affected_stakeholders": [
-            "data center operators",
-            "developers",
-            "site selectors",
+            "operators",
+            "hyperscalers",
+            "cloud buyers",
             "investors"
           ],
           "article_type": "Capacity Expansion",
-          "urgency_score": 0.56,
-          "taxonomy_confidence": 0.93,
+          "urgency_score": 0.54,
+          "taxonomy_confidence": 0.77,
           "taxonomy_reasons": [
-            "data center",
-            "colocation",
-            "campus",
-            "wholesale"
-          ],
-          "direct_ai_infrastructure_relevance": 0.82,
-          "data_center_relevance": 1,
-          "cloud_capacity_relevance": 0,
-          "semiconductor_relevance": 0,
-          "power_grid_relevance": 0.56,
-          "cooling_relevance": 0,
-          "capital_markets_relevance": 0,
-          "enterprise_ai_infrastructure_relevance": 0,
-          "infrastructure_relevance_score": 0.945,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:0.82(ai infrastructure)",
-            "data_center_relevance:1.00(data center, data centers, colocation)",
-            "power_grid_relevance:0.56(power, gigawatt)"
-          ],
-          "infrastructure_relevance": {
-            "direct_ai_infrastructure_relevance": 0.82,
-            "data_center_relevance": 1,
-            "cloud_capacity_relevance": 0,
-            "semiconductor_relevance": 0,
-            "power_grid_relevance": 0.56,
-            "cooling_relevance": 0,
-            "capital_markets_relevance": 0,
-            "enterprise_ai_infrastructure_relevance": 0,
-            "infrastructure_relevance_score": 0.945,
-            "infrastructure_relevance_tier": "full_memo",
-            "infrastructure_relevance_action": "generate_full_memo",
-            "infrastructure_relevance_reasons": [
-              "direct_ai_infrastructure_relevance:0.82(ai infrastructure)",
-              "data_center_relevance:1.00(data center, data centers, colocation)",
-              "power_grid_relevance:0.56(power, gigawatt)"
-            ],
-            "infrastructureRelevanceAction": "generate_full_memo",
-            "articlePagePublished": true,
-            "homepagePublished": true,
-            "archiveOnly": false,
-            "archiveOnlyReason": null
-          },
-          "score": 86
-        },
-        {
-          "id": "4b9cc8fefe132a5a",
-          "source": "Data Center Frontier",
-          "url": "https://www.datacenterfrontier.com/machine-learning/article/55383005/7x24-spring-conference-future-proofing-the-ai-data-center-amid-new-bottlenecks-new-risks-new-rules-of-execution",
-          "title": "7x24 Spring Conference: Future-Proofing the AI Data Center Amid New Bottlenecks, New Risks, New Rules of Execution",
-          "snippet": "At the 7x24 Exchange Spring Conference, speakers from Google, Oracle, T5 Data Centers, DLB Associates, and AI pioneer Sol Rashidi explored how workforce development, quality management, commissioning, and operational di…",
-          "contentText": "At the 7x24 Exchange Spring Conference, speakers from Google, Oracle, T5 Data Centers, DLB Associates, and AI pioneer Sol Rashidi explored how workforce development, quality management, commissioning, and operational discipline are becoming increasingly important as AI infrastructure scales at unprecedented speed.",
-          "publishedAt": "2026-06-09T16:00:51.000Z",
-          "sourceImage": "https://img.datacenterfrontier.com/files/base/ebm/datacenterfrontier/image/2026/06/6a282ebe13e4875c773e053e-724hero.png",
-          "region": "Global",
-          "language": "en",
-          "defaultCategory": "Colocation & Wholesale",
-          "category": "Data Centers",
-          "primary_category": "Data Centers",
-          "secondary_category": "Campus development and colocation capacity",
-          "infrastructure_layer": "Facility",
-          "affected_stakeholders": [
-            "data center operators",
-            "developers",
-            "site selectors",
-            "investors"
-          ],
-          "article_type": "Other",
-          "urgency_score": 0.48,
-          "taxonomy_confidence": 0.88,
-          "taxonomy_reasons": [
-            "data center",
-            "colocation",
-            "wholesale"
+            "ai infrastructure",
+            "neocloud"
           ],
           "direct_ai_infrastructure_relevance": 1,
-          "data_center_relevance": 1,
-          "cloud_capacity_relevance": 0,
-          "semiconductor_relevance": 0,
+          "data_center_relevance": 0.42,
+          "cloud_capacity_relevance": 0.24,
+          "semiconductor_relevance": 0.598,
           "power_grid_relevance": 0,
           "cooling_relevance": 0,
           "capital_markets_relevance": 0,
           "enterprise_ai_infrastructure_relevance": 0,
-          "infrastructure_relevance_score": 0.95,
+          "infrastructure_relevance_score": 0.932,
           "infrastructure_relevance_tier": "full_memo",
           "infrastructure_relevance_action": "generate_full_memo",
           "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, ai data center)",
-            "data_center_relevance:1.00(data center, data centers, colocation)"
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "data_center_relevance:0.42(data centers)",
+            "cloud_capacity_relevance:0.24(google cloud)",
+            "semiconductor_relevance:0.60(nvidia, gpu)"
           ],
           "infrastructure_relevance": {
             "direct_ai_infrastructure_relevance": 1,
-            "data_center_relevance": 1,
-            "cloud_capacity_relevance": 0,
-            "semiconductor_relevance": 0,
+            "data_center_relevance": 0.42,
+            "cloud_capacity_relevance": 0.24,
+            "semiconductor_relevance": 0.598,
             "power_grid_relevance": 0,
             "cooling_relevance": 0,
             "capital_markets_relevance": 0,
             "enterprise_ai_infrastructure_relevance": 0,
-            "infrastructure_relevance_score": 0.95,
+            "infrastructure_relevance_score": 0.932,
             "infrastructure_relevance_tier": "full_memo",
             "infrastructure_relevance_action": "generate_full_memo",
             "infrastructure_relevance_reasons": [
-              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, ai data center)",
-              "data_center_relevance:1.00(data center, data centers, colocation)"
+              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+              "data_center_relevance:0.42(data centers)",
+              "cloud_capacity_relevance:0.24(google cloud)",
+              "semiconductor_relevance:0.60(nvidia, gpu)"
             ],
             "infrastructureRelevanceAction": "generate_full_memo",
             "articlePagePublished": true,
@@ -14402,7 +14335,147 @@
             "archiveOnly": false,
             "archiveOnlyReason": null
           },
-          "score": 86
+          "score": 85
+        },
+        {
+          "id": "26aaf08709ba30d1",
+          "source": "HPCwire",
+          "url": "https://www.hpcwire.com/2026/06/09/why-model-flows-are-the-key-for-reproducibility-in-ai-for-science/",
+          "title": "Why Model Flows Are the Key for Reproducibility in AI for Science",
+          "snippet": "Reproducibility is absolutely critical in science, but it’s a troublesome characteristic when it comes to AI. Frontier models developed by Big AI may deliver superior accuracy and reasoning capabilities, but they do so…",
+          "contentText": "Reproducibility is absolutely critical in science, but it’s a troublesome characteristic when it comes to AI. Frontier models developed by Big AI may deliver superior accuracy and reasoning capabilities, but they do so largely as black boxes with little regard for reproducibility. If AI is going to turbo-charge scientific productivity, it must do so without compromising reproducibility. The question, then, becomes how to achieve it. This was the topic of a presentation at the TPC26 conference last week by Noah Smith, a computer scientist at the University of Washington and senior director of NLP research at the Allen Institute for Artificial Intelligence . Smith discussed why it’s important for scientists to have AI tools that meet their needs when it comes to reproducibility, and how mod…",
+          "publishedAt": "2026-06-09T22:16:42.000Z",
+          "sourceImage": "https://www.hpcwire.com/wp-content/uploads/2026/06/NoahSmith_ModelFlow-300x165.png",
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "category": "AI Infrastructure",
+          "primary_category": "AI Infrastructure",
+          "secondary_category": "GPU clusters and deployment readiness",
+          "infrastructure_layer": "Compute",
+          "affected_stakeholders": [
+            "operators",
+            "hyperscalers",
+            "cloud buyers",
+            "investors"
+          ],
+          "article_type": "Research / Technical",
+          "urgency_score": 0.43,
+          "taxonomy_confidence": 0.77,
+          "taxonomy_reasons": [
+            "ai infrastructure",
+            "neocloud"
+          ],
+          "direct_ai_infrastructure_relevance": 1,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0.22,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.778,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "semiconductor_relevance:0.22(gpu)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 1,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0.22,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.778,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+              "semiconductor_relevance:0.22(gpu)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 79
+        },
+        {
+          "id": "1114851f3726c657",
+          "source": "StorageReview",
+          "url": "https://www.storagereview.com/news/synology-extends-activeprotect-to-aws-azure-proxmox-and-nutanix-with-apm-2-0-at-computex-2026",
+          "title": "Synology Extends ActiveProtect to AWS, Azure, Proxmox, and Nutanix with APM 2.0 at COMPUTEX 2026",
+          "snippet": "At COMPUTEX 2026, Synology unveiled updates across its storage, data protection, collaboration, surveillance, and private cloud portfolios. The announcements centered on AI integration, hybrid cloud management, and expa…",
+          "contentText": "At COMPUTEX 2026, Synology unveiled updates across its storage, data protection, collaboration, surveillance, and private cloud portfolios. The announcements centered on AI integration, hybrid cloud management, and expanded data governance capabilities for both enterprise and consumer environments. Synology also unveiled ActiveProtect Manager 2.0. Synology executives emphasized the company&#8217;s focus on data ownership, security, and privacy, positioning its platforms as infrastructure that gives organizations and individuals greater control over their data while enabling the adoption of AI-driven technologies. What&#8217;s clear now more than ever is how Synology continues to push the brand into the enterprise space with a cohesive message across multiple product lines and offerings. A…",
+          "publishedAt": "2026-06-09T19:44:43.000Z",
+          "sourceImage": "https://www.storagereview.com/wp-content/uploads/2026/06/Storagereview-synology-computex.jpg",
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "category": "AI Infrastructure",
+          "primary_category": "AI Infrastructure",
+          "secondary_category": "GPU clusters and deployment readiness",
+          "infrastructure_layer": "Compute",
+          "affected_stakeholders": [
+            "operators",
+            "hyperscalers",
+            "cloud buyers",
+            "investors"
+          ],
+          "article_type": "Partnership",
+          "urgency_score": 0.48,
+          "taxonomy_confidence": 0.77,
+          "taxonomy_reasons": [
+            "ai infrastructure",
+            "neocloud"
+          ],
+          "direct_ai_infrastructure_relevance": 1,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0.594,
+          "semiconductor_relevance": 0.22,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0.46,
+          "infrastructure_relevance_score": 0.931,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "cloud_capacity_relevance:0.59(aws, azure)",
+            "semiconductor_relevance:0.22(gpu)",
+            "enterprise_ai_infrastructure_relevance:0.46(hybrid cloud, storage)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 1,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0.594,
+            "semiconductor_relevance": 0.22,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0.46,
+            "infrastructure_relevance_score": 0.931,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+              "cloud_capacity_relevance:0.59(aws, azure)",
+              "semiconductor_relevance:0.22(gpu)",
+              "enterprise_ai_infrastructure_relevance:0.46(hybrid cloud, storage)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 77
         },
         {
           "id": "fa781bb344ec8eeb",
@@ -14470,18 +14543,18 @@
             "archiveOnly": false,
             "archiveOnlyReason": null
           },
-          "score": 81
+          "score": 73
         },
         {
-          "id": "fbc958b42b986180",
+          "id": "be94dcf0570d6818",
           "source": "TechCrunch AI",
-          "url": "https://techcrunch.com/2026/06/09/anthropic-released-claude-fable-5-its-most-powerful-model-publicly-days-after-warning-ai-is-getting-too-dangerous/",
-          "title": "Anthropic’s Claude Fable is a version of Mythos the public can access today",
-          "snippet": "Anthropic is releasing Claude Fable 5, its first Mythos-class model available to the public. The model comes with guardrails that block responses in high-risk areas like cybersecurity and biology.",
-          "contentText": "Anthropic is releasing Claude Fable 5, its first Mythos-class model available to the public. The model comes with guardrails that block responses in high-risk areas like cybersecurity and biology.",
-          "publishedAt": "2026-06-09T17:00:00.000Z",
+          "url": "https://techcrunch.com/2026/06/09/how-justin-ernest-invested-nearly-400m-into-hot-startups-without-a-traditional-vc-fund/",
+          "title": "How Justin Ernest invested nearly $500M into hot startups without a traditional VC fund",
+          "snippet": "Instead of spending a year raising a formal venture fund, the Sabertooth VC founder used a captive network of LPs to invest in startups like Anthropic, Anduril, and SpaceX.",
+          "contentText": "Instead of spending a year raising a formal venture fund, the Sabertooth VC founder used a captive network of LPs to invest in startups like Anthropic, Anduril, and SpaceX.",
+          "publishedAt": "2026-06-09T23:17:51.000Z",
           "sourceImage": null,
-          "region": "Global",
+          "region": "US",
           "language": "en",
           "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
           "category": "AI Infrastructure",
@@ -14495,7 +14568,7 @@
             "investors"
           ],
           "article_type": "Other",
-          "urgency_score": 0.59,
+          "urgency_score": 0.43,
           "taxonomy_confidence": 0.77,
           "taxonomy_reasons": [
             "ai infrastructure",
@@ -14538,17 +14611,17 @@
             "archiveOnly": false,
             "archiveOnlyReason": null
           },
-          "score": 79
+          "score": 72
         },
         {
-          "id": "b0c20f5686969ae5",
-          "source": "HPCwire",
-          "url": "https://www.hpcwire.com/2026/06/09/tpc26-toward-scientific-ai-platforms-at-hpc-facilities/",
-          "title": "TPC26: Toward Scientific AI Platforms at HPC Facilities",
-          "snippet": "AI is creating a new set of demands for HPC centers. Researchers are no longer focused only on training models. Many are now looking for inference services and AI agents that can be used as part of their everyday resear…",
-          "contentText": "AI is creating a new set of demands for HPC centers. Researchers are no longer focused only on training models. Many are now looking for inference services and AI agents that can be used as part of their everyday research. For HPC centers, that means figuring out how to provide these services at scale and make them work alongside existing HPC infrastructure. Those issues were a major focus of the TPC26 session, &#8220;Toward Scientific AI Platforms: Inference, Agents, and AI Services at HPC Facilities.&#8221; The discussion brought together speakers from national labs, supercomputing centers, industry, and research organizations to share how they are building and operating AI services for researchers. Participants included Dr. İlkay Altıntaş, Chief Data Science Officer at the San Diego Su…",
-          "publishedAt": "2026-06-09T15:30:00.000Z",
-          "sourceImage": "https://www.hpcwire.com/wp-content/uploads/2026/06/toward-3-300x153.png",
+          "id": "dd75b5ffcd42600a",
+          "source": "Toms Hardware",
+          "url": "https://www.tomshardware.com/tech-industry/artificial-intelligence/claude-fable-5-brings-mythos-to-the-masses-anthropics-next-frontier-model-is-state-of-the-art-on-nearly-all-tested-benchmarks",
+          "title": "Claude Fable 5 brings Mythos to the masses — Anthropic's new frontier model is 'state-of-the-art on nearly all tested benchmarks'",
+          "snippet": "After first announcing its scarily capable Mythos Preview model back in April, Anthropic is releasing a public version of Mythos, called Fable 5, that it says is \"safe for general use.\"",
+          "contentText": "After first announcing its scarily capable Mythos Preview model back in April, Anthropic is releasing a public version of Mythos, called Fable 5, that it says is \"safe for general use.\"",
+          "publishedAt": "2026-06-09T20:34:10.000Z",
+          "sourceImage": "https://cdn.mos.cms.futurecdn.net/iAtJT6Ab8gPu3iDZq9bCnL-1280-80.jpg",
           "region": "US",
           "language": "en",
           "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
@@ -14562,13 +14635,12 @@
             "cloud buyers",
             "investors"
           ],
-          "article_type": "Research / Technical",
+          "article_type": "Other",
           "urgency_score": 0.43,
-          "taxonomy_confidence": 0.88,
+          "taxonomy_confidence": 0.77,
           "taxonomy_reasons": [
             "ai infrastructure",
-            "neocloud",
-            "hpc"
+            "neocloud"
           ],
           "direct_ai_infrastructure_relevance": 1,
           "data_center_relevance": 0,
@@ -14582,7 +14654,7 @@
           "infrastructure_relevance_tier": "full_memo",
           "infrastructure_relevance_action": "generate_full_memo",
           "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud, hpc)",
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
             "semiconductor_relevance:0.22(gpu)"
           ],
           "infrastructure_relevance": {
@@ -14598,7 +14670,7 @@
             "infrastructure_relevance_tier": "full_memo",
             "infrastructure_relevance_action": "generate_full_memo",
             "infrastructure_relevance_reasons": [
-              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud, hpc)",
+              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
               "semiconductor_relevance:0.22(gpu)"
             ],
             "infrastructureRelevanceAction": "generate_full_memo",
@@ -14607,108 +14679,30 @@
             "archiveOnly": false,
             "archiveOnlyReason": null
           },
-          "score": 79
-        },
-        {
-          "id": "f96ec6b3f18b09d4",
-          "source": "Google Cloud Blog",
-          "url": "https://cloud.google.com/blog/products/containers-kubernetes/gke-inference-gateway-prefix-caching-accelerates-ai-inference/",
-          "title": "Report: GKE Inference Gateway delivers up to 92% faster AI responses",
-          "snippet": "As generative AI moves from experimental pilots to massive production environments, the efficiency of your infrastructure becomes the ultimate differentiator. One way to get the most out of it and minimize costly accele…",
-          "contentText": "As generative AI moves from experimental pilots to massive production environments, the efficiency of your infrastructure becomes the ultimate differentiator. One way to get the most out of it and minimize costly accelerator idle time is to leverage the Google Kubernetes Engine (GKE) Inference Gateway , which intelligently routes generative AI workloads based on real-time model server metrics. Instead of relying on traditional, naive round-robin load balancing — which frequently triggers expensive accelerator recomputation and spikes user latency — this native extension of the GKE Gateway utilizes advanced capabilities like prefix caching and model-aware routing . By ensuring requests land on the exact accelerator that is primed to process them right away, GKE transforms how you can serve…",
-          "publishedAt": "2026-06-09T16:00:00.000Z",
-          "sourceImage": "https://storage.googleapis.com/gweb-cloudblog-publish/images/1_-_Updated_Doc_chart.max-1000x1000.jpg",
-          "region": "US",
-          "language": "en",
-          "defaultCategory": "Hyperscalers & Cloud",
-          "category": "Enterprise AI Infrastructure",
-          "primary_category": "Enterprise AI Infrastructure",
-          "secondary_category": "Enterprise deployment operations",
-          "infrastructure_layer": "Enterprise Platform",
-          "affected_stakeholders": [
-            "enterprise IT",
-            "cloud buyers",
-            "platform teams",
-            "software vendors"
-          ],
-          "article_type": "Other",
-          "urgency_score": 0.38,
-          "taxonomy_confidence": 0.6,
-          "taxonomy_reasons": [
-            "kubernetes"
-          ],
-          "direct_ai_infrastructure_relevance": 0.64,
-          "data_center_relevance": 0,
-          "cloud_capacity_relevance": 0.56,
-          "semiconductor_relevance": 0.22,
-          "power_grid_relevance": 0,
-          "cooling_relevance": 0,
-          "capital_markets_relevance": 0,
-          "enterprise_ai_infrastructure_relevance": 0.46,
-          "infrastructure_relevance_score": 0.634,
-          "infrastructure_relevance_tier": "signal_card",
-          "infrastructure_relevance_action": "publish_signal_card_only",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:0.64",
-            "cloud_capacity_relevance:0.56(hyperscalers, google cloud)",
-            "semiconductor_relevance:0.22(accelerator)",
-            "enterprise_ai_infrastructure_relevance:0.46(kubernetes, ai workloads)"
-          ],
-          "infrastructure_relevance": {
-            "direct_ai_infrastructure_relevance": 0.64,
-            "data_center_relevance": 0,
-            "cloud_capacity_relevance": 0.56,
-            "semiconductor_relevance": 0.22,
-            "power_grid_relevance": 0,
-            "cooling_relevance": 0,
-            "capital_markets_relevance": 0,
-            "enterprise_ai_infrastructure_relevance": 0.46,
-            "infrastructure_relevance_score": 0.634,
-            "infrastructure_relevance_tier": "signal_card",
-            "infrastructure_relevance_action": "publish_signal_card_only",
-            "infrastructure_relevance_reasons": [
-              "direct_ai_infrastructure_relevance:0.64",
-              "cloud_capacity_relevance:0.56(hyperscalers, google cloud)",
-              "semiconductor_relevance:0.22(accelerator)",
-              "enterprise_ai_infrastructure_relevance:0.46(kubernetes, ai workloads)"
-            ],
-            "infrastructureRelevanceAction": "publish_signal_card_only",
-            "articlePagePublished": false,
-            "homepagePublished": true,
-            "archiveOnly": false,
-            "archiveOnlyReason": null
-          },
-          "score": 73
+          "score": 71
         }
       ],
       "curatedIds": [
-        "112a6e73c00fb4d3",
-        "4b9cc8fefe132a5a",
+        "4c428773e8397c86",
+        "26aaf08709ba30d1",
+        "1114851f3726c657",
         "fa781bb344ec8eeb",
-        "fbc958b42b986180",
-        "b0c20f5686969ae5",
-        "f96ec6b3f18b09d4"
+        "be94dcf0570d6818",
+        "dd75b5ffcd42600a"
       ],
       "publishedIds": [
         "112a6e73c00fb4d3",
-        "4b9cc8fefe132a5a"
+        "4b9cc8fefe132a5a",
+        "26aaf08709ba30d1",
+        "4c428773e8397c86"
       ],
       "slotPublications": {
-        "0": true
+        "0": true,
+        "1": true
       }
     }
   },
   "runHistory": [
-    {
-      "at": "2026-04-24T16:09:19.774Z",
-      "day": "2026-04-25",
-      "slot": 0,
-      "publishedCount": 2,
-      "publishedIds": [
-        "5a2a310cb007bb9c",
-        "9a385f890ac88d26"
-      ]
-    },
     {
       "at": "2026-04-24T23:42:01.213Z",
       "day": "2026-04-25",
@@ -20883,7 +20877,129 @@
       ],
       "signalCardItems": [],
       "archiveOnlyItems": []
+    },
+    {
+      "at": "2026-06-10T00:17:46.338Z",
+      "day": "2026-06-10",
+      "slot": 1,
+      "publishedCount": 0,
+      "signalCardCount": 1,
+      "archiveOnlyCount": 0,
+      "repetitionBlockedCount": 1,
+      "publishedIds": [],
+      "processedIds": [
+        "26aaf08709ba30d1",
+        "4c428773e8397c86"
+      ],
+      "blockedCount": 1,
+      "blockedItems": [
+        {
+          "id": "26aaf08709ba30d1",
+          "title": "Why Model Flows Are the Key for Reproducibility in AI for Science",
+          "infrastructure_relevance_score": 0.919,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud, hpc)",
+            "cloud_capacity_relevance:0.54(hyperscalers, aws)",
+            "semiconductor_relevance:0.44(amd, gpu)",
+            "power_grid_relevance:0.22(power)"
+          ],
+          "extraction_quality_score": 0.98,
+          "source_domain_adapter": "generic",
+          "content_length": 1356,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": false,
+          "repetition_block_reasons": [],
+          "repetition_check": null,
+          "expert_insight_complete": true,
+          "expert_insight_missing_fields": [],
+          "reason": "fail_closed: source_text_incomplete:ellipsis_truncation_artifact, ellipsis_truncation_artifact"
+        }
+      ],
+      "repetitionBlockedItems": [
+        {
+          "id": "4c428773e8397c86",
+          "title": "NVIDIA Confidential Computing to Help Expand Apple’s Private Cloud Compute",
+          "infrastructure_relevance_score": 0.932,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "data_center_relevance:0.42(data centers)",
+            "cloud_capacity_relevance:0.56(hyperscalers, google cloud)",
+            "semiconductor_relevance:0.60(nvidia, gpu)",
+            "power_grid_relevance:0.22(power)",
+            "enterprise_ai_infrastructure_relevance:0.24(ai workloads)"
+          ],
+          "extraction_quality_score": 1,
+          "source_domain_adapter": "generic",
+          "content_length": 1776,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": true,
+          "repetition_block_reasons": [
+            "repeated_sentence_ratio>0.12",
+            "heading_sequence_similarity>0.75",
+            "conclusion_similarity>0.7"
+          ],
+          "repetition_check": {
+            "compared_article_count": 20,
+            "repeated_sentence_ratio": 0.16666666666666666,
+            "repeated_paragraph_ratio": 0.16666666666666666,
+            "heading_sequence_similarity": 1,
+            "banned_phrase_count": 0,
+            "banned_phrase_counts": {},
+            "recent_banned_phrase_counts": {},
+            "ngram_overlap": 0.5378151260504201,
+            "blueprint_repetition": 1,
+            "conclusion_similarity": 0.9271050693011066,
+            "repeated_sentence_count": 1,
+            "repeated_paragraph_count": 1,
+            "heading_sequence": [
+              "Technical Signal",
+              "Failure Domain",
+              "Operator Exposure",
+              "Benchmark To Watch"
+            ],
+            "blocked": true,
+            "reasons": [
+              "repeated_sentence_ratio>0.12",
+              "heading_sequence_similarity>0.75",
+              "conclusion_similarity>0.7"
+            ]
+          },
+          "expert_insight_complete": true,
+          "expert_insight_missing_fields": [],
+          "reason": "repeated_sentence_ratio>0.12; heading_sequence_similarity>0.75; conclusion_similarity>0.7"
+        }
+      ],
+      "signalCardItems": [
+        {
+          "id": "26aaf08709ba30d1",
+          "title": "Why Model Flows Are the Key for Reproducibility in AI for Science",
+          "infrastructure_relevance_score": 0.919,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud, hpc)",
+            "cloud_capacity_relevance:0.54(hyperscalers, aws)",
+            "semiconductor_relevance:0.44(amd, gpu)",
+            "power_grid_relevance:0.22(power)"
+          ],
+          "extraction_quality_score": 0.98,
+          "source_domain_adapter": "generic",
+          "content_length": 1356,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": false,
+          "repetition_block_reasons": [],
+          "repetition_check": null,
+          "expert_insight_complete": true,
+          "expert_insight_missing_fields": [],
+          "reason": "fail_closed: source_text_incomplete:ellipsis_truncation_artifact, ellipsis_truncation_artifact"
+        }
+      ],
+      "archiveOnlyItems": []
     }
   ],
-  "lastRunAt": "2026-06-09T17:27:19.589Z"
+  "lastRunAt": "2026-06-10T00:17:46.338Z"
 }

@@ -1,5 +1,189 @@
 [
   {
+    "id": "26aaf08709ba30d1",
+    "source": "HPCwire",
+    "url": "https://www.hpcwire.com/2026/06/09/why-model-flows-are-the-key-for-reproducibility-in-ai-for-science/",
+    "title": "Why Model Flows Are the Key for Reproducibility in AI for Science",
+    "snippet": "Reproducibility is absolutely critical in science, but it’s a troublesome characteristic when it comes to AI. Frontier models developed by Big AI may deliver superior accuracy and reasoning capabilities, but they do so…",
+    "contentText": "Reproducibility is absolutely critical in science, but it’s a troublesome characteristic when it comes to AI. Frontier models developed by Big AI may deliver superior accuracy and reasoning capabilities, but they do so largely as black boxes with little regard for reproducibility. If AI is going to turbo-charge scientific productivity, it must do so without compromising reproducibility. The question, then, becomes how to achieve it. This was the topic of a presentation at the TPC26 conference last week by Noah Smith, a computer scientist at the University of Washington and senior director of NLP research at the Allen Institute for Artificial Intelligence . Smith discussed why it’s important for scientists to have AI tools that meet their needs when it comes to reproducibility, and how mod…",
+    "publishedAt": "2026-06-09T22:16:42.000Z",
+    "sourceImage": "https://www.hpcwire.com/wp-content/uploads/2026/06/NoahSmith_ModelFlow-300x165.png",
+    "region": "US",
+    "language": "en",
+    "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+    "category": "AI Infrastructure",
+    "primary_category": "AI Infrastructure",
+    "secondary_category": "GPU clusters and deployment readiness",
+    "infrastructure_layer": "Compute",
+    "affected_stakeholders": [
+      "operators",
+      "hyperscalers",
+      "cloud buyers",
+      "investors"
+    ],
+    "article_type": "Product / Platform Update",
+    "urgency_score": 0.55,
+    "taxonomy_confidence": 0.93,
+    "taxonomy_reasons": [
+      "ai infrastructure",
+      "neocloud",
+      "hpc",
+      "deployment readiness"
+    ],
+    "direct_ai_infrastructure_relevance": 1,
+    "data_center_relevance": 0,
+    "cloud_capacity_relevance": 0.54,
+    "semiconductor_relevance": 0.44,
+    "power_grid_relevance": 0.22,
+    "cooling_relevance": 0,
+    "capital_markets_relevance": 0,
+    "enterprise_ai_infrastructure_relevance": 0,
+    "infrastructure_relevance_score": 0.919,
+    "infrastructure_relevance_tier": "full_memo",
+    "infrastructure_relevance_action": "generate_full_memo",
+    "infrastructure_relevance_reasons": [
+      "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud, hpc)",
+      "cloud_capacity_relevance:0.54(hyperscalers, aws)",
+      "semiconductor_relevance:0.44(amd, gpu)",
+      "power_grid_relevance:0.22(power)"
+    ],
+    "infrastructure_relevance": {
+      "direct_ai_infrastructure_relevance": 1,
+      "data_center_relevance": 0,
+      "cloud_capacity_relevance": 0.54,
+      "semiconductor_relevance": 0.44,
+      "power_grid_relevance": 0.22,
+      "cooling_relevance": 0,
+      "capital_markets_relevance": 0,
+      "enterprise_ai_infrastructure_relevance": 0,
+      "infrastructure_relevance_score": 0.919,
+      "infrastructure_relevance_tier": "full_memo",
+      "infrastructure_relevance_action": "generate_full_memo",
+      "infrastructure_relevance_reasons": [
+        "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud, hpc)",
+        "cloud_capacity_relevance:0.54(hyperscalers, aws)",
+        "semiconductor_relevance:0.44(amd, gpu)",
+        "power_grid_relevance:0.22(power)"
+      ],
+      "infrastructureRelevanceAction": "generate_full_memo",
+      "articlePagePublished": true,
+      "homepagePublished": true,
+      "archiveOnly": false,
+      "archiveOnlyReason": null
+    },
+    "score": 79,
+    "slug": "why-model-flows-are-the-key-for-reproducibility-in-ai-for-science",
+    "summary": "The Seventh National Research Platform (7NRP) workshop was held at the University of California San... Chemists have a scale problem. It is estimated that chemical space contains…",
+    "insight": "The practical effect is on compute supply, deployment speed, and network orchestration. The advantage goes to teams that line up power, facility design, network topology, and silicon timing instead of optimizing one layer in isolation.",
+    "expert_insight": {
+      "concrete_facts": [
+        "Concerns with Ozaki Scheme emulation have led AMD chip designers to conclude there&rsquo;s currently no...",
+        "After several months of radio silence on the matter, Honeywell announced today that Quantinuum confidentially...",
+        "IBM and RIKEN today announced they have successfully used a quantum computer to simulate a...",
+        "A year ago, AWS&rsquo;s Thierry Pellegrino estimated that quantum computing was still four to five..."
+      ],
+      "named_companies": [
+        "AMD",
+        "AWS"
+      ],
+      "infrastructure_layer": "Compute",
+      "bottleneck_type": "power_grid",
+      "who_gains_leverage": "utilities, power-secured developers, and operators with firm interconnection positions",
+      "who_takes_execution_risk": "developers and cloud buyers whose delivery dates depend on utility upgrades or energization schedules",
+      "timing_dependency": "utility interconnection, equipment procurement, and energization milestones",
+      "counterargument": "The source may still describe intent rather than delivered capacity, so the operating impact depends on follow-through.",
+      "next_observable_signal": "interconnection approvals, substation equipment dates, power purchase agreements, or disclosed energization windows",
+      "expert_insight_complete": true,
+      "expert_insight_missing_fields": []
+    },
+    "expertInsight": {
+      "concrete_facts": [
+        "Concerns with Ozaki Scheme emulation have led AMD chip designers to conclude there&rsquo;s currently no...",
+        "After several months of radio silence on the matter, Honeywell announced today that Quantinuum confidentially...",
+        "IBM and RIKEN today announced they have successfully used a quantum computer to simulate a...",
+        "A year ago, AWS&rsquo;s Thierry Pellegrino estimated that quantum computing was still four to five..."
+      ],
+      "named_companies": [
+        "AMD",
+        "AWS"
+      ],
+      "infrastructure_layer": "Compute",
+      "bottleneck_type": "power_grid",
+      "who_gains_leverage": "utilities, power-secured developers, and operators with firm interconnection positions",
+      "who_takes_execution_risk": "developers and cloud buyers whose delivery dates depend on utility upgrades or energization schedules",
+      "timing_dependency": "utility interconnection, equipment procurement, and energization milestones",
+      "counterargument": "The source may still describe intent rather than delivered capacity, so the operating impact depends on follow-through.",
+      "next_observable_signal": "interconnection approvals, substation equipment dates, power purchase agreements, or disclosed energization windows",
+      "expert_insight_complete": true,
+      "expert_insight_missing_fields": []
+    },
+    "concrete_facts": [
+      "Concerns with Ozaki Scheme emulation have led AMD chip designers to conclude there&rsquo;s currently no...",
+      "After several months of radio silence on the matter, Honeywell announced today that Quantinuum confidentially...",
+      "IBM and RIKEN today announced they have successfully used a quantum computer to simulate a...",
+      "A year ago, AWS&rsquo;s Thierry Pellegrino estimated that quantum computing was still four to five..."
+    ],
+    "named_companies": [
+      "AMD",
+      "AWS"
+    ],
+    "bottleneck_type": "power_grid",
+    "who_gains_leverage": "utilities, power-secured developers, and operators with firm interconnection positions",
+    "who_takes_execution_risk": "developers and cloud buyers whose delivery dates depend on utility upgrades or energization schedules",
+    "timing_dependency": "utility interconnection, equipment procurement, and energization milestones",
+    "counterargument": "The source may still describe intent rather than delivered capacity, so the operating impact depends on follow-through.",
+    "next_observable_signal": "interconnection approvals, substation equipment dates, power purchase agreements, or disclosed energization windows",
+    "expert_insight_complete": true,
+    "expert_insight_missing_fields": [],
+    "tags": [
+      "gpu",
+      "semiconductor"
+    ],
+    "imagePrompt": "Editorial hero image for enterprise technology news. No logos, no text, no watermark, no brand marks. Topic: Why Model Flows Are the Key for Reproducibility in AI for Science. Category: Hyperscalers & Cloud. Mood: premium, cinematic, monochrome glass dashboard aesthetic. Context: The Seventh National Research Platform (7NRP) workshop was held at the University of California San... Chemists have a scale problem. It is estimated that chemical space contains…. Include modern data center, network, semiconductor, cloud, or grid motifs only when relevant. 16:9 composition.",
+    "lang": "en",
+    "articleText": "The Seventh National Research Platform (7NRP) workshop was held at the University of California San... Chemists have a scale problem. It is estimated that chemical space contains as many as... Have we reached a point where AI agents can reliably function as scientific collaborators? Can... Genesis Mission started about six months ago as a United States-based effort to accelerate AI... The pace of scientific discovery is rapidly increasing thanks to AI and its capability to... AI can help accelerate scientific discovery, but setting up and running a foundation model is... Concerns with Ozaki Scheme emulation have led AMD chip designers to conclude there&rsquo;s currently no... China&rsquo;s National Supercomputing Center in Shenzhen last week introduced LineShine, a new supercomputer that it... After several months of radio silence on the matter, Honeywell announced today that Quantinuum confidentially... IBM and RIKEN today announced they have successfully used a quantum computer to simulate a... The incredible demand that AI is placing on technology is forcing changes to be made... The KV cache has emerged as the key linchpin in the quest to build AI... A year ago, AWS&rsquo;s Thierry Pellegrino estimated that quantum computing was still four to five... AI is creating a new set of demands for HPC centers. Researchers are no longer...",
+    "content_length": 1356,
+    "boilerplate_ratio": 0,
+    "title_body_similarity": 0.33,
+    "copyright_footer_detected": false,
+    "nav_or_cta_detected": false,
+    "sentence_completion_score": 1,
+    "source_domain_adapter": "generic",
+    "extraction_quality_score": 0.98,
+    "extraction_qa": {
+      "content_length": 1356,
+      "boilerplate_ratio": 0,
+      "title_body_similarity": 0.33,
+      "copyright_footer_detected": false,
+      "legal_boilerplate_detected": false,
+      "nav_or_cta_detected": false,
+      "sentence_completion_score": 1,
+      "source_domain_adapter": "generic",
+      "extraction_quality_score": 0.98,
+      "extraction_failure_reason": null,
+      "extraction_quality_reasons": []
+    },
+    "sourceUrl": "https://www.hpcwire.com/2026/06/09/why-model-flows-are-the-key-for-reproducibility-in-ai-for-science/",
+    "generatedImage": "/generated/26aaf08709ba30d1.svg",
+    "infrastructureRelevanceAction": "generate_full_memo",
+    "articlePagePublished": false,
+    "homepagePublished": true,
+    "archiveOnly": false,
+    "archiveOnlyReason": null,
+    "qualityGateBlocked": true,
+    "qualityGateReason": "fail_closed: source_text_incomplete:ellipsis_truncation_artifact, ellipsis_truncation_artifact",
+    "qualityGateBlockedAt": "2026-06-10T00:17:56.105Z",
+    "signalCardOnly": true,
+    "signalCardReason": "fail_closed: source_text_incomplete:ellipsis_truncation_artifact, ellipsis_truncation_artifact",
+    "article_blueprint": null,
+    "articleBlueprint": null,
+    "expertLensShort": null,
+    "expertLensFull": null,
+    "expertLens": null,
+    "generatedImageProvider": "local-placeholder",
+    "generatedImageModel": "local-svg"
+  },
+  {
     "id": "a1cf0f09534452ab",
     "source": "HPCwire",
     "url": "https://www.hpcwire.com/off-the-wire/trillion-labs-targets-ai-data-centers-and-power-plants-with-industrial-world-models/",
@@ -3301,7 +3485,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-06-09T17:27:37.988Z",
+      "generatedAt": "2026-06-10T00:18:03.476Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "SoftBank",
@@ -3915,7 +4099,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-06-09T17:27:38.199Z",
+      "generatedAt": "2026-06-10T00:18:03.698Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "NVIDIA",
@@ -4496,7 +4680,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-06-09T17:27:38.410Z",
+      "generatedAt": "2026-06-10T00:18:03.918Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Moving Defect Detection And Classification To The Edge",
@@ -5254,7 +5438,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-06-09T17:27:38.615Z",
+      "generatedAt": "2026-06-10T00:18:04.133Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Supermicro",
@@ -5698,7 +5882,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-06-09T17:27:38.829Z",
+      "generatedAt": "2026-06-10T00:18:04.356Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Samsung",
@@ -6453,7 +6637,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-06-09T17:27:39.031Z",
+      "generatedAt": "2026-06-10T00:18:04.571Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "NVIDIA",
@@ -7045,7 +7229,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-06-09T17:27:39.228Z",
+      "generatedAt": "2026-06-10T00:18:04.781Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Broadcom",
@@ -7470,7 +7654,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-06-09T17:27:39.429Z",
+      "generatedAt": "2026-06-10T00:18:04.992Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Google",
@@ -8359,125 +8543,6 @@
     "marketMissing": null,
     "claim_ledger_summary": null,
     "evidence_pack": null,
-    "sourceImage": null,
-    "secondary_category": null,
-    "urgency_score": null,
-    "defaultCategory": null
-  },
-  {
-    "id": "watch_sig_15be1d432d7e0d32",
-    "title": "Google: Google just declared itself a contender in AI design at IO 2026",
-    "source": "TechCrunch AI",
-    "sourceUrl": "https://techcrunch.com/2026/05/19/ai-design-tools-are-the-next-big-battleground-and-google-is-going-all-in-at-io-2026/",
-    "url": "https://techcrunch.com/2026/05/19/ai-design-tools-are-the-next-big-battleground-and-google-is-going-all-in-at-io-2026/",
-    "publishedAt": "2026-05-19T21:33:30.000Z",
-    "updatedAt": "2026-05-20T05:12:49.125Z",
-    "generation_version": "autonomous_editorial_desk_v1",
-    "public_generation_version": "autonomous_editorial_desk_v1",
-    "public_status": "signal",
-    "article_type": "Watchlist Signal",
-    "publishing_route": "Short Signal",
-    "homepagePublished": true,
-    "articlePagePublished": false,
-    "signalCardOnly": true,
-    "archiveOnly": false,
-    "noindex": false,
-    "seo_noindex": false,
-    "infrastructure_relevance_score": 0.65,
-    "extraction_quality_score": 0.9,
-    "primary_category": "Compute",
-    "infrastructure_layer": "Compute",
-    "region": "US",
-    "deck": "Google: Google just declared itself a contender in AI design at IO 2026 remains a source-linked AI infrastructure signal.",
-    "why_it_matters": "Google: Google just declared itself a contender in AI design at IO 2026 remains a source-linked AI infrastructure signal.",
-    "summary": "Google: Google just declared itself a contender in AI design at IO 2026 remains a source-linked AI infrastructure signal.",
-    "snippet": "Google: Google just declared itself a contender in AI design at IO 2026 remains a source-linked AI infrastructure signal.",
-    "excerpt": "Google: Google just declared itself a contender in AI design at IO 2026 remains a source-linked AI infrastructure signal.",
-    "contentText": "Google: Google just declared itself a contender in AI design at IO 2026 remains a source-linked AI infrastructure signal.",
-    "articleText": "Google: Google just declared itself a contender in AI design at IO 2026 remains a source-linked AI infrastructure signal.",
-    "fullArticleText": "Google: Google just declared itself a contender in AI design at IO 2026 remains a source-linked AI infrastructure signal.",
-    "cleaned_source_text": "Google: Google just declared itself a contender in AI design at IO 2026 remains a source-linked AI infrastructure signal.",
-    "source_evidence_text": "Google: Google just declared itself a contender in AI design at IO 2026 remains a source-linked AI infrastructure signal.",
-    "rawText": "Google: Google just declared itself a contender in AI design at IO 2026 remains a source-linked AI infrastructure signal.",
-    "expertLensShort": "Google: Google just declared itself a contender in AI design at IO 2026 remains a source-linked AI infrastructure signal.",
-    "expertLens": "Google: Google just declared itself a contender in AI design at IO 2026 remains a source-linked AI infrastructure signal.",
-    "public_presentation": {
-      "signal_label": "Watchlist",
-      "editorial_lens": "Compute",
-      "title": "Google: Google just declared itself a contender in AI design at IO 2026",
-      "deck": "Google: Google just declared itself a contender in AI design at IO 2026 remains a source-linked AI infrastructure signal.",
-      "why_it_matters": "Google: Google just declared itself a contender in AI design at IO 2026 remains a source-linked AI infrastructure signal.",
-      "reader_impact": [
-        "Operators",
-        "Capacity planners"
-      ],
-      "region": "US",
-      "source": "TechCrunch AI",
-      "view_detail": "",
-      "read_source": "https://techcrunch.com/2026/05/19/ai-design-tools-are-the-next-big-battleground-and-google-is-going-all-in-at-io-2026/",
-      "lane_key": "active-watchlist",
-      "lane_title": "Active Watchlist",
-      "visibility": "watchlist"
-    },
-    "public_routing": {
-      "visibility": "adjacent",
-      "laneKey": "adjacent-watchlist",
-      "laneTitle": "Adjacent Watchlist",
-      "score": 0.65,
-      "routing_decision": "short_signal",
-      "blocked_reasons": [
-        "score_below_standard_blog_threshold",
-        "unclean_or_short_evidence",
-        "missing_infrastructure_layer",
-        "facts_below_3"
-      ]
-    },
-    "signal_cluster_id": "sig_15be1d432d7e0d32",
-    "sort_index": 8,
-    "stale_generation": true,
-    "seo_noindex_reasons": [],
-    "generatedImage": "/generated/watch_sig_15be1d432d7e0d32.svg",
-    "public_content_tier": "signal_card",
-    "public_tier_reasons": [
-      "dirty_extraction",
-      "missing_concrete_infrastructure_layer"
-    ],
-    "slug": "watch_sig_15be1d432d7e0d32",
-    "language": "en",
-    "affected_stakeholders": [],
-    "article_blueprint": "capital-operator-brief",
-    "articleBlueprint": {
-      "id": "capital-operator-brief",
-      "name": "Capital Operator Brief",
-      "sectionHeadings": [
-        "Report",
-        "Capital Read",
-        "Operator Read",
-        "Watch Item"
-      ],
-      "paragraphRhythm": [
-        1,
-        1,
-        2,
-        1
-      ],
-      "targetParagraphs": 5,
-      "minChars": 900,
-      "maxChars": 1500
-    },
-    "blog_route": "short_signal",
-    "executiveSummary": [],
-    "claim_ledger": [],
-    "primaryHref": "https://techcrunch.com/2026/05/19/ai-design-tools-are-the-next-big-battleground-and-google-is-going-all-in-at-io-2026/",
-    "searchText": "Google: Google just declared itself a contender in AI design at IO 2026 TechCrunch AI Compute Watchlist Signal US Google: Google just declared itself a contender in AI design at IO 2026 remains a source-linked AI infrastructure signal.",
-    "expertLensFull": null,
-    "narrative_dna": null,
-    "whatHappened": null,
-    "marketMissing": null,
-    "claim_ledger_summary": null,
-    "evidence_pack": null,
-    "source_link_primary": true,
-    "source_link_secondary": false,
     "sourceImage": null,
     "secondary_category": null,
     "urgency_score": null,
