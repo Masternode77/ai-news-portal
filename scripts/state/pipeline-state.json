@@ -419,7 +419,9 @@
     "112a6e73c00fb4d3",
     "4b9cc8fefe132a5a",
     "26aaf08709ba30d1",
-    "4c428773e8397c86"
+    "4c428773e8397c86",
+    "b7244d39e1ebc4e6",
+    "d9a48b6706188b9f"
   ],
   "dayPlans": {
     "2026-03-24": {
@@ -14262,18 +14264,18 @@
     "2026-06-10": {
       "date": "2026-06-10",
       "createdAt": "2026-06-09T17:27:19.589Z",
-      "refreshedAt": "2026-06-10T00:17:46.338Z",
+      "refreshedAt": "2026-06-10T11:02:10.301Z",
       "candidateWindowHours": 24,
       "curatedItems": [
         {
-          "id": "4c428773e8397c86",
-          "source": "NVIDIA Blog",
-          "url": "https://blogs.nvidia.com/blog/nvidia-confidential-computing-apple-private-cloud-compute/",
-          "title": "NVIDIA Confidential Computing to Help Expand Apple’s Private Cloud Compute",
-          "snippet": "NVIDIA GPUs with Confidential Computing are now used for confidential inference in Apple’s Private Cloud Compute (PCC), as it expands beyond Apple’s data centers to Google Cloud. Unveiled during Apple’s annual WWDC gath…",
-          "contentText": "NVIDIA GPUs with Confidential Computing are now used for confidential inference in Apple’s Private Cloud Compute (PCC), as it expands beyond Apple’s data centers to Google Cloud. Unveiled during Apple’s annual WWDC gathering for developers from around the globe, NVIDIA GPUs will support server-side inference for Apple Foundation Models , custom-built by Apple and Google, leveraging the technologies behind the Gemini family of models. NVIDIA is collaborating with Apple and Google to support some of the next-generation Apple Intelligence features, using NVIDIA Blackwell GPUs with Confidential Computing integrated into Private Cloud Compute’s hardware security architecture running on Google Cloud. Confidential Computing Matters for the Era of AI Experiences NVIDIA Confidential Computing prov…",
-          "publishedAt": "2026-06-09T22:34:27.000Z",
-          "sourceImage": "https://blogs.nvidia.com/wp-content/uploads/2026/06/nvidia-confidential-computing-apple-pcc.jpeg",
+          "id": "d9a48b6706188b9f",
+          "source": "Toms Hardware",
+          "url": "https://www.tomshardware.com/3d-printing/3d-printed-triaxial-electrospray-nozzles-could-revolutionize-drug-and-self-healing-material-manufacturing-mit-developed-technique-makes-cleanroom-fabrication-optional",
+          "title": "3D-printed nozzles could revolutionize drug and self-healing material manufacturing — MIT-developed triaxial electrospray design makes cleanroom fabrication optional",
+          "snippet": "MIT's 3D-printed triaxial electrospray nozzles could revolutionize drug and self-healing material manufacturing. By using a relatively inexpensive resin printing approach, the new nozzle fabrication technique removes th…",
+          "contentText": "MIT's 3D-printed triaxial electrospray nozzles could revolutionize drug and self-healing material manufacturing. By using a relatively inexpensive resin printing approach, the new nozzle fabrication technique removes the need for a semiconductor-class cleanroom facility.",
+          "publishedAt": "2026-06-10T09:30:00.000Z",
+          "sourceImage": "https://cdn.mos.cms.futurecdn.net/u33nviy3DDiwytZuAahDkM-1280-80.jpg",
           "region": "US",
           "language": "en",
           "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
@@ -14287,47 +14289,43 @@
             "cloud buyers",
             "investors"
           ],
-          "article_type": "Capacity Expansion",
-          "urgency_score": 0.54,
+          "article_type": "Other",
+          "urgency_score": 0.45,
           "taxonomy_confidence": 0.77,
           "taxonomy_reasons": [
             "ai infrastructure",
             "neocloud"
           ],
           "direct_ai_infrastructure_relevance": 1,
-          "data_center_relevance": 0.42,
-          "cloud_capacity_relevance": 0.24,
-          "semiconductor_relevance": 0.598,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0.58,
           "power_grid_relevance": 0,
           "cooling_relevance": 0,
           "capital_markets_relevance": 0,
           "enterprise_ai_infrastructure_relevance": 0,
-          "infrastructure_relevance_score": 0.932,
+          "infrastructure_relevance_score": 0.858,
           "infrastructure_relevance_tier": "full_memo",
           "infrastructure_relevance_action": "generate_full_memo",
           "infrastructure_relevance_reasons": [
             "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "data_center_relevance:0.42(data centers)",
-            "cloud_capacity_relevance:0.24(google cloud)",
-            "semiconductor_relevance:0.60(nvidia, gpu)"
+            "semiconductor_relevance:0.58(semiconductor, gpu)"
           ],
           "infrastructure_relevance": {
             "direct_ai_infrastructure_relevance": 1,
-            "data_center_relevance": 0.42,
-            "cloud_capacity_relevance": 0.24,
-            "semiconductor_relevance": 0.598,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0.58,
             "power_grid_relevance": 0,
             "cooling_relevance": 0,
             "capital_markets_relevance": 0,
             "enterprise_ai_infrastructure_relevance": 0,
-            "infrastructure_relevance_score": 0.932,
+            "infrastructure_relevance_score": 0.858,
             "infrastructure_relevance_tier": "full_memo",
             "infrastructure_relevance_action": "generate_full_memo",
             "infrastructure_relevance_reasons": [
               "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-              "data_center_relevance:0.42(data centers)",
-              "cloud_capacity_relevance:0.24(google cloud)",
-              "semiconductor_relevance:0.60(nvidia, gpu)"
+              "semiconductor_relevance:0.58(semiconductor, gpu)"
             ],
             "infrastructureRelevanceAction": "generate_full_memo",
             "articlePagePublished": true,
@@ -14335,17 +14333,17 @@
             "archiveOnly": false,
             "archiveOnlyReason": null
           },
-          "score": 85
+          "score": 82
         },
         {
-          "id": "26aaf08709ba30d1",
+          "id": "b7244d39e1ebc4e6",
           "source": "HPCwire",
-          "url": "https://www.hpcwire.com/2026/06/09/why-model-flows-are-the-key-for-reproducibility-in-ai-for-science/",
-          "title": "Why Model Flows Are the Key for Reproducibility in AI for Science",
-          "snippet": "Reproducibility is absolutely critical in science, but it’s a troublesome characteristic when it comes to AI. Frontier models developed by Big AI may deliver superior accuracy and reasoning capabilities, but they do so…",
-          "contentText": "Reproducibility is absolutely critical in science, but it’s a troublesome characteristic when it comes to AI. Frontier models developed by Big AI may deliver superior accuracy and reasoning capabilities, but they do so largely as black boxes with little regard for reproducibility. If AI is going to turbo-charge scientific productivity, it must do so without compromising reproducibility. The question, then, becomes how to achieve it. This was the topic of a presentation at the TPC26 conference last week by Noah Smith, a computer scientist at the University of Washington and senior director of NLP research at the Allen Institute for Artificial Intelligence . Smith discussed why it’s important for scientists to have AI tools that meet their needs when it comes to reproducibility, and how mod…",
-          "publishedAt": "2026-06-09T22:16:42.000Z",
-          "sourceImage": "https://www.hpcwire.com/wp-content/uploads/2026/06/NoahSmith_ModelFlow-300x165.png",
+          "url": "https://www.hpcwire.com/2026/06/10/building-ai-factories-for-the-future-of-sovereign-ai/",
+          "title": "Building AI Factories for the Future of Sovereign AI",
+          "snippet": "The rise of AI factories marks a fundamental shift in how we think about and utilize intelligence. We are witnessing the transition from traditional AI models and isolated tools to AI being used as a scalable production…",
+          "contentText": "The rise of AI factories marks a fundamental shift in how we think about and utilize intelligence. We are witnessing the transition from traditional AI models and isolated tools to AI being used as a scalable production system with the power to automate business operations in real time. The number of organizations considered “AI mature” increased from 1% in 2024 to 37% in 2025. [i] , [ii] Traditional AI strategies center on R&D, training custom models, and running proof-of-concept pilots. AI factories go beyond fundamental capabilities—focusing on inference predictions, driving agentic AI workflows, and scaling efficiently to accommodate vast datasets and diverse workloads. These environments are purpose-built to enable enterprises to industrialize AI. From data pipelines and model traini…",
+          "publishedAt": "2026-06-10T09:55:50.000Z",
+          "sourceImage": "https://www.hpcwire.com/wp-content/uploads/2026/06/Picture1.jpg",
           "region": "US",
           "language": "en",
           "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
@@ -14359,8 +14357,8 @@
             "cloud buyers",
             "investors"
           ],
-          "article_type": "Research / Technical",
-          "urgency_score": 0.43,
+          "article_type": "Operations Update",
+          "urgency_score": 0.52,
           "taxonomy_confidence": 0.77,
           "taxonomy_reasons": [
             "ai infrastructure",
@@ -14370,32 +14368,34 @@
           "data_center_relevance": 0,
           "cloud_capacity_relevance": 0,
           "semiconductor_relevance": 0.22,
-          "power_grid_relevance": 0,
+          "power_grid_relevance": 0.22,
           "cooling_relevance": 0,
           "capital_markets_relevance": 0,
           "enterprise_ai_infrastructure_relevance": 0,
-          "infrastructure_relevance_score": 0.778,
+          "infrastructure_relevance_score": 0.813,
           "infrastructure_relevance_tier": "full_memo",
           "infrastructure_relevance_action": "generate_full_memo",
           "infrastructure_relevance_reasons": [
             "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "semiconductor_relevance:0.22(gpu)"
+            "semiconductor_relevance:0.22(gpu)",
+            "power_grid_relevance:0.22(power)"
           ],
           "infrastructure_relevance": {
             "direct_ai_infrastructure_relevance": 1,
             "data_center_relevance": 0,
             "cloud_capacity_relevance": 0,
             "semiconductor_relevance": 0.22,
-            "power_grid_relevance": 0,
+            "power_grid_relevance": 0.22,
             "cooling_relevance": 0,
             "capital_markets_relevance": 0,
             "enterprise_ai_infrastructure_relevance": 0,
-            "infrastructure_relevance_score": 0.778,
+            "infrastructure_relevance_score": 0.813,
             "infrastructure_relevance_tier": "full_memo",
             "infrastructure_relevance_action": "generate_full_memo",
             "infrastructure_relevance_reasons": [
               "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-              "semiconductor_relevance:0.22(gpu)"
+              "semiconductor_relevance:0.22(gpu)",
+              "power_grid_relevance:0.22(power)"
             ],
             "infrastructureRelevanceAction": "generate_full_memo",
             "articlePagePublished": true,
@@ -14403,7 +14403,145 @@
             "archiveOnly": false,
             "archiveOnlyReason": null
           },
-          "score": 79
+          "score": 80
+        },
+        {
+          "id": "58a6c54526aa9dd8",
+          "source": "Semiconductor Engineering",
+          "url": "https://semiengineering.com/building-multi-agent-systems-for-asic-flows/",
+          "title": "Building Multi-Agent Systems For ASIC Flows",
+          "snippet": "How agents can be used to divide and conquer IC design problems. The post Building Multi-Agent Systems For ASIC Flows appeared first on Semiconductor Engineering.",
+          "contentText": "If one AI agent can solve a problem in a certain amount of time, can multiple agents solve it faster? The answer is yes, but only if the agents have well-defined roles and targets. This is where orchestrators fit in, and why they are so critical to agentic AI. Kexun Zhang, head of research at ChipAgents, talks about what exactly AI agents are, how they can be used to solve big problems that would require many experienced engineers, and how to parse a problem to maximize the effectiveness of those agents. The post Building Multi-Agent Systems For ASIC Flows appeared first on Semiconductor Engineering .",
+          "publishedAt": "2026-06-10T07:15:59.000Z",
+          "sourceImage": null,
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "category": "Semiconductors",
+          "primary_category": "Semiconductors",
+          "secondary_category": "Accelerators, memory, and advanced packaging",
+          "infrastructure_layer": "Silicon",
+          "affected_stakeholders": [
+            "semiconductor suppliers",
+            "hyperscalers",
+            "server OEMs",
+            "investors"
+          ],
+          "article_type": "Research / Technical",
+          "urgency_score": 0.47,
+          "taxonomy_confidence": 0.85,
+          "taxonomy_reasons": [
+            "semiconductor",
+            "gpu",
+            "asic"
+          ],
+          "direct_ai_infrastructure_relevance": 1,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0.85,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.917,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "semiconductor_relevance:0.85(semiconductor, gpu, asic)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 1,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0.85,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.917,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+              "semiconductor_relevance:0.85(semiconductor, gpu, asic)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 77
+        },
+        {
+          "id": "6a1ba84a0d217f1d",
+          "source": "Capacity Media",
+          "url": "https://capacityglobal.com/news/spacex-ipo-space-data-centres-ai/",
+          "title": "Starlink, AI and space data centres: How the SpaceX IPO could change everything",
+          "snippet": "SpaceX continues to break records with its IPO, which it said is driven by Starlink, AI and space data centres, as investors demand nearly four times as more as what’s on offer. The post Starlink, AI and space data cent…",
+          "contentText": "The IPO that SpaceX filed at the end of May is shaping up to be the largest-ever filed, as its oversubscription rate runs nearly four times the planned offering size. According to sources cited by Reuters, the IPO has drawn more than US$250 billion of investor demand, far surpassing the $75 billion the firm first sought to raise. It is expected to make Elon Musk even wealthier than he already is, with rumours that the financial move could make him the first trillionaire in history. Forbes estimated on Tuesday that Musk’s current net worth is sitting around $792.8 billion. Starlink, AI and space-based data centres are expected to be the key growth drivers, although investor demand is still subject to change before the IPO prices. It comes as SpaceX continues to undertake record spending as…",
+          "publishedAt": "2026-06-10T10:07:40.000Z",
+          "sourceImage": "https://capacityglobal.com/wp-content/uploads/2026/06/Screenshot-2026-06-08-154155-327x218.png",
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "Hyperscalers & Cloud",
+          "category": "Capital Markets",
+          "primary_category": "Capital Markets",
+          "secondary_category": "Financing, valuation, and capital structure",
+          "infrastructure_layer": "Capital",
+          "affected_stakeholders": [
+            "investors",
+            "lenders",
+            "developers",
+            "operators"
+          ],
+          "article_type": "Financing / M&A",
+          "urgency_score": 0.4,
+          "taxonomy_confidence": 0.61,
+          "taxonomy_reasons": [
+            "ipo"
+          ],
+          "direct_ai_infrastructure_relevance": 0.64,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0.76,
+          "semiconductor_relevance": 0,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0.324,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.687,
+          "infrastructure_relevance_tier": "signal_card",
+          "infrastructure_relevance_action": "publish_signal_card_only",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:0.64",
+            "cloud_capacity_relevance:0.76(cloud capacity, hyperscalers)",
+            "capital_markets_relevance:0.32(ipo)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 0.64,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0.76,
+            "semiconductor_relevance": 0,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0.324,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.687,
+            "infrastructure_relevance_tier": "signal_card",
+            "infrastructure_relevance_action": "publish_signal_card_only",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:0.64",
+              "cloud_capacity_relevance:0.76(cloud capacity, hyperscalers)",
+              "capital_markets_relevance:0.32(ipo)"
+            ],
+            "infrastructureRelevanceAction": "publish_signal_card_only",
+            "articlePagePublished": false,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 75
         },
         {
           "id": "1114851f3726c657",
@@ -14475,244 +14613,105 @@
             "archiveOnly": false,
             "archiveOnlyReason": null
           },
-          "score": 77
-        },
-        {
-          "id": "fa781bb344ec8eeb",
-          "source": "ServeTheHome",
-          "url": "https://www.servethehome.com/minisforum-s5-all-flash-nas-shown-based-on-intels-wildcat-lake-platform/",
-          "title": "Minisforum S5 All-Flash NAS Shown Based on Intel’s Wildcat Lake Platform",
-          "snippet": "At Computex 2026 Minisforum was showing off their upcoming S5 NAS, a mid-range all-flash NAS. With 5 M.2 SSD slots and 10GbE networking, the fanless NAS punches up The post Minisforum S5 All-Flash NAS Shown Based on Int…",
-          "contentText": "At Computex 2026 Minisforum was showing off their upcoming S5 NAS, a mid-range all-flash NAS. With 5 M.2 SSD slots and 10GbE networking, the fanless NAS punches up The post Minisforum S5 All-Flash NAS Shown Based on Intel&#8217;s Wildcat Lake Platform appeared first on ServeTheHome .",
-          "publishedAt": "2026-06-09T16:30:19.000Z",
-          "sourceImage": null,
-          "region": "Global",
-          "language": "en",
-          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
-          "category": "AI Infrastructure",
-          "primary_category": "AI Infrastructure",
-          "secondary_category": "GPU clusters and deployment readiness",
-          "infrastructure_layer": "Compute",
-          "affected_stakeholders": [
-            "operators",
-            "hyperscalers",
-            "cloud buyers",
-            "investors"
-          ],
-          "article_type": "Product / Platform Update",
-          "urgency_score": 0.45,
-          "taxonomy_confidence": 0.77,
-          "taxonomy_reasons": [
-            "ai infrastructure",
-            "neocloud"
-          ],
-          "direct_ai_infrastructure_relevance": 1,
-          "data_center_relevance": 0,
-          "cloud_capacity_relevance": 0,
-          "semiconductor_relevance": 0.49,
-          "power_grid_relevance": 0,
-          "cooling_relevance": 0,
-          "capital_markets_relevance": 0,
-          "enterprise_ai_infrastructure_relevance": 0.18,
-          "infrastructure_relevance_score": 0.838,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "semiconductor_relevance:0.49(intel, gpu)"
-          ],
-          "infrastructure_relevance": {
-            "direct_ai_infrastructure_relevance": 1,
-            "data_center_relevance": 0,
-            "cloud_capacity_relevance": 0,
-            "semiconductor_relevance": 0.49,
-            "power_grid_relevance": 0,
-            "cooling_relevance": 0,
-            "capital_markets_relevance": 0,
-            "enterprise_ai_infrastructure_relevance": 0.18,
-            "infrastructure_relevance_score": 0.838,
-            "infrastructure_relevance_tier": "full_memo",
-            "infrastructure_relevance_action": "generate_full_memo",
-            "infrastructure_relevance_reasons": [
-              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-              "semiconductor_relevance:0.49(intel, gpu)"
-            ],
-            "infrastructureRelevanceAction": "generate_full_memo",
-            "articlePagePublished": true,
-            "homepagePublished": true,
-            "archiveOnly": false,
-            "archiveOnlyReason": null
-          },
-          "score": 73
-        },
-        {
-          "id": "be94dcf0570d6818",
-          "source": "TechCrunch AI",
-          "url": "https://techcrunch.com/2026/06/09/how-justin-ernest-invested-nearly-400m-into-hot-startups-without-a-traditional-vc-fund/",
-          "title": "How Justin Ernest invested nearly $500M into hot startups without a traditional VC fund",
-          "snippet": "Instead of spending a year raising a formal venture fund, the Sabertooth VC founder used a captive network of LPs to invest in startups like Anthropic, Anduril, and SpaceX.",
-          "contentText": "Instead of spending a year raising a formal venture fund, the Sabertooth VC founder used a captive network of LPs to invest in startups like Anthropic, Anduril, and SpaceX.",
-          "publishedAt": "2026-06-09T23:17:51.000Z",
-          "sourceImage": null,
-          "region": "US",
-          "language": "en",
-          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
-          "category": "AI Infrastructure",
-          "primary_category": "AI Infrastructure",
-          "secondary_category": "GPU clusters and deployment readiness",
-          "infrastructure_layer": "Compute",
-          "affected_stakeholders": [
-            "operators",
-            "hyperscalers",
-            "cloud buyers",
-            "investors"
-          ],
-          "article_type": "Other",
-          "urgency_score": 0.43,
-          "taxonomy_confidence": 0.77,
-          "taxonomy_reasons": [
-            "ai infrastructure",
-            "neocloud"
-          ],
-          "direct_ai_infrastructure_relevance": 1,
-          "data_center_relevance": 0,
-          "cloud_capacity_relevance": 0,
-          "semiconductor_relevance": 0.22,
-          "power_grid_relevance": 0,
-          "cooling_relevance": 0,
-          "capital_markets_relevance": 0,
-          "enterprise_ai_infrastructure_relevance": 0,
-          "infrastructure_relevance_score": 0.778,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "semiconductor_relevance:0.22(gpu)"
-          ],
-          "infrastructure_relevance": {
-            "direct_ai_infrastructure_relevance": 1,
-            "data_center_relevance": 0,
-            "cloud_capacity_relevance": 0,
-            "semiconductor_relevance": 0.22,
-            "power_grid_relevance": 0,
-            "cooling_relevance": 0,
-            "capital_markets_relevance": 0,
-            "enterprise_ai_infrastructure_relevance": 0,
-            "infrastructure_relevance_score": 0.778,
-            "infrastructure_relevance_tier": "full_memo",
-            "infrastructure_relevance_action": "generate_full_memo",
-            "infrastructure_relevance_reasons": [
-              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-              "semiconductor_relevance:0.22(gpu)"
-            ],
-            "infrastructureRelevanceAction": "generate_full_memo",
-            "articlePagePublished": true,
-            "homepagePublished": true,
-            "archiveOnly": false,
-            "archiveOnlyReason": null
-          },
-          "score": 72
-        },
-        {
-          "id": "dd75b5ffcd42600a",
-          "source": "Toms Hardware",
-          "url": "https://www.tomshardware.com/tech-industry/artificial-intelligence/claude-fable-5-brings-mythos-to-the-masses-anthropics-next-frontier-model-is-state-of-the-art-on-nearly-all-tested-benchmarks",
-          "title": "Claude Fable 5 brings Mythos to the masses — Anthropic's new frontier model is 'state-of-the-art on nearly all tested benchmarks'",
-          "snippet": "After first announcing its scarily capable Mythos Preview model back in April, Anthropic is releasing a public version of Mythos, called Fable 5, that it says is \"safe for general use.\"",
-          "contentText": "After first announcing its scarily capable Mythos Preview model back in April, Anthropic is releasing a public version of Mythos, called Fable 5, that it says is \"safe for general use.\"",
-          "publishedAt": "2026-06-09T20:34:10.000Z",
-          "sourceImage": "https://cdn.mos.cms.futurecdn.net/iAtJT6Ab8gPu3iDZq9bCnL-1280-80.jpg",
-          "region": "US",
-          "language": "en",
-          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
-          "category": "AI Infrastructure",
-          "primary_category": "AI Infrastructure",
-          "secondary_category": "GPU clusters and deployment readiness",
-          "infrastructure_layer": "Compute",
-          "affected_stakeholders": [
-            "operators",
-            "hyperscalers",
-            "cloud buyers",
-            "investors"
-          ],
-          "article_type": "Other",
-          "urgency_score": 0.43,
-          "taxonomy_confidence": 0.77,
-          "taxonomy_reasons": [
-            "ai infrastructure",
-            "neocloud"
-          ],
-          "direct_ai_infrastructure_relevance": 1,
-          "data_center_relevance": 0,
-          "cloud_capacity_relevance": 0,
-          "semiconductor_relevance": 0.22,
-          "power_grid_relevance": 0,
-          "cooling_relevance": 0,
-          "capital_markets_relevance": 0,
-          "enterprise_ai_infrastructure_relevance": 0,
-          "infrastructure_relevance_score": 0.778,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "semiconductor_relevance:0.22(gpu)"
-          ],
-          "infrastructure_relevance": {
-            "direct_ai_infrastructure_relevance": 1,
-            "data_center_relevance": 0,
-            "cloud_capacity_relevance": 0,
-            "semiconductor_relevance": 0.22,
-            "power_grid_relevance": 0,
-            "cooling_relevance": 0,
-            "capital_markets_relevance": 0,
-            "enterprise_ai_infrastructure_relevance": 0,
-            "infrastructure_relevance_score": 0.778,
-            "infrastructure_relevance_tier": "full_memo",
-            "infrastructure_relevance_action": "generate_full_memo",
-            "infrastructure_relevance_reasons": [
-              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-              "semiconductor_relevance:0.22(gpu)"
-            ],
-            "infrastructureRelevanceAction": "generate_full_memo",
-            "articlePagePublished": true,
-            "homepagePublished": true,
-            "archiveOnly": false,
-            "archiveOnlyReason": null
-          },
           "score": 71
+        },
+        {
+          "id": "b91347b4dbcc146e",
+          "source": "TechCrunch AI",
+          "url": "https://techcrunch.com/2026/06/10/meta-signs-first-ai-data-center-deal-in-india-with-reliance/",
+          "title": "Meta signs first AI data center deal in India with Reliance",
+          "snippet": "The 168-megawatt facility will support Meta's global AI computing needs and can be expanded over time.",
+          "contentText": "The 168-megawatt facility will support Meta's global AI computing needs and can be expanded over time.",
+          "publishedAt": "2026-06-10T07:05:26.000Z",
+          "sourceImage": null,
+          "region": "APAC",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "category": "AI Infrastructure",
+          "primary_category": "AI Infrastructure",
+          "secondary_category": "GPU clusters and deployment readiness",
+          "infrastructure_layer": "Compute",
+          "affected_stakeholders": [
+            "operators",
+            "hyperscalers",
+            "cloud buyers",
+            "investors"
+          ],
+          "article_type": "Other",
+          "urgency_score": 0.47,
+          "taxonomy_confidence": 0.77,
+          "taxonomy_reasons": [
+            "ai infrastructure",
+            "neocloud"
+          ],
+          "direct_ai_infrastructure_relevance": 1,
+          "data_center_relevance": 0.55,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0.22,
+          "power_grid_relevance": 0.3,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.921,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, ai data center, neocloud)",
+            "data_center_relevance:0.55(data center)",
+            "semiconductor_relevance:0.22(gpu)",
+            "power_grid_relevance:0.30(megawatt)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 1,
+            "data_center_relevance": 0.55,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0.22,
+            "power_grid_relevance": 0.3,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.921,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, ai data center, neocloud)",
+              "data_center_relevance:0.55(data center)",
+              "semiconductor_relevance:0.22(gpu)",
+              "power_grid_relevance:0.30(megawatt)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 70
         }
       ],
       "curatedIds": [
-        "4c428773e8397c86",
-        "26aaf08709ba30d1",
+        "d9a48b6706188b9f",
+        "b7244d39e1ebc4e6",
+        "58a6c54526aa9dd8",
+        "6a1ba84a0d217f1d",
         "1114851f3726c657",
-        "fa781bb344ec8eeb",
-        "be94dcf0570d6818",
-        "dd75b5ffcd42600a"
+        "b91347b4dbcc146e"
       ],
       "publishedIds": [
         "112a6e73c00fb4d3",
         "4b9cc8fefe132a5a",
         "26aaf08709ba30d1",
-        "4c428773e8397c86"
+        "4c428773e8397c86",
+        "b7244d39e1ebc4e6",
+        "d9a48b6706188b9f"
       ],
       "slotPublications": {
         "0": true,
-        "1": true
+        "1": true,
+        "2": true
       }
     }
   },
   "runHistory": [
-    {
-      "at": "2026-04-24T23:42:01.213Z",
-      "day": "2026-04-25",
-      "slot": 1,
-      "publishedCount": 2,
-      "publishedIds": [
-        "6c127759cb42421a",
-        "a26b17297b331386"
-      ]
-    },
     {
       "at": "2026-04-25T08:10:28.901Z",
       "day": "2026-04-25",
@@ -20999,7 +20998,72 @@
         }
       ],
       "archiveOnlyItems": []
+    },
+    {
+      "at": "2026-06-10T11:02:10.301Z",
+      "day": "2026-06-10",
+      "slot": 2,
+      "publishedCount": 0,
+      "signalCardCount": 2,
+      "archiveOnlyCount": 0,
+      "processedIds": [
+        "b7244d39e1ebc4e6",
+        "d9a48b6706188b9f"
+      ],
+      "blockedCount": 2,
+      "blockedItems": [
+        {
+          "id": "b7244d39e1ebc4e6",
+          "title": "Building AI Factories for the Future of Sovereign AI",
+          "infrastructure_relevance_score": 0.919,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud, hpc)",
+            "cloud_capacity_relevance:0.54(hyperscalers, aws)",
+            "semiconductor_relevance:0.44(amd, gpu)",
+            "power_grid_relevance:0.22(power)"
+          ],
+          "extraction_quality_score": 0.95,
+          "source_domain_adapter": "generic",
+          "content_length": 1366,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": false,
+          "repetition_block_reasons": [],
+          "repetition_check": null,
+          "expert_insight_complete": true,
+          "expert_insight_missing_fields": [],
+          "reason": "fail_closed: source_text_incomplete:ellipsis_truncation_artifact, ellipsis_truncation_artifact"
+        },
+        {
+          "id": "d9a48b6706188b9f",
+          "title": "3D-printed nozzles could revolutionize drug and self-healing material manufacturing — MIT-developed triaxial electrospray design makes cleanroom fabrication optional",
+          "infrastructure_relevance_score": 0.928,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "cloud_capacity_relevance:0.32(hyperscalers)",
+            "semiconductor_relevance:0.58(semiconductor, gpu)",
+            "power_grid_relevance:0.22(power)"
+          ],
+          "extraction_quality_score": 1,
+          "source_domain_adapter": "generic",
+          "content_length": 1662,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": false,
+          "repetition_block_reasons": [],
+          "repetition_check": null,
+          "expert_insight_complete": false,
+          "expert_insight_missing_fields": [
+            "concrete_facts",
+            "named_companies"
+          ],
+          "reason": "expert_insight_missing_fields concrete_facts, named_companies"
+        }
+      ],
+      "archiveOnlyItems": []
     }
   ],
-  "lastRunAt": "2026-06-10T00:17:46.338Z"
+  "lastRunAt": "2026-06-10T11:02:10.301Z"
 }
