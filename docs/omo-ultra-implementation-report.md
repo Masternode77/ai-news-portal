@@ -27,7 +27,7 @@ This report closes the 16-task Compute Current rebuild plan. The work replaced l
 
 - Passed: Tasks 1-15 were completed with RED/GREEN tests, Astro checks, and task-specific QA artifacts recorded in the evidence directory.
 - Passed: Task 16 report contract went RED on the missing validation module, then GREEN after the report contract and harness were added.
-- Blocked/skipped: credentialed live cache purge remains blocked without `COMPUTE_CURRENT_CACHE_PURGE_URL` or `VERCEL_DEPLOY_HOOK_URL`.
+- Blocked/skipped: credentialed live cache purge remains blocked without `COMPUTE_CURRENT_CACHE_PURGE_URL`.
 
 ## Remaining Risks
 

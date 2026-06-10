@@ -39,6 +39,9 @@ jobs:
       - name: Visual smoke
         run: npm run qa:visual:smoke
 
+      - name: Commercial visual QA
+        run: npm run qa:visual:commercial
+
       - name: Visual status
         run: npm run qa:visual:status
 
@@ -49,6 +52,7 @@ jobs:
           name: visual-qa-artifacts
           path: |
             artifacts/homepage.png
+            artifacts/visual-commercial/*.png
             artifacts/visual-status/*.json
           if-no-files-found: warn
 

@@ -1,0 +1,53 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { SITE } from '../config/site';
+
+const routes = SITE.commercial.routes;
+const contactSubjects = [
+  ['Request a sample', 'Compute Current sample request'],
+  ['Discuss a team subscription', 'Compute Current team subscription'],
+  ['Request a custom briefing', 'Compute Current custom briefing'],
+  ['Send a signal or source', 'Compute Current source signal'],
+];
+---
+<Layout
+  title={`Contact | ${SITE.name}`}
+  description="Contact Compute Current to request a sample brief, team subscription details, custom executive briefing, or source signal review."
+  canonicalPath={routes.contact}
+>
+  <main class="policy-shell">
+    <a class="back-link" href="/">Latest analysis</a>
+    <article class="policy-page">
+      <p class="eyebrow">Contact</p>
+      <h1>Request a brief, sample, team package, or source review.</h1>
+      <p class="policy-lede">
+        Compute Current handles wave-1 commercial requests directly so the briefing product can stay focused on decision-useful AI infrastructure intelligence.
+      </p>
+
+      <section>
+        <h2>Choose a request</h2>
+        <nav class="commercial-contact-list" aria-label="Contact request types">
+          {contactSubjects.map(([label, subject]) => (
+            <a href={`mailto:${SITE.contactEmail}?subject=${encodeURIComponent(subject)}`}>{label}</a>
+          ))}
+        </nav>
+      </section>
+
+      <section>
+        <h2>What to include</h2>
+        <ul class="commercial-signal-list">
+          <li>Your role: investor, operator, developer, vendor, cloud capacity team, or strategy group.</li>
+          <li>The market or bottleneck you need to track.</li>
+          <li>Whether you need the weekly brief, a team package, or a custom executive memo.</li>
+        </ul>
+      </section>
+
+      <nav class="policy-link-row" aria-label="Commercial pages">
+        <a href={routes.subscribe}>Weekly Brief</a>
+        <a href={routes.pricing}>Pricing</a>
+        <a href={routes.sample}>Sample Brief</a>
+        <a href={routes.briefing}>Executive Briefing</a>
+      </nav>
+    </article>
+  </main>
+</Layout>

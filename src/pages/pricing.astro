@@ -1,0 +1,59 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { SITE } from '../config/site';
+
+type CommercialPackage = (typeof SITE.commercial.packages)[number];
+
+const routes = SITE.commercial.routes;
+const packages = SITE.commercial.packages;
+const subject = encodeURIComponent('Compute Current pricing request');
+const body = encodeURIComponent('Please send pricing details for Compute Current intelligence products.');
+const pricingHref = `mailto:${SITE.contactEmail}?subject=${subject}&body=${body}`;
+---
+<Layout
+  title={`Pricing | ${SITE.name}`}
+  description="Pricing for Compute Current briefing notes, Pro weekly intelligence, team intelligence, and custom executive briefings."
+  canonicalPath={routes.pricing}
+>
+  <main class="policy-shell">
+    <a class="back-link" href="/">Latest analysis</a>
+    <article class="policy-page">
+      <p class="eyebrow">Pricing</p>
+      <h1>Commercial intelligence packages for AI infrastructure decisions.</h1>
+      <p class="policy-lede">
+        Compute Current starts with a direct-request commercial model: free public notes, a Pro weekly brief, team intelligence, and custom executive briefings.
+      </p>
+
+      <section>
+        <h2>Packages</h2>
+        <div class="commercial-grid">
+          {packages.map((plan: CommercialPackage) => (
+            <div class="commercial-plan">
+              <h3>{plan.name}</h3>
+              <p class="commercial-plan-price">{plan.price}</p>
+              {plan.annualPrice ? <p class="commercial-plan-price">{plan.annualPrice}</p> : null}
+              <p>{plan.summary}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <section>
+        <h2>Wave 1 request policy</h2>
+        <p>
+          Payment and invoicing are handled by direct briefing request while the product is validated with founding subscribers and custom briefing buyers.
+        </p>
+        <nav class="commercial-actions" aria-label="Pricing actions">
+          <a href={pricingHref}>Request Pricing</a>
+          <a href={routes.sample}>View Sample</a>
+          <a href={routes.briefing}>Custom Briefing</a>
+        </nav>
+      </section>
+
+      <nav class="policy-link-row" aria-label="Commercial pages">
+        <a href={routes.subscribe}>Weekly Brief</a>
+        <a href={routes.contact}>Contact</a>
+      </nav>
+    </article>
+  </main>
+</Layout>

@@ -9,6 +9,16 @@ const DEFAULT_SCREENSHOTS = [
   'evidence/compute-current-omo-ultra-rebuild/task-14-homepage.png',
   'evidence/compute-current-omo-ultra-rebuild/task-14-article.png',
 ];
+const COMMERCIAL_ROUTES = ['/subscribe/', '/pricing/', '/sample/', '/briefing/', '/contact/'];
+const SMOKE_PATHS = [
+  '/',
+  ...COMMERCIAL_ROUTES,
+  '/archive/',
+  '/rss.xml',
+  '/sitemap.xml',
+  '/sitemap-index.xml',
+  '/robots.txt',
+];
 
 function parseArgs(argv = process.argv.slice(2)) {
   const args = { out: DEFAULT_REPORT, json: DEFAULT_JSON };
@@ -44,22 +54,84 @@ async function distFileStatus(distDir, relativePath) {
   return { path: relativePath, ok: stat.size > 0, status: stat.size > 0 ? 'present' : 'empty', bytes: stat.size };
 }
 
+async function readText(filePath) {
+  try {
+    return await fs.readFile(filePath, 'utf8');
+  } catch {
+    return '';
+  }
+}
+
+async function firstAstroChildSitemap(distDir) {
+  const entries = await fs.readdir(distDir).catch(() => []);
+  return entries.find((entry) => /^sitemap-\d+\.xml$/.test(entry)) || '';
+}
+
+function commercialRouteFile(route) {
+  const slug = route.replace(/^\/|\/$/g, '');
+  return slug ? `${slug}/index.html` : 'index.html';
+}
+
+function localNewsIdsFromXml(xml = '') {
+  return [...xml.matchAll(/https:\/\/www\.computecurrent\.com\/news\/([^/]+)\//g)].map((match) => match[1]);
+}
+
+async function inspectLocalDistributionDetails(distDir) {
+  const homepage = await readText(path.join(distDir, 'index.html'));
+  const sitemap = await readText(path.join(distDir, 'sitemap.xml'));
+  const rss = await readText(path.join(distDir, 'rss.xml'));
+  const sitemapIndex = await readText(path.join(distDir, 'sitemap-index.xml'));
+  const childSitemap = await firstAstroChildSitemap(distDir);
+  const childXml = childSitemap ? await readText(path.join(distDir, childSitemap)) : '';
+  const homepageMissingCommercialLinks = [...COMMERCIAL_ROUTES, '/archive/'].filter((route) => !homepage.includes(`href="${route}"`) && !homepage.includes(`href='${route}'`));
+  const customSitemapMissingCommercial = COMMERCIAL_ROUTES.filter((route) => !sitemap.includes(route));
+  const astroSitemapMissingCommercial = COMMERCIAL_ROUTES.filter((route) => !childXml.includes(route));
+  const rssLocalNewsIds = localNewsIdsFromXml(rss);
+  const rssLocalFileStatuses = await Promise.all(rssLocalNewsIds.map(async (id) => ({
+    id,
+    exists: await exists(path.join(distDir, 'news', id, 'index.html')),
+  })));
+  const rssLocalMissingFiles = rssLocalFileStatuses.filter((item) => !item.exists).map((item) => item.id);
+  const sitemapIndexReferencesChild = Boolean(childSitemap && sitemapIndex.includes(childSitemap));
+
+  return {
+    homepageMissingCommercialLinks,
+    customSitemapMissingCommercial,
+    astroSitemapChild: childSitemap || null,
+    astroSitemapMissingCommercial,
+    sitemapIndexReferencesChild,
+    rssLocalNewsLinks: rssLocalNewsIds.length,
+    rssLocalMissingFiles,
+    ok: homepageMissingCommercialLinks.length === 0
+      && customSitemapMissingCommercial.length === 0
+      && astroSitemapMissingCommercial.length === 0
+      && sitemapIndexReferencesChild
+      && rssLocalMissingFiles.length === 0,
+  };
+}
+
 async function inspectLocalDist(distDir) {
   if (!distDir) return { kind: 'local-dist', ok: false, blocker: 'local dist path not provided' };
   const absolute = path.resolve(ROOT, distDir);
-  const sitemap = await exists(path.join(absolute, 'sitemap.xml')) ? 'sitemap.xml' : 'sitemap-index.xml';
-  const files = await Promise.all([
-    distFileStatus(absolute, 'index.html'),
-    distFileStatus(absolute, 'rss.xml'),
-    distFileStatus(absolute, sitemap),
-  ]);
+  const requiredFiles = [
+    'index.html',
+    'rss.xml',
+    'sitemap.xml',
+    'sitemap-index.xml',
+    'robots.txt',
+    'archive/index.html',
+    ...COMMERCIAL_ROUTES.map(commercialRouteFile),
+  ];
+  const files = await Promise.all(requiredFiles.map((file) => distFileStatus(absolute, file)));
+  const distribution = await inspectLocalDistributionDetails(absolute);
   const stat = await fs.stat(absolute).catch(() => null);
   return {
     kind: 'local-dist',
     path: absolute,
-    ok: files.every((file) => file.ok),
+    ok: files.every((file) => file.ok) && distribution.ok,
     buildId: stat ? `dist-mtime-${Math.trunc(stat.mtimeMs)}` : 'dist-missing',
     files,
+    distribution,
   };
 }
 
@@ -82,21 +154,17 @@ async function inspectUrl(label, url) {
   if (!url) {
     return { label, ok: false, skipped: true, blocker: `skipped ${label} step: URL not provided` };
   }
-  const checks = await Promise.all([
-    fetchUrl(url, '/'),
-    fetchUrl(url, '/rss.xml'),
-    fetchUrl(url, '/sitemap.xml'),
-  ]);
+  const checks = await Promise.all(SMOKE_PATHS.map((pathname) => fetchUrl(url, pathname)));
   return { label, url, ok: checks.every((check) => check.ok), checks };
 }
 
 async function maybePurgeCache() {
-  const purgeUrl = process.env.COMPUTE_CURRENT_CACHE_PURGE_URL || process.env.VERCEL_DEPLOY_HOOK_URL || '';
-  const token = process.env.COMPUTE_CURRENT_CACHE_PURGE_TOKEN || process.env.VERCEL_TOKEN || '';
+  const purgeUrl = process.env.COMPUTE_CURRENT_CACHE_PURGE_URL || '';
+  const token = process.env.COMPUTE_CURRENT_CACHE_PURGE_TOKEN || '';
   if (!purgeUrl) {
     return {
       status: 'skipped',
-      blocker: 'credential blocker: missing COMPUTE_CURRENT_CACHE_PURGE_URL or VERCEL_DEPLOY_HOOK_URL',
+      blocker: 'credential blocker: missing COMPUTE_CURRENT_CACHE_PURGE_URL',
     };
   }
   const response = await fetch(purgeUrl, {
@@ -136,6 +204,7 @@ function linesForUrl(result) {
 async function writeReport(result, reportPath) {
   await fs.mkdir(path.dirname(reportPath), { recursive: true });
   const localFiles = result.localDist.files || [];
+  const distribution = result.localDist.distribution || {};
   const lines = [
     '# Production Verification Report',
     '',
@@ -162,6 +231,12 @@ async function writeReport(result, reportPath) {
     '',
     `- Local dist status: ${result.localDist.ok ? 'passed' : 'failed'}`,
     ...localFiles.map((file) => `  - ${file.path}: ${file.status}${file.bytes ? ` (${file.bytes} bytes)` : ''}`),
+    `  - homepage commercial links missing: ${(distribution.homepageMissingCommercialLinks || []).join(', ') || 'none'}`,
+    `  - custom sitemap commercial paths missing: ${(distribution.customSitemapMissingCommercial || []).join(', ') || 'none'}`,
+    `  - Astro sitemap child: ${distribution.astroSitemapChild || 'missing'}`,
+    `  - Astro sitemap commercial paths missing: ${(distribution.astroSitemapMissingCommercial || []).join(', ') || 'none'}`,
+    `  - RSS local news links: ${distribution.rssLocalNewsLinks ?? 'n/a'}`,
+    `  - RSS local missing files: ${(distribution.rssLocalMissingFiles || []).join(', ') || 'none'}`,
     ...linesForUrl(result.local),
     ...linesForUrl(result.staging),
     ...linesForUrl(result.live),
@@ -185,7 +260,7 @@ async function writeReport(result, reportPath) {
 
 export async function verifyProductionSurface(options = {}) {
   const packageJson = await readJson(path.join(ROOT, 'package.json'));
-  const localDist = await inspectLocalDist(options.localDist || options['local-dist'] || 'dist');
+  const localDist = await inspectLocalDist(options.localDist || options['local-dist'] || options.dist || 'dist');
   const [local, staging, live, cachePurge, screenshots] = await Promise.all([
     inspectUrl('local', options.local),
     inspectUrl('staging', options.staging),

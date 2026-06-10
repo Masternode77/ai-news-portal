@@ -10,7 +10,19 @@ function slugify(value = '') {
 
 export function buildSitemapEntries(items = []) {
   const now = new Date().toISOString();
-  const staticPages = ['/', '/about/', '/methodology/', '/editorial-policy/', '/ai-disclosure/', '/archive/'];
+  const staticPages = [
+    '/',
+    '/about/',
+    '/methodology/',
+    '/editorial-policy/',
+    '/ai-disclosure/',
+    '/archive/',
+    '/subscribe/',
+    '/pricing/',
+    '/sample/',
+    '/briefing/',
+    '/contact/',
+  ];
   const articlePages = items
     .filter((item) => item?.id && item.articlePagePublished !== false && item.archiveOnly !== true && item.public_status !== 'archive_only_noindex' && item.public_status !== 'quarantined' && !shouldNoindexArticle(item))
     .map((item) => {

@@ -33,4 +33,6 @@ After publishing or regenerating a batch, run:
 npm run purge:cache
 ```
 
-Production purges require `COMPUTE_CURRENT_CACHE_PURGE_URL` or `VERCEL_DEPLOY_HOOK_URL`. Optional bearer auth uses `COMPUTE_CURRENT_CACHE_PURGE_TOKEN` or `VERCEL_TOKEN`.
+Production purges require `COMPUTE_CURRENT_CACHE_PURGE_URL`. Optional bearer auth uses `COMPUTE_CURRENT_CACHE_PURGE_TOKEN`.
+
+`VERCEL_DEPLOY_HOOK_URL` is a deployment trigger, not a cache-purge endpoint; do not use it for purge runs.

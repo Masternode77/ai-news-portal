@@ -43,6 +43,20 @@ test('homepage feed mixes longform and short public items without internal bucke
   assert.equal(feed.items.some((entry) => /Signals being monitored|Published deskwork|Cycle status/i.test(JSON.stringify(entry))), false);
 });
 
+test('homepage feed only links to article detail pages that pass public longform eligibility', () => {
+  const feed = buildHomepageFeed([
+    {
+      ...item(7, 'longform_analysis'),
+      articlePagePublished: true,
+      sourceUrl: 'https://example.com/source-story',
+      expertLensFull: { finalArticleBody: 'Too short for a public article page.' },
+    },
+  ]);
+
+  assert.equal(feed.items[0].publicSignal.view_detail, '');
+  assert.equal(feed.items[0].publicSignal.read_source, 'https://example.com/source-story');
+});
+
 test('homepage cards use a public board layout', () => {
   const cardSource = fs.readFileSync('src/components/ArticleCard.astro', 'utf8');
   const styles = fs.readFileSync('src/styles/global.css', 'utf8');

@@ -1,0 +1,82 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { SITE } from '../config/site';
+
+const routes = SITE.commercial.routes;
+const subject = encodeURIComponent('Compute Current sample brief request');
+const body = encodeURIComponent('Please send the current Compute Current Pro sample brief and founding subscriber details.');
+const sampleHref = `mailto:${SITE.contactEmail}?subject=${subject}&body=${body}`;
+---
+<Layout
+  title={`Sample Brief | ${SITE.name}`}
+  description="A sample Compute Current premium decision memo on AI data centers, power access, capacity, capital exposure, and infrastructure bottlenecks."
+  canonicalPath={routes.sample}
+>
+  <main class="policy-shell">
+    <a class="back-link" href="/">Latest analysis</a>
+    <article class="policy-page">
+      <p class="eyebrow">Sample Decision Memo</p>
+      <h1>AI Data Centers Are Turning Power Access Into the New Capacity Moat</h1>
+      <p class="policy-lede">
+        This is an illustrative sample of the paid Compute Current memo format. It shows the commercial read, watch items, and confidence notes a subscriber would receive.
+      </p>
+
+      <nav class="commercial-actions" aria-label="Sample brief actions">
+        <a href={sampleHref}>Request the Current Sample</a>
+        <a href={routes.subscribe}>Get the Weekly Brief</a>
+        <a href={routes.pricing}>See Pricing</a>
+      </nav>
+
+      <section>
+        <h2>What changed</h2>
+        <div class="commercial-sample-block">
+          <h3>Power access is becoming the gating constraint for AI capacity.</h3>
+          <p>
+            The sample read assumes a market where land, fiber, and capital are available, but usable power, interconnection timing, and cooling design decide which AI data center projects can move first.
+          </p>
+        </div>
+      </section>
+
+      <section>
+        <h2>Why it matters for AI infrastructure</h2>
+        <p>
+          AI capacity decisions now depend on grid timing, utility coordination, behind-the-meter options, rack density, cooling readiness, and the ability to sequence power delivery with tenant commitments.
+        </p>
+      </section>
+
+      <section>
+        <h2>Who benefits</h2>
+        <ul class="commercial-signal-list">
+          <li>Operators with defined power positions and credible energization timelines.</li>
+          <li>Developers that can combine grid access, generation strategy, and tenant-ready campus phasing.</li>
+          <li>Equipment and cooling vendors tied to high-density deployments with near-term power availability.</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Who is exposed</h2>
+        <ul class="commercial-signal-list">
+          <li>Projects marketed as AI-ready before utility milestones are firm.</li>
+          <li>Capital plans that assume GPU demand can overcome grid or permitting delay.</li>
+          <li>Teams tracking MW headlines without checking deliverability, cooling design, and interconnection queue risk.</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Watch next</h2>
+        <ul class="commercial-signal-list">
+          <li>Interconnection dates that move from planning language to executable utility milestones.</li>
+          <li>Campus expansions paired with generation, storage, nuclear, gas, or renewable supply strategy.</li>
+          <li>Tenant commitments that specify phased capacity delivery rather than headline MW alone.</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Confidence notes</h2>
+        <p>
+          Confidence is medium in this illustrative sample because the thesis is directional and depends on project-level evidence. A live Pro memo would attach source URLs, confidence labels, and item-specific caveats.
+        </p>
+      </section>
+    </article>
+  </main>
+</Layout>

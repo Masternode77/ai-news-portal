@@ -1,0 +1,54 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { SITE } from '../config/site';
+
+const routes = SITE.commercial.routes;
+const subject = encodeURIComponent('Compute Current Weekly Brief');
+const body = encodeURIComponent('Please send the Weekly AI Infrastructure Signal Brief sample and founding subscriber details.');
+const weeklyBriefHref = `mailto:${SITE.contactEmail}?subject=${subject}&body=${body}`;
+---
+<Layout
+  title={`Subscribe | ${SITE.name}`}
+  description="Request the weekly Compute Current AI Infrastructure Signal Brief for power, capacity, chips, cooling, cloud demand, capital, and APAC/Korea infrastructure signals."
+  canonicalPath={routes.subscribe}
+>
+  <main class="policy-shell">
+    <a class="back-link" href="/">Latest analysis</a>
+    <article class="policy-page">
+      <p class="eyebrow">Weekly Brief</p>
+      <h1>AI infrastructure signals for capacity, power, and capital decisions.</h1>
+      <p class="policy-lede">
+        The Weekly AI Infrastructure Signal Brief is built for investors, operators, developers, and cloud capacity teams watching the bottlenecks that shape AI data center deployment.
+      </p>
+
+      <nav class="commercial-actions" aria-label="Brief subscription actions">
+        <a href={weeklyBriefHref}>{SITE.commercial.ctas.weeklyBrief}</a>
+        <a href={routes.sample}>Request a Sample</a>
+        <a href={routes.pricing}>See Pricing</a>
+      </nav>
+
+      <section>
+        <h2>What the weekly brief tracks</h2>
+        <ul class="commercial-signal-list">
+          <li>Power availability, grid interconnection, generation tie-ups, and site constraints.</li>
+          <li>Data center capacity, hyperscaler demand, cloud commitments, and lease movement.</li>
+          <li>Chips, rack density, liquid cooling, supply bottlenecks, and deployment timing.</li>
+          <li>Capital, project finance, policy, permitting, and APAC/Korea-relevant market movement.</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>How to request access</h2>
+        <p>
+          Wave 1 uses direct briefing requests instead of a fake signup form. Send a note to the editorial desk and ask for the weekly brief, the sample memo, or team pricing.
+        </p>
+      </section>
+
+      <nav class="policy-link-row" aria-label="Commercial pages">
+        <a href={routes.sample}>Sample Brief</a>
+        <a href={routes.briefing}>Executive Briefing</a>
+        <a href={routes.contact}>Contact</a>
+      </nav>
+    </article>
+  </main>
+</Layout>

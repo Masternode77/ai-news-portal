@@ -2,6 +2,7 @@ import { buildPublicPresentation } from './public-presentation.mjs';
 import { routePublicLane } from './public-lane-router.mjs';
 import { cardCopyQualityResult, generateCardCopy } from './card-copy-quality-gate.mjs';
 import { publicEmptyStateText } from './public-empty-state-copy.mjs';
+import { isPublicLongformArticle } from './public-surface-eligibility.mjs';
 
 function dateMs(article = {}) {
   const ms = new Date(article.analysisPublishedAt || article.publishedAt || article.updatedAt || 0).getTime();
@@ -60,6 +61,7 @@ function decorate(article = {}, options = {}) {
   if (!copyQuality.ok) {
     return null;
   }
+  const detailHref = isPublicLongformArticle(article) ? `/news/${article.id}/` : '';
   return {
     ...article,
     publicSignal: {
@@ -73,7 +75,7 @@ function decorate(article = {}, options = {}) {
       date: copy.date,
       category: copy.category,
       cta: copy.cta,
-      view_detail: article.articlePagePublished === true && !article.signalCardOnly ? `/news/${article.id}/` : '',
+      view_detail: detailHref,
       read_source: article.sourceUrl || article.url || presentation.read_source || '',
     },
   };

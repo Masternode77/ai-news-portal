@@ -1,0 +1,60 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { SITE } from '../config/site';
+
+const routes = SITE.commercial.routes;
+const subject = encodeURIComponent('Compute Current executive briefing request');
+const body = encodeURIComponent('Please follow up about a custom executive briefing for AI infrastructure intelligence.');
+const briefingHref = `mailto:${SITE.contactEmail}?subject=${subject}&body=${body}`;
+---
+<Layout
+  title={`Executive Briefing | ${SITE.name}`}
+  description="Request custom Compute Current executive briefings for AI infrastructure investors, operators, developers, cloud capacity teams, and strategy groups."
+  canonicalPath={routes.briefing}
+>
+  <main class="policy-shell">
+    <a class="back-link" href="/">Latest analysis</a>
+    <article class="policy-page">
+      <p class="eyebrow">Executive Briefing</p>
+      <h1>Custom AI infrastructure intelligence for investment and operating decisions.</h1>
+      <p class="policy-lede">
+        Custom briefings turn Compute Current's public intelligence workflow into a focused memo and call for a specific market, project, tenant segment, or bottleneck.
+      </p>
+
+      <nav class="commercial-actions" aria-label="Executive briefing actions">
+        <a href={briefingHref}>Request a Briefing</a>
+        <a href={routes.sample}>View Sample</a>
+        <a href={routes.pricing}>See Pricing</a>
+      </nav>
+
+      <section>
+        <h2>Briefing use cases</h2>
+        <div class="commercial-grid">
+          <div class="commercial-note">
+            <h3>Project and site diligence</h3>
+            <p>Assess power access, grid timing, cooling readiness, capex exposure, and tenant-fit risk.</p>
+          </div>
+          <div class="commercial-note">
+            <h3>Hyperscaler capacity watch</h3>
+            <p>Track demand movement, cloud capacity signals, lease pressure, and deployment timing.</p>
+          </div>
+          <div class="commercial-note">
+            <h3>APAC and Korea read</h3>
+            <p>Translate global AI infrastructure movement into market-specific operating implications.</p>
+          </div>
+          <div class="commercial-note">
+            <h3>Bottleneck tracker</h3>
+            <p>Monitor power, grid, cooling, chips, rack density, financing, and policy constraints.</p>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2>Output</h2>
+        <p>
+          A custom briefing can include a memo, watchlist, source notes, confidence labels, and a focused executive call. Scope and cadence are confirmed by direct request.
+        </p>
+      </section>
+    </article>
+  </main>
+</Layout>

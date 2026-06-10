@@ -10,8 +10,8 @@ async function writeReport(lines = []) {
 }
 
 async function main() {
-  const purgeUrl = process.env.COMPUTE_CURRENT_CACHE_PURGE_URL || process.env.VERCEL_DEPLOY_HOOK_URL || '';
-  const token = process.env.COMPUTE_CURRENT_CACHE_PURGE_TOKEN || process.env.VERCEL_TOKEN || '';
+  const purgeUrl = process.env.COMPUTE_CURRENT_CACHE_PURGE_URL || '';
+  const token = process.env.COMPUTE_CURRENT_CACHE_PURGE_TOKEN || '';
 
   if (!purgeUrl) {
     await writeReport([
@@ -19,9 +19,10 @@ async function main() {
       '',
       `Generated at: ${new Date().toISOString()}`,
       'Status: skipped',
-      'Reason: missing COMPUTE_CURRENT_CACHE_PURGE_URL or VERCEL_DEPLOY_HOOK_URL.',
+      'Reason: missing COMPUTE_CURRENT_CACHE_PURGE_URL.',
       '',
       'The repository now includes the purge hook, but this local run did not have deployment cache credentials.',
+      'VERCEL_DEPLOY_HOOK_URL is a deploy trigger, not a cache-purge endpoint, and is intentionally ignored here.',
     ]);
     console.log('cache purge skipped: missing purge URL');
     return;

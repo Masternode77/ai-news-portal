@@ -24,7 +24,7 @@ This checklist separates local, staging, and production actions so credentialed 
 
 - Passed: env-docs audit documented 28 required environment variables across the setup/runbook docs.
 - Passed: password hash dry run produced hash metadata without exposing the plaintext password.
-- Blocked/skipped: cache purge is skipped without `COMPUTE_CURRENT_CACHE_PURGE_URL` or `VERCEL_DEPLOY_HOOK_URL`.
+- Blocked/skipped: cache purge is skipped without `COMPUTE_CURRENT_CACHE_PURGE_URL`.
 
 ## Remaining Risks
 
@@ -52,7 +52,7 @@ This checklist separates local, staging, and production actions so credentialed 
 2. Configure `IMAGE_PROVIDER=image2`; add `OPENAI_API_KEY` only if staging should generate paid images.
 3. Configure GitHub token access only to the staging branch.
 4. Run `npm run content:cycle`, then `npm run content:gate`.
-5. Run `npm run purge:cache` and confirm the report is either purged or explicitly skipped due missing credentials.
+5. Run `npm run purge:cache` and confirm the report is either purged or explicitly skipped due missing cache-purge credentials.
 
 ## Production Verification
 
@@ -64,3 +64,5 @@ This checklist separates local, staging, and production actions so credentialed 
 6. Record evidence before claiming live production verification.
 
 Never paste real API keys, bearer tokens, or admin passwords into docs, screenshots, tickets, or commits.
+
+`VERCEL_DEPLOY_HOOK_URL` is a deployment trigger, not a cache-purge endpoint; do not use it for purge runs.

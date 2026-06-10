@@ -9,6 +9,8 @@ import { SITE } from '../config/site';
 import { buildHomepageFeed } from '../../scripts/lib/homepage-feed-builder.mjs';
 
 const boardTitle = SITE.name;
+const routes = SITE.commercial.routes;
+const ctas = SITE.commercial.ctas;
 const homepageArticles = process.env.HOMEPAGE_FIXTURE === 'empty' ? [] : [...latestNews, ...archivedNews];
 const feed = buildHomepageFeed(homepageArticles, { limit: 50, minimumVisible: 30 });
 const latestFeed = { ...feed, items: feed.featured ? feed.items.slice(1) : feed.items };
@@ -65,10 +67,19 @@ const navLinks = [
             cooling, silicon, cloud capacity, and capital from headline noise to real operating decisions.
           </p>
           <p class="hero-deck">
-            No generic AI news feed, no hype cycle packaging. Just the board that shows what changed, who gains
-            leverage, and which bottleneck should be watched next.
+            Built for infrastructure investors, operators, developers, and cloud capacity teams that need to turn
+            power, grid, cooling, chips, and capital movement into practical watchlists.
           </p>
-          <a class="newsletter-cta" href="/archive/">Browse recent analysis</a>
+          <nav class="commercial-actions homepage-commercial-actions" aria-label="Commercial briefing actions">
+            <a href={routes.subscribe}>{ctas.weeklyBrief}</a>
+            <a href={routes.sample}>{ctas.sample}</a>
+            <a href={routes.briefing}>{ctas.executiveBriefing}</a>
+            <a href={routes.archive}>{ctas.recentAnalysis}</a>
+          </nav>
+          <nav class="homepage-secondary-actions" aria-label="Commercial reference links">
+            <a href={routes.pricing}>Pricing</a>
+            <a href={routes.contact}>Contact</a>
+          </nav>
         </div>
         <aside
           class="hero-brief premium-intelligence-desk"
@@ -138,6 +149,11 @@ const navLinks = [
 
     <footer class="transparency-footer" aria-label="Editorial links">
       <nav class="policy-link-row" aria-label="Publication pages">
+        <a href={routes.subscribe}>Weekly Brief</a>
+        <a href={routes.pricing}>Pricing</a>
+        <a href={routes.sample}>Sample Brief</a>
+        <a href={routes.briefing}>Executive Briefing</a>
+        <a href={routes.contact}>Contact</a>
         <a href="/about/">About</a>
         <a href="/editorial-policy/">Editorial Policy</a>
         <a href="/methodology/">Methodology</a>

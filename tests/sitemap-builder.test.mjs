@@ -27,6 +27,9 @@ test('sitemap builder includes article and taxonomy pages while excluding archiv
   assert.ok(articleEntry);
   assert.equal(articleEntry.image, '/generated/fallbacks/power-grid.svg');
   assert.equal(entries.some((entry) => entry.loc === '/news/b/'), false);
+  for (const loc of ['/subscribe/', '/pricing/', '/sample/', '/briefing/', '/contact/']) {
+    assert.ok(entries.some((entry) => entry.loc === loc), `expected static commercial page ${loc}`);
+  }
   const xml = sitemapXml(entries);
   assert.match(xml, /<urlset/);
   assert.match(xml, /<image:image>/);

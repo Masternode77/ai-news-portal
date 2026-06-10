@@ -34,6 +34,6 @@ Generated at: 2026-05-23T13:08:34Z
 
 `npm run purge:public-cache` ran locally and skipped the remote purge because no purge hook environment variable was configured.
 
-Result: `skipped: missing COMPUTE_CURRENT_CACHE_PURGE_URL or VERCEL_DEPLOY_HOOK_URL`.
+Result: `skipped: missing COMPUTE_CURRENT_CACHE_PURGE_URL`.
 
 The purge script and report are wired; production cache purge requires the deployment environment credentials.
