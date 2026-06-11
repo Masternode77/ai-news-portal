@@ -15,22 +15,36 @@ const pricingHref = `mailto:${SITE.contactEmail}?subject=${subject}&body=${body}
   description="Pricing for Compute Current briefing notes, Pro weekly intelligence, team intelligence, and custom executive briefings."
   canonicalPath={routes.pricing}
 >
-  <main class="policy-shell">
+  <main class="policy-shell commercial-page commercial-page-pricing">
     <a class="back-link" href="/">Latest analysis</a>
-    <article class="policy-page">
-      <p class="eyebrow">Pricing</p>
-      <h1>Commercial intelligence packages for AI infrastructure decisions.</h1>
-      <p class="policy-lede">
-        Compute Current starts with a direct-request commercial model: free public notes, a Pro weekly brief, team intelligence, and custom executive briefings.
-      </p>
+    <article class="policy-page commercial-article">
+      <header class="commercial-hero">
+        <div>
+          <p class="eyebrow">Pricing</p>
+          <h1>Commercial intelligence packages for AI infrastructure decisions.</h1>
+          <p class="policy-lede">
+            Compute Current starts with a direct-request model: public notes for audience building, a Pro weekly
+            brief for recurring intelligence, and custom briefings for higher-stakes decisions.
+          </p>
+        </div>
 
-      <section>
-        <h2>Packages</h2>
-        <div class="commercial-grid">
+        <aside class="commercial-hero-note" aria-label="Pricing model">
+          <span>Wave 1</span>
+          <strong>Request-based access</strong>
+          <p>Founding pricing is confirmed directly so packages can match individual, team, or advisory use.</p>
+        </aside>
+      </header>
+
+      <section class="commercial-section">
+        <div class="commercial-section-heading">
+          <p class="eyebrow">Packages</p>
+          <h2>Choose the decision cadence</h2>
+        </div>
+        <div class="commercial-grid commercial-package-grid">
           {packages.map((plan: CommercialPackage) => (
             <div class="commercial-plan">
-              <h3>{plan.name}</h3>
-              <p class="commercial-plan-price">{plan.price}</p>
+              <span>{plan.name}</span>
+              <h3>{plan.price}</h3>
               {plan.annualPrice ? <p class="commercial-plan-price">{plan.annualPrice}</p> : null}
               <p>{plan.summary}</p>
             </div>
@@ -38,17 +52,22 @@ const pricingHref = `mailto:${SITE.contactEmail}?subject=${subject}&body=${body}
         </div>
       </section>
 
-      <section>
-        <h2>Wave 1 request policy</h2>
-        <p>
-          Payment and invoicing are handled by direct briefing request while the product is validated with founding subscribers and custom briefing buyers.
-        </p>
-        <nav class="commercial-actions" aria-label="Pricing actions">
-          <a href={pricingHref}>Request Pricing</a>
-          <a href={routes.sample}>View Sample</a>
-          <a href={routes.briefing}>Custom Briefing</a>
-        </nav>
+      <section class="commercial-section commercial-proof-grid">
+        <div class="commercial-note">
+          <h2>Who uses it</h2>
+          <p>Infrastructure investors, operators, developers, cloud capacity teams, and strategy groups.</p>
+        </div>
+        <div class="commercial-note">
+          <h2>What pricing supports</h2>
+          <p>Weekly decision memos, team distribution, watchlists, custom topics, and executive briefing calls.</p>
+        </div>
       </section>
+
+      <nav class="commercial-actions" aria-label="Pricing actions">
+        <a href={pricingHref}>Request Pricing</a>
+        <a href={routes.sample}>View Sample</a>
+        <a href={routes.briefing}>Custom Briefing</a>
+      </nav>
 
       <nav class="policy-link-row" aria-label="Commercial pages">
         <a href={routes.subscribe}>Weekly Brief</a>

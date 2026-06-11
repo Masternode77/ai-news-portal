@@ -15,17 +15,31 @@ const contactSubjects = [
   description="Contact Compute Current to request a sample brief, team subscription details, custom executive briefing, or source signal review."
   canonicalPath={routes.contact}
 >
-  <main class="policy-shell">
+  <main class="policy-shell commercial-page commercial-page-contact">
     <a class="back-link" href="/">Latest analysis</a>
-    <article class="policy-page">
-      <p class="eyebrow">Contact</p>
-      <h1>Request a brief, sample, team package, or source review.</h1>
-      <p class="policy-lede">
-        Compute Current handles wave-1 commercial requests directly so the briefing product can stay focused on decision-useful AI infrastructure intelligence.
-      </p>
+    <article class="policy-page commercial-article">
+      <header class="commercial-hero">
+        <div>
+          <p class="eyebrow">Contact</p>
+          <h1>Route the right AI infrastructure intelligence request.</h1>
+          <p class="policy-lede">
+            Compute Current handles wave-1 commercial requests directly so the briefing product can stay focused on
+            decision-useful AI infrastructure intelligence.
+          </p>
+        </div>
 
-      <section>
-        <h2>Choose a request</h2>
+        <aside class="commercial-hero-note" aria-label="Response context">
+          <span>Desk intake</span>
+          <strong>Brief, sample, team, or source</strong>
+          <p>Send the request type, role, market, and bottleneck you need to track.</p>
+        </aside>
+      </header>
+
+      <section class="commercial-section">
+        <div class="commercial-section-heading">
+          <p class="eyebrow">Request router</p>
+          <h2>Choose the entry point</h2>
+        </div>
         <nav class="commercial-contact-list" aria-label="Contact request types">
           {contactSubjects.map(([label, subject]) => (
             <a href={`mailto:${SITE.contactEmail}?subject=${encodeURIComponent(subject)}`}>{label}</a>
@@ -33,13 +47,22 @@ const contactSubjects = [
         </nav>
       </section>
 
-      <section>
-        <h2>What to include</h2>
-        <ul class="commercial-signal-list">
-          <li>Your role: investor, operator, developer, vendor, cloud capacity team, or strategy group.</li>
-          <li>The market or bottleneck you need to track.</li>
-          <li>Whether you need the weekly brief, a team package, or a custom executive memo.</li>
-        </ul>
+      <section class="commercial-section commercial-proof-grid">
+        <div class="commercial-note">
+          <h2>What to include</h2>
+          <ul class="commercial-signal-list">
+            <li>Your role: investor, operator, developer, vendor, cloud capacity team, or strategy group.</li>
+            <li>The market or bottleneck you need to track.</li>
+            <li>Whether you need the weekly brief, a team package, or a custom executive memo.</li>
+          </ul>
+        </div>
+        <div class="commercial-note">
+          <h2>Best-fit requests</h2>
+          <p>
+            Power and grid diligence, AI data center capacity, tenant movement, cooling readiness, APAC/Korea reads,
+            and capital exposure tracking.
+          </p>
+        </div>
       </section>
 
       <nav class="policy-link-row" aria-label="Commercial pages">

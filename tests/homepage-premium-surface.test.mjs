@@ -36,6 +36,21 @@ test('homepage premium surface renders a named intelligence desk module before t
   assert.match(feedSource, /ArticleCard/);
 });
 
+test('homepage redesign exposes the commercial command center before latest signals', () => {
+  // Given: the homepage template is the canonical public entry point.
+  const source = readText('../src/pages/index.astro');
+  const templateSource = getTemplateSource(source);
+  const commandCenterIndex = templateSource.indexOf('data-commercial-command-center');
+  const latestSignalsIndex = templateSource.indexOf('Latest Signals');
+
+  // When: the redesigned product surface is inspected.
+  assert.notEqual(commandCenterIndex, -1, 'expected stable redesign marker data-commercial-command-center');
+  assert.notEqual(latestSignalsIndex, -1, 'expected Latest Signals feed label');
+
+  // Then: the conversion/product surface leads the news feed rather than trailing it.
+  assert.ok(commandCenterIndex < latestSignalsIndex, 'commercial command center should appear before Latest Signals');
+});
+
 test('homepage premium surface is part of the first viewport masthead system', () => {
   const source = readText('../src/pages/index.astro');
   const templateSource = getTemplateSource(source);

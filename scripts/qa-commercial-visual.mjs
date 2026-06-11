@@ -4,9 +4,10 @@ import path from 'node:path';
 
 const ROOT = process.cwd();
 const DIST_DIR = path.join(ROOT, 'dist');
-const STATUS_DIR = path.join(ROOT, 'artifacts', 'visual-status');
-const SCREENSHOT_DIR = path.join(ROOT, 'artifacts', 'visual-commercial');
-const STATUS_PATH = path.join(STATUS_DIR, 'commercial-visual.json');
+const EVIDENCE_DIR = process.env.QA_EVIDENCE_DIR ? path.resolve(process.env.QA_EVIDENCE_DIR) : '';
+const STATUS_PATH = EVIDENCE_DIR ? path.join(EVIDENCE_DIR, 'commercial-visual.json') : path.join(ROOT, 'artifacts', 'visual-status', 'commercial-visual.json');
+const STATUS_DIR = path.dirname(STATUS_PATH);
+const SCREENSHOT_DIR = EVIDENCE_DIR ? path.join(EVIDENCE_DIR, 'visual-commercial') : path.join(ROOT, 'artifacts', 'visual-commercial');
 const REQUIRED_VISUAL_QA = process.env.GITHUB_ACTIONS === 'true';
 const CONTACT_EMAIL = 'briefings@computecurrent.com';
 
@@ -27,10 +28,7 @@ const viewports = [
 
 async function writeStatus(payload) {
   await fs.mkdir(STATUS_DIR, { recursive: true });
-  await fs.writeFile(STATUS_PATH, JSON.stringify({
-    checkedAt: new Date().toISOString(),
-    ...payload,
-  }, null, 2));
+  await fs.writeFile(STATUS_PATH, JSON.stringify({ checkedAt: new Date().toISOString(), ...payload }, null, 2));
 }
 
 function contentTypeFor(filePath) {
@@ -111,6 +109,63 @@ async function targets() {
 
 async function pageChecks(page, target, screenshotPath) {
   return page.evaluate(({ requiredLinks }) => {
+    const maxFindings = 12;
+    const keySelector = 'a,button,h1,h2,h3,h4,h5,h6,p,article,nav,input,select,textarea,summary,[role="button"],[role="link"]';
+    const visibleElements = Array.from(document.querySelectorAll(keySelector))
+      .map((element, index) => {
+        const rect = element.getBoundingClientRect();
+        return { element, index, rect, style: window.getComputedStyle(element) };
+      })
+      .filter(({ rect, style }) => (
+        rect.width > 4 && rect.height > 4 && style.display !== 'none'
+        && style.visibility !== 'hidden' && Number.parseFloat(style.opacity || '1') > 0.05
+      ));
+    const describe = ({ element, index, rect }) => ({
+      element: element.tagName.toLowerCase(),
+      index,
+      className: typeof element.className === 'string' ? element.className : '',
+      text: (element.innerText || element.getAttribute('aria-label') || element.getAttribute('value') || '').trim().replace(/\s+/g, ' ').slice(0, 80),
+      rect: { x: Math.round(rect.x), y: Math.round(rect.y), width: Math.round(rect.width), height: Math.round(rect.height) },
+    });
+    const clippingOverflow = new Set(['hidden', 'clip']);
+    const isLineClamped = (style) => {
+      const clamp = style.webkitLineClamp || style.lineClamp || '';
+      return clamp && clamp !== 'none' && clamp !== 'unset' && Number.parseInt(clamp, 10) > 0;
+    };
+    const clippedElements = visibleElements
+      .filter(({ element, style }) => {
+        if (isLineClamped(style)) return false;
+        const clippedX = element.scrollWidth > element.clientWidth + 1 && clippingOverflow.has(style.overflowX);
+        const clippedY = element.scrollHeight > element.clientHeight + 1 && clippingOverflow.has(style.overflowY);
+        return clippedX || clippedY;
+      })
+      .slice(0, maxFindings)
+      .map((entry) => ({
+        ...describe(entry),
+        overflow: { x: Math.max(0, entry.element.scrollWidth - entry.element.clientWidth), y: Math.max(0, entry.element.scrollHeight - entry.element.clientHeight) },
+      }));
+    const overlappingElements = [];
+    for (let leftIndex = 0; leftIndex < visibleElements.length; leftIndex += 1) {
+      for (let rightIndex = leftIndex + 1; rightIndex < visibleElements.length; rightIndex += 1) {
+        const left = visibleElements[leftIndex];
+        const right = visibleElements[rightIndex];
+        if (left.element.contains(right.element) || right.element.contains(left.element)) continue;
+        if (isLineClamped(left.style) || isLineClamped(right.style)) continue;
+        const overlapWidth = Math.min(left.rect.right, right.rect.right) - Math.max(left.rect.left, right.rect.left);
+        const overlapHeight = Math.min(left.rect.bottom, right.rect.bottom) - Math.max(left.rect.top, right.rect.top);
+        if (overlapWidth <= 0 || overlapHeight <= 0) continue;
+        const overlapArea = overlapWidth * overlapHeight;
+        const smallestArea = Math.min(left.rect.width * left.rect.height, right.rect.width * right.rect.height);
+        if (overlapArea < 96 || overlapArea / smallestArea < 0.2) continue;
+        overlappingElements.push({
+          first: describe(left),
+          second: describe(right),
+          overlap: { width: Math.round(overlapWidth), height: Math.round(overlapHeight), area: Math.round(overlapArea) },
+        });
+        if (overlappingElements.length >= maxFindings) break;
+      }
+      if (overlappingElements.length >= maxFindings) break;
+    }
     const documentWidth = document.documentElement.scrollWidth;
     const viewportWidth = window.innerWidth;
     const links = Array.from(document.querySelectorAll('a')).map((anchor) => anchor.getAttribute('href') || '');
@@ -123,6 +178,8 @@ async function pageChecks(page, target, screenshotPath) {
       viewportWidth,
       documentWidth,
       horizontalOverflow: documentWidth > viewportWidth + 1,
+      clippedElements,
+      overlappingElements,
       missingRequiredLinks: requiredLinks.filter((required) => !links.some((link) => link === required || link.startsWith(required))),
     };
   }, { requiredLinks: target.requiredLinks }).then(async (checks) => {
@@ -205,6 +262,8 @@ async function main() {
     || result.status >= 400
     || result.blankScreenshot
     || result.horizontalOverflow
+    || result.clippedElements.length > 0
+    || result.overlappingElements.length > 0
     || result.bodyTextLength === 0
     || result.missingRequiredLinks.length > 0
   ));

@@ -12,14 +12,25 @@ const briefingHref = `mailto:${SITE.contactEmail}?subject=${subject}&body=${body
   description="Request custom Compute Current executive briefings for AI infrastructure investors, operators, developers, cloud capacity teams, and strategy groups."
   canonicalPath={routes.briefing}
 >
-  <main class="policy-shell">
+  <main class="policy-shell commercial-page commercial-page-briefing">
     <a class="back-link" href="/">Latest analysis</a>
-    <article class="policy-page">
-      <p class="eyebrow">Executive Briefing</p>
-      <h1>Custom AI infrastructure intelligence for investment and operating decisions.</h1>
-      <p class="policy-lede">
-        Custom briefings turn Compute Current's public intelligence workflow into a focused memo and call for a specific market, project, tenant segment, or bottleneck.
-      </p>
+    <article class="policy-page commercial-article">
+      <header class="commercial-hero">
+        <div>
+          <p class="eyebrow">Executive Briefing</p>
+          <h1>Custom AI infrastructure intelligence for investment and operating decisions.</h1>
+          <p class="policy-lede">
+            Custom briefings turn Compute Current's public intelligence workflow into a focused memo and call for a
+            specific market, project, tenant segment, or bottleneck.
+          </p>
+        </div>
+
+        <aside class="commercial-hero-note" aria-label="Custom briefing cadence">
+          <span>Cadence</span>
+          <strong>Memo plus executive call</strong>
+          <p>Scope can center on a region, project pipeline, buyer segment, or constraint watchlist.</p>
+        </aside>
+      </header>
 
       <nav class="commercial-actions" aria-label="Executive briefing actions">
         <a href={briefingHref}>Request a Briefing</a>
@@ -27,9 +38,12 @@ const briefingHref = `mailto:${SITE.contactEmail}?subject=${subject}&body=${body
         <a href={routes.pricing}>See Pricing</a>
       </nav>
 
-      <section>
-        <h2>Briefing use cases</h2>
-        <div class="commercial-grid">
+      <section class="commercial-section">
+        <div class="commercial-section-heading">
+          <p class="eyebrow">Use cases</p>
+          <h2>Where custom intelligence helps</h2>
+        </div>
+        <div class="commercial-grid commercial-use-grid">
           <div class="commercial-note">
             <h3>Project and site diligence</h3>
             <p>Assess power access, grid timing, cooling readiness, capex exposure, and tenant-fit risk.</p>
@@ -49,11 +63,19 @@ const briefingHref = `mailto:${SITE.contactEmail}?subject=${subject}&body=${body
         </div>
       </section>
 
-      <section>
-        <h2>Output</h2>
-        <p>
-          A custom briefing can include a memo, watchlist, source notes, confidence labels, and a focused executive call. Scope and cadence are confirmed by direct request.
-        </p>
+      <section class="commercial-section commercial-proof-grid">
+        <div class="commercial-note">
+          <h2>Output</h2>
+          <p>
+            A custom briefing can include a memo, watchlist, source notes, confidence labels, and a focused executive call.
+          </p>
+        </div>
+        <div class="commercial-note">
+          <h2>Fit</h2>
+          <p>
+            Built for teams making siting, leasing, capital allocation, partner, or market-entry decisions.
+          </p>
+        </div>
       </section>
     </article>
   </main>

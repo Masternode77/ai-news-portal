@@ -12,14 +12,25 @@ const weeklyBriefHref = `mailto:${SITE.contactEmail}?subject=${subject}&body=${b
   description="Request the weekly Compute Current AI Infrastructure Signal Brief for power, capacity, chips, cooling, cloud demand, capital, and APAC/Korea infrastructure signals."
   canonicalPath={routes.subscribe}
 >
-  <main class="policy-shell">
+  <main class="policy-shell commercial-page commercial-page-subscribe">
     <a class="back-link" href="/">Latest analysis</a>
-    <article class="policy-page">
-      <p class="eyebrow">Weekly Brief</p>
-      <h1>AI infrastructure signals for capacity, power, and capital decisions.</h1>
-      <p class="policy-lede">
-        The Weekly AI Infrastructure Signal Brief is built for investors, operators, developers, and cloud capacity teams watching the bottlenecks that shape AI data center deployment.
-      </p>
+    <article class="policy-page commercial-article">
+      <header class="commercial-hero">
+        <div>
+          <p class="eyebrow">Weekly Brief</p>
+          <h1>AI infrastructure signals for capacity, power, and capital decisions.</h1>
+          <p class="policy-lede">
+            The Weekly AI Infrastructure Signal Brief gives investors, operators, developers, and cloud capacity
+            teams a disciplined read on bottlenecks shaping AI data center deployment.
+          </p>
+        </div>
+
+        <aside class="commercial-hero-note" aria-label="Brief output">
+          <span>Output</span>
+          <strong>Source-linked weekly memo</strong>
+          <p>Five high-signal developments, commercial implications, watch items, and confidence notes.</p>
+        </aside>
+      </header>
 
       <nav class="commercial-actions" aria-label="Brief subscription actions">
         <a href={weeklyBriefHref}>{SITE.commercial.ctas.weeklyBrief}</a>
@@ -27,9 +38,12 @@ const weeklyBriefHref = `mailto:${SITE.contactEmail}?subject=${subject}&body=${b
         <a href={routes.pricing}>See Pricing</a>
       </nav>
 
-      <section>
-        <h2>What the weekly brief tracks</h2>
-        <ul class="commercial-signal-list">
+      <section class="commercial-section">
+        <div class="commercial-section-heading">
+          <p class="eyebrow">Coverage lanes</p>
+          <h2>What the weekly brief tracks</h2>
+        </div>
+        <ul class="commercial-signal-list commercial-check-grid">
           <li>Power availability, grid interconnection, generation tie-ups, and site constraints.</li>
           <li>Data center capacity, hyperscaler demand, cloud commitments, and lease movement.</li>
           <li>Chips, rack density, liquid cooling, supply bottlenecks, and deployment timing.</li>
@@ -37,11 +51,20 @@ const weeklyBriefHref = `mailto:${SITE.contactEmail}?subject=${subject}&body=${b
         </ul>
       </section>
 
-      <section>
-        <h2>How to request access</h2>
-        <p>
-          Wave 1 uses direct briefing requests instead of a fake signup form. Send a note to the editorial desk and ask for the weekly brief, the sample memo, or team pricing.
-        </p>
+      <section class="commercial-section commercial-proof-grid">
+        <div class="commercial-note">
+          <h2>How access works</h2>
+          <p>
+            Wave 1 uses direct briefing requests so the product can stay focused on qualified infrastructure readers
+            and founding subscriber feedback.
+          </p>
+        </div>
+        <div class="commercial-note">
+          <h2>What it replaces</h2>
+          <p>
+            A scattered watchlist across power, data center, chip, cloud, cooling, policy, and capital sources.
+          </p>
+        </div>
       </section>
 
       <nav class="policy-link-row" aria-label="Commercial pages">

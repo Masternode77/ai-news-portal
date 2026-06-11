@@ -35,6 +35,32 @@ const marketContext = [
   },
 ];
 
+const intelligenceProducts = [
+  {
+    label: 'Weekly Signal Brief',
+    title: 'Five decision-grade movements across power, capacity, chips, cooling, and capital.',
+    href: routes.subscribe,
+  },
+  {
+    label: 'Executive Briefing',
+    title: 'Custom memo and call for a market, site, tenant, or bottleneck question.',
+    href: routes.briefing,
+  },
+  {
+    label: 'Sample Memo',
+    title: 'Review the premium brief format before requesting a founding pilot.',
+    href: routes.sample,
+  },
+];
+
+const operatingReads = [
+  'Power and grid timing',
+  'Data center capacity',
+  'Hyperscaler demand',
+  'Cooling and rack density',
+  'Capital and policy risk',
+];
+
 const navLinks = [
   ['Power & Grid', '/category/power-grid/'],
   ['Data Centers', '/category/data-centers/'],
@@ -48,7 +74,7 @@ const navLinks = [
 ---
 <Layout title={boardTitle} description="AI infrastructure intelligence for power, data centers, chips, cloud capacity, cooling, and capital." canonicalPath="/">
   <main class="page-shell autonomous-home publication-home">
-    <header class="publication-header">
+    <header class="publication-header command-center-header" data-commercial-command-center>
       <div class="edition-line">
         <span>AI Infrastructure Intelligence</span>
         <span>Updated every 8 hours</span>
@@ -57,18 +83,17 @@ const navLinks = [
 
       <div class="masthead-row">
         <div class="hero-copy">
-          <p class="eyebrow">Operator briefing</p>
+          <p class="eyebrow">Infrastructure command center</p>
           <h1 aria-label={boardTitle}>
             <span>Compute</span>
             <span>Current</span>
           </h1>
           <p>
-            Decision-grade coverage of the AI infrastructure stack. We track the constraint that moves power,
-            cooling, silicon, cloud capacity, and capital from headline noise to real operating decisions.
+            AI infrastructure intelligence for capacity, power, and capital decisions.
           </p>
           <p class="hero-deck">
-            Built for infrastructure investors, operators, developers, and cloud capacity teams that need to turn
-            power, grid, cooling, chips, and capital movement into practical watchlists.
+            Built for operators, investors, developers, and cloud capacity teams that need to separate
+            headline movement from constraints that change build schedules, tenant strategy, and capital exposure.
           </p>
           <nav class="commercial-actions homepage-commercial-actions" aria-label="Commercial briefing actions">
             <a href={routes.subscribe}>{ctas.weeklyBrief}</a>
@@ -80,6 +105,10 @@ const navLinks = [
             <a href={routes.pricing}>Pricing</a>
             <a href={routes.contact}>Contact</a>
           </nav>
+
+          <div class="operating-read-row" aria-label="Coverage lanes">
+            {operatingReads.map((read) => <span>{read}</span>)}
+          </div>
         </div>
         <aside
           class="hero-brief premium-intelligence-desk"
@@ -123,6 +152,15 @@ const navLinks = [
           </div>
         </aside>
       </div>
+
+      <section class="command-product-strip" aria-label="Compute Current intelligence products">
+        {intelligenceProducts.map((product) => (
+          <a href={product.href}>
+            <span>{product.label}</span>
+            <strong>{product.title}</strong>
+          </a>
+        ))}
+      </section>
 
       <CategoryNav links={navLinks} />
     </header>
