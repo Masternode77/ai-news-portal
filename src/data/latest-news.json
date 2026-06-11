@@ -1,5 +1,399 @@
 [
   {
+    "id": "22a9114028a6e93d",
+    "source": "HPCwire",
+    "url": "https://www.hpcwire.com/2026/06/10/why-sram-chips-are-pulling-ahead-in-the-new-ai-world/",
+    "title": "Why SRAM Chips Are Pulling Ahead in the New AI World",
+    "snippet": "Thanks to the success of its GPUs in powering the first stage of the AI boom, Nvidia became not only the world’s most successful chip company, but the world’s most valuable company. But as we enter phase two of the AI b…",
+    "contentText": "Thanks to the success of its GPUs in powering the first stage of the AI boom, Nvidia became not only the world’s most successful chip company, but the world’s most valuable company. But as we enter phase two of the AI boom, we’re seeing a new class of chip based on static random access memory (SRAM) come to the forefront. That’s good news for Nvidia, which bought its own SRAM chipmaker, as well as upstarts like d-Matrix, Cerebras, and an SRAM cloud company called Gimlet Labs. While GPUs excel at chewing through massive gobs of data, keeping the previously computed AI model values in memory is the main bottleneck with AI inference workloads today. The so-called GPU memory wall is the primary barrier, as it imposes a hard limit on the number of previously computed keys and values an AI infe…",
+    "publishedAt": "2026-06-10T22:37:37.000Z",
+    "sourceImage": "https://www.hpcwire.com/wp-content/uploads/2026/04/dMatrix_chiplet-300x175.png",
+    "region": "US",
+    "language": "en",
+    "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+    "category": "Semiconductors",
+    "primary_category": "Semiconductors",
+    "secondary_category": "Accelerators, memory, and advanced packaging",
+    "infrastructure_layer": "Silicon",
+    "affected_stakeholders": [
+      "semiconductor suppliers",
+      "hyperscalers",
+      "server OEMs",
+      "investors"
+    ],
+    "article_type": "Product / Platform Update",
+    "urgency_score": 0.58,
+    "taxonomy_confidence": 0.95,
+    "taxonomy_reasons": [
+      "semiconductor",
+      "chip",
+      "gpu",
+      "nvidia",
+      "amd",
+      "advanced packaging"
+    ],
+    "direct_ai_infrastructure_relevance": 1,
+    "data_center_relevance": 0.42,
+    "cloud_capacity_relevance": 0.32,
+    "semiconductor_relevance": 1,
+    "power_grid_relevance": 0.22,
+    "cooling_relevance": 0,
+    "capital_markets_relevance": 0,
+    "enterprise_ai_infrastructure_relevance": 0.48,
+    "infrastructure_relevance_score": 1,
+    "infrastructure_relevance_tier": "full_memo",
+    "infrastructure_relevance_action": "generate_full_memo",
+    "infrastructure_relevance_reasons": [
+      "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+      "data_center_relevance:0.42(data center)",
+      "cloud_capacity_relevance:0.32(hyperscalers)",
+      "semiconductor_relevance:1.00(semiconductor, nvidia, amd)",
+      "power_grid_relevance:0.22(power)",
+      "enterprise_ai_infrastructure_relevance:0.48(networking, inference workloads)"
+    ],
+    "infrastructure_relevance": {
+      "direct_ai_infrastructure_relevance": 1,
+      "data_center_relevance": 0.42,
+      "cloud_capacity_relevance": 0.32,
+      "semiconductor_relevance": 1,
+      "power_grid_relevance": 0.22,
+      "cooling_relevance": 0,
+      "capital_markets_relevance": 0,
+      "enterprise_ai_infrastructure_relevance": 0.48,
+      "infrastructure_relevance_score": 1,
+      "infrastructure_relevance_tier": "full_memo",
+      "infrastructure_relevance_action": "generate_full_memo",
+      "infrastructure_relevance_reasons": [
+        "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+        "data_center_relevance:0.42(data center)",
+        "cloud_capacity_relevance:0.32(hyperscalers)",
+        "semiconductor_relevance:1.00(semiconductor, nvidia, amd)",
+        "power_grid_relevance:0.22(power)",
+        "enterprise_ai_infrastructure_relevance:0.48(networking, inference workloads)"
+      ],
+      "infrastructureRelevanceAction": "generate_full_memo",
+      "articlePagePublished": true,
+      "homepagePublished": true,
+      "archiveOnly": false,
+      "archiveOnlyReason": null
+    },
+    "score": 83,
+    "slug": "why-sram-chips-are-pulling-ahead-in-the-new-ai-world",
+    "summary": "In his presentation at the TPC26, Dieter Kranzlmüller, Chairman of the Board of the Leibniz... U.S. sanctions were designed to limit China&#8217;s access to the most advanced semi…",
+    "insight": "The practical effect is on compute supply, deployment speed, and network orchestration. The advantage goes to teams that line up power, facility design, network topology, and silicon timing instead of optimizing one layer in isolation.",
+    "expert_insight": {
+      "concrete_facts": [
+        "That’s good news for Nvidia, which bought its own SRAM chipmaker, as well as upstarts like d-Matrix, Cerebras, and an SRAM cloud company called Gimlet Labs.",
+        "sanctions were designed to limit China&#8217;s access to the most advanced semi… Thanks to the success of its GPUs in powering the first stage of the AI boom, Nvidia became not only the world’s most successful chip company, but the world’s most valuable company.",
+        "Concerns with Ozaki Scheme emulation have led AMD chip designers to conclude there’s currently no...",
+        "After several months of radio silence on the matter, Honeywell announced today that Quantinuum confidentially...",
+        "IBM and RIKEN today announced they have successfully used a quantum computer to simulate a..."
+      ],
+      "named_companies": [
+        "Nvidia",
+        "AMD"
+      ],
+      "infrastructure_layer": "Silicon",
+      "bottleneck_type": "power_grid",
+      "who_gains_leverage": "utilities, power-secured developers, and operators with firm interconnection positions",
+      "who_takes_execution_risk": "developers and cloud buyers whose delivery dates depend on utility upgrades or energization schedules",
+      "timing_dependency": "utility interconnection, equipment procurement, and energization milestones",
+      "counterargument": "The source may still describe intent rather than delivered capacity, so the operating impact depends on follow-through.",
+      "next_observable_signal": "interconnection approvals, substation equipment dates, power purchase agreements, or disclosed energization windows",
+      "expert_insight_complete": true,
+      "expert_insight_missing_fields": []
+    },
+    "expertInsight": {
+      "concrete_facts": [
+        "That’s good news for Nvidia, which bought its own SRAM chipmaker, as well as upstarts like d-Matrix, Cerebras, and an SRAM cloud company called Gimlet Labs.",
+        "sanctions were designed to limit China&#8217;s access to the most advanced semi… Thanks to the success of its GPUs in powering the first stage of the AI boom, Nvidia became not only the world’s most successful chip company, but the world’s most valuable company.",
+        "Concerns with Ozaki Scheme emulation have led AMD chip designers to conclude there’s currently no...",
+        "After several months of radio silence on the matter, Honeywell announced today that Quantinuum confidentially...",
+        "IBM and RIKEN today announced they have successfully used a quantum computer to simulate a..."
+      ],
+      "named_companies": [
+        "Nvidia",
+        "AMD"
+      ],
+      "infrastructure_layer": "Silicon",
+      "bottleneck_type": "power_grid",
+      "who_gains_leverage": "utilities, power-secured developers, and operators with firm interconnection positions",
+      "who_takes_execution_risk": "developers and cloud buyers whose delivery dates depend on utility upgrades or energization schedules",
+      "timing_dependency": "utility interconnection, equipment procurement, and energization milestones",
+      "counterargument": "The source may still describe intent rather than delivered capacity, so the operating impact depends on follow-through.",
+      "next_observable_signal": "interconnection approvals, substation equipment dates, power purchase agreements, or disclosed energization windows",
+      "expert_insight_complete": true,
+      "expert_insight_missing_fields": []
+    },
+    "concrete_facts": [
+      "That’s good news for Nvidia, which bought its own SRAM chipmaker, as well as upstarts like d-Matrix, Cerebras, and an SRAM cloud company called Gimlet Labs.",
+      "sanctions were designed to limit China&#8217;s access to the most advanced semi… Thanks to the success of its GPUs in powering the first stage of the AI boom, Nvidia became not only the world’s most successful chip company, but the world’s most valuable company.",
+      "Concerns with Ozaki Scheme emulation have led AMD chip designers to conclude there’s currently no...",
+      "After several months of radio silence on the matter, Honeywell announced today that Quantinuum confidentially...",
+      "IBM and RIKEN today announced they have successfully used a quantum computer to simulate a..."
+    ],
+    "named_companies": [
+      "Nvidia",
+      "AMD"
+    ],
+    "bottleneck_type": "power_grid",
+    "who_gains_leverage": "utilities, power-secured developers, and operators with firm interconnection positions",
+    "who_takes_execution_risk": "developers and cloud buyers whose delivery dates depend on utility upgrades or energization schedules",
+    "timing_dependency": "utility interconnection, equipment procurement, and energization milestones",
+    "counterargument": "The source may still describe intent rather than delivered capacity, so the operating impact depends on follow-through.",
+    "next_observable_signal": "interconnection approvals, substation equipment dates, power purchase agreements, or disclosed energization windows",
+    "expert_insight_complete": true,
+    "expert_insight_missing_fields": [],
+    "tags": [
+      "gpu",
+      "power",
+      "semiconductor"
+    ],
+    "imagePrompt": "Editorial hero image for enterprise technology news. No logos, no text, no watermark, no brand marks. Topic: Why SRAM Chips Are Pulling Ahead in the New AI World. Category: Hyperscalers & Cloud. Mood: premium, cinematic, monochrome glass dashboard aesthetic. Context: In his presentation at the TPC26, Dieter Kranzlmüller, Chairman of the Board of the Leibniz... U.S. sanctions were designed to limit China&#8217;s access to the most advanced semi…. Include modern data center, network, semiconductor, cloud, or grid motifs only when relevant. 16:9 composition.",
+    "lang": "en",
+    "articleText": "In his presentation at the TPC26, Dieter Kranzlmüller, Chairman of the Board of the Leibniz... U.S. sanctions were designed to limit China&#8217;s access to the most advanced semiconductor technologies. The... For most of the AI boom, the general assumption regarding AI hardware was to keep... You could build an entire data center around a new GPU with elaborate scale-up networking,... Progress is being made on Zero-Angle Memory (ZAM), the new 3D stacked DRAM memory that... At some point in developing ChipStack, Cadence’s agent-based chip design software, Kartik Hegde and his... Concerns with Ozaki Scheme emulation have led AMD chip designers to conclude there’s currently no... China’s National Supercomputing Center in Shenzhen last week introduced LineShine, a new supercomputer that it... After several months of radio silence on the matter, Honeywell announced today that Quantinuum confidentially... IBM and RIKEN today announced they have successfully used a quantum computer to simulate a... The incredible demand that AI is placing on technology is forcing changes to be made... The KV cache has emerged as the key linchpin in the quest to build AI... Scientific breakthroughs are often associated with new algorithms, novel approaches, or more powerful computing systems.... The rise of AI factories marks a fundamental shift in how we think about and...",
+    "content_length": 1372,
+    "boilerplate_ratio": 0,
+    "title_body_similarity": 0,
+    "copyright_footer_detected": false,
+    "nav_or_cta_detected": false,
+    "sentence_completion_score": 1,
+    "source_domain_adapter": "generic",
+    "extraction_quality_score": 0.95,
+    "extraction_qa": {
+      "content_length": 1372,
+      "boilerplate_ratio": 0,
+      "title_body_similarity": 0,
+      "copyright_footer_detected": false,
+      "legal_boilerplate_detected": false,
+      "nav_or_cta_detected": false,
+      "sentence_completion_score": 1,
+      "source_domain_adapter": "generic",
+      "extraction_quality_score": 0.95,
+      "extraction_failure_reason": null,
+      "extraction_quality_reasons": [
+        "title_body_similarity 0.00 low"
+      ]
+    },
+    "sourceUrl": "https://www.hpcwire.com/2026/06/10/why-sram-chips-are-pulling-ahead-in-the-new-ai-world/",
+    "generatedImage": "/generated/22a9114028a6e93d.svg",
+    "infrastructureRelevanceAction": "generate_full_memo",
+    "articlePagePublished": false,
+    "homepagePublished": true,
+    "archiveOnly": false,
+    "archiveOnlyReason": null,
+    "qualityGateBlocked": true,
+    "qualityGateReason": "fail_closed: source_text_incomplete:ellipsis_truncation_artifact, ellipsis_truncation_artifact",
+    "qualityGateBlockedAt": "2026-06-11T00:18:53.042Z",
+    "signalCardOnly": true,
+    "signalCardReason": "fail_closed: source_text_incomplete:ellipsis_truncation_artifact, ellipsis_truncation_artifact",
+    "article_blueprint": null,
+    "articleBlueprint": null,
+    "expertLensShort": null,
+    "expertLensFull": null,
+    "expertLens": null,
+    "generatedImageProvider": "local-placeholder",
+    "generatedImageModel": "local-svg"
+  },
+  {
+    "id": "82c8f35c981e9b53",
+    "source": "HPCwire",
+    "url": "https://www.hpcwire.com/off-the-wire/argonne-and-doe-launch-new-partnership-to-speed-up-us-manufacturing-innovation/",
+    "title": "Argonne and DOE Launch New Partnership to Speed Up US Manufacturing Innovation",
+    "snippet": "National Science-at-Scale Collaborative will connect industry, the Department of Energy and national laboratories to accelerate manufacturing innovation June 10, 2026 — The U.S. Department of Energy’s (DOE) Argonne Nati…",
+    "contentText": "National Science-at-Scale Collaborative will connect industry, the Department of Energy and national laboratories to accelerate manufacturing innovation June 10, 2026 &#8212; The U.S. Department of Energy’s (DOE) Argonne National Laboratory has launched a new effort to help American companies develop and scale new products and manufacturing technologies more quickly. Pilot-scale manufacturing equipment at Argonne’s Materials Engineering Research Facility. Image credit: Argonne National Laboratory. Called the ​“National Science-at-Scale Collaborative,” the effort is supported by DOE’s Office of Critical Materials and Energy Innovation (CMEI). The collaborative brings together industry, government and the national laboratories to address complex challenges in critical materials and chemical…",
+    "publishedAt": "2026-06-10T21:59:01.000Z",
+    "sourceImage": "https://www.hpcwire.com/wp-content/uploads/2026/06/16x9-34158D_182_AET_MERF-scaleability_PRINT-300x169.jpg",
+    "region": "US",
+    "language": "en",
+    "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+    "category": "AI Infrastructure",
+    "primary_category": "AI Infrastructure",
+    "secondary_category": "GPU clusters and deployment readiness",
+    "infrastructure_layer": "Compute",
+    "affected_stakeholders": [
+      "operators",
+      "hyperscalers",
+      "cloud buyers",
+      "investors"
+    ],
+    "article_type": "Product / Platform Update",
+    "urgency_score": 0.61,
+    "taxonomy_confidence": 0.93,
+    "taxonomy_reasons": [
+      "ai infrastructure",
+      "neocloud",
+      "hpc",
+      "deployment readiness"
+    ],
+    "direct_ai_infrastructure_relevance": 1,
+    "data_center_relevance": 0,
+    "cloud_capacity_relevance": 0.54,
+    "semiconductor_relevance": 0.72,
+    "power_grid_relevance": 0.22,
+    "cooling_relevance": 0,
+    "capital_markets_relevance": 0,
+    "enterprise_ai_infrastructure_relevance": 0,
+    "infrastructure_relevance_score": 0.958,
+    "infrastructure_relevance_tier": "full_memo",
+    "infrastructure_relevance_action": "generate_full_memo",
+    "infrastructure_relevance_reasons": [
+      "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud, hpc)",
+      "cloud_capacity_relevance:0.54(hyperscalers, aws)",
+      "semiconductor_relevance:0.72(nvidia, amd, gpu)",
+      "power_grid_relevance:0.22(power)"
+    ],
+    "infrastructure_relevance": {
+      "direct_ai_infrastructure_relevance": 1,
+      "data_center_relevance": 0,
+      "cloud_capacity_relevance": 0.54,
+      "semiconductor_relevance": 0.72,
+      "power_grid_relevance": 0.22,
+      "cooling_relevance": 0,
+      "capital_markets_relevance": 0,
+      "enterprise_ai_infrastructure_relevance": 0,
+      "infrastructure_relevance_score": 0.958,
+      "infrastructure_relevance_tier": "full_memo",
+      "infrastructure_relevance_action": "generate_full_memo",
+      "infrastructure_relevance_reasons": [
+        "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud, hpc)",
+        "cloud_capacity_relevance:0.54(hyperscalers, aws)",
+        "semiconductor_relevance:0.72(nvidia, amd, gpu)",
+        "power_grid_relevance:0.22(power)"
+      ],
+      "infrastructureRelevanceAction": "generate_full_memo",
+      "articlePagePublished": true,
+      "homepagePublished": true,
+      "archiveOnly": false,
+      "archiveOnlyReason": null
+    },
+    "score": 79,
+    "slug": "argonne-and-doe-launch-new-partnership-to-speed-up-us-manufacturing-innovation",
+    "summary": "TPC26 Panel Highlights the Growing Importance of Collaboration in AI for Science Scientific breakthroughs are often associated with new algorithms, novel approaches, or more power…",
+    "insight": "The practical effect is on compute supply, deployment speed, and network orchestration. The advantage goes to teams that line up power, facility design, network topology, and silicon timing instead of optimizing one layer in isolation.",
+    "expert_insight": {
+      "concrete_facts": [
+        "5, 2025 &#8212; AMD (NASDAQ:AMD) has announced financial results for the fourth...",
+        "NVIDIA Announces Financial Results for 1st Quarter Fiscal 2026 SANTA CLARA, Calif., May 29, 2025 &#8212; NVIDIA (NASDAQ: NVDA) has reported revenue for the first...",
+        "TPC26: AWS’s Pellegrino Says 2027 Could Mark a Quantum Turning Point A year ago, AWS&#8217;s Thierry Pellegrino estimated that quantum computing was still four to five...",
+        "AMD Reports 4th Quarter and Full Year 2024 Financial Results SANTA CLARA, Calif., Feb.",
+        "Supermicro Announces Support for NVIDIA RTX PRO 6000 Blackwell Server Edition GPUs SAN JOSE, Calif., March 18, 2025 &#8212; Supermicro, Inc."
+      ],
+      "named_companies": [
+        "AWS",
+        "AMD",
+        "NVIDIA",
+        "Supermicro",
+        "D-Wave Quantum Inc"
+      ],
+      "infrastructure_layer": "Compute",
+      "bottleneck_type": "power_grid",
+      "who_gains_leverage": "utilities, power-secured developers, and operators with firm interconnection positions",
+      "who_takes_execution_risk": "developers and cloud buyers whose delivery dates depend on utility upgrades or energization schedules",
+      "timing_dependency": "utility interconnection, equipment procurement, and energization milestones",
+      "counterargument": "The source may still describe intent rather than delivered capacity, so the operating impact depends on follow-through.",
+      "next_observable_signal": "interconnection approvals, substation equipment dates, power purchase agreements, or disclosed energization windows",
+      "expert_insight_complete": true,
+      "expert_insight_missing_fields": []
+    },
+    "expertInsight": {
+      "concrete_facts": [
+        "5, 2025 &#8212; AMD (NASDAQ:AMD) has announced financial results for the fourth...",
+        "NVIDIA Announces Financial Results for 1st Quarter Fiscal 2026 SANTA CLARA, Calif., May 29, 2025 &#8212; NVIDIA (NASDAQ: NVDA) has reported revenue for the first...",
+        "TPC26: AWS’s Pellegrino Says 2027 Could Mark a Quantum Turning Point A year ago, AWS&#8217;s Thierry Pellegrino estimated that quantum computing was still four to five...",
+        "AMD Reports 4th Quarter and Full Year 2024 Financial Results SANTA CLARA, Calif., Feb.",
+        "Supermicro Announces Support for NVIDIA RTX PRO 6000 Blackwell Server Edition GPUs SAN JOSE, Calif., March 18, 2025 &#8212; Supermicro, Inc."
+      ],
+      "named_companies": [
+        "AWS",
+        "AMD",
+        "NVIDIA",
+        "Supermicro",
+        "D-Wave Quantum Inc"
+      ],
+      "infrastructure_layer": "Compute",
+      "bottleneck_type": "power_grid",
+      "who_gains_leverage": "utilities, power-secured developers, and operators with firm interconnection positions",
+      "who_takes_execution_risk": "developers and cloud buyers whose delivery dates depend on utility upgrades or energization schedules",
+      "timing_dependency": "utility interconnection, equipment procurement, and energization milestones",
+      "counterargument": "The source may still describe intent rather than delivered capacity, so the operating impact depends on follow-through.",
+      "next_observable_signal": "interconnection approvals, substation equipment dates, power purchase agreements, or disclosed energization windows",
+      "expert_insight_complete": true,
+      "expert_insight_missing_fields": []
+    },
+    "concrete_facts": [
+      "5, 2025 &#8212; AMD (NASDAQ:AMD) has announced financial results for the fourth...",
+      "NVIDIA Announces Financial Results for 1st Quarter Fiscal 2026 SANTA CLARA, Calif., May 29, 2025 &#8212; NVIDIA (NASDAQ: NVDA) has reported revenue for the first...",
+      "TPC26: AWS’s Pellegrino Says 2027 Could Mark a Quantum Turning Point A year ago, AWS&#8217;s Thierry Pellegrino estimated that quantum computing was still four to five...",
+      "AMD Reports 4th Quarter and Full Year 2024 Financial Results SANTA CLARA, Calif., Feb.",
+      "Supermicro Announces Support for NVIDIA RTX PRO 6000 Blackwell Server Edition GPUs SAN JOSE, Calif., March 18, 2025 &#8212; Supermicro, Inc."
+    ],
+    "named_companies": [
+      "AWS",
+      "AMD",
+      "NVIDIA",
+      "Supermicro",
+      "D-Wave Quantum Inc"
+    ],
+    "bottleneck_type": "power_grid",
+    "who_gains_leverage": "utilities, power-secured developers, and operators with firm interconnection positions",
+    "who_takes_execution_risk": "developers and cloud buyers whose delivery dates depend on utility upgrades or energization schedules",
+    "timing_dependency": "utility interconnection, equipment procurement, and energization milestones",
+    "counterargument": "The source may still describe intent rather than delivered capacity, so the operating impact depends on follow-through.",
+    "next_observable_signal": "interconnection approvals, substation equipment dates, power purchase agreements, or disclosed energization windows",
+    "expert_insight_complete": true,
+    "expert_insight_missing_fields": [],
+    "tags": [
+      "gpu",
+      "power"
+    ],
+    "imagePrompt": "Editorial hero image for enterprise technology news. No logos, no text, no watermark, no brand marks. Topic: Argonne and DOE Launch New Partnership to Speed Up US Manufacturing Innovation. Category: Hyperscalers & Cloud. Mood: premium, cinematic, monochrome glass dashboard aesthetic. Context: TPC26 Panel Highlights the Growing Importance of Collaboration in AI for Science Scientific breakthroughs are often associated with new algorithms, novel approaches, or more power…. Include modern data center, network, semiconductor, cloud, or grid motifs only when relevant. 16:9 composition.",
+    "lang": "en",
+    "articleText": "TPC26 Panel Highlights the Growing Importance of Collaboration in AI for Science Scientific breakthroughs are often associated with new algorithms, novel approaches, or more powerful computing systems.... Building AI Factories for the Future of Sovereign AI The rise of AI factories marks a fundamental shift in how we think about and... TPC26: AWS’s Pellegrino Says 2027 Could Mark a Quantum Turning Point A year ago, AWS&#8217;s Thierry Pellegrino estimated that quantum computing was still four to five... TPC26: Toward Scientific AI Platforms at HPC Facilities AI is creating a new set of demands for HPC centers. Researchers are no longer... Blue Swan AI Gigafactory: Can Europe Scale AI Sustainably? In his presentation at the TPC26, Dieter Kranzlmüller, Chairman of the Board of the Leibniz... Foundation Models Offer a New Way to Explore Chemical Space Chemists have a scale problem. It is estimated that chemical space contains as many as... List of IBTA Compliant and Interoperable Network Products Delivered to IT Decision Makers June 19, 2019 &#8212; In April 2018, the IBTA’s Plugfest 33 saw the first instance of HDR... AMD Reports 4th Quarter and Full Year 2024 Financial Results SANTA CLARA, Calif., Feb. 5, 2025 &#8212; AMD (NASDAQ:AMD) has announced financial results for the fourth... D-Wave Announces Advancements in Annealing and Gate-Model Quantum Computing Tech at Qubits 2026 PALO ALTO, Calif., Jan. 28, 2026 &#8212; D-Wave Quantum Inc. has announced key product and... NVIDIA Announces Financial Results for 1st Quarter Fiscal 2026 SANTA CLARA, Calif., May 29, 2025 &#8212; NVIDIA (NASDAQ: NVDA) has reported revenue for the first... Supermicro Announces Support for NVIDIA RTX PRO 6000 Blackwell Server Edition GPUs SAN JOSE, Calif., March 18, 2025 &#8212; Supermicro, Inc.",
+    "content_length": 1799,
+    "boilerplate_ratio": 0,
+    "title_body_similarity": 0,
+    "copyright_footer_detected": false,
+    "nav_or_cta_detected": false,
+    "sentence_completion_score": 1,
+    "source_domain_adapter": "generic",
+    "extraction_quality_score": 1,
+    "extraction_qa": {
+      "content_length": 1799,
+      "boilerplate_ratio": 0,
+      "title_body_similarity": 0,
+      "copyright_footer_detected": false,
+      "legal_boilerplate_detected": false,
+      "nav_or_cta_detected": false,
+      "sentence_completion_score": 1,
+      "source_domain_adapter": "generic",
+      "extraction_quality_score": 1,
+      "extraction_failure_reason": null,
+      "extraction_quality_reasons": [
+        "title_body_similarity 0.00 low"
+      ]
+    },
+    "sourceUrl": "https://www.hpcwire.com/off-the-wire/argonne-and-doe-launch-new-partnership-to-speed-up-us-manufacturing-innovation/",
+    "generatedImage": "/generated/82c8f35c981e9b53.svg",
+    "infrastructureRelevanceAction": "generate_full_memo",
+    "articlePagePublished": false,
+    "homepagePublished": true,
+    "archiveOnly": false,
+    "archiveOnlyReason": null,
+    "qualityGateBlocked": true,
+    "qualityGateReason": "fail_closed: source_text_incomplete:ellipsis_truncation_artifact, ellipsis_truncation_artifact",
+    "qualityGateBlockedAt": "2026-06-11T00:18:53.044Z",
+    "signalCardOnly": true,
+    "signalCardReason": "fail_closed: source_text_incomplete:ellipsis_truncation_artifact, ellipsis_truncation_artifact",
+    "article_blueprint": null,
+    "articleBlueprint": null,
+    "expertLensShort": null,
+    "expertLensFull": null,
+    "expertLens": null,
+    "generatedImageProvider": "local-placeholder",
+    "generatedImageModel": "local-svg"
+  },
+  {
     "id": "5b765c3511945c8d",
     "source": "HPCwire",
     "url": "https://www.hpcwire.com/off-the-wire/nema-ashrae-and-pnnl-release-ai-data-center-energy-performance-framework/",
@@ -4052,7 +4446,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-06-10T18:08:37.621Z",
+      "generatedAt": "2026-06-11T00:18:57.334Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "SoftBank",
@@ -4666,7 +5060,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-06-10T18:08:37.846Z",
+      "generatedAt": "2026-06-11T00:18:57.554Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "NVIDIA",
@@ -5247,7 +5641,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-06-10T18:08:38.068Z",
+      "generatedAt": "2026-06-11T00:18:57.769Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Moving Defect Detection And Classification To The Edge",
@@ -6005,7 +6399,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-06-10T18:08:38.284Z",
+      "generatedAt": "2026-06-11T00:18:57.978Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Supermicro",
@@ -6449,7 +6843,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-06-10T18:08:38.509Z",
+      "generatedAt": "2026-06-11T00:18:58.193Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Samsung",
@@ -7204,7 +7598,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-06-10T18:08:38.724Z",
+      "generatedAt": "2026-06-11T00:18:58.401Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "NVIDIA",
@@ -7796,7 +8190,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-06-10T18:08:38.935Z",
+      "generatedAt": "2026-06-11T00:18:58.609Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Broadcom",
@@ -8042,719 +8436,5 @@
     },
     "dynamic_brief_label": "Stack Shift",
     "anti_template_rewrite": true
-  },
-  {
-    "id": "e07def5e2ea6d1c3",
-    "source": "Toms Hardware",
-    "url": "https://www.tomshardware.com/tech-industry/semiconductors/imec-builds-worlds-first-high-na-euv-fabricated-quantum-dot-qubit-device-breakthrough-could-pull-quantum-computing-onto-the-same-manufacturing-roadmap-as-next-gen-ai-processors-compressing-timelines",
-    "title": "Imec builds world's first High-NA EUV-fabricated quantum dot qubit device — breakthrough could pull quantum computing onto the same manufacturing roadmap as next-gen AI processors, compressing timelines",
-    "snippet": "Imec turns semiconductor supply into a technical bottleneck decision point for capacity planners.",
-    "contentText": "Imec unveiled the world’s first silicon quantum dot qubit device fabricated with High-NA EUV lithography, suggesting quantum computing may eventually scale using the semiconductor industry’s existing advanced manufacturing ecosystem. At first glance, the announcement may seem like another entry in the increasingly crowded quantum computing race. Qubits can theoretically solve computational problems that would take classical supercomputers longer than the age of the universe, but only at a scale nobody has yet achieved. With several advancements in the physics side of quantum computing, manufacturing now represents the major limitation. Imec claims to have addressed that directly by using the semiconductor industry's latest and most advanced lithography tool to fabricate silicon quantum dot spin qubits with tolerances compatible with industrial chip production for the first time. If that holds up, the implications for quantum scaling could be tremendous. It&rsquo;s a significant step towards quantum computing, but we are still not quite there. Quantum computing&rsquo;s central problem is no longer simply whether researchers can create functioning quantum systems. The problem is scaling those systems into reliable machines containing millions of reproducible, controllable qubits. Imec unveiled the world’s first silicon quantum dot qubit device fabricated with High-NA EUV lithogra Tom's Hardware reported: Imec builds world's first High-NA EUV-fabricated quantum dot qubit device — breakthrough could pull quantum computing onto the same manufacturing roadmap as next-gen AI processors, compressing timelines.",
-    "publishedAt": "2026-05-25T15:27:00.000Z",
-    "sourceImage": "https://cdn.mos.cms.futurecdn.net/vx6gWrh3KXPQ5bjvAYJpSV-1280-80.jpg",
-    "region": "US",
-    "language": "en",
-    "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
-    "category": "AI Infrastructure",
-    "primary_category": "AI Infrastructure",
-    "secondary_category": "GPU clusters and deployment readiness",
-    "infrastructure_layer": "semiconductor supply",
-    "affected_stakeholders": [
-      "operators",
-      "hyperscalers",
-      "cloud buyers",
-      "investors"
-    ],
-    "article_type": "Operations Update",
-    "urgency_score": 0.58,
-    "taxonomy_confidence": 0.85,
-    "taxonomy_reasons": [
-      "ai infrastructure",
-      "neocloud",
-      "deployment readiness"
-    ],
-    "direct_ai_infrastructure_relevance": 1,
-    "data_center_relevance": 0,
-    "cloud_capacity_relevance": 0.32,
-    "semiconductor_relevance": 0.94,
-    "power_grid_relevance": 0.22,
-    "cooling_relevance": 0,
-    "capital_markets_relevance": 0,
-    "enterprise_ai_infrastructure_relevance": 0,
-    "infrastructure_relevance_score": 1,
-    "infrastructure_relevance_tier": "full_memo",
-    "infrastructure_relevance_action": "generate_full_memo",
-    "infrastructure_relevance_reasons": [
-      "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-      "cloud_capacity_relevance:0.32(hyperscalers)",
-      "semiconductor_relevance:0.94(semiconductor, semiconductors, gpu)",
-      "power_grid_relevance:0.22(power)"
-    ],
-    "infrastructure_relevance": {
-      "direct_ai_infrastructure_relevance": 1,
-      "data_center_relevance": 0,
-      "cloud_capacity_relevance": 0.32,
-      "semiconductor_relevance": 0.94,
-      "power_grid_relevance": 0.22,
-      "cooling_relevance": 0,
-      "capital_markets_relevance": 0,
-      "enterprise_ai_infrastructure_relevance": 0,
-      "infrastructure_relevance_score": 1,
-      "infrastructure_relevance_tier": "full_memo",
-      "infrastructure_relevance_action": "generate_full_memo",
-      "infrastructure_relevance_reasons": [
-        "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-        "cloud_capacity_relevance:0.32(hyperscalers)",
-        "semiconductor_relevance:0.94(semiconductor, semiconductors, gpu)",
-        "power_grid_relevance:0.22(power)"
-      ],
-      "infrastructureRelevanceAction": "generate_full_memo",
-      "articlePagePublished": true,
-      "homepagePublished": true,
-      "archiveOnly": false
-    },
-    "score": 85,
-    "slug": "imec-builds-world-s-first-high-na-euv-fabricated-quantum-dot-qubit-device-breakthrough-could-pull-quantum-computing-onto-the-same-manufacturing-roadmap-as-next-gen-ai-processors-compressing-timelines",
-    "summary": "Tom's Hardware reported: Imec builds world's first High-NA EUV-fabricated quantum dot qubit device — breakthrough could pull quantum computing onto the same manufacturing roadmap as next-gen AI processors, compressing timelines.",
-    "insight": "The practical effect is on AI infrastructure execution risk. The advantage goes to teams that line up power, facility design, network topology, and silicon timing instead of optimizing one layer in isolation.",
-    "expert_insight": {
-      "concrete_facts": [
-        "Our detailed quantum computing roadmap analysis showed that companies including IBM, Google, IonQ, Quantinuum, D-Wave, PsiQuantum, and others have already demonstrated a wide range of working architectures, from superconducting qubits to trapped ions and photonic systems."
-      ],
-      "named_companies": [
-        "Google"
-      ],
-      "infrastructure_layer": "Compute",
-      "bottleneck_type": "power_grid",
-      "who_gains_leverage": "utilities, power-secured developers, and operators with firm interconnection positions",
-      "who_takes_execution_risk": "developers and cloud buyers whose delivery dates depend on utility upgrades or energization schedules",
-      "timing_dependency": "utility interconnection, equipment procurement, and energization milestones",
-      "counterargument": "The source may still describe intent rather than delivered capacity, so the operating impact depends on follow-through.",
-      "next_observable_signal": "interconnection approvals, substation equipment dates, power purchase agreements, or disclosed energization windows",
-      "expert_insight_complete": true,
-      "expert_insight_missing_fields": []
-    },
-    "expertInsight": {
-      "concrete_facts": [
-        "Our detailed quantum computing roadmap analysis showed that companies including IBM, Google, IonQ, Quantinuum, D-Wave, PsiQuantum, and others have already demonstrated a wide range of working architectures, from superconducting qubits to trapped ions and photonic systems."
-      ],
-      "named_companies": [
-        "Google"
-      ],
-      "infrastructure_layer": "Compute",
-      "bottleneck_type": "power_grid",
-      "who_gains_leverage": "utilities, power-secured developers, and operators with firm interconnection positions",
-      "who_takes_execution_risk": "developers and cloud buyers whose delivery dates depend on utility upgrades or energization schedules",
-      "timing_dependency": "utility interconnection, equipment procurement, and energization milestones",
-      "counterargument": "The source may still describe intent rather than delivered capacity, so the operating impact depends on follow-through.",
-      "next_observable_signal": "interconnection approvals, substation equipment dates, power purchase agreements, or disclosed energization windows",
-      "expert_insight_complete": true,
-      "expert_insight_missing_fields": []
-    },
-    "concrete_facts": [
-      "Our detailed quantum computing roadmap analysis showed that companies including IBM, Google, IonQ, Quantinuum, D-Wave, PsiQuantum, and others have already demonstrated a wide range of working architectures, from superconducting qubits to trapped ions and photonic systems."
-    ],
-    "named_companies": [
-      "Google"
-    ],
-    "bottleneck_type": "power_grid",
-    "who_gains_leverage": "utilities, power-secured developers, and operators with firm interconnection positions",
-    "who_takes_execution_risk": "developers and cloud buyers whose delivery dates depend on utility upgrades or energization schedules",
-    "timing_dependency": "utility interconnection, equipment procurement, and energization milestones",
-    "counterargument": "The source may still describe intent rather than delivered capacity, so the operating impact depends on follow-through.",
-    "next_observable_signal": "interconnection approvals, substation equipment dates, power purchase agreements, or disclosed energization windows",
-    "expert_insight_complete": true,
-    "expert_insight_missing_fields": [],
-    "tags": [
-      "semiconductor"
-    ],
-    "imagePrompt": "Editorial hero image for enterprise technology news. No logos, no text, no watermark, no brand marks. Topic: Imec builds world's first High-NA EUV-fabricated quantum dot qubit device — breakthrough could pull quantum computing onto the same manufacturing roadmap as next-gen AI processors, compressing timelines. Category: Hyperscalers & Cloud. Mood: premium, cinematic, monochrome glass dashboard aesthetic. Context: At first glance, the announcement may seem like another entry in the increasingly crowded quantum computing race. The actual significance, however, has less to do with raw quantum…. Include modern data center, network, semiconductor, cloud, or grid motifs only when relevant. 16:9 composition.",
-    "lang": "en",
-    "articleText": "Imec unveiled the world’s first silicon quantum dot qubit device fabricated with High-NA EUV lithography, suggesting quantum computing may eventually scale using the semiconductor industry’s existing advanced manufacturing ecosystem. At first glance, the announcement may seem like another entry in the increasingly crowded quantum computing race. Qubits can theoretically solve computational problems that would take classical supercomputers longer than the age of the universe, but only at a scale nobody has yet achieved. With several advancements in the physics side of quantum computing, manufacturing now represents the major limitation. Imec claims to have addressed that directly by using the semiconductor industry's latest and most advanced lithography tool to fabricate silicon quantum dot spin qubits with tolerances compatible with industrial chip production for the first time. If that holds up, the implications for quantum scaling could be tremendous. It&rsquo;s a significant step towards quantum computing, but we are still not quite there. Quantum computing&rsquo;s central problem is no longer simply whether researchers can create functioning quantum systems. The problem is scaling those systems into reliable machines containing millions of reproducible, controllable qubits. Imec unveiled the world’s first silicon quantum dot qubit device fabricated with High-NA EUV lithogra Tom's Hardware reported: Imec builds world's first High-NA EUV-fabricated quantum dot qubit device — breakthrough could pull quantum computing onto the same manufacturing roadmap as next-gen AI processors, compressing timelines.",
-    "content_length": 1690,
-    "boilerplate_ratio": 0,
-    "title_body_similarity": 0.33,
-    "copyright_footer_detected": false,
-    "nav_or_cta_detected": false,
-    "sentence_completion_score": 1,
-    "source_domain_adapter": "generic",
-    "extraction_quality_score": 1,
-    "extraction_qa": {
-      "content_length": 1690,
-      "boilerplate_ratio": 0,
-      "title_body_similarity": 0.33,
-      "copyright_footer_detected": false,
-      "legal_boilerplate_detected": false,
-      "nav_or_cta_detected": false,
-      "sentence_completion_score": 1,
-      "source_domain_adapter": "generic",
-      "extraction_quality_score": 1,
-      "extraction_quality_reasons": []
-    },
-    "sourceUrl": "https://www.tomshardware.com/tech-industry/semiconductors/imec-builds-worlds-first-high-na-euv-fabricated-quantum-dot-qubit-device-breakthrough-could-pull-quantum-computing-onto-the-same-manufacturing-roadmap-as-next-gen-ai-processors-compressing-timelines",
-    "generatedImage": "/generated/e07def5e2ea6d1c3.svg",
-    "infrastructureRelevanceAction": "generate_full_memo",
-    "articlePagePublished": true,
-    "homepagePublished": true,
-    "archiveOnly": false,
-    "article_blueprint": "capital-operator-brief",
-    "articleBlueprint": {
-      "id": "capital-operator-brief",
-      "name": "Capital Operator Brief",
-      "sectionHeadings": [
-        "Report",
-        "Capital Read",
-        "Operator Read",
-        "Watch Item"
-      ],
-      "paragraphRhythm": [
-        1,
-        1,
-        2,
-        1
-      ],
-      "targetParagraphs": 5,
-      "minChars": 900,
-      "maxChars": 1500
-    },
-    "expertLensShort": "Google is a technical bottleneck item for stack shifts readers, with the infrastructure read limited to source-backed facts.",
-    "expertLensFull": {
-      "version": 2,
-      "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-06-10T18:08:39.151Z",
-      "generation_version": "editorial_surface_v2",
-      "narrative_dna": {
-        "protagonist": "Google",
-        "concrete_event": "Tom's Hardware reported: Imec builds world's first High-NA EUV-fabricated quantum dot qubit device — breakthrough could pull quantum computing onto the same manufacturing roadmap as next-gen AI processors, compressing timelines.",
-        "core_tension": "Google has to translate tom's hardware reported: imec builds world's first high-na euv-fabricated quantum dot qubit device — breakthrough could pull quantum computing onto the same manufacturing roadmap as next-gen ai processors, compressing timelines. into a semiconductor supply decision that survives cost, timing, or operating constraints",
-        "infrastructure_layer": "semiconductor supply",
-        "reader_role": [
-          "operators",
-          "hyperscalers",
-          "cloud buyers",
-          "investors"
-        ],
-        "decision_relevance": "operators and hyperscalers can use the item to test technical bottleneck before changing procurement, deployment, or risk assumptions",
-        "evidence_anchor": "Our detailed quantum computing roadmap analysis showed that companies including IBM, Google, IonQ, Quantinuum, D-Wave, PsiQuantum, and others have already demonstrated a wide range of working architectures, from superconducting qubits to trapped ions and photonic systems.",
-        "counterpoint": "The source may still describe intent rather than delivered capacity, so the operating impact depends on follow-through.",
-        "watch_metric": "interconnection approvals, substation equipment dates, power purchase agreements, or disclosed energization windows",
-        "time_horizon": "near term",
-        "public_signal_label": "Stack Shift",
-        "editorial_lens": "Technical Bottleneck",
-        "story_archetype": "Technical Teardown",
-        "story_archetype_id": "technical-teardown",
-        "routing_decision": "core_lane",
-        "valid_for_full_article": true,
-        "missing_fields": [],
-        "truncation": {
-          "ok": true,
-          "artifacts": []
-        }
-      },
-      "dynamicBriefLabel": "Stack Shift",
-      "blueprintId": "capital-operator-brief",
-      "blueprintName": "Capital Operator Brief",
-      "blueprint": {
-        "id": "capital-operator-brief",
-        "name": "Capital Operator Brief",
-        "sectionHeadings": [
-          "Report",
-          "Capital Read",
-          "Operator Read",
-          "Watch Item"
-        ],
-        "paragraphRhythm": [
-          1,
-          1,
-          2,
-          1
-        ],
-        "targetParagraphs": 5,
-        "minChars": 900,
-        "maxChars": 1500
-      },
-      "thesis": "Google is a technical bottleneck item for stack shifts readers, with the infrastructure read limited to source-backed facts.",
-      "whatHappened": "Tom's Hardware reported: Imec builds world's first High-NA EUV-fabricated quantum dot qubit device — breakthrough could pull quantum computing onto the same manufacturing roadmap as next-gen AI processors, compressing timelines.",
-      "whyThisMatters": "The public card stays short because the available evidence supports a watchlist signal more than a full infrastructure memo.",
-      "marketMissing": "The source may still describe intent rather than delivered capacity, so the operating impact depends on follow-through.",
-      "investors": "Operators and hyperscalers can use the item to test technical bottleneck before changing procurement, deployment, or risk assumptions.",
-      "operators": "Semiconductor supply teams should track interconnection approvals, substation equipment dates, power purchase agreements, or disclosed energization windows.",
-      "hyperscalers": "Cloud and platform buyers should separate source evidence from generic AI demand before changing deployment plans.",
-      "watchNext": "Interconnection approvals, substation equipment dates, power purchase agreements, or disclosed energization windows.",
-      "executiveSummary": [
-        "Tom's Hardware reported: Imec builds world's first High-NA EUV-fabricated quantum dot qubit device — breakthrough could pull quantum computing onto the same manufacturing roadmap as next-gen AI processors, compressing",
-        "Operators and hyperscalers can use the item to test technical bottleneck before changing procurement, deployment, or risk assumptions.",
-        "Watch interconnection approvals, substation equipment dates, power purchase agreements, or disclosed energization windows."
-      ],
-      "headlineOptions": [
-        "Imec builds world's first High-NA EUV-fabricated quantum dot qubit device — breakthrough could pull quantum c",
-        "Tom's Hardware: the execution test behind the latest AI infrastructure move",
-        "The bottleneck behind Imec builds world's first High-NA EUV-fabricated quantum dot qubit device — breakthroug",
-        "Imec builds world's first High-NA EUV-fabricated quantum dot qubit device — breakthrough could pull quantum c",
-        "What to watch after Imec builds world's first High-NA EUV-fabricated quantum dot qubit device — breakthrough"
-      ],
-      "finalHeadline": "Imec builds world's first High-NA EUV-fabricated quantum dot qubit device — breakthrough could pull quantum computing o",
-      "metaDescription": "Google is a technical bottleneck item for stack shifts readers, with the infrastructure read limited to source-backed facts.",
-      "finalArticleBody": "Google is a technical bottleneck item for stack shifts readers, with the infrastructure read limited to source-backed facts.\n\nTechnical Signal\n\nTom's Hardware reported: Imec builds world's first High-NA EUV-fabricated quantum dot qubit device — breakthrough could pull quantum computing onto the same manufacturing roadmap as next-gen AI processors, compressing timelines. is the evidence anchor, with Google as the actor readers can track.\n\nFailure Domain\n\nSemiconductor supply is the operating layer that turns the update into technical bottleneck, especially for operators, hyperscalers, cloud buyers.\n\nOperator Exposure\n\nThe source may still describe intent rather than delivered capacity, so the operating impact depends on follow-through.; that keeps the public read tied to evidence instead of treating the announcement as finished capacity.\n\nBenchmark To Watch\n\nThe next useful checkpoint is interconnection approvals, substation equipment dates, power purchase agreements, or disclosed energization windows over the near term window.\n\nReaders should track interconnection approvals, substation equipment dates, power purchase agreements, or disclosed energization windows before treating the item as a planning assumption for semiconductor supply.",
-      "sourceLink": "https://www.tomshardware.com/tech-industry/semiconductors/imec-builds-worlds-first-high-na-euv-fabricated-quantum-dot-qubit-device-breakthrough-could-pull-quantum-computing-onto-the-same-manufacturing-roadmap-as-next-gen-ai-processors-compressing-timelines"
-    },
-    "expertLens": "Google is a technical bottleneck item for stack shifts readers, with the infrastructure read limited to source-backed facts.",
-    "generation_version": "editorial_surface_v2",
-    "narrative_dna": {
-      "protagonist": "Google",
-      "concrete_event": "Tom's Hardware reported: Imec builds world's first High-NA EUV-fabricated quantum dot qubit device — breakthrough could pull quantum computing onto the same manufacturing roadmap as next-gen AI processors, compressing timelines.",
-      "core_tension": "Google has to translate tom's hardware reported: imec builds world's first high-na euv-fabricated quantum dot qubit device — breakthrough could pull quantum computing onto the same manufacturing roadmap as next-gen ai processors, compressing timelines. into a semiconductor supply decision that survives cost, timing, or operating constraints",
-      "infrastructure_layer": "semiconductor supply",
-      "reader_role": [
-        "operators",
-        "hyperscalers",
-        "cloud buyers",
-        "investors"
-      ],
-      "decision_relevance": "operators and hyperscalers can use the item to test technical bottleneck before changing procurement, deployment, or risk assumptions",
-      "evidence_anchor": "Our detailed quantum computing roadmap analysis showed that companies including IBM, Google, IonQ, Quantinuum, D-Wave, PsiQuantum, and others have already demonstrated a wide range of working architectures, from superconducting qubits to trapped ions and photonic systems.",
-      "counterpoint": "The source may still describe intent rather than delivered capacity, so the operating impact depends on follow-through.",
-      "watch_metric": "interconnection approvals, substation equipment dates, power purchase agreements, or disclosed energization windows",
-      "time_horizon": "near term",
-      "public_signal_label": "Stack Shift",
-      "editorial_lens": "Technical Bottleneck",
-      "story_archetype": "Technical Teardown",
-      "story_archetype_id": "technical-teardown",
-      "routing_decision": "core_lane",
-      "valid_for_full_article": true,
-      "missing_fields": [],
-      "truncation": {
-        "ok": true,
-        "artifacts": []
-      }
-    },
-    "dynamic_brief_label": "Stack Shift",
-    "anti_template_rewrite": true,
-    "repetition_check": {
-      "compared_article_count": 17,
-      "repeated_sentence_ratio": 0.5714285714285714,
-      "repeated_paragraph_ratio": 0.6666666666666666,
-      "heading_sequence_similarity": 1,
-      "banned_phrase_count": 0,
-      "ngram_overlap": 0.6495726495726496,
-      "blueprint_repetition": 1,
-      "conclusion_similarity": 0.9999999999999998,
-      "repeated_sentence_count": 4,
-      "repeated_paragraph_count": 4,
-      "heading_sequence": [
-        "Technical Signal",
-        "Failure Domain",
-        "Operator Exposure",
-        "Benchmark To Watch"
-      ],
-      "blocked": true,
-      "reasons": [
-        "repeated_sentence_ratio>0.12",
-        "heading_sequence_similarity>0.75",
-        "conclusion_similarity>0.7"
-      ]
-    },
-    "repetition_blocked": true,
-    "repetition_block_reasons": [
-      "repeated_sentence_ratio>0.12",
-      "heading_sequence_similarity>0.75",
-      "conclusion_similarity>0.7"
-    ],
-    "searchText": "Imec builds world's first High-NA EUV-fabricated quantum dot qubit device — breakthrough could pull quantum computing onto the same manufacturing roadmap as next-gen AI processors, compressing timelines Toms Hardware AI Infrastructure AI Infrastructure semiconductor supply Imec turns semiconductor supply into a technical bottleneck decision point for capacity planners. Tom's Hardware reported: Imec builds world's first High-NA EUV-fabricated quantum dot qubit device — breakthrough could pull quantum computing onto the same manufacturing roadmap as next-gen AI processors, compressing timelines. Imec is now tied to a semiconductor supply decision where delivery, cost, and control matter more than headline demand.\n\nTom's Hardware's reporting centers on Tom's Hardware reported: Imec builds world's first High-NA EUV-fabricated quantum dot qubit device — breakthrough could pull quantum computing onto the same manufacturing roadmap as next-gen AI processors, compressing timelines, giving infrastructure readers an observable event to place against procurement calendars and operating risk.\n\nImec turns semiconductor supply into a technical bottleneck decision point for capacity planners is where operators, buyers, and investors can compare the report with their own exposure.\n\nThesis\n\nImec builds world's first High-NA EUV-fabricated quantum dot qubit device — breakthrough could pull quantum computing onto the same manufacturing roadmap as next-gen AI processors, compressing timelines matters because Imec is changing the control point around semiconductor supply, where timing, cost, and delivery risk decide whether demand becomes usable capacity.\n\nSupply Chain Pressure\n\nTom's Hardware supplies the reporting base: Tom's Hardware reported: Imec builds world's first High-NA EUV-fabricated quantum dot qubit device — breakthrough could pull quantum computing onto the same manufacturing roadmap as next-gen AI processors, compressing timelines. Compute Current reads that event through semiconductor supply, where timing, site readiness, and control over scarce inputs matter more than headline volume.\n\nImec turns semiconductor supply into a technical bottleneck decision point for capacity planners gives the article a second anchor, which keeps the analysis tied to observable infrastructure behavior rather than broad market excitement.\n\nCapacity Translation\n\nThe operating read is whether the reported event changes deployable capacity, platform resilience, or execution risk in a measurable way.\n\nIn semiconductor supply, the decisive question is whether capacity availability, deployment timing, operating cost, or ownership of a constrained input has changed.\n\nBuyer Exposure\n\nThe commercial read is how buyers, operators, and investors should price capacity, cost, or execution risk around semiconductor supply.\n\nImec, High-NA EUV-fabricated, Tom, Hardware Tom do not share the same exposure. What looks like an opening for one side can become schedule risk, margin pressure, or procurement friction for another.\n\nCounterpressure\n\nThe limitation is that the source may describe a useful signal without proving that timing, economics, or deployment risk has changed yet.\n\nThat limit matters. A named project, product, or capital move can still miss schedule, economics, customer adoption, or grid reality; the article keeps those unknowns visible instead of smoothing them away.\n\nSignals To Track\n\nTrack equipment lead times, packaging capacity, and buyer allocation; contracted capacity, delivery timing, and operating cost variance. These indicators matter because they translate a public report into the procurement, financing, and operations signals readers can act on.\n\nIf those signals move in the wrong direction, the story should be downgraded from an infrastructure thesis to a watchlist item. If they improve, it can support procurement, capital, or operating decisions.\n\nBottom Line\n\nImec builds world's first High-NA EUV-fabricated quantum dot qubit device — breakthrough could pull quantum computing onto the same manufacturing roadmap as next-gen AI processors, compressing timelines matters because Imec is changing the control point around semiconductor supply, where timing, cost, and delivery risk decide whether demand becomes usable capacity. The article stays in Core Longform Blog territory while the evidence remains clean, specific, and tied to semiconductor supply.\n\nOperating Context\n\nTom's Hardware supplies the event, while the local analysis follows how semiconductor supply constraints move through planning models, contracts, and operating calendars.\n\nImec, High-NA EUV-fabricated, Tom matter because control over one layer rarely solves the whole stack. Power availability, platform resilience, capital timing, and buyer commitments still have to line up before capacity becomes useful.\n\nThe stronger version of the thesis would show named customers, committed sites, clearer delivery dates, or measurable cost changes. Without that, the article stays disciplined: useful signal, not proof of a finished infrastructure shift.\n\nCommercial Context\n\nFor readers, the action is to compare this item with their own watchlist: equipment lead times, packaging capacity, and buyer allocation; contracted capacity, delivery timing, and operating cost variance. Those measures keep the read tied to decisions rather than market enthusiasm.\n\nTechnical Bottleneck also changes the risk conversation. The exposed party is not always the vendor in the headline; it can be the buyer counting on capacity, the operator absorbing site risk, or the investor underwriting a timeline.\n\nTom's Hardware reported: Imec builds world's first High-NA EUV-fabricated quantum dot qubit device — breakthrough could pull quantum computing onto the same manufacturing roadmap as next-gen AI processors, compressing timelines is useful because it gives the piece a concrete anchor instead of a generic forecast.\n\nRisk Context\n\nProcurement teams should translate the story into calendar risk: what has been committed, what still needs equipment or power, and what milestone would make the claim more durable.\n\nInvestors should separate the announced asset, product, or policy move from the cash conversion path behind it, especially where delivery schedules depend on third parties.\n\nOperators should ask whether this changes their own constraint stack or simply confirms a pressure they already track across sites, platforms, suppliers, and customers.\n\nReader Takeaway\n\nThe planning read is deliberately practical. If the reported event does not change a build schedule, a platform migration, a financing assumption, or a supplier allocation, it belongs lower in the operating stack even when the headline sounds large.\n\nThe commercial read is also narrower than market excitement. Buyers need to know whether the cost, capacity, or reliability profile changes soon enough to affect procurement, while sellers need proof that demand can become durable contracted work. semiconductor",
-    "generatedImageProvider": "local-placeholder",
-    "generatedImageModel": "local-svg",
-    "public_content_tier": "longform_analysis",
-    "blog_route": "core_longform_blog",
-    "publishing_route": "Core Longform Blog",
-    "public_status": "published",
-    "signalCardOnly": false,
-    "seo_noindex": false,
-    "noindex": false,
-    "deck": "Imec turns semiconductor supply into a technical bottleneck decision point for capacity planners.",
-    "why_it_matters": "Tom's Hardware reported: Imec builds world's first High-NA EUV-fabricated quantum dot qubit device — breakthrough could pull quantum computing onto the same manufacturing roadmap as next-gen AI processors, compressing timelines.",
-    "public_routing": {
-      "score": 1,
-      "visibility": "core",
-      "laneKey": "stack-shifts",
-      "laneTitle": "Stack Shifts",
-      "public_signal_label": "Stack Shift",
-      "editorial_lens": "Technical Bottleneck",
-      "story_archetype": "Supply Chain Fault Line",
-      "routing_decision": "core_longform_blog",
-      "blocked_reasons": []
-    },
-    "public_presentation": {
-      "signal_label": "Stack Shift",
-      "editorial_lens": "Technical Bottleneck",
-      "title": "Imec builds world's first High-NA EUV-fabricated quantum dot qubit device — breakthrough could pull quantum computing onto the same manufacturing roadmap as next-gen AI processors, compressing timelines",
-      "deck": "Imec turns semiconductor supply into a technical bottleneck decision point for capacity planners.",
-      "why_it_matters": "Tom's Hardware reported: Imec builds world's first High-NA EUV-fabricated quantum dot qubit device — breakthrough could pull quantum computing onto the same manufacturing roadmap as next-gen AI processors, compressing timelines.",
-      "reader_impact": [
-        "Operators",
-        "Capacity planners",
-        "Infrastructure investors"
-      ],
-      "region": "US",
-      "source": "Toms Hardware",
-      "view_detail": "/news/e07def5e2ea6d1c3/",
-      "read_source": "https://www.tomshardware.com/tech-industry/semiconductors/imec-builds-worlds-first-high-na-euv-fabricated-quantum-dot-qubit-device-breakthrough-could-pull-quantum-computing-onto-the-same-manufacturing-roadmap-as-next-gen-ai-processors-compressing-timelines",
-      "lane_key": "stack-shifts",
-      "lane_title": "Stack Shifts",
-      "visibility": "core",
-      "story_archetype": "Supply Chain Fault Line"
-    },
-    "regeneration_rank": 29,
-    "public_generation_version": "blog_engine_v4",
-    "route": "Core Longform Blog",
-    "quarantined": false,
-    "quarantine_reason": [],
-    "seo_noindex_reasons": [],
-    "source_link_secondary": true,
-    "primaryHref": "/news/e07def5e2ea6d1c3/",
-    "cleaned_source_text": "Imec unveiled the world’s first silicon quantum dot qubit device fabricated with High-NA EUV lithography, suggesting quantum computing may eventually scale using the semiconductor industry’s existing advanced manufacturing ecosystem. At first glance, the announcement may seem like another entry in the increasingly crowded quantum computing race. Qubits can theoretically solve computational problems that would take classical supercomputers longer than the age of the universe, but only at a scale nobody has yet achieved. With several advancements in the physics side of quantum computing, manufacturing now represents the major limitation. Imec claims to have addressed that directly by using the semiconductor industry's latest and most advanced lithography tool to fabricate silicon quantum dot spin qubits with tolerances compatible with industrial chip production for the first time. If that holds up, the implications for quantum scaling could be tremendous. It&rsquo;s a significant step towards quantum computing, but we are still not quite there. Quantum computing&rsquo;s central problem is no longer simply whether researchers can create functioning quantum systems. The problem is scaling those systems into reliable machines containing millions of reproducible, controllable qubits. Imec unveiled the world’s first silicon quantum dot qubit device fabricated with High-NA EUV lithogra Tom's Hardware reported: Imec builds world's first High-NA EUV-fabricated quantum dot qubit device — breakthrough could pull quantum computing onto the same manufacturing roadmap as next-gen AI processors, compressing timelines.",
-    "source_evidence_text": "Imec unveiled the world’s first silicon quantum dot qubit device fabricated with High-NA EUV lithography, suggesting quantum computing may eventually scale using the semiconductor industry’s existing advanced manufacturing ecosystem. At first glance, the announcement may seem like another entry in the increasingly crowded quantum computing race. Qubits can theoretically solve computational problems that would take classical supercomputers longer than the age of the universe, but only at a scale nobody has yet achieved. With several advancements in the physics side of quantum computing, manufacturing now represents the major limitation. Imec claims to have addressed that directly by using the semiconductor industry's latest and most advanced lithography tool to fabricate silicon quantum dot spin qubits with tolerances compatible with industrial chip production for the first time. If that holds up, the implications for quantum scaling could be tremendous. It&rsquo;s a significant step towards quantum computing, but we are still not quite there. Quantum computing&rsquo;s central problem is no longer simply whether researchers can create functioning quantum systems. The problem is scaling those systems into reliable machines containing millions of reproducible, controllable qubits. Imec unveiled the world’s first silicon quantum dot qubit device fabricated with High-NA EUV lithogra Tom's Hardware reported: Imec builds world's first High-NA EUV-fabricated quantum dot qubit device — breakthrough could pull quantum computing onto the same manufacturing roadmap as next-gen AI processors, compressing timelines.",
-    "rawText": "Imec unveiled the world’s first silicon quantum dot qubit device fabricated with High-NA EUV lithography, suggesting quantum computing may eventually scale using the semiconductor industry’s existing advanced manufacturing ecosystem. At first glance, the announcement may seem like another entry in the increasingly crowded quantum computing race. Qubits can theoretically solve computational problems that would take classical supercomputers longer than the age of the universe, but only at a scale nobody has yet achieved. With several advancements in the physics side of quantum computing, manufacturing now represents the major limitation. Imec claims to have addressed that directly by using the semiconductor industry's latest and most advanced lithography tool to fabricate silicon quantum dot spin qubits with tolerances compatible with industrial chip production for the first time. If that holds up, the implications for quantum scaling could be tremendous. It&rsquo;s a significant step towards quantum computing, but we are still not quite there. Quantum computing&rsquo;s central problem is no longer simply whether researchers can create functioning quantum systems. The problem is scaling those systems into reliable machines containing millions of reproducible, controllable qubits. Imec unveiled the world’s first silicon quantum dot qubit device fabricated with High-NA EUV lithogra Tom's Hardware reported: Imec builds world's first High-NA EUV-fabricated quantum dot qubit device — breakthrough could pull quantum computing onto the same manufacturing roadmap as next-gen AI processors, compressing timelines.",
-    "fullArticleText": "Imec unveiled the world’s first silicon quantum dot qubit device fabricated with High-NA EUV lithography, suggesting quantum computing may eventually scale using the semiconductor industry’s existing advanced manufacturing ecosystem. At first glance, the announcement may seem like another entry in the increasingly crowded quantum computing race. Qubits can theoretically solve computational problems that would take classical supercomputers longer than the age of the universe, but only at a scale nobody has yet achieved. With several advancements in the physics side of quantum computing, manufacturing now represents the major limitation. Imec claims to have addressed that directly by using the semiconductor industry's latest and most advanced lithography tool to fabricate silicon quantum dot spin qubits with tolerances compatible with industrial chip production for the first time. If that holds up, the implications for quantum scaling could be tremendous. It&rsquo;s a significant step towards quantum computing, but we are still not quite there. Quantum computing&rsquo;s central problem is no longer simply whether researchers can create functioning quantum systems. The problem is scaling those systems into reliable machines containing millions of reproducible, controllable qubits. Imec unveiled the world’s first silicon quantum dot qubit device fabricated with High-NA EUV lithogra Tom's Hardware reported: Imec builds world's first High-NA EUV-fabricated quantum dot qubit device — breakthrough could pull quantum computing onto the same manufacturing roadmap as next-gen AI processors, compressing timelines.",
-    "excerpt": "Imec turns semiconductor supply into a technical bottleneck decision point for capacity planners.",
-    "blog_metadata": {
-      "tone": "Technical explainer",
-      "archetype": "Supply Chain Fault Line",
-      "archetype_id": "supply-chain-fault-line",
-      "thesis": "Imec builds world's first High-NA EUV-fabricated quantum dot qubit device — breakthrough could pull quantum computing onto the same manufacturing roadmap as next-gen AI processors, compressing timelines matters because Imec is changing the control point around semiconductor supply, where timing, cost, and delivery risk decide whether demand becomes usable capacity.",
-      "evidence_fact_count": 6,
-      "verified_fact_count": 6,
-      "visible_body_characters": 6354,
-      "word_count": 906,
-      "paragraph_count": 26,
-      "section_count": 11,
-      "source_summary_ratio": 0.28,
-      "analysis_ratio": 0.72,
-      "unsupported_claim_count": 0,
-      "forbidden_phrase_count": 0,
-      "repeated_paragraph_count": 0,
-      "human_blog_quality_score": 0.938,
-      "insight_density_score": 0.81,
-      "source_fidelity_score": 1,
-      "anti_template_score": 0.94
-    },
-    "evidence_pack": {
-      "ok": true,
-      "blockReasons": [],
-      "source": "Tom's Hardware",
-      "title": "Imec builds world's first High-NA EUV-fabricated quantum dot qubit device — breakthrough could pull quantum computing onto the same manufacturing roadmap as next-gen AI processors, compressing timelines",
-      "evidenceText": "Imec unveiled the world’s first silicon quantum dot qubit device fabricated with High-NA EUV lithography, suggesting quantum computing may eventually scale using the semiconductor industry’s existing advanced manufacturing ecosystem. At first glance, the announcement may seem like another entry in the increasingly crowded quantum computing race. Qubits can theoretically solve computational problems that would take classical supercomputers longer than the age of the universe, but only at a scale nobody has yet achieved. With several advancements in the physics side of quantum computing, manufacturing now represents the major limitation. Imec claims to have addressed that directly by using the semiconductor industry's latest and most advanced lithography tool to fabricate silicon quantum dot spin qubits with tolerances compatible with industrial chip production for the first time. If that holds up, the implications for quantum scaling could be tremendous. It&rsquo;s a significant step towards quantum computing, but we are still not quite there. Quantum computing&rsquo;s central problem is no longer simply whether researchers can create functioning quantum systems. The problem is scaling those systems into reliable machines containing millions of reproducible, controllable qubits. Imec unveiled the world’s first silicon quantum dot qubit device fabricated with High-NA EUV lithography, suggesting quantum computing may eventually scale using the semiconductor industry’s existing advanced manufacturing ecosystem. At first glance, the announcement may seem like another entry in the increasingly crowded quantum computing race. Qubits can theoretically solve computational problems that would take classical supercomputers longer than the age of the universe, but only at a scale nobody has yet achieved. With several advancements in the physics side of quantum computing, manufacturing now represents the major limitation. Imec claims to have addressed that directly by using the semiconductor industry's latest and most advanced lithography tool to fabricate silicon quantum dot spin qubits with tolerances compatible with industrial chip production for the first time. If that holds up, the implications for quantum scaling could be tremendous. It&rsquo;s a significant step towards quantum computing, but we are still not quite there. Quantum computing&rsquo;s central problem is no longer simply whether researchers can create functioning quantum systems. The problem is scaling those systems into reliable machines containing millions of reproducible, controllable qubits. Imec unveiled the world’s first silicon quantum dot qubit device fabricated with High-NA EUV lithography, suggesting quantum computing may eventually scale using the semiconductor industry’s existing advanced manufacturing ecosystem. At first glance, the announcement may seem like another entry in the increasingly crowded quantum computing race. Qubits can theoretically solve computational problems that would take classical supercomputers longer than the age of the universe, but only at a scale nobody has yet achieved. With several advancements in the physics side of quantum computing, manufacturing now represents the major limitation. Imec claims to have addressed that directly by using the semiconductor industry's latest and most advanced lithography tool to fabricate silicon quantum dot spin qubits with tolerances compatible with industrial chip production for the first time. If that holds up, the implications for quantum scaling could be tremendous. It&rsquo;s a significant step towards quantum computing, but we are still not quite there. Quantum computing&rsquo;s central problem is no longer simply whether researchers can create functioning quantum systems. The problem is scaling those systems into reliable machines containing millions of reproducible, controllable qubits.",
-      "facts": [
-        "Tom's Hardware reported: Imec builds world's first High-NA EUV-fabricated quantum dot qubit device — breakthrough could pull quantum computing onto the same manufacturing roadmap as next-gen AI processors, compressing timelines.",
-        "Imec turns semiconductor supply into a technical bottleneck decision point for capacity planners.",
-        "Imec unveiled the world’s first silicon quantum dot qubit device fabricated with High-NA EUV lithography, suggesting quantum computing may eventually scale using the semiconductor industry’s existing advanced manufacturing ecosystem.",
-        "At first glance, the announcement may seem like another entry in the increasingly crowded quantum computing race.",
-        "Qubits can theoretically solve computational problems that would take classical supercomputers longer than the age of the universe, but only at a scale nobody has yet achieved.",
-        "With several advancements in the physics side of quantum computing, manufacturing now represents the major limitation.",
-        "Imec claims to have addressed that directly by using the semiconductor industry's latest and most advanced lithography tool to fabricate silicon quantum dot spin qubits with tolerances compatible with industrial chip production for the first time.",
-        "If that holds up, the implications for quantum scaling could be tremendous."
-      ],
-      "namedActors": [
-        "Imec",
-        "High-NA EUV-fabricated",
-        "Tom",
-        "Hardware Tom",
-        "Hardware",
-        "High-NA EUV",
-        "At",
-        "Qubits"
-      ],
-      "affectedInfrastructureLayer": "semiconductor supply",
-      "whyThisMattersNow": "Imec builds world's first High-NA EUV-fabricated quantum dot qubit device — breakthrough could pull quantum computing onto the same manufacturing roadmap as next-gen AI processors, compressing timelines matters now because infrastructure buyers need to separate credible capacity signals from unsupported market noise.",
-      "commercialImplication": "The commercial read is how buyers, operators, and investors should price capacity, cost, or execution risk around semiconductor supply.",
-      "operatingImplication": "The operating read is whether the reported event changes deployable capacity, platform resilience, or execution risk in a measurable way.",
-      "whoBenefits": [
-        "Imec",
-        "High-NA EUV-fabricated",
-        "Tom"
-      ],
-      "whoIsExposed": [
-        "buyers relying on unsupported capacity signals",
-        "teams with weak source evidence"
-      ],
-      "counterargument": "The limitation is that the source may describe a useful signal without proving that timing, economics, or deployment risk has changed yet.",
-      "whatWouldChangeOurView": "equipment lead times, packaging capacity, and buyer allocation",
-      "watchMetrics": [
-        "equipment lead times, packaging capacity, and buyer allocation",
-        "contracted capacity, delivery timing, and operating cost variance"
-      ],
-      "sourceLimitations": "The extracted evidence is sufficient for local analysis, but source attribution remains necessary.",
-      "verified_facts": [
-        "Tom's Hardware reported: Imec builds world's first High-NA EUV-fabricated quantum dot qubit device — breakthrough could pull quantum computing onto the same manufacturing roadmap as next-gen AI processors, compressing timelines.",
-        "Imec turns semiconductor supply into a technical bottleneck decision point for capacity planners.",
-        "Imec unveiled the world’s first silicon quantum dot qubit device fabricated with High-NA EUV lithography, suggesting quantum computing may eventually scale using the semiconductor industry’s existing advanced manufacturing ecosystem.",
-        "At first glance, the announcement may seem like another entry in the increasingly crowded quantum computing race.",
-        "Qubits can theoretically solve computational problems that would take classical supercomputers longer than the age of the universe, but only at a scale nobody has yet achieved.",
-        "With several advancements in the physics side of quantum computing, manufacturing now represents the major limitation."
-      ],
-      "named_entities": [
-        "Imec",
-        "High-NA EUV-fabricated",
-        "Tom",
-        "Hardware Tom",
-        "Hardware",
-        "High-NA EUV",
-        "At",
-        "Qubits"
-      ],
-      "infrastructure_layer": "semiconductor supply",
-      "watch_metrics": [
-        "equipment lead times, packaging capacity, and buyer allocation",
-        "contracted capacity, delivery timing, and operating cost variance"
-      ],
-      "commercial_implications": [
-        "The commercial read is how buyers, operators, and investors should price capacity, cost, or execution risk around semiconductor supply."
-      ],
-      "operating_implications": [
-        "The operating read is whether the reported event changes deployable capacity, platform resilience, or execution risk in a measurable way."
-      ],
-      "counterarguments": [
-        "The limitation is that the source may describe a useful signal without proving that timing, economics, or deployment risk has changed yet."
-      ],
-      "uncertainty": [
-        "The extracted evidence is sufficient for local analysis, but source attribution remains necessary."
-      ],
-      "what_would_change_our_view": [
-        "equipment lead times, packaging capacity, and buyer allocation."
-      ]
-    },
-    "source_link_primary": false,
-    "whatHappened": "Tom's Hardware reported: Imec builds world's first High-NA EUV-fabricated quantum dot qubit device — breakthrough could pull quantum computing onto the same manufacturing roadmap as next-gen AI processors, compressing timelines.",
-    "marketMissing": "The limitation is that the source may describe a useful signal without proving that timing, economics, or deployment risk has changed yet.",
-    "executiveSummary": [
-      "Tom's Hardware reported: Imec builds world's first High-NA EUV-fabricated quantum dot qubit device — breakthrough could pull quantum computing onto the same manufacturing roadmap as next-gen AI processors, compressing timelines.",
-      "Imec turns semiconductor supply into a technical bottleneck decision point for capacity planners.",
-      "Imec unveiled the world’s first silicon quantum dot qubit device fabricated with High-NA EUV lithography, suggesting quantum computing may eventually scale using the semiconductor industry’s existing advanced manufacturing ecosystem."
-    ],
-    "editorial_thesis": {
-      "thesis_sentence": "Imec builds world's first High-NA EUV-fabricated quantum dot qubit device — breakthrough could pull quantum computing onto the same manufacturing roadmap as next-gen AI processors, compressing timelines matters because Imec is changing the control point around semiconductor supply, where timing, cost, and delivery risk decide whether demand becomes usable capacity.",
-      "thesis": "Imec builds world's first High-NA EUV-fabricated quantum dot qubit device — breakthrough could pull quantum computing onto the same manufacturing roadmap as next-gen AI processors, compressing timelines matters because Imec is changing the control point around semiconductor supply, where timing, cost, and delivery risk decide whether demand becomes usable capacity.",
-      "what_changed": "Tom's Hardware reported: Imec builds world's first High-NA EUV-fabricated quantum dot qubit device — breakthrough could pull quantum computing onto the same manufacturing roadmap as next-gen AI processors, compressing timelines.",
-      "why_it_matters_for_ai_infrastructure": "semiconductor supply teams need to know whether the event changes capacity timing, operating cost, reliability, or supplier allocation.",
-      "who_benefits": "Imec, High-NA EUV-fabricated, Tom.",
-      "who_is_exposed": "buyers relying on unsupported capacity signals, teams with weak source evidence.",
-      "decision_relevance": "semiconductor supply planners can use the item to update watchlists, diligence questions, procurement timing, or operating assumptions.",
-      "counterargument": "The limitation is that the source may describe a useful signal without proving that timing, economics, or deployment risk has changed yet.",
-      "bottom_line": "Compute Current treats this as core longform blog because the evidence ties Tom's Hardware to semiconductor supply decisions."
-    },
-    "claim_ledger": [
-      {
-        "claim_id": "clm_e07def5e2ea6d1c3_1",
-        "article_id": "e07def5e2ea6d1c3",
-        "claim_text": "Tom's Hardware reported: Imec builds world's first High-NA EUV-fabricated quantum dot qubit device — breakthrough could pull quantum computing onto the same manufacturing roadmap as next-gen AI processors, compressing timelines.",
-        "source_quote_or_summary": "Tom's Hardware reported: Imec builds world's first High-NA EUV-fabricated quantum dot qubit device — breakthrough could pull quantum computing onto the same manufacturing roadmap as next-gen AI processors, compressing timelines.",
-        "source_url": "https://www.tomshardware.com/tech-industry/semiconductors/imec-builds-worlds-first-high-na-euv-fabricated-quantum-dot-qubit-device-breakthrough-could-pull-quantum-computing-onto-the-same-manufacturing-roadmap-as-next-gen-ai-processors-compressing-timelines",
-        "source_name": "Tom's Hardware",
-        "secondary_source_url": "",
-        "secondary_source_name": "",
-        "numeric_value": null,
-        "unit": "",
-        "verification_status": "verified_primary",
-        "used_in_article": true,
-        "article_sentence": "Tom's Hardware reported: Imec builds world's first High-NA EUV-fabricated quantum dot qubit device — breakthrough could pull quantum computing onto the same manufacturing roadmap as next-gen AI processors, compressing timelines.",
-        "inference_basis": "",
-        "notes": ""
-      },
-      {
-        "claim_id": "clm_e07def5e2ea6d1c3_2",
-        "article_id": "e07def5e2ea6d1c3",
-        "claim_text": "Imec turns semiconductor supply into a technical bottleneck decision point for capacity planners.",
-        "source_quote_or_summary": "Imec turns semiconductor supply into a technical bottleneck decision point for capacity planners.",
-        "source_url": "https://www.tomshardware.com/tech-industry/semiconductors/imec-builds-worlds-first-high-na-euv-fabricated-quantum-dot-qubit-device-breakthrough-could-pull-quantum-computing-onto-the-same-manufacturing-roadmap-as-next-gen-ai-processors-compressing-timelines",
-        "source_name": "Tom's Hardware",
-        "secondary_source_url": "",
-        "secondary_source_name": "",
-        "numeric_value": null,
-        "unit": "",
-        "verification_status": "verified_primary",
-        "used_in_article": true,
-        "article_sentence": "Imec turns semiconductor supply into a technical bottleneck decision point for capacity planners.",
-        "inference_basis": "",
-        "notes": ""
-      },
-      {
-        "claim_id": "clm_e07def5e2ea6d1c3_3",
-        "article_id": "e07def5e2ea6d1c3",
-        "claim_text": "Imec unveiled the world’s first silicon quantum dot qubit device fabricated with High-NA EUV lithography, suggesting quantum computing may eventually scale using the semiconductor industry’s existing advanced manufacturing ecosystem.",
-        "source_quote_or_summary": "Imec unveiled the world’s first silicon quantum dot qubit device fabricated with High-NA EUV lithography, suggesting quantum computing may eventually scale using the semiconductor industry’s existing advanced manufacturing ecosystem.",
-        "source_url": "https://www.tomshardware.com/tech-industry/semiconductors/imec-builds-worlds-first-high-na-euv-fabricated-quantum-dot-qubit-device-breakthrough-could-pull-quantum-computing-onto-the-same-manufacturing-roadmap-as-next-gen-ai-processors-compressing-timelines",
-        "source_name": "Tom's Hardware",
-        "secondary_source_url": "",
-        "secondary_source_name": "",
-        "numeric_value": null,
-        "unit": "",
-        "verification_status": "verified_primary",
-        "used_in_article": true,
-        "article_sentence": "Imec unveiled the world’s first silicon quantum dot qubit device fabricated with High-NA EUV lithography, suggesting quantum computing may eventually scale using the semiconductor industry’s existing advanced manufacturing ecosystem.",
-        "inference_basis": "",
-        "notes": ""
-      },
-      {
-        "claim_id": "clm_e07def5e2ea6d1c3_4",
-        "article_id": "e07def5e2ea6d1c3",
-        "claim_text": "At first glance, the announcement may seem like another entry in the increasingly crowded quantum computing race.",
-        "source_quote_or_summary": "At first glance, the announcement may seem like another entry in the increasingly crowded quantum computing race.",
-        "source_url": "https://www.tomshardware.com/tech-industry/semiconductors/imec-builds-worlds-first-high-na-euv-fabricated-quantum-dot-qubit-device-breakthrough-could-pull-quantum-computing-onto-the-same-manufacturing-roadmap-as-next-gen-ai-processors-compressing-timelines",
-        "source_name": "Tom's Hardware",
-        "secondary_source_url": "",
-        "secondary_source_name": "",
-        "numeric_value": null,
-        "unit": "",
-        "verification_status": "verified_primary",
-        "used_in_article": true,
-        "article_sentence": "At first glance, the announcement may seem like another entry in the increasingly crowded quantum computing race.",
-        "inference_basis": "",
-        "notes": ""
-      },
-      {
-        "claim_id": "clm_e07def5e2ea6d1c3_5",
-        "article_id": "e07def5e2ea6d1c3",
-        "claim_text": "Qubits can theoretically solve computational problems that would take classical supercomputers longer than the age of the universe, but only at a scale nobody has yet achieved.",
-        "source_quote_or_summary": "Qubits can theoretically solve computational problems that would take classical supercomputers longer than the age of the universe, but only at a scale nobody has yet achieved.",
-        "source_url": "https://www.tomshardware.com/tech-industry/semiconductors/imec-builds-worlds-first-high-na-euv-fabricated-quantum-dot-qubit-device-breakthrough-could-pull-quantum-computing-onto-the-same-manufacturing-roadmap-as-next-gen-ai-processors-compressing-timelines",
-        "source_name": "Tom's Hardware",
-        "secondary_source_url": "",
-        "secondary_source_name": "",
-        "numeric_value": null,
-        "unit": "",
-        "verification_status": "verified_primary",
-        "used_in_article": true,
-        "article_sentence": "Qubits can theoretically solve computational problems that would take classical supercomputers longer than the age of the universe, but only at a scale nobody has yet achieved.",
-        "inference_basis": "",
-        "notes": ""
-      }
-    ],
-    "claim_ledger_summary": {
-      "total_claim_count": 5,
-      "numeric_claim_count": 0,
-      "unsupported_claim_count": 0,
-      "verified_fact_count": 5
-    },
-    "noindex_reason": null,
-    "archiveOnlyReason": null,
-    "signalCardReason": null
-  },
-  {
-    "id": "watch_sig_4aac0298fca786fa",
-    "title": "Goldman Sachs: Goldman Sachs on data in the age of AI",
-    "source": "Bloomberg Technology",
-    "sourceUrl": "https://www.bloomberg.com/news/videos/2026-05-19/goldman-sachs-on-data-in-the-age-of-ai-video",
-    "url": "https://www.bloomberg.com/news/videos/2026-05-19/goldman-sachs-on-data-in-the-age-of-ai-video",
-    "publishedAt": "2026-05-19T23:10:28.000Z",
-    "updatedAt": "2026-05-20T05:12:49.125Z",
-    "generation_version": "editorial_surface_v2",
-    "public_generation_version": "autonomous_editorial_desk_v1",
-    "public_status": "signal",
-    "article_type": "Watchlist Signal",
-    "publishing_route": "Short Signal",
-    "homepagePublished": true,
-    "articlePagePublished": false,
-    "signalCardOnly": true,
-    "archiveOnly": false,
-    "noindex": false,
-    "seo_noindex": false,
-    "infrastructure_relevance_score": 0.65,
-    "extraction_quality_score": 0.9,
-    "primary_category": "Cloud Platform",
-    "infrastructure_layer": "Cloud Platform",
-    "region": "US",
-    "deck": "Goldman Sachs: Goldman Sachs on data in the age of AI remains a source-linked AI infrastructure signal.",
-    "why_it_matters": "Goldman Sachs: Goldman Sachs on data in the age of AI remains a source-linked AI infrastructure signal.",
-    "summary": "Goldman Sachs: Goldman Sachs on data in the age of AI remains a source-linked AI infrastructure signal.",
-    "snippet": "Goldman Sachs: Goldman Sachs on data in the age of AI remains a source-linked AI infrastructure signal.",
-    "excerpt": "Goldman Sachs: Goldman Sachs on data in the age of AI remains a source-linked AI infrastructure signal.",
-    "contentText": "Goldman Sachs: Goldman Sachs on data in the age of AI remains a source-linked AI infrastructure signal.",
-    "articleText": "Goldman Sachs: Goldman Sachs on data in the age of AI remains a source-linked AI infrastructure signal.",
-    "fullArticleText": "Goldman Sachs: Goldman Sachs on data in the age of AI remains a source-linked AI infrastructure signal.",
-    "cleaned_source_text": "Goldman Sachs: Goldman Sachs on data in the age of AI remains a source-linked AI infrastructure signal.",
-    "source_evidence_text": "Goldman Sachs: Goldman Sachs on data in the age of AI remains a source-linked AI infrastructure signal.",
-    "rawText": "Goldman Sachs: Goldman Sachs on data in the age of AI remains a source-linked AI infrastructure signal.",
-    "expertLensShort": "Goldman Sachs: Goldman Sachs on data in the age of AI remains a source-linked AI infrastructure signal.",
-    "expertLens": "Goldman Sachs: Goldman Sachs on data in the age of AI remains a source-linked AI infrastructure signal.",
-    "public_presentation": {
-      "signal_label": "Watchlist",
-      "editorial_lens": "Cloud Platform",
-      "title": "Goldman Sachs: Goldman Sachs on data in the age of AI",
-      "deck": "Goldman Sachs: Goldman Sachs on data in the age of AI remains a source-linked AI infrastructure signal.",
-      "why_it_matters": "Goldman Sachs: Goldman Sachs on data in the age of AI remains a source-linked AI infrastructure signal.",
-      "reader_impact": [
-        "Operators",
-        "Capacity planners"
-      ],
-      "region": "US",
-      "source": "Bloomberg Technology",
-      "view_detail": "",
-      "read_source": "https://www.bloomberg.com/news/videos/2026-05-19/goldman-sachs-on-data-in-the-age-of-ai-video",
-      "lane_key": "active-watchlist",
-      "lane_title": "Active Watchlist",
-      "visibility": "watchlist"
-    },
-    "public_routing": {
-      "visibility": "adjacent",
-      "laneKey": "adjacent-watchlist",
-      "laneTitle": "Adjacent Watchlist",
-      "score": 0.65,
-      "routing_decision": "short_signal",
-      "blocked_reasons": [
-        "score_below_standard_blog_threshold",
-        "unclean_or_short_evidence"
-      ]
-    },
-    "signal_cluster_id": "sig_4aac0298fca786fa",
-    "sort_index": 10,
-    "stale_generation": true,
-    "seo_noindex_reasons": [],
-    "generatedImage": "/generated/watch_sig_4aac0298fca786fa.svg",
-    "public_content_tier": "signal_card",
-    "public_tier_reasons": [
-      "dirty_extraction",
-      "missing_concrete_infrastructure_layer"
-    ],
-    "slug": "watch_sig_4aac0298fca786fa",
-    "language": "en",
-    "affected_stakeholders": [],
-    "article_blueprint": "stakeholder-map",
-    "articleBlueprint": {
-      "id": "stakeholder-map",
-      "name": "Stakeholder Map",
-      "sectionHeadings": [
-        "The Move",
-        "Who Benefits",
-        "Who Is Exposed",
-        "Bottleneck to Watch"
-      ],
-      "paragraphRhythm": [
-        2,
-        1,
-        1,
-        2
-      ],
-      "targetParagraphs": 6,
-      "minChars": 1000,
-      "maxChars": 1650
-    },
-    "dynamic_brief_label": "Adjacent Signal",
-    "anti_template_rewrite": true,
-    "blog_route": "short_signal",
-    "executiveSummary": [],
-    "claim_ledger": [],
-    "primaryHref": "https://www.bloomberg.com/news/videos/2026-05-19/goldman-sachs-on-data-in-the-age-of-ai-video",
-    "searchText": "Goldman Sachs: Goldman Sachs on data in the age of AI Bloomberg Technology Cloud Platform Watchlist Signal US Goldman Sachs: Goldman Sachs on data in the age of AI remains a source-linked AI infrastructure signal.",
-    "expertLensFull": null,
-    "narrative_dna": null,
-    "whatHappened": null,
-    "marketMissing": null,
-    "claim_ledger_summary": null,
-    "evidence_pack": null,
-    "source_link_primary": true,
-    "source_link_secondary": false,
-    "sourceImage": null,
-    "secondary_category": null,
-    "urgency_score": null,
-    "defaultCategory": null
   }
 ]

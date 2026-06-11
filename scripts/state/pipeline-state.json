@@ -423,7 +423,9 @@
     "b7244d39e1ebc4e6",
     "d9a48b6706188b9f",
     "5b765c3511945c8d",
-    "c3c8befdbf616d9c"
+    "c3c8befdbf616d9c",
+    "22a9114028a6e93d",
+    "82c8f35c981e9b53"
   ],
   "dayPlans": {
     "2026-03-24": {
@@ -14715,72 +14717,71 @@
     "2026-06-11": {
       "date": "2026-06-11",
       "createdAt": "2026-06-10T18:08:18.455Z",
-      "refreshedAt": "2026-06-10T18:08:18.455Z",
+      "refreshedAt": "2026-06-11T00:18:42.342Z",
       "candidateWindowHours": 24,
       "curatedItems": [
         {
-          "id": "5b765c3511945c8d",
+          "id": "22a9114028a6e93d",
           "source": "HPCwire",
-          "url": "https://www.hpcwire.com/off-the-wire/nema-ashrae-and-pnnl-release-ai-data-center-energy-performance-framework/",
-          "title": "NEMA, ASHRAE and PNNL Release AI Data Center Energy Performance Framework",
-          "snippet": "NEMA, ASHRAE and PNNL Join Forces To Establish an Authoritative Framework To Equip Data Center Project Developers and Facility Managers With Resources Needed To Advance Safe, Reliable, and Resilient Data Centers ARLINGT…",
-          "contentText": "NEMA, ASHRAE and PNNL Join Forces To Establish an Authoritative Framework To Equip Data Center Project Developers and Facility Managers With Resources Needed To Advance Safe, Reliable, and Resilient Data Centers ARLINGTON, Va., June 10, 2026 &#8212; The National Electrical Manufacturers Association ( NEMA ), ASHRAE , and Pacific Northwest National Laboratory ( PNNL ) today released their trilateral AI Data Center Energy Performance Framework, a comprehensive set of technical standards and industry best practices that will aid data center project developers and facility managers in the design, installation, and maintenance of critical energy infrastructure – including electrical, heating, and cooling equipment and integrated systems. “Data centers are foundational to America’s growth, comp…",
-          "publishedAt": "2026-06-10T17:47:18.000Z",
-          "sourceImage": "https://www.hpcwire.com/wp-content/uploads/2026/06/NEMA-logo-300x201.png",
+          "url": "https://www.hpcwire.com/2026/06/10/why-sram-chips-are-pulling-ahead-in-the-new-ai-world/",
+          "title": "Why SRAM Chips Are Pulling Ahead in the New AI World",
+          "snippet": "Thanks to the success of its GPUs in powering the first stage of the AI boom, Nvidia became not only the world’s most successful chip company, but the world’s most valuable company. But as we enter phase two of the AI b…",
+          "contentText": "Thanks to the success of its GPUs in powering the first stage of the AI boom, Nvidia became not only the world’s most successful chip company, but the world’s most valuable company. But as we enter phase two of the AI boom, we’re seeing a new class of chip based on static random access memory (SRAM) come to the forefront. That’s good news for Nvidia, which bought its own SRAM chipmaker, as well as upstarts like d-Matrix, Cerebras, and an SRAM cloud company called Gimlet Labs. While GPUs excel at chewing through massive gobs of data, keeping the previously computed AI model values in memory is the main bottleneck with AI inference workloads today. The so-called GPU memory wall is the primary barrier, as it imposes a hard limit on the number of previously computed keys and values an AI infe…",
+          "publishedAt": "2026-06-10T22:37:37.000Z",
+          "sourceImage": "https://www.hpcwire.com/wp-content/uploads/2026/04/dMatrix_chiplet-300x175.png",
           "region": "US",
           "language": "en",
           "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
-          "category": "AI Infrastructure",
-          "primary_category": "AI Infrastructure",
-          "secondary_category": "GPU clusters and deployment readiness",
-          "infrastructure_layer": "Compute",
+          "category": "Semiconductors",
+          "primary_category": "Semiconductors",
+          "secondary_category": "Accelerators, memory, and advanced packaging",
+          "infrastructure_layer": "Silicon",
           "affected_stakeholders": [
-            "operators",
+            "semiconductor suppliers",
             "hyperscalers",
-            "cloud buyers",
+            "server OEMs",
             "investors"
           ],
-          "article_type": "Product / Platform Update",
-          "urgency_score": 0.5,
+          "article_type": "Supply Chain",
+          "urgency_score": 0.46,
           "taxonomy_confidence": 0.77,
           "taxonomy_reasons": [
-            "ai infrastructure",
-            "neocloud"
+            "chip",
+            "gpu",
+            "nvidia"
           ],
           "direct_ai_infrastructure_relevance": 1,
-          "data_center_relevance": 0.97,
+          "data_center_relevance": 0,
           "cloud_capacity_relevance": 0,
-          "semiconductor_relevance": 0.22,
+          "semiconductor_relevance": 0.5,
           "power_grid_relevance": 0,
-          "cooling_relevance": 0.34,
+          "cooling_relevance": 0,
           "capital_markets_relevance": 0,
-          "enterprise_ai_infrastructure_relevance": 0,
-          "infrastructure_relevance_score": 1,
+          "enterprise_ai_infrastructure_relevance": 0.3,
+          "infrastructure_relevance_score": 0.875,
           "infrastructure_relevance_tier": "full_memo",
           "infrastructure_relevance_action": "generate_full_memo",
           "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, ai data center, neocloud)",
-            "data_center_relevance:0.97(data center, data centers)",
-            "semiconductor_relevance:0.22(gpu)",
-            "cooling_relevance:0.34(cooling)"
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "semiconductor_relevance:0.50(nvidia, gpu)",
+            "enterprise_ai_infrastructure_relevance:0.30(inference workloads)"
           ],
           "infrastructure_relevance": {
             "direct_ai_infrastructure_relevance": 1,
-            "data_center_relevance": 0.97,
+            "data_center_relevance": 0,
             "cloud_capacity_relevance": 0,
-            "semiconductor_relevance": 0.22,
+            "semiconductor_relevance": 0.5,
             "power_grid_relevance": 0,
-            "cooling_relevance": 0.34,
+            "cooling_relevance": 0,
             "capital_markets_relevance": 0,
-            "enterprise_ai_infrastructure_relevance": 0,
-            "infrastructure_relevance_score": 1,
+            "enterprise_ai_infrastructure_relevance": 0.3,
+            "infrastructure_relevance_score": 0.875,
             "infrastructure_relevance_tier": "full_memo",
             "infrastructure_relevance_action": "generate_full_memo",
             "infrastructure_relevance_reasons": [
-              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, ai data center, neocloud)",
-              "data_center_relevance:0.97(data center, data centers)",
-              "semiconductor_relevance:0.22(gpu)",
-              "cooling_relevance:0.34(cooling)"
+              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+              "semiconductor_relevance:0.50(nvidia, gpu)",
+              "enterprise_ai_infrastructure_relevance:0.30(inference workloads)"
             ],
             "infrastructureRelevanceAction": "generate_full_memo",
             "articlePagePublished": true,
@@ -14788,17 +14789,17 @@
             "archiveOnly": false,
             "archiveOnlyReason": null
           },
-          "score": 88
+          "score": 83
         },
         {
-          "id": "c3c8befdbf616d9c",
-          "source": "ServeTheHome",
-          "url": "https://www.servethehome.com/dell-pro-max-16-plus-review-intel-nvidia-rtx-pro-5000-blackwell-system/",
-          "title": "Dell Pro Max 16 Plus Review A More Mobile NVIDIA RTX Pro 5000 Blackwell System",
-          "snippet": "Sparing no expense, Dell's flagship workstation laptop, the Pro Max 16 Plus, aims to deliver as much performance as is possible in a 16-inch laptop while still being modestly portable The post Dell Pro Max 16 Plus Revie…",
-          "contentText": "Sparing no expense, Dell's flagship workstation laptop, the Pro Max 16 Plus, aims to deliver as much performance as is possible in a 16-inch laptop while still being modestly portable The post Dell Pro Max 16 Plus Review A More Mobile NVIDIA RTX Pro 5000 Blackwell System appeared first on ServeTheHome .",
-          "publishedAt": "2026-06-10T18:00:58.000Z",
-          "sourceImage": null,
+          "id": "82c8f35c981e9b53",
+          "source": "HPCwire",
+          "url": "https://www.hpcwire.com/off-the-wire/argonne-and-doe-launch-new-partnership-to-speed-up-us-manufacturing-innovation/",
+          "title": "Argonne and DOE Launch New Partnership to Speed Up US Manufacturing Innovation",
+          "snippet": "National Science-at-Scale Collaborative will connect industry, the Department of Energy and national laboratories to accelerate manufacturing innovation June 10, 2026 — The U.S. Department of Energy’s (DOE) Argonne Nati…",
+          "contentText": "National Science-at-Scale Collaborative will connect industry, the Department of Energy and national laboratories to accelerate manufacturing innovation June 10, 2026 &#8212; The U.S. Department of Energy’s (DOE) Argonne National Laboratory has launched a new effort to help American companies develop and scale new products and manufacturing technologies more quickly. Pilot-scale manufacturing equipment at Argonne’s Materials Engineering Research Facility. Image credit: Argonne National Laboratory. Called the ​“National Science-at-Scale Collaborative,” the effort is supported by DOE’s Office of Critical Materials and Energy Innovation (CMEI). The collaborative brings together industry, government and the national laboratories to address complex challenges in critical materials and chemical…",
+          "publishedAt": "2026-06-10T21:59:01.000Z",
+          "sourceImage": "https://www.hpcwire.com/wp-content/uploads/2026/06/16x9-34158D_182_AET_MERF-scaleability_PRINT-300x169.jpg",
           "region": "US",
           "language": "en",
           "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
@@ -14812,7 +14813,7 @@
             "cloud buyers",
             "investors"
           ],
-          "article_type": "Other",
+          "article_type": "Partnership",
           "urgency_score": 0.47,
           "taxonomy_confidence": 0.77,
           "taxonomy_reasons": [
@@ -14822,33 +14823,33 @@
           "direct_ai_infrastructure_relevance": 1,
           "data_center_relevance": 0,
           "cloud_capacity_relevance": 0,
-          "semiconductor_relevance": 0.798,
+          "semiconductor_relevance": 0.22,
           "power_grid_relevance": 0,
           "cooling_relevance": 0,
           "capital_markets_relevance": 0,
           "enterprise_ai_infrastructure_relevance": 0,
-          "infrastructure_relevance_score": 0.906,
+          "infrastructure_relevance_score": 0.778,
           "infrastructure_relevance_tier": "full_memo",
           "infrastructure_relevance_action": "generate_full_memo",
           "infrastructure_relevance_reasons": [
             "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "semiconductor_relevance:0.80(nvidia, intel, gpu)"
+            "semiconductor_relevance:0.22(gpu)"
           ],
           "infrastructure_relevance": {
             "direct_ai_infrastructure_relevance": 1,
             "data_center_relevance": 0,
             "cloud_capacity_relevance": 0,
-            "semiconductor_relevance": 0.798,
+            "semiconductor_relevance": 0.22,
             "power_grid_relevance": 0,
             "cooling_relevance": 0,
             "capital_markets_relevance": 0,
             "enterprise_ai_infrastructure_relevance": 0,
-            "infrastructure_relevance_score": 0.906,
+            "infrastructure_relevance_score": 0.778,
             "infrastructure_relevance_tier": "full_memo",
             "infrastructure_relevance_action": "generate_full_memo",
             "infrastructure_relevance_reasons": [
               "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-              "semiconductor_relevance:0.80(nvidia, intel, gpu)"
+              "semiconductor_relevance:0.22(gpu)"
             ],
             "infrastructureRelevanceAction": "generate_full_memo",
             "articlePagePublished": true,
@@ -14856,80 +14857,7 @@
             "archiveOnly": false,
             "archiveOnlyReason": null
           },
-          "score": 84
-        },
-        {
-          "id": "35963c52fff3b1a7",
-          "source": "Data Center Knowledge",
-          "url": "https://www.datacenterknowledge.com/energy-power-supply/industry-groups-launch-ai-data-center-framework-amid-rising-power-needs",
-          "title": "Industry Groups Launch AI Data Center Framework Amid Rising Power Needs",
-          "snippet": "Organizations including NEMA, ASHRAE, and PNNL have introduced a framework to guide developers, engineers, and facility managers in managing increasingly power-intensive AI workloads.",
-          "contentText": "Organizations including NEMA, ASHRAE, and PNNL have introduced a framework to guide developers, engineers, and facility managers in managing increasingly power-intensive AI workloads.",
-          "publishedAt": "2026-06-10T15:51:06.000Z",
-          "sourceImage": "https://eu-images.contentstack.com/v3/assets/blt8eb3cdfc1fce5194/blt3fcd2ac6898b00ea/6a298edc674d42c5a633feb8/Data-Center-Servers-Getty.jpg?width=1280&auto=webp&quality=80&disable=upscale",
-          "region": "US",
-          "language": "en",
-          "defaultCategory": "Colocation & Wholesale",
-          "category": "Data Centers",
-          "primary_category": "Data Centers",
-          "secondary_category": "Campus development and colocation capacity",
-          "infrastructure_layer": "Facility",
-          "affected_stakeholders": [
-            "data center operators",
-            "developers",
-            "site selectors",
-            "investors"
-          ],
-          "article_type": "Other",
-          "urgency_score": 0.59,
-          "taxonomy_confidence": 0.86,
-          "taxonomy_reasons": [
-            "data center",
-            "colocation",
-            "wholesale"
-          ],
-          "direct_ai_infrastructure_relevance": 0.78,
-          "data_center_relevance": 0.89,
-          "cloud_capacity_relevance": 0,
-          "semiconductor_relevance": 0,
-          "power_grid_relevance": 0.297,
-          "cooling_relevance": 0,
-          "capital_markets_relevance": 0,
-          "enterprise_ai_infrastructure_relevance": 0.24,
-          "infrastructure_relevance_score": 0.908,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:0.78(ai data center)",
-            "data_center_relevance:0.89(data center, colocation)",
-            "power_grid_relevance:0.30(power)",
-            "enterprise_ai_infrastructure_relevance:0.24(ai workloads)"
-          ],
-          "infrastructure_relevance": {
-            "direct_ai_infrastructure_relevance": 0.78,
-            "data_center_relevance": 0.89,
-            "cloud_capacity_relevance": 0,
-            "semiconductor_relevance": 0,
-            "power_grid_relevance": 0.297,
-            "cooling_relevance": 0,
-            "capital_markets_relevance": 0,
-            "enterprise_ai_infrastructure_relevance": 0.24,
-            "infrastructure_relevance_score": 0.908,
-            "infrastructure_relevance_tier": "full_memo",
-            "infrastructure_relevance_action": "generate_full_memo",
-            "infrastructure_relevance_reasons": [
-              "direct_ai_infrastructure_relevance:0.78(ai data center)",
-              "data_center_relevance:0.89(data center, colocation)",
-              "power_grid_relevance:0.30(power)",
-              "enterprise_ai_infrastructure_relevance:0.24(ai workloads)"
-            ],
-            "infrastructureRelevanceAction": "generate_full_memo",
-            "articlePagePublished": true,
-            "homepagePublished": true,
-            "archiveOnly": false,
-            "archiveOnlyReason": null
-          },
-          "score": 84
+          "score": 79
         },
         {
           "id": "cbee5ce490a3b47e",
@@ -14999,18 +14927,88 @@
             "archiveOnly": false,
             "archiveOnlyReason": null
           },
-          "score": 83
+          "score": 75
         },
         {
-          "id": "a2043e8d3f1f8af7",
+          "id": "6cdbbd8b81ca33ad",
+          "source": "TechCrunch AI",
+          "url": "https://techcrunch.com/2026/06/10/xai-fired-an-engineer-who-raised-alarms-about-grok-safety-new-lawsuit-claims/",
+          "title": "xAI fired an engineer who raised alarms about Grok safety, new lawsuit claims",
+          "snippet": "A former xAI engineer is suing the company and SpaceX, alleging he was fired for raising AI safety concerns about Grok days before SpaceX's historic IPO.",
+          "contentText": "A former xAI engineer is suing the company and SpaceX, alleging he was fired for raising AI safety concerns about Grok days before SpaceX's historic IPO.",
+          "publishedAt": "2026-06-10T22:31:19.000Z",
+          "sourceImage": null,
+          "region": "Global",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "category": "AI Infrastructure",
+          "primary_category": "AI Infrastructure",
+          "secondary_category": "GPU clusters and deployment readiness",
+          "infrastructure_layer": "Compute",
+          "affected_stakeholders": [
+            "operators",
+            "hyperscalers",
+            "cloud buyers",
+            "investors"
+          ],
+          "article_type": "Financing / M&A",
+          "urgency_score": 0.44,
+          "taxonomy_confidence": 0.77,
+          "taxonomy_reasons": [
+            "ai infrastructure",
+            "neocloud"
+          ],
+          "direct_ai_infrastructure_relevance": 1,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0.22,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0.24,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.818,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "semiconductor_relevance:0.22(gpu)",
+            "capital_markets_relevance:0.24(ipo)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 1,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0.22,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0.24,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.818,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+              "semiconductor_relevance:0.22(gpu)",
+              "capital_markets_relevance:0.24(ipo)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 73
+        },
+        {
+          "id": "076c51dd0f1cb1ee",
           "source": "NVIDIA Blog",
-          "url": "https://blogs.nvidia.com/blog/rtx-ai-garage-local-gemma-diffusion/",
-          "title": "NVIDIA Accelerates Google DeepMind’s DiffusionGemma for Local AI",
-          "snippet": "Today, Google DeepMind released DiffusionGemma — an experimental open model built for exceptionally fast text generation. NVIDIA has optimized DiffusionGemma to run even faster across NVIDIA GeForce RTX GPUs, the NVIDIA…",
-          "contentText": "Today, Google DeepMind released DiffusionGemma — an experimental open model built for exceptionally fast text generation. NVIDIA has optimized DiffusionGemma to run even faster across NVIDIA GeForce RTX GPUs, the NVIDIA RTX PRO platform and NVIDIA DGX Spark systems, from local PCs to the cloud. Rather than generating text one word at a time, DiffusionGemma generates multiple words in parallel to output whole blocks of text, opening a new, low-latency frontier for the kind of single-user workloads that developers, researchers and AI enthusiasts run every day. Features of the new model include: Parallel generation: DiffusionGemma denoises up to 256 tokens per step instead of predicting one at a time. Built on Gemma 4: DiffusionGemma is built on Gemma 4, a 26-billion-parameter mixture-of-exp…",
-          "publishedAt": "2026-06-10T16:15:20.000Z",
-          "sourceImage": "https://blogs.nvidia.com/wp-content/uploads/2026/06/diffusiongemma-nv-blog-1280x680-1.jpg",
-          "region": "US",
+          "url": "https://blogs.nvidia.com/blog/halos-os-robotaxi-safety/",
+          "title": "For Robotaxis, Safety Must Be Built In, Not Bolted On",
+          "snippet": "A car pulls up to the curb. The app says, “Your ride is here.” No one’s in the driver’s seat. For people who live in one of the dozens of cities now hosting robotaxi services, this is already a reality. The robotaxi ind…",
+          "contentText": "A car pulls up to the curb. The app says, “Your ride is here.” No one’s in the driver’s seat. For people who live in one of the dozens of cities now hosting robotaxi services, this is already a reality. The robotaxi industry has moved from prototype milestones to commercial operations, with an expanding ecosystem accelerating the pace of deployment. New collaborations announced at NVIDIA GTC Taipei reflect robotaxi programs spinning up around the world: Uber and Autobrains are launching a robotaxi program in Munich on the NVIDIA DRIVE Hyperion platform, using Autobrains’ agentic AI to support scalable operations. Foxconn is expanding its collaboration with NVIDIA to deploy robotaxi fleets, combining its services with NVIDIA DRIVE Hyperion for rapid integration and scaling in Taiwan. VinFa…",
+          "publishedAt": "2026-06-10T19:00:12.000Z",
+          "sourceImage": "https://blogs.nvidia.com/wp-content/uploads/2026/06/auto-corp-blog-robotaxi-5295700-1280x680-1.png",
+          "region": "APAC",
           "language": "en",
           "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
           "category": "AI Infrastructure",
@@ -15024,7 +15022,7 @@
             "investors"
           ],
           "article_type": "Product / Platform Update",
-          "urgency_score": 0.46,
+          "urgency_score": 0.45,
           "taxonomy_confidence": 0.77,
           "taxonomy_reasons": [
             "ai infrastructure",
@@ -15033,33 +15031,33 @@
           "direct_ai_infrastructure_relevance": 1,
           "data_center_relevance": 0,
           "cloud_capacity_relevance": 0,
-          "semiconductor_relevance": 0.598,
+          "semiconductor_relevance": 0.5,
           "power_grid_relevance": 0,
           "cooling_relevance": 0,
           "capital_markets_relevance": 0,
           "enterprise_ai_infrastructure_relevance": 0,
-          "infrastructure_relevance_score": 0.862,
+          "infrastructure_relevance_score": 0.84,
           "infrastructure_relevance_tier": "full_memo",
           "infrastructure_relevance_action": "generate_full_memo",
           "infrastructure_relevance_reasons": [
             "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "semiconductor_relevance:0.60(nvidia, gpu)"
+            "semiconductor_relevance:0.50(nvidia, gpu)"
           ],
           "infrastructure_relevance": {
             "direct_ai_infrastructure_relevance": 1,
             "data_center_relevance": 0,
             "cloud_capacity_relevance": 0,
-            "semiconductor_relevance": 0.598,
+            "semiconductor_relevance": 0.5,
             "power_grid_relevance": 0,
             "cooling_relevance": 0,
             "capital_markets_relevance": 0,
             "enterprise_ai_infrastructure_relevance": 0,
-            "infrastructure_relevance_score": 0.862,
+            "infrastructure_relevance_score": 0.84,
             "infrastructure_relevance_tier": "full_memo",
             "infrastructure_relevance_action": "generate_full_memo",
             "infrastructure_relevance_reasons": [
               "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-              "semiconductor_relevance:0.60(nvidia, gpu)"
+              "semiconductor_relevance:0.50(nvidia, gpu)"
             ],
             "infrastructureRelevanceAction": "generate_full_memo",
             "articlePagePublished": true,
@@ -15067,71 +15065,67 @@
             "archiveOnly": false,
             "archiveOnlyReason": null
           },
-          "score": 82
+          "score": 73
         },
         {
-          "id": "25f6e21fd1c395ff",
-          "source": "Power Engineering",
-          "url": "https://www.power-eng.com/gas/turbines/unlocking-more-power-plant-capacity-via-upgrades/",
-          "title": "Unlocking more power plant capacity via upgrades",
-          "snippet": "Combustor and wet compression combo boosts 7F turbine output.",
-          "contentText": "By Drew Robb Power availability is at an all-time premium. According to Industrial Info Resources (IIR), there are more than 12,000 active data center projects in the U.S. currently seeking grid interconnection. This amounts to 1,570 GW of generator capacity and 1,030 GW of storage. The analyst firm also notes that at least $100 billion of new data center announcements are being made each month, the bulk of them in North America. Unfortunately, gas turbine manufacturers can’t keep up – delivery timelines are stretching until the end of the decade in many cases – and local grids rarely have spare capacity to power AI-based facilities that sometimes require in excess of 1 GW. A survey of energy industry stakeholders by Black & Veatch named lack of power as the top obstacle they faced to get…",
-          "publishedAt": "2026-06-10T15:54:12.000Z",
-          "sourceImage": "https://www.power-eng.com/wp-content/uploads/2026/06/F-Class-FlameSheetTM-Combustor.jpg",
-          "region": "APAC",
+          "id": "3d60ff510763d39d",
+          "source": "StorageReview",
+          "url": "https://www.storagereview.com/news/veeam-adds-three-agentic-ai-agents-to-the-dataai-command-platform-for-privacy-and-ai-governance",
+          "title": "Veeam Adds Three Agentic AI Agents to the DataAI Command Platform for Privacy and AI Governance",
+          "snippet": "Veeam Software has introduced new agentic AI capabilities within its Veeam DataAI Command Platform, addressing enterprise challenges related to privacy, compliance, and AI governance. The update adds three AI-driven age…",
+          "contentText": "Veeam Software has introduced new agentic AI capabilities within its Veeam DataAI Command Platform, addressing enterprise challenges related to privacy, compliance, and AI governance. The update adds three AI-driven agents designed to automate policy enforcement and provide continuous, evidence-based validation of compliance across complex data environments. The announcement reflects a shift from manual, point-in-time compliance processes toward real-time governance aligned with the operational pace of AI systems. Veeam positions these agents as a way to address gaps in traditional privacy programs, which often rely on spreadsheets and disconnected workflows that cannot scale with modern AI-driven data usage. Addressing Regulatory Complexity in the AI Era Organizations are facing expandin…",
+          "publishedAt": "2026-06-10T19:58:45.000Z",
+          "sourceImage": "https://www.storagereview.com/wp-content/uploads/2026/06/Storagereview-veeam-dataAI-command-graph.png",
+          "region": "US",
           "language": "en",
-          "defaultCategory": "Power / Grid / Energy",
-          "category": "Power & Grid",
-          "primary_category": "Power & Grid",
-          "secondary_category": "Interconnection and power procurement",
-          "infrastructure_layer": "Power",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "category": "AI Infrastructure",
+          "primary_category": "AI Infrastructure",
+          "secondary_category": "GPU clusters and deployment readiness",
+          "infrastructure_layer": "Compute",
           "affected_stakeholders": [
-            "data center operators",
-            "utilities",
-            "cloud capacity teams",
+            "operators",
+            "hyperscalers",
+            "cloud buyers",
             "investors"
           ],
           "article_type": "Capacity Expansion",
-          "urgency_score": 0.88,
-          "taxonomy_confidence": 0.95,
+          "urgency_score": 0.43,
+          "taxonomy_confidence": 0.77,
           "taxonomy_reasons": [
-            "power",
-            "grid",
-            "interconnection",
-            "gw"
+            "ai infrastructure",
+            "neocloud"
           ],
-          "direct_ai_infrastructure_relevance": 0.82,
-          "data_center_relevance": 0.42,
+          "direct_ai_infrastructure_relevance": 1,
+          "data_center_relevance": 0,
           "cloud_capacity_relevance": 0,
-          "semiconductor_relevance": 0,
-          "power_grid_relevance": 1,
+          "semiconductor_relevance": 0.22,
+          "power_grid_relevance": 0,
           "cooling_relevance": 0,
           "capital_markets_relevance": 0,
-          "enterprise_ai_infrastructure_relevance": 0.18,
-          "infrastructure_relevance_score": 0.945,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.778,
           "infrastructure_relevance_tier": "full_memo",
           "infrastructure_relevance_action": "generate_full_memo",
           "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:0.82",
-            "data_center_relevance:0.42(data center)",
-            "power_grid_relevance:1.00(power, grid, interconnection)"
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "semiconductor_relevance:0.22(gpu)"
           ],
           "infrastructure_relevance": {
-            "direct_ai_infrastructure_relevance": 0.82,
-            "data_center_relevance": 0.42,
+            "direct_ai_infrastructure_relevance": 1,
+            "data_center_relevance": 0,
             "cloud_capacity_relevance": 0,
-            "semiconductor_relevance": 0,
-            "power_grid_relevance": 1,
+            "semiconductor_relevance": 0.22,
+            "power_grid_relevance": 0,
             "cooling_relevance": 0,
             "capital_markets_relevance": 0,
-            "enterprise_ai_infrastructure_relevance": 0.18,
-            "infrastructure_relevance_score": 0.945,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.778,
             "infrastructure_relevance_tier": "full_memo",
             "infrastructure_relevance_action": "generate_full_memo",
             "infrastructure_relevance_reasons": [
-              "direct_ai_infrastructure_relevance:0.82",
-              "data_center_relevance:0.42(data center)",
-              "power_grid_relevance:1.00(power, grid, interconnection)"
+              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+              "semiconductor_relevance:0.22(gpu)"
             ],
             "infrastructureRelevanceAction": "generate_full_memo",
             "articlePagePublished": true,
@@ -15139,37 +15133,30 @@
             "archiveOnly": false,
             "archiveOnlyReason": null
           },
-          "score": 81
+          "score": 71
         }
       ],
       "curatedIds": [
-        "5b765c3511945c8d",
-        "c3c8befdbf616d9c",
-        "35963c52fff3b1a7",
+        "22a9114028a6e93d",
+        "82c8f35c981e9b53",
         "cbee5ce490a3b47e",
-        "a2043e8d3f1f8af7",
-        "25f6e21fd1c395ff"
+        "6cdbbd8b81ca33ad",
+        "076c51dd0f1cb1ee",
+        "3d60ff510763d39d"
       ],
       "publishedIds": [
         "5b765c3511945c8d",
-        "c3c8befdbf616d9c"
+        "c3c8befdbf616d9c",
+        "22a9114028a6e93d",
+        "82c8f35c981e9b53"
       ],
       "slotPublications": {
-        "0": true
+        "0": true,
+        "1": true
       }
     }
   },
   "runHistory": [
-    {
-      "at": "2026-04-25T15:49:16.200Z",
-      "day": "2026-04-26",
-      "slot": 0,
-      "publishedCount": 2,
-      "publishedIds": [
-        "5a67c503256de83a",
-        "c0674a9a617baddd"
-      ]
-    },
     {
       "at": "2026-04-25T17:43:47.312Z",
       "day": "2026-04-26",
@@ -21625,7 +21612,71 @@
         }
       ],
       "archiveOnlyItems": []
+    },
+    {
+      "at": "2026-06-11T00:18:42.342Z",
+      "day": "2026-06-11",
+      "slot": 1,
+      "publishedCount": 0,
+      "signalCardCount": 2,
+      "archiveOnlyCount": 0,
+      "processedIds": [
+        "22a9114028a6e93d",
+        "82c8f35c981e9b53"
+      ],
+      "blockedCount": 2,
+      "blockedItems": [
+        {
+          "id": "22a9114028a6e93d",
+          "title": "Why SRAM Chips Are Pulling Ahead in the New AI World",
+          "infrastructure_relevance_score": 1,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "data_center_relevance:0.42(data center)",
+            "cloud_capacity_relevance:0.32(hyperscalers)",
+            "semiconductor_relevance:1.00(semiconductor, nvidia, amd)",
+            "power_grid_relevance:0.22(power)",
+            "enterprise_ai_infrastructure_relevance:0.48(networking, inference workloads)"
+          ],
+          "extraction_quality_score": 0.95,
+          "source_domain_adapter": "generic",
+          "content_length": 1372,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": false,
+          "repetition_block_reasons": [],
+          "repetition_check": null,
+          "expert_insight_complete": true,
+          "expert_insight_missing_fields": [],
+          "reason": "fail_closed: source_text_incomplete:ellipsis_truncation_artifact, ellipsis_truncation_artifact"
+        },
+        {
+          "id": "82c8f35c981e9b53",
+          "title": "Argonne and DOE Launch New Partnership to Speed Up US Manufacturing Innovation",
+          "infrastructure_relevance_score": 0.958,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud, hpc)",
+            "cloud_capacity_relevance:0.54(hyperscalers, aws)",
+            "semiconductor_relevance:0.72(nvidia, amd, gpu)",
+            "power_grid_relevance:0.22(power)"
+          ],
+          "extraction_quality_score": 1,
+          "source_domain_adapter": "generic",
+          "content_length": 1799,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": false,
+          "repetition_block_reasons": [],
+          "repetition_check": null,
+          "expert_insight_complete": true,
+          "expert_insight_missing_fields": [],
+          "reason": "fail_closed: source_text_incomplete:ellipsis_truncation_artifact, ellipsis_truncation_artifact"
+        }
+      ],
+      "archiveOnlyItems": []
     }
   ],
-  "lastRunAt": "2026-06-10T18:08:18.455Z"
+  "lastRunAt": "2026-06-11T00:18:42.342Z"
 }
