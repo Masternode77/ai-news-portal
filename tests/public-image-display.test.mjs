@@ -9,6 +9,7 @@ import {
   articleCardImage,
   articleDisplayImage,
   articleHeroImage,
+  articleImageProvenance,
   articleImageVariants,
   articleOpenGraphImage,
   isRemoteImage,
@@ -64,14 +65,25 @@ test('article card and header templates render images', () => {
   const cardImageSource = fs.readFileSync(new URL('../src/components/ArticleCardImage.astro', import.meta.url), 'utf8');
   const cardWrapperSource = fs.readFileSync(new URL('../src/components/ArticleListCard.astro', import.meta.url), 'utf8');
   const heroImageSource = fs.readFileSync(new URL('../src/components/ArticleHeroImage.astro', import.meta.url), 'utf8');
+  const featuredSource = fs.readFileSync(new URL('../src/components/FeaturedArticle.astro', import.meta.url), 'utf8');
+  const signalCardSource = fs.readFileSync(new URL('../src/components/PublicSignalCard.astro', import.meta.url), 'utf8');
   const articlePageSource = fs.readFileSync(new URL('../src/pages/news/[id].astro', import.meta.url), 'utf8');
 
   assert.match(cardSource, /ArticleCardImage/);
+  assert.match(cardSource, /provenanceLabel=\{provenanceLabel\}/);
   assert.match(cardImageSource, /class=\{className\}/);
+  assert.match(cardImageSource, /article-image-provenance/);
+  assert.match(cardImageSource, /data-image-provenance/);
   assert.match(cardWrapperSource, /ArticleCard/);
   assert.match(heroImageSource, /class="article-hero-image/);
+  assert.match(heroImageSource, /article-image-provenance/);
+  assert.match(heroImageSource, /data-image-provenance/);
+  assert.match(featuredSource, /provenanceLabel=\{provenanceLabel\}/);
+  assert.match(signalCardSource, /ArticleCardImage/);
+  assert.match(signalCardSource, /provenanceLabel=\{provenanceLabel\}/);
   assert.match(articlePageSource, /articleHeroImage/);
   assert.match(articlePageSource, /articleOpenGraphImage/);
+  assert.match(articlePageSource, /articleImageProvenance/);
 });
 
 test('article image surface uses source artwork when no generated image exists', () => {
@@ -89,11 +101,20 @@ test('article image surface uses source artwork when no generated image exists',
   assert.equal(articleOpenGraphImage(article), article.sourceImage);
   assert.equal(variants.thumbnail.status, 'source');
   assert.equal(variants.thumbnail.provider, 'source-image');
+  assert.deepEqual(articleImageProvenance(article, 'thumbnail'), {
+    label: 'Original source image',
+    kind: 'source',
+    provider: 'source-image',
+    status: 'source',
+    variant: 'thumbnail',
+  });
 
   const presentation = buildPublicPresentation(article);
   assert.equal(presentation.id, article.id);
   assert.equal(presentation.image, article.sourceImage);
   assert.equal(presentation.image_status, 'source');
+  assert.equal(presentation.image_provenance_label, 'Original source image');
+  assert.equal(presentation.image_provenance_kind, 'source');
   assert.match(presentation.image_alt, /Utility capacity queue/);
 });
 
@@ -116,6 +137,13 @@ test('article image surface prefers local generated images over source artwork',
   assert.equal(articleOpenGraphImage(article), article.generatedImage);
   assert.equal(variants.thumbnail.status, 'placeholder');
   assert.equal(variants.thumbnail.provider, 'local-placeholder');
+  assert.deepEqual(articleImageProvenance(article, 'thumbnail'), {
+    label: 'ChatGPT Image2 visual',
+    kind: 'image2',
+    provider: 'local-placeholder',
+    status: 'placeholder',
+    variant: 'thumbnail',
+  });
 });
 
 test('article image surface prefers canonical image2 hero metadata', () => {
@@ -138,4 +166,25 @@ test('article image surface prefers canonical image2 hero metadata', () => {
   const presentation = buildPublicPresentation(article);
   assert.equal(presentation.image, article.thumbnailImage);
   assert.equal(presentation.image_alt, article.imageAlt);
+  assert.equal(presentation.image_provenance_label, 'ChatGPT Image2 visual');
+  assert.equal(presentation.image_provenance_kind, 'image2');
+});
+
+test('article image provenance labels fallback and missing metadata as image2 visuals', () => {
+  const article = {
+    id: 'image_surface_fallback_fixture',
+    title: 'Unmapped AI infrastructure signal',
+  };
+
+  assert.deepEqual(articleImageProvenance(article, 'thumbnail'), {
+    label: 'ChatGPT Image2 visual',
+    kind: 'image2',
+    provider: 'category-fallback',
+    status: 'fallback',
+    variant: 'thumbnail',
+  });
+
+  const presentation = buildPublicPresentation(article);
+  assert.equal(presentation.image_provenance_label, 'ChatGPT Image2 visual');
+  assert.equal(presentation.image_provenance_kind, 'image2');
 });

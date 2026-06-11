@@ -1563,6 +1563,7 @@ time {
 
 .featured-article-media {
   display: block;
+  position: relative;
   min-width: 0;
   overflow: hidden;
   border: 1px solid rgba(29, 29, 31, 0.1);
@@ -2715,6 +2716,7 @@ time {
 
 .article-card-image-link {
   display: block;
+  position: relative;
   color: inherit;
   text-decoration: none;
   overflow: hidden;
@@ -2735,6 +2737,35 @@ time {
 
 .article-list-card:hover .article-card-image {
   transform: scale(1.018);
+}
+
+.article-image-provenance {
+  position: absolute;
+  z-index: 2;
+  top: 10px;
+  left: 10px;
+  display: inline-flex;
+  align-items: center;
+  max-width: calc(100% - 20px);
+  min-height: 26px;
+  padding: 0 9px;
+  border: 1px solid rgba(255, 255, 255, 0.24);
+  border-radius: 999px;
+  background: rgba(17, 24, 39, 0.86);
+  color: #fff;
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.18);
+  font-size: 0.68rem;
+  font-weight: 850;
+  line-height: 1;
+  letter-spacing: 0;
+  text-transform: uppercase;
+  pointer-events: none;
+}
+
+.article-image-provenance[data-provenance-kind="source"] {
+  background: rgba(255, 255, 255, 0.9);
+  color: #1d1d1f;
+  border-color: rgba(29, 29, 31, 0.14);
 }
 
 .article-list-card h3 {
@@ -2888,6 +2919,7 @@ time {
 }
 
 .article-hero-image {
+  position: relative;
   margin: 26px 0 0;
 }
 

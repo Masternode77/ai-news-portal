@@ -25,6 +25,7 @@ import { isPublicLongformArticle } from '../../../scripts/lib/public-surface-eli
 import {
   articleHeroImage,
   articleImageAlt,
+  articleImageProvenance,
   articleOpenGraphImage,
 } from '../../../scripts/lib/article-image-surface.mjs';
 import { relatedArticlesFor } from '../../../scripts/lib/related-articles.mjs';
@@ -61,6 +62,7 @@ const displayTitle = displayHeadline(articleRecord);
 const publicRouting = articleRecord.public_routing || routePublicLane(articleRecord);
 const publicPresentation = buildPublicPresentation(articleRecord, { route: publicRouting });
 const detailImage = articleHeroImage(articleRecord) || SITE.defaultOgImage;
+const detailImageProvenance = articleImageProvenance(articleRecord, 'hero');
 const openGraphImage = articleOpenGraphImage(articleRecord) || detailImage;
 const canonicalPath = articleCanonicalPath(articleRecord);
 const articleUrl = `${SITE.url}${canonicalPath}`;
@@ -121,6 +123,8 @@ const structuredData = buildArticleStructuredData({
         <ArticleHeroImage
           image={detailImage}
           imageAlt={publicPresentation.image_alt || articleImageAlt({ ...articleRecord, title: displayTitle })}
+          provenanceLabel={detailImageProvenance.label}
+          provenanceKind={detailImageProvenance.kind}
           caption={sourceAttribution.name ? `Visual analysis for reporting from ${sourceAttribution.name}.` : ''}
         />
 

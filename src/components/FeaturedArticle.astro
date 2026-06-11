@@ -10,6 +10,8 @@ const isExternal = href && !href.startsWith('/');
 const sourceIsExternal = sourceHref && !sourceHref.startsWith('/');
 const image = signal?.image || '/generated/fallbacks/ai-infrastructure.svg';
 const imageAlt = signal?.image_alt || (signal?.title ? `${signal.title} editorial visual` : 'Compute Current editorial visual');
+const provenanceLabel = signal?.image_provenance_label || 'ChatGPT Image2 visual';
+const provenanceKind = signal?.image_provenance_kind || 'image2';
 const date = signal?.date || signal?.publishedAt || '';
 const formattedDate = date
   ? new Date(date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
@@ -64,6 +66,8 @@ const readerImpact = Array.isArray(signal?.reader_impact) ? signal.reader_impact
       linkClassName="featured-article-media"
       priority={true}
       ariaLabel={href ? signal.title : ''}
+      provenanceLabel={provenanceLabel}
+      provenanceKind={provenanceKind}
     />
   </section>
 ) : null}

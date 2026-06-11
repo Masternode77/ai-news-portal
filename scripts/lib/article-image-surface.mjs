@@ -235,6 +235,21 @@ export function articleImageVariants(article = {}) {
   };
 }
 
+export function articleImageProvenance(article = {}, variant = 'hero') {
+  const variants = articleImageVariants(article);
+  const selected = variants[variant] || variants.hero;
+  const provider = clean(selected.provider);
+  const status = clean(selected.status);
+  const kind = status === 'source' || provider === 'source-image' ? 'source' : 'image2';
+  return {
+    label: kind === 'source' ? 'Original source image' : 'ChatGPT Image2 visual',
+    kind,
+    provider,
+    status,
+    variant: selected.variant || variant,
+  };
+}
+
 export function articleHeroImage(article = {}) {
   return articleImageVariants(article).hero.url;
 }

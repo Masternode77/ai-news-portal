@@ -1,8 +1,12 @@
 ---
+import ArticleCardImage from './ArticleCardImage.astro';
+
 const { signal, compact = false, priority = false } = Astro.props;
 const impact = Array.isArray(signal.reader_impact) ? signal.reader_impact.slice(0, 4) : [];
 const image = signal.image || signal.image_url || '/generated/fallbacks/ai-infrastructure.svg';
 const imageAlt = signal.image_alt || `${signal.title || 'Compute Current signal'} visual`;
+const provenanceLabel = signal.image_provenance_label || 'ChatGPT Image2 visual';
+const provenanceKind = signal.image_provenance_kind || 'image2';
 ---
 <article
   class:list={['intel-card', compact && 'intel-card-compact']}
@@ -12,15 +16,17 @@ const imageAlt = signal.image_alt || `${signal.title || 'Compute Current signal'
   data-deck={signal.deck}
 >
   {image ? (
-    signal.view_detail ? (
-      <a class="signal-media" href={signal.view_detail} aria-label={`Open ${signal.title}`}>
-        <img src={image} alt={imageAlt} loading={priority ? 'eager' : 'lazy'} decoding="async" />
-      </a>
-    ) : (
-      <div class="signal-media" aria-hidden="true">
-        <img src={image} alt="" loading="lazy" decoding="async" />
-      </div>
-    )
+    <ArticleCardImage
+      image={image}
+      imageAlt={imageAlt}
+      href={signal.view_detail || ''}
+      linkClassName="signal-media"
+      priority={priority}
+      decorative={!signal.view_detail}
+      ariaLabel={signal.view_detail ? `Open ${signal.title}` : ''}
+      provenanceLabel={provenanceLabel}
+      provenanceKind={provenanceKind}
+    />
   ) : null}
   <div class="story-meta">
     <span class="public-signal-label">{signal.signal_label}</span>
@@ -34,7 +40,7 @@ const imageAlt = signal.image_alt || `${signal.title || 'Compute Current signal'
   <p class="signal-why">{signal.why_it_matters}</p>
   {impact.length ? (
     <div class="reader-impact" aria-label="Reader impact">
-      {impact.map((label) => <span>{label}</span>)}
+      {impact.map((label: string) => <span>{label}</span>)}
     </div>
   ) : null}
   <div class="card-footer">

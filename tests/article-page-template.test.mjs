@@ -14,6 +14,9 @@ test('article page template presents Compute Current blog analysis before source
   assert.match(header, /aria-label="Breadcrumb"/);
   assert.match(template, /ArticleHeader/);
   assert.match(template, /ArticleHeroImage/);
+  assert.match(template, /articleImageProvenance/);
+  assert.match(template, /provenanceLabel=\{detailImageProvenance\.label\}/);
+  assert.match(template, /provenanceKind=\{detailImageProvenance\.kind\}/);
   assert.match(template, /LongformArticleBody/);
   assert.match(template, /SourceAttribution/);
   assert.match(template, /AIDisclosureFooter/);
@@ -25,6 +28,9 @@ test('article page template presents Compute Current blog analysis before source
   );
   assert.match(hero, /<figure class="[^"]*\barticle-hero-image\b[^"]*"/);
   assert.match(hero, /decoding="async"/);
+  assert.match(hero, /provenanceLabel/);
+  assert.match(hero, /article-image-provenance/);
+  assert.match(hero, /data-image-provenance/);
   assert.match(body, /<section class="detail-section detail-article-copy longform-article-body"/);
   assert.match(related, /article\.id !== currentId/);
   assert.match(source, /<section class="source-attribution"/);
