@@ -3,39 +3,37 @@ import Layout from '../layouts/Layout.astro';
 import { SITE } from '../config/site';
 
 const routes = SITE.commercial.routes;
-const subject = encodeURIComponent('Compute Current sample brief request');
-const body = encodeURIComponent('Please send the current Compute Current Pro sample brief and founding subscriber details.');
-const sampleHref = `mailto:${SITE.contactEmail}?subject=${subject}&body=${body}`;
 ---
 <Layout
-  title={`Sample Brief | ${SITE.name}`}
-  description="A sample Compute Current premium decision memo on AI data centers, power access, capacity, capital exposure, and infrastructure bottlenecks."
+  title={`Sample Analysis | ${SITE.name}`}
+  description="An illustrative Compute Current public analysis format on AI data centers, power access, capacity, capital exposure, and infrastructure bottlenecks."
   canonicalPath={routes.sample}
+  noindex={true}
 >
   <main class="policy-shell commercial-page commercial-page-sample">
     <a class="back-link" href="/">Latest analysis</a>
     <article class="policy-page commercial-article">
       <header class="commercial-hero">
         <div>
-          <p class="eyebrow">Sample Decision Memo</p>
+          <p class="eyebrow">Sample analysis</p>
           <h1>AI Data Centers Are Turning Power Access Into the New Capacity Moat</h1>
           <p class="policy-lede">
-            This is an illustrative sample of the paid Compute Current memo format. It shows the commercial read,
-            watch items, and confidence notes a subscriber would receive.
+            This is an illustrative sample of the public Compute Current analysis format. It shows the source logic,
+            watch items, and confidence notes an infrastructure reader should expect.
           </p>
         </div>
 
         <aside class="commercial-hero-note" aria-label="Sample memo use">
           <span>Memo format</span>
-          <strong>Commercial read first</strong>
-          <p>Every premium brief separates what changed from who benefits, who is exposed, and what to watch next.</p>
+          <strong>Decision read first</strong>
+          <p>Every analysis separates what changed from who benefits, who is exposed, and what to watch next.</p>
         </aside>
       </header>
 
-      <nav class="commercial-actions" aria-label="Sample brief actions">
-        <a href={sampleHref}>Request the Current Sample</a>
-        <a href={routes.subscribe}>Get the Weekly Brief</a>
-        <a href={routes.pricing}>See Pricing</a>
+      <nav class="commercial-actions" aria-label="Sample analysis actions">
+        <a href={routes.archive}>Open the Archive</a>
+        <a href={routes.methodology}>Trace the Methodology</a>
+        <a href={routes.rss}>RSS Feed</a>
       </nav>
 
       <section class="commercial-section commercial-sample-lead">
@@ -61,7 +59,7 @@ const sampleHref = `mailto:${SITE.contactEmail}?subject=${subject}&body=${body}`
           <h2>Confidence notes</h2>
           <p>
             Confidence is medium in this illustrative sample because the thesis is directional and depends on
-            project-level evidence. A live Pro memo would attach source URLs, confidence labels, and item-specific caveats.
+            project-level evidence. A live public analysis should attach source URLs, confidence labels, and item-specific caveats.
           </p>
         </div>
       </section>

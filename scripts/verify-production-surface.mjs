@@ -9,10 +9,11 @@ const DEFAULT_SCREENSHOTS = [
   'evidence/compute-current-omo-ultra-rebuild/task-14-homepage.png',
   'evidence/compute-current-omo-ultra-rebuild/task-14-article.png',
 ];
-const COMMERCIAL_ROUTES = ['/subscribe/', '/pricing/', '/sample/', '/briefing/', '/contact/'];
+const PUBLIC_REFERENCE_ROUTES = ['/contact/', '/methodology/', '/editorial-policy/', '/ai-disclosure/'];
+const LEGACY_OPEN_ROUTES = ['/subscribe/', '/pricing/', '/sample/', '/briefing/'];
 const SMOKE_PATHS = [
   '/',
-  ...COMMERCIAL_ROUTES,
+  ...PUBLIC_REFERENCE_ROUTES,
   '/archive/',
   '/rss.xml',
   '/sitemap.xml',
@@ -67,7 +68,7 @@ async function firstAstroChildSitemap(distDir) {
   return entries.find((entry) => /^sitemap-\d+\.xml$/.test(entry)) || '';
 }
 
-function commercialRouteFile(route) {
+function routeFile(route) {
   const slug = route.replace(/^\/|\/$/g, '');
   return slug ? `${slug}/index.html` : 'index.html';
 }
@@ -83,9 +84,12 @@ async function inspectLocalDistributionDetails(distDir) {
   const sitemapIndex = await readText(path.join(distDir, 'sitemap-index.xml'));
   const childSitemap = await firstAstroChildSitemap(distDir);
   const childXml = childSitemap ? await readText(path.join(distDir, childSitemap)) : '';
-  const homepageMissingCommercialLinks = [...COMMERCIAL_ROUTES, '/archive/'].filter((route) => !homepage.includes(`href="${route}"`) && !homepage.includes(`href='${route}'`));
-  const customSitemapMissingCommercial = COMMERCIAL_ROUTES.filter((route) => !sitemap.includes(route));
-  const astroSitemapMissingCommercial = COMMERCIAL_ROUTES.filter((route) => !childXml.includes(route));
+  const homepageMissingPublicLinks = [...PUBLIC_REFERENCE_ROUTES, '/archive/', '/rss.xml'].filter((route) => !homepage.includes(`href="${route}"`) && !homepage.includes(`href='${route}'`));
+  const homepageUnexpectedLegacyLinks = LEGACY_OPEN_ROUTES.filter((route) => homepage.includes(`href="${route}"`) || homepage.includes(`href='${route}'`));
+  const customSitemapMissingPublic = PUBLIC_REFERENCE_ROUTES.filter((route) => !sitemap.includes(route));
+  const customSitemapUnexpectedLegacy = LEGACY_OPEN_ROUTES.filter((route) => sitemap.includes(route));
+  const astroSitemapMissingPublic = PUBLIC_REFERENCE_ROUTES.filter((route) => !childXml.includes(route));
+  const astroSitemapUnexpectedLegacy = LEGACY_OPEN_ROUTES.filter((route) => childXml.includes(route));
   const rssLocalNewsIds = localNewsIdsFromXml(rss);
   const rssLocalFileStatuses = await Promise.all(rssLocalNewsIds.map(async (id) => ({
     id,
@@ -95,16 +99,22 @@ async function inspectLocalDistributionDetails(distDir) {
   const sitemapIndexReferencesChild = Boolean(childSitemap && sitemapIndex.includes(childSitemap));
 
   return {
-    homepageMissingCommercialLinks,
-    customSitemapMissingCommercial,
+    homepageMissingPublicLinks,
+    homepageUnexpectedLegacyLinks,
+    customSitemapMissingPublic,
+    customSitemapUnexpectedLegacy,
     astroSitemapChild: childSitemap || null,
-    astroSitemapMissingCommercial,
+    astroSitemapMissingPublic,
+    astroSitemapUnexpectedLegacy,
     sitemapIndexReferencesChild,
     rssLocalNewsLinks: rssLocalNewsIds.length,
     rssLocalMissingFiles,
-    ok: homepageMissingCommercialLinks.length === 0
-      && customSitemapMissingCommercial.length === 0
-      && astroSitemapMissingCommercial.length === 0
+    ok: homepageMissingPublicLinks.length === 0
+      && homepageUnexpectedLegacyLinks.length === 0
+      && customSitemapMissingPublic.length === 0
+      && customSitemapUnexpectedLegacy.length === 0
+      && astroSitemapMissingPublic.length === 0
+      && astroSitemapUnexpectedLegacy.length === 0
       && sitemapIndexReferencesChild
       && rssLocalMissingFiles.length === 0,
   };
@@ -120,7 +130,8 @@ async function inspectLocalDist(distDir) {
     'sitemap-index.xml',
     'robots.txt',
     'archive/index.html',
-    ...COMMERCIAL_ROUTES.map(commercialRouteFile),
+    ...PUBLIC_REFERENCE_ROUTES.map(routeFile),
+    ...LEGACY_OPEN_ROUTES.map(routeFile),
   ];
   const files = await Promise.all(requiredFiles.map((file) => distFileStatus(absolute, file)));
   const distribution = await inspectLocalDistributionDetails(absolute);
@@ -231,10 +242,13 @@ async function writeReport(result, reportPath) {
     '',
     `- Local dist status: ${result.localDist.ok ? 'passed' : 'failed'}`,
     ...localFiles.map((file) => `  - ${file.path}: ${file.status}${file.bytes ? ` (${file.bytes} bytes)` : ''}`),
-    `  - homepage commercial links missing: ${(distribution.homepageMissingCommercialLinks || []).join(', ') || 'none'}`,
-    `  - custom sitemap commercial paths missing: ${(distribution.customSitemapMissingCommercial || []).join(', ') || 'none'}`,
+    `  - homepage public links missing: ${(distribution.homepageMissingPublicLinks || []).join(', ') || 'none'}`,
+    `  - homepage legacy conversion links present: ${(distribution.homepageUnexpectedLegacyLinks || []).join(', ') || 'none'}`,
+    `  - custom sitemap public paths missing: ${(distribution.customSitemapMissingPublic || []).join(', ') || 'none'}`,
+    `  - custom sitemap legacy conversion paths present: ${(distribution.customSitemapUnexpectedLegacy || []).join(', ') || 'none'}`,
     `  - Astro sitemap child: ${distribution.astroSitemapChild || 'missing'}`,
-    `  - Astro sitemap commercial paths missing: ${(distribution.astroSitemapMissingCommercial || []).join(', ') || 'none'}`,
+    `  - Astro sitemap public paths missing: ${(distribution.astroSitemapMissingPublic || []).join(', ') || 'none'}`,
+    `  - Astro sitemap legacy conversion paths present: ${(distribution.astroSitemapUnexpectedLegacy || []).join(', ') || 'none'}`,
     `  - RSS local news links: ${distribution.rssLocalNewsLinks ?? 'n/a'}`,
     `  - RSS local missing files: ${(distribution.rssLocalMissingFiles || []).join(', ') || 'none'}`,
     ...linesForUrl(result.local),

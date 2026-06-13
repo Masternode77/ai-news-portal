@@ -14,6 +14,14 @@ function getMobileBlock(styles) {
   return start >= 0 ? styles.slice(start) : '';
 }
 
+function readStyles() {
+  return [
+    readText('../src/styles/global.css'),
+    readText('../src/styles/redesign.css'),
+    readText('../src/styles/public-intelligence.css'),
+  ].join('\n');
+}
+
 function getTemplateSource(source) {
   const frontmatterEnd = source.indexOf('---', 3);
   return frontmatterEnd >= 0 ? source.slice(frontmatterEnd + 3) : source;
@@ -36,19 +44,19 @@ test('homepage premium surface renders a named intelligence desk module before t
   assert.match(feedSource, /ArticleCard/);
 });
 
-test('homepage redesign exposes the commercial command center before latest signals', () => {
+test('homepage redesign exposes the public command center before latest signals', () => {
   // Given: the homepage template is the canonical public entry point.
   const source = readText('../src/pages/index.astro');
   const templateSource = getTemplateSource(source);
-  const commandCenterIndex = templateSource.indexOf('data-commercial-command-center');
+  const commandCenterIndex = templateSource.indexOf('data-public-command-center');
   const latestSignalsIndex = templateSource.indexOf('Latest Signals');
 
   // When: the redesigned product surface is inspected.
-  assert.notEqual(commandCenterIndex, -1, 'expected stable redesign marker data-commercial-command-center');
+  assert.notEqual(commandCenterIndex, -1, 'expected stable redesign marker data-public-command-center');
   assert.notEqual(latestSignalsIndex, -1, 'expected Latest Signals feed label');
 
-  // Then: the conversion/product surface leads the news feed rather than trailing it.
-  assert.ok(commandCenterIndex < latestSignalsIndex, 'commercial command center should appear before Latest Signals');
+  // Then: the public command surface leads the news feed rather than trailing it.
+  assert.ok(commandCenterIndex < latestSignalsIndex, 'public command center should appear before Latest Signals');
 });
 
 test('homepage premium surface is part of the first viewport masthead system', () => {
@@ -76,7 +84,7 @@ test('homepage premium surface is part of the first viewport masthead system', (
 });
 
 test('homepage premium surface keeps the intelligence deck readable on mobile', () => {
-  const styles = readText('../src/styles/global.css');
+  const styles = readStyles();
   const mobileBlock = getMobileBlock(styles);
 
   assert.ok(mobileBlock.length > 0, 'expected a mobile media block');
@@ -93,7 +101,7 @@ test('homepage premium surface keeps the intelligence deck readable on mobile', 
 });
 
 test('homepage mobile masthead stacks hero and intelligence desk without grid overlap', () => {
-  const styles = readText('../src/styles/global.css');
+  const styles = readStyles();
   const mobileBlock = getMobileBlock(styles);
 
   assert.match(
@@ -111,7 +119,7 @@ test('homepage mobile masthead stacks hero and intelligence desk without grid ov
 });
 
 test('homepage premium desk keeps core intelligence visible inside the desktop masthead', () => {
-  const styles = readText('../src/styles/global.css');
+  const styles = readStyles();
 
   assert.match(
     styles,
@@ -130,7 +138,7 @@ test('homepage premium desk keeps core intelligence visible inside the desktop m
 test('homepage premium surface preserves article feed and avoids generic AI-blog styling', () => {
   const homepageSource = readText('../src/pages/index.astro');
   const feedSource = readText('../src/components/LatestAnalysisFeed.astro');
-  const styles = readText('../src/styles/global.css');
+  const styles = readStyles();
   const combined = [homepageSource, feedSource, styles].join('\n');
   const feed = buildHomepageFeed([...latestNews, ...archivedNews], { limit: 50, minimumVisible: 30 });
 

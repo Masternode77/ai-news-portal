@@ -3,45 +3,43 @@ import Layout from '../layouts/Layout.astro';
 import { SITE } from '../config/site';
 
 const routes = SITE.commercial.routes;
-const subject = encodeURIComponent('Compute Current executive briefing request');
-const body = encodeURIComponent('Please follow up about a custom executive briefing for AI infrastructure intelligence.');
-const briefingHref = `mailto:${SITE.contactEmail}?subject=${subject}&body=${body}`;
 ---
 <Layout
-  title={`Executive Briefing | ${SITE.name}`}
-  description="Request custom Compute Current executive briefings for AI infrastructure investors, operators, developers, cloud capacity teams, and strategy groups."
+  title={`Method Notes | ${SITE.name}`}
+  description="How Compute Current turns public source movement into AI infrastructure signals for operators, investors, developers, and strategy groups."
   canonicalPath={routes.briefing}
+  noindex={true}
 >
   <main class="policy-shell commercial-page commercial-page-briefing">
     <a class="back-link" href="/">Latest analysis</a>
     <article class="policy-page commercial-article">
       <header class="commercial-hero">
         <div>
-          <p class="eyebrow">Executive Briefing</p>
-          <h1>Custom AI infrastructure intelligence for investment and operating decisions.</h1>
+          <p class="eyebrow">Method notes</p>
+          <h1>How a public source becomes an infrastructure signal.</h1>
           <p class="policy-lede">
-            Custom briefings turn Compute Current's public intelligence workflow into a focused memo and call for a
-            specific market, project, tenant segment, or bottleneck.
+            Compute Current looks for evidence that changes capacity, power, cooling, chip supply, siting, policy,
+            capital, or deployment timing for AI infrastructure readers.
           </p>
         </div>
 
-        <aside class="commercial-hero-note" aria-label="Custom briefing cadence">
-          <span>Cadence</span>
-          <strong>Memo plus executive call</strong>
-          <p>Scope can center on a region, project pipeline, buyer segment, or constraint watchlist.</p>
+        <aside class="commercial-hero-note" aria-label="Editorial method">
+          <span>Editorial method</span>
+          <strong>Source, thesis, constraint</strong>
+          <p>Every public read should connect a verified source to a decision point.</p>
         </aside>
       </header>
 
-      <nav class="commercial-actions" aria-label="Executive briefing actions">
-        <a href={briefingHref}>Request a Briefing</a>
-        <a href={routes.sample}>View Sample</a>
-        <a href={routes.pricing}>See Pricing</a>
+      <nav class="commercial-actions" aria-label="Method note actions">
+        <a href={routes.methodology}>Full Methodology</a>
+        <a href={routes.editorialPolicy}>Editorial Policy</a>
+        <a href={routes.archive}>Open the Archive</a>
       </nav>
 
       <section class="commercial-section">
         <div class="commercial-section-heading">
           <p class="eyebrow">Use cases</p>
-          <h2>Where custom intelligence helps</h2>
+          <h2>Where the signal filter matters</h2>
         </div>
         <div class="commercial-grid commercial-use-grid">
           <div class="commercial-note">
@@ -67,13 +65,13 @@ const briefingHref = `mailto:${SITE.contactEmail}?subject=${subject}&body=${body
         <div class="commercial-note">
           <h2>Output</h2>
           <p>
-            A custom briefing can include a memo, watchlist, source notes, confidence labels, and a focused executive call.
+            A published analysis should include source notes, confidence labels, a clear thesis, and the constraint readers should watch.
           </p>
         </div>
         <div class="commercial-note">
           <h2>Fit</h2>
           <p>
-            Built for teams making siting, leasing, capital allocation, partner, or market-entry decisions.
+            Built for readers making sense of siting, leasing, capital allocation, partner, or market-entry signals.
           </p>
         </div>
       </section>

@@ -3,45 +3,43 @@ import Layout from '../layouts/Layout.astro';
 import { SITE } from '../config/site';
 
 const routes = SITE.commercial.routes;
-const subject = encodeURIComponent('Compute Current Weekly Brief');
-const body = encodeURIComponent('Please send the Weekly AI Infrastructure Signal Brief sample and founding subscriber details.');
-const weeklyBriefHref = `mailto:${SITE.contactEmail}?subject=${subject}&body=${body}`;
 ---
 <Layout
-  title={`Subscribe | ${SITE.name}`}
-  description="Request the weekly Compute Current AI Infrastructure Signal Brief for power, capacity, chips, cooling, cloud demand, capital, and APAC/Korea infrastructure signals."
+  title={`Signal Board | ${SITE.name}`}
+  description="Open Compute Current signal board for power, capacity, chips, cooling, cloud demand, capital, and APAC/Korea infrastructure signals."
   canonicalPath={routes.subscribe}
+  noindex={true}
 >
   <main class="policy-shell commercial-page commercial-page-subscribe">
     <a class="back-link" href="/">Latest analysis</a>
     <article class="policy-page commercial-article">
       <header class="commercial-hero">
         <div>
-          <p class="eyebrow">Weekly Brief</p>
+          <p class="eyebrow">Signal board</p>
           <h1>AI infrastructure signals for capacity, power, and capital decisions.</h1>
           <p class="policy-lede">
-            The Weekly AI Infrastructure Signal Brief gives investors, operators, developers, and cloud capacity
-            teams a disciplined read on bottlenecks shaping AI data center deployment.
+            The public board gives infrastructure readers a disciplined read on the bottlenecks shaping AI data
+            center deployment, with source links and editorial confidence notes attached.
           </p>
         </div>
 
         <aside class="commercial-hero-note" aria-label="Brief output">
           <span>Output</span>
-          <strong>Source-linked weekly memo</strong>
-          <p>Five high-signal developments, commercial implications, watch items, and confidence notes.</p>
+          <strong>Source-linked public read</strong>
+          <p>Constraint signals, watch items, and confidence notes without a signup wall.</p>
         </aside>
       </header>
 
-      <nav class="commercial-actions" aria-label="Brief subscription actions">
-        <a href={weeklyBriefHref}>{SITE.commercial.ctas.weeklyBrief}</a>
-        <a href={routes.sample}>Request a Sample</a>
-        <a href={routes.pricing}>See Pricing</a>
+      <nav class="commercial-actions" aria-label="Signal board actions">
+        <a href={routes.archive}>{SITE.commercial.ctas.weeklyBrief}</a>
+        <a href={routes.methodology}>Trace the Methodology</a>
+        <a href={routes.rss}>RSS Feed</a>
       </nav>
 
       <section class="commercial-section">
         <div class="commercial-section-heading">
           <p class="eyebrow">Coverage lanes</p>
-          <h2>What the weekly brief tracks</h2>
+          <h2>What the signal board tracks</h2>
         </div>
         <ul class="commercial-signal-list commercial-check-grid">
           <li>Power availability, grid interconnection, generation tie-ups, and site constraints.</li>
@@ -55,21 +53,21 @@ const weeklyBriefHref = `mailto:${SITE.contactEmail}?subject=${subject}&body=${b
         <div class="commercial-note">
           <h2>How access works</h2>
           <p>
-            Wave 1 uses direct briefing requests so the product can stay focused on qualified infrastructure readers
-            and founding subscriber feedback.
+            The archive, RSS feed, methodology, and policy pages remain public so readers can inspect both the
+            signal and the editorial standard behind it.
           </p>
         </div>
         <div class="commercial-note">
-          <h2>What it replaces</h2>
+          <h2>What it reduces</h2>
           <p>
             A scattered watchlist across power, data center, chip, cloud, cooling, policy, and capital sources.
           </p>
         </div>
       </section>
 
-      <nav class="policy-link-row" aria-label="Commercial pages">
-        <a href={routes.sample}>Sample Brief</a>
-        <a href={routes.briefing}>Executive Briefing</a>
+      <nav class="policy-link-row" aria-label="Public reference pages">
+        <a href={routes.aiDisclosure}>AI-assisted Disclosure</a>
+        <a href={routes.editorialPolicy}>Editorial Policy</a>
         <a href={routes.contact}>Contact</a>
       </nav>
     </article>

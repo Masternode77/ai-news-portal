@@ -9,15 +9,12 @@ const STATUS_PATH = EVIDENCE_DIR ? path.join(EVIDENCE_DIR, 'commercial-visual.js
 const STATUS_DIR = path.dirname(STATUS_PATH);
 const SCREENSHOT_DIR = EVIDENCE_DIR ? path.join(EVIDENCE_DIR, 'visual-commercial') : path.join(ROOT, 'artifacts', 'visual-commercial');
 const REQUIRED_VISUAL_QA = process.env.GITHUB_ACTIONS === 'true';
-const CONTACT_EMAIL = 'briefings@computecurrent.com';
-
 const baseTargets = [
-  { path: '/', slug: 'home', requiredLinks: ['/subscribe/', '/pricing/', '/sample/', '/briefing/', '/contact/', '/archive/'] },
-  { path: '/subscribe/', slug: 'subscribe', requiredLinks: [`mailto:${CONTACT_EMAIL}`] },
-  { path: '/pricing/', slug: 'pricing', requiredLinks: [`mailto:${CONTACT_EMAIL}`] },
-  { path: '/sample/', slug: 'sample', requiredLinks: [`mailto:${CONTACT_EMAIL}`] },
-  { path: '/briefing/', slug: 'briefing', requiredLinks: [`mailto:${CONTACT_EMAIL}`] },
-  { path: '/contact/', slug: 'contact', requiredLinks: [`mailto:${CONTACT_EMAIL}`] },
+  { path: '/', slug: 'home', requiredLinks: ['/archive/', '/methodology/', '/editorial-policy/', '/ai-disclosure/', '/contact/', '/rss.xml'] },
+  { path: '/methodology/', slug: 'methodology', requiredLinks: [] },
+  { path: '/editorial-policy/', slug: 'editorial-policy', requiredLinks: [] },
+  { path: '/ai-disclosure/', slug: 'ai-disclosure', requiredLinks: [] },
+  { path: '/contact/', slug: 'contact', requiredLinks: ['mailto:briefings@computecurrent.com'] },
   { path: '/archive/', slug: 'archive', requiredLinks: [] },
 ];
 
@@ -270,7 +267,7 @@ async function main() {
 
   await writeStatus({
     status: failures.length ? 'failed' : 'passed',
-    reason: failures.length ? 'route_visual_checks_failed' : 'commercial_visual_checks_passed',
+    reason: failures.length ? 'route_visual_checks_failed' : 'public_visual_checks_passed',
     routes: results.length,
     screenshots: results.map((result) => result.screenshot),
     failures,

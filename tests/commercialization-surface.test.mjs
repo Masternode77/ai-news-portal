@@ -5,8 +5,10 @@ import test from 'node:test';
 import { guardPublicTemplatePhrases } from '../scripts/lib/public-template-phrase-guard.mjs';
 
 const distDir = path.resolve('dist');
-const commercialRoutes = ['/subscribe/', '/pricing/', '/sample/', '/briefing/', '/contact/'];
-const productionRoutes = ['/', '/archive/', '/rss.xml', '/sitemap.xml', ...commercialRoutes];
+const legacyOpenRoutes = ['/subscribe/', '/pricing/', '/sample/', '/briefing/'];
+const publicReferenceRoutes = ['/contact/', '/methodology/', '/editorial-policy/', '/ai-disclosure/'];
+const publicHomepageLinks = ['/archive/', '/methodology/', '/editorial-policy/', '/ai-disclosure/', '/contact/', '/rss.xml'];
+const productionRoutes = ['/', '/archive/', '/rss.xml', '/sitemap.xml', ...legacyOpenRoutes, ...publicReferenceRoutes];
 
 function distHtmlPath(routePath) {
   const normalized = routePath.replace(/^\/|\/$/g, '');
@@ -50,25 +52,28 @@ function textContent(html) {
     .trim();
 }
 
-test('built commercial routes exist with canonical links', async () => {
-  for (const routePath of commercialRoutes) {
+test('legacy conversion routes render as noindex public reference pages', async () => {
+  for (const routePath of legacyOpenRoutes) {
     const html = await readDistHtml(routePath);
     assert.match(html, new RegExp(`https://www\\.computecurrent\\.com${routePath}`));
+    assert.match(html, /<meta name="robots" content="noindex,nofollow">/);
   }
 });
 
-test('homepage links to the commercial conversion routes and archive', async () => {
+test('homepage links to public reference routes before latest signals', async () => {
   const homepage = await fs.readFile(path.join(distDir, 'index.html'), 'utf8');
   const latestSignalsIndex = homepage.indexOf('Latest Signals');
 
   assert.notEqual(latestSignalsIndex, -1, 'expected Latest Signals section');
-  for (const routePath of [...commercialRoutes, '/archive/']) {
+  for (const routePath of publicHomepageLinks) {
     const linkMatch = homepage.match(new RegExp(`href=["']${routePath}["']`));
     assert.ok(linkMatch, `expected homepage link to ${routePath}`);
     assert.ok(linkMatch.index < latestSignalsIndex, `${routePath} should appear before Latest Signals`);
   }
-  assert.match(homepage, /href=["']\/pricing\/["']/);
   assert.match(homepage, /href=["']\/contact\/["']/);
+  for (const routePath of legacyOpenRoutes) {
+    assert.doesNotMatch(homepage, new RegExp(`href=["']${routePath}["']`), `homepage should not link legacy conversion route ${routePath}`);
+  }
 });
 
 test('built public production routes exist and indexes exclude admin routes', async () => {
@@ -87,21 +92,21 @@ test('built public production routes exist and indexes exclude admin routes', as
   assert.doesNotMatch(archive, /href=["']\/admin(?:\/|["'])/i, 'archive should not link admin routes');
 });
 
-test('commercial routes avoid fake forms, payment surfaces, and template article language', async () => {
-  for (const routePath of commercialRoutes) {
+test('public and legacy reference routes avoid paid conversion surfaces and template article language', async () => {
+  for (const routePath of [...legacyOpenRoutes, ...publicReferenceRoutes]) {
     const html = await readDistHtml(routePath);
+    const text = textContent(html);
     assert.doesNotMatch(
-      html,
-      /<form\b|type=["']email|stripe|checkout|login|credit card|card number|payment processor|payment form/i,
+      text,
+      /stripe|checkout|login|credit card|card number|payment processor|payment form|request pricing|see pricing|founding subscriber|team subscription|custom executive|executive briefing|custom briefing|get the weekly|paid|paywall|subscriber would receive/i,
       `${routePath} contains a forbidden conversion/payment surface`,
     );
+    assert.doesNotMatch(html, /<form\b|type=["']email/i, `${routePath} contains a forbidden form surface`);
     assert.doesNotMatch(
       html,
       /\b(sourceUrl|rawText|articlePagePublished|public_status|debug|stack trace|localhost)\b/i,
       `${routePath} leaks article/debug terminology`,
     );
-
-    const text = textContent(html);
     const templateGuard = guardPublicTemplatePhrases(text);
     assert.equal(templateGuard.ok, true, `${routePath} matched public template phrases: ${(templateGuard.reasons || []).join(', ')}`);
   }

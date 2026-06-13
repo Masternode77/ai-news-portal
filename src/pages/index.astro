@@ -37,19 +37,19 @@ const marketContext = [
 
 const intelligenceProducts = [
   {
-    label: 'Weekly Signal Brief',
-    title: 'Five decision-grade movements across power, capacity, chips, cooling, and capital.',
-    href: routes.subscribe,
+    label: 'Power Watch',
+    title: 'Grid access, energization timing, generation tie-ups, and site constraints.',
+    href: '/category/power-grid/',
   },
   {
-    label: 'Executive Briefing',
-    title: 'Custom memo and call for a market, site, tenant, or bottleneck question.',
-    href: routes.briefing,
+    label: 'Capacity Watch',
+    title: 'Data center demand, cloud commitments, rack density, and lease movement.',
+    href: '/category/data-centers/',
   },
   {
-    label: 'Sample Memo',
-    title: 'Review the premium brief format before requesting a founding pilot.',
-    href: routes.sample,
+    label: 'Source Trail',
+    title: 'Original links, image provenance, archive search, and public methodology.',
+    href: routes.methodology,
   },
 ];
 
@@ -72,9 +72,9 @@ const navLinks = [
   ['Archive', '/archive/'],
 ];
 ---
-<Layout title={boardTitle} description="AI infrastructure intelligence for power, data centers, chips, cloud capacity, cooling, and capital." canonicalPath="/">
+<Layout title={boardTitle} description="Open AI infrastructure intelligence for power, data centers, chips, cloud capacity, cooling, and capital." canonicalPath="/">
   <main class="page-shell autonomous-home publication-home">
-    <header class="publication-header command-center-header" data-commercial-command-center>
+    <header class="publication-header command-center-header" data-public-command-center>
       <div class="edition-line">
         <span>AI Infrastructure Intelligence</span>
         <span>Updated every 8 hours</span>
@@ -89,21 +89,22 @@ const navLinks = [
             <span>Current</span>
           </h1>
           <p>
-            AI infrastructure intelligence for capacity, power, and capital decisions.
+            Open signals on the bottlenecks shaping AI capacity, power, and capital flows.
           </p>
           <p class="hero-deck">
-            Built for operators, investors, developers, and cloud capacity teams that need to separate
-            headline movement from constraints that change build schedules, tenant strategy, and capital exposure.
+            A public operating board for readers who need the source trail behind data center buildouts,
+            grid constraints, silicon supply, cooling shifts, cloud capacity, policy, and capital movement.
           </p>
-          <nav class="commercial-actions homepage-commercial-actions" aria-label="Commercial briefing actions">
-            <a href={routes.subscribe}>{ctas.weeklyBrief}</a>
-            <a href={routes.sample}>{ctas.sample}</a>
-            <a href={routes.briefing}>{ctas.executiveBriefing}</a>
+          <nav class="commercial-actions homepage-commercial-actions" aria-label="Public intelligence actions">
+            <a href={routes.archive}>{ctas.weeklyBrief}</a>
+            <a href={routes.methodology}>{ctas.executiveBriefing}</a>
+            <a href={routes.aiDisclosure}>{ctas.sample}</a>
             <a href={routes.archive}>{ctas.recentAnalysis}</a>
           </nav>
-          <nav class="homepage-secondary-actions" aria-label="Commercial reference links">
-            <a href={routes.pricing}>Pricing</a>
-            <a href={routes.contact}>Contact</a>
+          <nav class="homepage-secondary-actions" aria-label="Public reference links">
+            <a href={routes.rss}>RSS</a>
+            <a href={routes.editorialPolicy}>Editorial policy</a>
+            <a href={routes.contact}>{ctas.contact}</a>
           </nav>
 
           <div class="operating-read-row" aria-label="Coverage lanes">
@@ -123,11 +124,11 @@ const navLinks = [
             <div class="premium-desk-primary">
               <p class="eyebrow">Market read</p>
               <h2 id="premium-desk-heading" data-premium-hero-headline>
-                Track the constraint before it resets capacity plans.
+                Watch the constraint before it becomes the story.
               </h2>
               <p>
-                Compute Current ranks AI infrastructure signals by their effect on power access, site delivery,
-                accelerated compute supply, cooling strategy, and capital exposure.
+                Compute Current ranks public AI infrastructure signals by their effect on power access,
+                site delivery, accelerated compute supply, cooling strategy, and capital exposure.
               </p>
             </div>
 
@@ -145,7 +146,7 @@ const navLinks = [
               <h3>{leadSignal?.title || 'AI infrastructure signals are being prepared for publication.'}</h3>
               <p>
                 {leadSignal?.deck ||
-                  'The desk is monitoring infrastructure decisions that affect capacity buyers, data center developers, and capital allocators.'}
+                  'The desk is monitoring source-linked infrastructure signals across power, sites, silicon, cooling, and capital.'}
               </p>
               <a class="detail-link" href={leadHref}>Open lead signal</a>
             </article>
@@ -153,7 +154,7 @@ const navLinks = [
         </aside>
       </div>
 
-      <section class="command-product-strip" aria-label="Compute Current intelligence products">
+      <section class="command-product-strip" aria-label="Compute Current public intelligence lanes">
         {intelligenceProducts.map((product) => (
           <a href={product.href}>
             <span>{product.label}</span>
@@ -180,22 +181,18 @@ const navLinks = [
         <h2>Search the archive</h2>
       </div>
       <p class="archive-note">
-        Browse recent AI infrastructure coverage by source, date, and category without losing the operating context.
+        Browse AI infrastructure coverage by source, date, category, provenance, and operating context.
       </p>
       <a class="detail-link archive-link" href="/archive/">Explore all posts</a>
     </section>
 
     <footer class="transparency-footer" aria-label="Editorial links">
       <nav class="policy-link-row" aria-label="Publication pages">
-        <a href={routes.subscribe}>Weekly Brief</a>
-        <a href={routes.pricing}>Pricing</a>
-        <a href={routes.sample}>Sample Brief</a>
-        <a href={routes.briefing}>Executive Briefing</a>
-        <a href={routes.contact}>Contact</a>
         <a href="/about/">About</a>
         <a href="/editorial-policy/">Editorial Policy</a>
         <a href="/methodology/">Methodology</a>
         <a href="/ai-disclosure/">AI-assisted Disclosure</a>
+        <a href={routes.contact}>Send a Source Signal</a>
         <a href="/rss.xml">RSS</a>
         <a href="/sitemap.xml">Sitemap</a>
       </nav>

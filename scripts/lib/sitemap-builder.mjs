@@ -17,10 +17,6 @@ export function buildSitemapEntries(items = []) {
     '/editorial-policy/',
     '/ai-disclosure/',
     '/archive/',
-    '/subscribe/',
-    '/pricing/',
-    '/sample/',
-    '/briefing/',
     '/contact/',
   ];
   const articlePages = items

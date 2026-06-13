@@ -2,50 +2,45 @@
 import Layout from '../layouts/Layout.astro';
 import { SITE } from '../config/site';
 
-type CommercialPackage = (typeof SITE.commercial.packages)[number];
-
 const routes = SITE.commercial.routes;
 const packages = SITE.commercial.packages;
-const subject = encodeURIComponent('Compute Current pricing request');
-const body = encodeURIComponent('Please send pricing details for Compute Current intelligence products.');
-const pricingHref = `mailto:${SITE.contactEmail}?subject=${subject}&body=${body}`;
 ---
 <Layout
-  title={`Pricing | ${SITE.name}`}
-  description="Pricing for Compute Current briefing notes, Pro weekly intelligence, team intelligence, and custom executive briefings."
+  title={`Open Access | ${SITE.name}`}
+  description="Compute Current keeps its AI infrastructure signal board public, source-linked, and built for infrastructure readers."
   canonicalPath={routes.pricing}
+  noindex={true}
 >
   <main class="policy-shell commercial-page commercial-page-pricing">
     <a class="back-link" href="/">Latest analysis</a>
     <article class="policy-page commercial-article">
       <header class="commercial-hero">
         <div>
-          <p class="eyebrow">Pricing</p>
-          <h1>Commercial intelligence packages for AI infrastructure decisions.</h1>
+          <p class="eyebrow">Open access</p>
+          <h1>The public signal board stays in the open.</h1>
           <p class="policy-lede">
-            Compute Current starts with a direct-request model: public notes for audience building, a Pro weekly
-            brief for recurring intelligence, and custom briefings for higher-stakes decisions.
+            Compute Current is being shaped as a public AI infrastructure intelligence desk. The useful surface is
+            the archive, source trail, methodology, and coverage lanes - not a gated product funnel.
           </p>
         </div>
 
-        <aside class="commercial-hero-note" aria-label="Pricing model">
-          <span>Wave 1</span>
-          <strong>Request-based access</strong>
-          <p>Founding pricing is confirmed directly so packages can match individual, team, or advisory use.</p>
+        <aside class="commercial-hero-note" aria-label="Open access model">
+          <span>Access model</span>
+          <strong>Public by default</strong>
+          <p>Signals point readers to source evidence, confidence notes, and editorial rules.</p>
         </aside>
       </header>
 
       <section class="commercial-section">
         <div class="commercial-section-heading">
-          <p class="eyebrow">Packages</p>
-          <h2>Choose the decision cadence</h2>
+          <p class="eyebrow">Public surfaces</p>
+          <h2>What stays visible</h2>
         </div>
         <div class="commercial-grid commercial-package-grid">
-          {packages.map((plan: CommercialPackage) => (
+          {packages.map((plan) => (
             <div class="commercial-plan">
               <span>{plan.name}</span>
               <h3>{plan.price}</h3>
-              {plan.annualPrice ? <p class="commercial-plan-price">{plan.annualPrice}</p> : null}
               <p>{plan.summary}</p>
             </div>
           ))}
@@ -54,23 +49,24 @@ const pricingHref = `mailto:${SITE.contactEmail}?subject=${subject}&body=${body}
 
       <section class="commercial-section commercial-proof-grid">
         <div class="commercial-note">
-          <h2>Who uses it</h2>
-          <p>Infrastructure investors, operators, developers, cloud capacity teams, and strategy groups.</p>
+          <h2>Reader fit</h2>
+          <p>Operators, developers, investors, cloud capacity teams, and strategy groups tracking AI infrastructure constraints.</p>
         </div>
         <div class="commercial-note">
-          <h2>What pricing supports</h2>
-          <p>Weekly decision memos, team distribution, watchlists, custom topics, and executive briefing calls.</p>
+          <h2>What the public board supports</h2>
+          <p>Fast orientation across power, grid, capacity, chips, cooling, policy, capital, and source credibility.</p>
         </div>
       </section>
 
-      <nav class="commercial-actions" aria-label="Pricing actions">
-        <a href={pricingHref}>Request Pricing</a>
-        <a href={routes.sample}>View Sample</a>
-        <a href={routes.briefing}>Custom Briefing</a>
+      <nav class="commercial-actions" aria-label="Open access actions">
+        <a href={routes.archive}>Open the Archive</a>
+        <a href={routes.methodology}>Trace the Methodology</a>
+        <a href={routes.rss}>RSS Feed</a>
       </nav>
 
-      <nav class="policy-link-row" aria-label="Commercial pages">
-        <a href={routes.subscribe}>Weekly Brief</a>
+      <nav class="policy-link-row" aria-label="Public reference pages">
+        <a href={routes.editorialPolicy}>Editorial Policy</a>
+        <a href={routes.aiDisclosure}>AI-assisted Disclosure</a>
         <a href={routes.contact}>Contact</a>
       </nav>
     </article>
