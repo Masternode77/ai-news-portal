@@ -439,7 +439,9 @@
     "62fd6f6a738899a6",
     "709c32b8f3e8711d",
     "80e399633d08f508",
-    "59c4e46077b24d10"
+    "59c4e46077b24d10",
+    "86071b1319f7b9c9",
+    "c7bec125ed2d3825"
   ],
   "dayPlans": {
     "2026-03-24": {
@@ -16059,19 +16061,449 @@
         "1": true,
         "2": true
       }
+    },
+    "2026-06-14": {
+      "date": "2026-06-14",
+      "createdAt": "2026-06-13T16:21:50.796Z",
+      "refreshedAt": "2026-06-13T16:21:50.796Z",
+      "candidateWindowHours": 24,
+      "curatedItems": [
+        {
+          "id": "86071b1319f7b9c9",
+          "source": "Toms Hardware",
+          "url": "https://www.tomshardware.com/tech-industry/artificial-intelligence/more-than-75-data-center-build-outs-worth-usd130-billion-have-been-successfully-blocked-in-the-first-four-months-of-2026-bipartisan-opposition-mounts-nationwide-over-fears-of-soaring-power-and-water-costs",
+          "title": "More than 75 data center build-outs worth $130 billion have been successfully blocked in the first four months of 2026 — bipartisan opposition mounts nationwide over fears of soaring power and water costs",
+          "snippet": "A research firm says the number of blocked data centers in the first quarter of 2026 already matches the number of projects stopped in 2025. The opposition also comes from both sides of the aisle, despite President Trum…",
+          "contentText": "A research firm says the number of blocked data centers in the first quarter of 2026 already matches the number of projects stopped in 2025. The opposition also comes from both sides of the aisle, despite President Trump's push for more AI development inside the U.S.",
+          "publishedAt": "2026-06-13T14:13:22.000Z",
+          "sourceImage": "https://cdn.mos.cms.futurecdn.net/Mmp3MeVfMAxqZQ3Z9geEz4-1280-80.jpg",
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "category": "AI Infrastructure",
+          "primary_category": "AI Infrastructure",
+          "secondary_category": "GPU clusters and deployment readiness",
+          "infrastructure_layer": "Compute",
+          "affected_stakeholders": [
+            "operators",
+            "hyperscalers",
+            "cloud buyers",
+            "investors"
+          ],
+          "article_type": "Research / Technical",
+          "urgency_score": 0.58,
+          "taxonomy_confidence": 0.77,
+          "taxonomy_reasons": [
+            "ai infrastructure",
+            "neocloud"
+          ],
+          "direct_ai_infrastructure_relevance": 1,
+          "data_center_relevance": 0.97,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0.22,
+          "power_grid_relevance": 0.297,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 1,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "data_center_relevance:0.97(data center, data centers)",
+            "semiconductor_relevance:0.22(gpu)",
+            "power_grid_relevance:0.30(power)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 1,
+            "data_center_relevance": 0.97,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0.22,
+            "power_grid_relevance": 0.297,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 1,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+              "data_center_relevance:0.97(data center, data centers)",
+              "semiconductor_relevance:0.22(gpu)",
+              "power_grid_relevance:0.30(power)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 88
+        },
+        {
+          "id": "c7bec125ed2d3825",
+          "source": "Toms Hardware",
+          "url": "https://www.tomshardware.com/desktops/mini-pcs/amd-challenges-nvidias-dgx-spark-with-usd3-999-ryzen-ai-halo-with-windows-11-support-strix-halo-desktop-undercuts-nvidia-by-usd700-packs-128gb-of-unified-memory",
+          "title": "AMD challenges Nvidia's DGX Spark with $3,999 Ryzen AI Halo with Windows 11 support — Strix Halo desktop undercuts Nvidia by $700, packs 128GB of unified memory",
+          "snippet": "Powered by the Ryzen AI Max+ 395 processor and 128GB of unified memory, AMD's developer kit arrives as a direct competitor to Nvidia's DGX Spark, which recently saw a price increase to $4,699.",
+          "contentText": "Powered by the Ryzen AI Max+ 395 processor and 128GB of unified memory, AMD's developer kit arrives as a direct competitor to Nvidia's DGX Spark, which recently saw a price increase to $4,699.",
+          "publishedAt": "2026-06-13T14:12:34.000Z",
+          "sourceImage": "https://cdn.mos.cms.futurecdn.net/M4BHGp6uziXvNLMYf5EbVA-1280-80.jpg",
+          "region": "Global",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "category": "Semiconductors",
+          "primary_category": "Semiconductors",
+          "secondary_category": "Accelerators, memory, and advanced packaging",
+          "infrastructure_layer": "Silicon",
+          "affected_stakeholders": [
+            "semiconductor suppliers",
+            "hyperscalers",
+            "server OEMs",
+            "investors"
+          ],
+          "article_type": "Supply Chain",
+          "urgency_score": 0.48,
+          "taxonomy_confidence": 0.89,
+          "taxonomy_reasons": [
+            "gpu",
+            "nvidia",
+            "amd"
+          ],
+          "direct_ai_infrastructure_relevance": 1,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0.895,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.927,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "semiconductor_relevance:0.90(nvidia, amd, gpu)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 1,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0.895,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.927,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+              "semiconductor_relevance:0.90(nvidia, amd, gpu)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 81
+        },
+        {
+          "id": "a2672887f7ed392b",
+          "source": "ServeTheHome",
+          "url": "https://www.servethehome.com/sth-weekly-newsletters-you-want-to-subscribe-in-q2-2026/",
+          "title": "STH Weekly Newsletters You Want to Subscribe in Q2 2026",
+          "snippet": "Subscribe to our newsletters to stay up to date on the latest reviews and coverage from STH and more delivered to your inbox The post STH Weekly Newsletters You Want to Subscribe in Q2 2026 appeared first on ServeTheHom…",
+          "contentText": "Subscribe to our newsletters to stay up to date on the latest reviews and coverage from STH and more delivered to your inbox The post STH Weekly Newsletters You Want to Subscribe in Q2 2026 appeared first on ServeTheHome .",
+          "publishedAt": "2026-06-13T14:00:34.000Z",
+          "sourceImage": null,
+          "region": "Global",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "category": "AI Infrastructure",
+          "primary_category": "AI Infrastructure",
+          "secondary_category": "GPU clusters and deployment readiness",
+          "infrastructure_layer": "Compute",
+          "affected_stakeholders": [
+            "operators",
+            "hyperscalers",
+            "cloud buyers",
+            "investors"
+          ],
+          "article_type": "Other",
+          "urgency_score": 0.43,
+          "taxonomy_confidence": 0.77,
+          "taxonomy_reasons": [
+            "ai infrastructure",
+            "neocloud"
+          ],
+          "direct_ai_infrastructure_relevance": 1,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0.22,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.778,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "semiconductor_relevance:0.22(gpu)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 1,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0.22,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.778,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+              "semiconductor_relevance:0.22(gpu)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 79
+        },
+        {
+          "id": "1f3d84b06f4c5d36",
+          "source": "HPCwire",
+          "url": "https://www.hpcwire.com/2026/06/12/exploring-the-current-boundaries-of-ai-for-science-at-tpc26/",
+          "title": "Exploring the Current Boundaries of AI for Science at TPC26",
+          "snippet": "Last week’s TPC26 event brought together many of the world’s preeminent experts in using AI for science and engineering. The conference demonstrated that we have come quite far in just a few years. But it also showed us…",
+          "contentText": "Last week’s TPC26 event brought together many of the world’s preeminent experts in using AI for science and engineering. The conference demonstrated that we have come quite far in just a few years. But it also showed us limits to the use of the technology as it currently exists, as well as possible ways the community can move forward as AI inevitably improves. After listening to all the plenaries from TPC26 and several of the breakouts and birds of a feather (BOF) sessions, a few trends emerged that are worth noting. Let’s take them one at a time, starting with agentic AI. How Capable Are Scientific Agents Today? Rick Stevens recounted his experience working with AI agents during his keynote address at TPC26. The Argonne National Laboratory associate laboratory director for Computing, Env…",
+          "publishedAt": "2026-06-12T23:19:41.000Z",
+          "sourceImage": "https://www.hpcwire.com/wp-content/uploads/2026/06/TPC26_Rick_1-300x153.png",
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "category": "AI Infrastructure",
+          "primary_category": "AI Infrastructure",
+          "secondary_category": "GPU clusters and deployment readiness",
+          "infrastructure_layer": "Compute",
+          "affected_stakeholders": [
+            "operators",
+            "hyperscalers",
+            "cloud buyers",
+            "investors"
+          ],
+          "article_type": "Research / Technical",
+          "urgency_score": 0.43,
+          "taxonomy_confidence": 0.77,
+          "taxonomy_reasons": [
+            "ai infrastructure",
+            "neocloud"
+          ],
+          "direct_ai_infrastructure_relevance": 1,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0.22,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.778,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "semiconductor_relevance:0.22(gpu)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 1,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0.22,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.778,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+              "semiconductor_relevance:0.22(gpu)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 65
+        },
+        {
+          "id": "4bd9a8dc1a80e69b",
+          "source": "NVIDIA Blog",
+          "url": "https://blogs.nvidia.com/blog/nvidia-blackwell-agentperf-artificial-analysis/",
+          "title": "NVIDIA Blackwell Leads on First Agentic AI Infrastructure Benchmark",
+          "snippet": "AgentPerf from Artificial Analysis, the industry’s first agentic AI benchmark, gives developers, enterprises and infrastructure providers a clear way to compare systems for agentic AI. In the first round of published re…",
+          "contentText": "AgentPerf from Artificial Analysis, the industry’s first agentic AI benchmark, gives developers, enterprises and infrastructure providers a clear way to compare systems for agentic AI. In the first round of published results, the NVIDIA Blackwell Ultra NVL72 platform delivers leading performance across the agentic AI workloads tested, running 20x more agents per megawatt than NVIDIA Hopper. Agentic AI is a fundamentally different workload than conversational AI. A single chat completion is a sprint: one large language model (LLM) call, one response. An agent functions more like a relay: It breaks a goal into many steps and keeps going until the task is done. Agents chain together multiple LLM calls and tool calls to gather context, observe, reason and act. That results in dozens to hundre…",
+          "publishedAt": "2026-06-12T21:00:08.000Z",
+          "sourceImage": "https://blogs.nvidia.com/wp-content/uploads/2026/06/dgx-social-gb300-2048x2048-1-1.jpg",
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "category": "AI Infrastructure",
+          "primary_category": "AI Infrastructure",
+          "secondary_category": "GPU clusters and deployment readiness",
+          "infrastructure_layer": "Compute",
+          "affected_stakeholders": [
+            "operators",
+            "hyperscalers",
+            "cloud buyers",
+            "investors"
+          ],
+          "article_type": "Product / Platform Update",
+          "urgency_score": 0.48,
+          "taxonomy_confidence": 0.8,
+          "taxonomy_reasons": [
+            "ai infrastructure",
+            "neocloud"
+          ],
+          "direct_ai_infrastructure_relevance": 1,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0.598,
+          "power_grid_relevance": 0.3,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0.24,
+          "infrastructure_relevance_score": 0.932,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "semiconductor_relevance:0.60(nvidia, gpu)",
+            "power_grid_relevance:0.30(megawatt)",
+            "enterprise_ai_infrastructure_relevance:0.24(ai workloads)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 1,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0.598,
+            "power_grid_relevance": 0.3,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0.24,
+            "infrastructure_relevance_score": 0.932,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+              "semiconductor_relevance:0.60(nvidia, gpu)",
+              "power_grid_relevance:0.30(megawatt)",
+              "enterprise_ai_infrastructure_relevance:0.24(ai workloads)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 65
+        },
+        {
+          "id": "f5c28ca1322dc1ac",
+          "source": "Toms Hardware",
+          "url": "https://www.tomshardware.com/networking/routers/netgear-countersues-tp-link-alleging-its-american-company-rebrand-is-false-advertising",
+          "title": "Netgear countersues TP-Link, saying firm 'remains, at its core, a Chinese company selling Chinese-made products' — alleges its 'American company' rebrand is false advertising",
+          "snippet": "Netgear filed counterclaims against TP-Link in federal court in Delaware on June 11, accusing its larger rival of false advertising under the Lanham Act.",
+          "contentText": "Netgear filed counterclaims against TP-Link in federal court in Delaware on June 11, accusing its larger rival of false advertising under the Lanham Act.",
+          "publishedAt": "2026-06-13T13:47:29.000Z",
+          "sourceImage": "https://cdn.mos.cms.futurecdn.net/Z7FX6Fpm3rBoQH23X4nYJ8-1280-80.jpg",
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "category": "AI Infrastructure",
+          "primary_category": "AI Infrastructure",
+          "secondary_category": "GPU clusters and deployment readiness",
+          "infrastructure_layer": "Compute",
+          "affected_stakeholders": [
+            "operators",
+            "hyperscalers",
+            "cloud buyers",
+            "investors"
+          ],
+          "article_type": "Other",
+          "urgency_score": 0.43,
+          "taxonomy_confidence": 0.77,
+          "taxonomy_reasons": [
+            "ai infrastructure",
+            "neocloud"
+          ],
+          "direct_ai_infrastructure_relevance": 1,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0.22,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0.18,
+          "infrastructure_relevance_score": 0.778,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "semiconductor_relevance:0.22(gpu)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 1,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0.22,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0.18,
+            "infrastructure_relevance_score": 0.778,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+              "semiconductor_relevance:0.22(gpu)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 64
+        }
+      ],
+      "curatedIds": [
+        "86071b1319f7b9c9",
+        "c7bec125ed2d3825",
+        "a2672887f7ed392b",
+        "1f3d84b06f4c5d36",
+        "4bd9a8dc1a80e69b",
+        "f5c28ca1322dc1ac"
+      ],
+      "publishedIds": [
+        "86071b1319f7b9c9",
+        "c7bec125ed2d3825"
+      ],
+      "slotPublications": {
+        "0": true
+      }
     }
   },
   "runHistory": [
-    {
-      "at": "2026-04-27T23:56:32.353Z",
-      "day": "2026-04-28",
-      "slot": 1,
-      "publishedCount": 2,
-      "publishedIds": [
-        "77545df409c97640",
-        "1f8b861c6eec6fed"
-      ]
-    },
     {
       "at": "2026-04-28T09:32:01.808Z",
       "day": "2026-04-28",
@@ -23277,7 +23709,132 @@
         }
       ],
       "archiveOnlyItems": []
+    },
+    {
+      "at": "2026-06-13T16:21:50.796Z",
+      "day": "2026-06-14",
+      "slot": 0,
+      "publishedCount": 0,
+      "signalCardCount": 0,
+      "archiveOnlyCount": 0,
+      "repetitionBlockedCount": 2,
+      "publishedIds": [],
+      "processedIds": [
+        "86071b1319f7b9c9",
+        "c7bec125ed2d3825"
+      ],
+      "blockedCount": 0,
+      "blockedItems": [],
+      "repetitionBlockedItems": [
+        {
+          "id": "86071b1319f7b9c9",
+          "title": "More than 75 data center build-outs worth $130 billion have been successfully blocked in the first four months of 2026 — bipartisan opposition mounts nationwide over fears of soaring power and water costs",
+          "infrastructure_relevance_score": 1,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "data_center_relevance:1.00(data center, data centers, campus)",
+            "cloud_capacity_relevance:0.32(hyperscalers)",
+            "semiconductor_relevance:0.22(gpu)",
+            "power_grid_relevance:0.54(power, electricity)",
+            "capital_markets_relevance:0.28(capex)"
+          ],
+          "extraction_quality_score": 1,
+          "source_domain_adapter": "generic",
+          "content_length": 1647,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": true,
+          "repetition_block_reasons": [
+            "repeated_sentence_ratio>0.12",
+            "conclusion_similarity>0.7"
+          ],
+          "repetition_check": {
+            "compared_article_count": 20,
+            "repeated_sentence_ratio": 0.2857142857142857,
+            "repeated_paragraph_ratio": 0.3333333333333333,
+            "heading_sequence_similarity": 0,
+            "banned_phrase_count": 0,
+            "banned_phrase_counts": {},
+            "recent_banned_phrase_counts": {},
+            "ngram_overlap": 0.45081967213114754,
+            "blueprint_repetition": 2,
+            "conclusion_similarity": 0.9271050693011066,
+            "repeated_sentence_count": 2,
+            "repeated_paragraph_count": 2,
+            "heading_sequence": [
+              "Regulatory Signal",
+              "Market Access Risk",
+              "Stakeholder Impact",
+              "Next Decision"
+            ],
+            "blocked": true,
+            "reasons": [
+              "repeated_sentence_ratio>0.12",
+              "conclusion_similarity>0.7"
+            ]
+          },
+          "expert_insight_complete": true,
+          "expert_insight_missing_fields": [],
+          "reason": "repeated_sentence_ratio>0.12; conclusion_similarity>0.7"
+        },
+        {
+          "id": "c7bec125ed2d3825",
+          "title": "AMD challenges Nvidia's DGX Spark with $3,999 Ryzen AI Halo with Windows 11 support — Strix Halo desktop undercuts Nvidia by $700, packs 128GB of unified memory",
+          "infrastructure_relevance_score": 0.997,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "cloud_capacity_relevance:0.32(hyperscalers)",
+            "semiconductor_relevance:0.90(nvidia, amd, gpu)",
+            "power_grid_relevance:0.22(power)",
+            "cooling_relevance:0.34(cooling)"
+          ],
+          "extraction_quality_score": 1,
+          "source_domain_adapter": "generic",
+          "content_length": 1701,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": true,
+          "repetition_block_reasons": [
+            "repeated_sentence_ratio>0.12",
+            "heading_sequence_similarity>0.75",
+            "conclusion_similarity>0.7"
+          ],
+          "repetition_check": {
+            "compared_article_count": 20,
+            "repeated_sentence_ratio": 0.2857142857142857,
+            "repeated_paragraph_ratio": 0.3333333333333333,
+            "heading_sequence_similarity": 1,
+            "banned_phrase_count": 0,
+            "banned_phrase_counts": {},
+            "recent_banned_phrase_counts": {},
+            "ngram_overlap": 0.6238532110091743,
+            "blueprint_repetition": 1,
+            "conclusion_similarity": 0.9511897312113418,
+            "repeated_sentence_count": 2,
+            "repeated_paragraph_count": 2,
+            "heading_sequence": [
+              "System Change",
+              "Bottleneck",
+              "Engineering Tradeoff",
+              "Validation Metric"
+            ],
+            "blocked": true,
+            "reasons": [
+              "repeated_sentence_ratio>0.12",
+              "heading_sequence_similarity>0.75",
+              "conclusion_similarity>0.7"
+            ]
+          },
+          "expert_insight_complete": true,
+          "expert_insight_missing_fields": [],
+          "reason": "repeated_sentence_ratio>0.12; heading_sequence_similarity>0.75; conclusion_similarity>0.7"
+        }
+      ],
+      "signalCardItems": [],
+      "archiveOnlyItems": []
     }
   ],
-  "lastRunAt": "2026-06-13T10:06:57.258Z"
+  "lastRunAt": "2026-06-13T16:21:50.796Z"
 }
