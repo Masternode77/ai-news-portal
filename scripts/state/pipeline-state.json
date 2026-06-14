@@ -443,7 +443,9 @@
     "86071b1319f7b9c9",
     "c7bec125ed2d3825",
     "3ba9d9baffe5e9f1",
-    "a5be7ba04545b187"
+    "a5be7ba04545b187",
+    "28f6d80a16b9d90f",
+    "b4c3ebc29ea27eeb"
   ],
   "dayPlans": {
     "2026-03-24": {
@@ -16504,19 +16506,443 @@
         "0": true,
         "1": true
       }
+    },
+    "2026-06-15": {
+      "date": "2026-06-15",
+      "createdAt": "2026-06-14T16:43:00.585Z",
+      "refreshedAt": "2026-06-14T16:43:00.585Z",
+      "candidateWindowHours": 24,
+      "curatedItems": [
+        {
+          "id": "28f6d80a16b9d90f",
+          "source": "Toms Hardware",
+          "url": "https://www.tomshardware.com/desktops/servers/amazon-says-its-data-centers-consume-only-0-075-percent-of-the-water-americans-use-for-watering-their-lawns-and-gardens-company-also-boasts-of-its-improvements-in-water-efficiency",
+          "title": "Amazon says its data centers consume only 0.075% of the water Americans use for watering their lawns and gardens — company also boasts of its improvements in water efficiency",
+          "snippet": "Amazon says that it uses 2.5 billion gallons of water annually for data center cooling but compares it to the 3.3 trillion gallons of water used for watering lawns and gardens in the U.S. every year.",
+          "contentText": "Amazon says that it uses 2.5 billion gallons of water annually for data center cooling but compares it to the 3.3 trillion gallons of water used for watering lawns and gardens in the U.S. every year.",
+          "publishedAt": "2026-06-14T14:25:00.000Z",
+          "sourceImage": "https://cdn.mos.cms.futurecdn.net/d9r5UfU78W3pdvTxnuJttK-1280-80.jpg",
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "category": "AI Infrastructure",
+          "primary_category": "AI Infrastructure",
+          "secondary_category": "GPU clusters and deployment readiness",
+          "infrastructure_layer": "Compute",
+          "affected_stakeholders": [
+            "operators",
+            "hyperscalers",
+            "cloud buyers",
+            "investors"
+          ],
+          "article_type": "Other",
+          "urgency_score": 0.5,
+          "taxonomy_confidence": 0.77,
+          "taxonomy_reasons": [
+            "ai infrastructure",
+            "neocloud"
+          ],
+          "direct_ai_infrastructure_relevance": 1,
+          "data_center_relevance": 0.97,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0.22,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0.34,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 1,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "data_center_relevance:0.97(data center, data centers)",
+            "semiconductor_relevance:0.22(gpu)",
+            "cooling_relevance:0.34(cooling)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 1,
+            "data_center_relevance": 0.97,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0.22,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0.34,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 1,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+              "data_center_relevance:0.97(data center, data centers)",
+              "semiconductor_relevance:0.22(gpu)",
+              "cooling_relevance:0.34(cooling)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 88
+        },
+        {
+          "id": "b4c3ebc29ea27eeb",
+          "source": "ServeTheHome",
+          "url": "https://www.servethehome.com/antropic-halts-access-to-fable-5-and-mythos-5/",
+          "title": "Antropic Halts Access to Fable 5 and Mythos 5",
+          "snippet": "Anthropic shut down access to Fable 5 and Mythos 5 due to an export control concern over the weekend in a wake-up call for the industry The post Antropic Halts Access to Fable 5 and Mythos 5 appeared first on ServeTheHo…",
+          "contentText": "Anthropic shut down access to Fable 5 and Mythos 5 due to an export control concern over the weekend in a wake-up call for the industry The post Antropic Halts Access to Fable 5 and Mythos 5 appeared first on ServeTheHome .",
+          "publishedAt": "2026-06-14T13:00:04.000Z",
+          "sourceImage": null,
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "category": "AI Infrastructure",
+          "primary_category": "AI Infrastructure",
+          "secondary_category": "GPU clusters and deployment readiness",
+          "infrastructure_layer": "Compute",
+          "affected_stakeholders": [
+            "operators",
+            "hyperscalers",
+            "cloud buyers",
+            "investors"
+          ],
+          "article_type": "Other",
+          "urgency_score": 0.43,
+          "taxonomy_confidence": 0.77,
+          "taxonomy_reasons": [
+            "ai infrastructure",
+            "neocloud"
+          ],
+          "direct_ai_infrastructure_relevance": 1,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0.22,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.778,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "semiconductor_relevance:0.22(gpu)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 1,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0.22,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.778,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+              "semiconductor_relevance:0.22(gpu)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 71
+        },
+        {
+          "id": "412943d3a8e9d608",
+          "source": "TechCrunch AI",
+          "url": "https://techcrunch.com/2026/06/14/as-ai-companies-race-to-go-public-who-else-is-along-for-the-ride/",
+          "title": "As AI companies race to go public, who else is along for the ride?",
+          "snippet": "Startups are trying to \"ride that SpaceX IPO wave.\"",
+          "contentText": "Startups are trying to \"ride that SpaceX IPO wave.\"",
+          "publishedAt": "2026-06-14T16:38:09.000Z",
+          "sourceImage": null,
+          "region": "Global",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "category": "AI Infrastructure",
+          "primary_category": "AI Infrastructure",
+          "secondary_category": "GPU clusters and deployment readiness",
+          "infrastructure_layer": "Compute",
+          "affected_stakeholders": [
+            "operators",
+            "hyperscalers",
+            "cloud buyers",
+            "investors"
+          ],
+          "article_type": "Financing / M&A",
+          "urgency_score": 0.44,
+          "taxonomy_confidence": 0.77,
+          "taxonomy_reasons": [
+            "ai infrastructure",
+            "neocloud"
+          ],
+          "direct_ai_infrastructure_relevance": 1,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0.22,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0.24,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.818,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "semiconductor_relevance:0.22(gpu)",
+            "capital_markets_relevance:0.24(ipo)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 1,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0.22,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0.24,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.818,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+              "semiconductor_relevance:0.22(gpu)",
+              "capital_markets_relevance:0.24(ipo)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 68
+        },
+        {
+          "id": "1860b5bc5fb90830",
+          "source": "Data Center Dynamics",
+          "url": "https://www.datacenterdynamics.com/en/opinions/data-centers-are-getting-caught-up-in-conflict-what-does-this-mean-for-cloud-strategy/",
+          "title": "Data centers are getting caught up in conflict. What does this mean for cloud strategy?",
+          "snippet": "From regional disruption to sudden outages, organizations are being forced to design infrastructure that can withstand events beyond their control",
+          "contentText": "From regional disruption to sudden outages, organizations are being forced to design infrastructure that can withstand events beyond their control",
+          "publishedAt": "2026-06-14T11:00:29.000Z",
+          "sourceImage": "https://media.datacenterdynamics.com/media/images/Screenshot_2026-05-11_113140.bd3925f7.fill-750x500.png",
+          "region": "Global",
+          "language": "en",
+          "defaultCategory": "Colocation & Wholesale",
+          "category": "Data Centers",
+          "primary_category": "Data Centers",
+          "secondary_category": "Campus development and colocation capacity",
+          "infrastructure_layer": "Facility",
+          "affected_stakeholders": [
+            "data center operators",
+            "developers",
+            "site selectors",
+            "investors"
+          ],
+          "article_type": "Other",
+          "urgency_score": 0.38,
+          "taxonomy_confidence": 0.77,
+          "taxonomy_reasons": [
+            "colocation",
+            "wholesale"
+          ],
+          "direct_ai_infrastructure_relevance": 0,
+          "data_center_relevance": 1,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.615,
+          "infrastructure_relevance_tier": "signal_card",
+          "infrastructure_relevance_action": "publish_signal_card_only",
+          "infrastructure_relevance_reasons": [
+            "data_center_relevance:1.00(data center, data centers, colocation)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 0,
+            "data_center_relevance": 1,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.615,
+            "infrastructure_relevance_tier": "signal_card",
+            "infrastructure_relevance_action": "publish_signal_card_only",
+            "infrastructure_relevance_reasons": [
+              "data_center_relevance:1.00(data center, data centers, colocation)"
+            ],
+            "infrastructureRelevanceAction": "publish_signal_card_only",
+            "articlePagePublished": false,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 57
+        },
+        {
+          "id": "c267785875cc844a",
+          "source": "Toms Hardware",
+          "url": "https://www.tomshardware.com/3d-printing/snapmaker-launches-usd150-000-innovation-fund-for-open-source-3d-printing-cash-rewards-target-developers-backing-the-u1-toolchanger-across-klipper-orcaslicer-and-moonraker-ecosystems",
+          "title": "Snapmaker launches $150,000 Innovation Fund for open source 3D printing — cash rewards target developers backing the U1 toolchanger across Klipper, OrcaSlicer, and Moonraker ecosystems",
+          "snippet": "Snapmaker celebrates 10 years in business by sponsoring open-source developers and you.",
+          "contentText": "Snapmaker celebrates 10 years in business by sponsoring open-source developers and you.",
+          "publishedAt": "2026-06-14T13:30:00.000Z",
+          "sourceImage": "https://cdn.mos.cms.futurecdn.net/nM94eVTpJLZpPcrmdN4WiM-1280-80.png",
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "category": "AI Infrastructure",
+          "primary_category": "AI Infrastructure",
+          "secondary_category": "GPU clusters and deployment readiness",
+          "infrastructure_layer": "Compute",
+          "affected_stakeholders": [
+            "operators",
+            "hyperscalers",
+            "cloud buyers",
+            "investors"
+          ],
+          "article_type": "Product / Platform Update",
+          "urgency_score": 0.43,
+          "taxonomy_confidence": 0.77,
+          "taxonomy_reasons": [
+            "ai infrastructure",
+            "neocloud"
+          ],
+          "direct_ai_infrastructure_relevance": 1,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0.22,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.778,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "semiconductor_relevance:0.22(gpu)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 1,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0.22,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.778,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+              "semiconductor_relevance:0.22(gpu)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 48
+        },
+        {
+          "id": "065e9d938876ddfc",
+          "source": "Bloomberg Technology",
+          "url": "https://www.bloomberg.com/news/newsletters/2026-06-14/siri-ai-hands-on-review-ios-27-macos-27-details-iphone-fold-touch-macbook",
+          "title": "Apple’s New Siri Is Just Good Enough to Ease Its AI Crisis",
+          "snippet": "The company prepares for the foldable iPhone and touch-screen MacBook.",
+          "contentText": "The company prepares for the foldable iPhone and touch-screen MacBook.",
+          "publishedAt": "2026-06-14T14:00:01.000Z",
+          "sourceImage": "https://assets.bwbx.io/images/users/iqjWHBFdfxIU/iwn7_Q7X5W7g/v0/1200x-1.jpg",
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "Hyperscalers & Cloud",
+          "category": "Cloud Capacity",
+          "primary_category": "Cloud Capacity",
+          "secondary_category": "Hyperscale regions and accelerator availability",
+          "infrastructure_layer": "Cloud Platform",
+          "affected_stakeholders": [
+            "hyperscalers",
+            "cloud buyers",
+            "enterprise IT",
+            "operators"
+          ],
+          "article_type": "Other",
+          "urgency_score": 0.28,
+          "taxonomy_confidence": 0.5,
+          "taxonomy_reasons": [
+            "fallback_taxonomy"
+          ],
+          "direct_ai_infrastructure_relevance": 0.22,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0.32,
+          "semiconductor_relevance": 0,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.304,
+          "infrastructure_relevance_tier": "archive_only",
+          "infrastructure_relevance_action": "archive_only",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:0.22",
+            "cloud_capacity_relevance:0.32(hyperscalers)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 0.22,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0.32,
+            "semiconductor_relevance": 0,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.304,
+            "infrastructure_relevance_tier": "archive_only",
+            "infrastructure_relevance_action": "archive_only",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:0.22",
+              "cloud_capacity_relevance:0.32(hyperscalers)"
+            ],
+            "infrastructureRelevanceAction": "archive_only",
+            "articlePagePublished": false,
+            "homepagePublished": false,
+            "archiveOnly": true,
+            "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
+          },
+          "score": 47
+        }
+      ],
+      "curatedIds": [
+        "28f6d80a16b9d90f",
+        "b4c3ebc29ea27eeb",
+        "412943d3a8e9d608",
+        "1860b5bc5fb90830",
+        "c267785875cc844a",
+        "065e9d938876ddfc"
+      ],
+      "publishedIds": [
+        "28f6d80a16b9d90f",
+        "b4c3ebc29ea27eeb"
+      ],
+      "slotPublications": {
+        "0": true
+      }
     }
   },
   "runHistory": [
-    {
-      "at": "2026-04-28T16:59:02.142Z",
-      "day": "2026-04-29",
-      "slot": 0,
-      "publishedCount": 2,
-      "publishedIds": [
-        "da5f48fd367fafba",
-        "3c9d4e08c978770c"
-      ]
-    },
     {
       "at": "2026-04-28T23:56:59.200Z",
       "day": "2026-04-29",
@@ -23952,7 +24378,129 @@
       ],
       "signalCardItems": [],
       "archiveOnlyItems": []
+    },
+    {
+      "at": "2026-06-14T16:43:00.585Z",
+      "day": "2026-06-15",
+      "slot": 0,
+      "publishedCount": 0,
+      "signalCardCount": 0,
+      "archiveOnlyCount": 0,
+      "repetitionBlockedCount": 2,
+      "publishedIds": [],
+      "processedIds": [
+        "28f6d80a16b9d90f",
+        "b4c3ebc29ea27eeb"
+      ],
+      "blockedCount": 0,
+      "blockedItems": [],
+      "repetitionBlockedItems": [
+        {
+          "id": "28f6d80a16b9d90f",
+          "title": "Amazon says its data centers consume only 0.075% of the water Americans use for watering their lawns and gardens — company also boasts of its improvements in water efficiency",
+          "infrastructure_relevance_score": 1,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "data_center_relevance:0.97(data center, data centers)",
+            "cloud_capacity_relevance:0.32(hyperscalers)",
+            "semiconductor_relevance:0.22(gpu)",
+            "power_grid_relevance:0.22(power)",
+            "cooling_relevance:0.34(cooling)"
+          ],
+          "extraction_quality_score": 1,
+          "source_domain_adapter": "generic",
+          "content_length": 1601,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": true,
+          "repetition_block_reasons": [
+            "repeated_sentence_ratio>0.12",
+            "conclusion_similarity>0.7"
+          ],
+          "repetition_check": {
+            "compared_article_count": 20,
+            "repeated_sentence_ratio": 0.3333333333333333,
+            "repeated_paragraph_ratio": 0.4,
+            "heading_sequence_similarity": 0,
+            "banned_phrase_count": 0,
+            "banned_phrase_counts": {},
+            "recent_banned_phrase_counts": {},
+            "ngram_overlap": 0.5230769230769231,
+            "blueprint_repetition": 1,
+            "conclusion_similarity": 0.9271050693011066,
+            "repeated_sentence_count": 2,
+            "repeated_paragraph_count": 2,
+            "heading_sequence": [
+              "Policy Move",
+              "Infrastructure Exposure",
+              "Who Benefits",
+              "Watch Item"
+            ],
+            "blocked": true,
+            "reasons": [
+              "repeated_sentence_ratio>0.12",
+              "conclusion_similarity>0.7"
+            ]
+          },
+          "expert_insight_complete": true,
+          "expert_insight_missing_fields": [],
+          "reason": "repeated_sentence_ratio>0.12; conclusion_similarity>0.7"
+        },
+        {
+          "id": "b4c3ebc29ea27eeb",
+          "title": "Antropic Halts Access to Fable 5 and Mythos 5",
+          "infrastructure_relevance_score": 0.87,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "cloud_capacity_relevance:0.32(hyperscalers)",
+            "semiconductor_relevance:0.22(gpu)",
+            "power_grid_relevance:0.22(power)"
+          ],
+          "extraction_quality_score": 1,
+          "source_domain_adapter": "servethehome",
+          "content_length": 1710,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": true,
+          "repetition_block_reasons": [
+            "repeated_sentence_ratio>0.12",
+            "conclusion_similarity>0.7"
+          ],
+          "repetition_check": {
+            "compared_article_count": 20,
+            "repeated_sentence_ratio": 0.2857142857142857,
+            "repeated_paragraph_ratio": 0.4,
+            "heading_sequence_similarity": 0,
+            "banned_phrase_count": 0,
+            "banned_phrase_counts": {},
+            "recent_banned_phrase_counts": {},
+            "ngram_overlap": 0.34306569343065696,
+            "blueprint_repetition": 2,
+            "conclusion_similarity": 0.9271050693011066,
+            "repeated_sentence_count": 2,
+            "repeated_paragraph_count": 2,
+            "heading_sequence": [
+              "Market Pieces",
+              "Land Power Capital Chips",
+              "Demand Test",
+              "What To Split Out"
+            ],
+            "blocked": true,
+            "reasons": [
+              "repeated_sentence_ratio>0.12",
+              "conclusion_similarity>0.7"
+            ]
+          },
+          "expert_insight_complete": true,
+          "expert_insight_missing_fields": [],
+          "reason": "repeated_sentence_ratio>0.12; conclusion_similarity>0.7"
+        }
+      ],
+      "signalCardItems": [],
+      "archiveOnlyItems": []
     }
   ],
-  "lastRunAt": "2026-06-14T00:09:44.527Z"
+  "lastRunAt": "2026-06-14T16:43:00.585Z"
 }
