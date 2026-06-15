@@ -1,6 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import CategoryNav from '../components/CategoryNav.astro';
+import ArticleCardImage from '../components/ArticleCardImage.astro';
 import FeaturedArticle from '../components/FeaturedArticle.astro';
 import LatestAnalysisFeed from '../components/LatestAnalysisFeed.astro';
 import latestNews from '../data/latest-news.json';
@@ -20,6 +21,10 @@ const topSources = Array.from(new Set(feed.items.map((entry) => entry.publicSign
 const leadSignal = feed.featured?.publicSignal || feed.items[0]?.publicSignal || null;
 const leadHref = leadSignal?.view_detail || leadSignal?.read_source || '/archive/';
 const leadDate = leadSignal?.date ? dateFormatter.format(new Date(leadSignal.date)) : 'Latest desk signal';
+const leadImage = leadSignal?.image || '/generated/fallbacks/ai-infrastructure.svg';
+const leadImageAlt = leadSignal?.image_alt || (leadSignal?.title ? `${leadSignal.title} editorial visual` : 'Compute Current editorial visual');
+const leadImageProvenanceLabel = leadSignal?.image_provenance_label || 'ChatGPT Image2 visual';
+const leadImageProvenanceKind = leadSignal?.image_provenance_kind || 'image2';
 const marketContext = [
   {
     label: 'Constraint watched',
@@ -142,13 +147,28 @@ const navLinks = [
             </div>
 
             <article class="premium-lead-card" data-premium-lead-card>
-              <span>{leadSignal?.source || 'Editorial desk'}</span>
-              <h3>{leadSignal?.title || 'AI infrastructure signals are being prepared for publication.'}</h3>
-              <p>
-                {leadSignal?.deck ||
-                  'The desk is monitoring source-linked infrastructure signals across power, sites, silicon, cooling, and capital.'}
-              </p>
-              <a class="detail-link" href={leadHref}>Open lead signal</a>
+              <div data-premium-lead-visual>
+                <ArticleCardImage
+                  image={leadImage}
+                  imageAlt={leadImageAlt}
+                  href={leadHref}
+                  className="premium-lead-card-image"
+                  linkClassName="premium-lead-card-visual"
+                  priority={true}
+                  ariaLabel={leadSignal?.title || 'Open lead signal'}
+                  provenanceLabel={leadImageProvenanceLabel}
+                  provenanceKind={leadImageProvenanceKind}
+                />
+              </div>
+              <div class="premium-lead-card-copy">
+                <span>{leadSignal?.source || 'Editorial desk'}</span>
+                <h3>{leadSignal?.title || 'AI infrastructure signals are being prepared for publication.'}</h3>
+                <p>
+                  {leadSignal?.deck ||
+                    'The desk is monitoring source-linked infrastructure signals across power, sites, silicon, cooling, and capital.'}
+                </p>
+                <a class="detail-link" href={leadHref}>Open lead signal</a>
+              </div>
             </article>
           </div>
         </aside>
