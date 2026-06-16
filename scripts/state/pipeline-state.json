@@ -455,7 +455,9 @@
     "a2cf95f0d1c7563d",
     "6803634b659b2057",
     "1567a8de61325a85",
-    "4f3735ab72426735"
+    "4f3735ab72426735",
+    "9150848dedf04c3f",
+    "dae515923e74a6bc"
   ],
   "dayPlans": {
     "2026-03-24": {
@@ -17411,19 +17413,444 @@
         "1": true,
         "2": true
       }
+    },
+    "2026-06-17": {
+      "date": "2026-06-17",
+      "createdAt": "2026-06-16T18:56:51.407Z",
+      "refreshedAt": "2026-06-16T18:56:51.407Z",
+      "candidateWindowHours": 24,
+      "curatedItems": [
+        {
+          "id": "dae515923e74a6bc",
+          "source": "NVIDIA Blog",
+          "url": "https://blogs.nvidia.com/blog/hpe-ai-factory-agentic-enterprise/",
+          "title": "HPE AI Factory With NVIDIA Expands for the Era of Agents",
+          "snippet": "Enterprises are moving agentic AI from proof of concept to production — and the next generation of AI factories are built for the era of agents. At HPE Discover Las Vegas, running through Thursday, June 18, NVIDIA and H…",
+          "contentText": "Enterprises are moving agentic AI from proof of concept to production — and the next generation of AI factories are built for the era of agents. At HPE Discover Las Vegas, running through Thursday, June 18, NVIDIA and HPE are expanding the HPE AI Factory with NVIDIA , including NVIDIA Vera CPU and NVIDIA Agent Toolkit for HPE Private Cloud AI. Plus, NVIDIA Confidential Computing extends across HPE AI Factory and enhanced full-stack NVIDIA integration — with NVIDIA accelerated computing, NVIDIA AI software and NVIDIA networking — is available throughout the entire portfolio. NVIDIA Vera CPU Available With HPE Private Cloud AI The HPE ProLiant Compute DL394 Gen12 with the NVIDIA Vera CPU will be available in 2027 with HPE Private Cloud AI, a turnkey AI factory co-engineered with NVIDIA. Ver…",
+          "publishedAt": "2026-06-16T16:30:27.000Z",
+          "sourceImage": "https://blogs.nvidia.com/wp-content/uploads/2026/06/logo-lockup-press-hpe-1600x900-4603000.png",
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "category": "AI Infrastructure",
+          "primary_category": "AI Infrastructure",
+          "secondary_category": "GPU clusters and deployment readiness",
+          "infrastructure_layer": "Compute",
+          "affected_stakeholders": [
+            "operators",
+            "hyperscalers",
+            "cloud buyers",
+            "investors"
+          ],
+          "article_type": "Capacity Expansion",
+          "urgency_score": 0.52,
+          "taxonomy_confidence": 0.77,
+          "taxonomy_reasons": [
+            "ai infrastructure",
+            "neocloud"
+          ],
+          "direct_ai_infrastructure_relevance": 1,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0.598,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0.18,
+          "infrastructure_relevance_score": 0.862,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "semiconductor_relevance:0.60(nvidia, gpu)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 1,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0.598,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0.18,
+            "infrastructure_relevance_score": 0.862,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+              "semiconductor_relevance:0.60(nvidia, gpu)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 82
+        },
+        {
+          "id": "9150848dedf04c3f",
+          "source": "Data Center POST",
+          "url": "https://datacenterpost.com/delivering-the-ai-era-building-a-100-terabit-midwest-connectivity-corridor/",
+          "title": "Delivering the AI Era: Building a 100-Terabit Midwest Connectivity Corridor",
+          "snippet": "TL;DR The Midwest AI Boom: A massive 100-Terabit connectivity corridor is being built in the Midwest, which is rapidly becoming a strategic hub for AI infrastructure due to its availability of land, power, and buildable…",
+          "contentText": "TL;DR The Midwest AI Boom: A massive 100-Terabit connectivity corridor is being built in the Midwest, which is rapidly becoming a strategic hub for AI infrastructure due to its availability of land, power, and buildable space. Symphonic Collaboration: Building such large-scale network infrastructure requires immense trust and deep coordination across service providers, equipment vendors, and operational teams to achieve shared goals. Supply Chain and Efficiency: High global demand is creating supply chain bottlenecks for critical networking gear, pushing the industry to focus on smarter transport models that prioritize power and spectral efficiency over pure speed. Future Constraints: Moving forward, massive fiber and multi-gigawatt power requirements will be the industry&#8217;s biggest…",
+          "publishedAt": "2026-06-16T18:00:37.000Z",
+          "sourceImage": "https://d3qut6qyo6tw2j.cloudfront.net/bin/uploads/2026/06/15092314/NEDAS-Live-E566_Aureon-Partners_Blog-1024x512.png",
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "Colocation & Wholesale",
+          "category": "Data Centers",
+          "primary_category": "Data Centers",
+          "secondary_category": "Campus development and colocation capacity",
+          "infrastructure_layer": "Facility",
+          "affected_stakeholders": [
+            "data center operators",
+            "developers",
+            "site selectors",
+            "investors"
+          ],
+          "article_type": "Product / Platform Update",
+          "urgency_score": 0.52,
+          "taxonomy_confidence": 0.73,
+          "taxonomy_reasons": [
+            "colocation",
+            "wholesale"
+          ],
+          "direct_ai_infrastructure_relevance": 0.82,
+          "data_center_relevance": 0.76,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0,
+          "power_grid_relevance": 0.56,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0.18,
+          "infrastructure_relevance_score": 0.828,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:0.82(ai infrastructure)",
+            "data_center_relevance:0.76(data center, colocation)",
+            "power_grid_relevance:0.56(power, gigawatt)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 0.82,
+            "data_center_relevance": 0.76,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0,
+            "power_grid_relevance": 0.56,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0.18,
+            "infrastructure_relevance_score": 0.828,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:0.82(ai infrastructure)",
+              "data_center_relevance:0.76(data center, colocation)",
+              "power_grid_relevance:0.56(power, gigawatt)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 81
+        },
+        {
+          "id": "101cd50e0ec6b5b9",
+          "source": "HPCwire",
+          "url": "https://www.hpcwire.com/off-the-wire/darpa-selects-quandela-for-stage-a-of-the-quantum-benchmarking-initiative/",
+          "title": "DARPA Selects Quandela for Stage A of the Quantum Benchmarking Initiative",
+          "snippet": "Quandela’s spin-photon quantum computing architecture advances into DARPA program evaluating utility-scale, fault-tolerant quantum systems WASHINGTON, June 16, 2026 — Quandela today announced it has been selected by the…",
+          "contentText": "Quandela’s spin-photon quantum computing architecture advances into DARPA program evaluating utility-scale, fault-tolerant quantum systems WASHINGTON, June 16, 2026 &#8212; Quandela today announced it has been selected by the U.S. Defense Advanced Research Projects Agency (DARPA) to participate in Stage A of the Quantum Benchmarking Initiative (QBI), a multi-stage program designed to assess whether any quantum computing architecture can achieve utility-scale operation by 2033. Under Stage A, Quandela will present a detailed concept for a utility-scale, fault-tolerant quantum computer, along with technical evidence supporting its near-term feasibility. Within DARPA’s framework, utility-scale refers to systems whose computational value exceeds their cost. The QBI program is intended to rigo…",
+          "publishedAt": "2026-06-16T17:44:22.000Z",
+          "sourceImage": "https://www.hpcwire.com/wp-content/uploads/2025/06/Quandela-2025-300x76.png",
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "category": "AI Infrastructure",
+          "primary_category": "AI Infrastructure",
+          "secondary_category": "GPU clusters and deployment readiness",
+          "infrastructure_layer": "Compute",
+          "affected_stakeholders": [
+            "operators",
+            "hyperscalers",
+            "cloud buyers",
+            "investors"
+          ],
+          "article_type": "Research / Technical",
+          "urgency_score": 0.44,
+          "taxonomy_confidence": 0.77,
+          "taxonomy_reasons": [
+            "ai infrastructure",
+            "neocloud"
+          ],
+          "direct_ai_infrastructure_relevance": 1,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0.22,
+          "power_grid_relevance": 0.26,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.822,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "semiconductor_relevance:0.22(gpu)",
+            "power_grid_relevance:0.26(utility)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 1,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0.22,
+            "power_grid_relevance": 0.26,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.822,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+              "semiconductor_relevance:0.22(gpu)",
+              "power_grid_relevance:0.26(utility)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 81
+        },
+        {
+          "id": "c3de052bf5eca921",
+          "source": "StorageReview",
+          "url": "https://www.storagereview.com/news/hpe-expands-ai-factory-portfolio-for-agentic-ai-deployments",
+          "title": "HPE Expands AI Factory Portfolio for Agentic AI Deployments",
+          "snippet": "At HPE Discover 2026, HPE announced a series of enhancements to its AI infrastructure portfolio to help enterprises operationalize agentic AI with greater governance, security, and scalability. The updates expand HPE AI…",
+          "contentText": "At HPE Discover 2026, HPE announced a series of enhancements to its AI infrastructure portfolio to help enterprises operationalize agentic AI with greater governance, security, and scalability. The updates expand HPE AI Factory offerings within the NVIDIA AI Computing by HPE portfolio and focus on moving AI initiatives from pilot projects into production environments. The announcements center on HPE Private Cloud AI and larger-scale HPE AI Factory deployments, adding new capabilities for agent governance, data preparation, inference efficiency, and confidential computing. &#8220;As AI becomes more autonomous, organizations need a new architecture to run it securely, govern it responsibly, and scale it economically,&#8221; said Antonio Neri, president and CEO of HPE. &#8220;Across networki…",
+          "publishedAt": "2026-06-16T16:30:04.000Z",
+          "sourceImage": "https://www.storagereview.com/wp-content/uploads/2026/06/StorageReview-HPE-Discover-2026-4-scaled.jpg",
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "category": "AI Infrastructure",
+          "primary_category": "AI Infrastructure",
+          "secondary_category": "GPU clusters and deployment readiness",
+          "infrastructure_layer": "Compute",
+          "affected_stakeholders": [
+            "operators",
+            "hyperscalers",
+            "cloud buyers",
+            "investors"
+          ],
+          "article_type": "Capacity Expansion",
+          "urgency_score": 0.51,
+          "taxonomy_confidence": 0.77,
+          "taxonomy_reasons": [
+            "ai infrastructure",
+            "neocloud"
+          ],
+          "direct_ai_infrastructure_relevance": 1,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0.5,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.84,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "semiconductor_relevance:0.50(nvidia, gpu)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 1,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0.5,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.84,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+              "semiconductor_relevance:0.50(nvidia, gpu)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 81
+        },
+        {
+          "id": "284be13a70519094",
+          "source": "HPCwire",
+          "url": "https://www.hpcwire.com/off-the-wire/mlcommons-releases-mlperf-training-v6-0-results/",
+          "title": "MLCommons Releases MLPerf Training v6.0 Results",
+          "snippet": "New benchmarks and increased diversity of submissions reflect important changes in AI ecosystem SAN FRANCISCO, June 16, 2026 — Today, MLCommons announced new results for the MLPerf Training v6.0 benchmark suite. The two…",
+          "contentText": "New benchmarks and increased diversity of submissions reflect important changes in AI ecosystem SAN FRANCISCO, June 16, 2026 &#8212; Today, MLCommons announced new results for the MLPerf Training v6.0 benchmark suite. The two new benchmarks added in this round, and the submissions received, highlight rapid and significant changes in the AI ecosystem. Credit: MLCommons “It’s an exciting moment for the community,” said Shriya Rishab, MLPerf Training Working Group co-chair. “We’re seeing strong convergence on a set of best practices for training AI models, but at the same time there is increasing technical diversity in the underlying frameworks and systems that are being used to host and run them.” MLPerf Training v6.0 Adds Two New Benchmarks, Emphasizing Sparse Computation The MLPerf Traini…",
+          "publishedAt": "2026-06-16T18:55:44.000Z",
+          "sourceImage": "https://www.hpcwire.com/wp-content/uploads/2026/06/image-2-300x155.png",
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "category": "AI Infrastructure",
+          "primary_category": "AI Infrastructure",
+          "secondary_category": "GPU clusters and deployment readiness",
+          "infrastructure_layer": "Compute",
+          "affected_stakeholders": [
+            "operators",
+            "hyperscalers",
+            "cloud buyers",
+            "investors"
+          ],
+          "article_type": "Capacity Expansion",
+          "urgency_score": 0.43,
+          "taxonomy_confidence": 0.77,
+          "taxonomy_reasons": [
+            "ai infrastructure",
+            "neocloud"
+          ],
+          "direct_ai_infrastructure_relevance": 1,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0.22,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.778,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "semiconductor_relevance:0.22(gpu)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 1,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0.22,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.778,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+              "semiconductor_relevance:0.22(gpu)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 79
+        },
+        {
+          "id": "858b5e8315e12605",
+          "source": "ServeTheHome",
+          "url": "https://www.servethehome.com/hpe-discover-2026-keynote-coverage/",
+          "title": "HPE Discover 2026 Keynote Coverage",
+          "snippet": "We are at HPE Discover 2026 covering Antonio Neri's keynote live where the company is discussing its next-generation networking and AI tech The post HPE Discover 2026 Keynote Coverage appeared first on ServeTheHome.",
+          "contentText": "We are at HPE Discover 2026 covering Antonio Neri's keynote live where the company is discussing its next-generation networking and AI tech The post HPE Discover 2026 Keynote Coverage appeared first on ServeTheHome .",
+          "publishedAt": "2026-06-16T18:55:18.000Z",
+          "sourceImage": null,
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "category": "AI Infrastructure",
+          "primary_category": "AI Infrastructure",
+          "secondary_category": "GPU clusters and deployment readiness",
+          "infrastructure_layer": "Compute",
+          "affected_stakeholders": [
+            "operators",
+            "hyperscalers",
+            "cloud buyers",
+            "investors"
+          ],
+          "article_type": "Other",
+          "urgency_score": 0.43,
+          "taxonomy_confidence": 0.77,
+          "taxonomy_reasons": [
+            "ai infrastructure",
+            "neocloud"
+          ],
+          "direct_ai_infrastructure_relevance": 1,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0.22,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0.18,
+          "infrastructure_relevance_score": 0.778,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "semiconductor_relevance:0.22(gpu)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 1,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0.22,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0.18,
+            "infrastructure_relevance_score": 0.778,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+              "semiconductor_relevance:0.22(gpu)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 79
+        }
+      ],
+      "curatedIds": [
+        "dae515923e74a6bc",
+        "9150848dedf04c3f",
+        "101cd50e0ec6b5b9",
+        "c3de052bf5eca921",
+        "284be13a70519094",
+        "858b5e8315e12605"
+      ],
+      "publishedIds": [
+        "9150848dedf04c3f",
+        "dae515923e74a6bc"
+      ],
+      "slotPublications": {
+        "0": true
+      }
     }
   },
   "runHistory": [
-    {
-      "at": "2026-04-30T16:25:50.756Z",
-      "day": "2026-05-01",
-      "slot": 0,
-      "publishedCount": 2,
-      "publishedIds": [
-        "cca8d24a8b7a6fb3",
-        "9df9266cfbc1d896"
-      ]
-    },
     {
       "at": "2026-04-30T23:55:08.247Z",
       "day": "2026-05-01",
@@ -25370,7 +25797,133 @@
         }
       ],
       "archiveOnlyItems": []
+    },
+    {
+      "at": "2026-06-16T18:56:51.407Z",
+      "day": "2026-06-17",
+      "slot": 0,
+      "publishedCount": 0,
+      "signalCardCount": 1,
+      "archiveOnlyCount": 0,
+      "repetitionBlockedCount": 1,
+      "publishedIds": [],
+      "processedIds": [
+        "9150848dedf04c3f",
+        "dae515923e74a6bc"
+      ],
+      "blockedCount": 1,
+      "blockedItems": [
+        {
+          "id": "9150848dedf04c3f",
+          "title": "Delivering the AI Era: Building a 100-Terabit Midwest Connectivity Corridor",
+          "infrastructure_relevance_score": 0.98,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:0.82(ai infrastructure)",
+            "data_center_relevance:1.00(data center, data centers, colocation)",
+            "cloud_capacity_relevance:0.32(hyperscalers)",
+            "power_grid_relevance:0.56(power, gigawatt)",
+            "capital_markets_relevance:0.28(capex)"
+          ],
+          "extraction_quality_score": 1,
+          "source_domain_adapter": "datacenterpost",
+          "content_length": 1772,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": false,
+          "repetition_block_reasons": [],
+          "repetition_check": null,
+          "expert_insight_complete": false,
+          "expert_insight_missing_fields": [
+            "named_companies"
+          ],
+          "reason": "expert_insight_missing_fields named_companies"
+        }
+      ],
+      "repetitionBlockedItems": [
+        {
+          "id": "dae515923e74a6bc",
+          "title": "HPE AI Factory With NVIDIA Expands for the Era of Agents",
+          "infrastructure_relevance_score": 0.932,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "cloud_capacity_relevance:0.32(hyperscalers)",
+            "semiconductor_relevance:0.60(nvidia, gpu)",
+            "power_grid_relevance:0.22(power)"
+          ],
+          "extraction_quality_score": 1,
+          "source_domain_adapter": "generic",
+          "content_length": 1780,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": true,
+          "repetition_block_reasons": [
+            "repeated_sentence_ratio>0.12",
+            "heading_sequence_similarity>0.75",
+            "conclusion_similarity>0.7"
+          ],
+          "repetition_check": {
+            "compared_article_count": 20,
+            "repeated_sentence_ratio": 0.2857142857142857,
+            "repeated_paragraph_ratio": 0.3333333333333333,
+            "heading_sequence_similarity": 1,
+            "banned_phrase_count": 0,
+            "banned_phrase_counts": {},
+            "recent_banned_phrase_counts": {},
+            "ngram_overlap": 0.6521739130434783,
+            "blueprint_repetition": 2,
+            "conclusion_similarity": 0.9271050693011066,
+            "repeated_sentence_count": 2,
+            "repeated_paragraph_count": 2,
+            "heading_sequence": [
+              "Technical Signal",
+              "Failure Domain",
+              "Operator Exposure",
+              "Benchmark To Watch"
+            ],
+            "blocked": true,
+            "reasons": [
+              "repeated_sentence_ratio>0.12",
+              "heading_sequence_similarity>0.75",
+              "conclusion_similarity>0.7"
+            ]
+          },
+          "expert_insight_complete": true,
+          "expert_insight_missing_fields": [],
+          "reason": "repeated_sentence_ratio>0.12; heading_sequence_similarity>0.75; conclusion_similarity>0.7"
+        }
+      ],
+      "signalCardItems": [
+        {
+          "id": "9150848dedf04c3f",
+          "title": "Delivering the AI Era: Building a 100-Terabit Midwest Connectivity Corridor",
+          "infrastructure_relevance_score": 0.98,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:0.82(ai infrastructure)",
+            "data_center_relevance:1.00(data center, data centers, colocation)",
+            "cloud_capacity_relevance:0.32(hyperscalers)",
+            "power_grid_relevance:0.56(power, gigawatt)",
+            "capital_markets_relevance:0.28(capex)"
+          ],
+          "extraction_quality_score": 1,
+          "source_domain_adapter": "datacenterpost",
+          "content_length": 1772,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": false,
+          "repetition_block_reasons": [],
+          "repetition_check": null,
+          "expert_insight_complete": false,
+          "expert_insight_missing_fields": [
+            "named_companies"
+          ],
+          "reason": "expert_insight_missing_fields named_companies"
+        }
+      ],
+      "archiveOnlyItems": []
     }
   ],
-  "lastRunAt": "2026-06-16T12:19:22.559Z"
+  "lastRunAt": "2026-06-16T18:56:51.407Z"
 }
