@@ -1,0 +1,43 @@
+# AI News Portal QA/QC Report
+
+Generated at: 2026-06-18T04:57:14.351Z
+Verdict: deployable with operational follow-up
+
+## Commands Run
+
+- `npm run content:gate` -> skipped (0)
+- `git diff --name-only --diff-filter=U` -> passed
+- `JSON.parse(src/data/latest-news.json)` -> passed
+- `JSON.parse(src/data/archived-news.json)` -> passed
+- `JSON.parse(src/data/search-index.json)` -> passed
+- `production surface verification` -> local dist passed
+
+## Artifacts
+
+- JSON result: `evidence/qa-qc/qa-qc-report.json`
+- Markdown report: `docs/qa-qc-report.md`
+- Production verification report: `evidence/qa-qc/production-verification-report.md`
+- Production verification JSON: `evidence/qa-qc/production-verification-report.json`
+
+## Pass/Fail
+
+- Verdict: deployable with operational follow-up
+- Local gate: skipped (prior gate evidence required)
+- Merge/data integrity: passed
+- Local distribution: passed
+- Live verification: failed
+- Cache purge: skipped
+
+## Remaining Risks
+
+- live URL verification failed or is not yet deployed
+- skipped staging step: URL not provided
+- cache purge skipped by QA/QC non-goal
+- local content gate skipped in this run; use prior gate evidence before release
+- This QA/QC workflow does not use production secrets and does not execute cache purge.
+
+## Cleanup Receipts
+
+- No production secret was read or required.
+- Cache purge was explicitly skipped by the QA/QC workflow.
+- No dev server, tmux session, browser context, or bound port is left running by this script.

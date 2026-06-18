@@ -169,7 +169,25 @@ async function inspectUrl(label, url) {
   return { label, url, ok: checks.every((check) => check.ok), checks };
 }
 
-async function maybePurgeCache() {
+export async function maybePurgeCache(options = {}) {
+  if (options.skipCachePurge || options['skip-cache-purge']) {
+    return {
+      status: 'skipped',
+      blocker: 'cache purge skipped by QA/QC non-goal',
+    };
+  }
+  const allowCachePurge = Boolean(
+    options.allowCachePurge
+      || options['allow-cache-purge']
+      || options.purgeCache
+      || options['purge-cache'],
+  );
+  if (!allowCachePurge) {
+    return {
+      status: 'skipped',
+      blocker: 'cache purge requires explicit --purge-cache opt-in',
+    };
+  }
   const purgeUrl = process.env.COMPUTE_CURRENT_CACHE_PURGE_URL || '';
   const token = process.env.COMPUTE_CURRENT_CACHE_PURGE_TOKEN || '';
   if (!purgeUrl) {
@@ -279,7 +297,7 @@ export async function verifyProductionSurface(options = {}) {
     inspectUrl('local', options.local),
     inspectUrl('staging', options.staging),
     inspectUrl('live', options.live),
-    maybePurgeCache(),
+    maybePurgeCache(options),
     screenshotArtifacts(),
   ]);
   const result = {
