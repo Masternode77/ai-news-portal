@@ -42,7 +42,8 @@ test('homepage premium surface renders a named intelligence desk module before t
   assert.match(source, /data-premium-lead-card/);
   assert.match(source, /data-premium-lead-visual/);
   assert.match(source, /leadImage/);
-  assert.match(source, /leadImageProvenanceLabel/);
+  assert.match(source, /provenanceLabel=""/);
+  assert.doesNotMatch(source, /leadImageProvenanceLabel/);
   assert.ok(templateSource.indexOf('data-homepage-premium-surface="intelligence-desk"') < templateSource.indexOf('FeaturedArticle'));
   assert.ok(templateSource.indexOf('data-homepage-premium-surface="intelligence-desk"') < templateSource.indexOf('LatestAnalysisFeed'));
   assert.match(feedSource, /ArticleCard/);

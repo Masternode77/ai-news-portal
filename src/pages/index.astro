@@ -8,6 +8,7 @@ import latestNews from '../data/latest-news.json';
 import archivedNews from '../data/archived-news.json';
 import { SITE } from '../config/site';
 import { buildHomepageFeed } from '../../scripts/lib/homepage-feed-builder.mjs';
+import { selectHomepageVisualLead } from '../../scripts/lib/homepage-visual-lead.mjs';
 
 const boardTitle = SITE.name;
 const routes = SITE.commercial.routes;
@@ -18,13 +19,11 @@ const latestFeed = { ...feed, items: feed.featured ? feed.items.slice(1) : feed.
 const featuredSignal = feed.featured?.publicSignal || null;
 const dateFormatter = new Intl.DateTimeFormat('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
 const topSources = Array.from(new Set(feed.items.map((entry) => entry.publicSignal?.source).filter(Boolean))).slice(0, 3);
-const leadSignal = feed.featured?.publicSignal || feed.items[0]?.publicSignal || null;
+const leadSignal = selectHomepageVisualLead(feed);
 const leadHref = leadSignal?.view_detail || leadSignal?.read_source || '/archive/';
 const leadDate = leadSignal?.date ? dateFormatter.format(new Date(leadSignal.date)) : 'Latest desk signal';
 const leadImage = leadSignal?.image || '/generated/fallbacks/ai-infrastructure.svg';
 const leadImageAlt = leadSignal?.image_alt || (leadSignal?.title ? `${leadSignal.title} editorial visual` : 'Compute Current editorial visual');
-const leadImageProvenanceLabel = leadSignal?.image_provenance_label || 'ChatGPT Image2 visual';
-const leadImageProvenanceKind = leadSignal?.image_provenance_kind || 'image2';
 const marketContext = [
   {
     label: 'Constraint watched',
@@ -156,8 +155,8 @@ const navLinks = [
                   linkClassName="premium-lead-card-visual"
                   priority={true}
                   ariaLabel={leadSignal?.title || 'Open lead signal'}
-                  provenanceLabel={leadImageProvenanceLabel}
-                  provenanceKind={leadImageProvenanceKind}
+                  provenanceLabel=""
+                  provenanceKind=""
                 />
               </div>
               <div class="premium-lead-card-copy">
