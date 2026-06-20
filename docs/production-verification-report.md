@@ -33,7 +33,7 @@ Build ID: 0.0.1:dist-mtime-1780211413505
   - https://www.computecurrent.com/rss.xml: live status passed 200
   - https://www.computecurrent.com/sitemap.xml: live status passed 200
 - Cache purge status: skipped
-- Cache purge blocker: credential blocker: missing COMPUTE_CURRENT_CACHE_PURGE_URL or VERCEL_DEPLOY_HOOK_URL
+- Cache purge blocker: credential blocker: missing COMPUTE_CURRENT_CACHE_PURGE_URL
 
 ## Remaining Risks
 

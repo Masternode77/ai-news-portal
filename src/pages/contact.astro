@@ -1,0 +1,75 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { SITE } from '../config/site';
+
+const routes = SITE.commercial.routes;
+const contactSubjects = [
+  ['Send a source signal', 'Compute Current source signal'],
+  ['Share a correction', 'Compute Current correction'],
+  ['Share methodology feedback', 'Compute Current methodology feedback'],
+  ['Share partnership context', 'Compute Current partnership context'],
+];
+---
+<Layout
+  title={`Contact | ${SITE.name}`}
+  description="Contact Compute Current to send source signals, corrections, methodology feedback, or AI infrastructure partnership context."
+  canonicalPath={routes.contact}
+>
+  <main class="policy-shell commercial-page commercial-page-contact">
+    <a class="back-link" href="/">Latest analysis</a>
+    <article class="policy-page commercial-article">
+      <header class="commercial-hero">
+        <div>
+          <p class="eyebrow">Contact</p>
+          <h1>Route the right AI infrastructure signal.</h1>
+          <p class="policy-lede">
+            Compute Current welcomes source tips, corrections, methodology feedback, and partnership context that
+            can improve decision-useful AI infrastructure intelligence.
+          </p>
+        </div>
+
+        <aside class="commercial-hero-note" aria-label="Response context">
+          <span>Desk intake</span>
+          <strong>Source, correction, method, context</strong>
+          <p>Send the source URL, market, bottleneck, and why it matters for infrastructure readers.</p>
+        </aside>
+      </header>
+
+      <section class="commercial-section">
+        <div class="commercial-section-heading">
+          <p class="eyebrow">Request router</p>
+          <h2>Choose the entry point</h2>
+        </div>
+        <nav class="commercial-contact-list" aria-label="Contact request types">
+          {contactSubjects.map(([label, subject]) => (
+            <a href={`mailto:${SITE.contactEmail}?subject=${encodeURIComponent(subject)}`}>{label}</a>
+          ))}
+        </nav>
+      </section>
+
+      <section class="commercial-section commercial-proof-grid">
+        <div class="commercial-note">
+          <h2>What to include</h2>
+          <ul class="commercial-signal-list">
+            <li>Your role: investor, operator, developer, vendor, cloud capacity team, or strategy group.</li>
+            <li>The market or bottleneck you need to track.</li>
+            <li>The source URL, correction detail, or methodology question that should be reviewed.</li>
+          </ul>
+        </div>
+        <div class="commercial-note">
+          <h2>Best-fit requests</h2>
+          <p>
+            Power and grid diligence, AI data center capacity, tenant movement, cooling readiness, APAC/Korea reads,
+            and capital exposure tracking.
+          </p>
+        </div>
+      </section>
+
+      <nav class="policy-link-row" aria-label="Public reference pages">
+        <a href={routes.archive}>Archive</a>
+        <a href={routes.methodology}>Methodology</a>
+        <a href={routes.editorialPolicy}>Editorial Policy</a>
+      </nav>
+    </article>
+  </main>
+</Layout>

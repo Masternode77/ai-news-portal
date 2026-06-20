@@ -1,0 +1,96 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { SITE } from '../config/site';
+
+const routes = SITE.commercial.routes;
+---
+<Layout
+  title={`Sample Analysis | ${SITE.name}`}
+  description="An illustrative Compute Current public analysis format on AI data centers, power access, capacity, capital exposure, and infrastructure bottlenecks."
+  canonicalPath={routes.sample}
+  noindex={true}
+>
+  <main class="policy-shell commercial-page commercial-page-sample">
+    <a class="back-link" href="/">Latest analysis</a>
+    <article class="policy-page commercial-article">
+      <header class="commercial-hero">
+        <div>
+          <p class="eyebrow">Sample analysis</p>
+          <h1>AI Data Centers Are Turning Power Access Into the New Capacity Moat</h1>
+          <p class="policy-lede">
+            This is an illustrative sample of the public Compute Current analysis format. It shows the source logic,
+            watch items, and confidence notes an infrastructure reader should expect.
+          </p>
+        </div>
+
+        <aside class="commercial-hero-note" aria-label="Sample memo use">
+          <span>Memo format</span>
+          <strong>Decision read first</strong>
+          <p>Every analysis separates what changed from who benefits, who is exposed, and what to watch next.</p>
+        </aside>
+      </header>
+
+      <nav class="commercial-actions" aria-label="Sample analysis actions">
+        <a href={routes.archive}>Open the Archive</a>
+        <a href={routes.methodology}>Trace the Methodology</a>
+        <a href={routes.rss}>RSS Feed</a>
+      </nav>
+
+      <section class="commercial-section commercial-sample-lead">
+        <h2>What changed</h2>
+        <div class="commercial-sample-block">
+          <h3>Power access is becoming the gating constraint for AI capacity.</h3>
+          <p>
+            The sample read assumes a market where land, fiber, and capital are available, but usable power,
+            interconnection timing, and cooling design decide which AI data center projects can move first.
+          </p>
+        </div>
+      </section>
+
+      <section class="commercial-section commercial-memo-grid">
+        <div class="commercial-note">
+          <h2>Why it matters for AI infrastructure</h2>
+          <p>
+            AI capacity decisions now depend on grid timing, utility coordination, behind-the-meter options,
+            rack density, cooling readiness, and the ability to sequence power delivery with tenant commitments.
+          </p>
+        </div>
+        <div class="commercial-note">
+          <h2>Confidence notes</h2>
+          <p>
+            Confidence is medium in this illustrative sample because the thesis is directional and depends on
+            project-level evidence. A live public analysis should attach source URLs, confidence labels, and item-specific caveats.
+          </p>
+        </div>
+      </section>
+
+      <section class="commercial-section commercial-proof-grid">
+        <div>
+          <h2>Who benefits</h2>
+          <ul class="commercial-signal-list">
+            <li>Operators with defined power positions and credible energization timelines.</li>
+            <li>Developers that can combine grid access, generation strategy, and tenant-ready campus phasing.</li>
+            <li>Equipment and cooling vendors tied to high-density deployments with near-term power availability.</li>
+          </ul>
+        </div>
+        <div>
+          <h2>Who is exposed</h2>
+          <ul class="commercial-signal-list">
+            <li>Projects marketed as AI-ready before utility milestones are firm.</li>
+            <li>Capital plans that assume GPU demand can overcome grid or permitting delay.</li>
+            <li>Teams tracking MW headlines without checking deliverability, cooling design, and interconnection queue risk.</li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="commercial-section">
+        <h2>Watch next</h2>
+        <ul class="commercial-signal-list commercial-check-grid">
+          <li>Interconnection dates that move from planning language to executable utility milestones.</li>
+          <li>Campus expansions paired with generation, storage, nuclear, gas, or renewable supply strategy.</li>
+          <li>Tenant commitments that specify phased capacity delivery rather than headline MW alone.</li>
+        </ul>
+      </section>
+    </article>
+  </main>
+</Layout>

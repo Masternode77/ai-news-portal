@@ -27,7 +27,7 @@ test('category fallback assets cover every public taxonomy lane', async () => {
   }
 });
 
-test('article image variants surface remote source artwork with source metadata', () => {
+test('article image variants use Image2 fallback when only remote source artwork exists', () => {
   const article = {
     id: 'remote_only_image_fixture',
     title: 'Utility interconnect delays reset AI campus timing',
@@ -38,11 +38,11 @@ test('article image variants surface remote source artwork with source metadata'
   const variants = articleImageVariants(article);
 
   assert.equal(isTrustedPublicImage(article.sourceImage), false);
-  assert.equal(variants.thumbnail.url, article.sourceImage);
-  assert.equal(variants.thumbnail.status, 'source');
-  assert.equal(variants.thumbnail.provider, 'source-image');
-  assert.equal(variants.hero.url, article.sourceImage);
-  assert.equal(variants.og.url, article.sourceImage);
+  assert.equal(variants.thumbnail.url, '/generated/fallbacks/power-grid.svg');
+  assert.equal(variants.thumbnail.status, 'fallback');
+  assert.equal(variants.thumbnail.provider, 'category-fallback');
+  assert.equal(variants.hero.url, '/generated/fallbacks/power-grid.svg');
+  assert.equal(variants.og.url, '/generated/fallbacks/power-grid.svg');
   assert.equal(articleCardImage(article), variants.thumbnail.url);
   assert.equal(articleHeroImage(article), variants.hero.url);
   assert.equal(articleOpenGraphImage(article), variants.og.url);

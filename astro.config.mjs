@@ -19,6 +19,7 @@ const noindexArticlePaths = new Set(
     .filter((article) => article?.id && shouldNoindexArticle(article))
     .map((article) => articleCanonicalPath(article))
 );
+const noindexStaticPaths = new Set(['/subscribe/', '/pricing/', '/sample/', '/briefing/']);
 
 const pagePath = (page) => {
   try {
@@ -37,6 +38,7 @@ export default defineConfig({
         return !pathname.startsWith('/admin')
           && !pathname.startsWith('/api/admin')
           && pathname !== '/dashboard/'
+          && !noindexStaticPaths.has(pathname)
           && !noindexArticlePaths.has(pathname);
       },
     }),

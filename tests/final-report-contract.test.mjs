@@ -11,6 +11,7 @@ const FINAL_REPORTS = [
   'docs/admin-cms-report.md',
   'docs/legacy-migration-report.md',
   'docs/public-qa-report.md',
+  'docs/qa-qc-report.md',
   'docs/deployment-checklist.md',
   'docs/production-verification-report.md',
 ];

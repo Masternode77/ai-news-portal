@@ -14,6 +14,8 @@ const formattedDate = date
 const cta = signal.cta || (signal.view_detail ? 'Read analysis' : 'Source');
 const image = signal.image || '/generated/fallbacks/ai-infrastructure.svg';
 const imageAlt = signal.image_alt || (signal.title ? `${signal.title} editorial visual` : 'Compute Current editorial visual');
+const provenanceLabel = signal.image_provenance_label || 'ChatGPT Image2 visual';
+const provenanceKind = signal.image_provenance_kind || 'image2';
 const readerImpact = Array.isArray(signal.reader_impact) ? signal.reader_impact.slice(0, 4) : [];
 ---
 <article class="article-list-card" data-public-card>
@@ -23,6 +25,8 @@ const readerImpact = Array.isArray(signal.reader_impact) ? signal.reader_impact.
     href={href}
     decorative={!href}
     ariaLabel={href ? signal.title : ''}
+    provenanceLabel={provenanceLabel}
+    provenanceKind={provenanceKind}
   />
   <div class="article-list-card-main">
     <div class="story-meta">

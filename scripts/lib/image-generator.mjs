@@ -2,6 +2,7 @@ import fs from 'node:fs/promises';
 import path from 'node:path';
 import sharp from 'sharp';
 import { IMAGE_PROVIDER, PIPELINE_OFFLINE } from './constants.mjs';
+import { ARTICLE_IMAGE_VARIANTS, canonicalArticleImagePaths } from './image-store.mjs';
 import { createImageProvider } from './image-providers/index.mjs';
 import { fetchWithTimeout } from './image-providers/shared.mjs';
 import { isStockDerivedCardImage } from './stock-card-image-detector.mjs';
@@ -69,46 +70,67 @@ function svgTextLines(lines = [], { x, y, size, lineHeight, fill, weight = 700, 
   return `<text x="${x}" y="${y}" fill="${fill}" font-family="${family}" font-size="${size}" font-weight="${weight}" letter-spacing="${letterSpacing}">${tspans}</text>`;
 }
 
-async function writePlaceholderSvg(item) {
-  const palette = colorFromId(item.id);
-  const filename = `${item.id}.svg`;
-  const outPath = path.join(OUT_DIR, filename);
-  const titleLines = wrapText(item.title, 30, 3);
-  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="1344" height="768" viewBox="0 0 1344 768" fill="none">
+function localEditorialSvg(item = {}, variant = ARTICLE_IMAGE_VARIANTS.hero) {
+  const palette = colorFromId(item.id || 'abcdef1234567890');
+  const width = variant.width;
+  const height = variant.height;
+  const pad = Math.round(width * 0.055);
+  const midY = Math.round(height * 0.58);
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" role="img" aria-label="Compute Current editorial visual">
   <defs>
-    <linearGradient id="bg" x1="120" y1="70" x2="1180" y2="690" gradientUnits="userSpaceOnUse">
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
       <stop stop-color="${palette.one}"/>
-      <stop offset="0.42" stop-color="#111829"/>
-      <stop offset="1" stop-color="#090C12"/>
+      <stop offset="0.46" stop-color="#111820"/>
+      <stop offset="1" stop-color="#05080d"/>
     </linearGradient>
-    <filter id="noise">
-      <feTurbulence type="fractalNoise" baseFrequency="0.84" numOctaves="2" stitchTiles="stitch"/>
-      <feComponentTransfer><feFuncA type="table" tableValues="0 0 0.03 0.04"/></feComponentTransfer>
-    </filter>
+    <radialGradient id="pulse" cx="50%" cy="50%" r="50%">
+      <stop stop-color="${palette.three}" stop-opacity="0.72"/>
+      <stop offset="1" stop-color="${palette.three}" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="soft"><feGaussianBlur stdDeviation="${Math.max(12, Math.round(width / 80))}"/></filter>
   </defs>
-  <rect width="1344" height="768" rx="40" fill="url(#bg)"/>
-  <circle cx="284" cy="172" r="232" fill="${palette.two}" fill-opacity="0.22"/>
-  <circle cx="1080" cy="138" r="194" fill="${palette.three}" fill-opacity="0.15"/>
-  <rect x="70" y="72" width="1204" height="624" rx="34" stroke="rgba(255,255,255,0.12)" fill="rgba(255,255,255,0.03)"/>
-  <path d="M126 592C250 506 356 460 456 458C564 456 650 520 758 520C890 520 998 420 1206 244" stroke="#E8F0FF" stroke-opacity="0.45" stroke-width="4"/>
-  <g stroke="rgba(255,255,255,0.08)">
-    <path d="M108 604H1236"/>
-    <path d="M108 556H1236"/>
-    <path d="M108 508H1236"/>
-    <path d="M210 112V658"/>
-    <path d="M488 112V658"/>
-    <path d="M766 112V658"/>
-    <path d="M1044 112V658"/>
+  <rect width="${width}" height="${height}" fill="url(#bg)"/>
+  <circle cx="${Math.round(width * 0.18)}" cy="${Math.round(height * 0.18)}" r="${Math.round(width * 0.16)}" fill="${palette.two}" opacity="0.24" filter="url(#soft)"/>
+  <circle cx="${Math.round(width * 0.84)}" cy="${Math.round(height * 0.24)}" r="${Math.round(width * 0.13)}" fill="url(#pulse)" filter="url(#soft)"/>
+  <g stroke="rgba(240,248,255,0.12)" stroke-width="${Math.max(1, Math.round(width / 900))}">
+    <path d="M${pad} ${Math.round(height * 0.74)}H${width - pad}"/>
+    <path d="M${pad} ${Math.round(height * 0.62)}H${width - pad}"/>
+    <path d="M${Math.round(width * 0.22)} ${pad}V${height - pad}"/>
+    <path d="M${Math.round(width * 0.48)} ${pad}V${height - pad}"/>
+    <path d="M${Math.round(width * 0.74)} ${pad}V${height - pad}"/>
   </g>
-  <text x="118" y="164" fill="#F6F8FF" font-family="Inter, Arial, sans-serif" font-size="20" font-weight="700" letter-spacing="0.12em">${safeText(item.category || 'AI / DATA CENTER SIGNAL')}</text>
-  ${svgTextLines(titleLines, { x: 118, y: 236, size: 50, lineHeight: 58, fill: '#F6F8FF', weight: 800 })}
-  <text x="118" y="${292 + Math.max(0, titleLines.length - 1) * 58}" fill="#CBD8F5" font-family="Inter, Arial, sans-serif" font-size="26" font-weight="600">${safeText(item.source || 'Curated infrastructure briefing', 44)}</text>
-  <text x="118" y="612" fill="#C1CDE6" font-family="Inter, Arial, sans-serif" font-size="20" font-weight="600">Compute Current</text>
-  <rect width="1344" height="768" rx="40" filter="url(#noise)"/>
+  <path d="M${pad} ${midY}C${Math.round(width * 0.23)} ${Math.round(height * 0.42)}, ${Math.round(width * 0.36)} ${Math.round(height * 0.74)}, ${Math.round(width * 0.5)} ${Math.round(height * 0.56)}S${Math.round(width * 0.74)} ${Math.round(height * 0.36)}, ${width - pad} ${Math.round(height * 0.24)}" fill="none" stroke="#f6f8ff" stroke-opacity="0.52" stroke-width="${Math.max(3, Math.round(width / 260))}"/>
+  <g fill="none" stroke="${palette.three}" stroke-opacity="0.74" stroke-width="${Math.max(2, Math.round(width / 420))}">
+    <path d="M${Math.round(width * 0.1)} ${Math.round(height * 0.28)}H${Math.round(width * 0.38)}V${Math.round(height * 0.44)}H${Math.round(width * 0.7)}"/>
+    <path d="M${Math.round(width * 0.24)} ${Math.round(height * 0.84)}V${Math.round(height * 0.68)}H${Math.round(width * 0.88)}"/>
+  </g>
+  <rect x="${pad}" y="${pad}" width="${width - pad * 2}" height="${height - pad * 2}" rx="${Math.round(width * 0.022)}" fill="rgba(255,255,255,0.025)" stroke="rgba(255,255,255,0.13)"/>
 </svg>`;
+}
 
-  await fs.writeFile(outPath, svg, 'utf8');
-  return `/generated/${filename}`;
+async function writeLocalEditorialRasterSet(item = {}) {
+  const paths = canonicalArticleImagePaths(item, { extension: 'webp', legacyExtension: 'webp' });
+  for (const [key, variant] of Object.entries(ARTICLE_IMAGE_VARIANTS)) {
+    const publicPath = paths[`${key}Image`];
+    const outPath = path.join(process.cwd(), 'public', publicPath.replace(/^\//, ''));
+    await fs.mkdir(path.dirname(outPath), { recursive: true });
+    await sharp(Buffer.from(localEditorialSvg(item, variant)))
+      .webp({ quality: 88 })
+      .toFile(outPath);
+  }
+
+  const legacyPath = path.join(process.cwd(), 'public', paths.legacyImage.replace(/^\//, ''));
+  await fs.mkdir(path.dirname(legacyPath), { recursive: true });
+  await sharp(Buffer.from(localEditorialSvg(item, ARTICLE_IMAGE_VARIANTS.hero)))
+    .webp({ quality: 88 })
+    .toFile(legacyPath);
+
+  return paths;
+}
+
+async function writeLocalEditorialImageSet(item) {
+  const paths = await writeLocalEditorialRasterSet(item);
+  return paths.heroImage;
 }
 
 async function generateLocalPoster(item) {
@@ -175,8 +197,20 @@ async function generateLocalPoster(item) {
 export async function needsImageRefresh(item) {
   if (item?.forceImageRefresh || item?.forceAiImage) return true;
   if (isStockDerivedCardImage(item)) return true;
+  const providerText = [
+    item?.generatedImageProvider,
+    item?.imageProvider,
+    item?.image_source_provider,
+    item?.generatedImageModel,
+    item?.imageModel,
+    item?.imageStatus,
+    item?.image_status,
+  ].filter(Boolean).join(' ');
+  if (/\b(?:local-placeholder|local-svg|category-fallback|fallback|placeholder)\b/i.test(providerText)) return true;
   if (!item?.generatedImage) return true;
   if (/^https?:\/\//i.test(item.generatedImage)) return true;
+  if (/^\/generated\/fallbacks\//i.test(item.generatedImage)) return true;
+  if (/\.svg(?:$|[?#])/i.test(item.generatedImage)) return true;
   const localPath = path.join(process.cwd(), 'public', item.generatedImage.replace(/^\//, ''));
   if (!(await fileExists(localPath))) return true;
   if (localPath.endsWith('.svg')) {
@@ -194,7 +228,7 @@ export async function ensureArticleImage(item) {
   }
 
   if (item?.forcePlaceholderImage) {
-    return writePlaceholderSvg(item);
+    return writeLocalEditorialImageSet(item);
   }
 
   const provider = createImageProvider();
@@ -216,5 +250,5 @@ export async function ensureArticleImage(item) {
     console.error(`[pipeline] source poster fallback for ${item.id}: ${error.message}`);
   }
 
-  return writePlaceholderSvg(item);
+  return writeLocalEditorialImageSet(item);
 }

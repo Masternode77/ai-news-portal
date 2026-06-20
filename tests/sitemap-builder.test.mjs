@@ -27,6 +27,12 @@ test('sitemap builder includes article and taxonomy pages while excluding archiv
   assert.ok(articleEntry);
   assert.equal(articleEntry.image, '/generated/fallbacks/power-grid.svg');
   assert.equal(entries.some((entry) => entry.loc === '/news/b/'), false);
+  for (const loc of ['/about/', '/methodology/', '/editorial-policy/', '/ai-disclosure/', '/archive/', '/contact/']) {
+    assert.ok(entries.some((entry) => entry.loc === loc), `expected static public page ${loc}`);
+  }
+  for (const loc of ['/subscribe/', '/pricing/', '/sample/', '/briefing/']) {
+    assert.equal(entries.some((entry) => entry.loc === loc), false, `expected legacy conversion page ${loc} to stay out of sitemap`);
+  }
   const xml = sitemapXml(entries);
   assert.match(xml, /<urlset/);
   assert.match(xml, /<image:image>/);

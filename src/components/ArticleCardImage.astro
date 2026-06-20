@@ -8,6 +8,8 @@ const {
   priority = false,
   decorative = false,
   ariaLabel = '',
+  provenanceLabel = '',
+  provenanceKind = '',
 } = Astro.props;
 
 const safeImage = image || '/generated/fallbacks/ai-infrastructure.svg';
@@ -24,9 +26,27 @@ const alt = decorative ? '' : imageAlt;
     aria-label={ariaLabel || undefined}
   >
     <img class={className} src={safeImage} alt={alt} loading={loading} decoding="async" />
+    {provenanceLabel ? (
+      <span
+        class="article-image-provenance"
+        data-image-provenance
+        data-provenance-kind={provenanceKind || undefined}
+      >
+        {provenanceLabel}
+      </span>
+    ) : null}
   </a>
 ) : (
   <div class={linkClassName} aria-hidden={decorative ? 'true' : undefined}>
     <img class={className} src={safeImage} alt={alt} loading={loading} decoding="async" />
+    {provenanceLabel ? (
+      <span
+        class="article-image-provenance"
+        data-image-provenance
+        data-provenance-kind={provenanceKind || undefined}
+      >
+        {provenanceLabel}
+      </span>
+    ) : null}
   </div>
 )}

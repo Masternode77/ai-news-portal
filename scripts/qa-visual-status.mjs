@@ -3,7 +3,7 @@ import path from 'node:path';
 
 const ROOT = process.cwd();
 const STATUS_DIR = path.join(ROOT, 'artifacts', 'visual-status');
-const files = ['capture.json', 'smoke.json'];
+const files = ['capture.json', 'smoke.json', 'commercial-visual.json'];
 
 async function readJson(name) {
   const filePath = path.join(STATUS_DIR, name);

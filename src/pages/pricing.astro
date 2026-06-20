@@ -1,0 +1,74 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { SITE } from '../config/site';
+
+const routes = SITE.commercial.routes;
+const packages = SITE.commercial.packages;
+---
+<Layout
+  title={`Open Access | ${SITE.name}`}
+  description="Compute Current keeps its AI infrastructure signal board public, source-linked, and built for infrastructure readers."
+  canonicalPath={routes.pricing}
+  noindex={true}
+>
+  <main class="policy-shell commercial-page commercial-page-pricing">
+    <a class="back-link" href="/">Latest analysis</a>
+    <article class="policy-page commercial-article">
+      <header class="commercial-hero">
+        <div>
+          <p class="eyebrow">Open access</p>
+          <h1>The public signal board stays in the open.</h1>
+          <p class="policy-lede">
+            Compute Current is being shaped as a public AI infrastructure intelligence desk. The useful surface is
+            the archive, source trail, methodology, and coverage lanes - not a gated product funnel.
+          </p>
+        </div>
+
+        <aside class="commercial-hero-note" aria-label="Open access model">
+          <span>Access model</span>
+          <strong>Public by default</strong>
+          <p>Signals point readers to source evidence, confidence notes, and editorial rules.</p>
+        </aside>
+      </header>
+
+      <section class="commercial-section">
+        <div class="commercial-section-heading">
+          <p class="eyebrow">Public surfaces</p>
+          <h2>What stays visible</h2>
+        </div>
+        <div class="commercial-grid commercial-package-grid">
+          {packages.map((plan) => (
+            <div class="commercial-plan">
+              <span>{plan.name}</span>
+              <h3>{plan.price}</h3>
+              <p>{plan.summary}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <section class="commercial-section commercial-proof-grid">
+        <div class="commercial-note">
+          <h2>Reader fit</h2>
+          <p>Operators, developers, investors, cloud capacity teams, and strategy groups tracking AI infrastructure constraints.</p>
+        </div>
+        <div class="commercial-note">
+          <h2>What the public board supports</h2>
+          <p>Fast orientation across power, grid, capacity, chips, cooling, policy, capital, and source credibility.</p>
+        </div>
+      </section>
+
+      <nav class="commercial-actions" aria-label="Open access actions">
+        <a href={routes.archive}>Open the Archive</a>
+        <a href={routes.methodology}>Trace the Methodology</a>
+        <a href={routes.rss}>RSS Feed</a>
+      </nav>
+
+      <nav class="policy-link-row" aria-label="Public reference pages">
+        <a href={routes.editorialPolicy}>Editorial Policy</a>
+        <a href={routes.aiDisclosure}>AI-assisted Disclosure</a>
+        <a href={routes.contact}>Contact</a>
+      </nav>
+    </article>
+  </main>
+</Layout>

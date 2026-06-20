@@ -32,14 +32,6 @@ const VARIANT_FIELDS = {
   og: ['ogImage', 'heroImage', 'generatedImage', 'image', 'thumbnailImage', 'sourceImage', 'imageUrl', 'image_url', 'thumbnail'],
 };
 
-const SOURCE_IMAGE_FIELDS = [
-  'sourceImage',
-  'image',
-  'imageUrl',
-  'image_url',
-  'thumbnail',
-];
-
 const IMAGE_METADATA_FIELDS = [
   'imageAlt',
   'heroImage',
@@ -135,10 +127,6 @@ function imageProviderFor(article = {}, status = 'available') {
   return clean(article.generatedImageProvider || article.imageProvider || article.image_source_provider) || 'local';
 }
 
-function sourceImageProviderFor(article = {}) {
-  return clean(article.image_source_provider) || 'source-image';
-}
-
 function imageProviderText(article = {}) {
   return [
     article.generatedImageProvider,
@@ -166,11 +154,6 @@ function isPlaceholderGeneratedCandidate(article = {}, image = '') {
   if (imageProviderLooksPlaceholder(article)) return true;
   if (imageProviderLooksAi(article)) return false;
   return /\.svg(?:$|[?#])/i.test(value);
-}
-
-function sourceImageCandidates(article = {}, variant = 'hero') {
-  const fields = unique([...(VARIANT_FIELDS[variant] || VARIANT_FIELDS.hero), ...SOURCE_IMAGE_FIELDS]);
-  return unique(fields.map((field) => article[field])).filter(isRemoteImage);
 }
 
 function imageVariantObject(article = {}, variant = 'hero') {
@@ -202,17 +185,6 @@ function imageVariantObject(article = {}, variant = 'hero') {
     }
   }
 
-  for (const candidate of sourceImageCandidates(article, variant)) {
-    return {
-      url: candidate,
-      alt: articleImageAlt(article),
-      status: 'source',
-      provider: sourceImageProviderFor(article),
-      variant,
-      fallback: false,
-    };
-  }
-
   const fallback = fallbackCategoryImagePath(article);
   const safeFallback = isTrustedPublicImage(fallback)
     ? fallback
@@ -232,6 +204,21 @@ export function articleImageVariants(article = {}) {
     hero: imageVariantObject(article, 'hero'),
     thumbnail: imageVariantObject(article, 'thumbnail'),
     og: imageVariantObject(article, 'og'),
+  };
+}
+
+export function articleImageProvenance(article = {}, variant = 'hero') {
+  const variants = articleImageVariants(article);
+  const selected = variants[variant] || variants.hero;
+  const provider = clean(selected.provider);
+  const status = clean(selected.status);
+  const kind = status === 'source' || provider === 'source-image' ? 'source' : 'image2';
+  return {
+    label: kind === 'source' ? 'Original source image' : 'ChatGPT Image2 visual',
+    kind,
+    provider,
+    status,
+    variant: selected.variant || variant,
   };
 }
 

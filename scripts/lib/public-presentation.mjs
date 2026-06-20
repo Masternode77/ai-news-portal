@@ -6,6 +6,7 @@ import { routePublicLane } from './public-lane-router.mjs';
 import {
   articleCardImage,
   articleImageAlt,
+  articleImageProvenance,
   articleImageVariants,
 } from './article-image-surface.mjs';
 
@@ -73,6 +74,7 @@ export function buildPublicPresentation(article = {}, options = {}) {
   const detailHref = publicDetailHref(article);
   const image = publicImage(article);
   const imageMeta = articleImageVariants(article).thumbnail;
+  const imageProvenance = articleImageProvenance(article, 'thumbnail');
 
   return {
     id: article.id || persisted.id,
@@ -86,6 +88,8 @@ export function buildPublicPresentation(article = {}, options = {}) {
     image_status: imageMeta.status,
     image_provider: imageMeta.provider,
     image_variant: imageMeta.variant,
+    image_provenance_label: imageProvenance.label,
+    image_provenance_kind: imageProvenance.kind,
     reader_impact: persisted.reader_impact || stakeholderLabels(article),
     region: compact(article.region || 'Global'),
     source: compact(article.source || 'Source'),

@@ -19,6 +19,49 @@ function item(index, tier = 'editorial_brief') {
   };
 }
 
+function axisItem(index, axis, hoursAgo = index) {
+  const byAxis = {
+    capacity: {
+      title: 'Hyperscaler lease turns into live data center capacity',
+      primary_category: 'Data Centers',
+      infrastructure_layer: 'data center facility',
+      deck: 'A named lease changes where AI demand becomes usable data center capacity for buyers.',
+    },
+    power: {
+      title: 'Utility interconnection queue delays AI campus energization',
+      primary_category: 'Power & Grid',
+      infrastructure_layer: 'power',
+      deck: 'A grid queue delay changes energization timing for AI campus operators.',
+    },
+    capital: {
+      title: 'Infrastructure fund prices new data center capital raise',
+      primary_category: 'Capital Markets',
+      infrastructure_layer: 'capital',
+      deck: 'A capital raise shows which AI infrastructure risk investors still underwrite.',
+    },
+    'supply-chain': {
+      title: 'Transformer supplier backlog shifts AI campus delivery dates',
+      primary_category: 'Supply Chain',
+      infrastructure_layer: 'equipment supply',
+      deck: 'A supplier backlog changes delivery timing for substations and AI capacity commitments.',
+    },
+    risk: {
+      title: 'Local permitting challenge raises data center siting risk',
+      primary_category: 'Policy & Siting',
+      infrastructure_layer: 'risk',
+      deck: 'A permitting challenge changes the exposure profile for data center developers.',
+    },
+  };
+  return {
+    ...item(index),
+    ...byAxis[axis],
+    id: `axis-${axis}-${index}`,
+    publishedAt: new Date(Date.UTC(2026, 4, 20, 12 - hoursAgo)).toISOString(),
+    bottleneck_type: axis,
+    generatedImage: `/generated/fallbacks/${axis === 'supply-chain' ? 'supply-chain' : axis === 'capacity' ? 'data-centers' : axis === 'risk' ? 'regulation' : axis}.svg`,
+  };
+}
+
 test('homepage feed exposes 30 to 50 public cards when enough eligible items exist', () => {
   const feed = buildHomepageFeed(Array.from({ length: 36 }, (_, index) => item(index)));
 
@@ -28,6 +71,20 @@ test('homepage feed exposes 30 to 50 public cards when enough eligible items exi
   assert.equal(feed.items.every((entry) => entry.publicSignal.title), true);
   assert.equal(feed.sections.length, 1);
   assert.equal(feed.sections[0].title, 'Latest Analysis');
+});
+
+test('homepage first viewport cards represent distinct bottleneck axes when eligible signals exist', () => {
+  const feed = buildHomepageFeed([
+    ...Array.from({ length: 5 }, (_, index) => axisItem(index + 50, 'power', index)),
+    axisItem(1, 'capacity', 8),
+    axisItem(2, 'capital', 9),
+    axisItem(3, 'supply-chain', 10),
+    axisItem(4, 'risk', 11),
+  ], { limit: 9, minimumVisible: 0 });
+  const firstViewportAxes = feed.items.slice(0, 5).map((entry) => entry.publicSignal.bottleneck_axis);
+
+  assert.deepEqual(firstViewportAxes, ['power', 'capacity', 'capital', 'supply-chain', 'risk']);
+  assert.equal(new Set(feed.items.slice(0, 5).map((entry) => entry.publicSignal.deck)).size, 5);
 });
 
 test('homepage feed mixes longform and short public items without internal buckets', () => {
@@ -41,6 +98,20 @@ test('homepage feed mixes longform and short public items without internal bucke
 
   assert.deepEqual(labels.sort(), ['Analysis', 'Brief', 'Signal'].sort());
   assert.equal(feed.items.some((entry) => /Signals being monitored|Published deskwork|Cycle status/i.test(JSON.stringify(entry))), false);
+});
+
+test('homepage feed only links to article detail pages that pass public longform eligibility', () => {
+  const feed = buildHomepageFeed([
+    {
+      ...item(7, 'longform_analysis'),
+      articlePagePublished: true,
+      sourceUrl: 'https://example.com/source-story',
+      expertLensFull: { finalArticleBody: 'Too short for a public article page.' },
+    },
+  ]);
+
+  assert.equal(feed.items[0].publicSignal.view_detail, '');
+  assert.equal(feed.items[0].publicSignal.read_source, 'https://example.com/source-story');
 });
 
 test('homepage cards use a public board layout', () => {
@@ -60,7 +131,10 @@ test('homepage composes dedicated publication components', () => {
 
   assert.match(source, /FeaturedArticle/);
   assert.match(source, /CategoryNav/);
+  assert.match(source, /hero-brief/);
+  assert.match(source, /Latest Signals/);
   assert.match(feedSource, /ArticleCard/);
   assert.match(styles, /\.featured-article\s*{/);
   assert.match(styles, /\.category-nav\s*{/);
+  assert.match(styles, /\.publication-home\s*{/);
 });

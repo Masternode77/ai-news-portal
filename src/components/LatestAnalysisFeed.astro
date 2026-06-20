@@ -5,6 +5,7 @@ import FeedFilterBar from './FeedFilterBar.astro';
 const {
   feed = { items: [], filters: [], emptyState: 'No new stories yet.' },
   title = 'Latest Analysis',
+  eyebrow = 'Latest Analysis',
   dek = 'A live stream of AI infrastructure analysis, briefs, and market signals.',
   showFilters = true,
 } = Astro.props;
@@ -13,7 +14,7 @@ const items = feed.items || [];
 <section class="latest-analysis-feed" aria-label={title}>
   <div class="feed-heading">
     <div>
-      <p class="eyebrow">Latest Analysis</p>
+      <p class="eyebrow">{eyebrow}</p>
       <h2>{title}</h2>
     </div>
     {dek ? <p>{dek}</p> : null}

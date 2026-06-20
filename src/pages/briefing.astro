@@ -1,0 +1,80 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { SITE } from '../config/site';
+
+const routes = SITE.commercial.routes;
+---
+<Layout
+  title={`Method Notes | ${SITE.name}`}
+  description="How Compute Current turns public source movement into AI infrastructure signals for operators, investors, developers, and strategy groups."
+  canonicalPath={routes.briefing}
+  noindex={true}
+>
+  <main class="policy-shell commercial-page commercial-page-briefing">
+    <a class="back-link" href="/">Latest analysis</a>
+    <article class="policy-page commercial-article">
+      <header class="commercial-hero">
+        <div>
+          <p class="eyebrow">Method notes</p>
+          <h1>How a public source becomes an infrastructure signal.</h1>
+          <p class="policy-lede">
+            Compute Current looks for evidence that changes capacity, power, cooling, chip supply, siting, policy,
+            capital, or deployment timing for AI infrastructure readers.
+          </p>
+        </div>
+
+        <aside class="commercial-hero-note" aria-label="Editorial method">
+          <span>Editorial method</span>
+          <strong>Source, thesis, constraint</strong>
+          <p>Every public read should connect a verified source to a decision point.</p>
+        </aside>
+      </header>
+
+      <nav class="commercial-actions" aria-label="Method note actions">
+        <a href={routes.methodology}>Full Methodology</a>
+        <a href={routes.editorialPolicy}>Editorial Policy</a>
+        <a href={routes.archive}>Open the Archive</a>
+      </nav>
+
+      <section class="commercial-section">
+        <div class="commercial-section-heading">
+          <p class="eyebrow">Use cases</p>
+          <h2>Where the signal filter matters</h2>
+        </div>
+        <div class="commercial-grid commercial-use-grid">
+          <div class="commercial-note">
+            <h3>Project and site diligence</h3>
+            <p>Assess power access, grid timing, cooling readiness, capex exposure, and tenant-fit risk.</p>
+          </div>
+          <div class="commercial-note">
+            <h3>Hyperscaler capacity watch</h3>
+            <p>Track demand movement, cloud capacity signals, lease pressure, and deployment timing.</p>
+          </div>
+          <div class="commercial-note">
+            <h3>APAC and Korea read</h3>
+            <p>Translate global AI infrastructure movement into market-specific operating implications.</p>
+          </div>
+          <div class="commercial-note">
+            <h3>Bottleneck tracker</h3>
+            <p>Monitor power, grid, cooling, chips, rack density, financing, and policy constraints.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="commercial-section commercial-proof-grid">
+        <div class="commercial-note">
+          <h2>Output</h2>
+          <p>
+            A published analysis should include source notes, confidence labels, a clear thesis, and the constraint readers should watch.
+          </p>
+        </div>
+        <div class="commercial-note">
+          <h2>Fit</h2>
+          <p>
+            Built for readers making sense of siting, leasing, capital allocation, partner, or market-entry signals.
+          </p>
+        </div>
+      </section>
+    </article>
+  </main>
+</Layout>
