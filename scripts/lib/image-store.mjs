@@ -57,40 +57,9 @@ function colorFromSlug(slug = 'article-image') {
   };
 }
 
-function wrap(value = '', max = 28, lines = 3) {
-  const words = String(value || '').split(/\s+/).filter(Boolean);
-  const out = [];
-  let line = '';
-  for (const word of words) {
-    const next = line ? `${line} ${word}` : word;
-    if (next.length > max && line) {
-      out.push(line);
-      line = word;
-    } else {
-      line = next;
-    }
-    if (out.length === lines) break;
-  }
-  if (line && out.length < lines) out.push(line);
-  return out;
-}
-
-function textLines(lines, { x, y, size, lineHeight, fill, weight = 800 }) {
-  return `<text x="${x}" y="${y}" fill="${fill}" font-family="Inter, Arial, sans-serif" font-size="${size}" font-weight="${weight}">${lines
-    .map((line, index) => `<tspan x="${x}" dy="${index === 0 ? 0 : lineHeight}">${escapeXml(line)}</tspan>`)
-    .join('')}</text>`;
-}
-
 function fallbackSvg(article = {}, variant, slug) {
   const palette = colorFromSlug(slug);
-  const title = article.expertLensFull?.finalHeadline || article.title || 'Compute Current';
-  const category = article.primary_category || article.category || article.infrastructure_layer || 'AI Infrastructure';
-  const source = article.source || 'Compute Current';
-  const lines = wrap(title, variant.width >= 1400 ? 34 : 28, 3);
-  const titleSize = Math.round(variant.width / 25);
-  const labelSize = Math.round(variant.width / 72);
   const pad = Math.round(variant.width * 0.07);
-  const baseline = Math.round(variant.height * 0.32);
 
   return `<svg xmlns="http://www.w3.org/2000/svg" width="${variant.width}" height="${variant.height}" viewBox="0 0 ${variant.width} ${variant.height}" role="img" aria-label="${escapeXml(articleImageAltText(article))}">
   <defs>
@@ -114,32 +83,32 @@ function fallbackSvg(article = {}, variant, slug) {
     <path d="M${Math.round(variant.width * 0.76)} ${pad}V${variant.height - pad}"/>
   </g>
   <path d="M${pad} ${Math.round(variant.height * 0.72)}C${Math.round(variant.width * 0.24)} ${Math.round(variant.height * 0.58)}, ${Math.round(variant.width * 0.35)} ${Math.round(variant.height * 0.54)}, ${Math.round(variant.width * 0.48)} ${Math.round(variant.height * 0.58)}C${Math.round(variant.width * 0.62)} ${Math.round(variant.height * 0.62)}, ${Math.round(variant.width * 0.74)} ${Math.round(variant.height * 0.48)}, ${variant.width - pad} ${Math.round(variant.height * 0.3)}" stroke="#edf4ff" stroke-opacity="0.5" stroke-width="${Math.max(3, Math.round(variant.width / 360))}" fill="none"/>
+  <g fill="none" stroke="${palette.three}" stroke-opacity="0.62" stroke-width="${Math.max(2, Math.round(variant.width / 420))}">
+    <path d="M${Math.round(variant.width * 0.12)} ${Math.round(variant.height * 0.24)}H${Math.round(variant.width * 0.34)}V${Math.round(variant.height * 0.44)}H${Math.round(variant.width * 0.62)}"/>
+    <path d="M${Math.round(variant.width * 0.26)} ${Math.round(variant.height * 0.84)}V${Math.round(variant.height * 0.66)}H${Math.round(variant.width * 0.86)}"/>
+  </g>
   <rect x="${pad}" y="${pad}" width="${variant.width - pad * 2}" height="${variant.height - pad * 2}" rx="${Math.round(variant.width * 0.02)}" stroke="rgba(255,255,255,0.14)" fill="rgba(255,255,255,0.03)"/>
-  <text x="${pad + 18}" y="${Math.round(variant.height * 0.18)}" fill="#dce8ff" font-family="Inter, Arial, sans-serif" font-size="${labelSize}" font-weight="800">${escapeXml(category)}</text>
-  ${textLines(lines, { x: pad + 18, y: baseline, size: titleSize, lineHeight: Math.round(titleSize * 1.12), fill: '#ffffff' })}
-  <text x="${pad + 18}" y="${variant.height - pad - 28}" fill="#c8d6ea" font-family="Inter, Arial, sans-serif" font-size="${labelSize}" font-weight="700">${escapeXml(source)}</text>
-  <text x="${variant.width - pad - 190}" y="${variant.height - pad - 28}" fill="#c8d6ea" font-family="Inter, Arial, sans-serif" font-size="${labelSize}" font-weight="700">Compute Current</text>
 </svg>`;
 }
 
 export async function writeFallbackArticleImageSet(article = {}, metadata = {}, options = {}) {
   const publicDir = options.publicDir || path.join(process.cwd(), 'public');
-  const paths = canonicalArticleImagePaths(article, { extension: 'svg', legacyExtension: 'svg' });
+  const paths = canonicalArticleImagePaths(article, { extension: 'webp', legacyExtension: 'webp' });
   const slug = paths.slug;
   const writes = Object.entries(ARTICLE_IMAGE_VARIANTS).map(async ([key, variant]) => {
     const publicPath = paths[`${key}Image`];
     const filePath = publicPathToFile(publicDir, publicPath);
     await fs.mkdir(path.dirname(filePath), { recursive: true });
-    await fs.writeFile(filePath, fallbackSvg(article, variant, slug), 'utf8');
+    await sharp(Buffer.from(fallbackSvg(article, variant, slug)))
+      .webp({ quality: 88 })
+      .toFile(filePath);
   });
 
   const legacyFile = publicPathToFile(publicDir, paths.legacyImage);
   await fs.mkdir(path.dirname(legacyFile), { recursive: true });
-  try {
-    await fs.access(legacyFile);
-  } catch {
-    await fs.writeFile(legacyFile, fallbackSvg(article, ARTICLE_IMAGE_VARIANTS.hero, slug), 'utf8');
-  }
+  await sharp(Buffer.from(fallbackSvg(article, ARTICLE_IMAGE_VARIANTS.hero, slug)))
+    .webp({ quality: 88 })
+    .toFile(legacyFile);
   await Promise.all(writes);
 
   return { ...metadata, ...paths };

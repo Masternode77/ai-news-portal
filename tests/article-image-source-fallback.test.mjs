@@ -7,7 +7,7 @@ import {
   articleOpenGraphImage,
 } from '../scripts/lib/article-image-surface.mjs';
 
-test('article image surface uses source artwork when no generated image exists', () => {
+test('article image surface uses category fallback until source artwork is canonicalized', () => {
   const article = {
     id: 'remote_only_image_fixture',
     title: 'Utility interconnect delays reset AI campus timing',
@@ -17,11 +17,12 @@ test('article image surface uses source artwork when no generated image exists',
 
   const variants = articleImageVariants(article);
 
-  assert.equal(articleCardImage(article), article.sourceImage);
-  assert.equal(articleHeroImage(article), article.sourceImage);
-  assert.equal(articleOpenGraphImage(article), article.sourceImage);
-  assert.equal(variants.thumbnail.status, 'source');
-  assert.equal(variants.thumbnail.provider, 'source-image');
+  assert.equal(articleCardImage(article), '/generated/fallbacks/power-grid.svg');
+  assert.equal(articleHeroImage(article), '/generated/fallbacks/power-grid.svg');
+  assert.equal(articleOpenGraphImage(article), '/generated/fallbacks/power-grid.svg');
+  assert.equal(variants.thumbnail.status, 'fallback');
+  assert.equal(variants.thumbnail.provider, 'category-fallback');
+  assert.equal(variants.thumbnail.fallback, true);
 });
 
 test('article image surface prefers local placeholder cards over unvalidated source artwork', () => {

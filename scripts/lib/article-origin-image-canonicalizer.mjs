@@ -28,6 +28,8 @@ const REMOTE_SOURCE_FIELDS = [
   'thumbnail',
 ];
 
+const PLACEHOLDER_PROVIDER_RE = /\b(?:local-placeholder|local-svg|category-fallback)\b/i;
+
 async function fileExists(filePath = '') {
   if (!filePath) return false;
   try {
@@ -46,7 +48,24 @@ function isRemoteUrl(value = '') {
   return /^https?:\/\//i.test(clean(value));
 }
 
+function imageProviderText(item = {}) {
+  return [
+    item.generatedImageProvider,
+    item.imageProvider,
+    item.image_source_provider,
+    item.generatedImageModel,
+    item.imageModel,
+    item.imageStatus,
+    item.image_status,
+  ].map(clean).filter(Boolean).join(' ');
+}
+
+function itemLooksPlaceholder(item = {}) {
+  return PLACEHOLDER_PROVIDER_RE.test(imageProviderText(item));
+}
+
 function localSourceImageFileFor(item = {}) {
+  if (itemLooksPlaceholder(item)) return '';
   for (const field of LOCAL_SOURCE_FIELDS) {
     const candidate = item[field];
     if (!localArticleImageExists(candidate)) continue;
@@ -68,8 +87,8 @@ function remoteSourceImageFor(item = {}) {
   return {};
 }
 
-function missingCanonicalVariants(paths = {}, publicDir = '') {
-  return Object.entries(ARTICLE_IMAGE_VARIANTS).map(([key]) => {
+function canonicalImageTargets(paths = {}, publicDir = '') {
+  const variantTargets = Object.entries(ARTICLE_IMAGE_VARIANTS).map(([key]) => {
     const publicPath = paths[`${key}Image`];
     return {
       key,
@@ -77,11 +96,20 @@ function missingCanonicalVariants(paths = {}, publicDir = '') {
       filePath: path.join(publicDir, publicPath.replace(/^\//, '')),
     };
   });
+
+  return [
+    ...variantTargets,
+    {
+      key: 'legacy',
+      publicPath: paths.legacyImage,
+      filePath: path.join(publicDir, paths.legacyImage.replace(/^\//, '')),
+    },
+  ];
 }
 
 async function writeMissingVariants(missing = [], source) {
   await Promise.all(missing.map(async (entry) => {
-    const variant = ARTICLE_IMAGE_VARIANTS[entry.key];
+    const variant = ARTICLE_IMAGE_VARIANTS[entry.key] || ARTICLE_IMAGE_VARIANTS.hero;
     await fs.mkdir(path.dirname(entry.filePath), { recursive: true });
     await sharp(source)
       .resize(variant.width, variant.height, { fit: 'cover', position: 'attention' })
@@ -112,12 +140,14 @@ async function fetchRemoteSourceImage(url = '') {
 export async function ensureCanonicalArticleImageSet(item = {}, options = {}) {
   const publicDir = options.publicDir || path.join(process.cwd(), 'public');
   const paths = canonicalArticleImagePaths(item, { extension: 'webp', legacyExtension: 'webp' });
-  const candidates = missingCanonicalVariants(paths, publicDir);
-  const missing = [];
+  const candidates = canonicalImageTargets(paths, publicDir);
+  const missing = options.overwrite === true ? [...candidates] : [];
 
-  for (const candidate of candidates) {
-    if (!(await fileExists(candidate.filePath))) {
-      missing.push(candidate);
+  if (options.overwrite !== true) {
+    for (const candidate of candidates) {
+      if (!(await fileExists(candidate.filePath))) {
+        missing.push(candidate);
+      }
     }
   }
 

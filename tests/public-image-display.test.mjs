@@ -31,7 +31,7 @@ test('public feed cards carry displayable editorial images', () => {
   assert.ok(feed.items.length >= 30);
   assert.equal(feed.items.filter((item) => !item.publicSignal?.image).length, 0);
   assert.equal(feed.items.filter((item) => !item.publicSignal?.image_alt).length, 0);
-  assert.equal(feed.items.filter(isStockDerivedCardImage).length, 0);
+  assert.equal(feed.items.filter((item) => isStockDerivedCardImage(item.publicSignal)).length, 0);
   assert.equal(feed.items.filter((item) => {
     const image = item.publicSignal?.image;
     return !isTrustedPublicImage(image) && !isRemoteImage(image);
@@ -47,7 +47,8 @@ test('affected hpcwire records use local generated cards instead of remote sourc
   for (const article of affected) {
     assert.equal(localArticleImageExists(article.generatedImage), true, article.id);
     assert.equal(isRemoteImage(articleCardImage(article)), false, article.id);
-    assert.equal(articleCardImage(article), article.generatedImage, article.id);
+    assert.equal(articleCardImage(article), article.thumbnailImage, article.id);
+    assert.equal(articleDisplayImage(article), article.generatedImage, article.id);
   }
 
   const feed = buildHomepageFeed(allArticles, { limit: 50, minimumVisible: 30 });

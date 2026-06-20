@@ -104,13 +104,19 @@ test('article origin canonicalization', async (t) => {
         await createFixturePng(sourceFile);
 
         const result = await ensureCanonicalArticleImageSet(article, { publicDir });
-        const expectedPaths = [result.paths.heroImage, result.paths.thumbnailImage, result.paths.ogImage];
+        const expectedPaths = [
+          result.paths.heroImage,
+          result.paths.thumbnailImage,
+          result.paths.ogImage,
+          result.paths.legacyImage,
+        ];
 
-        assert.equal(result.changed, 3);
+        assert.equal(result.changed, 4);
         assert.equal(result.skipped, false);
         assert.ok(result.paths.heroImage.endsWith('/hero.webp'));
         assert.ok(result.paths.thumbnailImage.endsWith('/thumbnail.webp'));
         assert.ok(result.paths.ogImage.endsWith('/og.webp'));
+        assert.ok(result.paths.legacyImage.endsWith('/origin-local-fixture.webp'));
         for (const publicPath of expectedPaths) {
           await fs.access(path.join(publicDir, publicPath.replace(/^\//, '')));
         }
@@ -133,9 +139,14 @@ test('article origin canonicalization', async (t) => {
       await withCwd(root, async () => {
         const result = await ensureCanonicalArticleImageSet(article, { publicDir });
 
-        assert.equal(result.changed, 3);
+        assert.equal(result.changed, 4);
         assert.equal(result.skipped, false);
-        for (const publicPath of [result.paths.heroImage, result.paths.thumbnailImage, result.paths.ogImage]) {
+        for (const publicPath of [
+          result.paths.heroImage,
+          result.paths.thumbnailImage,
+          result.paths.ogImage,
+          result.paths.legacyImage,
+        ]) {
           await fs.access(path.join(publicDir, publicPath.replace(/^\//, '')));
         }
       });
@@ -233,11 +244,17 @@ test('article origin canonicalization', async (t) => {
       assert.equal(updated.generatedImageProvider, 'image2');
       assert.equal(updated.generatedImageModel, 'gpt-image-2');
       assert.equal(updated.imageStatus, 'fallback');
-      assert.match(updated.heroImage, /\/generated\/articles\/force-image2-fixture-forced-image2-output-should-win-over-source-artwork\/hero\.svg$/);
-      assert.match(updated.thumbnailImage, /\/thumbnail\.svg$/);
-      assert.match(updated.ogImage, /\/og\.svg$/);
+      assert.match(updated.heroImage, /\/generated\/articles\/force-image2-fixture-forced-image2-output-should-win-over-source-artwork\/hero\.webp$/);
+      assert.match(updated.thumbnailImage, /\/thumbnail\.webp$/);
+      assert.match(updated.ogImage, /\/og\.webp$/);
+      assert.match(updated.legacyImage, /\/generated\/force-image2-fixture\.webp$/);
       assert.equal(updated.generatedImage, updated.heroImage);
-      for (const publicPath of [updated.heroImage, updated.thumbnailImage, updated.ogImage]) {
+      for (const publicPath of [
+        updated.heroImage,
+        updated.thumbnailImage,
+        updated.ogImage,
+        updated.legacyImage,
+      ]) {
         await fs.access(path.join(publicDir, publicPath.replace(/^\//, '')));
       }
     } finally {
