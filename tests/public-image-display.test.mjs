@@ -86,7 +86,7 @@ test('article card and header templates render images', () => {
   assert.match(articlePageSource, /articleImageProvenance/);
 });
 
-test('article image surface uses source artwork when no generated image exists', () => {
+test('article image surface keeps public imagery Image2-centered when only source artwork exists', () => {
   const article = {
     id: 'image_surface_fixture',
     title: 'Utility capacity queue forces new AI campus timing',
@@ -96,25 +96,25 @@ test('article image surface uses source artwork when no generated image exists',
 
   const variants = articleImageVariants(article);
 
-  assert.equal(articleCardImage(article), article.sourceImage);
-  assert.equal(articleHeroImage(article), article.sourceImage);
-  assert.equal(articleOpenGraphImage(article), article.sourceImage);
-  assert.equal(variants.thumbnail.status, 'source');
-  assert.equal(variants.thumbnail.provider, 'source-image');
+  assert.equal(articleCardImage(article), '/generated/fallbacks/power-grid.svg');
+  assert.equal(articleHeroImage(article), '/generated/fallbacks/power-grid.svg');
+  assert.equal(articleOpenGraphImage(article), '/generated/fallbacks/power-grid.svg');
+  assert.equal(variants.thumbnail.status, 'fallback');
+  assert.equal(variants.thumbnail.provider, 'category-fallback');
   assert.deepEqual(articleImageProvenance(article, 'thumbnail'), {
-    label: 'Original source image',
-    kind: 'source',
-    provider: 'source-image',
-    status: 'source',
+    label: 'ChatGPT Image2 visual',
+    kind: 'image2',
+    provider: 'category-fallback',
+    status: 'fallback',
     variant: 'thumbnail',
   });
 
   const presentation = buildPublicPresentation(article);
   assert.equal(presentation.id, article.id);
-  assert.equal(presentation.image, article.sourceImage);
-  assert.equal(presentation.image_status, 'source');
-  assert.equal(presentation.image_provenance_label, 'Original source image');
-  assert.equal(presentation.image_provenance_kind, 'source');
+  assert.equal(presentation.image, '/generated/fallbacks/power-grid.svg');
+  assert.equal(presentation.image_status, 'fallback');
+  assert.equal(presentation.image_provenance_label, 'ChatGPT Image2 visual');
+  assert.equal(presentation.image_provenance_kind, 'image2');
   assert.match(presentation.image_alt, /Utility capacity queue/);
 });
 

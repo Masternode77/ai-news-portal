@@ -32,14 +32,6 @@ const VARIANT_FIELDS = {
   og: ['ogImage', 'heroImage', 'generatedImage', 'image', 'thumbnailImage', 'sourceImage', 'imageUrl', 'image_url', 'thumbnail'],
 };
 
-const SOURCE_IMAGE_FIELDS = [
-  'sourceImage',
-  'image',
-  'imageUrl',
-  'image_url',
-  'thumbnail',
-];
-
 const IMAGE_METADATA_FIELDS = [
   'imageAlt',
   'heroImage',
@@ -135,10 +127,6 @@ function imageProviderFor(article = {}, status = 'available') {
   return clean(article.generatedImageProvider || article.imageProvider || article.image_source_provider) || 'local';
 }
 
-function sourceImageProviderFor(article = {}) {
-  return clean(article.image_source_provider) || 'source-image';
-}
-
 function imageProviderText(article = {}) {
   return [
     article.generatedImageProvider,
@@ -168,11 +156,6 @@ function isPlaceholderGeneratedCandidate(article = {}, image = '') {
   return /\.svg(?:$|[?#])/i.test(value);
 }
 
-function sourceImageCandidates(article = {}, variant = 'hero') {
-  const fields = unique([...(VARIANT_FIELDS[variant] || VARIANT_FIELDS.hero), ...SOURCE_IMAGE_FIELDS]);
-  return unique(fields.map((field) => article[field])).filter(isRemoteImage);
-}
-
 function imageVariantObject(article = {}, variant = 'hero') {
   const generatedCandidates = variantCandidates(article, variant);
   for (const candidate of generatedCandidates) {
@@ -200,17 +183,6 @@ function imageVariantObject(article = {}, variant = 'hero') {
         fallback: placeholder,
       };
     }
-  }
-
-  for (const candidate of sourceImageCandidates(article, variant)) {
-    return {
-      url: candidate,
-      alt: articleImageAlt(article),
-      status: 'source',
-      provider: sourceImageProviderFor(article),
-      variant,
-      fallback: false,
-    };
   }
 
   const fallback = fallbackCategoryImagePath(article);

@@ -3,6 +3,10 @@ import { routePublicLane } from './public-lane-router.mjs';
 import { cardCopyQualityResult, generateCardCopy } from './card-copy-quality-gate.mjs';
 import { publicEmptyStateText } from './public-empty-state-copy.mjs';
 import { isPublicLongformArticle } from './public-surface-eligibility.mjs';
+import {
+  inferBottleneckAxis,
+  orderByFirstViewportAxisDiversity,
+} from './bottleneck-axis-diversity.mjs';
 
 function dateMs(article = {}) {
   const ms = new Date(article.analysisPublishedAt || article.publishedAt || article.updatedAt || 0).getTime();
@@ -57,6 +61,7 @@ function decorate(article = {}, options = {}) {
     : articleRoute;
   const presentation = buildPublicPresentation(article, { route, recentDecks: options.recentDecks || [] });
   const copy = generateCardCopy(article);
+  const bottleneckAxis = inferBottleneckAxis(article);
   const copyQuality = cardCopyQualityResult(copy);
   if (!copyQuality.ok) {
     return null;
@@ -75,6 +80,7 @@ function decorate(article = {}, options = {}) {
       date: copy.date,
       category: copy.category,
       cta: copy.cta,
+      bottleneck_axis: bottleneckAxis,
       view_detail: detailHref,
       read_source: article.sourceUrl || article.url || presentation.read_source || '',
     },
@@ -87,7 +93,10 @@ export function buildHomepageFeed(items = [], options = {}) {
   const sorted = dedupeFeedItems(items
     .filter(publicEligible)
     .sort((a, b) => dateMs(b) - dateMs(a)));
-  const visible = sorted.slice(0, Math.max(Math.min(limit, sorted.length), Math.min(minimumVisible, sorted.length)));
+  const visible = orderByFirstViewportAxisDiversity(
+    sorted.slice(0, Math.max(Math.min(limit, sorted.length), Math.min(minimumVisible, sorted.length))),
+    { firstViewportCount: options.firstViewportCount || 5 },
+  );
   const recentDecks = [];
   const decorated = visible.map((article) => {
     const entry = decorate(article, { recentDecks });
