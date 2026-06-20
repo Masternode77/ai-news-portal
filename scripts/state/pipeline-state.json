@@ -475,7 +475,9 @@
     "3ccdc307289db72e",
     "ea8c0b98a2d3023c",
     "ed745b629ec4ba23",
-    "61f937f8f06f752b"
+    "61f937f8f06f752b",
+    "e7d6cd2df96fbcc8",
+    "a842c96c9190ea02"
   ],
   "dayPlans": {
     "2026-03-24": {
@@ -18767,18 +18769,156 @@
     "2026-06-20": {
       "date": "2026-06-20",
       "createdAt": "2026-06-19T17:23:30.536Z",
-      "refreshedAt": "2026-06-19T17:23:30.536Z",
+      "refreshedAt": "2026-06-20T00:11:28.578Z",
       "candidateWindowHours": 24,
       "curatedItems": [
         {
-          "id": "ed745b629ec4ba23",
+          "id": "e7d6cd2df96fbcc8",
           "source": "HPCwire",
-          "url": "https://www.hpcwire.com/off-the-wire/riken-brings-roquo-online-to-advance-quantum-hpc-hybrid-computing/",
-          "title": "RIKEN Brings ROQUO Online to Advance Quantum-HPC Hybrid Computing",
-          "snippet": "June 19, 2026 — The Quantum-HPC Hybrid Platform Division of the RIKEN Center for Computational Science (R-CCS) has installed a new JHPC-quantum GPU supercomputer, ROQUO, at R-CCS in Kobe and has begun its mission to acc…",
-          "contentText": "June 19, 2026 &#8212; The Quantum-HPC Hybrid Platform Division of the RIKEN Center for Computational Science (R-CCS) has installed a new JHPC-quantum GPU supercomputer, ROQUO, at R-CCS in Kobe and has begun its mission to accelerate the integration of quantum computing and high-performance computing (HPC). ROQUO ROQUO is a new computing platform for the Quantum-HPC Hybrid Platform, named after Mount Rokko, the mountain that symbolizes Kobe. It was introduced as part of the NEDO-commissioned project Research and Development of Quantum-Supercomputers Hybrid Platform for Exploration of Uncharted Computable Capabilities ( JHPC-quantum project ) and was built primarily by DTS Corporation as the Supercomputer for the Quantum-HPC Hybrid Platform announced on November 18, 2025. Construction has n…",
-          "publishedAt": "2026-06-19T16:54:39.000Z",
-          "sourceImage": "https://www.hpcwire.com/wp-content/uploads/2026/06/img_roquo-300x163.png",
+          "url": "https://www.hpcwire.com/off-the-wire/toshiba-demonstrates-storage-infrastructure-for-scientific-ai-and-research-at-isc-2026/",
+          "title": "Toshiba Demonstrates Storage Infrastructure for Scientific AI and Research at ISC 2026",
+          "snippet": "DÜSSELDORF, Germany, June 19, 2026 — Toshiba Electronics Europe GmbH (Toshiba) will showcase how high-capacity HDD technology is enabling scalable storage infrastructures for next-generation research at ISC High Perform…",
+          "contentText": "DÜSSELDORF, Germany, June 19, 2026 &#8212; Toshiba Electronics Europe GmbH (Toshiba) will showcase how high-capacity HDD technology is enabling scalable storage infrastructures for next-generation research at ISC High Performance 2026 from June 23 – 25 in Hamburg. With scientific computing and AI generating increasingly large and complex datasets, organisations are seeking storage solutions that can scale efficiently to support growing performance and capacity demands. Credit: Toshiba At booth Z06, Toshiba will present two live demonstrations featuring its MG Series 24TB enterprise capacity hard drives, highlighting scalable storage architectures for scientific computing, research data management and AI-driven applications. “Scientific research and AI applications are generating unprecede…",
+          "publishedAt": "2026-06-19T23:10:24.000Z",
+          "sourceImage": "https://www.hpcwire.com/wp-content/uploads/2026/06/85f5890f-3258-46e0-85d9-bea9f34c773f-300x193.jpg",
+          "region": "APAC",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "category": "AI Infrastructure",
+          "primary_category": "AI Infrastructure",
+          "secondary_category": "GPU clusters and deployment readiness",
+          "infrastructure_layer": "Compute",
+          "affected_stakeholders": [
+            "operators",
+            "hyperscalers",
+            "cloud buyers",
+            "investors"
+          ],
+          "article_type": "Capacity Expansion",
+          "urgency_score": 0.53,
+          "taxonomy_confidence": 0.77,
+          "taxonomy_reasons": [
+            "ai infrastructure",
+            "neocloud"
+          ],
+          "direct_ai_infrastructure_relevance": 1,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0.22,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0.423,
+          "infrastructure_relevance_score": 0.858,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "semiconductor_relevance:0.22(gpu)",
+            "enterprise_ai_infrastructure_relevance:0.42(data management, storage)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 1,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0.22,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0.423,
+            "infrastructure_relevance_score": 0.858,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+              "semiconductor_relevance:0.22(gpu)",
+              "enterprise_ai_infrastructure_relevance:0.42(data management, storage)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 82
+        },
+        {
+          "id": "a842c96c9190ea02",
+          "source": "ServeTheHome",
+          "url": "https://www.servethehome.com/building-a-dense-agentic-ai-cpu-rack-amd-dell-today/",
+          "title": "Building a Dense Agentic AI CPU Rack Today",
+          "snippet": "We go into what is driving agentic AI server CPU demand on both sides, running the AI agents, but also the legacy workloads The post Building a Dense Agentic AI CPU Rack Today appeared first on ServeTheHome.",
+          "contentText": "We go into what is driving agentic AI server CPU demand on both sides, running the AI agents, but also the legacy workloads The post Building a Dense Agentic AI CPU Rack Today appeared first on ServeTheHome .",
+          "publishedAt": "2026-06-19T22:38:10.000Z",
+          "sourceImage": null,
+          "region": "Global",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "category": "AI Infrastructure",
+          "primary_category": "AI Infrastructure",
+          "secondary_category": "GPU clusters and deployment readiness",
+          "infrastructure_layer": "Compute",
+          "affected_stakeholders": [
+            "operators",
+            "hyperscalers",
+            "cloud buyers",
+            "investors"
+          ],
+          "article_type": "Market Analysis",
+          "urgency_score": 0.44,
+          "taxonomy_confidence": 0.77,
+          "taxonomy_reasons": [
+            "ai infrastructure",
+            "neocloud"
+          ],
+          "direct_ai_infrastructure_relevance": 1,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0.44,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.827,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "semiconductor_relevance:0.44(amd, gpu)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 1,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0.44,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.827,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+              "semiconductor_relevance:0.44(amd, gpu)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 81
+        },
+        {
+          "id": "4d9091bdca98534e",
+          "source": "TechCrunch AI",
+          "url": "https://techcrunch.com/2026/06/19/encryption-spyware-and-now-mythos-history-shows-why-cyber-export-control-doesnt-work/",
+          "title": "Encryption, spyware, and now Mythos: History shows why cyber export control doesn’t work",
+          "snippet": "For the last 30 years, stopping the flow of cybersecurity-related software has proven to be ineffective. It's unclear why it would work now with Anthropic’s cybersecurity model Mythos.",
+          "contentText": "For the last 30 years, stopping the flow of cybersecurity-related software has proven to be ineffective. It's unclear why it would work now with Anthropic’s cybersecurity model Mythos.",
+          "publishedAt": "2026-06-19T22:40:14.000Z",
+          "sourceImage": null,
           "region": "Global",
           "language": "en",
           "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
@@ -18794,75 +18934,6 @@
           ],
           "article_type": "Product / Platform Update",
           "urgency_score": 0.43,
-          "taxonomy_confidence": 0.88,
-          "taxonomy_reasons": [
-            "ai infrastructure",
-            "neocloud",
-            "hpc"
-          ],
-          "direct_ai_infrastructure_relevance": 1,
-          "data_center_relevance": 0,
-          "cloud_capacity_relevance": 0,
-          "semiconductor_relevance": 0.22,
-          "power_grid_relevance": 0,
-          "cooling_relevance": 0,
-          "capital_markets_relevance": 0,
-          "enterprise_ai_infrastructure_relevance": 0,
-          "infrastructure_relevance_score": 0.778,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud, high-performance computing)",
-            "semiconductor_relevance:0.22(gpu)"
-          ],
-          "infrastructure_relevance": {
-            "direct_ai_infrastructure_relevance": 1,
-            "data_center_relevance": 0,
-            "cloud_capacity_relevance": 0,
-            "semiconductor_relevance": 0.22,
-            "power_grid_relevance": 0,
-            "cooling_relevance": 0,
-            "capital_markets_relevance": 0,
-            "enterprise_ai_infrastructure_relevance": 0,
-            "infrastructure_relevance_score": 0.778,
-            "infrastructure_relevance_tier": "full_memo",
-            "infrastructure_relevance_action": "generate_full_memo",
-            "infrastructure_relevance_reasons": [
-              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud, high-performance computing)",
-              "semiconductor_relevance:0.22(gpu)"
-            ],
-            "infrastructureRelevanceAction": "generate_full_memo",
-            "articlePagePublished": true,
-            "homepagePublished": true,
-            "archiveOnly": false,
-            "archiveOnlyReason": null
-          },
-          "score": 79
-        },
-        {
-          "id": "61f937f8f06f752b",
-          "source": "StorageReview",
-          "url": "https://www.storagereview.com/review/highpoint-rocket-1604l-review-four-gen5-m-2-ssds-one-slot-55-6gb-s",
-          "title": "HighPoint Rocket 1604L Review: Four Gen5 M.2 SSDs, One Slot, 55.6GB/s",
-          "snippet": "The HighPoint Rocket 1604L is a $399 PCIe Gen5 x16 add-in card that carries four M.2 NVMe SSDs, each on a dedicated Gen5 x4 connection. In our testing with four Samsung 9100 PRO 4TB drives installed, the card sustained…",
-          "contentText": "The HighPoint Rocket 1604L is a $399 PCIe Gen5 x16 add-in card that carries four M.2 NVMe SSDs, each on a dedicated Gen5 x4 connection. In our testing with four Samsung 9100 PRO 4TB drives installed, the card sustained 55.6GB/s of 128K sequential read bandwidth and 10.1 million 4K random write IOPS, numbers that are within a few percent of what the four drives are rated to deliver on native motherboard slots. That is the entire pitch of this card: it adds drive bays without subtracting performance. The 1604L takes a different architectural path than most quad-M.2 cards we have looked at. It is not a passive bifurcation riser, nor is it a PCIe switch card. Instead, it is built around an Astera Labs PT5161LRS retimer, which sits in the data path at the physical layer, re-clocking and regene…",
-          "publishedAt": "2026-06-19T16:28:30.000Z",
-          "sourceImage": "https://www.storagereview.com/wp-content/uploads/2026/06/StorageReview-Highpoint-1604L-2.jpg",
-          "region": "US",
-          "language": "en",
-          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
-          "category": "AI Infrastructure",
-          "primary_category": "AI Infrastructure",
-          "secondary_category": "GPU clusters and deployment readiness",
-          "infrastructure_layer": "Compute",
-          "affected_stakeholders": [
-            "operators",
-            "hyperscalers",
-            "cloud buyers",
-            "investors"
-          ],
-          "article_type": "Capacity Expansion",
-          "urgency_score": 0.43,
           "taxonomy_confidence": 0.77,
           "taxonomy_reasons": [
             "ai infrastructure",
@@ -18908,152 +18979,14 @@
           "score": 79
         },
         {
-          "id": "370f5a7baca9d875",
-          "source": "TechCrunch AI",
-          "url": "https://techcrunch.com/video/is-the-us-governments-anthropic-ban-accidentally-helping-the-brand/",
-          "title": "Is the US government’s Anthropic ban accidentally helping the brand?",
-          "snippet": "Just as last week was ending, the US government forced Anthropic to pull its two newest models, Fable 5 and Mythos 5, citing national security concerns after Amazon researchers allegedly found a way to bypass Fable 5’s…",
-          "contentText": "Just as last week&#160;was ending,&#160;the US government&#160;forced Anthropic to pull its two newest models, Fable 5 and Mythos 5, citing national security concerns after Amazon researchers allegedly found a way to bypass Fable 5&#8217;s guardrails.&#160; Cybersecurity researchers have&#160;since signed an open letter&#160;calling&#160;the move dangerous, and Anthropic itself noted the same jailbreaks exist in other models.&#160;So&#160;is [&#8230;]",
-          "publishedAt": "2026-06-19T16:08:17.000Z",
-          "sourceImage": null,
-          "region": "US",
-          "language": "en",
-          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
-          "category": "AI Infrastructure",
-          "primary_category": "AI Infrastructure",
-          "secondary_category": "GPU clusters and deployment readiness",
-          "infrastructure_layer": "Compute",
-          "affected_stakeholders": [
-            "operators",
-            "hyperscalers",
-            "cloud buyers",
-            "investors"
-          ],
-          "article_type": "Other",
-          "urgency_score": 0.43,
-          "taxonomy_confidence": 0.77,
-          "taxonomy_reasons": [
-            "ai infrastructure",
-            "neocloud"
-          ],
-          "direct_ai_infrastructure_relevance": 1,
-          "data_center_relevance": 0,
-          "cloud_capacity_relevance": 0,
-          "semiconductor_relevance": 0.22,
-          "power_grid_relevance": 0,
-          "cooling_relevance": 0,
-          "capital_markets_relevance": 0,
-          "enterprise_ai_infrastructure_relevance": 0,
-          "infrastructure_relevance_score": 0.778,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "semiconductor_relevance:0.22(gpu)"
-          ],
-          "infrastructure_relevance": {
-            "direct_ai_infrastructure_relevance": 1,
-            "data_center_relevance": 0,
-            "cloud_capacity_relevance": 0,
-            "semiconductor_relevance": 0.22,
-            "power_grid_relevance": 0,
-            "cooling_relevance": 0,
-            "capital_markets_relevance": 0,
-            "enterprise_ai_infrastructure_relevance": 0,
-            "infrastructure_relevance_score": 0.778,
-            "infrastructure_relevance_tier": "full_memo",
-            "infrastructure_relevance_action": "generate_full_memo",
-            "infrastructure_relevance_reasons": [
-              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-              "semiconductor_relevance:0.22(gpu)"
-            ],
-            "infrastructureRelevanceAction": "generate_full_memo",
-            "articlePagePublished": true,
-            "homepagePublished": true,
-            "archiveOnly": false,
-            "archiveOnlyReason": null
-          },
-          "score": 79
-        },
-        {
-          "id": "839fbcfffadf0831",
+          "id": "7d320f069334abac",
           "source": "Toms Hardware",
-          "url": "https://www.tomshardware.com/tech-industry/data-centers/amazon-workers-who-testified-against-ai-data-centers-say-they-were-intimidated-by-the-company-monitored-at-work-employees-face-possible-termination-for-violating-company-policy-speaking-as-representatives",
-          "title": "Amazon workers who testified against AI data centers say they were intimidated by the company, monitored at work — employees face possible termination for violating company policy, speaking as representatives",
-          "snippet": "The three Amazon workers claim that they've been intimidated during the Zoom meetings and were being monitored while at work.",
-          "contentText": "The three Amazon workers claim that they've been intimidated during the Zoom meetings and were being monitored while at work.",
-          "publishedAt": "2026-06-19T15:55:04.000Z",
-          "sourceImage": "https://cdn.mos.cms.futurecdn.net/fZwzLTThYTVLZDd6x9xHCj-1280-80.jpg",
-          "region": "Global",
-          "language": "en",
-          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
-          "category": "AI Infrastructure",
-          "primary_category": "AI Infrastructure",
-          "secondary_category": "GPU clusters and deployment readiness",
-          "infrastructure_layer": "Compute",
-          "affected_stakeholders": [
-            "operators",
-            "hyperscalers",
-            "cloud buyers",
-            "investors"
-          ],
-          "article_type": "Policy / Regulation",
-          "urgency_score": 0.46,
-          "taxonomy_confidence": 0.77,
-          "taxonomy_reasons": [
-            "ai infrastructure",
-            "neocloud"
-          ],
-          "direct_ai_infrastructure_relevance": 1,
-          "data_center_relevance": 0.55,
-          "cloud_capacity_relevance": 0,
-          "semiconductor_relevance": 0.22,
-          "power_grid_relevance": 0,
-          "cooling_relevance": 0,
-          "capital_markets_relevance": 0,
-          "enterprise_ai_infrastructure_relevance": 0,
-          "infrastructure_relevance_score": 0.886,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "data_center_relevance:0.55(data centers)",
-            "semiconductor_relevance:0.22(gpu)"
-          ],
-          "infrastructure_relevance": {
-            "direct_ai_infrastructure_relevance": 1,
-            "data_center_relevance": 0.55,
-            "cloud_capacity_relevance": 0,
-            "semiconductor_relevance": 0.22,
-            "power_grid_relevance": 0,
-            "cooling_relevance": 0,
-            "capital_markets_relevance": 0,
-            "enterprise_ai_infrastructure_relevance": 0,
-            "infrastructure_relevance_score": 0.886,
-            "infrastructure_relevance_tier": "full_memo",
-            "infrastructure_relevance_action": "generate_full_memo",
-            "infrastructure_relevance_reasons": [
-              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-              "data_center_relevance:0.55(data centers)",
-              "semiconductor_relevance:0.22(gpu)"
-            ],
-            "infrastructureRelevanceAction": "generate_full_memo",
-            "articlePagePublished": true,
-            "homepagePublished": true,
-            "archiveOnly": false,
-            "archiveOnlyReason": null
-          },
-          "score": 76
-        },
-        {
-          "id": "becba427c5f23924",
-          "source": "Toms Hardware",
-          "url": "https://www.tomshardware.com/peripherals/docking-stations-hubs/the-best-thunderbolt-and-usb-c-docks-for-laptops",
-          "title": "The Best Thunderbolt and USB-C Docks in 2026 — up to 140W Power Delivery, 10 GbE, and even internal M.2 SSD slots",
-          "snippet": "These are the best Thunderbolt and USB-C docks for expanding your laptop's port options.",
-          "contentText": "These are the best Thunderbolt and USB-C docks for expanding your laptop's port options.",
-          "publishedAt": "2026-06-19T16:31:46.000Z",
-          "sourceImage": "https://cdn.mos.cms.futurecdn.net/6JgTGGa4HkMDp5H7eAyZb7-1280-80.jpg",
+          "url": "https://www.tomshardware.com/pc-components/cpus/amd-will-reinstate-memory-encryption-on-ryzen-9000-cpus-through-a-bios-update-in-july-tsme-is-coming-back-after-valuable-community-feedback",
+          "title": "AMD will reinstate memory encryption on Ryzen 9000 CPUs through a BIOS update in July — TSME is coming back after 'valuable community feedback'",
+          "snippet": "AMD says it will reinstate firmware memory encryption (TSME) on non-PRO Ryzen 9000 desktop CPUs through a BIOS update in July, following the feature's removal through an earlier firmware update.",
+          "contentText": "AMD says it will reinstate firmware memory encryption (TSME) on non-PRO Ryzen 9000 desktop CPUs through a BIOS update in July, following the feature's removal through an earlier firmware update.",
+          "publishedAt": "2026-06-19T21:02:49.000Z",
+          "sourceImage": "https://cdn.mos.cms.futurecdn.net/yQxDP9b5mwjEYZ4Y37kD7X-1280-80.jpg",
           "region": "US",
           "language": "en",
           "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
@@ -19067,8 +19000,8 @@
             "cloud buyers",
             "investors"
           ],
-          "article_type": "Other",
-          "urgency_score": 0.53,
+          "article_type": "Product / Platform Update",
+          "urgency_score": 0.45,
           "taxonomy_confidence": 0.77,
           "taxonomy_reasons": [
             "ai infrastructure",
@@ -19077,35 +19010,33 @@
           "direct_ai_infrastructure_relevance": 1,
           "data_center_relevance": 0,
           "cloud_capacity_relevance": 0,
-          "semiconductor_relevance": 0.22,
-          "power_grid_relevance": 0.297,
+          "semiconductor_relevance": 0.517,
+          "power_grid_relevance": 0,
           "cooling_relevance": 0,
           "capital_markets_relevance": 0,
           "enterprise_ai_infrastructure_relevance": 0,
-          "infrastructure_relevance_score": 0.83,
+          "infrastructure_relevance_score": 0.844,
           "infrastructure_relevance_tier": "full_memo",
           "infrastructure_relevance_action": "generate_full_memo",
           "infrastructure_relevance_reasons": [
             "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "semiconductor_relevance:0.22(gpu)",
-            "power_grid_relevance:0.30(power)"
+            "semiconductor_relevance:0.52(amd, gpu)"
           ],
           "infrastructure_relevance": {
             "direct_ai_infrastructure_relevance": 1,
             "data_center_relevance": 0,
             "cloud_capacity_relevance": 0,
-            "semiconductor_relevance": 0.22,
-            "power_grid_relevance": 0.297,
+            "semiconductor_relevance": 0.517,
+            "power_grid_relevance": 0,
             "cooling_relevance": 0,
             "capital_markets_relevance": 0,
             "enterprise_ai_infrastructure_relevance": 0,
-            "infrastructure_relevance_score": 0.83,
+            "infrastructure_relevance_score": 0.844,
             "infrastructure_relevance_tier": "full_memo",
             "infrastructure_relevance_action": "generate_full_memo",
             "infrastructure_relevance_reasons": [
               "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-              "semiconductor_relevance:0.22(gpu)",
-              "power_grid_relevance:0.30(power)"
+              "semiconductor_relevance:0.52(amd, gpu)"
             ],
             "infrastructureRelevanceAction": "generate_full_memo",
             "articlePagePublished": true,
@@ -19113,7 +19044,80 @@
             "archiveOnly": false,
             "archiveOnlyReason": null
           },
-          "score": 74
+          "score": 73
+        },
+        {
+          "id": "e18fa25d31602938",
+          "source": "HPCwire",
+          "url": "https://www.hpcwire.com/off-the-wire/aws-announces-amazon-ec2-g7-instances-accelerated-by-nvidia-rtx-pro-4500-blackwell-server-edition-gpus/",
+          "title": "AWS Announces Amazon EC2 G7 Instances Accelerated by NVIDIA RTX PRO 4500 Blackwell Server Edition GPUs",
+          "snippet": "June 19, 2026 — Amazon Web Services (AWS) has announced the general availability of Amazon Elastic Compute Cloud (Amazon EC2) G7 instances, delivering high performance GPU acceleration for AI inference, graphics, and da…",
+          "contentText": "June 19, 2026 &#8212; Amazon Web Services (AWS) has announced the general availability of Amazon Elastic Compute Cloud (Amazon EC2) G7 instances, delivering high performance GPU acceleration for AI inference, graphics, and data analytics workloads. AWS is the first major cloud provider to support NVIDIA RTX PRO 4500 Blackwell Server Edition GPUs. G7 instances are accelerated by these GPUs with custom sixth-generation Intel Xeon Scalable processors, delivering up to 4.6x AI inference performance and up to 2.1x graphics performance compared to G6 instances. G7 instances also deliver faster performance for GPU-accelerated analytics on Amazon EMR on Amazon Elastic Kubernetes Service (Amazon EKS). G7 instances are well suited for a broad range of GPU-enabled workloads including AI inference, g…",
+          "publishedAt": "2026-06-19T20:45:51.000Z",
+          "sourceImage": "https://www.hpcwire.com/wp-content/uploads/2025/11/aws_150x60-300x146.jpg",
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "category": "Semiconductors",
+          "primary_category": "Semiconductors",
+          "secondary_category": "Accelerators, memory, and advanced packaging",
+          "infrastructure_layer": "Silicon",
+          "affected_stakeholders": [
+            "semiconductor suppliers",
+            "hyperscalers",
+            "server OEMs",
+            "investors"
+          ],
+          "article_type": "Product / Platform Update",
+          "urgency_score": 0.49,
+          "taxonomy_confidence": 0.85,
+          "taxonomy_reasons": [
+            "gpu",
+            "nvidia",
+            "intel"
+          ],
+          "direct_ai_infrastructure_relevance": 1,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0.297,
+          "semiconductor_relevance": 0.798,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0.22,
+          "infrastructure_relevance_score": 0.976,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "cloud_capacity_relevance:0.30(aws)",
+            "semiconductor_relevance:0.80(nvidia, intel, gpu)",
+            "enterprise_ai_infrastructure_relevance:0.22(kubernetes)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 1,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0.297,
+            "semiconductor_relevance": 0.798,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0.22,
+            "infrastructure_relevance_score": 0.976,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+              "cloud_capacity_relevance:0.30(aws)",
+              "semiconductor_relevance:0.80(nvidia, intel, gpu)",
+              "enterprise_ai_infrastructure_relevance:0.22(kubernetes)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 63
         },
         {
           "id": "894cf14b54938fe2",
@@ -19183,37 +19187,30 @@
             "archiveOnly": false,
             "archiveOnlyReason": null
           },
-          "score": 67
+          "score": 61
         }
       ],
       "curatedIds": [
-        "ed745b629ec4ba23",
-        "61f937f8f06f752b",
-        "370f5a7baca9d875",
-        "839fbcfffadf0831",
-        "becba427c5f23924",
+        "e7d6cd2df96fbcc8",
+        "a842c96c9190ea02",
+        "4d9091bdca98534e",
+        "7d320f069334abac",
+        "e18fa25d31602938",
         "894cf14b54938fe2"
       ],
       "publishedIds": [
         "ed745b629ec4ba23",
-        "61f937f8f06f752b"
+        "61f937f8f06f752b",
+        "e7d6cd2df96fbcc8",
+        "a842c96c9190ea02"
       ],
       "slotPublications": {
-        "0": true
+        "0": true,
+        "1": true
       }
     }
   },
   "runHistory": [
-    {
-      "at": "2026-05-03T15:55:21.201Z",
-      "day": "2026-05-04",
-      "slot": 0,
-      "publishedCount": 2,
-      "publishedIds": [
-        "09bf14c891180af1",
-        "42643512f2829ad6"
-      ]
-    },
     {
       "at": "2026-05-03T23:51:19.719Z",
       "day": "2026-05-04",
@@ -28231,7 +28228,129 @@
         }
       ],
       "archiveOnlyItems": []
+    },
+    {
+      "at": "2026-06-20T00:11:28.578Z",
+      "day": "2026-06-20",
+      "slot": 1,
+      "publishedCount": 0,
+      "signalCardCount": 1,
+      "archiveOnlyCount": 0,
+      "repetitionBlockedCount": 1,
+      "publishedIds": [],
+      "processedIds": [
+        "e7d6cd2df96fbcc8",
+        "a842c96c9190ea02"
+      ],
+      "blockedCount": 1,
+      "blockedItems": [
+        {
+          "id": "e7d6cd2df96fbcc8",
+          "title": "Toshiba Demonstrates Storage Infrastructure for Scientific AI and Research at ISC 2026",
+          "infrastructure_relevance_score": 0.958,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud, hpc)",
+            "cloud_capacity_relevance:0.54(hyperscalers, aws)",
+            "semiconductor_relevance:0.72(nvidia, amd, gpu)",
+            "power_grid_relevance:0.22(power)",
+            "enterprise_ai_infrastructure_relevance:0.42(data management, storage)"
+          ],
+          "extraction_quality_score": 1,
+          "source_domain_adapter": "generic",
+          "content_length": 1733,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": false,
+          "repetition_block_reasons": [],
+          "repetition_check": null,
+          "expert_insight_complete": true,
+          "expert_insight_missing_fields": [],
+          "reason": "fail_closed: source_text_incomplete:ellipsis_truncation_artifact, ellipsis_truncation_artifact"
+        }
+      ],
+      "repetitionBlockedItems": [
+        {
+          "id": "a842c96c9190ea02",
+          "title": "Building a Dense Agentic AI CPU Rack Today",
+          "infrastructure_relevance_score": 0.897,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "data_center_relevance:0.42(data center)",
+            "cloud_capacity_relevance:0.32(hyperscalers)",
+            "semiconductor_relevance:0.44(amd, gpu)",
+            "power_grid_relevance:0.22(power)",
+            "enterprise_ai_infrastructure_relevance:0.40(kubernetes, storage)"
+          ],
+          "extraction_quality_score": 1,
+          "source_domain_adapter": "servethehome",
+          "content_length": 1757,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": true,
+          "repetition_block_reasons": [
+            "repeated_sentence_ratio>0.12",
+            "conclusion_similarity>0.7"
+          ],
+          "repetition_check": {
+            "compared_article_count": 20,
+            "repeated_sentence_ratio": 0.16666666666666666,
+            "repeated_paragraph_ratio": 0.2,
+            "heading_sequence_similarity": 0,
+            "banned_phrase_count": 0,
+            "banned_phrase_counts": {},
+            "recent_banned_phrase_counts": {},
+            "ngram_overlap": 0.2647058823529412,
+            "blueprint_repetition": 1,
+            "conclusion_similarity": 0.9271050693011066,
+            "repeated_sentence_count": 1,
+            "repeated_paragraph_count": 1,
+            "heading_sequence": [
+              "Market Pieces",
+              "Land Power Capital Chips",
+              "Demand Test",
+              "What To Split Out"
+            ],
+            "blocked": true,
+            "reasons": [
+              "repeated_sentence_ratio>0.12",
+              "conclusion_similarity>0.7"
+            ]
+          },
+          "expert_insight_complete": true,
+          "expert_insight_missing_fields": [],
+          "reason": "repeated_sentence_ratio>0.12; conclusion_similarity>0.7"
+        }
+      ],
+      "signalCardItems": [
+        {
+          "id": "e7d6cd2df96fbcc8",
+          "title": "Toshiba Demonstrates Storage Infrastructure for Scientific AI and Research at ISC 2026",
+          "infrastructure_relevance_score": 0.958,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud, hpc)",
+            "cloud_capacity_relevance:0.54(hyperscalers, aws)",
+            "semiconductor_relevance:0.72(nvidia, amd, gpu)",
+            "power_grid_relevance:0.22(power)",
+            "enterprise_ai_infrastructure_relevance:0.42(data management, storage)"
+          ],
+          "extraction_quality_score": 1,
+          "source_domain_adapter": "generic",
+          "content_length": 1733,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": false,
+          "repetition_block_reasons": [],
+          "repetition_check": null,
+          "expert_insight_complete": true,
+          "expert_insight_missing_fields": [],
+          "reason": "fail_closed: source_text_incomplete:ellipsis_truncation_artifact, ellipsis_truncation_artifact"
+        }
+      ],
+      "archiveOnlyItems": []
     }
   ],
-  "lastRunAt": "2026-06-19T17:23:30.536Z"
+  "lastRunAt": "2026-06-20T00:11:28.578Z"
 }
