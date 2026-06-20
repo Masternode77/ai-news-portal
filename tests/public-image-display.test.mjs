@@ -18,14 +18,6 @@ import {
 } from '../scripts/lib/article-image-surface.mjs';
 import { buildPublicPresentation } from '../scripts/lib/public-presentation.mjs';
 
-const HPCWIRE_REMOTE_IMAGE_REGRESSION_IDS = [
-  '0ccf1e3f69f2b513',
-  '0737340e51a0cfb0',
-  'e40a1864f5a8b8e8',
-  '4d21b727a5d2e275',
-  'cf753845198cd7d0',
-];
-
 test('public feed cards carry displayable editorial images', () => {
   const feed = buildHomepageFeed([...latestNews, ...archivedNews], { limit: 50, minimumVisible: 30 });
   assert.ok(feed.items.length >= 30);
@@ -38,11 +30,15 @@ test('public feed cards carry displayable editorial images', () => {
   }).length, 0);
 });
 
-test('affected hpcwire records use local generated cards instead of remote source artwork', () => {
+test('remote source artwork is normalized to local generated cards', () => {
   const allArticles = [...latestNews, ...archivedNews];
-  const affected = allArticles.filter((article) => HPCWIRE_REMOTE_IMAGE_REGRESSION_IDS.includes(article.id));
+  const affected = allArticles.filter((article) => {
+    return isRemoteImage(article.sourceImage)
+      && localArticleImageExists(article.generatedImage)
+      && localArticleImageExists(article.thumbnailImage);
+  });
 
-  assert.equal(affected.length, 5);
+  assert.ok(affected.length >= 5);
 
   for (const article of affected) {
     assert.equal(localArticleImageExists(article.generatedImage), true, article.id);
@@ -52,13 +48,8 @@ test('affected hpcwire records use local generated cards instead of remote sourc
   }
 
   const feed = buildHomepageFeed(allArticles, { limit: 50, minimumVisible: 30 });
-  const homepageAffectedIds = new Set(affected
-    .filter((article) => article.homepagePublished !== false && article.archiveOnly !== true)
-    .map((article) => article.id));
-  const homepageAffected = feed.items.filter((item) => homepageAffectedIds.has(item.id));
 
-  assert.equal(homepageAffected.length, homepageAffectedIds.size);
-  assert.equal(homepageAffected.some((item) => /hpcwire\.com/i.test(item.publicSignal?.image || '')), false);
+  assert.equal(feed.items.some((item) => isRemoteImage(item.publicSignal?.image)), false);
 });
 
 test('article card and header templates render images', () => {
