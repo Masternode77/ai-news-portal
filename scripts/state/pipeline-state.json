@@ -483,7 +483,9 @@
     "8e36dc4fc38b02b7",
     "5526bda7754a830e",
     "06e0bb5548713b43",
-    "9f9e39ac5d62dc19"
+    "9f9e39ac5d62dc19",
+    "5466f33554cb7678",
+    "8e4f7e99be38e51d"
   ],
   "dayPlans": {
     "2026-03-24": {
@@ -19216,160 +19218,19 @@
     "2026-06-21": {
       "date": "2026-06-21",
       "createdAt": "2026-06-20T16:25:50.294Z",
-      "refreshedAt": "2026-06-21T00:10:29.153Z",
+      "refreshedAt": "2026-06-21T10:40:35.082Z",
       "candidateWindowHours": 24,
       "curatedItems": [
         {
-          "id": "9f9e39ac5d62dc19",
-          "source": "StorageReview",
-          "url": "https://www.storagereview.com/news/cloudcasa-adds-kubernetes-disaster-recovery-for-hpe-alletra-storage-mp-b10000",
-          "title": "CloudCasa Adds Kubernetes Disaster Recovery for HPE Alletra Storage MP B10000",
-          "snippet": "CloudCasa by Catalogic has introduced CloudCasa Disaster Recovery (CloudCasa DR) for Kubernetes, powered by HPE Alletra Storage MP B10000. The new offering extends CloudCasa’s Kubernetes data protection portfolio with o…",
-          "contentText": "CloudCasa by Catalogic has introduced CloudCasa Disaster Recovery (CloudCasa DR) for Kubernetes, powered by HPE Alletra Storage MP B10000 . The new offering extends CloudCasa&#8217;s Kubernetes data protection portfolio with orchestrated disaster recovery capabilities designed for Kubernetes applications and KubeVirt virtual machines deployed across HPE and hybrid cloud environments. The announcement builds on CloudCasa&#8217;s existing support for backup and recovery of HPE Kubernetes Service (HKS) clusters. With the addition of CloudCasa DR, organizations can leverage storage-based replication and automated recovery workflows to meet more aggressive recovery objectives than traditional backup-based approaches. Disaster Recovery Driven by Native Replication Rather than restoring workload…",
-          "publishedAt": "2026-06-20T17:32:08.000Z",
-          "sourceImage": "https://www.storagereview.com/wp-content/uploads/2026/06/StorageReview-HPE-VME-B10000-3.jpg",
-          "region": "US",
-          "language": "en",
-          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
-          "category": "Enterprise AI Infrastructure",
-          "primary_category": "Enterprise AI Infrastructure",
-          "secondary_category": "Enterprise deployment operations",
-          "infrastructure_layer": "Enterprise Platform",
-          "affected_stakeholders": [
-            "enterprise IT",
-            "cloud buyers",
-            "platform teams",
-            "software vendors"
-          ],
-          "article_type": "Capacity Expansion",
-          "urgency_score": 0.5,
-          "taxonomy_confidence": 0.95,
-          "taxonomy_reasons": [
-            "hybrid cloud",
-            "kubernetes",
-            "backup",
-            "disaster recovery",
-            "storage"
-          ],
-          "direct_ai_infrastructure_relevance": 1,
-          "data_center_relevance": 0,
-          "cloud_capacity_relevance": 0,
-          "semiconductor_relevance": 0.22,
-          "power_grid_relevance": 0,
-          "cooling_relevance": 0,
-          "capital_markets_relevance": 0,
-          "enterprise_ai_infrastructure_relevance": 1,
-          "infrastructure_relevance_score": 0.985,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "semiconductor_relevance:0.22(gpu)",
-            "enterprise_ai_infrastructure_relevance:1.00(hybrid cloud, kubernetes, backup)"
-          ],
-          "infrastructure_relevance": {
-            "direct_ai_infrastructure_relevance": 1,
-            "data_center_relevance": 0,
-            "cloud_capacity_relevance": 0,
-            "semiconductor_relevance": 0.22,
-            "power_grid_relevance": 0,
-            "cooling_relevance": 0,
-            "capital_markets_relevance": 0,
-            "enterprise_ai_infrastructure_relevance": 1,
-            "infrastructure_relevance_score": 0.985,
-            "infrastructure_relevance_tier": "full_memo",
-            "infrastructure_relevance_action": "generate_full_memo",
-            "infrastructure_relevance_reasons": [
-              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-              "semiconductor_relevance:0.22(gpu)",
-              "enterprise_ai_infrastructure_relevance:1.00(hybrid cloud, kubernetes, backup)"
-            ],
-            "infrastructureRelevanceAction": "generate_full_memo",
-            "articlePagePublished": true,
-            "homepagePublished": true,
-            "archiveOnly": false,
-            "archiveOnlyReason": null
-          },
-          "score": 79
-        },
-        {
-          "id": "06e0bb5548713b43",
-          "source": "ServeTheHome",
-          "url": "https://www.servethehome.com/minisforums-upcoming-ms-03-sff-pc-brings-more-of-a-good-thing/",
-          "title": "Minisforum’s Upcoming MS-03 SFF PC Brings More of a Good Thing",
-          "snippet": "At Computex 2026 Minisforum was showing off their upcoming MS-03 mini-PC, the successor to their popular MS-01 and aiming to bring more of a good thing with Intel's new Panther Lake platform The post Minisforum’s Upcomi…",
-          "contentText": "At Computex 2026 Minisforum was showing off their upcoming MS-03 mini-PC, the successor to their popular MS-01 and aiming to bring more of a good thing with Intel's new Panther Lake platform The post Minisforum’s Upcoming MS-03 SFF PC Brings More of a Good Thing appeared first on ServeTheHome .",
-          "publishedAt": "2026-06-20T20:04:44.000Z",
-          "sourceImage": null,
-          "region": "Global",
-          "language": "en",
-          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
-          "category": "AI Infrastructure",
-          "primary_category": "AI Infrastructure",
-          "secondary_category": "GPU clusters and deployment readiness",
-          "infrastructure_layer": "Compute",
-          "affected_stakeholders": [
-            "operators",
-            "hyperscalers",
-            "cloud buyers",
-            "investors"
-          ],
-          "article_type": "Product / Platform Update",
-          "urgency_score": 0.44,
-          "taxonomy_confidence": 0.77,
-          "taxonomy_reasons": [
-            "ai infrastructure",
-            "neocloud"
-          ],
-          "direct_ai_infrastructure_relevance": 1,
-          "data_center_relevance": 0,
-          "cloud_capacity_relevance": 0,
-          "semiconductor_relevance": 0.42,
-          "power_grid_relevance": 0,
-          "cooling_relevance": 0,
-          "capital_markets_relevance": 0,
-          "enterprise_ai_infrastructure_relevance": 0,
-          "infrastructure_relevance_score": 0.822,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "semiconductor_relevance:0.42(intel, gpu)"
-          ],
-          "infrastructure_relevance": {
-            "direct_ai_infrastructure_relevance": 1,
-            "data_center_relevance": 0,
-            "cloud_capacity_relevance": 0,
-            "semiconductor_relevance": 0.42,
-            "power_grid_relevance": 0,
-            "cooling_relevance": 0,
-            "capital_markets_relevance": 0,
-            "enterprise_ai_infrastructure_relevance": 0,
-            "infrastructure_relevance_score": 0.822,
-            "infrastructure_relevance_tier": "full_memo",
-            "infrastructure_relevance_action": "generate_full_memo",
-            "infrastructure_relevance_reasons": [
-              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-              "semiconductor_relevance:0.42(intel, gpu)"
-            ],
-            "infrastructureRelevanceAction": "generate_full_memo",
-            "articlePagePublished": true,
-            "homepagePublished": true,
-            "archiveOnly": false,
-            "archiveOnlyReason": null
-          },
-          "score": 73
-        },
-        {
-          "id": "01bee54feadb8246",
+          "id": "5466f33554cb7678",
           "source": "Toms Hardware",
-          "url": "https://www.tomshardware.com/pc-components/ssds/wds-2tb-black-ssd-price-drops-by-nearly-20-percent-ahead-of-prime-day-sale-grab-the-2tb-sn7100-for-usd242-96",
-          "title": "WD's 2TB Black SSD price drops by nearly 20% ahead of Prime Day sale — grab the 2TB SN7100 for $242.96",
-          "snippet": "The WD Black SN7100 stands out for its high-end performance, low operating temperatures, and impressive efficiency. It is one of the few PCIe 4.0 SSDs that can compete with flagship drives while consuming noticeably les…",
-          "contentText": "The WD Black SN7100 stands out for its high-end performance, low operating temperatures, and impressive efficiency. It is one of the few PCIe 4.0 SSDs that can compete with flagship drives while consuming noticeably less power.",
-          "publishedAt": "2026-06-20T16:45:07.000Z",
-          "sourceImage": "https://cdn.mos.cms.futurecdn.net/SBaGU4fgUaGod8XHBuPjLU-1280-80.jpg",
-          "region": "Global",
+          "url": "https://www.tomshardware.com/tech-industry/drones/acoustic-mapping-app-uses-thousands-of-networked-old-android-phones-to-hunt-shahed-drones-crowd-sourced-microphone-network-spots-small-low-rcs-military-targets",
+          "title": "Acoustic mapping app uses thousands of networked old Android phones to hunt Shahed drones — crowd-sourced microphone network spots small, low-RCS military targets",
+          "snippet": "This app would crowdsource drone detection and help map their location and direction long before they reach their targets.",
+          "contentText": "This app would crowdsource drone detection and help map their location and direction long before they reach their targets.",
+          "publishedAt": "2026-06-21T10:30:00.000Z",
+          "sourceImage": "https://cdn.mos.cms.futurecdn.net/dArHmMyYYbVbJGSiz2FSNe-1280-80.jpg",
+          "region": "US",
           "language": "en",
           "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
           "category": "AI Infrastructure",
@@ -19383,7 +19244,7 @@
             "investors"
           ],
           "article_type": "Other",
-          "urgency_score": 0.52,
+          "urgency_score": 0.43,
           "taxonomy_confidence": 0.77,
           "taxonomy_reasons": [
             "ai infrastructure",
@@ -19393,34 +19254,32 @@
           "data_center_relevance": 0,
           "cloud_capacity_relevance": 0,
           "semiconductor_relevance": 0.22,
-          "power_grid_relevance": 0.22,
+          "power_grid_relevance": 0,
           "cooling_relevance": 0,
           "capital_markets_relevance": 0,
           "enterprise_ai_infrastructure_relevance": 0,
-          "infrastructure_relevance_score": 0.813,
+          "infrastructure_relevance_score": 0.778,
           "infrastructure_relevance_tier": "full_memo",
           "infrastructure_relevance_action": "generate_full_memo",
           "infrastructure_relevance_reasons": [
             "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "semiconductor_relevance:0.22(gpu)",
-            "power_grid_relevance:0.22(power)"
+            "semiconductor_relevance:0.22(gpu)"
           ],
           "infrastructure_relevance": {
             "direct_ai_infrastructure_relevance": 1,
             "data_center_relevance": 0,
             "cloud_capacity_relevance": 0,
             "semiconductor_relevance": 0.22,
-            "power_grid_relevance": 0.22,
+            "power_grid_relevance": 0,
             "cooling_relevance": 0,
             "capital_markets_relevance": 0,
             "enterprise_ai_infrastructure_relevance": 0,
-            "infrastructure_relevance_score": 0.813,
+            "infrastructure_relevance_score": 0.778,
             "infrastructure_relevance_tier": "full_memo",
             "infrastructure_relevance_action": "generate_full_memo",
             "infrastructure_relevance_reasons": [
               "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-              "semiconductor_relevance:0.22(gpu)",
-              "power_grid_relevance:0.22(power)"
+              "semiconductor_relevance:0.22(gpu)"
             ],
             "infrastructureRelevanceAction": "generate_full_memo",
             "articlePagePublished": true,
@@ -19496,18 +19355,83 @@
             "archiveOnly": false,
             "archiveOnlyReason": null
           },
-          "score": 64
+          "score": 58
         },
         {
-          "id": "2ce7f52637e502d4",
-          "source": "Toms Hardware",
-          "url": "https://www.tomshardware.com/desktops/gaming-pcs/save-usd300-on-this-1440p-ready-gaming-pc-with-32gb-ddr5-ram-grab-the-asus-rog-gm700-with-amds-ryzen-7-8700f-and-rx-9060-xt-for-just-usd1-199",
-          "title": "Save $300 on this 1440p-ready gaming PC with 32GB DDR5 RAM — grab the Asus ROG GM700 with AMD's Ryzen 7 8700F and RX 9060 XT for just $1,199",
-          "snippet": "Asus' ROG GM700 is a great prebuilt, packing powerful components for a solid price without compromising on the details. It just happens to look nice, too, if you're into the gamer aesthetic.",
-          "contentText": "Asus' ROG GM700 is a great prebuilt, packing powerful components for a solid price without compromising on the details. It just happens to look nice, too, if you're into the gamer aesthetic.",
-          "publishedAt": "2026-06-20T15:25:58.000Z",
-          "sourceImage": "https://cdn.mos.cms.futurecdn.net/cC5K7o6dE6H8VpPnNYeHCe-1280-80.png",
+          "id": "41503945fb4a27b7",
+          "source": "Bloomberg Technology",
+          "url": "https://www.bloomberg.com/news/articles/2026-06-20/millions-in-brazil-get-fake-government-mobile-alert-after-hack",
+          "title": "Millions in Brazil Get Fake Government Mobile Alert After Hack",
+          "snippet": "Brazil’s Integration and Regional Development Ministry and federal police are investigating an intrusion into the civil defense alert system that sent messages containing the word “misanthropy” to the mobile phones of m…",
+          "contentText": "Brazil’s Integration and Regional Development Ministry and federal police are investigating an intrusion into the civil defense alert system that sent messages containing the word “misanthropy” to the mobile phones of millions of Brazilians.",
+          "publishedAt": "2026-06-20T16:45:45.000Z",
+          "sourceImage": "https://assets.bwbx.io/images/users/iqjWHBFdfxIU/i8iz6Fg9gUcI/v1/1200x-1.jpg",
           "region": "US",
+          "language": "en",
+          "defaultCategory": "Hyperscalers & Cloud",
+          "category": "Cloud Capacity",
+          "primary_category": "Cloud Capacity",
+          "secondary_category": "Hyperscale regions and accelerator availability",
+          "infrastructure_layer": "Cloud Platform",
+          "affected_stakeholders": [
+            "hyperscalers",
+            "cloud buyers",
+            "enterprise IT",
+            "operators"
+          ],
+          "article_type": "Other",
+          "urgency_score": 0.25,
+          "taxonomy_confidence": 0.5,
+          "taxonomy_reasons": [
+            "fallback_taxonomy"
+          ],
+          "direct_ai_infrastructure_relevance": 0,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0.32,
+          "semiconductor_relevance": 0,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.221,
+          "infrastructure_relevance_tier": "archive_only",
+          "infrastructure_relevance_action": "archive_only",
+          "infrastructure_relevance_reasons": [
+            "cloud_capacity_relevance:0.32(hyperscalers)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 0,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0.32,
+            "semiconductor_relevance": 0,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.221,
+            "infrastructure_relevance_tier": "archive_only",
+            "infrastructure_relevance_action": "archive_only",
+            "infrastructure_relevance_reasons": [
+              "cloud_capacity_relevance:0.32(hyperscalers)"
+            ],
+            "infrastructureRelevanceAction": "archive_only",
+            "articlePagePublished": false,
+            "homepagePublished": false,
+            "archiveOnly": true,
+            "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
+          },
+          "score": 41
+        },
+        {
+          "id": "01bee54feadb8246",
+          "source": "Toms Hardware",
+          "url": "https://www.tomshardware.com/pc-components/ssds/wds-2tb-black-ssd-price-drops-by-nearly-20-percent-ahead-of-prime-day-sale-grab-the-2tb-sn7100-for-usd242-96",
+          "title": "WD's 2TB Black SSD price drops by nearly 20% ahead of Prime Day sale — grab the 2TB SN7100 for $242.96",
+          "snippet": "The WD Black SN7100 stands out for its high-end performance, low operating temperatures, and impressive efficiency. It is one of the few PCIe 4.0 SSDs that can compete with flagship drives while consuming noticeably les…",
+          "contentText": "The WD Black SN7100 stands out for its high-end performance, low operating temperatures, and impressive efficiency. It is one of the few PCIe 4.0 SSDs that can compete with flagship drives while consuming noticeably less power.",
+          "publishedAt": "2026-06-20T16:45:07.000Z",
+          "sourceImage": "https://cdn.mos.cms.futurecdn.net/SBaGU4fgUaGod8XHBuPjLU-1280-80.jpg",
+          "region": "Global",
           "language": "en",
           "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
           "category": "AI Infrastructure",
@@ -19521,6 +19445,76 @@
             "investors"
           ],
           "article_type": "Other",
+          "urgency_score": 0.52,
+          "taxonomy_confidence": 0.77,
+          "taxonomy_reasons": [
+            "ai infrastructure",
+            "neocloud"
+          ],
+          "direct_ai_infrastructure_relevance": 1,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0.22,
+          "power_grid_relevance": 0.22,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.813,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "semiconductor_relevance:0.22(gpu)",
+            "power_grid_relevance:0.22(power)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 1,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0.22,
+            "power_grid_relevance": 0.22,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.813,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+              "semiconductor_relevance:0.22(gpu)",
+              "power_grid_relevance:0.22(power)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 62
+        },
+        {
+          "id": "8427051ae77f23d4",
+          "source": "Toms Hardware",
+          "url": "https://www.tomshardware.com/pc-components/get-amds-flagship-ryzen-7-9800x3d-with-32gb-of-ddr5-memory-and-an-msi-b850-wi-fi-7-motherboard-at-a-discount-micro-center-bundles-are-now-available-on-amazon",
+          "title": "Get AMD's flagship Ryzen 7 9800X3D with 32GB of DDR5 memory and an MSI B850 Wi-Fi 7 motherboard at a discount — Micro Center bundles are now available on Amazon",
+          "snippet": "Micro Center is now selling some of its bundles on Amazon, including this 9800X3D combo that gives you an excellent motherboard and fast RAM without breaking the bank.",
+          "contentText": "Micro Center is now selling some of its bundles on Amazon, including this 9800X3D combo that gives you an excellent motherboard and fast RAM without breaking the bank.",
+          "publishedAt": "2026-06-20T17:57:35.000Z",
+          "sourceImage": "https://cdn.mos.cms.futurecdn.net/6uzzW34EthdMgZT97tXT3K-1280-80.png",
+          "region": "Global",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "category": "AI Infrastructure",
+          "primary_category": "AI Infrastructure",
+          "secondary_category": "GPU clusters and deployment readiness",
+          "infrastructure_layer": "Compute",
+          "affected_stakeholders": [
+            "operators",
+            "hyperscalers",
+            "cloud buyers",
+            "investors"
+          ],
+          "article_type": "Supply Chain",
           "urgency_score": 0.45,
           "taxonomy_confidence": 0.77,
           "taxonomy_reasons": [
@@ -19564,7 +19558,7 @@
             "archiveOnly": false,
             "archiveOnlyReason": null
           },
-          "score": 63
+          "score": 60
         },
         {
           "id": "e1044deab0981437",
@@ -19632,40 +19626,33 @@
             "archiveOnly": false,
             "archiveOnlyReason": null
           },
-          "score": 59
+          "score": 53
         }
       ],
       "curatedIds": [
-        "9f9e39ac5d62dc19",
-        "06e0bb5548713b43",
-        "01bee54feadb8246",
+        "5466f33554cb7678",
         "8e4f7e99be38e51d",
-        "2ce7f52637e502d4",
+        "41503945fb4a27b7",
+        "01bee54feadb8246",
+        "8427051ae77f23d4",
         "e1044deab0981437"
       ],
       "publishedIds": [
         "8e36dc4fc38b02b7",
         "5526bda7754a830e",
         "06e0bb5548713b43",
-        "9f9e39ac5d62dc19"
+        "9f9e39ac5d62dc19",
+        "5466f33554cb7678",
+        "8e4f7e99be38e51d"
       ],
       "slotPublications": {
         "0": true,
-        "1": true
+        "1": true,
+        "2": true
       }
     }
   },
   "runHistory": [
-    {
-      "at": "2026-05-04T23:56:03.133Z",
-      "day": "2026-05-05",
-      "slot": 1,
-      "publishedCount": 2,
-      "publishedIds": [
-        "abe9c98478d05061",
-        "94f36086ed1f0aa2"
-      ]
-    },
     {
       "at": "2026-05-05T09:16:51.940Z",
       "day": "2026-05-05",
@@ -29130,7 +29117,131 @@
       ],
       "signalCardItems": [],
       "archiveOnlyItems": []
+    },
+    {
+      "at": "2026-06-21T10:40:35.082Z",
+      "day": "2026-06-21",
+      "slot": 2,
+      "publishedCount": 0,
+      "signalCardCount": 1,
+      "archiveOnlyCount": 0,
+      "repetitionBlockedCount": 1,
+      "publishedIds": [],
+      "processedIds": [
+        "5466f33554cb7678",
+        "8e4f7e99be38e51d"
+      ],
+      "blockedCount": 1,
+      "blockedItems": [
+        {
+          "id": "5466f33554cb7678",
+          "title": "Acoustic mapping app uses thousands of networked old Android phones to hunt Shahed drones — crowd-sourced microphone network spots small, low-RCS military targets",
+          "infrastructure_relevance_score": 0.87,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "cloud_capacity_relevance:0.32(hyperscalers)",
+            "semiconductor_relevance:0.22(gpu)",
+            "power_grid_relevance:0.22(power)"
+          ],
+          "extraction_quality_score": 1,
+          "source_domain_adapter": "generic",
+          "content_length": 1730,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": false,
+          "repetition_block_reasons": [],
+          "repetition_check": null,
+          "expert_insight_complete": false,
+          "expert_insight_missing_fields": [
+            "concrete_facts",
+            "named_companies"
+          ],
+          "reason": "expert_insight_missing_fields concrete_facts, named_companies"
+        }
+      ],
+      "repetitionBlockedItems": [
+        {
+          "id": "8e4f7e99be38e51d",
+          "title": "Signal’s Meredith Whittaker wants you to remember that AI chatbots ‘are not your friends’",
+          "infrastructure_relevance_score": 0.87,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "cloud_capacity_relevance:0.32(hyperscalers)",
+            "semiconductor_relevance:0.22(gpu)",
+            "power_grid_relevance:0.22(power)"
+          ],
+          "extraction_quality_score": 1,
+          "source_domain_adapter": "techcrunch",
+          "content_length": 1517,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": true,
+          "repetition_block_reasons": [
+            "repeated_sentence_ratio>0.12",
+            "conclusion_similarity>0.7"
+          ],
+          "repetition_check": {
+            "compared_article_count": 20,
+            "repeated_sentence_ratio": 0.2857142857142857,
+            "repeated_paragraph_ratio": 0.3333333333333333,
+            "heading_sequence_similarity": 0,
+            "banned_phrase_count": 0,
+            "banned_phrase_counts": {},
+            "recent_banned_phrase_counts": {},
+            "ngram_overlap": 0.4583333333333333,
+            "blueprint_repetition": 1,
+            "conclusion_similarity": 0.9271050693011066,
+            "repeated_sentence_count": 2,
+            "repeated_paragraph_count": 2,
+            "heading_sequence": [
+              "Regulatory Signal",
+              "Market Access Risk",
+              "Stakeholder Impact",
+              "Next Decision"
+            ],
+            "blocked": true,
+            "reasons": [
+              "repeated_sentence_ratio>0.12",
+              "conclusion_similarity>0.7"
+            ]
+          },
+          "expert_insight_complete": true,
+          "expert_insight_missing_fields": [],
+          "reason": "repeated_sentence_ratio>0.12; conclusion_similarity>0.7"
+        }
+      ],
+      "signalCardItems": [
+        {
+          "id": "5466f33554cb7678",
+          "title": "Acoustic mapping app uses thousands of networked old Android phones to hunt Shahed drones — crowd-sourced microphone network spots small, low-RCS military targets",
+          "infrastructure_relevance_score": 0.87,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "cloud_capacity_relevance:0.32(hyperscalers)",
+            "semiconductor_relevance:0.22(gpu)",
+            "power_grid_relevance:0.22(power)"
+          ],
+          "extraction_quality_score": 1,
+          "source_domain_adapter": "generic",
+          "content_length": 1730,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": false,
+          "repetition_block_reasons": [],
+          "repetition_check": null,
+          "expert_insight_complete": false,
+          "expert_insight_missing_fields": [
+            "concrete_facts",
+            "named_companies"
+          ],
+          "reason": "expert_insight_missing_fields concrete_facts, named_companies"
+        }
+      ],
+      "archiveOnlyItems": []
     }
   ],
-  "lastRunAt": "2026-06-21T00:10:29.153Z"
+  "lastRunAt": "2026-06-21T10:40:35.082Z"
 }
