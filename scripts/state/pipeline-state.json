@@ -481,7 +481,9 @@
     "7d320f069334abac",
     "702c90805ddc6a17",
     "8e36dc4fc38b02b7",
-    "5526bda7754a830e"
+    "5526bda7754a830e",
+    "06e0bb5548713b43",
+    "9f9e39ac5d62dc19"
   ],
   "dayPlans": {
     "2026-03-24": {
@@ -19214,110 +19216,40 @@
     "2026-06-21": {
       "date": "2026-06-21",
       "createdAt": "2026-06-20T16:25:50.294Z",
-      "refreshedAt": "2026-06-20T16:25:50.294Z",
+      "refreshedAt": "2026-06-21T00:10:29.153Z",
       "candidateWindowHours": 24,
       "curatedItems": [
         {
-          "id": "5526bda7754a830e",
-          "source": "Toms Hardware",
-          "url": "https://www.tomshardware.com/tech-industry/data-centers/china-unifies-tech-sector-to-build-grid-free-orbiting-satellite-ai-data-centers-challenging-elon-musks-spacex-beijings-forced-chip-and-satellite-alliance-announced-a-week-before-musks-ai1-reveal",
-          "title": "China unifies tech sector to build grid-free orbiting satellite AI data centers, challenging Elon Musk's SpaceX — Beijing's forced chip and satellite alliance announced a week before Musk’s AI1 reveal",
-          "snippet": "Beijing says the Space Computing Industry Innovation Center will bring together rocket and satellite manufacturers, chip manufacturers, and AI labs to develop a space-based data center system.",
-          "contentText": "Beijing says the Space Computing Industry Innovation Center will bring together rocket and satellite manufacturers, chip manufacturers, and AI labs to develop a space-based data center system.",
-          "publishedAt": "2026-06-20T14:53:42.000Z",
-          "sourceImage": "https://cdn.mos.cms.futurecdn.net/d7kjue9PbCHvHp6fnyUv2i-1280-80.jpg",
+          "id": "9f9e39ac5d62dc19",
+          "source": "StorageReview",
+          "url": "https://www.storagereview.com/news/cloudcasa-adds-kubernetes-disaster-recovery-for-hpe-alletra-storage-mp-b10000",
+          "title": "CloudCasa Adds Kubernetes Disaster Recovery for HPE Alletra Storage MP B10000",
+          "snippet": "CloudCasa by Catalogic has introduced CloudCasa Disaster Recovery (CloudCasa DR) for Kubernetes, powered by HPE Alletra Storage MP B10000. The new offering extends CloudCasa’s Kubernetes data protection portfolio with o…",
+          "contentText": "CloudCasa by Catalogic has introduced CloudCasa Disaster Recovery (CloudCasa DR) for Kubernetes, powered by HPE Alletra Storage MP B10000 . The new offering extends CloudCasa&#8217;s Kubernetes data protection portfolio with orchestrated disaster recovery capabilities designed for Kubernetes applications and KubeVirt virtual machines deployed across HPE and hybrid cloud environments. The announcement builds on CloudCasa&#8217;s existing support for backup and recovery of HPE Kubernetes Service (HKS) clusters. With the addition of CloudCasa DR, organizations can leverage storage-based replication and automated recovery workflows to meet more aggressive recovery objectives than traditional backup-based approaches. Disaster Recovery Driven by Native Replication Rather than restoring workload…",
+          "publishedAt": "2026-06-20T17:32:08.000Z",
+          "sourceImage": "https://www.storagereview.com/wp-content/uploads/2026/06/StorageReview-HPE-VME-B10000-3.jpg",
           "region": "US",
           "language": "en",
           "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
-          "category": "AI Infrastructure",
-          "primary_category": "AI Infrastructure",
-          "secondary_category": "GPU clusters and deployment readiness",
-          "infrastructure_layer": "Compute",
+          "category": "Enterprise AI Infrastructure",
+          "primary_category": "Enterprise AI Infrastructure",
+          "secondary_category": "Enterprise deployment operations",
+          "infrastructure_layer": "Enterprise Platform",
           "affected_stakeholders": [
-            "operators",
-            "hyperscalers",
+            "enterprise IT",
             "cloud buyers",
-            "investors"
+            "platform teams",
+            "software vendors"
           ],
-          "article_type": "Partnership",
-          "urgency_score": 0.6,
-          "taxonomy_confidence": 0.77,
+          "article_type": "Capacity Expansion",
+          "urgency_score": 0.5,
+          "taxonomy_confidence": 0.95,
           "taxonomy_reasons": [
-            "ai infrastructure",
-            "neocloud"
-          ],
-          "direct_ai_infrastructure_relevance": 1,
-          "data_center_relevance": 0.97,
-          "cloud_capacity_relevance": 0,
-          "semiconductor_relevance": 0.22,
-          "power_grid_relevance": 0.378,
-          "cooling_relevance": 0,
-          "capital_markets_relevance": 0,
-          "enterprise_ai_infrastructure_relevance": 0,
-          "infrastructure_relevance_score": 1,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "data_center_relevance:0.97(data center, data centers)",
-            "semiconductor_relevance:0.22(gpu)",
-            "power_grid_relevance:0.38(grid)"
-          ],
-          "infrastructure_relevance": {
-            "direct_ai_infrastructure_relevance": 1,
-            "data_center_relevance": 0.97,
-            "cloud_capacity_relevance": 0,
-            "semiconductor_relevance": 0.22,
-            "power_grid_relevance": 0.378,
-            "cooling_relevance": 0,
-            "capital_markets_relevance": 0,
-            "enterprise_ai_infrastructure_relevance": 0,
-            "infrastructure_relevance_score": 1,
-            "infrastructure_relevance_tier": "full_memo",
-            "infrastructure_relevance_action": "generate_full_memo",
-            "infrastructure_relevance_reasons": [
-              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-              "data_center_relevance:0.97(data center, data centers)",
-              "semiconductor_relevance:0.22(gpu)",
-              "power_grid_relevance:0.38(grid)"
-            ],
-            "infrastructureRelevanceAction": "generate_full_memo",
-            "articlePagePublished": true,
-            "homepagePublished": true,
-            "archiveOnly": false,
-            "archiveOnlyReason": null
-          },
-          "score": 84
-        },
-        {
-          "id": "8e36dc4fc38b02b7",
-          "source": "HPCwire",
-          "url": "https://www.hpcwire.com/off-the-wire/gcs-centers-spotlight-europes-hpc-leadership-at-isc-2026/",
-          "title": "GCS Centers Spotlight Europe’s HPC Leadership at ISC 2026",
-          "snippet": "June 19, 2026 — The Gauss Centre for Supercomputing (GCS) will once again be well-represented at this year’s International Supercomputing Conference (ISC26), which runs June 22–26 in Hamburg. All three GCS centers—the H…",
-          "contentText": "June 19, 2026 &#8212; The Gauss Centre for Supercomputing (GCS) will once again be well-represented at this year’s International Supercomputing Conference (ISC26), which runs June 22–26 in Hamburg. All three GCS centers—the High-Performance Computing Center Stuttgart (HLRS), Jülich Supercomputing Centre (JSC), and Leibniz Supercomputing Centre (LRZ)—will be participating in many parts of the conference program as well as staffing the GCS booth (#K02). Additionally, JSC staff will be at a separate stand, (#Z01) to celebrate JUPITER, Euope’s first exascale system. GCS centers’ staffs will participate in a variety of poster presentations, birds-of-a-feather sessions, tutorials, and workshops, highlighting how GCS centers are supporting researchers in the age of exascale and the rise of artif…",
-          "publishedAt": "2026-06-19T23:53:50.000Z",
-          "sourceImage": "https://www.hpcwire.com/wp-content/uploads/2026/06/ISCLogo-300x154.png",
-          "region": "US",
-          "language": "en",
-          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
-          "category": "AI Infrastructure",
-          "primary_category": "AI Infrastructure",
-          "secondary_category": "GPU clusters and deployment readiness",
-          "infrastructure_layer": "Compute",
-          "affected_stakeholders": [
-            "operators",
-            "hyperscalers",
-            "cloud buyers",
-            "investors"
-          ],
-          "article_type": "Other",
-          "urgency_score": 0.43,
-          "taxonomy_confidence": 0.88,
-          "taxonomy_reasons": [
-            "ai infrastructure",
-            "neocloud",
-            "hpc"
+            "hybrid cloud",
+            "kubernetes",
+            "backup",
+            "disaster recovery",
+            "storage"
           ],
           "direct_ai_infrastructure_relevance": 1,
           "data_center_relevance": 0,
@@ -19326,13 +19258,14 @@
           "power_grid_relevance": 0,
           "cooling_relevance": 0,
           "capital_markets_relevance": 0,
-          "enterprise_ai_infrastructure_relevance": 0,
-          "infrastructure_relevance_score": 0.778,
+          "enterprise_ai_infrastructure_relevance": 1,
+          "infrastructure_relevance_score": 0.985,
           "infrastructure_relevance_tier": "full_memo",
           "infrastructure_relevance_action": "generate_full_memo",
           "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud, high-performance computing)",
-            "semiconductor_relevance:0.22(gpu)"
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "semiconductor_relevance:0.22(gpu)",
+            "enterprise_ai_infrastructure_relevance:1.00(hybrid cloud, kubernetes, backup)"
           ],
           "infrastructure_relevance": {
             "direct_ai_infrastructure_relevance": 1,
@@ -19342,13 +19275,14 @@
             "power_grid_relevance": 0,
             "cooling_relevance": 0,
             "capital_markets_relevance": 0,
-            "enterprise_ai_infrastructure_relevance": 0,
-            "infrastructure_relevance_score": 0.778,
+            "enterprise_ai_infrastructure_relevance": 1,
+            "infrastructure_relevance_score": 0.985,
             "infrastructure_relevance_tier": "full_memo",
             "infrastructure_relevance_action": "generate_full_memo",
             "infrastructure_relevance_reasons": [
-              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud, high-performance computing)",
-              "semiconductor_relevance:0.22(gpu)"
+              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+              "semiconductor_relevance:0.22(gpu)",
+              "enterprise_ai_infrastructure_relevance:1.00(hybrid cloud, kubernetes, backup)"
             ],
             "infrastructureRelevanceAction": "generate_full_memo",
             "articlePagePublished": true,
@@ -19356,16 +19290,16 @@
             "archiveOnly": false,
             "archiveOnlyReason": null
           },
-          "score": 65
+          "score": 79
         },
         {
-          "id": "7a85b2e565aaba53",
-          "source": "TechCrunch AI",
-          "url": "https://techcrunch.com/2026/06/19/encryption-spyware-and-now-mythos-history-shows-why-cyber-export-control-doesnt-work/",
-          "title": "From PGP to Mythos: a brief history of export controls that didn’t stop anyone",
-          "snippet": "For the last 30 years, stopping the flow of cybersecurity-related software has proven to be ineffective. It's unclear why it would work now with Anthropic’s cybersecurity model Mythos.",
-          "contentText": "For the last 30 years, stopping the flow of cybersecurity-related software has proven to be ineffective. It's unclear why it would work now with Anthropic’s cybersecurity model Mythos.",
-          "publishedAt": "2026-06-19T22:40:14.000Z",
+          "id": "06e0bb5548713b43",
+          "source": "ServeTheHome",
+          "url": "https://www.servethehome.com/minisforums-upcoming-ms-03-sff-pc-brings-more-of-a-good-thing/",
+          "title": "Minisforum’s Upcoming MS-03 SFF PC Brings More of a Good Thing",
+          "snippet": "At Computex 2026 Minisforum was showing off their upcoming MS-03 mini-PC, the successor to their popular MS-01 and aiming to bring more of a good thing with Intel's new Panther Lake platform The post Minisforum’s Upcomi…",
+          "contentText": "At Computex 2026 Minisforum was showing off their upcoming MS-03 mini-PC, the successor to their popular MS-01 and aiming to bring more of a good thing with Intel's new Panther Lake platform The post Minisforum’s Upcoming MS-03 SFF PC Brings More of a Good Thing appeared first on ServeTheHome .",
+          "publishedAt": "2026-06-20T20:04:44.000Z",
           "sourceImage": null,
           "region": "Global",
           "language": "en",
@@ -19381,7 +19315,75 @@
             "investors"
           ],
           "article_type": "Product / Platform Update",
-          "urgency_score": 0.43,
+          "urgency_score": 0.44,
+          "taxonomy_confidence": 0.77,
+          "taxonomy_reasons": [
+            "ai infrastructure",
+            "neocloud"
+          ],
+          "direct_ai_infrastructure_relevance": 1,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0.42,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.822,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "semiconductor_relevance:0.42(intel, gpu)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 1,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0.42,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.822,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+              "semiconductor_relevance:0.42(intel, gpu)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 73
+        },
+        {
+          "id": "01bee54feadb8246",
+          "source": "Toms Hardware",
+          "url": "https://www.tomshardware.com/pc-components/ssds/wds-2tb-black-ssd-price-drops-by-nearly-20-percent-ahead-of-prime-day-sale-grab-the-2tb-sn7100-for-usd242-96",
+          "title": "WD's 2TB Black SSD price drops by nearly 20% ahead of Prime Day sale — grab the 2TB SN7100 for $242.96",
+          "snippet": "The WD Black SN7100 stands out for its high-end performance, low operating temperatures, and impressive efficiency. It is one of the few PCIe 4.0 SSDs that can compete with flagship drives while consuming noticeably les…",
+          "contentText": "The WD Black SN7100 stands out for its high-end performance, low operating temperatures, and impressive efficiency. It is one of the few PCIe 4.0 SSDs that can compete with flagship drives while consuming noticeably less power.",
+          "publishedAt": "2026-06-20T16:45:07.000Z",
+          "sourceImage": "https://cdn.mos.cms.futurecdn.net/SBaGU4fgUaGod8XHBuPjLU-1280-80.jpg",
+          "region": "Global",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "category": "AI Infrastructure",
+          "primary_category": "AI Infrastructure",
+          "secondary_category": "GPU clusters and deployment readiness",
+          "infrastructure_layer": "Compute",
+          "affected_stakeholders": [
+            "operators",
+            "hyperscalers",
+            "cloud buyers",
+            "investors"
+          ],
+          "article_type": "Other",
+          "urgency_score": 0.52,
           "taxonomy_confidence": 0.77,
           "taxonomy_reasons": [
             "ai infrastructure",
@@ -19391,32 +19393,34 @@
           "data_center_relevance": 0,
           "cloud_capacity_relevance": 0,
           "semiconductor_relevance": 0.22,
-          "power_grid_relevance": 0,
+          "power_grid_relevance": 0.22,
           "cooling_relevance": 0,
           "capital_markets_relevance": 0,
           "enterprise_ai_infrastructure_relevance": 0,
-          "infrastructure_relevance_score": 0.778,
+          "infrastructure_relevance_score": 0.813,
           "infrastructure_relevance_tier": "full_memo",
           "infrastructure_relevance_action": "generate_full_memo",
           "infrastructure_relevance_reasons": [
             "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "semiconductor_relevance:0.22(gpu)"
+            "semiconductor_relevance:0.22(gpu)",
+            "power_grid_relevance:0.22(power)"
           ],
           "infrastructure_relevance": {
             "direct_ai_infrastructure_relevance": 1,
             "data_center_relevance": 0,
             "cloud_capacity_relevance": 0,
             "semiconductor_relevance": 0.22,
-            "power_grid_relevance": 0,
+            "power_grid_relevance": 0.22,
             "cooling_relevance": 0,
             "capital_markets_relevance": 0,
             "enterprise_ai_infrastructure_relevance": 0,
-            "infrastructure_relevance_score": 0.778,
+            "infrastructure_relevance_score": 0.813,
             "infrastructure_relevance_tier": "full_memo",
             "infrastructure_relevance_action": "generate_full_memo",
             "infrastructure_relevance_reasons": [
               "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-              "semiconductor_relevance:0.22(gpu)"
+              "semiconductor_relevance:0.22(gpu)",
+              "power_grid_relevance:0.22(power)"
             ],
             "infrastructureRelevanceAction": "generate_full_memo",
             "articlePagePublished": true,
@@ -19424,85 +19428,17 @@
             "archiveOnly": false,
             "archiveOnlyReason": null
           },
-          "score": 65
+          "score": 72
         },
         {
-          "id": "d8c0f2304f72d4ce",
-          "source": "Bloomberg Technology",
-          "url": "https://www.bloomberg.com/news/articles/2026-06-20/jio-platforms-plans-3-billion-debt-reduction-from-ipo-proceeds",
-          "title": "Jio Platforms Plans $3 Billion Debt Reduction from IPO Proceeds",
-          "snippet": "Jio Platforms Ltd. plans to use part of the proceeds from its proposed initial share sale to repay its telecom unit’s external commercial borrowings of almost $3 billion, a draft IPO document showed.",
-          "contentText": "Jio Platforms Ltd. plans to use part of the proceeds from its proposed initial share sale to repay its telecom unit’s external commercial borrowings of almost $3 billion, a draft IPO document showed.",
-          "publishedAt": "2026-06-20T10:49:31.000Z",
-          "sourceImage": "https://assets.bwbx.io/images/users/iqjWHBFdfxIU/iZDlOdzU1Czg/v1/1200x-1.jpg",
-          "region": "US",
-          "language": "en",
-          "defaultCategory": "Hyperscalers & Cloud",
-          "category": "Capital Markets",
-          "primary_category": "Capital Markets",
-          "secondary_category": "Financing, valuation, and capital structure",
-          "infrastructure_layer": "Capital",
-          "affected_stakeholders": [
-            "investors",
-            "lenders",
-            "developers",
-            "operators"
-          ],
-          "article_type": "Financing / M&A",
-          "urgency_score": 0.44,
-          "taxonomy_confidence": 0.78,
-          "taxonomy_reasons": [
-            "debt",
-            "ipo"
-          ],
-          "direct_ai_infrastructure_relevance": 0,
-          "data_center_relevance": 0,
-          "cloud_capacity_relevance": 0.32,
-          "semiconductor_relevance": 0,
-          "power_grid_relevance": 0,
-          "cooling_relevance": 0,
-          "capital_markets_relevance": 0.702,
-          "enterprise_ai_infrastructure_relevance": 0,
-          "infrastructure_relevance_score": 0.548,
-          "infrastructure_relevance_tier": "archive_only",
-          "infrastructure_relevance_action": "archive_only",
-          "infrastructure_relevance_reasons": [
-            "cloud_capacity_relevance:0.32(hyperscalers)",
-            "capital_markets_relevance:0.70(debt, ipo)"
-          ],
-          "infrastructure_relevance": {
-            "direct_ai_infrastructure_relevance": 0,
-            "data_center_relevance": 0,
-            "cloud_capacity_relevance": 0.32,
-            "semiconductor_relevance": 0,
-            "power_grid_relevance": 0,
-            "cooling_relevance": 0,
-            "capital_markets_relevance": 0.702,
-            "enterprise_ai_infrastructure_relevance": 0,
-            "infrastructure_relevance_score": 0.548,
-            "infrastructure_relevance_tier": "archive_only",
-            "infrastructure_relevance_action": "archive_only",
-            "infrastructure_relevance_reasons": [
-              "cloud_capacity_relevance:0.32(hyperscalers)",
-              "capital_markets_relevance:0.70(debt, ipo)"
-            ],
-            "infrastructureRelevanceAction": "archive_only",
-            "articlePagePublished": false,
-            "homepagePublished": false,
-            "archiveOnly": true,
-            "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
-          },
-          "score": 61
-        },
-        {
-          "id": "9c2fb4aada83cf17",
-          "source": "Toms Hardware",
-          "url": "https://www.tomshardware.com/peripherals/controllers-gamepads/web-app-drives-valves-new-steam-controller-across-the-floor-using-its-rumble-motors",
-          "title": "New web app can make Valve's Steam Controller drift across your desk like an RC car — web app drives the gamepad using its rumble motors",
-          "snippet": "A developer has created a Chromium browser-based tool that turns Valve's second-gen Steam Controller into a self-propelled RC car.",
-          "contentText": "A developer has created a Chromium browser-based tool that turns Valve's second-gen Steam Controller into a self-propelled RC car.",
-          "publishedAt": "2026-06-20T13:37:38.000Z",
-          "sourceImage": "https://cdn.mos.cms.futurecdn.net/n9MQTLFR7jCACG5JBUMVuG-1280-80.png",
+          "id": "8e4f7e99be38e51d",
+          "source": "TechCrunch AI",
+          "url": "https://techcrunch.com/2026/06/20/signals-meredith-whittaker-wants-you-to-remember-that-ai-chatbots-are-not-your-friends/",
+          "title": "Signal’s Meredith Whittaker wants you to remember that AI chatbots ‘are not your friends’",
+          "snippet": "\"These are not your friends. These are not conscious beings. These are not sentient interlocutors.”",
+          "contentText": "\"These are not your friends. These are not conscious beings. These are not sentient interlocutors.”",
+          "publishedAt": "2026-06-20T20:32:29.000Z",
+          "sourceImage": null,
           "region": "US",
           "language": "en",
           "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
@@ -19560,17 +19496,85 @@
             "archiveOnly": false,
             "archiveOnlyReason": null
           },
-          "score": 56
+          "score": 64
         },
         {
-          "id": "d3f6271de97cdc72",
+          "id": "2ce7f52637e502d4",
           "source": "Toms Hardware",
-          "url": "https://www.tomshardware.com/3d-printing/3d-scanning/best-3d-scanners",
-          "title": "The best 3D scanners 2026 — the top performing models we've benchmarked",
-          "snippet": "We help you find the best 3D scanners for high accuracy, portability, and more.",
-          "contentText": "We help you find the best 3D scanners for high accuracy, portability, and more.",
-          "publishedAt": "2026-06-20T13:17:22.000Z",
-          "sourceImage": "https://cdn.mos.cms.futurecdn.net/6EJmt8zSnrV4fATFjoNpd9-1280-80.png",
+          "url": "https://www.tomshardware.com/desktops/gaming-pcs/save-usd300-on-this-1440p-ready-gaming-pc-with-32gb-ddr5-ram-grab-the-asus-rog-gm700-with-amds-ryzen-7-8700f-and-rx-9060-xt-for-just-usd1-199",
+          "title": "Save $300 on this 1440p-ready gaming PC with 32GB DDR5 RAM — grab the Asus ROG GM700 with AMD's Ryzen 7 8700F and RX 9060 XT for just $1,199",
+          "snippet": "Asus' ROG GM700 is a great prebuilt, packing powerful components for a solid price without compromising on the details. It just happens to look nice, too, if you're into the gamer aesthetic.",
+          "contentText": "Asus' ROG GM700 is a great prebuilt, packing powerful components for a solid price without compromising on the details. It just happens to look nice, too, if you're into the gamer aesthetic.",
+          "publishedAt": "2026-06-20T15:25:58.000Z",
+          "sourceImage": "https://cdn.mos.cms.futurecdn.net/cC5K7o6dE6H8VpPnNYeHCe-1280-80.png",
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "category": "AI Infrastructure",
+          "primary_category": "AI Infrastructure",
+          "secondary_category": "GPU clusters and deployment readiness",
+          "infrastructure_layer": "Compute",
+          "affected_stakeholders": [
+            "operators",
+            "hyperscalers",
+            "cloud buyers",
+            "investors"
+          ],
+          "article_type": "Other",
+          "urgency_score": 0.45,
+          "taxonomy_confidence": 0.77,
+          "taxonomy_reasons": [
+            "ai infrastructure",
+            "neocloud"
+          ],
+          "direct_ai_infrastructure_relevance": 1,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0.517,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.844,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "semiconductor_relevance:0.52(amd, gpu)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 1,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0.517,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.844,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+              "semiconductor_relevance:0.52(amd, gpu)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 63
+        },
+        {
+          "id": "e1044deab0981437",
+          "source": "TechCrunch AI",
+          "url": "https://techcrunch.com/2026/06/20/in-the-weights-is-your-new-ai-centric-vanity-search/",
+          "title": "In the Weights is your new AI-centric vanity search",
+          "snippet": "So ... what's your In the Weights score?",
+          "contentText": "So ... what's your In the Weights score?",
+          "publishedAt": "2026-06-20T19:41:11.000Z",
+          "sourceImage": null,
           "region": "Global",
           "language": "en",
           "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
@@ -19628,37 +19632,30 @@
             "archiveOnly": false,
             "archiveOnlyReason": null
           },
-          "score": 39
+          "score": 59
         }
       ],
       "curatedIds": [
-        "5526bda7754a830e",
-        "8e36dc4fc38b02b7",
-        "7a85b2e565aaba53",
-        "d8c0f2304f72d4ce",
-        "9c2fb4aada83cf17",
-        "d3f6271de97cdc72"
+        "9f9e39ac5d62dc19",
+        "06e0bb5548713b43",
+        "01bee54feadb8246",
+        "8e4f7e99be38e51d",
+        "2ce7f52637e502d4",
+        "e1044deab0981437"
       ],
       "publishedIds": [
         "8e36dc4fc38b02b7",
-        "5526bda7754a830e"
+        "5526bda7754a830e",
+        "06e0bb5548713b43",
+        "9f9e39ac5d62dc19"
       ],
       "slotPublications": {
-        "0": true
+        "0": true,
+        "1": true
       }
     }
   },
   "runHistory": [
-    {
-      "at": "2026-05-04T16:54:23.870Z",
-      "day": "2026-05-05",
-      "slot": 0,
-      "publishedCount": 2,
-      "publishedIds": [
-        "39d693922a48a70c",
-        "b41a262b5b276e16"
-      ]
-    },
     {
       "at": "2026-05-04T23:56:03.133Z",
       "day": "2026-05-05",
@@ -29010,7 +29007,130 @@
         }
       ],
       "archiveOnlyItems": []
+    },
+    {
+      "at": "2026-06-21T00:10:29.153Z",
+      "day": "2026-06-21",
+      "slot": 1,
+      "publishedCount": 0,
+      "signalCardCount": 0,
+      "archiveOnlyCount": 0,
+      "repetitionBlockedCount": 2,
+      "publishedIds": [],
+      "processedIds": [
+        "06e0bb5548713b43",
+        "9f9e39ac5d62dc19"
+      ],
+      "blockedCount": 0,
+      "blockedItems": [],
+      "repetitionBlockedItems": [
+        {
+          "id": "06e0bb5548713b43",
+          "title": "Minisforum’s Upcoming MS-03 SFF PC Brings More of a Good Thing",
+          "infrastructure_relevance_score": 0.892,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "cloud_capacity_relevance:0.32(hyperscalers)",
+            "semiconductor_relevance:0.42(intel, gpu)",
+            "power_grid_relevance:0.22(power)"
+          ],
+          "extraction_quality_score": 1,
+          "source_domain_adapter": "servethehome",
+          "content_length": 1758,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": true,
+          "repetition_block_reasons": [
+            "repeated_sentence_ratio>0.12",
+            "heading_sequence_similarity>0.75",
+            "conclusion_similarity>0.7"
+          ],
+          "repetition_check": {
+            "compared_article_count": 20,
+            "repeated_sentence_ratio": 0.14285714285714285,
+            "repeated_paragraph_ratio": 0.16666666666666666,
+            "heading_sequence_similarity": 1,
+            "banned_phrase_count": 0,
+            "banned_phrase_counts": {},
+            "recent_banned_phrase_counts": {},
+            "ngram_overlap": 0.49166666666666664,
+            "blueprint_repetition": 1,
+            "conclusion_similarity": 0.9271050693011066,
+            "repeated_sentence_count": 1,
+            "repeated_paragraph_count": 1,
+            "heading_sequence": [
+              "Technical Signal",
+              "Failure Domain",
+              "Operator Exposure",
+              "Benchmark To Watch"
+            ],
+            "blocked": true,
+            "reasons": [
+              "repeated_sentence_ratio>0.12",
+              "heading_sequence_similarity>0.75",
+              "conclusion_similarity>0.7"
+            ]
+          },
+          "expert_insight_complete": true,
+          "expert_insight_missing_fields": [],
+          "reason": "repeated_sentence_ratio>0.12; heading_sequence_similarity>0.75; conclusion_similarity>0.7"
+        },
+        {
+          "id": "9f9e39ac5d62dc19",
+          "title": "CloudCasa Adds Kubernetes Disaster Recovery for HPE Alletra Storage MP B10000",
+          "infrastructure_relevance_score": 1,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "cloud_capacity_relevance:0.32(hyperscalers)",
+            "semiconductor_relevance:0.22(gpu)",
+            "power_grid_relevance:0.22(power)",
+            "enterprise_ai_infrastructure_relevance:1.00(hybrid cloud, openshift, kubernetes)"
+          ],
+          "extraction_quality_score": 1,
+          "source_domain_adapter": "storagereview",
+          "content_length": 1685,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": true,
+          "repetition_block_reasons": [
+            "repeated_sentence_ratio>0.12",
+            "conclusion_similarity>0.7"
+          ],
+          "repetition_check": {
+            "compared_article_count": 20,
+            "repeated_sentence_ratio": 0.14285714285714285,
+            "repeated_paragraph_ratio": 0.16666666666666666,
+            "heading_sequence_similarity": 0,
+            "banned_phrase_count": 0,
+            "banned_phrase_counts": {},
+            "recent_banned_phrase_counts": {},
+            "ngram_overlap": 0.36134453781512604,
+            "blueprint_repetition": 1,
+            "conclusion_similarity": 0.9271050693011066,
+            "repeated_sentence_count": 1,
+            "repeated_paragraph_count": 1,
+            "heading_sequence": [
+              "Platform Move",
+              "Resilience Read",
+              "Enterprise Exposure",
+              "Proof Point"
+            ],
+            "blocked": true,
+            "reasons": [
+              "repeated_sentence_ratio>0.12",
+              "conclusion_similarity>0.7"
+            ]
+          },
+          "expert_insight_complete": true,
+          "expert_insight_missing_fields": [],
+          "reason": "repeated_sentence_ratio>0.12; conclusion_similarity>0.7"
+        }
+      ],
+      "signalCardItems": [],
+      "archiveOnlyItems": []
     }
   ],
-  "lastRunAt": "2026-06-20T16:25:50.294Z"
+  "lastRunAt": "2026-06-21T00:10:29.153Z"
 }
