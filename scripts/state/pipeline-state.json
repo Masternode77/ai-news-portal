@@ -491,7 +491,9 @@
     "9d07630cc205c071",
     "9e915ef1c8728d81",
     "db2b49ee9c075f6a",
-    "0b03b82940d8a319"
+    "0b03b82940d8a319",
+    "707dc21843e2eb4c",
+    "3dd9415a71c7ef86"
   ],
   "dayPlans": {
     "2026-03-24": {
@@ -20108,19 +20110,454 @@
         "1": true,
         "2": true
       }
+    },
+    "2026-06-23": {
+      "date": "2026-06-23",
+      "createdAt": "2026-06-22T18:51:48.931Z",
+      "refreshedAt": "2026-06-22T18:51:48.931Z",
+      "candidateWindowHours": 24,
+      "curatedItems": [
+        {
+          "id": "3dd9415a71c7ef86",
+          "source": "StorageReview",
+          "url": "https://www.storagereview.com/news/cgi-taps-netapp-keystone-to-power-block-storage-in-its-shared-services-platform",
+          "title": "CGI Taps NetApp Keystone to Power Block Storage in Its Shared Services Platform",
+          "snippet": "CGI and NetApp have expanded their global alliance partnership, with NetApp Keystone set to power CGI’s block storage solutions within its shared services platform. The move deepens the companies’ existing relationship…",
+          "contentText": "CGI and NetApp have expanded their global alliance partnership, with NetApp Keystone set to power CGI&#8217;s block storage solutions within its shared services platform. The move deepens the companies&#8217; existing relationship and is designed to help organizations modernize IT infrastructure, improve data management, and advance AI initiatives across private, public, and hybrid cloud environments. Under the expanded agreement, CGI will integrate NetApp Keystone&#8217; s subscription-based storage model into its shared services platform. The offering is designed to provide customers with scalable block storage resources while allowing organizations to consume storage capacity through a flexible, consumption-based model rather than traditional infrastructure procurement cycles. NetApp K…",
+          "publishedAt": "2026-06-22T18:46:02.000Z",
+          "sourceImage": "https://www.storagereview.com/wp-content/uploads/2026/06/Storagereview-netapp-keystone-data-collector-flow.png",
+          "region": "APAC",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "category": "AI Infrastructure",
+          "primary_category": "AI Infrastructure",
+          "secondary_category": "GPU clusters and deployment readiness",
+          "infrastructure_layer": "Compute",
+          "affected_stakeholders": [
+            "operators",
+            "hyperscalers",
+            "cloud buyers",
+            "investors"
+          ],
+          "article_type": "Capacity Expansion",
+          "urgency_score": 0.81,
+          "taxonomy_confidence": 0.77,
+          "taxonomy_reasons": [
+            "ai infrastructure",
+            "neocloud"
+          ],
+          "direct_ai_infrastructure_relevance": 1,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0.22,
+          "power_grid_relevance": 0.297,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0.703,
+          "infrastructure_relevance_score": 0.955,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "semiconductor_relevance:0.22(gpu)",
+            "power_grid_relevance:0.30(power)",
+            "enterprise_ai_infrastructure_relevance:0.70(hybrid cloud, data management, storage)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 1,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0.22,
+            "power_grid_relevance": 0.297,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0.703,
+            "infrastructure_relevance_score": 0.955,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+              "semiconductor_relevance:0.22(gpu)",
+              "power_grid_relevance:0.30(power)",
+              "enterprise_ai_infrastructure_relevance:0.70(hybrid cloud, data management, storage)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 86
+        },
+        {
+          "id": "707dc21843e2eb4c",
+          "source": "Semiconductor Engineering",
+          "url": "https://semiengineering.com/advancements-in-atomic-scale-plasma-processing/",
+          "title": "Advancements In Atomic-Scale Plasma Processing",
+          "snippet": "Researchers from Nagoya University, Boise State University, Korea Institute of Fusion Energy, Hitachi High-Tech Corp. and Princeton Plasma Physics Laboratory published a technical paper titled “Recent Progress in Atomic…",
+          "contentText": "Researchers from Nagoya University, Boise State University, Korea Institute of Fusion Energy, Hitachi High-Tech Corp. and Princeton Plasma Physics Laboratory published a technical paper titled “Recent Progress in Atomic-Scale Controlled Plasma Processing.” Abstract Excerpt: “Atomic-scale control in plasma processing is becoming increasingly critical for fabricating of advanced semiconductor devices, particularly as the industry shifts toward three-dimensional (3D) architectures and high-aspect-ratio (HAR) structures. This review presents a comprehensive overview of recent developments in atomic-scale controlled plasma processes.&#8221; Find the technical paper here . June 2026. Kenji Ishikawa et al 2026 Jpn. J. Appl. Phys. 65 120801 The post Advancements In Atomic-Scale Plasma Processing…",
+          "publishedAt": "2026-06-22T18:42:12.000Z",
+          "sourceImage": null,
+          "region": "Korea",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "category": "AI Infrastructure",
+          "primary_category": "AI Infrastructure",
+          "secondary_category": "GPU clusters and deployment readiness",
+          "infrastructure_layer": "Compute",
+          "affected_stakeholders": [
+            "operators",
+            "hyperscalers",
+            "cloud buyers",
+            "investors"
+          ],
+          "article_type": "Research / Technical",
+          "urgency_score": 0.45,
+          "taxonomy_confidence": 0.77,
+          "taxonomy_reasons": [
+            "ai infrastructure",
+            "neocloud"
+          ],
+          "direct_ai_infrastructure_relevance": 1,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0.58,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.858,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "semiconductor_relevance:0.58(semiconductor, gpu)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 1,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0.58,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.858,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+              "semiconductor_relevance:0.58(semiconductor, gpu)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 82
+        },
+        {
+          "id": "e6d609b3407840a6",
+          "source": "HPCwire",
+          "url": "https://www.hpcwire.com/off-the-wire/nvidia-vera-cpu-opens-the-way-for-agentic-scientific-ai-at-los-alamos/",
+          "title": "LANL Taps NVIDIA Vera CPUs for Mission, Vision and Veritas Supercomputers",
+          "snippet": "Mission, Vision and Veritas supercomputers with Vera CPUs to advance materials simulation, scientific AI agents and molecular design. June 22, 2026 — Mission, Vision and Veritas — new Los Alamos National Laboratory (LAN…",
+          "contentText": "Mission, Vision and Veritas supercomputers with Vera CPUs to advance materials simulation, scientific AI agents and molecular design. June 22, 2026 &#8212; Mission, Vision and Veritas — new Los Alamos National Laboratory (LANL) supercomputers to be built with HPE and NVIDIA — are tapping NVIDIA Vera CPUs to accelerate scientific discovery, unlocking agentic AI for science. The supercomputers will use the HPE Cray Supercomputing GX5000 architecture with the NVIDIA Vera Rubin platform, combining NVIDIA Vera CPUs, NVIDIA Rubin GPUs and NVIDIA Quantum-X800 InfiniBand networking. Under the planned configuration, Mission will include NVIDIA Vera Rubin GPU nodes and 2,300 standalone NVIDIA Vera CPUs using the HPE Cray Supercomputing GX240 blade. Veritas will feature approximately 1,150 standalon…",
+          "publishedAt": "2026-06-22T17:14:49.000Z",
+          "sourceImage": "https://www.hpcwire.com/wp-content/uploads/2026/06/veritas-vera-cpu-lanl-1920x1080-1-300x169.jpg",
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "category": "AI Infrastructure",
+          "primary_category": "AI Infrastructure",
+          "secondary_category": "GPU clusters and deployment readiness",
+          "infrastructure_layer": "Compute",
+          "affected_stakeholders": [
+            "operators",
+            "hyperscalers",
+            "cloud buyers",
+            "investors"
+          ],
+          "article_type": "Product / Platform Update",
+          "urgency_score": 0.46,
+          "taxonomy_confidence": 0.77,
+          "taxonomy_reasons": [
+            "ai infrastructure",
+            "neocloud"
+          ],
+          "direct_ai_infrastructure_relevance": 1,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0.598,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0.18,
+          "infrastructure_relevance_score": 0.862,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "semiconductor_relevance:0.60(nvidia, gpu)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 1,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0.598,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0.18,
+            "infrastructure_relevance_score": 0.862,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+              "semiconductor_relevance:0.60(nvidia, gpu)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 82
+        },
+        {
+          "id": "fdd4cebd3edd6dff",
+          "source": "ServeTheHome",
+          "url": "https://www.servethehome.com/this-is-the-storage-kioxia-hpe-spaceborne-computer-4-bringing-ai-compute-to-the-moon/",
+          "title": "This is the Storage of Spaceborne Computer 4 Bringing AI Compute to the Moon",
+          "snippet": "We found a HPE Spaceborne Computer 4 compute module bringing AI inference to the moon later this year and the storage may surprise you The post This is the Storage of Spaceborne Computer 4 Bringing AI Compute to the Moo…",
+          "contentText": "We found a HPE Spaceborne Computer 4 compute module bringing AI inference to the moon later this year and the storage may surprise you The post This is the Storage of Spaceborne Computer 4 Bringing AI Compute to the Moon appeared first on ServeTheHome .",
+          "publishedAt": "2026-06-22T17:00:45.000Z",
+          "sourceImage": null,
+          "region": "Global",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "category": "AI Infrastructure",
+          "primary_category": "AI Infrastructure",
+          "secondary_category": "GPU clusters and deployment readiness",
+          "infrastructure_layer": "Compute",
+          "affected_stakeholders": [
+            "operators",
+            "hyperscalers",
+            "cloud buyers",
+            "investors"
+          ],
+          "article_type": "Other",
+          "urgency_score": 0.44,
+          "taxonomy_confidence": 0.77,
+          "taxonomy_reasons": [
+            "ai infrastructure",
+            "neocloud"
+          ],
+          "direct_ai_infrastructure_relevance": 1,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0.22,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0.243,
+          "infrastructure_relevance_score": 0.818,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "semiconductor_relevance:0.22(gpu)",
+            "enterprise_ai_infrastructure_relevance:0.24(storage)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 1,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0.22,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0.243,
+            "infrastructure_relevance_score": 0.818,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+              "semiconductor_relevance:0.22(gpu)",
+              "enterprise_ai_infrastructure_relevance:0.24(storage)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 80
+        },
+        {
+          "id": "21ad53a98be021d4",
+          "source": "StorageReview",
+          "url": "https://www.storagereview.com/news/ibm-expands-z-software-portfolio-with-new-security-and-database-management-tools",
+          "title": "IBM Expands Z Software Portfolio with New Security and Database Management Tools",
+          "snippet": "IBM has announced the general availability of three new IBM Z software offerings that strengthen security operations, simplify certificate management, and improve database administration through AI-assisted automation.…",
+          "contentText": "IBM has announced the general availability of three new IBM Z software offerings that strengthen security operations, simplify certificate management, and improve database administration through AI-assisted automation. The releases reflect IBM&#8217;s continued focus on supporting mission-critical workloads running on IBM Z and LinuxONE environments as enterprises address increasingly complex security, compliance, and operational requirements. IBM positions the new tools alongside its broader security initiatives, including Project Glasswing and Project Lightwell , as organizations face evolving cyber threats and growing regulatory demands. The company noted that enterprises continue to rely on IBM Z for highly sensitive workloads, where platform resiliency and availability remain key req…",
+          "publishedAt": "2026-06-22T18:32:12.000Z",
+          "sourceImage": "https://www.storagereview.com/wp-content/uploads/2026/05/Storagereview-IBM-quantum-computers.jpg",
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "category": "AI Infrastructure",
+          "primary_category": "AI Infrastructure",
+          "secondary_category": "GPU clusters and deployment readiness",
+          "infrastructure_layer": "Compute",
+          "affected_stakeholders": [
+            "operators",
+            "hyperscalers",
+            "cloud buyers",
+            "investors"
+          ],
+          "article_type": "Capacity Expansion",
+          "urgency_score": 0.49,
+          "taxonomy_confidence": 0.77,
+          "taxonomy_reasons": [
+            "ai infrastructure",
+            "neocloud"
+          ],
+          "direct_ai_infrastructure_relevance": 1,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0.22,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.778,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "semiconductor_relevance:0.22(gpu)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 1,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0.22,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.778,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+              "semiconductor_relevance:0.22(gpu)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 79
+        },
+        {
+          "id": "d13c06cabd0fa9dc",
+          "source": "Bloomberg Technology",
+          "url": "https://www.bloomberg.com/news/videos/2026-06-22/bloomberg-tech-6-22-2026-video",
+          "title": "SpaceX Kicks Off High-Grade Bond Sale | Bloomberg Tech 6/22/2026",
+          "snippet": "Bloomberg’s Ed Ludlow breaks down SpaceX's first-ever investment-grade bond offering following its record-breaking IPO. Plus, Micron strikes an AI Infrastructure agreement with Anthropic to drive enterprise AI adoption.…",
+          "contentText": "Bloomberg’s Ed Ludlow breaks down SpaceX's first-ever investment-grade bond offering following its record-breaking IPO. Plus, Micron strikes an AI Infrastructure agreement with Anthropic to drive enterprise AI adoption. And Chevron signs a 20-year deal with Microsoft to power a West Texas data center that could be one of the biggest in the US. (Source: Bloomberg)",
+          "publishedAt": "2026-06-22T18:06:49.000Z",
+          "sourceImage": "https://assets.bwbx.io/images/users/iqjWHBFdfxIU/i9oxkBM6076I/v3/1200x-1.jpg",
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "Hyperscalers & Cloud",
+          "category": "Capital Markets",
+          "primary_category": "Capital Markets",
+          "secondary_category": "Financing, valuation, and capital structure",
+          "infrastructure_layer": "Capital",
+          "affected_stakeholders": [
+            "investors",
+            "lenders",
+            "developers",
+            "operators"
+          ],
+          "article_type": "Financing / M&A",
+          "urgency_score": 0.51,
+          "taxonomy_confidence": 0.73,
+          "taxonomy_reasons": [
+            "bond",
+            "ipo"
+          ],
+          "direct_ai_infrastructure_relevance": 0.78,
+          "data_center_relevance": 0.42,
+          "cloud_capacity_relevance": 0.32,
+          "semiconductor_relevance": 0,
+          "power_grid_relevance": 0.22,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0.564,
+          "enterprise_ai_infrastructure_relevance": 0.32,
+          "infrastructure_relevance_score": 0.796,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:0.78(ai infrastructure)",
+            "data_center_relevance:0.42(data center)",
+            "cloud_capacity_relevance:0.32(hyperscalers)",
+            "power_grid_relevance:0.22(power)",
+            "capital_markets_relevance:0.56(bond, ipo)",
+            "enterprise_ai_infrastructure_relevance:0.32(enterprise ai)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 0.78,
+            "data_center_relevance": 0.42,
+            "cloud_capacity_relevance": 0.32,
+            "semiconductor_relevance": 0,
+            "power_grid_relevance": 0.22,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0.564,
+            "enterprise_ai_infrastructure_relevance": 0.32,
+            "infrastructure_relevance_score": 0.796,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:0.78(ai infrastructure)",
+              "data_center_relevance:0.42(data center)",
+              "cloud_capacity_relevance:0.32(hyperscalers)",
+              "power_grid_relevance:0.22(power)",
+              "capital_markets_relevance:0.56(bond, ipo)",
+              "enterprise_ai_infrastructure_relevance:0.32(enterprise ai)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 79
+        }
+      ],
+      "curatedIds": [
+        "3dd9415a71c7ef86",
+        "707dc21843e2eb4c",
+        "e6d609b3407840a6",
+        "fdd4cebd3edd6dff",
+        "21ad53a98be021d4",
+        "d13c06cabd0fa9dc"
+      ],
+      "publishedIds": [
+        "707dc21843e2eb4c",
+        "3dd9415a71c7ef86"
+      ],
+      "slotPublications": {
+        "0": true
+      }
     }
   },
   "runHistory": [
-    {
-      "at": "2026-05-06T09:33:40.497Z",
-      "day": "2026-05-06",
-      "slot": 2,
-      "publishedCount": 2,
-      "publishedIds": [
-        "038ed22e4e071a9e",
-        "5682daf625803504"
-      ]
-    },
     {
       "at": "2026-05-06T16:48:59.522Z",
       "day": "2026-05-07",
@@ -30042,7 +30479,129 @@
         }
       ],
       "archiveOnlyItems": []
+    },
+    {
+      "at": "2026-06-22T18:51:48.931Z",
+      "day": "2026-06-23",
+      "slot": 0,
+      "publishedCount": 0,
+      "signalCardCount": 1,
+      "archiveOnlyCount": 0,
+      "repetitionBlockedCount": 1,
+      "publishedIds": [],
+      "processedIds": [
+        "707dc21843e2eb4c",
+        "3dd9415a71c7ef86"
+      ],
+      "blockedCount": 1,
+      "blockedItems": [
+        {
+          "id": "707dc21843e2eb4c",
+          "title": "Advancements In Atomic-Scale Plasma Processing",
+          "infrastructure_relevance_score": 0.928,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "cloud_capacity_relevance:0.32(hyperscalers)",
+            "semiconductor_relevance:0.58(semiconductor, gpu)",
+            "power_grid_relevance:0.22(power)",
+            "capital_markets_relevance:0.28(capex)"
+          ],
+          "extraction_quality_score": 0.67,
+          "source_domain_adapter": "semiengineering",
+          "content_length": 625,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": false,
+          "repetition_block_reasons": [],
+          "repetition_check": null,
+          "expert_insight_complete": true,
+          "expert_insight_missing_fields": [],
+          "reason": "fail_closed: source_text_incomplete:source_evidence_length_below_1200, sentence_completion_score_below_0.92:0.567"
+        }
+      ],
+      "repetitionBlockedItems": [
+        {
+          "id": "3dd9415a71c7ef86",
+          "title": "CGI Taps NetApp Keystone to Power Block Storage in Its Shared Services Platform",
+          "infrastructure_relevance_score": 0.955,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "cloud_capacity_relevance:0.32(hyperscalers)",
+            "semiconductor_relevance:0.22(gpu)",
+            "power_grid_relevance:0.30(power)",
+            "capital_markets_relevance:0.28(capex)",
+            "enterprise_ai_infrastructure_relevance:0.70(hybrid cloud, data management, storage)"
+          ],
+          "extraction_quality_score": 1,
+          "source_domain_adapter": "storagereview",
+          "content_length": 1575,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": true,
+          "repetition_block_reasons": [
+            "repeated_sentence_ratio>0.12",
+            "conclusion_similarity>0.7"
+          ],
+          "repetition_check": {
+            "compared_article_count": 20,
+            "repeated_sentence_ratio": 0.14285714285714285,
+            "repeated_paragraph_ratio": 0.16666666666666666,
+            "heading_sequence_similarity": 0,
+            "banned_phrase_count": 0,
+            "banned_phrase_counts": {},
+            "recent_banned_phrase_counts": {},
+            "ngram_overlap": 0.3252032520325203,
+            "blueprint_repetition": 2,
+            "conclusion_similarity": 0.9511897312113418,
+            "repeated_sentence_count": 1,
+            "repeated_paragraph_count": 1,
+            "heading_sequence": [
+              "Platform Move",
+              "Resilience Read",
+              "Enterprise Exposure",
+              "Proof Point"
+            ],
+            "blocked": true,
+            "reasons": [
+              "repeated_sentence_ratio>0.12",
+              "conclusion_similarity>0.7"
+            ]
+          },
+          "expert_insight_complete": true,
+          "expert_insight_missing_fields": [],
+          "reason": "repeated_sentence_ratio>0.12; conclusion_similarity>0.7"
+        }
+      ],
+      "signalCardItems": [
+        {
+          "id": "707dc21843e2eb4c",
+          "title": "Advancements In Atomic-Scale Plasma Processing",
+          "infrastructure_relevance_score": 0.928,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "cloud_capacity_relevance:0.32(hyperscalers)",
+            "semiconductor_relevance:0.58(semiconductor, gpu)",
+            "power_grid_relevance:0.22(power)",
+            "capital_markets_relevance:0.28(capex)"
+          ],
+          "extraction_quality_score": 0.67,
+          "source_domain_adapter": "semiengineering",
+          "content_length": 625,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": false,
+          "repetition_block_reasons": [],
+          "repetition_check": null,
+          "expert_insight_complete": true,
+          "expert_insight_missing_fields": [],
+          "reason": "fail_closed: source_text_incomplete:source_evidence_length_below_1200, sentence_completion_score_below_0.92:0.567"
+        }
+      ],
+      "archiveOnlyItems": []
     }
   ],
-  "lastRunAt": "2026-06-22T13:00:04.504Z"
+  "lastRunAt": "2026-06-22T18:51:48.931Z"
 }
