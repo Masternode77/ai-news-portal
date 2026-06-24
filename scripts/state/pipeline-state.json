@@ -499,7 +499,9 @@
     "4240a2e12e224591",
     "815ce7914444d876",
     "64b3c3a82b08a2d1",
-    "779bac80cf74e87f"
+    "779bac80cf74e87f",
+    "d3735c4aa21d4f9a",
+    "a6ebeaf6fc673fa0"
   ],
   "dayPlans": {
     "2026-03-24": {
@@ -20568,19 +20570,19 @@
     "2026-06-24": {
       "date": "2026-06-24",
       "createdAt": "2026-06-23T17:21:05.011Z",
-      "refreshedAt": "2026-06-23T17:21:05.011Z",
+      "refreshedAt": "2026-06-24T00:00:50.550Z",
       "candidateWindowHours": 24,
       "curatedItems": [
         {
-          "id": "779bac80cf74e87f",
-          "source": "Toms Hardware",
-          "url": "https://www.tomshardware.com/pc-components/these-are-the-best-cpu-cooler-deals-we-found-this-prime-day-up-to-33-percent-off-deals-from-cooler-master-arctic-tryx-corsair-and-pccooler-for-every-budget",
-          "title": "These are the best CPU cooler deals we found this Prime Day, up to 33% off — deals from Cooler Master, Arctic, Tryx, Corsair, and PCCooler for every budget",
-          "snippet": "As Amazon's Prime Day gets started, now's your chance to snag some awesome deals on CPU coolers. We have singled out options from across the board, highlighting the best offers at each price point. Arctic's Liquid Freez…",
-          "contentText": "There are exactly two things every PC has in common: it needs power and it needs to be cooled. Modern-day desktops mostly scale linearly in cost, with higher-end builds typically opting for liquid cooling over conventional air cooling. As such, today, we've rounded up some of the best AIOs we could find as part of Amazon's Prime Day Deals, along with a nice little cameo of tradition at the end. All of these coolers represent great value, and you can't go wrong with any of them. Check out CPU cooler deals on Amazon First up, we have the Cooler Master Elite Liquid 240, a 240mm AIO liquid cooler that comes with two 120mm RGB fans and a similarly RGB-illuminated pump block featuring aa frosted hexagonal design. The supplied Dual Elite 120mm fans can spin between 600 and 2,100 RPM, are designe…",
-          "publishedAt": "2026-06-23T16:56:12.000Z",
-          "sourceImage": "https://cdn.mos.cms.futurecdn.net/HavNxSZqaFw4qZLexH6C8Y-1280-80.png",
-          "region": "Global",
+          "id": "d3735c4aa21d4f9a",
+          "source": "HPCwire",
+          "url": "https://www.hpcwire.com/off-the-wire/gartner-predicts-neocloud-providers-will-capture-20-of-the-267b-ai-cloud-market-by-2030/",
+          "title": "Gartner Predicts Neocloud Providers Will Capture 20% of the $267B AI Cloud Market by 2030",
+          "snippet": "STAMFORD, Conn., June 23, 2026 — By 2030, neocloud providers will capture 20% of the $267 billion AI cloud market, according to Gartner, Inc., a business and technology insights company. “Neocloud” refers to cloud provi…",
+          "contentText": "STAMFORD, Conn., June 23, 2026 &#8212; By 2030, neocloud providers will capture 20% of the $267 billion AI cloud market, according to Gartner, Inc. , a business and technology insights company. “Neocloud” refers to cloud providers built specifically for AI and high-performance workloads. The rapid growth of GenAI is creating unprecedented demand for GPU-intensive computing, accelerating investment in localized, high-performance infrastructure and exposing the limitations in traditional cloud models. Neoclouds are challenging the dominance of hyperscalers by focusing on AI-optimized infrastructure. “While U.S. hyperscalers are launching their own sovereign offerings, a new wave of specialized neocloud providers is gaining significant traction,” said Enrique Castera, Sr Director Analyst at…",
+          "publishedAt": "2026-06-23T21:44:52.000Z",
+          "sourceImage": "https://www.hpcwire.com/wp-content/uploads/2026/06/Gartner-300x150.jpg",
+          "region": "US",
           "language": "en",
           "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
           "category": "AI Infrastructure",
@@ -20593,8 +20595,78 @@
             "cloud buyers",
             "investors"
           ],
-          "article_type": "Other",
-          "urgency_score": 0.73,
+          "article_type": "Market Analysis",
+          "urgency_score": 0.45,
+          "taxonomy_confidence": 0.8,
+          "taxonomy_reasons": [
+            "ai infrastructure",
+            "neocloud"
+          ],
+          "direct_ai_infrastructure_relevance": 1,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0.32,
+          "semiconductor_relevance": 0.22,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.835,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "cloud_capacity_relevance:0.32(hyperscalers)",
+            "semiconductor_relevance:0.22(gpu)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 1,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0.32,
+            "semiconductor_relevance": 0.22,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.835,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+              "cloud_capacity_relevance:0.32(hyperscalers)",
+              "semiconductor_relevance:0.22(gpu)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 81
+        },
+        {
+          "id": "a6ebeaf6fc673fa0",
+          "source": "Toms Hardware",
+          "url": "https://www.tomshardware.com/desktops/gaming-pcs/save-almost-usd1-500-instantly-on-an-rtx-5080-gaming-pc-legion-tower-7i-gen-10-packs-core-ultra-7-265k-and-32gb-ddr5",
+          "title": "Save almost $1,500 instantly on an RTX 5080 gaming PC — Legion Tower 7i Gen 10 packs Core Ultra 7 265K and 32GB DDR5",
+          "snippet": "Lenovo temporarily puts the Legion Tower 7i Gen 10 on sale for $2,899.99, 33% off its regular price tag.",
+          "contentText": "At the rate that memory and storage prices keep rising, sometimes you can save hundreds of dollars by buying a prebuilt gaming PC as opposed to building it yourself. Lenovo has temporarily slashed the pricing of its Legion Tower 7i Gen 10 gaming PC by 33%, putting up to $1,430 in savings into your pockets. If you would rather purchase a prebuilt system than assemble one yourself, Lenovo's gaming rig definitely deserves your attention. Check out the Legion Tower 7i Gen 10 deal on Lenovo There's really nothing to hate about the Legion Tower 7i Gen 10. The system has a Core Ultra 7 265K processor with 20 cores and a maximum boost clock speed of up to 5.5 GHz. It's the perfect fit for the high-end GeForce RTX 5080 . The powerhouse combo has everything it needs to run the latest AAA games at 4…",
+          "publishedAt": "2026-06-23T21:26:57.000Z",
+          "sourceImage": "https://cdn.mos.cms.futurecdn.net/dfgiP56bSJPhZViCQ6pwUD-1280-80.jpg",
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "category": "AI Infrastructure",
+          "primary_category": "AI Infrastructure",
+          "secondary_category": "GPU clusters and deployment readiness",
+          "infrastructure_layer": "Compute",
+          "affected_stakeholders": [
+            "operators",
+            "hyperscalers",
+            "cloud buyers",
+            "investors"
+          ],
+          "article_type": "Supply Chain",
+          "urgency_score": 0.43,
           "taxonomy_confidence": 0.77,
           "taxonomy_reasons": [
             "ai infrastructure",
@@ -20604,36 +20676,32 @@
           "data_center_relevance": 0,
           "cloud_capacity_relevance": 0,
           "semiconductor_relevance": 0.22,
-          "power_grid_relevance": 0.22,
-          "cooling_relevance": 0.82,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
           "capital_markets_relevance": 0,
-          "enterprise_ai_infrastructure_relevance": 0,
-          "infrastructure_relevance_score": 0.98,
+          "enterprise_ai_infrastructure_relevance": 0.18,
+          "infrastructure_relevance_score": 0.778,
           "infrastructure_relevance_tier": "full_memo",
           "infrastructure_relevance_action": "generate_full_memo",
           "infrastructure_relevance_reasons": [
             "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "semiconductor_relevance:0.22(gpu)",
-            "power_grid_relevance:0.22(power)",
-            "cooling_relevance:0.82(cooling, liquid cooling)"
+            "semiconductor_relevance:0.22(gpu)"
           ],
           "infrastructure_relevance": {
             "direct_ai_infrastructure_relevance": 1,
             "data_center_relevance": 0,
             "cloud_capacity_relevance": 0,
             "semiconductor_relevance": 0.22,
-            "power_grid_relevance": 0.22,
-            "cooling_relevance": 0.82,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
             "capital_markets_relevance": 0,
-            "enterprise_ai_infrastructure_relevance": 0,
-            "infrastructure_relevance_score": 0.98,
+            "enterprise_ai_infrastructure_relevance": 0.18,
+            "infrastructure_relevance_score": 0.778,
             "infrastructure_relevance_tier": "full_memo",
             "infrastructure_relevance_action": "generate_full_memo",
             "infrastructure_relevance_reasons": [
               "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-              "semiconductor_relevance:0.22(gpu)",
-              "power_grid_relevance:0.22(power)",
-              "cooling_relevance:0.82(cooling, liquid cooling)"
+              "semiconductor_relevance:0.22(gpu)"
             ],
             "infrastructureRelevanceAction": "generate_full_memo",
             "articlePagePublished": true,
@@ -20641,86 +20709,17 @@
             "archiveOnly": false,
             "archiveOnlyReason": null
           },
-          "score": 87
+          "score": 79
         },
         {
-          "id": "64b3c3a82b08a2d1",
-          "source": "HPCwire",
-          "url": "https://www.hpcwire.com/off-the-wire/semidynamics-brings-its-full-inference-stack-to-isc-2026/",
-          "title": "Semidynamics Brings Its Full Inference Stack to ISC 2026",
-          "snippet": "BARCELONA, SPAIN, June 23, 2026 — Building high-performance AI silicon is necessary but no longer sufficient: the compute is only useful if the memory system can keep it fed. That is the argument Semidynamics CEO Roger…",
-          "contentText": "BARCELONA, SPAIN, June 23, 2026 &#8212; Building high-performance AI silicon is necessary but no longer sufficient: the compute is only useful if the memory system can keep it fed. That is the argument Semidynamics CEO Roger Espasa will bring to ISC High Performance 2026 in Hamburg (23–25 June, booth A22, Hall H), where the Barcelona-based company — which taped out its first 3nm chip with TSMC in December 2025 — will present its plans for a complete memory-centric inference platform, from RISC-V core to liquid-cooled, OCP-compliant rack, at a major HPC trade show for the first time. Semidynamics at ISC 2026 “You need serious compute to play in AI inference, and we built it,” said Espasa. “But compute you can’t feed is wasted silicon. The hard, still-unsolved problem is the memory architec…",
-          "publishedAt": "2026-06-23T17:16:06.000Z",
-          "sourceImage": "https://www.hpcwire.com/wp-content/uploads/2026/06/semidynamics-isc-hpc-2026-300x169.jpg",
-          "region": "US",
-          "language": "en",
-          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
-          "category": "AI Infrastructure",
-          "primary_category": "AI Infrastructure",
-          "secondary_category": "GPU clusters and deployment readiness",
-          "infrastructure_layer": "Compute",
-          "affected_stakeholders": [
-            "operators",
-            "hyperscalers",
-            "cloud buyers",
-            "investors"
-          ],
-          "article_type": "Product / Platform Update",
-          "urgency_score": 0.45,
-          "taxonomy_confidence": 0.85,
-          "taxonomy_reasons": [
-            "ai infrastructure",
-            "neocloud",
-            "hpc"
-          ],
-          "direct_ai_infrastructure_relevance": 1,
-          "data_center_relevance": 0,
-          "cloud_capacity_relevance": 0,
-          "semiconductor_relevance": 0.5,
-          "power_grid_relevance": 0,
-          "cooling_relevance": 0,
-          "capital_markets_relevance": 0,
-          "enterprise_ai_infrastructure_relevance": 0,
-          "infrastructure_relevance_score": 0.84,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud, hpc)",
-            "semiconductor_relevance:0.50(tsmc, gpu)"
-          ],
-          "infrastructure_relevance": {
-            "direct_ai_infrastructure_relevance": 1,
-            "data_center_relevance": 0,
-            "cloud_capacity_relevance": 0,
-            "semiconductor_relevance": 0.5,
-            "power_grid_relevance": 0,
-            "cooling_relevance": 0,
-            "capital_markets_relevance": 0,
-            "enterprise_ai_infrastructure_relevance": 0,
-            "infrastructure_relevance_score": 0.84,
-            "infrastructure_relevance_tier": "full_memo",
-            "infrastructure_relevance_action": "generate_full_memo",
-            "infrastructure_relevance_reasons": [
-              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud, hpc)",
-              "semiconductor_relevance:0.50(tsmc, gpu)"
-            ],
-            "infrastructureRelevanceAction": "generate_full_memo",
-            "articlePagePublished": true,
-            "homepagePublished": true,
-            "archiveOnly": false,
-            "archiveOnlyReason": null
-          },
-          "score": 81
-        },
-        {
-          "id": "c342d529dc3f0135",
+          "id": "51a6cad3080e9f43",
           "source": "StorageReview",
-          "url": "https://www.storagereview.com/news/amd-and-ibm-advance-hybrid-quantum-centric-supercomputing-strategy",
-          "title": "AMD and IBM Advance Hybrid Quantum-Centric Supercomputing Strategy",
-          "snippet": "As quantum computing continues its transition from research labs to practical computing environments, AMD and IBM are positioning themselves around a common vision: hybrid computing architectures that combine quantum pr…",
-          "contentText": "As quantum computing continues its transition from research labs to practical computing environments, AMD and IBM are positioning themselves around a common vision: hybrid computing architectures that combine quantum processors, high-performance computing (HPC), and AI into a unified platform. Recent disclosures from both companies outline a growing partnership focused on building the infrastructure required to make quantum computing useful at scale, highlighting a broader industry shift away from standalone quantum systems and toward tightly integrated quantum-classical environments. The collaboration comes as governments, research institutions, and enterprises increase investment in quantum technologies. The U.S. Department of Commerce announced in May 2026 plans to invest more than $2…",
-          "publishedAt": "2026-06-23T15:55:59.000Z",
-          "sourceImage": "https://www.storagereview.com/wp-content/uploads/2026/06/IBM-and-AMD.jpeg",
+          "url": "https://www.storagereview.com/news/micron-and-anthropic-form-strategic-ai-infrastructure-partnership",
+          "title": "Micron and Anthropic Form Strategic AI Infrastructure Partnership",
+          "snippet": "Micron has announced a strategic agreement with Anthropic focused on AI memory and storage architecture, long-term component supply, enterprise deployment of Anthropic’s Claude models within Micron, and participation in…",
+          "contentText": "Micron has announced a strategic agreement with Anthropic focused on AI memory and storage architecture, long-term component supply, enterprise deployment of Anthropic&#8217;s Claude models within Micron, and participation in Anthropic&#8217;s Series H funding round. The partnership aligns infrastructure development more closely with the requirements of large-scale AI training and inference environments. The companies plan to collaborate on memory and storage subsystem design and optimization, while also establishing a supply framework intended to support Anthropic&#8217;s future compute expansion. Micron Executive Vice President and Chief Business Officer Sumit Sadana said memory and storage technologies remain foundational to AI deployments spanning data centers and edge environments. H…",
+          "publishedAt": "2026-06-23T19:38:10.000Z",
+          "sourceImage": "https://www.storagereview.com/wp-content/uploads/2026/06/micron-anthropic-collab.png",
           "region": "US",
           "language": "en",
           "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
@@ -20734,44 +20733,47 @@
             "cloud buyers",
             "investors"
           ],
-          "article_type": "Product / Platform Update",
-          "urgency_score": 0.45,
-          "taxonomy_confidence": 0.85,
+          "article_type": "Capacity Expansion",
+          "urgency_score": 0.55,
+          "taxonomy_confidence": 0.8,
           "taxonomy_reasons": [
             "ai infrastructure",
-            "neocloud",
-            "hpc"
+            "neocloud"
           ],
           "direct_ai_infrastructure_relevance": 1,
-          "data_center_relevance": 0,
+          "data_center_relevance": 0.42,
           "cloud_capacity_relevance": 0,
-          "semiconductor_relevance": 0.517,
+          "semiconductor_relevance": 0.22,
           "power_grid_relevance": 0,
           "cooling_relevance": 0,
-          "capital_markets_relevance": 0,
-          "enterprise_ai_infrastructure_relevance": 0,
-          "infrastructure_relevance_score": 0.844,
+          "capital_markets_relevance": 0.28,
+          "enterprise_ai_infrastructure_relevance": 0.18,
+          "infrastructure_relevance_score": 0.892,
           "infrastructure_relevance_tier": "full_memo",
           "infrastructure_relevance_action": "generate_full_memo",
           "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud, high-performance computing)",
-            "semiconductor_relevance:0.52(amd, gpu)"
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "data_center_relevance:0.42(data centers)",
+            "semiconductor_relevance:0.22(gpu)",
+            "capital_markets_relevance:0.28(funding)"
           ],
           "infrastructure_relevance": {
             "direct_ai_infrastructure_relevance": 1,
-            "data_center_relevance": 0,
+            "data_center_relevance": 0.42,
             "cloud_capacity_relevance": 0,
-            "semiconductor_relevance": 0.517,
+            "semiconductor_relevance": 0.22,
             "power_grid_relevance": 0,
             "cooling_relevance": 0,
-            "capital_markets_relevance": 0,
-            "enterprise_ai_infrastructure_relevance": 0,
-            "infrastructure_relevance_score": 0.844,
+            "capital_markets_relevance": 0.28,
+            "enterprise_ai_infrastructure_relevance": 0.18,
+            "infrastructure_relevance_score": 0.892,
             "infrastructure_relevance_tier": "full_memo",
             "infrastructure_relevance_action": "generate_full_memo",
             "infrastructure_relevance_reasons": [
-              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud, high-performance computing)",
-              "semiconductor_relevance:0.52(amd, gpu)"
+              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+              "data_center_relevance:0.42(data centers)",
+              "semiconductor_relevance:0.22(gpu)",
+              "capital_markets_relevance:0.28(funding)"
             ],
             "infrastructureRelevanceAction": "generate_full_memo",
             "articlePagePublished": true,
@@ -20779,7 +20781,78 @@
             "archiveOnly": false,
             "archiveOnlyReason": null
           },
-          "score": 81
+          "score": 75
+        },
+        {
+          "id": "1d74ad6b4492c1e5",
+          "source": "Data Center POST",
+          "url": "https://datacenterpost.com/data-center-refrigerant-market-to-surpass-usd-1-62-billion-by-2035/",
+          "title": "Data Center Refrigerant Market to Surpass USD 1.62 Billion by 2035",
+          "snippet": "TL;DR Massive Market Growth: The global data center refrigerant market is projected to reach $1.62 billion by 2035 (up from $633 million in 2025), driven by the rapid expansion of artificial intelligence, cloud platform…",
+          "contentText": "TL;DR Massive Market Growth: The global data center refrigerant market is projected to reach $1.62 billion by 2035 (up from $633 million in 2025), driven by the rapid expansion of artificial intelligence, cloud platforms, and high-density computing. Shift to Sustainable Solutions: Regulatory pressures and sustainability goals are forcing a transition to low-emission alternatives, with Hydrofluoroolefins (HFOs) capturing a dominant 67.7% market share in 2025 due to their low global warming potential and high cooling efficiency. U.S. Market Leadership: The United States accounted for a massive 79% of the market in 2025, heavily supported by continuous investments in hyperscale expansions and strict energy efficiency mandates. # # # The global data center refrigerant market was valued at USD…",
+          "publishedAt": "2026-06-23T17:30:00.000Z",
+          "sourceImage": "https://d3qut6qyo6tw2j.cloudfront.net/bin/uploads/2026/06/23124337/DCP_Data-Center-Refrigerant-Market-to-Surpass-USD-1.62-Billion-by-2035_image-1024x510.png",
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "Colocation & Wholesale",
+          "category": "Data Centers",
+          "primary_category": "Data Centers",
+          "secondary_category": "Campus development and colocation capacity",
+          "infrastructure_layer": "Facility",
+          "affected_stakeholders": [
+            "data center operators",
+            "developers",
+            "site selectors",
+            "investors"
+          ],
+          "article_type": "Capacity Expansion",
+          "urgency_score": 0.46,
+          "taxonomy_confidence": 0.86,
+          "taxonomy_reasons": [
+            "data center",
+            "colocation",
+            "wholesale"
+          ],
+          "direct_ai_infrastructure_relevance": 0.78,
+          "data_center_relevance": 0.89,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0.34,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.873,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:0.78",
+            "data_center_relevance:0.89(data center, colocation)",
+            "cooling_relevance:0.34(cooling)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 0.78,
+            "data_center_relevance": 0.89,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0.34,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.873,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:0.78",
+              "data_center_relevance:0.89(data center, colocation)",
+              "cooling_relevance:0.34(cooling)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 75
         },
         {
           "id": "5f1cd4e7f2f33f7f",
@@ -20851,7 +20924,7 @@
             "archiveOnly": false,
             "archiveOnlyReason": null
           },
-          "score": 80
+          "score": 72
         },
         {
           "id": "ec785e65cc82e5f7",
@@ -20919,105 +20992,30 @@
             "archiveOnly": false,
             "archiveOnlyReason": null
           },
-          "score": 79
-        },
-        {
-          "id": "9edc1fce82e78edc",
-          "source": "HPCwire",
-          "url": "https://www.hpcwire.com/off-the-wire/eurohpc-adds-daedalus-and-arrhenius-as-jupiter-holds-top-five-top500-spot/",
-          "title": "EuroHPC Adds DAEDALUS and Arrhenius as JUPITER Holds Top-Five TOP500 Spot",
-          "snippet": "June 23, 2026 — Today, the latest TOP500 and Green500 rankings once again featured all operational EuroHPC supercomputers, including two new systems, DAEDALUS and Arrhenius, while JUPITER remains among the world’s top f…",
-          "contentText": "June 23, 2026 &#8212; Today, the latest TOP500 and Green500 rankings once again featured all operational EuroHPC supercomputers, including two new systems, DAEDALUS and Arrhenius, while JUPITER remains among the world&#8217;s top five with its exascale capabilities. The latest editions of the TOP500 and Green500 lists were released today, on Tuesday 23rd June 2026, at the ISC 2026 event being held this week in Hamburg, Germany. JUPITER remains among the world’s five most powerful supercomputers, while DAEDALUS and Arrhenius, two new mid-range systems located in Greece and Sweden made their first appearance in the TOP500, entering the Top 50 at 31st and 42nd place, respectively. All other operational EuroHPC supercomputers are featured on the TOP500 list of the world’s most powerful system…",
-          "publishedAt": "2026-06-23T16:51:56.000Z",
-          "sourceImage": "https://www.hpcwire.com/wp-content/uploads/2026/06/20260623_2-300x203.png",
-          "region": "US",
-          "language": "en",
-          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
-          "category": "AI Infrastructure",
-          "primary_category": "AI Infrastructure",
-          "secondary_category": "GPU clusters and deployment readiness",
-          "infrastructure_layer": "Compute",
-          "affected_stakeholders": [
-            "operators",
-            "hyperscalers",
-            "cloud buyers",
-            "investors"
-          ],
-          "article_type": "Capacity Expansion",
-          "urgency_score": 0.43,
-          "taxonomy_confidence": 0.77,
-          "taxonomy_reasons": [
-            "ai infrastructure",
-            "neocloud"
-          ],
-          "direct_ai_infrastructure_relevance": 1,
-          "data_center_relevance": 0,
-          "cloud_capacity_relevance": 0,
-          "semiconductor_relevance": 0.22,
-          "power_grid_relevance": 0,
-          "cooling_relevance": 0,
-          "capital_markets_relevance": 0,
-          "enterprise_ai_infrastructure_relevance": 0,
-          "infrastructure_relevance_score": 0.778,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "semiconductor_relevance:0.22(gpu)"
-          ],
-          "infrastructure_relevance": {
-            "direct_ai_infrastructure_relevance": 1,
-            "data_center_relevance": 0,
-            "cloud_capacity_relevance": 0,
-            "semiconductor_relevance": 0.22,
-            "power_grid_relevance": 0,
-            "cooling_relevance": 0,
-            "capital_markets_relevance": 0,
-            "enterprise_ai_infrastructure_relevance": 0,
-            "infrastructure_relevance_score": 0.778,
-            "infrastructure_relevance_tier": "full_memo",
-            "infrastructure_relevance_action": "generate_full_memo",
-            "infrastructure_relevance_reasons": [
-              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-              "semiconductor_relevance:0.22(gpu)"
-            ],
-            "infrastructureRelevanceAction": "generate_full_memo",
-            "articlePagePublished": true,
-            "homepagePublished": true,
-            "archiveOnly": false,
-            "archiveOnlyReason": null
-          },
-          "score": 79
+          "score": 71
         }
       ],
       "curatedIds": [
-        "779bac80cf74e87f",
-        "64b3c3a82b08a2d1",
-        "c342d529dc3f0135",
+        "d3735c4aa21d4f9a",
+        "a6ebeaf6fc673fa0",
+        "51a6cad3080e9f43",
+        "1d74ad6b4492c1e5",
         "5f1cd4e7f2f33f7f",
-        "ec785e65cc82e5f7",
-        "9edc1fce82e78edc"
+        "ec785e65cc82e5f7"
       ],
       "publishedIds": [
         "64b3c3a82b08a2d1",
-        "779bac80cf74e87f"
+        "779bac80cf74e87f",
+        "d3735c4aa21d4f9a",
+        "a6ebeaf6fc673fa0"
       ],
       "slotPublications": {
-        "0": true
+        "0": true,
+        "1": true
       }
     }
   },
   "runHistory": [
-    {
-      "at": "2026-05-07T16:58:35.542Z",
-      "day": "2026-05-08",
-      "slot": 0,
-      "publishedCount": 2,
-      "publishedIds": [
-        "5c3ad4989e1f7056",
-        "56a5fd6cc9a86f35"
-      ]
-    },
     {
       "at": "2026-05-07T23:55:05.936Z",
       "day": "2026-05-08",
@@ -31335,7 +31333,75 @@
         }
       ],
       "archiveOnlyItems": []
+    },
+    {
+      "at": "2026-06-24T00:00:50.550Z",
+      "day": "2026-06-24",
+      "slot": 1,
+      "publishedCount": 0,
+      "signalCardCount": 2,
+      "archiveOnlyCount": 0,
+      "processedIds": [
+        "d3735c4aa21d4f9a",
+        "a6ebeaf6fc673fa0"
+      ],
+      "blockedCount": 2,
+      "blockedItems": [
+        {
+          "id": "d3735c4aa21d4f9a",
+          "title": "Gartner Predicts Neocloud Providers Will Capture 20% of the $267B AI Cloud Market by 2030",
+          "infrastructure_relevance_score": 0.985,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, ai data center, neocloud)",
+            "data_center_relevance:0.84(data center, data centers)",
+            "cloud_capacity_relevance:0.56(hyperscalers, google cloud)",
+            "semiconductor_relevance:0.44(amd, gpu)",
+            "power_grid_relevance:0.22(power)"
+          ],
+          "extraction_quality_score": 1,
+          "source_domain_adapter": "generic",
+          "content_length": 1639,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": false,
+          "repetition_block_reasons": [],
+          "repetition_check": null,
+          "expert_insight_complete": true,
+          "expert_insight_missing_fields": [],
+          "reason": "fail_closed: source_text_incomplete:ellipsis_truncation_artifact, ellipsis_truncation_artifact"
+        },
+        {
+          "id": "a6ebeaf6fc673fa0",
+          "title": "Save almost $1,500 instantly on an RTX 5080 gaming PC — Legion Tower 7i Gen 10 packs Core Ultra 7 265K and 32GB DDR5",
+          "infrastructure_relevance_score": 0.875,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "cloud_capacity_relevance:0.32(hyperscalers)",
+            "semiconductor_relevance:0.22(gpu)",
+            "power_grid_relevance:0.22(power)",
+            "cooling_relevance:0.34(cooling)",
+            "capital_markets_relevance:0.28(capex)"
+          ],
+          "extraction_quality_score": 1,
+          "source_domain_adapter": "generic",
+          "content_length": 1755,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": false,
+          "repetition_block_reasons": [],
+          "repetition_check": null,
+          "expert_insight_complete": false,
+          "expert_insight_missing_fields": [
+            "concrete_facts",
+            "named_companies"
+          ],
+          "reason": "expert_insight_missing_fields concrete_facts, named_companies"
+        }
+      ],
+      "archiveOnlyItems": []
     }
   ],
-  "lastRunAt": "2026-06-23T17:21:05.011Z"
+  "lastRunAt": "2026-06-24T00:00:50.550Z"
 }
