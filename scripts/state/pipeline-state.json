@@ -501,7 +501,9 @@
     "64b3c3a82b08a2d1",
     "779bac80cf74e87f",
     "d3735c4aa21d4f9a",
-    "a6ebeaf6fc673fa0"
+    "a6ebeaf6fc673fa0",
+    "7dd8017bab80a8d8",
+    "65490873599f5aab"
   ],
   "dayPlans": {
     "2026-03-24": {
@@ -20570,70 +20572,71 @@
     "2026-06-24": {
       "date": "2026-06-24",
       "createdAt": "2026-06-23T17:21:05.011Z",
-      "refreshedAt": "2026-06-24T00:00:50.550Z",
+      "refreshedAt": "2026-06-24T10:27:26.059Z",
       "candidateWindowHours": 24,
       "curatedItems": [
         {
-          "id": "d3735c4aa21d4f9a",
-          "source": "HPCwire",
-          "url": "https://www.hpcwire.com/off-the-wire/gartner-predicts-neocloud-providers-will-capture-20-of-the-267b-ai-cloud-market-by-2030/",
-          "title": "Gartner Predicts Neocloud Providers Will Capture 20% of the $267B AI Cloud Market by 2030",
-          "snippet": "STAMFORD, Conn., June 23, 2026 — By 2030, neocloud providers will capture 20% of the $267 billion AI cloud market, according to Gartner, Inc., a business and technology insights company. “Neocloud” refers to cloud provi…",
-          "contentText": "STAMFORD, Conn., June 23, 2026 &#8212; By 2030, neocloud providers will capture 20% of the $267 billion AI cloud market, according to Gartner, Inc. , a business and technology insights company. “Neocloud” refers to cloud providers built specifically for AI and high-performance workloads. The rapid growth of GenAI is creating unprecedented demand for GPU-intensive computing, accelerating investment in localized, high-performance infrastructure and exposing the limitations in traditional cloud models. Neoclouds are challenging the dominance of hyperscalers by focusing on AI-optimized infrastructure. “While U.S. hyperscalers are launching their own sovereign offerings, a new wave of specialized neocloud providers is gaining significant traction,” said Enrique Castera, Sr Director Analyst at…",
-          "publishedAt": "2026-06-23T21:44:52.000Z",
-          "sourceImage": "https://www.hpcwire.com/wp-content/uploads/2026/06/Gartner-300x150.jpg",
+          "id": "7dd8017bab80a8d8",
+          "source": "Toms Hardware",
+          "url": "https://www.tomshardware.com/pc-components/gpu-drivers/five-year-old-nvidia-a100-servers-triple-in-price-in-china",
+          "title": "China black market Nvidia prices rocket in wake of smuggling crackdown and customs freeze — five-year-old A100 servers triple in price, now fetching up to $82,000",
+          "snippet": "Chinese companies are paying as much as $82,000 for servers built around Nvidia's five-year-old A100 accelerator",
+          "contentText": "Chinese companies are paying as much as 600,000 Chinese Yuan ($82,000) for servers built around Nvidia's five-year-old A100 accelerator and modifying gaming GPUs to run AI workloads, as a U.S. smuggling crackdown and a Chinese customs freeze on legally approved chips choke off every other supply route at once, according to the Financial Times . The price of an A100 server has roughly tripled since late last year, while Nvidia's flagship DGX B300 system has doubled to more than 8 million ($1.1 million) on the black market over the past six months. Servers built on the A100, a data-center GPU Nvidia launched in 2020, have climbed from about 200,000 Chinese Yuan ($22,300) to as much as 600,000 ($67,000) since late last year, the FT reported, citing chip traders. Demand has also pulled in gam…",
+          "publishedAt": "2026-06-24T10:21:28.000Z",
+          "sourceImage": "https://cdn.mos.cms.futurecdn.net/2Mu9zo58bjnNith76bmxng-1280-80.jpg",
           "region": "US",
           "language": "en",
           "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
-          "category": "AI Infrastructure",
-          "primary_category": "AI Infrastructure",
-          "secondary_category": "GPU clusters and deployment readiness",
-          "infrastructure_layer": "Compute",
+          "category": "Semiconductors",
+          "primary_category": "Semiconductors",
+          "secondary_category": "Accelerators, memory, and advanced packaging",
+          "infrastructure_layer": "Silicon",
           "affected_stakeholders": [
-            "operators",
+            "semiconductor suppliers",
             "hyperscalers",
-            "cloud buyers",
+            "server OEMs",
             "investors"
           ],
-          "article_type": "Market Analysis",
-          "urgency_score": 0.45,
-          "taxonomy_confidence": 0.8,
+          "article_type": "Supply Chain",
+          "urgency_score": 0.48,
+          "taxonomy_confidence": 0.85,
           "taxonomy_reasons": [
-            "ai infrastructure",
-            "neocloud"
+            "chip",
+            "gpu",
+            "nvidia"
           ],
           "direct_ai_infrastructure_relevance": 1,
           "data_center_relevance": 0,
-          "cloud_capacity_relevance": 0.32,
-          "semiconductor_relevance": 0.22,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0.818,
           "power_grid_relevance": 0,
           "cooling_relevance": 0,
           "capital_markets_relevance": 0,
-          "enterprise_ai_infrastructure_relevance": 0,
-          "infrastructure_relevance_score": 0.835,
+          "enterprise_ai_infrastructure_relevance": 0.24,
+          "infrastructure_relevance_score": 0.945,
           "infrastructure_relevance_tier": "full_memo",
           "infrastructure_relevance_action": "generate_full_memo",
           "infrastructure_relevance_reasons": [
             "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "cloud_capacity_relevance:0.32(hyperscalers)",
-            "semiconductor_relevance:0.22(gpu)"
+            "semiconductor_relevance:0.82(nvidia, accelerator, gpu)",
+            "enterprise_ai_infrastructure_relevance:0.24(ai workloads)"
           ],
           "infrastructure_relevance": {
             "direct_ai_infrastructure_relevance": 1,
             "data_center_relevance": 0,
-            "cloud_capacity_relevance": 0.32,
-            "semiconductor_relevance": 0.22,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0.818,
             "power_grid_relevance": 0,
             "cooling_relevance": 0,
             "capital_markets_relevance": 0,
-            "enterprise_ai_infrastructure_relevance": 0,
-            "infrastructure_relevance_score": 0.835,
+            "enterprise_ai_infrastructure_relevance": 0.24,
+            "infrastructure_relevance_score": 0.945,
             "infrastructure_relevance_tier": "full_memo",
             "infrastructure_relevance_action": "generate_full_memo",
             "infrastructure_relevance_reasons": [
               "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-              "cloud_capacity_relevance:0.32(hyperscalers)",
-              "semiconductor_relevance:0.22(gpu)"
+              "semiconductor_relevance:0.82(nvidia, accelerator, gpu)",
+              "enterprise_ai_infrastructure_relevance:0.24(ai workloads)"
             ],
             "infrastructureRelevanceAction": "generate_full_memo",
             "articlePagePublished": true,
@@ -20641,18 +20644,157 @@
             "archiveOnly": false,
             "archiveOnlyReason": null
           },
-          "score": 81
+          "score": 86
         },
         {
-          "id": "a6ebeaf6fc673fa0",
+          "id": "65490873599f5aab",
+          "source": "Capacity Media",
+          "url": "https://capacityglobal.com/news/nokia-google-cloud-ai-agent-partnership/",
+          "title": "Google Cloud and Nokia launch AI agents for telecoms",
+          "snippet": "Nokia and Google Cloud have partnered to embed AI agents built with Gemini AI into Nokia’s autonomous network product suite. The post Google Cloud and Nokia launch AI agents for telecoms appeared first on Capacity.",
+          "contentText": "Nokia is expected to develop and launch six AI agents as part of the collaboration to eliminate manual troubleshooting bottlenecks. As a result, telecom providers should be able to enjoy lower operational costs and rapidly resolve network issues for their customers. Google said, in some cases, network problem-solving times could be cut by 50-80%. “The AI era demands a new kind of network – one that is programmable, AI-native and able to operate at machine speed,” said Vivek Jaiswal, senior vice president of autonomous networks at Nokia. “With Gemini-powered agents integrated into Nokia&#8217;s automation portfolio, we’re helping telecom providers move beyond manual operations to maximise performance, ensure reliability and find new efficiencies within their data.” Nokia’s six specialised…",
+          "publishedAt": "2026-06-24T10:14:13.000Z",
+          "sourceImage": "https://capacityglobal.com/wp-content/uploads/2026/03/Metro-Connect-Fall-2026-327x218.webp",
+          "region": "APAC",
+          "language": "en",
+          "defaultCategory": "Hyperscalers & Cloud",
+          "category": "Cloud Capacity",
+          "primary_category": "Cloud Capacity",
+          "secondary_category": "Hyperscale regions and accelerator availability",
+          "infrastructure_layer": "Cloud Platform",
+          "affected_stakeholders": [
+            "hyperscalers",
+            "cloud buyers",
+            "enterprise IT",
+            "operators"
+          ],
+          "article_type": "Capacity Expansion",
+          "urgency_score": 0.55,
+          "taxonomy_confidence": 0.72,
+          "taxonomy_reasons": [
+            "google cloud"
+          ],
+          "direct_ai_infrastructure_relevance": 0.64,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 1,
+          "semiconductor_relevance": 0,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.791,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:0.64",
+            "cloud_capacity_relevance:1.00(cloud capacity, hyperscalers, google cloud)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 0.64,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 1,
+            "semiconductor_relevance": 0,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.791,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:0.64",
+              "cloud_capacity_relevance:1.00(cloud capacity, hyperscalers, google cloud)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 79
+        },
+        {
+          "id": "ed75fad9a47f4c38",
+          "source": "Data Center Dynamics",
+          "url": "https://www.datacenterdynamics.com/en/news/eco-wave-power-taps-nvidia-to-build-digital-twins-to-optimize-wave-energy-systems-for-ai-data-centers/",
+          "title": "Eco Wave Power taps Nvidia to build digital twins to optimize wave energy systems for AI data centers",
+          "snippet": "Company is part of Nvidia's Inception program",
+          "contentText": "Company is part of Nvidia's Inception program",
+          "publishedAt": "2026-06-24T09:58:48.000Z",
+          "sourceImage": "https://media.datacenterdynamics.com/media/images/Jaffa-Station-during-storm-1536x10.63749ae2.fill-750x500.jpg",
+          "region": "Global",
+          "language": "en",
+          "defaultCategory": "Colocation & Wholesale",
+          "category": "Data Centers",
+          "primary_category": "Data Centers",
+          "secondary_category": "Campus development and colocation capacity",
+          "infrastructure_layer": "Facility",
+          "affected_stakeholders": [
+            "data center operators",
+            "developers",
+            "site selectors",
+            "investors"
+          ],
+          "article_type": "Other",
+          "urgency_score": 0.57,
+          "taxonomy_confidence": 0.77,
+          "taxonomy_reasons": [
+            "colocation",
+            "wholesale"
+          ],
+          "direct_ai_infrastructure_relevance": 0.78,
+          "data_center_relevance": 1,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0.378,
+          "power_grid_relevance": 0.297,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.972,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:0.78",
+            "data_center_relevance:1.00(data center, data centers, colocation)",
+            "semiconductor_relevance:0.38(nvidia)",
+            "power_grid_relevance:0.30(power)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 0.78,
+            "data_center_relevance": 1,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0.378,
+            "power_grid_relevance": 0.297,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.972,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:0.78",
+              "data_center_relevance:1.00(data center, data centers, colocation)",
+              "semiconductor_relevance:0.38(nvidia)",
+              "power_grid_relevance:0.30(power)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 75
+        },
+        {
+          "id": "66094f77bf7b18eb",
           "source": "Toms Hardware",
-          "url": "https://www.tomshardware.com/desktops/gaming-pcs/save-almost-usd1-500-instantly-on-an-rtx-5080-gaming-pc-legion-tower-7i-gen-10-packs-core-ultra-7-265k-and-32gb-ddr5",
-          "title": "Save almost $1,500 instantly on an RTX 5080 gaming PC — Legion Tower 7i Gen 10 packs Core Ultra 7 265K and 32GB DDR5",
-          "snippet": "Lenovo temporarily puts the Legion Tower 7i Gen 10 on sale for $2,899.99, 33% off its regular price tag.",
-          "contentText": "At the rate that memory and storage prices keep rising, sometimes you can save hundreds of dollars by buying a prebuilt gaming PC as opposed to building it yourself. Lenovo has temporarily slashed the pricing of its Legion Tower 7i Gen 10 gaming PC by 33%, putting up to $1,430 in savings into your pockets. If you would rather purchase a prebuilt system than assemble one yourself, Lenovo's gaming rig definitely deserves your attention. Check out the Legion Tower 7i Gen 10 deal on Lenovo There's really nothing to hate about the Legion Tower 7i Gen 10. The system has a Core Ultra 7 265K processor with 20 cores and a maximum boost clock speed of up to 5.5 GHz. It's the perfect fit for the high-end GeForce RTX 5080 . The powerhouse combo has everything it needs to run the latest AAA games at 4…",
-          "publishedAt": "2026-06-23T21:26:57.000Z",
-          "sourceImage": "https://cdn.mos.cms.futurecdn.net/dfgiP56bSJPhZViCQ6pwUD-1280-80.jpg",
-          "region": "US",
+          "url": "https://www.tomshardware.com/networking/routers/netgear-rolls-out-stellar-prime-day-deals-on-wi-fi-7-gear-up-to-33-percent-off-for-routers-mesh-systems-and-range-extenders",
+          "title": "Netgear rolls out stellar Prime Day deals on Wi-Fi 7 gear — up to 33% off for routers, mesh systems, and range extenders",
+          "snippet": "Netgear is loading up the discounts on Wi-Fi 7 hardware",
+          "contentText": "Yesterday, we brought you some poppin' deals on TP-Link Wi-Fi networking gear, and today, we're back in action with the latest sales from Netgear. Netgear has a wide assortment of Wi-Fi 7 hardware, ranging from entry-level dual-band Wi-Fi 7 routers to premium tri- and quad-band Orbi mesh routers. Today, you’ll find deals on everything from EXS25 plug-in range extender to the Orbi 770 tri-band mesh system. Orbi 770 Series Tri-Band WiFi 7 Mesh 2-Pack Nighthawk Dual-Band WiFi 7 Router Nighthawk Dual-Band WiFi 7 Router Nighthawk Dual-Band WiFi 7 Router Netgear WiFi 7 Range Extender The Netgear Orbi 770, currently on sale, is a mid-range Wi-Fi 7 mesh system that includes two wireless nodes. The system carries a regular asking price of $549.99, but is currently available with a $125 discount, t…",
+          "publishedAt": "2026-06-24T10:00:00.000Z",
+          "sourceImage": "https://cdn.mos.cms.futurecdn.net/5h87V9jzGBF6PzpWcx46hQ-1280-80.jpg",
+          "region": "Global",
           "language": "en",
           "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
           "category": "AI Infrastructure",
@@ -20665,7 +20807,7 @@
             "cloud buyers",
             "investors"
           ],
-          "article_type": "Supply Chain",
+          "article_type": "Other",
           "urgency_score": 0.43,
           "taxonomy_confidence": 0.77,
           "taxonomy_reasons": [
@@ -20709,71 +20851,68 @@
             "archiveOnly": false,
             "archiveOnlyReason": null
           },
-          "score": 79
+          "score": 74
         },
         {
-          "id": "51a6cad3080e9f43",
-          "source": "StorageReview",
-          "url": "https://www.storagereview.com/news/micron-and-anthropic-form-strategic-ai-infrastructure-partnership",
-          "title": "Micron and Anthropic Form Strategic AI Infrastructure Partnership",
-          "snippet": "Micron has announced a strategic agreement with Anthropic focused on AI memory and storage architecture, long-term component supply, enterprise deployment of Anthropic’s Claude models within Micron, and participation in…",
-          "contentText": "Micron has announced a strategic agreement with Anthropic focused on AI memory and storage architecture, long-term component supply, enterprise deployment of Anthropic&#8217;s Claude models within Micron, and participation in Anthropic&#8217;s Series H funding round. The partnership aligns infrastructure development more closely with the requirements of large-scale AI training and inference environments. The companies plan to collaborate on memory and storage subsystem design and optimization, while also establishing a supply framework intended to support Anthropic&#8217;s future compute expansion. Micron Executive Vice President and Chief Business Officer Sumit Sadana said memory and storage technologies remain foundational to AI deployments spanning data centers and edge environments. H…",
-          "publishedAt": "2026-06-23T19:38:10.000Z",
-          "sourceImage": "https://www.storagereview.com/wp-content/uploads/2026/06/micron-anthropic-collab.png",
+          "id": "cb28cc17943fb4bb",
+          "source": "Semiconductor Engineering",
+          "url": "https://semiengineering.com/how-far-left-can-you-shift/",
+          "title": "How Far Left Can You Shift?",
+          "snippet": "Complex chips require much more work earlier in the flow. The post How Far Left Can You Shift? appeared first on Semiconductor Engineering.",
+          "contentText": "More steps in the design flow are shifting left, which makes a complicated design process even more complex. This includes early software prototyping, workload mapping, verification, multi-physics integration, verification, IP qualification. Frank Schirrmeister, executive director of strategic programs for System Solutions at Synopsys, talks about the increasing number of steps, the potential trouble spots, how reuse and chiplets impact the flow, and what engineers need to know in order to get a working chip out the door and on schedule. The post How Far Left Can You Shift? appeared first on Semiconductor Engineering .",
+          "publishedAt": "2026-06-24T07:15:47.000Z",
+          "sourceImage": null,
           "region": "US",
           "language": "en",
           "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
-          "category": "AI Infrastructure",
-          "primary_category": "AI Infrastructure",
-          "secondary_category": "GPU clusters and deployment readiness",
-          "infrastructure_layer": "Compute",
+          "category": "Semiconductors",
+          "primary_category": "Semiconductors",
+          "secondary_category": "Accelerators, memory, and advanced packaging",
+          "infrastructure_layer": "Silicon",
           "affected_stakeholders": [
-            "operators",
+            "semiconductor suppliers",
             "hyperscalers",
-            "cloud buyers",
+            "server OEMs",
             "investors"
           ],
-          "article_type": "Capacity Expansion",
-          "urgency_score": 0.55,
-          "taxonomy_confidence": 0.8,
+          "article_type": "Product / Platform Update",
+          "urgency_score": 0.45,
+          "taxonomy_confidence": 0.78,
           "taxonomy_reasons": [
-            "ai infrastructure",
-            "neocloud"
+            "semiconductor",
+            "chip",
+            "gpu"
           ],
           "direct_ai_infrastructure_relevance": 1,
-          "data_center_relevance": 0.42,
+          "data_center_relevance": 0,
           "cloud_capacity_relevance": 0,
-          "semiconductor_relevance": 0.22,
+          "semiconductor_relevance": 0.58,
           "power_grid_relevance": 0,
           "cooling_relevance": 0,
-          "capital_markets_relevance": 0.28,
-          "enterprise_ai_infrastructure_relevance": 0.18,
-          "infrastructure_relevance_score": 0.892,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.858,
           "infrastructure_relevance_tier": "full_memo",
           "infrastructure_relevance_action": "generate_full_memo",
           "infrastructure_relevance_reasons": [
             "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "data_center_relevance:0.42(data centers)",
-            "semiconductor_relevance:0.22(gpu)",
-            "capital_markets_relevance:0.28(funding)"
+            "semiconductor_relevance:0.58(semiconductor, gpu)"
           ],
           "infrastructure_relevance": {
             "direct_ai_infrastructure_relevance": 1,
-            "data_center_relevance": 0.42,
+            "data_center_relevance": 0,
             "cloud_capacity_relevance": 0,
-            "semiconductor_relevance": 0.22,
+            "semiconductor_relevance": 0.58,
             "power_grid_relevance": 0,
             "cooling_relevance": 0,
-            "capital_markets_relevance": 0.28,
-            "enterprise_ai_infrastructure_relevance": 0.18,
-            "infrastructure_relevance_score": 0.892,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.858,
             "infrastructure_relevance_tier": "full_memo",
             "infrastructure_relevance_action": "generate_full_memo",
             "infrastructure_relevance_reasons": [
               "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-              "data_center_relevance:0.42(data centers)",
-              "semiconductor_relevance:0.22(gpu)",
-              "capital_markets_relevance:0.28(funding)"
+              "semiconductor_relevance:0.58(semiconductor, gpu)"
             ],
             "infrastructureRelevanceAction": "generate_full_memo",
             "articlePagePublished": true,
@@ -20781,161 +20920,18 @@
             "archiveOnly": false,
             "archiveOnlyReason": null
           },
-          "score": 75
+          "score": 74
         },
         {
-          "id": "1d74ad6b4492c1e5",
-          "source": "Data Center POST",
-          "url": "https://datacenterpost.com/data-center-refrigerant-market-to-surpass-usd-1-62-billion-by-2035/",
-          "title": "Data Center Refrigerant Market to Surpass USD 1.62 Billion by 2035",
-          "snippet": "TL;DR Massive Market Growth: The global data center refrigerant market is projected to reach $1.62 billion by 2035 (up from $633 million in 2025), driven by the rapid expansion of artificial intelligence, cloud platform…",
-          "contentText": "TL;DR Massive Market Growth: The global data center refrigerant market is projected to reach $1.62 billion by 2035 (up from $633 million in 2025), driven by the rapid expansion of artificial intelligence, cloud platforms, and high-density computing. Shift to Sustainable Solutions: Regulatory pressures and sustainability goals are forcing a transition to low-emission alternatives, with Hydrofluoroolefins (HFOs) capturing a dominant 67.7% market share in 2025 due to their low global warming potential and high cooling efficiency. U.S. Market Leadership: The United States accounted for a massive 79% of the market in 2025, heavily supported by continuous investments in hyperscale expansions and strict energy efficiency mandates. # # # The global data center refrigerant market was valued at USD…",
-          "publishedAt": "2026-06-23T17:30:00.000Z",
-          "sourceImage": "https://d3qut6qyo6tw2j.cloudfront.net/bin/uploads/2026/06/23124337/DCP_Data-Center-Refrigerant-Market-to-Surpass-USD-1.62-Billion-by-2035_image-1024x510.png",
-          "region": "US",
-          "language": "en",
-          "defaultCategory": "Colocation & Wholesale",
-          "category": "Data Centers",
-          "primary_category": "Data Centers",
-          "secondary_category": "Campus development and colocation capacity",
-          "infrastructure_layer": "Facility",
-          "affected_stakeholders": [
-            "data center operators",
-            "developers",
-            "site selectors",
-            "investors"
-          ],
-          "article_type": "Capacity Expansion",
-          "urgency_score": 0.46,
-          "taxonomy_confidence": 0.86,
-          "taxonomy_reasons": [
-            "data center",
-            "colocation",
-            "wholesale"
-          ],
-          "direct_ai_infrastructure_relevance": 0.78,
-          "data_center_relevance": 0.89,
-          "cloud_capacity_relevance": 0,
-          "semiconductor_relevance": 0,
-          "power_grid_relevance": 0,
-          "cooling_relevance": 0.34,
-          "capital_markets_relevance": 0,
-          "enterprise_ai_infrastructure_relevance": 0,
-          "infrastructure_relevance_score": 0.873,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:0.78",
-            "data_center_relevance:0.89(data center, colocation)",
-            "cooling_relevance:0.34(cooling)"
-          ],
-          "infrastructure_relevance": {
-            "direct_ai_infrastructure_relevance": 0.78,
-            "data_center_relevance": 0.89,
-            "cloud_capacity_relevance": 0,
-            "semiconductor_relevance": 0,
-            "power_grid_relevance": 0,
-            "cooling_relevance": 0.34,
-            "capital_markets_relevance": 0,
-            "enterprise_ai_infrastructure_relevance": 0,
-            "infrastructure_relevance_score": 0.873,
-            "infrastructure_relevance_tier": "full_memo",
-            "infrastructure_relevance_action": "generate_full_memo",
-            "infrastructure_relevance_reasons": [
-              "direct_ai_infrastructure_relevance:0.78",
-              "data_center_relevance:0.89(data center, colocation)",
-              "cooling_relevance:0.34(cooling)"
-            ],
-            "infrastructureRelevanceAction": "generate_full_memo",
-            "articlePagePublished": true,
-            "homepagePublished": true,
-            "archiveOnly": false,
-            "archiveOnlyReason": null
-          },
-          "score": 75
-        },
-        {
-          "id": "5f1cd4e7f2f33f7f",
-          "source": "Data Center Dynamics",
-          "url": "https://www.datacenterdynamics.com/en/news/alpsemi-raises-17m-for-development-of-wide-bandgap-power-switches-for-ai-data-centers/",
-          "title": "AlpSemi raises €17m for development of wide-bandgap power switches for AI data centers",
-          "snippet": "Round was led by Yotta Capital with participation from SE Ventures, Navitas Semiconductor, and Cycle Group",
-          "contentText": "Round was led by Yotta Capital with participation from SE Ventures, Navitas Semiconductor, and Cycle Group",
-          "publishedAt": "2026-06-23T17:00:25.000Z",
-          "sourceImage": "https://media.datacenterdynamics.com/media/images/AlpSemi.972a4176.fill-750x500.jpg",
-          "region": "Global",
-          "language": "en",
-          "defaultCategory": "Colocation & Wholesale",
-          "category": "Data Centers",
-          "primary_category": "Data Centers",
-          "secondary_category": "Campus development and colocation capacity",
-          "infrastructure_layer": "Facility",
-          "affected_stakeholders": [
-            "data center operators",
-            "developers",
-            "site selectors",
-            "investors"
-          ],
-          "article_type": "Other",
-          "urgency_score": 0.57,
-          "taxonomy_confidence": 0.77,
-          "taxonomy_reasons": [
-            "colocation",
-            "wholesale"
-          ],
-          "direct_ai_infrastructure_relevance": 0.78,
-          "data_center_relevance": 1,
-          "cloud_capacity_relevance": 0,
-          "semiconductor_relevance": 0.36,
-          "power_grid_relevance": 0.297,
-          "cooling_relevance": 0,
-          "capital_markets_relevance": 0,
-          "enterprise_ai_infrastructure_relevance": 0,
-          "infrastructure_relevance_score": 0.972,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:0.78",
-            "data_center_relevance:1.00(data center, data centers, colocation)",
-            "semiconductor_relevance:0.36(semiconductor)",
-            "power_grid_relevance:0.30(power)"
-          ],
-          "infrastructure_relevance": {
-            "direct_ai_infrastructure_relevance": 0.78,
-            "data_center_relevance": 1,
-            "cloud_capacity_relevance": 0,
-            "semiconductor_relevance": 0.36,
-            "power_grid_relevance": 0.297,
-            "cooling_relevance": 0,
-            "capital_markets_relevance": 0,
-            "enterprise_ai_infrastructure_relevance": 0,
-            "infrastructure_relevance_score": 0.972,
-            "infrastructure_relevance_tier": "full_memo",
-            "infrastructure_relevance_action": "generate_full_memo",
-            "infrastructure_relevance_reasons": [
-              "direct_ai_infrastructure_relevance:0.78",
-              "data_center_relevance:1.00(data center, data centers, colocation)",
-              "semiconductor_relevance:0.36(semiconductor)",
-              "power_grid_relevance:0.30(power)"
-            ],
-            "infrastructureRelevanceAction": "generate_full_memo",
-            "articlePagePublished": true,
-            "homepagePublished": true,
-            "archiveOnly": false,
-            "archiveOnlyReason": null
-          },
-          "score": 72
-        },
-        {
-          "id": "ec785e65cc82e5f7",
-          "source": "TechCrunch AI",
-          "url": "https://techcrunch.com/2026/06/23/anthropics-claude-tag-is-learning-your-company-one-slack-message-at-a-time/",
-          "title": "Anthropic’s Claude Tag is learning your company, one Slack message at a time",
-          "snippet": "Anthropic’s new Claude Tag brings an always-on AI teammate to Slack. But beyond productivity, the feature is a strategic play to capture organizational context, institutional knowledge, and enterprise workflows.",
-          "contentText": "Anthropic’s new Claude Tag brings an always-on AI teammate to Slack. But beyond productivity, the feature is a strategic play to capture organizational context, institutional knowledge, and enterprise workflows.",
-          "publishedAt": "2026-06-23T17:00:00.000Z",
-          "sourceImage": null,
-          "region": "Global",
+          "id": "b65b902adf6de52a",
+          "source": "HPCwire",
+          "url": "https://www.hpcwire.com/2026/06/24/acm-to-take-over-top500/",
+          "title": "ACM to Take Over TOP500",
+          "snippet": "There were two surprises during the TOP500 session at ISC 2026 on June 22. First, the Chinese supercomputer LineShine took over the number one spot on the list. Secondly, the Association of Computing Machinery (ACM) ann…",
+          "contentText": "There were two surprises during the TOP500 session at ISC 2026 on June 22. First, the Chinese supercomputer LineShine took over the number one spot on the list. Secondly, the Association of Computing Machinery (ACM) announced it was taking ownership of the TOP500 list. The ownership transition of TOP500 was announced following the presentation of the top five systems on the June 2026 list by Horst Simon, the deputy director of Lawrence Berkeley National Laboratory and one of three caretakers of TOP500, along with Oak Ridge National Lab’s Jack Dongarra and LBNL’s Erich Strohmaier, who created the first TOP500 list in June 1993 with Hans Meuer, who passed in 2014. Simon introduced Christine Harvey, who is the chair of the ACM Special Interest Group on High Performance Computing ( SIGHPC ) a…",
+          "publishedAt": "2026-06-24T07:02:18.000Z",
+          "sourceImage": "https://www.hpcwire.com/wp-content/uploads/2026/06/ACM_TOP500_Harvey-300x169.jpg",
+          "region": "EU",
           "language": "en",
           "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
           "category": "AI Infrastructure",
@@ -20996,36 +20992,29 @@
         }
       ],
       "curatedIds": [
-        "d3735c4aa21d4f9a",
-        "a6ebeaf6fc673fa0",
-        "51a6cad3080e9f43",
-        "1d74ad6b4492c1e5",
-        "5f1cd4e7f2f33f7f",
-        "ec785e65cc82e5f7"
+        "7dd8017bab80a8d8",
+        "65490873599f5aab",
+        "ed75fad9a47f4c38",
+        "66094f77bf7b18eb",
+        "cb28cc17943fb4bb",
+        "b65b902adf6de52a"
       ],
       "publishedIds": [
         "64b3c3a82b08a2d1",
         "779bac80cf74e87f",
         "d3735c4aa21d4f9a",
-        "a6ebeaf6fc673fa0"
+        "a6ebeaf6fc673fa0",
+        "7dd8017bab80a8d8",
+        "65490873599f5aab"
       ],
       "slotPublications": {
         "0": true,
-        "1": true
+        "1": true,
+        "2": true
       }
     }
   },
   "runHistory": [
-    {
-      "at": "2026-05-07T23:55:05.936Z",
-      "day": "2026-05-08",
-      "slot": 1,
-      "publishedCount": 2,
-      "publishedIds": [
-        "61d7aa8def75634d",
-        "959a645ecc1fe069"
-      ]
-    },
     {
       "at": "2026-05-08T08:45:36.881Z",
       "day": "2026-05-08",
@@ -31401,7 +31390,131 @@
         }
       ],
       "archiveOnlyItems": []
+    },
+    {
+      "at": "2026-06-24T10:27:26.059Z",
+      "day": "2026-06-24",
+      "slot": 2,
+      "publishedCount": 0,
+      "signalCardCount": 0,
+      "archiveOnlyCount": 0,
+      "repetitionBlockedCount": 2,
+      "publishedIds": [],
+      "processedIds": [
+        "7dd8017bab80a8d8",
+        "65490873599f5aab"
+      ],
+      "blockedCount": 0,
+      "blockedItems": [],
+      "repetitionBlockedItems": [
+        {
+          "id": "7dd8017bab80a8d8",
+          "title": "China black market Nvidia prices rocket in wake of smuggling crackdown and customs freeze — five-year-old A100 servers triple in price, now fetching up to $82,000",
+          "infrastructure_relevance_score": 0.98,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "data_center_relevance:0.42(data centers)",
+            "cloud_capacity_relevance:0.32(hyperscalers)",
+            "semiconductor_relevance:0.82(nvidia, accelerator, gpu)",
+            "power_grid_relevance:0.22(power)",
+            "enterprise_ai_infrastructure_relevance:0.24(ai workloads)"
+          ],
+          "extraction_quality_score": 1,
+          "source_domain_adapter": "generic",
+          "content_length": 1672,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": true,
+          "repetition_block_reasons": [
+            "repeated_sentence_ratio>0.12",
+            "heading_sequence_similarity>0.75",
+            "conclusion_similarity>0.7"
+          ],
+          "repetition_check": {
+            "compared_article_count": 20,
+            "repeated_sentence_ratio": 0.14285714285714285,
+            "repeated_paragraph_ratio": 0.16666666666666666,
+            "heading_sequence_similarity": 1,
+            "banned_phrase_count": 0,
+            "banned_phrase_counts": {},
+            "recent_banned_phrase_counts": {},
+            "ngram_overlap": 0.4166666666666667,
+            "blueprint_repetition": 1,
+            "conclusion_similarity": 0.9511897312113418,
+            "repeated_sentence_count": 1,
+            "repeated_paragraph_count": 1,
+            "heading_sequence": [
+              "Technical Signal",
+              "Failure Domain",
+              "Operator Exposure",
+              "Benchmark To Watch"
+            ],
+            "blocked": true,
+            "reasons": [
+              "repeated_sentence_ratio>0.12",
+              "heading_sequence_similarity>0.75",
+              "conclusion_similarity>0.7"
+            ]
+          },
+          "expert_insight_complete": true,
+          "expert_insight_missing_fields": [],
+          "reason": "repeated_sentence_ratio>0.12; heading_sequence_similarity>0.75; conclusion_similarity>0.7"
+        },
+        {
+          "id": "65490873599f5aab",
+          "title": "Google Cloud and Nokia launch AI agents for telecoms",
+          "infrastructure_relevance_score": 0.861,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:0.64",
+            "cloud_capacity_relevance:1.00(cloud capacity, hyperscalers, google cloud)",
+            "power_grid_relevance:0.22(power)",
+            "capital_markets_relevance:0.28(capex)"
+          ],
+          "extraction_quality_score": 1,
+          "source_domain_adapter": "generic",
+          "content_length": 1792,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": true,
+          "repetition_block_reasons": [
+            "repeated_sentence_ratio>0.12",
+            "conclusion_similarity>0.7"
+          ],
+          "repetition_check": {
+            "compared_article_count": 20,
+            "repeated_sentence_ratio": 0.3333333333333333,
+            "repeated_paragraph_ratio": 0.4,
+            "heading_sequence_similarity": 0,
+            "banned_phrase_count": 0,
+            "banned_phrase_counts": {},
+            "recent_banned_phrase_counts": {},
+            "ngram_overlap": 0.5967741935483871,
+            "blueprint_repetition": 1,
+            "conclusion_similarity": 0.9271050693011066,
+            "repeated_sentence_count": 2,
+            "repeated_paragraph_count": 2,
+            "heading_sequence": [
+              "Policy Move",
+              "Infrastructure Exposure",
+              "Who Benefits",
+              "Watch Item"
+            ],
+            "blocked": true,
+            "reasons": [
+              "repeated_sentence_ratio>0.12",
+              "conclusion_similarity>0.7"
+            ]
+          },
+          "expert_insight_complete": true,
+          "expert_insight_missing_fields": [],
+          "reason": "repeated_sentence_ratio>0.12; conclusion_similarity>0.7"
+        }
+      ],
+      "signalCardItems": [],
+      "archiveOnlyItems": []
     }
   ],
-  "lastRunAt": "2026-06-24T00:00:50.550Z"
+  "lastRunAt": "2026-06-24T10:27:26.059Z"
 }
