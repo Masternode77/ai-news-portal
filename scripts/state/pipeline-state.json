@@ -509,7 +509,9 @@
     "4e06aca9dffe5bd0",
     "1289a48e806eb4bb",
     "27908bdfe9a75b0b",
-    "ca7a32023701ffa6"
+    "ca7a32023701ffa6",
+    "d60f0ac298d65311",
+    "1d134b7d52040ef8"
   ],
   "dayPlans": {
     "2026-03-24": {
@@ -21465,19 +21467,450 @@
         "1": true,
         "2": true
       }
+    },
+    "2026-06-26": {
+      "date": "2026-06-26",
+      "createdAt": "2026-06-25T17:19:41.498Z",
+      "refreshedAt": "2026-06-25T17:19:41.498Z",
+      "candidateWindowHours": 24,
+      "curatedItems": [
+        {
+          "id": "1d134b7d52040ef8",
+          "source": "StorageReview",
+          "url": "https://www.storagereview.com/news/dell-poweredge-xe8812-brings-nvidia-vera-rubin-nvl4-to-hpc-up-to-144-gpus-per-rack",
+          "title": "Dell PowerEdge XE8812 Brings NVIDIA Vera Rubin NVL4 to HPC, Up to 144 GPUs Per Rack",
+          "snippet": "Dell Technologies has introduced the PowerEdge XE8812, a new liquid-cooled server platform designed for large-scale inference and high-performance computing workloads. The system joins the Dell AI Factory with the NVIDI…",
+          "contentText": "Dell Technologies has introduced the PowerEdge XE8812, a new liquid-cooled server platform designed for large-scale inference and high-performance computing workloads. The system joins the Dell AI Factory with the NVIDIA portfolio. It is built around the NVIDIA Vera Rubin NVL4 architecture, offering up to 144 GPUs per rack in a dense rack-scale configuration. Screenshot The announcement reflects growing demand for infrastructure capable of supporting increasingly complex AI and simulation workloads. Organizations across scientific research, engineering, sovereign AI initiatives, and genomics are requiring greater compute density, memory capacity, and power efficiency than previous-generation systems can provide. Designed for AI and HPC Convergence The Dell PowerEdge XE8812 is a fanless, d…",
+          "publishedAt": "2026-06-25T15:15:05.000Z",
+          "sourceImage": "https://www.storagereview.com/wp-content/uploads/2026/06/Storagereview-dell-XE8812-row.jpg",
+          "region": "APAC",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "category": "AI Infrastructure",
+          "primary_category": "AI Infrastructure",
+          "secondary_category": "GPU clusters and deployment readiness",
+          "infrastructure_layer": "Compute",
+          "affected_stakeholders": [
+            "operators",
+            "hyperscalers",
+            "cloud buyers",
+            "investors"
+          ],
+          "article_type": "Capacity Expansion",
+          "urgency_score": 0.63,
+          "taxonomy_confidence": 0.88,
+          "taxonomy_reasons": [
+            "ai infrastructure",
+            "neocloud",
+            "hpc"
+          ],
+          "direct_ai_infrastructure_relevance": 1,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0.598,
+          "power_grid_relevance": 0.22,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.897,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud, high-performance computing)",
+            "semiconductor_relevance:0.60(nvidia, gpu)",
+            "power_grid_relevance:0.22(power)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 1,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0.598,
+            "power_grid_relevance": 0.22,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.897,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud, high-performance computing)",
+              "semiconductor_relevance:0.60(nvidia, gpu)",
+              "power_grid_relevance:0.22(power)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 84
+        },
+        {
+          "id": "d60f0ac298d65311",
+          "source": "Toms Hardware",
+          "url": "https://www.tomshardware.com/pc-components/cpus/scalpers-circle-amds-ryzen-7-5800x3d-10th-anniversary-edition-asking-for-usd600-or-more-re-released-cpu-sees-inconsistent-inventory-on-release-day",
+          "title": "Scalpers circle AMD's Ryzen 7 5800X3D 10th Anniversary Edition, asking for $600 or more — re-released CPU sees inconsistent inventory on release day",
+          "snippet": "Scalpers are trying to capitalize on the release of the Ryzen 7 5800X3D 10th Anniversary Edition, asking nearly double the CPU's suggested retail price.",
+          "contentText": "Scalpers are moving in on AMD's Ryzen 7 5800X3D 10th Anniversary Edition. The new CPU, which is identical to the original but \"re-engineered\" for a new bonding process , is on sale officially today, June 29. We've been keeping track of inventory and haven't seen the chip available for more than a few minutes — and amid the flurry, scalpers are stepping in and asking for $600 or more for the chip on the secondhand market, sometimes doubling the CPU's $350 MSRP. Go deeper with TH Premium: CPU (Image credit: Tom's Hardware) CPU scaling with DLSS Ryzen to the top: How AMD innovated in the gaming CPU market How ARM is working its way into PCs AMD CES 2026 gaming trends press Q&A roundtable transcript Over on eBay, most listings for the chip are above $600, with some asking for $750 or more. Wo…",
+          "publishedAt": "2026-06-25T16:58:05.000Z",
+          "sourceImage": "https://cdn.mos.cms.futurecdn.net/p3Kjz2uFDawbqt4hPoaDaW-1280-80.jpg",
+          "region": "Global",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "category": "Semiconductors",
+          "primary_category": "Semiconductors",
+          "secondary_category": "Accelerators, memory, and advanced packaging",
+          "infrastructure_layer": "Silicon",
+          "affected_stakeholders": [
+            "semiconductor suppliers",
+            "hyperscalers",
+            "server OEMs",
+            "investors"
+          ],
+          "article_type": "Product / Platform Update",
+          "urgency_score": 0.45,
+          "taxonomy_confidence": 0.8,
+          "taxonomy_reasons": [
+            "chip",
+            "gpu",
+            "amd"
+          ],
+          "direct_ai_infrastructure_relevance": 1,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0.517,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.844,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "semiconductor_relevance:0.52(amd, gpu)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 1,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0.517,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.844,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+              "semiconductor_relevance:0.52(amd, gpu)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 81
+        },
+        {
+          "id": "40d2ab5104845790",
+          "source": "HPCwire",
+          "url": "https://www.hpcwire.com/off-the-wire/eurohpc-opens-access-to-its-quantum-computers/",
+          "title": "EuroHPC Opens Access to Its Quantum Computers",
+          "snippet": "June 25, 2026 — A major milestone for European science and innovation is reached today, as European users can now request free access to the EuroHPC quantum computers through the newly launched EuroHPC quantum access pi…",
+          "contentText": "June 25, 2026 &#8212; A major milestone for European science and innovation is reached today, as European users can now request free access to the EuroHPC quantum computers through the newly launched EuroHPC quantum access pilot call. Researchers, public institutions, and industry across Europe can now access E urope’s growing quantum computing infrastructure in the same way they already access EuroHPC supercomputers. This unprecedented step enables users to experiment with different quantum technologies to advance scientific discovery and drive innovation. Users can now access Europe’s growing quantum computing infrastructure in the same way they already access EuroHPC supercomputers. As part of its hybrid strategy to integrate quantum computers with Europe’s world-class supercomputing i…",
+          "publishedAt": "2026-06-25T16:49:07.000Z",
+          "sourceImage": "https://www.hpcwire.com/wp-content/uploads/2026/06/1st-QC-access-call-300x225.png",
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "category": "AI Infrastructure",
+          "primary_category": "AI Infrastructure",
+          "secondary_category": "GPU clusters and deployment readiness",
+          "infrastructure_layer": "Compute",
+          "affected_stakeholders": [
+            "operators",
+            "hyperscalers",
+            "cloud buyers",
+            "investors"
+          ],
+          "article_type": "Capacity Expansion",
+          "urgency_score": 0.43,
+          "taxonomy_confidence": 0.77,
+          "taxonomy_reasons": [
+            "ai infrastructure",
+            "neocloud"
+          ],
+          "direct_ai_infrastructure_relevance": 1,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0.22,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.778,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "semiconductor_relevance:0.22(gpu)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 1,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0.22,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.778,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+              "semiconductor_relevance:0.22(gpu)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 79
+        },
+        {
+          "id": "623fef669a333204",
+          "source": "Capacity Media",
+          "url": "https://capacityglobal.com/news/google-cloud-andi-gutmans/",
+          "title": "Google Cloud’s Gutmans: ‘We can truly build autonomous agents that really act on your behalf’",
+          "snippet": "The VP and GM of Google's Data Cloud on autonomous networks, the limits of AI trust, and why most AI projects fail before they start. The post Google Cloud’s Gutmans: ‘We can truly build autonomous agents that really ac…",
+          "contentText": "Andi Gutmans has spent the better part of three decades at the intersection of open-source software and enterprise infrastructure: co-creating PHP, building and selling Zend Technologies, running analytics at AWS, and now overseeing Google Cloud&#8217;s entire data estate as VP and GM of its Data Cloud. Speaking to Capacity at Google Cloud Summit London earlier this month, Gutmans made a direct case: the agentic era is not a roadmap item. It is already in production, and the telecoms industry is one of its most compelling proving grounds. What does the Agentic Data Cloud actually mean for a telecoms operator? Gutmans is quick to ground it in operational terms. &#8220;In order to get the full advantage of autonomy and agentic capabilities, we&#8217;re working very closely with customers li…",
+          "publishedAt": "2026-06-25T14:46:22.000Z",
+          "sourceImage": "https://capacityglobal.com/wp-content/uploads/2026/06/Screenshot-2026-06-08-154155-327x218.png",
+          "region": "APAC",
+          "language": "en",
+          "defaultCategory": "Hyperscalers & Cloud",
+          "category": "Cloud Capacity",
+          "primary_category": "Cloud Capacity",
+          "secondary_category": "Hyperscale regions and accelerator availability",
+          "infrastructure_layer": "Cloud Platform",
+          "affected_stakeholders": [
+            "hyperscalers",
+            "cloud buyers",
+            "enterprise IT",
+            "operators"
+          ],
+          "article_type": "Capacity Expansion",
+          "urgency_score": 0.51,
+          "taxonomy_confidence": 0.8,
+          "taxonomy_reasons": [
+            "aws",
+            "google cloud"
+          ],
+          "direct_ai_infrastructure_relevance": 0.64,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 1,
+          "semiconductor_relevance": 0,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.791,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:0.64",
+            "cloud_capacity_relevance:1.00(cloud capacity, hyperscalers, aws)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 0.64,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 1,
+            "semiconductor_relevance": 0,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.791,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:0.64",
+              "cloud_capacity_relevance:1.00(cloud capacity, hyperscalers, aws)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 79
+        },
+        {
+          "id": "efb1b65689a131fe",
+          "source": "Data Center Knowledge",
+          "url": "https://www.datacenterknowledge.com/data-center-chips/qualcomm-lands-meta-cpu-deal-unveils-ai-data-center-platform",
+          "title": "Qualcomm Lands Meta CPU Deal, Unveils AI Data Center Platform",
+          "snippet": "The chipmaker outlines its full AI infrastructure strategy, wins two hyperscale customers, and targets a $15 billion data center business by 2029.",
+          "contentText": "The chipmaker outlines its full AI infrastructure strategy, wins two hyperscale customers, and targets a $15 billion data center business by 2029.",
+          "publishedAt": "2026-06-25T14:46:03.000Z",
+          "sourceImage": "https://eu-images.contentstack.com/v3/assets/blt8eb3cdfc1fce5194/bltccc12eb180478e40/6a3d3fd04acf573a022f72a8/GettyImages-2279394832.jpg?width=720&quality=80&disable=upscale",
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "Colocation & Wholesale",
+          "category": "Data Centers",
+          "primary_category": "Data Centers",
+          "secondary_category": "Campus development and colocation capacity",
+          "infrastructure_layer": "Facility",
+          "affected_stakeholders": [
+            "data center operators",
+            "developers",
+            "site selectors",
+            "investors"
+          ],
+          "article_type": "Product / Platform Update",
+          "urgency_score": 0.48,
+          "taxonomy_confidence": 0.86,
+          "taxonomy_reasons": [
+            "data center",
+            "colocation",
+            "wholesale"
+          ],
+          "direct_ai_infrastructure_relevance": 1,
+          "data_center_relevance": 0.89,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.926,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, ai data center)",
+            "data_center_relevance:0.89(data center, colocation)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 1,
+            "data_center_relevance": 0.89,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.926,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, ai data center)",
+              "data_center_relevance:0.89(data center, colocation)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 78
+        },
+        {
+          "id": "db1746b49134b829",
+          "source": "Data Center Frontier",
+          "url": "https://www.datacenterfrontier.com/press-releases/article/55384832/data-center-insights-2026-brings-industry-leaders-together-for-a-two-day-look-at-the-ai-infrastructure-era",
+          "title": "Data Center Insights 2026 Brings Industry Leaders Together for a Two-Day Look at the AI Infrastructure Era",
+          "snippet": "Produced by DCF and EndeavorB2B, this July 15-16 virtual conference brings together industry experts to explore cutting-edge strategies in cooling, power distribution, fiber connectivity, and modular design, helping pro…",
+          "contentText": "Produced by DCF and EndeavorB2B, this July 15-16 virtual conference brings together industry experts to explore cutting-edge strategies in cooling, power distribution, fiber connectivity, and modular design, helping professionals adapt to rapid technological changes.",
+          "publishedAt": "2026-06-25T13:36:32.000Z",
+          "sourceImage": "https://img.datacenterfrontier.com/files/base/ebm/datacenterfrontier/image/2026/06/6a32a8762c4693ce1f052c5a-dci_banner.png",
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "Colocation & Wholesale",
+          "category": "Data Centers",
+          "primary_category": "Data Centers",
+          "secondary_category": "Campus development and colocation capacity",
+          "infrastructure_layer": "Facility",
+          "affected_stakeholders": [
+            "data center operators",
+            "developers",
+            "site selectors",
+            "investors"
+          ],
+          "article_type": "Other",
+          "urgency_score": 0.55,
+          "taxonomy_confidence": 0.86,
+          "taxonomy_reasons": [
+            "data center",
+            "colocation",
+            "wholesale"
+          ],
+          "direct_ai_infrastructure_relevance": 0.78,
+          "data_center_relevance": 0.89,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0,
+          "power_grid_relevance": 0.22,
+          "cooling_relevance": 0.34,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.908,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:0.78(ai infrastructure)",
+            "data_center_relevance:0.89(data center, colocation)",
+            "power_grid_relevance:0.22(power)",
+            "cooling_relevance:0.34(cooling)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 0.78,
+            "data_center_relevance": 0.89,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0,
+            "power_grid_relevance": 0.22,
+            "cooling_relevance": 0.34,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.908,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:0.78(ai infrastructure)",
+              "data_center_relevance:0.89(data center, colocation)",
+              "power_grid_relevance:0.22(power)",
+              "cooling_relevance:0.34(cooling)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 76
+        }
+      ],
+      "curatedIds": [
+        "1d134b7d52040ef8",
+        "d60f0ac298d65311",
+        "40d2ab5104845790",
+        "623fef669a333204",
+        "efb1b65689a131fe",
+        "db1746b49134b829"
+      ],
+      "publishedIds": [
+        "d60f0ac298d65311",
+        "1d134b7d52040ef8"
+      ],
+      "slotPublications": {
+        "0": true
+      }
     }
   },
   "runHistory": [
-    {
-      "at": "2026-05-09T08:48:23.367Z",
-      "day": "2026-05-09",
-      "slot": 2,
-      "publishedCount": 2,
-      "publishedIds": [
-        "abe7b33521f5568d",
-        "3beff5fe5e73ee90"
-      ]
-    },
     {
       "at": "2026-05-09T15:59:07.852Z",
       "day": "2026-05-10",
@@ -32194,7 +32627,131 @@
         }
       ],
       "archiveOnlyItems": []
+    },
+    {
+      "at": "2026-06-25T17:19:41.498Z",
+      "day": "2026-06-26",
+      "slot": 0,
+      "publishedCount": 0,
+      "signalCardCount": 0,
+      "archiveOnlyCount": 0,
+      "repetitionBlockedCount": 2,
+      "publishedIds": [],
+      "processedIds": [
+        "d60f0ac298d65311",
+        "1d134b7d52040ef8"
+      ],
+      "blockedCount": 0,
+      "blockedItems": [],
+      "repetitionBlockedItems": [
+        {
+          "id": "d60f0ac298d65311",
+          "title": "Scalpers circle AMD's Ryzen 7 5800X3D 10th Anniversary Edition, asking for $600 or more — re-released CPU sees inconsistent inventory on release day",
+          "infrastructure_relevance_score": 0.914,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "cloud_capacity_relevance:0.32(hyperscalers)",
+            "semiconductor_relevance:0.52(amd, gpu)",
+            "power_grid_relevance:0.22(power)"
+          ],
+          "extraction_quality_score": 1,
+          "source_domain_adapter": "generic",
+          "content_length": 1690,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": true,
+          "repetition_block_reasons": [
+            "repeated_sentence_ratio>0.12",
+            "heading_sequence_similarity>0.75",
+            "conclusion_similarity>0.7"
+          ],
+          "repetition_check": {
+            "compared_article_count": 20,
+            "repeated_sentence_ratio": 0.2857142857142857,
+            "repeated_paragraph_ratio": 0.3333333333333333,
+            "heading_sequence_similarity": 1,
+            "banned_phrase_count": 0,
+            "banned_phrase_counts": {},
+            "recent_banned_phrase_counts": {},
+            "ngram_overlap": 0.46153846153846156,
+            "blueprint_repetition": 2,
+            "conclusion_similarity": 0.9511897312113418,
+            "repeated_sentence_count": 2,
+            "repeated_paragraph_count": 2,
+            "heading_sequence": [
+              "Deal Signal",
+              "Contract Quality",
+              "Operating Dependency",
+              "Investor Test"
+            ],
+            "blocked": true,
+            "reasons": [
+              "repeated_sentence_ratio>0.12",
+              "heading_sequence_similarity>0.75",
+              "conclusion_similarity>0.7"
+            ]
+          },
+          "expert_insight_complete": true,
+          "expert_insight_missing_fields": [],
+          "reason": "repeated_sentence_ratio>0.12; heading_sequence_similarity>0.75; conclusion_similarity>0.7"
+        },
+        {
+          "id": "1d134b7d52040ef8",
+          "title": "Dell PowerEdge XE8812 Brings NVIDIA Vera Rubin NVL4 to HPC, Up to 144 GPUs Per Rack",
+          "infrastructure_relevance_score": 0.932,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud, high-performance computing)",
+            "cloud_capacity_relevance:0.32(hyperscalers)",
+            "semiconductor_relevance:0.60(nvidia, gpu)",
+            "power_grid_relevance:0.22(power)"
+          ],
+          "extraction_quality_score": 1,
+          "source_domain_adapter": "storagereview",
+          "content_length": 1729,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": true,
+          "repetition_block_reasons": [
+            "repeated_sentence_ratio>0.12",
+            "heading_sequence_similarity>0.75",
+            "conclusion_similarity>0.7"
+          ],
+          "repetition_check": {
+            "compared_article_count": 20,
+            "repeated_sentence_ratio": 0.2857142857142857,
+            "repeated_paragraph_ratio": 0.3333333333333333,
+            "heading_sequence_similarity": 1,
+            "banned_phrase_count": 0,
+            "banned_phrase_counts": {},
+            "recent_banned_phrase_counts": {},
+            "ngram_overlap": 0.452991452991453,
+            "blueprint_repetition": 1,
+            "conclusion_similarity": 0.9271050693011066,
+            "repeated_sentence_count": 2,
+            "repeated_paragraph_count": 2,
+            "heading_sequence": [
+              "Technical Signal",
+              "Failure Domain",
+              "Operator Exposure",
+              "Benchmark To Watch"
+            ],
+            "blocked": true,
+            "reasons": [
+              "repeated_sentence_ratio>0.12",
+              "heading_sequence_similarity>0.75",
+              "conclusion_similarity>0.7"
+            ]
+          },
+          "expert_insight_complete": true,
+          "expert_insight_missing_fields": [],
+          "reason": "repeated_sentence_ratio>0.12; heading_sequence_similarity>0.75; conclusion_similarity>0.7"
+        }
+      ],
+      "signalCardItems": [],
+      "archiveOnlyItems": []
     }
   ],
-  "lastRunAt": "2026-06-25T10:20:15.297Z"
+  "lastRunAt": "2026-06-25T17:19:41.498Z"
 }
