@@ -531,7 +531,9 @@
     "5b2eb493afacc696",
     "68e53992ccc4ae28",
     "ad496ea93f8d4222",
-    "cafb6b7bd34f6856"
+    "cafb6b7bd34f6856",
+    "4ae8e192700d302f",
+    "7fce7a23c9ef533e"
   ],
   "dayPlans": {
     "2026-03-24": {
@@ -22815,18 +22817,18 @@
     "2026-06-29": {
       "date": "2026-06-29",
       "createdAt": "2026-06-28T16:19:54.945Z",
-      "refreshedAt": "2026-06-29T00:12:10.112Z",
+      "refreshedAt": "2026-06-29T12:06:35.682Z",
       "candidateWindowHours": 24,
       "curatedItems": [
         {
-          "id": "ad496ea93f8d4222",
-          "source": "HPCwire",
-          "url": "https://www.hpcwire.com/2026/06/28/from-compute-stacking-to-total-efficiency-building-the-next-generation-of-hpc-infrastructure-for-the-ai-era/",
-          "title": "From Compute Stacking to Total Efficiency: Building the Next Generation of HPC Infrastructure for the AI Era",
-          "snippet": "A Deeper Look at the Compute Demands of AI Adding more processors and accelerators alone is no longer enough to support modern AI and HPC environments. Performance increasingly depends on how efficiently compute resourc…",
-          "contentText": "A Deeper Look at the Compute Demands of AI Adding more processors and accelerators alone is no longer enough to support modern AI and HPC environments. Performance increasingly depends on how efficiently compute resources interact with storage, networking, software, power delivery, and cooling across the entire infrastructure stack. Large AI models and scientific datasets are exposing data movement as a primary bottleneck, leaving expensive GPU resources underutilized when storage and networking cannot deliver data fast enough. At the same time, organizations must support a growing mix of traditional HPC simulations, AI training, and inference workloads on shared infrastructure, making intelligent resource management and application-aware optimization as important as raw compute performan…",
-          "publishedAt": "2026-06-28T23:55:35.000Z",
-          "sourceImage": "https://www.hpcwire.com/wp-content/uploads/2026/06/msl-img1.jpg",
+          "id": "7fce7a23c9ef533e",
+          "source": "NVIDIA Blog",
+          "url": "https://blogs.nvidia.com/blog/palantir-secure-ai-us-agencies-nemotron-open-models/",
+          "title": "Open Models, Closed Environments: Palantir Brings Secure AI to US Agencies With NVIDIA Nemotron",
+          "snippet": "Showcasing the importance of open source innovation in American AI, Palantir’s new intelligent engine — introduced today — uses NVIDIA Nemotron open models to serve the needs of U.S. government agencies. Open source sof…",
+          "contentText": "Showcasing the importance of open source innovation in American AI, Palantir’s new intelligent engine — introduced today — uses NVIDIA Nemotron open models to serve the needs of U.S. government agencies. Open source software has long been a pillar of U.S. technology leadership. In 1969, DARPA connected four university computers — from UCLA, Stanford, UCSB and the University of Utah — laying the infrastructure backbone that became the internet. In those early days, U.S.-led open source contributions also drove leadership in coding languages, with UNIX in 1969 and C at Bell Labs in 1972. These languages led to more open source software building on those foundations, including the Linux Kernel in 1991, GitHub in 2008 and Docker in 2013. Today, open models are making frontier-level AI broadly…",
+          "publishedAt": "2026-06-29T10:59:38.000Z",
+          "sourceImage": "https://blogs.nvidia.com/wp-content/uploads/2026/06/open-source-software-crop1-scaled.png",
           "region": "US",
           "language": "en",
           "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
@@ -22841,30 +22843,95 @@
             "investors"
           ],
           "article_type": "Product / Platform Update",
-          "urgency_score": 0.56,
-          "taxonomy_confidence": 0.88,
+          "urgency_score": 0.46,
+          "taxonomy_confidence": 0.77,
           "taxonomy_reasons": [
             "ai infrastructure",
-            "neocloud",
-            "hpc"
+            "neocloud"
+          ],
+          "direct_ai_infrastructure_relevance": 1,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0.598,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.862,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "semiconductor_relevance:0.60(nvidia, gpu)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 1,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0.598,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.862,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+              "semiconductor_relevance:0.60(nvidia, gpu)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 82
+        },
+        {
+          "id": "4ae8e192700d302f",
+          "source": "Toms Hardware",
+          "url": "https://www.tomshardware.com/desktops/gaming-pcs/save-a-massive-usd1-100-on-this-rtx-5080-gaming-pc-with-a-9800x3d-from-hp-now-just-usd2-499-liquid-cooled-omen-35l-rig-unlocks-4k-gameplay-with-32gb-ddr5-and-a-2tb-ssd",
+          "title": "Save a massive $1,100 on this RTX 5080 gaming PC with a 9800X3D from HP, now just $2,499 — liquid-cooled Omen 35L rig unlocks 4K gameplay with 32GB DDR5 and a 2TB SSD",
+          "snippet": "Save $1,100 on this HP Omen 45L gaming rig, fitted with a 9800X3D, RTX 5080, 32GB of DDR5 RAM, and 2TB in SSD storage, all for just $2,499.99.",
+          "contentText": "With the AI boom rapidly pushing up the cost of individual parts for a gaming PC, buying a pre-built rig is often the better choice from a value perspective. That's because of deals like this HP Omen 35L gaming PC, fitted with a 9800X3D, RTX 5080, 32GB DDR5, and 2TB of SSD storage for just $2,499.99 right now . HP has slashed $1,100 off its list price for this 4K-capable machine, making it a seriously affordable option for any gamer. ● Check out this deal on HP's website It would be almost impossible to pick up the individual parts in this machine for the same cost right now. SSDs, RAM, GPUs: they're all much more expensive now than they were 12 months ago. The RTX 5080, the gaming powerhouse behind this PC, would set you back half the cost alone. Luckily, you're getting power for value i…",
+          "publishedAt": "2026-06-29T11:15:36.000Z",
+          "sourceImage": "https://cdn.mos.cms.futurecdn.net/EFosWwPimqWcVRZDwzpAvb-1280-80.png",
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "category": "AI Infrastructure",
+          "primary_category": "AI Infrastructure",
+          "secondary_category": "GPU clusters and deployment readiness",
+          "infrastructure_layer": "Compute",
+          "affected_stakeholders": [
+            "operators",
+            "hyperscalers",
+            "cloud buyers",
+            "investors"
+          ],
+          "article_type": "Other",
+          "urgency_score": 0.52,
+          "taxonomy_confidence": 0.77,
+          "taxonomy_reasons": [
+            "ai infrastructure",
+            "neocloud"
           ],
           "direct_ai_infrastructure_relevance": 1,
           "data_center_relevance": 0,
           "cloud_capacity_relevance": 0,
           "semiconductor_relevance": 0.22,
           "power_grid_relevance": 0.22,
-          "cooling_relevance": 0.34,
+          "cooling_relevance": 0,
           "capital_markets_relevance": 0,
-          "enterprise_ai_infrastructure_relevance": 0.66,
-          "infrastructure_relevance_score": 0.945,
+          "enterprise_ai_infrastructure_relevance": 0.18,
+          "infrastructure_relevance_score": 0.813,
           "infrastructure_relevance_tier": "full_memo",
           "infrastructure_relevance_action": "generate_full_memo",
           "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud, hpc)",
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
             "semiconductor_relevance:0.22(gpu)",
-            "power_grid_relevance:0.22(power)",
-            "cooling_relevance:0.34(cooling)",
-            "enterprise_ai_infrastructure_relevance:0.66(storage, networking, inference workloads)"
+            "power_grid_relevance:0.22(power)"
           ],
           "infrastructure_relevance": {
             "direct_ai_infrastructure_relevance": 1,
@@ -22872,18 +22939,16 @@
             "cloud_capacity_relevance": 0,
             "semiconductor_relevance": 0.22,
             "power_grid_relevance": 0.22,
-            "cooling_relevance": 0.34,
+            "cooling_relevance": 0,
             "capital_markets_relevance": 0,
-            "enterprise_ai_infrastructure_relevance": 0.66,
-            "infrastructure_relevance_score": 0.945,
+            "enterprise_ai_infrastructure_relevance": 0.18,
+            "infrastructure_relevance_score": 0.813,
             "infrastructure_relevance_tier": "full_memo",
             "infrastructure_relevance_action": "generate_full_memo",
             "infrastructure_relevance_reasons": [
-              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud, hpc)",
+              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
               "semiconductor_relevance:0.22(gpu)",
-              "power_grid_relevance:0.22(power)",
-              "cooling_relevance:0.34(cooling)",
-              "enterprise_ai_infrastructure_relevance:0.66(storage, networking, inference workloads)"
+              "power_grid_relevance:0.22(power)"
             ],
             "infrastructureRelevanceAction": "generate_full_memo",
             "articlePagePublished": true,
@@ -22891,70 +22956,209 @@
             "archiveOnly": false,
             "archiveOnlyReason": null
           },
-          "score": 86
+          "score": 80
         },
         {
-          "id": "cafb6b7bd34f6856",
-          "source": "ServeTheHome",
-          "url": "https://www.servethehome.com/asustor-showcases-flashstor-12-pro-gen3-flashstor-6-gen3-all-flash-nases-at-computex-2026/",
-          "title": "Asustor Showcases Flashstor 12 Pro Gen3 & Flashstor 6 Gen3 All-Flash NASes at Computex 2026",
-          "snippet": "For Computex 2026, Asustor had their upcoming third-generation Flashstor NASes on display. With support for either 6 or 12 M.2 SSDs, these all-flash NASes continue to be an interesting offering The post Asustor Showcase…",
-          "contentText": "For Computex 2026, Asustor had their upcoming third-generation Flashstor NASes on display. With support for either 6 or 12 M.2 SSDs, these all-flash NASes continue to be an interesting offering The post Asustor Showcases Flashstor 12 Pro Gen3 &#038; Flashstor 6 Gen3 All-Flash NASes at Computex 2026 appeared first on ServeTheHome .",
-          "publishedAt": "2026-06-28T17:00:06.000Z",
+          "id": "d0826995ce6d9f7d",
+          "source": "Power Engineering",
+          "url": "https://www.power-eng.com/business/policy-and-regulation/can-ercots-new-batch-zero-process-alleviate-the-burden-of-438000-mw-of-large-load-requests/",
+          "title": "Can ERCOT’s new ‘Batch Zero’ process alleviate the burden of 438,000 MW of large load requests?",
+          "snippet": "The Public Utility Commission of Texas approved ERCOT's Batch Zero process for large-user connections to enhance grid reliability and manage demand.",
+          "contentText": "Interconnection reform is all the rage right at the moment, and now the Electric Reliability Council of Texas (ERCOT) wants to get in on the fun. The Public Utility Commission of Texas (PUCT) recently approved ERCOT&#8217;s Batch Zero process for large-user connection requests, which ERCOT says is meant to ensure large electricity users like data centers &#8220;only connect in quantities and locations the Texas grid can reliably support.&#8221; ERCOT is the first Independent System Operator (ISO) in the nation to use a batch process to assess large electricity users wanting to connect to the grid. The new batch framework groups qualified large projects that are 75 megawatts (MW) and greater into a single study. ERCOT says this process will allow it to assess the &#8220;full picture&#8221;…",
+          "publishedAt": "2026-06-29T10:00:00.000Z",
+          "sourceImage": "https://www.power-eng.com/wp-content/uploads/2026/06/image-8.png",
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "Power / Grid / Energy",
+          "category": "Power & Grid",
+          "primary_category": "Power & Grid",
+          "secondary_category": "Interconnection and power procurement",
+          "infrastructure_layer": "Power",
+          "affected_stakeholders": [
+            "data center operators",
+            "utilities",
+            "cloud capacity teams",
+            "investors"
+          ],
+          "article_type": "Market Analysis",
+          "urgency_score": 0.74,
+          "taxonomy_confidence": 0.95,
+          "taxonomy_reasons": [
+            "power",
+            "grid",
+            "interconnection",
+            "utility",
+            "electricity"
+          ],
+          "direct_ai_infrastructure_relevance": 0,
+          "data_center_relevance": 0.42,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0,
+          "power_grid_relevance": 1,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.742,
+          "infrastructure_relevance_tier": "signal_card",
+          "infrastructure_relevance_action": "publish_signal_card_only",
+          "infrastructure_relevance_reasons": [
+            "data_center_relevance:0.42(data centers)",
+            "power_grid_relevance:1.00(power, grid, interconnection)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 0,
+            "data_center_relevance": 0.42,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0,
+            "power_grid_relevance": 1,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.742,
+            "infrastructure_relevance_tier": "signal_card",
+            "infrastructure_relevance_action": "publish_signal_card_only",
+            "infrastructure_relevance_reasons": [
+              "data_center_relevance:0.42(data centers)",
+              "power_grid_relevance:1.00(power, grid, interconnection)"
+            ],
+            "infrastructureRelevanceAction": "publish_signal_card_only",
+            "articlePagePublished": false,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 77
+        },
+        {
+          "id": "2f693241115bf812",
+          "source": "Semiconductor Engineering",
+          "url": "https://semiengineering.com/rethinking-chip-verification/",
+          "title": "Rethinking Chip Verification",
+          "snippet": "Specification engineering is gaining traction as a potential solution to the verification bottleneck. The post Rethinking Chip Verification appeared first on Semiconductor Engineering.",
+          "contentText": "Key Takeaways: AI and modern tools are easing traditional verification pain, but they&#8217;re not addressing the underlying bottleneck in complex designs. Work is underway to create a golden, unambiguous spec above RTL, tracing requirements from spec to implementation to verification and checking for gaps, conflicts, and inconsistencies across levels and blocks, often with AI help. Tool chains and flows are not yet ready for this new reality. While there are pieces (MBSE tools, requirements databases, verification management, high-level synthesis, AI code/RTL generators), they’re poorly connected. EDA vendors and their customers are looking at a different way to tackle the semiconductor verification bottleneck, combining AI with massive simulations to create a single reference point for…",
+          "publishedAt": "2026-06-29T07:01:01.000Z",
           "sourceImage": null,
           "region": "US",
           "language": "en",
           "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
-          "category": "AI Infrastructure",
-          "primary_category": "AI Infrastructure",
-          "secondary_category": "GPU clusters and deployment readiness",
-          "infrastructure_layer": "Compute",
+          "category": "Semiconductors",
+          "primary_category": "Semiconductors",
+          "secondary_category": "Accelerators, memory, and advanced packaging",
+          "infrastructure_layer": "Silicon",
           "affected_stakeholders": [
-            "operators",
+            "semiconductor suppliers",
             "hyperscalers",
-            "cloud buyers",
+            "server OEMs",
             "investors"
           ],
-          "article_type": "Other",
-          "urgency_score": 0.43,
-          "taxonomy_confidence": 0.77,
+          "article_type": "Research / Technical",
+          "urgency_score": 0.45,
+          "taxonomy_confidence": 0.81,
           "taxonomy_reasons": [
-            "ai infrastructure",
-            "neocloud"
+            "semiconductor",
+            "chip",
+            "gpu"
           ],
           "direct_ai_infrastructure_relevance": 1,
           "data_center_relevance": 0,
           "cloud_capacity_relevance": 0,
-          "semiconductor_relevance": 0.22,
+          "semiconductor_relevance": 0.58,
           "power_grid_relevance": 0,
           "cooling_relevance": 0,
           "capital_markets_relevance": 0,
           "enterprise_ai_infrastructure_relevance": 0,
-          "infrastructure_relevance_score": 0.778,
+          "infrastructure_relevance_score": 0.858,
           "infrastructure_relevance_tier": "full_memo",
           "infrastructure_relevance_action": "generate_full_memo",
           "infrastructure_relevance_reasons": [
             "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "semiconductor_relevance:0.22(gpu)"
+            "semiconductor_relevance:0.58(semiconductor, gpu)"
           ],
           "infrastructure_relevance": {
             "direct_ai_infrastructure_relevance": 1,
             "data_center_relevance": 0,
             "cloud_capacity_relevance": 0,
-            "semiconductor_relevance": 0.22,
+            "semiconductor_relevance": 0.58,
             "power_grid_relevance": 0,
             "cooling_relevance": 0,
             "capital_markets_relevance": 0,
             "enterprise_ai_infrastructure_relevance": 0,
-            "infrastructure_relevance_score": 0.778,
+            "infrastructure_relevance_score": 0.858,
             "infrastructure_relevance_tier": "full_memo",
             "infrastructure_relevance_action": "generate_full_memo",
             "infrastructure_relevance_reasons": [
               "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-              "semiconductor_relevance:0.22(gpu)"
+              "semiconductor_relevance:0.58(semiconductor, gpu)"
             ],
             "infrastructureRelevanceAction": "generate_full_memo",
             "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 74
+        },
+        {
+          "id": "9afe230673c975f0",
+          "source": "Capacity Media",
+          "url": "https://capacityglobal.com/news/bt-group-and-verizon-combine-international-operations/",
+          "title": "BT Group and Verizon to combine international operations in $4bn joint venture",
+          "snippet": "BT Group and Verizon have agreed to combine their respective international enterprise operations into a 50:50 joint venture. The post BT Group and Verizon to combine international operations in $4bn joint venture appear…",
+          "contentText": "The new company with approximately $4 billion in combined annual revenue and a customer base spanning more than 180 countries. The new entity will focus exclusively on serving multinational organisations, bringing together BT International, which provides secure and resilient communication and network services globally, with Verizon&#8217;s international enterprise wireline arm. Verizon will pay BT an equalisation payment of $625 million. The transaction is expected to close in 2027, subject to regulatory clearances. Martijn Blanken has been appointed CEO-designate of the new joint venture, conditional on completion. Blanken brings almost three decades of senior leadership across telecoms, technology, and digital infrastructure, including stints at Telstra, EXA Infrastructure, and KPN. He…",
+          "publishedAt": "2026-06-29T11:01:29.000Z",
+          "sourceImage": "https://capacityglobal.com/wp-content/uploads/2025/09/54075740660_ee73a351a0_c-327x218.jpg",
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "Hyperscalers & Cloud",
+          "category": "Capital Markets",
+          "primary_category": "Capital Markets",
+          "secondary_category": "Financing, valuation, and capital structure",
+          "infrastructure_layer": "Capital",
+          "affected_stakeholders": [
+            "investors",
+            "lenders",
+            "developers",
+            "operators"
+          ],
+          "article_type": "Financing / M&A",
+          "urgency_score": 0.37,
+          "taxonomy_confidence": 0.62,
+          "taxonomy_reasons": [
+            "joint venture"
+          ],
+          "direct_ai_infrastructure_relevance": 0,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0.76,
+          "semiconductor_relevance": 0,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0.405,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.6,
+          "infrastructure_relevance_tier": "signal_card",
+          "infrastructure_relevance_action": "publish_signal_card_only",
+          "infrastructure_relevance_reasons": [
+            "cloud_capacity_relevance:0.76(cloud capacity, hyperscalers)",
+            "capital_markets_relevance:0.41(joint venture)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 0,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0.76,
+            "semiconductor_relevance": 0,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0.405,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.6,
+            "infrastructure_relevance_tier": "signal_card",
+            "infrastructure_relevance_action": "publish_signal_card_only",
+            "infrastructure_relevance_reasons": [
+              "cloud_capacity_relevance:0.76(cloud capacity, hyperscalers)",
+              "capital_markets_relevance:0.41(joint venture)"
+            ],
+            "infrastructureRelevanceAction": "publish_signal_card_only",
+            "articlePagePublished": false,
             "homepagePublished": true,
             "archiveOnly": false,
             "archiveOnlyReason": null
@@ -22962,149 +23166,14 @@
           "score": 71
         },
         {
-          "id": "303abec9531eaebc",
-          "source": "TechCrunch AI",
-          "url": "https://techcrunch.com/2026/06/28/ford-rehires-gray-beard-engineers-after-ai-falls-short/",
-          "title": "Ford rehires ‘gray beard’ engineers after AI falls short",
-          "snippet": "\"Mistakenly we thought that by just introducing artificial intelligence ... that would produce a high-quality product.”",
-          "contentText": "\"Mistakenly we thought that by just introducing artificial intelligence ... that would produce a high-quality product.”",
-          "publishedAt": "2026-06-28T19:05:39.000Z",
-          "sourceImage": null,
-          "region": "US",
-          "language": "en",
-          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
-          "category": "AI Infrastructure",
-          "primary_category": "AI Infrastructure",
-          "secondary_category": "GPU clusters and deployment readiness",
-          "infrastructure_layer": "Compute",
-          "affected_stakeholders": [
-            "operators",
-            "hyperscalers",
-            "cloud buyers",
-            "investors"
-          ],
-          "article_type": "Other",
-          "urgency_score": 0.43,
-          "taxonomy_confidence": 0.77,
-          "taxonomy_reasons": [
-            "ai infrastructure",
-            "neocloud"
-          ],
-          "direct_ai_infrastructure_relevance": 1,
-          "data_center_relevance": 0,
-          "cloud_capacity_relevance": 0,
-          "semiconductor_relevance": 0.22,
-          "power_grid_relevance": 0,
-          "cooling_relevance": 0,
-          "capital_markets_relevance": 0,
-          "enterprise_ai_infrastructure_relevance": 0,
-          "infrastructure_relevance_score": 0.778,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "semiconductor_relevance:0.22(gpu)"
-          ],
-          "infrastructure_relevance": {
-            "direct_ai_infrastructure_relevance": 1,
-            "data_center_relevance": 0,
-            "cloud_capacity_relevance": 0,
-            "semiconductor_relevance": 0.22,
-            "power_grid_relevance": 0,
-            "cooling_relevance": 0,
-            "capital_markets_relevance": 0,
-            "enterprise_ai_infrastructure_relevance": 0,
-            "infrastructure_relevance_score": 0.778,
-            "infrastructure_relevance_tier": "full_memo",
-            "infrastructure_relevance_action": "generate_full_memo",
-            "infrastructure_relevance_reasons": [
-              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-              "semiconductor_relevance:0.22(gpu)"
-            ],
-            "infrastructureRelevanceAction": "generate_full_memo",
-            "articlePagePublished": true,
-            "homepagePublished": true,
-            "archiveOnly": false,
-            "archiveOnlyReason": null
-          },
-          "score": 64
-        },
-        {
-          "id": "2fbe8bd5ecb44a64",
-          "source": "Bloomberg Technology",
-          "url": "https://www.bloomberg.com/news/articles/2026-06-28/china-india-see-top-firms-lose-market-cap-share-in-ai-lag",
-          "title": "China, India See Top Firms Lose Market Cap Share in AI Lag",
-          "snippet": "China, India, and Hong Kong have emerged as the only major stock markets worldwide where top companies account for a smaller share of market capitalization than a year ago, underscoring their lag in the global AI race.",
-          "contentText": "China, India, and Hong Kong have emerged as the only major stock markets worldwide where top companies account for a smaller share of market capitalization than a year ago, underscoring their lag in the global AI race.",
-          "publishedAt": "2026-06-28T23:00:00.000Z",
-          "sourceImage": "https://assets.bwbx.io/images/users/iqjWHBFdfxIU/iAGP3rYHzdGg/v3/1200x-1.png",
-          "region": "APAC",
-          "language": "en",
-          "defaultCategory": "Hyperscalers & Cloud",
-          "category": "Cloud Capacity",
-          "primary_category": "Cloud Capacity",
-          "secondary_category": "Hyperscale regions and accelerator availability",
-          "infrastructure_layer": "Cloud Platform",
-          "affected_stakeholders": [
-            "hyperscalers",
-            "cloud buyers",
-            "enterprise IT",
-            "operators"
-          ],
-          "article_type": "Market Analysis",
-          "urgency_score": 0.28,
-          "taxonomy_confidence": 0.5,
-          "taxonomy_reasons": [
-            "fallback_taxonomy"
-          ],
-          "direct_ai_infrastructure_relevance": 0.22,
-          "data_center_relevance": 0,
-          "cloud_capacity_relevance": 0.32,
-          "semiconductor_relevance": 0,
-          "power_grid_relevance": 0,
-          "cooling_relevance": 0,
-          "capital_markets_relevance": 0,
-          "enterprise_ai_infrastructure_relevance": 0,
-          "infrastructure_relevance_score": 0.304,
-          "infrastructure_relevance_tier": "archive_only",
-          "infrastructure_relevance_action": "archive_only",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:0.22",
-            "cloud_capacity_relevance:0.32(hyperscalers)"
-          ],
-          "infrastructure_relevance": {
-            "direct_ai_infrastructure_relevance": 0.22,
-            "data_center_relevance": 0,
-            "cloud_capacity_relevance": 0.32,
-            "semiconductor_relevance": 0,
-            "power_grid_relevance": 0,
-            "cooling_relevance": 0,
-            "capital_markets_relevance": 0,
-            "enterprise_ai_infrastructure_relevance": 0,
-            "infrastructure_relevance_score": 0.304,
-            "infrastructure_relevance_tier": "archive_only",
-            "infrastructure_relevance_action": "archive_only",
-            "infrastructure_relevance_reasons": [
-              "direct_ai_infrastructure_relevance:0.22",
-              "cloud_capacity_relevance:0.32(hyperscalers)"
-            ],
-            "infrastructureRelevanceAction": "archive_only",
-            "articlePagePublished": false,
-            "homepagePublished": false,
-            "archiveOnly": true,
-            "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
-          },
-          "score": 59
-        },
-        {
-          "id": "e07054a6e2e1d6c9",
+          "id": "d56d8516d74da6d0",
           "source": "Data Center Dynamics",
-          "url": "https://www.datacenterdynamics.com/en/news/elon-musk-gets-ftc-nod-to-acquire-data-center-optics-business-mesh-optical/",
-          "title": "Elon Musk gets FTC nod to acquire data center optics business Mesh Optical",
-          "snippet": "The transceiver company was founded by SpaceX employees",
-          "contentText": "The transceiver company was founded by SpaceX employees",
-          "publishedAt": "2026-06-28T22:43:35.000Z",
-          "sourceImage": "https://media.datacenterdynamics.com/media/images/Mesh_Optical_Technologies.ecc2219c.fill-750x500.png",
+          "url": "https://www.datacenterdynamics.com/en/news/dogecoin-miner-looks-to-develop-behind-the-meter-data-centers-in-idaho-and-alberta-eyes-ai-market-as-potential-customer/",
+          "title": "Dogecoin miner looks to develop behind-the-meter data centers in Idaho and Alberta, eyes AI market as potential customer",
+          "snippet": "Follows company's recent merger with a healthcare-focused software firm",
+          "contentText": "Follows company's recent merger with a healthcare-focused software firm",
+          "publishedAt": "2026-06-29T11:30:24.000Z",
+          "sourceImage": "https://media.datacenterdynamics.com/media/images/GettyImages-1357739626.6d365018.fill-750x500.jpg",
           "region": "US",
           "language": "en",
           "defaultCategory": "Colocation & Wholesale",
@@ -23118,153 +23187,79 @@
             "site selectors",
             "investors"
           ],
-          "article_type": "Other",
-          "urgency_score": 0.36,
-          "taxonomy_confidence": 0.86,
+          "article_type": "Financing / M&A",
+          "urgency_score": 0.48,
+          "taxonomy_confidence": 0.77,
           "taxonomy_reasons": [
-            "data center",
             "colocation",
             "wholesale"
           ],
-          "direct_ai_infrastructure_relevance": 0,
-          "data_center_relevance": 0.89,
+          "direct_ai_infrastructure_relevance": 0.78,
+          "data_center_relevance": 1,
           "cloud_capacity_relevance": 0,
           "semiconductor_relevance": 0,
           "power_grid_relevance": 0,
           "cooling_relevance": 0,
-          "capital_markets_relevance": 0,
+          "capital_markets_relevance": 0.28,
           "enterprise_ai_infrastructure_relevance": 0,
-          "infrastructure_relevance_score": 0.551,
-          "infrastructure_relevance_tier": "signal_card",
-          "infrastructure_relevance_action": "publish_signal_card_only",
+          "infrastructure_relevance_score": 0.937,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
           "infrastructure_relevance_reasons": [
-            "data_center_relevance:0.89(data center, colocation)"
+            "direct_ai_infrastructure_relevance:0.78",
+            "data_center_relevance:1.00(data center, data centers, colocation)",
+            "capital_markets_relevance:0.28(merger)"
           ],
           "infrastructure_relevance": {
-            "direct_ai_infrastructure_relevance": 0,
-            "data_center_relevance": 0.89,
+            "direct_ai_infrastructure_relevance": 0.78,
+            "data_center_relevance": 1,
             "cloud_capacity_relevance": 0,
             "semiconductor_relevance": 0,
             "power_grid_relevance": 0,
             "cooling_relevance": 0,
-            "capital_markets_relevance": 0,
+            "capital_markets_relevance": 0.28,
             "enterprise_ai_infrastructure_relevance": 0,
-            "infrastructure_relevance_score": 0.551,
-            "infrastructure_relevance_tier": "signal_card",
-            "infrastructure_relevance_action": "publish_signal_card_only",
+            "infrastructure_relevance_score": 0.937,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
             "infrastructure_relevance_reasons": [
-              "data_center_relevance:0.89(data center, colocation)"
+              "direct_ai_infrastructure_relevance:0.78",
+              "data_center_relevance:1.00(data center, data centers, colocation)",
+              "capital_markets_relevance:0.28(merger)"
             ],
-            "infrastructureRelevanceAction": "publish_signal_card_only",
-            "articlePagePublished": false,
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
             "homepagePublished": true,
             "archiveOnly": false,
             "archiveOnlyReason": null
           },
-          "score": 57
-        },
-        {
-          "id": "81b7bcde6de6a1f7",
-          "source": "Bloomberg Technology",
-          "url": "https://www.bloomberg.com/news/articles/2026-06-28/chinese-spies-smuggled-drugs-fuel-takaichi-s-security-push",
-          "title": "Chinese Spies, Smuggled Drugs Fuel Takaichi’s Security Push",
-          "snippet": "Chinese spies stealing Japanese industrial secrets in boardrooms. Chip smugglers ferrying Nvidia’s prized artificial intelligence semiconductors via Japan. Drug gangs quietly slipping fentanyl across Japan’s borders to…",
-          "contentText": "Chinese spies stealing Japanese industrial secrets in boardrooms. Chip smugglers ferrying Nvidia’s prized artificial intelligence semiconductors via Japan. Drug gangs quietly slipping fentanyl across Japan’s borders to a US opioid crisis.",
-          "publishedAt": "2026-06-28T22:00:00.000Z",
-          "sourceImage": "https://assets.bwbx.io/images/users/iqjWHBFdfxIU/ic.LrHxknz5U/v0/1200x-1.jpg",
-          "region": "APAC",
-          "language": "en",
-          "defaultCategory": "Hyperscalers & Cloud",
-          "category": "Semiconductors",
-          "primary_category": "Semiconductors",
-          "secondary_category": "Accelerators, memory, and advanced packaging",
-          "infrastructure_layer": "Silicon",
-          "affected_stakeholders": [
-            "semiconductor suppliers",
-            "hyperscalers",
-            "server OEMs",
-            "investors"
-          ],
-          "article_type": "Other",
-          "urgency_score": 0.36,
-          "taxonomy_confidence": 0.71,
-          "taxonomy_reasons": [
-            "chip",
-            "nvidia"
-          ],
-          "direct_ai_infrastructure_relevance": 0.22,
-          "data_center_relevance": 0,
-          "cloud_capacity_relevance": 0.32,
-          "semiconductor_relevance": 0.64,
-          "power_grid_relevance": 0,
-          "cooling_relevance": 0,
-          "capital_markets_relevance": 0,
-          "enterprise_ai_infrastructure_relevance": 0,
-          "infrastructure_relevance_score": 0.547,
-          "infrastructure_relevance_tier": "archive_only",
-          "infrastructure_relevance_action": "archive_only",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:0.22",
-            "cloud_capacity_relevance:0.32(hyperscalers)",
-            "semiconductor_relevance:0.64(semiconductors, nvidia)"
-          ],
-          "infrastructure_relevance": {
-            "direct_ai_infrastructure_relevance": 0.22,
-            "data_center_relevance": 0,
-            "cloud_capacity_relevance": 0.32,
-            "semiconductor_relevance": 0.64,
-            "power_grid_relevance": 0,
-            "cooling_relevance": 0,
-            "capital_markets_relevance": 0,
-            "enterprise_ai_infrastructure_relevance": 0,
-            "infrastructure_relevance_score": 0.547,
-            "infrastructure_relevance_tier": "archive_only",
-            "infrastructure_relevance_action": "archive_only",
-            "infrastructure_relevance_reasons": [
-              "direct_ai_infrastructure_relevance:0.22",
-              "cloud_capacity_relevance:0.32(hyperscalers)",
-              "semiconductor_relevance:0.64(semiconductors, nvidia)"
-            ],
-            "infrastructureRelevanceAction": "archive_only",
-            "articlePagePublished": false,
-            "homepagePublished": false,
-            "archiveOnly": true,
-            "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
-          },
-          "score": 57
+          "score": 69
         }
       ],
       "curatedIds": [
-        "ad496ea93f8d4222",
-        "cafb6b7bd34f6856",
-        "303abec9531eaebc",
-        "2fbe8bd5ecb44a64",
-        "e07054a6e2e1d6c9",
-        "81b7bcde6de6a1f7"
+        "7fce7a23c9ef533e",
+        "4ae8e192700d302f",
+        "d0826995ce6d9f7d",
+        "2f693241115bf812",
+        "9afe230673c975f0",
+        "d56d8516d74da6d0"
       ],
       "publishedIds": [
         "5b2eb493afacc696",
         "68e53992ccc4ae28",
         "ad496ea93f8d4222",
-        "cafb6b7bd34f6856"
+        "cafb6b7bd34f6856",
+        "4ae8e192700d302f",
+        "7fce7a23c9ef533e"
       ],
       "slotPublications": {
         "0": true,
-        "1": true
+        "1": true,
+        "2": true
       }
     }
   },
   "runHistory": [
-    {
-      "at": "2026-05-13T00:01:46.495Z",
-      "day": "2026-05-13",
-      "slot": 1,
-      "publishedCount": 2,
-      "publishedIds": [
-        "18495307e5a94019",
-        "b548cf3edd48c266"
-      ]
-    },
     {
       "at": "2026-05-13T09:50:18.566Z",
       "day": "2026-05-13",
@@ -35097,7 +35092,131 @@
         }
       ],
       "archiveOnlyItems": []
+    },
+    {
+      "at": "2026-06-29T12:06:35.682Z",
+      "day": "2026-06-29",
+      "slot": 2,
+      "publishedCount": 0,
+      "signalCardCount": 0,
+      "archiveOnlyCount": 0,
+      "repetitionBlockedCount": 2,
+      "publishedIds": [],
+      "processedIds": [
+        "4ae8e192700d302f",
+        "7fce7a23c9ef533e"
+      ],
+      "blockedCount": 0,
+      "blockedItems": [],
+      "repetitionBlockedItems": [
+        {
+          "id": "4ae8e192700d302f",
+          "title": "Save a massive $1,100 on this RTX 5080 gaming PC with a 9800X3D from HP, now just $2,499 — liquid-cooled Omen 35L rig unlocks 4K gameplay with 32GB DDR5 and a 2TB SSD",
+          "infrastructure_relevance_score": 0.897,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "cloud_capacity_relevance:0.32(hyperscalers)",
+            "semiconductor_relevance:0.44(amd, gpu)",
+            "power_grid_relevance:0.22(power)"
+          ],
+          "extraction_quality_score": 1,
+          "source_domain_adapter": "generic",
+          "content_length": 1602,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": true,
+          "repetition_block_reasons": [
+            "repeated_sentence_ratio>0.12",
+            "heading_sequence_similarity>0.75",
+            "conclusion_similarity>0.7"
+          ],
+          "repetition_check": {
+            "compared_article_count": 20,
+            "repeated_sentence_ratio": 0.14285714285714285,
+            "repeated_paragraph_ratio": 0.16666666666666666,
+            "heading_sequence_similarity": 1,
+            "banned_phrase_count": 0,
+            "banned_phrase_counts": {},
+            "recent_banned_phrase_counts": {},
+            "ngram_overlap": 0.4344262295081967,
+            "blueprint_repetition": 2,
+            "conclusion_similarity": 0.9271050693011066,
+            "repeated_sentence_count": 1,
+            "repeated_paragraph_count": 1,
+            "heading_sequence": [
+              "Technical Signal",
+              "Failure Domain",
+              "Operator Exposure",
+              "Benchmark To Watch"
+            ],
+            "blocked": true,
+            "reasons": [
+              "repeated_sentence_ratio>0.12",
+              "heading_sequence_similarity>0.75",
+              "conclusion_similarity>0.7"
+            ]
+          },
+          "expert_insight_complete": true,
+          "expert_insight_missing_fields": [],
+          "reason": "repeated_sentence_ratio>0.12; heading_sequence_similarity>0.75; conclusion_similarity>0.7"
+        },
+        {
+          "id": "7fce7a23c9ef533e",
+          "title": "Open Models, Closed Environments: Palantir Brings Secure AI to US Agencies With NVIDIA Nemotron",
+          "infrastructure_relevance_score": 0.932,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "cloud_capacity_relevance:0.32(hyperscalers)",
+            "semiconductor_relevance:0.60(nvidia, gpu)",
+            "power_grid_relevance:0.22(power)"
+          ],
+          "extraction_quality_score": 1,
+          "source_domain_adapter": "generic",
+          "content_length": 1799,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": true,
+          "repetition_block_reasons": [
+            "repeated_sentence_ratio>0.12",
+            "heading_sequence_similarity>0.75",
+            "conclusion_similarity>0.7"
+          ],
+          "repetition_check": {
+            "compared_article_count": 20,
+            "repeated_sentence_ratio": 0.3333333333333333,
+            "repeated_paragraph_ratio": 0.3333333333333333,
+            "heading_sequence_similarity": 1,
+            "banned_phrase_count": 0,
+            "banned_phrase_counts": {},
+            "recent_banned_phrase_counts": {},
+            "ngram_overlap": 0.6551724137931034,
+            "blueprint_repetition": 1,
+            "conclusion_similarity": 0.9271050693011066,
+            "repeated_sentence_count": 2,
+            "repeated_paragraph_count": 2,
+            "heading_sequence": [
+              "Technical Signal",
+              "Failure Domain",
+              "Operator Exposure",
+              "Benchmark To Watch"
+            ],
+            "blocked": true,
+            "reasons": [
+              "repeated_sentence_ratio>0.12",
+              "heading_sequence_similarity>0.75",
+              "conclusion_similarity>0.7"
+            ]
+          },
+          "expert_insight_complete": true,
+          "expert_insight_missing_fields": [],
+          "reason": "repeated_sentence_ratio>0.12; heading_sequence_similarity>0.75; conclusion_similarity>0.7"
+        }
+      ],
+      "signalCardItems": [],
+      "archiveOnlyItems": []
     }
   ],
-  "lastRunAt": "2026-06-29T00:12:10.112Z"
+  "lastRunAt": "2026-06-29T12:06:35.682Z"
 }
