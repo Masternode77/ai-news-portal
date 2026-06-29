@@ -529,7 +529,9 @@
     "5136cbc93bdb119c",
     "615f3b9b77fc6567",
     "5b2eb493afacc696",
-    "68e53992ccc4ae28"
+    "68e53992ccc4ae28",
+    "ad496ea93f8d4222",
+    "cafb6b7bd34f6856"
   ],
   "dayPlans": {
     "2026-03-24": {
@@ -22813,18 +22815,18 @@
     "2026-06-29": {
       "date": "2026-06-29",
       "createdAt": "2026-06-28T16:19:54.945Z",
-      "refreshedAt": "2026-06-28T16:19:54.945Z",
+      "refreshedAt": "2026-06-29T00:12:10.112Z",
       "candidateWindowHours": 24,
       "curatedItems": [
         {
-          "id": "68e53992ccc4ae28",
-          "source": "Toms Hardware",
-          "url": "https://www.tomshardware.com/pc-components/pnys-performance-32gb-ddr5-5600-ram-becomes-the-cheapest-2x16gb-kit-ddr5-kit-gets-a-usd70-discount",
-          "title": "PNY's Performance 32GB DDR5-5600 RAM becomes the cheapest 2x16GB kit— DDR5 kit gets a $70 discount",
-          "snippet": "This 32GB DDR5 memory kit won't impress enthusiasts with its timings or design, but its aggressive price makes it difficult to overlook.",
-          "contentText": "Memory has become one of the most expensive components when it comes to building a PC. With the ongoing global DRAM shortage, one of the best ways to dodge obnoxious price tags is to either get a combo bundle or scour the used marketplace for a solid deal. However, if you are looking for a brand new pair of RAM sticks for a desktop PC, the PNY Performance 32GB DDR5 kit has just dropped from its listed price of $449.99 down to $379.99 over at Amazon , offering savings of $70. That makes it one of the cheapest 32GB DDR5 kits that you can purchase today. Check out this deal on Amazon The kit includes two 16GB DDR5 modules capable of running at 5600 MT/s at CL46 latency, which is noticeably looser than the sub-CL40 timings found on higher-end DDR5 memory. The difference in performance is gene…",
-          "publishedAt": "2026-06-28T14:32:37.000Z",
-          "sourceImage": "https://cdn.mos.cms.futurecdn.net/STZBMnHCN4KoFrPmDMTjUX-1280-80.jpg",
+          "id": "ad496ea93f8d4222",
+          "source": "HPCwire",
+          "url": "https://www.hpcwire.com/2026/06/28/from-compute-stacking-to-total-efficiency-building-the-next-generation-of-hpc-infrastructure-for-the-ai-era/",
+          "title": "From Compute Stacking to Total Efficiency: Building the Next Generation of HPC Infrastructure for the AI Era",
+          "snippet": "A Deeper Look at the Compute Demands of AI Adding more processors and accelerators alone is no longer enough to support modern AI and HPC environments. Performance increasingly depends on how efficiently compute resourc…",
+          "contentText": "A Deeper Look at the Compute Demands of AI Adding more processors and accelerators alone is no longer enough to support modern AI and HPC environments. Performance increasingly depends on how efficiently compute resources interact with storage, networking, software, power delivery, and cooling across the entire infrastructure stack. Large AI models and scientific datasets are exposing data movement as a primary bottleneck, leaving expensive GPU resources underutilized when storage and networking cannot deliver data fast enough. At the same time, organizations must support a growing mix of traditional HPC simulations, AI training, and inference workloads on shared infrastructure, making intelligent resource management and application-aware optimization as important as raw compute performan…",
+          "publishedAt": "2026-06-28T23:55:35.000Z",
+          "sourceImage": "https://www.hpcwire.com/wp-content/uploads/2026/06/msl-img1.jpg",
           "region": "US",
           "language": "en",
           "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
@@ -22838,8 +22840,83 @@
             "cloud buyers",
             "investors"
           ],
-          "article_type": "Supply Chain",
-          "urgency_score": 0.59,
+          "article_type": "Product / Platform Update",
+          "urgency_score": 0.56,
+          "taxonomy_confidence": 0.88,
+          "taxonomy_reasons": [
+            "ai infrastructure",
+            "neocloud",
+            "hpc"
+          ],
+          "direct_ai_infrastructure_relevance": 1,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0.22,
+          "power_grid_relevance": 0.22,
+          "cooling_relevance": 0.34,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0.66,
+          "infrastructure_relevance_score": 0.945,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud, hpc)",
+            "semiconductor_relevance:0.22(gpu)",
+            "power_grid_relevance:0.22(power)",
+            "cooling_relevance:0.34(cooling)",
+            "enterprise_ai_infrastructure_relevance:0.66(storage, networking, inference workloads)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 1,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0.22,
+            "power_grid_relevance": 0.22,
+            "cooling_relevance": 0.34,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0.66,
+            "infrastructure_relevance_score": 0.945,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud, hpc)",
+              "semiconductor_relevance:0.22(gpu)",
+              "power_grid_relevance:0.22(power)",
+              "cooling_relevance:0.34(cooling)",
+              "enterprise_ai_infrastructure_relevance:0.66(storage, networking, inference workloads)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 86
+        },
+        {
+          "id": "cafb6b7bd34f6856",
+          "source": "ServeTheHome",
+          "url": "https://www.servethehome.com/asustor-showcases-flashstor-12-pro-gen3-flashstor-6-gen3-all-flash-nases-at-computex-2026/",
+          "title": "Asustor Showcases Flashstor 12 Pro Gen3 & Flashstor 6 Gen3 All-Flash NASes at Computex 2026",
+          "snippet": "For Computex 2026, Asustor had their upcoming third-generation Flashstor NASes on display. With support for either 6 or 12 M.2 SSDs, these all-flash NASes continue to be an interesting offering The post Asustor Showcase…",
+          "contentText": "For Computex 2026, Asustor had their upcoming third-generation Flashstor NASes on display. With support for either 6 or 12 M.2 SSDs, these all-flash NASes continue to be an interesting offering The post Asustor Showcases Flashstor 12 Pro Gen3 &#038; Flashstor 6 Gen3 All-Flash NASes at Computex 2026 appeared first on ServeTheHome .",
+          "publishedAt": "2026-06-28T17:00:06.000Z",
+          "sourceImage": null,
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "category": "AI Infrastructure",
+          "primary_category": "AI Infrastructure",
+          "secondary_category": "GPU clusters and deployment readiness",
+          "infrastructure_layer": "Compute",
+          "affected_stakeholders": [
+            "operators",
+            "hyperscalers",
+            "cloud buyers",
+            "investors"
+          ],
+          "article_type": "Other",
+          "urgency_score": 0.43,
           "taxonomy_confidence": 0.77,
           "taxonomy_reasons": [
             "ai infrastructure",
@@ -22882,71 +22959,67 @@
             "archiveOnly": false,
             "archiveOnlyReason": null
           },
-          "score": 79
+          "score": 71
         },
         {
-          "id": "5b2eb493afacc696",
-          "source": "Bloomberg Technology",
-          "url": "https://www.bloomberg.com/news/articles/2026-06-28/ai-startup-firmus-to-build-indonesia-data-center-with-nvidia",
-          "title": "AI Startup Firmus to Build Indonesia Data Center With Nvidia",
-          "snippet": "Firmus Technologies Pty Ltd. will build its first data center project in Indonesia as part of a partnership with US chip giant Nvidia Corp., which the Australian artificial intelligence infrastructure firm said is expec…",
-          "contentText": "Firmus Technologies Pty Ltd. will build its first data center project in Indonesia as part of a partnership with US chip giant Nvidia Corp., which the Australian artificial intelligence infrastructure firm said is expected to win it as much as $30 billion in committed offtake agreements in its first six years.",
-          "publishedAt": "2026-06-28T14:01:00.000Z",
-          "sourceImage": "https://assets.bwbx.io/images/users/iqjWHBFdfxIU/imZqKnFL0nLU/v0/1200x-1.jpg",
-          "region": "APAC",
+          "id": "303abec9531eaebc",
+          "source": "TechCrunch AI",
+          "url": "https://techcrunch.com/2026/06/28/ford-rehires-gray-beard-engineers-after-ai-falls-short/",
+          "title": "Ford rehires ‘gray beard’ engineers after AI falls short",
+          "snippet": "\"Mistakenly we thought that by just introducing artificial intelligence ... that would produce a high-quality product.”",
+          "contentText": "\"Mistakenly we thought that by just introducing artificial intelligence ... that would produce a high-quality product.”",
+          "publishedAt": "2026-06-28T19:05:39.000Z",
+          "sourceImage": null,
+          "region": "US",
           "language": "en",
-          "defaultCategory": "Hyperscalers & Cloud",
-          "category": "Semiconductors",
-          "primary_category": "Semiconductors",
-          "secondary_category": "Accelerators, memory, and advanced packaging",
-          "infrastructure_layer": "Silicon",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "category": "AI Infrastructure",
+          "primary_category": "AI Infrastructure",
+          "secondary_category": "GPU clusters and deployment readiness",
+          "infrastructure_layer": "Compute",
           "affected_stakeholders": [
-            "semiconductor suppliers",
+            "operators",
             "hyperscalers",
-            "server OEMs",
+            "cloud buyers",
             "investors"
           ],
-          "article_type": "Partnership",
+          "article_type": "Other",
           "urgency_score": 0.43,
-          "taxonomy_confidence": 0.7,
+          "taxonomy_confidence": 0.77,
           "taxonomy_reasons": [
-            "chip",
-            "nvidia"
+            "ai infrastructure",
+            "neocloud"
           ],
-          "direct_ai_infrastructure_relevance": 0.78,
-          "data_center_relevance": 0.55,
-          "cloud_capacity_relevance": 0.32,
-          "semiconductor_relevance": 0.378,
+          "direct_ai_infrastructure_relevance": 1,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0.22,
           "power_grid_relevance": 0,
           "cooling_relevance": 0,
           "capital_markets_relevance": 0,
           "enterprise_ai_infrastructure_relevance": 0,
-          "infrastructure_relevance_score": 0.793,
+          "infrastructure_relevance_score": 0.778,
           "infrastructure_relevance_tier": "full_memo",
           "infrastructure_relevance_action": "generate_full_memo",
           "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:0.78",
-            "data_center_relevance:0.55(data center)",
-            "cloud_capacity_relevance:0.32(hyperscalers)",
-            "semiconductor_relevance:0.38(nvidia)"
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "semiconductor_relevance:0.22(gpu)"
           ],
           "infrastructure_relevance": {
-            "direct_ai_infrastructure_relevance": 0.78,
-            "data_center_relevance": 0.55,
-            "cloud_capacity_relevance": 0.32,
-            "semiconductor_relevance": 0.378,
+            "direct_ai_infrastructure_relevance": 1,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0.22,
             "power_grid_relevance": 0,
             "cooling_relevance": 0,
             "capital_markets_relevance": 0,
             "enterprise_ai_infrastructure_relevance": 0,
-            "infrastructure_relevance_score": 0.793,
+            "infrastructure_relevance_score": 0.778,
             "infrastructure_relevance_tier": "full_memo",
             "infrastructure_relevance_action": "generate_full_memo",
             "infrastructure_relevance_reasons": [
-              "direct_ai_infrastructure_relevance:0.78",
-              "data_center_relevance:0.55(data center)",
-              "cloud_capacity_relevance:0.32(hyperscalers)",
-              "semiconductor_relevance:0.38(nvidia)"
+              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+              "semiconductor_relevance:0.22(gpu)"
             ],
             "infrastructureRelevanceAction": "generate_full_memo",
             "articlePagePublished": true,
@@ -22954,18 +23027,18 @@
             "archiveOnly": false,
             "archiveOnlyReason": null
           },
-          "score": 79
+          "score": 64
         },
         {
-          "id": "a76382fb736eb8e6",
+          "id": "2fbe8bd5ecb44a64",
           "source": "Bloomberg Technology",
-          "url": "https://www.bloomberg.com/news/features/2026-06-28/robotaxis-why-waymo-tesla-baidu-and-others-face-continued-challenges",
-          "title": "How Robotaxis Are Making Headway, Glitches and All",
-          "snippet": "It’s one of those technologies that were always around the corner but never arrived. Now it has, kind of...",
-          "contentText": "It’s one of those technologies that were always around the corner but never arrived. Now it has, kind of...",
-          "publishedAt": "2026-06-28T14:00:15.000Z",
-          "sourceImage": "https://assets.bwbx.io/images/users/iqjWHBFdfxIU/iJLDMz6BIirU/v1/1200x-1.gif",
-          "region": "Global",
+          "url": "https://www.bloomberg.com/news/articles/2026-06-28/china-india-see-top-firms-lose-market-cap-share-in-ai-lag",
+          "title": "China, India See Top Firms Lose Market Cap Share in AI Lag",
+          "snippet": "China, India, and Hong Kong have emerged as the only major stock markets worldwide where top companies account for a smaller share of market capitalization than a year ago, underscoring their lag in the global AI race.",
+          "contentText": "China, India, and Hong Kong have emerged as the only major stock markets worldwide where top companies account for a smaller share of market capitalization than a year ago, underscoring their lag in the global AI race.",
+          "publishedAt": "2026-06-28T23:00:00.000Z",
+          "sourceImage": "https://assets.bwbx.io/images/users/iqjWHBFdfxIU/iAGP3rYHzdGg/v3/1200x-1.png",
+          "region": "APAC",
           "language": "en",
           "defaultCategory": "Hyperscalers & Cloud",
           "category": "Cloud Capacity",
@@ -22978,139 +23051,7 @@
             "enterprise IT",
             "operators"
           ],
-          "article_type": "Other",
-          "urgency_score": 0.25,
-          "taxonomy_confidence": 0.5,
-          "taxonomy_reasons": [
-            "fallback_taxonomy"
-          ],
-          "direct_ai_infrastructure_relevance": 0,
-          "data_center_relevance": 0,
-          "cloud_capacity_relevance": 0.32,
-          "semiconductor_relevance": 0,
-          "power_grid_relevance": 0,
-          "cooling_relevance": 0,
-          "capital_markets_relevance": 0,
-          "enterprise_ai_infrastructure_relevance": 0,
-          "infrastructure_relevance_score": 0.221,
-          "infrastructure_relevance_tier": "archive_only",
-          "infrastructure_relevance_action": "archive_only",
-          "infrastructure_relevance_reasons": [
-            "cloud_capacity_relevance:0.32(hyperscalers)"
-          ],
-          "infrastructure_relevance": {
-            "direct_ai_infrastructure_relevance": 0,
-            "data_center_relevance": 0,
-            "cloud_capacity_relevance": 0.32,
-            "semiconductor_relevance": 0,
-            "power_grid_relevance": 0,
-            "cooling_relevance": 0,
-            "capital_markets_relevance": 0,
-            "enterprise_ai_infrastructure_relevance": 0,
-            "infrastructure_relevance_score": 0.221,
-            "infrastructure_relevance_tier": "archive_only",
-            "infrastructure_relevance_action": "archive_only",
-            "infrastructure_relevance_reasons": [
-              "cloud_capacity_relevance:0.32(hyperscalers)"
-            ],
-            "infrastructureRelevanceAction": "archive_only",
-            "articlePagePublished": false,
-            "homepagePublished": false,
-            "archiveOnly": true,
-            "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
-          },
-          "score": 48
-        },
-        {
-          "id": "389775594624eca9",
-          "source": "Data Center Dynamics",
-          "url": "https://www.datacenterdynamics.com/en/opinions/turning-constraints-into-opportunity/",
-          "title": "Turning constraints into opportunity",
-          "snippet": "The future of sustainable data center design",
-          "contentText": "The future of sustainable data center design",
-          "publishedAt": "2026-06-28T11:00:23.000Z",
-          "sourceImage": "https://media.datacenterdynamics.com/media/images/Kate_Steele_Lenovo.6e4f3a4f.fill-750x500.jpg",
-          "region": "US",
-          "language": "en",
-          "defaultCategory": "Colocation & Wholesale",
-          "category": "Data Centers",
-          "primary_category": "Data Centers",
-          "secondary_category": "Campus development and colocation capacity",
-          "infrastructure_layer": "Facility",
-          "affected_stakeholders": [
-            "data center operators",
-            "developers",
-            "site selectors",
-            "investors"
-          ],
-          "article_type": "Other",
-          "urgency_score": 0.33,
-          "taxonomy_confidence": 0.81,
-          "taxonomy_reasons": [
-            "data center",
-            "colocation",
-            "wholesale"
-          ],
-          "direct_ai_infrastructure_relevance": 0,
-          "data_center_relevance": 0.76,
-          "cloud_capacity_relevance": 0,
-          "semiconductor_relevance": 0,
-          "power_grid_relevance": 0,
-          "cooling_relevance": 0,
-          "capital_markets_relevance": 0,
-          "enterprise_ai_infrastructure_relevance": 0,
-          "infrastructure_relevance_score": 0.476,
-          "infrastructure_relevance_tier": "archive_only",
-          "infrastructure_relevance_action": "archive_only",
-          "infrastructure_relevance_reasons": [
-            "data_center_relevance:0.76(data center, colocation)"
-          ],
-          "infrastructure_relevance": {
-            "direct_ai_infrastructure_relevance": 0,
-            "data_center_relevance": 0.76,
-            "cloud_capacity_relevance": 0,
-            "semiconductor_relevance": 0,
-            "power_grid_relevance": 0,
-            "cooling_relevance": 0,
-            "capital_markets_relevance": 0,
-            "enterprise_ai_infrastructure_relevance": 0,
-            "infrastructure_relevance_score": 0.476,
-            "infrastructure_relevance_tier": "archive_only",
-            "infrastructure_relevance_action": "archive_only",
-            "infrastructure_relevance_reasons": [
-              "data_center_relevance:0.76(data center, colocation)"
-            ],
-            "infrastructureRelevanceAction": "archive_only",
-            "articlePagePublished": false,
-            "homepagePublished": false,
-            "archiveOnly": true,
-            "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
-          },
-          "score": 46
-        },
-        {
-          "id": "0572eafe22d82e19",
-          "source": "Bloomberg Technology",
-          "url": "https://www.bloomberg.com/news/newsletters/2026-06-28/apple-s-sweeping-price-hikes-bring-the-ai-era-home-m6-m7-touch-macbook-pro",
-          "title": "Apple’s Sweeping Price Increases Bring Home the Costs of the AI Era",
-          "snippet": "The latest on the smart glasses competition.",
-          "contentText": "The latest on the smart glasses competition.",
-          "publishedAt": "2026-06-28T14:00:01.000Z",
-          "sourceImage": "https://assets.bwbx.io/images/users/iqjWHBFdfxIU/i9Wtb83gWZwg/v17/1200x-1.jpg",
-          "region": "Global",
-          "language": "en",
-          "defaultCategory": "Hyperscalers & Cloud",
-          "category": "Cloud Capacity",
-          "primary_category": "Cloud Capacity",
-          "secondary_category": "Hyperscale regions and accelerator availability",
-          "infrastructure_layer": "Cloud Platform",
-          "affected_stakeholders": [
-            "hyperscalers",
-            "cloud buyers",
-            "enterprise IT",
-            "operators"
-          ],
-          "article_type": "Other",
+          "article_type": "Market Analysis",
           "urgency_score": 0.28,
           "taxonomy_confidence": 0.5,
           "taxonomy_reasons": [
@@ -23153,64 +23094,136 @@
             "archiveOnly": true,
             "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
           },
-          "score": 43
+          "score": 59
         },
         {
-          "id": "110d2b48fff3f18f",
-          "source": "Bloomberg Technology",
-          "url": "https://www.bloomberg.com/news/articles/2026-06-28/austria-lobbies-eu-to-host-anthropic-after-us-access-curbs",
-          "title": "Austria Lobbies EU to Host Anthropic After US Access Curbs",
-          "snippet": "Austria is pushing the European Union to consider hosting Anthropic PBC within its borders to counter US efforts to block foreigners from using its most advanced artificial-intelligence models.",
-          "contentText": "Austria is pushing the European Union to consider hosting Anthropic PBC within its borders to counter US efforts to block foreigners from using its most advanced artificial-intelligence models.",
-          "publishedAt": "2026-06-28T12:29:42.000Z",
-          "sourceImage": "https://assets.bwbx.io/images/users/iqjWHBFdfxIU/i.5Km_Dlo7qI/v0/1200x-1.jpg",
+          "id": "e07054a6e2e1d6c9",
+          "source": "Data Center Dynamics",
+          "url": "https://www.datacenterdynamics.com/en/news/elon-musk-gets-ftc-nod-to-acquire-data-center-optics-business-mesh-optical/",
+          "title": "Elon Musk gets FTC nod to acquire data center optics business Mesh Optical",
+          "snippet": "The transceiver company was founded by SpaceX employees",
+          "contentText": "The transceiver company was founded by SpaceX employees",
+          "publishedAt": "2026-06-28T22:43:35.000Z",
+          "sourceImage": "https://media.datacenterdynamics.com/media/images/Mesh_Optical_Technologies.ecc2219c.fill-750x500.png",
           "region": "US",
           "language": "en",
-          "defaultCategory": "Hyperscalers & Cloud",
-          "category": "Cloud Capacity",
-          "primary_category": "Cloud Capacity",
-          "secondary_category": "Hyperscale regions and accelerator availability",
-          "infrastructure_layer": "Cloud Platform",
+          "defaultCategory": "Colocation & Wholesale",
+          "category": "Data Centers",
+          "primary_category": "Data Centers",
+          "secondary_category": "Campus development and colocation capacity",
+          "infrastructure_layer": "Facility",
           "affected_stakeholders": [
-            "hyperscalers",
-            "cloud buyers",
-            "enterprise IT",
-            "operators"
+            "data center operators",
+            "developers",
+            "site selectors",
+            "investors"
           ],
           "article_type": "Other",
-          "urgency_score": 0.41,
-          "taxonomy_confidence": 0.5,
+          "urgency_score": 0.36,
+          "taxonomy_confidence": 0.86,
           "taxonomy_reasons": [
-            "fallback_taxonomy"
+            "data center",
+            "colocation",
+            "wholesale"
           ],
           "direct_ai_infrastructure_relevance": 0,
-          "data_center_relevance": 0,
-          "cloud_capacity_relevance": 0.32,
+          "data_center_relevance": 0.89,
+          "cloud_capacity_relevance": 0,
           "semiconductor_relevance": 0,
           "power_grid_relevance": 0,
           "cooling_relevance": 0,
           "capital_markets_relevance": 0,
           "enterprise_ai_infrastructure_relevance": 0,
-          "infrastructure_relevance_score": 0.221,
-          "infrastructure_relevance_tier": "archive_only",
-          "infrastructure_relevance_action": "archive_only",
+          "infrastructure_relevance_score": 0.551,
+          "infrastructure_relevance_tier": "signal_card",
+          "infrastructure_relevance_action": "publish_signal_card_only",
           "infrastructure_relevance_reasons": [
-            "cloud_capacity_relevance:0.32(hyperscalers)"
+            "data_center_relevance:0.89(data center, colocation)"
           ],
           "infrastructure_relevance": {
             "direct_ai_infrastructure_relevance": 0,
-            "data_center_relevance": 0,
-            "cloud_capacity_relevance": 0.32,
+            "data_center_relevance": 0.89,
+            "cloud_capacity_relevance": 0,
             "semiconductor_relevance": 0,
             "power_grid_relevance": 0,
             "cooling_relevance": 0,
             "capital_markets_relevance": 0,
             "enterprise_ai_infrastructure_relevance": 0,
-            "infrastructure_relevance_score": 0.221,
+            "infrastructure_relevance_score": 0.551,
+            "infrastructure_relevance_tier": "signal_card",
+            "infrastructure_relevance_action": "publish_signal_card_only",
+            "infrastructure_relevance_reasons": [
+              "data_center_relevance:0.89(data center, colocation)"
+            ],
+            "infrastructureRelevanceAction": "publish_signal_card_only",
+            "articlePagePublished": false,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 57
+        },
+        {
+          "id": "81b7bcde6de6a1f7",
+          "source": "Bloomberg Technology",
+          "url": "https://www.bloomberg.com/news/articles/2026-06-28/chinese-spies-smuggled-drugs-fuel-takaichi-s-security-push",
+          "title": "Chinese Spies, Smuggled Drugs Fuel Takaichi’s Security Push",
+          "snippet": "Chinese spies stealing Japanese industrial secrets in boardrooms. Chip smugglers ferrying Nvidia’s prized artificial intelligence semiconductors via Japan. Drug gangs quietly slipping fentanyl across Japan’s borders to…",
+          "contentText": "Chinese spies stealing Japanese industrial secrets in boardrooms. Chip smugglers ferrying Nvidia’s prized artificial intelligence semiconductors via Japan. Drug gangs quietly slipping fentanyl across Japan’s borders to a US opioid crisis.",
+          "publishedAt": "2026-06-28T22:00:00.000Z",
+          "sourceImage": "https://assets.bwbx.io/images/users/iqjWHBFdfxIU/ic.LrHxknz5U/v0/1200x-1.jpg",
+          "region": "APAC",
+          "language": "en",
+          "defaultCategory": "Hyperscalers & Cloud",
+          "category": "Semiconductors",
+          "primary_category": "Semiconductors",
+          "secondary_category": "Accelerators, memory, and advanced packaging",
+          "infrastructure_layer": "Silicon",
+          "affected_stakeholders": [
+            "semiconductor suppliers",
+            "hyperscalers",
+            "server OEMs",
+            "investors"
+          ],
+          "article_type": "Other",
+          "urgency_score": 0.36,
+          "taxonomy_confidence": 0.71,
+          "taxonomy_reasons": [
+            "chip",
+            "nvidia"
+          ],
+          "direct_ai_infrastructure_relevance": 0.22,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0.32,
+          "semiconductor_relevance": 0.64,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.547,
+          "infrastructure_relevance_tier": "archive_only",
+          "infrastructure_relevance_action": "archive_only",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:0.22",
+            "cloud_capacity_relevance:0.32(hyperscalers)",
+            "semiconductor_relevance:0.64(semiconductors, nvidia)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 0.22,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0.32,
+            "semiconductor_relevance": 0.64,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.547,
             "infrastructure_relevance_tier": "archive_only",
             "infrastructure_relevance_action": "archive_only",
             "infrastructure_relevance_reasons": [
-              "cloud_capacity_relevance:0.32(hyperscalers)"
+              "direct_ai_infrastructure_relevance:0.22",
+              "cloud_capacity_relevance:0.32(hyperscalers)",
+              "semiconductor_relevance:0.64(semiconductors, nvidia)"
             ],
             "infrastructureRelevanceAction": "archive_only",
             "articlePagePublished": false,
@@ -23218,37 +23231,30 @@
             "archiveOnly": true,
             "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
           },
-          "score": 39
+          "score": 57
         }
       ],
       "curatedIds": [
-        "68e53992ccc4ae28",
-        "5b2eb493afacc696",
-        "a76382fb736eb8e6",
-        "389775594624eca9",
-        "0572eafe22d82e19",
-        "110d2b48fff3f18f"
+        "ad496ea93f8d4222",
+        "cafb6b7bd34f6856",
+        "303abec9531eaebc",
+        "2fbe8bd5ecb44a64",
+        "e07054a6e2e1d6c9",
+        "81b7bcde6de6a1f7"
       ],
       "publishedIds": [
         "5b2eb493afacc696",
-        "68e53992ccc4ae28"
+        "68e53992ccc4ae28",
+        "ad496ea93f8d4222",
+        "cafb6b7bd34f6856"
       ],
       "slotPublications": {
-        "0": true
+        "0": true,
+        "1": true
       }
     }
   },
   "runHistory": [
-    {
-      "at": "2026-05-12T17:19:07.507Z",
-      "day": "2026-05-13",
-      "slot": 0,
-      "publishedCount": 2,
-      "publishedIds": [
-        "341f3e11be204997",
-        "fee3dad0550ec9b9"
-      ]
-    },
     {
       "at": "2026-05-13T00:01:46.495Z",
       "day": "2026-05-13",
@@ -35024,7 +35030,74 @@
         }
       ],
       "archiveOnlyItems": []
+    },
+    {
+      "at": "2026-06-29T00:12:10.112Z",
+      "day": "2026-06-29",
+      "slot": 1,
+      "publishedCount": 0,
+      "signalCardCount": 2,
+      "archiveOnlyCount": 0,
+      "processedIds": [
+        "ad496ea93f8d4222",
+        "cafb6b7bd34f6856"
+      ],
+      "blockedCount": 2,
+      "blockedItems": [
+        {
+          "id": "ad496ea93f8d4222",
+          "title": "From Compute Stacking to Total Efficiency: Building the Next Generation of HPC Infrastructure for the AI Era",
+          "infrastructure_relevance_score": 0.945,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud, high-performance computing)",
+            "cloud_capacity_relevance:0.32(hyperscalers)",
+            "semiconductor_relevance:0.22(gpu)",
+            "power_grid_relevance:0.22(power)",
+            "cooling_relevance:0.34(cooling)",
+            "capital_markets_relevance:0.28(capex)",
+            "enterprise_ai_infrastructure_relevance:0.66(storage, networking, inference workloads)"
+          ],
+          "extraction_quality_score": 0.98,
+          "source_domain_adapter": "generic",
+          "content_length": 1478,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": false,
+          "repetition_block_reasons": [],
+          "repetition_check": null,
+          "expert_insight_complete": false,
+          "expert_insight_missing_fields": [
+            "named_companies"
+          ],
+          "reason": "fail_closed: source_text_incomplete:ellipsis_truncation_artifact, ellipsis_truncation_artifact"
+        },
+        {
+          "id": "cafb6b7bd34f6856",
+          "title": "Asustor Showcases Flashstor 12 Pro Gen3 & Flashstor 6 Gen3 All-Flash NASes at Computex 2026",
+          "infrastructure_relevance_score": 0.941,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "cloud_capacity_relevance:0.32(hyperscalers)",
+            "semiconductor_relevance:0.64(amd, intel, gpu)",
+            "power_grid_relevance:0.22(power)"
+          ],
+          "extraction_quality_score": 1,
+          "source_domain_adapter": "servethehome",
+          "content_length": 1674,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": false,
+          "repetition_block_reasons": [],
+          "repetition_check": null,
+          "expert_insight_complete": true,
+          "expert_insight_missing_fields": [],
+          "reason": "fail_closed: nav_or_cta_detected"
+        }
+      ],
+      "archiveOnlyItems": []
     }
   ],
-  "lastRunAt": "2026-06-28T16:19:54.945Z"
+  "lastRunAt": "2026-06-29T00:12:10.112Z"
 }
