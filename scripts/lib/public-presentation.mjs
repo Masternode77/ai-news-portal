@@ -1,6 +1,7 @@
 import { generateEditorialExcerpt } from './editorial-excerpt-generator.mjs';
 import { guardPublicCopy } from './copy-quality-guard.mjs';
 import { generateCardCopy } from './card-copy-quality-gate.mjs';
+import { hasInternalPublicLanguage, sanitizePublicCopy } from './internal-language-guard.mjs';
 import { normalizeProperNouns } from './proper-noun-normalizer.mjs';
 import { routePublicLane } from './public-lane-router.mjs';
 import {
@@ -11,6 +12,7 @@ import {
 } from './article-image-surface.mjs';
 
 const FALLBACK_READER_IMPACT = ['Operators', 'Capacity planners'];
+const UNSAFE_PRESENTATION_TERMS = /\b(qualify|qualification|threshold|relevance score|urgency score|extraction|routing decision|publish decision|noindex)\b/i;
 
 function compact(value = '') {
   return normalizeProperNouns(String(value || '').replace(/\s+/g, ' ').trim());
@@ -29,6 +31,21 @@ function stakeholderLabels(article = {}) {
 
 function publicImage(article = {}) {
   return articleCardImage(article);
+}
+
+function safeImageAlt(value = '', fallbackTitle = '') {
+  const clean = sanitizePublicCopy(value || '');
+  if (clean && !hasInternalPublicLanguage(clean)) return clean;
+  const fallback = sanitizePublicCopy(`${fallbackTitle || 'AI infrastructure'} editorial visual`);
+  return hasInternalPublicLanguage(fallback) ? 'AI infrastructure editorial visual' : fallback;
+}
+
+function safePresentationText(value = '', fallback = '') {
+  const guarded = guardPublicCopy(value).text;
+  if (guarded && !hasInternalPublicLanguage(guarded) && !UNSAFE_PRESENTATION_TERMS.test(guarded)) return guarded;
+  const fallbackGuarded = guardPublicCopy(fallback).text;
+  if (fallbackGuarded && !hasInternalPublicLanguage(fallbackGuarded) && !UNSAFE_PRESENTATION_TERMS.test(fallbackGuarded)) return fallbackGuarded;
+  return '';
 }
 
 function normalizedRoute(article = {}, route = undefined) {
@@ -68,9 +85,9 @@ export function buildPublicPresentation(article = {}, options = {}) {
     recentDecks: options.recentDecks || [],
   });
   const cardCopy = generateCardCopy(article);
-  const title = compact(article.expertLensFull?.finalHeadline || article.title || '');
-  const deck = guardPublicCopy(persisted.deck || article.deck || generated.deck || cardCopy.deck).text;
-  const why = guardPublicCopy(persisted.why_it_matters || article.why_it_matters || generated.why_it_matters || cardCopy.why_it_matters).text;
+  const title = cardCopy.title || sanitizePublicCopy(compact(article.expertLensFull?.finalHeadline || article.title || ''));
+  const deck = safePresentationText(persisted.deck || article.deck || generated.deck, cardCopy.deck);
+  const why = safePresentationText(persisted.why_it_matters || article.why_it_matters || generated.why_it_matters, cardCopy.why_it_matters);
   const detailHref = publicDetailHref(article);
   const image = publicImage(article);
   const imageMeta = articleImageVariants(article).thumbnail;
@@ -84,7 +101,7 @@ export function buildPublicPresentation(article = {}, options = {}) {
     deck,
     why_it_matters: why,
     image,
-    image_alt: persisted.image_alt || articleImageAlt({ ...article, title }),
+    image_alt: safeImageAlt(persisted.image_alt || articleImageAlt({ ...article, title }), title),
     image_status: imageMeta.status,
     image_provider: imageMeta.provider,
     image_variant: imageMeta.variant,

@@ -8,14 +8,14 @@ import { buildArchiveFeed } from '../../../scripts/lib/archive-feed-builder.mjs'
 
 const feed = buildArchiveFeed([...latestNews, ...archivedNews], { page: 1, pageSize: 50 });
 ---
-<Layout title={`Archive | ${SITE.name}`} description="Search the Compute Current archive." canonicalPath="/archive/">
+<Layout title={`Publication archive | ${SITE.name}`} description="Browse the Compute Current publication archive." canonicalPath="/archive/">
   <main class="policy-shell taxonomy-page publication-archive">
-    <a class="back-link" href="/">Latest analysis</a>
+    <a class="back-link" href="/">Read the latest</a>
     <section class="policy-page">
-      <p class="eyebrow">Archive</p>
-      <h1>Search the archive</h1>
-      <p class="policy-lede">Browse recent AI infrastructure analysis, briefs, and signals.</p>
+      <p class="eyebrow">Publication archive</p>
+      <h1>Publication archive</h1>
+      <p class="policy-lede">Browse recent AI infrastructure intelligence, briefs, and source-linked analysis.</p>
     </section>
-    <LatestAnalysisFeed feed={feed} title="Browse Recent Analysis" dek="" />
+    <LatestAnalysisFeed feed={feed} title="Recent intelligence" eyebrow="Publication archive" dek="" />
   </main>
 </Layout>

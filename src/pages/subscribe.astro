@@ -5,8 +5,8 @@ import { SITE } from '../config/site';
 const routes = SITE.commercial.routes;
 ---
 <Layout
-  title={`Signal Board | ${SITE.name}`}
-  description="Open Compute Current signal board for power, capacity, chips, cooling, cloud demand, capital, and APAC/Korea infrastructure signals."
+  title={`Publication Feed | ${SITE.name}`}
+  description="Open Compute Current publication feed for power, capacity, chips, cooling, cloud demand, capital, and APAC/Korea infrastructure coverage."
   canonicalPath={routes.subscribe}
   noindex={true}
 >
@@ -15,7 +15,7 @@ const routes = SITE.commercial.routes;
     <article class="policy-page commercial-article">
       <header class="commercial-hero">
         <div>
-          <p class="eyebrow">Signal board</p>
+          <p class="eyebrow">Publication feed</p>
           <h1>AI infrastructure signals for capacity, power, and capital decisions.</h1>
           <p class="policy-lede">
             The public board gives infrastructure readers a disciplined read on the bottlenecks shaping AI data
@@ -30,7 +30,7 @@ const routes = SITE.commercial.routes;
         </aside>
       </header>
 
-      <nav class="commercial-actions" aria-label="Signal board actions">
+      <nav class="commercial-actions" aria-label="Publication feed actions">
         <a href={routes.archive}>{SITE.commercial.ctas.weeklyBrief}</a>
         <a href={routes.methodology}>Trace the Methodology</a>
         <a href={routes.rss}>RSS Feed</a>
@@ -39,7 +39,7 @@ const routes = SITE.commercial.routes;
       <section class="commercial-section">
         <div class="commercial-section-heading">
           <p class="eyebrow">Coverage lanes</p>
-          <h2>What the signal board tracks</h2>
+          <h2>What the publication feed tracks</h2>
         </div>
         <ul class="commercial-signal-list commercial-check-grid">
           <li>Power availability, grid interconnection, generation tie-ups, and site constraints.</li>

@@ -5,7 +5,7 @@ const { signal, compact = false, priority = false } = Astro.props;
 const impact = Array.isArray(signal.reader_impact) ? signal.reader_impact.slice(0, 4) : [];
 const image = signal.image || signal.image_url || '/generated/fallbacks/ai-infrastructure.svg';
 const imageAlt = signal.image_alt || `${signal.title || 'Compute Current signal'} visual`;
-const provenanceLabel = signal.image_provenance_label || 'ChatGPT Image2 visual';
+const provenanceLabel = signal.image_provenance_label || 'Editorial visual';
 const provenanceKind = signal.image_provenance_kind || 'image2';
 ---
 <article

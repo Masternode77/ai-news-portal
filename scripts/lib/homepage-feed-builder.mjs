@@ -62,7 +62,7 @@ function decorate(article = {}, options = {}) {
   const presentation = buildPublicPresentation(article, { route, recentDecks: options.recentDecks || [] });
   const copy = generateCardCopy(article);
   const bottleneckAxis = inferBottleneckAxis(article);
-  const copyQuality = cardCopyQualityResult(copy);
+  const copyQuality = cardCopyQualityResult(copy, article);
   if (!copyQuality.ok) {
     return null;
   }

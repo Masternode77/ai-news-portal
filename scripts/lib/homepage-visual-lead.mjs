@@ -11,6 +11,8 @@ export function hasGeneratedRasterImage(signal = {}) {
 
 export function selectHomepageVisualLead(feed = {}) {
   const items = Array.isArray(feed.items) ? feed.items : [];
-  const generatedLead = items.find((item) => hasGeneratedRasterImage(item.publicSignal));
+  const featuredId = feed.featured?.id || '';
+  const candidates = items.filter((item) => !featuredId || item.id !== featuredId);
+  const generatedLead = candidates.find((item) => hasGeneratedRasterImage(item.publicSignal));
   return generatedLead?.publicSignal || feed.featured?.publicSignal || items[0]?.publicSignal || null;
 }

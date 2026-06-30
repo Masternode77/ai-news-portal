@@ -17,6 +17,25 @@ import {
   localArticleImageExists,
 } from '../scripts/lib/article-image-surface.mjs';
 import { buildPublicPresentation } from '../scripts/lib/public-presentation.mjs';
+import { registerPublicImageAuditContractTests } from './public-image-audit-contracts.mjs';
+
+const HPCWIRE_REMOTE_IMAGE_REGRESSION_IDS = [
+  '0ccf1e3f69f2b513',
+  '0737340e51a0cfb0',
+  'e40a1864f5a8b8e8',
+  '4d21b727a5d2e275',
+  'cf753845198cd7d0',
+];
+const FORBIDDEN_VISIBLE_PROVENANCE_LABELS = /ChatGPT Image2 visual|Editorial visual|Original source image/;
+
+function assertPublicImage2Provenance(provenance, expected) {
+  assert.equal(typeof provenance.label, 'string');
+  assert.notEqual(provenance.label.length, 0);
+  assert.equal(provenance.kind, 'image2');
+  assert.equal(provenance.provider, expected.provider);
+  assert.equal(provenance.status, expected.status);
+  assert.equal(provenance.variant, expected.variant);
+}
 
 test('public feed cards carry displayable editorial images', () => {
   const feed = buildHomepageFeed([...latestNews, ...archivedNews], { limit: 50, minimumVisible: 30 });
@@ -64,18 +83,75 @@ test('article card and header templates render images', () => {
   assert.match(cardSource, /ArticleCardImage/);
   assert.match(cardSource, /provenanceLabel=\{provenanceLabel\}/);
   assert.match(cardImageSource, /class=\{className\}/);
-  assert.match(cardImageSource, /article-image-provenance/);
   assert.match(cardImageSource, /data-image-provenance/);
   assert.match(cardWrapperSource, /ArticleCard/);
   assert.match(heroImageSource, /class="article-hero-image/);
-  assert.match(heroImageSource, /article-image-provenance/);
   assert.match(heroImageSource, /data-image-provenance/);
+  assert.doesNotMatch(heroImageSource, /article-image-provenance/);
+  assert.doesNotMatch(heroImageSource, /\{provenanceLabel\}/);
   assert.match(featuredSource, /provenanceLabel=\{provenanceLabel\}/);
   assert.match(signalCardSource, /ArticleCardImage/);
   assert.match(signalCardSource, /provenanceLabel=\{provenanceLabel\}/);
   assert.match(articlePageSource, /articleHeroImage/);
   assert.match(articlePageSource, /articleOpenGraphImage/);
   assert.match(articlePageSource, /articleImageProvenance/);
+});
+
+test('article card image keeps provenance metadata non-visible', () => {
+  const cardImageSource = fs.readFileSync(new URL('../src/components/ArticleCardImage.astro', import.meta.url), 'utf8');
+
+  assert.match(cardImageSource, /data-image-provenance/);
+  assert.match(cardImageSource, /data-provenance-kind/);
+  assert.doesNotMatch(cardImageSource, /\{displayProvenanceLabel\}|\{provenanceLabel\}/);
+});
+
+test('article hero image keeps provenance metadata non-visible', () => {
+  const heroImageSource = fs.readFileSync(new URL('../src/components/ArticleHeroImage.astro', import.meta.url), 'utf8');
+
+  assert.match(heroImageSource, /data-image-provenance/);
+  assert.match(heroImageSource, /data-provenance-kind/);
+  assert.doesNotMatch(heroImageSource, /article-image-provenance/);
+  assert.doesNotMatch(heroImageSource, /\{provenanceLabel\}/);
+});
+
+test('public feed carries non-visible publication image provenance metadata', () => {
+  const feed = buildHomepageFeed([...latestNews, ...archivedNews], { limit: 50, minimumVisible: 30 });
+  const publicSignals = feed.items.map((item) => item.publicSignal);
+  const visibleSignalCopy = publicSignals.map((signal) => ({
+    title: signal.title,
+    deck: signal.deck,
+    why_it_matters: signal.why_it_matters,
+    image_alt: signal.image_alt,
+    source: signal.source,
+    cta: signal.cta,
+  }));
+
+  assert.ok(publicSignals.length >= 30);
+  assert.equal(publicSignals.every((signal) => signal.image_provenance_label), true);
+  assert.equal(publicSignals.every((signal) => signal.image_provenance_kind), true);
+  assert.equal(publicSignals.some((signal) => signal.image_provenance_kind === 'image2'), true);
+  assert.doesNotMatch(JSON.stringify(visibleSignalCopy), FORBIDDEN_VISIBLE_PROVENANCE_LABELS);
+});
+
+test('public presentation fails closed instead of using generic terminal copy', () => {
+  const presentation = buildPublicPresentation({
+    id: 'unsafe-public-presentation-copy',
+    title: 'Extraction threshold routing decision',
+    source: 'Relevance score',
+    primary_category: 'Qualification',
+    infrastructure_layer: 'qualification',
+    deck: 'The extraction threshold routing decision did not qualify.',
+    why_it_matters: 'The source evidence was too thin for a publish decision.',
+    public_presentation: {
+      deck: 'The extraction threshold routing decision did not qualify.',
+      why_it_matters: 'The source evidence was too thin for a publish decision.',
+    },
+  });
+
+  assert.notEqual(presentation.deck, 'AI infrastructure update.');
+  assert.notEqual(presentation.why_it_matters, 'AI infrastructure update.');
+  assert.equal(presentation.deck, '');
+  assert.equal(presentation.why_it_matters, '');
 });
 
 test('article image surface keeps public imagery Image2-centered when only source artwork exists', () => {
@@ -93,9 +169,7 @@ test('article image surface keeps public imagery Image2-centered when only sourc
   assert.equal(articleOpenGraphImage(article), '/generated/fallbacks/power-grid.svg');
   assert.equal(variants.thumbnail.status, 'fallback');
   assert.equal(variants.thumbnail.provider, 'category-fallback');
-  assert.deepEqual(articleImageProvenance(article, 'thumbnail'), {
-    label: 'ChatGPT Image2 visual',
-    kind: 'image2',
+  assertPublicImage2Provenance(articleImageProvenance(article, 'thumbnail'), {
     provider: 'category-fallback',
     status: 'fallback',
     variant: 'thumbnail',
@@ -105,7 +179,8 @@ test('article image surface keeps public imagery Image2-centered when only sourc
   assert.equal(presentation.id, article.id);
   assert.equal(presentation.image, '/generated/fallbacks/power-grid.svg');
   assert.equal(presentation.image_status, 'fallback');
-  assert.equal(presentation.image_provenance_label, 'ChatGPT Image2 visual');
+  assert.equal(typeof presentation.image_provenance_label, 'string');
+  assert.notEqual(presentation.image_provenance_label.length, 0);
   assert.equal(presentation.image_provenance_kind, 'image2');
   assert.match(presentation.image_alt, /Utility capacity queue/);
 });
@@ -129,9 +204,7 @@ test('article image surface prefers local generated images over source artwork',
   assert.equal(articleOpenGraphImage(article), article.generatedImage);
   assert.equal(variants.thumbnail.status, 'placeholder');
   assert.equal(variants.thumbnail.provider, 'local-placeholder');
-  assert.deepEqual(articleImageProvenance(article, 'thumbnail'), {
-    label: 'ChatGPT Image2 visual',
-    kind: 'image2',
+  assertPublicImage2Provenance(articleImageProvenance(article, 'thumbnail'), {
     provider: 'local-placeholder',
     status: 'placeholder',
     variant: 'thumbnail',
@@ -158,7 +231,8 @@ test('article image surface prefers canonical image2 hero metadata', () => {
   const presentation = buildPublicPresentation(article);
   assert.equal(presentation.image, article.thumbnailImage);
   assert.equal(presentation.image_alt, article.imageAlt);
-  assert.equal(presentation.image_provenance_label, 'ChatGPT Image2 visual');
+  assert.equal(typeof presentation.image_provenance_label, 'string');
+  assert.notEqual(presentation.image_provenance_label.length, 0);
   assert.equal(presentation.image_provenance_kind, 'image2');
 });
 
@@ -168,15 +242,16 @@ test('article image provenance labels fallback and missing metadata as image2 vi
     title: 'Unmapped AI infrastructure signal',
   };
 
-  assert.deepEqual(articleImageProvenance(article, 'thumbnail'), {
-    label: 'ChatGPT Image2 visual',
-    kind: 'image2',
+  assertPublicImage2Provenance(articleImageProvenance(article, 'thumbnail'), {
     provider: 'category-fallback',
     status: 'fallback',
     variant: 'thumbnail',
   });
 
   const presentation = buildPublicPresentation(article);
-  assert.equal(presentation.image_provenance_label, 'ChatGPT Image2 visual');
+  assert.equal(typeof presentation.image_provenance_label, 'string');
+  assert.notEqual(presentation.image_provenance_label.length, 0);
   assert.equal(presentation.image_provenance_kind, 'image2');
 });
+
+registerPublicImageAuditContractTests();

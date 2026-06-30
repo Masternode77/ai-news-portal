@@ -10,13 +10,14 @@ const isExternal = href && !href.startsWith('/');
 const sourceIsExternal = sourceHref && !sourceHref.startsWith('/');
 const image = signal?.image || '/generated/fallbacks/ai-infrastructure.svg';
 const imageAlt = signal?.image_alt || (signal?.title ? `${signal.title} editorial visual` : 'Compute Current editorial visual');
-const provenanceLabel = signal?.image_provenance_label || 'ChatGPT Image2 visual';
+const provenanceLabel = signal?.image_provenance_label || 'Editorial visual';
 const provenanceKind = signal?.image_provenance_kind || 'image2';
 const date = signal?.date || signal?.publishedAt || '';
 const formattedDate = date
   ? new Date(date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
   : '';
 const readerImpact = Array.isArray(signal?.reader_impact) ? signal.reader_impact.slice(0, 3) : [];
+const whyItMatters = signal?.why_it_matters ? String(signal.why_it_matters).replace(/^Why it\s+matters:\s*/i, '') : '';
 ---
 {hasSignal ? (
   <section class="featured-article" aria-label="Featured analysis" data-featured-article>
@@ -36,8 +37,8 @@ const readerImpact = Array.isArray(signal?.reader_impact) ? signal.reader_impact
         ) : signal.title}
       </h2>
       {signal.deck ? <p class="featured-deck">{signal.deck}</p> : null}
-      {signal.why_it_matters ? (
-        <p class="featured-why"><strong>Why it matters:</strong>{' '}{String(signal.why_it_matters).replace(/^Why it matters:\s*/i, '')}</p>
+      {whyItMatters ? (
+        <p class="featured-why">{whyItMatters}</p>
       ) : null}
       {readerImpact.length ? (
         <div class="article-impact-pills" aria-label="Reader impact">

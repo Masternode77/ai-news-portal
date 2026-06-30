@@ -20,14 +20,14 @@ export function getStaticPaths() {
 const { pageNumber } = Astro.props;
 const feed = buildArchiveFeed([...latestNews, ...archivedNews], { page: pageNumber, pageSize: 50 });
 ---
-<Layout title={`Archive page ${pageNumber} | ${SITE.name}`} description="Compute Current archive page." canonicalPath={`/archive/${pageNumber}/`}>
+<Layout title={`Publication archive page ${pageNumber} | ${SITE.name}`} description="Compute Current publication archive page." canonicalPath={`/archive/${pageNumber}/`}>
   <main class="policy-shell taxonomy-page publication-archive">
-    <a class="back-link" href="/archive/">Archive</a>
+    <a class="back-link" href="/archive/">Publication archive</a>
     <section class="policy-page">
-      <p class="eyebrow">Archive</p>
-      <h1>Archive page {pageNumber}</h1>
-      <p class="policy-lede">Browse recent AI infrastructure analysis, briefs, and signals.</p>
+      <p class="eyebrow">Publication archive</p>
+      <h1>Publication archive page {pageNumber}</h1>
+      <p class="policy-lede">Browse recent AI infrastructure intelligence, briefs, and source-linked analysis.</p>
     </section>
-    <LatestAnalysisFeed feed={feed} title="Browse Recent Analysis" dek="" />
+    <LatestAnalysisFeed feed={feed} title="Recent intelligence" eyebrow="Publication archive" dek="" />
   </main>
 </Layout>

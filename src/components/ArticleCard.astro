@@ -14,9 +14,10 @@ const formattedDate = date
 const cta = signal.cta || (signal.view_detail ? 'Read analysis' : 'Source');
 const image = signal.image || '/generated/fallbacks/ai-infrastructure.svg';
 const imageAlt = signal.image_alt || (signal.title ? `${signal.title} editorial visual` : 'Compute Current editorial visual');
-const provenanceLabel = signal.image_provenance_label || 'ChatGPT Image2 visual';
+const provenanceLabel = signal.image_provenance_label || 'Editorial visual';
 const provenanceKind = signal.image_provenance_kind || 'image2';
 const readerImpact = Array.isArray(signal.reader_impact) ? signal.reader_impact.slice(0, 4) : [];
+const whyItMatters = signal.why_it_matters ? String(signal.why_it_matters).replace(/^Why it\s+matters:\s*/i, '') : '';
 ---
 <article class="article-list-card" data-public-card>
   <ArticleCardImage
@@ -43,8 +44,8 @@ const readerImpact = Array.isArray(signal.reader_impact) ? signal.reader_impact.
       ) : signal.title}
     </h3>
     {signal.deck ? <p class="article-deck">{signal.deck}</p> : null}
-    {signal.why_it_matters ? (
-      <p class="article-why"><strong>Why it matters:</strong>{' '}{String(signal.why_it_matters).replace(/^Why it matters:\s*/i, '')}</p>
+    {whyItMatters ? (
+      <p class="article-why">{whyItMatters}</p>
     ) : null}
     {readerImpact.length ? (
       <div class="article-impact-pills" aria-label="Reader impact">

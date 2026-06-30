@@ -24,22 +24,22 @@ export const SITE = {
       rss: '/rss.xml',
     },
     ctas: {
-      weeklyBrief: 'Open the Signal Board',
-      sample: 'Read the Sample Analysis',
-      executiveBriefing: 'Trace the Methodology',
-      recentAnalysis: 'Browse recent analysis',
-      contact: 'Send a Source Signal',
+      weeklyBrief: 'Read the latest',
+      sample: 'Editorial policy',
+      executiveBriefing: 'How we source',
+      recentAnalysis: 'Browse the archive',
+      contact: 'Share a source',
     },
     packages: [
       {
-        name: 'Public Signal Board',
+        name: 'Recent intelligence',
         price: 'Open',
-        summary: 'Live public signals for readers tracking AI infrastructure constraints.',
+        summary: 'Source-linked analysis for readers tracking AI infrastructure constraints.',
       },
       {
         name: 'Source Trail',
         price: 'Open',
-        summary: 'Source-linked context, provenance labels, and archive paths for every released signal.',
+        summary: 'Source-linked context, provenance labels, and archive paths for every published analysis.',
       },
       {
         name: 'Constraint Watchlists',

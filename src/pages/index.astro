@@ -15,13 +15,14 @@ const routes = SITE.commercial.routes;
 const ctas = SITE.commercial.ctas;
 const homepageArticles = process.env.HOMEPAGE_FIXTURE === 'empty' ? [] : [...latestNews, ...archivedNews];
 const feed = buildHomepageFeed(homepageArticles, { limit: 50, minimumVisible: 30 });
-const latestFeed = { ...feed, items: feed.featured ? feed.items.slice(1) : feed.items };
 const featuredSignal = feed.featured?.publicSignal || null;
 const dateFormatter = new Intl.DateTimeFormat('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
 const topSources = Array.from(new Set(feed.items.map((entry) => entry.publicSignal?.source).filter(Boolean))).slice(0, 3);
 const leadSignal = selectHomepageVisualLead(feed);
+const leadListExclusions = new Set([feed.featured?.publicSignal?.id, leadSignal?.id].filter(Boolean));
+const latestFeed = { ...feed, items: leadListExclusions.size ? feed.items.filter((item) => !leadListExclusions.has(item.publicSignal?.id)) : feed.items };
 const leadHref = leadSignal?.view_detail || leadSignal?.read_source || '/archive/';
-const leadDate = leadSignal?.date ? dateFormatter.format(new Date(leadSignal.date)) : 'Latest desk signal';
+const leadDate = leadSignal?.date ? dateFormatter.format(new Date(leadSignal.date)) : 'Latest analysis';
 const leadImage = leadSignal?.image || '/generated/fallbacks/ai-infrastructure.svg';
 const leadImageAlt = leadSignal?.image_alt || (leadSignal?.title ? `${leadSignal.title} editorial visual` : 'Compute Current editorial visual');
 const marketContext = [
@@ -31,11 +32,11 @@ const marketContext = [
   },
   {
     label: 'Reader impact',
-    value: featuredSignal?.signal_label || 'Operator signal',
+    value: featuredSignal?.signal_label || 'Operator focus',
   },
   {
     label: 'Source mix',
-    value: topSources.length ? topSources.join(', ') : 'Pipeline sources',
+    value: topSources.length ? topSources.join(', ') : 'Public sources',
   },
 ];
 
@@ -52,7 +53,7 @@ const intelligenceProducts = [
   },
   {
     label: 'Source Trail',
-    title: 'Original links, image provenance, archive search, and public methodology.',
+    title: 'Original links, visual source notes, archive search, and public methodology.',
     href: routes.methodology,
   },
 ];
@@ -78,7 +79,7 @@ const navLinks = [
 ---
 <Layout title={boardTitle} description="Open AI infrastructure intelligence for power, data centers, chips, cloud capacity, cooling, and capital." canonicalPath="/">
   <main class="page-shell autonomous-home publication-home">
-    <header class="publication-header command-center-header" data-public-command-center>
+    <header class="publication-header command-center-header">
       <div class="edition-line">
         <span>AI Infrastructure Intelligence</span>
         <span>Updated every 8 hours</span>
@@ -87,22 +88,22 @@ const navLinks = [
 
       <div class="masthead-row">
         <div class="hero-copy">
-          <p class="eyebrow">Infrastructure command center</p>
+          <p class="eyebrow">AI Infrastructure Intelligence</p>
           <h1 aria-label={boardTitle}>
             <span>Compute</span>
             <span>Current</span>
           </h1>
           <p>
-            Open signals on the bottlenecks shaping AI capacity, power, and capital flows.
+            Source-linked analysis on the bottlenecks shaping AI capacity, power, and capital flows.
           </p>
           <p class="hero-deck">
-            A public operating board for readers who need the source trail behind data center buildouts,
-            grid constraints, silicon supply, cooling shifts, cloud capacity, policy, and capital movement.
+            A public publication for readers who need the source trail behind data center buildouts, grid constraints,
+            silicon supply, cooling shifts, cloud capacity, policy, and capital movement.
           </p>
           <nav class="commercial-actions homepage-commercial-actions" aria-label="Public intelligence actions">
-            <a href={routes.archive}>{ctas.weeklyBrief}</a>
-            <a href={routes.methodology}>{ctas.executiveBriefing}</a>
-            <a href={routes.aiDisclosure}>{ctas.sample}</a>
+            <a href={routes.archive}>Read the latest</a>
+            <a href={routes.methodology}>How we source</a>
+            <a href={routes.editorialPolicy}>{ctas.sample}</a>
             <a href={routes.archive}>{ctas.recentAnalysis}</a>
           </nav>
           <nav class="homepage-secondary-actions" aria-label="Public reference links">
@@ -131,7 +132,7 @@ const navLinks = [
                 Watch the constraint before it becomes the story.
               </h2>
               <p>
-                Compute Current ranks public AI infrastructure signals by their effect on power access,
+                Compute Current ranks public AI infrastructure developments by their effect on power access,
                 site delivery, accelerated compute supply, cooling strategy, and capital exposure.
               </p>
             </div>
@@ -154,19 +155,19 @@ const navLinks = [
                   className="premium-lead-card-image"
                   linkClassName="premium-lead-card-visual"
                   priority={true}
-                  ariaLabel={leadSignal?.title || 'Open lead signal'}
+                  ariaLabel={leadSignal?.title || 'Read lead analysis'}
                   provenanceLabel=""
                   provenanceKind=""
                 />
               </div>
               <div class="premium-lead-card-copy">
                 <span>{leadSignal?.source || 'Editorial desk'}</span>
-                <h3>{leadSignal?.title || 'AI infrastructure signals are being prepared for publication.'}</h3>
+                <h3>{leadSignal?.title || 'AI infrastructure analysis is being prepared for publication.'}</h3>
                 <p>
                   {leadSignal?.deck ||
-                    'The desk is monitoring source-linked infrastructure signals across power, sites, silicon, cooling, and capital.'}
+                    'The publication is monitoring source-linked infrastructure intelligence across power, sites, silicon, cooling, and capital.'}
                 </p>
-                <a class="detail-link" href={leadHref}>Open lead signal</a>
+                <a class="detail-link" href={leadHref}>Read lead analysis</a>
               </div>
             </article>
           </div>
@@ -189,29 +190,29 @@ const navLinks = [
 
     <LatestAnalysisFeed
       feed={latestFeed}
-      title="Latest Signals"
-      eyebrow="Live analysis"
-      dek="Analysis, briefs, and source-linked signals from the AI infrastructure buildout."
+      title="Latest Analysis"
+      eyebrow="Recent intelligence"
+      dek="Source-linked analysis and briefs from the AI infrastructure buildout."
     />
 
     <section class="search-shell publication-search">
       <div class="search-copy">
-        <p class="eyebrow">Archive</p>
-        <h2>Search the archive</h2>
+        <p class="eyebrow">Publication archive</p>
+        <h2>Browse the archive</h2>
       </div>
       <p class="archive-note">
         Browse AI infrastructure coverage by source, date, category, provenance, and operating context.
       </p>
-      <a class="detail-link archive-link" href="/archive/">Explore all posts</a>
+      <a class="detail-link archive-link" href="/archive/">Browse the archive</a>
     </section>
 
     <footer class="transparency-footer" aria-label="Editorial links">
       <nav class="policy-link-row" aria-label="Publication pages">
         <a href="/about/">About</a>
-        <a href="/editorial-policy/">Editorial Policy</a>
+        <a href="/editorial-policy/">Editorial policy</a>
         <a href="/methodology/">Methodology</a>
         <a href="/ai-disclosure/">AI-assisted Disclosure</a>
-        <a href={routes.contact}>Send a Source Signal</a>
+        <a href={routes.contact}>{ctas.contact}</a>
         <a href="/rss.xml">RSS</a>
         <a href="/sitemap.xml">Sitemap</a>
       </nav>

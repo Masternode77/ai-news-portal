@@ -7,17 +7,13 @@ const {
   caption = '',
 } = Astro.props;
 const safeImage = image || '/generated/fallbacks/ai-infrastructure.svg';
+const hasProvenance = Boolean(provenanceLabel || provenanceKind);
 ---
-<figure class="article-hero-image publication-hero-image">
+<figure
+  class="article-hero-image publication-hero-image"
+  data-image-provenance={hasProvenance ? '' : undefined}
+  data-provenance-kind={provenanceKind || undefined}
+>
   <img src={safeImage} alt={imageAlt} loading="eager" decoding="async" fetchpriority="high" />
-  {provenanceLabel ? (
-    <span
-      class="article-image-provenance"
-      data-image-provenance
-      data-provenance-kind={provenanceKind || undefined}
-    >
-      {provenanceLabel}
-    </span>
-  ) : null}
   {caption ? <figcaption>{caption}</figcaption> : null}
 </figure>

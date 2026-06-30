@@ -1,7 +1,9 @@
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import test from 'node:test';
+import { buildArchiveFeed } from '../scripts/lib/archive-feed-builder.mjs';
 import { buildHomepageFeed } from '../scripts/lib/homepage-feed-builder.mjs';
+import { findInternalLanguageHits } from '../scripts/lib/internal-language-guard.mjs';
 
 function item(index, tier = 'editorial_brief') {
   return {
@@ -62,6 +64,26 @@ function axisItem(index, axis, hoursAgo = index) {
   };
 }
 
+function weakGeneralAiItem(index, title) {
+  return {
+    id: `weak-general-ai-${index}`,
+    title,
+    source: 'Bloomberg Technology',
+    sourceUrl: `https://example.com/weak-general-ai-${index}`,
+    publishedAt: new Date(Date.UTC(2026, 4, 21, index)).toISOString(),
+    primary_category: 'AI Infrastructure',
+    infrastructure_layer: 'Compute',
+    infrastructure_relevance_score: 0.62,
+    public_content_tier: 'signal_card',
+    homepagePublished: true,
+    archiveOnly: false,
+    seo_noindex: false,
+    summary: `${title} remains a source-linked AI infrastructure signal.`,
+    articleText: `${title} remains a source-linked AI infrastructure signal.`,
+    generatedImage: '/generated/fallbacks/ai-infrastructure.svg',
+  };
+}
+
 test('homepage feed exposes 30 to 50 public cards when enough eligible items exist', () => {
   const feed = buildHomepageFeed(Array.from({ length: 36 }, (_, index) => item(index)));
 
@@ -71,6 +93,25 @@ test('homepage feed exposes 30 to 50 public cards when enough eligible items exi
   assert.equal(feed.items.every((entry) => entry.publicSignal.title), true);
   assert.equal(feed.sections.length, 1);
   assert.equal(feed.sections[0].title, 'Latest Analysis');
+});
+
+test('homepage and archive feeds exclude weak general AI items without dropping below 30 cards', () => {
+  const weakTitles = ['AI Is Reshaping Self-Driving Cars, Wayve CEO Says', 'Vibe coding is spreading, but engineering is not going away', 'Orlando Bravo Says Thoma Bravo Has Become AI-Centric'];
+  const articles = [
+    ...weakTitles.map((title, index) => weakGeneralAiItem(index, title)),
+    ...Array.from({ length: 36 }, (_, index) => item(index + 100)),
+  ];
+  const homepage = buildHomepageFeed(articles, { limit: 50, minimumVisible: 30 });
+  const archive = buildArchiveFeed(articles, { page: 1, pageSize: 50 });
+  const homepageText = JSON.stringify(homepage.items.map((entry) => entry.publicSignal));
+  const archiveText = JSON.stringify(archive.items.map((entry) => entry.publicSignal));
+
+  assert.equal(homepage.items.length, 36);
+  assert.equal(archive.items.length, 36);
+  for (const title of weakTitles) {
+    assert.doesNotMatch(homepageText, new RegExp(title.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'i'));
+    assert.doesNotMatch(archiveText, new RegExp(title.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'i'));
+  }
 });
 
 test('homepage first viewport cards represent distinct bottleneck axes when eligible signals exist', () => {
@@ -98,6 +139,89 @@ test('homepage feed mixes longform and short public items without internal bucke
 
   assert.deepEqual(labels.sort(), ['Analysis', 'Brief', 'Signal'].sort());
   assert.equal(feed.items.some((entry) => /Signals being monitored|Published deskwork|Cycle status/i.test(JSON.stringify(entry))), false);
+});
+
+test('homepage feed avoids visible standalone blueprint without mutating source URLs', () => {
+  const article = {
+    id: 'watch_sig_299b3d10a524a4cb',
+    title: 'Google: The agentic era: Architecting the blueprint for mission impact across the public sector',
+    deck: 'Google: The agentic era: Architecting the blueprint for mission impact across the public sector remains a source-linked AI infrastructure signal.',
+    why_it_matters: 'Google: The agentic era: Architecting the blueprint for mission impact across the public sector remains a source-linked AI infrastructure signal.',
+    source: 'Google Cloud Blog',
+    sourceUrl: 'https://cloud.google.com/blog/topics/public-sector/the-agentic-era-architecting-the-blueprint-for-mission-impact-across-the-public-sector/',
+    publishedAt: new Date(Date.UTC(2026, 4, 20, 12)).toISOString(),
+    primary_category: 'Cloud Capacity',
+    infrastructure_layer: 'cloud capacity',
+    public_content_tier: 'signal_card',
+    homepagePublished: true,
+    archiveOnly: false,
+    generatedImage: '/generated/fallbacks/cloud-capacity.svg',
+    public_presentation: {
+      image_alt: 'Google: The agentic era: Architecting the blueprint for mission impact across the public sector editorial visual',
+    },
+  };
+  const feed = buildHomepageFeed([article], { limit: 1, minimumVisible: 0 });
+  const signal = feed.items[0].publicSignal;
+  const signalText = JSON.stringify({
+    title: signal.title,
+    deck: signal.deck,
+    why_it_matters: signal.why_it_matters,
+    image_alt: signal.image_alt,
+    source: signal.source,
+    cta: signal.cta,
+  });
+  const hits = findInternalLanguageHits([{ path: '/', surface: 'test-feed', text: signalText }]);
+
+  assert.equal(feed.items.length, 1);
+  assert.equal(feed.featured.id, 'watch_sig_299b3d10a524a4cb');
+  assert.equal(feed.sections[0].items.length, 1);
+  assert.equal(signal.title, 'Google Cloud Blog cloud capacity update');
+  assert.equal(signal.image_alt, 'Google Cloud Blog cloud capacity update editorial visual');
+  assert.equal(/\bblueprint\b/i.test(signalText), false);
+  assert.equal(signal.read_source, article.sourceUrl);
+  assert.match(signal.read_source, /\bblueprint\b/i);
+  assert.match(signal.image, /\bblueprint\b/i);
+  assert.equal(signal.image_variant, 'thumbnail');
+  assert.equal(typeof signal.image_provenance_label, 'string');
+  assert.notEqual(signal.image_provenance_label.length, 0);
+  assert.equal(signal.image_provenance_kind, 'image2');
+  assert.doesNotMatch(signalText, /ChatGPT Image2 visual|Editorial visual|Original source image/);
+  assert.deepEqual(hits, []);
+});
+
+test('homepage feed keeps longform count while replacing persisted blueprint deck', () => {
+  const article = {
+    id: 'longform-blueprint-fixture',
+    title: 'Grid capacity update',
+    source: 'Example Source',
+    sourceUrl: 'https://example.com/longform-blueprint',
+    publishedAt: '2026-05-22T00:00:00Z',
+    homepagePublished: true,
+    archiveOnly: false,
+    public_status: 'published',
+    public_content_tier: 'longform_analysis',
+    articlePagePublished: true,
+    public_routing: { visibility: 'core' },
+    deck: 'The source described a deployment blueprint for grid capacity planning with named operators and procurement timing.',
+    why_it_matters: 'The grid update changes interconnection timing for AI campus delivery.',
+    infrastructure_layer: 'grid',
+  };
+  const feed = buildHomepageFeed([article], { limit: 1, minimumVisible: 0 });
+  const signal = feed.items[0].publicSignal;
+  const publicText = JSON.stringify({
+    title: signal.title,
+    deck: signal.deck,
+    why_it_matters: signal.why_it_matters,
+    source: signal.source,
+    cta: signal.cta,
+  });
+  const hits = findInternalLanguageHits([{ path: '/', surface: 'test-feed', text: publicText }]);
+
+  assert.equal(feed.items.length, 1);
+  assert.equal(feed.sections[0].items.length, 1);
+  assert.doesNotMatch(signal.deck, /\bblueprint\b/i);
+  assert.match(signal.deck, /grid|interconnection|AI campus/i);
+  assert.deepEqual(hits, []);
 });
 
 test('homepage feed only links to article detail pages that pass public longform eligibility', () => {
@@ -132,7 +256,11 @@ test('homepage composes dedicated publication components', () => {
   assert.match(source, /FeaturedArticle/);
   assert.match(source, /CategoryNav/);
   assert.match(source, /hero-brief/);
-  assert.match(source, /Latest Signals/);
+  assert.match(source, /Latest Analysis/);
+  assert.match(source, /Publication archive/);
+  assert.match(source, /Read the latest/);
+  assert.match(source, /Browse the archive/);
+  assert.doesNotMatch(source, /Latest Signals|Infrastructure command center|public operating board|Source Signal/i);
   assert.match(feedSource, /ArticleCard/);
   assert.match(styles, /\.featured-article\s*{/);
   assert.match(styles, /\.category-nav\s*{/);

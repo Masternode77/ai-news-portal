@@ -3403,7 +3403,20 @@ time {
     padding: 18px;
   }
 
-  .transparency-footer .policy-link-row {
+  .publication-home .transparency-footer {
+    grid-template-columns: 1fr;
+  }
+
+  .publication-home .transparency-footer .policy-link-row {
     justify-content: flex-start;
+  }
+
+  .publication-home .feed-heading {
+    grid-template-columns: 1fr;
+  }
+
+  .publication-home .feed-heading > p {
+    max-width: 100%;
+    overflow-wrap: anywhere;
   }
 }

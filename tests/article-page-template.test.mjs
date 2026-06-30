@@ -26,11 +26,12 @@ test('article page template presents Compute Current blog analysis before source
       && template.indexOf('ArticleHeroImage') < template.indexOf('LongformArticleBody'),
     'hero image should render near the headline before the longform body'
   );
-  assert.match(hero, /<figure class="[^"]*\barticle-hero-image\b[^"]*"/);
+  assert.match(hero, /<figure[\s\S]*class="[^"]*\barticle-hero-image\b[^"]*"/);
   assert.match(hero, /decoding="async"/);
   assert.match(hero, /provenanceLabel/);
-  assert.match(hero, /article-image-provenance/);
   assert.match(hero, /data-image-provenance/);
+  assert.doesNotMatch(hero, /article-image-provenance/);
+  assert.doesNotMatch(hero, /\{provenanceLabel\}/);
   assert.match(body, /<section class="detail-section detail-article-copy longform-article-body"/);
   assert.match(related, /article\.id !== currentId/);
   assert.match(source, /<section class="source-attribution"/);

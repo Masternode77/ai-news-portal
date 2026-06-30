@@ -1,4 +1,6 @@
-import { sanitizePublicCopy } from './internal-language-guard.mjs';
+import { hasInternalPublicLanguage, sanitizePublicCopy } from './internal-language-guard.mjs';
+import { angleFor, deckForAngle, whyForFallback } from './card-copy-fallbacks.mjs';
+import { hasSourceBackedCardProductFit } from './card-copy-product-fit.mjs';
 import { normalizeProperNouns } from './proper-noun-normalizer.mjs';
 
 const INTERNAL_CARD_PATTERNS = [
@@ -9,8 +11,10 @@ const INTERNAL_CARD_PATTERNS = [
   /^Readers can use this to test/i,
   /\b(qualify|qualification|threshold|relevance score|urgency score|extraction|routing decision|publish decision|noindex)\b/i,
   /\b(watchlist|pending clearer execution evidence|limited to source-backed facts|before it becomes a full Compute Current analysis|needs verified)\b/i,
-  /\b(concrete read|may alter AI capacity planning)\b/i,
+  /\b(concrete read|may alter AI capacity planning|compact[-\s]+signal)\b/i,
 ];
+
+const WHY_IT_MATTERS_LABEL = /^Why it\s+matters:\s*/i;
 
 const LABEL_BY_TIER = {
   longform_analysis: 'Analysis',
@@ -27,22 +31,42 @@ function compact(value = '') {
     .replace(/^([^:]{3,80}):\s+\1:\s*/i, '$1: ');
 }
 
+function isLongformAnalysis(article = {}) {
+  const tier = String(article.public_content_tier || article.type || '').toLowerCase().replace(/\s+/g, '_');
+  return tier === 'longform_analysis';
+}
+
+function cleanWhyItMatters(value = '') {
+  return sanitizePublicCopy(value || '').replace(WHY_IT_MATTERS_LABEL, '');
+}
+
 function titleFor(article = {}) {
-  const title = compact(article.expertLensFull?.finalHeadline || article.title || 'Untitled item');
-  const match = title.match(/^([^:]{2,60}):\s+(.+)$/);
-  if (!match) return title;
+  const rawTitle = compact(article.expertLensFull?.finalHeadline || article.title || 'Untitled item');
+  const title = sanitizePublicCopy(rawTitle);
+  const displayTitle = safeDisplayTitle(article, title, rawTitle);
+  const match = displayTitle.match(/^([^:]{2,60}):\s+(.+)$/);
+  if (!match) return displayTitle;
   const prefix = match[1].trim();
   const rest = match[2].trim();
   const firstPrefixWord = prefix.split(/\s+/)[0]?.toLowerCase();
   if (firstPrefixWord && rest.toLowerCase().startsWith(firstPrefixWord)) return rest;
-  return title;
+  return displayTitle;
+}
+
+function safeDisplayTitle(article = {}, title = '', rawTitle = title) {
+  if (!hasInternalPublicLanguage(title) && !hasInternalPublicLanguage(rawTitle)) return title;
+  const candidates = [
+    `${actorFor(article)} ${layerFor(article)} update`,
+    `${layerFor(article)} update`,
+  ].map(compact);
+  return candidates.find((candidate) => candidate && !hasInternalPublicLanguage(candidate) && !INTERNAL_CARD_PATTERNS.some((pattern) => pattern.test(candidate))) || '';
 }
 
 function clipped(value = '', max = 96) {
-  const text = compact(value).replace(/[,;:\s]+$/g, '');
+  const text = compact(value).replace(/[,;:!?.\s]+$/g, '');
   if (text.length <= max) return text;
-  const shortened = text.slice(0, max).replace(/\s+\S*$/g, '').replace(/[,;:\s]+$/g, '');
-  return shortened || text.slice(0, max).replace(/[,;:\s]+$/g, '');
+  const shortened = text.slice(0, max).replace(/\s+\S*$/g, '').replace(/[,;:!?.\s]+$/g, '');
+  return shortened || text.slice(0, max).replace(/[,;:!?.\s]+$/g, '');
 }
 
 function sentence(value = '') {
@@ -81,14 +105,24 @@ function layerFor(article = {}) {
   return compact(layer).toLowerCase();
 }
 
+function whySubjectFor(article = {}) {
+  const title = clipped(titleFor(article).replace(/\s+[|—-]\s+.*$/, ''), 76);
+  const source = clipped(article.source || '', 34);
+  if (source && title && !title.toLowerCase().includes(source.toLowerCase())) {
+    return clipped(`The ${source} update on ${title}`, 96);
+  }
+  return title || clipped(`${actorFor(article)} ${layerFor(article)} update`, 96);
+}
+
 function deckFor(article = {}) {
   const persisted = article.public_presentation?.deck || article.deck || article.expertLensFull?.metaDescription || article.summary || article.snippet;
   const cleanPersisted = sanitizePublicCopy(persisted || '');
   if (
-    article.public_content_tier === 'longform_analysis'
+    isLongformAnalysis(article)
     && cleanPersisted
     && cleanPersisted.length >= 60
     && !INTERNAL_CARD_PATTERNS.some((pattern) => pattern.test(cleanPersisted))
+    && !hasInternalPublicLanguage(cleanPersisted)
   ) {
     return sentence(cleanPersisted).slice(0, 260);
   }
@@ -96,46 +130,27 @@ function deckFor(article = {}) {
   const layer = layerFor(article);
   const title = titleFor(article);
   const titleContext = clipped(title.replace(/\s+[|—-]\s+.*$/, ''), 96);
-  if (/capital|deal|reit|ipo|funding|lease|acquisition|investor/i.test(`${title} ${layer}`)) {
-    return sentence(`${titleContext} points to where capital is still willing to underwrite AI infrastructure capacity despite execution risk`);
-  }
-  if (/data center|campus|hyperscale|colocation|facility|lease/i.test(`${title} ${layer}`)) {
-    return sentence(`${titleContext} is a capacity signal for operators tracking where AI demand is turning into real data center commitments`);
-  }
-  if (/chip|gpu|semiconductor|silicon|hbm|memory|epyc|socamm|lpddr|arm/i.test(`${title} ${layer}`)) {
-    return sentence(`${titleContext} matters most for capacity-per-watt planning, supplier leverage, and the timing of AI hardware refresh cycles`);
-  }
-  if (/cloud|aws|google|platform|openshift|kubernetes|storage|backup|resilience|inference/i.test(`${title} ${layer}`)) {
-    return sentence(`${titleContext} gives enterprise infrastructure teams another read on how AI workloads are changing platform, storage, and cloud capacity decisions`);
-  }
-  if (/power|grid|utility|interconnection|battery|storage|nuclear|ercot|gw|mw/i.test(`${title} ${layer}`)) {
-    return sentence(`${titleContext} keeps power availability near the center of AI campus timing, interconnection risk, and buyer commitments`);
-  }
-  return sentence(`${titleContext || actor || layer} gives infrastructure readers a compact signal on AI capacity planning, supplier timing, or operating risk`);
+  return deckForAngle(angleFor(article), titleContext || actor || layer, article);
 }
 
 function whyFor(article = {}) {
-  const persisted = article.public_presentation?.why_it_matters || article.why_it_matters || article.evidence_pack?.operatingImplication;
-  const cleanPersisted = sanitizePublicCopy(persisted || '');
+  const persisted = article.public_presentation?.why_it_matters || article.publicSignal?.why_it_matters || article.why_it_matters || article.evidence_pack?.operatingImplication;
+  const cleanPersisted = cleanWhyItMatters(persisted || '');
   if (
-    article.public_content_tier === 'longform_analysis'
+    isLongformAnalysis(article)
     && cleanPersisted
-    && cleanPersisted.length >= 40
+    && cleanPersisted.length >= 30
     && !INTERNAL_CARD_PATTERNS.some((pattern) => pattern.test(cleanPersisted))
+    && !hasInternalPublicLanguage(cleanPersisted)
   ) {
     return sentence(cleanPersisted).slice(0, 220);
   }
   const layer = layerFor(article);
-  if (/power|grid|utility|interconnection/i.test(layer)) {
-    return sentence('Why it matters: grid access is becoming a gating condition for AI buildouts, not a back-office procurement detail');
-  }
-  if (/semiconductor|silicon|chip|gpu|memory/i.test(layer)) {
-    return sentence('Why it matters: chip availability and performance per watt can reset cloud margins, buyer queues, and refresh timing');
-  }
-  if (/cloud|platform|enterprise|storage/i.test(layer)) {
-    return sentence('Why it matters: platform readiness determines how quickly AI demand converts into usable capacity for enterprise buyers');
-  }
-  return sentence(`Why it matters: ${layer} constraints can change build schedules, buyer commitments, and cost assumptions before demand shows up in revenue`);
+  return whyForFallback(article, {
+    angle: angleFor(article),
+    layer,
+    subject: whySubjectFor(article),
+  });
 }
 
 export function generateCardCopy(article = {}) {
@@ -153,18 +168,22 @@ export function generateCardCopy(article = {}) {
   };
 }
 
-export function cardCopyQualityResult(copy = {}) {
+export function cardCopyQualityResult(copy = {}, article = undefined) {
   const reasons = [];
   const text = [copy.title, copy.deck, copy.why_it_matters, copy.label, copy.cta].filter(Boolean).join(' ');
   const lines = [copy.deck, copy.why_it_matters].filter(Boolean);
   if (!copy.title || String(copy.title).length < 8) reasons.push('missing_title');
+  if (/^AI infrastructure update\.?$/i.test(compact(copy.title || ''))) reasons.push('generic_title');
   if (!copy.deck || String(copy.deck).length < 45) reasons.push('deck_too_thin');
+  if (WHY_IT_MATTERS_LABEL.test(compact(copy.why_it_matters || ''))) reasons.push('why_it_matters_label_prefix');
   if (INTERNAL_CARD_PATTERNS.some((pattern) => pattern.test(text)) || lines.some((line) => INTERNAL_CARD_PATTERNS.some((pattern) => pattern.test(line)))) {
     reasons.push('internal_qualification_language');
   }
+  if (hasInternalPublicLanguage(text)) reasons.push('internal_public_language');
   if (!/\b(power|grid|utility|data center|campus|cloud|capacity|cooling|rack|chip|gpu|hbm|memory|capital|deal|policy|siting|interconnection|operator|buyer|supplier|platform)\b/i.test(text)) {
     reasons.push('missing_concrete_infrastructure_noun');
   }
+  if (article && !hasSourceBackedCardProductFit(article)) reasons.push('unsupported_product_fit');
   return {
     ok: reasons.length === 0,
     reasons,

@@ -1,6 +1,6 @@
 import fs from 'node:fs';
 import path from 'node:path';
-import { findInternalLanguageHits } from './lib/internal-language-guard.mjs';
+import { extractReaderVisibleText, findInternalLanguageHits } from './lib/internal-language-guard.mjs';
 
 const ROOT = path.resolve('.');
 const SOURCE_PUBLIC_FILES = [
@@ -17,6 +17,7 @@ const SOURCE_PUBLIC_FILES = [
   'src/pages/ai-disclosure.astro',
   'src/components/ArticleListCard.astro',
   'src/components/LatestAnalysisFeed.astro',
+  'src/components/PublicSignalCard.astro',
   'src/components/FeedFilterBar.astro',
   'src/components/ArticleHeader.astro',
   'src/components/ArticleBody.astro',
@@ -44,11 +45,20 @@ export function auditPublicCopy() {
   const records = [];
   for (const file of SOURCE_PUBLIC_FILES) {
     if (!fs.existsSync(file)) continue;
-    records.push({ path: `/${file}`, surface: 'source', text: fs.readFileSync(file, 'utf8') });
+    records.push({
+      path: `/${file}`,
+      surface: 'source',
+      text: extractReaderVisibleText(fs.readFileSync(file, 'utf8')),
+    });
   }
   for (const file of walk(path.join(ROOT, 'dist'))) {
     if (!/\.(html|xml|txt)$/.test(file)) continue;
-    records.push({ path: publicPathFromDist(file), surface: 'dist', text: fs.readFileSync(file, 'utf8') });
+    const raw = fs.readFileSync(file, 'utf8');
+    records.push({
+      path: publicPathFromDist(file),
+      surface: 'dist',
+      text: /\.(html|xml)$/.test(file) ? extractReaderVisibleText(raw) : raw,
+    });
   }
   const hits = findInternalLanguageHits(records);
   return { ok: hits.length === 0, hits };

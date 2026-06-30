@@ -16,6 +16,7 @@ const safeImage = image || '/generated/fallbacks/ai-infrastructure.svg';
 const isExternal = href && !href.startsWith('/');
 const loading = priority ? 'eager' : 'lazy';
 const alt = decorative ? '' : imageAlt;
+const hasProvenance = Boolean(provenanceLabel || provenanceKind);
 ---
 {href ? (
   <a
@@ -24,29 +25,18 @@ const alt = decorative ? '' : imageAlt;
     target={isExternal ? '_blank' : undefined}
     rel={isExternal ? 'noopener noreferrer' : undefined}
     aria-label={ariaLabel || undefined}
+    data-image-provenance={hasProvenance ? '' : undefined}
+    data-provenance-kind={provenanceKind || undefined}
   >
     <img class={className} src={safeImage} alt={alt} loading={loading} decoding="async" />
-    {provenanceLabel ? (
-      <span
-        class="article-image-provenance"
-        data-image-provenance
-        data-provenance-kind={provenanceKind || undefined}
-      >
-        {provenanceLabel}
-      </span>
-    ) : null}
   </a>
 ) : (
-  <div class={linkClassName} aria-hidden={decorative ? 'true' : undefined}>
+  <div
+    class={linkClassName}
+    aria-hidden={decorative ? 'true' : undefined}
+    data-image-provenance={hasProvenance ? '' : undefined}
+    data-provenance-kind={provenanceKind || undefined}
+  >
     <img class={className} src={safeImage} alt={alt} loading={loading} decoding="async" />
-    {provenanceLabel ? (
-      <span
-        class="article-image-provenance"
-        data-image-provenance
-        data-provenance-kind={provenanceKind || undefined}
-      >
-        {provenanceLabel}
-      </span>
-    ) : null}
   </div>
 )}

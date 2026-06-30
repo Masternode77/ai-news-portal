@@ -49,19 +49,20 @@ test('homepage premium surface renders a named intelligence desk module before t
   assert.match(feedSource, /ArticleCard/);
 });
 
-test('homepage redesign exposes the public command center before latest signals', () => {
+test('homepage redesign exposes publication masthead before latest analysis', () => {
   // Given: the homepage template is the canonical public entry point.
   const source = readText('../src/pages/index.astro');
   const templateSource = getTemplateSource(source);
-  const commandCenterIndex = templateSource.indexOf('data-public-command-center');
-  const latestSignalsIndex = templateSource.indexOf('Latest Signals');
+  const publicationMastheadIndex = templateSource.indexOf('AI Infrastructure Intelligence');
+  const latestAnalysisIndex = templateSource.indexOf('Latest Analysis');
 
   // When: the redesigned product surface is inspected.
-  assert.notEqual(commandCenterIndex, -1, 'expected stable redesign marker data-public-command-center');
-  assert.notEqual(latestSignalsIndex, -1, 'expected Latest Signals feed label');
+  assert.notEqual(publicationMastheadIndex, -1, 'expected publication masthead vocabulary');
+  assert.notEqual(latestAnalysisIndex, -1, 'expected Latest Analysis feed label');
+  assert.doesNotMatch(templateSource, /data-public-command-center|Infrastructure command center|Latest Signals/i);
 
-  // Then: the public command surface leads the news feed rather than trailing it.
-  assert.ok(commandCenterIndex < latestSignalsIndex, 'public command center should appear before Latest Signals');
+  // Then: the publication masthead leads the news feed rather than trailing it.
+  assert.ok(publicationMastheadIndex < latestAnalysisIndex, 'publication masthead should appear before Latest Analysis');
 });
 
 test('homepage premium surface is part of the first viewport masthead system', () => {

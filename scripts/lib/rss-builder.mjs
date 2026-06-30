@@ -1,7 +1,7 @@
-import { cleanEditorialText, displayHeadline } from '../../src/lib/editorial-display.js';
+import { cleanEditorialText } from '../../src/lib/editorial-display.js';
 import { rssItemEligible } from './seo-quality-policy.mjs';
 import { sanitizePublicCopy } from './internal-language-guard.mjs';
-import { generateCardCopy } from './card-copy-quality-gate.mjs';
+import { cardCopyQualityResult, generateCardCopy } from './card-copy-quality-gate.mjs';
 import { articleOpenGraphImage, isTrustedPublicImage } from './article-image-surface.mjs';
 
 function rssLinkFor(item = {}) {
@@ -46,12 +46,16 @@ export function buildRssItems(items = []) {
     if (seenLinks.has(link)) {
       continue;
     }
-    seenLinks.add(link);
 
     const copy = generateCardCopy(item);
+    if (!cardCopyQualityResult(copy, item).ok) {
+      continue;
+    }
+    seenLinks.add(link);
+
     const image = rssImageFor(item);
     out.push({
-      title: sanitizePublicCopy(displayHeadline(item)),
+      title: copy.title,
       pubDate: new Date(item.analysisPublishedAt || item.publishedAt),
       description: sanitizePublicCopy(cleanEditorialText(copy.deck || item.deck || item.expertLensShort || item.summary || item.snippet || '')),
       link,
