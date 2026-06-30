@@ -537,7 +537,9 @@
     "e8581ad5cbb71425",
     "c55e2b8eca6be724",
     "6d2b6f19ba715fc7",
-    "46356da6ecccdb14"
+    "46356da6ecccdb14",
+    "44b53955da06abc8",
+    "f24c5d9b3710a94b"
   ],
   "dayPlans": {
     "2026-03-24": {
@@ -23265,18 +23267,18 @@
     "2026-06-30": {
       "date": "2026-06-30",
       "createdAt": "2026-06-29T17:45:52.615Z",
-      "refreshedAt": "2026-06-30T00:06:41.403Z",
+      "refreshedAt": "2026-06-30T10:35:40.892Z",
       "candidateWindowHours": 24,
       "curatedItems": [
         {
-          "id": "6d2b6f19ba715fc7",
-          "source": "HPCwire",
-          "url": "https://www.hpcwire.com/2026/06/29/jack-dongarra-discusses-a-changing-hpc-world-in-isc-2026-closing-keynote/",
-          "title": "Jack Dongarra Discusses a Changing HPC World in ISC 2026 Closing Keynote",
-          "snippet": "The HPC world is changing, according to Jack Dongarra, who delivered his first ever ISC keynote here in Hamburg, Germany on June 25. From changing hardware and software to the emergence of AI-based scientific techniques…",
-          "contentText": "The HPC world is changing, according to Jack Dongarra, who delivered his first ever ISC keynote here in Hamburg, Germany on June 25. From changing hardware and software to the emergence of AI-based scientific techniques, the old order of HPC is being replaced by something new. The question is, how can HPC professionals chart a path forward? The first way that HPC is changing is the emergence of hyperscalers, who impose large gravitational forces on the rest of the market. The large clusters on the TOP500 list, such as the Frontier machine installed at Dongarra’s Oak Ridge National Lab are dwarfed by the massive systems being installed by Web giants and AI companies. “There&#8217;s a computer in Tennessee, not at the lab, over in Memphis called Colossus2, which is being put together and it…",
-          "publishedAt": "2026-06-29T22:58:01.000Z",
-          "sourceImage": "https://www.hpcwire.com/wp-content/uploads/2026/06/Colussus-2-300x160.png",
+          "id": "f24c5d9b3710a94b",
+          "source": "Toms Hardware",
+          "url": "https://www.tomshardware.com/video-games/retro-gaming/hamsteros-jams-a-32-bit-gui-operating-system-in-a-1-44-mb-single-floppy-for-386-era-hardware-retro-os-should-make-for-easy-living-with-dos-machines-and-software",
+          "title": "HamsterOS jams a 32-bit GUI operating system in a single 1.44 MB floppy disk — retro OS for 386-era hardware should make for easy living with DOS machines and software",
+          "snippet": "HamsterOS fits on just a single 1.44 MB floppy disk, and it's set for a full release this November.",
+          "contentText": "The appetite for retro computing grows ever larger, and there are probably hundreds of thousands of homebrew software projects targeting machines from the last century. However, few of those are full-featured, 32-bit, and GUI-driven operating systems that can fit in a single floppy, with some modern conveniences to boot. Enter the upcoming HamsterOS , set for release in November. HamsterOS is seemingly targeted at using PCs from the 386/486 era, along with DOS software. After loading from the floppy disk, it'll present a user interface with most every commonly used utility: a notepad, image viewer, calculator, file finder, drive icons, and a window manager. The file browser should have up to five windows once, complete with per-type icons. Crucially, HamsterOS includes an in-kernel VM86 D…",
+          "publishedAt": "2026-06-30T10:30:00.000Z",
+          "sourceImage": "https://cdn.mos.cms.futurecdn.net/wyhLNbRxThi8Mi5GCPhi4o-1280-80.jpg",
           "region": "US",
           "language": "en",
           "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
@@ -23291,45 +23293,44 @@
             "investors"
           ],
           "article_type": "Product / Platform Update",
-          "urgency_score": 0.45,
-          "taxonomy_confidence": 0.88,
+          "urgency_score": 0.44,
+          "taxonomy_confidence": 0.77,
           "taxonomy_reasons": [
             "ai infrastructure",
-            "neocloud",
-            "hpc"
+            "neocloud"
           ],
           "direct_ai_infrastructure_relevance": 1,
           "data_center_relevance": 0,
-          "cloud_capacity_relevance": 0.32,
+          "cloud_capacity_relevance": 0,
           "semiconductor_relevance": 0.22,
-          "power_grid_relevance": 0,
+          "power_grid_relevance": 0.26,
           "cooling_relevance": 0,
           "capital_markets_relevance": 0,
           "enterprise_ai_infrastructure_relevance": 0,
-          "infrastructure_relevance_score": 0.835,
+          "infrastructure_relevance_score": 0.822,
           "infrastructure_relevance_tier": "full_memo",
           "infrastructure_relevance_action": "generate_full_memo",
           "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud, hpc)",
-            "cloud_capacity_relevance:0.32(hyperscalers)",
-            "semiconductor_relevance:0.22(gpu)"
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "semiconductor_relevance:0.22(gpu)",
+            "power_grid_relevance:0.26(utility)"
           ],
           "infrastructure_relevance": {
             "direct_ai_infrastructure_relevance": 1,
             "data_center_relevance": 0,
-            "cloud_capacity_relevance": 0.32,
+            "cloud_capacity_relevance": 0,
             "semiconductor_relevance": 0.22,
-            "power_grid_relevance": 0,
+            "power_grid_relevance": 0.26,
             "cooling_relevance": 0,
             "capital_markets_relevance": 0,
             "enterprise_ai_infrastructure_relevance": 0,
-            "infrastructure_relevance_score": 0.835,
+            "infrastructure_relevance_score": 0.822,
             "infrastructure_relevance_tier": "full_memo",
             "infrastructure_relevance_action": "generate_full_memo",
             "infrastructure_relevance_reasons": [
-              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud, hpc)",
-              "cloud_capacity_relevance:0.32(hyperscalers)",
-              "semiconductor_relevance:0.22(gpu)"
+              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+              "semiconductor_relevance:0.22(gpu)",
+              "power_grid_relevance:0.26(utility)"
             ],
             "infrastructureRelevanceAction": "generate_full_memo",
             "articlePagePublished": true,
@@ -23340,15 +23341,157 @@
           "score": 81
         },
         {
-          "id": "46356da6ecccdb14",
-          "source": "Toms Hardware",
-          "url": "https://www.tomshardware.com/pc-components/ram/amd-expo-ull-ram-drops-at-jaw-dropping-usd1-099-despite-promises-of-it-being-effectively-the-same-price-ddr5-6000-c26-32gb-kit-sports-80-percent-ull-tax",
-          "title": "AMD EXPO ULL RAM drops at jaw-dropping $1,099 despite promises of it being 'effectively the same price' — DDR5-6000 C26 32GB kit sports 80% ULL tax",
-          "snippet": "Newegg has started selling G.Skill’s Trident Z5 NeoX memory kits featuring AMD ULL technology, and the prices are already high.",
-          "contentText": "G.Skill’s AMD EXPO ULL (Ultra Low Latency) memory kits, strong contenders among today's best RAM options, have arrived on the retail market. While AMD previously stated that EXPO ULL memory kits would be “effectively the same price” as vanilla EXPO memory kits, this has proven by far not to be the case. In reality, these new EXPO ULL kits carry a substantial premium that can scale up to 80% over their regular counterparts. Go deeper with TH Premium: Memory (Image credit: SK Hynix) AI data centers are swallowing the world's memory and storage supply The future of DRAM: From DDR5 to future ICs High-bandwidth memory roadmap Here's why HBM is coming for your PC's RAM The Trident Z5 NeoX is G.Skill’s latest memory series featuring ULL optimizations. The new lineup is available in three strikin…",
-          "publishedAt": "2026-06-29T20:16:12.000Z",
-          "sourceImage": "https://cdn.mos.cms.futurecdn.net/mPGyiCGGWcMuu2i4UUpjVL-1280-80.jpg",
-          "region": "US",
+          "id": "44b53955da06abc8",
+          "source": "Capacity Media",
+          "url": "https://capacityglobal.com/news/vocus-to-build-australias-first-ducted-long-haul-fibre-route/",
+          "title": "Vocus to build Australia’s first ducted long-haul fibre route between Sydney and Melbourne",
+          "snippet": "Vocus plans to build and operate Australia's first ducted long-haul fibre route, connecting Sydney and Melbourne, as the inaugural project under its newly launched Australian Digital Infrastructure Platform (ADIP). The…",
+          "contentText": "The route will be capable of accommodating up to 6,912 fibre cores, 3,456 fibre pairs, and is expected to be ready for service in 2029. Construction will represent approximately $500 million in capital investment and is projected to create more than 1,000 high-value jobs. The Sydney-Melbourne corridor currently carries roughly 40% of Australia&#8217;s long-haul data traffic. Vocus warns the route will become undersupplied without new investment, particularly as AI workloads accelerate demand. The company projects that by 2030, Australian data centre capacity will triple, with AI workloads driving 85-95% of long-haul fibre demand and 70-80% of metro demand. &#8220;The AI era runs on high-capacity, diverse fibre networks, the critical arteries that power digital infrastructure ecosystems,&#…",
+          "publishedAt": "2026-06-30T09:43:56.000Z",
+          "sourceImage": "https://capacityglobal.com/wp-content/uploads/2025/09/54195379714_ad0b118cc4_k-327x218.jpg",
+          "region": "APAC",
+          "language": "en",
+          "defaultCategory": "Hyperscalers & Cloud",
+          "category": "Cloud Capacity",
+          "primary_category": "Cloud Capacity",
+          "secondary_category": "Hyperscale regions and accelerator availability",
+          "infrastructure_layer": "Cloud Platform",
+          "affected_stakeholders": [
+            "hyperscalers",
+            "cloud buyers",
+            "enterprise IT",
+            "operators"
+          ],
+          "article_type": "Capacity Expansion",
+          "urgency_score": 0.57,
+          "taxonomy_confidence": 0.57,
+          "taxonomy_reasons": [
+            "fallback_taxonomy"
+          ],
+          "direct_ai_infrastructure_relevance": 0.64,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0.76,
+          "semiconductor_relevance": 0,
+          "power_grid_relevance": 0.22,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0.24,
+          "infrastructure_relevance_score": 0.722,
+          "infrastructure_relevance_tier": "signal_card",
+          "infrastructure_relevance_action": "publish_signal_card_only",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:0.64",
+            "cloud_capacity_relevance:0.76(cloud capacity, hyperscalers)",
+            "power_grid_relevance:0.22(power)",
+            "enterprise_ai_infrastructure_relevance:0.24(ai workloads)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 0.64,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0.76,
+            "semiconductor_relevance": 0,
+            "power_grid_relevance": 0.22,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0.24,
+            "infrastructure_relevance_score": 0.722,
+            "infrastructure_relevance_tier": "signal_card",
+            "infrastructure_relevance_action": "publish_signal_card_only",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:0.64",
+              "cloud_capacity_relevance:0.76(cloud capacity, hyperscalers)",
+              "power_grid_relevance:0.22(power)",
+              "enterprise_ai_infrastructure_relevance:0.24(ai workloads)"
+            ],
+            "infrastructureRelevanceAction": "publish_signal_card_only",
+            "articlePagePublished": false,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 76
+        },
+        {
+          "id": "8020c31bdc14e974",
+          "source": "Data Center Knowledge",
+          "url": "https://www.datacenterknowledge.com/ai-data-centers/stargate-update-ai-s-biggest-data-center-buildout-meets-reality",
+          "title": "Stargate Update: AI’s Biggest Data Center Buildout Meets Reality",
+          "snippet": "The initiative's success now hinges on whether it can scale faster than the mounting risks around energy, financing, governance, and community consent.",
+          "contentText": "The initiative's success now hinges on whether it can scale faster than the mounting risks around energy, financing, governance, and community consent.",
+          "publishedAt": "2026-06-30T09:00:00.000Z",
+          "sourceImage": "https://eu-images.contentstack.com/v3/assets/blt8eb3cdfc1fce5194/blt9ac16134e6b739d0/6a42dc54f970e92bd6d8019a/openai_abilene.png?width=720&quality=80&disable=upscale",
+          "region": "Global",
+          "language": "en",
+          "defaultCategory": "Colocation & Wholesale",
+          "category": "Data Centers",
+          "primary_category": "Data Centers",
+          "secondary_category": "Campus development and colocation capacity",
+          "infrastructure_layer": "Facility",
+          "affected_stakeholders": [
+            "data center operators",
+            "developers",
+            "site selectors",
+            "investors"
+          ],
+          "article_type": "Financing / M&A",
+          "urgency_score": 0.46,
+          "taxonomy_confidence": 0.86,
+          "taxonomy_reasons": [
+            "data center",
+            "colocation",
+            "wholesale"
+          ],
+          "direct_ai_infrastructure_relevance": 0.78,
+          "data_center_relevance": 0.89,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0.32,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.873,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:0.78",
+            "data_center_relevance:0.89(data center, colocation)",
+            "capital_markets_relevance:0.32(financing)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 0.78,
+            "data_center_relevance": 0.89,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0.32,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.873,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:0.78",
+              "data_center_relevance:0.89(data center, colocation)",
+              "capital_markets_relevance:0.32(financing)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 76
+        },
+        {
+          "id": "23464f2093d0e518",
+          "source": "Semiconductor Engineering",
+          "url": "https://semiengineering.com/chip-industry-technical-paper-roundup-june-23/",
+          "title": "Chip Industry Technical Paper Roundup: June 30",
+          "snippet": "Processing-using-DRAM interference; atomic-scale plasma processing; gallium oxide phase instability; event-driven reinforcement learning for fab control; microarchitectural timing leaks in embedded processors; LLM-assis…",
+          "contentText": "New technical papers recently added to Semiconductor Engineering’s library: Technical Paper Research Organizations PuDGhost: Experimental Analysis of Computation Result Corruption in Processing-using-DRAM Operations on Real DRAM Chips and Implications for Future Systems The University of Tokyo , ETH Zurich , CISPA , RIKEN Recent Progress in Atomic-Scale Controlled Plasma Processing Nagoya University , Boise State University , Korea Institute of Fusion Energy , Hitachi High-Tech Corp. , Princeton Plasma Physics Laboratory Coordination-Sensitive Nanoscale Analysis of Defect-Driven Phase Transformation in Si-Doped Gallium Oxide University at Buffalo , The Ohio State University , Lawrence Livermore National Laboratory Event-Driven Reinforcement Learning Enables Long-Horizon Control in Semicon…",
+          "publishedAt": "2026-06-30T07:01:42.000Z",
+          "sourceImage": "https://s.w.org/images/core/emoji/17.0.2/72x72/1f517.png",
+          "region": "Korea",
           "language": "en",
           "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
           "category": "Semiconductors",
@@ -23362,45 +23505,44 @@
             "investors"
           ],
           "article_type": "Supply Chain",
-          "urgency_score": 0.5,
-          "taxonomy_confidence": 0.88,
+          "urgency_score": 0.47,
+          "taxonomy_confidence": 0.93,
           "taxonomy_reasons": [
+            "semiconductor",
+            "chip",
             "gpu",
-            "amd",
-            "hbm"
+            "fab"
           ],
           "direct_ai_infrastructure_relevance": 1,
-          "data_center_relevance": 0.42,
+          "data_center_relevance": 0,
           "cloud_capacity_relevance": 0,
-          "semiconductor_relevance": 1,
+          "semiconductor_relevance": 0.8,
           "power_grid_relevance": 0,
           "cooling_relevance": 0,
           "capital_markets_relevance": 0,
-          "enterprise_ai_infrastructure_relevance": 0.18,
-          "infrastructure_relevance_score": 0.985,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.906,
           "infrastructure_relevance_tier": "full_memo",
           "infrastructure_relevance_action": "generate_full_memo",
           "infrastructure_relevance_reasons": [
             "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "data_center_relevance:0.42(data centers)",
-            "semiconductor_relevance:1.00(amd, hbm, high-bandwidth memory)"
+            "semiconductor_relevance:0.80(semiconductor, fab, gpu)"
           ],
           "infrastructure_relevance": {
             "direct_ai_infrastructure_relevance": 1,
-            "data_center_relevance": 0.42,
+            "data_center_relevance": 0,
             "cloud_capacity_relevance": 0,
-            "semiconductor_relevance": 1,
+            "semiconductor_relevance": 0.8,
             "power_grid_relevance": 0,
             "cooling_relevance": 0,
             "capital_markets_relevance": 0,
-            "enterprise_ai_infrastructure_relevance": 0.18,
-            "infrastructure_relevance_score": 0.985,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.906,
             "infrastructure_relevance_tier": "full_memo",
             "infrastructure_relevance_action": "generate_full_memo",
             "infrastructure_relevance_reasons": [
               "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-              "data_center_relevance:0.42(data centers)",
-              "semiconductor_relevance:1.00(amd, hbm, high-bandwidth memory)"
+              "semiconductor_relevance:0.80(semiconductor, fab, gpu)"
             ],
             "infrastructureRelevanceAction": "generate_full_memo",
             "articlePagePublished": true,
@@ -23408,18 +23550,18 @@
             "archiveOnly": false,
             "archiveOnlyReason": null
           },
-          "score": 79
+          "score": 76
         },
         {
-          "id": "badb25b47f8b6703",
-          "source": "Semiconductor Engineering",
-          "url": "https://semiengineering.com/photonic-crystal-fingerprints-target-silicon-photonics-supply-chain-security/",
-          "title": "HW Fingerprinting Technique for Silicon Photonic ICs Using Photonic Crystal-based Density-Controlled Patterns (U. of Florida)",
-          "snippet": "Researchers from University of Florida published a technical paper titled “Enhancing Co-packaging Optics Enabled Silicon Photonics Security Assurance Hardware Fingerprinting.” Abstract Excerpt: The paper proposes a meth…",
-          "contentText": "Researchers from University of Florida published a technical paper titled “Enhancing Co-packaging Optics Enabled Silicon Photonics Security Assurance Hardware Fingerprinting.” Abstract Excerpt: The paper proposes a method that “embeds two-dimensional photonic crystal (PhC) patterns” and creates a “distinctive optical signature” for device authentication. Find the technical paper here . June 2026. arXiv:2606.27612 or Biswas, Liton Kumar, M. Shafkat M. Khan, Himanandhan Reddy Kottur, Hao Wang, Hamed Dalir, and Navid Asadizanjani. “Enhancing Co-packaging Optics Enabled Silicon Photonics Security Assurance Hardware Fingerprinting.” IMAPSource Proceedings 2025, Symposium, 7–12. 2025. https://doi.org/10.4071/001c.147091. The post HW Fingerprinting Technique for Silicon Photonic ICs Using Photon…",
-          "publishedAt": "2026-06-29T18:46:27.000Z",
-          "sourceImage": null,
-          "region": "US",
+          "id": "74982d13200be781",
+          "source": "Toms Hardware",
+          "url": "https://www.tomshardware.com/3d-printing/maker-kicks-off-oomwoo-an-open-source-robot-vacuum-you-can-3d-print-and-build-yourself",
+          "title": "Oomwoo is a new open-source robot vacuum you can 3D print yourself, sidesteps cloud security risks by running fully offline — project combines Raspberry Pi, 2D LiDAR, and a 3D-printed chassis",
+          "snippet": "Maker's Pet has launched oomwoo, an open-source robot vacuum that owners build themselves.",
+          "contentText": "Maker's Pet has launched oomwoo , an open-source robot vacuum that owners build themselves. The robot works by mapping the home with an inexpensive 2D LiDAR sensor and then navigating using ROS 2 and the Nav2 stack on Raspberry Pi, integrating natively with Home Assistant. It can be printed using a regular desktop 3D printer and runs entirely without the cloud, while the hardware, firmware, and software are all open under the Apache 2.0 license. Ilia O of Maker’s Pet is also developing oomwoo in public “from the first commit,” though the project is so early that it doesn’t have any build instructions yet. Right now, oomwoo is at the request-for-comments stage, with the current v0 milestone covering a 3D-printed chassis, a ROS 2 Gazebo simulation, and LiDAR mapping with manual SLAM, and th…",
+          "publishedAt": "2026-06-30T10:00:00.000Z",
+          "sourceImage": "https://cdn.mos.cms.futurecdn.net/xHYaeGUrtwRYLr4vErMHoG-1280-80.jpg",
+          "region": "APAC",
           "language": "en",
           "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
           "category": "AI Infrastructure",
@@ -23432,212 +23574,7 @@
             "cloud buyers",
             "investors"
           ],
-          "article_type": "Supply Chain",
-          "urgency_score": 0.45,
-          "taxonomy_confidence": 0.77,
-          "taxonomy_reasons": [
-            "ai infrastructure",
-            "neocloud"
-          ],
-          "direct_ai_infrastructure_relevance": 1,
-          "data_center_relevance": 0,
-          "cloud_capacity_relevance": 0,
-          "semiconductor_relevance": 0.58,
-          "power_grid_relevance": 0,
-          "cooling_relevance": 0,
-          "capital_markets_relevance": 0,
-          "enterprise_ai_infrastructure_relevance": 0,
-          "infrastructure_relevance_score": 0.858,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "semiconductor_relevance:0.58(semiconductor, gpu)"
-          ],
-          "infrastructure_relevance": {
-            "direct_ai_infrastructure_relevance": 1,
-            "data_center_relevance": 0,
-            "cloud_capacity_relevance": 0,
-            "semiconductor_relevance": 0.58,
-            "power_grid_relevance": 0,
-            "cooling_relevance": 0,
-            "capital_markets_relevance": 0,
-            "enterprise_ai_infrastructure_relevance": 0,
-            "infrastructure_relevance_score": 0.858,
-            "infrastructure_relevance_tier": "full_memo",
-            "infrastructure_relevance_action": "generate_full_memo",
-            "infrastructure_relevance_reasons": [
-              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-              "semiconductor_relevance:0.58(semiconductor, gpu)"
-            ],
-            "infrastructureRelevanceAction": "generate_full_memo",
-            "articlePagePublished": true,
-            "homepagePublished": true,
-            "archiveOnly": false,
-            "archiveOnlyReason": null
-          },
-          "score": 74
-        },
-        {
-          "id": "58a12fb3e555a660",
-          "source": "ServeTheHome",
-          "url": "https://www.servethehome.com/amd-epyc-8005-sorano-completely-changes-amd-sp6/",
-          "title": "AMD EPYC 8005 Sorano Completely Changes AMD SP6",
-          "snippet": "We take a look at the AMD EPYC 8005 \"Sorano\" and see one of the biggest generational upheavals in server CPUs we have seen since 2019 The post AMD EPYC 8005 Sorano Completely Changes AMD SP6 appeared first on ServeTheHo…",
-          "contentText": "We take a look at the AMD EPYC 8005 \"Sorano\" and see one of the biggest generational upheavals in server CPUs we have seen since 2019 The post AMD EPYC 8005 Sorano Completely Changes AMD SP6 appeared first on ServeTheHome .",
-          "publishedAt": "2026-06-29T18:24:15.000Z",
-          "sourceImage": null,
-          "region": "US",
-          "language": "en",
-          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
-          "category": "AI Infrastructure",
-          "primary_category": "AI Infrastructure",
-          "secondary_category": "GPU clusters and deployment readiness",
-          "infrastructure_layer": "Compute",
-          "affected_stakeholders": [
-            "operators",
-            "hyperscalers",
-            "cloud buyers",
-            "investors"
-          ],
-          "article_type": "Other",
-          "urgency_score": 0.45,
-          "taxonomy_confidence": 0.77,
-          "taxonomy_reasons": [
-            "ai infrastructure",
-            "neocloud"
-          ],
-          "direct_ai_infrastructure_relevance": 1,
-          "data_center_relevance": 0,
-          "cloud_capacity_relevance": 0,
-          "semiconductor_relevance": 0.517,
-          "power_grid_relevance": 0,
-          "cooling_relevance": 0,
-          "capital_markets_relevance": 0,
-          "enterprise_ai_infrastructure_relevance": 0,
-          "infrastructure_relevance_score": 0.844,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "semiconductor_relevance:0.52(amd, gpu)"
-          ],
-          "infrastructure_relevance": {
-            "direct_ai_infrastructure_relevance": 1,
-            "data_center_relevance": 0,
-            "cloud_capacity_relevance": 0,
-            "semiconductor_relevance": 0.517,
-            "power_grid_relevance": 0,
-            "cooling_relevance": 0,
-            "capital_markets_relevance": 0,
-            "enterprise_ai_infrastructure_relevance": 0,
-            "infrastructure_relevance_score": 0.844,
-            "infrastructure_relevance_tier": "full_memo",
-            "infrastructure_relevance_action": "generate_full_memo",
-            "infrastructure_relevance_reasons": [
-              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-              "semiconductor_relevance:0.52(amd, gpu)"
-            ],
-            "infrastructureRelevanceAction": "generate_full_memo",
-            "articlePagePublished": true,
-            "homepagePublished": true,
-            "archiveOnly": false,
-            "archiveOnlyReason": null
-          },
-          "score": 73
-        },
-        {
-          "id": "ec27eaf9ca3b8cc3",
-          "source": "Google Cloud Blog",
-          "url": "https://cloud.google.com/blog/products/databases/the-power-of-multi-model-spanner-for-the-agentic-era/",
-          "title": "Supercharging the agentic era with Spanner’s multi-model architecture",
-          "snippet": "In the agentic era, the role of the database has fundamentally changed. It is no longer a passive repository; it’s a critical context engine designed to ground generative AI apps, models and power autonomous workflows.…",
-          "contentText": "In the agentic era, the role of the database has fundamentally changed. It is no longer a passive repository; it’s a critical context engine designed to ground generative AI apps, models and power autonomous workflows. To do this effectively, databases must move beyond fragmented architectures and embrace a unified, multi-model foundation, facilitating deep reasoning and transforming static data into a system of action. Spanner is leading this charge, and as a foundational pillar of Google’s Agentic Data Cloud , the industry is taking notice. In the 2025 Gartner® Critical Capabilities for Operational Cloud Database Management Systems report , Google (Spanner) ranked #1 in the Lightweight Transactions Use Case for the second consecutive year — in our opinion proving it is the most efficien…",
-          "publishedAt": "2026-06-29T23:00:00.000Z",
-          "sourceImage": "https://storage.googleapis.com/gweb-cloudblog-publish/images/image1_XCfyf3z.max-1000x1000.png",
-          "region": "US",
-          "language": "en",
-          "defaultCategory": "Hyperscalers & Cloud",
-          "category": "Power & Grid",
-          "primary_category": "Power & Grid",
-          "secondary_category": "Interconnection and power procurement",
-          "infrastructure_layer": "Power",
-          "affected_stakeholders": [
-            "data center operators",
-            "utilities",
-            "cloud capacity teams",
-            "investors"
-          ],
-          "article_type": "Research / Technical",
-          "urgency_score": 0.45,
-          "taxonomy_confidence": 0.57,
-          "taxonomy_reasons": [
-            "power"
-          ],
-          "direct_ai_infrastructure_relevance": 0.64,
-          "data_center_relevance": 0,
-          "cloud_capacity_relevance": 0.56,
-          "semiconductor_relevance": 0,
-          "power_grid_relevance": 0.22,
-          "cooling_relevance": 0,
-          "capital_markets_relevance": 0,
-          "enterprise_ai_infrastructure_relevance": 0,
-          "infrastructure_relevance_score": 0.599,
-          "infrastructure_relevance_tier": "signal_card",
-          "infrastructure_relevance_action": "publish_signal_card_only",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:0.64",
-            "cloud_capacity_relevance:0.56(hyperscalers, google cloud)",
-            "power_grid_relevance:0.22(power)"
-          ],
-          "infrastructure_relevance": {
-            "direct_ai_infrastructure_relevance": 0.64,
-            "data_center_relevance": 0,
-            "cloud_capacity_relevance": 0.56,
-            "semiconductor_relevance": 0,
-            "power_grid_relevance": 0.22,
-            "cooling_relevance": 0,
-            "capital_markets_relevance": 0,
-            "enterprise_ai_infrastructure_relevance": 0,
-            "infrastructure_relevance_score": 0.599,
-            "infrastructure_relevance_tier": "signal_card",
-            "infrastructure_relevance_action": "publish_signal_card_only",
-            "infrastructure_relevance_reasons": [
-              "direct_ai_infrastructure_relevance:0.64",
-              "cloud_capacity_relevance:0.56(hyperscalers, google cloud)",
-              "power_grid_relevance:0.22(power)"
-            ],
-            "infrastructureRelevanceAction": "publish_signal_card_only",
-            "articlePagePublished": false,
-            "homepagePublished": true,
-            "archiveOnly": false,
-            "archiveOnlyReason": null
-          },
-          "score": 71
-        },
-        {
-          "id": "52631ca9a629e7bd",
-          "source": "TechCrunch AI",
-          "url": "https://techcrunch.com/2026/06/29/geminis-personalized-ai-image-generation-is-now-free-for-u-s-users/",
-          "title": "Gemini’s personalized AI image generation is now free for US users",
-          "snippet": "Google is expanding Gemini’s personalized AI image generation to eligible free users in the U.S., allowing the chatbot to create images based on your interests and data from connected Google apps.",
-          "contentText": "Google is expanding Gemini’s personalized AI image generation to eligible free users in the U.S., allowing the chatbot to create images based on your interests and data from connected Google apps.",
-          "publishedAt": "2026-06-29T20:12:59.000Z",
-          "sourceImage": null,
-          "region": "US",
-          "language": "en",
-          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
-          "category": "AI Infrastructure",
-          "primary_category": "AI Infrastructure",
-          "secondary_category": "GPU clusters and deployment readiness",
-          "infrastructure_layer": "Compute",
-          "affected_stakeholders": [
-            "operators",
-            "hyperscalers",
-            "cloud buyers",
-            "investors"
-          ],
-          "article_type": "Other",
+          "article_type": "Product / Platform Update",
           "urgency_score": 0.43,
           "taxonomy_confidence": 0.77,
           "taxonomy_reasons": [
@@ -23681,40 +23618,102 @@
             "archiveOnly": false,
             "archiveOnlyReason": null
           },
-          "score": 71
+          "score": 75
+        },
+        {
+          "id": "b1e266c8dac0d600",
+          "source": "Capacity Media",
+          "url": "https://capacityglobal.com/news/de-cix-boosts-nordic-footprint/",
+          "title": "DE-CIX boosts Nordic footprint with AI-ready Internet and Cloud Exchange in Stockholm",
+          "snippet": "DE-CIX is expanding into Stockholm with a new AI-ready Internet and Cloud Exchange, extending the operator's Nordic footprint beyond its existing locations in Denmark, Norway, and Finland. The post DE-CIX boosts Nordic…",
+          "contentText": "The exchange launches in September 2026, with orders open immediately. Stockholm becomes DE-CIX&#8217;s sixth Nordic site since the company began operations in the region in 2023 , joining Esbjerg and Copenhagen in Denmark, Kristiansand and Oslo in Norway, and Helsinki in Finland. The new exchange will be AI-ready from launch, incorporating DE-CIX&#8217;s AI-IX capabilities to support data-intensive workloads, cloud-based AI applications, and low-latency real-time use cases. It will offer local access to both internet peering and cloud interconnection, deployed across multiple data centre locations in the Stockholm metropolitan area and operated by DE-CIX International GmbH. &#8220;With more than 30 data centres, Stockholm is a huge hub for the Nordics, handling 55% of total Nordic intern…",
+          "publishedAt": "2026-06-30T09:52:02.000Z",
+          "sourceImage": "https://capacityglobal.com/wp-content/uploads/2025/09/54075740660_ee73a351a0_c-327x218.jpg",
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "Hyperscalers & Cloud",
+          "category": "Power & Grid",
+          "primary_category": "Power & Grid",
+          "secondary_category": "Interconnection and power procurement",
+          "infrastructure_layer": "Power",
+          "affected_stakeholders": [
+            "data center operators",
+            "utilities",
+            "cloud capacity teams",
+            "investors"
+          ],
+          "article_type": "Product / Platform Update",
+          "urgency_score": 0.58,
+          "taxonomy_confidence": 0.59,
+          "taxonomy_reasons": [
+            "interconnection"
+          ],
+          "direct_ai_infrastructure_relevance": 0.64,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0.76,
+          "semiconductor_relevance": 0,
+          "power_grid_relevance": 0.36,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.687,
+          "infrastructure_relevance_tier": "signal_card",
+          "infrastructure_relevance_action": "publish_signal_card_only",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:0.64",
+            "cloud_capacity_relevance:0.76(cloud capacity, hyperscalers)",
+            "power_grid_relevance:0.36(interconnection)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 0.64,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0.76,
+            "semiconductor_relevance": 0,
+            "power_grid_relevance": 0.36,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.687,
+            "infrastructure_relevance_tier": "signal_card",
+            "infrastructure_relevance_action": "publish_signal_card_only",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:0.64",
+              "cloud_capacity_relevance:0.76(cloud capacity, hyperscalers)",
+              "power_grid_relevance:0.36(interconnection)"
+            ],
+            "infrastructureRelevanceAction": "publish_signal_card_only",
+            "articlePagePublished": false,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 75
         }
       ],
       "curatedIds": [
-        "6d2b6f19ba715fc7",
-        "46356da6ecccdb14",
-        "badb25b47f8b6703",
-        "58a12fb3e555a660",
-        "ec27eaf9ca3b8cc3",
-        "52631ca9a629e7bd"
+        "f24c5d9b3710a94b",
+        "44b53955da06abc8",
+        "8020c31bdc14e974",
+        "23464f2093d0e518",
+        "74982d13200be781",
+        "b1e266c8dac0d600"
       ],
       "publishedIds": [
         "e8581ad5cbb71425",
         "c55e2b8eca6be724",
         "6d2b6f19ba715fc7",
-        "46356da6ecccdb14"
+        "46356da6ecccdb14",
+        "44b53955da06abc8",
+        "f24c5d9b3710a94b"
       ],
       "slotPublications": {
         "0": true,
-        "1": true
+        "1": true,
+        "2": true
       }
     }
   },
   "runHistory": [
-    {
-      "at": "2026-05-14T00:02:27.633Z",
-      "day": "2026-05-14",
-      "slot": 1,
-      "publishedCount": 2,
-      "publishedIds": [
-        "8d3331f325d66aad",
-        "0ed07cfa83e089d9"
-      ]
-    },
     {
       "at": "2026-05-14T09:38:28.601Z",
       "day": "2026-05-14",
@@ -35890,7 +35889,50 @@
         }
       ],
       "archiveOnlyItems": []
+    },
+    {
+      "at": "2026-06-30T10:35:40.892Z",
+      "day": "2026-06-30",
+      "slot": 2,
+      "publishedCount": 0,
+      "signalCardCount": 2,
+      "archiveOnlyCount": 0,
+      "processedIds": [
+        "44b53955da06abc8",
+        "f24c5d9b3710a94b"
+      ],
+      "blockedCount": 1,
+      "blockedItems": [
+        {
+          "id": "f24c5d9b3710a94b",
+          "title": "HamsterOS jams a 32-bit GUI operating system in a single 1.44 MB floppy disk — retro OS for 386-era hardware should make for easy living with DOS machines and software",
+          "infrastructure_relevance_score": 0.963,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "cloud_capacity_relevance:0.32(hyperscalers)",
+            "semiconductor_relevance:0.22(gpu)",
+            "power_grid_relevance:0.74(power, utility, utilities)",
+            "capital_markets_relevance:0.28(capex)"
+          ],
+          "extraction_quality_score": 1,
+          "source_domain_adapter": "generic",
+          "content_length": 1674,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": false,
+          "repetition_block_reasons": [],
+          "repetition_check": null,
+          "expert_insight_complete": false,
+          "expert_insight_missing_fields": [
+            "concrete_facts",
+            "named_companies"
+          ],
+          "reason": "expert_insight_missing_fields concrete_facts, named_companies"
+        }
+      ],
+      "archiveOnlyItems": []
     }
   ],
-  "lastRunAt": "2026-06-30T00:06:41.403Z"
+  "lastRunAt": "2026-06-30T10:35:40.892Z"
 }
