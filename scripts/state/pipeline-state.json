@@ -539,7 +539,9 @@
     "6d2b6f19ba715fc7",
     "46356da6ecccdb14",
     "44b53955da06abc8",
-    "f24c5d9b3710a94b"
+    "f24c5d9b3710a94b",
+    "259b09dbc84e9d09",
+    "6ce0e914a48b9cc9"
   ],
   "dayPlans": {
     "2026-03-24": {
@@ -23711,19 +23713,454 @@
         "1": true,
         "2": true
       }
+    },
+    "2026-07-01": {
+      "date": "2026-07-01",
+      "createdAt": "2026-06-30T17:10:18.781Z",
+      "refreshedAt": "2026-06-30T17:10:18.781Z",
+      "candidateWindowHours": 24,
+      "curatedItems": [
+        {
+          "id": "6ce0e914a48b9cc9",
+          "source": "Data Center POST",
+          "url": "https://datacenterpost.com/structure-research-forecasts-ai-data-center-capacity-will-reach-150-gw-by-203/",
+          "title": "Structure Research Forecasts AI Data Center Capacity Will Reach 150 GW by 203",
+          "snippet": "TL;DR AI capacity is set to surge: Structure Research projects AI-focused data center capacity will grow from 2.3 GW today to 150 GW by 2030, reflecting unprecedented infrastructure expansion. New research brings clarit…",
+          "contentText": "TL;DR AI capacity is set to surge: Structure Research projects AI-focused data center capacity will grow from 2.3 GW today to 150 GW by 2030, reflecting unprecedented infrastructure expansion. New research brings clarity: The report provides a bottom-up view of who is funding, building, and consuming AI infrastructure, offering a more complete picture of the rapidly evolving ecosystem. Power and strategy will shape the future: Findings highlight power availability as a key constraint while examining how hyperscalers, AI labs, neocloud providers, and sovereign AI initiatives are driving the next phase of AI infrastructure growth. # # # Artificial intelligence is driving one of the fastest infrastructure expansions the data center industry has ever experienced, but understanding where capac…",
+          "publishedAt": "2026-06-30T16:00:55.000Z",
+          "sourceImage": "https://d3qut6qyo6tw2j.cloudfront.net/bin/uploads/2026/06/30103344/Structure-Research-PR-Blog_6.30.26-1024x512.png",
+          "region": "APAC",
+          "language": "en",
+          "defaultCategory": "Colocation & Wholesale",
+          "category": "Data Centers",
+          "primary_category": "Data Centers",
+          "secondary_category": "Campus development and colocation capacity",
+          "infrastructure_layer": "Facility",
+          "affected_stakeholders": [
+            "data center operators",
+            "developers",
+            "site selectors",
+            "investors"
+          ],
+          "article_type": "Capacity Expansion",
+          "urgency_score": 0.74,
+          "taxonomy_confidence": 0.86,
+          "taxonomy_reasons": [
+            "data center",
+            "colocation",
+            "wholesale"
+          ],
+          "direct_ai_infrastructure_relevance": 1,
+          "data_center_relevance": 0.89,
+          "cloud_capacity_relevance": 0.32,
+          "semiconductor_relevance": 0,
+          "power_grid_relevance": 0.517,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0.28,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.996,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, ai data center, neocloud)",
+            "data_center_relevance:0.89(data center, colocation)",
+            "cloud_capacity_relevance:0.32(hyperscalers)",
+            "power_grid_relevance:0.52(power, gw)",
+            "capital_markets_relevance:0.28(funding)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 1,
+            "data_center_relevance": 0.89,
+            "cloud_capacity_relevance": 0.32,
+            "semiconductor_relevance": 0,
+            "power_grid_relevance": 0.517,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0.28,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.996,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, ai data center, neocloud)",
+              "data_center_relevance:0.89(data center, colocation)",
+              "cloud_capacity_relevance:0.32(hyperscalers)",
+              "power_grid_relevance:0.52(power, gw)",
+              "capital_markets_relevance:0.28(funding)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 88
+        },
+        {
+          "id": "259b09dbc84e9d09",
+          "source": "Toms Hardware",
+          "url": "https://www.tomshardware.com/pc-components/cpus/amd-confirms-low-power-cpu-cores-in-linux-kernel-patch-zen-6-chips-could-follow-in-intels-footsteps-with-new-core-type-for-background-tasks",
+          "title": "AMD confirms low-power CPU cores in Linux kernel patch — Zen 6 chips could follow in Intel's footsteps with new core type for background tasks",
+          "snippet": "AMD confirms plans to incorporate low-power CPU cores into next-generation heterogeneous CPUs to lower power consumption and improve energy efficiency.",
+          "contentText": "AMD has submitted Linux kernel patches including support for its new low-power CPU cores that will likely emerge in its future heterogeneous processors. The new patch clearly distinguishes between high-performance cores, efficiency cores, and low-power cores, so it is safe to say that AMD's upcoming CPU platforms will use three types of cores, with the low-power one serving light workloads, reports Phoronix . Go deeper with TH Premium: CPU (Image credit: Tom's Hardware) CPU scaling with DLSS Ryzen to the top: How AMD innovated in the gaming CPU market How ARM is working its way into PCs AMD CES 2026 gaming trends press Q&A roundtable transcript AMD's heterogeneous processors identify CPU types using CPUID Function 0x80000026 (Extended CPU Topology), as EBX bits [31:28] carry the core clas…",
+          "publishedAt": "2026-06-30T16:50:50.000Z",
+          "sourceImage": "https://cdn.mos.cms.futurecdn.net/b6AWuqaDHTv9ZS4ZpfqZNV-1280-80.png",
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "category": "Semiconductors",
+          "primary_category": "Semiconductors",
+          "secondary_category": "Accelerators, memory, and advanced packaging",
+          "infrastructure_layer": "Silicon",
+          "affected_stakeholders": [
+            "semiconductor suppliers",
+            "hyperscalers",
+            "server OEMs",
+            "investors"
+          ],
+          "article_type": "Market Analysis",
+          "urgency_score": 0.56,
+          "taxonomy_confidence": 0.87,
+          "taxonomy_reasons": [
+            "gpu",
+            "amd",
+            "intel"
+          ],
+          "direct_ai_infrastructure_relevance": 1,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0.787,
+          "power_grid_relevance": 0.297,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.938,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "semiconductor_relevance:0.79(amd, intel, gpu)",
+            "power_grid_relevance:0.30(power)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 1,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0.787,
+            "power_grid_relevance": 0.297,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.938,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+              "semiconductor_relevance:0.79(amd, intel, gpu)",
+              "power_grid_relevance:0.30(power)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 85
+        },
+        {
+          "id": "1ba44a1cc7b94c6b",
+          "source": "StorageReview",
+          "url": "https://www.storagereview.com/news/amd-versal-premium-gen-2-mop-32gb-in-package-lpddr5x-288gb-s-60-less-board-area",
+          "title": "AMD Versal Premium Gen 2 MoP: 32GB In-Package LPDDR5X, 288GB/s, 60% Less Board Area",
+          "snippet": "AMD has introduced the Versal Premium Gen 2 Memory-on-Package (MoP) adaptive SoCs, adding integrated LPDDR5X memory directly into the device package to increase bandwidth while reducing board complexity and footprint. T…",
+          "contentText": "AMD has introduced the Versal Premium Gen 2 Memory-on-Package (MoP) adaptive SoCs, adding integrated LPDDR5X memory directly into the device package to increase bandwidth while reducing board complexity and footprint. The new devices target applications that require high memory throughput within constrained power and space budgets, including networking, physical AI, aerospace and defense, test and measurement, and professional video systems. Unlike traditional designs that rely on external DRAM, the Versal Premium Gen 2 MoP architecture integrates up to 32GB of LPDDR5X memory into the package, providing up to 288GB/s of memory bandwidth. According to AMD, the approach reduces board area by up to 60% compared to equivalent external memory implementations while eliminating much of the compl…",
+          "publishedAt": "2026-06-30T15:53:48.000Z",
+          "sourceImage": "https://www.storagereview.com/wp-content/uploads/2026/06/Storagereview-Versal-Premium-Gen-2-MoP-Right-Hero--e1782809170997.jpg",
+          "region": "Global",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "category": "AI Infrastructure",
+          "primary_category": "AI Infrastructure",
+          "secondary_category": "GPU clusters and deployment readiness",
+          "infrastructure_layer": "Compute",
+          "affected_stakeholders": [
+            "operators",
+            "hyperscalers",
+            "cloud buyers",
+            "investors"
+          ],
+          "article_type": "Supply Chain",
+          "urgency_score": 0.54,
+          "taxonomy_confidence": 0.77,
+          "taxonomy_reasons": [
+            "ai infrastructure",
+            "neocloud"
+          ],
+          "direct_ai_infrastructure_relevance": 1,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0.517,
+          "power_grid_relevance": 0.22,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0.18,
+          "infrastructure_relevance_score": 0.879,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "semiconductor_relevance:0.52(amd, gpu)",
+            "power_grid_relevance:0.22(power)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 1,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0.517,
+            "power_grid_relevance": 0.22,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0.18,
+            "infrastructure_relevance_score": 0.879,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+              "semiconductor_relevance:0.52(amd, gpu)",
+              "power_grid_relevance:0.22(power)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 83
+        },
+        {
+          "id": "1f8e1fb945c2602f",
+          "source": "NVIDIA Blog",
+          "url": "https://blogs.nvidia.com/blog/claude-science-bionemo-agent-toolkit/",
+          "title": "NVIDIA BioNeMo Agent Toolkit Brings Accelerated AI to Life Sciences Researchers in Claude Science",
+          "snippet": "Life sciences has entered an era of computational scale, and for more than a decade, NVIDIA has built the full GPU-accelerated computing stack — spanning hardware, frameworks, libraries, models, microservices and domain…",
+          "contentText": "Life sciences has entered an era of computational scale, and for more than a decade, NVIDIA has built the full GPU-accelerated computing stack — spanning hardware, frameworks, libraries, models, microservices and domain-specific tools — to help researchers run more sophisticated workflows and iterate faster. This week, Anthropic announced Claude Science , an AI workbench for science research that lets scientists converse with agents in natural language to run their work end to end. Claude Science integrates with NVIDIA BioNeMo Agent Toolkit as a resource that scientists can access within their workflow. The toolkit packages NVIDIA-accelerated capabilities as callable skills, enabling Claude Science to select the appropriate tool, prepare valid inputs and execute the workflow — all while c…",
+          "publishedAt": "2026-06-30T17:00:38.000Z",
+          "sourceImage": "https://blogs.nvidia.com/wp-content/uploads/2026/06/anthropic-nvidia.png",
+          "region": "Global",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "category": "AI Infrastructure",
+          "primary_category": "AI Infrastructure",
+          "secondary_category": "GPU clusters and deployment readiness",
+          "infrastructure_layer": "Compute",
+          "affected_stakeholders": [
+            "operators",
+            "hyperscalers",
+            "cloud buyers",
+            "investors"
+          ],
+          "article_type": "Research / Technical",
+          "urgency_score": 0.46,
+          "taxonomy_confidence": 0.77,
+          "taxonomy_reasons": [
+            "ai infrastructure",
+            "neocloud"
+          ],
+          "direct_ai_infrastructure_relevance": 1,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0.598,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.862,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "semiconductor_relevance:0.60(nvidia, gpu)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 1,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0.598,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.862,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+              "semiconductor_relevance:0.60(nvidia, gpu)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 82
+        },
+        {
+          "id": "eafc5f2847ab53dc",
+          "source": "Toms Hardware",
+          "url": "https://www.tomshardware.com/laptops/microsofts-flagship-windows-pc-lineup-will-drop-reportedly-drop-budget-options-firm-prunes-surface-go-and-surface-laptop-go",
+          "title": "Microsoft's flagship Windows PC lineup will drop reportedly drop budget options — firm prunes Surface Go and Surface Laptop Go",
+          "snippet": "Microsoft is further pruning its Surface line, with the Surface Laptop Go 3 and Surface Go 4 going out of stock without clear follow-ups.",
+          "contentText": "Microsoft is further shrinking its Surface lineup of flagship Windows devices. According to a report from Windows Central , citing \"sources that are familiar with Microsoft's hardware roadmap,\" the company is no longer manufacturing its budget-focused Surface Go 4 and Surface Laptop Go 3 , and doesn't plan to follow them up with new devices. Over the last few years, Microsoft has discontinued many of its most interesting designs, including the powerhouse Surface Laptop Studio , the Surface Studio desktop, Surface Headphones and Earbuds, the Surface Book, and the Surface Duo smartphone. The entire line has been simplified down to the Surface Pro and Surface Laptop, with the Surface Laptop Ultra coming later this year with Nvidia's RTX Spark. (Microsoft's RTX Spark Dev Box is also Surface-b…",
+          "publishedAt": "2026-06-30T16:41:31.000Z",
+          "sourceImage": "https://cdn.mos.cms.futurecdn.net/XRtmkW5JC2SXWrjy7VuhCC-1280-80.jpg",
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "category": "AI Infrastructure",
+          "primary_category": "AI Infrastructure",
+          "secondary_category": "GPU clusters and deployment readiness",
+          "infrastructure_layer": "Compute",
+          "affected_stakeholders": [
+            "operators",
+            "hyperscalers",
+            "cloud buyers",
+            "investors"
+          ],
+          "article_type": "Other",
+          "urgency_score": 0.45,
+          "taxonomy_confidence": 0.77,
+          "taxonomy_reasons": [
+            "ai infrastructure",
+            "neocloud"
+          ],
+          "direct_ai_infrastructure_relevance": 1,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0.5,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.84,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "semiconductor_relevance:0.50(nvidia, gpu)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 1,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0.5,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.84,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+              "semiconductor_relevance:0.50(nvidia, gpu)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 81
+        },
+        {
+          "id": "61c41378ce7cc7c2",
+          "source": "HPCwire",
+          "url": "https://www.hpcwire.com/off-the-wire/pasqal-and-credit-agricole-cib-advance-strategic-partnership-to-deploy-quantum-computing-applied-to-finance/",
+          "title": "Pasqal and Crédit Agricole CIB Advance Strategic Partnership to Deploy Quantum Computing Applied to Finance",
+          "snippet": "PARIS, June 30, 2026 — Crédit Agricole CIB, the financing and investment banking arm of Crédit Agricole Group, and Pasqal, a global leader in neutral atom quantum computing, announced the signing of a strategic partners…",
+          "contentText": "PARIS, June 30, 2026 &#8212; Crédit Agricole CIB , the financing and investment banking arm of Crédit Agricole Group, and Pasqal , a global leader in neutral atom quantum computing, announced the signing of a strategic partnership to accelerate the transition from quantum research to operational deployment in capital markets activities. Building on a collaboration initiated in 2019, the partnership enters a new phase focused on the industrialization of quantum computing applications, with initial production use cases targeted as early as 2028. An Innovation Trajectory Validated by Concrete Results Since 2021, Crédit Agricole CIB and Pasqal have conducted several major projects focusing on counterparty credit default risk measurement and portfolio optimization to improve the Bank&#8217;s c…",
+          "publishedAt": "2026-06-30T15:45:19.000Z",
+          "sourceImage": "https://www.hpcwire.com/wp-content/uploads/2023/10/pasqal-300x160.png",
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "category": "AI Infrastructure",
+          "primary_category": "AI Infrastructure",
+          "secondary_category": "GPU clusters and deployment readiness",
+          "infrastructure_layer": "Compute",
+          "affected_stakeholders": [
+            "operators",
+            "hyperscalers",
+            "cloud buyers",
+            "investors"
+          ],
+          "article_type": "Financing / M&A",
+          "urgency_score": 0.45,
+          "taxonomy_confidence": 0.77,
+          "taxonomy_reasons": [
+            "ai infrastructure",
+            "neocloud"
+          ],
+          "direct_ai_infrastructure_relevance": 1,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0.22,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0.32,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.835,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "semiconductor_relevance:0.22(gpu)",
+            "capital_markets_relevance:0.32(financing)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 1,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0.22,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0.32,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.835,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+              "semiconductor_relevance:0.22(gpu)",
+              "capital_markets_relevance:0.32(financing)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 81
+        }
+      ],
+      "curatedIds": [
+        "6ce0e914a48b9cc9",
+        "259b09dbc84e9d09",
+        "1ba44a1cc7b94c6b",
+        "1f8e1fb945c2602f",
+        "eafc5f2847ab53dc",
+        "61c41378ce7cc7c2"
+      ],
+      "publishedIds": [
+        "259b09dbc84e9d09",
+        "6ce0e914a48b9cc9"
+      ],
+      "slotPublications": {
+        "0": true
+      }
     }
   },
   "runHistory": [
-    {
-      "at": "2026-05-14T09:38:28.601Z",
-      "day": "2026-05-14",
-      "slot": 2,
-      "publishedCount": 2,
-      "publishedIds": [
-        "40484b3a0dc84798",
-        "63b5932ccef80cbf"
-      ]
-    },
     {
       "at": "2026-05-14T17:04:47.860Z",
       "day": "2026-05-15",
@@ -35932,7 +36369,132 @@
         }
       ],
       "archiveOnlyItems": []
+    },
+    {
+      "at": "2026-06-30T17:10:18.781Z",
+      "day": "2026-07-01",
+      "slot": 0,
+      "publishedCount": 0,
+      "signalCardCount": 0,
+      "archiveOnlyCount": 0,
+      "repetitionBlockedCount": 2,
+      "publishedIds": [],
+      "processedIds": [
+        "259b09dbc84e9d09",
+        "6ce0e914a48b9cc9"
+      ],
+      "blockedCount": 0,
+      "blockedItems": [],
+      "repetitionBlockedItems": [
+        {
+          "id": "259b09dbc84e9d09",
+          "title": "AMD confirms low-power CPU cores in Linux kernel patch — Zen 6 chips could follow in Intel's footsteps with new core type for background tasks",
+          "infrastructure_relevance_score": 0.973,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "cloud_capacity_relevance:0.32(hyperscalers)",
+            "semiconductor_relevance:0.79(amd, intel, gpu)",
+            "power_grid_relevance:0.30(power)"
+          ],
+          "extraction_quality_score": 1,
+          "source_domain_adapter": "generic",
+          "content_length": 1711,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": true,
+          "repetition_block_reasons": [
+            "repeated_sentence_ratio>0.12",
+            "heading_sequence_similarity>0.75",
+            "conclusion_similarity>0.7"
+          ],
+          "repetition_check": {
+            "compared_article_count": 20,
+            "repeated_sentence_ratio": 0.14285714285714285,
+            "repeated_paragraph_ratio": 0.16666666666666666,
+            "heading_sequence_similarity": 1,
+            "banned_phrase_count": 0,
+            "banned_phrase_counts": {},
+            "recent_banned_phrase_counts": {},
+            "ngram_overlap": 0.5188679245283019,
+            "blueprint_repetition": 2,
+            "conclusion_similarity": 0.9511897312113418,
+            "repeated_sentence_count": 1,
+            "repeated_paragraph_count": 1,
+            "heading_sequence": [
+              "System Change",
+              "Bottleneck",
+              "Engineering Tradeoff",
+              "Validation Metric"
+            ],
+            "blocked": true,
+            "reasons": [
+              "repeated_sentence_ratio>0.12",
+              "heading_sequence_similarity>0.75",
+              "conclusion_similarity>0.7"
+            ]
+          },
+          "expert_insight_complete": true,
+          "expert_insight_missing_fields": [],
+          "reason": "repeated_sentence_ratio>0.12; heading_sequence_similarity>0.75; conclusion_similarity>0.7"
+        },
+        {
+          "id": "6ce0e914a48b9cc9",
+          "title": "Structure Research Forecasts AI Data Center Capacity Will Reach 150 GW by 203",
+          "infrastructure_relevance_score": 1,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, ai data center, compute capacity)",
+            "data_center_relevance:1.00(data center, colocation, campus)",
+            "cloud_capacity_relevance:0.32(hyperscalers)",
+            "power_grid_relevance:0.86(power, gigawatts, gw)",
+            "capital_markets_relevance:0.56(funding, capex)"
+          ],
+          "extraction_quality_score": 1,
+          "source_domain_adapter": "datacenterpost",
+          "content_length": 1591,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": true,
+          "repetition_block_reasons": [
+            "repeated_sentence_ratio>0.12",
+            "heading_sequence_similarity>0.75",
+            "conclusion_similarity>0.7"
+          ],
+          "repetition_check": {
+            "compared_article_count": 20,
+            "repeated_sentence_ratio": 0.16666666666666666,
+            "repeated_paragraph_ratio": 0.16666666666666666,
+            "heading_sequence_similarity": 1,
+            "banned_phrase_count": 0,
+            "banned_phrase_counts": {},
+            "recent_banned_phrase_counts": {},
+            "ngram_overlap": 0.36885245901639346,
+            "blueprint_repetition": 1,
+            "conclusion_similarity": 0.9511897312113418,
+            "repeated_sentence_count": 1,
+            "repeated_paragraph_count": 1,
+            "heading_sequence": [
+              "Deal Signal",
+              "Contract Quality",
+              "Operating Dependency",
+              "Investor Test"
+            ],
+            "blocked": true,
+            "reasons": [
+              "repeated_sentence_ratio>0.12",
+              "heading_sequence_similarity>0.75",
+              "conclusion_similarity>0.7"
+            ]
+          },
+          "expert_insight_complete": true,
+          "expert_insight_missing_fields": [],
+          "reason": "repeated_sentence_ratio>0.12; heading_sequence_similarity>0.75; conclusion_similarity>0.7"
+        }
+      ],
+      "signalCardItems": [],
+      "archiveOnlyItems": []
     }
   ],
-  "lastRunAt": "2026-06-30T10:35:40.892Z"
+  "lastRunAt": "2026-06-30T17:10:18.781Z"
 }
