@@ -545,7 +545,9 @@
     "71aeac242a42001a",
     "6702ac4399d035d3",
     "6928712cd2780279",
-    "76680cf9b5e9b787"
+    "76680cf9b5e9b787",
+    "d5f449423e19b8a4",
+    "619ea028d6f4ae6c"
   ],
   "dayPlans": {
     "2026-03-24": {
@@ -24169,19 +24171,445 @@
         "1": true,
         "2": true
       }
+    },
+    "2026-07-02": {
+      "date": "2026-07-02",
+      "createdAt": "2026-07-01T17:21:36.004Z",
+      "refreshedAt": "2026-07-01T17:21:36.004Z",
+      "candidateWindowHours": 24,
+      "curatedItems": [
+        {
+          "id": "d5f449423e19b8a4",
+          "source": "HPCwire",
+          "url": "https://www.hpcwire.com/off-the-wire/llnl-opens-registration-for-real-world-quantum-computing-workshop/",
+          "title": "LLNL Opens Registration for Real-World Quantum Computing Workshop",
+          "snippet": "July 1, 2026 — Registration is now open for the 2026 Real-World Quantum Computing workshop, jointly hosted by Lawrence Livermore National Laboratory (LLNL) and San Jose State University (SJSU). The two-day workshop is d…",
+          "contentText": "July 1, 2026 &#8212; Registration is now open for the 2026 Real-World Quantum Computing workshop, jointly hosted by Lawrence Livermore National Laboratory (LLNL) and San Jose State University (SJSU). The two-day workshop is designed for upper-level undergraduates and graduate students in engineering, physics or related fields. Interns are encouraged to apply. Applications will be accepted on a first-come, first-served basis. Participants and instructors work through a hands-on activity at the 2025 Real-World Quantum Computing workshop. The workshop aims to orient participants to the physical principles of using superconducting hardware for quantum computing, focusing on low-level calibration and physical controls. This free, in-person workshop will be held at the University of California…",
+          "publishedAt": "2026-07-01T16:38:01.000Z",
+          "sourceImage": "https://www.hpcwire.com/wp-content/uploads/2026/07/Ext_Quantum-Workshop_1200x800-300x200.jpg",
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "category": "AI Infrastructure",
+          "primary_category": "AI Infrastructure",
+          "secondary_category": "GPU clusters and deployment readiness",
+          "infrastructure_layer": "Compute",
+          "affected_stakeholders": [
+            "operators",
+            "hyperscalers",
+            "cloud buyers",
+            "investors"
+          ],
+          "article_type": "Capacity Expansion",
+          "urgency_score": 0.43,
+          "taxonomy_confidence": 0.77,
+          "taxonomy_reasons": [
+            "ai infrastructure",
+            "neocloud"
+          ],
+          "direct_ai_infrastructure_relevance": 1,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0.22,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.778,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "semiconductor_relevance:0.22(gpu)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 1,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0.22,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.778,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+              "semiconductor_relevance:0.22(gpu)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 79
+        },
+        {
+          "id": "619ea028d6f4ae6c",
+          "source": "Data Center POST",
+          "url": "https://datacenterpost.com/inference-decoded-unlocking-ais-potential-by-learning-the-language-of-inference-systems/",
+          "title": "Inference, Decoded: Unlocking AI’s Potential by Learning the Language of Inference Systems",
+          "snippet": "TL;DR The Shift to Inference: As AI transitions from model training to revenue-generating applications, inference systems must be managed as complex chains where a single weak link can bottleneck the entire system. List…",
+          "contentText": "TL;DR The Shift to Inference: As AI transitions from model training to revenue-generating applications, inference systems must be managed as complex chains where a single weak link can bottleneck the entire system. Listening to System Diagnostics: Instead of treating inference as a black box, teams must learn to translate continuous performance signals, such as &#8220;Time to First Token&#8221; or latency spikes, to accurately diagnose issues like memory constraints or scheduler pressure. Workload-Specific Testing: Generic benchmarks fail to predict real-world performance because different AI applications (e.g., fraud detection vs. legal analysis) stress systems in unique ways; testing must model actual prompt shapes, multi-turn sessions, and traffic bursts. # # # Over the last several ye…",
+          "publishedAt": "2026-07-01T17:00:44.000Z",
+          "sourceImage": "https://d3qut6qyo6tw2j.cloudfront.net/bin/uploads/2026/07/01111815/DCP-Blog-Submission_6.30.26-1-1024x512.png",
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "Colocation & Wholesale",
+          "category": "Data Centers",
+          "primary_category": "Data Centers",
+          "secondary_category": "Campus development and colocation capacity",
+          "infrastructure_layer": "Facility",
+          "affected_stakeholders": [
+            "data center operators",
+            "developers",
+            "site selectors",
+            "investors"
+          ],
+          "article_type": "Supply Chain",
+          "urgency_score": 0.43,
+          "taxonomy_confidence": 0.73,
+          "taxonomy_reasons": [
+            "colocation",
+            "wholesale"
+          ],
+          "direct_ai_infrastructure_relevance": 0.78,
+          "data_center_relevance": 0.76,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.77,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:0.78",
+            "data_center_relevance:0.76(data center, colocation)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 0.78,
+            "data_center_relevance": 0.76,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.77,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:0.78",
+              "data_center_relevance:0.76(data center, colocation)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 78
+        },
+        {
+          "id": "5252528d9e20149e",
+          "source": "Toms Hardware",
+          "url": "https://www.tomshardware.com/tech-industry/semiconductors/tesla-hires-17-year-intel-veteran-responsible-for-billion-dollar-fab-startups-gary-jiang-likely-chosen-to-oversee-fab-efforts-for-terafabs-licensing-of-14a",
+          "title": "Tesla hires 17-year Intel veteran responsible for billion-dollar fab startups — Gary Jiang likely chosen to oversee fab efforts for Terafab's licensing of 14A",
+          "snippet": "Tesla hires an Intel veteran, who most recently was responsible for installing advanced tools at Intel's Arizona fab that is now ramping production of chips using 18A fabrication process.",
+          "contentText": "Tesla has hired Gary Jiang, an Intel veteran who most recently was responsible for installing equipment and transferring Intel's leading-edge 18A technology process from development fab in Oregon to the company's high-volume fab in Arizona, as spotted by Electrek.co . The appointment marks the first publicly identified senior leadership hire for Elon Musk's semiconductor production project, Terafab , which demonstrates Tesla's effort to build an experienced semiconductor manufacturing organization from the ground up by hiring veterans from other companies. Tesla poaches an Intel veteran Gary Jiang joined Tesla in June 2026 after spending over 17 years at Intel, according to his LinkedIn profile. Interestingly, there is little to glean about his current role from his LinkedIn profile, asid…",
+          "publishedAt": "2026-07-01T14:07:26.000Z",
+          "sourceImage": "https://cdn.mos.cms.futurecdn.net/PoCxHQ8gKEscb2NWQov7wZ-1280-80.png",
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "category": "Semiconductors",
+          "primary_category": "Semiconductors",
+          "secondary_category": "Accelerators, memory, and advanced packaging",
+          "infrastructure_layer": "Silicon",
+          "affected_stakeholders": [
+            "semiconductor suppliers",
+            "hyperscalers",
+            "server OEMs",
+            "investors"
+          ],
+          "article_type": "Supply Chain",
+          "urgency_score": 0.48,
+          "taxonomy_confidence": 0.95,
+          "taxonomy_reasons": [
+            "semiconductor",
+            "gpu",
+            "intel",
+            "fab"
+          ],
+          "direct_ai_infrastructure_relevance": 1,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 1,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.95,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "semiconductor_relevance:1.00(semiconductor, semiconductors, intel)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 1,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 1,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.95,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+              "semiconductor_relevance:1.00(semiconductor, semiconductors, intel)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 78
+        },
+        {
+          "id": "9ee3213b89ac2ef8",
+          "source": "Data Center Knowledge",
+          "url": "https://www.datacenterknowledge.com/energy-power-supply/national-grid-agrees-to-1-75b-investment-in-joulent-to-expand-ai-power-infrastructure",
+          "title": "National Grid Agrees to $1.75B Investment in Joulent to Expand AI Power Infrastructure",
+          "snippet": "The company’s planned $1.75 billion investment in Joulent illustrates how dedicated power infrastructure is becoming central to AI data center growth.",
+          "contentText": "The company’s planned $1.75 billion investment in Joulent illustrates how dedicated power infrastructure is becoming central to AI data center growth.",
+          "publishedAt": "2026-07-01T15:29:03.000Z",
+          "sourceImage": "https://eu-images.contentstack.com/v3/assets/blt8eb3cdfc1fce5194/bltf296102f7d0c8812/6a4533bf8b73521d38a1d31d/GettyImages-2198004413.jpg?width=720&quality=80&disable=upscale",
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "Colocation & Wholesale",
+          "category": "Data Centers",
+          "primary_category": "Data Centers",
+          "secondary_category": "Campus development and colocation capacity",
+          "infrastructure_layer": "Facility",
+          "affected_stakeholders": [
+            "data center operators",
+            "developers",
+            "site selectors",
+            "investors"
+          ],
+          "article_type": "Other",
+          "urgency_score": 0.62,
+          "taxonomy_confidence": 0.81,
+          "taxonomy_reasons": [
+            "data center",
+            "colocation",
+            "wholesale"
+          ],
+          "direct_ai_infrastructure_relevance": 0.82,
+          "data_center_relevance": 0.76,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0,
+          "power_grid_relevance": 0.675,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.828,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:0.82(ai data center)",
+            "data_center_relevance:0.76(data center, colocation)",
+            "power_grid_relevance:0.68(power, grid)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 0.82,
+            "data_center_relevance": 0.76,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0,
+            "power_grid_relevance": 0.675,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.828,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:0.82(ai data center)",
+              "data_center_relevance:0.76(data center, colocation)",
+              "power_grid_relevance:0.68(power, grid)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 74
+        },
+        {
+          "id": "3223a99a1a4c8145",
+          "source": "TechCrunch AI",
+          "url": "https://techcrunch.com/2026/07/01/venice-ai-becomes-a-unicorn-with-65m-series-a-as-its-privacy-first-ai-platform-takes-off/",
+          "title": "Venice AI becomes a unicorn with $65M Series A as its privacy-first AI platform takes off",
+          "snippet": "Venice AI is already profitable, with annualized run-rate revenues of over $70 million, CEO Erik Voorhees said.",
+          "contentText": "Venice AI is already profitable, with annualized run-rate revenues of over $70 million, CEO Erik Voorhees said.",
+          "publishedAt": "2026-07-01T14:25:23.000Z",
+          "sourceImage": null,
+          "region": "Global",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "category": "AI Infrastructure",
+          "primary_category": "AI Infrastructure",
+          "secondary_category": "GPU clusters and deployment readiness",
+          "infrastructure_layer": "Compute",
+          "affected_stakeholders": [
+            "operators",
+            "hyperscalers",
+            "cloud buyers",
+            "investors"
+          ],
+          "article_type": "Product / Platform Update",
+          "urgency_score": 0.43,
+          "taxonomy_confidence": 0.77,
+          "taxonomy_reasons": [
+            "ai infrastructure",
+            "neocloud"
+          ],
+          "direct_ai_infrastructure_relevance": 1,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0.22,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.778,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "semiconductor_relevance:0.22(gpu)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 1,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0.22,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.778,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+              "semiconductor_relevance:0.22(gpu)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 72
+        },
+        {
+          "id": "ade06a25b4406a03",
+          "source": "Semiconductor Engineering",
+          "url": "https://semiengineering.com/securing-the-software-defined-vehicle-how-rambus-and-telechips-enable-safe-scalable-automotive-soc/",
+          "title": "Securing the Software Defined Vehicle: How Rambus and Telechips Enable Safe, Scalable Automotive SoC",
+          "snippet": "Scalable, heterogeneous SoC platforms with built-in, system-level security, including the hardware-based Root of Trust. The post Securing the Software Defined Vehicle: How Rambus and Telechips Enable Safe, Scalable Auto…",
+          "contentText": "Automotive architectures are rapidly shifting from distributed ECUs to centralized, zonal computing models designed for the software-defined vehicle (SDV). As workloads such as AI-driven ADAS, digital cockpits, and OTA updates increase system complexity, automakers are consolidating functions onto high-performance SoCs, improving efficiency but raising new challenges in isolation and security. To address this, Telechips is developing scalable, heterogeneous SoC platforms with built-in, system-level security, including the hardware-based Root of Trust, the Rambus RT-648 incorporating an Arm Cortex-M33 processor enabling secure boot, robust key management, and trusted system operation. Read more here . The post Securing the Software Defined Vehicle: How Rambus and Telechips Enable Safe, Sca…",
+          "publishedAt": "2026-07-01T07:02:19.000Z",
+          "sourceImage": null,
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "category": "AI Infrastructure",
+          "primary_category": "AI Infrastructure",
+          "secondary_category": "GPU clusters and deployment readiness",
+          "infrastructure_layer": "Compute",
+          "affected_stakeholders": [
+            "operators",
+            "hyperscalers",
+            "cloud buyers",
+            "investors"
+          ],
+          "article_type": "Product / Platform Update",
+          "urgency_score": 0.45,
+          "taxonomy_confidence": 0.77,
+          "taxonomy_reasons": [
+            "ai infrastructure",
+            "neocloud"
+          ],
+          "direct_ai_infrastructure_relevance": 1,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0.58,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.858,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "semiconductor_relevance:0.58(semiconductor, gpu)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 1,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0.58,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.858,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+              "semiconductor_relevance:0.58(semiconductor, gpu)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 68
+        }
+      ],
+      "curatedIds": [
+        "d5f449423e19b8a4",
+        "619ea028d6f4ae6c",
+        "5252528d9e20149e",
+        "9ee3213b89ac2ef8",
+        "3223a99a1a4c8145",
+        "ade06a25b4406a03"
+      ],
+      "publishedIds": [
+        "d5f449423e19b8a4",
+        "619ea028d6f4ae6c"
+      ],
+      "slotPublications": {
+        "0": true
+      }
     }
   },
   "runHistory": [
-    {
-      "at": "2026-05-15T09:51:14.869Z",
-      "day": "2026-05-15",
-      "slot": 2,
-      "publishedCount": 2,
-      "publishedIds": [
-        "8a0d16a55deb2db8",
-        "47270f6d05c43680"
-      ]
-    },
     {
       "at": "2026-05-15T16:55:16.736Z",
       "day": "2026-05-16",
@@ -36678,7 +37106,127 @@
       ],
       "signalCardItems": [],
       "archiveOnlyItems": []
+    },
+    {
+      "at": "2026-07-01T17:21:36.004Z",
+      "day": "2026-07-02",
+      "slot": 0,
+      "publishedCount": 0,
+      "signalCardCount": 1,
+      "archiveOnlyCount": 0,
+      "repetitionBlockedCount": 1,
+      "publishedIds": [],
+      "processedIds": [
+        "d5f449423e19b8a4",
+        "619ea028d6f4ae6c"
+      ],
+      "blockedCount": 1,
+      "blockedItems": [
+        {
+          "id": "d5f449423e19b8a4",
+          "title": "LLNL Opens Registration for Real-World Quantum Computing Workshop",
+          "infrastructure_relevance_score": 0.967,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud, high-performance computing)",
+            "cloud_capacity_relevance:0.54(hyperscalers, aws)",
+            "semiconductor_relevance:0.50(nvidia, gpu)",
+            "power_grid_relevance:0.76(power, grid, utility)"
+          ],
+          "extraction_quality_score": 1,
+          "source_domain_adapter": "generic",
+          "content_length": 1780,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": false,
+          "repetition_block_reasons": [],
+          "repetition_check": null,
+          "expert_insight_complete": true,
+          "expert_insight_missing_fields": [],
+          "reason": "fail_closed: source_text_incomplete:ellipsis_truncation_artifact, ellipsis_truncation_artifact"
+        }
+      ],
+      "repetitionBlockedItems": [
+        {
+          "id": "619ea028d6f4ae6c",
+          "title": "Inference, Decoded: Unlocking AI’s Potential by Learning the Language of Inference Systems",
+          "infrastructure_relevance_score": 0.84,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:0.78",
+            "data_center_relevance:0.76(data center, colocation)",
+            "semiconductor_relevance:0.22(gpu)",
+            "power_grid_relevance:0.22(power)"
+          ],
+          "extraction_quality_score": 1,
+          "source_domain_adapter": "datacenterpost",
+          "content_length": 1749,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": true,
+          "repetition_block_reasons": [
+            "repeated_sentence_ratio>0.12",
+            "heading_sequence_similarity>0.75",
+            "conclusion_similarity>0.7"
+          ],
+          "repetition_check": {
+            "compared_article_count": 20,
+            "repeated_sentence_ratio": 0.125,
+            "repeated_paragraph_ratio": 0.16666666666666666,
+            "heading_sequence_similarity": 1,
+            "banned_phrase_count": 0,
+            "banned_phrase_counts": {},
+            "recent_banned_phrase_counts": {},
+            "ngram_overlap": 0.5178571428571429,
+            "blueprint_repetition": 1,
+            "conclusion_similarity": 0.9511897312113418,
+            "repeated_sentence_count": 1,
+            "repeated_paragraph_count": 1,
+            "heading_sequence": [
+              "System Change",
+              "Bottleneck",
+              "Engineering Tradeoff",
+              "Validation Metric"
+            ],
+            "blocked": true,
+            "reasons": [
+              "repeated_sentence_ratio>0.12",
+              "heading_sequence_similarity>0.75",
+              "conclusion_similarity>0.7"
+            ]
+          },
+          "expert_insight_complete": true,
+          "expert_insight_missing_fields": [],
+          "reason": "repeated_sentence_ratio>0.12; heading_sequence_similarity>0.75; conclusion_similarity>0.7"
+        }
+      ],
+      "signalCardItems": [
+        {
+          "id": "d5f449423e19b8a4",
+          "title": "LLNL Opens Registration for Real-World Quantum Computing Workshop",
+          "infrastructure_relevance_score": 0.967,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud, high-performance computing)",
+            "cloud_capacity_relevance:0.54(hyperscalers, aws)",
+            "semiconductor_relevance:0.50(nvidia, gpu)",
+            "power_grid_relevance:0.76(power, grid, utility)"
+          ],
+          "extraction_quality_score": 1,
+          "source_domain_adapter": "generic",
+          "content_length": 1780,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": false,
+          "repetition_block_reasons": [],
+          "repetition_check": null,
+          "expert_insight_complete": true,
+          "expert_insight_missing_fields": [],
+          "reason": "fail_closed: source_text_incomplete:ellipsis_truncation_artifact, ellipsis_truncation_artifact"
+        }
+      ],
+      "archiveOnlyItems": []
     }
   ],
-  "lastRunAt": "2026-07-01T10:48:11.913Z"
+  "lastRunAt": "2026-07-01T17:21:36.004Z"
 }
