@@ -543,7 +543,9 @@
     "259b09dbc84e9d09",
     "6ce0e914a48b9cc9",
     "71aeac242a42001a",
-    "6702ac4399d035d3"
+    "6702ac4399d035d3",
+    "6928712cd2780279",
+    "76680cf9b5e9b787"
   ],
   "dayPlans": {
     "2026-03-24": {
@@ -23719,18 +23721,91 @@
     "2026-07-01": {
       "date": "2026-07-01",
       "createdAt": "2026-06-30T17:10:18.781Z",
-      "refreshedAt": "2026-07-01T00:07:33.761Z",
+      "refreshedAt": "2026-07-01T10:48:11.913Z",
       "candidateWindowHours": 24,
       "curatedItems": [
         {
-          "id": "71aeac242a42001a",
-          "source": "Semiconductor Engineering",
-          "url": "https://semiengineering.com/a-self-evolving-agent-framework-that-treats-hardware-design-as-repository-level-code-evolution-nvidia-research/",
-          "title": "A Self-Evolving Agent Framework That Treats Hardware Design as Repository-Level Code Evolution (Nvidia Research)",
-          "snippet": "A new technical paper, Agentic Hardware Design as Repository-Level Code Evolution, was published by researchers at Nvidia Research. Abstract “We present HORIZON, a self-evolving agent framework that treats hardware desi…",
-          "contentText": "A new technical paper, Agentic Hardware Design as Repository-Level Code Evolution, was published by researchers at Nvidia Research. Abstract &#8220;We present HORIZON, a self-evolving agent framework that treats hardware design as repository-level code evolution. A Markdown harness is compiled into a project pack containing domain knowledge, an executable evaluator, an acceptance predicate, and a git/runtime policy; a hands-free agent loop then evolves an isolated git worktree, using repository operations for state management, tracing, and replay. This extends prior works of repository-scale self-evolution from EDA software systems, to hardware-design artifacts themselves. We evaluate our approach on ChipBench, RTLLM, Verilog-Eval, and nine CVDP categories, achieving 100% benchmark comple…",
-          "publishedAt": "2026-06-30T22:23:40.000Z",
-          "sourceImage": null,
+          "id": "6928712cd2780279",
+          "source": "Toms Hardware",
+          "url": "https://www.tomshardware.com/tech-industry/data-centers/virginia-county-asks-all-employees-including-schools-to-save-power-due-to-ai-driven-electricity-price-hikes-states-400-plus-data-centers-steadily-increasing-demand-grid-expansion-and-pricing",
+          "title": "Virginia county asks all employees, including schools, to conserve power due to AI-driven electricity price hikes — state's 400-plus data centers steadily increasing demand, grid expansion, and pricing",
+          "snippet": "Virginia county asks all employees including schools to save power, due to AI-driven power requirements— state's 400-plus datacenters steadily increasing demand, grid expansion, and pricing",
+          "contentText": "In yet another case of the AI-driven blues, 404 Media reports that Henrico County, VA, Manager John Vithoulkas sent an email to all county employees — including those in schools and social services — asking them to conserve energy by turning off unused lights and computers, using blinds to lessen heat buildup, and curbing or stopping the usage of heavy loads like space heaters. That plea comes as the state's main power provider repeatedly hikes rates, and those repeated increases are linked to the rapidly increasing demands of data center buildouts. According to the report, Henrico County already has 37 data centers within its borders, and more are coming to the area. The net result of this increasing demand is that Henrico County and other Virginia government entities covered by a collec…",
+          "publishedAt": "2026-07-01T10:30:00.000Z",
+          "sourceImage": "https://cdn.mos.cms.futurecdn.net/XNjRQaFA4Kt4gbSRrSjeUA-1280-80.jpg",
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "category": "Power & Grid",
+          "primary_category": "Power & Grid",
+          "secondary_category": "Interconnection and power procurement",
+          "infrastructure_layer": "Power",
+          "affected_stakeholders": [
+            "data center operators",
+            "utilities",
+            "cloud capacity teams",
+            "investors"
+          ],
+          "article_type": "Capacity Expansion",
+          "urgency_score": 0.68,
+          "taxonomy_confidence": 0.93,
+          "taxonomy_reasons": [
+            "power",
+            "grid",
+            "electricity"
+          ],
+          "direct_ai_infrastructure_relevance": 1,
+          "data_center_relevance": 0.97,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0.22,
+          "power_grid_relevance": 0.999,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 1,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "data_center_relevance:0.97(data center, data centers)",
+            "semiconductor_relevance:0.22(gpu)",
+            "power_grid_relevance:1.00(power, grid, electricity)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 1,
+            "data_center_relevance": 0.97,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0.22,
+            "power_grid_relevance": 0.999,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 1,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+              "data_center_relevance:0.97(data center, data centers)",
+              "semiconductor_relevance:0.22(gpu)",
+              "power_grid_relevance:1.00(power, grid, electricity)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 88
+        },
+        {
+          "id": "76680cf9b5e9b787",
+          "source": "Toms Hardware",
+          "url": "https://www.tomshardware.com/tech-industry/new-pc-purchases-see-sharpest-drop-in-nearly-three-years-as-memory-and-storage-prices-bite-shipments-fall-by-7-percent-analysts-forecast-14-percent-contraction-that-will-hit-budget-laptops-hard",
+          "title": "New PC purchases see sharpest drop in nearly three years as memory and storage prices bite — shipments fall by 7%, analysts forecast 14% contraction that will hit budget laptops hard",
+          "snippet": "A research firm says that PC deliveries for the first quarter of 2026 fell by 7%, with the entire industry expected to ship 14.4% less units for the entire year.",
+          "contentText": "Shipment of new PCs in the U.S. fell to 15.8 million units, dropping by 7% year-over-year in the first quarter of 2026. According to research firm Omdia , this was the biggest drop in quarterly deliveries since the third quarter of 2023, and it’s primarily driven by supply shortages as well as the accompanying price increases for memory and storage chips. The threat of tariffs and the Windows 11 refresh cycle — driven by the end of Windows 10 support — has also inflated shipments last year, resulting in reduced orders today. Go deeper with TH Premium: AI shortages (Image credit: Nvidia) AI data centers are swallowing the world's memory and storage supply Chip scarcity assaults auto industry amid the worsening Nexperia and DRAM crisis Samsung and SK hynix shorten memory contracts as pricin…",
+          "publishedAt": "2026-07-01T10:02:16.000Z",
+          "sourceImage": "https://cdn.mos.cms.futurecdn.net/o7rvVs7BL6BzpuyE9oJuT3-1280-80.png",
           "region": "US",
           "language": "en",
           "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
@@ -23744,43 +23819,48 @@
             "server OEMs",
             "investors"
           ],
-          "article_type": "Policy / Regulation",
-          "urgency_score": 0.48,
-          "taxonomy_confidence": 0.79,
+          "article_type": "Supply Chain",
+          "urgency_score": 0.47,
+          "taxonomy_confidence": 0.77,
           "taxonomy_reasons": [
+            "chip",
             "gpu",
             "nvidia"
           ],
           "direct_ai_infrastructure_relevance": 1,
-          "data_center_relevance": 0,
+          "data_center_relevance": 0.42,
           "cloud_capacity_relevance": 0,
-          "semiconductor_relevance": 0.958,
+          "semiconductor_relevance": 0.5,
           "power_grid_relevance": 0,
           "cooling_relevance": 0,
           "capital_markets_relevance": 0,
-          "enterprise_ai_infrastructure_relevance": 0,
-          "infrastructure_relevance_score": 0.941,
+          "enterprise_ai_infrastructure_relevance": 0.243,
+          "infrastructure_relevance_score": 0.91,
           "infrastructure_relevance_tier": "full_memo",
           "infrastructure_relevance_action": "generate_full_memo",
           "infrastructure_relevance_reasons": [
             "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "semiconductor_relevance:0.96(semiconductor, nvidia, gpu)"
+            "data_center_relevance:0.42(data centers)",
+            "semiconductor_relevance:0.50(nvidia, gpu)",
+            "enterprise_ai_infrastructure_relevance:0.24(storage)"
           ],
           "infrastructure_relevance": {
             "direct_ai_infrastructure_relevance": 1,
-            "data_center_relevance": 0,
+            "data_center_relevance": 0.42,
             "cloud_capacity_relevance": 0,
-            "semiconductor_relevance": 0.958,
+            "semiconductor_relevance": 0.5,
             "power_grid_relevance": 0,
             "cooling_relevance": 0,
             "capital_markets_relevance": 0,
-            "enterprise_ai_infrastructure_relevance": 0,
-            "infrastructure_relevance_score": 0.941,
+            "enterprise_ai_infrastructure_relevance": 0.243,
+            "infrastructure_relevance_score": 0.91,
             "infrastructure_relevance_tier": "full_memo",
             "infrastructure_relevance_action": "generate_full_memo",
             "infrastructure_relevance_reasons": [
               "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-              "semiconductor_relevance:0.96(semiconductor, nvidia, gpu)"
+              "data_center_relevance:0.42(data centers)",
+              "semiconductor_relevance:0.50(nvidia, gpu)",
+              "enterprise_ai_infrastructure_relevance:0.24(storage)"
             ],
             "infrastructureRelevanceAction": "generate_full_memo",
             "articlePagePublished": true,
@@ -23788,301 +23868,17 @@
             "archiveOnly": false,
             "archiveOnlyReason": null
           },
-          "score": 86
+          "score": 84
         },
         {
-          "id": "6702ac4399d035d3",
-          "source": "HPCwire",
-          "url": "https://www.hpcwire.com/off-the-wire/amd-debuts-memory-on-package-versal-socs-to-boost-bandwidth-and-cut-board-space/",
-          "title": "AMD Debuts Memory-on-Package Versal SoCs to Boost Bandwidth and Cut Board Space",
-          "snippet": "June 30, 2026 — AMD today announced the AMD Versal Premium Gen 2 Memory on Package (MoP) adaptive system-on-chips (SoCs). The MoP architecture integrates up to 32GB of LPDDR5X into a single package, delivering up to 288…",
-          "contentText": "June 30, 2026 &#8212; AMD today announced the AMD Versal Premium Gen 2 Memory on Package (MoP) adaptive system-on-chips (SoCs). The MoP architecture integrates up to 32GB of LPDDR5X into a single package, delivering up to 288GB/s of bandwidth in up to 60% less board area, letting engineers build high-bandwidth systems without the risk and time of board-level memory design. Directly integrating memory into an adaptive SoC package enables faster data transfer, reduces latency and can help lower power consumption compared to standard SoC packages. As physical AI, networking, and aerospace and defense workloads push more data through ever-tighter space and power budgets, MoP targets the designs that need it most: test and measurement, professional video editing, and VPX systems for secure com…",
-          "publishedAt": "2026-06-30T21:37:46.000Z",
-          "sourceImage": "https://www.hpcwire.com/wp-content/uploads/2026/06/4898500-versal-mop-teaser-300x169.png",
-          "region": "US",
-          "language": "en",
-          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
-          "category": "AI Infrastructure",
-          "primary_category": "AI Infrastructure",
-          "secondary_category": "GPU clusters and deployment readiness",
-          "infrastructure_layer": "Compute",
-          "affected_stakeholders": [
-            "operators",
-            "hyperscalers",
-            "cloud buyers",
-            "investors"
-          ],
-          "article_type": "Supply Chain",
-          "urgency_score": 0.54,
-          "taxonomy_confidence": 0.77,
-          "taxonomy_reasons": [
-            "ai infrastructure",
-            "neocloud"
-          ],
-          "direct_ai_infrastructure_relevance": 1,
-          "data_center_relevance": 0,
-          "cloud_capacity_relevance": 0,
-          "semiconductor_relevance": 0.517,
-          "power_grid_relevance": 0.22,
-          "cooling_relevance": 0,
-          "capital_markets_relevance": 0,
-          "enterprise_ai_infrastructure_relevance": 0.18,
-          "infrastructure_relevance_score": 0.879,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "semiconductor_relevance:0.52(amd, gpu)",
-            "power_grid_relevance:0.22(power)"
-          ],
-          "infrastructure_relevance": {
-            "direct_ai_infrastructure_relevance": 1,
-            "data_center_relevance": 0,
-            "cloud_capacity_relevance": 0,
-            "semiconductor_relevance": 0.517,
-            "power_grid_relevance": 0.22,
-            "cooling_relevance": 0,
-            "capital_markets_relevance": 0,
-            "enterprise_ai_infrastructure_relevance": 0.18,
-            "infrastructure_relevance_score": 0.879,
-            "infrastructure_relevance_tier": "full_memo",
-            "infrastructure_relevance_action": "generate_full_memo",
-            "infrastructure_relevance_reasons": [
-              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-              "semiconductor_relevance:0.52(amd, gpu)",
-              "power_grid_relevance:0.22(power)"
-            ],
-            "infrastructureRelevanceAction": "generate_full_memo",
-            "articlePagePublished": true,
-            "homepagePublished": true,
-            "archiveOnly": false,
-            "archiveOnlyReason": null
-          },
-          "score": 83
-        },
-        {
-          "id": "849109216aacfde1",
-          "source": "StorageReview",
-          "url": "https://www.storagereview.com/news/scality-and-ovhcloud-build-a-sovereign-ai-storage-stack-on-opcp-and-bare-metal",
-          "title": "Scality and OVHcloud Build a Sovereign AI Storage Stack on OPCP and Bare Metal",
-          "snippet": "Scality and OVHcloud have expanded their technology partnership with a joint storage platform aimed at organizations requiring sovereign infrastructure for AI and mission-critical data. The combined solution is designed…",
-          "contentText": "Scality and OVHcloud have expanded their technology partnership with a joint storage platform aimed at organizations requiring sovereign infrastructure for AI and mission-critical data. The combined solution is designed to keep sensitive data under customer control while supporting high-performance AI workloads without relying on U.S. hyperscale cloud providers. The offering is available as either a dedicated sovereign cloud deployment or an on-premises implementation using the OVHcloud On-Prem Cloud Platform (OPCP). It also supports backup replication across multiple availability zones to improve resilience and disaster recovery. The announcement targets two primary enterprise requirements: meeting increasingly strict data sovereignty and regulatory compliance mandates while providing pr…",
-          "publishedAt": "2026-06-30T19:34:45.000Z",
-          "sourceImage": "https://www.storagereview.com/wp-content/uploads/2026/06/scality-ovhcloud-sovereign-stack.png",
-          "region": "US",
-          "language": "en",
-          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
-          "category": "Enterprise AI Infrastructure",
-          "primary_category": "Enterprise AI Infrastructure",
-          "secondary_category": "Enterprise deployment operations",
-          "infrastructure_layer": "Enterprise Platform",
-          "affected_stakeholders": [
-            "enterprise IT",
-            "cloud buyers",
-            "platform teams",
-            "software vendors"
-          ],
-          "article_type": "Policy / Regulation",
-          "urgency_score": 0.5,
-          "taxonomy_confidence": 0.95,
-          "taxonomy_reasons": [
-            "on-prem",
-            "backup",
-            "disaster recovery",
-            "storage"
-          ],
-          "direct_ai_infrastructure_relevance": 1,
-          "data_center_relevance": 0,
-          "cloud_capacity_relevance": 0.24,
-          "semiconductor_relevance": 0.22,
-          "power_grid_relevance": 0,
-          "cooling_relevance": 0,
-          "capital_markets_relevance": 0,
-          "enterprise_ai_infrastructure_relevance": 1,
-          "infrastructure_relevance_score": 1,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "cloud_capacity_relevance:0.24(sovereign cloud)",
-            "semiconductor_relevance:0.22(gpu)",
-            "enterprise_ai_infrastructure_relevance:1.00(on-prem, backup, disaster recovery)"
-          ],
-          "infrastructure_relevance": {
-            "direct_ai_infrastructure_relevance": 1,
-            "data_center_relevance": 0,
-            "cloud_capacity_relevance": 0.24,
-            "semiconductor_relevance": 0.22,
-            "power_grid_relevance": 0,
-            "cooling_relevance": 0,
-            "capital_markets_relevance": 0,
-            "enterprise_ai_infrastructure_relevance": 1,
-            "infrastructure_relevance_score": 1,
-            "infrastructure_relevance_tier": "full_memo",
-            "infrastructure_relevance_action": "generate_full_memo",
-            "infrastructure_relevance_reasons": [
-              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-              "cloud_capacity_relevance:0.24(sovereign cloud)",
-              "semiconductor_relevance:0.22(gpu)",
-              "enterprise_ai_infrastructure_relevance:1.00(on-prem, backup, disaster recovery)"
-            ],
-            "infrastructureRelevanceAction": "generate_full_memo",
-            "articlePagePublished": true,
-            "homepagePublished": true,
-            "archiveOnly": false,
-            "archiveOnlyReason": null
-          },
-          "score": 80
-        },
-        {
-          "id": "07d6893f8f09b039",
-          "source": "Data Center Frontier",
-          "url": "https://www.datacenterfrontier.com/hyperscale/podcast/55387903/emergence-water-and-nimbus-water-joins-power-as-ai-infrastructures-next-critical-constraint",
-          "title": "Emergence Water and Nimbus: Water Joins Power as AI Infrastructure's Next Critical Constraint",
-          "snippet": "As hyperscale AI campuses scale toward gigawatt deployments, water is rapidly evolving from a sustainability metric into a determining factor for site selection, cooling architecture, construction logistics and long-ter…",
-          "contentText": "As hyperscale AI campuses scale toward gigawatt deployments, water is rapidly evolving from a sustainability metric into a determining factor for site selection, cooling architecture, construction logistics and long-term operational resilience. A new partnership between Emergence Water and Nimbus illustrates how the industry is beginning to rethink water as core infrastructure rather than a utility.",
-          "publishedAt": "2026-06-30T20:13:21.000Z",
-          "sourceImage": "https://img.datacenterfrontier.com/files/base/ebm/datacenterfrontier/image/2026/06/6a442096788ffa021865cf6b-nimbuscooling.png",
-          "region": "US",
-          "language": "en",
-          "defaultCategory": "Colocation & Wholesale",
-          "category": "Power & Grid",
-          "primary_category": "Power & Grid",
-          "secondary_category": "Interconnection and power procurement",
-          "infrastructure_layer": "Power",
-          "affected_stakeholders": [
-            "data center operators",
-            "utilities",
-            "cloud capacity teams",
-            "investors"
-          ],
-          "article_type": "Partnership",
-          "urgency_score": 0.55,
-          "taxonomy_confidence": 0.78,
-          "taxonomy_reasons": [
-            "power",
-            "utility"
-          ],
-          "direct_ai_infrastructure_relevance": 0.82,
-          "data_center_relevance": 0.76,
-          "cloud_capacity_relevance": 0,
-          "semiconductor_relevance": 0,
-          "power_grid_relevance": 0.897,
-          "cooling_relevance": 0.34,
-          "capital_markets_relevance": 0,
-          "enterprise_ai_infrastructure_relevance": 0,
-          "infrastructure_relevance_score": 0.921,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:0.82(ai infrastructure)",
-            "data_center_relevance:0.76(data center, colocation)",
-            "power_grid_relevance:0.90(power, utility, gigawatt)",
-            "cooling_relevance:0.34(cooling)"
-          ],
-          "infrastructure_relevance": {
-            "direct_ai_infrastructure_relevance": 0.82,
-            "data_center_relevance": 0.76,
-            "cloud_capacity_relevance": 0,
-            "semiconductor_relevance": 0,
-            "power_grid_relevance": 0.897,
-            "cooling_relevance": 0.34,
-            "capital_markets_relevance": 0,
-            "enterprise_ai_infrastructure_relevance": 0,
-            "infrastructure_relevance_score": 0.921,
-            "infrastructure_relevance_tier": "full_memo",
-            "infrastructure_relevance_action": "generate_full_memo",
-            "infrastructure_relevance_reasons": [
-              "direct_ai_infrastructure_relevance:0.82(ai infrastructure)",
-              "data_center_relevance:0.76(data center, colocation)",
-              "power_grid_relevance:0.90(power, utility, gigawatt)",
-              "cooling_relevance:0.34(cooling)"
-            ],
-            "infrastructureRelevanceAction": "generate_full_memo",
-            "articlePagePublished": true,
-            "homepagePublished": true,
-            "archiveOnly": false,
-            "archiveOnlyReason": null
-          },
-          "score": 77
-        },
-        {
-          "id": "1f8e1fb945c2602f",
-          "source": "NVIDIA Blog",
-          "url": "https://blogs.nvidia.com/blog/claude-science-bionemo-agent-toolkit/",
-          "title": "NVIDIA BioNeMo Agent Toolkit Brings Accelerated AI to Life Sciences Researchers in Claude Science",
-          "snippet": "Life sciences has entered an era of computational scale, and for more than a decade, NVIDIA has built the full GPU-accelerated computing stack — spanning hardware, frameworks, libraries, models, microservices and domain…",
-          "contentText": "Life sciences has entered an era of computational scale, and for more than a decade, NVIDIA has built the full GPU-accelerated computing stack — spanning hardware, frameworks, libraries, models, microservices and domain-specific tools — to help researchers run more sophisticated workflows and iterate faster. This week, Anthropic announced Claude Science , an AI workbench for science research that lets scientists converse with agents in natural language to run their work end to end. Claude Science integrates with NVIDIA BioNeMo Agent Toolkit as a resource that scientists can access within their workflow. The toolkit packages NVIDIA-accelerated capabilities as callable skills, enabling Claude Science to select the appropriate tool, prepare valid inputs and execute the workflow — all while c…",
-          "publishedAt": "2026-06-30T17:00:38.000Z",
-          "sourceImage": "https://blogs.nvidia.com/wp-content/uploads/2026/06/anthropic-nvidia.png",
-          "region": "Global",
-          "language": "en",
-          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
-          "category": "AI Infrastructure",
-          "primary_category": "AI Infrastructure",
-          "secondary_category": "GPU clusters and deployment readiness",
-          "infrastructure_layer": "Compute",
-          "affected_stakeholders": [
-            "operators",
-            "hyperscalers",
-            "cloud buyers",
-            "investors"
-          ],
-          "article_type": "Research / Technical",
-          "urgency_score": 0.46,
-          "taxonomy_confidence": 0.77,
-          "taxonomy_reasons": [
-            "ai infrastructure",
-            "neocloud"
-          ],
-          "direct_ai_infrastructure_relevance": 1,
-          "data_center_relevance": 0,
-          "cloud_capacity_relevance": 0,
-          "semiconductor_relevance": 0.598,
-          "power_grid_relevance": 0,
-          "cooling_relevance": 0,
-          "capital_markets_relevance": 0,
-          "enterprise_ai_infrastructure_relevance": 0,
-          "infrastructure_relevance_score": 0.862,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "semiconductor_relevance:0.60(nvidia, gpu)"
-          ],
-          "infrastructure_relevance": {
-            "direct_ai_infrastructure_relevance": 1,
-            "data_center_relevance": 0,
-            "cloud_capacity_relevance": 0,
-            "semiconductor_relevance": 0.598,
-            "power_grid_relevance": 0,
-            "cooling_relevance": 0,
-            "capital_markets_relevance": 0,
-            "enterprise_ai_infrastructure_relevance": 0,
-            "infrastructure_relevance_score": 0.862,
-            "infrastructure_relevance_tier": "full_memo",
-            "infrastructure_relevance_action": "generate_full_memo",
-            "infrastructure_relevance_reasons": [
-              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-              "semiconductor_relevance:0.60(nvidia, gpu)"
-            ],
-            "infrastructureRelevanceAction": "generate_full_memo",
-            "articlePagePublished": true,
-            "homepagePublished": true,
-            "archiveOnly": false,
-            "archiveOnlyReason": null
-          },
-          "score": 74
-        },
-        {
-          "id": "f6bda9cf2a7dc4dc",
-          "source": "Data Center POST",
-          "url": "https://datacenterpost.com/engineering-the-future-how-dpi-is-evolving-for-ai-infrastructure-data-centre-deployments/",
-          "title": "Engineering the Future: How DPI is Evolving for AI Infrastructure Data Centre Deployments",
-          "snippet": "Originally posted on Datalec Ltd. TL;DR AI-Driven Density Surge: AI workloads are pushing data centre rack densities to extreme levels (projected to reach 600kW by late 2027), accelerating a critical industry transition…",
-          "contentText": "Originally posted on Datalec Ltd . TL;DR AI-Driven Density Surge: AI workloads are pushing data centre rack densities to extreme levels (projected to reach 600kW by late 2027), accelerating a critical industry transition from traditional air cooling to advanced liquid-cooling technologies. Localized Infrastructure Manufacturing: To support these complex thermal and structural demands, DPI has expanded its bespoke manufacturing in the UAE to produce liquid-ready whitespace solutions, including heavy-duty Hyperion ceiling systems, modular pods, and dedicated stainless-steel technology cooling loops. # # # Artificial intelligence is fundamentally reshaping data centre design by driving unprecedented increases in power density, cooling requirements, and infrastructure complexity. Traditional…",
-          "publishedAt": "2026-06-30T18:30:24.000Z",
-          "sourceImage": "https://d3qut6qyo6tw2j.cloudfront.net/bin/uploads/2026/06/30130904/Datalec-Blog-Syndication_June-2026-1024x512.png",
+          "id": "11c2543bd3d7c7a2",
+          "source": "Data Center Knowledge",
+          "url": "https://www.datacenterknowledge.com/energy-power-supply/data-center-power-coalition-launches-to-tackle-ai-s-biggest-bottleneck",
+          "title": "Data Center Power Coalition Launches to Tackle AI’s Biggest Bottleneck",
+          "snippet": "As utilities struggle to keep pace with AI-driven demand, a new industry coalition aims to create a common playbook for powering next-generation data centers.",
+          "contentText": "As utilities struggle to keep pace with AI-driven demand, a new industry coalition aims to create a common playbook for powering next-generation data centers.",
+          "publishedAt": "2026-07-01T08:00:00.000Z",
+          "sourceImage": "https://eu-images.contentstack.com/v3/assets/blt8eb3cdfc1fce5194/blte46527ca3daff2bd/6a4412aea6d47520af059689/Data-Center-Power-Coalition-Main.jpg?width=720&quality=80&disable=upscale",
           "region": "US",
           "language": "en",
           "defaultCategory": "Colocation & Wholesale",
@@ -24096,49 +23892,46 @@
             "site selectors",
             "investors"
           ],
-          "article_type": "Research / Technical",
-          "urgency_score": 0.53,
-          "taxonomy_confidence": 0.73,
+          "article_type": "Product / Platform Update",
+          "urgency_score": 0.56,
+          "taxonomy_confidence": 0.88,
           "taxonomy_reasons": [
+            "data center",
             "colocation",
             "wholesale"
           ],
-          "direct_ai_infrastructure_relevance": 0.78,
-          "data_center_relevance": 0.76,
+          "direct_ai_infrastructure_relevance": 0.82,
+          "data_center_relevance": 1,
           "cloud_capacity_relevance": 0,
           "semiconductor_relevance": 0,
-          "power_grid_relevance": 0.22,
-          "cooling_relevance": 0.64,
+          "power_grid_relevance": 0.557,
+          "cooling_relevance": 0,
           "capital_markets_relevance": 0,
-          "enterprise_ai_infrastructure_relevance": 0.24,
-          "infrastructure_relevance_score": 0.84,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.945,
           "infrastructure_relevance_tier": "full_memo",
           "infrastructure_relevance_action": "generate_full_memo",
           "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:0.78(ai infrastructure)",
-            "data_center_relevance:0.76(data center, colocation)",
-            "power_grid_relevance:0.22(power)",
-            "cooling_relevance:0.64(cooling, thermal)",
-            "enterprise_ai_infrastructure_relevance:0.24(ai workloads)"
+            "direct_ai_infrastructure_relevance:0.82",
+            "data_center_relevance:1.00(data center, data centers, colocation)",
+            "power_grid_relevance:0.56(power, utilities)"
           ],
           "infrastructure_relevance": {
-            "direct_ai_infrastructure_relevance": 0.78,
-            "data_center_relevance": 0.76,
+            "direct_ai_infrastructure_relevance": 0.82,
+            "data_center_relevance": 1,
             "cloud_capacity_relevance": 0,
             "semiconductor_relevance": 0,
-            "power_grid_relevance": 0.22,
-            "cooling_relevance": 0.64,
+            "power_grid_relevance": 0.557,
+            "cooling_relevance": 0,
             "capital_markets_relevance": 0,
-            "enterprise_ai_infrastructure_relevance": 0.24,
-            "infrastructure_relevance_score": 0.84,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.945,
             "infrastructure_relevance_tier": "full_memo",
             "infrastructure_relevance_action": "generate_full_memo",
             "infrastructure_relevance_reasons": [
-              "direct_ai_infrastructure_relevance:0.78(ai infrastructure)",
-              "data_center_relevance:0.76(data center, colocation)",
-              "power_grid_relevance:0.22(power)",
-              "cooling_relevance:0.64(cooling, thermal)",
-              "enterprise_ai_infrastructure_relevance:0.24(ai workloads)"
+              "direct_ai_infrastructure_relevance:0.82",
+              "data_center_relevance:1.00(data center, data centers, colocation)",
+              "power_grid_relevance:0.56(power, utilities)"
             ],
             "infrastructureRelevanceAction": "generate_full_memo",
             "articlePagePublished": true,
@@ -24146,40 +23939,239 @@
             "archiveOnly": false,
             "archiveOnlyReason": null
           },
-          "score": 73
+          "score": 79
+        },
+        {
+          "id": "c6a24cfe559a4902",
+          "source": "Data Center Dynamics",
+          "url": "https://www.datacenterdynamics.com/en/videos/dcd-studio-cloud-adoption-and-the-ai-boom-in-italy-with-tiziano-durante-microsoft/",
+          "title": "DCD Studio: Cloud adoption and the AI boom in Italy with Tiziano Durante, Microsoft",
+          "snippet": "Georgia Butler speaks with Tiziano Durante of Microsoft on Italy's booming data center market, Microsoft’s €4.3bn investment, AI-driven cloud growth, digital sovereignty, and the role of hybrid cloud in innovation.",
+          "contentText": "Georgia Butler speaks with Tiziano Durante of Microsoft on Italy's booming data center market, Microsoft’s €4.3bn investment, AI-driven cloud growth, digital sovereignty, and the role of hybrid cloud in innovation.",
+          "publishedAt": "2026-07-01T10:27:27.000Z",
+          "sourceImage": "https://media.datacenterdynamics.com/media/images/DCN_Milan_THUMBNAIL.10612674.fill-750x500.png",
+          "region": "EU",
+          "language": "en",
+          "defaultCategory": "Colocation & Wholesale",
+          "category": "Data Centers",
+          "primary_category": "Data Centers",
+          "secondary_category": "Campus development and colocation capacity",
+          "infrastructure_layer": "Facility",
+          "affected_stakeholders": [
+            "data center operators",
+            "developers",
+            "site selectors",
+            "investors"
+          ],
+          "article_type": "Market Analysis",
+          "urgency_score": 0.44,
+          "taxonomy_confidence": 0.81,
+          "taxonomy_reasons": [
+            "data center",
+            "colocation",
+            "wholesale"
+          ],
+          "direct_ai_infrastructure_relevance": 0.78,
+          "data_center_relevance": 0.76,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0.28,
+          "infrastructure_relevance_score": 0.805,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:0.78",
+            "data_center_relevance:0.76(data center, colocation)",
+            "enterprise_ai_infrastructure_relevance:0.28(hybrid cloud)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 0.78,
+            "data_center_relevance": 0.76,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0.28,
+            "infrastructure_relevance_score": 0.805,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:0.78",
+              "data_center_relevance:0.76(data center, colocation)",
+              "enterprise_ai_infrastructure_relevance:0.28(hybrid cloud)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 76
+        },
+        {
+          "id": "406d3f0e293ee807",
+          "source": "Capacity Media",
+          "url": "https://capacityglobal.com/news/microsoft-to-cut-workforce/",
+          "title": "Microsoft to cut under 2.5% of workforce: report",
+          "snippet": "Microsoft is planning to cut under 2.5% of its global workforce in its latest round of layoffs, which could be announced as early as next week. The post Microsoft to cut under 2.5% of workforce: report appeared first on…",
+          "contentText": "Business Insider reported the news today, citing sources familiar with the matter. Reuters said it could not immediately verify the report, and Microsoft has so far declined to comment on the news. The cuts will reportedly affect thousands of roles, including positions in sales and consulting, as well as jobs at the Xbox gaming division. Microsoft had around 228,000 full-time employees as of June 30, 2025, according to an SEC filing, meaning a cut of under 2.5% would affect fewer than roughly 5,700 roles, though exact figures have not been confirmed. The report follows a wave of layoffs across the technology, media and finance sectors in the US, as companies look to control costs while continuing to invest heavily in AI infrastructure. It also comes weeks after Bloomberg reported that Mic…",
+          "publishedAt": "2026-07-01T10:18:17.000Z",
+          "sourceImage": "https://capacityglobal.com/wp-content/uploads/2026/06/dc-usa.png",
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "Hyperscalers & Cloud",
+          "category": "AI Infrastructure",
+          "primary_category": "AI Infrastructure",
+          "secondary_category": "GPU clusters and deployment readiness",
+          "infrastructure_layer": "Compute",
+          "affected_stakeholders": [
+            "operators",
+            "hyperscalers",
+            "cloud buyers",
+            "investors"
+          ],
+          "article_type": "Other",
+          "urgency_score": 0.39,
+          "taxonomy_confidence": 0.64,
+          "taxonomy_reasons": [
+            "ai infrastructure"
+          ],
+          "direct_ai_infrastructure_relevance": 0.7,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0.76,
+          "semiconductor_relevance": 0,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.665,
+          "infrastructure_relevance_tier": "signal_card",
+          "infrastructure_relevance_action": "publish_signal_card_only",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:0.70(ai infrastructure)",
+            "cloud_capacity_relevance:0.76(cloud capacity, hyperscalers)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 0.7,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0.76,
+            "semiconductor_relevance": 0,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.665,
+            "infrastructure_relevance_tier": "signal_card",
+            "infrastructure_relevance_action": "publish_signal_card_only",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:0.70(ai infrastructure)",
+              "cloud_capacity_relevance:0.76(cloud capacity, hyperscalers)"
+            ],
+            "infrastructureRelevanceAction": "publish_signal_card_only",
+            "articlePagePublished": false,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 74
+        },
+        {
+          "id": "ade06a25b4406a03",
+          "source": "Semiconductor Engineering",
+          "url": "https://semiengineering.com/securing-the-software-defined-vehicle-how-rambus-and-telechips-enable-safe-scalable-automotive-soc/",
+          "title": "Securing the Software Defined Vehicle: How Rambus and Telechips Enable Safe, Scalable Automotive SoC",
+          "snippet": "Scalable, heterogeneous SoC platforms with built-in, system-level security, including the hardware-based Root of Trust. The post Securing the Software Defined Vehicle: How Rambus and Telechips Enable Safe, Scalable Auto…",
+          "contentText": "Automotive architectures are rapidly shifting from distributed ECUs to centralized, zonal computing models designed for the software-defined vehicle (SDV). As workloads such as AI-driven ADAS, digital cockpits, and OTA updates increase system complexity, automakers are consolidating functions onto high-performance SoCs, improving efficiency but raising new challenges in isolation and security. To address this, Telechips is developing scalable, heterogeneous SoC platforms with built-in, system-level security, including the hardware-based Root of Trust, the Rambus RT-648 incorporating an Arm Cortex-M33 processor enabling secure boot, robust key management, and trusted system operation. Read more here . The post Securing the Software Defined Vehicle: How Rambus and Telechips Enable Safe, Sca…",
+          "publishedAt": "2026-07-01T07:02:19.000Z",
+          "sourceImage": null,
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "category": "AI Infrastructure",
+          "primary_category": "AI Infrastructure",
+          "secondary_category": "GPU clusters and deployment readiness",
+          "infrastructure_layer": "Compute",
+          "affected_stakeholders": [
+            "operators",
+            "hyperscalers",
+            "cloud buyers",
+            "investors"
+          ],
+          "article_type": "Product / Platform Update",
+          "urgency_score": 0.45,
+          "taxonomy_confidence": 0.77,
+          "taxonomy_reasons": [
+            "ai infrastructure",
+            "neocloud"
+          ],
+          "direct_ai_infrastructure_relevance": 1,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0.58,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.858,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "semiconductor_relevance:0.58(semiconductor, gpu)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 1,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0.58,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.858,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+              "semiconductor_relevance:0.58(semiconductor, gpu)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 74
         }
       ],
       "curatedIds": [
-        "71aeac242a42001a",
-        "6702ac4399d035d3",
-        "849109216aacfde1",
-        "07d6893f8f09b039",
-        "1f8e1fb945c2602f",
-        "f6bda9cf2a7dc4dc"
+        "6928712cd2780279",
+        "76680cf9b5e9b787",
+        "11c2543bd3d7c7a2",
+        "c6a24cfe559a4902",
+        "406d3f0e293ee807",
+        "ade06a25b4406a03"
       ],
       "publishedIds": [
         "259b09dbc84e9d09",
         "6ce0e914a48b9cc9",
         "71aeac242a42001a",
-        "6702ac4399d035d3"
+        "6702ac4399d035d3",
+        "6928712cd2780279",
+        "76680cf9b5e9b787"
       ],
       "slotPublications": {
         "0": true,
-        "1": true
+        "1": true,
+        "2": true
       }
     }
   },
   "runHistory": [
-    {
-      "at": "2026-05-14T23:59:19.732Z",
-      "day": "2026-05-15",
-      "slot": 1,
-      "publishedCount": 2,
-      "publishedIds": [
-        "062857be29136f6f",
-        "0f122f5ca4904e77"
-      ]
-    },
     {
       "at": "2026-05-15T09:51:14.869Z",
       "day": "2026-05-15",
@@ -36557,7 +36549,136 @@
         }
       ],
       "archiveOnlyItems": []
+    },
+    {
+      "at": "2026-07-01T10:48:11.913Z",
+      "day": "2026-07-01",
+      "slot": 2,
+      "publishedCount": 0,
+      "signalCardCount": 0,
+      "archiveOnlyCount": 0,
+      "repetitionBlockedCount": 2,
+      "publishedIds": [],
+      "processedIds": [
+        "6928712cd2780279",
+        "76680cf9b5e9b787"
+      ],
+      "blockedCount": 0,
+      "blockedItems": [],
+      "repetitionBlockedItems": [
+        {
+          "id": "6928712cd2780279",
+          "title": "Virginia county asks all employees, including schools, to conserve power due to AI-driven electricity price hikes — state's 400-plus data centers steadily increasing demand, grid expansion, and pricing",
+          "infrastructure_relevance_score": 1,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "data_center_relevance:1.00(data center, data centers, datacenter)",
+            "cloud_capacity_relevance:0.32(hyperscalers)",
+            "semiconductor_relevance:0.22(gpu)",
+            "power_grid_relevance:1.00(power, grid, utility)",
+            "capital_markets_relevance:0.28(capex)"
+          ],
+          "extraction_quality_score": 1,
+          "source_domain_adapter": "generic",
+          "content_length": 1658,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": true,
+          "repetition_block_reasons": [
+            "repeated_sentence_ratio>0.12",
+            "heading_sequence_similarity>0.75",
+            "conclusion_similarity>0.7"
+          ],
+          "repetition_check": {
+            "compared_article_count": 20,
+            "repeated_sentence_ratio": 0.2857142857142857,
+            "repeated_paragraph_ratio": 0.3333333333333333,
+            "heading_sequence_similarity": 1,
+            "banned_phrase_count": 0,
+            "banned_phrase_counts": {},
+            "recent_banned_phrase_counts": {},
+            "ngram_overlap": 0.34959349593495936,
+            "blueprint_repetition": 1,
+            "conclusion_similarity": 1,
+            "repeated_sentence_count": 2,
+            "repeated_paragraph_count": 2,
+            "heading_sequence": [
+              "What Changed",
+              "Energy Procurement Read",
+              "Volatility Risk",
+              "Next Market Test"
+            ],
+            "blocked": true,
+            "reasons": [
+              "repeated_sentence_ratio>0.12",
+              "heading_sequence_similarity>0.75",
+              "conclusion_similarity>0.7"
+            ]
+          },
+          "expert_insight_complete": true,
+          "expert_insight_missing_fields": [],
+          "reason": "repeated_sentence_ratio>0.12; heading_sequence_similarity>0.75; conclusion_similarity>0.7"
+        },
+        {
+          "id": "76680cf9b5e9b787",
+          "title": "New PC purchases see sharpest drop in nearly three years as memory and storage prices bite — shipments fall by 7%, analysts forecast 14% contraction that will hit budget laptops hard",
+          "infrastructure_relevance_score": 0.954,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "data_center_relevance:0.58(data centers, campus)",
+            "cloud_capacity_relevance:0.32(hyperscalers)",
+            "semiconductor_relevance:0.70(nvidia, intel, gpu)",
+            "power_grid_relevance:0.22(power)",
+            "capital_markets_relevance:0.28(capex)",
+            "enterprise_ai_infrastructure_relevance:0.24(storage)"
+          ],
+          "extraction_quality_score": 1,
+          "source_domain_adapter": "generic",
+          "content_length": 1660,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": true,
+          "repetition_block_reasons": [
+            "repeated_sentence_ratio>0.12",
+            "heading_sequence_similarity>0.75",
+            "conclusion_similarity>0.7"
+          ],
+          "repetition_check": {
+            "compared_article_count": 20,
+            "repeated_sentence_ratio": 0.14285714285714285,
+            "repeated_paragraph_ratio": 0.16666666666666666,
+            "heading_sequence_similarity": 1,
+            "banned_phrase_count": 0,
+            "banned_phrase_counts": {},
+            "recent_banned_phrase_counts": {},
+            "ngram_overlap": 0.3565217391304348,
+            "blueprint_repetition": 1,
+            "conclusion_similarity": 0.9511897312113418,
+            "repeated_sentence_count": 1,
+            "repeated_paragraph_count": 1,
+            "heading_sequence": [
+              "Memory Move",
+              "Virtualization Impact",
+              "Procurement Risk",
+              "Watch Metric"
+            ],
+            "blocked": true,
+            "reasons": [
+              "repeated_sentence_ratio>0.12",
+              "heading_sequence_similarity>0.75",
+              "conclusion_similarity>0.7"
+            ]
+          },
+          "expert_insight_complete": true,
+          "expert_insight_missing_fields": [],
+          "reason": "repeated_sentence_ratio>0.12; heading_sequence_similarity>0.75; conclusion_similarity>0.7"
+        }
+      ],
+      "signalCardItems": [],
+      "archiveOnlyItems": []
     }
   ],
-  "lastRunAt": "2026-07-01T00:07:33.761Z"
+  "lastRunAt": "2026-07-01T10:48:11.913Z"
 }
