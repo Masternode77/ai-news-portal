@@ -549,7 +549,9 @@
     "d5f449423e19b8a4",
     "619ea028d6f4ae6c",
     "928af59a4843a631",
-    "3cfeaad8775dba04"
+    "3cfeaad8775dba04",
+    "e3281f2ca0189b2d",
+    "ad60a3188c60024a"
   ],
   "dayPlans": {
     "2026-03-24": {
@@ -24177,91 +24179,18 @@
     "2026-07-02": {
       "date": "2026-07-02",
       "createdAt": "2026-07-01T17:21:36.004Z",
-      "refreshedAt": "2026-07-02T00:11:36.329Z",
+      "refreshedAt": "2026-07-02T10:14:27.277Z",
       "candidateWindowHours": 24,
       "curatedItems": [
         {
-          "id": "3cfeaad8775dba04",
-          "source": "Uptime Institute Journal",
-          "url": "https://journal.uptimeinstitute.com/investments-back-two-phase-cooling-as-water-cold-plate-successor/",
-          "title": "Investments back two-phase cooling as water cold plate successor",
-          "snippet": "Direct liquid cooling (DLC) has attracted significant investment over the past two years, driven largely by the massive buildout of dense AI training clusters. In the coming years, major AI hardware manufacturers are pl…",
-          "contentText": "Direct liquid cooling (DLC) has attracted significant investment over the past two years, driven largely by the massive buildout of dense AI training clusters. In the coming years, major AI hardware manufacturers are planning ever-higher computing density, with a corresponding sharp increase in rack power — soon to surpass 200 kW. Not long ago, the typical question about DLC for data center planning was whether it was needed at all. By 2026, the question for many organizations has shifted to how much DLC capacity they will need over time — AI compute systems have made it clear to many operators they needed to prepare for DLC. Generic servers are also approaching thermal power densities where a change to liquids make sense. As such, expectations of DLC adoption are running high, as highlig…",
-          "publishedAt": "2026-07-01T22:00:00.000Z",
-          "sourceImage": "https://journal.uptimeinstitute.com/wp-content/uploads/2026/06/diagram-Operators-considering-DLC-favor-water-and-dielectric-cold-plates-1030x536.png",
-          "region": "APAC",
-          "language": "en",
-          "defaultCategory": "Colocation & Wholesale",
-          "category": "Cooling & Facility Engineering",
-          "primary_category": "Cooling & Facility Engineering",
-          "secondary_category": "Thermal design and rack density",
-          "infrastructure_layer": "Cooling",
-          "affected_stakeholders": [
-            "operators",
-            "equipment vendors",
-            "data center developers",
-            "enterprise IT"
-          ],
-          "article_type": "Capacity Expansion",
-          "urgency_score": 0.65,
-          "taxonomy_confidence": 0.88,
-          "taxonomy_reasons": [
-            "cooling",
-            "liquid cooling",
-            "thermal"
-          ],
-          "direct_ai_infrastructure_relevance": 0.78,
-          "data_center_relevance": 0.76,
-          "cloud_capacity_relevance": 0,
-          "semiconductor_relevance": 0,
-          "power_grid_relevance": 0.22,
-          "cooling_relevance": 1,
-          "capital_markets_relevance": 0,
-          "enterprise_ai_infrastructure_relevance": 0,
-          "infrastructure_relevance_score": 0.972,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:0.78",
-            "data_center_relevance:0.76(data center, colocation)",
-            "power_grid_relevance:0.22(power)",
-            "cooling_relevance:1.00(cooling, liquid cooling, thermal)"
-          ],
-          "infrastructure_relevance": {
-            "direct_ai_infrastructure_relevance": 0.78,
-            "data_center_relevance": 0.76,
-            "cloud_capacity_relevance": 0,
-            "semiconductor_relevance": 0,
-            "power_grid_relevance": 0.22,
-            "cooling_relevance": 1,
-            "capital_markets_relevance": 0,
-            "enterprise_ai_infrastructure_relevance": 0,
-            "infrastructure_relevance_score": 0.972,
-            "infrastructure_relevance_tier": "full_memo",
-            "infrastructure_relevance_action": "generate_full_memo",
-            "infrastructure_relevance_reasons": [
-              "direct_ai_infrastructure_relevance:0.78",
-              "data_center_relevance:0.76(data center, colocation)",
-              "power_grid_relevance:0.22(power)",
-              "cooling_relevance:1.00(cooling, liquid cooling, thermal)"
-            ],
-            "infrastructureRelevanceAction": "generate_full_memo",
-            "articlePagePublished": true,
-            "homepagePublished": true,
-            "archiveOnly": false,
-            "archiveOnlyReason": null
-          },
-          "score": 87
-        },
-        {
-          "id": "928af59a4843a631",
-          "source": "HPCwire",
-          "url": "https://www.hpcwire.com/2026/07/01/ciq-simplifies-hpc-admin-on-containerized-infra-with-fuzzball-update/",
-          "title": "CIQ Simplifies HPC Admin on Containerized Infra with Fuzzball Update",
-          "snippet": "It’s easy to get bogged down micromanaging HPC infrastructure. But focus too much on one aspect, and other things can quickly get out of hand in today’s complex HPC environments. With the latest release of the Fuzzball…",
-          "contentText": "It’s easy to get bogged down micromanaging HPC infrastructure. But focus too much on one aspect, and other things can quickly get out of hand in today’s complex HPC environments. With the latest release of the Fuzzball orchestration platform, the folks at CIQ hope to give customers a sense of simplicity and control of their HPC environments. Fuzzball is a containerized HPC orchestration platform from CIQ , which was founded by Greg Kurtzer, the creator of the Apptainer container management system for HPC (among other popular software projects). It’s been adopted by organizations ranging from Sandia National Lab to the biotech FYR. Fuzzball was designed by the same team of engineers that built Apptainer to efficiently schedule HPC jobs to run efficiently on containerized infrastructure, wh…",
-          "publishedAt": "2026-07-01T23:57:58.000Z",
-          "sourceImage": "https://www.hpcwire.com/wp-content/uploads/2026/07/fuzzball_workflow_1-300x201.png",
+          "id": "ad60a3188c60024a",
+          "source": "Semiconductor Engineering",
+          "url": "https://semiengineering.com/ai-data-centers-and-auto-industry-converge-on-same-issues/",
+          "title": "AI Data Centers And Auto Industry Converge On Same Issues",
+          "snippet": "The EV revolution relies on battery innovation, while AI data centers need a range of new energy solutions to play nice with the grid. Both sectors are taking notes. The post AI Data Centers And Auto Industry Converge O…",
+          "contentText": "Key Takeaways : AI data centers need power from a range of sources, including batteries, to safeguard against blackouts, transient voltage spikes, and grid demand spikes. As with regenerative braking and bidirectional charging in electric vehicles, data centers could feed power or heat back into the grid for public use, but the immediate goal is to disrupt the grid as little as possible. Overseeing battery and energy storage systems is a multi-tiered software management layer that monitors everything from the battery cells to the interaction between the data center and the grid. AI data centers and automotive companies are converging on the same energy-related problems from different angles, but they are leveraging technology improvements developed by each other to accelerate the timetabl…",
+          "publishedAt": "2026-07-02T07:15:57.000Z",
+          "sourceImage": "https://i0.wp.com/semiengineering.com/wp-content/uploads/2026/07/Image.jpeg?resize=1024%2C652&#038;ssl=1",
           "region": "US",
           "language": "en",
           "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
@@ -24276,42 +24205,115 @@
             "investors"
           ],
           "article_type": "Product / Platform Update",
-          "urgency_score": 0.43,
-          "taxonomy_confidence": 0.88,
+          "urgency_score": 0.68,
+          "taxonomy_confidence": 0.77,
           "taxonomy_reasons": [
             "ai infrastructure",
-            "neocloud",
-            "hpc"
+            "neocloud"
+          ],
+          "direct_ai_infrastructure_relevance": 1,
+          "data_center_relevance": 0.97,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0.58,
+          "power_grid_relevance": 0.5,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0.18,
+          "infrastructure_relevance_score": 1,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "data_center_relevance:0.97(data center, data centers)",
+            "semiconductor_relevance:0.58(semiconductor, gpu)",
+            "power_grid_relevance:0.50(power, grid)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 1,
+            "data_center_relevance": 0.97,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0.58,
+            "power_grid_relevance": 0.5,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0.18,
+            "infrastructure_relevance_score": 1,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+              "data_center_relevance:0.97(data center, data centers)",
+              "semiconductor_relevance:0.58(semiconductor, gpu)",
+              "power_grid_relevance:0.50(power, grid)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 88
+        },
+        {
+          "id": "e3281f2ca0189b2d",
+          "source": "Toms Hardware",
+          "url": "https://www.tomshardware.com/tech-industry/googles-camera-based-recaptcha-asks-for-a-hand-scan-to-prove-youre-human",
+          "title": "Google testing controversial webcam-based reCAPTCHA that asks for a hand scan to prove you're human — testers beat it with a stock photo",
+          "snippet": "Google is testing a reCAPTCHA check that switches on a user's camera and asks them to wave or hold up an open palm.",
+          "contentText": "Google is testing a reCAPTCHA check that switches on a user's camera and asks them to wave or hold up an open palm, mapping 21 coordinates of the hand to decide whether a real person is present. The experimental method, which is rolling out as a limited test, was defeated within days by testers who fed a static stock photo of a hand through the OBS Virtual Camera and passed with no live person, no video, and no AI involved. The check sits inside Google Cloud Fraud Defense, the platform behind reCAPTCHA on login screens, sign-up forms, and checkout pages. It’s meant to catch what the older challenges increasingly miss, such as automated account creation and credential stuffing. When the challenge triggers, the browser requests camera permission and prompts the user through a short gesture.…",
+          "publishedAt": "2026-07-02T10:00:00.000Z",
+          "sourceImage": "https://cdn.mos.cms.futurecdn.net/ja6KC8oV8j6EJwxEq8uCj-1280-80.jpg",
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "category": "AI Infrastructure",
+          "primary_category": "AI Infrastructure",
+          "secondary_category": "GPU clusters and deployment readiness",
+          "infrastructure_layer": "Compute",
+          "affected_stakeholders": [
+            "operators",
+            "hyperscalers",
+            "cloud buyers",
+            "investors"
+          ],
+          "article_type": "Product / Platform Update",
+          "urgency_score": 0.44,
+          "taxonomy_confidence": 0.77,
+          "taxonomy_reasons": [
+            "ai infrastructure",
+            "neocloud"
           ],
           "direct_ai_infrastructure_relevance": 1,
           "data_center_relevance": 0,
-          "cloud_capacity_relevance": 0,
+          "cloud_capacity_relevance": 0.24,
           "semiconductor_relevance": 0.22,
           "power_grid_relevance": 0,
           "cooling_relevance": 0,
           "capital_markets_relevance": 0,
           "enterprise_ai_infrastructure_relevance": 0,
-          "infrastructure_relevance_score": 0.778,
+          "infrastructure_relevance_score": 0.818,
           "infrastructure_relevance_tier": "full_memo",
           "infrastructure_relevance_action": "generate_full_memo",
           "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud, hpc)",
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "cloud_capacity_relevance:0.24(google cloud)",
             "semiconductor_relevance:0.22(gpu)"
           ],
           "infrastructure_relevance": {
             "direct_ai_infrastructure_relevance": 1,
             "data_center_relevance": 0,
-            "cloud_capacity_relevance": 0,
+            "cloud_capacity_relevance": 0.24,
             "semiconductor_relevance": 0.22,
             "power_grid_relevance": 0,
             "cooling_relevance": 0,
             "capital_markets_relevance": 0,
             "enterprise_ai_infrastructure_relevance": 0,
-            "infrastructure_relevance_score": 0.778,
+            "infrastructure_relevance_score": 0.818,
             "infrastructure_relevance_tier": "full_memo",
             "infrastructure_relevance_action": "generate_full_memo",
             "infrastructure_relevance_reasons": [
-              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud, hpc)",
+              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+              "cloud_capacity_relevance:0.24(google cloud)",
               "semiconductor_relevance:0.22(gpu)"
             ],
             "infrastructureRelevanceAction": "generate_full_memo",
@@ -24320,90 +24322,87 @@
             "archiveOnly": false,
             "archiveOnlyReason": null
           },
-          "score": 79
+          "score": 80
         },
         {
-          "id": "0ce562a0f4e270ad",
-          "source": "Bloomberg Technology",
-          "url": "https://www.bloomberg.com/news/articles/2026-07-01/nvidia-ai-chip-gets-power-from-valar-s-nuclear-reactor",
-          "title": "Nuclear Firm First in US to Produce Power From Advanced Reactor",
-          "snippet": "Valar Atomics Inc., a California-based nuclear startup, generated power from an advanced reactor to run an Nvidia Corp. AI chip. While just a trickle of electricity was produced, it’s the first time a next-gen reactor h…",
-          "contentText": "Valar Atomics Inc., a California-based nuclear startup, generated power from an advanced reactor to run an Nvidia Corp. AI chip. While just a trickle of electricity was produced, it’s the first time a next-gen reactor has done so in the US.",
-          "publishedAt": "2026-07-01T21:14:39.000Z",
-          "sourceImage": "https://assets.bwbx.io/images/users/iqjWHBFdfxIU/itUQ7Q0r0ZoM/v0/1200x-1.jpg",
-          "region": "US",
+          "id": "738bddb3419232c8",
+          "source": "Capacity Media",
+          "url": "https://capacityglobal.com/news/samsung-details-90bn-investment-plan/",
+          "title": "Samsung details $90bn investment plan for South Korea’s Chungcheong region",
+          "snippet": "Samsung Group has detailed plans to invest 140 trillion won ($90 billion) in South Korea's central Chungcheong province, covering production of display panels, batteries, chips and chip materials. The post Samsung detai…",
+          "contentText": "The details were confirmed today by Samsung Display chief executive Yi Chung at an event hosted by South Korean President Lee Jae Myung. The investment is split across several Samsung subsidiaries. Samsung Display will spend 67 trillion won in the cities of Asan and Cheonan, while Samsung Electronics will invest 56 trillion won to build packaging facilities for high-bandwidth memory (HBM) chips in Onyang and Cheonan, capacity aimed at meeting surging demand for AI accelerator components. Samsung SDI will commit 9 trillion won by 2040 to production and R&D for next-generation batteries in Cheonan, while Samsung Electro-Mechanics will invest 8 trillion won by the same year in Sejong to produce advanced chip packaging materials for AI servers, alongside efforts to build domestic engineering…",
+          "publishedAt": "2026-07-02T08:15:24.000Z",
+          "sourceImage": "https://capacityglobal.com/wp-content/uploads/2026/06/itw-asia-new-logo.png",
+          "region": "Korea",
           "language": "en",
           "defaultCategory": "Hyperscalers & Cloud",
-          "category": "Power & Grid",
-          "primary_category": "Power & Grid",
-          "secondary_category": "Interconnection and power procurement",
-          "infrastructure_layer": "Power",
+          "category": "Semiconductors",
+          "primary_category": "Semiconductors",
+          "secondary_category": "Accelerators, memory, and advanced packaging",
+          "infrastructure_layer": "Silicon",
           "affected_stakeholders": [
-            "data center operators",
-            "utilities",
-            "cloud capacity teams",
+            "semiconductor suppliers",
+            "hyperscalers",
+            "server OEMs",
             "investors"
           ],
-          "article_type": "Other",
-          "urgency_score": 0.49,
-          "taxonomy_confidence": 0.89,
+          "article_type": "Capacity Expansion",
+          "urgency_score": 0.52,
+          "taxonomy_confidence": 0.76,
           "taxonomy_reasons": [
-            "power",
-            "electricity",
-            "nuclear"
+            "chip",
+            "hbm"
           ],
-          "direct_ai_infrastructure_relevance": 0.22,
+          "direct_ai_infrastructure_relevance": 0.64,
           "data_center_relevance": 0,
-          "cloud_capacity_relevance": 0.32,
-          "semiconductor_relevance": 0.28,
-          "power_grid_relevance": 0.888,
+          "cloud_capacity_relevance": 0.76,
+          "semiconductor_relevance": 0.94,
+          "power_grid_relevance": 0,
           "cooling_relevance": 0,
           "capital_markets_relevance": 0,
           "enterprise_ai_infrastructure_relevance": 0,
-          "infrastructure_relevance_score": 0.725,
-          "infrastructure_relevance_tier": "signal_card",
-          "infrastructure_relevance_action": "publish_signal_card_only",
+          "infrastructure_relevance_score": 0.817,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
           "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:0.22",
-            "cloud_capacity_relevance:0.32(hyperscalers)",
-            "semiconductor_relevance:0.28(nvidia)",
-            "power_grid_relevance:0.89(power, electricity, nuclear)"
+            "direct_ai_infrastructure_relevance:0.64",
+            "cloud_capacity_relevance:0.76(cloud capacity, hyperscalers)",
+            "semiconductor_relevance:0.94(hbm, high-bandwidth memory, accelerator)"
           ],
           "infrastructure_relevance": {
-            "direct_ai_infrastructure_relevance": 0.22,
+            "direct_ai_infrastructure_relevance": 0.64,
             "data_center_relevance": 0,
-            "cloud_capacity_relevance": 0.32,
-            "semiconductor_relevance": 0.28,
-            "power_grid_relevance": 0.888,
+            "cloud_capacity_relevance": 0.76,
+            "semiconductor_relevance": 0.94,
+            "power_grid_relevance": 0,
             "cooling_relevance": 0,
             "capital_markets_relevance": 0,
             "enterprise_ai_infrastructure_relevance": 0,
-            "infrastructure_relevance_score": 0.725,
-            "infrastructure_relevance_tier": "signal_card",
-            "infrastructure_relevance_action": "publish_signal_card_only",
+            "infrastructure_relevance_score": 0.817,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
             "infrastructure_relevance_reasons": [
-              "direct_ai_infrastructure_relevance:0.22",
-              "cloud_capacity_relevance:0.32(hyperscalers)",
-              "semiconductor_relevance:0.28(nvidia)",
-              "power_grid_relevance:0.89(power, electricity, nuclear)"
+              "direct_ai_infrastructure_relevance:0.64",
+              "cloud_capacity_relevance:0.76(cloud capacity, hyperscalers)",
+              "semiconductor_relevance:0.94(hbm, high-bandwidth memory, accelerator)"
             ],
-            "infrastructureRelevanceAction": "publish_signal_card_only",
-            "articlePagePublished": false,
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
             "homepagePublished": true,
             "archiveOnly": false,
             "archiveOnlyReason": null
           },
-          "score": 76
+          "score": 80
         },
         {
-          "id": "2d5b94556760a1c3",
-          "source": "Data Center POST",
-          "url": "https://datacenterpost.com/beyond-basic-colocation-building-hybrid-and-multi-cloud-hubs-in-interconnection-rich-data-centers/",
-          "title": "Beyond Basic Colocation: Building Hybrid and Multi-Cloud Hubs in Interconnection-Rich Data Centers",
-          "snippet": "Originally posted on 1547realty. TL;DR Hybrid and multi-cloud strategies depend on connectivity, not just colocation space. Carrier-rich, interconnection-focused facilities improve performance, flexibility, and scalabil…",
-          "contentText": "Originally posted on 1547realty . TL;DR Hybrid and multi-cloud strategies depend on connectivity, not just colocation space. Carrier-rich, interconnection-focused facilities improve performance, flexibility, and scalability. 1547&#8217;s connected data centers help organizations build low-latency, future-ready infrastructure. # # # Modern colocation facilities have evolved far beyond providing basic power, cooling, and space, transforming into the critical connective tissue for hybrid and multi-cloud architectures. Driven by concerns over latency, egress costs, and vendor lock-in, the vast majority of organizations now blend private, on-premises systems with multiple public cloud platforms. This architectural complexity is increasingly managed within carrier-dense interconnection hubs, wh…",
-          "publishedAt": "2026-07-01T19:00:55.000Z",
-          "sourceImage": "https://d3qut6qyo6tw2j.cloudfront.net/bin/uploads/2026/07/01131823/1547-Hybrid-Blog-Syndication-1024x512.png",
+          "id": "bad26fd05f49fd7a",
+          "source": "Data Center Dynamics",
+          "url": "https://www.datacenterdynamics.com/en/videos/dcd-studio-engineering-for-denser-workloads-with-linda-lescuyer-data4/",
+          "title": "DCD Studio: Engineering for denser workloads with Linda Lescuyer, Data4",
+          "snippet": "Emma Strutton speaks with Linda Lescuyer of Data4 Group about sustainable innovation in data centres, exploring community integration, AI-driven energy demand, low-carbon operations, heat reuse, and supply chain collabo…",
+          "contentText": "Emma Strutton speaks with Linda Lescuyer of Data4 Group about sustainable innovation in data centres, exploring community integration, AI-driven energy demand, low-carbon operations, heat reuse, and supply chain collaboration.",
+          "publishedAt": "2026-07-02T09:37:58.000Z",
+          "sourceImage": "https://media.datacenterdynamics.com/media/images/thumb_5_L0bpCKg.2e16d0ba.fill-750x500.jpg",
           "region": "US",
           "language": "en",
           "defaultCategory": "Colocation & Wholesale",
@@ -24417,45 +24416,43 @@
             "site selectors",
             "investors"
           ],
-          "article_type": "Other",
-          "urgency_score": 0.67,
-          "taxonomy_confidence": 0.8,
+          "article_type": "Supply Chain",
+          "urgency_score": 0.43,
+          "taxonomy_confidence": 0.73,
           "taxonomy_reasons": [
             "colocation",
             "wholesale"
           ],
-          "direct_ai_infrastructure_relevance": 0,
-          "data_center_relevance": 1,
+          "direct_ai_infrastructure_relevance": 0.78,
+          "data_center_relevance": 0.76,
           "cloud_capacity_relevance": 0,
           "semiconductor_relevance": 0,
-          "power_grid_relevance": 0.706,
-          "cooling_relevance": 0.34,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
           "capital_markets_relevance": 0,
           "enterprise_ai_infrastructure_relevance": 0,
-          "infrastructure_relevance_score": 0.84,
+          "infrastructure_relevance_score": 0.77,
           "infrastructure_relevance_tier": "full_memo",
           "infrastructure_relevance_action": "generate_full_memo",
           "infrastructure_relevance_reasons": [
-            "data_center_relevance:1.00(data center, data centers, colocation)",
-            "power_grid_relevance:0.71(power, interconnection)",
-            "cooling_relevance:0.34(cooling)"
+            "direct_ai_infrastructure_relevance:0.78",
+            "data_center_relevance:0.76(data center, colocation)"
           ],
           "infrastructure_relevance": {
-            "direct_ai_infrastructure_relevance": 0,
-            "data_center_relevance": 1,
+            "direct_ai_infrastructure_relevance": 0.78,
+            "data_center_relevance": 0.76,
             "cloud_capacity_relevance": 0,
             "semiconductor_relevance": 0,
-            "power_grid_relevance": 0.706,
-            "cooling_relevance": 0.34,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
             "capital_markets_relevance": 0,
             "enterprise_ai_infrastructure_relevance": 0,
-            "infrastructure_relevance_score": 0.84,
+            "infrastructure_relevance_score": 0.77,
             "infrastructure_relevance_tier": "full_memo",
             "infrastructure_relevance_action": "generate_full_memo",
             "infrastructure_relevance_reasons": [
-              "data_center_relevance:1.00(data center, data centers, colocation)",
-              "power_grid_relevance:0.71(power, interconnection)",
-              "cooling_relevance:0.34(cooling)"
+              "direct_ai_infrastructure_relevance:0.78",
+              "data_center_relevance:0.76(data center, colocation)"
             ],
             "infrastructureRelevanceAction": "generate_full_memo",
             "articlePagePublished": true,
@@ -24463,67 +24460,140 @@
             "archiveOnly": false,
             "archiveOnlyReason": null
           },
-          "score": 73
+          "score": 78
         },
         {
-          "id": "fd2d7cd048ea9b8e",
+          "id": "c1e4d79163f28f3f",
+          "source": "NVIDIA Blog",
+          "url": "https://blogs.nvidia.com/blog/nvidia-unlocks-ai-compute-at-scale-capital-partners-to-power-ai-infrastructure-buildout/",
+          "title": "NVIDIA Unlocks AI Compute at Scale, Inviting Partners to Power the AI Infrastructure Buildout",
+          "snippet": "As AI moves from model development to production inference, compute demand is accelerating and shifting toward continuously operating AI factories that generate tokens at scale. This shift requires access to large‑scale…",
+          "contentText": "As AI moves from model development to production inference, compute demand is accelerating and shifting toward continuously operating AI factories that generate tokens at scale. This shift requires access to large‑scale, multi‑tenant accelerated computing that can come online quickly, stay highly utilized and support the economics of token‑scale AI services. Emerging AI companies historically have had limited access to capital-intensive infrastructure, with even long-term commitments insufficient to unlock financing for compute. To address this, NVIDIA is introducing a new business model that opens up compute access to the fast‑growing AI ecosystem of startups, model builders, enterprises, research organizations and regional AI players. This new model enables AI clouds to procure NVIDIA i…",
+          "publishedAt": "2026-07-02T03:34:48.000Z",
+          "sourceImage": "https://blogs.nvidia.com/wp-content/uploads/2025/03/nvendeavor-1.jpg",
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "category": "AI Infrastructure",
+          "primary_category": "AI Infrastructure",
+          "secondary_category": "GPU clusters and deployment readiness",
+          "infrastructure_layer": "Compute",
+          "affected_stakeholders": [
+            "operators",
+            "hyperscalers",
+            "cloud buyers",
+            "investors"
+          ],
+          "article_type": "Capacity Expansion",
+          "urgency_score": 0.56,
+          "taxonomy_confidence": 0.8,
+          "taxonomy_reasons": [
+            "ai infrastructure",
+            "neocloud"
+          ],
+          "direct_ai_infrastructure_relevance": 1,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0.598,
+          "power_grid_relevance": 0.297,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0.32,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.932,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "semiconductor_relevance:0.60(nvidia, gpu)",
+            "power_grid_relevance:0.30(power)",
+            "capital_markets_relevance:0.32(financing)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 1,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0.598,
+            "power_grid_relevance": 0.297,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0.32,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.932,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+              "semiconductor_relevance:0.60(nvidia, gpu)",
+              "power_grid_relevance:0.30(power)",
+              "capital_markets_relevance:0.32(financing)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 77
+        },
+        {
+          "id": "06163c83623ee8d7",
           "source": "Toms Hardware",
-          "url": "https://www.tomshardware.com/video-games/console-gaming/xbox-reportedly-testing-a-way-to-digitize-physical-games-in-the-wake-of-playstation-killing-game-discs-feature-said-to-go-back-to-xbox-one-era-games",
-          "title": "Xbox reportedly testing a way to digitize physical games in the wake of PlayStation killing game discs — feature said to go back to Xbox One-era games",
-          "snippet": "Microsoft is reportedly testing a feature to digitize physical games going back to the Xbox One with digital copies tied to the owner of the physical disc.",
-          "contentText": "Microsoft is reportedly working on a feature that would enable the digitization of disc-based titles, according to the Verge . This would assist players in playing older games on newer consoles, especially if Microsoft follows Sony's PlayStation in abandoning physical game production . According to the report, employees at Xbox are testing the \"Disc2Digital\" feature, which will work on Xbox One and Xbox Series X /S discs, but not the original Xbox or Xbox 360. This restriction is likely due to Microsoft's plans to move more games online with the Xbox One. Discs will continue to work after you've enabled the digital entitlement, but you'll lose your digital rights to the game if you transfer the disc to someone else by loaning it or selling it. The digital games will also reportedly be abl…",
-          "publishedAt": "2026-07-01T19:19:25.000Z",
-          "sourceImage": "https://cdn.mos.cms.futurecdn.net/mFKpufMPUKRTroyPTjZEZA-1280-80.png",
-          "region": "Global",
+          "url": "https://www.tomshardware.com/pc-components/32gb-corsair-vengeance-ddr5-is-usd314-in-this-woot-sale-the-lowest-standalone-ram-price-in-months-thanks-to-usd125-discount",
+          "title": "32GB Corsair Vengeance DDR5 is $359 in this Woot sale — the lowest standalone RAM price in months, thanks to $80 discount",
+          "snippet": "Get Corsair Vengeance DDR5 for just $314 at Woot.",
+          "contentText": "32GB of RAM costs no less than $380 in the current AI component crunch, but right now you can get 32GB of DDR5 6000 Corsair Vengeance for $339, or as little as $314 with an extra discount , the lowest price we've seen in months. Check out this deal on Woot While we haven't reviewed this specific kit, the closely related Corsair Vengeance RGB DDR5-6000 C36 is a solid kit. With support for Intel XMP 3.0 and AMD Expo, 32GB of DDR5 6000 is the sweet spot for gaming, making this the best RAM deal we've seen in ages. The Woot discount on this new kit is officially 23%, bringing the price from $439 to $339. That would make this the best RAM deal out there right now; however, Woot is also offering an extra 20% off, up to $25, at the checkout automatically, which should bring the price to $314. Ev…",
+          "publishedAt": "2026-07-02T09:45:08.000Z",
+          "sourceImage": "https://cdn.mos.cms.futurecdn.net/9Y5FPoHbujE9wMmjfypv9g-1280-80.jpg",
+          "region": "US",
           "language": "en",
           "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
-          "category": "AI Infrastructure",
-          "primary_category": "AI Infrastructure",
-          "secondary_category": "GPU clusters and deployment readiness",
-          "infrastructure_layer": "Compute",
+          "category": "Semiconductors",
+          "primary_category": "Semiconductors",
+          "secondary_category": "Accelerators, memory, and advanced packaging",
+          "infrastructure_layer": "Silicon",
           "affected_stakeholders": [
-            "operators",
+            "semiconductor suppliers",
             "hyperscalers",
-            "cloud buyers",
+            "server OEMs",
             "investors"
           ],
           "article_type": "Other",
-          "urgency_score": 0.43,
-          "taxonomy_confidence": 0.77,
+          "urgency_score": 0.46,
+          "taxonomy_confidence": 0.79,
           "taxonomy_reasons": [
-            "ai infrastructure",
-            "neocloud"
+            "gpu",
+            "amd",
+            "intel"
           ],
           "direct_ai_infrastructure_relevance": 1,
           "data_center_relevance": 0,
           "cloud_capacity_relevance": 0,
-          "semiconductor_relevance": 0.22,
+          "semiconductor_relevance": 0.64,
           "power_grid_relevance": 0,
           "cooling_relevance": 0,
           "capital_markets_relevance": 0,
           "enterprise_ai_infrastructure_relevance": 0,
-          "infrastructure_relevance_score": 0.778,
+          "infrastructure_relevance_score": 0.871,
           "infrastructure_relevance_tier": "full_memo",
           "infrastructure_relevance_action": "generate_full_memo",
           "infrastructure_relevance_reasons": [
             "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "semiconductor_relevance:0.22(gpu)"
+            "semiconductor_relevance:0.64(amd, intel, gpu)"
           ],
           "infrastructure_relevance": {
             "direct_ai_infrastructure_relevance": 1,
             "data_center_relevance": 0,
             "cloud_capacity_relevance": 0,
-            "semiconductor_relevance": 0.22,
+            "semiconductor_relevance": 0.64,
             "power_grid_relevance": 0,
             "cooling_relevance": 0,
             "capital_markets_relevance": 0,
             "enterprise_ai_infrastructure_relevance": 0,
-            "infrastructure_relevance_score": 0.778,
+            "infrastructure_relevance_score": 0.871,
             "infrastructure_relevance_tier": "full_memo",
             "infrastructure_relevance_action": "generate_full_memo",
             "infrastructure_relevance_reasons": [
               "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-              "semiconductor_relevance:0.22(gpu)"
+              "semiconductor_relevance:0.64(amd, intel, gpu)"
             ],
             "infrastructureRelevanceAction": "generate_full_memo",
             "articlePagePublished": true,
@@ -24531,108 +24601,33 @@
             "archiveOnly": false,
             "archiveOnlyReason": null
           },
-          "score": 71
-        },
-        {
-          "id": "2ba45f15dff5468f",
-          "source": "ServeTheHome",
-          "url": "https://www.servethehome.com/this-is-a-thing-kyy-x90g-quad-portable-monitor-review/",
-          "title": "This is a Thing KYY X90G “Quad” Portable Monitor Review",
-          "snippet": "Apparenty taking three 15.6\" IPS monitors with you to surround your laptop is a big productivity boost as we found in our KYY X90G review The post This is a Thing KYY X90G “Quad” Portable Monitor Review appeared first o…",
-          "contentText": "Apparenty taking three 15.6\" IPS monitors with you to surround your laptop is a big productivity boost as we found in our KYY X90G review The post This is a Thing KYY X90G &#8220;Quad&#8221; Portable Monitor Review appeared first on ServeTheHome .",
-          "publishedAt": "2026-07-01T18:15:06.000Z",
-          "sourceImage": null,
-          "region": "Global",
-          "language": "en",
-          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
-          "category": "AI Infrastructure",
-          "primary_category": "AI Infrastructure",
-          "secondary_category": "GPU clusters and deployment readiness",
-          "infrastructure_layer": "Compute",
-          "affected_stakeholders": [
-            "operators",
-            "hyperscalers",
-            "cloud buyers",
-            "investors"
-          ],
-          "article_type": "Other",
-          "urgency_score": 0.43,
-          "taxonomy_confidence": 0.77,
-          "taxonomy_reasons": [
-            "ai infrastructure",
-            "neocloud"
-          ],
-          "direct_ai_infrastructure_relevance": 1,
-          "data_center_relevance": 0,
-          "cloud_capacity_relevance": 0,
-          "semiconductor_relevance": 0.22,
-          "power_grid_relevance": 0,
-          "cooling_relevance": 0,
-          "capital_markets_relevance": 0,
-          "enterprise_ai_infrastructure_relevance": 0,
-          "infrastructure_relevance_score": 0.778,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "semiconductor_relevance:0.22(gpu)"
-          ],
-          "infrastructure_relevance": {
-            "direct_ai_infrastructure_relevance": 1,
-            "data_center_relevance": 0,
-            "cloud_capacity_relevance": 0,
-            "semiconductor_relevance": 0.22,
-            "power_grid_relevance": 0,
-            "cooling_relevance": 0,
-            "capital_markets_relevance": 0,
-            "enterprise_ai_infrastructure_relevance": 0,
-            "infrastructure_relevance_score": 0.778,
-            "infrastructure_relevance_tier": "full_memo",
-            "infrastructure_relevance_action": "generate_full_memo",
-            "infrastructure_relevance_reasons": [
-              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-              "semiconductor_relevance:0.22(gpu)"
-            ],
-            "infrastructureRelevanceAction": "generate_full_memo",
-            "articlePagePublished": true,
-            "homepagePublished": true,
-            "archiveOnly": false,
-            "archiveOnlyReason": null
-          },
-          "score": 71
+          "score": 74
         }
       ],
       "curatedIds": [
-        "3cfeaad8775dba04",
-        "928af59a4843a631",
-        "0ce562a0f4e270ad",
-        "2d5b94556760a1c3",
-        "fd2d7cd048ea9b8e",
-        "2ba45f15dff5468f"
+        "ad60a3188c60024a",
+        "e3281f2ca0189b2d",
+        "738bddb3419232c8",
+        "bad26fd05f49fd7a",
+        "c1e4d79163f28f3f",
+        "06163c83623ee8d7"
       ],
       "publishedIds": [
         "d5f449423e19b8a4",
         "619ea028d6f4ae6c",
         "928af59a4843a631",
-        "3cfeaad8775dba04"
+        "3cfeaad8775dba04",
+        "e3281f2ca0189b2d",
+        "ad60a3188c60024a"
       ],
       "slotPublications": {
         "0": true,
-        "1": true
+        "1": true,
+        "2": true
       }
     }
   },
   "runHistory": [
-    {
-      "at": "2026-05-15T23:56:11.237Z",
-      "day": "2026-05-16",
-      "slot": 1,
-      "publishedCount": 2,
-      "publishedIds": [
-        "1fbd2acc35cad9b3",
-        "af45a6f9a7a983f9"
-      ]
-    },
     {
       "at": "2026-05-16T08:56:43.876Z",
       "day": "2026-05-16",
@@ -37296,7 +37291,131 @@
         }
       ],
       "archiveOnlyItems": []
+    },
+    {
+      "at": "2026-07-02T10:14:27.277Z",
+      "day": "2026-07-02",
+      "slot": 2,
+      "publishedCount": 0,
+      "signalCardCount": 1,
+      "archiveOnlyCount": 0,
+      "repetitionBlockedCount": 1,
+      "publishedIds": [],
+      "processedIds": [
+        "e3281f2ca0189b2d",
+        "ad60a3188c60024a"
+      ],
+      "blockedCount": 1,
+      "blockedItems": [
+        {
+          "id": "e3281f2ca0189b2d",
+          "title": "Google testing controversial webcam-based reCAPTCHA that asks for a hand scan to prove you're human — testers beat it with a stock photo",
+          "infrastructure_relevance_score": 0.923,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "cloud_capacity_relevance:0.56(hyperscalers, google cloud)",
+            "semiconductor_relevance:0.22(gpu)",
+            "power_grid_relevance:0.22(power)",
+            "capital_markets_relevance:0.28(capex)"
+          ],
+          "extraction_quality_score": 0.86,
+          "source_domain_adapter": "generic",
+          "content_length": 1713,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": false,
+          "repetition_block_reasons": [],
+          "repetition_check": null,
+          "expert_insight_complete": true,
+          "expert_insight_missing_fields": [],
+          "reason": "fail_closed: legal_boilerplate_detected"
+        }
+      ],
+      "repetitionBlockedItems": [
+        {
+          "id": "ad60a3188c60024a",
+          "title": "AI Data Centers And Auto Industry Converge On Same Issues",
+          "infrastructure_relevance_score": 1,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "data_center_relevance:1.00(data center, data centers, campus)",
+            "cloud_capacity_relevance:0.32(hyperscalers)",
+            "semiconductor_relevance:0.58(semiconductor, gpu)",
+            "power_grid_relevance:0.76(power, grid, utility)",
+            "capital_markets_relevance:0.28(capex)"
+          ],
+          "extraction_quality_score": 1,
+          "source_domain_adapter": "semiengineering",
+          "content_length": 1635,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": true,
+          "repetition_block_reasons": [
+            "repeated_sentence_ratio>0.12",
+            "heading_sequence_similarity>0.75",
+            "conclusion_similarity>0.7"
+          ],
+          "repetition_check": {
+            "compared_article_count": 20,
+            "repeated_sentence_ratio": 0.42857142857142855,
+            "repeated_paragraph_ratio": 0.5,
+            "heading_sequence_similarity": 1,
+            "banned_phrase_count": 0,
+            "banned_phrase_counts": {},
+            "recent_banned_phrase_counts": {},
+            "ngram_overlap": 0.4793388429752066,
+            "blueprint_repetition": 2,
+            "conclusion_similarity": 1,
+            "repeated_sentence_count": 3,
+            "repeated_paragraph_count": 3,
+            "heading_sequence": [
+              "What Changed",
+              "Energy Procurement Read",
+              "Volatility Risk",
+              "Next Market Test"
+            ],
+            "blocked": true,
+            "reasons": [
+              "repeated_sentence_ratio>0.12",
+              "heading_sequence_similarity>0.75",
+              "conclusion_similarity>0.7"
+            ]
+          },
+          "expert_insight_complete": true,
+          "expert_insight_missing_fields": [],
+          "reason": "repeated_sentence_ratio>0.12; heading_sequence_similarity>0.75; conclusion_similarity>0.7"
+        }
+      ],
+      "signalCardItems": [
+        {
+          "id": "e3281f2ca0189b2d",
+          "title": "Google testing controversial webcam-based reCAPTCHA that asks for a hand scan to prove you're human — testers beat it with a stock photo",
+          "infrastructure_relevance_score": 0.923,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "cloud_capacity_relevance:0.56(hyperscalers, google cloud)",
+            "semiconductor_relevance:0.22(gpu)",
+            "power_grid_relevance:0.22(power)",
+            "capital_markets_relevance:0.28(capex)"
+          ],
+          "extraction_quality_score": 0.86,
+          "source_domain_adapter": "generic",
+          "content_length": 1713,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": false,
+          "repetition_block_reasons": [],
+          "repetition_check": null,
+          "expert_insight_complete": true,
+          "expert_insight_missing_fields": [],
+          "reason": "fail_closed: legal_boilerplate_detected"
+        }
+      ],
+      "archiveOnlyItems": []
     }
   ],
-  "lastRunAt": "2026-07-02T00:11:36.329Z"
+  "lastRunAt": "2026-07-02T10:14:27.277Z"
 }
