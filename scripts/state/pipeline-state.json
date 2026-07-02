@@ -547,7 +547,9 @@
     "6928712cd2780279",
     "76680cf9b5e9b787",
     "d5f449423e19b8a4",
-    "619ea028d6f4ae6c"
+    "619ea028d6f4ae6c",
+    "928af59a4843a631",
+    "3cfeaad8775dba04"
   ],
   "dayPlans": {
     "2026-03-24": {
@@ -24175,18 +24177,91 @@
     "2026-07-02": {
       "date": "2026-07-02",
       "createdAt": "2026-07-01T17:21:36.004Z",
-      "refreshedAt": "2026-07-01T17:21:36.004Z",
+      "refreshedAt": "2026-07-02T00:11:36.329Z",
       "candidateWindowHours": 24,
       "curatedItems": [
         {
-          "id": "d5f449423e19b8a4",
+          "id": "3cfeaad8775dba04",
+          "source": "Uptime Institute Journal",
+          "url": "https://journal.uptimeinstitute.com/investments-back-two-phase-cooling-as-water-cold-plate-successor/",
+          "title": "Investments back two-phase cooling as water cold plate successor",
+          "snippet": "Direct liquid cooling (DLC) has attracted significant investment over the past two years, driven largely by the massive buildout of dense AI training clusters. In the coming years, major AI hardware manufacturers are pl…",
+          "contentText": "Direct liquid cooling (DLC) has attracted significant investment over the past two years, driven largely by the massive buildout of dense AI training clusters. In the coming years, major AI hardware manufacturers are planning ever-higher computing density, with a corresponding sharp increase in rack power — soon to surpass 200 kW. Not long ago, the typical question about DLC for data center planning was whether it was needed at all. By 2026, the question for many organizations has shifted to how much DLC capacity they will need over time — AI compute systems have made it clear to many operators they needed to prepare for DLC. Generic servers are also approaching thermal power densities where a change to liquids make sense. As such, expectations of DLC adoption are running high, as highlig…",
+          "publishedAt": "2026-07-01T22:00:00.000Z",
+          "sourceImage": "https://journal.uptimeinstitute.com/wp-content/uploads/2026/06/diagram-Operators-considering-DLC-favor-water-and-dielectric-cold-plates-1030x536.png",
+          "region": "APAC",
+          "language": "en",
+          "defaultCategory": "Colocation & Wholesale",
+          "category": "Cooling & Facility Engineering",
+          "primary_category": "Cooling & Facility Engineering",
+          "secondary_category": "Thermal design and rack density",
+          "infrastructure_layer": "Cooling",
+          "affected_stakeholders": [
+            "operators",
+            "equipment vendors",
+            "data center developers",
+            "enterprise IT"
+          ],
+          "article_type": "Capacity Expansion",
+          "urgency_score": 0.65,
+          "taxonomy_confidence": 0.88,
+          "taxonomy_reasons": [
+            "cooling",
+            "liquid cooling",
+            "thermal"
+          ],
+          "direct_ai_infrastructure_relevance": 0.78,
+          "data_center_relevance": 0.76,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0,
+          "power_grid_relevance": 0.22,
+          "cooling_relevance": 1,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.972,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:0.78",
+            "data_center_relevance:0.76(data center, colocation)",
+            "power_grid_relevance:0.22(power)",
+            "cooling_relevance:1.00(cooling, liquid cooling, thermal)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 0.78,
+            "data_center_relevance": 0.76,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0,
+            "power_grid_relevance": 0.22,
+            "cooling_relevance": 1,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.972,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:0.78",
+              "data_center_relevance:0.76(data center, colocation)",
+              "power_grid_relevance:0.22(power)",
+              "cooling_relevance:1.00(cooling, liquid cooling, thermal)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 87
+        },
+        {
+          "id": "928af59a4843a631",
           "source": "HPCwire",
-          "url": "https://www.hpcwire.com/off-the-wire/llnl-opens-registration-for-real-world-quantum-computing-workshop/",
-          "title": "LLNL Opens Registration for Real-World Quantum Computing Workshop",
-          "snippet": "July 1, 2026 — Registration is now open for the 2026 Real-World Quantum Computing workshop, jointly hosted by Lawrence Livermore National Laboratory (LLNL) and San Jose State University (SJSU). The two-day workshop is d…",
-          "contentText": "July 1, 2026 &#8212; Registration is now open for the 2026 Real-World Quantum Computing workshop, jointly hosted by Lawrence Livermore National Laboratory (LLNL) and San Jose State University (SJSU). The two-day workshop is designed for upper-level undergraduates and graduate students in engineering, physics or related fields. Interns are encouraged to apply. Applications will be accepted on a first-come, first-served basis. Participants and instructors work through a hands-on activity at the 2025 Real-World Quantum Computing workshop. The workshop aims to orient participants to the physical principles of using superconducting hardware for quantum computing, focusing on low-level calibration and physical controls. This free, in-person workshop will be held at the University of California…",
-          "publishedAt": "2026-07-01T16:38:01.000Z",
-          "sourceImage": "https://www.hpcwire.com/wp-content/uploads/2026/07/Ext_Quantum-Workshop_1200x800-300x200.jpg",
+          "url": "https://www.hpcwire.com/2026/07/01/ciq-simplifies-hpc-admin-on-containerized-infra-with-fuzzball-update/",
+          "title": "CIQ Simplifies HPC Admin on Containerized Infra with Fuzzball Update",
+          "snippet": "It’s easy to get bogged down micromanaging HPC infrastructure. But focus too much on one aspect, and other things can quickly get out of hand in today’s complex HPC environments. With the latest release of the Fuzzball…",
+          "contentText": "It’s easy to get bogged down micromanaging HPC infrastructure. But focus too much on one aspect, and other things can quickly get out of hand in today’s complex HPC environments. With the latest release of the Fuzzball orchestration platform, the folks at CIQ hope to give customers a sense of simplicity and control of their HPC environments. Fuzzball is a containerized HPC orchestration platform from CIQ , which was founded by Greg Kurtzer, the creator of the Apptainer container management system for HPC (among other popular software projects). It’s been adopted by organizations ranging from Sandia National Lab to the biotech FYR. Fuzzball was designed by the same team of engineers that built Apptainer to efficiently schedule HPC jobs to run efficiently on containerized infrastructure, wh…",
+          "publishedAt": "2026-07-01T23:57:58.000Z",
+          "sourceImage": "https://www.hpcwire.com/wp-content/uploads/2026/07/fuzzball_workflow_1-300x201.png",
           "region": "US",
           "language": "en",
           "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
@@ -24200,12 +24275,13 @@
             "cloud buyers",
             "investors"
           ],
-          "article_type": "Capacity Expansion",
+          "article_type": "Product / Platform Update",
           "urgency_score": 0.43,
-          "taxonomy_confidence": 0.77,
+          "taxonomy_confidence": 0.88,
           "taxonomy_reasons": [
             "ai infrastructure",
-            "neocloud"
+            "neocloud",
+            "hpc"
           ],
           "direct_ai_infrastructure_relevance": 1,
           "data_center_relevance": 0,
@@ -24219,7 +24295,7 @@
           "infrastructure_relevance_tier": "full_memo",
           "infrastructure_relevance_action": "generate_full_memo",
           "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud, hpc)",
             "semiconductor_relevance:0.22(gpu)"
           ],
           "infrastructure_relevance": {
@@ -24235,7 +24311,7 @@
             "infrastructure_relevance_tier": "full_memo",
             "infrastructure_relevance_action": "generate_full_memo",
             "infrastructure_relevance_reasons": [
-              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud, hpc)",
               "semiconductor_relevance:0.22(gpu)"
             ],
             "infrastructureRelevanceAction": "generate_full_memo",
@@ -24247,152 +24323,87 @@
           "score": 79
         },
         {
-          "id": "619ea028d6f4ae6c",
-          "source": "Data Center POST",
-          "url": "https://datacenterpost.com/inference-decoded-unlocking-ais-potential-by-learning-the-language-of-inference-systems/",
-          "title": "Inference, Decoded: Unlocking AI’s Potential by Learning the Language of Inference Systems",
-          "snippet": "TL;DR The Shift to Inference: As AI transitions from model training to revenue-generating applications, inference systems must be managed as complex chains where a single weak link can bottleneck the entire system. List…",
-          "contentText": "TL;DR The Shift to Inference: As AI transitions from model training to revenue-generating applications, inference systems must be managed as complex chains where a single weak link can bottleneck the entire system. Listening to System Diagnostics: Instead of treating inference as a black box, teams must learn to translate continuous performance signals, such as &#8220;Time to First Token&#8221; or latency spikes, to accurately diagnose issues like memory constraints or scheduler pressure. Workload-Specific Testing: Generic benchmarks fail to predict real-world performance because different AI applications (e.g., fraud detection vs. legal analysis) stress systems in unique ways; testing must model actual prompt shapes, multi-turn sessions, and traffic bursts. # # # Over the last several ye…",
-          "publishedAt": "2026-07-01T17:00:44.000Z",
-          "sourceImage": "https://d3qut6qyo6tw2j.cloudfront.net/bin/uploads/2026/07/01111815/DCP-Blog-Submission_6.30.26-1-1024x512.png",
+          "id": "0ce562a0f4e270ad",
+          "source": "Bloomberg Technology",
+          "url": "https://www.bloomberg.com/news/articles/2026-07-01/nvidia-ai-chip-gets-power-from-valar-s-nuclear-reactor",
+          "title": "Nuclear Firm First in US to Produce Power From Advanced Reactor",
+          "snippet": "Valar Atomics Inc., a California-based nuclear startup, generated power from an advanced reactor to run an Nvidia Corp. AI chip. While just a trickle of electricity was produced, it’s the first time a next-gen reactor h…",
+          "contentText": "Valar Atomics Inc., a California-based nuclear startup, generated power from an advanced reactor to run an Nvidia Corp. AI chip. While just a trickle of electricity was produced, it’s the first time a next-gen reactor has done so in the US.",
+          "publishedAt": "2026-07-01T21:14:39.000Z",
+          "sourceImage": "https://assets.bwbx.io/images/users/iqjWHBFdfxIU/itUQ7Q0r0ZoM/v0/1200x-1.jpg",
           "region": "US",
           "language": "en",
-          "defaultCategory": "Colocation & Wholesale",
-          "category": "Data Centers",
-          "primary_category": "Data Centers",
-          "secondary_category": "Campus development and colocation capacity",
-          "infrastructure_layer": "Facility",
+          "defaultCategory": "Hyperscalers & Cloud",
+          "category": "Power & Grid",
+          "primary_category": "Power & Grid",
+          "secondary_category": "Interconnection and power procurement",
+          "infrastructure_layer": "Power",
           "affected_stakeholders": [
             "data center operators",
-            "developers",
-            "site selectors",
+            "utilities",
+            "cloud capacity teams",
             "investors"
           ],
-          "article_type": "Supply Chain",
-          "urgency_score": 0.43,
-          "taxonomy_confidence": 0.73,
+          "article_type": "Other",
+          "urgency_score": 0.49,
+          "taxonomy_confidence": 0.89,
           "taxonomy_reasons": [
-            "colocation",
-            "wholesale"
+            "power",
+            "electricity",
+            "nuclear"
           ],
-          "direct_ai_infrastructure_relevance": 0.78,
-          "data_center_relevance": 0.76,
-          "cloud_capacity_relevance": 0,
-          "semiconductor_relevance": 0,
-          "power_grid_relevance": 0,
-          "cooling_relevance": 0,
-          "capital_markets_relevance": 0,
-          "enterprise_ai_infrastructure_relevance": 0,
-          "infrastructure_relevance_score": 0.77,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:0.78",
-            "data_center_relevance:0.76(data center, colocation)"
-          ],
-          "infrastructure_relevance": {
-            "direct_ai_infrastructure_relevance": 0.78,
-            "data_center_relevance": 0.76,
-            "cloud_capacity_relevance": 0,
-            "semiconductor_relevance": 0,
-            "power_grid_relevance": 0,
-            "cooling_relevance": 0,
-            "capital_markets_relevance": 0,
-            "enterprise_ai_infrastructure_relevance": 0,
-            "infrastructure_relevance_score": 0.77,
-            "infrastructure_relevance_tier": "full_memo",
-            "infrastructure_relevance_action": "generate_full_memo",
-            "infrastructure_relevance_reasons": [
-              "direct_ai_infrastructure_relevance:0.78",
-              "data_center_relevance:0.76(data center, colocation)"
-            ],
-            "infrastructureRelevanceAction": "generate_full_memo",
-            "articlePagePublished": true,
-            "homepagePublished": true,
-            "archiveOnly": false,
-            "archiveOnlyReason": null
-          },
-          "score": 78
-        },
-        {
-          "id": "5252528d9e20149e",
-          "source": "Toms Hardware",
-          "url": "https://www.tomshardware.com/tech-industry/semiconductors/tesla-hires-17-year-intel-veteran-responsible-for-billion-dollar-fab-startups-gary-jiang-likely-chosen-to-oversee-fab-efforts-for-terafabs-licensing-of-14a",
-          "title": "Tesla hires 17-year Intel veteran responsible for billion-dollar fab startups — Gary Jiang likely chosen to oversee fab efforts for Terafab's licensing of 14A",
-          "snippet": "Tesla hires an Intel veteran, who most recently was responsible for installing advanced tools at Intel's Arizona fab that is now ramping production of chips using 18A fabrication process.",
-          "contentText": "Tesla has hired Gary Jiang, an Intel veteran who most recently was responsible for installing equipment and transferring Intel's leading-edge 18A technology process from development fab in Oregon to the company's high-volume fab in Arizona, as spotted by Electrek.co . The appointment marks the first publicly identified senior leadership hire for Elon Musk's semiconductor production project, Terafab , which demonstrates Tesla's effort to build an experienced semiconductor manufacturing organization from the ground up by hiring veterans from other companies. Tesla poaches an Intel veteran Gary Jiang joined Tesla in June 2026 after spending over 17 years at Intel, according to his LinkedIn profile. Interestingly, there is little to glean about his current role from his LinkedIn profile, asid…",
-          "publishedAt": "2026-07-01T14:07:26.000Z",
-          "sourceImage": "https://cdn.mos.cms.futurecdn.net/PoCxHQ8gKEscb2NWQov7wZ-1280-80.png",
-          "region": "US",
-          "language": "en",
-          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
-          "category": "Semiconductors",
-          "primary_category": "Semiconductors",
-          "secondary_category": "Accelerators, memory, and advanced packaging",
-          "infrastructure_layer": "Silicon",
-          "affected_stakeholders": [
-            "semiconductor suppliers",
-            "hyperscalers",
-            "server OEMs",
-            "investors"
-          ],
-          "article_type": "Supply Chain",
-          "urgency_score": 0.48,
-          "taxonomy_confidence": 0.95,
-          "taxonomy_reasons": [
-            "semiconductor",
-            "gpu",
-            "intel",
-            "fab"
-          ],
-          "direct_ai_infrastructure_relevance": 1,
+          "direct_ai_infrastructure_relevance": 0.22,
           "data_center_relevance": 0,
-          "cloud_capacity_relevance": 0,
-          "semiconductor_relevance": 1,
-          "power_grid_relevance": 0,
+          "cloud_capacity_relevance": 0.32,
+          "semiconductor_relevance": 0.28,
+          "power_grid_relevance": 0.888,
           "cooling_relevance": 0,
           "capital_markets_relevance": 0,
           "enterprise_ai_infrastructure_relevance": 0,
-          "infrastructure_relevance_score": 0.95,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_score": 0.725,
+          "infrastructure_relevance_tier": "signal_card",
+          "infrastructure_relevance_action": "publish_signal_card_only",
           "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "semiconductor_relevance:1.00(semiconductor, semiconductors, intel)"
+            "direct_ai_infrastructure_relevance:0.22",
+            "cloud_capacity_relevance:0.32(hyperscalers)",
+            "semiconductor_relevance:0.28(nvidia)",
+            "power_grid_relevance:0.89(power, electricity, nuclear)"
           ],
           "infrastructure_relevance": {
-            "direct_ai_infrastructure_relevance": 1,
+            "direct_ai_infrastructure_relevance": 0.22,
             "data_center_relevance": 0,
-            "cloud_capacity_relevance": 0,
-            "semiconductor_relevance": 1,
-            "power_grid_relevance": 0,
+            "cloud_capacity_relevance": 0.32,
+            "semiconductor_relevance": 0.28,
+            "power_grid_relevance": 0.888,
             "cooling_relevance": 0,
             "capital_markets_relevance": 0,
             "enterprise_ai_infrastructure_relevance": 0,
-            "infrastructure_relevance_score": 0.95,
-            "infrastructure_relevance_tier": "full_memo",
-            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_score": 0.725,
+            "infrastructure_relevance_tier": "signal_card",
+            "infrastructure_relevance_action": "publish_signal_card_only",
             "infrastructure_relevance_reasons": [
-              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-              "semiconductor_relevance:1.00(semiconductor, semiconductors, intel)"
+              "direct_ai_infrastructure_relevance:0.22",
+              "cloud_capacity_relevance:0.32(hyperscalers)",
+              "semiconductor_relevance:0.28(nvidia)",
+              "power_grid_relevance:0.89(power, electricity, nuclear)"
             ],
-            "infrastructureRelevanceAction": "generate_full_memo",
-            "articlePagePublished": true,
+            "infrastructureRelevanceAction": "publish_signal_card_only",
+            "articlePagePublished": false,
             "homepagePublished": true,
             "archiveOnly": false,
             "archiveOnlyReason": null
           },
-          "score": 78
+          "score": 76
         },
         {
-          "id": "9ee3213b89ac2ef8",
-          "source": "Data Center Knowledge",
-          "url": "https://www.datacenterknowledge.com/energy-power-supply/national-grid-agrees-to-1-75b-investment-in-joulent-to-expand-ai-power-infrastructure",
-          "title": "National Grid Agrees to $1.75B Investment in Joulent to Expand AI Power Infrastructure",
-          "snippet": "The company’s planned $1.75 billion investment in Joulent illustrates how dedicated power infrastructure is becoming central to AI data center growth.",
-          "contentText": "The company’s planned $1.75 billion investment in Joulent illustrates how dedicated power infrastructure is becoming central to AI data center growth.",
-          "publishedAt": "2026-07-01T15:29:03.000Z",
-          "sourceImage": "https://eu-images.contentstack.com/v3/assets/blt8eb3cdfc1fce5194/bltf296102f7d0c8812/6a4533bf8b73521d38a1d31d/GettyImages-2198004413.jpg?width=720&quality=80&disable=upscale",
+          "id": "2d5b94556760a1c3",
+          "source": "Data Center POST",
+          "url": "https://datacenterpost.com/beyond-basic-colocation-building-hybrid-and-multi-cloud-hubs-in-interconnection-rich-data-centers/",
+          "title": "Beyond Basic Colocation: Building Hybrid and Multi-Cloud Hubs in Interconnection-Rich Data Centers",
+          "snippet": "Originally posted on 1547realty. TL;DR Hybrid and multi-cloud strategies depend on connectivity, not just colocation space. Carrier-rich, interconnection-focused facilities improve performance, flexibility, and scalabil…",
+          "contentText": "Originally posted on 1547realty . TL;DR Hybrid and multi-cloud strategies depend on connectivity, not just colocation space. Carrier-rich, interconnection-focused facilities improve performance, flexibility, and scalability. 1547&#8217;s connected data centers help organizations build low-latency, future-ready infrastructure. # # # Modern colocation facilities have evolved far beyond providing basic power, cooling, and space, transforming into the critical connective tissue for hybrid and multi-cloud architectures. Driven by concerns over latency, egress costs, and vendor lock-in, the vast majority of organizations now blend private, on-premises systems with multiple public cloud platforms. This architectural complexity is increasingly managed within carrier-dense interconnection hubs, wh…",
+          "publishedAt": "2026-07-01T19:00:55.000Z",
+          "sourceImage": "https://d3qut6qyo6tw2j.cloudfront.net/bin/uploads/2026/07/01131823/1547-Hybrid-Blog-Syndication-1024x512.png",
           "region": "US",
           "language": "en",
           "defaultCategory": "Colocation & Wholesale",
@@ -24407,45 +24418,44 @@
             "investors"
           ],
           "article_type": "Other",
-          "urgency_score": 0.62,
-          "taxonomy_confidence": 0.81,
+          "urgency_score": 0.67,
+          "taxonomy_confidence": 0.8,
           "taxonomy_reasons": [
-            "data center",
             "colocation",
             "wholesale"
           ],
-          "direct_ai_infrastructure_relevance": 0.82,
-          "data_center_relevance": 0.76,
+          "direct_ai_infrastructure_relevance": 0,
+          "data_center_relevance": 1,
           "cloud_capacity_relevance": 0,
           "semiconductor_relevance": 0,
-          "power_grid_relevance": 0.675,
-          "cooling_relevance": 0,
+          "power_grid_relevance": 0.706,
+          "cooling_relevance": 0.34,
           "capital_markets_relevance": 0,
           "enterprise_ai_infrastructure_relevance": 0,
-          "infrastructure_relevance_score": 0.828,
+          "infrastructure_relevance_score": 0.84,
           "infrastructure_relevance_tier": "full_memo",
           "infrastructure_relevance_action": "generate_full_memo",
           "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:0.82(ai data center)",
-            "data_center_relevance:0.76(data center, colocation)",
-            "power_grid_relevance:0.68(power, grid)"
+            "data_center_relevance:1.00(data center, data centers, colocation)",
+            "power_grid_relevance:0.71(power, interconnection)",
+            "cooling_relevance:0.34(cooling)"
           ],
           "infrastructure_relevance": {
-            "direct_ai_infrastructure_relevance": 0.82,
-            "data_center_relevance": 0.76,
+            "direct_ai_infrastructure_relevance": 0,
+            "data_center_relevance": 1,
             "cloud_capacity_relevance": 0,
             "semiconductor_relevance": 0,
-            "power_grid_relevance": 0.675,
-            "cooling_relevance": 0,
+            "power_grid_relevance": 0.706,
+            "cooling_relevance": 0.34,
             "capital_markets_relevance": 0,
             "enterprise_ai_infrastructure_relevance": 0,
-            "infrastructure_relevance_score": 0.828,
+            "infrastructure_relevance_score": 0.84,
             "infrastructure_relevance_tier": "full_memo",
             "infrastructure_relevance_action": "generate_full_memo",
             "infrastructure_relevance_reasons": [
-              "direct_ai_infrastructure_relevance:0.82(ai data center)",
-              "data_center_relevance:0.76(data center, colocation)",
-              "power_grid_relevance:0.68(power, grid)"
+              "data_center_relevance:1.00(data center, data centers, colocation)",
+              "power_grid_relevance:0.71(power, interconnection)",
+              "cooling_relevance:0.34(cooling)"
             ],
             "infrastructureRelevanceAction": "generate_full_memo",
             "articlePagePublished": true,
@@ -24453,17 +24463,17 @@
             "archiveOnly": false,
             "archiveOnlyReason": null
           },
-          "score": 74
+          "score": 73
         },
         {
-          "id": "3223a99a1a4c8145",
-          "source": "TechCrunch AI",
-          "url": "https://techcrunch.com/2026/07/01/venice-ai-becomes-a-unicorn-with-65m-series-a-as-its-privacy-first-ai-platform-takes-off/",
-          "title": "Venice AI becomes a unicorn with $65M Series A as its privacy-first AI platform takes off",
-          "snippet": "Venice AI is already profitable, with annualized run-rate revenues of over $70 million, CEO Erik Voorhees said.",
-          "contentText": "Venice AI is already profitable, with annualized run-rate revenues of over $70 million, CEO Erik Voorhees said.",
-          "publishedAt": "2026-07-01T14:25:23.000Z",
-          "sourceImage": null,
+          "id": "fd2d7cd048ea9b8e",
+          "source": "Toms Hardware",
+          "url": "https://www.tomshardware.com/video-games/console-gaming/xbox-reportedly-testing-a-way-to-digitize-physical-games-in-the-wake-of-playstation-killing-game-discs-feature-said-to-go-back-to-xbox-one-era-games",
+          "title": "Xbox reportedly testing a way to digitize physical games in the wake of PlayStation killing game discs — feature said to go back to Xbox One-era games",
+          "snippet": "Microsoft is reportedly testing a feature to digitize physical games going back to the Xbox One with digital copies tied to the owner of the physical disc.",
+          "contentText": "Microsoft is reportedly working on a feature that would enable the digitization of disc-based titles, according to the Verge . This would assist players in playing older games on newer consoles, especially if Microsoft follows Sony's PlayStation in abandoning physical game production . According to the report, employees at Xbox are testing the \"Disc2Digital\" feature, which will work on Xbox One and Xbox Series X /S discs, but not the original Xbox or Xbox 360. This restriction is likely due to Microsoft's plans to move more games online with the Xbox One. Discs will continue to work after you've enabled the digital entitlement, but you'll lose your digital rights to the game if you transfer the disc to someone else by loaning it or selling it. The digital games will also reportedly be abl…",
+          "publishedAt": "2026-07-01T19:19:25.000Z",
+          "sourceImage": "https://cdn.mos.cms.futurecdn.net/mFKpufMPUKRTroyPTjZEZA-1280-80.png",
           "region": "Global",
           "language": "en",
           "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
@@ -24477,7 +24487,7 @@
             "cloud buyers",
             "investors"
           ],
-          "article_type": "Product / Platform Update",
+          "article_type": "Other",
           "urgency_score": 0.43,
           "taxonomy_confidence": 0.77,
           "taxonomy_reasons": [
@@ -24521,18 +24531,18 @@
             "archiveOnly": false,
             "archiveOnlyReason": null
           },
-          "score": 72
+          "score": 71
         },
         {
-          "id": "ade06a25b4406a03",
-          "source": "Semiconductor Engineering",
-          "url": "https://semiengineering.com/securing-the-software-defined-vehicle-how-rambus-and-telechips-enable-safe-scalable-automotive-soc/",
-          "title": "Securing the Software Defined Vehicle: How Rambus and Telechips Enable Safe, Scalable Automotive SoC",
-          "snippet": "Scalable, heterogeneous SoC platforms with built-in, system-level security, including the hardware-based Root of Trust. The post Securing the Software Defined Vehicle: How Rambus and Telechips Enable Safe, Scalable Auto…",
-          "contentText": "Automotive architectures are rapidly shifting from distributed ECUs to centralized, zonal computing models designed for the software-defined vehicle (SDV). As workloads such as AI-driven ADAS, digital cockpits, and OTA updates increase system complexity, automakers are consolidating functions onto high-performance SoCs, improving efficiency but raising new challenges in isolation and security. To address this, Telechips is developing scalable, heterogeneous SoC platforms with built-in, system-level security, including the hardware-based Root of Trust, the Rambus RT-648 incorporating an Arm Cortex-M33 processor enabling secure boot, robust key management, and trusted system operation. Read more here . The post Securing the Software Defined Vehicle: How Rambus and Telechips Enable Safe, Sca…",
-          "publishedAt": "2026-07-01T07:02:19.000Z",
+          "id": "2ba45f15dff5468f",
+          "source": "ServeTheHome",
+          "url": "https://www.servethehome.com/this-is-a-thing-kyy-x90g-quad-portable-monitor-review/",
+          "title": "This is a Thing KYY X90G “Quad” Portable Monitor Review",
+          "snippet": "Apparenty taking three 15.6\" IPS monitors with you to surround your laptop is a big productivity boost as we found in our KYY X90G review The post This is a Thing KYY X90G “Quad” Portable Monitor Review appeared first o…",
+          "contentText": "Apparenty taking three 15.6\" IPS monitors with you to surround your laptop is a big productivity boost as we found in our KYY X90G review The post This is a Thing KYY X90G &#8220;Quad&#8221; Portable Monitor Review appeared first on ServeTheHome .",
+          "publishedAt": "2026-07-01T18:15:06.000Z",
           "sourceImage": null,
-          "region": "US",
+          "region": "Global",
           "language": "en",
           "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
           "category": "AI Infrastructure",
@@ -24545,8 +24555,8 @@
             "cloud buyers",
             "investors"
           ],
-          "article_type": "Product / Platform Update",
-          "urgency_score": 0.45,
+          "article_type": "Other",
+          "urgency_score": 0.43,
           "taxonomy_confidence": 0.77,
           "taxonomy_reasons": [
             "ai infrastructure",
@@ -24555,33 +24565,33 @@
           "direct_ai_infrastructure_relevance": 1,
           "data_center_relevance": 0,
           "cloud_capacity_relevance": 0,
-          "semiconductor_relevance": 0.58,
+          "semiconductor_relevance": 0.22,
           "power_grid_relevance": 0,
           "cooling_relevance": 0,
           "capital_markets_relevance": 0,
           "enterprise_ai_infrastructure_relevance": 0,
-          "infrastructure_relevance_score": 0.858,
+          "infrastructure_relevance_score": 0.778,
           "infrastructure_relevance_tier": "full_memo",
           "infrastructure_relevance_action": "generate_full_memo",
           "infrastructure_relevance_reasons": [
             "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "semiconductor_relevance:0.58(semiconductor, gpu)"
+            "semiconductor_relevance:0.22(gpu)"
           ],
           "infrastructure_relevance": {
             "direct_ai_infrastructure_relevance": 1,
             "data_center_relevance": 0,
             "cloud_capacity_relevance": 0,
-            "semiconductor_relevance": 0.58,
+            "semiconductor_relevance": 0.22,
             "power_grid_relevance": 0,
             "cooling_relevance": 0,
             "capital_markets_relevance": 0,
             "enterprise_ai_infrastructure_relevance": 0,
-            "infrastructure_relevance_score": 0.858,
+            "infrastructure_relevance_score": 0.778,
             "infrastructure_relevance_tier": "full_memo",
             "infrastructure_relevance_action": "generate_full_memo",
             "infrastructure_relevance_reasons": [
               "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-              "semiconductor_relevance:0.58(semiconductor, gpu)"
+              "semiconductor_relevance:0.22(gpu)"
             ],
             "infrastructureRelevanceAction": "generate_full_memo",
             "articlePagePublished": true,
@@ -24589,37 +24599,30 @@
             "archiveOnly": false,
             "archiveOnlyReason": null
           },
-          "score": 68
+          "score": 71
         }
       ],
       "curatedIds": [
-        "d5f449423e19b8a4",
-        "619ea028d6f4ae6c",
-        "5252528d9e20149e",
-        "9ee3213b89ac2ef8",
-        "3223a99a1a4c8145",
-        "ade06a25b4406a03"
+        "3cfeaad8775dba04",
+        "928af59a4843a631",
+        "0ce562a0f4e270ad",
+        "2d5b94556760a1c3",
+        "fd2d7cd048ea9b8e",
+        "2ba45f15dff5468f"
       ],
       "publishedIds": [
         "d5f449423e19b8a4",
-        "619ea028d6f4ae6c"
+        "619ea028d6f4ae6c",
+        "928af59a4843a631",
+        "3cfeaad8775dba04"
       ],
       "slotPublications": {
-        "0": true
+        "0": true,
+        "1": true
       }
     }
   },
   "runHistory": [
-    {
-      "at": "2026-05-15T16:55:16.736Z",
-      "day": "2026-05-16",
-      "slot": 0,
-      "publishedCount": 2,
-      "publishedIds": [
-        "03ad74aeabe4fed6",
-        "eab2bc2f6f7d59c2"
-      ]
-    },
     {
       "at": "2026-05-15T23:56:11.237Z",
       "day": "2026-05-16",
@@ -37226,7 +37229,74 @@
         }
       ],
       "archiveOnlyItems": []
+    },
+    {
+      "at": "2026-07-02T00:11:36.329Z",
+      "day": "2026-07-02",
+      "slot": 1,
+      "publishedCount": 0,
+      "signalCardCount": 2,
+      "archiveOnlyCount": 0,
+      "processedIds": [
+        "928af59a4843a631",
+        "3cfeaad8775dba04"
+      ],
+      "blockedCount": 2,
+      "blockedItems": [
+        {
+          "id": "928af59a4843a631",
+          "title": "CIQ Simplifies HPC Admin on Containerized Infra with Fuzzball Update",
+          "infrastructure_relevance_score": 0.87,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud, high-performance computing)",
+            "cloud_capacity_relevance:0.32(hyperscalers)",
+            "semiconductor_relevance:0.22(gpu)",
+            "power_grid_relevance:0.22(power)",
+            "capital_markets_relevance:0.28(capex)"
+          ],
+          "extraction_quality_score": 0.95,
+          "source_domain_adapter": "generic",
+          "content_length": 1405,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": false,
+          "repetition_block_reasons": [],
+          "repetition_check": null,
+          "expert_insight_complete": false,
+          "expert_insight_missing_fields": [
+            "named_companies"
+          ],
+          "reason": "fail_closed: source_text_incomplete:ellipsis_truncation_artifact, ellipsis_truncation_artifact"
+        },
+        {
+          "id": "3cfeaad8775dba04",
+          "title": "Investments back two-phase cooling as water cold plate successor",
+          "infrastructure_relevance_score": 0.972,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:0.78",
+            "data_center_relevance:0.76(data center, colocation)",
+            "power_grid_relevance:0.22(power)",
+            "cooling_relevance:1.00(cooling, liquid cooling, immersion)"
+          ],
+          "extraction_quality_score": 1,
+          "source_domain_adapter": "generic",
+          "content_length": 1714,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": false,
+          "repetition_block_reasons": [],
+          "repetition_check": null,
+          "expert_insight_complete": false,
+          "expert_insight_missing_fields": [
+            "named_companies"
+          ],
+          "reason": "expert_insight_missing_fields named_companies"
+        }
+      ],
+      "archiveOnlyItems": []
     }
   ],
-  "lastRunAt": "2026-07-01T17:21:36.004Z"
+  "lastRunAt": "2026-07-02T00:11:36.329Z"
 }
