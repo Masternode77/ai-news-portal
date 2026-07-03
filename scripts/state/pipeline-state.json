@@ -557,7 +557,9 @@
     "ee9f9f8e69e8398e",
     "b32b03b3b5d41c65",
     "474042c2ee76104b",
-    "d39352ace85618f7"
+    "d39352ace85618f7",
+    "aad1517f8354d118",
+    "38b2be9a58185420"
   ],
   "dayPlans": {
     "2026-03-24": {
@@ -25085,81 +25087,457 @@
         "1": true,
         "2": true
       }
-    }
-  },
-  "runHistory": [
-    {
-      "at": "2026-05-23T23:59:54.989Z",
-      "day": "2026-05-24",
-      "slot": 1,
-      "publishedCount": 1,
-      "signalCardCount": 0,
-      "archiveOnlyCount": 0,
-      "repetitionBlockedCount": 1,
-      "publishedIds": [
-        "f3e3bbb2618eafae"
-      ],
-      "processedIds": [
-        "f3e3bbb2618eafae",
-        "6570da47d46f3f99"
-      ],
-      "blockedCount": 0,
-      "blockedItems": [],
-      "repetitionBlockedItems": [
+    },
+    "2026-07-04": {
+      "date": "2026-07-04",
+      "createdAt": "2026-07-03T16:41:30.628Z",
+      "refreshedAt": "2026-07-03T16:41:30.628Z",
+      "candidateWindowHours": 24,
+      "curatedItems": [
         {
-          "id": "6570da47d46f3f99",
-          "title": "Save almost $200 on a flagship AMD 9850X3D CPU and 9070 XT GPU with this Newegg combo bundle — AMD's Ryzen 9 9850X3D and Radeon RX 9070 XT can be yours at a great price",
-          "infrastructure_relevance_score": 0.992,
+          "id": "aad1517f8354d118",
+          "source": "Toms Hardware",
+          "url": "https://www.tomshardware.com/pc-components/cpus/intel-reportedly-adding-two-new-22-core-skus-with-game-boosting-cache-to-nova-lake-s-lineup-125w-unlocked-and-65w-locked-part-rumored-to-be-part-of-single-tile-core-ultra-5-tier",
+          "title": "Intel reportedly adding two new 22-core SKUs with game-boosting cache to Nova Lake-S lineup — 125W unlocked and 65W locked part rumored to be part of single-tile Core Ultra 5 tier",
+          "snippet": "Intel is apparently cooking up two new 22-core Nova Lake-S SKUs with up to 144MB of bLLC. One is a locked 65W variant and one is an unlocked 125W part, and both are said to be part of the Core Ultra 5 tier.",
+          "contentText": "Intel's next-gen desktop family, Nova Lake, is expected to take a generational leap in terms of performance, and a big part of that is the rumored introduction of bLLC (Big Last Level Cache). It would be the company's answer to AMD's X3D chips, but implemented even more aggressively, from what we can tell so far. Now, a new leak from Jaykihn says Intel has added two new Core Ultra 5 SKUs with bLLC to the lineup, both featuring 22 cores in total. I made a huge mistake.It is U5 6+12+4 125W, NOT 6+8+4.So is the U9 6+12+4 65W.Sorry sorry sorry. July 3, 2026 The leaker accidentally tweeted out the wrong specs at first, so we've only embedded their correction post. According to the leak, each chip features a 22-core config comprising 6 P-Cores, 12 E-Cores, and 4 LP-E cores on a single tile. Tha…",
+          "publishedAt": "2026-07-03T15:44:10.000Z",
+          "sourceImage": "https://cdn.mos.cms.futurecdn.net/rxLeKvgEq52xDLyGj6HuGA-1280-80.jpg",
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "category": "Semiconductors",
+          "primary_category": "Semiconductors",
+          "secondary_category": "Accelerators, memory, and advanced packaging",
+          "infrastructure_layer": "Silicon",
+          "affected_stakeholders": [
+            "semiconductor suppliers",
+            "hyperscalers",
+            "server OEMs",
+            "investors"
+          ],
+          "article_type": "Other",
+          "urgency_score": 0.46,
+          "taxonomy_confidence": 0.91,
+          "taxonomy_reasons": [
+            "chip",
+            "gpu",
+            "amd",
+            "intel"
+          ],
+          "direct_ai_infrastructure_relevance": 1,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0.71,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.886,
           "infrastructure_relevance_tier": "full_memo",
           "infrastructure_relevance_action": "generate_full_memo",
           "infrastructure_relevance_reasons": [
             "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "cloud_capacity_relevance:0.32(hyperscalers)",
-            "semiconductor_relevance:0.87(nvidia, amd, gpu)",
-            "power_grid_relevance:0.22(power)"
+            "semiconductor_relevance:0.71(amd, intel, gpu)"
           ],
-          "extraction_quality_score": 1,
-          "source_domain_adapter": "generic",
-          "content_length": 1713,
-          "boilerplate_ratio": 0,
-          "repetition_blocked": true,
-          "repetition_block_reasons": [
-            "repeated_sentence_ratio>0.12",
-            "conclusion_similarity>0.7"
-          ],
-          "repetition_check": {
-            "compared_article_count": 14,
-            "repeated_sentence_ratio": 0.16666666666666666,
-            "repeated_paragraph_ratio": 0.2,
-            "heading_sequence_similarity": 0,
-            "banned_phrase_count": 0,
-            "banned_phrase_counts": {},
-            "recent_banned_phrase_counts": {},
-            "ngram_overlap": 0.2907801418439716,
-            "blueprint_repetition": 1,
-            "conclusion_similarity": 0.9233805168766386,
-            "repeated_sentence_count": 1,
-            "repeated_paragraph_count": 1,
-            "heading_sequence": [
-              "Market Pieces",
-              "Land Power Capital Chips",
-              "Demand Test",
-              "What To Split Out"
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 1,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0.71,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.886,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+              "semiconductor_relevance:0.71(amd, intel, gpu)"
             ],
-            "blocked": true,
-            "reasons": [
-              "repeated_sentence_ratio>0.12",
-              "conclusion_similarity>0.7"
-            ]
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
           },
-          "expert_insight_complete": true,
-          "expert_insight_missing_fields": [],
-          "reason": "repeated_sentence_ratio>0.12; conclusion_similarity>0.7"
+          "score": 83
+        },
+        {
+          "id": "38b2be9a58185420",
+          "source": "StorageReview",
+          "url": "https://www.storagereview.com/news/couchbase-ai-data-plane-hits-ga-with-enterprise-analytics-2-2-and-iceberg-federation",
+          "title": "Couchbase AI Data Plane Hits GA, With Enterprise Analytics 2.2 and Iceberg Federation",
+          "snippet": "Couchbase has announced the general availability of its AI Data Plane, positioning it as a unified data infrastructure layer for enterprise AI agents. The release is aimed at organizations trying to move agentic AI proj…",
+          "contentText": "Couchbase has announced the general availability of its AI Data Plane, positioning it as a unified data infrastructure layer for enterprise AI agents. The release is aimed at organizations trying to move agentic AI projects beyond pilots by combining persistent memory, real-time context retrieval, and consistent data access across cloud, edge, and lakehouse environments within a single architecture. At a high level, Couchbase addresses a common enterprise issue: production AI agents that depend on multiple disconnected services for vector search, caching, document storage, and integration logic. Couchbase&#8217;s approach is to consolidate those functions into a governed operational layer that spans Capella and self-managed deployments, giving platform teams a single control plane for the…",
+          "publishedAt": "2026-07-03T14:57:51.000Z",
+          "sourceImage": "https://www.storagereview.com/wp-content/uploads/2026/07/Storagereview-couchbase-agent-memory-graphic.png",
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "category": "AI Infrastructure",
+          "primary_category": "AI Infrastructure",
+          "secondary_category": "GPU clusters and deployment readiness",
+          "infrastructure_layer": "Compute",
+          "affected_stakeholders": [
+            "operators",
+            "hyperscalers",
+            "cloud buyers",
+            "investors"
+          ],
+          "article_type": "Product / Platform Update",
+          "urgency_score": 0.46,
+          "taxonomy_confidence": 0.77,
+          "taxonomy_reasons": [
+            "ai infrastructure",
+            "neocloud"
+          ],
+          "direct_ai_infrastructure_relevance": 1,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0.22,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0.5,
+          "infrastructure_relevance_score": 0.875,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "semiconductor_relevance:0.22(gpu)",
+            "enterprise_ai_infrastructure_relevance:0.50(enterprise ai, storage)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 1,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0.22,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0.5,
+            "infrastructure_relevance_score": 0.875,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+              "semiconductor_relevance:0.22(gpu)",
+              "enterprise_ai_infrastructure_relevance:0.50(enterprise ai, storage)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 83
+        },
+        {
+          "id": "08382c19a1e90682",
+          "source": "Semiconductor Engineering",
+          "url": "https://semiengineering.com/chip-industry-week-in-review-145/",
+          "title": "Chip Industry Week In Review",
+          "snippet": "S. Korea goes All In on AI; new Dresden power fab; Intel expansion; GM secures memory supply; AI power management funding; mature-node foundry capacity; 300mm fab equipment; McKinsey's map of strategic IC supply; securi…",
+          "contentText": "Around the world South Korea unveiled a sweeping AI and semiconductor investment drive, planning three mega projects that tie semiconductors, physical AI/robotics, and AI data centers into a single industrial plan, with government support for regional chip clusters, packaging capacity, power, water, sites, and workforce development. Among the new investments: Samsung will spend $260B on new semiconductor fabs in Gwangju and $36B for HBM fabs in Cheonan and Onyang, plus more buildouts for smartphone displays, next-gen batteries and a Sejong substrate line. SK hynix outlined a broader AI-memory expansion plan that ties together new front-end, NAND, and advanced-packaging capacity. The company plans to invest ~$714B over the mid- to long-term, including ~$386B for its Yongin Semiconductor Cl…",
+          "publishedAt": "2026-07-03T07:01:50.000Z",
+          "sourceImage": "https://i0.wp.com/semiengineering.com/wp-content/uploads/2026/07/Screenshot-2026-07-02-at-1.43.32-PM.png?resize=1790%2C1002&#038;ssl=1",
+          "region": "Korea",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "category": "Semiconductors",
+          "primary_category": "Semiconductors",
+          "secondary_category": "Accelerators, memory, and advanced packaging",
+          "infrastructure_layer": "Silicon",
+          "affected_stakeholders": [
+            "semiconductor suppliers",
+            "hyperscalers",
+            "server OEMs",
+            "investors"
+          ],
+          "article_type": "Capacity Expansion",
+          "urgency_score": 0.74,
+          "taxonomy_confidence": 0.95,
+          "taxonomy_reasons": [
+            "semiconductor",
+            "chip",
+            "gpu",
+            "intel",
+            "hbm",
+            "fab"
+          ],
+          "direct_ai_infrastructure_relevance": 1,
+          "data_center_relevance": 0.42,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 1,
+          "power_grid_relevance": 0.22,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0.28,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 1,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "data_center_relevance:0.42(data centers)",
+            "semiconductor_relevance:1.00(semiconductor, semiconductors, intel)",
+            "power_grid_relevance:0.22(power)",
+            "capital_markets_relevance:0.28(funding)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 1,
+            "data_center_relevance": 0.42,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 1,
+            "power_grid_relevance": 0.22,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0.28,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 1,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+              "data_center_relevance:0.42(data centers)",
+              "semiconductor_relevance:1.00(semiconductor, semiconductors, intel)",
+              "power_grid_relevance:0.22(power)",
+              "capital_markets_relevance:0.28(funding)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 74
+        },
+        {
+          "id": "2d0d33e66b090721",
+          "source": "Capacity Media",
+          "url": "https://capacityglobal.com/news/meta-48bn-cloud-question/",
+          "title": "Meta’s $48bn cloud question: Structural competitor or bursty-capacity opportunist?",
+          "snippet": "Bloomberg's report that Meta is building a cloud business to sell excess AI computing capacity wiped 10-17% off CoreWeave and Nebius in a single trading session and added more than 10% to Meta's own share price. The pos…",
+          "contentText": "But strip away the market&#8217;s knee-jerk repricing and two starkly different readings of the same plan emerge, one in which Meta becomes a structural threat to the neocloud sector , and one in which it is simply monetising a capacity mismatch that was always going to correct itself. What&#8217;s actually being proposed The plans, still in development according to Bloomberg&#8217;s sourcing, span two distinct products. The first is a hosted model service, comparable to AWS Bedrock, through which developers would pay to query AI models, including Meta&#8217;s proprietary Muse Spark, run on Meta&#8217;s own infrastructure. The second is closer to the neocloud model outright: leasing raw GPU capacity, likely on Nvidia H100 or Blackwell-generation hardware, direct to third parties. Meta has…",
+          "publishedAt": "2026-07-03T09:59:30.000Z",
+          "sourceImage": "https://capacityglobal.com/wp-content/uploads/2026/06/dc-usa.png",
+          "region": "APAC",
+          "language": "en",
+          "defaultCategory": "Hyperscalers & Cloud",
+          "category": "Semiconductors",
+          "primary_category": "Semiconductors",
+          "secondary_category": "Accelerators, memory, and advanced packaging",
+          "infrastructure_layer": "Silicon",
+          "affected_stakeholders": [
+            "semiconductor suppliers",
+            "hyperscalers",
+            "server OEMs",
+            "investors"
+          ],
+          "article_type": "Capacity Expansion",
+          "urgency_score": 0.52,
+          "taxonomy_confidence": 0.69,
+          "taxonomy_reasons": [
+            "gpu",
+            "nvidia"
+          ],
+          "direct_ai_infrastructure_relevance": 0.64,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0.98,
+          "semiconductor_relevance": 0.5,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.814,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:0.64(neocloud)",
+            "cloud_capacity_relevance:0.98(cloud capacity, hyperscalers, aws)",
+            "semiconductor_relevance:0.50(nvidia, gpu)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 0.64,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0.98,
+            "semiconductor_relevance": 0.5,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.814,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:0.64(neocloud)",
+              "cloud_capacity_relevance:0.98(cloud capacity, hyperscalers, aws)",
+              "semiconductor_relevance:0.50(nvidia, gpu)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 72
+        },
+        {
+          "id": "d26e6ee609886078",
+          "source": "Data Center Dynamics",
+          "url": "https://www.datacenterdynamics.com/en/news/cpp-investments-to-pump-175-billion-into-eqt-and-edgeconnexs-ai-data-center-build-out/",
+          "title": "CPP Investments to pump $1.75 billion into EQT and EdgeConneX's AI data center build-out",
+          "snippet": "EdgeConneX claims 10GW development pipeline",
+          "contentText": "EdgeConneX claims 10GW development pipeline",
+          "publishedAt": "2026-07-03T15:38:31.000Z",
+          "sourceImage": "https://media.datacenterdynamics.com/media/images/Edgeconnex_CHI01_Elk_Grove_Chicago.2e16d0ba.fill-750x500.png",
+          "region": "Global",
+          "language": "en",
+          "defaultCategory": "Colocation & Wholesale",
+          "category": "Data Centers",
+          "primary_category": "Data Centers",
+          "secondary_category": "Campus development and colocation capacity",
+          "infrastructure_layer": "Facility",
+          "affected_stakeholders": [
+            "data center operators",
+            "developers",
+            "site selectors",
+            "investors"
+          ],
+          "article_type": "Other",
+          "urgency_score": 0.45,
+          "taxonomy_confidence": 0.86,
+          "taxonomy_reasons": [
+            "data center",
+            "colocation",
+            "wholesale"
+          ],
+          "direct_ai_infrastructure_relevance": 0.78,
+          "data_center_relevance": 0.89,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.838,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:0.78(ai data center)",
+            "data_center_relevance:0.89(data center, colocation)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 0.78,
+            "data_center_relevance": 0.89,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.838,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:0.78(ai data center)",
+              "data_center_relevance:0.89(data center, colocation)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 65
+        },
+        {
+          "id": "a103a5a4dbde9a62",
+          "source": "Data Center Dynamics",
+          "url": "https://www.datacenterdynamics.com/en/news/300mw-data-center-campus-proposed-in-kent-uk/",
+          "title": "300MW data center campus proposed in Kent, UK",
+          "snippet": "Renewables firm Clearstone looks to build campus near Dartford",
+          "contentText": "Renewables firm Clearstone looks to build campus near Dartford",
+          "publishedAt": "2026-07-03T15:47:43.000Z",
+          "sourceImage": "https://media.datacenterdynamics.com/media/images/clearstone_ebbsfleet.ca19097c.fill-750x500.png",
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "Colocation & Wholesale",
+          "category": "Data Centers",
+          "primary_category": "Data Centers",
+          "secondary_category": "Campus development and colocation capacity",
+          "infrastructure_layer": "Facility",
+          "affected_stakeholders": [
+            "data center operators",
+            "developers",
+            "site selectors",
+            "investors"
+          ],
+          "article_type": "Other",
+          "urgency_score": 0.38,
+          "taxonomy_confidence": 0.95,
+          "taxonomy_reasons": [
+            "data center",
+            "colocation",
+            "campus",
+            "wholesale"
+          ],
+          "direct_ai_infrastructure_relevance": 0,
+          "data_center_relevance": 1,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.615,
+          "infrastructure_relevance_tier": "signal_card",
+          "infrastructure_relevance_action": "publish_signal_card_only",
+          "infrastructure_relevance_reasons": [
+            "data_center_relevance:1.00(data center, colocation, campus)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 0,
+            "data_center_relevance": 1,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.615,
+            "infrastructure_relevance_tier": "signal_card",
+            "infrastructure_relevance_action": "publish_signal_card_only",
+            "infrastructure_relevance_reasons": [
+              "data_center_relevance:1.00(data center, colocation, campus)"
+            ],
+            "infrastructureRelevanceAction": "publish_signal_card_only",
+            "articlePagePublished": false,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 60
         }
       ],
-      "signalCardItems": [],
-      "archiveOnlyItems": []
-    },
+      "curatedIds": [
+        "aad1517f8354d118",
+        "38b2be9a58185420",
+        "08382c19a1e90682",
+        "2d0d33e66b090721",
+        "d26e6ee609886078",
+        "a103a5a4dbde9a62"
+      ],
+      "publishedIds": [
+        "aad1517f8354d118",
+        "38b2be9a58185420"
+      ],
+      "slotPublications": {
+        "0": true
+      }
+    }
+  },
+  "runHistory": [
     {
       "at": "2026-05-24T09:25:05.880Z",
       "day": "2026-05-24",
@@ -38034,7 +38412,132 @@
       ],
       "signalCardItems": [],
       "archiveOnlyItems": []
+    },
+    {
+      "at": "2026-07-03T16:41:30.628Z",
+      "day": "2026-07-04",
+      "slot": 0,
+      "publishedCount": 0,
+      "signalCardCount": 0,
+      "archiveOnlyCount": 0,
+      "repetitionBlockedCount": 2,
+      "publishedIds": [],
+      "processedIds": [
+        "aad1517f8354d118",
+        "38b2be9a58185420"
+      ],
+      "blockedCount": 0,
+      "blockedItems": [],
+      "repetitionBlockedItems": [
+        {
+          "id": "aad1517f8354d118",
+          "title": "Intel reportedly adding two new 22-core SKUs with game-boosting cache to Nova Lake-S lineup — 125W unlocked and 65W locked part rumored to be part of single-tile Core Ultra 5 tier",
+          "infrastructure_relevance_score": 0.956,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "cloud_capacity_relevance:0.32(hyperscalers)",
+            "semiconductor_relevance:0.71(amd, intel, gpu)",
+            "power_grid_relevance:0.22(power)"
+          ],
+          "extraction_quality_score": 1,
+          "source_domain_adapter": "generic",
+          "content_length": 1746,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": true,
+          "repetition_block_reasons": [
+            "repeated_sentence_ratio>0.12",
+            "heading_sequence_similarity>0.75",
+            "conclusion_similarity>0.7"
+          ],
+          "repetition_check": {
+            "compared_article_count": 20,
+            "repeated_sentence_ratio": 0.2857142857142857,
+            "repeated_paragraph_ratio": 0.3333333333333333,
+            "heading_sequence_similarity": 1,
+            "banned_phrase_count": 0,
+            "banned_phrase_counts": {},
+            "recent_banned_phrase_counts": {},
+            "ngram_overlap": 0.48695652173913045,
+            "blueprint_repetition": 2,
+            "conclusion_similarity": 0.9511897312113418,
+            "repeated_sentence_count": 2,
+            "repeated_paragraph_count": 2,
+            "heading_sequence": [
+              "Power-Market Move",
+              "Operating Lever",
+              "Grid Exposure",
+              "Metric To Watch"
+            ],
+            "blocked": true,
+            "reasons": [
+              "repeated_sentence_ratio>0.12",
+              "heading_sequence_similarity>0.75",
+              "conclusion_similarity>0.7"
+            ]
+          },
+          "expert_insight_complete": true,
+          "expert_insight_missing_fields": [],
+          "reason": "repeated_sentence_ratio>0.12; heading_sequence_similarity>0.75; conclusion_similarity>0.7"
+        },
+        {
+          "id": "38b2be9a58185420",
+          "title": "Couchbase AI Data Plane Hits GA, With Enterprise Analytics 2.2 and Iceberg Federation",
+          "infrastructure_relevance_score": 0.91,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "cloud_capacity_relevance:0.32(hyperscalers)",
+            "semiconductor_relevance:0.22(gpu)",
+            "power_grid_relevance:0.22(power)",
+            "enterprise_ai_infrastructure_relevance:0.50(enterprise ai, storage)"
+          ],
+          "extraction_quality_score": 1,
+          "source_domain_adapter": "storagereview",
+          "content_length": 1712,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": true,
+          "repetition_block_reasons": [
+            "repeated_sentence_ratio>0.12",
+            "heading_sequence_similarity>0.75",
+            "conclusion_similarity>0.7"
+          ],
+          "repetition_check": {
+            "compared_article_count": 20,
+            "repeated_sentence_ratio": 0.14285714285714285,
+            "repeated_paragraph_ratio": 0.16666666666666666,
+            "heading_sequence_similarity": 1,
+            "banned_phrase_count": 0,
+            "banned_phrase_counts": {},
+            "recent_banned_phrase_counts": {},
+            "ngram_overlap": 0.5607476635514018,
+            "blueprint_repetition": 1,
+            "conclusion_similarity": 0.9271050693011066,
+            "repeated_sentence_count": 1,
+            "repeated_paragraph_count": 1,
+            "heading_sequence": [
+              "System Change",
+              "Bottleneck",
+              "Engineering Tradeoff",
+              "Validation Metric"
+            ],
+            "blocked": true,
+            "reasons": [
+              "repeated_sentence_ratio>0.12",
+              "heading_sequence_similarity>0.75",
+              "conclusion_similarity>0.7"
+            ]
+          },
+          "expert_insight_complete": true,
+          "expert_insight_missing_fields": [],
+          "reason": "repeated_sentence_ratio>0.12; heading_sequence_similarity>0.75; conclusion_similarity>0.7"
+        }
+      ],
+      "signalCardItems": [],
+      "archiveOnlyItems": []
     }
   ],
-  "lastRunAt": "2026-07-03T10:10:06.913Z"
+  "lastRunAt": "2026-07-03T16:41:30.628Z"
 }
