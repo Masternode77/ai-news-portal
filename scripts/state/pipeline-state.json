@@ -573,7 +573,9 @@
     "51788ad4054a6b4e",
     "ec5820bde3bf274e",
     "4310c39540d07cf5",
-    "2a11375ad7078318"
+    "2a11375ad7078318",
+    "af3310fd8b85535f",
+    "aaf9b07521ab8ae0"
   ],
   "dayPlans": {
     "2026-03-24": {
@@ -25915,18 +25917,18 @@
     "2026-07-06": {
       "date": "2026-07-06",
       "createdAt": "2026-07-05T16:15:24.081Z",
-      "refreshedAt": "2026-07-06T00:09:58.985Z",
+      "refreshedAt": "2026-07-06T11:43:15.336Z",
       "candidateWindowHours": 24,
       "curatedItems": [
         {
-          "id": "2a11375ad7078318",
-          "source": "ServeTheHome",
-          "url": "https://www.servethehome.com/spotted-at-computex-2026-microns-first-pcie-gen6-data-center-ssd-the-9650/",
-          "title": "Spotted at Computex 2026: Micron’s First PCIe Gen6 Data Center SSD, the 9650",
-          "snippet": "Ahead of the launch of PCIe Gen6 CPUs, Micron was at Computex 2026 showing off their first PCIe Gen6 SSD for data centers, the 9650 The post Spotted at Computex 2026: Micron’s First PCIe Gen6 Data Center SSD, the 9650 a…",
-          "contentText": "Ahead of the launch of PCIe Gen6 CPUs, Micron was at Computex 2026 showing off their first PCIe Gen6 SSD for data centers, the 9650 The post Spotted at Computex 2026: Micron’s First PCIe Gen6 Data Center SSD, the 9650 appeared first on ServeTheHome .",
-          "publishedAt": "2026-07-05T17:00:11.000Z",
-          "sourceImage": null,
+          "id": "aaf9b07521ab8ae0",
+          "source": "Toms Hardware",
+          "url": "https://www.tomshardware.com/tech-industry/data-centers/wisconsin-residents-file-class-action-lawsuit-against-microsofts-worlds-most-powerful-ai-data-center-due-to-data-center-noise-plaintiffs-also-mention-construction-noise-and-extreme-light-pollution-from-usd7-3-billion-facility",
+          "title": "Wisconsin residents file class-action lawsuit against Microsoft's 'world's most powerful AI data center' due to data center noise — plaintiffs also mention construction noise and extreme light pollution from $7.3 billion facility",
+          "snippet": "Wisconsin residents file class-action lawsuit against Microsoft due to data center noise — plaintiffs also mention construction noise and extreme light pollution",
+          "contentText": "Controversy due to AI data center buildouts generally centers around their massive power usage and draining of local water reserves, but noise is a third torment to nearby residents, and one that is arguably much harder to correct. Residents of Sturtevant, slightly south of Milwaukee, Wisconsin, filed a class-action lawsuit against Microsoft due to the excessive noise produced by the company's Fairwater facility. CEO Satya Nadella described the project as \"the world's most powerful AI data center,\" projected to generate 865,000 tokens per second and have a final bill of $7.3 billion. The Sturtevant residents live just 1.5 miles (2.4 km) from the facility. The lawsuit was filed by three citizens and represents the households within this distance, reportedly amounting to over 1,000 homes, i…",
+          "publishedAt": "2026-07-06T11:00:00.000Z",
+          "sourceImage": "https://cdn.mos.cms.futurecdn.net/8K8xkKj7a9LFdAhMdjyXTc-1280-80.jpg",
           "region": "US",
           "language": "en",
           "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
@@ -25941,44 +25943,46 @@
             "investors"
           ],
           "article_type": "Other",
-          "urgency_score": 0.53,
+          "urgency_score": 0.55,
           "taxonomy_confidence": 0.77,
           "taxonomy_reasons": [
             "ai infrastructure",
             "neocloud"
           ],
           "direct_ai_infrastructure_relevance": 1,
-          "data_center_relevance": 0.97,
+          "data_center_relevance": 0.55,
           "cloud_capacity_relevance": 0,
           "semiconductor_relevance": 0.22,
-          "power_grid_relevance": 0,
+          "power_grid_relevance": 0.22,
           "cooling_relevance": 0,
           "capital_markets_relevance": 0,
           "enterprise_ai_infrastructure_relevance": 0,
-          "infrastructure_relevance_score": 0.978,
+          "infrastructure_relevance_score": 0.921,
           "infrastructure_relevance_tier": "full_memo",
           "infrastructure_relevance_action": "generate_full_memo",
           "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "data_center_relevance:0.97(data center, data centers)",
-            "semiconductor_relevance:0.22(gpu)"
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, ai data center, neocloud)",
+            "data_center_relevance:0.55(data center)",
+            "semiconductor_relevance:0.22(gpu)",
+            "power_grid_relevance:0.22(power)"
           ],
           "infrastructure_relevance": {
             "direct_ai_infrastructure_relevance": 1,
-            "data_center_relevance": 0.97,
+            "data_center_relevance": 0.55,
             "cloud_capacity_relevance": 0,
             "semiconductor_relevance": 0.22,
-            "power_grid_relevance": 0,
+            "power_grid_relevance": 0.22,
             "cooling_relevance": 0,
             "capital_markets_relevance": 0,
             "enterprise_ai_infrastructure_relevance": 0,
-            "infrastructure_relevance_score": 0.978,
+            "infrastructure_relevance_score": 0.921,
             "infrastructure_relevance_tier": "full_memo",
             "infrastructure_relevance_action": "generate_full_memo",
             "infrastructure_relevance_reasons": [
-              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-              "data_center_relevance:0.97(data center, data centers)",
-              "semiconductor_relevance:0.22(gpu)"
+              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, ai data center, neocloud)",
+              "data_center_relevance:0.55(data center)",
+              "semiconductor_relevance:0.22(gpu)",
+              "power_grid_relevance:0.22(power)"
             ],
             "infrastructureRelevanceAction": "generate_full_memo",
             "articlePagePublished": true,
@@ -25986,17 +25990,17 @@
             "archiveOnly": false,
             "archiveOnlyReason": null
           },
-          "score": 79
+          "score": 85
         },
         {
-          "id": "4310c39540d07cf5",
-          "source": "Toms Hardware",
-          "url": "https://www.tomshardware.com/pc-components/get-an-rtx-3060-with-12-gb-of-vram-for-just-usd329-99-at-newegg-msi-ventus-2x-oc-model-back-in-stock-with-free-shipping",
-          "title": "Get an RTX 3060 with 12 GB of VRAM for just $329.99 at Newegg — MSI Ventus 2X OC model back in stock with free shipping",
-          "snippet": "Get an RTX 3060 with 12 GB of VRAM for just $329.99 at Newegg — MSI Ventus 2X OC model back in stock with free shipping",
-          "contentText": "Barely a week ago, we reported that Nvidia's notion of bringing back old graphics cards actually became a reality . As a quick heads-up, we just spotted an MSI Ventus 2X 3060 12 GB OC selling at the virtual stand of Newegg for a scant $329.99, with free shipping included. The card was essentially nowhere to be seen for years, and when it showed up, it carried near-$400 price tags. The 12 GB of VRAM are particularly welcome sight in this day and age, where 8 GB is a significant constraint for contemporary games. That amount also makes this card a viable platform for running AI models locally. Check out all the GeForce RTX 3060 Ventus 2X 12G OC at Newegg . The specific card on hand is the MSI GeForce RTX 3060 Ventus 2X 12 GB OC, a dual-fan variant with a 1087 MHz GPU boost clock. Though the…",
-          "publishedAt": "2026-07-05T19:08:22.000Z",
-          "sourceImage": "https://cdn.mos.cms.futurecdn.net/esDyKzmWaKR96VNBebEnVS-1280-80.png",
+          "id": "af3310fd8b85535f",
+          "source": "Semiconductor Engineering",
+          "url": "https://semiengineering.com/research-bits-july-6/",
+          "title": "Research Bits: July 6",
+          "snippet": "Neural net predicts semiconductor properties; ferroelectric titanium dioxide thin film; bidirectional pixels. The post Research Bits: July 6 appeared first on Semiconductor Engineering.",
+          "contentText": "Neural net predicts semiconductor properties Researchers from the Institute of Science Tokyo, Yokohama City University, and National Sun Yat-sen University devised a tandem neural network capable of quickly inferring key physical parameters of semiconductor materials from simple transistor measurements. The approach uses two machine learning models linked in series. The first model tries to estimate material properties from transistor measurements. Then, a pre-trained forward network that uses the material estimates produced by the first model to reconstruct the original transistor characteristics. By using the output of this second model as part of the training input given to the first model, the overall system learns to find solutions that are both mathematically plausible and physicall…",
+          "publishedAt": "2026-07-06T07:01:19.000Z",
+          "sourceImage": null,
           "region": "US",
           "language": "en",
           "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
@@ -26010,7 +26014,7 @@
             "cloud buyers",
             "investors"
           ],
-          "article_type": "Product / Platform Update",
+          "article_type": "Research / Technical",
           "urgency_score": 0.45,
           "taxonomy_confidence": 0.77,
           "taxonomy_reasons": [
@@ -26020,36 +26024,104 @@
           "direct_ai_infrastructure_relevance": 1,
           "data_center_relevance": 0,
           "cloud_capacity_relevance": 0,
-          "semiconductor_relevance": 0.5,
+          "semiconductor_relevance": 0.58,
           "power_grid_relevance": 0,
           "cooling_relevance": 0,
           "capital_markets_relevance": 0,
           "enterprise_ai_infrastructure_relevance": 0,
-          "infrastructure_relevance_score": 0.84,
+          "infrastructure_relevance_score": 0.858,
           "infrastructure_relevance_tier": "full_memo",
           "infrastructure_relevance_action": "generate_full_memo",
           "infrastructure_relevance_reasons": [
             "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "semiconductor_relevance:0.50(nvidia, gpu)"
+            "semiconductor_relevance:0.58(semiconductor, gpu)"
           ],
           "infrastructure_relevance": {
             "direct_ai_infrastructure_relevance": 1,
             "data_center_relevance": 0,
             "cloud_capacity_relevance": 0,
-            "semiconductor_relevance": 0.5,
+            "semiconductor_relevance": 0.58,
             "power_grid_relevance": 0,
             "cooling_relevance": 0,
             "capital_markets_relevance": 0,
             "enterprise_ai_infrastructure_relevance": 0,
-            "infrastructure_relevance_score": 0.84,
+            "infrastructure_relevance_score": 0.858,
             "infrastructure_relevance_tier": "full_memo",
             "infrastructure_relevance_action": "generate_full_memo",
             "infrastructure_relevance_reasons": [
               "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-              "semiconductor_relevance:0.50(nvidia, gpu)"
+              "semiconductor_relevance:0.58(semiconductor, gpu)"
             ],
             "infrastructureRelevanceAction": "generate_full_memo",
             "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 74
+        },
+        {
+          "id": "45e30296c4135cb3",
+          "source": "Capacity Media",
+          "url": "https://capacityglobal.com/news/congratulations-you-received-bead-funding-what-next/",
+          "title": "Congratulations, you received BEAD funding. What’s next?",
+          "snippet": "In November 2021, Congress announced the $42.5 billion Broadband, Equity, Access, and Deployment (BEAD) Program Act. The post Congratulations, you received BEAD funding. What’s next? appeared first on Capacity.",
+          "contentText": "Managed by the National Telecommunications and Information Administration (NTIA), BEAD aims to bring fibre networks to the most underserved parts of the U.S., democratizing access to reliable, high-speed internet. Now more than four years later, NTIA is awarding funding to states and U.S. territories, who in turn are allocating sub-grants to individual projects proposed (and to be constructed and operated) by broadband and telecommunications companies. However, while these companies have now spent more than three years proposing, revising, and re-proposing projects, receiving a BEAD sub-grant is not the end, but rather the beginning of another, even larger effort. These operators must now manage fibre buildouts, source broadband facilities and equipment, contract with labour forces, inter…",
+          "publishedAt": "2026-07-06T11:09:46.000Z",
+          "sourceImage": "https://capacityglobal.com/wp-content/uploads/2026/06/dc-usa.png",
+          "region": "APAC",
+          "language": "en",
+          "defaultCategory": "Hyperscalers & Cloud",
+          "category": "Capital Markets",
+          "primary_category": "Capital Markets",
+          "secondary_category": "Financing, valuation, and capital structure",
+          "infrastructure_layer": "Capital",
+          "affected_stakeholders": [
+            "investors",
+            "lenders",
+            "developers",
+            "operators"
+          ],
+          "article_type": "Capacity Expansion",
+          "urgency_score": 0.55,
+          "taxonomy_confidence": 0.74,
+          "taxonomy_reasons": [
+            "funding",
+            "equity"
+          ],
+          "direct_ai_infrastructure_relevance": 0,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0.76,
+          "semiconductor_relevance": 0,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0.638,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.651,
+          "infrastructure_relevance_tier": "signal_card",
+          "infrastructure_relevance_action": "publish_signal_card_only",
+          "infrastructure_relevance_reasons": [
+            "cloud_capacity_relevance:0.76(cloud capacity, hyperscalers)",
+            "capital_markets_relevance:0.64(funding, equity)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 0,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0.76,
+            "semiconductor_relevance": 0,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0.638,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.651,
+            "infrastructure_relevance_tier": "signal_card",
+            "infrastructure_relevance_action": "publish_signal_card_only",
+            "infrastructure_relevance_reasons": [
+              "cloud_capacity_relevance:0.76(cloud capacity, hyperscalers)",
+              "capital_markets_relevance:0.64(funding, equity)"
+            ],
+            "infrastructureRelevanceAction": "publish_signal_card_only",
+            "articlePagePublished": false,
             "homepagePublished": true,
             "archiveOnly": false,
             "archiveOnlyReason": null
@@ -26057,65 +26129,132 @@
           "score": 73
         },
         {
-          "id": "934374dabbaea940",
-          "source": "HPCwire",
-          "url": "https://www.hpcwire.com/2026/07/05/asc26-the-wuxi-rumble/",
-          "title": "ASC26: The Wuxi Rumble",
-          "snippet": "The ASC student cluster competition returned to Wuxi, aka “The Pearl of Taihu” for its 2026 edition. Competition fans will remember Wuxi from 2017 when students got the chance to run on what was then the largest superco…",
-          "contentText": "The ASC student cluster competition returned to Wuxi, aka “The Pearl of Taihu” for its 2026 edition. Competition fans will remember Wuxi from 2017 when students got the chance to run on what was then the largest supercomputer in the world, the Sunway TaihuLight. As usual, 25 student teams representing top universities from around the world gathered, this time hosted by Wuxi University. The picture above is the registration table at the hotel with 150 bags ready to be handed out to students, coaches, and visiting HPC/AI dignitaries. While the university has a beautiful and modern campus, I was a little concerned about the cluster stadium. It was about half the size of the usual competition venues, and I wondered if 25 GPU crammed clusters and upwards of 200 people coupled with the hot and…",
-          "publishedAt": "2026-07-05T21:00:35.000Z",
-          "sourceImage": null,
+          "id": "62908872cf082d3f",
+          "source": "Capacity Media",
+          "url": "https://capacityglobal.com/news/nscale-uk-data-centre-planning-despite-objection/",
+          "title": "UK government reportedly urged Nscale AI data centre approval",
+          "snippet": "Nscale’s AI data centre site in Essex was reportedly approved despite local council objections, as the UK government got involved. The post UK government reportedly urged Nscale AI data centre approval appeared first on…",
+          "contentText": "The UK government has reportedly put pressure on local council officials to push through a “supercomputer” data centre being co-developed by Microsoft and Nscale. First reported by The Telegraph , Epping Forest district council was urged by Lord Stockwood, Minister for Investment, to back the giant AI data centre. Lord Stockwood reportedly wrote to the council’s chief executive Andrew Small &#8211; a move that is considered highly unusual – in November, to “emphasise our strong support” for the project, according to planning documents. “You will be aware that this project was announced by the Prime Minister during the recent US state visit, underscoring its importance to UK-US technological partnership and our shared commitment to advancing AI capabilities,” he wrote, as reported by The T…",
+          "publishedAt": "2026-07-06T10:59:15.000Z",
+          "sourceImage": "https://capacityglobal.com/wp-content/uploads/2026/06/cap-europe.png",
           "region": "US",
           "language": "en",
-          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
-          "category": "AI Infrastructure",
-          "primary_category": "AI Infrastructure",
-          "secondary_category": "GPU clusters and deployment readiness",
-          "infrastructure_layer": "Compute",
+          "defaultCategory": "Hyperscalers & Cloud",
+          "category": "Cloud Capacity",
+          "primary_category": "Cloud Capacity",
+          "secondary_category": "Hyperscale regions and accelerator availability",
+          "infrastructure_layer": "Cloud Platform",
           "affected_stakeholders": [
-            "operators",
             "hyperscalers",
             "cloud buyers",
-            "investors"
+            "enterprise IT",
+            "operators"
           ],
-          "article_type": "Other",
-          "urgency_score": 0.43,
-          "taxonomy_confidence": 0.85,
+          "article_type": "Policy / Regulation",
+          "urgency_score": 0.47,
+          "taxonomy_confidence": 0.57,
           "taxonomy_reasons": [
-            "ai infrastructure",
-            "neocloud",
-            "hpc"
+            "fallback_taxonomy"
           ],
-          "direct_ai_infrastructure_relevance": 1,
-          "data_center_relevance": 0.16,
-          "cloud_capacity_relevance": 0,
-          "semiconductor_relevance": 0.22,
+          "direct_ai_infrastructure_relevance": 0.64,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0.76,
+          "semiconductor_relevance": 0,
           "power_grid_relevance": 0,
           "cooling_relevance": 0,
           "capital_markets_relevance": 0,
           "enterprise_ai_infrastructure_relevance": 0,
-          "infrastructure_relevance_score": 0.778,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_score": 0.652,
+          "infrastructure_relevance_tier": "signal_card",
+          "infrastructure_relevance_action": "publish_signal_card_only",
           "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud, hpc)",
-            "semiconductor_relevance:0.22(gpu)"
+            "direct_ai_infrastructure_relevance:0.64",
+            "cloud_capacity_relevance:0.76(cloud capacity, hyperscalers)"
           ],
           "infrastructure_relevance": {
-            "direct_ai_infrastructure_relevance": 1,
-            "data_center_relevance": 0.16,
-            "cloud_capacity_relevance": 0,
-            "semiconductor_relevance": 0.22,
+            "direct_ai_infrastructure_relevance": 0.64,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0.76,
+            "semiconductor_relevance": 0,
             "power_grid_relevance": 0,
             "cooling_relevance": 0,
             "capital_markets_relevance": 0,
             "enterprise_ai_infrastructure_relevance": 0,
-            "infrastructure_relevance_score": 0.778,
+            "infrastructure_relevance_score": 0.652,
+            "infrastructure_relevance_tier": "signal_card",
+            "infrastructure_relevance_action": "publish_signal_card_only",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:0.64",
+              "cloud_capacity_relevance:0.76(cloud capacity, hyperscalers)"
+            ],
+            "infrastructureRelevanceAction": "publish_signal_card_only",
+            "articlePagePublished": false,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 73
+        },
+        {
+          "id": "5ecb1dac4cbe9c3e",
+          "source": "Data Center Knowledge",
+          "url": "https://www.datacenterknowledge.com/sustainability/do-data-centers-cause-air-pollution-it-depends-on-power-",
+          "title": "Do Data Centers Cause Air Pollution? It Depends on Power.",
+          "snippet": "A data center’s air-quality impact varies widely depending on the facility's power source, grid mix, and whether it uses on-site generation.",
+          "contentText": "A data center’s air-quality impact varies widely depending on the facility's power source, grid mix, and whether it uses on-site generation.",
+          "publishedAt": "2026-07-06T09:00:00.000Z",
+          "sourceImage": "https://eu-images.contentstack.com/v3/assets/blt8eb3cdfc1fce5194/bltf4ca4cdf572d2b15/6a46c899062d6e0069fa00b8/Heat_emission_from_the_chimneys_of_a_large_data_and_server_complex.png?width=720&quality=80&disable=upscale",
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "Colocation & Wholesale",
+          "category": "Data Centers",
+          "primary_category": "Data Centers",
+          "secondary_category": "Campus development and colocation capacity",
+          "infrastructure_layer": "Facility",
+          "affected_stakeholders": [
+            "data center operators",
+            "developers",
+            "site selectors",
+            "investors"
+          ],
+          "article_type": "Other",
+          "urgency_score": 0.61,
+          "taxonomy_confidence": 0.85,
+          "taxonomy_reasons": [
+            "data center",
+            "colocation",
+            "wholesale"
+          ],
+          "direct_ai_infrastructure_relevance": 0,
+          "data_center_relevance": 1,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0,
+          "power_grid_relevance": 0.577,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.777,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "data_center_relevance:1.00(data center, data centers, colocation)",
+            "power_grid_relevance:0.58(power, grid)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 0,
+            "data_center_relevance": 1,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0,
+            "power_grid_relevance": 0.577,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.777,
             "infrastructure_relevance_tier": "full_memo",
             "infrastructure_relevance_action": "generate_full_memo",
             "infrastructure_relevance_reasons": [
-              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud, hpc)",
-              "semiconductor_relevance:0.22(gpu)"
+              "data_center_relevance:1.00(data center, data centers, colocation)",
+              "power_grid_relevance:0.58(power, grid)"
             ],
             "infrastructureRelevanceAction": "generate_full_memo",
             "articlePagePublished": true,
@@ -26123,18 +26262,18 @@
             "archiveOnly": false,
             "archiveOnlyReason": null
           },
-          "score": 71
+          "score": 72
         },
         {
-          "id": "32e2499dae8d4801",
-          "source": "TechCrunch AI",
-          "url": "https://techcrunch.com/2026/07/05/amazon-will-stop-accepting-new-customers-for-mechanical-turk/",
-          "title": "Amazon will stop accepting new customers for Mechanical Turk",
-          "snippet": "These may be the last days of Amazon’s Mechanical Turk.",
-          "contentText": "These may be the last days of Amazon’s Mechanical Turk.",
-          "publishedAt": "2026-07-05T17:43:36.000Z",
+          "id": "7c789bcded4f436f",
+          "source": "Hugging Face Blog",
+          "url": "https://huggingface.co/blog/lerobot-release-v060",
+          "title": "LeRobot v0.6.0: Imagine, Evaluate, Improve",
+          "snippet": "",
+          "contentText": "",
+          "publishedAt": "2026-07-07T00:00:00.000Z",
           "sourceImage": null,
-          "region": "US",
+          "region": "Global",
           "language": "en",
           "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
           "category": "AI Infrastructure",
@@ -26191,284 +26330,33 @@
             "archiveOnly": false,
             "archiveOnlyReason": null
           },
-          "score": 59
-        },
-        {
-          "id": "67ce16b7f33b41e4",
-          "source": "Bloomberg Technology",
-          "url": "https://www.bloomberg.com/news/articles/2026-07-05/uk-to-toughen-up-political-donation-rules-in-latest-crackdown",
-          "title": "UK to Toughen Up Political Donation Rules in Latest Crackdown",
-          "snippet": "Political donors will need to wait a year after returning to the UK before they can give more than £100,000 ($133,510) as part of a proposed crackdown on offshore political finance that threatens to hit Nigel Farage’s R…",
-          "contentText": "Political donors will need to wait a year after returning to the UK before they can give more than £100,000 ($133,510) as part of a proposed crackdown on offshore political finance that threatens to hit Nigel Farage’s Reform UK.",
-          "publishedAt": "2026-07-05T23:01:00.000Z",
-          "sourceImage": "https://assets.bwbx.io/images/users/iqjWHBFdfxIU/iu03pJtIIDmA/v0/1200x-1.jpg",
-          "region": "EU",
-          "language": "en",
-          "defaultCategory": "Hyperscalers & Cloud",
-          "category": "Cloud Capacity",
-          "primary_category": "Cloud Capacity",
-          "secondary_category": "Hyperscale regions and accelerator availability",
-          "infrastructure_layer": "Cloud Platform",
-          "affected_stakeholders": [
-            "hyperscalers",
-            "cloud buyers",
-            "enterprise IT",
-            "operators"
-          ],
-          "article_type": "Other",
-          "urgency_score": 0.25,
-          "taxonomy_confidence": 0.5,
-          "taxonomy_reasons": [
-            "fallback_taxonomy"
-          ],
-          "direct_ai_infrastructure_relevance": 0,
-          "data_center_relevance": 0,
-          "cloud_capacity_relevance": 0.32,
-          "semiconductor_relevance": 0,
-          "power_grid_relevance": 0,
-          "cooling_relevance": 0,
-          "capital_markets_relevance": 0,
-          "enterprise_ai_infrastructure_relevance": 0,
-          "infrastructure_relevance_score": 0.221,
-          "infrastructure_relevance_tier": "archive_only",
-          "infrastructure_relevance_action": "archive_only",
-          "infrastructure_relevance_reasons": [
-            "cloud_capacity_relevance:0.32(hyperscalers)"
-          ],
-          "infrastructure_relevance": {
-            "direct_ai_infrastructure_relevance": 0,
-            "data_center_relevance": 0,
-            "cloud_capacity_relevance": 0.32,
-            "semiconductor_relevance": 0,
-            "power_grid_relevance": 0,
-            "cooling_relevance": 0,
-            "capital_markets_relevance": 0,
-            "enterprise_ai_infrastructure_relevance": 0,
-            "infrastructure_relevance_score": 0.221,
-            "infrastructure_relevance_tier": "archive_only",
-            "infrastructure_relevance_action": "archive_only",
-            "infrastructure_relevance_reasons": [
-              "cloud_capacity_relevance:0.32(hyperscalers)"
-            ],
-            "infrastructureRelevanceAction": "archive_only",
-            "articlePagePublished": false,
-            "homepagePublished": false,
-            "archiveOnly": true,
-            "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
-          },
-          "score": 55
-        },
-        {
-          "id": "0083bbf6cea90556",
-          "source": "Bloomberg Technology",
-          "url": "https://www.bloomberg.com/news/features/2026-07-05/samsung-s-ai-bonus-deal-a-short-lived-victory-for-millennial-union-leader",
-          "title": "Millennial Samsung Union Leader’s $26 Billion Bonus Victory Turns to Bitterness",
-          "snippet": "Avoiding old-school labor ideology, a new generation of tech workers finds itself divided by the AI boom.",
-          "contentText": "Avoiding old-school labor ideology, a new generation of tech workers finds itself divided by the AI boom.",
-          "publishedAt": "2026-07-05T22:00:20.000Z",
-          "sourceImage": "https://assets.bwbx.io/images/users/iqjWHBFdfxIU/i67sS6s.b1kc/v1/1200x-1.jpg",
-          "region": "US",
-          "language": "en",
-          "defaultCategory": "Hyperscalers & Cloud",
-          "category": "Cloud Capacity",
-          "primary_category": "Cloud Capacity",
-          "secondary_category": "Hyperscale regions and accelerator availability",
-          "infrastructure_layer": "Cloud Platform",
-          "affected_stakeholders": [
-            "hyperscalers",
-            "cloud buyers",
-            "enterprise IT",
-            "operators"
-          ],
-          "article_type": "Other",
-          "urgency_score": 0.28,
-          "taxonomy_confidence": 0.5,
-          "taxonomy_reasons": [
-            "fallback_taxonomy"
-          ],
-          "direct_ai_infrastructure_relevance": 0.22,
-          "data_center_relevance": 0,
-          "cloud_capacity_relevance": 0.32,
-          "semiconductor_relevance": 0,
-          "power_grid_relevance": 0,
-          "cooling_relevance": 0,
-          "capital_markets_relevance": 0,
-          "enterprise_ai_infrastructure_relevance": 0,
-          "infrastructure_relevance_score": 0.304,
-          "infrastructure_relevance_tier": "archive_only",
-          "infrastructure_relevance_action": "archive_only",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:0.22",
-            "cloud_capacity_relevance:0.32(hyperscalers)"
-          ],
-          "infrastructure_relevance": {
-            "direct_ai_infrastructure_relevance": 0.22,
-            "data_center_relevance": 0,
-            "cloud_capacity_relevance": 0.32,
-            "semiconductor_relevance": 0,
-            "power_grid_relevance": 0,
-            "cooling_relevance": 0,
-            "capital_markets_relevance": 0,
-            "enterprise_ai_infrastructure_relevance": 0,
-            "infrastructure_relevance_score": 0.304,
-            "infrastructure_relevance_tier": "archive_only",
-            "infrastructure_relevance_action": "archive_only",
-            "infrastructure_relevance_reasons": [
-              "direct_ai_infrastructure_relevance:0.22",
-              "cloud_capacity_relevance:0.32(hyperscalers)"
-            ],
-            "infrastructureRelevanceAction": "archive_only",
-            "articlePagePublished": false,
-            "homepagePublished": false,
-            "archiveOnly": true,
-            "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
-          },
-          "score": 52
+          "score": 67
         }
       ],
       "curatedIds": [
-        "2a11375ad7078318",
-        "4310c39540d07cf5",
-        "934374dabbaea940",
-        "32e2499dae8d4801",
-        "67ce16b7f33b41e4",
-        "0083bbf6cea90556"
+        "aaf9b07521ab8ae0",
+        "af3310fd8b85535f",
+        "45e30296c4135cb3",
+        "62908872cf082d3f",
+        "5ecb1dac4cbe9c3e",
+        "7c789bcded4f436f"
       ],
       "publishedIds": [
         "51788ad4054a6b4e",
         "ec5820bde3bf274e",
         "4310c39540d07cf5",
-        "2a11375ad7078318"
+        "2a11375ad7078318",
+        "af3310fd8b85535f",
+        "aaf9b07521ab8ae0"
       ],
       "slotPublications": {
         "0": true,
-        "1": true
+        "1": true,
+        "2": true
       }
     }
   },
   "runHistory": [
-    {
-      "at": "2026-05-27T00:08:51.506Z",
-      "day": "2026-05-27",
-      "slot": 1,
-      "publishedCount": 0,
-      "signalCardCount": 1,
-      "archiveOnlyCount": 0,
-      "repetitionBlockedCount": 1,
-      "publishedIds": [],
-      "processedIds": [
-        "4d21b727a5d2e275",
-        "cea8c815f2a5b199"
-      ],
-      "blockedCount": 1,
-      "blockedItems": [
-        {
-          "id": "4d21b727a5d2e275",
-          "title": "Inside MemKV, MinIO’s 3.5G Solution for KV Cache Acceleration",
-          "infrastructure_relevance_score": 1,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "cloud_capacity_relevance:0.32(hyperscalers)",
-            "semiconductor_relevance:1.00(nvidia, amd, hbm)",
-            "power_grid_relevance:0.22(power)",
-            "enterprise_ai_infrastructure_relevance:0.48(storage, inference workloads)"
-          ],
-          "extraction_quality_score": 0.95,
-          "source_domain_adapter": "generic",
-          "content_length": 1379,
-          "boilerplate_ratio": 0,
-          "repetition_blocked": false,
-          "repetition_block_reasons": [],
-          "repetition_check": null,
-          "expert_insight_complete": true,
-          "expert_insight_missing_fields": [],
-          "reason": "fail_closed: source_text_incomplete:ellipsis_truncation_artifact, ellipsis_truncation_artifact"
-        }
-      ],
-      "repetitionBlockedItems": [
-        {
-          "id": "cea8c815f2a5b199",
-          "title": "NVIDIA Vera CPU Is ‘Packing a Heavy-Hitting Punch’ Against Competition",
-          "infrastructure_relevance_score": 0.932,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "data_center_relevance:0.42(data center)",
-            "cloud_capacity_relevance:0.32(hyperscalers)",
-            "semiconductor_relevance:0.60(nvidia, gpu)",
-            "power_grid_relevance:0.22(power)",
-            "cooling_relevance:0.30(thermal)"
-          ],
-          "extraction_quality_score": 1,
-          "source_domain_adapter": "generic",
-          "content_length": 1728,
-          "boilerplate_ratio": 0,
-          "repetition_blocked": true,
-          "repetition_block_reasons": [
-            "repeated_sentence_ratio>0.12",
-            "conclusion_similarity>0.7"
-          ],
-          "repetition_check": {
-            "compared_article_count": 17,
-            "repeated_sentence_ratio": 0.16666666666666666,
-            "repeated_paragraph_ratio": 0.16666666666666666,
-            "heading_sequence_similarity": 0,
-            "banned_phrase_count": 0,
-            "banned_phrase_counts": {},
-            "recent_banned_phrase_counts": {},
-            "ngram_overlap": 0.330188679245283,
-            "blueprint_repetition": 2,
-            "conclusion_similarity": 0.9233805168766386,
-            "repeated_sentence_count": 1,
-            "repeated_paragraph_count": 1,
-            "heading_sequence": [
-              "System Change",
-              "Bottleneck",
-              "Engineering Tradeoff",
-              "Validation Metric"
-            ],
-            "blocked": true,
-            "reasons": [
-              "repeated_sentence_ratio>0.12",
-              "conclusion_similarity>0.7"
-            ]
-          },
-          "expert_insight_complete": true,
-          "expert_insight_missing_fields": [],
-          "reason": "repeated_sentence_ratio>0.12; conclusion_similarity>0.7"
-        }
-      ],
-      "signalCardItems": [
-        {
-          "id": "4d21b727a5d2e275",
-          "title": "Inside MemKV, MinIO’s 3.5G Solution for KV Cache Acceleration",
-          "infrastructure_relevance_score": 1,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "cloud_capacity_relevance:0.32(hyperscalers)",
-            "semiconductor_relevance:1.00(nvidia, amd, hbm)",
-            "power_grid_relevance:0.22(power)",
-            "enterprise_ai_infrastructure_relevance:0.48(storage, inference workloads)"
-          ],
-          "extraction_quality_score": 0.95,
-          "source_domain_adapter": "generic",
-          "content_length": 1379,
-          "boilerplate_ratio": 0,
-          "repetition_blocked": false,
-          "repetition_block_reasons": [],
-          "repetition_check": null,
-          "expert_insight_complete": true,
-          "expert_insight_missing_fields": [],
-          "reason": "fail_closed: source_text_incomplete:ellipsis_truncation_artifact, ellipsis_truncation_artifact"
-        }
-      ],
-      "archiveOnlyItems": []
-    },
     {
       "at": "2026-05-27T11:00:48.593Z",
       "day": "2026-05-27",
@@ -39525,7 +39413,134 @@
       ],
       "signalCardItems": [],
       "archiveOnlyItems": []
+    },
+    {
+      "at": "2026-07-06T11:43:15.336Z",
+      "day": "2026-07-06",
+      "slot": 2,
+      "publishedCount": 0,
+      "signalCardCount": 1,
+      "archiveOnlyCount": 0,
+      "repetitionBlockedCount": 1,
+      "publishedIds": [],
+      "processedIds": [
+        "af3310fd8b85535f",
+        "aaf9b07521ab8ae0"
+      ],
+      "blockedCount": 1,
+      "blockedItems": [
+        {
+          "id": "af3310fd8b85535f",
+          "title": "Research Bits: July 6",
+          "infrastructure_relevance_score": 0.928,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "cloud_capacity_relevance:0.32(hyperscalers)",
+            "semiconductor_relevance:0.58(semiconductor, gpu)",
+            "power_grid_relevance:0.22(power)"
+          ],
+          "extraction_quality_score": 1,
+          "source_domain_adapter": "semiengineering",
+          "content_length": 1759,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": false,
+          "repetition_block_reasons": [],
+          "repetition_check": null,
+          "expert_insight_complete": false,
+          "expert_insight_missing_fields": [
+            "named_companies"
+          ],
+          "reason": "expert_insight_missing_fields named_companies"
+        }
+      ],
+      "repetitionBlockedItems": [
+        {
+          "id": "aaf9b07521ab8ae0",
+          "title": "Wisconsin residents file class-action lawsuit against Microsoft's 'world's most powerful AI data center' due to data center noise — plaintiffs also mention construction noise and extreme light pollution from $7.3 billion facility",
+          "infrastructure_relevance_score": 0.956,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, ai data center, neocloud)",
+            "data_center_relevance:0.71(data center, campus)",
+            "cloud_capacity_relevance:0.32(hyperscalers)",
+            "semiconductor_relevance:0.22(gpu)",
+            "power_grid_relevance:0.22(power)",
+            "cooling_relevance:0.34(cooling)",
+            "capital_markets_relevance:0.28(capex)"
+          ],
+          "extraction_quality_score": 1,
+          "source_domain_adapter": "generic",
+          "content_length": 1784,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": true,
+          "repetition_block_reasons": [
+            "repeated_sentence_ratio>0.12",
+            "heading_sequence_similarity>0.75",
+            "conclusion_similarity>0.7"
+          ],
+          "repetition_check": {
+            "compared_article_count": 20,
+            "repeated_sentence_ratio": 0.2857142857142857,
+            "repeated_paragraph_ratio": 0.3333333333333333,
+            "heading_sequence_similarity": 1,
+            "banned_phrase_count": 0,
+            "banned_phrase_counts": {},
+            "recent_banned_phrase_counts": {},
+            "ngram_overlap": 0.6551724137931034,
+            "blueprint_repetition": 1,
+            "conclusion_similarity": 0.9271050693011066,
+            "repeated_sentence_count": 2,
+            "repeated_paragraph_count": 2,
+            "heading_sequence": [
+              "Technical Signal",
+              "Failure Domain",
+              "Operator Exposure",
+              "Benchmark To Watch"
+            ],
+            "blocked": true,
+            "reasons": [
+              "repeated_sentence_ratio>0.12",
+              "heading_sequence_similarity>0.75",
+              "conclusion_similarity>0.7"
+            ]
+          },
+          "expert_insight_complete": true,
+          "expert_insight_missing_fields": [],
+          "reason": "repeated_sentence_ratio>0.12; heading_sequence_similarity>0.75; conclusion_similarity>0.7"
+        }
+      ],
+      "signalCardItems": [
+        {
+          "id": "af3310fd8b85535f",
+          "title": "Research Bits: July 6",
+          "infrastructure_relevance_score": 0.928,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "cloud_capacity_relevance:0.32(hyperscalers)",
+            "semiconductor_relevance:0.58(semiconductor, gpu)",
+            "power_grid_relevance:0.22(power)"
+          ],
+          "extraction_quality_score": 1,
+          "source_domain_adapter": "semiengineering",
+          "content_length": 1759,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": false,
+          "repetition_block_reasons": [],
+          "repetition_check": null,
+          "expert_insight_complete": false,
+          "expert_insight_missing_fields": [
+            "named_companies"
+          ],
+          "reason": "expert_insight_missing_fields named_companies"
+        }
+      ],
+      "archiveOnlyItems": []
     }
   ],
-  "lastRunAt": "2026-07-06T00:09:58.985Z"
+  "lastRunAt": "2026-07-06T11:43:15.336Z"
 }
