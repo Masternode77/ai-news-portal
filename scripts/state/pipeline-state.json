@@ -575,7 +575,9 @@
     "4310c39540d07cf5",
     "2a11375ad7078318",
     "af3310fd8b85535f",
-    "aaf9b07521ab8ae0"
+    "aaf9b07521ab8ae0",
+    "31c08800182195fe",
+    "557157c0d6d50936"
   ],
   "dayPlans": {
     "2026-03-24": {
@@ -26354,102 +26356,451 @@
         "1": true,
         "2": true
       }
-    }
-  },
-  "runHistory": [
-    {
-      "at": "2026-05-27T11:00:48.593Z",
-      "day": "2026-05-27",
-      "slot": 2,
-      "publishedCount": 0,
-      "signalCardCount": 1,
-      "archiveOnlyCount": 0,
-      "repetitionBlockedCount": 1,
-      "publishedIds": [],
-      "processedIds": [
-        "51c2ac92c77262f5",
-        "43bfb1d4d4b67121"
-      ],
-      "blockedCount": 0,
-      "blockedItems": [],
-      "repetitionBlockedItems": [
+    },
+    "2026-07-07": {
+      "date": "2026-07-07",
+      "createdAt": "2026-07-06T17:49:19.766Z",
+      "refreshedAt": "2026-07-06T17:49:19.766Z",
+      "candidateWindowHours": 24,
+      "curatedItems": [
         {
-          "id": "43bfb1d4d4b67121",
-          "title": "Samsung chip workers vote to accept $340,000 average bonus, ending months-long strike threat — resentment over deal has slowed down Samsung foundry division",
-          "infrastructure_relevance_score": 1,
+          "id": "557157c0d6d50936",
+          "source": "Toms Hardware",
+          "url": "https://www.tomshardware.com/pc-components/ddr5/china-made-cxmt-memory-now-supports-faster-speeds-on-msis-amd-motherboards-new-bios-adds-ddr5-8200-validation-on-dual-dimm-ddr5-7200-on-quad-dimm-models",
+          "title": "China-made CXMT memory now supports faster speeds on MSI's AMD motherboards — new BIOS adds DDR5-8200 validation on dual-DIMM, DDR5-7200 on quad-DIMM models",
+          "snippet": "MSI has officially validated region-bound Chinese RAM using CXMT modules to run at up to 8,200 MT/s on its AM5 motherboards. Models with two RAM slots can handle these high frequencies a bit better than four-DIMM varian…",
+          "contentText": "ChangXin Memory Technologies, or CXMT, has just received official validation from MSI for its high-speed DDR5 memory modules. The manufacturer has released new beta BIOSes across its AM5 lineup, unlocking stable frequencies up to 8,200 MT/s for 3GB CXMT chips on dual-DIMM motherboards. Previously, RAM using these modules was limited to around 6,800 MT/s despite the hardware itself being capable of much more. Go deeper with TH Premium: Taiwan, trade, and tariffs (Image credit: tsmc) China's latest round of rare-earth export controls explained Analyzing Washington's new AI accelerator export rules U.S. government plans tariff exemptions for TSMC Nvidia wants China's market share to secure the future of CUDA in the region The test BIOS comes from MSI China — there's no announcement on global…",
+          "publishedAt": "2026-07-06T16:20:37.000Z",
+          "sourceImage": "https://cdn.mos.cms.futurecdn.net/nnkvWRAwHdH8xCQXAJiweE-1280-80.jpg",
+          "region": "APAC",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "category": "Semiconductors",
+          "primary_category": "Semiconductors",
+          "secondary_category": "Accelerators, memory, and advanced packaging",
+          "infrastructure_layer": "Silicon",
+          "affected_stakeholders": [
+            "semiconductor suppliers",
+            "hyperscalers",
+            "server OEMs",
+            "investors"
+          ],
+          "article_type": "Capacity Expansion",
+          "urgency_score": 0.48,
+          "taxonomy_confidence": 0.95,
+          "taxonomy_reasons": [
+            "gpu",
+            "nvidia",
+            "amd",
+            "tsmc"
+          ],
+          "direct_ai_infrastructure_relevance": 1,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 1,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.95,
           "infrastructure_relevance_tier": "full_memo",
           "infrastructure_relevance_action": "generate_full_memo",
           "infrastructure_relevance_reasons": [
             "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "cloud_capacity_relevance:0.32(hyperscalers)",
-            "semiconductor_relevance:1.00(semiconductor, nvidia, high-bandwidth memory)",
-            "power_grid_relevance:0.22(power)"
+            "semiconductor_relevance:1.00(nvidia, amd, tsmc)"
           ],
-          "extraction_quality_score": 1,
-          "source_domain_adapter": "generic",
-          "content_length": 1757,
-          "boilerplate_ratio": 0,
-          "repetition_blocked": true,
-          "repetition_block_reasons": [
-            "conclusion_similarity>0.7"
-          ],
-          "repetition_check": {
-            "compared_article_count": 17,
-            "repeated_sentence_ratio": 0,
-            "repeated_paragraph_ratio": 0,
-            "heading_sequence_similarity": 0,
-            "banned_phrase_count": 0,
-            "banned_phrase_counts": {},
-            "recent_banned_phrase_counts": {},
-            "ngram_overlap": 0.3275862068965517,
-            "blueprint_repetition": 1,
-            "conclusion_similarity": 0.9233805168766386,
-            "repeated_sentence_count": 0,
-            "repeated_paragraph_count": 0,
-            "heading_sequence": [
-              "Memory Move",
-              "Virtualization Impact",
-              "Procurement Risk",
-              "Watch Metric"
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 1,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 1,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.95,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+              "semiconductor_relevance:1.00(nvidia, amd, tsmc)"
             ],
-            "blocked": true,
-            "reasons": [
-              "conclusion_similarity>0.7"
-            ]
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
           },
-          "expert_insight_complete": true,
-          "expert_insight_missing_fields": [],
-          "reason": "conclusion_similarity>0.7"
-        }
-      ],
-      "signalCardItems": [
+          "score": 86
+        },
         {
-          "id": "51c2ac92c77262f5",
-          "title": "The AI-native era: Nokia’s new AI networking lab promises to shape the future",
-          "infrastructure_relevance_score": 0.722,
-          "infrastructure_relevance_tier": "signal_card",
-          "infrastructure_relevance_action": "publish_signal_card_only",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:0.64",
-            "cloud_capacity_relevance:0.76(cloud capacity, hyperscalers)",
-            "semiconductor_relevance:0.22(amd)",
-            "power_grid_relevance:0.50(power, grid)",
-            "enterprise_ai_infrastructure_relevance:0.24(networking)"
+          "id": "31c08800182195fe",
+          "source": "Data Center Knowledge",
+          "url": "https://www.datacenterknowledge.com/energy-power-supply/how-ercot-s-post-crez-bet-is-reshaping-ai-infrastructure",
+          "title": "Texas’ 765 kV Decision: Build the Wires, the AI Will Follow",
+          "snippet": "The state’s first extra-high-voltage network marks a fundamental shift in grid planning – building massive capacity for data centers and other large loads before they even break ground.",
+          "contentText": "The state’s first extra-high-voltage network marks a fundamental shift in grid planning – building massive capacity for data centers and other large loads before they even break ground.",
+          "publishedAt": "2026-07-06T16:12:14.000Z",
+          "sourceImage": "https://eu-images.contentstack.com/v3/assets/blt8eb3cdfc1fce5194/bltff24428c8e6bf6dc/6a4bd356c6acc87b048bf557/Texas-Power-Lines.jpg?width=720&quality=80&disable=upscale",
+          "region": "APAC",
+          "language": "en",
+          "defaultCategory": "Colocation & Wholesale",
+          "category": "Data Centers",
+          "primary_category": "Data Centers",
+          "secondary_category": "Campus development and colocation capacity",
+          "infrastructure_layer": "Facility",
+          "affected_stakeholders": [
+            "data center operators",
+            "developers",
+            "site selectors",
+            "investors"
           ],
-          "extraction_quality_score": 1,
-          "source_domain_adapter": "generic",
-          "content_length": 1623,
-          "boilerplate_ratio": 0,
-          "repetition_blocked": false,
-          "repetition_block_reasons": [],
-          "repetition_check": null,
-          "expert_insight_complete": true,
-          "expert_insight_missing_fields": [],
-          "reason": "infrastructure_relevance_signal_card_threshold"
+          "article_type": "Capacity Expansion",
+          "urgency_score": 0.66,
+          "taxonomy_confidence": 0.77,
+          "taxonomy_reasons": [
+            "colocation",
+            "wholesale"
+          ],
+          "direct_ai_infrastructure_relevance": 0.82,
+          "data_center_relevance": 1,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0,
+          "power_grid_relevance": 0.5,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.945,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:0.82",
+            "data_center_relevance:1.00(data center, data centers, colocation)",
+            "power_grid_relevance:0.50(power, grid)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 0.82,
+            "data_center_relevance": 1,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0,
+            "power_grid_relevance": 0.5,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.945,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:0.82",
+              "data_center_relevance:1.00(data center, data centers, colocation)",
+              "power_grid_relevance:0.50(power, grid)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 86
+        },
+        {
+          "id": "4909137cc9425f42",
+          "source": "StorageReview",
+          "url": "https://www.storagereview.com/news/sk-hynix-ships-12-high-hbm4e-samples-16gbps-per-pin-and-48gb-stacks",
+          "title": "SK hynix Ships 12-High HBM4E Samples: 16Gbps Per Pin and 48GB Stacks",
+          "snippet": "SK hynix says it shipped samples of its 12-stack HBM4E (High Bandwidth Memory) to major customers, marking the next step in the company’s AI memory roadmap. The company said the samples were delivered on schedule and th…",
+          "contentText": "SK hynix says it shipped samples of its 12-stack HBM4E (High Bandwidth Memory) to major customers, marking the next step in the company&#8217;s AI memory roadmap. The company said the samples were delivered on schedule and that it will work closely with partners toward timely mass production. HBM4E builds on the company&#8217;s HBM portfolio with improvements in both bandwidth and power efficiency aimed at AI training and inference workloads. SK hynix said the new memory delivers up to 16Gbps per pin while improving power efficiency by more than 20% compared to previous-generation products. The company also introduced a new interface and design optimizations intended to reduce data transfer latency and improve stability under high-bandwidth operating conditions. These enhancements are des…",
+          "publishedAt": "2026-07-06T16:27:56.000Z",
+          "sourceImage": "https://www.storagereview.com/wp-content/uploads/2026/07/Storagereview-SK-hynix-HBM4E.png",
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "category": "AI Infrastructure",
+          "primary_category": "AI Infrastructure",
+          "secondary_category": "GPU clusters and deployment readiness",
+          "infrastructure_layer": "Compute",
+          "affected_stakeholders": [
+            "operators",
+            "hyperscalers",
+            "cloud buyers",
+            "investors"
+          ],
+          "article_type": "Supply Chain",
+          "urgency_score": 0.56,
+          "taxonomy_confidence": 0.77,
+          "taxonomy_reasons": [
+            "ai infrastructure",
+            "neocloud"
+          ],
+          "direct_ai_infrastructure_relevance": 1,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0.58,
+          "power_grid_relevance": 0.22,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0.3,
+          "infrastructure_relevance_score": 0.928,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "semiconductor_relevance:0.58(hbm, gpu)",
+            "power_grid_relevance:0.22(power)",
+            "enterprise_ai_infrastructure_relevance:0.30(inference workloads)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 1,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0.58,
+            "power_grid_relevance": 0.22,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0.3,
+            "infrastructure_relevance_score": 0.928,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+              "semiconductor_relevance:0.58(hbm, gpu)",
+              "power_grid_relevance:0.22(power)",
+              "enterprise_ai_infrastructure_relevance:0.30(inference workloads)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 85
+        },
+        {
+          "id": "d95c05a687d46a34",
+          "source": "StorageReview",
+          "url": "https://www.storagereview.com/news/canonical-lxd-6-9-adds-dell-powerstore-driver-and-fibre-channel-support",
+          "title": "Canonical LXD 6.9 Adds Dell PowerStore Driver and Fibre Channel Support",
+          "snippet": "Canonical has released LXD 6.9 with updates aimed squarely at storage teams: a native driver for Dell PowerStore arrays, a new Fibre Channel connector for remote storage generally, and support for Dell PowerFlex 5. For…",
+          "contentText": "Canonical has released LXD 6.9 with updates aimed squarely at storage teams: a native driver for Dell PowerStore arrays, a new Fibre Channel connector for remote storage generally, and support for Dell PowerFlex 5. For a platform that started life as a container manager, that is a notable amount of enterprise SAN plumbing in a single release. For readers who have not tracked it, LXD is Canonical&#8217;s open-source virtualization platform that manages both system containers and full KVM virtual machines across clustered hosts. It has gained attention as organizations reassess their hypervisor options in the wake of Broadcom&#8217;s VMware licensing changes, and Canonical has been steadily building out the enterprise features (clustering, live migration, a Kubernetes CSI driver, disaster-r…",
+          "publishedAt": "2026-07-06T17:05:23.000Z",
+          "sourceImage": "https://www.storagereview.com/wp-content/uploads/2026/05/StorageReview-Dell-PowerStore-9500-20-2.jpg",
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "category": "Enterprise AI Infrastructure",
+          "primary_category": "Enterprise AI Infrastructure",
+          "secondary_category": "Enterprise deployment operations",
+          "infrastructure_layer": "Enterprise Platform",
+          "affected_stakeholders": [
+            "enterprise IT",
+            "cloud buyers",
+            "platform teams",
+            "software vendors"
+          ],
+          "article_type": "Capacity Expansion",
+          "urgency_score": 0.47,
+          "taxonomy_confidence": 0.79,
+          "taxonomy_reasons": [
+            "kubernetes",
+            "virtualization",
+            "storage"
+          ],
+          "direct_ai_infrastructure_relevance": 1,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0.22,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0.6,
+          "infrastructure_relevance_score": 0.897,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "semiconductor_relevance:0.22(gpu)",
+            "enterprise_ai_infrastructure_relevance:0.60(kubernetes, virtualization, storage)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 1,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0.22,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0.6,
+            "infrastructure_relevance_score": 0.897,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+              "semiconductor_relevance:0.22(gpu)",
+              "enterprise_ai_infrastructure_relevance:0.60(kubernetes, virtualization, storage)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 84
+        },
+        {
+          "id": "410f7a49db92484a",
+          "source": "NVIDIA Blog",
+          "url": "https://blogs.nvidia.com/blog/open-models-icml-2026/",
+          "title": "How Open Models Are Driving AI Research",
+          "snippet": "Every year, the International Conference on Machine Learning (ICML) reveals where thousands of AI researchers have decided to put their work. This year’s accepted papers reveal a clear direction: open frontier models an…",
+          "contentText": "Every year, the International Conference on Machine Learning (ICML) reveals where thousands of AI researchers have decided to put their work. This year’s accepted papers reveal a clear direction: open frontier models and open AI infrastructure have become foundational to how modern AI science gets done. NVIDIA had 74 papers accepted at ICML 2026. Approximately 2,000 accepted papers cite NVIDIA GPUs, and 145 cite NVIDIA Nemotron — a family of open models, including open datasets — as the foundation for new research. Hundreds more draw on NVIDIA Cosmos , NVIDIA Isaac GR00T , BioNeMo and other NVIDIA open model families, spanning physical AI, robotics, autonomous vehicles and biomedical research. The Themes Defining This Year’s Research Areas including vision and video generation, reinforcem…",
+          "publishedAt": "2026-07-06T16:00:00.000Z",
+          "sourceImage": "https://blogs.nvidia.com/wp-content/uploads/2026/07/ICML-Blog-Featured-Image.jpg",
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "category": "AI Infrastructure",
+          "primary_category": "AI Infrastructure",
+          "secondary_category": "GPU clusters and deployment readiness",
+          "infrastructure_layer": "Compute",
+          "affected_stakeholders": [
+            "operators",
+            "hyperscalers",
+            "cloud buyers",
+            "investors"
+          ],
+          "article_type": "Research / Technical",
+          "urgency_score": 0.45,
+          "taxonomy_confidence": 0.77,
+          "taxonomy_reasons": [
+            "ai infrastructure",
+            "neocloud"
+          ],
+          "direct_ai_infrastructure_relevance": 1,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0.5,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.84,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "semiconductor_relevance:0.50(nvidia, gpu)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 1,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0.5,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.84,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+              "semiconductor_relevance:0.50(nvidia, gpu)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 81
+        },
+        {
+          "id": "4e32a54851aaf208",
+          "source": "ServeTheHome",
+          "url": "https://www.servethehome.com/amd-ryzen-ai-halo-developer-system-review-amd-goes-for-local-ai/",
+          "title": "AMD Ryzen AI Halo Developer System Review AMD Goes for Local AI",
+          "snippet": "We test the AMD Ryzen AI Halo developer system and see how AMD is putting its spin on a 128GB local AI dev box The post AMD Ryzen AI Halo Developer System Review AMD Goes for Local AI appeared first on ServeTheHome.",
+          "contentText": "We test the AMD Ryzen AI Halo developer system and see how AMD is putting its spin on a 128GB local AI dev box The post AMD Ryzen AI Halo Developer System Review AMD Goes for Local AI appeared first on ServeTheHome .",
+          "publishedAt": "2026-07-06T15:00:20.000Z",
+          "sourceImage": null,
+          "region": "Global",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "category": "AI Infrastructure",
+          "primary_category": "AI Infrastructure",
+          "secondary_category": "GPU clusters and deployment readiness",
+          "infrastructure_layer": "Compute",
+          "affected_stakeholders": [
+            "operators",
+            "hyperscalers",
+            "cloud buyers",
+            "investors"
+          ],
+          "article_type": "Other",
+          "urgency_score": 0.45,
+          "taxonomy_confidence": 0.77,
+          "taxonomy_reasons": [
+            "ai infrastructure",
+            "neocloud"
+          ],
+          "direct_ai_infrastructure_relevance": 1,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0.517,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.844,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "semiconductor_relevance:0.52(amd, gpu)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 1,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0.517,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.844,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+              "semiconductor_relevance:0.52(amd, gpu)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 81
         }
       ],
-      "archiveOnlyItems": []
-    },
+      "curatedIds": [
+        "557157c0d6d50936",
+        "31c08800182195fe",
+        "4909137cc9425f42",
+        "d95c05a687d46a34",
+        "410f7a49db92484a",
+        "4e32a54851aaf208"
+      ],
+      "publishedIds": [
+        "31c08800182195fe",
+        "557157c0d6d50936"
+      ],
+      "slotPublications": {
+        "0": true
+      }
+    }
+  },
+  "runHistory": [
     {
       "at": "2026-05-27T18:06:41.529Z",
       "day": "2026-05-28",
@@ -39540,7 +39891,131 @@
         }
       ],
       "archiveOnlyItems": []
+    },
+    {
+      "at": "2026-07-06T17:49:19.766Z",
+      "day": "2026-07-07",
+      "slot": 0,
+      "publishedCount": 0,
+      "signalCardCount": 1,
+      "archiveOnlyCount": 0,
+      "repetitionBlockedCount": 1,
+      "publishedIds": [],
+      "processedIds": [
+        "31c08800182195fe",
+        "557157c0d6d50936"
+      ],
+      "blockedCount": 1,
+      "blockedItems": [
+        {
+          "id": "31c08800182195fe",
+          "title": "Texas’ 765 kV Decision: Build the Wires, the AI Will Follow",
+          "infrastructure_relevance_score": 1,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:0.82(ai infrastructure)",
+            "data_center_relevance:1.00(data center, data centers, colocation)",
+            "cloud_capacity_relevance:0.32(hyperscalers)",
+            "power_grid_relevance:1.00(power, grid, utilities)",
+            "capital_markets_relevance:0.28(capex)"
+          ],
+          "extraction_quality_score": 1,
+          "source_domain_adapter": "datacenterknowledge",
+          "content_length": 1666,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": false,
+          "repetition_block_reasons": [],
+          "repetition_check": null,
+          "expert_insight_complete": false,
+          "expert_insight_missing_fields": [
+            "named_companies"
+          ],
+          "reason": "expert_insight_missing_fields named_companies"
+        }
+      ],
+      "repetitionBlockedItems": [
+        {
+          "id": "557157c0d6d50936",
+          "title": "China-made CXMT memory now supports faster speeds on MSI's AMD motherboards — new BIOS adds DDR5-8200 validation on dual-DIMM, DDR5-7200 on quad-DIMM models",
+          "infrastructure_relevance_score": 1,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "cloud_capacity_relevance:0.32(hyperscalers)",
+            "semiconductor_relevance:1.00(nvidia, amd, intel)",
+            "power_grid_relevance:0.22(power)"
+          ],
+          "extraction_quality_score": 1,
+          "source_domain_adapter": "generic",
+          "content_length": 1699,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": true,
+          "repetition_block_reasons": [
+            "repeated_sentence_ratio>0.12",
+            "conclusion_similarity>0.7"
+          ],
+          "repetition_check": {
+            "compared_article_count": 20,
+            "repeated_sentence_ratio": 0.5,
+            "repeated_paragraph_ratio": 0.6,
+            "heading_sequence_similarity": 0,
+            "banned_phrase_count": 0,
+            "banned_phrase_counts": {},
+            "recent_banned_phrase_counts": {},
+            "ngram_overlap": 0.5793650793650794,
+            "blueprint_repetition": 2,
+            "conclusion_similarity": 0.9511897312113418,
+            "repeated_sentence_count": 3,
+            "repeated_paragraph_count": 3,
+            "heading_sequence": [
+              "Policy Move",
+              "Infrastructure Exposure",
+              "Who Benefits",
+              "Watch Item"
+            ],
+            "blocked": true,
+            "reasons": [
+              "repeated_sentence_ratio>0.12",
+              "conclusion_similarity>0.7"
+            ]
+          },
+          "expert_insight_complete": true,
+          "expert_insight_missing_fields": [],
+          "reason": "repeated_sentence_ratio>0.12; conclusion_similarity>0.7"
+        }
+      ],
+      "signalCardItems": [
+        {
+          "id": "31c08800182195fe",
+          "title": "Texas’ 765 kV Decision: Build the Wires, the AI Will Follow",
+          "infrastructure_relevance_score": 1,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:0.82(ai infrastructure)",
+            "data_center_relevance:1.00(data center, data centers, colocation)",
+            "cloud_capacity_relevance:0.32(hyperscalers)",
+            "power_grid_relevance:1.00(power, grid, utilities)",
+            "capital_markets_relevance:0.28(capex)"
+          ],
+          "extraction_quality_score": 1,
+          "source_domain_adapter": "datacenterknowledge",
+          "content_length": 1666,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": false,
+          "repetition_block_reasons": [],
+          "repetition_check": null,
+          "expert_insight_complete": false,
+          "expert_insight_missing_fields": [
+            "named_companies"
+          ],
+          "reason": "expert_insight_missing_fields named_companies"
+        }
+      ],
+      "archiveOnlyItems": []
     }
   ],
-  "lastRunAt": "2026-07-06T11:43:15.336Z"
+  "lastRunAt": "2026-07-06T17:49:19.766Z"
 }
