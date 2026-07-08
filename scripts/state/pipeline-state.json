@@ -583,7 +583,9 @@
     "e3d2d3f29bf3c3a4",
     "63f49f42d14d3bef",
     "95ded0cd1bc972ec",
-    "805c0b6a711aa623"
+    "805c0b6a711aa623",
+    "8b61d7f2d34d24b2",
+    "058d1f7712cf684e"
   ],
   "dayPlans": {
     "2026-03-24": {
@@ -26812,160 +26814,18 @@
     "2026-07-08": {
       "date": "2026-07-08",
       "createdAt": "2026-07-07T17:23:48.215Z",
-      "refreshedAt": "2026-07-07T17:23:48.215Z",
+      "refreshedAt": "2026-07-07T23:59:37.929Z",
       "candidateWindowHours": 24,
       "curatedItems": [
         {
-          "id": "95ded0cd1bc972ec",
-          "source": "StorageReview",
-          "url": "https://www.storagereview.com/news/tensorwave-raises-350m-series-b-at-1-55b-valuation-to-grow-its-amd-instinct-ai-cloud",
-          "title": "TensorWave Raises $350M Series B at $1.55B Valuation to Grow Its AMD Instinct AI Cloud",
-          "snippet": "TensorWave has closed a $350 million Series B round at a $1.55 billion valuation to expand its AMD-based AI cloud infrastructure. The round, announced June 10, was co-led by Magnetar and AMD Ventures, with participation…",
-          "contentText": "TensorWave has closed a $350 million Series B round at a $1.55 billion valuation to expand its AMD-based AI cloud infrastructure. The round, announced June 10, was co-led by Magnetar and AMD Ventures, with participation from existing investors Maverick Silicon, Nexus Venture Partners, and Western Frontier. The new capital will fund deployment of next-generation AMD Instinct MI355X GPU clusters optimized for memory-intensive AI workloads, including large language model training, high-throughput inference, and generative AI applications. TensorWave said the expansion aims to meet growing demand for AI compute while offering an alternative to vertically integrated GPU cloud platforms through an open, AMD-based ecosystem. TensorWave&#8217;s infrastructure is already used by AI developers incl…",
-          "publishedAt": "2026-07-07T16:57:34.000Z",
-          "sourceImage": "https://www.storagereview.com/wp-content/uploads/2025/06/StorageReview-AMD-Advancing-AI-MI350-1-2.jpg",
-          "region": "US",
-          "language": "en",
-          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
-          "category": "AI Infrastructure",
-          "primary_category": "AI Infrastructure",
-          "secondary_category": "GPU clusters and deployment readiness",
-          "infrastructure_layer": "Compute",
-          "affected_stakeholders": [
-            "operators",
-            "hyperscalers",
-            "cloud buyers",
-            "investors"
-          ],
-          "article_type": "Capacity Expansion",
-          "urgency_score": 0.47,
-          "taxonomy_confidence": 0.77,
-          "taxonomy_reasons": [
-            "ai infrastructure",
-            "neocloud"
-          ],
-          "direct_ai_infrastructure_relevance": 1,
-          "data_center_relevance": 0,
-          "cloud_capacity_relevance": 0,
-          "semiconductor_relevance": 0.517,
-          "power_grid_relevance": 0,
-          "cooling_relevance": 0,
-          "capital_markets_relevance": 0.351,
-          "enterprise_ai_infrastructure_relevance": 0.24,
-          "infrastructure_relevance_score": 0.914,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, gpu clusters, neocloud)",
-            "semiconductor_relevance:0.52(amd, gpu)",
-            "capital_markets_relevance:0.35(valuation)",
-            "enterprise_ai_infrastructure_relevance:0.24(ai workloads)"
-          ],
-          "infrastructure_relevance": {
-            "direct_ai_infrastructure_relevance": 1,
-            "data_center_relevance": 0,
-            "cloud_capacity_relevance": 0,
-            "semiconductor_relevance": 0.517,
-            "power_grid_relevance": 0,
-            "cooling_relevance": 0,
-            "capital_markets_relevance": 0.351,
-            "enterprise_ai_infrastructure_relevance": 0.24,
-            "infrastructure_relevance_score": 0.914,
-            "infrastructure_relevance_tier": "full_memo",
-            "infrastructure_relevance_action": "generate_full_memo",
-            "infrastructure_relevance_reasons": [
-              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, gpu clusters, neocloud)",
-              "semiconductor_relevance:0.52(amd, gpu)",
-              "capital_markets_relevance:0.35(valuation)",
-              "enterprise_ai_infrastructure_relevance:0.24(ai workloads)"
-            ],
-            "infrastructureRelevanceAction": "generate_full_memo",
-            "articlePagePublished": true,
-            "homepagePublished": true,
-            "archiveOnly": false,
-            "archiveOnlyReason": null
-          },
-          "score": 84
-        },
-        {
-          "id": "805c0b6a711aa623",
-          "source": "NVIDIA Blog",
-          "url": "https://blogs.nvidia.com/blog/nvidia-vera-max-single-threaded-cpu-at-scale/",
-          "title": "AI Innovators Adopt NVIDIA Vera — Why Max Single-Threaded CPU at Scale Matters",
-          "snippet": "Max single-threaded CPUs at scale are a new category of CPUs built for the agentic AI era. Across the creation and deployment of an agentic system, the CPU is on the critical path for reasoning, response time and learni…",
-          "contentText": "Max single-threaded CPUs at scale are a new category of CPUs built for the agentic AI era. A cross the creation and deployment of an agentic system, the CPU is on the critical path for reasoning, response time and learning. CPUs are the processor which executes the work the AI model commands: the tool calling, code execution, data processing, KV-cache and result analysis. For agents in AI factories, speed matters. The faster the CPU can run the tool, the faster the agent can perform the task at hand. For the AI factory, the utilization of GPU is the most valuable resource in the data center so any time waiting for a task to complete constrains the revenue of an AI factory — or worse, impacts the GPU utilization waiting for the CPU to finish its task. AI factories need a CPU with max singl…",
-          "publishedAt": "2026-07-07T15:00:52.000Z",
-          "sourceImage": "https://blogs.nvidia.com/wp-content/uploads/2026/07/cpu-press-vera-cpu-agentic-tl-1920x1080-5404450.png",
-          "region": "US",
-          "language": "en",
-          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
-          "category": "AI Infrastructure",
-          "primary_category": "AI Infrastructure",
-          "secondary_category": "GPU clusters and deployment readiness",
-          "infrastructure_layer": "Compute",
-          "affected_stakeholders": [
-            "operators",
-            "hyperscalers",
-            "cloud buyers",
-            "investors"
-          ],
-          "article_type": "Operations Update",
-          "urgency_score": 0.47,
-          "taxonomy_confidence": 0.77,
-          "taxonomy_reasons": [
-            "ai infrastructure",
-            "neocloud"
-          ],
-          "direct_ai_infrastructure_relevance": 1,
-          "data_center_relevance": 0.42,
-          "cloud_capacity_relevance": 0,
-          "semiconductor_relevance": 0.598,
-          "power_grid_relevance": 0,
-          "cooling_relevance": 0,
-          "capital_markets_relevance": 0,
-          "enterprise_ai_infrastructure_relevance": 0,
-          "infrastructure_relevance_score": 0.897,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "data_center_relevance:0.42(data center)",
-            "semiconductor_relevance:0.60(nvidia, gpu)"
-          ],
-          "infrastructure_relevance": {
-            "direct_ai_infrastructure_relevance": 1,
-            "data_center_relevance": 0.42,
-            "cloud_capacity_relevance": 0,
-            "semiconductor_relevance": 0.598,
-            "power_grid_relevance": 0,
-            "cooling_relevance": 0,
-            "capital_markets_relevance": 0,
-            "enterprise_ai_infrastructure_relevance": 0,
-            "infrastructure_relevance_score": 0.897,
-            "infrastructure_relevance_tier": "full_memo",
-            "infrastructure_relevance_action": "generate_full_memo",
-            "infrastructure_relevance_reasons": [
-              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-              "data_center_relevance:0.42(data center)",
-              "semiconductor_relevance:0.60(nvidia, gpu)"
-            ],
-            "infrastructureRelevanceAction": "generate_full_memo",
-            "articlePagePublished": true,
-            "homepagePublished": true,
-            "archiveOnly": false,
-            "archiveOnlyReason": null
-          },
-          "score": 84
-        },
-        {
-          "id": "1d72c11a019aa488",
+          "id": "058d1f7712cf684e",
           "source": "Toms Hardware",
-          "url": "https://www.tomshardware.com/tech-industry/chinese-memory-and-storage-firm-expected-to-post-more-than-60-000-percent-jump-in-profits-due-to-exploding-demand-lexar-owner-longsys-forecasts-nearly-usd1-5-billion-profit-for-1h26-compared-to-usd2-1-million-last-year",
-          "title": "Chinese memory and storage firm expected to post more than 60,000% jump in profits due to exploding demand — Lexar owner Longsys forecasts nearly $1.5 billion profit for 1H26 compared to $2.1 million last year",
-          "snippet": "Chinese memory and storage manufacturer Longsys expects to post a massive increase in profits due to the AI-driven chip shortage.",
-          "contentText": "Shenzhen Longsys Electronics, the Chinese parent company of Lexar , announced that it’s expecting a net profit of $1.36 to $1.62 billion (or 9.2 to 11 billion yuan) for the first half of 2026, smashing its year-ago profit of just $2.2 million. This represents an incredible jump of 61,818% to 73,636%, and it comes on revenue forecasts of $3.24 to $3.68 billion (22 to 25 billion yuan) — more than double the $1.5 billion it achieved last year, according to the South China Morning Post (SCMP) . This massive growth is attributed to the increased demand for—you guessed it— memory and storage chips due to the global AI infrastructure buildout, and all that demand is competing for limited memory wafer capacity. Longsys says that it has signed long-term agreements and memoranda of understanding wi…",
-          "publishedAt": "2026-07-07T16:13:09.000Z",
-          "sourceImage": "https://cdn.mos.cms.futurecdn.net/sU4Bt8gYKvkvKgDDNUz9HE-1280-80.jpg",
+          "url": "https://www.tomshardware.com/pc-components/gpus/unannounced-nvidia-rtx-50-super-gpus-appear-in-seasonic-psu-calculator-unreleased-graphics-cards-shown-with-10-17-percent-higher-tgp-over-original-models",
+          "title": "Unannounced Nvidia RTX 50 Super GPUs appear in Seasonic PSU calculator — unreleased graphics cards shown with 10-17% higher TGP over original models",
+          "snippet": "Total graphics power figures for Nvidia's unanounced, unreleased RTX 50 Super-series graphics cards have appeared in Seasonic's PSU capacity calculator, revealing potentially higher TGPs of those products.",
+          "contentText": "The GeForce RTX 50-series desktop graphics lineup has remained unchanged for just over a year now (since the introduction of the RTX 5050), and none of the conversations we've had at major trade shows suggests that a mid-cycle Super refresh will occur any time soon. But there are still signs that such an update could still happen at some point, and the latest sign comes from Seasonic, which has listed an RTX 5080 Super, an RTX 5070 Ti Super, and RTX 5070 Ti Super in its PSU wattage calculator . Go deeper with TH Premium: GPUs (Image credit: Noctua) Desktop Roadmap Enterprise Roadmap Rubin in-depth The Stout Owl: The ultimate Noctua G2 PC You can click through the calculator and assemble a hypothetical system with these unannounced products inside. To be useful, this calculator also provid…",
+          "publishedAt": "2026-07-07T21:34:05.000Z",
+          "sourceImage": "https://cdn.mos.cms.futurecdn.net/CBBS7c4u3Y3LJcY55ryv2W-1280-80.jpg",
           "region": "APAC",
           "language": "en",
           "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
@@ -26980,7 +26840,7 @@
             "investors"
           ],
           "article_type": "Capacity Expansion",
-          "urgency_score": 0.7,
+          "urgency_score": 0.63,
           "taxonomy_confidence": 0.77,
           "taxonomy_reasons": [
             "ai infrastructure",
@@ -26989,35 +26849,35 @@
           "direct_ai_infrastructure_relevance": 1,
           "data_center_relevance": 0,
           "cloud_capacity_relevance": 0,
-          "semiconductor_relevance": 0.46,
-          "power_grid_relevance": 0,
+          "semiconductor_relevance": 0.598,
+          "power_grid_relevance": 0.22,
           "cooling_relevance": 0,
           "capital_markets_relevance": 0,
-          "enterprise_ai_infrastructure_relevance": 0.243,
-          "infrastructure_relevance_score": 0.866,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.897,
           "infrastructure_relevance_tier": "full_memo",
           "infrastructure_relevance_action": "generate_full_memo",
           "infrastructure_relevance_reasons": [
             "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "semiconductor_relevance:0.46(wafer, gpu)",
-            "enterprise_ai_infrastructure_relevance:0.24(storage)"
+            "semiconductor_relevance:0.60(nvidia, gpu)",
+            "power_grid_relevance:0.22(power)"
           ],
           "infrastructure_relevance": {
             "direct_ai_infrastructure_relevance": 1,
             "data_center_relevance": 0,
             "cloud_capacity_relevance": 0,
-            "semiconductor_relevance": 0.46,
-            "power_grid_relevance": 0,
+            "semiconductor_relevance": 0.598,
+            "power_grid_relevance": 0.22,
             "cooling_relevance": 0,
             "capital_markets_relevance": 0,
-            "enterprise_ai_infrastructure_relevance": 0.243,
-            "infrastructure_relevance_score": 0.866,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.897,
             "infrastructure_relevance_tier": "full_memo",
             "infrastructure_relevance_action": "generate_full_memo",
             "infrastructure_relevance_reasons": [
               "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-              "semiconductor_relevance:0.46(wafer, gpu)",
-              "enterprise_ai_infrastructure_relevance:0.24(storage)"
+              "semiconductor_relevance:0.60(nvidia, gpu)",
+              "power_grid_relevance:0.22(power)"
             ],
             "infrastructureRelevanceAction": "generate_full_memo",
             "articlePagePublished": true,
@@ -27025,7 +26885,77 @@
             "archiveOnly": false,
             "archiveOnlyReason": null
           },
-          "score": 82
+          "score": 84
+        },
+        {
+          "id": "8b61d7f2d34d24b2",
+          "source": "HPCwire",
+          "url": "https://www.hpcwire.com/off-the-wire/fresno-state-opens-f3i-supercomputing-center-to-advance-ai-across-california-agriculture/",
+          "title": "Fresno State Opens F3i Supercomputing Center to Advance AI Across California Agriculture",
+          "snippet": "Regional partnership establishes innovation platform to strengthen agriculture security and rural reinvestment July 7, 2026 — F3 Innovate (F3i), Fresno State and the San Diego Supercomputer Center at UC San Diego have a…",
+          "contentText": "Regional partnership establishes innovation platform to strengthen agriculture security and rural reinvestment July 7, 2026 &#8212; F3 Innovate (F3i), Fresno State and the San Diego Supercomputer Center at UC San Diego have announced the launch of the F3i Supercomputing Center , a regional innovation platform providing the computing power, technical support and talent pipeline needed to accelerate innovation across California’s food and agriculture supply chain. The center represents a first-of-its-kind partnership between industry and higher education to expand access to the advanced computing infrastructure needed to compete in an AI-driven economy. The universities, F3i and local leaders will celebrate the launch of the Supercomputer Center from 10 a.m. to noon Thursday, July 9 , in th…",
+          "publishedAt": "2026-07-07T21:24:39.000Z",
+          "sourceImage": "https://www.hpcwire.com/wp-content/uploads/2026/07/Fresno-State-300x300.png",
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "category": "AI Infrastructure",
+          "primary_category": "AI Infrastructure",
+          "secondary_category": "GPU clusters and deployment readiness",
+          "infrastructure_layer": "Compute",
+          "affected_stakeholders": [
+            "operators",
+            "hyperscalers",
+            "cloud buyers",
+            "investors"
+          ],
+          "article_type": "Capacity Expansion",
+          "urgency_score": 0.56,
+          "taxonomy_confidence": 0.77,
+          "taxonomy_reasons": [
+            "ai infrastructure",
+            "neocloud"
+          ],
+          "direct_ai_infrastructure_relevance": 1,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0.22,
+          "power_grid_relevance": 0.22,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.813,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "semiconductor_relevance:0.22(gpu)",
+            "power_grid_relevance:0.22(power)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 1,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0.22,
+            "power_grid_relevance": 0.22,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.813,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+              "semiconductor_relevance:0.22(gpu)",
+              "power_grid_relevance:0.22(power)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 80
         },
         {
           "id": "1d863b7cada1fd93",
@@ -27097,17 +27027,17 @@
             "archiveOnly": false,
             "archiveOnlyReason": null
           },
-          "score": 81
+          "score": 73
         },
         {
-          "id": "64ea44f09014ad08",
-          "source": "HPCwire",
-          "url": "https://www.hpcwire.com/off-the-wire/taccs-horizon-nears-early-operations-as-nsf-leadership-class-supercomputer/",
-          "title": "TACC’s Horizon Nears Early Operations as NSF Leadership-Class Supercomputer",
-          "snippet": "Scientists explore the U.S. NSF Leadership-Class Computing Facility and the discoveries it will enable July 7, 2026 — A new era of U.S. scientific computing is underway. Horizon, at the Texas Advanced Computing Center (…",
-          "contentText": "Scientists explore the U.S. NSF Leadership-Class Computing Facility and the discoveries it will enable July 7, 2026 &#8212; A new era of U.S. scientific computing is underway. Horizon , at the Texas Advanced Computing Center (TACC) at The University of Texas at Austin, will soon begin early operations broadly for the research community. As the flagship supercomputer of the U.S. National Science Foundation Leadership-Class Computing Facility (NSF LCCF), Horizon will provide unprecedented computing power to researchers tackling some of the nation&#8217;s most ambitious scientific challenges. Clockwise) Dan Stanzione, Texas Advanced Computing Center; Katie Antypas, National Science Foundation; Tom Quinn, University of Washington; Yifeng Cui, San Diego Supercomputer Center; Steven A. Gottlieb…",
-          "publishedAt": "2026-07-07T17:03:25.000Z",
-          "sourceImage": "https://www.hpcwire.com/wp-content/uploads/2026/07/csa-speakers-collage_edited.jpg__800x533_q85_subsampling-2-300x200.jpg",
+          "id": "c39fd7cad98b262b",
+          "source": "Semiconductor Engineering",
+          "url": "https://semiengineering.com/photoluminescence-inspection-is-changing-how-manufacturers-protect-yield-in-sic-and-gan-devices/",
+          "title": "Photoluminescence Inspection Is Changing How Manufacturers Protect Yield In SiC And GaN Devices",
+          "snippet": "Detecting subsurface or crystalline defects that directly impact electrical behavior in wide-bandgap materials. The post Photoluminescence Inspection Is Changing How Manufacturers Protect Yield In SiC And GaN Devices ap…",
+          "contentText": "Electric vehicles, fast-charging infrastructure, renewable energy systems, and industrial power conversion are redefining what power semiconductors need to deliver: higher voltages, higher power densities, faster switching, and longer lifetimes. To meet these demands, manufacturers are increasingly turning to wide-bandgap materials like silicon carbide (SiC) and gallium nitride (GaN). SiC has become the material of choice for high-voltage applications such as traction inverters, onboard chargers, and motor drives, while GaN is widely adopted in fast-charging and high-frequency power devices. As these end products scale in volume and performance, the pressure on semiconductor manufacturing to deliver consistent yield and reliability continues to mount. At the same time, manufacturers are u…",
+          "publishedAt": "2026-07-07T07:08:27.000Z",
+          "sourceImage": "https://i0.wp.com/semiengineering.com/wp-content/uploads/2026/07/Onto_Photoluminescence-Inspection-SiC-GaN-fig1.webp?resize=624%2C502&#038;ssl=1",
           "region": "US",
           "language": "en",
           "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
@@ -27121,8 +27051,78 @@
             "cloud buyers",
             "investors"
           ],
-          "article_type": "Operations Update",
-          "urgency_score": 0.52,
+          "article_type": "Other",
+          "urgency_score": 0.57,
+          "taxonomy_confidence": 0.77,
+          "taxonomy_reasons": [
+            "ai infrastructure",
+            "neocloud"
+          ],
+          "direct_ai_infrastructure_relevance": 1,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0.94,
+          "power_grid_relevance": 0.4,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.972,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "semiconductor_relevance:0.94(semiconductor, semiconductors, gpu)",
+            "power_grid_relevance:0.40(power, renewable)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 1,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0.94,
+            "power_grid_relevance": 0.4,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.972,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+              "semiconductor_relevance:0.94(semiconductor, semiconductors, gpu)",
+              "power_grid_relevance:0.40(power, renewable)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 73
+        },
+        {
+          "id": "359f9244814d723a",
+          "source": "TechCrunch AI",
+          "url": "https://techcrunch.com/2026/07/07/meta-rolls-out-muse-a-new-ai-image-generator/",
+          "title": "Meta rolls out Muse, a new AI image generator",
+          "snippet": "The new image-generating model has numerous use cases, including advertising, decorating and creator-based opportunities.",
+          "contentText": "The new image-generating model has numerous use cases, including advertising, decorating and creator-based opportunities.",
+          "publishedAt": "2026-07-07T22:18:10.000Z",
+          "sourceImage": null,
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "category": "AI Infrastructure",
+          "primary_category": "AI Infrastructure",
+          "secondary_category": "GPU clusters and deployment readiness",
+          "infrastructure_layer": "Compute",
+          "affected_stakeholders": [
+            "operators",
+            "hyperscalers",
+            "cloud buyers",
+            "investors"
+          ],
+          "article_type": "Other",
+          "urgency_score": 0.43,
           "taxonomy_confidence": 0.77,
           "taxonomy_reasons": [
             "ai infrastructure",
@@ -27132,34 +27132,32 @@
           "data_center_relevance": 0,
           "cloud_capacity_relevance": 0,
           "semiconductor_relevance": 0.22,
-          "power_grid_relevance": 0.22,
+          "power_grid_relevance": 0,
           "cooling_relevance": 0,
           "capital_markets_relevance": 0,
           "enterprise_ai_infrastructure_relevance": 0,
-          "infrastructure_relevance_score": 0.813,
+          "infrastructure_relevance_score": 0.778,
           "infrastructure_relevance_tier": "full_memo",
           "infrastructure_relevance_action": "generate_full_memo",
           "infrastructure_relevance_reasons": [
             "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "semiconductor_relevance:0.22(gpu)",
-            "power_grid_relevance:0.22(power)"
+            "semiconductor_relevance:0.22(gpu)"
           ],
           "infrastructure_relevance": {
             "direct_ai_infrastructure_relevance": 1,
             "data_center_relevance": 0,
             "cloud_capacity_relevance": 0,
             "semiconductor_relevance": 0.22,
-            "power_grid_relevance": 0.22,
+            "power_grid_relevance": 0,
             "cooling_relevance": 0,
             "capital_markets_relevance": 0,
             "enterprise_ai_infrastructure_relevance": 0,
-            "infrastructure_relevance_score": 0.813,
+            "infrastructure_relevance_score": 0.778,
             "infrastructure_relevance_tier": "full_memo",
             "infrastructure_relevance_action": "generate_full_memo",
             "infrastructure_relevance_reasons": [
               "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-              "semiconductor_relevance:0.22(gpu)",
-              "power_grid_relevance:0.22(power)"
+              "semiconductor_relevance:0.22(gpu)"
             ],
             "infrastructureRelevanceAction": "generate_full_memo",
             "articlePagePublished": true,
@@ -27167,7 +27165,7 @@
             "archiveOnly": false,
             "archiveOnlyReason": null
           },
-          "score": 80
+          "score": 72
         },
         {
           "id": "2bf99881c7fcbee7",
@@ -27235,148 +27233,30 @@
             "archiveOnly": false,
             "archiveOnlyReason": null
           },
-          "score": 79
+          "score": 71
         }
       ],
       "curatedIds": [
-        "95ded0cd1bc972ec",
-        "805c0b6a711aa623",
-        "1d72c11a019aa488",
+        "058d1f7712cf684e",
+        "8b61d7f2d34d24b2",
         "1d863b7cada1fd93",
-        "64ea44f09014ad08",
+        "c39fd7cad98b262b",
+        "359f9244814d723a",
         "2bf99881c7fcbee7"
       ],
       "publishedIds": [
         "95ded0cd1bc972ec",
-        "805c0b6a711aa623"
+        "805c0b6a711aa623",
+        "8b61d7f2d34d24b2",
+        "058d1f7712cf684e"
       ],
       "slotPublications": {
-        "0": true
+        "0": true,
+        "1": true
       }
     }
   },
   "runHistory": [
-    {
-      "at": "2026-05-28T18:16:30.634Z",
-      "day": "2026-05-29",
-      "slot": 0,
-      "publishedCount": 0,
-      "signalCardCount": 0,
-      "archiveOnlyCount": 0,
-      "repetitionBlockedCount": 2,
-      "publishedIds": [],
-      "processedIds": [
-        "deede025a79929a9",
-        "e1b69d4c0ff19ba0"
-      ],
-      "blockedCount": 0,
-      "blockedItems": [],
-      "repetitionBlockedItems": [
-        {
-          "id": "deede025a79929a9",
-          "title": "Proxmox Datacenter Manager 1.1 Adds Automated Installs and Unified Ceph Monitoring",
-          "infrastructure_relevance_score": 0.921,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "data_center_relevance:0.55(datacenter)",
-            "cloud_capacity_relevance:0.52(hyperscalers, provisioning)",
-            "semiconductor_relevance:0.22(gpu)",
-            "power_grid_relevance:0.22(power)"
-          ],
-          "extraction_quality_score": 1,
-          "source_domain_adapter": "storagereview",
-          "content_length": 1678,
-          "boilerplate_ratio": 0,
-          "repetition_blocked": true,
-          "repetition_block_reasons": [
-            "repeated_sentence_ratio>0.12",
-            "conclusion_similarity>0.7"
-          ],
-          "repetition_check": {
-            "compared_article_count": 16,
-            "repeated_sentence_ratio": 0.14285714285714285,
-            "repeated_paragraph_ratio": 0.16666666666666666,
-            "heading_sequence_similarity": 0,
-            "banned_phrase_count": 0,
-            "banned_phrase_counts": {},
-            "recent_banned_phrase_counts": {},
-            "ngram_overlap": 0.3879310344827586,
-            "blueprint_repetition": 1,
-            "conclusion_similarity": 0.9233805168766386,
-            "repeated_sentence_count": 1,
-            "repeated_paragraph_count": 1,
-            "heading_sequence": [
-              "Cost Signal",
-              "Below The Accelerator Layer",
-              "Buyer Exposure",
-              "Planning Metric"
-            ],
-            "blocked": true,
-            "reasons": [
-              "repeated_sentence_ratio>0.12",
-              "conclusion_similarity>0.7"
-            ]
-          },
-          "expert_insight_complete": true,
-          "expert_insight_missing_fields": [],
-          "reason": "repeated_sentence_ratio>0.12; conclusion_similarity>0.7"
-        },
-        {
-          "id": "e1b69d4c0ff19ba0",
-          "title": "Wyoming data center power projects highlight new entrants, partnerships in power generation market",
-          "infrastructure_relevance_score": 0.87,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "data_center_relevance:1.00(data center, data centers, colocation)",
-            "power_grid_relevance:1.00(power, grid, megawatts)"
-          ],
-          "extraction_quality_score": 1,
-          "source_domain_adapter": "generic",
-          "content_length": 1755,
-          "boilerplate_ratio": 0,
-          "repetition_blocked": true,
-          "repetition_block_reasons": [
-            "repeated_sentence_ratio>0.12",
-            "heading_sequence_similarity>0.75",
-            "conclusion_similarity>0.7"
-          ],
-          "repetition_check": {
-            "compared_article_count": 16,
-            "repeated_sentence_ratio": 0.25,
-            "repeated_paragraph_ratio": 0.3333333333333333,
-            "heading_sequence_similarity": 1,
-            "banned_phrase_count": 0,
-            "banned_phrase_counts": {},
-            "recent_banned_phrase_counts": {},
-            "ngram_overlap": 0.38016528925619836,
-            "blueprint_repetition": 1,
-            "conclusion_similarity": 0.9271050693011066,
-            "repeated_sentence_count": 2,
-            "repeated_paragraph_count": 2,
-            "heading_sequence": [
-              "Power-Market Move",
-              "Operating Lever",
-              "Grid Exposure",
-              "Metric To Watch"
-            ],
-            "blocked": true,
-            "reasons": [
-              "repeated_sentence_ratio>0.12",
-              "heading_sequence_similarity>0.75",
-              "conclusion_similarity>0.7"
-            ]
-          },
-          "expert_insight_complete": true,
-          "expert_insight_missing_fields": [],
-          "reason": "repeated_sentence_ratio>0.12; heading_sequence_similarity>0.75; conclusion_similarity>0.7"
-        }
-      ],
-      "signalCardItems": [],
-      "archiveOnlyItems": []
-    },
     {
       "at": "2026-05-29T00:13:35.225Z",
       "day": "2026-05-29",
@@ -40469,7 +40349,127 @@
       ],
       "signalCardItems": [],
       "archiveOnlyItems": []
+    },
+    {
+      "at": "2026-07-07T23:59:37.929Z",
+      "day": "2026-07-08",
+      "slot": 1,
+      "publishedCount": 0,
+      "signalCardCount": 1,
+      "archiveOnlyCount": 0,
+      "repetitionBlockedCount": 1,
+      "publishedIds": [],
+      "processedIds": [
+        "8b61d7f2d34d24b2",
+        "058d1f7712cf684e"
+      ],
+      "blockedCount": 1,
+      "blockedItems": [
+        {
+          "id": "8b61d7f2d34d24b2",
+          "title": "Fresno State Opens F3i Supercomputing Center to Advance AI Across California Agriculture",
+          "infrastructure_relevance_score": 0.91,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud, hpc)",
+            "cloud_capacity_relevance:0.32(hyperscalers)",
+            "semiconductor_relevance:0.50(nvidia, gpu)",
+            "power_grid_relevance:0.50(power, grid)"
+          ],
+          "extraction_quality_score": 1,
+          "source_domain_adapter": "generic",
+          "content_length": 1641,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": false,
+          "repetition_block_reasons": [],
+          "repetition_check": null,
+          "expert_insight_complete": true,
+          "expert_insight_missing_fields": [],
+          "reason": "fail_closed: source_text_incomplete:ellipsis_truncation_artifact, ellipsis_truncation_artifact"
+        }
+      ],
+      "repetitionBlockedItems": [
+        {
+          "id": "058d1f7712cf684e",
+          "title": "Unannounced Nvidia RTX 50 Super GPUs appear in Seasonic PSU calculator — unreleased graphics cards shown with 10-17% higher TGP over original models",
+          "infrastructure_relevance_score": 0.932,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "cloud_capacity_relevance:0.32(hyperscalers)",
+            "semiconductor_relevance:0.60(nvidia, gpu)",
+            "power_grid_relevance:0.22(power)"
+          ],
+          "extraction_quality_score": 1,
+          "source_domain_adapter": "generic",
+          "content_length": 1580,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": true,
+          "repetition_block_reasons": [
+            "repeated_sentence_ratio>0.12",
+            "heading_sequence_similarity>0.75",
+            "conclusion_similarity>0.7"
+          ],
+          "repetition_check": {
+            "compared_article_count": 20,
+            "repeated_sentence_ratio": 0.42857142857142855,
+            "repeated_paragraph_ratio": 0.5,
+            "heading_sequence_similarity": 1,
+            "banned_phrase_count": 0,
+            "banned_phrase_counts": {},
+            "recent_banned_phrase_counts": {},
+            "ngram_overlap": 0.6086956521739131,
+            "blueprint_repetition": 1,
+            "conclusion_similarity": 0.9271050693011066,
+            "repeated_sentence_count": 3,
+            "repeated_paragraph_count": 3,
+            "heading_sequence": [
+              "Technical Signal",
+              "Failure Domain",
+              "Operator Exposure",
+              "Benchmark To Watch"
+            ],
+            "blocked": true,
+            "reasons": [
+              "repeated_sentence_ratio>0.12",
+              "heading_sequence_similarity>0.75",
+              "conclusion_similarity>0.7"
+            ]
+          },
+          "expert_insight_complete": true,
+          "expert_insight_missing_fields": [],
+          "reason": "repeated_sentence_ratio>0.12; heading_sequence_similarity>0.75; conclusion_similarity>0.7"
+        }
+      ],
+      "signalCardItems": [
+        {
+          "id": "8b61d7f2d34d24b2",
+          "title": "Fresno State Opens F3i Supercomputing Center to Advance AI Across California Agriculture",
+          "infrastructure_relevance_score": 0.91,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud, hpc)",
+            "cloud_capacity_relevance:0.32(hyperscalers)",
+            "semiconductor_relevance:0.50(nvidia, gpu)",
+            "power_grid_relevance:0.50(power, grid)"
+          ],
+          "extraction_quality_score": 1,
+          "source_domain_adapter": "generic",
+          "content_length": 1641,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": false,
+          "repetition_block_reasons": [],
+          "repetition_check": null,
+          "expert_insight_complete": true,
+          "expert_insight_missing_fields": [],
+          "reason": "fail_closed: source_text_incomplete:ellipsis_truncation_artifact, ellipsis_truncation_artifact"
+        }
+      ],
+      "archiveOnlyItems": []
     }
   ],
-  "lastRunAt": "2026-07-07T17:23:48.215Z"
+  "lastRunAt": "2026-07-07T23:59:37.929Z"
 }
