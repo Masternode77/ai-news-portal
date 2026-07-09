@@ -3,9 +3,9 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { discoverSourceFeeds } from './source-feed-discovery.mjs';
 import { loadSourceRegistry, REQUESTED_SOURCE_IDS } from './source-registry.mjs';
+import { projectPath } from './project-root.mjs';
 
-const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
-const REPORT_PATH = path.join(ROOT, 'docs/source-expansion-report.md');
+const REPORT_PATH = projectPath(import.meta.url, 'docs/source-expansion-report.md');
 
 function statusIsActive(status = '') {
   return ['active_feed', 'active_sitemap', 'landing_page_only'].includes(status);

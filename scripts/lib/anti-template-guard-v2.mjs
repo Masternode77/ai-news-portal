@@ -1,12 +1,10 @@
 import fs from 'node:fs';
-import path from 'node:path';
-import { fileURLToPath } from 'node:url';
+import { projectConfigPath } from './project-root.mjs';
 import { repeatedParagraphs } from './repeated-language-detector.mjs';
 
-const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
 const PHRASE_PATHS = [
-  path.join(ROOT, 'config/forbiddenAIPhrases.yml'),
-  path.join(ROOT, 'config/forbiddenPublicPhrases.yml'),
+  projectConfigPath(import.meta.url, 'forbiddenAIPhrases.yml'),
+  projectConfigPath(import.meta.url, 'forbiddenPublicPhrases.yml'),
 ];
 
 function parseYamlPhrases(raw = '') {

@@ -1,6 +1,4 @@
 import fs from 'node:fs/promises';
-import path from 'node:path';
-import { fileURLToPath } from 'node:url';
 import {
   ARCHIVE_NEWS_PATH,
   LATEST_NEWS_PATH,
@@ -15,9 +13,9 @@ import { buildCompanyIndex } from './company-entity-index.mjs';
 import { buildRegionIndex } from './region-index.mjs';
 import { buildHomepageFeed } from './homepage-feed-builder.mjs';
 import { buildArchiveFeed } from './archive-feed-builder.mjs';
+import { projectPath } from './project-root.mjs';
 
-const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
-const TAXONOMY_PATH = path.join(ROOT, 'src/data/taxonomy-pages.json');
+const TAXONOMY_PATH = projectPath(import.meta.url, 'src/data/taxonomy-pages.json');
 
 function dateMs(article = {}) {
   const ms = new Date(article.analysisPublishedAt || article.publishedAt || article.updatedAt || 0).getTime();

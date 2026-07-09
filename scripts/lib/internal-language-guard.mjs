@@ -1,9 +1,7 @@
 import fs from 'node:fs';
-import path from 'node:path';
-import { fileURLToPath } from 'node:url';
+import { projectConfigPath } from './project-root.mjs';
 
-const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
-const DEFAULT_PHRASE_PATH = path.join(ROOT, 'config/editorial/internal-public-banned-phrases.json');
+const DEFAULT_PHRASE_PATH = projectConfigPath(import.meta.url, 'editorial/internal-public-banned-phrases.json');
 
 const REPLACEMENTS = new Map([
   ['Find published anaylsis', 'Search the archive'],

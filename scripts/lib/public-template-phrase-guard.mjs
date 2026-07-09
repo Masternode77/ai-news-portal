@@ -1,11 +1,9 @@
 import fs from 'node:fs';
-import path from 'node:path';
-import { fileURLToPath } from 'node:url';
 import { BANNED_PHRASES } from './banned-phrases.mjs';
 import { nearDuplicatePhraseMatches } from './near-duplicate-phrase-detector.mjs';
+import { projectConfigPath } from './project-root.mjs';
 
-const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
-const FORBIDDEN_PUBLIC_PHRASES_PATH = path.join(ROOT, 'config/forbiddenPublicPhrases.yml');
+const FORBIDDEN_PUBLIC_PHRASES_PATH = projectConfigPath(import.meta.url, 'forbiddenPublicPhrases.yml');
 
 function parseSimpleYamlList(raw = '', key = '') {
   const lines = String(raw || '').split(/\r?\n/);

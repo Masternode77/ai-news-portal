@@ -1,10 +1,8 @@
 import fs from 'node:fs';
-import path from 'node:path';
-import { fileURLToPath } from 'node:url';
 import { sanitizePublicCopy } from './internal-language-guard.mjs';
+import { projectConfigPath } from './project-root.mjs';
 
-const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
-const COPY_PATH = path.join(ROOT, 'config/editorial/public-empty-states.json');
+const COPY_PATH = projectConfigPath(import.meta.url, 'editorial/public-empty-states.json');
 
 export function publicEmptyStateCopy() {
   return JSON.parse(fs.readFileSync(COPY_PATH, 'utf8'));

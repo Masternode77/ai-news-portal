@@ -1,11 +1,9 @@
 import fs from 'node:fs';
-import path from 'node:path';
-import { fileURLToPath } from 'node:url';
 import { hasMalformedProperNouns, malformedProperNouns, normalizeProperNouns } from './proper-noun-normalizer.mjs';
+import { projectConfigPath } from './project-root.mjs';
 import { detectTruncationArtifacts } from './truncation-detector.mjs';
 
-const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
-const FORBIDDEN_PUBLIC_PHRASES_PATH = path.join(ROOT, 'config/forbiddenPublicPhrases.yml');
+const FORBIDDEN_PUBLIC_PHRASES_PATH = projectConfigPath(import.meta.url, 'forbiddenPublicPhrases.yml');
 
 function parseSimpleYamlList(raw = '', key = '') {
   const lines = String(raw || '').split(/\r?\n/);

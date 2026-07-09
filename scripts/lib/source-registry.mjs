@@ -1,9 +1,7 @@
 import fs from 'node:fs/promises';
-import path from 'node:path';
-import { fileURLToPath } from 'node:url';
+import { projectConfigPath } from './project-root.mjs';
 
-const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
-export const SOURCE_REGISTRY_PATH = path.join(ROOT, 'config/sourceRegistry.yml');
+export const SOURCE_REGISTRY_PATH = projectConfigPath(import.meta.url, 'sourceRegistry.yml');
 
 export const REQUESTED_SOURCE_IDS = [
   'datacenterdynamics',

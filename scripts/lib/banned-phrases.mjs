@@ -1,10 +1,7 @@
 import fs from 'node:fs';
-import path from 'node:path';
-import { fileURLToPath } from 'node:url';
+import { projectConfigPath } from './project-root.mjs';
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const ROOT = path.resolve(__dirname, '../..');
-const CONFIG_PATH = path.join(ROOT, 'config/bannedPhrases.yml');
+const CONFIG_PATH = projectConfigPath(import.meta.url, 'bannedPhrases.yml');
 
 function parseListBlock(text = '', key = '') {
   const lines = text.split(/\r?\n/);

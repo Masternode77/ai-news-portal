@@ -1,9 +1,7 @@
 import fs from 'node:fs';
-import path from 'node:path';
-import { fileURLToPath } from 'node:url';
+import { projectConfigPath } from './project-root.mjs';
 
-const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
-const CONFIG_PATH = path.join(ROOT, 'config/properNouns.yml');
+const CONFIG_PATH = projectConfigPath(import.meta.url, 'properNouns.yml');
 
 function parseProperNounsConfig() {
   try {

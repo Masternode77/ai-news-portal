@@ -1,17 +1,15 @@
 import fs from 'node:fs';
-import path from 'node:path';
-import { fileURLToPath } from 'node:url';
 import { detectBoilerplate } from './boilerplate-detector.mjs';
 import { detectTruncationArtifacts } from './truncation-detector.mjs';
 import { buildEvidencePack } from './evidence-pack-builder.mjs';
 import { namesConcreteInfrastructureLayer, routePublicLane } from './public-lane-router.mjs';
+import { projectConfigPath } from './project-root.mjs';
 import {
   sourceExtractionPassesLongformGate,
   sourceExtractionPassesPublicGate,
 } from './source-extraction-fail-closed.mjs';
 
-const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
-const POLICY_PATH = path.join(ROOT, 'config/editorial/content-tier-policy.json');
+const POLICY_PATH = projectConfigPath(import.meta.url, 'editorial/content-tier-policy.json');
 
 export const PUBLIC_CONTENT_TIERS = {
   LONGFORM_ANALYSIS: 'longform_analysis',
