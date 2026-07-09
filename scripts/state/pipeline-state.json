@@ -593,7 +593,9 @@
     "8bec059c036a3e9d",
     "961088cbf4a06cde",
     "e11a3f9433638460",
-    "4de03cdf5aad8af1"
+    "4de03cdf5aad8af1",
+    "ab2422a259d8f4dc",
+    "2718004370758867"
   ],
   "dayPlans": {
     "2026-03-24": {
@@ -27715,129 +27717,452 @@
         "1": true,
         "2": true
       }
+    },
+    "2026-07-10": {
+      "date": "2026-07-10",
+      "createdAt": "2026-07-09T17:25:00.285Z",
+      "refreshedAt": "2026-07-09T17:25:00.285Z",
+      "candidateWindowHours": 24,
+      "curatedItems": [
+        {
+          "id": "ab2422a259d8f4dc",
+          "source": "Data Center Knowledge",
+          "url": "https://www.datacenterknowledge.com/data-center-site-selection/can-growing-community-backlash-quiet-the-ai-data-center-boom-",
+          "title": "Can Growing Community Backlash Quiet the AI Data Center Boom?",
+          "snippet": "Local opposition groups surged to 430 from 76 since 2025, while recent Virginia project failures suggest community acceptance is emerging as a new site-selection variable for AI infrastructure.",
+          "contentText": "Local opposition groups surged to 430 from 76 since 2025, while recent Virginia project failures suggest community acceptance is emerging as a new site-selection variable for AI infrastructure.",
+          "publishedAt": "2026-07-09T15:23:54.000Z",
+          "sourceImage": "https://eu-images.contentstack.com/v3/assets/blt8eb3cdfc1fce5194/bltde8083b6eb26bbce/6a4fb12ec736a117fe6bf8e9/GettyImages-2277371455.jpg?width=720&quality=80&disable=upscale",
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "Colocation & Wholesale",
+          "category": "Data Centers",
+          "primary_category": "Data Centers",
+          "secondary_category": "Campus development and colocation capacity",
+          "infrastructure_layer": "Facility",
+          "affected_stakeholders": [
+            "data center operators",
+            "developers",
+            "site selectors",
+            "investors"
+          ],
+          "article_type": "Other",
+          "urgency_score": 0.48,
+          "taxonomy_confidence": 0.86,
+          "taxonomy_reasons": [
+            "data center",
+            "colocation",
+            "wholesale"
+          ],
+          "direct_ai_infrastructure_relevance": 1,
+          "data_center_relevance": 0.89,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.926,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, ai data center)",
+            "data_center_relevance:0.89(data center, colocation)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 1,
+            "data_center_relevance": 0.89,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.926,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, ai data center)",
+              "data_center_relevance:0.89(data center, colocation)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 85
+        },
+        {
+          "id": "2718004370758867",
+          "source": "StorageReview",
+          "url": "https://www.storagereview.com/news/nvidia-pairs-revenue-sharing-with-credit-support-to-finance-ai-cloud-buildouts",
+          "title": "NVIDIA Pairs Revenue Sharing With Credit Support to Finance AI Cloud Buildouts",
+          "snippet": "NVIDIA has introduced a new business model to accelerate the deployment of AI infrastructure by combining revenue sharing with credit support for AI cloud providers. Announced July 1 in a blog post co-authored by CFO Co…",
+          "contentText": "NVIDIA has introduced a new business model to accelerate the deployment of AI infrastructure by combining revenue sharing with credit support for AI cloud providers. Announced July 1 in a blog post co-authored by CFO Colette Kress, the initiative is designed to expand access to accelerated computing for AI startups, model developers, enterprises, research organizations, and regional AI providers as production inference workloads continue to grow. The announcement reflects an industry-wide shift from primarily training large language models to operating production AI services. As AI adoption grows, infrastructure requirements are increasingly centered on AI factories that continuously generate inference tokens at scale. These environments demand rapidly deployable GPU infrastructure, high…",
+          "publishedAt": "2026-07-09T14:38:11.000Z",
+          "sourceImage": "https://www.storagereview.com/wp-content/uploads/2026/03/storagereview_nvidia_gtc_26_vera_rubin_stack_02-scaled.png",
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "category": "AI Infrastructure",
+          "primary_category": "AI Infrastructure",
+          "secondary_category": "GPU clusters and deployment readiness",
+          "infrastructure_layer": "Compute",
+          "affected_stakeholders": [
+            "operators",
+            "hyperscalers",
+            "cloud buyers",
+            "investors"
+          ],
+          "article_type": "Operations Update",
+          "urgency_score": 0.47,
+          "taxonomy_confidence": 0.77,
+          "taxonomy_reasons": [
+            "ai infrastructure",
+            "neocloud"
+          ],
+          "direct_ai_infrastructure_relevance": 1,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0.598,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0.3,
+          "infrastructure_relevance_score": 0.897,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "semiconductor_relevance:0.60(nvidia, gpu)",
+            "enterprise_ai_infrastructure_relevance:0.30(inference workloads)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 1,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0.598,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0.3,
+            "infrastructure_relevance_score": 0.897,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+              "semiconductor_relevance:0.60(nvidia, gpu)",
+              "enterprise_ai_infrastructure_relevance:0.30(inference workloads)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 84
+        },
+        {
+          "id": "748c538d597548cc",
+          "source": "Data Center POST",
+          "url": "https://datacenterpost.com/lightpath-expands-ai-grade-fiber-to-meet-growing-hyperscale-demand/",
+          "title": "Lightpath Expands AI-Grade Fiber to Meet Growing Hyperscale Demand",
+          "snippet": "TL;DR Lightpath is extending its AI-grade fiber network to support two new hyperscale data center campuses under construction in Saline, Michigan and Port Washington, Wisconsin. Each campus is planned to exceed one giga…",
+          "contentText": "TL;DR Lightpath is extending its AI-grade fiber network to support two new hyperscale data center campuses under construction in Saline, Michigan and Port Washington, Wisconsin. Each campus is planned to exceed one gigawatt of capacity, requiring route-diverse, multi-terabit fiber connectivity. The projects continue Lightpath&#8217;s expansion into the markets where hyperscale AI infrastructure is being built. The deployments highlight the growing role of fiber infrastructure in supporting AI-driven compute demand and next-generation digital infrastructure. ### Artificial intelligence is reshaping where digital infrastructure is built and how networks are designed to support it. As hyperscale data center development accelerates, fiber infrastructure has become a critical component of ensu…",
+          "publishedAt": "2026-07-09T17:00:48.000Z",
+          "sourceImage": "https://d3qut6qyo6tw2j.cloudfront.net/bin/uploads/2026/07/09091100/Lightpath_SalinePortWashington_DCP-PR-Blog-7.8.26-1024x512.png",
+          "region": "APAC",
+          "language": "en",
+          "defaultCategory": "Colocation & Wholesale",
+          "category": "Data Centers",
+          "primary_category": "Data Centers",
+          "secondary_category": "Campus development and colocation capacity",
+          "infrastructure_layer": "Facility",
+          "affected_stakeholders": [
+            "data center operators",
+            "developers",
+            "site selectors",
+            "investors"
+          ],
+          "article_type": "Capacity Expansion",
+          "urgency_score": 0.6,
+          "taxonomy_confidence": 0.92,
+          "taxonomy_reasons": [
+            "data center",
+            "colocation",
+            "campus",
+            "wholesale"
+          ],
+          "direct_ai_infrastructure_relevance": 0.78,
+          "data_center_relevance": 0.92,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0,
+          "power_grid_relevance": 0.34,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.89,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:0.78(ai infrastructure)",
+            "data_center_relevance:0.92(data center, colocation, campus)",
+            "power_grid_relevance:0.34(gigawatt)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 0.78,
+            "data_center_relevance": 0.92,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0,
+            "power_grid_relevance": 0.34,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.89,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:0.78(ai infrastructure)",
+              "data_center_relevance:0.92(data center, colocation, campus)",
+              "power_grid_relevance:0.34(gigawatt)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 83
+        },
+        {
+          "id": "05e25f6722033b83",
+          "source": "TechCrunch AI",
+          "url": "https://techcrunch.com/2026/07/09/nvidia-is-a-victim-of-the-compute-marketplace-it-created/",
+          "title": "Nvidia is a victim of the compute marketplace it created",
+          "snippet": "Having proven how valuable compute can be, the company finds itself at the center of a market everyone wants to be in — while simpler technologies and less interesting companies get rich on the sidelines.",
+          "contentText": "Having proven how valuable compute can be, the company finds itself at the center of a market everyone wants to be in — while simpler technologies and less interesting companies get rich on the sidelines.",
+          "publishedAt": "2026-07-09T17:06:11.000Z",
+          "sourceImage": null,
+          "region": "Global",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "category": "AI Infrastructure",
+          "primary_category": "AI Infrastructure",
+          "secondary_category": "GPU clusters and deployment readiness",
+          "infrastructure_layer": "Compute",
+          "affected_stakeholders": [
+            "operators",
+            "hyperscalers",
+            "cloud buyers",
+            "investors"
+          ],
+          "article_type": "Market Analysis",
+          "urgency_score": 0.46,
+          "taxonomy_confidence": 0.77,
+          "taxonomy_reasons": [
+            "ai infrastructure",
+            "neocloud"
+          ],
+          "direct_ai_infrastructure_relevance": 1,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0.598,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.862,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "semiconductor_relevance:0.60(nvidia, gpu)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 1,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0.598,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.862,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+              "semiconductor_relevance:0.60(nvidia, gpu)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 82
+        },
+        {
+          "id": "8ea8d0f7d1896bfc",
+          "source": "Toms Hardware",
+          "url": "https://www.tomshardware.com/pc-components/ssds/teamgroup-g70-pro-2tb-ssd-review",
+          "title": "TeamGroup G70 Pro 2TB SSD Review: Low latency meets affordable DRAM",
+          "snippet": "The TeamGroup G70 Pro is a high-end drive without a high-end price. Good performance, but poor power efficiency keeps it in check.",
+          "contentText": "Another day, another TeamGroup drive, right? Yet the G70 Pro surprises with some unusually good results, combining DRAM and newer flash into a powerful but affordable drive. We have some questions about the controller choice, but the drive as a whole is surprisingly good. The devil, as they say, is in the details, as its performance quirks make it better for some use cases over others. It’s also not something you want to toss into your laptop – this is still a high-end drive with correspondingly high heat production – but could work in a pinch for pretty much anything else. In this market, it’s a welcome alternative. TeamGroup G70 Pro Specifications Product 512GB 1TB 2TB 4TB 8TB Pricing N/A $198.94 $326.99 $519.99 N/A Form Factor M.2 2280 M.2 2280 M.2 2280 M.2 2280 M.2 2280 Interface / Pr…",
+          "publishedAt": "2026-07-09T17:17:56.000Z",
+          "sourceImage": "https://cdn.mos.cms.futurecdn.net/ai7AkiYr6oMXjS58pCf6Nn-1280-80.jpg",
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "category": "AI Infrastructure",
+          "primary_category": "AI Infrastructure",
+          "secondary_category": "GPU clusters and deployment readiness",
+          "infrastructure_layer": "Compute",
+          "affected_stakeholders": [
+            "operators",
+            "hyperscalers",
+            "cloud buyers",
+            "investors"
+          ],
+          "article_type": "Market Analysis",
+          "urgency_score": 0.52,
+          "taxonomy_confidence": 0.77,
+          "taxonomy_reasons": [
+            "ai infrastructure",
+            "neocloud"
+          ],
+          "direct_ai_infrastructure_relevance": 1,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0.22,
+          "power_grid_relevance": 0.22,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.813,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "semiconductor_relevance:0.22(gpu)",
+            "power_grid_relevance:0.22(power)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 1,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0.22,
+            "power_grid_relevance": 0.22,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.813,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+              "semiconductor_relevance:0.22(gpu)",
+              "power_grid_relevance:0.22(power)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 80
+        },
+        {
+          "id": "7cc96364af2dd319",
+          "source": "HPCwire",
+          "url": "https://www.hpcwire.com/2026/07/09/from-supercomputers-to-scientific-collaborators-argonnes-vision-for-ai-driven-hpc/",
+          "title": "From Supercomputers to Scientific Collaborators: Argonne’s Vision for AI-Driven HPC",
+          "snippet": "Scientists have relied on HPC facilities to help them process large volumes of data, execute sophisticated simulations, and power large-scale research. However, as AI becomes more deeply integrated into scientific resea…",
+          "contentText": "Scientists have relied on HPC facilities to help them process large volumes of data, execute sophisticated simulations, and power large-scale research. However, as AI becomes more deeply integrated into scientific research, the role of HPC facilities may also be starting to evolve. According to Thomas Uram, Group Leader of the Data Services and Workflows Team at Argonne National Laboratory (ANL), the next generation of HPC facilities will do more than provide scientists with access to compute. In his presentation at the ISC 2026, Uram outlined how AI inference services and access to computing resources are transforming supercomputing centers into platforms that actively support scientific discovery. He said that the transformation begins by building AI capabilities directly into the facil…",
+          "publishedAt": "2026-07-09T17:04:34.000Z",
+          "sourceImage": "https://www.hpcwire.com/wp-content/uploads/2026/07/ALCF-evolution-300x163.png",
+          "region": "Global",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "category": "AI Infrastructure",
+          "primary_category": "AI Infrastructure",
+          "secondary_category": "GPU clusters and deployment readiness",
+          "infrastructure_layer": "Compute",
+          "affected_stakeholders": [
+            "operators",
+            "hyperscalers",
+            "cloud buyers",
+            "investors"
+          ],
+          "article_type": "Research / Technical",
+          "urgency_score": 0.52,
+          "taxonomy_confidence": 0.88,
+          "taxonomy_reasons": [
+            "ai infrastructure",
+            "neocloud",
+            "hpc"
+          ],
+          "direct_ai_infrastructure_relevance": 1,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0.22,
+          "power_grid_relevance": 0.22,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.813,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud, hpc)",
+            "semiconductor_relevance:0.22(gpu)",
+            "power_grid_relevance:0.22(power)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 1,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0.22,
+            "power_grid_relevance": 0.22,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.813,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud, hpc)",
+              "semiconductor_relevance:0.22(gpu)",
+              "power_grid_relevance:0.22(power)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 80
+        }
+      ],
+      "curatedIds": [
+        "ab2422a259d8f4dc",
+        "2718004370758867",
+        "748c538d597548cc",
+        "05e25f6722033b83",
+        "8ea8d0f7d1896bfc",
+        "7cc96364af2dd319"
+      ],
+      "publishedIds": [
+        "ab2422a259d8f4dc",
+        "2718004370758867"
+      ],
+      "slotPublications": {
+        "0": true
+      }
     }
   },
   "runHistory": [
-    {
-      "at": "2026-05-30T09:25:09.075Z",
-      "day": "2026-05-30",
-      "slot": 2,
-      "publishedCount": 0,
-      "signalCardCount": 1,
-      "archiveOnlyCount": 0,
-      "repetitionBlockedCount": 1,
-      "publishedIds": [],
-      "processedIds": [
-        "0ccf1e3f69f2b513",
-        "54652826bb6c24c9"
-      ],
-      "blockedCount": 1,
-      "blockedItems": [
-        {
-          "id": "0ccf1e3f69f2b513",
-          "title": "HPC Career Notes for May 2026",
-          "infrastructure_relevance_score": 0.958,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud, hpc)",
-            "cloud_capacity_relevance:0.32(hyperscalers)",
-            "semiconductor_relevance:0.72(nvidia, amd, gpu)",
-            "power_grid_relevance:0.22(power)"
-          ],
-          "extraction_quality_score": 1,
-          "source_domain_adapter": "generic",
-          "content_length": 1434,
-          "boilerplate_ratio": 0,
-          "repetition_blocked": false,
-          "repetition_block_reasons": [],
-          "repetition_check": null,
-          "expert_insight_complete": true,
-          "expert_insight_missing_fields": [],
-          "reason": "fail_closed: source_text_incomplete:ellipsis_truncation_artifact, ellipsis_truncation_artifact"
-        }
-      ],
-      "repetitionBlockedItems": [
-        {
-          "id": "54652826bb6c24c9",
-          "title": "Finding the perfect energy balance for the next generation of data centres",
-          "infrastructure_relevance_score": 0.887,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:0.64(compute capacity)",
-            "cloud_capacity_relevance:0.76(cloud capacity, hyperscalers)",
-            "power_grid_relevance:1.00(power, grid, utilities)",
-            "cooling_relevance:0.34(cooling)",
-            "capital_markets_relevance:0.28(capex)",
-            "enterprise_ai_infrastructure_relevance:0.24(ai workloads)"
-          ],
-          "extraction_quality_score": 1,
-          "source_domain_adapter": "generic",
-          "content_length": 1744,
-          "boilerplate_ratio": 0,
-          "repetition_blocked": true,
-          "repetition_block_reasons": [
-            "heading_sequence_similarity>0.75",
-            "conclusion_similarity>0.7"
-          ],
-          "repetition_check": {
-            "compared_article_count": 16,
-            "repeated_sentence_ratio": 0,
-            "repeated_paragraph_ratio": 0,
-            "heading_sequence_similarity": 1,
-            "banned_phrase_count": 0,
-            "banned_phrase_counts": {},
-            "recent_banned_phrase_counts": {},
-            "ngram_overlap": 0.344,
-            "blueprint_repetition": 1,
-            "conclusion_similarity": 0.9271050693011066,
-            "repeated_sentence_count": 0,
-            "repeated_paragraph_count": 0,
-            "heading_sequence": [
-              "What Changed",
-              "Energy Procurement Read",
-              "Volatility Risk",
-              "Next Market Test"
-            ],
-            "blocked": true,
-            "reasons": [
-              "heading_sequence_similarity>0.75",
-              "conclusion_similarity>0.7"
-            ]
-          },
-          "expert_insight_complete": true,
-          "expert_insight_missing_fields": [],
-          "reason": "heading_sequence_similarity>0.75; conclusion_similarity>0.7"
-        }
-      ],
-      "signalCardItems": [
-        {
-          "id": "0ccf1e3f69f2b513",
-          "title": "HPC Career Notes for May 2026",
-          "infrastructure_relevance_score": 0.958,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud, hpc)",
-            "cloud_capacity_relevance:0.32(hyperscalers)",
-            "semiconductor_relevance:0.72(nvidia, amd, gpu)",
-            "power_grid_relevance:0.22(power)"
-          ],
-          "extraction_quality_score": 1,
-          "source_domain_adapter": "generic",
-          "content_length": 1434,
-          "boilerplate_ratio": 0,
-          "repetition_blocked": false,
-          "repetition_block_reasons": [],
-          "repetition_check": null,
-          "expert_insight_complete": true,
-          "expert_insight_missing_fields": [],
-          "reason": "fail_closed: source_text_incomplete:ellipsis_truncation_artifact, ellipsis_truncation_artifact"
-        }
-      ],
-      "archiveOnlyItems": []
-    },
     {
       "at": "2026-05-30T16:10:17.745Z",
       "day": "2026-05-31",
@@ -40935,7 +41260,133 @@
         }
       ],
       "archiveOnlyItems": []
+    },
+    {
+      "at": "2026-07-09T17:25:00.285Z",
+      "day": "2026-07-10",
+      "slot": 0,
+      "publishedCount": 0,
+      "signalCardCount": 0,
+      "archiveOnlyCount": 0,
+      "repetitionBlockedCount": 2,
+      "publishedIds": [],
+      "processedIds": [
+        "ab2422a259d8f4dc",
+        "2718004370758867"
+      ],
+      "blockedCount": 0,
+      "blockedItems": [],
+      "repetitionBlockedItems": [
+        {
+          "id": "ab2422a259d8f4dc",
+          "title": "Can Growing Community Backlash Quiet the AI Data Center Boom?",
+          "infrastructure_relevance_score": 1,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, ai data center)",
+            "data_center_relevance:1.00(data center, colocation, campus)",
+            "power_grid_relevance:0.72(power, utility, electricity)",
+            "capital_markets_relevance:0.28(capex)"
+          ],
+          "extraction_quality_score": 1,
+          "source_domain_adapter": "datacenterknowledge",
+          "content_length": 1667,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": true,
+          "repetition_block_reasons": [
+            "repeated_sentence_ratio>0.12",
+            "heading_sequence_similarity>0.75",
+            "conclusion_similarity>0.7"
+          ],
+          "repetition_check": {
+            "compared_article_count": 20,
+            "repeated_sentence_ratio": 0.3333333333333333,
+            "repeated_paragraph_ratio": 0.3333333333333333,
+            "heading_sequence_similarity": 1,
+            "banned_phrase_count": 0,
+            "banned_phrase_counts": {},
+            "recent_banned_phrase_counts": {},
+            "ngram_overlap": 0.3865546218487395,
+            "blueprint_repetition": 2,
+            "conclusion_similarity": 0.9511897312113418,
+            "repeated_sentence_count": 2,
+            "repeated_paragraph_count": 2,
+            "heading_sequence": [
+              "What Changed",
+              "Energy Procurement Read",
+              "Volatility Risk",
+              "Next Market Test"
+            ],
+            "blocked": true,
+            "reasons": [
+              "repeated_sentence_ratio>0.12",
+              "heading_sequence_similarity>0.75",
+              "conclusion_similarity>0.7"
+            ]
+          },
+          "expert_insight_complete": true,
+          "expert_insight_missing_fields": [],
+          "reason": "repeated_sentence_ratio>0.12; heading_sequence_similarity>0.75; conclusion_similarity>0.7"
+        },
+        {
+          "id": "2718004370758867",
+          "title": "NVIDIA Pairs Revenue Sharing With Credit Support to Finance AI Cloud Buildouts",
+          "infrastructure_relevance_score": 0.932,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, compute capacity, neocloud)",
+            "cloud_capacity_relevance:0.32(hyperscalers)",
+            "semiconductor_relevance:0.60(nvidia, gpu)",
+            "power_grid_relevance:0.22(power)",
+            "capital_markets_relevance:0.60(funding, financing)",
+            "enterprise_ai_infrastructure_relevance:0.30(inference workloads)"
+          ],
+          "extraction_quality_score": 1,
+          "source_domain_adapter": "storagereview",
+          "content_length": 1633,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": true,
+          "repetition_block_reasons": [
+            "repeated_sentence_ratio>0.12",
+            "heading_sequence_similarity>0.75",
+            "conclusion_similarity>0.7"
+          ],
+          "repetition_check": {
+            "compared_article_count": 20,
+            "repeated_sentence_ratio": 0.14285714285714285,
+            "repeated_paragraph_ratio": 0.16666666666666666,
+            "heading_sequence_similarity": 1,
+            "banned_phrase_count": 0,
+            "banned_phrase_counts": {},
+            "recent_banned_phrase_counts": {},
+            "ngram_overlap": 0.3076923076923077,
+            "blueprint_repetition": 1,
+            "conclusion_similarity": 0.9271050693011066,
+            "repeated_sentence_count": 1,
+            "repeated_paragraph_count": 1,
+            "heading_sequence": [
+              "Deal Signal",
+              "Contract Quality",
+              "Operating Dependency",
+              "Investor Test"
+            ],
+            "blocked": true,
+            "reasons": [
+              "repeated_sentence_ratio>0.12",
+              "heading_sequence_similarity>0.75",
+              "conclusion_similarity>0.7"
+            ]
+          },
+          "expert_insight_complete": true,
+          "expert_insight_missing_fields": [],
+          "reason": "repeated_sentence_ratio>0.12; heading_sequence_similarity>0.75; conclusion_similarity>0.7"
+        }
+      ],
+      "signalCardItems": [],
+      "archiveOnlyItems": []
     }
   ],
-  "lastRunAt": "2026-07-09T10:40:25.329Z"
+  "lastRunAt": "2026-07-09T17:25:00.285Z"
 }
