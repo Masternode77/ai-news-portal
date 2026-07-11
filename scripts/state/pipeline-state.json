@@ -603,7 +603,9 @@
     "34fcab8309c48911",
     "f4cae728e8b65925",
     "d562bc0e05e85856",
-    "687751a4b0d6dc50"
+    "687751a4b0d6dc50",
+    "cdeae38966757691",
+    "663a8e6a23f67106"
   ],
   "dayPlans": {
     "2026-03-24": {
@@ -28185,153 +28187,16 @@
     "2026-07-11": {
       "date": "2026-07-11",
       "createdAt": "2026-07-10T17:03:15.903Z",
-      "refreshedAt": "2026-07-11T00:00:27.307Z",
+      "refreshedAt": "2026-07-11T08:56:50.409Z",
       "candidateWindowHours": 24,
       "curatedItems": [
-        {
-          "id": "d562bc0e05e85856",
-          "source": "Toms Hardware",
-          "url": "https://www.tomshardware.com/tech-industry/big-tech/apple-sues-openai-over-alleged-theft-of-trade-secrets-claims-company-mentored-incoming-employees-on-bringing-confidential-information",
-          "title": "Apple sues OpenAI over alleged theft of trade secrets — claims company mentored incoming employees on bringing confidential information",
-          "snippet": "Apple sued OpenAI, including its own former employees, over the theft of trade secrets as both companies build up AI hardware businesses.",
-          "contentText": "Apple filed a federal lawsuit against OpenAI on Friday, accusing the AI company and its chief hardware officer of stealing its trade secrets. \"OpenAI and its cohorts, led at least in part by former Apple employees, have recruited candidates from Apple, extracted their knowledge of Apple’s sensitive and confidential information, and then continued to exploit that knowledge once they arrived,\" the complaint reads. \"As a result, OpenAI has misappropriated Apple’s trade secrets and confidential information in a variety of ways.\" The suit, filed in the Northern District of California , names OpenAI technical staff member Chang Liu, chief hardware officer Tang Tan, OpenAI, and io Products as defendants. The last of that group is notable because it was founded by Tan in collaboration with former…",
-          "publishedAt": "2026-07-10T21:59:42.000Z",
-          "sourceImage": "https://cdn.mos.cms.futurecdn.net/wj86mmdySzCEPUihwhHf8o-1280-80.jpg",
-          "region": "US",
-          "language": "en",
-          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
-          "category": "AI Infrastructure",
-          "primary_category": "AI Infrastructure",
-          "secondary_category": "GPU clusters and deployment readiness",
-          "infrastructure_layer": "Compute",
-          "affected_stakeholders": [
-            "operators",
-            "hyperscalers",
-            "cloud buyers",
-            "investors"
-          ],
-          "article_type": "Partnership",
-          "urgency_score": 0.43,
-          "taxonomy_confidence": 0.77,
-          "taxonomy_reasons": [
-            "ai infrastructure",
-            "neocloud"
-          ],
-          "direct_ai_infrastructure_relevance": 1,
-          "data_center_relevance": 0,
-          "cloud_capacity_relevance": 0,
-          "semiconductor_relevance": 0.22,
-          "power_grid_relevance": 0,
-          "cooling_relevance": 0,
-          "capital_markets_relevance": 0,
-          "enterprise_ai_infrastructure_relevance": 0,
-          "infrastructure_relevance_score": 0.778,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "semiconductor_relevance:0.22(gpu)"
-          ],
-          "infrastructure_relevance": {
-            "direct_ai_infrastructure_relevance": 1,
-            "data_center_relevance": 0,
-            "cloud_capacity_relevance": 0,
-            "semiconductor_relevance": 0.22,
-            "power_grid_relevance": 0,
-            "cooling_relevance": 0,
-            "capital_markets_relevance": 0,
-            "enterprise_ai_infrastructure_relevance": 0,
-            "infrastructure_relevance_score": 0.778,
-            "infrastructure_relevance_tier": "full_memo",
-            "infrastructure_relevance_action": "generate_full_memo",
-            "infrastructure_relevance_reasons": [
-              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-              "semiconductor_relevance:0.22(gpu)"
-            ],
-            "infrastructureRelevanceAction": "generate_full_memo",
-            "articlePagePublished": true,
-            "homepagePublished": true,
-            "archiveOnly": false,
-            "archiveOnlyReason": null
-          },
-          "score": 79
-        },
-        {
-          "id": "687751a4b0d6dc50",
-          "source": "Power Engineering",
-          "url": "https://www.power-eng.com/gas/turbines/baker-hughes-gas-turbines-to-support-up-to-1-8-gw-of-behind-the-meter-data-center-power/",
-          "title": "Baker Hughes gas turbines to support up to 1.8 GW of behind-the-meter data center power",
-          "snippet": "Kodiak Gas Services and Baker Hughes have formed a multi-year agreement for power generation solutions to enhance Kodiak's energy infrastructure, aiming for 1.8 GW capacity by 2030.",
-          "contentText": "Kodiak Gas Services, a provider of energy infrastructure, and Baker Hughes, an energy technology company, have announced a multi-year strategic agreement under which Baker Hughes will provide power generation solutions to support Kodiak’s &#8220;expanding energy infrastructure initiatives,&#8221; including behind-the-meter power for data centers. The agreement is anchored by an initial equipment award that will enable approximately 1 gigawatt (GW) of generation capacity to be delivered by 2030, with the broader framework providing a pathway for up to 1.8 GW of power over time. The initial major order includes NovaLT16 gas turbines, Frame 5 gas turbines and BRUSH Power Generation generators. Baker Hughes argues that &#8220;high efficiency&#8221; power generation technologies can support be…",
-          "publishedAt": "2026-07-10T19:51:47.000Z",
-          "sourceImage": "https://www.power-eng.com/wp-content/uploads/2024/02/baker-hughes.png",
-          "region": "APAC",
-          "language": "en",
-          "defaultCategory": "Power / Grid / Energy",
-          "category": "Power & Grid",
-          "primary_category": "Power & Grid",
-          "secondary_category": "Interconnection and power procurement",
-          "infrastructure_layer": "Power",
-          "affected_stakeholders": [
-            "data center operators",
-            "utilities",
-            "cloud capacity teams",
-            "investors"
-          ],
-          "article_type": "Capacity Expansion",
-          "urgency_score": 0.72,
-          "taxonomy_confidence": 0.91,
-          "taxonomy_reasons": [
-            "power",
-            "grid",
-            "gw"
-          ],
-          "direct_ai_infrastructure_relevance": 0,
-          "data_center_relevance": 0.97,
-          "cloud_capacity_relevance": 0,
-          "semiconductor_relevance": 0,
-          "power_grid_relevance": 1,
-          "cooling_relevance": 0,
-          "capital_markets_relevance": 0,
-          "enterprise_ai_infrastructure_relevance": 0,
-          "infrastructure_relevance_score": 0.863,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "data_center_relevance:0.97(data center, data centers)",
-            "power_grid_relevance:1.00(power, grid, gigawatt)"
-          ],
-          "infrastructure_relevance": {
-            "direct_ai_infrastructure_relevance": 0,
-            "data_center_relevance": 0.97,
-            "cloud_capacity_relevance": 0,
-            "semiconductor_relevance": 0,
-            "power_grid_relevance": 1,
-            "cooling_relevance": 0,
-            "capital_markets_relevance": 0,
-            "enterprise_ai_infrastructure_relevance": 0,
-            "infrastructure_relevance_score": 0.863,
-            "infrastructure_relevance_tier": "full_memo",
-            "infrastructure_relevance_action": "generate_full_memo",
-            "infrastructure_relevance_reasons": [
-              "data_center_relevance:0.97(data center, data centers)",
-              "power_grid_relevance:1.00(power, grid, gigawatt)"
-            ],
-            "infrastructureRelevanceAction": "generate_full_memo",
-            "articlePagePublished": true,
-            "homepagePublished": true,
-            "archiveOnly": false,
-            "archiveOnlyReason": null
-          },
-          "score": 74
-        },
         {
           "id": "663a8e6a23f67106",
           "source": "TechCrunch AI",
           "url": "https://techcrunch.com/2026/07/10/meta-removes-controversial-ai-feature-on-instagram-after-backlash/",
           "title": "Meta removes controversial AI feature on Instagram after backlash",
-          "snippet": "Meta told Dylan Byers, of Puck News, that it had nixed the feature after backlash from its user base.",
-          "contentText": "Meta told Dylan Byers, of Puck News, that it had nixed the feature after backlash from its user base.",
+          "snippet": "\"Our intent was to provide a useful creative tool and to give people control over whether their public content could be referenced in this way,\" the company said in a blog post. \"We've heard the feedback that this featu…",
+          "contentText": "\"Our intent was to provide a useful creative tool and to give people control over whether their public content could be referenced in this way,\" the company said in a blog post. \"We've heard the feedback that this feature missed the mark, so it's no longer available.\"",
           "publishedAt": "2026-07-10T23:55:07.000Z",
           "sourceImage": null,
           "region": "US",
@@ -28391,78 +28256,7 @@
             "archiveOnly": false,
             "archiveOnlyReason": null
           },
-          "score": 72
-        },
-        {
-          "id": "5940d46f34b7e12e",
-          "source": "Semiconductor Engineering",
-          "url": "https://semiengineering.com/chip-industry-week-in-review-146/",
-          "title": "Chip Industry Week In Review",
-          "snippet": "Micron ups US investments; Apple's $30B deal; Solstice's buy; onsemi divests; diamonds for inspection; fault-tolerant quantum $; analog IMC; patent infringements; Accellera's functional safety standard; 189k workers sho…",
-          "contentText": "Micron The memory maker rolled out a slew of announcements this week, including: Raised its planned U.S. investment to more than $250B through 2035, an incremental $50B above what was announced last June , with an ultimate goal of producing 40% of its DRAM in the U.S.; Planned new investments of $3B for U.S. IC supply-chain investments, including $500M in financing for GlobalWafers ’ 300mm raw silicon wafer facility in Sherman, Texas, along with a 10-year wafer supply agreement; Entered into a long-term strategic customer agreement with Ford , providing a supply of memory and storage solutions for the carmaker&#8217;s next-gen vehicle production. Started construction on its $9.3B expansion of its Hiroshima Prefecture advanced memory chip facility. Large Deals Apple announced a $30B+ multi…",
-          "publishedAt": "2026-07-10T07:01:43.000Z",
-          "sourceImage": "https://i0.wp.com/semiengineering.com/wp-content/uploads/2026/07/Screenshot-2026-07-09-at-4.45.40-PM.png?resize=430%2C275&#038;ssl=1",
-          "region": "US",
-          "language": "en",
-          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
-          "category": "Semiconductors",
-          "primary_category": "Semiconductors",
-          "secondary_category": "Accelerators, memory, and advanced packaging",
-          "infrastructure_layer": "Silicon",
-          "affected_stakeholders": [
-            "semiconductor suppliers",
-            "hyperscalers",
-            "server OEMs",
-            "investors"
-          ],
-          "article_type": "Capacity Expansion",
-          "urgency_score": 0.48,
-          "taxonomy_confidence": 0.85,
-          "taxonomy_reasons": [
-            "chip",
-            "gpu",
-            "wafer"
-          ],
-          "direct_ai_infrastructure_relevance": 1,
-          "data_center_relevance": 0,
-          "cloud_capacity_relevance": 0,
-          "semiconductor_relevance": 0.82,
-          "power_grid_relevance": 0,
-          "cooling_relevance": 0,
-          "capital_markets_relevance": 0.32,
-          "enterprise_ai_infrastructure_relevance": 0.18,
-          "infrastructure_relevance_score": 0.945,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "semiconductor_relevance:0.82(semiconductor, wafer, gpu)",
-            "capital_markets_relevance:0.32(financing)"
-          ],
-          "infrastructure_relevance": {
-            "direct_ai_infrastructure_relevance": 1,
-            "data_center_relevance": 0,
-            "cloud_capacity_relevance": 0,
-            "semiconductor_relevance": 0.82,
-            "power_grid_relevance": 0,
-            "cooling_relevance": 0,
-            "capital_markets_relevance": 0.32,
-            "enterprise_ai_infrastructure_relevance": 0.18,
-            "infrastructure_relevance_score": 0.945,
-            "infrastructure_relevance_tier": "full_memo",
-            "infrastructure_relevance_action": "generate_full_memo",
-            "infrastructure_relevance_reasons": [
-              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-              "semiconductor_relevance:0.82(semiconductor, wafer, gpu)",
-              "capital_markets_relevance:0.32(financing)"
-            ],
-            "infrastructureRelevanceAction": "generate_full_memo",
-            "articlePagePublished": true,
-            "homepagePublished": true,
-            "archiveOnly": false,
-            "archiveOnlyReason": null
-          },
-          "score": 72
+          "score": 65
         },
         {
           "id": "cdeae38966757691",
@@ -28531,7 +28325,7 @@
             "archiveOnly": false,
             "archiveOnlyReason": null
           },
-          "score": 71
+          "score": 65
         },
         {
           "id": "eb2ed4d6eb41ad53",
@@ -28602,69 +28396,239 @@
             "archiveOnly": false,
             "archiveOnlyReason": null
           },
-          "score": 68
+          "score": 62
+        },
+        {
+          "id": "01de5f50855464b7",
+          "source": "Cloudflare Blog",
+          "url": "https://blog.cloudflare.com/smart-tiered-cache-for-public-clouds/",
+          "title": "Improving Smart Tiered Cache for Public Cloud Regions",
+          "snippet": "Smart Tiered Cache allows for precise upper tier selection for origins hosted on AWS, GCP, Azure, and Oracle Cloud with customer-provided cloud region hints.",
+          "contentText": "In 2021, we shipped Smart Tiered Cache . The idea: for each origin behind your site, Cloudflare picks the single best upper-tier data center to route through, based on real-time latency. Flip one switch, and we find the fastest path from our network to your origin. That works as long as an origin IP lives in one fixed place. Public cloud origins usually don't. They sit behind anycast or regional unicast front ends, so one origin IP can look equally close to a dozen Cloudflare data centers at once — and the latency probes have nothing to lock onto. Smart Tiered Cache handles this the safe way: when there's no clear winner, it falls back to several upper tiers. Nothing breaks. You just lose the thing that made a single closest tier worth it, which is cache efficiency. Smart Tiered Cache for…",
+          "publishedAt": "2026-07-10T13:00:00.000Z",
+          "sourceImage": "https://cf-assets.www.cloudflare.com/zkvhlag99gkb/1pLDhUXVPPshpZr9zeP4bb/cecf1530616ab1d6097597d5d26039a7/BLOG-3328_image6.png",
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "Hyperscalers & Cloud",
+          "category": "Cloud Capacity",
+          "primary_category": "Cloud Capacity",
+          "secondary_category": "Hyperscale regions and accelerator availability",
+          "infrastructure_layer": "Cloud Platform",
+          "affected_stakeholders": [
+            "hyperscalers",
+            "cloud buyers",
+            "enterprise IT",
+            "operators"
+          ],
+          "article_type": "Other",
+          "urgency_score": 0.45,
+          "taxonomy_confidence": 0.93,
+          "taxonomy_reasons": [
+            "cloud region",
+            "aws",
+            "azure",
+            "oracle cloud"
+          ],
+          "direct_ai_infrastructure_relevance": 0,
+          "data_center_relevance": 0.84,
+          "cloud_capacity_relevance": 1,
+          "semiconductor_relevance": 0,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.835,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "data_center_relevance:0.84(data center, data centers)",
+            "cloud_capacity_relevance:1.00(cloud region, hyperscalers, aws)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 0,
+            "data_center_relevance": 0.84,
+            "cloud_capacity_relevance": 1,
+            "semiconductor_relevance": 0,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.835,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "data_center_relevance:0.84(data center, data centers)",
+              "cloud_capacity_relevance:1.00(cloud region, hyperscalers, aws)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 61
+        },
+        {
+          "id": "c88d3c197b69d69f",
+          "source": "TechCrunch AI",
+          "url": "https://techcrunch.com/2026/07/10/apple-sues-openai-over-alleged-trade-secret-theft/",
+          "title": "Apple sues OpenAI over alleged trade secret theft",
+          "snippet": "Apple alleges the misconduct was directed by OpenAI's senior leadership, including a longtime former employee.",
+          "contentText": "Apple alleges the misconduct was directed by OpenAI's senior leadership, including a longtime former employee.",
+          "publishedAt": "2026-07-10T21:00:29.000Z",
+          "sourceImage": null,
+          "region": "Global",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "category": "AI Infrastructure",
+          "primary_category": "AI Infrastructure",
+          "secondary_category": "GPU clusters and deployment readiness",
+          "infrastructure_layer": "Compute",
+          "affected_stakeholders": [
+            "operators",
+            "hyperscalers",
+            "cloud buyers",
+            "investors"
+          ],
+          "article_type": "Other",
+          "urgency_score": 0.43,
+          "taxonomy_confidence": 0.77,
+          "taxonomy_reasons": [
+            "ai infrastructure",
+            "neocloud"
+          ],
+          "direct_ai_infrastructure_relevance": 1,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0.22,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.778,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "semiconductor_relevance:0.22(gpu)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 1,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0.22,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.778,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+              "semiconductor_relevance:0.22(gpu)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 58
+        },
+        {
+          "id": "aedf516ee949acc1",
+          "source": "Data Center POST",
+          "url": "https://datacenterpost.com/virginia-fiber-express-networks-advances-phase-1-of-statewide-fiber-build/",
+          "title": "Virginia Fiber Express Networks Advances Phase 1 of Statewide Fiber Build",
+          "snippet": "Permits secured: VFE Networks has cleared the key licenses and permit needed to move Phase 1 forward. Local partners: Express-tek and S&N Infrastructure are helping support the build and deployment. Phase 1 scope: A 126…",
+          "contentText": "Permits secured: VFE Networks has cleared the key licenses and permit needed to move Phase 1 forward. Local partners: Express-tek and S&N Infrastructure are helping support the build and deployment. Phase 1 scope: A 126-mile diverse fiber route from Northern Virginia to Richmond-Sandston, designed for redundancy and AI-ready capacity. # # # Virginia Fiber Express Networks LLC (VFE Networks), a wholly owned subsidiary of Infraforward Strategies LLC , has secured the licenses and permit needed to advance Phase 1 of its planned fiber network. In partnership with Express-tek and S&N Infrastructure , the company is moving forward with a project built to support rising demand for digital infrastructure across Virginia and beyond. Phase 1 will deliver a 126-mile diverse fiber route from Northern…",
+          "publishedAt": "2026-07-10T13:30:35.000Z",
+          "sourceImage": "https://d3qut6qyo6tw2j.cloudfront.net/bin/uploads/2026/07/09154515/VFENet-Phase-1-PR-Blog-7.7.26-1-1024x512.png",
+          "region": "APAC",
+          "language": "en",
+          "defaultCategory": "Colocation & Wholesale",
+          "category": "Data Centers",
+          "primary_category": "Data Centers",
+          "secondary_category": "Campus development and colocation capacity",
+          "infrastructure_layer": "Facility",
+          "affected_stakeholders": [
+            "data center operators",
+            "developers",
+            "site selectors",
+            "investors"
+          ],
+          "article_type": "Capacity Expansion",
+          "urgency_score": 0.59,
+          "taxonomy_confidence": 0.73,
+          "taxonomy_reasons": [
+            "colocation",
+            "wholesale"
+          ],
+          "direct_ai_infrastructure_relevance": 0.78,
+          "data_center_relevance": 0.76,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.77,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:0.78",
+            "data_center_relevance:0.76(data center, colocation)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 0.78,
+            "data_center_relevance": 0.76,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.77,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:0.78",
+              "data_center_relevance:0.76(data center, colocation)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 58
         }
       ],
       "curatedIds": [
-        "d562bc0e05e85856",
-        "687751a4b0d6dc50",
         "663a8e6a23f67106",
-        "5940d46f34b7e12e",
         "cdeae38966757691",
-        "eb2ed4d6eb41ad53"
+        "eb2ed4d6eb41ad53",
+        "01de5f50855464b7",
+        "c88d3c197b69d69f",
+        "aedf516ee949acc1"
       ],
       "publishedIds": [
         "34fcab8309c48911",
         "f4cae728e8b65925",
         "d562bc0e05e85856",
-        "687751a4b0d6dc50"
+        "687751a4b0d6dc50",
+        "cdeae38966757691",
+        "663a8e6a23f67106"
       ],
       "slotPublications": {
         "0": true,
-        "1": true
+        "1": true,
+        "2": true
       }
     }
   },
   "runHistory": [
-    {
-      "at": "2026-06-01T00:08:40.188Z",
-      "day": "2026-06-01",
-      "slot": 1,
-      "publishedCount": 0,
-      "signalCardCount": 2,
-      "archiveOnlyCount": 0,
-      "processedIds": [
-        "49d9b8d4a3e7f1f3",
-        "d474027d664852ac"
-      ],
-      "blockedCount": 1,
-      "blockedItems": [
-        {
-          "id": "d474027d664852ac",
-          "title": "AMD brings back Ryzen 7 5800X3D, launches Ryzen 7 7700X3D to combat rising component prices — eight-core X3D CPUs arrive under $350 for AM4 or AM5, DDR4 or DDR5",
-          "infrastructure_relevance_score": 0.914,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "cloud_capacity_relevance:0.32(hyperscalers)",
-            "semiconductor_relevance:0.52(amd, gpu)",
-            "power_grid_relevance:0.22(power)"
-          ],
-          "extraction_quality_score": 0.55,
-          "source_domain_adapter": "generic",
-          "content_length": 475,
-          "boilerplate_ratio": 0,
-          "repetition_blocked": false,
-          "repetition_block_reasons": [],
-          "repetition_check": null,
-          "expert_insight_complete": true,
-          "expert_insight_missing_fields": [],
-          "reason": "fail_closed: source_text_incomplete:source_evidence_length_below_500, source_evidence_length_below_1200"
-        }
-      ],
-      "archiveOnlyItems": []
-    },
     {
       "at": "2026-06-01T12:47:08.042Z",
       "day": "2026-06-01",
@@ -41846,7 +41810,127 @@
       ],
       "signalCardItems": [],
       "archiveOnlyItems": []
+    },
+    {
+      "at": "2026-07-11T08:56:50.409Z",
+      "day": "2026-07-11",
+      "slot": 2,
+      "publishedCount": 0,
+      "signalCardCount": 1,
+      "archiveOnlyCount": 0,
+      "repetitionBlockedCount": 1,
+      "publishedIds": [],
+      "processedIds": [
+        "cdeae38966757691",
+        "663a8e6a23f67106"
+      ],
+      "blockedCount": 1,
+      "blockedItems": [
+        {
+          "id": "cdeae38966757691",
+          "title": "PEARC Celebrates 10th Anniversary of Conference Series",
+          "infrastructure_relevance_score": 0.91,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud, high-performance computing)",
+            "cloud_capacity_relevance:0.32(hyperscalers)",
+            "semiconductor_relevance:0.50(nvidia, gpu)",
+            "power_grid_relevance:0.22(power)"
+          ],
+          "extraction_quality_score": 0.95,
+          "source_domain_adapter": "generic",
+          "content_length": 1444,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": false,
+          "repetition_block_reasons": [],
+          "repetition_check": null,
+          "expert_insight_complete": true,
+          "expert_insight_missing_fields": [],
+          "reason": "fail_closed: source_text_incomplete:ellipsis_truncation_artifact, ellipsis_truncation_artifact"
+        }
+      ],
+      "repetitionBlockedItems": [
+        {
+          "id": "663a8e6a23f67106",
+          "title": "Meta removes controversial AI feature on Instagram after backlash",
+          "infrastructure_relevance_score": 0.87,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "cloud_capacity_relevance:0.32(hyperscalers)",
+            "semiconductor_relevance:0.22(gpu)",
+            "power_grid_relevance:0.22(power)"
+          ],
+          "extraction_quality_score": 1,
+          "source_domain_adapter": "techcrunch",
+          "content_length": 1731,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": true,
+          "repetition_block_reasons": [
+            "repeated_sentence_ratio>0.12",
+            "heading_sequence_similarity>0.75",
+            "conclusion_similarity>0.7"
+          ],
+          "repetition_check": {
+            "compared_article_count": 20,
+            "repeated_sentence_ratio": 0.14285714285714285,
+            "repeated_paragraph_ratio": 0.16666666666666666,
+            "heading_sequence_similarity": 1,
+            "banned_phrase_count": 0,
+            "banned_phrase_counts": {},
+            "recent_banned_phrase_counts": {},
+            "ngram_overlap": 0.4485981308411215,
+            "blueprint_repetition": 1,
+            "conclusion_similarity": 0.9271050693011066,
+            "repeated_sentence_count": 1,
+            "repeated_paragraph_count": 1,
+            "heading_sequence": [
+              "System Change",
+              "Bottleneck",
+              "Engineering Tradeoff",
+              "Validation Metric"
+            ],
+            "blocked": true,
+            "reasons": [
+              "repeated_sentence_ratio>0.12",
+              "heading_sequence_similarity>0.75",
+              "conclusion_similarity>0.7"
+            ]
+          },
+          "expert_insight_complete": true,
+          "expert_insight_missing_fields": [],
+          "reason": "repeated_sentence_ratio>0.12; heading_sequence_similarity>0.75; conclusion_similarity>0.7"
+        }
+      ],
+      "signalCardItems": [
+        {
+          "id": "cdeae38966757691",
+          "title": "PEARC Celebrates 10th Anniversary of Conference Series",
+          "infrastructure_relevance_score": 0.91,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud, high-performance computing)",
+            "cloud_capacity_relevance:0.32(hyperscalers)",
+            "semiconductor_relevance:0.50(nvidia, gpu)",
+            "power_grid_relevance:0.22(power)"
+          ],
+          "extraction_quality_score": 0.95,
+          "source_domain_adapter": "generic",
+          "content_length": 1444,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": false,
+          "repetition_block_reasons": [],
+          "repetition_check": null,
+          "expert_insight_complete": true,
+          "expert_insight_missing_fields": [],
+          "reason": "fail_closed: source_text_incomplete:ellipsis_truncation_artifact, ellipsis_truncation_artifact"
+        }
+      ],
+      "archiveOnlyItems": []
     }
   ],
-  "lastRunAt": "2026-07-11T00:00:27.307Z"
+  "lastRunAt": "2026-07-11T08:56:50.409Z"
 }
