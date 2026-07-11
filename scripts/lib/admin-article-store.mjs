@@ -3,6 +3,20 @@ import { guardPublicCopy } from './copy-quality-guard.mjs';
 import { summarizeAdminAuditChange } from './admin-audit-log.mjs';
 import { sourceExtractionPassesPublicGate } from './source-extraction-fail-closed.mjs';
 
+const ADMIN_ACTIONS = new Set([
+  'publish',
+  'save-draft',
+  'unpublish',
+  'hide',
+  'noindex',
+  'regenerate-article',
+  'regenerate-brief',
+  'regenerate-image',
+  'edit-prompt',
+  'upload-image',
+  'preview',
+]);
+
 function clone(value) {
   return structuredClone(value ?? {});
 }
@@ -94,8 +108,8 @@ function applyPatch(article = {}, patch = {}) {
   return next;
 }
 
-export function validateAdminPublishQuality(article = {}, { action = 'publish' } = {}) {
-  if (action !== 'publish') return [];
+export function validateAdminPublishQuality(article = {}, { action = 'publish', publicEligible = false } = {}) {
+  if (action !== 'publish' && !publicEligible) return [];
   const copy = [article.title, article.deck || article.summary, bodyText(article)].filter(Boolean).join('\n\n');
   const guard = guardPublicCopy(copy);
   const banned = bannedPhraseMatches(copy);
@@ -106,6 +120,14 @@ export function validateAdminPublishQuality(article = {}, { action = 'publish' }
   if (guard.reasons.length) errors.push(...guard.reasons);
   if (Object.keys(banned).length) errors.push(...Object.keys(banned).map((phrase) => 'banned_phrase:' + phrase));
   return [...new Set(errors)];
+}
+
+function isPubliclyEligible(article = {}) {
+  if (article.hidden === true || article.draft === true) return false;
+  if (['draft', 'hidden', 'unpublished', 'deleted'].includes(text(article.public_status).toLowerCase())) return false;
+  return article.public_status === 'published'
+    || article.articlePagePublished === true
+    || article.homepagePublished === true;
 }
 
 function requestRegeneration(article, type, patch, actor, timestamp) {
@@ -167,18 +189,43 @@ function applyAction(next, action, patch, actor, timestamp) {
 export function applyAdminArticleAction({ article = {}, patch = {}, action = 'save-draft', actor = 'admin', now = new Date().toISOString(), commitSha = '' } = {}) {
   const timestamp = nowIso(now);
   const before = clone(article);
-  const next = applyPatch(before, patch);
-  if (action === 'publish') {
-    const candidate = clone(next);
-    applyAction(candidate, action, patch, actor, timestamp);
-    const qualityErrors = validateAdminPublishQuality(candidate, { action });
-    if (qualityErrors.length) {
-      return { ok: false, statusCode: 422, article: before, attemptedArticle: candidate, qualityErrors, reviewQueue: { action: 'publish-blocked', articleId: text(before.id), reasons: qualityErrors, actor, timestamp } };
-    }
-    Object.assign(next, candidate);
-  } else if (action !== 'preview') {
-    applyAction(next, action, patch, actor, timestamp);
+  if (!ADMIN_ACTIONS.has(action)) {
+    return {
+      ok: false,
+      statusCode: 400,
+      article: before,
+      qualityErrors: [`unknown_admin_action:${action}`],
+    };
   }
+
+  const candidate = applyPatch(before, patch);
+  if (action !== 'preview') {
+    applyAction(candidate, action, patch, actor, timestamp);
+  }
+  const validatePublicState = action !== 'preview' && isPubliclyEligible(candidate);
+  if (action === 'publish' || validatePublicState) {
+    const qualityErrors = validateAdminPublishQuality(candidate, {
+      action,
+      publicEligible: validatePublicState,
+    });
+    if (qualityErrors.length) {
+      return {
+        ok: false,
+        statusCode: 422,
+        article: before,
+        attemptedArticle: candidate,
+        qualityErrors,
+        reviewQueue: {
+          action: action === 'publish' ? 'publish-blocked' : `${action}-blocked`,
+          articleId: text(before.id),
+          reasons: qualityErrors,
+          actor,
+          timestamp,
+        },
+      };
+    }
+  }
+  const next = candidate;
   next.updatedAt = timestamp;
   next.searchText = searchText(next);
   const auditEntry = summarizeAdminAuditChange({ before, after: next, actor, action, articleId: next.id, timestamp, commitSha });

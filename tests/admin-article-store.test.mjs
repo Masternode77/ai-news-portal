@@ -167,6 +167,44 @@ test('admin extraction publish gates do not block non-publish actions', () => {
   assert.equal(result.article.title, 'Draft can keep failed source metadata');
 });
 
+test('public articles cannot bypass quality gates through regeneration actions', () => {
+  const published = {
+    ...baseArticle(),
+    public_status: 'published',
+    articlePagePublished: true,
+    homepagePublished: true,
+  };
+  const blocked = applyAdminArticleAction({
+    article: published,
+    action: 'regenerate-image',
+    actor: 'owner',
+    now: '2026-05-31T06:09:00.000Z',
+    patch: { title: '', bodyMarkdown: 'short', imagePrompt: 'New direction' },
+  });
+
+  assert.equal(blocked.ok, false);
+  assert.equal(blocked.statusCode, 422);
+  assert.equal(blocked.article.title, published.title);
+  assert.equal(blocked.article.public_status, 'published');
+  assert.ok(blocked.qualityErrors.includes('missing_title'));
+  assert.ok(blocked.qualityErrors.includes('body_too_short_for_publish'));
+});
+
+test('unknown admin actions are rejected without changing the article', () => {
+  const article = baseArticle();
+  const result = applyAdminArticleAction({
+    article,
+    action: 'publish-without-review',
+    actor: 'owner',
+    patch: { title: 'Changed by unknown action' },
+  });
+
+  assert.equal(result.ok, false);
+  assert.equal(result.statusCode, 400);
+  assert.deepEqual(result.article, article);
+  assert.deepEqual(result.qualityErrors, ['unknown_admin_action:publish-without-review']);
+});
+
 test('admin actions cover hide, noindex, regenerate, image replacement, and preview', () => {
   const hidden = applyAdminArticleAction({ article: baseArticle(), action: 'hide', actor: 'owner' });
   assert.equal(hidden.article.public_status, 'hidden');
