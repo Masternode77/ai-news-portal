@@ -45,7 +45,10 @@ export default async function handler(req, res) {
     recordSuccessfulLogin(req);
     const session = createSession(body.username || 'admin');
     json(res, 200, { ok: true, csrfToken: session.csrfToken }, { 'Set-Cookie': session.cookie });
-  } catch {
-    json(res, 400, { error: 'Invalid login request.' });
+  } catch (error) {
+    const statusCode = error?.statusCode === 413 || error?.statusCode === 415
+      ? error.statusCode
+      : 400;
+    json(res, statusCode, { error: statusCode === 413 ? 'Request body is too large.' : statusCode === 415 ? 'JSON content type required.' : 'Invalid login request.' });
   }
 }

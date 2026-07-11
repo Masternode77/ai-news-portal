@@ -26,10 +26,43 @@ function mockReq({ method = 'GET', url = '/api/admin/login', headers = {}, body 
   const req = Readable.from(chunks);
   req.method = method;
   req.url = url;
-  req.headers = headers;
+  req.headers = body === undefined
+    ? headers
+    : { 'content-type': 'application/json', ...headers };
   req.socket = { remoteAddress: '198.51.100.9' };
   return req;
 }
+
+test('admin auth fails closed without leaking configuration and never caches responses', async () => {
+  delete process.env.ADMIN_USERNAME;
+  delete process.env.ADMIN_PASSWORD_HASH;
+  delete process.env.ADMIN_SESSION_SECRET;
+
+  const response = await call(loginHandler, { method: 'GET' });
+
+  assert.equal(response.statusCode, 503);
+  assert.equal(response.getHeader('cache-control'), 'no-store');
+  assert.doesNotMatch(response.body, /ADMIN_|SESSION_SECRET|PASSWORD_HASH/);
+  assert.match(response.body, /temporarily unavailable/i);
+});
+
+test('admin JSON endpoints reject unsupported content types and oversized bodies', async () => {
+  configureAuth();
+
+  const unsupported = await call(loginHandler, {
+    method: 'POST',
+    headers: { 'content-type': 'text/plain' },
+    body: { username: 'owner', password: 'correct-password' },
+  });
+  assert.equal(unsupported.statusCode, 415);
+
+  const oversized = await call(loginHandler, {
+    method: 'POST',
+    body: { username: 'owner', password: 'x'.repeat(70 * 1024) },
+  });
+  assert.equal(oversized.statusCode, 413);
+  assert.equal(oversized.getHeader('cache-control'), 'no-store');
+});
 
 function mockRes() {
   return {

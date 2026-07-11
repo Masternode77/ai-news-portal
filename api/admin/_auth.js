@@ -5,6 +5,8 @@ const SESSION_TTL_SECONDS = 60 * 60 * 8;
 const PASSWORD_KEY_LENGTH = 64;
 const LOGIN_WINDOW_MS = 15 * 60 * 1000;
 const MAX_FAILED_LOGIN_ATTEMPTS = 5;
+const MAX_JSON_BODY_BYTES = 64 * 1024;
+const MAX_FAILED_LOGIN_AUDIT_ENTRIES = 100;
 const failedLoginState = new Map();
 const failedLoginAudit = [];
 
@@ -54,13 +56,28 @@ export function json(res, statusCode, payload, headers = {}) {
     res.setHeader(key, value);
   }
   res.setHeader('Content-Type', 'application/json; charset=utf-8');
+  res.setHeader('Cache-Control', 'no-store');
   res.end(JSON.stringify(payload));
 }
 
 export async function readJson(req) {
+  const contentType = headerValue(req, 'content-type').split(';')[0].trim().toLowerCase();
+  if (contentType !== 'application/json') {
+    throw Object.assign(new Error('unsupported_content_type'), { statusCode: 415 });
+  }
+  const declaredLength = Number(headerValue(req, 'content-length'));
+  if (Number.isFinite(declaredLength) && declaredLength > MAX_JSON_BODY_BYTES) {
+    throw Object.assign(new Error('request_too_large'), { statusCode: 413 });
+  }
   const chunks = [];
+  let receivedBytes = 0;
   for await (const chunk of req) {
-    chunks.push(Buffer.isBuffer(chunk) ? chunk : Buffer.from(String(chunk)));
+    const buffer = Buffer.isBuffer(chunk) ? chunk : Buffer.from(String(chunk));
+    receivedBytes += buffer.length;
+    if (receivedBytes > MAX_JSON_BODY_BYTES) {
+      throw Object.assign(new Error('request_too_large'), { statusCode: 413 });
+    }
+    chunks.push(buffer);
   }
   if (!chunks.length) return {};
   return JSON.parse(Buffer.concat(chunks).toString('utf8'));
@@ -103,7 +120,7 @@ function headerValue(req, name) {
 
 export function requireAdmin(req, res, options = {}) {
   if (!configured()) {
-    json(res, 500, { error: 'Admin auth is not configured. Set ADMIN_USERNAME, ADMIN_PASSWORD_HASH, and ADMIN_SESSION_SECRET.' });
+    json(res, 503, { error: 'Admin service is temporarily unavailable.' });
     return null;
   }
 
@@ -164,6 +181,12 @@ function clientIp(req) {
   return forwarded || req.socket?.remoteAddress || 'unknown';
 }
 
+function safeAuditValue(value = '', maxLength = 96) {
+  return String(value || '')
+    .replace(/[\u0000-\u001f\u007f]/g, '')
+    .slice(0, maxLength);
+}
+
 function throttleEntry(req, now = Date.now()) {
   const ip = clientIp(req);
   const entry = failedLoginState.get(ip);
@@ -196,12 +219,13 @@ export function recordFailedLogin(req, username = '', reason = 'invalid_credenti
   failedLoginState.set(entry.ip, next);
   const audit = {
     timestamp: new Date(now).toISOString(),
-    ip: entry.ip,
-    username: String(username || ''),
-    reason,
+    ip: safeAuditValue(entry.ip),
+    username: safeAuditValue(username),
+    reason: safeAuditValue(reason, 48),
   };
   failedLoginAudit.push(audit);
-  console.warn(`[admin-auth] failed login username=${audit.username || '(blank)'} ip=${audit.ip} reason=${reason}`);
+  if (failedLoginAudit.length > MAX_FAILED_LOGIN_AUDIT_ENTRIES) failedLoginAudit.shift();
+  console.warn(`[admin-auth] failed login username=${audit.username || '(blank)'} ip=${audit.ip} reason=${audit.reason}`);
   return audit;
 }
 

@@ -62,7 +62,16 @@ export default async function handler(req, res) {
       if (result.blocked) return json(res, result.statusCode || 422, { error: 'Publish quality gate failed.', qualityErrors: result.qualityErrors, reviewQueue: result.reviewQueue, article: publicArticle(result.article) });
       json(res, 200, { ok: true, article: publicArticle(result.article), auditEntry: result.auditEntry, preview: result.preview, sourceFile: result.sourceFile, commitSha: result.commitSha, commitUrl: result.commitUrl });
     } catch (error) {
-      json(res, 500, { error: error.message || 'Unable to save article.' });
+      const statusCode = error?.statusCode === 413 || error?.statusCode === 415
+        ? error.statusCode
+        : 500;
+      json(res, statusCode, {
+        error: statusCode === 413
+          ? 'Request body is too large.'
+          : statusCode === 415
+            ? 'JSON content type required.'
+            : 'Unable to save article.',
+      });
     }
     return;
   }
