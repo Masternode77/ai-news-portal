@@ -1,34 +1,41 @@
 # NEXT
 
-## Completed
-- Applied the article-detail editorial treatment across the portal.
-- Homepage/search titles now prefer hook-style `expertLensFull.finalHeadline`.
-- Existing article copy is lightly cleaned at render time to remove stiff template phrasing.
-- Article pages now show a three-line Executive Summary before the main copy.
-- Future expert-lens generation now requests hook headlines and exactly three executive-summary lines.
-- Expanded article detail width and aligned summary/body blocks to the page edge.
-- Tuned global headline/body font stacks, detail headline scale, homepage lead headline scale, and article body readability.
-- Removed the remaining title width cap so article and homepage lead headlines use the full content width.
-- Reduced oversized headline scales and loosened line-height to remove the empty-right-column effect.
-- Homepage media now prefers source images over generated text posters to avoid baked-in headline clipping.
-- Local generated posters now wrap long title and summary text inside SVG overlays.
-- Added five crawler feeds: Data Center Frontier, Data Center POST, Cloudflare Blog, Engineering at Meta, and Hugging Face Blog.
-- Verified all five added feeds parse successfully with `rss-parser`.
-- Verified `fetchNewsPool()` candidate inclusion: default 30-item pool includes Cloudflare Blog; 200-item pool includes all five added feeds.
-- Added source-balanced pool selection: each active source gets one candidate before the remaining pool is filled by recency.
-- Verified the default 30-item pool now includes all five added feeds.
-- Replaced four broken feeds: Reuters Technology -> SiliconANGLE AI, NVIDIA URL fixed, Google Cloud URL fixed, AnandTech -> StorageReview.
-- Verified all four replacement feeds parse and appear in the default 30-item candidate pool.
-- Ran the full pipeline after feed repair; it refreshed `news-pool`, normalized live/archive/search data, and confirmed all added/replacement feeds are present in the saved 30-item pool.
+## Current branch
+- `upgrade/gpt-5-6-sol`, based on production `origin/main` SHA `19089b66`.
+- Rollback tag: `backup/pre-gpt56-upgrade-20260711T091118Z`.
+- Security/dependency and repository-guidance commits replayed; branch is two commits ahead before audit docs.
 
-## Current state
-- `npm run check` passed with 0 errors and existing hints.
-- `npm run build` passed and generated 279 static pages.
-- Previously broken feeds have been replaced or repaired.
-- The latest pipeline run published 0 new articles because the current KST slot was already marked published.
+## Latest completed checklist item
+- Completed read-only repository, production, Vercel, content, image, admin, security, SEO, performance, CI/CD, desktop, and mobile audit.
+- Documented the canonical target architecture before major refactoring.
+- Classified all 165 `scripts/lib` runtime modules.
 
-## Next safe task
-- Review and optionally commit refreshed data files from the full pipeline run.
+## Changed files
+- `docs/pre-upgrade-baseline.md`
+- `docs/gpt56-full-audit.md`
+- `docs/gpt56-runtime-map.md`
+- `docs/gpt56-legacy-engine-map.md`
+- `docs/gpt56-admin-audit.md`
+- `docs/gpt56-security-audit.md`
+- `docs/gpt56-design-audit.md`
+- `docs/gpt56-risk-register.md`
+- `docs/canonical-architecture.md`
+- `docs/plugin-contracts.md`
+- `docs/plugin-development-guide.md`
+- `docs/legacy-engine-migration.md`
 
-## Validation
-- Confirm this file remains under 120 lines.
+## Validation results
+- Upgrade branch `npm audit --json`: 0 vulnerabilities.
+- Audit documentation check: 12/12 present.
+- Legacy inventory check: 165/165 runtime modules classified.
+- `git diff --check`: passed.
+- Clean origin baseline build: passed, 1,532 pages, 33.86 seconds locally.
+- Clean origin baseline tests after build: 252/256 passed; four documented pre-existing failures.
+
+## Blockers
+- Production DB, object storage, and admin credentials are not available; integration must fail closed and production CRUD cannot be claimed.
+- Production remains unchanged until preview gates pass.
+
+## Exact next step
+- Commit the audit/architecture checkpoint.
+- Implement regression tests for public-route removal and the highest-severity security boundaries before changing behavior.
