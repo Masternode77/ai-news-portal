@@ -126,7 +126,7 @@ test('article origin canonicalization', async (t) => {
     }
   });
 
-  await t.test('remote source image should canonicalize locally when no generated image exists', async () => {
+  await t.test('remote source image on a loopback destination is rejected', async () => {
     const { root, publicDir } = await makeTempProject();
     const remote = await createRemotePngServer();
     const article = {
@@ -139,16 +139,9 @@ test('article origin canonicalization', async (t) => {
       await withCwd(root, async () => {
         const result = await ensureCanonicalArticleImageSet(article, { publicDir });
 
-        assert.equal(result.changed, 4);
-        assert.equal(result.skipped, false);
-        for (const publicPath of [
-          result.paths.heroImage,
-          result.paths.thumbnailImage,
-          result.paths.ogImage,
-          result.paths.legacyImage,
-        ]) {
-          await fs.access(path.join(publicDir, publicPath.replace(/^\//, '')));
-        }
+        assert.equal(result.changed, 0);
+        assert.equal(result.skipped, true);
+        assert.equal(result.reason, 'source_image_fetch_failed');
       });
     } finally {
       await remote.close();

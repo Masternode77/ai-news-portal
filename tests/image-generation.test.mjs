@@ -3,6 +3,7 @@ import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import test from 'node:test';
+import sharp from 'sharp';
 import { buildArticleImagePrompt, articleImageAltText } from '../scripts/lib/article-image-prompt.mjs';
 import { generateArticleImageSet, metadataPatchFromImageSet } from '../scripts/lib/image2-provider.mjs';
 import { createImageProvider, describeImageProvider } from '../scripts/lib/image-providers/index.mjs';
@@ -64,13 +65,15 @@ test('offline image2 generation writes metadata and canonical fallback variants'
   assert.equal(result.generatedAt, '2026-05-31T00:00:00.000Z');
   assert.match(result.prompt, /data center|grid|power/i);
   assert.match(result.alt, /Utility queue/);
-  assert.match(result.heroImage, /^\/generated\/articles\/image2-fixture-001-utility-queue-forces-new-ai-campus-timing\/hero\.svg$/);
-  assert.match(result.thumbnailImage, /\/thumbnail\.svg$/);
-  assert.match(result.ogImage, /\/og\.svg$/);
-  assert.match(result.legacyImage, /^\/generated\/image2-fixture-001\.svg$/);
+  assert.match(result.heroImage, /^\/generated\/articles\/image2-fixture-001-utility-queue-forces-new-ai-campus-timing\/hero\.webp$/);
+  assert.match(result.thumbnailImage, /\/thumbnail\.webp$/);
+  assert.match(result.ogImage, /\/og\.webp$/);
+  assert.match(result.legacyImage, /^\/generated\/image2-fixture-001\.webp$/);
 
   for (const imagePath of [result.heroImage, result.thumbnailImage, result.ogImage, result.legacyImage]) {
-    assert.equal(fs.existsSync(path.join(publicDir, imagePath.replace(/^\//, ''))), true, `${imagePath} should exist`);
+    const outputPath = path.join(publicDir, imagePath.replace(/^\//, ''));
+    assert.equal(fs.existsSync(outputPath), true, `${imagePath} should exist`);
+    assert.equal((await sharp(outputPath).metadata()).format, 'webp');
   }
 
   assert.equal(patch.generatedImage, result.heroImage);

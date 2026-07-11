@@ -10,7 +10,18 @@ import {
   canonicalArticleImagePaths,
 } from './image-store.mjs';
 import { PIPELINE_OFFLINE } from './constants.mjs';
-import { fetchWithTimeout } from './image-providers/shared.mjs';
+import {
+  fetchWithTimeout,
+  SUPPORTED_RASTER_MIME_TYPES,
+  validateRasterImageBytes,
+} from './image-providers/shared.mjs';
+import {
+  ensureSafePublicOutputTarget,
+  writeSafePublicFile,
+} from './safe-public-file.mjs';
+
+const MAX_SOURCE_IMAGE_BYTES = 16 * 1024 * 1024;
+const MAX_SOURCE_IMAGE_PIXELS = 40_000_000;
 
 const LOCAL_SOURCE_FIELDS = [
   'heroImage',
@@ -107,21 +118,46 @@ function canonicalImageTargets(paths = {}, publicDir = '') {
   ];
 }
 
-async function writeMissingVariants(missing = [], source) {
+async function writeMissingVariants(missing = [], source, publicDir) {
+  const validated = await validateRasterImageBytes(source, '', {
+    maxBytes: MAX_SOURCE_IMAGE_BYTES,
+    maxPixels: MAX_SOURCE_IMAGE_PIXELS,
+  });
   await Promise.all(missing.map(async (entry) => {
     const variant = ARTICLE_IMAGE_VARIANTS[entry.key] || ARTICLE_IMAGE_VARIANTS.hero;
-    await fs.mkdir(path.dirname(entry.filePath), { recursive: true });
-    await sharp(source)
+    const outputPath = await ensureSafePublicOutputTarget(publicDir, entry.filePath);
+    const output = await sharp(validated.bytes, {
+      failOn: 'error',
+      limitInputPixels: MAX_SOURCE_IMAGE_PIXELS,
+      animated: false,
+      sequentialRead: true,
+    })
+      .rotate()
       .resize(variant.width, variant.height, { fit: 'cover', position: 'attention' })
       .webp({ quality: 88 })
-      .toFile(entry.filePath);
+      .toBuffer();
+    await writeSafePublicFile(publicDir, outputPath, output);
   }));
+}
+
+async function readLocalSourceImage(filePath = '') {
+  const stats = await fs.stat(filePath);
+  if (!stats.isFile() || stats.size > MAX_SOURCE_IMAGE_BYTES) {
+    throw new Error('Local source image exceeds the byte limit');
+  }
+  return fs.readFile(filePath);
 }
 
 async function fetchRemoteSourceImage(url = '') {
   const response = await fetchWithTimeout(url, {
     headers: {
       'user-agent': 'Mozilla/5.0 (compatible; ComputeCurrentBot/1.0)',
+    },
+    safeFetch: {
+      allowedMimeTypes: SUPPORTED_RASTER_MIME_TYPES,
+      maxRedirects: 3,
+      maxCompressedBytes: MAX_SOURCE_IMAGE_BYTES,
+      maxDecompressedBytes: MAX_SOURCE_IMAGE_BYTES,
     },
   }, 20000);
 
@@ -130,11 +166,12 @@ async function fetchRemoteSourceImage(url = '') {
   }
 
   const contentType = response.headers.get('content-type') || '';
-  if (contentType && !/^image\//i.test(contentType)) {
-    return { error: 'source_image_not_image' };
-  }
-
-  return { bytes: Buffer.from(await response.arrayBuffer()) };
+  const bytes = Buffer.from(await response.arrayBuffer());
+  const validated = await validateRasterImageBytes(bytes, contentType, {
+    maxBytes: MAX_SOURCE_IMAGE_BYTES,
+    maxPixels: MAX_SOURCE_IMAGE_PIXELS,
+  });
+  return { bytes: validated.bytes };
 }
 
 export async function ensureCanonicalArticleImageSet(item = {}, options = {}) {
@@ -142,6 +179,12 @@ export async function ensureCanonicalArticleImageSet(item = {}, options = {}) {
   const paths = canonicalArticleImagePaths(item, { extension: 'webp', legacyExtension: 'webp' });
   const candidates = canonicalImageTargets(paths, publicDir);
   const missing = options.overwrite === true ? [...candidates] : [];
+
+  try {
+    await Promise.all(candidates.map((candidate) => ensureSafePublicOutputTarget(publicDir, candidate.filePath)));
+  } catch {
+    return { changed: 0, skipped: true, reason: 'unsafe_image_output_path', paths };
+  }
 
   if (options.overwrite !== true) {
     for (const candidate of candidates) {
@@ -157,8 +200,13 @@ export async function ensureCanonicalArticleImageSet(item = {}, options = {}) {
 
   const sourceFile = localSourceImageFileFor(item);
   if (await fileExists(sourceFile)) {
-    await writeMissingVariants(missing, sourceFile);
-    return { changed: missing.length, skipped: false, paths };
+    try {
+      const bytes = await readLocalSourceImage(sourceFile);
+      await writeMissingVariants(missing, bytes, publicDir);
+      return { changed: missing.length, skipped: false, paths };
+    } catch {
+      return { changed: 0, skipped: true, reason: 'invalid_local_source_image', paths };
+    }
   }
 
   const remote = remoteSourceImageFor(item);
@@ -178,7 +226,7 @@ export async function ensureCanonicalArticleImageSet(item = {}, options = {}) {
   }
 
   try {
-    await writeMissingVariants(missing, fetched.bytes);
+    await writeMissingVariants(missing, fetched.bytes, publicDir);
     return { changed: missing.length, skipped: false, paths };
   } catch {
     return { changed: 0, skipped: true, reason: 'invalid_source_image', paths };

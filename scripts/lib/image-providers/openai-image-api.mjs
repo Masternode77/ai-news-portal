@@ -4,7 +4,14 @@ import {
   OPENAI_IMAGE_QUALITY,
   OPENAI_IMAGE_SIZE,
 } from '../constants.mjs';
-import { buildImagePrompt, fetchWithTimeout, writeImageBytes } from './shared.mjs';
+import {
+  buildImagePrompt,
+  fetchWithTimeout,
+  SUPPORTED_RASTER_MIME_TYPES,
+  writeImageBytes,
+} from './shared.mjs';
+
+const MAX_PROVIDER_IMAGE_BYTES = 16 * 1024 * 1024;
 
 function mimeTypeForFormat(format = 'png') {
   if (format === 'jpeg' || format === 'jpg') return 'image/jpeg';
@@ -63,7 +70,14 @@ export async function requestOpenAiImage(options = {}) {
   }
 
   if (image.url) {
-    const imageResponse = await fetchWithTimeout(image.url, {}, 20000);
+    const imageResponse = await fetchWithTimeout(image.url, {
+      safeFetch: {
+        allowedMimeTypes: SUPPORTED_RASTER_MIME_TYPES,
+        maxCompressedBytes: MAX_PROVIDER_IMAGE_BYTES,
+        maxDecompressedBytes: MAX_PROVIDER_IMAGE_BYTES,
+        maxRedirects: 3,
+      },
+    }, 20000);
     if (!imageResponse.ok) {
       throw new Error(`Generated image fetch failed: ${imageResponse.status}`);
     }

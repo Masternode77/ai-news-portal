@@ -1,7 +1,11 @@
-import fs from 'node:fs/promises';
 import path from 'node:path';
 import sharp from 'sharp';
 import { articleImageAltText, imageSlugPart } from './article-image-prompt.mjs';
+import { validateRasterImageBytes } from './image-providers/shared.mjs';
+import { publicFilePath, writeSafePublicFile } from './safe-public-file.mjs';
+
+const MAX_ARTICLE_IMAGE_BYTES = 16 * 1024 * 1024;
+const MAX_ARTICLE_IMAGE_PIXELS = 40_000_000;
 
 export const ARTICLE_IMAGE_VARIANTS = {
   hero: { file: 'hero', width: 1536, height: 864, label: '16:9 hero' },
@@ -32,10 +36,6 @@ export function canonicalArticleImagePaths(article = {}, options = {}) {
     ogImage: `${base}/${ARTICLE_IMAGE_VARIANTS.og.file}.${extension}`,
     legacyImage: `/generated/${id}.${legacyExtension}`,
   };
-}
-
-function publicPathToFile(publicDir, publicPath) {
-  return path.join(publicDir, publicPath.replace(/^\//, ''));
 }
 
 function escapeXml(value = '') {
@@ -95,21 +95,22 @@ export async function writeFallbackArticleImageSet(article = {}, metadata = {}, 
   const publicDir = options.publicDir || path.join(process.cwd(), 'public');
   const paths = canonicalArticleImagePaths(article, { extension: 'webp', legacyExtension: 'webp' });
   const slug = paths.slug;
-  const writes = Object.entries(ARTICLE_IMAGE_VARIANTS).map(async ([key, variant]) => {
+  const writes = [];
+  for (const [key, variant] of Object.entries(ARTICLE_IMAGE_VARIANTS)) {
     const publicPath = paths[`${key}Image`];
-    const filePath = publicPathToFile(publicDir, publicPath);
-    await fs.mkdir(path.dirname(filePath), { recursive: true });
-    await sharp(Buffer.from(fallbackSvg(article, variant, slug)))
+    const filePath = publicFilePath(publicDir, publicPath);
+    const output = await sharp(Buffer.from(fallbackSvg(article, variant, slug)))
       .webp({ quality: 88 })
-      .toFile(filePath);
-  });
+      .toBuffer();
+    writes.push(() => writeSafePublicFile(publicDir, filePath, output));
+  }
 
-  const legacyFile = publicPathToFile(publicDir, paths.legacyImage);
-  await fs.mkdir(path.dirname(legacyFile), { recursive: true });
-  await sharp(Buffer.from(fallbackSvg(article, ARTICLE_IMAGE_VARIANTS.hero, slug)))
+  const legacyFile = publicFilePath(publicDir, paths.legacyImage);
+  const legacyOutput = await sharp(Buffer.from(fallbackSvg(article, ARTICLE_IMAGE_VARIANTS.hero, slug)))
     .webp({ quality: 88 })
-    .toFile(legacyFile);
-  await Promise.all(writes);
+    .toBuffer();
+  writes.push(() => writeSafePublicFile(publicDir, legacyFile, legacyOutput));
+  await Promise.all(writes.map((write) => write()));
 
   return { ...metadata, ...paths };
 }
@@ -117,24 +118,40 @@ export async function writeFallbackArticleImageSet(article = {}, metadata = {}, 
 export async function writeArticleImageSetFromBytes(article = {}, bytes, metadata = {}, options = {}) {
   const publicDir = options.publicDir || path.join(process.cwd(), 'public');
   const paths = canonicalArticleImagePaths(article, { extension: 'webp', legacyExtension: 'webp' });
-  const buffer = Buffer.isBuffer(bytes) ? bytes : Buffer.from(bytes);
+  const validated = await validateRasterImageBytes(bytes, options.mimeType || '', {
+    maxBytes: MAX_ARTICLE_IMAGE_BYTES,
+    maxPixels: MAX_ARTICLE_IMAGE_PIXELS,
+  });
+  const buffer = validated.bytes;
 
   for (const [key, variant] of Object.entries(ARTICLE_IMAGE_VARIANTS)) {
     const publicPath = paths[`${key}Image`];
-    const filePath = publicPathToFile(publicDir, publicPath);
-    await fs.mkdir(path.dirname(filePath), { recursive: true });
-    await sharp(buffer)
+    const filePath = publicFilePath(publicDir, publicPath);
+    const output = await sharp(buffer, {
+      failOn: 'error',
+      limitInputPixels: MAX_ARTICLE_IMAGE_PIXELS,
+      animated: false,
+      sequentialRead: true,
+    })
+      .rotate()
       .resize(variant.width, variant.height, { fit: 'cover', position: 'attention' })
       .webp({ quality: 88 })
-      .toFile(filePath);
+      .toBuffer();
+    await writeSafePublicFile(publicDir, filePath, output);
   }
 
-  const legacyFile = publicPathToFile(publicDir, paths.legacyImage);
-  await fs.mkdir(path.dirname(legacyFile), { recursive: true });
-  await sharp(buffer)
+  const legacyFile = publicFilePath(publicDir, paths.legacyImage);
+  const legacyOutput = await sharp(buffer, {
+    failOn: 'error',
+    limitInputPixels: MAX_ARTICLE_IMAGE_PIXELS,
+    animated: false,
+    sequentialRead: true,
+  })
+    .rotate()
     .resize(ARTICLE_IMAGE_VARIANTS.hero.width, ARTICLE_IMAGE_VARIANTS.hero.height, { fit: 'cover', position: 'attention' })
     .webp({ quality: 88 })
-    .toFile(legacyFile);
+    .toBuffer();
+  await writeSafePublicFile(publicDir, legacyFile, legacyOutput);
 
   return { ...metadata, ...paths };
 }

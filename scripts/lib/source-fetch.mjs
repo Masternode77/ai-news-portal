@@ -1,6 +1,7 @@
 import { PIPELINE_OFFLINE } from './constants.mjs';
 import { stripHtml, truncate } from './normalize.mjs';
 import { analyzeExtractionQuality } from './quality-gate.mjs';
+import { safeHttpFetch } from './safe-http-fetch.mjs';
 
 const GENERIC_ADAPTER = 'generic';
 
@@ -227,17 +228,18 @@ export async function fetchArticleExtraction({
   }
 
   const adapter = adapterForUrl(url);
-  const controller = new AbortController();
-  const timeout = setTimeout(() => controller.abort(), timeoutMs);
 
   try {
-    const response = await fetch(url, {
-      signal: controller.signal,
+    const response = await safeHttpFetch(url, {
+      timeoutMs,
       headers: {
         'user-agent': 'Mozilla/5.0 (compatible; AINewsPortalBot/1.0)',
         accept: 'text/html,application/xhtml+xml',
       },
-      redirect: 'follow',
+      allowedMimeTypes: ['text/html', 'application/xhtml+xml'],
+      maxRedirects: 4,
+      maxCompressedBytes: 2 * 1024 * 1024,
+      maxDecompressedBytes: 4 * 1024 * 1024,
     });
 
     if (!response.ok) {
@@ -259,8 +261,13 @@ export async function fetchArticleExtraction({
 
     return { articleText, extractionQa };
   } catch (error) {
-    return fallbackExtraction(url, fallbackSnippet, error?.name === 'AbortError' ? 'timeout' : 'fetch_failed');
-  } finally {
-    clearTimeout(timeout);
+    const reason = /timed out|aborted/i.test(error?.message || '')
+      ? 'timeout'
+      : /non-public|HTTP\(S\)|credentials|downgrade|redirect/i.test(error?.message || '')
+        ? 'unsafe_source_url'
+        : /MIME|encoding|response exceeds/i.test(error?.message || '')
+          ? 'unsupported_source_response'
+          : 'fetch_failed';
+    return fallbackExtraction(url, fallbackSnippet, reason);
   }
 }

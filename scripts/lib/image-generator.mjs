@@ -4,10 +4,20 @@ import sharp from 'sharp';
 import { IMAGE_PROVIDER, PIPELINE_OFFLINE } from './constants.mjs';
 import { ARTICLE_IMAGE_VARIANTS, canonicalArticleImagePaths } from './image-store.mjs';
 import { createImageProvider } from './image-providers/index.mjs';
-import { fetchWithTimeout } from './image-providers/shared.mjs';
+import {
+  ensureGeneratedOutDir,
+  fetchWithTimeout,
+  safeGeneratedImageId,
+  SUPPORTED_RASTER_MIME_TYPES,
+  validateRasterImageBytes,
+  writeImageBytes,
+} from './image-providers/shared.mjs';
+import { localArticleImagePath } from './article-image-surface.mjs';
 import { isStockDerivedCardImage } from './stock-card-image-detector.mjs';
+import { publicFilePath, writeSafePublicFile } from './safe-public-file.mjs';
 
-const OUT_DIR = path.join(process.cwd(), 'public/generated');
+const MAX_SOURCE_IMAGE_BYTES = 16 * 1024 * 1024;
+const MAX_SOURCE_IMAGE_PIXELS = 40_000_000;
 
 function colorFromId(id = 'abcdef1234567890') {
   const a = parseInt(id.slice(0, 2), 16) || 64;
@@ -19,10 +29,6 @@ function colorFromId(id = 'abcdef1234567890') {
     two: `rgb(${90 + (c % 120)} ${70 + (a % 100)} ${110 + (b % 100)})`,
     three: `rgb(${90 + (b % 80)} ${160 + (c % 70)} ${190 + (a % 40)})`,
   };
-}
-
-async function ensureOutDir() {
-  await fs.mkdir(OUT_DIR, { recursive: true });
 }
 
 async function fileExists(filePath) {
@@ -109,21 +115,22 @@ function localEditorialSvg(item = {}, variant = ARTICLE_IMAGE_VARIANTS.hero) {
 }
 
 async function writeLocalEditorialRasterSet(item = {}) {
+  const publicDir = path.join(process.cwd(), 'public');
   const paths = canonicalArticleImagePaths(item, { extension: 'webp', legacyExtension: 'webp' });
   for (const [key, variant] of Object.entries(ARTICLE_IMAGE_VARIANTS)) {
     const publicPath = paths[`${key}Image`];
-    const outPath = path.join(process.cwd(), 'public', publicPath.replace(/^\//, ''));
-    await fs.mkdir(path.dirname(outPath), { recursive: true });
-    await sharp(Buffer.from(localEditorialSvg(item, variant)))
+    const outPath = publicFilePath(publicDir, publicPath);
+    const output = await sharp(Buffer.from(localEditorialSvg(item, variant)))
       .webp({ quality: 88 })
-      .toFile(outPath);
+      .toBuffer();
+    await writeSafePublicFile(publicDir, outPath, output);
   }
 
-  const legacyPath = path.join(process.cwd(), 'public', paths.legacyImage.replace(/^\//, ''));
-  await fs.mkdir(path.dirname(legacyPath), { recursive: true });
-  await sharp(Buffer.from(localEditorialSvg(item, ARTICLE_IMAGE_VARIANTS.hero)))
+  const legacyPath = publicFilePath(publicDir, paths.legacyImage);
+  const legacyOutput = await sharp(Buffer.from(localEditorialSvg(item, ARTICLE_IMAGE_VARIANTS.hero)))
     .webp({ quality: 88 })
-    .toFile(legacyPath);
+    .toBuffer();
+  await writeSafePublicFile(publicDir, legacyPath, legacyOutput);
 
   return paths;
 }
@@ -147,20 +154,30 @@ async function generateLocalPoster(item) {
     headers: {
       'user-agent': 'Mozilla/5.0 (compatible; AINewsPortalBot/1.0)',
     },
+    safeFetch: {
+      allowedMimeTypes: SUPPORTED_RASTER_MIME_TYPES,
+      maxRedirects: 3,
+      maxCompressedBytes: MAX_SOURCE_IMAGE_BYTES,
+      maxDecompressedBytes: MAX_SOURCE_IMAGE_BYTES,
+    },
   }, 20000);
 
   if (!response.ok) {
     throw new Error(`Source image fetch failed: ${response.status}`);
   }
 
-  const arrayBuffer = await response.arrayBuffer();
-  const palette = colorFromId(item.id);
+  const bytes = Buffer.from(await response.arrayBuffer());
+  const validated = await validateRasterImageBytes(
+    bytes,
+    response.headers.get('content-type') || '',
+    { maxBytes: MAX_SOURCE_IMAGE_BYTES, maxPixels: MAX_SOURCE_IMAGE_PIXELS },
+  );
+  const imageId = safeGeneratedImageId(item);
+  const palette = colorFromId(imageId);
   const titleLines = wrapText(item.title, 34, 3);
   const category = safeText(item.category || 'AI Infrastructure Brief', 32);
   const source = safeText(item.source || 'Curated source', 28);
   const summaryLines = wrapText(item.summary || item.snippet || '', 72, 2);
-  const filename = `${item.id}.jpg`;
-  const outPath = path.join(OUT_DIR, filename);
 
   const overlaySvg = Buffer.from(`
     <svg width="1344" height="768" viewBox="0 0 1344 768" xmlns="http://www.w3.org/2000/svg">
@@ -180,7 +197,13 @@ async function generateLocalPoster(item) {
     </svg>
   `);
 
-  await sharp(Buffer.from(arrayBuffer))
+  const output = await sharp(validated.bytes, {
+    failOn: 'error',
+    limitInputPixels: MAX_SOURCE_IMAGE_PIXELS,
+    animated: false,
+    sequentialRead: true,
+  })
+    .rotate()
     .resize(1344, 768, {
       fit: 'cover',
       position: 'attention',
@@ -189,9 +212,9 @@ async function generateLocalPoster(item) {
     .blur(0.3)
     .composite([{ input: overlaySvg }])
     .jpeg({ quality: 88, mozjpeg: true })
-    .toFile(outPath);
+    .toBuffer();
 
-  return `/generated/${filename}`;
+  return writeImageBytes(item, output, 'image/jpeg');
 }
 
 export async function needsImageRefresh(item) {
@@ -211,7 +234,8 @@ export async function needsImageRefresh(item) {
   if (/^https?:\/\//i.test(item.generatedImage)) return true;
   if (/^\/generated\/fallbacks\//i.test(item.generatedImage)) return true;
   if (/\.svg(?:$|[?#])/i.test(item.generatedImage)) return true;
-  const localPath = path.join(process.cwd(), 'public', item.generatedImage.replace(/^\//, ''));
+  const localPath = localArticleImagePath(item.generatedImage);
+  if (!localPath) return true;
   if (!(await fileExists(localPath))) return true;
   if (localPath.endsWith('.svg')) {
     const svg = await fs.readFile(localPath, 'utf8').catch(() => '');
@@ -221,7 +245,7 @@ export async function needsImageRefresh(item) {
 }
 
 export async function ensureArticleImage(item) {
-  await ensureOutDir();
+  await ensureGeneratedOutDir();
 
   if (!(await needsImageRefresh(item))) {
     return item.generatedImage;

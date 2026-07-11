@@ -253,7 +253,32 @@ export function localArticleImagePath(image = '') {
   const value = clean(image);
   if (!value || isRemoteImage(value)) return '';
   if (!value.startsWith('/')) return '';
-  return path.join(process.cwd(), 'public', value.replace(/^\//, ''));
+  const publicRoot = path.resolve(process.cwd(), 'public');
+  const candidate = path.resolve(publicRoot, value.replace(/^\/+/, ''));
+  const relative = path.relative(publicRoot, candidate);
+  if (!relative || relative.startsWith('..') || path.isAbsolute(relative)) return '';
+
+  try {
+    const realPublicRoot = fs.realpathSync(publicRoot);
+    const realCandidate = fs.realpathSync(candidate);
+    const realRelative = path.relative(realPublicRoot, realCandidate);
+    if (!realRelative || realRelative.startsWith('..') || path.isAbsolute(realRelative)) return '';
+    return realCandidate;
+  } catch {
+    let ancestor = path.dirname(candidate);
+    while (ancestor.startsWith(publicRoot) && ancestor !== path.dirname(ancestor)) {
+      try {
+        const realPublicRoot = fs.realpathSync(publicRoot);
+        const realAncestor = fs.realpathSync(ancestor);
+        const realRelative = path.relative(realPublicRoot, realAncestor);
+        if (realRelative.startsWith('..') || path.isAbsolute(realRelative)) return '';
+        return candidate;
+      } catch {
+        ancestor = path.dirname(ancestor);
+      }
+    }
+    return '';
+  }
 }
 
 export function localArticleImageExists(image = '') {
