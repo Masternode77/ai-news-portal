@@ -182,8 +182,6 @@ export const buildArticleStructuredData = ({
       '@type': 'Thing',
       name,
     })),
-    correctionPolicy: absoluteUrl(site.url, '/editorial-policy/'),
-    publishingPrinciples: absoluteUrl(site.url, '/editorial-policy/'),
     accountablePerson: {
       '@type': 'Organization',
       name: site.name,

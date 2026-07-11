@@ -1,10 +1,8 @@
 ---
 const { canonicalUrl = '' } = Astro.props;
 ---
-<section class="detail-section ai-disclosure-footer">
-  <p>
-    Compute Current uses AI-assisted research and editing with human editorial standards, source attribution, and publication checks.
-    <a href="/ai-disclosure/">Read the disclosure</a>.
-  </p>
-  {canonicalUrl ? <p class="canonical-note">Canonical page: <a href={canonicalUrl}>{canonicalUrl}</a></p> : null}
-</section>
+{canonicalUrl ? (
+  <footer class="detail-section article-canonical-footer">
+    <p class="canonical-note">Canonical article: <a href={canonicalUrl}>{canonicalUrl}</a></p>
+  </footer>
+) : null}

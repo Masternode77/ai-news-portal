@@ -16,19 +16,14 @@ export const SITE = {
       pricing: '/pricing/',
       sample: '/sample/',
       briefing: '/briefing/',
-      contact: '/contact/',
       archive: '/archive/',
-      methodology: '/methodology/',
-      editorialPolicy: '/editorial-policy/',
-      aiDisclosure: '/ai-disclosure/',
       rss: '/rss.xml',
     },
     ctas: {
       weeklyBrief: 'Read the latest',
-      sample: 'Editorial policy',
-      executiveBriefing: 'How we source',
+      sample: 'Read a sample',
+      executiveBriefing: 'Read the briefing',
       recentAnalysis: 'Browse the archive',
-      contact: 'Share a source',
     },
     packages: [
       {
@@ -47,9 +42,9 @@ export const SITE = {
         summary: 'Power, capacity, silicon, cooling, capital, and policy lanes organized for fast scanning.',
       },
       {
-        name: 'Editorial Method',
+        name: 'Company & Regional Views',
         price: 'Open',
-        summary: 'Public rules for source selection, AI assistance, image provenance, and quality gates.',
+        summary: 'Published infrastructure signals organized by company, market, and region.',
       },
     ],
   },

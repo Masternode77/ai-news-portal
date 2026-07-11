@@ -53,8 +53,8 @@ const intelligenceProducts = [
   },
   {
     label: 'Source Trail',
-    title: 'Original links, visual source notes, archive search, and public methodology.',
-    href: routes.methodology,
+    title: 'Original links, visual source notes, and searchable publication history.',
+    href: routes.archive,
   },
 ];
 
@@ -102,14 +102,14 @@ const navLinks = [
           </p>
           <nav class="commercial-actions homepage-commercial-actions" aria-label="Public intelligence actions">
             <a href={routes.archive}>Read the latest</a>
-            <a href={routes.methodology}>How we source</a>
-            <a href={routes.editorialPolicy}>{ctas.sample}</a>
+            <a href={routes.sample}>{ctas.sample}</a>
+            <a href="/category/data-centers/">Data center coverage</a>
             <a href={routes.archive}>{ctas.recentAnalysis}</a>
           </nav>
           <nav class="homepage-secondary-actions" aria-label="Public reference links">
             <a href={routes.rss}>RSS</a>
-            <a href={routes.editorialPolicy}>Editorial policy</a>
-            <a href={routes.contact}>{ctas.contact}</a>
+            <a href={routes.archive}>Archive</a>
+            <a href="/admin/" rel="nofollow">Admin</a>
           </nav>
 
           <div class="operating-read-row" aria-label="Coverage lanes">
@@ -206,15 +206,13 @@ const navLinks = [
       <a class="detail-link archive-link" href="/archive/">Browse the archive</a>
     </section>
 
-    <footer class="transparency-footer" aria-label="Editorial links">
+    <footer class="transparency-footer" aria-label="Publication links">
       <nav class="policy-link-row" aria-label="Publication pages">
-        <a href="/about/">About</a>
-        <a href="/editorial-policy/">Editorial policy</a>
-        <a href="/methodology/">Methodology</a>
-        <a href="/ai-disclosure/">AI-assisted Disclosure</a>
-        <a href={routes.contact}>{ctas.contact}</a>
+        <a href={routes.archive}>Archive</a>
+        <a href={routes.sample}>Sample</a>
         <a href="/rss.xml">RSS</a>
         <a href="/sitemap.xml">Sitemap</a>
+        <a href="/admin/" rel="nofollow">Admin</a>
       </nav>
     </footer>
   </main>

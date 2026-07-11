@@ -32,7 +32,7 @@ const routes = SITE.commercial.routes;
 
       <nav class="commercial-actions" aria-label="Publication feed actions">
         <a href={routes.archive}>{SITE.commercial.ctas.weeklyBrief}</a>
-        <a href={routes.methodology}>Trace the Methodology</a>
+        <a href={routes.sample}>Read a Sample</a>
         <a href={routes.rss}>RSS Feed</a>
       </nav>
 
@@ -53,8 +53,7 @@ const routes = SITE.commercial.routes;
         <div class="commercial-note">
           <h2>How access works</h2>
           <p>
-            The archive, RSS feed, methodology, and policy pages remain public so readers can inspect both the
-            signal and the editorial standard behind it.
+            The archive and RSS feed remain open so readers can follow published signals without a signup wall.
           </p>
         </div>
         <div class="commercial-note">
@@ -66,9 +65,9 @@ const routes = SITE.commercial.routes;
       </section>
 
       <nav class="policy-link-row" aria-label="Public reference pages">
-        <a href={routes.aiDisclosure}>AI-assisted Disclosure</a>
-        <a href={routes.editorialPolicy}>Editorial Policy</a>
-        <a href={routes.contact}>Contact</a>
+        <a href={routes.archive}>Archive</a>
+        <a href={routes.sample}>Sample</a>
+        <a href="/admin/" rel="nofollow">Admin</a>
       </nav>
     </article>
   </main>
