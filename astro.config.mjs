@@ -37,7 +37,6 @@ export default defineConfig({
         const pathname = pagePath(page);
         return !pathname.startsWith('/admin')
           && !pathname.startsWith('/api/admin')
-          && pathname !== '/dashboard/'
           && !noindexStaticPaths.has(pathname)
           && !noindexArticlePaths.has(pathname);
       },

@@ -7,7 +7,6 @@
     "npm": ">=9.6.5"
   },
   "scripts": {
-    "sync:dashboard-data": "node ./scripts/sync-dashboard-data.cjs",
     "dev": "astro dev",
     "pipeline": "node ./scripts/pipeline.mjs",
     "test:curation": "PIPELINE_OFFLINE=1 OPENROUTER_API_KEY= node ./scripts/test-curation.mjs",
@@ -18,7 +17,7 @@
     "prepare:static-images": "node ./scripts/prepare-static-images.mjs",
     "regenerate:stock-card-images": "node ./scripts/regenerate-stock-card-images.mjs",
     "backfill:article-metadata": "node ./scripts/backfill-article-metadata.mjs",
-    "build": "npm run sync:dashboard-data && npm run prepare:static-images && astro build",
+    "build": "npm run prepare:static-images && astro build",
     "check": "astro check",
     "preview": "astro preview",
     "astro": "astro",

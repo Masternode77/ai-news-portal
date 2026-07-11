@@ -89,7 +89,7 @@ npm run content:gate
 npm run qa:qc
 ```
 
-`npm run build` runs `sync:dashboard-data`, `prepare:static-images`, then `astro build`. `content:gate` is the broad release gate: check, build, selected tests, public audits, image audit, and admin exclusion audit.
+`npm run build` runs `prepare:static-images` and then `astro build`. Runtime dashboard data is never generated into `public/`. `content:gate` is the broad release gate: check, build, selected tests, public audits, image audit, and admin exclusion audit.
 
 ## GENERATED AND RUNTIME PATHS
 
