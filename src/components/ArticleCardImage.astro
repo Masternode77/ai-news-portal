@@ -1,4 +1,6 @@
 ---
+import { safePublicHref } from '../lib/public-url.js';
+
 const {
   image = '/generated/fallbacks/ai-infrastructure.svg',
   imageAlt = 'Compute Current editorial visual',
@@ -13,15 +15,16 @@ const {
 } = Astro.props;
 
 const safeImage = image || '/generated/fallbacks/ai-infrastructure.svg';
-const isExternal = href && !href.startsWith('/');
+const safeHref = safePublicHref(href);
+const isExternal = safeHref.startsWith('http://') || safeHref.startsWith('https://');
 const loading = priority ? 'eager' : 'lazy';
 const alt = decorative ? '' : imageAlt;
 const hasProvenance = Boolean(provenanceLabel || provenanceKind);
 ---
-{href ? (
+{safeHref ? (
   <a
     class={linkClassName}
-    href={href}
+    href={safeHref}
     target={isExternal ? '_blank' : undefined}
     rel={isExternal ? 'noopener noreferrer' : undefined}
     aria-label={ariaLabel || undefined}

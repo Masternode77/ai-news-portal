@@ -12,6 +12,7 @@ import { SITE } from '../../config/site';
 import { cleanEditorialText, displayHeadline } from '../../lib/editorial-display.js';
 import { buildPublicPresentation } from '../../lib/publicPresentation.js';
 import { taxonomyDisplay } from '../../lib/taxonomy-display.js';
+import { serializeJsonForHtml } from '../../lib/safe-html.js';
 import {
   articleCanonicalPath,
   buildArticleStructuredData,
@@ -108,7 +109,7 @@ const structuredData = buildArticleStructuredData({
   canonicalPath={canonicalPath}
   image={openGraphImage}
 >
-  <script is:inline type="application/ld+json" set:html={JSON.stringify(structuredData)}></script>
+  <script is:inline type="application/ld+json" set:html={serializeJsonForHtml(structuredData)}></script>
   <main class="detail-shell publication-article">
     <article class="detail-card publication-article-card">
       <div class="detail-body">

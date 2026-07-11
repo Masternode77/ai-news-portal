@@ -1,5 +1,6 @@
 ---
 import ArticleCardImage from './ArticleCardImage.astro';
+import { safePublicHttpUrl, safePublicPath } from '../lib/public-url.js';
 
 const { signal, compact = false, priority = false } = Astro.props;
 const impact = Array.isArray(signal.reader_impact) ? signal.reader_impact.slice(0, 4) : [];
@@ -7,6 +8,8 @@ const image = signal.image || signal.image_url || '/generated/fallbacks/ai-infra
 const imageAlt = signal.image_alt || `${signal.title || 'Compute Current signal'} visual`;
 const provenanceLabel = signal.image_provenance_label || 'Editorial visual';
 const provenanceKind = signal.image_provenance_kind || 'image2';
+const detailHref = safePublicPath(signal.view_detail);
+const sourceHref = safePublicHttpUrl(signal.read_source);
 ---
 <article
   class:list={['intel-card', compact && 'intel-card-compact']}
@@ -19,11 +22,11 @@ const provenanceKind = signal.image_provenance_kind || 'image2';
     <ArticleCardImage
       image={image}
       imageAlt={imageAlt}
-      href={signal.view_detail || ''}
+      href={detailHref}
       linkClassName="signal-media"
       priority={priority}
-      decorative={!signal.view_detail}
-      ariaLabel={signal.view_detail ? `Open ${signal.title}` : ''}
+      decorative={!detailHref}
+      ariaLabel={detailHref ? `Open ${signal.title}` : ''}
       provenanceLabel={provenanceLabel}
       provenanceKind={provenanceKind}
     />
@@ -34,7 +37,7 @@ const provenanceKind = signal.image_provenance_kind || 'image2';
     <span>{signal.region}</span>
   </div>
   <h3>
-    {signal.view_detail ? <a href={signal.view_detail}>{signal.title}</a> : signal.title}
+    {detailHref ? <a href={detailHref}>{signal.title}</a> : signal.title}
   </h3>
   <p class="signal-deck">{signal.deck}</p>
   <p class="signal-why">{signal.why_it_matters}</p>
@@ -44,7 +47,7 @@ const provenanceKind = signal.image_provenance_kind || 'image2';
     </div>
   ) : null}
   <div class="card-footer">
-    {signal.view_detail ? <a class="detail-link" href={signal.view_detail}>View detail</a> : null}
-    {signal.read_source ? <a class="source-cta" href={signal.read_source} target="_blank" rel="noreferrer">Read source</a> : null}
+    {detailHref ? <a class="detail-link" href={detailHref}>View detail</a> : null}
+    {sourceHref ? <a class="source-cta" href={sourceHref} target="_blank" rel="noopener noreferrer">Read source</a> : null}
   </div>
 </article>

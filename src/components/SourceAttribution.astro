@@ -1,12 +1,15 @@
 ---
+import { safePublicHttpUrl } from '../lib/public-url.js';
+
 const { source } = Astro.props;
+const sourceUrl = safePublicHttpUrl(source?.url);
 ---
 <section class="source-attribution" aria-label="Source attribution">
   <span>Source</span>
   <p>
     Based on reporting from <strong>{source.name}</strong>{source.domain ? <> ({source.domain})</> : null}.
-    {source.url ? (
-      <a href={source.url} target="_blank" rel="noopener noreferrer">Read the source</a>
+    {sourceUrl ? (
+      <a href={sourceUrl} target="_blank" rel="noopener noreferrer">Read the source</a>
     ) : null}
   </p>
 </section>

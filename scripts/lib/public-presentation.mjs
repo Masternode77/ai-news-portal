@@ -10,6 +10,7 @@ import {
   articleImageProvenance,
   articleImageVariants,
 } from './article-image-surface.mjs';
+import { firstSafePublicHttpUrl } from '../../src/lib/public-url.js';
 
 const FALLBACK_READER_IMPACT = ['Operators', 'Capacity planners'];
 const UNSAFE_PRESENTATION_TERMS = /\b(qualify|qualification|threshold|relevance score|urgency score|extraction|routing decision|publish decision|noindex)\b/i;
@@ -70,7 +71,6 @@ function normalizedRoute(article = {}, route = undefined) {
 }
 
 export function publicDetailHref(article = {}) {
-  const sourceUrl = article.sourceUrl || article.url || '';
   if (article.articlePagePublished === false || article.archiveOnly === true || article.signalCardOnly === true || article.public_content_tier === 'editorial_brief' || article.public_content_tier === 'signal_card') {
     return '';
   }
@@ -111,7 +111,7 @@ export function buildPublicPresentation(article = {}, options = {}) {
     region: compact(article.region || 'Global'),
     source: compact(article.source || 'Source'),
     view_detail: detailHref,
-    read_source: article.sourceUrl || article.url || '',
+    read_source: firstSafePublicHttpUrl([article.sourceUrl, article.url]),
     lane_key: route.laneKey || persisted.lane_key,
     lane_title: route.laneTitle || persisted.lane_title,
     visibility: route.visibility || persisted.visibility,
