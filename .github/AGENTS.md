@@ -8,7 +8,7 @@
 
 | Task | Location | Notes |
 |------|----------|-------|
-| Scheduled content refresh | `.github/workflows/update-news.yml` | Runs check, pipeline, dashboard sync, build, then commits refreshed artifacts. |
+| Scheduled content refresh | `.github/workflows/update-news.yml` | Runs check, pipeline, build, then commits refreshed content artifacts. |
 | Visual QA | `.github/workflows/visual-qa.yml` | Installs browser tooling dynamically and uploads visual artifacts. |
 | Build contract | `package.json`, `vercel.json` | Workflows and Vercel share `npm run build`. |
 | Deployment runbooks | `docs/deployment-checklist.md`, `docs/automation-runbook.md`, `docs/qa-qc-runbook.md` | Use docs when changing cadence or release evidence. |
@@ -16,7 +16,7 @@
 ## CONVENTIONS
 
 - Scheduled workflow times are KST-aligned; keep UTC cron comments and expressions in sync.
-- Commit-back paths are intentional for refreshed JSON/dashboard/image artifacts.
+- Commit-back paths are limited to refreshed content JSON, pipeline state, and generated images.
 - Use package scripts instead of duplicating shell logic in workflow YAML.
 - Keep secrets optional where scripts already support offline or skipped behavior.
 

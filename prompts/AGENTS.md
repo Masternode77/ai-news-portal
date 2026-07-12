@@ -2,7 +2,7 @@
 
 ## OVERVIEW
 
-`prompts/` contains prompt and story-archetype text used by autonomous desk and blog-generation flows.
+`prompts/` contains prompt and story-archetype text used by the canonical editorial registry plus legacy compatibility flows.
 
 ## STRUCTURE
 
@@ -25,6 +25,7 @@ prompts/
 ## CONVENTIONS
 
 - Prompt edits are product behavior changes; update or run related tests.
+- Confirm that a prompt is registered in the active canonical flow before treating it as production behavior.
 - Use source-specific constraints and concrete infrastructure nouns.
 - Keep instructions aligned with extraction QA, source fidelity, repetition, and product-fit gates.
 - Vary structure, opening move, paragraph rhythm, and analytical angle across generated items.

@@ -26,7 +26,7 @@ Compute Current is an Astro-based AI infrastructure intelligence product. The so
 |------|----------|-------|
 | Public page/layout change | `src/pages`, `src/components`, `src/styles` | Follow `src/AGENTS.md`; preserve noindex/admin separation. |
 | Article/card rendering | `src/components`, `src/lib/publicPresentation.js` | Source data comes from `src/data/*.json`. |
-| Admin editor/API work | `api/admin`, `src/pages/admin*` | GitHub API persistence and cookie auth; follow `api/AGENTS.md`. |
+| Admin editor/API work | `api/admin`, `src/admin`, `src/plugins/storage`, `src/pages/admin*` | Authenticated APIs, CMS service, and storage adapters; follow `api/AGENTS.md`. |
 | Content generation or QA logic | `scripts/lib` | Also follow `scripts/lib/AGENTS.override.md`. |
 | Pipeline orchestration | `scripts/pipeline.mjs`, `scripts/run-*.mjs` | Builds and workflows call package scripts directly. |
 | Editorial policy or phrase gates | `config`, `scripts/lib/*guard*`, `tests/*guard*` | Update config and publishing guard together. |
@@ -89,7 +89,7 @@ npm run content:gate
 npm run qa:qc
 ```
 
-`npm run build` runs `prepare:static-images` and then `astro build`. Runtime dashboard data is never generated into `public/`. `content:gate` is the broad release gate: check, build, selected tests, public audits, image audit, and admin exclusion audit.
+`npm run build` prepares static images, exports the admin public read model when configured, runs `astro build`, and prunes unreachable generated images. Runtime dashboard data is never generated into `public/`. `content:gate` is the broad release gate: check, build, selected tests, public audits, image audit, and admin exclusion audit.
 
 ## GENERATED AND RUNTIME PATHS
 
@@ -102,4 +102,4 @@ npm run qa:qc
 - `scripts/lib/AGENTS.md` and `scripts/lib/AGENTS.override.md` are authoritative for content-generation modules.
 - No ESLint, Prettier, Jest, Vitest, or Playwright config files are present; tests use Node's built-in runner and visual QA scripts import Playwright directly.
 - GitHub Actions uses a push-back content refresh model; Vercel builds from `npm run build`.
-- Admin writes are GitHub API commits, not database mutations.
+- Admin writes go through the CMS service and storage abstraction: Postgres in configured deployments and the atomic local adapter in development/tests. The legacy GitHub helper is compatibility-only.
