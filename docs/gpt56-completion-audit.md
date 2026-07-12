@@ -38,13 +38,15 @@ The exact 35-item final-acceptance accounting is maintained in
 
 ## Preview Receipt
 
-- URL: `https://ai-news-portal-3e74jqkkk-masternode77s-projects.vercel.app`
-- Deployment: `dpl_2BxCaNmSH9kTvnXNd4FziacMb6Tq`, target `preview`, status `Ready`.
-- Implementation: `7c97b6d262ca86b58686986c4c8186d6b30a0f93`.
+- URL: `https://ai-news-portal-i7uvleecb-masternode77s-projects.vercel.app`
+- Deployment: `dpl_9xvuthwXDaPnhN1nNVqXH1Xh8sD7`, target `preview`, status `Ready`.
+- Implementation: `8f60816ffd4a1ecabe1e017aa15bb7d21cac5f08`.
 - Public routes: homepage, archive, search, and representative article returned 200.
 - Retired routes: about, editorial policy, methodology, AI disclosure, and contact returned 404.
 - Browser: homepage desktop/mobile each loaded 39 unique images, archive loaded 40, and the article loaded 1;
   zero broken images, placeholders, console/page errors, or horizontal overflow after lazy-load traversal.
+- Captures: `artifacts/final-8f60816-preview/` contains exact-preview desktop/mobile home,
+  archive, article, and machine-readable QA receipts.
 - Admin: three pretty article routes returned 200 with private/no-store caching; unconfigured API returned generic no-store 503.
 
 ## External State Note

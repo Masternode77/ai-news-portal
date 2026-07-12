@@ -2,13 +2,13 @@
 
 ## Current branch
 - `upgrade/gpt-5-6-sol`, merged with `origin/main` SHA `f8bc10a2`.
-- Last previewed implementation SHA: `7c97b6d2`.
-- Canonical cutover preview: `dpl_2BxCaNmSH9kTvnXNd4FziacMb6Tq`.
+- Last previewed implementation SHA: `8f60816f`.
+- Canonical cutover preview: `dpl_9xvuthwXDaPnhN1nNVqXH1Xh8sD7`.
 - Rollback tag: `backup/pre-gpt56-upgrade-20260711T091118Z`.
 - No push or production promotion has been performed.
 
 ## Latest completed checklist item
-- Deployed exact-commit preview `dpl_9xCSF6wHsFtNwCwV37S8xXYR1tet` from the Linux remote builder.
+- Deployed exact-commit preview `dpl_9xvuthwXDaPnhN1nNVqXH1Xh8sD7` from the Linux remote builder.
 - Merged the current content stream without unresolved conflicts or dropped remote records.
 - Repaired two verified source photos and 66 byte-duplicate legacy image records.
 - Re-ran route, fail-closed API, visual, image, Lighthouse, and production-identity checks.
@@ -19,7 +19,7 @@
 - Reduced `scripts/pipeline.mjs` to a compatibility alias and removed deterministic outage longform.
 - Added extraction-only evidence freezing, strict model-output schemas, lifecycle replay validation,
   fail-closed stale-longform removal, and cross-runner publication output bundles.
-- Deployed and browser-verified the canonical cutover preview from local commit `7c97b6d2`.
+- Deployed and browser-verified the canonical cutover preview from local commit `8f60816f`.
 
 ## Changed files
 - Architecture/editorial: `src/core/`, `src/adapters/`, `src/plugins/content/`, `scripts/lib/`, CLI entry points.
@@ -55,5 +55,5 @@
 - Production promotion requires explicit preview approval.
 
 ## Exact next step
-- Commit the verified benchmark and persistence tooling, deploy an exact-HEAD preview, and update receipts.
+- Present the exact-commit preview for human approval and keep managed persistence blocked on preview credentials.
 - Keep push, production promotion, production secrets, and cache purge excluded pending explicit approval.

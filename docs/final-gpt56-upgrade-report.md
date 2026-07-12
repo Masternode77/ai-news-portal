@@ -20,9 +20,9 @@ production secret or cache purge; the connected `main` branch did deploy indepen
 | Baseline production SHA | `19089b66627be58d5066376902ff382d2a018137` |
 | Merged `origin/main` SHA | `f8bc10a220a6b910e703375d337dcd3f40ea0467` |
 | Rollback tag | `backup/pre-gpt56-upgrade-20260711T091118Z` |
-| Verified implementation SHA | `7c97b6d262ca86b58686986c4c8186d6b30a0f93` |
-| Preview deployment | `dpl_2BxCaNmSH9kTvnXNd4FziacMb6Tq` (`READY`, preview target) |
-| Preview URL | `https://ai-news-portal-3e74jqkkk-masternode77s-projects.vercel.app` |
+| Verified implementation SHA | `8f60816ffd4a1ecabe1e017aa15bb7d21cac5f08` |
+| Preview deployment | `dpl_9xvuthwXDaPnhN1nNVqXH1Xh8sD7` (`READY`, preview target) |
+| Preview URL | `https://ai-news-portal-i7uvleecb-masternode77s-projects.vercel.app` |
 | Latest observed production | `dpl_9cRkkosCcwjY6fV3EvLT7DM36bTV` (external `main` automation, not this branch) |
 
 ## Delivered Platform
