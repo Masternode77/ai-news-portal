@@ -30,9 +30,14 @@ Implemented shells: `/admin/login/`, `/admin/dashboard/`, `/admin/articles/`,
 `/admin/quarantine/`, `/admin/pipeline/`, and `/admin/audit-log/`. Vercel rewrites expose
 the requested pretty article edit routes without embedding article data in static HTML.
 
+The final preview verified `/admin/articles/new`, `/admin/articles/test-article`, and
+`/admin/articles/test-article/edit` as HTTP 200 shells with `Cache-Control: no-store, private`.
+The credential-free `/api/admin/articles` request returned the intended generic HTTP 503 with
+`Cache-Control: no-store`.
+
 ## Commands Run
 
-- `node --test tests/admin-public-read-model.test.mjs tests/admin-cms-api.test.mjs tests/admin-media.test.mjs tests/admin-cms-service.test.mjs tests/admin-storage-local.test.mjs tests/admin-storage-postgres.test.mjs`: 27 passed, 0 failed.
+- `node --test tests/admin-public-read-model.test.mjs tests/admin-cms-api.test.mjs tests/admin-media.test.mjs tests/admin-cms-service.test.mjs tests/admin-storage-local.test.mjs tests/admin-storage-postgres.test.mjs tests/admin-route-contract.test.mjs`: passed, 0 failed.
 - `npm audit --audit-level=low`: passed with 0 known dependency vulnerabilities.
 
 ## Artifacts
@@ -54,9 +59,9 @@ Additional verification evidence:
 
 - Media API integration covers login, CSRF rejection, upload, normalization, local serving,
   audit provenance, and malformed base64 rejection.
-- Local persistence is tested across adapter instances; Postgres SQL is covered with
-  injected transaction clients. A live managed Postgres migration has not run because no
-  production database credential is available in this checkout.
+- Local persistence is tested across adapter instances and a fresh Node process; Postgres SQL is
+  covered with injected transaction clients. A live managed Postgres migration has not run
+  because no preview database credential is available in this checkout.
 
 ## Production Requirements
 

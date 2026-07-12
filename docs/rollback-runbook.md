@@ -26,3 +26,9 @@ only be acknowledged by a future consumer that verifies the deployed read-model 
 After rollback, verify the production commit/deployment ID, homepage, one article, RSS, sitemap,
 robots, admin denial, response headers, and image delivery. Record the exact rollback deployment
 and do not claim cache invalidation unless a purge command succeeds.
+
+The rollback tag was checked out in an isolated worktree on 2026-07-12. `npm ci` completed and
+`npm run build` produced `dist/index.html`, 1,532 index pages, and approximately 286 MB of output.
+The baseline dependency tree still reports 18 known vulnerabilities, so this is an emergency
+code rollback target, not a forward security-quality target. The worktree was removed after the
+receipt was recorded; no rollback deployment or cache purge was performed.

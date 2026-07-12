@@ -5,10 +5,11 @@ Updated: 2026-07-12
 ## Executive Verdict
 
 The Compute Current upgrade is **deployable with operational follow-up** and ready for human
-preview approval. The public publication, canonical editorial foundation, secure durable CMS
-integration, design prototypes, tests, preview packaging, and rollback controls are implemented
-and verified. Production was not promoted, the production domain remains on its prior deployment,
-and no production secret or cache purge was used.
+preview approval. The public publication, canonical editorial foundation, secure CMS integration,
+design prototypes, tests, preview packaging, and rollback controls are implemented and verified.
+Full goal completion is not claimed: isolated editorial phases, managed preview persistence, and
+human-labeled content benchmarks remain open. This branch did not promote production and used no
+production secret or cache purge; the connected `main` branch did deploy independently during QA.
 
 ## Release Identity
 
@@ -17,12 +18,12 @@ and no production secret or cache purge was used.
 | Repository | `Masternode77/ai-news-portal` |
 | Branch | `upgrade/gpt-5-6-sol` |
 | Baseline production SHA | `19089b66627be58d5066376902ff382d2a018137` |
-| Merged `origin/main` SHA | `25e53c9f` |
+| Merged `origin/main` SHA | `f8bc10a220a6b910e703375d337dcd3f40ea0467` |
 | Rollback tag | `backup/pre-gpt56-upgrade-20260711T091118Z` |
-| Verified product SHA | `f674c1df` |
-| Preview deployment | `dpl_9qoXHkYVspAM5FHBExEc6iqyzTuT` |
-| Preview URL | `https://ai-news-portal-g93sbqwbc-masternode77s-projects.vercel.app` |
-| Production deployment | `dpl_EtTdsEikynpmsq9sUQSaDch76PFF` (unchanged) |
+| Verified implementation SHA | `ee8d377533b2f5046db70390a4cbdb2290bfd8d0` plus final release-control receipt |
+| Preview deployment | `dpl_BUNoSSST7HJoin4U7hxWQwqavqW1` |
+| Preview URL | `https://ai-news-portal-iux4oa1uv-masternode77s-projects.vercel.app` |
+| Latest observed production | `dpl_9cRkkosCcwjY6fV3EvLT7DM36bTV` (external `main` automation, not this branch) |
 
 ## Delivered Platform
 
@@ -34,6 +35,11 @@ and no production secret or cache purge was used.
   reviewed compatibility surfaces for legacy callers.
 - Added strict source-grounded relevance, source-fidelity checks, safe downgrade behavior,
   bottleneck-axis diversity, and explicit image provenance handling.
+- Added the twelve requested repo-local skills and the optional reviewed
+  `compute-current-editorial-os` plugin bundle with validator-tested mirrored skills.
+- Added the canonical npm command namespace. Isolated phases fail closed until their legacy
+  implementations are fully migrated; `content:cycle` rejects all arguments except the explicit
+  `--production` boundary.
 - Removed public operational/dashboard routes and unified homepage, archive, search, article,
   RSS, sitemap, category, company, and region surfaces on one public inventory.
 
@@ -62,6 +68,8 @@ and no production secret or cache purge was used.
   metadata, and object-key validation.
 - Preview credentials are intentionally absent. Admin APIs therefore return generic JSON 503
   responses with `no-store` and `noindex,nofollow` instead of crashing or exposing environment names.
+- Pretty article routes were verified on the final preview, and local file storage persistence was
+  verified across a fresh Node process.
 
 ### Security
 
@@ -90,20 +98,22 @@ three prototypes remain noindex and are not production routes.
 | --- | --- |
 | Clean install | `npm ci` passed |
 | Dependency security | `npm audit --audit-level=low`: 0 vulnerabilities |
-| Full tests | 422 total, 421 passed, 0 failed, 1 intentional skip |
+| Full tests | 440 total, 439 passed, 0 failed, 1 intentional skip |
 | Editorial scripts | quality, relevance, taxonomy, repetition passed |
 | Astro check | 0 errors, 0 warnings, 11 existing type hints |
 | Build | 61 pages; 85 images retained; 4,097 pruned |
 | Content gate | passed all public, copy, image, feed, and admin exclusion audits |
 | QA/QC | deployable with operational follow-up |
 | Code review | APPROVE; 0 actionable P0-P3 findings |
-| Preview routes | 8/8 returned 200 |
+| Preview public routes | homepage, archive, search, and representative article returned 200 |
+| Removed public routes | 5/5 returned 404 |
+| Preview admin pretty routes | 3/3 returned 200 with private/no-store caching |
 | Preview admin APIs | intended generic 503 fail-closed response |
 | Visual QA | 4/4 surfaces passed; 0 broken images/errors/overflow/placeholders |
 | Deployed image uniqueness | homepage 39/39; archive 40/40; duplicate groups 0 |
 | Lighthouse mobile | 97 performance, 100 accessibility, 92 best practices |
 | Lighthouse desktop | 100 performance, 100 accessibility, 92 best practices |
-| Production identity | still `dpl_EtTdsEikynpmsq9sUQSaDch76PFF` |
+| Production action by this branch | none; external `main` automation advanced production during QA |
 
 The preview SEO score of 69 is expected because Vercel adds `x-robots-tag: noindex`. The two
 Best Practices deductions are the Vercel Preview Toolbar script being blocked by the site's
@@ -128,13 +138,17 @@ remains outside release inputs.
    claiming precision, recall, or a sub-5% false-positive rate.
 3. Configure OAuth/2FA if required, plus Vercel Firewall, managed database backups, least-privilege
    credentials, monitoring, and secret rotation.
-4. Review the preview screenshots and selected design. Only then push and promote using the
+4. Complete the isolated ingest/extract/classify/cluster/generate/review/publish migration before
+   claiming a single fully migrated engine; current phase commands intentionally fail closed.
+5. Review the preview screenshots and selected design. Only then push and promote using the
    release runbook. Cache purge remains explicitly excluded.
 
 ## Rollback and Recommendation
 
-The annotated rollback tag resolves to the original production SHA. The upgrade uses additive
-storage changes and a derived public read model; a failed preview gate must stop promotion rather
-than alter production. On current evidence, approve the branch for preview review and operational
-credential testing. Do not claim production CMS persistence or promote the domain until those
-external checks and explicit preview approval are complete.
+The annotated rollback tag resolves to the original production SHA. An isolated checkout passed
+`npm ci` and built 1,532 index pages, although that emergency baseline retains 18 dependency
+findings. The upgrade uses additive storage changes and a derived public read model; a failed
+preview gate must stop promotion rather than alter production. On current evidence, approve the
+branch for preview review and operational credential testing. Do not claim production CMS
+persistence or promote the domain until those external checks and explicit preview approval are
+complete. The detailed pass/partial/blocked matrix is in `docs/gpt56-completion-audit.md`.
