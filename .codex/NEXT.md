@@ -2,12 +2,12 @@
 
 ## Current branch
 - `upgrade/gpt-5-6-sol`, merged with `origin/main` SHA `f8bc10a2`.
-- Verified implementation SHA before final release-control receipt: `ee8d3775`.
+- Verified implementation SHA: `3f88df4c`.
 - Rollback tag: `backup/pre-gpt56-upgrade-20260711T091118Z`.
 - No push or production promotion has been performed.
 
 ## Latest completed checklist item
-- Deployed final preview `dpl_BUNoSSST7HJoin4U7hxWQwqavqW1` from the Linux remote builder.
+- Deployed exact-commit preview `dpl_9xCSF6wHsFtNwCwV37S8xXYR1tet` from the Linux remote builder.
 - Merged the current content stream without unresolved conflicts or dropped remote records.
 - Repaired two verified source photos and 66 byte-duplicate legacy image records.
 - Re-ran route, fail-closed API, visual, image, Lighthouse, and production-identity checks.
@@ -34,7 +34,8 @@
 - Preview public routes: 4/4 returned 200; retired routes: 5/5 returned 404.
 - Admin pretty routes: 3/3 returned 200 with private/no-store caching.
 - Admin APIs without preview credentials: intended generic 503, no-store, noindex.
-- Visual QA: 4/4 passed; 0 broken images, placeholders, app errors, or overflow.
+- Exact-commit visual QA: desktop/mobile homepage and desktop article passed; 0 broken images,
+  placeholders, app errors, or overflow.
 - Deployed image bytes: homepage 39/39 and archive 40/40 unique.
 - Lighthouse mobile: performance 97, accessibility 100, best practices 92.
 - Lighthouse desktop: performance 100, accessibility 100, best practices 92.
@@ -47,7 +48,6 @@
 - Isolated content phases remain fail-closed pending full migration from `scripts/pipeline.mjs`.
 
 ## Exact next step
-- Commit the release-control receipt and deploy that exact branch state to preview.
 - Present the exact preview/screenshots and await explicit preview approval.
 - After approval, push and follow the production runbook in a separately authorized step.
 - Keep cache purge excluded.

@@ -27,18 +27,20 @@ Production promotion is outside this approval state.
 | Managed CMS persistence | BLOCKED | Preview Postgres, Blob, and admin credentials are absent; live migration, upload, restart, and rebuild-trigger receipts cannot be produced. |
 | Dependency security | PASS | `npm audit --audit-level=low` reports zero findings on the upgrade branch. |
 | Tests, build, content gate | PASS | Full test suite, Astro check, build, editorial evaluations, and `content:gate` pass. |
-| Preview and rendered QA | PASS | Preview `dpl_BUNoSSST7HJoin4U7hxWQwqavqW1` is Ready; public/admin route and browser checks pass. |
+| Preview and rendered QA | PASS | Preview `dpl_9xCSF6wHsFtNwCwV37S8xXYR1tet` from implementation SHA `3f88df4c` is Ready; public/admin route and browser checks pass. |
 | Rollback path | PASS WITH CAVEAT | Tag checkout, clean install, and build passed; rollback baseline retains 18 dependency findings. |
 | Dashboard-only deploy suppression | PASS ON BRANCH | `vercel.json` uses a tested fail-open ignore script for dashboard/pipeline state-only commits; it takes effect only after branch integration. |
 | PR, merge, production smoke | NOT STARTED | Explicit preview approval and push/PR authorization were not given. No production promotion or cache purge was run by this branch. |
 
 ## Preview Receipt
 
-- URL: `https://ai-news-portal-iux4oa1uv-masternode77s-projects.vercel.app`
-- Deployment: `dpl_BUNoSSST7HJoin4U7hxWQwqavqW1`, target `preview`, status `Ready`.
+- URL: `https://ai-news-portal-kn646hbhp-masternode77s-projects.vercel.app`
+- Deployment: `dpl_9xCSF6wHsFtNwCwV37S8xXYR1tet`, target `preview`, status `Ready`.
+- Implementation: `3f88df4c93f2b55c75dc8a3172e4f6834bc5858a`.
 - Public routes: homepage, archive, search, and representative article returned 200.
 - Retired routes: about, editorial policy, methodology, AI disclosure, and contact returned 404.
-- Browser: homepage 39 images, archive 40 images, article 1 image; zero broken after lazy-load traversal.
+- Browser: exact-commit homepage desktop/mobile each loaded 39 images and the article loaded 1;
+  zero broken images, placeholders, console/page errors, or horizontal overflow after lazy-load traversal.
 - Admin: three pretty article routes returned 200 with private/no-store caching; unconfigured API returned generic no-store 503.
 
 ## External State Note

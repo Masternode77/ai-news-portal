@@ -33,7 +33,8 @@ the requested pretty article edit routes without embedding article data in stati
 The final preview verified `/admin/articles/new`, `/admin/articles/test-article`, and
 `/admin/articles/test-article/edit` as HTTP 200 shells with `Cache-Control: no-store, private`.
 The credential-free `/api/admin/articles` request returned the intended generic HTTP 503 with
-`Cache-Control: no-store`.
+`Cache-Control: no-store`. This receipt comes from preview
+`dpl_9xCSF6wHsFtNwCwV37S8xXYR1tet` built from implementation SHA `3f88df4c`.
 
 ## Commands Run
 

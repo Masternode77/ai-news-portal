@@ -20,9 +20,9 @@ production secret or cache purge; the connected `main` branch did deploy indepen
 | Baseline production SHA | `19089b66627be58d5066376902ff382d2a018137` |
 | Merged `origin/main` SHA | `f8bc10a220a6b910e703375d337dcd3f40ea0467` |
 | Rollback tag | `backup/pre-gpt56-upgrade-20260711T091118Z` |
-| Verified implementation SHA | `ee8d377533b2f5046db70390a4cbdb2290bfd8d0` plus final release-control receipt |
-| Preview deployment | `dpl_BUNoSSST7HJoin4U7hxWQwqavqW1` |
-| Preview URL | `https://ai-news-portal-iux4oa1uv-masternode77s-projects.vercel.app` |
+| Verified implementation SHA | `3f88df4c93f2b55c75dc8a3172e4f6834bc5858a` |
+| Preview deployment | `dpl_9xCSF6wHsFtNwCwV37S8xXYR1tet` |
+| Preview URL | `https://ai-news-portal-kn646hbhp-masternode77s-projects.vercel.app` |
 | Latest observed production | `dpl_9cRkkosCcwjY6fV3EvLT7DM36bTV` (external `main` automation, not this branch) |
 
 ## Delivered Platform
@@ -109,7 +109,7 @@ three prototypes remain noindex and are not production routes.
 | Removed public routes | 5/5 returned 404 |
 | Preview admin pretty routes | 3/3 returned 200 with private/no-store caching |
 | Preview admin APIs | intended generic 503 fail-closed response |
-| Visual QA | 4/4 surfaces passed; 0 broken images/errors/overflow/placeholders |
+| Visual QA | Exact-commit desktop/mobile checks passed; 0 broken images/errors/overflow/placeholders |
 | Deployed image uniqueness | homepage 39/39; archive 40/40; duplicate groups 0 |
 | Lighthouse mobile | 97 performance, 100 accessibility, 92 best practices |
 | Lighthouse desktop | 100 performance, 100 accessibility, 92 best practices |
