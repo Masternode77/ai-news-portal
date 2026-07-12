@@ -107,3 +107,20 @@ test('postgres admin storage read methods support injected SQL rows', async () =
   assert.equal((await storage.getArticle('article-1')).title, 'Read row');
   assert.deepEqual(await storage.listRevisions('article-1'), [{ id: 'rev-1', articleId: 'article-1', version: 1 }]);
 });
+
+test('postgres publication outbox scopes probe reads by article id before limiting rows', async () => {
+  const client = queryClient((text, params) => {
+    if (/from admin_publication_outbox/.test(text)) {
+      assert.match(text, /article_id = \$2/);
+      assert.deepEqual(params, [false, 'probe-article', 20]);
+      return { rows: [{ id: 'event-1', articleId: 'probe-article', action: 'probe-create' }] };
+    }
+    return { rows: [] };
+  });
+  const storage = createPostgresAdminStorage({ sqlClient: client });
+
+  assert.deepEqual(
+    await storage.listPublicationOutbox({ pendingOnly: false, articleId: 'probe-article', limit: 20 }),
+    [{ id: 'event-1', articleId: 'probe-article', action: 'probe-create' }],
+  );
+});

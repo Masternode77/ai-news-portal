@@ -23,6 +23,10 @@ Updated: 2026-07-12
    and persistence after a fresh deployment/process.
 4. Record the preview URL, deployment ID, commit SHA, screenshots, DB migration receipt, and
    every skipped credential-dependent check.
+5. Run the managed probe in two invocations with preview credentials only:
+   `VERCEL_ENV=preview ADMIN_PERSISTENCE_SCOPE=preview npm run admin:verify-managed -- --phase=write --target=preview --deployment=<before>`;
+   after a fresh process or preview deployment, run it with `--phase=verify` and
+   `--deployment=<after>`. Retain the ignored receipt without checking in credentials or state.
 
 ## Merge And Production
 

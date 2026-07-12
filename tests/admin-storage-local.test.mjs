@@ -188,6 +188,11 @@ test('local admin storage records and acknowledges publication events atomically
   const pending = await storage.listPublicationOutbox();
   assert.deepEqual(pending.map((entry) => entry.action), ['create-draft', 'publish']);
   assert.equal(pending[1].payload.article.public_status, 'published');
+  assert.deepEqual(
+    (await storage.listPublicationOutbox({ articleId: 'article-1' })).map((entry) => entry.action),
+    ['create-draft', 'publish'],
+  );
+  assert.deepEqual(await storage.listPublicationOutbox({ articleId: 'missing-article' }), []);
 
   const processed = await storage.markPublicationOutboxProcessed(pending[0].id, { now: '2026-07-12T00:01:00.000Z' });
   assert.equal(processed.processedAt, '2026-07-12T00:01:00.000Z');

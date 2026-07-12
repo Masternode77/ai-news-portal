@@ -35,6 +35,8 @@ production secret or cache purge; the connected `main` branch did deploy indepen
   reviewed compatibility surfaces for legacy callers.
 - Added strict source-grounded relevance, source-fidelity checks, safe downgrade behavior,
   bottleneck-axis diversity, and explicit image provenance handling.
+- Added blind, digest-bound review packets and a fail-closed scorer for the outstanding
+  independent 150-item relevance and 40-item writing benchmark.
 - Added the twelve requested repo-local skills and the optional reviewed
   `compute-current-editorial-os` plugin bundle with validator-tested mirrored skills.
 - Added a single production composition with seven registered providers, durable checkpoint
@@ -75,6 +77,9 @@ production secret or cache purge; the connected `main` branch did deploy indepen
   responses with `no-store` and `noindex,nofollow` instead of crashing or exposing environment names.
 - Pretty article routes were verified on the final preview, and local file storage persistence was
   verified across a fresh Node process.
+- Added a preview-only two-phase managed persistence probe for migration, Postgres CRUD,
+  revisions, audit, outbox, private Blob round trips, restart/deployment survival, and cleanup.
+  Production scope is rejected and primary plus cleanup failures are reported together.
 
 ### Security
 
@@ -103,13 +108,13 @@ three prototypes remain noindex and are not production routes.
 | --- | --- |
 | Clean install | `npm ci` passed |
 | Dependency security | `npm audit --audit-level=low`: 0 vulnerabilities |
-| Full tests | 480 total, 479 passed, 0 failed, 1 intentional skip |
+| Full tests | 487 total, 486 passed, 0 failed, 1 intentional skip |
 | Editorial scripts | quality, relevance, taxonomy, repetition passed |
 | Astro check | 0 errors, 0 warnings, 11 existing type hints |
 | Build | 61 pages; 85 images retained; 4,097 pruned |
 | Content gate | passed all public, copy, image, feed, and admin exclusion audits |
 | QA/QC | deployable with operational follow-up |
-| Code review | Initial review approved; architecture findings fixed and regression-verified. Fresh independent reruns were unavailable after the agent quota was exhausted. |
+| Code review | APPROVED after reason-code evidence, preview scope, and cleanup error masking findings were fixed and regression-verified. |
 | Preview public routes | homepage, archive, search, and representative article returned 200 |
 | Removed public routes | 5/5 returned 404 |
 | Preview admin pretty routes | 3/3 returned 200 with private/no-store caching |

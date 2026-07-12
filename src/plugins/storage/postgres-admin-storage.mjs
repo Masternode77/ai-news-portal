@@ -374,16 +374,17 @@ class PostgresAdminStorageTransaction {
     return clone(result.rows);
   }
 
-  async listPublicationOutbox({ pendingOnly = true, limit = 100 } = {}) {
+  async listPublicationOutbox({ pendingOnly = true, limit = 100, articleId } = {}) {
     const safeLimit = Math.min(1000, Math.max(1, Number(limit) || 100));
     const result = await query(this.#client, `
       select id, article_id as "articleId", action, article_version as "articleVersion",
         payload, created_at as "createdAt", processed_at as "processedAt", processing_error as "processingError"
       from admin_publication_outbox
       where ($1::boolean = false or processed_at is null)
+        and ($2::text is null or article_id = $2)
       order by created_at asc, id asc
-      limit $2
-    `, [pendingOnly, safeLimit]);
+      limit $3
+    `, [pendingOnly, articleId || null, safeLimit]);
     return clone(result.rows);
   }
 

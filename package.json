@@ -46,6 +46,7 @@
     "regenerate:public-content-v2": "node ./scripts/regenerate-public-content-v2.mjs",
     "migrate:legacy": "node ./scripts/migrate-legacy-content.mjs",
     "admin:migrate": "node ./scripts/migrate-admin-storage.mjs",
+    "admin:verify-managed": "node ./scripts/verify-managed-admin-persistence.mjs",
     "admin:export-public": "node ./scripts/export-admin-public-read-model.mjs",
     "regen:latest100": "node ./scripts/regenerate-latest100.mjs",
     "generate:missing-images": "node ./scripts/generate-missing-images.mjs",
@@ -85,7 +86,9 @@
     "regenerate:autonomous-analyses-v1": "node ./scripts/regenerate-autonomous-analyses-v1.mjs",
     "rebuild:taxonomy-pages": "node ./scripts/rebuild-taxonomy-pages.mjs",
     "audit:autonomous-public": "npm run build && node ./scripts/audit-autonomous-public-surface.mjs",
-    "eval:articles": "npm run content:eval"
+    "eval:articles": "npm run content:eval",
+    "benchmark:prepare": "node ./scripts/prepare-human-content-benchmark.mjs",
+    "benchmark:score": "node ./scripts/score-human-content-benchmark.mjs"
   },
   "dependencies": {
     "@astrojs/rss": "^4.0.12",

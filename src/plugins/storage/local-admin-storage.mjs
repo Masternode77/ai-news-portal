@@ -337,10 +337,11 @@ class LocalAdminStorageTransaction {
     return clone([...this.#snapshot.media.values()].filter((media) => !articleId || media.articleId === articleId));
   }
 
-  async listPublicationOutbox({ pendingOnly = true, limit = 100 } = {}) {
+  async listPublicationOutbox({ pendingOnly = true, limit = 100, articleId } = {}) {
     const safeLimit = Math.min(1000, Math.max(1, Number(limit) || 100));
     return clone(this.#snapshot.publicationOutbox
       .filter((entry) => !pendingOnly || !entry.processedAt)
+      .filter((entry) => !articleId || entry.articleId === articleId)
       .sort((a, b) => a.createdAt.localeCompare(b.createdAt))
       .slice(0, safeLimit));
   }

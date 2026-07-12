@@ -9,6 +9,10 @@ thin, noindex shells; article, revision, audit, media, and session data are retu
 from authenticated APIs. Production persistence is fail-closed until Postgres and Vercel
 Blob credentials are configured.
 
+The branch includes a preview-only managed persistence probe. It requires `VERCEL_ENV=preview`,
+`--target=preview`, and `ADMIN_PERSISTENCE_SCOPE=preview`, never prints credentials,
+and can split write and verification across separate processes or preview deployments.
+
 ## Architecture
 
 - Auth: signed HttpOnly, SameSite=Strict, Secure cookies in Vercel/production; CSRF on
@@ -40,12 +44,16 @@ The credential-free `/api/admin/articles` request returned the intended generic 
 
 - `node --test tests/admin-public-read-model.test.mjs tests/admin-cms-api.test.mjs tests/admin-media.test.mjs tests/admin-cms-service.test.mjs tests/admin-storage-local.test.mjs tests/admin-storage-postgres.test.mjs tests/admin-route-contract.test.mjs`: passed, 0 failed.
 - `npm audit --audit-level=low`: passed with 0 known dependency vulnerabilities.
+- `node --test tests/managed-admin-persistence.test.mjs tests/admin-storage-local.test.mjs tests/admin-storage-postgres.test.mjs`: passed; covers probe boundaries, reconnect, Blob round trip, lifecycle, audit, outbox, and multi-error cleanup reporting without managed credentials.
+- `npm run admin:verify-managed -- --phase=cycle --target=preview`: rejected before any write because preview scope and credentials were absent.
 
 ## Artifacts
 
 - `.cache/admin-public-read-model.json`: ignored build-time publication read model with CMS ownership tombstones.
 - `scripts/export-admin-public-read-model.mjs`: prebuild export that leaves outbox events pending.
-- `src/plugins/storage/migrations/001_admin_cms.sql`: durable CMS schema and indexes.
+- `migrations/001_admin_storage.sql`: durable CMS schema and indexes.
+- `scripts/verify-managed-admin-persistence.mjs`: preview-only write/verify/cycle runner.
+- `scripts/lib/managed-admin-persistence.mjs`: credential-redacted probe and bounded cleanup.
 - `tests/admin-cms-api.test.mjs`, `tests/admin-media.test.mjs`, and
   `tests/admin-public-read-model.test.mjs`: API, media privacy, and publication regression coverage.
 
@@ -69,6 +77,30 @@ Additional verification evidence:
 `DATABASE_URL`, `ADMIN_USERNAME`, `ADMIN_PASSWORD_HASH`, `ADMIN_SESSION_SECRET`,
 `ADMIN_ROLE` (or `ADMIN_USER_ROLES`), `BLOB_READ_WRITE_TOKEN`, and
 `ADMIN_MEDIA_PROVIDER=vercel-blob`. Run `npm run admin:migrate` before enabling login.
+
+## Managed Preview Receipt Procedure
+
+Use preview credentials only. The first command creates one namespaced draft plus one private
+Blob and writes an ignored, non-secret state file:
+
+```bash
+VERCEL_ENV=preview ADMIN_PERSISTENCE_SCOPE=preview npm run admin:verify-managed -- \
+  --phase=write --target=preview --deployment=dpl_before_restart
+```
+
+After starting a fresh process or creating a new preview deployment against the same managed
+stores, verify and clean up the probe:
+
+```bash
+VERCEL_ENV=preview ADMIN_PERSISTENCE_SCOPE=preview npm run admin:verify-managed -- \
+  --phase=verify --target=preview --deployment=dpl_after_restart
+```
+
+The receipt records whether the process and deployment identifiers changed, plus article,
+revision, audit, outbox, private Blob, delete/restore, and cleanup checks. `--phase=cycle` proves a
+fresh adapter/connection only; it is not a substitute for the two-process/deployment receipt.
+The environment flags attest the execution scope; the operator must still verify that the supplied
+database and Blob token belong to isolated preview resources.
 
 ## Remaining Risks
 

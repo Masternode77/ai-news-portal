@@ -30,16 +30,15 @@
 - Final receipts: `docs/final-gpt56-upgrade-report.md`, visual/performance reports.
 
 ## Validation results
-- Current `npm test`: 480 total, 479 passed, 0 failed, 1 intentional skip.
+- Current `npm test`: 487 total, 486 passed, 0 failed, 1 intentional skip.
 - Latest receipt, evidence, migration, and fidelity regression suite: 54 passed, 0 failed.
 - Quality, relevance, taxonomy, and repetition scripts: passed.
 - `npm run check`: 0 errors, 0 warnings, 11 existing type hints.
 - `npm audit --audit-level=low`: 0 vulnerabilities; baseline was 18.
 - `npm run build`: 61 pages; 85 generated assets retained, 4,097 pruned.
 - `npm run content:gate`: passed all public/content/image/admin gates.
-- Initial code review approved the image/receipt changes. Architecture review then found three
-  trust-boundary defects; all are fixed and regression-covered. Two fresh independent reruns could
-  not start because the agent quota was exhausted, so final closure used full-suite and negative probes.
+- Independent review found reason-code evidence, preview-scope, and cleanup-error masking defects;
+  all are fixed and regression-covered. Final re-review returned APPROVE with no open findings.
 - Canonical preview public routes: 4/4 returned 200; retired routes: 5/5 returned 404.
 - Admin pretty routes: 3/3 returned 200 with private/no-store caching.
 - Admin APIs without preview credentials: intended generic 503, no-store, noindex.
@@ -56,5 +55,5 @@
 - Production promotion requires explicit preview approval.
 
 ## Exact next step
-- Present the exact-HEAD preview for human approval and keep managed persistence work blocked on credentials.
+- Commit the verified benchmark and persistence tooling, deploy an exact-HEAD preview, and update receipts.
 - Keep push, production promotion, production secrets, and cache purge excluded pending explicit approval.
