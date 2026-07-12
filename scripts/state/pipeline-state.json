@@ -609,7 +609,9 @@
     "59d1d162db3c4a70",
     "507286ecf72e8608",
     "be2060f4c0fc9986",
-    "c646df502ab7a32a"
+    "c646df502ab7a32a",
+    "f156ccb0c41a22ee",
+    "1d8b48c1241dd7e3"
   ],
   "dayPlans": {
     "2026-03-24": {
@@ -28634,87 +28636,19 @@
     "2026-07-12": {
       "date": "2026-07-12",
       "createdAt": "2026-07-11T16:01:24.474Z",
-      "refreshedAt": "2026-07-11T23:57:53.212Z",
+      "refreshedAt": "2026-07-12T09:12:09.935Z",
       "candidateWindowHours": 24,
       "curatedItems": [
         {
-          "id": "c646df502ab7a32a",
+          "id": "f156ccb0c41a22ee",
           "source": "Toms Hardware",
-          "url": "https://www.tomshardware.com/pc-components/gpus/hotspot-temperature-sensor-on-nvidias-blackwell-gaming-gpus-is-still-accessible-if-you-have-access-to-nvidias-internal-mods-tool-nvidia-rtx-5070-ti-caught-throttling-at-107-c-over-poor-tim-application",
-          "title": "Hotspot temperature sensor on Nvidia's Blackwell gaming GPUs is still accessible if you have access to Nvidia's internal MODS tool — Nvidia RTX 5070 Ti caught throttling at 107°C over poor TIM application",
-          "snippet": "Nvidia decided to hide the hotspot temperature on its RTX 50 series, but internal diagnostic tools, such as Nvidia's own \"MODS,\" can still read it. The resulting data reveals how some GPUs can overheat and throttle easi…",
-          "contentText": "When the RTX 50 series launched, reviewers quickly discovered that the hotspot temperature was being misreported in standard diagnostics tools such as HWiNFO or MSI Afterburner. Eventually, people realized that Nvidia had outright removed the option to monitor hotspot temps, but it seems like the hardware was never removed from the GPU. New testing by Brazilian repair specialist Paulo Gomes has revealed that the sensor is still present and readable with special tools. In the video, the host shows a Gigabyte variant of the RTX 5070 Ti that was sent to him due to overheating issues. Within Windows, the monitoring tools showed no abnormal signs, as the \"average\" temperature was reported at 67 to 68 degrees Celsius. However, when diagnosed with a specialized tool called \"MODS,\" the hotspot te…",
-          "publishedAt": "2026-07-11T16:18:59.000Z",
-          "sourceImage": "https://cdn.mos.cms.futurecdn.net/GSB5guPv9JyJQd4axDtzUY-1280-80.jpg",
-          "region": "US",
-          "language": "en",
-          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
-          "category": "AI Infrastructure",
-          "primary_category": "AI Infrastructure",
-          "secondary_category": "GPU clusters and deployment readiness",
-          "infrastructure_layer": "Compute",
-          "affected_stakeholders": [
-            "operators",
-            "hyperscalers",
-            "cloud buyers",
-            "investors"
-          ],
-          "article_type": "Research / Technical",
-          "urgency_score": 0.46,
-          "taxonomy_confidence": 0.77,
-          "taxonomy_reasons": [
-            "ai infrastructure",
-            "neocloud"
-          ],
-          "direct_ai_infrastructure_relevance": 1,
-          "data_center_relevance": 0,
-          "cloud_capacity_relevance": 0,
-          "semiconductor_relevance": 0.598,
-          "power_grid_relevance": 0,
-          "cooling_relevance": 0,
-          "capital_markets_relevance": 0,
-          "enterprise_ai_infrastructure_relevance": 0,
-          "infrastructure_relevance_score": 0.862,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "semiconductor_relevance:0.60(nvidia, gpu)"
-          ],
-          "infrastructure_relevance": {
-            "direct_ai_infrastructure_relevance": 1,
-            "data_center_relevance": 0,
-            "cloud_capacity_relevance": 0,
-            "semiconductor_relevance": 0.598,
-            "power_grid_relevance": 0,
-            "cooling_relevance": 0,
-            "capital_markets_relevance": 0,
-            "enterprise_ai_infrastructure_relevance": 0,
-            "infrastructure_relevance_score": 0.862,
-            "infrastructure_relevance_tier": "full_memo",
-            "infrastructure_relevance_action": "generate_full_memo",
-            "infrastructure_relevance_reasons": [
-              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-              "semiconductor_relevance:0.60(nvidia, gpu)"
-            ],
-            "infrastructureRelevanceAction": "generate_full_memo",
-            "articlePagePublished": true,
-            "homepagePublished": true,
-            "archiveOnly": false,
-            "archiveOnlyReason": null
-          },
-          "score": 74
-        },
-        {
-          "id": "be2060f4c0fc9986",
-          "source": "ServeTheHome",
-          "url": "https://www.servethehome.com/aic-gets-flashy-with-32-ssd-bay-jbof-server-for-key-value-caching/",
-          "title": "AIC Gets Flashy with 32 SSD Bay JBOF Server for Key Value Caching",
-          "snippet": "In preparation for the Rubin Vera era, AIC was showing off its F2032-01-G6, a 2U JBOF storage system that can house up to 32 E3 SSDs. The box is designed to be paired with BlueField-4 DPUs, allowing it to be used as a k…",
-          "contentText": "In preparation for the Rubin Vera era, AIC was showing off its F2032-01-G6, a 2U JBOF storage system that can house up to 32 E3 SSDs. The box is designed to be paired with BlueField-4 DPUs, allowing it to be used as a key value caching appliance The post AIC Gets Flashy with 32 SSD Bay JBOF Server for Key Value Caching appeared first on ServeTheHome .",
-          "publishedAt": "2026-07-11T17:00:08.000Z",
-          "sourceImage": null,
-          "region": "US",
+          "url": "https://www.tomshardware.com/3d-printing/ivan-miranda-releases-files-for-a-3d-printed-electric-motorbike-that-fits-in-a-suitcase",
+          "title": "This 3D-printed electric motorbike folds into your luggage — creator warns it is 'super fast... way too fast'",
+          "snippet": "Ivan Miranda has released the design files for the Mirandetta, a 3D-printed electric scooter that breaks down to fit inside a suitcase.",
+          "contentText": "Ivan Miranda has released the design files for the Mirandetta, a 3D-printed electric motorbike that breaks down to fit inside a suitcase. He has re-engineered the vehicle so that every part prints on a single 300mm x 300mm bed. The files cost $40 through his website, ivanmiranda.com, and the redesign targets makers who want to build their own rather than admire the one-off he rode at Prague Maker Faire. Miranda built the original in roughly 10 days as a \"travel hack\" — the smallest motorbike an adult could ride that still packed into checked luggage. To achieve this, he relied on aluminum wheel axles and an all-metal steering column assembly, and now the released design replaces both with printed parts. Miranda also standardized the lighting on off-the-shelf T10 automotive sockets and bul…",
+          "publishedAt": "2026-07-11T17:21:53.000Z",
+          "sourceImage": "https://cdn.mos.cms.futurecdn.net/C4mcY9G6StQz2zboReZmsk-1280-80.png",
+          "region": "Global",
           "language": "en",
           "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
           "category": "AI Infrastructure",
@@ -28741,7 +28675,7 @@
           "power_grid_relevance": 0,
           "cooling_relevance": 0,
           "capital_markets_relevance": 0,
-          "enterprise_ai_infrastructure_relevance": 0.18,
+          "enterprise_ai_infrastructure_relevance": 0,
           "infrastructure_relevance_score": 0.778,
           "infrastructure_relevance_tier": "full_memo",
           "infrastructure_relevance_action": "generate_full_memo",
@@ -28757,7 +28691,7 @@
             "power_grid_relevance": 0,
             "cooling_relevance": 0,
             "capital_markets_relevance": 0,
-            "enterprise_ai_infrastructure_relevance": 0.18,
+            "enterprise_ai_infrastructure_relevance": 0,
             "infrastructure_relevance_score": 0.778,
             "infrastructure_relevance_tier": "full_memo",
             "infrastructure_relevance_action": "generate_full_memo",
@@ -28771,7 +28705,7 @@
             "archiveOnly": false,
             "archiveOnlyReason": null
           },
-          "score": 71
+          "score": 65
         },
         {
           "id": "1d8b48c1241dd7e3",
@@ -28840,7 +28774,74 @@
             "archiveOnly": false,
             "archiveOnlyReason": null
           },
-          "score": 69
+          "score": 63
+        },
+        {
+          "id": "dbbd39bc203a0cb5",
+          "source": "Bloomberg Technology",
+          "url": "https://www.bloomberg.com/news/articles/2026-07-12/zhipu-s-chinese-founder-says-frontier-ai-should-stay-open-to-all",
+          "title": "Zhipu’s Chinese Founder Says Frontier AI Should Stay Open to All",
+          "snippet": "The founder of Chinese AI lab Zhipu argued that frontier artificial intelligence should remain broadly accessible rather than controlled by select individuals, weighing in on a growing debate about the risks posed by ev…",
+          "contentText": "The founder of Chinese AI lab Zhipu argued that frontier artificial intelligence should remain broadly accessible rather than controlled by select individuals, weighing in on a growing debate about the risks posed by ever more powerful models.",
+          "publishedAt": "2026-07-12T06:59:51.000Z",
+          "sourceImage": "https://assets.bwbx.io/images/users/iqjWHBFdfxIU/iNg6IZgo4SRA/v0/1200x-1.jpg",
+          "region": "Global",
+          "language": "en",
+          "defaultCategory": "Hyperscalers & Cloud",
+          "category": "Cloud Capacity",
+          "primary_category": "Cloud Capacity",
+          "secondary_category": "Hyperscale regions and accelerator availability",
+          "infrastructure_layer": "Cloud Platform",
+          "affected_stakeholders": [
+            "hyperscalers",
+            "cloud buyers",
+            "enterprise IT",
+            "operators"
+          ],
+          "article_type": "Other",
+          "urgency_score": 0.28,
+          "taxonomy_confidence": 0.5,
+          "taxonomy_reasons": [
+            "fallback_taxonomy"
+          ],
+          "direct_ai_infrastructure_relevance": 0.22,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0.32,
+          "semiconductor_relevance": 0,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.304,
+          "infrastructure_relevance_tier": "archive_only",
+          "infrastructure_relevance_action": "archive_only",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:0.22",
+            "cloud_capacity_relevance:0.32(hyperscalers)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 0.22,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0.32,
+            "semiconductor_relevance": 0,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.304,
+            "infrastructure_relevance_tier": "archive_only",
+            "infrastructure_relevance_action": "archive_only",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:0.22",
+              "cloud_capacity_relevance:0.32(hyperscalers)"
+            ],
+            "infrastructureRelevanceAction": "archive_only",
+            "articlePagePublished": false,
+            "homepagePublished": false,
+            "archiveOnly": true,
+            "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
+          },
+          "score": 59
         },
         {
           "id": "54cfb279834228c6",
@@ -28908,7 +28909,7 @@
             "archiveOnly": false,
             "archiveOnlyReason": null
           },
-          "score": 58
+          "score": 52
         },
         {
           "id": "8098880cf7a0da18",
@@ -28976,219 +28977,98 @@
             "archiveOnly": false,
             "archiveOnlyReason": null
           },
-          "score": 57
+          "score": 51
         },
         {
-          "id": "22d4aea429f0b892",
-          "source": "Data Center Dynamics",
-          "url": "https://www.datacenterdynamics.com/en/opinions/a-new-definition-of-speed-to-power/",
-          "title": "Sponsored: A new definition of speed to power",
-          "snippet": "In today's environment, speed to power becomes less about overcoming external constraints and more about internal alignment",
-          "contentText": "In today's environment, speed to power becomes less about overcoming external constraints and more about internal alignment",
-          "publishedAt": "2026-07-11T15:00:00.000Z",
-          "sourceImage": "https://media.datacenterdynamics.com/media/images/1727127734081.b3947662.fill-750x500.jpg",
-          "region": "Global",
+          "id": "27b1d1aa3331d17c",
+          "source": "Bloomberg Technology",
+          "url": "https://www.bloomberg.com/news/articles/2026-07-12/china-evs-average-1-8-years-on-road-less-than-cell-phones",
+          "title": "China EVs on Road Have Average Age of 1.8 Years, Newspaper Says",
+          "snippet": "Chinese electric vehicles on the road are on average just 1.8 years old, compared with 8.2 years for gasoline-powered cars, 21st Century Business Herald reported, citing a report by the China Association of Automobile M…",
+          "contentText": "Chinese electric vehicles on the road are on average just 1.8 years old, compared with 8.2 years for gasoline-powered cars, 21st Century Business Herald reported, citing a report by the China Association of Automobile Manufacturers and Hejun Consulting.",
+          "publishedAt": "2026-07-12T03:18:44.000Z",
+          "sourceImage": "https://assets.bwbx.io/images/users/iqjWHBFdfxIU/io16CeYO4qZ4/v0/1200x-1.jpg",
+          "region": "US",
           "language": "en",
-          "defaultCategory": "Colocation & Wholesale",
-          "category": "Data Centers",
-          "primary_category": "Data Centers",
-          "secondary_category": "Campus development and colocation capacity",
-          "infrastructure_layer": "Facility",
+          "defaultCategory": "Hyperscalers & Cloud",
+          "category": "Cloud Capacity",
+          "primary_category": "Cloud Capacity",
+          "secondary_category": "Hyperscale regions and accelerator availability",
+          "infrastructure_layer": "Cloud Platform",
           "affected_stakeholders": [
-            "data center operators",
-            "developers",
-            "site selectors",
-            "investors"
+            "hyperscalers",
+            "cloud buyers",
+            "enterprise IT",
+            "operators"
           ],
           "article_type": "Other",
-          "urgency_score": 0.44,
-          "taxonomy_confidence": 0.73,
+          "urgency_score": 0.25,
+          "taxonomy_confidence": 0.5,
           "taxonomy_reasons": [
-            "colocation",
-            "wholesale"
+            "fallback_taxonomy"
           ],
           "direct_ai_infrastructure_relevance": 0,
-          "data_center_relevance": 0.76,
-          "cloud_capacity_relevance": 0,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0.32,
           "semiconductor_relevance": 0,
-          "power_grid_relevance": 0.297,
+          "power_grid_relevance": 0,
           "cooling_relevance": 0,
           "capital_markets_relevance": 0,
           "enterprise_ai_infrastructure_relevance": 0,
-          "infrastructure_relevance_score": 0.576,
-          "infrastructure_relevance_tier": "signal_card",
-          "infrastructure_relevance_action": "publish_signal_card_only",
+          "infrastructure_relevance_score": 0.221,
+          "infrastructure_relevance_tier": "archive_only",
+          "infrastructure_relevance_action": "archive_only",
           "infrastructure_relevance_reasons": [
-            "data_center_relevance:0.76(data center, colocation)",
-            "power_grid_relevance:0.30(power)"
+            "cloud_capacity_relevance:0.32(hyperscalers)"
           ],
           "infrastructure_relevance": {
             "direct_ai_infrastructure_relevance": 0,
-            "data_center_relevance": 0.76,
-            "cloud_capacity_relevance": 0,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0.32,
             "semiconductor_relevance": 0,
-            "power_grid_relevance": 0.297,
+            "power_grid_relevance": 0,
             "cooling_relevance": 0,
             "capital_markets_relevance": 0,
             "enterprise_ai_infrastructure_relevance": 0,
-            "infrastructure_relevance_score": 0.576,
-            "infrastructure_relevance_tier": "signal_card",
-            "infrastructure_relevance_action": "publish_signal_card_only",
+            "infrastructure_relevance_score": 0.221,
+            "infrastructure_relevance_tier": "archive_only",
+            "infrastructure_relevance_action": "archive_only",
             "infrastructure_relevance_reasons": [
-              "data_center_relevance:0.76(data center, colocation)",
-              "power_grid_relevance:0.30(power)"
+              "cloud_capacity_relevance:0.32(hyperscalers)"
             ],
-            "infrastructureRelevanceAction": "publish_signal_card_only",
+            "infrastructureRelevanceAction": "archive_only",
             "articlePagePublished": false,
-            "homepagePublished": true,
-            "archiveOnly": false,
-            "archiveOnlyReason": null
+            "homepagePublished": false,
+            "archiveOnly": true,
+            "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
           },
-          "score": 49
+          "score": 47
         }
       ],
       "curatedIds": [
-        "c646df502ab7a32a",
-        "be2060f4c0fc9986",
+        "f156ccb0c41a22ee",
         "1d8b48c1241dd7e3",
+        "dbbd39bc203a0cb5",
         "54cfb279834228c6",
         "8098880cf7a0da18",
-        "22d4aea429f0b892"
+        "27b1d1aa3331d17c"
       ],
       "publishedIds": [
         "59d1d162db3c4a70",
         "507286ecf72e8608",
         "be2060f4c0fc9986",
-        "c646df502ab7a32a"
+        "c646df502ab7a32a",
+        "f156ccb0c41a22ee",
+        "1d8b48c1241dd7e3"
       ],
       "slotPublications": {
         "0": true,
-        "1": true
+        "1": true,
+        "2": true
       }
     }
   },
   "runHistory": [
-    {
-      "at": "2026-06-02T00:16:07.581Z",
-      "day": "2026-06-02",
-      "slot": 1,
-      "publishedCount": 0,
-      "signalCardCount": 0,
-      "archiveOnlyCount": 0,
-      "repetitionBlockedCount": 2,
-      "publishedIds": [],
-      "processedIds": [
-        "518f7863439aecd8",
-        "9ce58ee319dd3da9"
-      ],
-      "blockedCount": 0,
-      "blockedItems": [],
-      "repetitionBlockedItems": [
-        {
-          "id": "518f7863439aecd8",
-          "title": "AMD Radeon RX 9070 GRE review: thoroughly midrange",
-          "infrastructure_relevance_score": 0.975,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "cloud_capacity_relevance:0.32(hyperscalers)",
-            "semiconductor_relevance:0.80(nvidia, amd, gpu)",
-            "power_grid_relevance:0.22(power)"
-          ],
-          "extraction_quality_score": 1,
-          "source_domain_adapter": "generic",
-          "content_length": 1791,
-          "boilerplate_ratio": 0,
-          "repetition_blocked": true,
-          "repetition_block_reasons": [
-            "repeated_sentence_ratio>0.12",
-            "conclusion_similarity>0.7"
-          ],
-          "repetition_check": {
-            "compared_article_count": 15,
-            "repeated_sentence_ratio": 0.14285714285714285,
-            "repeated_paragraph_ratio": 0.16666666666666666,
-            "heading_sequence_similarity": 0,
-            "banned_phrase_count": 0,
-            "banned_phrase_counts": {},
-            "recent_banned_phrase_counts": {},
-            "ngram_overlap": 0.330188679245283,
-            "blueprint_repetition": 2,
-            "conclusion_similarity": 0.9233805168766386,
-            "repeated_sentence_count": 1,
-            "repeated_paragraph_count": 1,
-            "heading_sequence": [
-              "System Change",
-              "Bottleneck",
-              "Engineering Tradeoff",
-              "Validation Metric"
-            ],
-            "blocked": true,
-            "reasons": [
-              "repeated_sentence_ratio>0.12",
-              "conclusion_similarity>0.7"
-            ]
-          },
-          "expert_insight_complete": true,
-          "expert_insight_missing_fields": [],
-          "reason": "repeated_sentence_ratio>0.12; conclusion_similarity>0.7"
-        },
-        {
-          "id": "9ce58ee319dd3da9",
-          "title": "Alphabet plans to raise $80B to pay for AI buildout",
-          "infrastructure_relevance_score": 0.87,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "cloud_capacity_relevance:0.32(hyperscalers)",
-            "semiconductor_relevance:0.22(gpu)",
-            "power_grid_relevance:0.22(power)",
-            "capital_markets_relevance:0.28(capex)"
-          ],
-          "extraction_quality_score": 1,
-          "source_domain_adapter": "techcrunch",
-          "content_length": 1727,
-          "boilerplate_ratio": 0,
-          "repetition_blocked": true,
-          "repetition_block_reasons": [
-            "heading_sequence_similarity>0.75",
-            "conclusion_similarity>0.7"
-          ],
-          "repetition_check": {
-            "compared_article_count": 15,
-            "repeated_sentence_ratio": 0,
-            "repeated_paragraph_ratio": 0,
-            "heading_sequence_similarity": 1,
-            "banned_phrase_count": 0,
-            "banned_phrase_counts": {},
-            "recent_banned_phrase_counts": {},
-            "ngram_overlap": 0.3076923076923077,
-            "blueprint_repetition": 1,
-            "conclusion_similarity": 0.8999999999999998,
-            "repeated_sentence_count": 0,
-            "repeated_paragraph_count": 0,
-            "heading_sequence": [
-              "Deal Signal",
-              "Contract Quality",
-              "Operating Dependency",
-              "Investor Test"
-            ],
-            "blocked": true,
-            "reasons": [
-              "heading_sequence_similarity>0.75",
-              "conclusion_similarity>0.7"
-            ]
-          },
-          "expert_insight_complete": true,
-          "expert_insight_missing_fields": [],
-          "reason": "heading_sequence_similarity>0.75; conclusion_similarity>0.7"
-        }
-      ],
-      "signalCardItems": [],
-      "archiveOnlyItems": []
-    },
     {
       "at": "2026-06-02T11:24:51.421Z",
       "day": "2026-06-02",
@@ -42434,7 +42314,134 @@
       ],
       "signalCardItems": [],
       "archiveOnlyItems": []
+    },
+    {
+      "at": "2026-07-12T09:12:09.935Z",
+      "day": "2026-07-12",
+      "slot": 2,
+      "publishedCount": 0,
+      "signalCardCount": 1,
+      "archiveOnlyCount": 0,
+      "repetitionBlockedCount": 1,
+      "publishedIds": [],
+      "processedIds": [
+        "f156ccb0c41a22ee",
+        "1d8b48c1241dd7e3"
+      ],
+      "blockedCount": 1,
+      "blockedItems": [
+        {
+          "id": "f156ccb0c41a22ee",
+          "title": "This 3D-printed electric motorbike folds into your luggage — creator warns it is 'super fast... way too fast'",
+          "infrastructure_relevance_score": 0.87,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "cloud_capacity_relevance:0.32(hyperscalers)",
+            "semiconductor_relevance:0.22(gpu)",
+            "power_grid_relevance:0.22(power)",
+            "capital_markets_relevance:0.28(capex)"
+          ],
+          "extraction_quality_score": 1,
+          "source_domain_adapter": "generic",
+          "content_length": 1780,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": false,
+          "repetition_block_reasons": [],
+          "repetition_check": null,
+          "expert_insight_complete": false,
+          "expert_insight_missing_fields": [
+            "named_companies"
+          ],
+          "reason": "expert_insight_missing_fields named_companies"
+        }
+      ],
+      "repetitionBlockedItems": [
+        {
+          "id": "1d8b48c1241dd7e3",
+          "title": "OpenAI's Sam Altman accuses Musk of selling public market investors \"on short-term space data centers\"",
+          "infrastructure_relevance_score": 0.972,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:0.78",
+            "data_center_relevance:1.00(data center, data centers, colocation)",
+            "cloud_capacity_relevance:0.32(hyperscalers)",
+            "power_grid_relevance:0.22(power)",
+            "capital_markets_relevance:0.28(capex)"
+          ],
+          "extraction_quality_score": 1,
+          "source_domain_adapter": "generic",
+          "content_length": 1433,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": true,
+          "repetition_block_reasons": [
+            "repeated_sentence_ratio>0.12",
+            "heading_sequence_similarity>0.75",
+            "conclusion_similarity>0.7"
+          ],
+          "repetition_check": {
+            "compared_article_count": 20,
+            "repeated_sentence_ratio": 0.14285714285714285,
+            "repeated_paragraph_ratio": 0.16666666666666666,
+            "heading_sequence_similarity": 1,
+            "banned_phrase_count": 0,
+            "banned_phrase_counts": {},
+            "recent_banned_phrase_counts": {},
+            "ngram_overlap": 0.6115702479338843,
+            "blueprint_repetition": 1,
+            "conclusion_similarity": 0.9511897312113418,
+            "repeated_sentence_count": 1,
+            "repeated_paragraph_count": 1,
+            "heading_sequence": [
+              "Capital Move",
+              "Demand Evidence",
+              "Execution Risk",
+              "Milestone To Watch"
+            ],
+            "blocked": true,
+            "reasons": [
+              "repeated_sentence_ratio>0.12",
+              "heading_sequence_similarity>0.75",
+              "conclusion_similarity>0.7"
+            ]
+          },
+          "expert_insight_complete": true,
+          "expert_insight_missing_fields": [],
+          "reason": "repeated_sentence_ratio>0.12; heading_sequence_similarity>0.75; conclusion_similarity>0.7"
+        }
+      ],
+      "signalCardItems": [
+        {
+          "id": "f156ccb0c41a22ee",
+          "title": "This 3D-printed electric motorbike folds into your luggage — creator warns it is 'super fast... way too fast'",
+          "infrastructure_relevance_score": 0.87,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "cloud_capacity_relevance:0.32(hyperscalers)",
+            "semiconductor_relevance:0.22(gpu)",
+            "power_grid_relevance:0.22(power)",
+            "capital_markets_relevance:0.28(capex)"
+          ],
+          "extraction_quality_score": 1,
+          "source_domain_adapter": "generic",
+          "content_length": 1780,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": false,
+          "repetition_block_reasons": [],
+          "repetition_check": null,
+          "expert_insight_complete": false,
+          "expert_insight_missing_fields": [
+            "named_companies"
+          ],
+          "reason": "expert_insight_missing_fields named_companies"
+        }
+      ],
+      "archiveOnlyItems": []
     }
   ],
-  "lastRunAt": "2026-07-11T23:57:53.212Z"
+  "lastRunAt": "2026-07-12T09:12:09.935Z"
 }
