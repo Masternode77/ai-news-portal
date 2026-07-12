@@ -30,3 +30,10 @@ test('Vercel policy keeps admin pages private and preserves legacy admin locatio
   assert.ok(vercel.redirects.some((entry) => entry.source === '/admin/edit/:id'));
   assert.ok(vercel.redirects.some((entry) => entry.source === '/admin' && entry.destination === '/admin/login/'));
 });
+
+test('Vercel admin functions include file-backed editorial policy at runtime', () => {
+  assert.equal(
+    vercel.functions?.['api/admin/*.js']?.includeFiles,
+    '{config/**/*.yml,config/**/*.json,src/data/{editorial-cycles,claim-ledger,source-health}.json}',
+  );
+});

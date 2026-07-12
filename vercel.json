@@ -2,6 +2,11 @@
   "framework": "astro",
   "buildCommand": "npm run build",
   "outputDirectory": "dist",
+  "functions": {
+    "api/admin/*.js": {
+      "includeFiles": "{config/**/*.yml,config/**/*.json,src/data/{editorial-cycles,claim-ledger,source-health}.json}"
+    }
+  },
   "rewrites": [
     {
       "source": "/admin/articles/:id/edit",
