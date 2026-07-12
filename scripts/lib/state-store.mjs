@@ -5,6 +5,7 @@ const DEFAULT_STATE = {
   publishedIds: [],
   dayPlans: {},
   runHistory: [],
+  publicationReceipts: {},
   lastRunAt: null,
 };
 

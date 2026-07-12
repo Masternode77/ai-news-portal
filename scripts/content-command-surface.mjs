@@ -2,24 +2,12 @@
 import { spawn } from 'node:child_process';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { ORCHESTRATOR_PHASES } from '../src/core/orchestrator/index.mjs';
+import { CONTENT_CYCLE_PHASES } from '../src/core/orchestrator/index.mjs';
+import { runCanonicalContentCommand } from '../src/adapters/content-cycle-composition.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-const CONTENT_PHASES = Object.freeze([
-  'ingest',
-  'extract',
-  'classify',
-  'cluster',
-  'generate',
-  'review',
-  'publish',
-]);
+const CONTENT_PHASES = CONTENT_CYCLE_PHASES;
 const COMMANDS = Object.freeze([...CONTENT_PHASES, 'cycle', 'eval']);
-const UNSUPPORTED_PHASE_MESSAGE = [
-  'isolated content phases are not implemented as standalone production commands',
-  'run `npm run content:cycle` for the canonical production ingestion cycle',
-].join('; ');
-
 function usage() {
   return [
     'Usage: node scripts/content-command-surface.mjs <command> [--production]',
@@ -58,7 +46,7 @@ function spawnNode(relativeScript, args = []) {
 
 function assertKnownPhase(command) {
   if (!CONTENT_PHASES.includes(command)) return;
-  if (!ORCHESTRATOR_PHASES.includes(command)) {
+  if (!CONTENT_CYCLE_PHASES.includes(command)) {
     throw new Error(`content phase ${command} is missing from src/core/orchestrator`);
   }
 }
@@ -74,7 +62,9 @@ async function runCommand(command, options = {}) {
     if (!options.production || options.rest.length !== 1 || options.rest[0] !== '--production') {
       throw new Error('content:cycle requires exactly one argument: --production');
     }
-    return spawnNode('scripts/pipeline.mjs');
+    const receipt = await runCanonicalContentCommand('cycle', { production: true });
+    console.log(JSON.stringify(receipt));
+    return 0;
   }
 
   if (command === 'eval') {
@@ -83,7 +73,9 @@ async function runCommand(command, options = {}) {
   }
 
   if (options.rest.length) throw new Error(`content:${command} does not accept additional arguments`);
-  throw new Error(`content:${command} failed closed: ${UNSUPPORTED_PHASE_MESSAGE}`);
+  const receipt = await runCanonicalContentCommand(command);
+  console.log(JSON.stringify(receipt));
+  return 0;
 }
 
 const args = parseArgs();

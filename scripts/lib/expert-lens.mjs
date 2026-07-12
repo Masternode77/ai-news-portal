@@ -293,11 +293,123 @@ function needsExpertLens(article) {
   return !hydrated.expertLensFull || !hydrated.expertLensShort;
 }
 
+function strictGenerationError(code, message) {
+  const error = new Error(message);
+  error.code = code;
+  error.retryable = code === 'editorial_service_unavailable';
+  return error;
+}
+
+const STRICT_LENS_TEXT_FIELDS = Object.freeze([
+  'dynamicBriefLabel',
+  'thesis',
+  'whatHappened',
+  'whyThisMatters',
+  'marketMissing',
+  'investors',
+  'operators',
+  'hyperscalers',
+  'watchNext',
+  'finalHeadline',
+  'metaDescription',
+]);
+
+const STRICT_NARRATIVE_FIELDS = Object.freeze([
+  'protagonist',
+  'antagonist_or_constraint',
+  'core_tension',
+  'reader_role',
+  'infrastructure_layer',
+  'time_horizon',
+  'story_archetype',
+  'hook_style',
+  'evidence_anchor',
+  'counterpoint',
+  'next_observable_signal',
+]);
+
+function strictText(value, maxLength = 0) {
+  if (typeof value !== 'string' || !value.trim()) return '';
+  const cleaned = normalizeEditorialVoice(sanitizeGeneratedText(value));
+  if (!cleaned || hasBannedPhrase(cleaned)) return '';
+  return maxLength ? truncate(cleaned, maxLength) : cleaned;
+}
+
+function strictTextArray(value, { minimum, maximum, maxLength }) {
+  if (!Array.isArray(value) || value.length < minimum || value.length > maximum) return null;
+  const cleaned = value.map((entry) => strictText(entry, maxLength));
+  return cleaned.every(Boolean) ? cleaned : null;
+}
+
+export function validateStrictExpertLensPayload(payload, {
+  blueprintId,
+  generationVersion = GENERATION_VERSION,
+  sourceLink,
+} = {}) {
+  if (!payload || typeof payload !== 'object' || Array.isArray(payload)) return null;
+  if (payload.blueprintId !== blueprintId || payload.generation_version !== generationVersion) return null;
+  if (!payload.narrative_dna
+    || typeof payload.narrative_dna !== 'object'
+    || Array.isArray(payload.narrative_dna)
+    || STRICT_NARRATIVE_FIELDS.some((field) => !strictText(payload.narrative_dna[field], 240))) {
+    return null;
+  }
+  const expectedSourceLink = String(sourceLink || '').trim();
+  const returnedSourceLink = String(payload.sourceLink || '').trim();
+  if (!expectedSourceLink || returnedSourceLink !== expectedSourceLink) return null;
+  const normalized = {};
+  const limits = {
+    dynamicBriefLabel: 80,
+    thesis: 160,
+    whatHappened: 500,
+    whyThisMatters: 500,
+    marketMissing: 500,
+    investors: 500,
+    operators: 500,
+    hyperscalers: 500,
+    watchNext: 500,
+    finalHeadline: 120,
+    metaDescription: 170,
+  };
+  for (const field of STRICT_LENS_TEXT_FIELDS) {
+    normalized[field] = strictText(payload[field], limits[field]);
+    if (!normalized[field]) return null;
+  }
+  const executiveSummary = strictTextArray(payload.executiveSummary, {
+    minimum: 2,
+    maximum: 3,
+    maxLength: 220,
+  });
+  const headlineOptions = strictTextArray(payload.headlineOptions, {
+    minimum: 3,
+    maximum: 5,
+    maxLength: 110,
+  });
+  const finalArticleBody = normalizeEditorialParagraphs(
+    sanitizeGeneratedText(payload.finalArticleBody || ''),
+  ).join('\n\n');
+  if (!executiveSummary || !headlineOptions || !finalArticleBody || hasBannedPhrase(finalArticleBody)) {
+    return null;
+  }
+  return {
+    ...normalized,
+    blueprintId,
+    generation_version: generationVersion,
+    narrative_dna: structuredClone(payload.narrative_dna),
+    executiveSummary,
+    headlineOptions,
+    finalArticleBody,
+    sourceLink: expectedSourceLink,
+  };
+}
+
 async function generateExpertLensFull(article, blueprint) {
   if (!articleHasExpertInsight(article)) {
-    throw new Error('expert insight fields are incomplete; refusing generic long-form article generation');
+    throw strictGenerationError(
+      'expert_insight_incomplete',
+      'expert insight fields are incomplete; refusing long-form generation',
+    );
   }
-  const fallback = fallbackExpertLensFull(article, blueprint);
   const expertInsight = article.expert_insight || article.expertInsight || {};
   const content = await callExpertLensText({
     systemPrompt: [
@@ -308,19 +420,11 @@ async function generateExpertLensFull(article, blueprint) {
       `Do not use any banned phrase: ${BANNED_PHRASES.join(' | ')}.`,
       `No hook or lead sentence may begin with: ${BLOCKED_HOOK_STARTS.join(' | ')}.`,
       'The output must be decision-grade, accurate, skeptical, and free of generic hype or unsupported certainty.',
-      'Use this logic in order: report what changed, explain why the development matters now, identify 1-2 underappreciated constraints, name practical implications for the most relevant audience, then end with what to watch next.',
-      'The article must use the extracted expert insight fields. Do not substitute generic infrastructure analysis for missing details.',
-      'Every finalArticleBody must explicitly use at least one concrete fact, one named company, the infrastructure layer, bottleneck type, leverage holder, execution-risk holder, timing dependency, counterargument, and next observable signal.',
+      'Use the extracted expert insight fields and do not substitute generic infrastructure analysis.',
       blueprintPrompt(blueprint),
       'Return strict JSON only with keys: blueprintId, generation_version, narrative_dna, dynamicBriefLabel, thesis, whatHappened, whyThisMatters, marketMissing, investors, operators, hyperscalers, watchNext, executiveSummary, headlineOptions, finalHeadline, metaDescription, finalArticleBody, sourceLink.',
-      `generation_version must be "${GENERATION_VERSION}". dynamicBriefLabel must be one of the allowed NarrativeDNA brief labels.`,
-      `blueprintId must be "${blueprint.id}".`,
-      'executiveSummary must be exactly 3 short lines for busy readers: what changed, why it matters, and what to watch.',
-      'headlineOptions must be an array of exactly 5 concise headline ideas written in English, each with a concrete hook that invites a click without hype.',
-      'finalHeadline must use the strongest hook while preserving the source facts.',
-      'Keep each section concise but substantive. Do not invent facts or numbers not grounded in the provided context.',
-      `The finalArticleBody is the primary deliverable. It must include the selected blueprint headings as standalone lines and otherwise be reported analysis, not bullets and not a repeated section template.`,
-      'Do not include the headings "Why it matters", "Pressure points", "Market implications", or "What to watch" anywhere in reader-facing copy.',
+      `generation_version must be "${GENERATION_VERSION}" and blueprintId must be "${blueprint.id}".`,
+      'The finalArticleBody must use the selected blueprint headings, preserve uncertainty, and contain no unsupported claims.',
     ].join(' '),
     userPrompt: JSON.stringify({
       selectedBlueprint: blueprintSnapshot(blueprint),
@@ -340,7 +444,40 @@ async function generateExpertLensFull(article, blueprint) {
     maxTokens: 2600,
   }).catch(() => '');
 
-  return normalizeExpertLensFull(article, content || fallback, blueprint, { enforceBlueprint: true });
+  if (!content) {
+    throw strictGenerationError(
+      'editorial_service_unavailable',
+      'editorial service returned no long-form response; downgrade to Source Signal',
+    );
+  }
+  const parsed = safeJsonParse(content, null);
+  const strict = validateStrictExpertLensPayload(parsed, {
+    blueprintId: blueprint.id,
+    sourceLink: article.sourceUrl || article.url,
+  });
+  const body = strict?.finalArticleBody || '';
+  if (
+    !strict
+    || body.length < (blueprint.minChars || HUMANIZED_ARTICLE_MIN_CHARS)
+    || body.length > (blueprint.maxChars || Number.POSITIVE_INFINITY) + 400
+    || !bodyUsesBlueprint(body, blueprint)
+    || expertInsightUsageScore(body, expertInsight) < 0.55
+    || containsTemplateLanguage(body)
+    || hasBannedPhrase(body)
+  ) {
+    throw strictGenerationError(
+      'editorial_generation_invalid',
+      'editorial response failed long-form structure, evidence, or diversity validation',
+    );
+  }
+  return {
+    version: EXPERT_LENS_VERSION,
+    mode: EXPERT_LENS_MODE,
+    generatedAt: new Date().toISOString(),
+    ...strict,
+    blueprintName: blueprint.name,
+    blueprint: blueprintSnapshot(blueprint),
+  };
 }
 
 async function enrichSingleArticle(article, options = {}) {
@@ -379,6 +516,39 @@ export async function attachExpertLens(articles = [], options = {}) {
     }
   }
 
+  return results;
+}
+
+export async function attachExpertLensStrict(articles = [], options = {}) {
+  const results = [];
+  const recentBlueprintIds = [...(options.recentBlueprintIds || [])];
+  for (const article of articles) {
+    // Strict generation never hydrates persisted lens data because legacy hydration is
+    // intentionally fallback-capable. A candidate must earn a fresh validated draft.
+    const cleanCandidate = {
+      ...article,
+      expertLens: null,
+      expertLensShort: null,
+      expertLensFull: null,
+    };
+    const blueprint = resolveArticleBlueprint(cleanCandidate, recentBlueprintIds);
+    const articleWithBlueprint = withBlueprintFields(cleanCandidate, blueprint);
+    const full = await generateExpertLensFull(articleWithBlueprint, blueprint);
+    const short = buildExpertLensShort(full, articleWithBlueprint.summary || articleWithBlueprint.snippet || articleWithBlueprint.title);
+    const enriched = {
+      ...articleWithBlueprint,
+      expertLensShort: short,
+      expertLensFull: full,
+      expertLens: short,
+      generation_version: GENERATION_VERSION,
+      narrative_dna: full.narrative_dna || extractNarrativeDNA(articleWithBlueprint),
+      dynamic_brief_label: full.dynamicBriefLabel || full.narrative_dna?.brief_label || null,
+      article_blueprint: full.blueprintId || blueprint.id,
+      articleBlueprint: full.blueprint || blueprintSnapshot(blueprint),
+    };
+    results.push(enriched);
+    if (enriched.article_blueprint) recentBlueprintIds.unshift(enriched.article_blueprint);
+  }
   return results;
 }
 

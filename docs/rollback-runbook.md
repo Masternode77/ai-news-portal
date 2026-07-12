@@ -21,6 +21,23 @@ objects and audit/revision rows must not be deleted during an application rollba
 outbox events remain pending through builds and deployments, allowing safe replay. They must
 only be acknowledged by a future consumer that verifies the deployed read-model version.
 
+## Canonical Content Cycle Rollback
+
+1. Disable the scheduled `Update News` workflow before changing code or public data.
+2. Record the failed run ID, checkpoint, publication receipt, and output manifest from the
+   `content-cycle-v2` cache namespace. Do not restore an older cache into a newer pipeline version.
+3. Restore `src/data/latest-news.json`, `src/data/archived-news.json`,
+   `src/data/search-index.json`, `src/data/news-pool.json`,
+   `scripts/state/pipeline-state.json`, and referenced `public/generated` files from one known-good
+   commit or one matching publication bundle. Never mix files from different run IDs.
+4. Compare the restored archive IDs with Supabase. Re-upsert the known-good archive snapshot or
+   quarantine extra rows before reopening writes; file rollback alone does not undo an external
+   archive upsert.
+5. Deploy the known-good Vercel release or reviewed revert, then verify homepage, article, archive,
+   search, RSS, sitemap, image hashes, and the deployed commit identity.
+6. Start a fresh cache namespace when changing the pipeline schema. Re-enable the scheduler only
+   after a dry run creates a completed receipt whose output manifest verifies byte-for-byte.
+
 ## Validation
 
 After rollback, verify the production commit/deployment ID, homepage, one article, RSS, sitemap,

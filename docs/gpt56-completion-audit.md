@@ -5,8 +5,8 @@ Updated: 2026-07-12
 ## Verdict
 
 The branch is suitable for human preview review and is deployable with operational follow-up.
-It is not eligible for a claim of full goal completion because the isolated editorial phases,
-managed preview CMS persistence, and independently labeled content benchmarks remain incomplete.
+It is not eligible for a claim of full goal completion because managed preview CMS persistence
+and independently labeled content benchmarks remain incomplete.
 Production promotion is outside this approval state.
 
 ## Acceptance Matrix
@@ -14,20 +14,20 @@ Production promotion is outside this approval state.
 | Area | Result | Evidence or remaining condition |
 | --- | --- | --- |
 | Canonical contracts and registry | PASS | Contracts, registry, lifecycle, transition records, and provider tests exist under `src/core/`. |
-| One active production engine | PARTIAL | `content:cycle --production` is the guarded entry point, but it still delegates to `scripts/pipeline.mjs`; isolated phase commands intentionally fail closed pending migration. |
+| One active production engine | PASS | All seven phase commands and `content:cycle --production` use one registry/composition/checkpoint path; `scripts/pipeline.mjs` is a thin compatibility alias. |
 | Legacy engines disabled or removed | PARTIAL | Legacy inventory and wrappers are documented and production entry points are constrained; not every legacy implementation is deleted. |
 | Provider extensibility | PASS | Registry and plugin contracts allow provider registration without source-specific orchestrator imports. |
 | Public operational pages removed | PASS | Five retired URLs return 404; navigation, feeds, sitemap, and schema audits pass. |
 | Source attribution and public copy | PASS | Attribution remains visible; public process language and repeated banned formulas are gated. |
-| Content routing and safe downgrade | PASS | Source Signal downgrade and no deterministic longform fallback are covered by tests. |
+| Content routing and safe downgrade | PASS | Extraction-only evidence is frozen before generation; strict schemas reject partial output; failed extraction removes stale longform; Source Signal downgrade has no deterministic longform fallback. |
 | 150 relevance / 40 writing labels | BLOCKED | Machine fixtures exist, but independent human labels were not supplied; precision, recall, and sub-5% FPR are not claimed. |
 | Three design options | PASS | All routes, representative data, desktop/mobile artifacts, comparison, and winner scoring exist. |
 | Selected responsive design | PASS | Midnight Intelligence is promoted; preview browser QA reports no overflow, overlays, console errors, broken images, or placeholder labels. |
 | Secure admin implementation | PASS | Auth, CSRF, roles, revisions, audit, media, CRUD services, and fail-closed APIs are covered locally. |
 | Managed CMS persistence | BLOCKED | Preview Postgres, Blob, and admin credentials are absent; live migration, upload, restart, and rebuild-trigger receipts cannot be produced. |
 | Dependency security | PASS | `npm audit --audit-level=low` reports zero findings on the upgrade branch. |
-| Tests, build, content gate | PASS | Full test suite, Astro check, build, editorial evaluations, and `content:gate` pass. |
-| Preview and rendered QA | PASS | Preview `dpl_9xCSF6wHsFtNwCwV37S8xXYR1tet` from implementation SHA `3f88df4c` is Ready; public/admin route and browser checks pass. |
+| Tests, build, content gate | PASS | Full suite: 480 total, 479 passed, 0 failed, 1 intentional skip. Astro check, 61-page build, public/content/image/admin gates, and dependency audit pass. |
+| Preview and rendered QA | PENDING REFRESH | The prior preview remains Ready, but the canonical cutover needs a new exact-commit preview and rendered verification. |
 | Rollback path | PASS WITH CAVEAT | Tag checkout, clean install, and build passed; rollback baseline retains 18 dependency findings. |
 | Dashboard-only deploy suppression | PASS ON BRANCH | `vercel.json` uses a tested fail-open ignore script for dashboard/pipeline state-only commits; it takes effect only after branch integration. |
 | PR, merge, production smoke | NOT STARTED | Explicit preview approval and push/PR authorization were not given. No production promotion or cache purge was run by this branch. |

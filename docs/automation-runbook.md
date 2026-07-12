@@ -6,7 +6,7 @@ This repo supports a scheduled content cycle, image regeneration, migration dry 
 
 - `npm run content:cycle`: fixture-backed content cycle.
 - `node scripts/schedule-content-cycle.mjs`: scheduler wrapper using `CONTENT_CYCLE_FIXTURE`.
-- `npm run migrate:legacy -- --dry-run`: legacy classification report.
+- `npm run migrate:legacy -- --dry-run`: read-only legacy classification report; apply mode is disabled.
 - `npm run regen:latest100`: latest-100 regeneration report.
 - `npm run generate:missing-images -- --dry-run`: fallback image assignment report.
 - `npm run purge:cache`: cache purge or documented credential skip.

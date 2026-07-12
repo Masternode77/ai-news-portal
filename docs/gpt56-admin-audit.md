@@ -3,10 +3,9 @@
 ## Read-only baseline capability
 
 At the start of the upgrade, the existing code was a useful authenticated editor foundation
-that needed consolidation rather than a parallel replacement. It provided
-not replaced in parallel. It provides signed eight-hour HttpOnly/SameSite cookies,
-scrypt password verification, CSRF tokens for article mutations, GitHub API persistence,
-escaped editor previews, noindex metadata, and admin sitemap exclusions.
+that needed consolidation rather than a parallel replacement. It provided signed eight-hour
+HttpOnly/SameSite cookies, scrypt password verification, CSRF tokens for article mutations,
+GitHub API persistence, escaped editor previews, noindex metadata, and admin sitemap exclusions.
 
 ## Production route status
 

@@ -4,9 +4,9 @@ This document maps the current content generation pipeline.
 
 ## High-Level Flow
 
-1. `.github/workflows/update-news.yml` runs `npm run pipeline` on the 00:05, 08:05, and 16:05 KST schedules, or by manual dispatch.
-2. `scripts/pipeline.mjs` loads existing state and article JSON, fetches or reuses the RSS candidate pool, plans the daily curation set, enriches the current slot, relevance-gates items, quality-gates extracted article pages, merges fresh and existing records, and writes JSON artifacts.
-3. `npm run build` runs `sync:dashboard-data`, `prepare:static-images`, then `astro build`.
+1. `.github/workflows/update-news.yml` runs `npm run content:cycle` on the 00:05, 08:05, and 16:05 KST schedules, or by manual dispatch.
+2. `src/adapters/content-cycle-composition.mjs` registers seven phase providers and runs them through the resumable core orchestrator. `scripts/pipeline.mjs` is only a compatibility alias to this composition.
+3. `npm run build` runs static-image preparation, the configured admin public export, and `astro build`.
 4. The workflow commits refreshed JSON/assets back to `main`; Vercel builds from the pushed repository state.
 
 ## 1. Crawler Sources
@@ -70,15 +70,16 @@ Generated article repetition is scored in `scripts/lib/repetition-detector.mjs` 
 
 ## 3. Article Summarization Prompts
 
-The article summary/enrichment prompt lives in `scripts/lib/content.mjs` inside `enrichContent()`.
+The canonical flow separates source work from generated metadata in `scripts/lib/content.mjs`:
+`extractContentSource()` records extraction evidence, `classifyExtractedContent()` performs
+deterministic relevance/taxonomy work, and `generateEditorialMetadata()` requests only public
+summary, insight, tags, and an image prompt after the item is an editorial candidate.
 
 The system prompt positions the model as a veteran editor covering data centers, hyperscalers, cloud infrastructure, semiconductors, power markets, and AI deployment. It requires strict JSON with:
 
 - `summary`
 - `insight`
-- `category`
 - `tags`
-- `region`
 - `imagePrompt`
 
 Prompt constraints:
@@ -86,18 +87,14 @@ Prompt constraints:
 - `summary`: 1-2 sentences, 180 characters max, crisp and factual.
 - `insight`: up to 2 sentences, focused on operators, investors, and capacity planners.
 - Avoid phrases such as `Expert lens`, `This signal matters`, `strategic significance`, and `read-through`.
-- `category` must be one of the configured categories.
 - `tags` must be up to six concise lowercase tags.
-- `region` should be a short market label.
 - `imagePrompt` should describe a premium 16:9 editorial image with no logos or text.
 - Do not invent facts or numbers unsupported by source text.
 
-If OpenRouter is unavailable or returns invalid JSON, deterministic fallbacks are used:
-
-- `fallbackSummary()` truncates article text, snippet, or title.
-- `fallbackInsight()` infers a practical market theme from keywords.
-- `fallbackImagePrompt()` builds a generic editorial image prompt.
-- `normalizeAiPayload()` validates model output and falls back field-by-field.
+If OpenRouter is unavailable or returns invalid JSON, generation returns a typed failure.
+The canonical generate/review path downgrades the item to a source-linked signal; it does not
+publish a deterministic insight or local long-form article. Source-grounded card text and the
+image prompt baseline remain available for the signal route.
 
 OpenRouter wiring is in `scripts/lib/openrouter.mjs`, with `OPENROUTER_MODEL` defaulting to `openai/gpt-5.3-codex`.
 
@@ -144,7 +141,11 @@ Key prompt rules:
 
 `EDITORIAL_HUMANIZER_PROMPT` requires a natural newsroom voice, fact preservation, no invented numbers/quotes/motives, avoidance of consulting-memo phrasing, varied sentence length, concrete nouns, and no mention of humanization or AI detection.
 
-If model output is missing or too templated, `fallbackExpertLensFull()` and `blueprintFallbackBody()` generate deterministic article body, executive summary, headline options, and meta description from available article fields while preserving the selected blueprint.
+The canonical path calls `attachExpertLensStrict()`, clears any persisted legacy lens, and requires
+a fresh response that passes body length, blueprint structure, expert-insight use, template, and
+banned-phrase checks. Missing or invalid output returns a typed generation failure and becomes a
+Source Signal. Legacy fallback helpers remain compatibility internals and are not reachable from
+the production composition.
 
 ## 5. Taxonomy and Tag Assignment Logic
 
@@ -168,11 +169,9 @@ Deterministic assignment:
 - The legacy `category` field is retained as a compatibility alias for `primary_category`.
 - `buildFallbackTags()` still maps keyword groups to tags such as `gpu`, `cloud`, `power`, `cooling`, `semiconductor`, `policy`, `colocation`, and `financing`.
 
-LLM assignment:
-
-- `enrichContent()` asks the model for taxonomy fields, tags, and region.
-- `classifyTaxonomy()` validates model taxonomy labels against allowed primary categories, infrastructure layers, and article types; invalid labels fall back to deterministic taxonomy.
-- Tags are combined with fallback tags, deduped, and capped at six.
+Generated metadata cannot override the deterministic relevance route or taxonomy. The model may
+suggest summary, insight, tags, and image prompt only after classification; tags are normalized,
+deduplicated, and capped at six.
 
 Infrastructure relevance classification:
 
@@ -186,10 +185,10 @@ Expert insight extraction:
 
 - `scripts/lib/expert-insight-engine.mjs` extracts structured decision fields from each enriched source article before long-form memo generation.
 - Extracted fields are `concrete_facts`, `named_companies`, `infrastructure_layer`, `bottleneck_type`, `who_gains_leverage`, `who_takes_execution_risk`, `timing_dependency`, `counterargument`, and `next_observable_signal`.
-- `enrichContent()` persists these fields as `expert_insight`, `expertInsight`, and top-level compatibility fields on the article record.
+- `classifyExtractedContent()` persists these fields as `expert_insight`, `expertInsight`, and top-level compatibility fields on the article record.
 - `splitByExpertInsightGate()` blocks long-form memo generation when required fields are empty. Blocked items are converted into source/signal cards with `expertInsightBlocked`, `expertInsightBlockReason`, and missing-field metadata.
 - `generateExpertLensFull()` includes the extracted insight fields in the prompt and refuses long-form generation if the fields are incomplete.
-- The deterministic fallback body path also starts from the extracted facts, companies, bottleneck, leverage, execution risk, timing dependency, counterargument, and next observable signal so offline generation cannot fall back to generic infrastructure analysis.
+- Missing required insight fields block strict long-form generation and retain only the source signal route.
 
 ## 6. Homepage Feed Generation
 
@@ -231,41 +230,43 @@ Archive management is in `scripts/lib/archive-store.mjs`.
 - Writes `src/data/search-index.json` as merged latest-searchable plus archive.
 - Optionally upserts overflow archive records into Supabase.
 
-`src/data/latest-news.json` is written by `scripts/pipeline.mjs` after `syncArchiveArtifacts()` returns the current latest set.
+`src/data/latest-news.json` is written only by the canonical publish provider after `syncArchiveArtifacts()` returns the current latest set.
 
 ## 8. Publish/Deploy Hooks
 
 Scheduled publish path:
 
 - `.github/workflows/update-news.yml` schedules the full news pipeline at 00:05, 08:05, and 16:05 KST.
-- It runs `npm run check`, `npm run pipeline`, `npm run sync:dashboard-data`, and `npm run build`.
+- It restores the versioned content-cycle cache, runs `npm run check`, `npm run content:cycle`,
+  saves the cache even on failure, and then runs `npm run build`.
 - It commits and pushes changes to `main` for:
   - `src/data/latest-news.json`
   - `src/data/archived-news.json`
   - `src/data/search-index.json`
   - `src/data/news-pool.json`
   - `scripts/state/pipeline-state.json`
-  - `public/dashboard-data.json`
   - `public/generated`
-- Commit message: `chore: refresh news surface, archive, and dashboard [skip ci]`.
+- Content changes use `chore: refresh news surface and archive`. A state-only fallback uses
+  `chore: refresh dashboard state [skip ci]`; the workflow no longer runs a dashboard sync.
 
 Build/deploy path:
 
 - `vercel.json` declares Astro, `npm run build`, and output directory `dist`.
 - Vercel deploys from repository pushes.
-- `package.json` build script runs `sync:dashboard-data`, `prepare:static-images`, and `astro build`.
+- `package.json` build script runs `prepare:static-images`, conditionally exports the configured
+  admin public read model, runs `astro build`, and prunes unreachable generated images from `dist`.
 - `prepare-static-images` may refresh missing local generated images in latest/archive JSON before the Astro build.
 
 Admin edit publish path:
 
-- `api/admin/article.js` exposes authenticated GET/POST article editing.
-- `api/admin/_github.js` reads/writes `src/data/latest-news.json`, `src/data/archived-news.json`, and `src/data/search-index.json` through the GitHub Contents/Git API.
-- Saving an edit commits to the configured branch (`GITHUB_BRANCH`, default `main`), which lets Vercel rebuild after GitHub receives the commit.
+- `api/admin/article.js` exposes authenticated read and mutation actions through
+  `src/admin/admin-cms-service.mjs`.
+- `api/admin/_storage.js` selects the admin storage adapter. Production requires configured
+  Postgres; local/test storage is isolated and cannot silently become the production CMS.
+- Publish mutations create durable revisions, audit records, and publication-outbox state.
+  A configured build exports eligible CMS records with `export-admin-public-read-model.mjs`.
 
-Dashboard-only path:
-
-- `.github/workflows/update-news.yml` also runs a separate dashboard sync every 15 minutes, committing only `public/dashboard-data.json`.
-- This is adjacent to the content pipeline but does not generate article content.
+There is no dashboard-only scheduled job in `.github/workflows/update-news.yml`.
 
 ## 9. Article Tables and JSON Stores
 
@@ -276,7 +277,8 @@ JSON stores:
 - `src/data/archived-news.json`: overflow, archive-only, and prior articles enriched for archive/search.
 - `src/data/search-index.json`: merged latest + archive records with `searchText` for client-side search.
 - `scripts/state/pipeline-state.json`: pipeline state containing published IDs, day plans, slot publication markers, run history, last run time, extraction gate details, and infrastructure relevance routing details.
-- `public/dashboard-data.json`: dashboard runtime data generated by `scripts/sync-dashboard-data.cjs`; not an article store.
+- `public/dashboard-data.json`: retained dashboard data, not an article store and not updated by
+  the canonical scheduled content workflow.
 - `src/data/cron-registry-snapshot-latest.json`: dashboard input snapshot; not an article store.
 
 Database table:
@@ -284,6 +286,8 @@ Database table:
 - Optional Supabase table configured by `SUPABASE_ARCHIVE_TABLE`, default `archived_articles`.
 - Upserted columns include `id`, `slug`, `title`, `url`, `source`, `published_at`, `summary`, `expert_lens`, `expert_lens_full`, `category`, `region`, `generated_image`, `tags`, `article_text`, and `archived_at`.
 - Supabase writes are skipped when `SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY`, or article rows are missing.
+- The Supabase mirror is explicitly best-effort and non-authoritative; its status is recorded in
+  the publication result, while checked-in JSON remains the Astro read path and rollback source.
 
 ## Notes and Observed Boundaries
 
@@ -291,5 +295,5 @@ Database table:
 - Article detail pages are generated from checked-in JSON, not from Supabase.
 - Low-quality extraction does not remove an item from the signal surface; it blocks the local article detail page and points the item to the original source URL.
 - Low infrastructure relevance does remove an item from the homepage surface; it is archived unless a manual approval flag overrides homepage suppression.
-- `scripts/update-news.js` is only a compatibility alias that imports `scripts/pipeline.mjs`.
+- `scripts/pipeline.mjs` is a compatibility alias to `runCanonicalContentCommand('cycle')`.
 - The README still mentions an older "Latest-3 Korean Expert Lens" description, but current code attaches Expert Lens to focused newly publishable visible articles during pipeline runs and hydrates existing visible articles when needed.

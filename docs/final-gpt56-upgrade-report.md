@@ -7,8 +7,8 @@ Updated: 2026-07-12
 The Compute Current upgrade is **deployable with operational follow-up** and ready for human
 preview approval. The public publication, canonical editorial foundation, secure CMS integration,
 design prototypes, tests, preview packaging, and rollback controls are implemented and verified.
-Full goal completion is not claimed: isolated editorial phases, managed preview persistence, and
-human-labeled content benchmarks remain open. This branch did not promote production and used no
+Full goal completion is not claimed: managed preview persistence and human-labeled content
+benchmarks remain open. This branch did not promote production and used no
 production secret or cache purge; the connected `main` branch did deploy independently during QA.
 
 ## Release Identity
@@ -20,9 +20,9 @@ production secret or cache purge; the connected `main` branch did deploy indepen
 | Baseline production SHA | `19089b66627be58d5066376902ff382d2a018137` |
 | Merged `origin/main` SHA | `f8bc10a220a6b910e703375d337dcd3f40ea0467` |
 | Rollback tag | `backup/pre-gpt56-upgrade-20260711T091118Z` |
-| Verified implementation SHA | `3f88df4c93f2b55c75dc8a3172e4f6834bc5858a` |
-| Preview deployment | `dpl_9xCSF6wHsFtNwCwV37S8xXYR1tet` |
-| Preview URL | `https://ai-news-portal-kn646hbhp-masternode77s-projects.vercel.app` |
+| Verified implementation SHA | Pending final canonical-cutover commit |
+| Preview deployment | Pending exact-commit canonical-cutover preview |
+| Preview URL | Pending exact-commit canonical-cutover preview |
 | Latest observed production | `dpl_9cRkkosCcwjY6fV3EvLT7DM36bTV` (external `main` automation, not this branch) |
 
 ## Delivered Platform
@@ -37,9 +37,14 @@ production secret or cache purge; the connected `main` branch did deploy indepen
   bottleneck-axis diversity, and explicit image provenance handling.
 - Added the twelve requested repo-local skills and the optional reviewed
   `compute-current-editorial-os` plugin bundle with validator-tested mirrored skills.
-- Added the canonical npm command namespace. Isolated phases fail closed until their legacy
-  implementations are fully migrated; `content:cycle` rejects all arguments except the explicit
-  `--production` boundary.
+- Added a single production composition with seven registered providers, durable checkpoint
+  replay/resume, a validated transition journal, cross-runner publication receipts, SHA-256 output
+  recovery bundles, functional isolated phase commands, and an explicit `--production` boundary
+  for the full cycle. The former 532-line `pipeline.mjs` is now only a compatibility alias.
+- Publication replay now verifies the active run ID, pipeline version, and output-manifest run ID
+  before reusing a receipt; stale or incomplete receipts fail closed.
+- Extraction-only evidence facts are exact source sentences, generated summaries cannot validate
+  themselves, and legacy migration commands are read-only diagnostics that reject `--apply`.
 - Removed public operational/dashboard routes and unified homepage, archive, search, article,
   RSS, sitemap, category, company, and region surfaces on one public inventory.
 
@@ -98,13 +103,13 @@ three prototypes remain noindex and are not production routes.
 | --- | --- |
 | Clean install | `npm ci` passed |
 | Dependency security | `npm audit --audit-level=low`: 0 vulnerabilities |
-| Full tests | 440 total, 439 passed, 0 failed, 1 intentional skip |
+| Full tests | 480 total, 479 passed, 0 failed, 1 intentional skip |
 | Editorial scripts | quality, relevance, taxonomy, repetition passed |
 | Astro check | 0 errors, 0 warnings, 11 existing type hints |
 | Build | 61 pages; 85 images retained; 4,097 pruned |
 | Content gate | passed all public, copy, image, feed, and admin exclusion audits |
 | QA/QC | deployable with operational follow-up |
-| Code review | APPROVE; 0 actionable P0-P3 findings |
+| Code review | Initial review approved; architecture findings fixed and regression-verified. Fresh independent reruns were unavailable after the agent quota was exhausted. |
 | Preview public routes | homepage, archive, search, and representative article returned 200 |
 | Removed public routes | 5/5 returned 404 |
 | Preview admin pretty routes | 3/3 returned 200 with private/no-store caching |
@@ -138,9 +143,7 @@ remains outside release inputs.
    claiming precision, recall, or a sub-5% false-positive rate.
 3. Configure OAuth/2FA if required, plus Vercel Firewall, managed database backups, least-privilege
    credentials, monitoring, and secret rotation.
-4. Complete the isolated ingest/extract/classify/cluster/generate/review/publish migration before
-   claiming a single fully migrated engine; current phase commands intentionally fail closed.
-5. Review the preview screenshots and selected design. Only then push and promote using the
+4. Review the preview screenshots and selected design. Only then push and promote using the
    release runbook. Cache purge remains explicitly excluded.
 
 ## Rollback and Recommendation

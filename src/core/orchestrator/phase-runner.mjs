@@ -1,16 +1,8 @@
 import { createHash } from 'node:crypto';
 import { assertLegalTransition } from '../state/lifecycle.mjs';
+import { CONTENT_CYCLE_PHASES } from './content-cycle-phases.mjs';
 
-export const ORCHESTRATOR_PHASES = Object.freeze([
-  'ingest',
-  'extract',
-  'classify',
-  'cluster',
-  'generate',
-  'review',
-  'publish',
-  'read-model',
-]);
+export const ORCHESTRATOR_PHASES = CONTENT_CYCLE_PHASES;
 
 const PHASE_SET = new Set(ORCHESTRATOR_PHASES);
 const RESERVED_OPERATIONS = new Set(['constructor', 'prototype', '__proto__']);

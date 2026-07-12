@@ -1,8 +1,8 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { ARCHIVE_NEWS_PATH, LATEST_NEWS_PATH, SEARCH_INDEX_PATH, TAXONOMY_PAGES_PATH } from './lib/constants.mjs';
-import { readJsonFile, writeJsonFile } from './lib/state-store.mjs';
+import { ARCHIVE_NEWS_PATH, LATEST_NEWS_PATH } from './lib/constants.mjs';
+import { readJsonFile } from './lib/state-store.mjs';
 import { applyLegacyMigrationPlan, buildLegacyMigrationPlan, LEGACY_MIGRATION_ACTIONS } from './lib/legacy-migration.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
@@ -76,24 +76,13 @@ async function writeReport(plan, applied, mode) {
   await fs.writeFile(ROLLBACK_PATH, `${JSON.stringify(applied.rollback || [], null, 2)}\n`, 'utf8');
 }
 
-async function applyWrites(applied = {}) {
-  const latest = applied.updatedArticles.slice(0, 50);
-  const archived = applied.updatedArticles.slice(50);
-  await writeJsonFile(LATEST_NEWS_PATH, latest);
-  await writeJsonFile(ARCHIVE_NEWS_PATH, archived);
-  await writeJsonFile(SEARCH_INDEX_PATH, applied.searchIndex);
-  await writeJsonFile(TAXONOMY_PAGES_PATH, {
-    generatedAt: new Date().toISOString(),
-    ...applied.taxonomyPages,
-  });
+if (arg('--apply')) {
+  throw new Error('legacy migration apply mode is disabled; use the canonical content lifecycle');
 }
-
-const dryRun = arg('--dry-run') || !arg('--apply');
 const all = await loadArticles();
 const plan = buildLegacyMigrationPlan(all, { auditLimit: 200, regenerationLimit: 100 });
 const applied = applyLegacyMigrationPlan(plan);
-await writeReport(plan, applied, dryRun ? 'dry-run' : 'apply');
-if (!dryRun) await applyWrites(applied);
+await writeReport(plan, applied, 'diagnostic');
 
-console.log(`legacy migration ${dryRun ? 'dry run' : 'applied'}: ${JSON.stringify(plan.counts)}`);
+console.log(`legacy migration diagnostic: ${JSON.stringify(plan.counts)}`);
 console.log(`report: ${REPORT_PATH}`);

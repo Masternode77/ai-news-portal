@@ -2,7 +2,7 @@
 
 ## Current branch
 - `upgrade/gpt-5-6-sol`, merged with `origin/main` SHA `f8bc10a2`.
-- Verified implementation SHA: `3f88df4c`.
+- Last previewed implementation SHA: `3f88df4c`; the current cutover is not yet previewed.
 - Rollback tag: `backup/pre-gpt56-upgrade-20260711T091118Z`.
 - No push or production promotion has been performed.
 
@@ -14,9 +14,13 @@
 - Verified public/admin routes and lazy-loaded images on the final preview.
 - Added a tested Vercel ignored-build rule for dashboard/pipeline state-only commits.
 - Observed external `main` automation advance production; this branch did not promote it.
+- Migrated all seven production content phases to one registry-driven resumable orchestrator.
+- Reduced `scripts/pipeline.mjs` to a compatibility alias and removed deterministic outage longform.
+- Added extraction-only evidence freezing, strict model-output schemas, lifecycle replay validation,
+  fail-closed stale-longform removal, and cross-runner publication output bundles.
 
 ## Changed files
-- Architecture/editorial: `src/core/`, `scripts/lib/`, workflow entry points.
+- Architecture/editorial: `src/core/`, `src/adapters/`, `src/plugins/content/`, `scripts/lib/`, CLI entry points.
 - Admin/storage: `api/admin/`, `src/admin/`, `src/plugins/storage/`, `migrations/`.
 - Public product: public routes/components/styles, RSS, sitemap, search, taxonomy.
 - Release/security: `package.json`, lockfile, `vercel.json`, runbooks and audits.
@@ -24,13 +28,16 @@
 - Final receipts: `docs/final-gpt56-upgrade-report.md`, visual/performance reports.
 
 ## Validation results
-- `npm test`: 440 total, 439 passed, 0 failed, 1 intentional skip.
+- Current `npm test`: 480 total, 479 passed, 0 failed, 1 intentional skip.
+- Latest receipt, evidence, migration, and fidelity regression suite: 54 passed, 0 failed.
 - Quality, relevance, taxonomy, and repetition scripts: passed.
 - `npm run check`: 0 errors, 0 warnings, 11 existing type hints.
 - `npm audit --audit-level=low`: 0 vulnerabilities; baseline was 18.
 - `npm run build`: 61 pages; 85 generated assets retained, 4,097 pruned.
 - `npm run content:gate`: passed all public/content/image/admin gates.
-- Independent code review: APPROVE, 0 actionable P0-P3 findings.
+- Initial code review approved the image/receipt changes. Architecture review then found three
+  trust-boundary defects; all are fixed and regression-covered. Two fresh independent reruns could
+  not start because the agent quota was exhausted, so final closure used full-suite and negative probes.
 - Preview public routes: 4/4 returned 200; retired routes: 5/5 returned 404.
 - Admin pretty routes: 3/3 returned 200 with private/no-store caching.
 - Admin APIs without preview credentials: intended generic 503, no-store, noindex.
@@ -45,9 +52,7 @@
 - Independent 150-item relevance and 40-sample writing labels require human review.
 - OAuth/2FA, firewall, backups, monitoring, and secret rotation are operational follow-up.
 - Production promotion requires explicit preview approval.
-- Isolated content phases remain fail-closed pending full migration from `scripts/pipeline.mjs`.
 
 ## Exact next step
-- Present the exact preview/screenshots and await explicit preview approval.
-- After approval, push and follow the production runbook in a separately authorized step.
-- Keep cache purge excluded.
+- Create the Lore commit, then deploy and verify a new exact-commit preview for the canonical cutover.
+- Keep push, production promotion, production secrets, and cache purge excluded pending explicit approval.

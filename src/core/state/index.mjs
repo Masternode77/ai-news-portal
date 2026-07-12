@@ -9,3 +9,15 @@ export {
 } from './lifecycle.mjs';
 export { createTransitionRecord, TransitionRecordError, validateTransitionRecord } from './transition-record.mjs';
 export { InMemoryStateStorage, InMemoryStorageError } from './in-memory-state-storage.mjs';
+export {
+  FileCycleCheckpointError,
+  FileCycleCheckpointStore,
+} from './file-cycle-checkpoint-store.mjs';
+export {
+  FilePublicationReceiptError,
+  FilePublicationReceiptStore,
+} from './file-publication-receipt-store.mjs';
+export {
+  FilePublicationOutputBundleError,
+  FilePublicationOutputBundleStore,
+} from './file-publication-output-bundle-store.mjs';

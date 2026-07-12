@@ -1,0 +1,552 @@
+import assert from 'node:assert/strict';
+import test from 'node:test';
+import {
+  beginProductionPublication,
+  buildProductionPublishAccounting,
+  completeProductionPublication,
+  productionPublicationReceipt,
+  runProductionClassify,
+  runProductionCluster,
+  runProductionGenerate,
+  runProductionReview,
+  runProductionPublish,
+} from '../scripts/lib/production-content-phases.mjs';
+import { publicSurfaceDecision } from '../scripts/lib/public-surface-eligibility.mjs';
+import { buildEvidencePack, buildSourceEvidencePack } from '../scripts/lib/evidence-pack-builder.mjs';
+import {
+  CURATED_ARTICLE_ID,
+  repairPublicLongformRecord,
+} from '../scripts/repair-public-longform-inventory.mjs';
+
+function sourceText(minimumLength) {
+  const sentences = [
+    'The utility approved a new interconnection plan for an AI data center campus in Virginia.',
+    'The first phase covers 120 megawatts and depends on transformer delivery before energization.',
+    'The developer said construction is underway while the cloud tenant completes network design.',
+    'The filing identifies substation work, cooling equipment, and commissioning as separate milestones.',
+    'The disclosed schedule does not establish when every planned building will enter service.',
+  ];
+  let text = '';
+  let index = 0;
+  while (text.length < minimumLength) {
+    text += `${sentences[index % sentences.length]} `;
+    index += 1;
+  }
+  return text.trim();
+}
+
+function extractedArticle({ id, length, score = 0.94 }) {
+  const articleText = sourceText(length);
+  return {
+    id,
+    title: 'Utility clears 120 MW interconnection plan for Virginia AI campus',
+    source: 'Test Wire',
+    url: `https://example.com/${id}`,
+    sourceUrl: `https://example.com/${id}`,
+    snippet: 'The project depends on transformer delivery and substation commissioning.',
+    publishedAt: '2026-07-12T00:00:00.000Z',
+    articleText,
+    content_length: articleText.length,
+    extraction_quality_score: score,
+    extraction_qa: { extraction_quality_score: score },
+  };
+}
+
+function curatedLongformInput() {
+  return {
+    ...extractedArticle({ id: CURATED_ARTICLE_ID, length: 1_300 }),
+    title: 'A contracted campus still has to reach energization',
+    source: 'Infrastructure Filing',
+    sourceUrl: 'https://example.com/campus',
+    public_content_tier: 'longform_analysis',
+    public_status: 'published',
+    articlePagePublished: true,
+    homepagePublished: true,
+    archiveOnly: false,
+    signalCardOnly: false,
+    noindex: false,
+    seo_noindex: false,
+    infrastructure_relevance_score: 0.9,
+    infrastructure_relevance_action: 'generate_full_memo',
+    infrastructureRelevanceAction: 'generate_full_memo',
+    infrastructure_relevance: {
+      infrastructure_relevance_tier: 'full_memo',
+      infrastructure_relevance_action: 'generate_full_memo',
+      infrastructureRelevanceAction: 'generate_full_memo',
+      articlePagePublished: true,
+      homepagePublished: true,
+      archiveOnly: false,
+    },
+    expertLensFull: { finalArticleBody: 'A short body cannot support a public analysis page.' },
+    public_routing: { visibility: 'core' },
+  };
+}
+
+function outputManifest(runId) {
+  return { schemaVersion: 1, runId, files: [] };
+}
+
+test('classify uses the canonical fail-closed public extraction boundary', async () => {
+  const clean = extractedArticle({ id: 'clean', length: 700 });
+  const thin = extractedArticle({ id: 'thin', length: 220 });
+  const result = await runProductionClassify({ extracted: [clean, thin] });
+
+  assert.equal(result.ok, true);
+  assert.deepEqual(result.value.cleanSources.map(({ id }) => id), ['clean']);
+  assert.deepEqual(result.value.classificationRejected.map(({ id }) => id), ['thin']);
+  assert.match(result.value.classificationRejected[0].extractionBlockReasons.join(' '), /below_500/);
+  assert.deepEqual(
+    result.transitions.map(({ articleId, toState }) => [articleId, toState]),
+    [['clean', 'clean_source'], ['thin', 'extraction_failed']],
+  );
+});
+
+test('cluster downgrades clean but insufficient evidence to a source signal', async () => {
+  const article = {
+    ...extractedArticle({ id: 'source-only', length: 700 }),
+    infrastructure_relevance: {
+      infrastructure_relevance_score: 0.91,
+      infrastructure_relevance_tier: 'full_memo',
+      infrastructure_relevance_action: 'generate_full_memo',
+      infrastructure_relevance_reasons: ['power_grid_relevance:0.91'],
+    },
+  };
+  const result = await runProductionCluster({ cleanSources: [article] });
+
+  assert.equal(result.value.editorialCandidates.length, 0);
+  assert.deepEqual(result.value.signalCards.map(({ id }) => id), ['source-only']);
+  assert.equal(result.value.signalCards[0].signalCardReason, 'source_evidence_insufficient_for_longform');
+  assert.deepEqual(result.transitions.map(({ toState }) => toState), ['source_signal']);
+});
+
+test('review downgrade removes an unapproved draft from the public read-model payload', async () => {
+  const failed = {
+    ...extractedArticle({ id: 'failed-draft', length: 1_300 }),
+    summary: 'Unreviewed generated summary.',
+    insight: 'Unreviewed generated implication.',
+    expertLensShort: 'Unreviewed generated lens.',
+    expertLensFull: { finalArticleBody: 'Unsupported draft body.' },
+    signalCardReason: 'editorial_service_unavailable',
+  };
+  const result = await runProductionReview({ generationFailed: [failed] });
+  const signal = result.value.finalSignalCards[0];
+
+  assert.equal(signal.articlePagePublished, false);
+  assert.equal(signal.summary, failed.snippet);
+  assert.equal(signal.insight, '');
+  assert.equal(signal.expertLensShort, '');
+  assert.equal(signal.expertLensFull, null);
+  assert.deepEqual(result.transitions.map(({ toState }) => toState), ['review_failed', 'source_signal']);
+});
+
+test('review reuses generation evidence and persists every public eligibility gate', async () => {
+  const article = repairPublicLongformRecord(curatedLongformInput());
+  const generatedBody = article.expertLensFull.finalArticleBody
+    .replace('What 430 MW Has To Support', 'Capacity Conditions')
+    .replace('The Mid-2027 Delivery Test', 'Delivery Schedule');
+  article.articleText = generatedBody;
+  article.cleaned_source_text = generatedBody;
+  article.extraction_quality_score = 0.94;
+  article.extraction_qa = { extraction_quality_score: 0.94 };
+  article.infrastructure_relevance_score = 0.94;
+  const evidencePack = buildSourceEvidencePack(article);
+  const sourceFact = evidencePack.facts[3];
+  article.summary = sourceFact;
+  article.deck = sourceFact;
+  article.why_it_matters = sourceFact;
+  article.snippet = sourceFact;
+  article.expertLensFull = {
+    ...article.expertLensFull,
+    finalArticleBody: generatedBody,
+    metaDescription: sourceFact,
+  };
+  article.public_presentation = {
+    ...article.public_presentation,
+    deck: sourceFact,
+    why_it_matters: sourceFact,
+  };
+  article.evidence_pack = evidencePack;
+  for (const field of ['source_fidelity', 'claim_fidelity', 'seo_fidelity']) delete article[field];
+
+  const result = await runProductionReview({
+    generatedDrafts: [article],
+    existingLatest: [],
+    existingArchive: [],
+  });
+  const reviewed = result.value.reviewPassed[0];
+
+  assert.ok(reviewed);
+  assert.equal(reviewed.source_fidelity.ok, true);
+  assert.equal(reviewed.claim_fidelity.ok, true);
+  assert.deepEqual(reviewed.claim_fidelity.unsupportedClaims, []);
+  assert.equal(reviewed.seo_fidelity.ok, true);
+  assert.equal(publicSurfaceDecision(reviewed).detailPage, true);
+  assert.deepEqual(result.transitions.map(({ toState }) => toState), ['publish_ready']);
+});
+
+test('generated summary cannot enter extraction evidence or self-validate unsupported claims', async () => {
+  const article = extractedArticle({ id: 'circular-evidence', length: 1_300 });
+  article.summary = 'The company guaranteed 999 GW of capacity on Mars.';
+  const evidencePack = buildSourceEvidencePack(article);
+  assert.doesNotMatch(evidencePack.evidenceText, /999 GW|Mars/i);
+  assert.doesNotMatch(evidencePack.facts.join(' '), /999 GW|Mars/i);
+  for (const fact of evidencePack.facts) {
+    assert.ok(
+      evidencePack.evidenceText.toLowerCase().includes(fact.toLowerCase()),
+      `extraction fact must be an exact source sentence: ${fact}`,
+    );
+  }
+
+  const result = await runProductionReview({
+    generatedDrafts: [{
+      ...article,
+      evidence_pack: evidencePack,
+      expertLensFull: {
+        finalArticleBody: 'The company guaranteed 999 GW of capacity on Mars.',
+        metaDescription: 'The company guaranteed 999 GW of capacity on Mars.',
+      },
+    }],
+  });
+  assert.equal(result.value.reviewPassed.length, 0);
+  assert.equal(result.value.reviewFailed.length, 1);
+  assert.match(result.value.reviewFailed[0].signalCardReason, /source_fidelity_failed/);
+});
+
+test('extraction evidence does not invent a default source title', () => {
+  const article = extractedArticle({ id: 'missing-title', length: 1_300 });
+  delete article.title;
+  const evidencePack = buildSourceEvidencePack(article);
+
+  assert.doesNotMatch(evidencePack.evidenceText, /Untitled item/i);
+  assert.doesNotMatch(evidencePack.facts.join(' '), /Untitled item/i);
+});
+
+test('generate fails the phase on unexpected implementation errors instead of masking them', async () => {
+  const source = extractedArticle({ id: 'broken-generator', length: 1_300 });
+  const broken = { ...source };
+  Object.defineProperty(broken, 'evidence_pack', {
+    get() { throw new TypeError('unexpected evidence access failure'); },
+  });
+
+  await assert.rejects(
+    () => runProductionGenerate({ editorialCandidates: [broken] }),
+    (error) => error instanceof TypeError && /unexpected evidence access failure/.test(error.message),
+  );
+});
+
+test('publish accounting marks extraction and classification rejects as processed blockers', () => {
+  const extractionFailed = [{ id: 'extract-failed', extractionFailureCode: 'source_extraction_failed' }];
+  const classificationRejected = [{ id: 'classify-failed', qualityGateReason: 'source_extraction_fail_closed' }];
+  const accounting = buildProductionPublishAccounting({ extractionFailed, classificationRejected });
+
+  assert.deepEqual(accounting.publicUpdates, []);
+  assert.deepEqual(accounting.processedItems.map(({ id }) => id), ['extract-failed', 'classify-failed']);
+  assert.deepEqual(accounting.blockedItems.map(({ id }) => id), ['extract-failed', 'classify-failed']);
+});
+
+test('publish removes stale public longform when the same source now fails extraction', async () => {
+  const stale = {
+    id: 'stale-longform',
+    title: 'Stale longform',
+    publishedAt: '2026-07-11T00:00:00.000Z',
+    articlePagePublished: true,
+    homepagePublished: true,
+  };
+  const state = { publishedIds: [], dayPlans: {}, runHistory: [], publicationReceipts: {} };
+  let archiveInput;
+  let latestOutput;
+  await runProductionPublish({
+    now: '2026-07-12T00:00:00.000Z',
+    existingLatest: [stale],
+    existingArchive: [stale],
+    extractionFailed: [{ ...stale, extractionFailureCode: 'source_extraction_failed' }],
+  }, {
+    runId: 'cycle-stale-removal',
+    pipelineVersion: '5.6.0-test',
+  }, {
+    readState: async () => state,
+    writeState: async () => {},
+    backfillImages: async (articles) => articles,
+    syncArchive: async (articles, priorArchive) => {
+      archiveInput = priorArchive;
+      return { latest: articles, supabaseStatus: 'skipped' };
+    },
+    writeJson: async (filePath, value) => {
+      if (filePath.endsWith('latest-news.json')) latestOutput = value;
+    },
+  });
+
+  assert.deepEqual(archiveInput, []);
+  assert.deepEqual(latestOutput, []);
+  assert.deepEqual(state.publishedIds, ['stale-longform']);
+});
+
+test('publication receipts retain retry attempts and a stable completion result', () => {
+  const state = {};
+  beginProductionPublication(state, {
+    runId: 'cycle-1',
+    pipelineVersion: '5.6.0-test',
+    startedAt: '2026-07-12T00:00:00.000Z',
+  });
+  beginProductionPublication(state, {
+    runId: 'cycle-1',
+    pipelineVersion: '5.6.0-test',
+    startedAt: '2026-07-12T00:01:00.000Z',
+  });
+  completeProductionPublication(state, {
+    runId: 'cycle-1',
+    completedAt: '2026-07-12T00:02:00.000Z',
+    result: { latestCount: 12, publishedCount: 1 },
+  });
+
+  assert.deepEqual(productionPublicationReceipt(state, 'cycle-1'), {
+    runId: 'cycle-1',
+    pipelineVersion: '5.6.0-test',
+    status: 'completed',
+    startedAt: '2026-07-12T00:00:00.000Z',
+    attempts: 2,
+    completedAt: '2026-07-12T00:02:00.000Z',
+    result: { latestCount: 12, publishedCount: 1 },
+  });
+});
+
+test('publish replay uses its completion receipt without repeating public writes', async () => {
+  const publication = {
+    latestCount: 12,
+    publishedCount: 1,
+    signalCardCount: 0,
+    archiveOnlyCount: 0,
+    supabaseStatus: 'synced',
+    outputManifest: outputManifest('cycle-replay'),
+  };
+  const state = {
+    publicationReceipts: {
+      'cycle-replay': {
+        runId: 'cycle-replay',
+        pipelineVersion: '5.6.0-test',
+        status: 'completed',
+        result: publication,
+      },
+    },
+  };
+  const unexpected = async () => { throw new Error('public write must not repeat'); };
+  const result = await runProductionPublish({
+    reviewPassed: [{ id: 'published-article' }],
+  }, {
+    runId: 'cycle-replay',
+    pipelineVersion: '5.6.0-test',
+  }, {
+    readState: async () => state,
+    writeState: unexpected,
+    writeJson: unexpected,
+    syncArchive: unexpected,
+    backfillImages: unexpected,
+  });
+
+  assert.deepEqual(result.value.publication, publication);
+  assert.deepEqual(result.transitions.map(({ toState }) => toState), ['published']);
+});
+
+test('publish reconciles durable completion after a fresh runner without repeating public writes', async () => {
+  const publication = {
+    latestCount: 12,
+    publishedCount: 1,
+    signalCardCount: 0,
+    archiveOnlyCount: 0,
+    supabaseStatus: 'synced',
+    outputManifest: outputManifest('cycle-durable-replay'),
+  };
+  const state = { publishedIds: [], dayPlans: {}, runHistory: [], publicationReceipts: {} };
+  const durableState = {
+    publicationReceipts: {
+      'cycle-durable-replay': {
+        runId: 'cycle-durable-replay',
+        pipelineVersion: '5.6.0-test',
+        status: 'completed',
+        startedAt: '2026-07-12T00:00:00.000Z',
+        attempts: 1,
+        completedAt: '2026-07-12T00:01:00.000Z',
+        result: publication,
+      },
+    },
+  };
+  const unexpected = async () => { throw new Error('public write must not repeat'); };
+  let persistedState;
+  const result = await runProductionPublish({
+    now: '2026-07-12T00:02:00.000Z',
+    reviewPassed: [{ id: 'published-article' }],
+  }, {
+    runId: 'cycle-durable-replay',
+    pipelineVersion: '5.6.0-test',
+  }, {
+    receiptStore: {
+      load: async () => durableState,
+      save: unexpected,
+    },
+    readState: async () => state,
+    writeState: async (_path, nextState) => { persistedState = structuredClone(nextState); },
+    writeJson: unexpected,
+    syncArchive: unexpected,
+    backfillImages: unexpected,
+  });
+
+  assert.deepEqual(result.value.publication, publication);
+  assert.equal(persistedState.publicationReceipts['cycle-durable-replay'].status, 'completed');
+  assert.deepEqual(persistedState.publishedIds, ['published-article']);
+  assert.deepEqual(persistedState.runHistory.map(({ runId }) => runId), ['cycle-durable-replay']);
+});
+
+test('publish replay rejects stale pipeline receipts before any public write', async () => {
+  const unexpected = async () => { throw new Error('public write must not run'); };
+  await assert.rejects(
+    () => runProductionPublish({}, {
+      runId: 'cycle-stale-receipt',
+      pipelineVersion: '5.6.1-test',
+    }, {
+      receiptStore: {
+        load: async () => ({
+          publicationReceipts: {
+            'cycle-stale-receipt': {
+              runId: 'cycle-stale-receipt',
+              pipelineVersion: '5.6.0-test',
+              status: 'completed',
+              startedAt: '2026-07-12T00:00:00.000Z',
+              attempts: 1,
+              completedAt: '2026-07-12T00:01:00.000Z',
+              result: {
+                publishedCount: 99,
+                outputManifest: outputManifest('cycle-stale-receipt'),
+              },
+            },
+          },
+        }),
+        save: unexpected,
+      },
+      readState: async () => ({ publicationReceipts: {} }),
+      writeState: unexpected,
+      writeJson: unexpected,
+      syncArchive: unexpected,
+      backfillImages: unexpected,
+    }),
+    /does not match the active content cycle/,
+  );
+});
+
+test('publish replay rejects completed receipts without a matching output manifest', async () => {
+  const unexpected = async () => { throw new Error('public write must not run'); };
+  await assert.rejects(
+    () => runProductionPublish({}, {
+      runId: 'cycle-missing-manifest',
+      pipelineVersion: '5.6.1-test',
+    }, {
+      receiptStore: {
+        load: async () => ({
+          publicationReceipts: {
+            'cycle-missing-manifest': {
+              runId: 'cycle-missing-manifest',
+              pipelineVersion: '5.6.1-test',
+              status: 'completed',
+              startedAt: '2026-07-12T00:00:00.000Z',
+              attempts: 1,
+              completedAt: '2026-07-12T00:01:00.000Z',
+              result: { publishedCount: 1 },
+            },
+          },
+        }),
+        save: unexpected,
+      },
+      readState: async () => ({ publicationReceipts: {} }),
+      writeState: unexpected,
+      writeJson: unexpected,
+      syncArchive: unexpected,
+      backfillImages: unexpected,
+    }),
+    /does not match the active content cycle/,
+  );
+});
+
+test('publish persists a preparing receipt before any public read-model side effect', async () => {
+  const state = { publishedIds: [], dayPlans: {}, runHistory: [], publicationReceipts: {} };
+  const events = [];
+  await runProductionPublish({}, {
+    runId: 'cycle-ordering',
+    pipelineVersion: '5.6.0-test',
+  }, {
+    receiptStore: {
+      load: async () => ({ publicationReceipts: {} }),
+      save: async (nextState) => {
+        events.push(`receipt:${nextState.publicationReceipts['cycle-ordering'].status}`);
+      },
+    },
+    readState: async () => state,
+    writeState: async (_path, nextState) => {
+      events.push(`state:${nextState.publicationReceipts['cycle-ordering'].status}`);
+    },
+    backfillImages: async (articles) => {
+      events.push('images');
+      return articles;
+    },
+    syncArchive: async (articles) => {
+      events.push('archive');
+      return { latest: articles, supabaseStatus: 'skipped' };
+    },
+    writeJson: async () => { events.push('json'); },
+  });
+
+  assert.deepEqual(events, [
+    'receipt:preparing',
+    'state:preparing',
+    'images',
+    'archive',
+    'json',
+    'state:completed',
+    'receipt:completed',
+  ]);
+});
+
+test('publish bundles every refreshed image variant without copying unchanged inventory', async () => {
+  const state = { publishedIds: [], dayPlans: {}, runHistory: [], publicationReceipts: {} };
+  const durableState = { publicationReceipts: {} };
+  let capturedPaths;
+  const result = await runProductionPublish({
+    reviewPassed: [{ id: 'fresh-image', title: 'Fresh image', publishedAt: '2026-07-12T00:00:00.000Z' }],
+  }, {
+    runId: 'cycle-image-bundle',
+    pipelineVersion: '5.6.1-test',
+  }, {
+    receiptStore: {
+      load: async () => durableState,
+      save: async () => {},
+    },
+    outputBundleStore: {
+      capture: async (runId, paths) => {
+        capturedPaths = paths;
+        return { schemaVersion: 1, runId, files: [{ path: paths[0], sha256: 'a'.repeat(64), size: 1 }] };
+      },
+    },
+    readState: async () => state,
+    writeState: async () => {},
+    writeJson: async () => {},
+    backfillImages: async (articles, options) => {
+      assert.equal(options.collectOutputs, true);
+      return {
+        articles,
+        outputPaths: [
+          '/generated/articles/fresh/hero.webp',
+          '/generated/articles/fresh/thumbnail.webp',
+          '/generated/articles/fresh/og.webp',
+          '/generated/fresh.webp',
+        ],
+      };
+    },
+    syncArchive: async (articles) => ({ latest: articles, supabaseStatus: 'skipped' }),
+  });
+
+  assert.deepEqual(capturedPaths.slice(-4), [
+    'public/generated/articles/fresh/hero.webp',
+    'public/generated/articles/fresh/thumbnail.webp',
+    'public/generated/articles/fresh/og.webp',
+    'public/generated/fresh.webp',
+  ]);
+  assert.equal(result.value.publication.outputManifest.runId, 'cycle-image-bundle');
+});

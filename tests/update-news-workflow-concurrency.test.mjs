@@ -29,3 +29,11 @@ test('update-news workflow has one serialized main-writing job', () => {
   assert.doesNotMatch(workflow, /^  dashboard-sync:/m);
   assert.match(extractJobBlock('update-news'), /git push origin HEAD:main/);
 });
+
+test('update-news workflow restores and preserves cycle checkpoints and publication receipts', () => {
+  const job = extractJobBlock('update-news');
+  assert.match(job, /uses: actions\/cache\/restore@v4/);
+  assert.match(job, /path: \.cache\/content-cycle(?:\s|$)/);
+  assert.match(job, /restore-keys:\s*\|[\s\S]*content-cycle-v2-\$\{\{ runner\.os \}\}-\$\{\{ github\.ref_name \}\}-/);
+  assert.match(job, /if: always\(\)[\s\S]*uses: actions\/cache\/save@v4/);
+});

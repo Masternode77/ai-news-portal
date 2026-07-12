@@ -55,7 +55,7 @@ async function setup(run, state = 'discovered', pluginOptions) {
 }
 
 test('phase runner exposes only canonical named phases', () => {
-  assert.deepEqual(ORCHESTRATOR_PHASES, ['ingest', 'extract', 'classify', 'cluster', 'generate', 'review', 'publish', 'read-model']);
+  assert.deepEqual(ORCHESTRATOR_PHASES, ['ingest', 'extract', 'classify', 'cluster', 'generate', 'review', 'publish']);
 });
 
 test('phase runner resolves a provider from the registry and commits its legal transition', async () => {

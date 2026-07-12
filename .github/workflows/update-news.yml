@@ -34,6 +34,14 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Restore canonical content checkpoint
+        uses: actions/cache/restore@v4
+        with:
+          path: .cache/content-cycle
+          key: content-cycle-v2-${{ runner.os }}-${{ github.ref_name }}-${{ github.run_id }}-${{ github.run_attempt }}
+          restore-keys: |
+            content-cycle-v2-${{ runner.os }}-${{ github.ref_name }}-
+
       - name: Validate project
         run: npm run check
 
@@ -49,6 +57,13 @@ jobs:
           SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
           SUPABASE_ARCHIVE_TABLE: ${{ secrets.SUPABASE_ARCHIVE_TABLE }}
         run: npm run content:cycle
+
+      - name: Preserve canonical content checkpoint
+        if: always()
+        uses: actions/cache/save@v4
+        with:
+          path: .cache/content-cycle
+          key: content-cycle-v2-${{ runner.os }}-${{ github.ref_name }}-${{ github.run_id }}-${{ github.run_attempt }}
 
       - name: Validate production build
         run: npm run build

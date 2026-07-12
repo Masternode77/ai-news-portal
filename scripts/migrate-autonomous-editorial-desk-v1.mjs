@@ -1,5 +1,5 @@
-import { readJsonFile, writeJsonFile } from './lib/state-store.mjs';
-import { LATEST_NEWS_PATH, ARCHIVE_NEWS_PATH, SEARCH_INDEX_PATH } from './lib/constants.mjs';
+import { readJsonFile } from './lib/state-store.mjs';
+import { LATEST_NEWS_PATH, ARCHIVE_NEWS_PATH } from './lib/constants.mjs';
 import { AUTONOMOUS_VERSION } from './lib/autonomous-desk-utils.mjs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -34,12 +34,8 @@ export async function migrateAutonomousEditorialDeskV1() {
   ]);
   const latestOut = latest.map(migrateArticle);
   const archivedOut = archived.map(migrateArticle);
-  await Promise.all([
-    writeJsonFile(LATEST_NEWS_PATH, latestOut),
-    writeJsonFile(ARCHIVE_NEWS_PATH, archivedOut),
-    writeJsonFile(SEARCH_INDEX_PATH, [...latestOut, ...archivedOut]),
-  ]);
   return {
+    mode: 'diagnostic',
     migrated_latest: latestOut.length,
     migrated_archived: archivedOut.length,
     stale_marked: [...latestOut, ...archivedOut].filter((article) => article.stale_generation).length,
@@ -47,6 +43,9 @@ export async function migrateAutonomousEditorialDeskV1() {
 }
 
 if (process.argv[1] && fileURLToPath(import.meta.url) === path.resolve(process.argv[1])) {
+  if (process.argv.includes('--apply')) {
+    throw new Error('autonomous desk migration apply mode is disabled; use the canonical content lifecycle');
+  }
   const result = await migrateAutonomousEditorialDeskV1();
   console.log(JSON.stringify(result, null, 2));
 }

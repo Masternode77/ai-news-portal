@@ -6,6 +6,20 @@ import test from 'node:test';
 const pkg = JSON.parse(fs.readFileSync(new URL('../package.json', import.meta.url), 'utf8'));
 const workflow = fs.readFileSync(new URL('../.github/workflows/update-news.yml', import.meta.url), 'utf8');
 const canonicalScript = fs.readFileSync(new URL('../scripts/content-command-surface.mjs', import.meta.url), 'utf8');
+const legacyPipeline = fs.readFileSync(new URL('../scripts/pipeline.mjs', import.meta.url), 'utf8');
+const legacyMigration = fs.readFileSync(new URL('../scripts/migrate-legacy-content.mjs', import.meta.url), 'utf8');
+const autonomousMigration = fs.readFileSync(new URL('../scripts/migrate-autonomous-editorial-desk-v1.mjs', import.meta.url), 'utf8');
+const legacyGenerationScripts = [
+  'humanize-existing-articles.mjs',
+  'regenerate-clean-content.mjs',
+  'regenerate-blog-surface-v4.mjs',
+  'backfill-homepage-blogs.mjs',
+  'regenerate-narrative-dna-articles.mjs',
+  'regenerate-public-content-v2.mjs',
+  'regenerate-latest100.mjs',
+  'run-editorial-cycle.mjs',
+  'regenerate-autonomous-analyses-v1.mjs',
+];
 
 const canonicalEntrypoint = 'node ./scripts/content-command-surface.mjs';
 const contentCommands = [
@@ -40,22 +54,49 @@ test('legacy pipeline npm script is a compatibility wrapper to canonical product
 });
 
 test('canonical CLI is the shared phase entrypoint over the core orchestrator phase list', () => {
-  assert.match(canonicalScript, /ORCHESTRATOR_PHASES/);
+  assert.match(canonicalScript, /CONTENT_CYCLE_PHASES/);
   assert.match(canonicalScript, /CONTENT_PHASES/);
-  assert.match(canonicalScript, /scripts\/pipeline\.mjs/);
+  assert.match(canonicalScript, /runCanonicalContentCommand/);
+  assert.doesNotMatch(canonicalScript, /scripts\/pipeline\.mjs/);
   assert.match(canonicalScript, /scripts\/eval-article-generation\.mjs/);
 });
 
-test('isolated phase commands fail closed instead of reporting no-op success', () => {
-  const result = spawnSync(process.execPath, ['scripts/content-command-surface.mjs', 'ingest'], {
+test('isolated phase commands route through the resumable orchestrator', () => {
+  const result = spawnSync(process.execPath, ['scripts/content-command-surface.mjs', 'extract'], {
     cwd: new URL('..', import.meta.url),
     encoding: 'utf8',
+    env: {
+      ...process.env,
+      CONTENT_CYCLE_CHECKPOINT_PATH: `.cache/test-content-cycle-${process.pid}.json`,
+    },
   });
 
   assert.notEqual(result.status, 0);
-  assert.match(result.stderr, /content:ingest failed closed/);
-  assert.match(result.stderr, /npm run content:cycle/);
+  assert.match(result.stderr, /content cycle checkpoint is missing/);
+  assert.doesNotMatch(result.stderr, /isolated content phases are not implemented/);
   assert.equal(result.stdout, '');
+});
+
+test('legacy pipeline file is only a compatibility alias to the canonical engine', () => {
+  assert.match(legacyPipeline, /runCanonicalContentCommand/);
+  assert.doesNotMatch(legacyPipeline, /fetchNewsPool|attachExpertLens|syncArchiveArtifacts/);
+  assert.ok(legacyPipeline.split('\n').length < 20);
+});
+
+test('legacy generation entrypoints cannot execute independent writer implementations', () => {
+  for (const file of legacyGenerationScripts) {
+    const source = fs.readFileSync(new URL(`../scripts/${file}`, import.meta.url), 'utf8');
+    assert.match(source, /runLegacyContentCommand/, `${file} must delegate to the canonical engine`);
+    assert.ok(source.split('\n').length < 10, `${file} must remain a thin compatibility wrapper`);
+    assert.doesNotMatch(source, /writeJsonFile|writeFile|syncArchiveArtifacts|attachExpertLens/);
+  }
+});
+
+test('legacy migration diagnostics cannot mutate the public read model', () => {
+  assert.doesNotMatch(legacyMigration, /writeJsonFile|applyWrites|SEARCH_INDEX_PATH|TAXONOMY_PAGES_PATH/);
+  assert.doesNotMatch(autonomousMigration, /writeJsonFile/);
+  assert.match(legacyMigration, /apply mode is disabled/i);
+  assert.match(autonomousMigration, /diagnostic/i);
 });
 
 test('canonical CLI help remains successful', () => {

@@ -27,6 +27,17 @@ const orchestrator = createContentOrchestrator({ registry, policy, clock, logger
 No `createContentOrchestrator` edit is permitted when adding a source, image provider,
 writer, classifier, storage adapter, or publisher.
 
+The active content composition is `src/adapters/content-cycle-composition.mjs`. Production
+phase adapters are registered from `src/plugins/content/production-content-plugins.mjs` and
+provide one capability each: `content.ingest`, `content.extract`, `content.classify`,
+`content.cluster`, `content.generate`, `content.review`, and `content.publish`. Phase providers
+return `{ ok, value, discoveries, transitions }`; they never mutate checkpoint state directly.
+
+The seven-phase lifecycle topology is intentionally fixed. Plugins replace or extend the
+implementation selected for an existing phase capability; they do not add, skip, or reorder
+production lifecycle phases. A topology change is a versioned core migration with checkpoint
+schema and recovery review, not a provider installation.
+
 ## Security checklist
 
 - Use the shared safe HTTP adapter; never call `fetch` directly for source-controlled URLs.

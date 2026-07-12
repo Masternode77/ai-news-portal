@@ -94,19 +94,19 @@ migration, and Vercel preview verification pass.
 
 | Old module/command | Active use | Canonical replacement | Migration | Deletion date |
 | --- | --- | --- | --- | --- |
-| `npm run pipeline` | Production | `npm run content:cycle` | Compatibility wrapper after parity | After preview approval |
-| `run:editorial-cycle` | Manual/alternate | `content:cycle` | Read-only wrapper, then remove | After two release cycles |
-| `content:cycle` (fixture-only implementation) | Test/manual | Canonical orchestrator | Replace implementation in place | N/A |
-| `humanize:existing` | Manual | `content:review` | Dry-run migration wrapper | After data migration |
-| `regenerate:clean-content` | Manual | `content:review` | Wrapper with explicit IDs | After data migration |
-| `regenerate:blog-surface-v4` | Manual | `content:generate` | Disable independent writes | After preview approval |
-| `backfill:homepage-blogs` | Manual | Public read-model rebuild | Remove quota elevation | After preview approval |
-| `regenerate:narrative-dna` | Manual | `content:generate` | Disable independent writes | After preview approval |
-| `regenerate:public-content-v2` | Manual | `content:review` | Disable independent writes | After preview approval |
-| `migrate:legacy` | Manual | Versioned `content:import` | Compatibility wrapper | After migration sign-off |
-| `regen:latest100` | Manual | `content:review --limit 100` | Wrapper | After migration sign-off |
-| `regenerate:autonomous-analyses-v1` | Manual | `content:generate` | Disable independent writes | After preview approval |
-| `migrate:autonomous-desk-v1` | Manual | Versioned `content:import` | Compatibility wrapper | After migration sign-off |
+| `npm run pipeline` | Production | `npm run content:cycle` | Complete: thin compatibility wrapper | After preview approval |
+| `run:editorial-cycle` | Manual/alternate | `content:cycle` | Complete: thin compatibility wrapper | After two release cycles |
+| `content:cycle` (fixture-only implementation) | Test/manual | Canonical orchestrator | Complete: production command no longer invokes fixture engine | N/A |
+| `humanize:existing` | Manual | `content:review` | Complete: thin compatibility wrapper | After data migration |
+| `regenerate:clean-content` | Manual | `content:review` | Complete: thin compatibility wrapper | After data migration |
+| `regenerate:blog-surface-v4` | Manual | `content:generate` | Complete: independent writes disabled | After preview approval |
+| `backfill:homepage-blogs` | Manual | `content:publish` | Complete: independent quota/write path disabled | After preview approval |
+| `regenerate:narrative-dna` | Manual | `content:generate` | Complete: independent writes disabled | After preview approval |
+| `regenerate:public-content-v2` | Manual | `content:review` | Complete: independent writes disabled | After preview approval |
+| `migrate:legacy` | Manual | Versioned `content:import` | Read-only diagnostic; apply disabled | After migration sign-off |
+| `regen:latest100` | Manual | `content:review` | Complete: thin compatibility wrapper | After migration sign-off |
+| `regenerate:autonomous-analyses-v1` | Manual | `content:generate` | Complete: independent writes disabled | After preview approval |
+| `migrate:autonomous-desk-v1` | Manual | Versioned `content:import` | Read-only diagnostic; apply disabled | After migration sign-off |
 | `audit:content-quality` | Manual | `content:eval` | Consolidate assertions | After parity |
 | `audit:public-surface` | Manual | `audit:public` | Compatibility wrapper | After parity |
 | `audit:blog-surface-v4` | Manual | `audit:public` | Remove generation-specific policy | After parity |

@@ -69,11 +69,14 @@ The orchestrator executes named phases:
 5. `generate`: create Evidence Card, Angle, Outline, Draft only for an editorial route.
 6. `review`: Critic, Senior Rewrite, Fidelity and Diversity gates.
 7. `publish`: transactionally publish or downgrade to Source Signal.
-8. `read-model`: build public queries, RSS, sitemap, and search indexes.
+
+`publish` also builds the public query artifacts, RSS inputs, sitemap inputs, and search index;
+there is no separate eighth production phase.
 
 `content:cycle` invokes all phases. Phase commands invoke the same phase runner and
-state store; none implements a separate pipeline. Each invocation accepts a bounded
-batch, idempotency namespace, retry policy, and dry-run flag.
+state store; none implements a separate pipeline. The current CLI exposes no batch,
+retry, idempotency-namespace, or dry-run flags; those policies are internal to the
+orchestrator and checkpoint contracts until a versioned command API is introduced.
 
 ## Editorial route policy
 
@@ -89,11 +92,14 @@ deterministic fallback long-form article.
 
 ## Data ownership
 
-- Canonical writable state: transactional `StorageAdapter` using managed Postgres in
-  production and an isolated local/test adapter.
-- Public delivery: immutable generated read model or cache derived from published state.
+- Admin CMS state: transactional `StorageAdapter` using managed Postgres when configured
+  and an isolated local/test adapter otherwise.
+- Scheduled content-cycle state: versioned file checkpoints, publication receipts, and
+  SHA-256 output bundles under the ignored `.cache/content-cycle` runtime boundary.
+- Public delivery: tracked generated JSON and raster read models written only by the
+  canonical publish phase; admin exports may supply the build-time read model when configured.
 - Images: object storage through a media adapter, with content hash and provenance.
-- JSON: import/export and rollback artifact only, never production mutation storage.
+- JSON: the current static publication read model and rollback format, not the admin CMS database.
 - GitHub: source code/release transport, not the CMS database.
 
 The database schema includes users, sessions, articles, revisions, sources, source items,

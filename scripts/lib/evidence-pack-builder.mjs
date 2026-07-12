@@ -31,11 +31,11 @@ function compactLimited(value = '', limit = 2400) {
   return terminal > 400 ? clipped.slice(0, terminal + 1) : `${clipped.replace(/\s+\S*$/, '')}.`;
 }
 
-function splitSentences(text = '') {
+function splitSentences(text = '', { minLength = 35, maxLength = 260 } = {}) {
   return compact(text)
     .split(/(?<=[.!?])\s+/)
     .map((sentence) => sentence.trim())
-    .filter((sentence) => sentence.length >= 35 && sentence.length <= 260)
+    .filter((sentence) => sentence.length >= minLength && sentence.length <= maxLength)
     .filter(isUsableEvidenceSentence);
 }
 
@@ -50,7 +50,7 @@ function isUsableEvidenceSentence(sentence = '') {
 }
 
 function cleanEvidenceSentences(text = '') {
-  return splitSentences(text).join(' ');
+  return splitSentences(text, { minLength: 12, maxLength: 1200 }).join(' ');
 }
 
 function unique(values = []) {
@@ -93,7 +93,7 @@ export function cleanEvidenceText(article = {}) {
     article.fullArticleText,
     article.summary,
     article.snippet,
-  ].filter(Boolean).map((value) => compactLimited(value, 1800)).join('\n\n'), 5000);
+  ].filter(Boolean).map((value) => compactLimited(value, 8000)).join('\n\n'), 16000);
   const boilerplate = detectBoilerplate(raw);
   const text = compact(cleanEvidenceSentences(boilerplate.cleaned_text || raw));
   const truncation = detectTruncationArtifacts(text);
@@ -176,5 +176,41 @@ export function buildEvidencePack(article = {}, options = {}) {
     whatWouldChangeOurView: watchMetrics[0] || 'cleaner evidence of committed capacity and operating impact',
     watchMetrics,
     sourceLimitations: cleaned.text.length < 1200 ? 'The extracted source evidence is concise, so the article should avoid unsupported claims.' : 'The extracted evidence is sufficient for local analysis, but source attribution remains necessary.',
+  };
+}
+
+function sourceOnlyArticle(article = {}) {
+  const sourceOnly = { ...article };
+  for (const field of [
+    'summary',
+    'insight',
+    'deck',
+    'why_it_matters',
+    'expertLensShort',
+    'expertLensFull',
+    'public_presentation',
+    'seo_title',
+    'seo_description',
+  ]) delete sourceOnly[field];
+  return sourceOnly;
+}
+
+export function buildSourceEvidencePack(article = {}, options = {}) {
+  const pack = buildEvidencePack(sourceOnlyArticle(article), options);
+  const sourceTitle = compact(article.title);
+  const titleEvidence = !sourceTitle || /[.!?]$/.test(sourceTitle) ? sourceTitle : `${sourceTitle}.`;
+  const evidenceText = compact(`${titleEvidence} ${pack.evidenceText}`);
+  const facts = unique(splitSentences(evidenceText)).slice(0, 8);
+  const factTarget = options.factTarget || 3;
+  const blockReasons = pack.blockReasons.filter((reason) => !reason.startsWith('facts_below_'));
+  if (facts.length < factTarget) blockReasons.push(`facts_below_${factTarget}`);
+  return {
+    ...pack,
+    ok: blockReasons.length === 0,
+    blockReasons,
+    evidenceText,
+    facts,
+    analyticalInferences: [],
+    origin: 'extraction_only',
   };
 }

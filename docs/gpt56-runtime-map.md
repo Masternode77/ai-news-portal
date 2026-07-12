@@ -5,23 +5,26 @@
 ```mermaid
 flowchart TD
   A["GitHub schedule or manual dispatch"] --> B["update-news.yml"]
-  B --> C["npm run pipeline"]
-  C --> D["fetch-feeds and source-fetch"]
-  D --> E["content.mjs"]
-  E --> F["expert-lens.mjs"]
-  F --> G["relevance, fidelity, repetition and quality gates"]
-  G --> H["archive-store.mjs"]
-  H --> I["src/data JSON and public/generated assets"]
-  I --> J["automation commit to main"]
-  J --> K["Vercel npm run build"]
-  K --> L["sync-dashboard-data"]
-  L --> M["prepare-static-images"]
-  M --> N["Astro static build"]
+  B --> C["npm run content:cycle"]
+  C --> D["content-cycle-composition.mjs"]
+  D --> E["PluginRegistry"]
+  E --> F["ingest -> extract -> classify -> cluster"]
+  F --> G["generate -> review -> publish"]
+  G --> H["Checkpoint, receipt, and output bundle in GitHub cache"]
+  H --> I["Validated lifecycle journal and SHA-256 output manifest"]
+  I --> J["Verified or restored src/data, state, and referenced images"]
+  J --> K["automation commit to main"]
+  K --> L["Vercel npm run build"]
+  L --> M["admin public export if configured"]
+  M --> N["prepare-static-images and Astro build"]
 ```
 
-The scheduled job does not call the newer autonomous editorial desk as its canonical
-writer. Multiple manual commands can write the same archives and make provenance
-ambiguous.
+The scheduled job and `npm run pipeline` compatibility command resolve the same canonical
+composition. Each named phase uses the same registry and file checkpoint, so a failed run
+restarts at the failed phase rather than replaying completed providers. The workflow serializes
+writers and preserves failed checkpoints across ephemeral runners. Completed checkpoints must
+match a durable publication receipt and byte-level output bundle before another run starts. A
+mismatched pipeline version or lifecycle journal fails closed.
 
 ## Public request path
 
@@ -37,14 +40,17 @@ use a one-year cache.
 ## Admin mutation path
 
 ```text
-browser -> /api/admin/login -> signed cookie
-browser -> /api/admin/article + CSRF -> GitHub Contents API
-GitHub commit to main -> Vercel deployment -> public JSON read model
+browser -> /api/admin/login -> Argon2id + durable session hooks -> signed cookie
+browser -> /api/admin/articles or article + CSRF/RBAC -> AdminCmsService
+AdminCmsService -> Postgres in production / isolated local adapter in tests
+publish mutation -> transactional revision, audit, and publication outbox
+build -> configured admin public export -> Astro public read model
 ```
 
-This path is fail-closed without credentials but is not a durable CMS. The authenticated
-dashboard API reads checked-in admin models; required list/create/source/quarantine/
-pipeline/audit routes are absent.
+Production storage is fail-closed without database and Blob credentials. The route and service
+surface includes article list/create/edit, revisions, media, audit, source/pipeline operations,
+quarantine, soft deletion, and permanent-delete confirmation. Managed preview persistence remains
+unverified until the external preview credentials and migrations are available.
 
 ## Image path
 
@@ -64,19 +70,14 @@ URL, hash, and generation timestamp need explicit immutable metadata.
 
 ## Failure behavior
 
-- Extraction QA fails closed for long form, but broad homepage routing can still expose
-  weak source signals.
-- Failed editorial generation can be deleted or blocked rather than consistently
-  downgraded to a clean Source Signal.
-- Network fetches follow redirects and buffer full bodies without destination or byte
-  controls.
-- Automation commits and Vercel deployments are coupled to timestamp-only changes.
-- Tests depend on a prior build and the build mutates tracked source artifacts.
-
-## Target runtime
-
-The target path is `connector -> safe fetch -> extraction -> state machine -> relevance
--> clustering -> route -> multi-pass editorial -> review -> transactional publish ->
-public read model`. Every implementation is obtained from a central plugin registry.
-Only `content:cycle` may execute the full production lifecycle; phase commands call the
-same orchestrator with bounded start/end states.
+- Source extraction uses the canonical public and long-form fail-closed gates.
+- Clean, relevant sources without enough long-form evidence become Source Signals.
+- Editorial service, image, generation, fidelity, claim, SEO, or repetition failures cannot
+  publish local long form; the record is downgraded to a Source Signal.
+- A provider failure records the phase and retry classification in the checkpoint. A rerun
+  resumes that phase with the same run ID and does not replay completed phases.
+- Only the publish provider mutates the public JSON read model. It persists a preparing receipt
+  before side effects, captures a content-addressed output bundle, and persists a completed result
+  afterward. Completed run IDs restore missing or changed state, image, archive, and JSON files
+  from the bundle without rerunning public side effects.
+- Dashboard/state-only commits are ignored by the Vercel build rule after integration.
