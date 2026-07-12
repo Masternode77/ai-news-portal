@@ -34,7 +34,7 @@ found 0 vulnerabilities
 
 ## Verification
 
-`npm test` ran 418 tests: 417 passed, none failed, and one intentional skip, followed by passing
+`npm test` ran 422 tests: 421 passed, none failed, and one intentional skip, followed by passing
 quality, relevance, taxonomy, and repetition commands. `npm audit --audit-level=low` reports
 zero findings. Build, content gate, and preview header checks remain separate release receipts.
 

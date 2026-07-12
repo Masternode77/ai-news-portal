@@ -16,13 +16,14 @@ Updated: 2026-07-12
 
 ## Local Evidence
 
-The full test run ran 418 tests: 417 passed, none failed, and one skip. The 61-page Astro build
+The full test run ran 422 tests: 421 passed, none failed, and one skip. The 61-page Astro build
 completed successfully. Public output, sitemap/RSS, structured-data, thin-page, source
 attribution, admin exclusion, and retired-route contracts are included in the test and content
 gate surfaces.
 
 ## Remaining Risks
 
-Search-engine fetch behavior, deployed canonical host headers, social-card cache freshness, and
-real preview response headers require the Vercel preview. Lighthouse SEO is not claimed until
-that URL is measured. Production remains unchanged during this review.
+The exact Vercel preview was measured. Its Lighthouse SEO score is 69 because Vercel adds
+`x-robots-tag: noindex` to previews; this is expected and prevents accidental indexing. Field
+search-engine behavior and social-card cache freshness still require post-approval production
+observation. Production remains unchanged during this review.

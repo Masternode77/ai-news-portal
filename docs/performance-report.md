@@ -16,20 +16,43 @@ Measured locally on macOS with Node 22+ using `/usr/bin/time -l npm run build`:
 | CSS | not retained | 100,126 bytes / 2 files |
 
 The first measured build copied 4,154 historical generated assets and produced a 272 MB
-`dist`. The new post-build reachability pruner retained 83 referenced generated assets and
-reduced `dist` to 5.6 MB, a reduction of about 97.9%. Publication builds do not acknowledge
-outbox events, so an export, Astro, pruning, or deployment failure cannot consume them.
+`dist`. The final post-merge build retained 85 referenced generated assets and pruned 4,097;
+the reachability step reduces
+`dist` to 5.6 MB, about 97.9%. Publication builds do not acknowledge outbox events, so an
+export, Astro, pruning, or deployment failure cannot consume them.
+
+## Final Preview Lighthouse
+
+Measured against deployment `dpl_9qoXHkYVspAM5FHBExEc6iqyzTuT`:
+
+| Profile | Performance | Accessibility | Best Practices | SEO | FCP | LCP | TBT | CLS |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| Mobile | 97 | 100 | 92 | 69 | 0.9 s | 2.6 s | 0 ms | 0 |
+| Desktop | 100 | 100 | 92 | 69 | 0.3 s | 0.5 s | 0 ms | 0 |
+
+The two Best Practices failures come from Vercel Preview Toolbar attempting to inject
+`https://vercel.live/_next-live/feedback/feedback.js` while the application's CSP correctly
+allows scripts from `self` only. Browser QA filters only this known preview-tool request and
+records zero application console errors or request failures.
+
+The SEO score is not a production SEO result. Vercel adds `x-robots-tag: noindex` to preview
+deployments, and Lighthouse correctly marks the preview as not crawlable. Canonical, sitemap,
+RSS, robots, and public inventory contracts pass separately; production remains untouched.
+
+Raw reports:
+
+- `evidence/gpt56-upgrade/lighthouse-home-mobile.json`
+- `evidence/gpt56-upgrade/lighthouse-home-desktop.json`
 
 ## Page Samples
 
-- Homepage HTML: 73,627 bytes.
-- Archive HTML: 73,914 bytes.
-- Search HTML: 97,656 bytes.
-- Published article HTML: 19,159 bytes.
+- Homepage HTML: 75,505 bytes.
+- Archive HTML: 75,792 bytes.
+- Search HTML: 100,020 bytes.
+- Published article HTML: 19,154 bytes.
 
 ## Remaining Risks
 
-Local artifact size is verified; field LCP, CLS, INP, TTFB and Lighthouse scores are not yet
-measured against the Vercel preview. The preview must reach the requested 90 scores where
-realistic or record concrete blockers before merge. Search and archive HTML remain the largest
-documents because they intentionally expose a usable publication feed without client fetching.
+These are lab measurements, not field Core Web Vitals. INP and long-window user telemetry need
+real production traffic after approval. Search and archive remain the largest HTML documents
+because they intentionally provide a usable publication feed without client-side fetching.

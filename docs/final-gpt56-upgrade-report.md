@@ -1,0 +1,140 @@
+# Final GPT-5.6 Upgrade Report
+
+Updated: 2026-07-12
+
+## Executive Verdict
+
+The Compute Current upgrade is **deployable with operational follow-up** and ready for human
+preview approval. The public publication, canonical editorial foundation, secure durable CMS
+integration, design prototypes, tests, preview packaging, and rollback controls are implemented
+and verified. Production was not promoted, the production domain remains on its prior deployment,
+and no production secret or cache purge was used.
+
+## Release Identity
+
+| Item | Value |
+| --- | --- |
+| Repository | `Masternode77/ai-news-portal` |
+| Branch | `upgrade/gpt-5-6-sol` |
+| Baseline production SHA | `19089b66627be58d5066376902ff382d2a018137` |
+| Merged `origin/main` SHA | `25e53c9f` |
+| Rollback tag | `backup/pre-gpt56-upgrade-20260711T091118Z` |
+| Verified product SHA | `f674c1df` |
+| Preview deployment | `dpl_9qoXHkYVspAM5FHBExEc6iqyzTuT` |
+| Preview URL | `https://ai-news-portal-g93sbqwbc-masternode77s-projects.vercel.app` |
+| Production deployment | `dpl_EtTdsEikynpmsq9sUQSaDch76PFF` (unchanged) |
+
+## Delivered Platform
+
+### Canonical content architecture
+
+- Retained Astro and introduced contracts, plugin registry, phase runner, lifecycle state, and
+  transition records under `src/core/`.
+- Consolidated production entry points around the canonical content cycle while retaining
+  reviewed compatibility surfaces for legacy callers.
+- Added strict source-grounded relevance, source-fidelity checks, safe downgrade behavior,
+  bottleneck-axis diversity, and explicit image provenance handling.
+- Removed public operational/dashboard routes and unified homepage, archive, search, article,
+  RSS, sitemap, category, company, and region surfaces on one public inventory.
+
+### Public publication
+
+- Rebuilt the homepage as a premium publication with a real visual lead, 30 to 50 eligible
+  list-style stories, source/date/category context, and decision-oriented card copy.
+- Added reader search and strengthened archive, taxonomy, article evidence, related discovery,
+  source attribution, and report/share controls.
+- Homepage and article images use the canonical raster surface. Final preview inspection found
+  39/39 unique homepage images and 40/40 unique archive images, with zero broken assets or
+  visible default placeholder labels.
+- Replaced two duplicate legacy cards with verified source photographs and migrated 66 records
+  that shared one fallback raster to the SHA-256-seeded v2 generator. The audit now rejects
+  duplicate image bytes across homepage, archive, search, and taxonomy surfaces.
+- Reduced static output from 1,532 pages to 61; the final build retained 85 reachable generated
+  assets and pruned 4,097.
+
+### Durable admin CMS
+
+- Added authenticated admin routes for login, articles, editor, sources, quarantine, pipeline,
+  audit, revisions, media, and operations.
+- Added Postgres and isolated local storage adapters, optimistic concurrency, immutable revisions
+  and audit records, soft deletion, ownership tombstones, and a transactional publication outbox.
+- Added private media ownership and deterministic public promotion with size, signature, pixel,
+  metadata, and object-key validation.
+- Preview credentials are intentionally absent. Admin APIs therefore return generic JSON 503
+  responses with `no-store` and `noindex,nofollow` instead of crashing or exposing environment names.
+
+### Security
+
+- Dependency audit improved from 18 findings (9 high, 9 moderate) to zero.
+- Added Argon2id, durable login throttling and revocation, CSRF, strict role authorization,
+  bounded parsing, safe public URLs, script-safe structured data, SSRF controls, security headers,
+  and fail-closed configuration.
+- No tracked credential or private key was introduced. Runtime/evidence folders are ignored and
+  stale tracked OMX/OMO state was removed.
+
+## Design Decision
+
+| Option | Score | Preview |
+| --- | ---: | --- |
+| Midnight Intelligence | **9.16** | `/design-lab/midnight-intelligence/` |
+| Research Ledger | 9.08 | `/design-lab/research-ledger/` |
+| Signal Mosaic | 8.73 | `/design-lab/signal-mosaic/` |
+
+Midnight Intelligence is recommended because it preserves the existing institutional dark
+identity while improving visual priority, article reading, hierarchy, and mobile behavior. All
+three prototypes remain noindex and are not production routes.
+
+## Verification Evidence
+
+| Gate | Result |
+| --- | --- |
+| Clean install | `npm ci` passed |
+| Dependency security | `npm audit --audit-level=low`: 0 vulnerabilities |
+| Full tests | 422 total, 421 passed, 0 failed, 1 intentional skip |
+| Editorial scripts | quality, relevance, taxonomy, repetition passed |
+| Astro check | 0 errors, 0 warnings, 11 existing type hints |
+| Build | 61 pages; 85 images retained; 4,097 pruned |
+| Content gate | passed all public, copy, image, feed, and admin exclusion audits |
+| QA/QC | deployable with operational follow-up |
+| Code review | APPROVE; 0 actionable P0-P3 findings |
+| Preview routes | 8/8 returned 200 |
+| Preview admin APIs | intended generic 503 fail-closed response |
+| Visual QA | 4/4 surfaces passed; 0 broken images/errors/overflow/placeholders |
+| Deployed image uniqueness | homepage 39/39; archive 40/40; duplicate groups 0 |
+| Lighthouse mobile | 97 performance, 100 accessibility, 92 best practices |
+| Lighthouse desktop | 100 performance, 100 accessibility, 92 best practices |
+| Production identity | still `dpl_EtTdsEikynpmsq9sUQSaDch76PFF` |
+
+The preview SEO score of 69 is expected because Vercel adds `x-robots-tag: noindex`. The two
+Best Practices deductions are the Vercel Preview Toolbar script being blocked by the site's
+intentional self-only CSP, not application JavaScript failures.
+
+## LOC and Repository Hygiene
+
+The final product merge against the rollback baseline spans 594 paths, including 316 binary
+image paths. Git's textual counters report 137,038 additions and 142,755 deletions, a net
+reduction of 5,717 lines. That comparison includes the 19 upstream content commits merged from
+`origin/main` as well as the architecture, coverage, and generated-data cleanup in this branch.
+
+Tracked `.omo` and `.omx` runtime state was removed, `.omx/` is repository-ignored, stale AGENTS
+guidance was corrected for Postgres/storage-adapter ownership, and build/evidence/runtime output
+remains outside release inputs.
+
+## Operational Follow-up
+
+1. Configure preview Postgres, Blob, and admin credentials; run the managed migration and CRUD,
+   revision, media, restart-persistence, and outbox verification against preview infrastructure.
+2. Produce independent human labels for 150 relevance items and 40 writing samples before
+   claiming precision, recall, or a sub-5% false-positive rate.
+3. Configure OAuth/2FA if required, plus Vercel Firewall, managed database backups, least-privilege
+   credentials, monitoring, and secret rotation.
+4. Review the preview screenshots and selected design. Only then push and promote using the
+   release runbook. Cache purge remains explicitly excluded.
+
+## Rollback and Recommendation
+
+The annotated rollback tag resolves to the original production SHA. The upgrade uses additive
+storage changes and a derived public read model; a failed preview gate must stop promotion rather
+than alter production. On current evidence, approve the branch for preview review and operational
+credential testing. Do not claim production CMS persistence or promote the domain until those
+external checks and explicit preview approval are complete.

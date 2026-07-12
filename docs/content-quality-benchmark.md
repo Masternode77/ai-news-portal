@@ -7,11 +7,11 @@ Updated: 2026-07-12
 The repository's executable quality suite currently covers extraction failure, strict
 infrastructure routing, taxonomy, source fidelity, unsupported claims, article length,
 anti-template language, repeated openings, homepage eligibility, and safe downgrade to a
-source-linked signal. The full test run ran 418 tests: 417 passed, none failed, and one
+source-linked signal. The full test run ran 422 tests: 421 passed, none failed, and one
 intentional skip; the standalone quality, relevance, taxonomy, and repetition commands also passed.
 
-The historical stores contain 733 records: 30 latest and 703 archived. Of the archived
-records, 562 are marked `archive_only`, 112 `signal_card`, one `full_memo`, and 28 predate the
+The historical stores contain 739 records: 30 latest and 709 archived. Of the archived
+records, 562 are marked `archive_only`, 112 `signal_card`, seven `full_memo`, and 28 predate the
 current tier field. These production-derived fields are useful regression evidence, but they
 are not an independent human-labeled benchmark.
 

@@ -1,40 +1,48 @@
 # NEXT
 
 ## Current branch
-- `upgrade/gpt-5-6-sol`, based on production `origin/main` SHA `19089b66`.
+- `upgrade/gpt-5-6-sol`, merged with `origin/main` SHA `25e53c9f`.
+- Verified product SHA: `f674c1df`.
 - Rollback tag: `backup/pre-gpt56-upgrade-20260711T091118Z`.
-- Branch carries the local upgrade checkpoints; production remains unchanged.
+- No push or production promotion has been performed.
 
 ## Latest completed checklist item
-- Consolidated the admin surface behind authenticated APIs and durable storage adapters.
-- Added Argon2id auth, 64-byte session-secret enforcement, durable throttling/revocation,
-  admin/editor authorization, private media ownership checks, and transactional outbox storage.
-- Moved the CMS public read model to ignored `.cache/` storage and left outbox rows pending
-  until a future post-deployment verifier can safely acknowledge them.
+- Deployed final preview `dpl_9qoXHkYVspAM5FHBExEc6iqyzTuT` from the Linux remote builder.
+- Merged the current content stream without unresolved conflicts or dropped remote records.
+- Repaired two verified source photos and 66 byte-duplicate legacy image records.
+- Re-ran route, fail-closed API, visual, image, Lighthouse, and production-identity checks.
+- Confirmed production still points to `dpl_EtTdsEikynpmsq9sUQSaDch76PFF`.
 
 ## Changed files
-- Auth/admin APIs: `api/admin/`, `src/admin/`, `src/plugins/storage/`, `migrations/`.
-- Public read model and surfaces: `src/lib/public-content-inventory.js`, public routes,
-  RSS, sitemap, footer, and admin shells.
-- Build/security: `package.json`, lockfile, `vercel.json`, export/pruner/migration scripts.
-- Tests and reports: admin/auth/media/storage/read-model/pruner suites and `docs/` receipts.
+- Architecture/editorial: `src/core/`, `scripts/lib/`, workflow entry points.
+- Admin/storage: `api/admin/`, `src/admin/`, `src/plugins/storage/`, `migrations/`.
+- Public product: public routes/components/styles, RSS, sitemap, search, taxonomy.
+- Release/security: `package.json`, lockfile, `vercel.json`, runbooks and audits.
+- Image durability: generator seed, duplicate audit/repair, tests, data, and generated rasters.
+- Final receipts: `docs/final-gpt56-upgrade-report.md`, visual/performance reports.
 
 ## Validation results
-- `npm test`: 418 tests, 417 passed, 0 failed, 1 intentional skip; all four quality scripts passed.
-- Targeted auth/admin/media/read-model/pruner suite: 35/35 passed.
-- `npm run check`: 0 errors, 0 warnings, 11 type hints.
-- `npm audit --audit-level=low`: 0 vulnerabilities after clean `npm ci`.
-- `npm run build`: 61 pages; 31.02 s; 4,071 unreachable images pruned, 83 retained.
-- `npm run content:gate`: passed all rendered copy, homepage, feed, image, and admin audits.
-- `npm run qa:qc`: deployable with operational follow-up; local and live checks passed.
+- `npm test`: 422 total, 421 passed, 0 failed, 1 intentional skip.
+- Quality, relevance, taxonomy, and repetition scripts: passed.
+- `npm run check`: 0 errors, 0 warnings, 11 existing type hints.
+- `npm audit --audit-level=low`: 0 vulnerabilities; baseline was 18.
+- `npm run build`: 61 pages; 85 generated assets retained, 4,097 pruned.
+- `npm run content:gate`: passed all public/content/image/admin gates.
 - Independent code review: APPROVE, 0 actionable P0-P3 findings.
-- Conflict-marker, secret-shaped addition, and whitespace scans: clean.
+- Preview routes: 8/8 returned 200.
+- Admin APIs without preview credentials: intended generic 503, no-store, noindex.
+- Visual QA: 4/4 passed; 0 broken images, placeholders, app errors, or overflow.
+- Deployed image bytes: homepage 39/39 and archive 40/40 unique.
+- Lighthouse mobile: performance 97, accessibility 100, best practices 92.
+- Lighthouse desktop: performance 100, accessibility 100, best practices 92.
 
 ## Blockers
-- Preview Postgres, Blob, and admin credentials are not configured; live persistence cannot be claimed.
-- Independent 150-item relevance and 40-sample writing labels require human editorial review.
-- Production remains unchanged until preview deployment and explicit approval.
+- Preview Postgres, Blob, and admin credentials are absent; managed persistence is not proven.
+- Independent 150-item relevance and 40-sample writing labels require human review.
+- OAuth/2FA, firewall, backups, monitoring, and secret rotation are operational follow-up.
+- Production promotion requires explicit preview approval.
 
 ## Exact next step
-- Create the local checkpoint commit, deploy preview only, run rendered/visual/security checks,
-  and record the exact preview URL and commit SHA. Do not deploy production.
+- Present the exact preview/screenshots and await explicit preview approval.
+- After approval, push and follow the production runbook in a separately authorized step.
+- Keep cache purge excluded.
