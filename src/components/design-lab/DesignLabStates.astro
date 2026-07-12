@@ -1,0 +1,43 @@
+---
+const { theme } = Astro.props;
+---
+<header class="dl-states-header">
+  <span>Latest coverage</span>
+  <h1>Useful next steps when coverage changes</h1>
+  <p>Readers can keep browsing published analysis while new coverage is refreshed or a narrower view has no matches.</p>
+</header>
+
+<div class="dl-state-grid">
+  <section class="dl-state-panel" aria-labelledby="loading-state-title" aria-busy="true">
+    <div class="dl-state-title">
+      <span>Loading</span>
+      <h2 id="loading-state-title">Refreshing the latest coverage</h2>
+    </div>
+    <div class="dl-skeleton-list" aria-hidden="true">
+      <div><i></i><span></span><span></span></div>
+      <div><i></i><span></span><span></span></div>
+      <div><i></i><span></span><span></span></div>
+    </div>
+  </section>
+
+  <section class="dl-state-panel" aria-labelledby="empty-state-title">
+    <div class="dl-state-title">
+      <span>Empty</span>
+      <h2 id="empty-state-title">No articles match this view</h2>
+    </div>
+    <p>Widen the category or date range to bring current infrastructure coverage back into view.</p>
+    <a class="dl-primary-action" href={`/design-lab/${theme.slug}/`}>Return to the front page</a>
+  </section>
+
+  <section class="dl-state-panel dl-state-error" aria-labelledby="error-state-title" role="alert">
+    <div class="dl-state-title">
+      <span>Unavailable</span>
+      <h2 id="error-state-title">Latest coverage is temporarily unavailable</h2>
+    </div>
+    <p>Published analysis remains available while the latest items are reloaded.</p>
+    <div class="dl-state-actions">
+      <a class="dl-primary-action" href={`/design-lab/${theme.slug}/states/`}>Try again</a>
+      <a href="/archive/">Open the archive</a>
+    </div>
+  </section>
+</div>

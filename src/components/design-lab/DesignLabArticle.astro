@@ -1,0 +1,68 @@
+---
+import { DESIGN_LAB_ARTICLE } from '../../lib/design-lab-data.js';
+
+const { theme } = Astro.props;
+const article = DESIGN_LAB_ARTICLE;
+const date = new Intl.DateTimeFormat('en-US', { month: 'long', day: 'numeric', year: 'numeric' })
+  .format(new Date(article.date));
+const isHeading = (block: string) => block.length < 82 && !/[.!?]$/.test(block);
+---
+<article class="dl-article">
+  <header class="dl-article-header">
+    <a class="dl-back-link" href={`/design-lab/${theme.slug}/`}>Front page</a>
+    <div class="dl-article-labels">
+      <span>{article.route}</span>
+      <span>{article.lane}</span>
+    </div>
+    <h1>{article.title}</h1>
+    <p class="dl-article-deck">{article.deck}</p>
+    <div class="dl-byline">
+      <span>By {article.author}</span>
+      <time datetime={article.date}>{date}</time>
+      <span>Source: {article.source}</span>
+    </div>
+  </header>
+
+  <figure class="dl-article-hero">
+    <img
+      src={article.heroImage}
+      alt={article.imageAlt}
+      width="1536"
+      height="864"
+      loading="eager"
+      fetchpriority="high"
+      decoding="async"
+    />
+    <figcaption>Editorial visual for Compute Current analysis. Source reporting: {article.source}.</figcaption>
+  </figure>
+
+  <section class="dl-key-data" aria-label="Key data">
+    {article.keyData.map(([label, value]: [string, string]) => (
+      <div><span>{label}</span><strong>{value}</strong></div>
+    ))}
+  </section>
+
+  <div class="dl-article-layout">
+    <div class="dl-article-body">
+      {article.body.map((block: string) => isHeading(block) ? <h2>{block}</h2> : <p>{block}</p>)}
+    </div>
+
+    <aside class="dl-article-rail" aria-label="Analysis notes">
+      <section>
+        <span>Source limitation</span>
+        <p>{article.limitation}</p>
+      </section>
+      <section>
+        <span>Watch next</span>
+        <ul>
+          {article.watchItems.map((item: string) => <li>{item}</li>)}
+        </ul>
+      </section>
+      <section class="dl-bottom-line">
+        <span>Bottom line</span>
+        <p>{article.bottomLine}</p>
+      </section>
+      <a class="dl-source-action" href={article.sourceUrl} rel="noopener noreferrer">Read the original disclosure</a>
+    </aside>
+  </div>
+</article>

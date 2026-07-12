@@ -1,0 +1,87 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { DESIGN_LAB_THEMES } from '../../lib/design-lab-data.js';
+import '../../styles/design-lab.css';
+
+const { theme, currentView = 'home' } = Astro.props;
+const base = `/design-lab/${theme.slug}/`;
+const viewLinks = [
+  { id: 'home', label: 'Front Page', href: base },
+  { id: 'article', label: 'Lead Analysis', href: `${base}article/` },
+  { id: 'states', label: 'Coverage Status', href: `${base}states/` },
+];
+const title = `${theme.name} | Compute Current Design Lab`;
+---
+<Layout
+  title={title}
+  description={theme.proposition}
+  canonicalPath={currentView === 'home' ? base : `${base}${currentView}/`}
+  noindex={true}
+>
+  <div class={`design-lab design-lab-${theme.slug}`} data-design-theme={theme.slug}>
+    <header class="dl-site-header">
+      <div class="dl-utility-line">
+        <a class="dl-brand" href={base} aria-label={`${theme.name} front page`}>
+          <span>Compute</span>
+          <strong>Current</strong>
+        </a>
+        <span class="dl-edition">AI Infrastructure Intelligence</span>
+        <div class="dl-utility-links">
+          <a href="/archive/">Archive</a>
+          <a href="/rss.xml">RSS</a>
+        </div>
+      </div>
+
+      <div class="dl-title-row">
+        <div>
+          <span class="dl-option-label">Design option</span>
+          <strong>{theme.name}</strong>
+        </div>
+        <p>{theme.proposition}</p>
+      </div>
+
+      <nav class="dl-primary-nav" aria-label={`${theme.name} sections`}>
+        <a href="/category/power-grid/">Power</a>
+        <a href="/category/data-centers/">Capacity</a>
+        <a href="/category/semiconductors/">Silicon</a>
+        <a href="/category/cooling/">Cooling</a>
+        <a href="/category/capital-markets/">Capital</a>
+        <a href="/region/global/">Regions</a>
+      </nav>
+
+      <div class="dl-lab-navs">
+        <nav class="dl-view-nav" aria-label="Prototype views">
+          {viewLinks.map((link) => (
+            <a href={link.href} aria-current={currentView === link.id ? 'page' : undefined}>{link.label}</a>
+          ))}
+        </nav>
+        <nav class="dl-theme-nav" aria-label="Design options">
+          {DESIGN_LAB_THEMES.map((option) => (
+            <a
+              href={`/design-lab/${option.slug}/${currentView === 'home' ? '' : `${currentView}/`}`}
+              aria-current={theme.slug === option.slug ? 'page' : undefined}
+            >
+              {option.shortName}
+            </a>
+          ))}
+        </nav>
+      </div>
+    </header>
+
+    <main class="dl-main">
+      <slot />
+    </main>
+
+    <footer class="dl-footer">
+      <div>
+        <strong>Compute Current</strong>
+        <p>Source-linked intelligence on the physical systems behind AI deployment.</p>
+      </div>
+      <nav aria-label="Publication links">
+        <a href="/archive/">Archive</a>
+        <a href="/sample/">Sample</a>
+        <a href="/sitemap.xml">Sitemap</a>
+      </nav>
+    </footer>
+  </div>
+</Layout>

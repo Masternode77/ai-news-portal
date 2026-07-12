@@ -1,0 +1,29 @@
+---
+const { story, href = story.sourceUrl, feature = false, rank = '' } = Astro.props;
+const external = /^https?:\/\//.test(href);
+---
+<article class:list={['dl-story-card', { 'dl-story-card-feature': feature }]}>
+  <a class="dl-story-image" href={href} rel={external ? 'noopener noreferrer' : undefined}>
+    <img
+      src={story.image}
+      alt={story.imageAlt}
+      width="1200"
+      height="900"
+      loading={feature ? 'eager' : 'lazy'}
+      decoding="async"
+    />
+  </a>
+  <div class="dl-story-copy">
+    <div class="dl-story-meta">
+      {rank ? <span class="dl-story-rank">{rank}</span> : null}
+      <span>{story.route}</span>
+      <span>{story.lane}</span>
+    </div>
+    <h2><a href={href} rel={external ? 'noopener noreferrer' : undefined}>{story.title}</a></h2>
+    <p>{story.deck}</p>
+    <div class="dl-story-bottom">
+      <span>{story.source}</span>
+      <strong>{story.metric}</strong>
+    </div>
+  </div>
+</article>

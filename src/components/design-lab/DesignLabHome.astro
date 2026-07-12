@@ -1,0 +1,87 @@
+---
+import {
+  DESIGN_LAB_LEAD,
+  DESIGN_LAB_MARKET_DATA,
+  DESIGN_LAB_STORIES,
+} from '../../lib/design-lab-data.js';
+import DesignLabStoryCard from './DesignLabStoryCard.astro';
+
+const { theme } = Astro.props;
+const articleHref = `/design-lab/${theme.slug}/article/`;
+const secondaryStories = DESIGN_LAB_STORIES.slice(1, 7);
+const date = new Intl.DateTimeFormat('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
+  .format(new Date(DESIGN_LAB_LEAD.date));
+const heroKicker = theme.slug === 'midnight-intelligence'
+  ? 'The evening analysis'
+  : theme.slug === 'research-ledger'
+    ? 'Research note 01'
+    : 'Lead constraint / capacity';
+---
+<section class="dl-home-hero" aria-labelledby="dl-lead-title">
+  <div class="dl-lead-copy">
+    <div class="dl-lead-meta">
+      <span>{heroKicker}</span>
+      <span>{DESIGN_LAB_LEAD.lane}</span>
+      <time datetime={DESIGN_LAB_LEAD.date}>{date}</time>
+    </div>
+    <h1 id="dl-lead-title">{DESIGN_LAB_LEAD.title}</h1>
+    <p class="dl-lead-deck">{DESIGN_LAB_LEAD.deck}</p>
+    <div class="dl-lead-actions">
+      <a class="dl-primary-action" href={articleHref}>Read the analysis</a>
+      <a href={DESIGN_LAB_LEAD.sourceUrl} rel="noopener noreferrer">View original source</a>
+    </div>
+  </div>
+  <a class="dl-lead-visual" href={articleHref} aria-label={`Read ${DESIGN_LAB_LEAD.title}`}>
+    <img
+      src={DESIGN_LAB_LEAD.heroImage}
+      alt={DESIGN_LAB_LEAD.imageAlt}
+      width="1536"
+      height="864"
+      loading="eager"
+      fetchpriority="high"
+      decoding="async"
+    />
+    <span>{DESIGN_LAB_LEAD.metric}</span>
+  </a>
+</section>
+
+<section class="dl-market-strip" aria-label="Current infrastructure signals">
+  {DESIGN_LAB_MARKET_DATA.map((item) => (
+    <article>
+      <span>{item.label}</span>
+      <strong>{item.value}</strong>
+      <small>{item.context}</small>
+    </article>
+  ))}
+</section>
+
+<section class="dl-feed-section" aria-labelledby="dl-feed-title">
+  <header class="dl-section-heading">
+    <div>
+      <span>Current edition</span>
+      <h2 id="dl-feed-title">Infrastructure signals worth carrying forward</h2>
+    </div>
+    <p>Power access, site delivery, thermal design, silicon supply, network capacity, and capital are tracked as separate decisions.</p>
+  </header>
+
+  <div class="dl-story-grid">
+    {secondaryStories.map((story, index) => (
+      <DesignLabStoryCard story={story} rank={String(index + 1).padStart(2, '0')} feature={index === 0} />
+    ))}
+  </div>
+</section>
+
+<section class="dl-decision-band" aria-labelledby="dl-decision-title">
+  <div>
+    <span>Decision index</span>
+    <h2 id="dl-decision-title">What changed for infrastructure teams?</h2>
+  </div>
+  <ol>
+    {DESIGN_LAB_STORIES.slice(0, 4).map((story) => (
+      <li>
+        <span>{story.lane}</span>
+        <p>{story.decision}</p>
+      </li>
+    ))}
+  </ol>
+</section>

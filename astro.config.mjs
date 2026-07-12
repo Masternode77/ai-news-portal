@@ -20,6 +20,7 @@ const noindexArticlePaths = new Set(
     .map((article) => articleCanonicalPath(article))
 );
 const noindexStaticPaths = new Set(['/subscribe/', '/pricing/', '/sample/', '/briefing/']);
+const noindexPathPrefixes = ['/design-lab/'];
 
 const pagePath = (page) => {
   try {
@@ -37,6 +38,7 @@ export default defineConfig({
         const pathname = pagePath(page);
         return !pathname.startsWith('/admin')
           && !pathname.startsWith('/api/admin')
+          && !noindexPathPrefixes.some((prefix) => pathname.startsWith(prefix))
           && !noindexStaticPaths.has(pathname)
           && !noindexArticlePaths.has(pathname);
       },
