@@ -3,12 +3,17 @@ import fs from 'node:fs';
 import test from 'node:test';
 import { relatedArticlesFor } from '../scripts/lib/related-articles.mjs';
 
-test('article page template keeps internal evidence components off the public article surface', () => {
+test('article page exposes reader-safe evidence without internal quality panels', () => {
   const page = fs.readFileSync('src/pages/news/[id].astro', 'utf8');
   assert.doesNotMatch(page, /ArticleEvidenceBox/);
   assert.doesNotMatch(page, /ClaimVerificationNote/);
-  assert.doesNotMatch(page, /ArticleWatchMetrics/);
+  assert.doesNotMatch(page, /InternalQualityPanel/);
   assert.doesNotMatch(page, /Backfilled Analysis/);
+  assert.match(page, /buildArticleReadingModel/);
+  assert.match(page, /ArticleSourceFacts/);
+  assert.match(page, /ArticleWatchMetrics/);
+  assert.match(page, /ArticleBottomLine/);
+  assert.match(page, /ArticleActions/);
 });
 
 test('related articles prefer same category and adjacent infrastructure without duplicates', () => {

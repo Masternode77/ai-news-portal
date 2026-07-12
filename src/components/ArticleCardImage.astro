@@ -12,6 +12,8 @@ const {
   ariaLabel = '',
   provenanceLabel = '',
   provenanceKind = '',
+  width = 1200,
+  height = 900,
 } = Astro.props;
 
 const safeImage = image || '/generated/fallbacks/ai-infrastructure.svg';
@@ -31,7 +33,7 @@ const hasProvenance = Boolean(provenanceLabel || provenanceKind);
     data-image-provenance={hasProvenance ? '' : undefined}
     data-provenance-kind={provenanceKind || undefined}
   >
-    <img class={className} src={safeImage} alt={alt} loading={loading} decoding="async" />
+    <img class={className} src={safeImage} alt={alt} width={width} height={height} loading={loading} decoding="async" fetchpriority={priority ? 'high' : 'auto'} />
   </a>
 ) : (
   <div
@@ -40,6 +42,6 @@ const hasProvenance = Boolean(provenanceLabel || provenanceKind);
     data-image-provenance={hasProvenance ? '' : undefined}
     data-provenance-kind={provenanceKind || undefined}
   >
-    <img class={className} src={safeImage} alt={alt} loading={loading} decoding="async" />
+    <img class={className} src={safeImage} alt={alt} width={width} height={height} loading={loading} decoding="async" fetchpriority={priority ? 'high' : 'auto'} />
   </div>
 )}

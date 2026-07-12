@@ -14,6 +14,6 @@ const hasProvenance = Boolean(provenanceLabel || provenanceKind);
   data-image-provenance={hasProvenance ? '' : undefined}
   data-provenance-kind={provenanceKind || undefined}
 >
-  <img src={safeImage} alt={imageAlt} loading="eager" decoding="async" fetchpriority="high" />
+  <img src={safeImage} alt={imageAlt} width="1536" height="864" loading="eager" decoding="async" fetchpriority="high" />
   {caption ? <figcaption>{caption}</figcaption> : null}
 </figure>

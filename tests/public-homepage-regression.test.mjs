@@ -25,14 +25,12 @@ test('homepage source does not render operational dashboard sections', () => {
 test('homepage source uses publication vocabulary for reader-facing actions', () => {
   const source = fs.readFileSync('src/pages/index.astro', 'utf8');
   const required = [
-    'AI Infrastructure Intelligence',
-    'Latest Analysis',
-    'Recent intelligence',
-    'Publication archive',
-    'Read the latest',
-    'Browse the archive',
+    'Latest intelligence',
+    'Current edition',
+    'Explore the archive',
+    'Browse all coverage',
     'Source-linked analysis',
-    'Recent intelligence',
+    'Search all public coverage',
   ];
   const missing = required.filter((phrase) => !new RegExp(phrase, 'i').test(source));
   assert.deepEqual(missing, [], `homepage source is missing publication vocabulary: ${missing.join(', ')}`);

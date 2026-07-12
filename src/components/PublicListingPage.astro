@@ -1,0 +1,30 @@
+---
+import PublicSiteHeader from './PublicSiteHeader.astro';
+import PublicSiteFooter from './PublicSiteFooter.astro';
+
+const {
+  eyebrow = 'Coverage',
+  title,
+  lede = '',
+  activePath = Astro.url.pathname,
+  showSearch = true,
+} = Astro.props;
+---
+<div class="public-site public-listing-site">
+  <PublicSiteHeader activePath={activePath} />
+  <main class="public-page-main">
+    <header class="public-page-heading">
+      <p class="eyebrow">{eyebrow}</p>
+      <h1>{title}</h1>
+      {lede ? <p>{lede}</p> : null}
+      {showSearch ? (
+        <nav class="public-page-tools" aria-label="Page tools">
+          <a href="/search/">Search public coverage</a>
+          <a href="/archive/">Browse the archive</a>
+        </nav>
+      ) : null}
+    </header>
+    <slot />
+  </main>
+  <PublicSiteFooter />
+</div>

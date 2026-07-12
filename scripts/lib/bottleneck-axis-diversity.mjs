@@ -43,9 +43,17 @@ function explicitAxis(value = '') {
 }
 
 export function inferBottleneckAxis(article = {}) {
-  const explicit = explicitAxis(article.bottleneck_type)
-    || explicitAxis(article.primary_category)
-    || explicitAxis(article.infrastructure_layer);
+  const title = compact(article.title);
+  if (/\b(security|ban|bans|moratorium|permit|permitting|regulation|regulatory|policy|freeze|lawsuit|compliance)\b/.test(title)) {
+    return 'risk';
+  }
+  if (/\b(supply chain|supplier|procurement|lead time|transformer|switchgear|busbar|equipment delivery)\b/.test(title)) {
+    return 'supply-chain';
+  }
+
+  const explicit = explicitAxis(article.primary_category)
+    || explicitAxis(article.infrastructure_layer)
+    || explicitAxis(article.bottleneck_type);
   if (explicit) return explicit;
 
   const text = textFor(article);
@@ -77,6 +85,11 @@ export function inferBottleneckAxis(article = {}) {
 
 export function orderByFirstViewportAxisDiversity(items = [], options = {}) {
   const firstViewportCount = Math.max(1, Number(options.firstViewportCount || HOMEPAGE_BOTTLENECK_AXES.length));
+  const candidateCount = Math.max(
+    firstViewportCount,
+    Math.min(items.length, Number(options.candidateCount || items.length)),
+  );
+  const candidates = items.slice(0, candidateCount);
   const usedIndexes = new Set();
   const selected = [];
   const firstItem = items[0];
@@ -95,7 +108,7 @@ export function orderByFirstViewportAxisDiversity(items = [], options = {}) {
   for (const axis of orderedAxes) {
     if (selected.length >= firstViewportCount) break;
     if (axis === firstAxis && selected.length) continue;
-    const index = items.findIndex((item, candidateIndex) => !usedIndexes.has(candidateIndex) && inferBottleneckAxis(item) === axis);
+    const index = candidates.findIndex((item, candidateIndex) => !usedIndexes.has(candidateIndex) && inferBottleneckAxis(item) === axis);
     if (index < 0) continue;
     selected.push(items[index]);
     usedIndexes.add(index);

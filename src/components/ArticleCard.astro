@@ -32,7 +32,7 @@ const whyItMatters = signal.why_it_matters ? String(signal.why_it_matters).repla
   />
   <div class="article-list-card-main">
     <div class="story-meta">
-      <span class="public-signal-label">{signal.signal_label || signal.label || 'Brief'}</span>
+      <span class="public-signal-label">{signal.format_label || signal.signal_label || signal.label || 'Brief'}</span>
       {signal.category ? <span>{signal.category}</span> : null}
       {formattedDate ? <time datetime={date}>{formattedDate}</time> : null}
       {signal.source ? <span>{signal.source}</span> : null}

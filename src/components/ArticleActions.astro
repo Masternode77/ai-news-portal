@@ -1,0 +1,49 @@
+---
+const {
+  url = '',
+  title = '',
+  deck = '',
+  reportEmail = '',
+} = Astro.props;
+
+function safeShareUrl(value: unknown) {
+  const candidate = String(value || '').trim();
+  try {
+    const parsed = new URL(candidate);
+    return parsed.protocol === 'https:' || parsed.protocol === 'http:' ? parsed.href : '';
+  } catch {
+    return '';
+  }
+}
+
+const cleanUrl = safeShareUrl(url);
+const cleanTitle = String(title || '').replace(/\s+/g, ' ').trim();
+const cleanDeck = String(deck || '').replace(/\s+/g, ' ').trim();
+const cleanReportEmail = String(reportEmail || '').replace(/[\r\n]/g, '').trim();
+const shareText = [cleanTitle, cleanDeck].filter(Boolean).join(' - ');
+
+const shareParams = new URLSearchParams();
+if (cleanUrl) shareParams.set('url', cleanUrl);
+
+const linkedInHref = `https://www.linkedin.com/sharing/share-offsite/?${shareParams.toString()}`;
+const xParams = new URLSearchParams();
+if (cleanUrl) xParams.set('url', cleanUrl);
+if (shareText) xParams.set('text', shareText);
+const xHref = `https://twitter.com/intent/tweet?${xParams.toString()}`;
+
+const mailParams = new URLSearchParams();
+if (cleanTitle) mailParams.set('subject', cleanTitle);
+mailParams.set('body', [shareText, cleanUrl].filter(Boolean).join('\n\n'));
+const mailHref = `mailto:?${mailParams.toString()}`;
+
+const reportParams = new URLSearchParams();
+reportParams.set('subject', cleanTitle ? `Report an issue: ${cleanTitle}` : 'Report an issue');
+reportParams.set('body', cleanUrl ? `Article URL:\n${cleanUrl}\n\nIssue:\n` : 'Issue:\n');
+const reportHref = cleanReportEmail ? `mailto:${encodeURIComponent(cleanReportEmail)}?${reportParams.toString()}` : '';
+---
+<nav class="article-actions" aria-label="Article actions">
+  <a href={linkedInHref} target="_blank" rel="noopener noreferrer">LinkedIn</a>
+  <a href={xHref} target="_blank" rel="noopener noreferrer">X</a>
+  <a href={mailHref}>Email</a>
+  {reportHref ? <a href={reportHref}>Report issue</a> : null}
+</nav>

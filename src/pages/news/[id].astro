@@ -6,6 +6,13 @@ import LongformArticleBody from '../../components/LongformArticleBody.astro';
 import SourceAttribution from '../../components/SourceAttribution.astro';
 import AIDisclosureFooter from '../../components/AIDisclosureFooter.astro';
 import RelatedArticles from '../../components/RelatedArticles.astro';
+import AtAGlanceBox from '../../components/AtAGlanceBox.astro';
+import ArticleSourceFacts from '../../components/ArticleSourceFacts.astro';
+import ArticleWatchMetrics from '../../components/ArticleWatchMetrics.astro';
+import ArticleBottomLine from '../../components/ArticleBottomLine.astro';
+import ArticleActions from '../../components/ArticleActions.astro';
+import PublicSiteHeader from '../../components/PublicSiteHeader.astro';
+import PublicSiteFooter from '../../components/PublicSiteFooter.astro';
 import latestNews from '../../data/latest-news.json';
 import archivedNews from '../../data/archived-news.json';
 import { SITE } from '../../config/site';
@@ -13,6 +20,8 @@ import { cleanEditorialText, displayHeadline } from '../../lib/editorial-display
 import { buildPublicPresentation } from '../../lib/publicPresentation.js';
 import { taxonomyDisplay } from '../../lib/taxonomy-display.js';
 import { serializeJsonForHtml } from '../../lib/safe-html.js';
+import { buildArticleReadingModel } from '../../lib/article-reading-model.js';
+import { publicFormatLabel } from '../../lib/public-route-label.js';
 import {
   articleCanonicalPath,
   buildArticleStructuredData,
@@ -76,6 +85,8 @@ const articleDescription = guardPublicCopy(cleanEditorialText(
   || articleRecord.snippet
   || articleRecord.title
 )).text;
+const readingModel = buildArticleReadingModel(articleRecord, publicPresentation);
+const formatLabel = publicFormatLabel(articleRecord);
 const articleBodyBlocks = cleanArticleBodyBlocks(articleRecord.expertLensFull?.finalArticleBody || '')
   .map((paragraph: string) => guardPublicCopy(cleanEditorialText(paragraph)).text)
   .filter((paragraph: string) => !forbiddenPublicPhraseMatches(paragraph).length)
@@ -110,8 +121,10 @@ const structuredData = buildArticleStructuredData({
   image={openGraphImage}
 >
   <script is:inline type="application/ld+json" set:html={serializeJsonForHtml(structuredData)}></script>
-  <main class="detail-shell publication-article">
-    <article class="detail-card publication-article-card">
+  <div class="public-site public-article-site">
+    <PublicSiteHeader activePath={canonicalPath} />
+    <main class="detail-shell publication-article">
+      <article class="detail-card publication-article-card">
       <div class="detail-body">
         <ArticleHeader
           category={taxonomy.primary}
@@ -119,6 +132,7 @@ const structuredData = buildArticleStructuredData({
           source={sourceAttribution}
           title={displayTitle}
           deck={publicPresentation.deck || articleDescription}
+          formatLabel={formatLabel}
         />
 
         <ArticleHeroImage
@@ -129,9 +143,27 @@ const structuredData = buildArticleStructuredData({
           caption={sourceAttribution.name ? `Visual analysis for reporting from ${sourceAttribution.name}.` : ''}
         />
 
+        <AtAGlanceBox items={readingModel.executiveSummary} />
+
+        <ArticleSourceFacts
+          facts={readingModel.sourceFacts}
+          limitation={readingModel.evidenceLimitation}
+        />
+
         {articleBodyBlocks.length ? <LongformArticleBody blocks={articleBodyBlocks} /> : null}
 
+        {readingModel.watchItems.length ? <ArticleWatchMetrics metrics={readingModel.watchItems} /> : null}
+
+        <ArticleBottomLine bottomLine={readingModel.bottomLine} />
+
         <SourceAttribution source={sourceAttribution} />
+
+        <ArticleActions
+          url={articleUrl}
+          title={displayTitle}
+          deck={publicPresentation.deck || articleDescription}
+          reportEmail={SITE.contactEmail}
+        />
 
         <AIDisclosureFooter canonicalUrl={articleUrl} />
 
@@ -145,6 +177,8 @@ const structuredData = buildArticleStructuredData({
 
         <RelatedArticles articles={related} currentId={articleRecord.id} />
       </div>
-    </article>
-  </main>
+      </article>
+    </main>
+    <PublicSiteFooter />
+  </div>
 </Layout>

@@ -10,7 +10,7 @@ test('article page template presents Compute Current blog analysis before source
   const related = await fs.readFile('src/components/RelatedArticles.astro', 'utf8');
   const source = await fs.readFile('src/components/SourceAttribution.astro', 'utf8');
 
-  assert.match(header, /Compute Current Editorial Desk/);
+  assert.match(header, /By Compute Current/);
   assert.match(header, /aria-label="Breadcrumb"/);
   assert.match(template, /ArticleHeader/);
   assert.match(template, /ArticleHeroImage/);

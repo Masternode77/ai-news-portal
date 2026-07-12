@@ -1,6 +1,7 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import LatestAnalysisFeed from '../../components/LatestAnalysisFeed.astro';
+import PublicListingPage from '../../components/PublicListingPage.astro';
 import latestNews from '../../data/latest-news.json';
 import archivedNews from '../../data/archived-news.json';
 import { SITE } from '../../config/site';
@@ -21,13 +22,19 @@ const { pageNumber } = Astro.props;
 const feed = buildArchiveFeed([...latestNews, ...archivedNews], { page: pageNumber, pageSize: 50 });
 ---
 <Layout title={`Publication archive page ${pageNumber} | ${SITE.name}`} description="Compute Current publication archive page." canonicalPath={`/archive/${pageNumber}/`}>
-  <main class="policy-shell taxonomy-page publication-archive">
-    <a class="back-link" href="/archive/">Publication archive</a>
-    <section class="policy-page">
-      <p class="eyebrow">Publication archive</p>
-      <h1>Publication archive page {pageNumber}</h1>
-      <p class="policy-lede">Browse recent AI infrastructure intelligence, briefs, and source-linked analysis.</p>
-    </section>
+  <PublicListingPage
+    eyebrow="Publication archive"
+    title={`AI infrastructure archive, page ${pageNumber}`}
+    lede="Continue through published analysis and source-linked briefs across the physical systems behind AI deployment."
+    activePath="/archive/"
+  >
     <LatestAnalysisFeed feed={feed} title="Recent intelligence" eyebrow="Publication archive" dek="" />
-  </main>
+    <nav class="public-pagination" aria-label="Archive pages">
+      {Array.from({ length: feed.pageCount }, (_, index) => index + 1).map((page) => (
+        page === pageNumber
+          ? <span aria-current="page">{page}</span>
+          : <a href={page === 1 ? '/archive/' : `/archive/${page}/`}>{page}</a>
+      ))}
+    </nav>
+  </PublicListingPage>
 </Layout>

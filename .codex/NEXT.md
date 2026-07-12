@@ -6,37 +6,43 @@
 - Branch carries the local upgrade checkpoints; production remains unchanged.
 
 ## Latest completed checklist item
-- Built three production-quality, noindex design options: Midnight Intelligence,
-  Research Ledger, and Signal Mosaic.
-- Each option includes homepage, article, navigation, loading, empty, and error
-  states using one source-grounded dataset and unique local article images.
-- Completed desktop, tablet, and mobile visual QA and selected Midnight
-  Intelligence as the recommendation pending preview approval.
+- Implemented the selected Midnight Intelligence public UI across the homepage,
+  archive, taxonomy listings, search, and article routes.
+- Repaired public eligibility and relevance so source-grounded infrastructure
+  stories remain visible while consumer/software-only and generated boilerplate
+  are excluded.
+- Verified recent homepage diversity across capacity, power, capital,
+  supply-chain, and risk, with real raster imagery on every visible story.
 
 ## Changed surfaces
-- `src/pages/design-lab/`, `src/components/design-lab/`, and
-  `src/styles/design-lab.css`.
-- `src/lib/design-lab-data.js` shared representative content model.
-- `scripts/qa-design-lab-visual.mjs` and design-lab regression tests.
-- `docs/design-options-comparison.md` weighted decision record.
-- `package.json` visual QA command only; no dependency changes.
+- Public routes and shared reader components under `src/pages/`,
+  `src/components/`, and `src/styles/public-intelligence.css`.
+- Search, route-label, article-reading, relevance, feed ordering, and visual-lead
+  helpers under `src/lib/` and `scripts/lib/`.
+- Focused regression tests for copy quality, public filtering, images, search,
+  article rendering, homepage hierarchy, and RSS compatibility.
 
 ## Validation results
-- Final full suite: 352 passed, 0 failed, 1 conditional skip (353 total).
-- `npm run check`: 0 errors, 11 existing hints.
+- Final full suite: 369 passed, 0 failed, 1 intentional skip (370 total).
+- `npm run check`: 0 errors, 0 warnings, 9 existing hints.
 - `npm audit`: 0 vulnerabilities at every severity across 406 dependencies.
-- `npm run content:gate`: passed; build produced 1,529 pages.
-- Design-lab Chromium QA: 27 captures, 0 failures across three viewports.
-- No overflow, clipped text, failed/repeated visible images, console errors,
-  internal copy, exposed admin links, or blank pixel captures.
-- Public copy, article, homepage, feed volume, image, and admin exclusion audits passed.
-- Screenshot evidence is local under `artifacts/design-options/` and intentionally
-  ignored as runtime evidence.
+- `npm run build`: passed; build produced 1,529 pages.
+- Chromium desktop/mobile QA passed for homepage, archive, search, and article:
+  HTTP 200, zero horizontal overflow, broken images, public admin links, or
+  generic-copy matches.
+- Final screenshot evidence is local under `artifacts/public-final-review/` and
+  intentionally ignored as runtime evidence.
+- `npm run content:gate`: passed; 1,529 routes built, 19 release-gate tests
+  passed, and public copy, homepage, feed-volume, image, and admin-exclusion
+  audits passed.
+- Independent code review findings were repaired. Final independent visual
+  review found zero P0-P2 issues in desktop v4 and mobile v5 captures.
 
 ## Blockers
 - Production DB, object storage, and admin credentials are unavailable; production CRUD cannot be claimed.
 - Production remains unchanged until preview deployment and explicit approval.
 
 ## Exact next step
-- Create the local design checkpoint commit, then adapt the selected Midnight
-  direction into the final public UI on the upgrade branch before the secure CMS phase.
+- Create the local public-surface checkpoint commit, then begin secure CMS
+  containment by removing data-bearing static admin routes and introducing a
+  durable storage boundary. Do not push or deploy production.

@@ -7,7 +7,7 @@ import { guardPublicTemplatePhrases } from '../scripts/lib/public-template-phras
 const distDir = path.resolve('dist');
 const legacyOpenRoutes = ['/subscribe/', '/pricing/', '/sample/', '/briefing/'];
 const retiredOperationalRoutes = ['/contact/', '/methodology/', '/editorial-policy/', '/ai-disclosure/'];
-const publicHomepageLinks = ['/archive/', '/sample/', '/rss.xml'];
+const publicHomepageLinks = ['/search/', '/archive/', '/rss.xml'];
 const productionRoutes = ['/', '/archive/', '/rss.xml', '/sitemap.xml', ...legacyOpenRoutes];
 
 function distHtmlPath(routePath) {
@@ -60,11 +60,11 @@ test('legacy conversion routes render as noindex public reference pages', async 
   }
 });
 
-test('homepage links to publication surfaces before latest analysis', async () => {
+test('homepage links to publication surfaces before the current edition', async () => {
   const homepage = await fs.readFile(path.join(distDir, 'index.html'), 'utf8');
-  const latestAnalysisIndex = homepage.indexOf('Latest Analysis');
+  const latestAnalysisIndex = homepage.indexOf('Latest intelligence');
 
-  assert.notEqual(latestAnalysisIndex, -1, 'expected Latest Analysis section');
+  assert.notEqual(latestAnalysisIndex, -1, 'expected latest intelligence section');
   for (const routePath of publicHomepageLinks) {
     const linkMatch = homepage.match(new RegExp(`href=["']${routePath}["']`));
     assert.ok(linkMatch, `expected homepage link to ${routePath}`);
@@ -98,6 +98,7 @@ test('public conversion routes avoid paid surfaces and template article language
   for (const routePath of legacyOpenRoutes) {
     const html = await readDistHtml(routePath);
     const text = textContent(html);
+    assert.doesNotMatch(html, /href=["']\/admin(?:\/|["'])/i, `${routePath} should not expose admin navigation`);
     assert.doesNotMatch(
       text,
       /stripe|checkout|login|credit card|card number|payment processor|payment form|request pricing|see pricing|founding subscriber|team subscription|custom executive|executive briefing|custom briefing|get the weekly|paid|paywall|subscriber would receive/i,

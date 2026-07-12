@@ -152,7 +152,7 @@ test('rss builder omits extraction-clean weak self-driving items without source-
 });
 
 test('rss builder descriptions do not expose compact-signal fallback copy', () => {
-  const publicSourceText = 'Verified source text connects data center procurement timing, power equipment delivery, supplier timing, and operating risk to a public market signal. '.repeat(8);
+  const publicSourceText = 'Verified source text connects AI data center procurement timing, utility power equipment delivery, server capacity, and operating risk to a public market signal. '.repeat(8);
   const items = buildRssItems([
     {
       id: 'procurement-fallback',

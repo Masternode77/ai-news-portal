@@ -2,6 +2,7 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import test from 'node:test';
 import { buildArchiveFeed } from '../scripts/lib/archive-feed-builder.mjs';
+import { inferBottleneckAxis } from '../scripts/lib/bottleneck-axis-diversity.mjs';
 import { buildHomepageFeed } from '../scripts/lib/homepage-feed-builder.mjs';
 import { findInternalLanguageHits } from '../scripts/lib/internal-language-guard.mjs';
 import { generateLongformAnalysis } from '../scripts/lib/longform-engine.mjs';
@@ -81,6 +82,7 @@ function axisItem(index, axis, hoursAgo = index) {
     ...item(index),
     ...byAxis[axis],
     id: `axis-${axis}-${index}`,
+    infrastructure_relevance_score: 0.9,
     publishedAt: new Date(Date.UTC(2026, 4, 20, 12 - hoursAgo)).toISOString(),
     bottleneck_type: axis,
     generatedImage: `/generated/fallbacks/${axis === 'supply-chain' ? 'supply-chain' : axis === 'capacity' ? 'data-centers' : axis === 'risk' ? 'regulation' : axis}.svg`,
@@ -216,7 +218,36 @@ test('homepage first viewport cards represent distinct bottleneck axes when elig
   const firstViewportAxes = feed.items.slice(0, 5).map((entry) => entry.publicSignal.bottleneck_axis);
 
   assert.deepEqual(firstViewportAxes, ['power', 'capacity', 'capital', 'supply-chain', 'risk']);
-  assert.equal(new Set(feed.items.slice(0, 5).map((entry) => entry.publicSignal.deck)).size, 5);
+  assert.equal(new Set(feed.items.slice(0, 5).map((entry) => entry.publicSignal.title)).size, 5);
+});
+
+test('editorial category wins over a stale persisted bottleneck axis', () => {
+  assert.equal(inferBottleneckAxis({
+    title: 'Leading-edge fab capacity expands',
+    primary_category: 'Semiconductors',
+    infrastructure_layer: 'Silicon',
+    bottleneck_type: 'power_grid',
+  }), 'capacity');
+});
+
+test('clear title evidence repairs stale category metadata for risk and supply-chain stories', () => {
+  assert.equal(inferBottleneckAxis({
+    title: 'Counties pass temporary data center bans',
+    primary_category: 'Power & Grid',
+  }), 'risk');
+  assert.equal(inferBottleneckAxis({
+    title: 'Liquid-cooling supplier unveils an 800V DC busbar',
+    primary_category: 'Cooling',
+  }), 'supply-chain');
+});
+
+test('homepage diversity does not promote stale axes ahead of the recent candidate window', () => {
+  const recent = Array.from({ length: 15 }, (_, index) => axisItem(index + 100, index % 2 ? 'capacity' : 'power', index));
+  const staleCapital = axisItem(999, 'capital', 30);
+  const feed = buildHomepageFeed([...recent, staleCapital], { limit: 16, minimumVisible: 0 });
+
+  assert.equal(feed.items.slice(0, 5).some((entry) => entry.id === staleCapital.id), false);
+  assert.equal(feed.items.at(-1).id, staleCapital.id);
 });
 
 test('homepage feed mixes longform and short public items without internal buckets', () => {
@@ -235,20 +266,21 @@ test('homepage feed mixes longform and short public items without internal bucke
 test('homepage feed avoids visible standalone blueprint without mutating source URLs', () => {
   const article = {
     id: 'watch_sig_299b3d10a524a4cb',
-    title: 'Google: The agentic era: Architecting the blueprint for mission impact across the public sector',
-    deck: 'Google: The agentic era: Architecting the blueprint for mission impact across the public sector remains a source-linked AI infrastructure signal.',
-    why_it_matters: 'Google: The agentic era: Architecting the blueprint for mission impact across the public sector remains a source-linked AI infrastructure signal.',
+    title: 'Google: Architecting the blueprint for AI data center capacity',
+    deck: 'Google: Architecting the blueprint for AI data center capacity remains a source-linked AI infrastructure signal.',
+    why_it_matters: 'Google: Architecting the blueprint for AI data center capacity remains a source-linked AI infrastructure signal.',
     source: 'Google Cloud Blog',
-    sourceUrl: 'https://cloud.google.com/blog/topics/public-sector/the-agentic-era-architecting-the-blueprint-for-mission-impact-across-the-public-sector/',
+    sourceUrl: 'https://cloud.google.com/blog/topics/infrastructure/architecting-the-blueprint-for-ai-data-center-capacity/',
     publishedAt: new Date(Date.UTC(2026, 4, 20, 12)).toISOString(),
     primary_category: 'Cloud Capacity',
     infrastructure_layer: 'cloud capacity',
+    infrastructure_relevance_score: 0.62,
     public_content_tier: 'signal_card',
     homepagePublished: true,
     archiveOnly: false,
     generatedImage: '/generated/fallbacks/cloud-capacity.svg',
     public_presentation: {
-      image_alt: 'Google: The agentic era: Architecting the blueprint for mission impact across the public sector editorial visual',
+      image_alt: 'Google: Architecting the blueprint for AI data center capacity editorial visual',
     },
   };
   const feed = buildHomepageFeed([article], { limit: 1, minimumVisible: 0 });
@@ -271,7 +303,7 @@ test('homepage feed avoids visible standalone blueprint without mutating source 
   assert.equal(/\bblueprint\b/i.test(signalText), false);
   assert.equal(signal.read_source, article.sourceUrl);
   assert.match(signal.read_source, /\bblueprint\b/i);
-  assert.match(signal.image, /\bblueprint\b/i);
+  assert.doesNotMatch(signal.image, /\bblueprint\b/i);
   assert.equal(signal.image_variant, 'thumbnail');
   assert.equal(typeof signal.image_provenance_label, 'string');
   assert.notEqual(signal.image_provenance_label.length, 0);
@@ -322,31 +354,31 @@ test('homepage feed only links to article detail pages that pass public longform
   assert.equal(feed.items.length, 0);
 });
 
-test('homepage cards use a public board layout', () => {
+test('homepage cards use a stable publication list layout', () => {
   const cardSource = fs.readFileSync('src/components/ArticleCard.astro', 'utf8');
-  const styles = fs.readFileSync('src/styles/global.css', 'utf8');
+  const styles = fs.readFileSync('src/styles/public-intelligence.css', 'utf8');
 
-  assert.match(styles, /\.article-list\s*{[^}]*grid-template-columns:\s*repeat\(3,\s*minmax\(0,\s*1fr\)\)/s);
-  assert.match(styles, /\.article-list-card\s*{[^}]*flex-direction:\s*column/s);
+  assert.match(styles, /\.public-site \.article-list\s*{[^}]*grid-template-columns:\s*1fr/s);
+  assert.match(styles, /\.public-site \.article-list-card\s*{[^}]*grid-template-columns:\s*240px minmax\(0, 1fr\)/s);
   assert.match(cardSource, /article-impact-pills/);
+  assert.match(cardSource, /format_label/);
   assert.equal(/Cycle status|qualifying signal|Published deskwork/i.test(cardSource), false);
 });
 
 test('homepage composes dedicated publication components', () => {
   const source = fs.readFileSync('src/pages/index.astro', 'utf8');
   const feedSource = fs.readFileSync('src/components/LatestAnalysisFeed.astro', 'utf8');
-  const styles = fs.readFileSync('src/styles/global.css', 'utf8');
+  const styles = fs.readFileSync('src/styles/public-intelligence.css', 'utf8');
 
-  assert.match(source, /FeaturedArticle/);
-  assert.match(source, /CategoryNav/);
-  assert.match(source, /hero-brief/);
-  assert.match(source, /Latest Analysis/);
-  assert.match(source, /Publication archive/);
-  assert.match(source, /Read the latest/);
-  assert.match(source, /Browse the archive/);
+  assert.match(source, /PublicSiteHeader/);
+  assert.match(source, /PublicSiteFooter/);
+  assert.match(source, /public-lead/);
+  assert.match(source, /Latest intelligence/);
+  assert.match(source, /Explore the archive/);
+  assert.match(source, /Browse all coverage/);
   assert.doesNotMatch(source, /Latest Signals|Infrastructure command center|public operating board|Source Signal/i);
   assert.match(feedSource, /ArticleCard/);
-  assert.match(styles, /\.featured-article\s*{/);
-  assert.match(styles, /\.category-nav\s*{/);
-  assert.match(styles, /\.publication-home\s*{/);
+  assert.match(styles, /\.public-lead\s*{/);
+  assert.match(styles, /\.public-decision-index\s*{/);
+  assert.match(styles, /\.public-discovery\s*{/);
 });

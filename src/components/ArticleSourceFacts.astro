@@ -1,0 +1,17 @@
+---
+const { facts = [], limitation = '' } = Astro.props;
+const visibleFacts = Array.isArray(facts) ? facts.filter(Boolean).slice(0, 4) : [];
+---
+{visibleFacts.length || limitation ? (
+  <section class="article-source-facts" aria-labelledby="source-facts-title">
+    <h2 id="source-facts-title">What the source establishes</h2>
+    {visibleFacts.length ? (
+      <ul>
+        {visibleFacts.map((fact: string) => <li>{fact}</li>)}
+      </ul>
+    ) : null}
+    {limitation ? (
+      <p><strong>Evidence limit:</strong> {limitation}</p>
+    ) : null}
+  </section>
+) : null}

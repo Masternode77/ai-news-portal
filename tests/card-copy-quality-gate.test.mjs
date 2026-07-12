@@ -257,15 +257,13 @@ test('generated homepage copy avoids repeated fallback text across same-angle ba
     generatedImage: '/generated/fallbacks/semiconductors.svg',
   }));
   const feed = buildHomepageFeed(sameAngleItems, { limit: 36, minimumVisible: 0 });
+  const titles = feed.items.map((entry) => entry.publicSignal.title);
   const decks = feed.items.map((entry) => entry.publicSignal.deck);
   const whys = feed.items.map((entry) => entry.publicSignal.why_it_matters);
-  const deckTails = decks.map(terminalTailFamily);
-  const whyTails = whys.map(terminalTailFamily);
 
   assert.equal(feed.items.length, 36);
-  assert.equal(maxDuplicateCount(decks), 1);
-  assert.equal(maxDuplicateCount(whys), 1);
-  assert.ok(maxDuplicateCount(deckTails) <= 2);
-  assert.ok(maxDuplicateCount(whyTails) <= 2);
-  assert.equal(feed.items.every((entry) => cardCopyQualityResult(entry.publicSignal).ok), true);
+  assert.equal(maxDuplicateCount(titles), 1);
+  assert.equal(decks.every((deck) => deck === ''), true);
+  assert.equal(whys.every((why) => why === ''), true);
+  assert.doesNotMatch(JSON.stringify(feed.items), /compact signal|infrastructure readers|why it matters:/i);
 });

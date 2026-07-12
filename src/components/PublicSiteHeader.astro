@@ -1,0 +1,33 @@
+---
+import { SITE } from '../config/site';
+
+const { activePath = Astro.url.pathname } = Astro.props;
+const links = [
+  ['Power', '/category/power-grid/'],
+  ['Capacity', '/category/data-centers/'],
+  ['Cloud', '/category/cloud-capacity/'],
+  ['Silicon', '/category/semiconductors/'],
+  ['Cooling', '/category/cooling/'],
+  ['Capital', '/category/capital-markets/'],
+  ['Policy', '/category/regulation/'],
+];
+---
+<header class="public-site-header">
+  <div class="public-utility-row">
+    <a class="public-brand" href="/" aria-label={`${SITE.name} home`}>
+      <span>Compute</span>
+      <strong>Current</strong>
+    </a>
+    <p>AI infrastructure intelligence</p>
+    <nav class="public-utility-links" aria-label="Publication utilities">
+      <a href="/search/">Search</a>
+      <a href="/archive/">Archive</a>
+      <a href="/rss.xml">RSS</a>
+    </nav>
+  </div>
+  <nav class="public-primary-nav" aria-label="Coverage sections">
+    {links.map(([label, href]) => (
+      <a href={href} aria-current={activePath.startsWith(href) ? 'page' : undefined}>{label}</a>
+    ))}
+  </nav>
+</header>

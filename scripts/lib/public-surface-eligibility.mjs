@@ -7,6 +7,7 @@ import {
   isSitemapEligible,
   publicArticleContract,
 } from './public-article-contract.mjs';
+import { sourceGroundedPublicRelevant } from './source-grounded-public-relevance.mjs';
 
 function persistedEditorialGatesPass(article = {}) {
   return article.repetition_blocked !== true
@@ -33,7 +34,8 @@ export function publicSurfaceDecision(article = {}) {
   const sourceHref = safeSourceUrlFor(article);
   const detailPage = strictLocalLongformEligible(article, contract);
   const failedLongform = contract.tier === PUBLIC_ARTICLE_TIERS.LONGFORM_ANALYSIS && !detailPage;
-  const hasPublicDestination = !failedLongform && (detailPage || Boolean(sourceHref));
+  const sourceRelevant = sourceGroundedPublicRelevant(article);
+  const hasPublicDestination = sourceRelevant && !failedLongform && (detailPage || Boolean(sourceHref));
   const archive = hasPublicDestination
     && contract.status === 'published'
     && contract.visibility.public === true
@@ -49,6 +51,7 @@ export function publicSurfaceDecision(article = {}) {
     archive,
     detailPage,
     homepage,
+    sourceRelevant,
     sourceHref,
     rss: homepage && isRssEligible(contract),
   };

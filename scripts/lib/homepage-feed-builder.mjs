@@ -7,6 +7,7 @@ import {
   inferBottleneckAxis,
   orderByFirstViewportAxisDiversity,
 } from './bottleneck-axis-diversity.mjs';
+import { publicFormatLabel } from '../../src/lib/public-route-label.js';
 
 function dateMs(article = {}) {
   const ms = new Date(article.analysisPublishedAt || article.publishedAt || article.updatedAt || 0).getTime();
@@ -26,6 +27,18 @@ function canonicalFeedKey(article = {}) {
   const title = String(article.title || article.expertLensFull?.finalHeadline || '').trim().toLowerCase();
   const source = String(article.source || article.source_name || '').trim().toLowerCase();
   return `title:${source}:${title}`;
+}
+
+const UNSAFE_SOURCE_EXCERPT = /\b(gives (?:buyers|operators)|shows where|ties .{0,80} timing|matters most for|puts .{0,80} planning|changes how|the practical checkpoint|the exposed dependency|sharper read|remains a source-linked ai infrastructure signal)\b/i;
+
+function sourceExcerptForCard(article = {}) {
+  const text = String(article.contentText || article.extractedText || article.sourceText || '').replace(/\s+/g, ' ').trim();
+  if (!text) return '';
+  const candidate = text.split(/(?<=[.!?])\s+/)[0]?.trim() || '';
+  if (candidate.length < 55 || UNSAFE_SOURCE_EXCERPT.test(candidate)) return '';
+  if (candidate.length <= 240) return candidate;
+  const clipped = candidate.slice(0, 237).replace(/\s+\S*$/, '').trim();
+  return clipped ? `${clipped}...` : '';
 }
 
 function dedupeFeedItems(items = []) {
@@ -60,6 +73,8 @@ function decorate(article = {}, options = {}) {
     : articleRoute;
   const presentation = buildPublicPresentation(article, { route, recentDecks: options.recentDecks || [] });
   const copy = generateCardCopy(article);
+  const sourceOnly = !surface.detailPage;
+  const sourceExcerpt = sourceOnly ? sourceExcerptForCard(article) : '';
   const bottleneckAxis = inferBottleneckAxis(article);
   const copyQuality = cardCopyQualityResult(copy, article);
   if (!copyQuality.ok) {
@@ -73,13 +88,16 @@ function decorate(article = {}, options = {}) {
       signal_label: copy.signal_label,
       label: copy.label,
       title: copy.title,
-      deck: copy.deck,
-      why_it_matters: copy.why_it_matters,
+      homepage_headline: String(article.leadHeadline || '').trim(),
+      deck: sourceOnly ? sourceExcerpt : copy.deck,
+      why_it_matters: sourceOnly ? '' : copy.why_it_matters,
       source: copy.source,
       date: copy.date,
       category: copy.category,
       cta: copy.cta,
+      format_label: publicFormatLabel(article),
       bottleneck_axis: bottleneckAxis,
+      reader_impact: sourceOnly ? [] : presentation.reader_impact,
       view_detail: detailHref,
       read_source: surface.sourceHref,
     },
@@ -94,7 +112,7 @@ function selectVisibleItems(sorted = [], count = 0, longformTarget = 3, firstVie
   ));
   const selected = orderByFirstViewportAxisDiversity(
     current.slice(0, count),
-    { firstViewportCount },
+    { firstViewportCount, candidateCount: Math.max(firstViewportCount * 3, 15) },
   );
   const selectedIds = new Set(selected.map((article) => article.id));
   const reservedLongforms = current

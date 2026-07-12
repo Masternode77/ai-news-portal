@@ -17,6 +17,8 @@ test('full offline content cycle downgrades unsupported longform while updating 
   assert.ok(result.artifacts.rssItems.length >= 1);
   const downgraded = result.artifacts.latestNews.find((article) => article.id === 'fact-rich-ai-campus');
   const cycleResult = result.results.find((article) => article.id === 'fact-rich-ai-campus');
+  assert.equal(downgraded.imageProvider, 'image2');
+  assert.equal(downgraded.forceAiImage, true);
   assert.equal(downgraded.public_content_tier, 'editorial_brief');
   assert.equal(downgraded.articlePagePublished, false);
   assert.equal(cycleResult.tier, 'editorial_brief');

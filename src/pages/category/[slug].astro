@@ -1,6 +1,7 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import LatestAnalysisFeed from '../../components/LatestAnalysisFeed.astro';
+import PublicListingPage from '../../components/PublicListingPage.astro';
 import taxonomyPages from '../../data/taxonomy-pages.json';
 import { SITE } from '../../config/site';
 import { buildHomepageFeed } from '../../../scripts/lib/homepage-feed-builder.mjs';
@@ -13,13 +14,12 @@ const { page } = Astro.props;
 const feed = buildHomepageFeed(page.items || [], { limit: 50, minimumVisible: 0 });
 ---
 <Layout title={`${page.title} | ${SITE.name}`} description={`Compute Current coverage for ${page.title}.`} canonicalPath={`/category/${page.slug}/`}>
-  <main class="policy-shell taxonomy-page">
-    <a class="back-link" href="/">Latest analysis</a>
-    <section class="policy-page">
-      <p class="eyebrow">Category</p>
-      <h1>{page.title}</h1>
-      <p class="policy-lede">Recent analysis, briefs, and signals in this coverage lane.</p>
-    </section>
+  <PublicListingPage
+    eyebrow="Coverage"
+    title={page.title}
+    lede={`Recent source-linked intelligence about ${page.title.toLowerCase()} and the decisions it changes.`}
+    activePath={`/category/${page.slug}/`}
+  >
     <LatestAnalysisFeed feed={feed} title={page.title} dek="" />
-  </main>
+  </PublicListingPage>
 </Layout>

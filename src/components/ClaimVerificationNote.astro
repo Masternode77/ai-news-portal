@@ -1,7 +1,13 @@
 ---
-const { claims = [] } = Astro.props;
+type Claim = {
+  numeric_value?: number | null;
+  verification_status?: string;
+};
+
+const VERIFIED_STATUSES = new Set(['verified_primary', 'verified_secondary', 'verified_multi_source']);
+const { claims = [] } = Astro.props as { claims?: Claim[] };
 const numeric = claims.filter((claim) => claim.numeric_value !== null && claim.numeric_value !== undefined);
-const verified = numeric.filter((claim) => /verified/.test(claim.verification_status || ''));
+const verified = numeric.filter((claim) => VERIFIED_STATUSES.has(String(claim.verification_status || '').toLowerCase()));
 ---
 <section class="detail-section claim-note">
   <h2>Claim verification</h2>

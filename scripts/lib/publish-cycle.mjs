@@ -105,6 +105,7 @@ function materializeArticle(source = {}, result = {}, now = new Date().toISOStri
     imageAlt: `${clean(source.title || result.title)} editorial visual`,
     imageStatus: 'queued',
     imageProvider: 'image2',
+    forceAiImage: true,
     ...images,
     public_routing: publicRoutingFor(result),
     expertLensShort: deck,

@@ -1,0 +1,213 @@
+---
+import Layout from '../layouts/Layout.astro';
+import ArticleCard from '../components/ArticleCard.astro';
+import PublicListingPage from '../components/PublicListingPage.astro';
+import latestNews from '../data/latest-news.json';
+import archivedNews from '../data/archived-news.json';
+import { SITE } from '../config/site';
+import { buildArchiveFeed } from '../../scripts/lib/archive-feed-builder.mjs';
+import {
+  buildPublicSearchRecord,
+  publicSearchFilterOptions,
+} from '../lib/public-search.js';
+
+const SEARCH_PAGE_SIZE = 10000;
+const feed = buildArchiveFeed([...latestNews, ...archivedNews], {
+  page: 1,
+  pageSize: SEARCH_PAGE_SIZE,
+});
+const items = feed.items || [];
+const records = items.map(buildPublicSearchRecord);
+const filters = publicSearchFilterOptions(records);
+const resultLabel = `${items.length} ${items.length === 1 ? 'result' : 'results'}`;
+---
+<Layout
+  title={`Search AI infrastructure intelligence | ${SITE.name}`}
+  description="Search Compute Current analysis, briefs, and market signals about AI infrastructure."
+  canonicalPath="/search/"
+>
+  <PublicListingPage
+    eyebrow="Search"
+    title="Search AI infrastructure intelligence"
+    lede="Explore analysis and source-linked briefs by topic, category or source."
+    activePath="/search/"
+    showSearch={false}
+  >
+
+    <section class="search-controls" aria-label="Search filters">
+      <div class="search-field">
+        <label for="public-search-query">Search by keyword</label>
+        <input
+          id="public-search-query"
+          type="search"
+          name="q"
+          autocomplete="off"
+          placeholder="Power, cooling, GPUs, data centers"
+        />
+      </div>
+      <div class="search-field">
+        <label for="public-search-category">Category</label>
+        <select id="public-search-category" name="category">
+          <option value="">All categories</option>
+          {filters.categories.map((category) => (
+            <option value={category.value}>{category.label}</option>
+          ))}
+        </select>
+      </div>
+      <div class="search-field">
+        <label for="public-search-source">Source</label>
+        <select id="public-search-source" name="source">
+          <option value="">All sources</option>
+          {filters.sources.map((source) => (
+            <option value={source.value}>{source.label}</option>
+          ))}
+        </select>
+      </div>
+    </section>
+
+    <section class="latest-analysis-feed search-results" aria-labelledby="search-results-title">
+      <div class="feed-heading">
+        <div>
+          <p class="eyebrow">Results</p>
+          <h2 id="search-results-title">Published intelligence</h2>
+        </div>
+        <p id="search-result-count" aria-live="polite">{resultLabel}</p>
+      </div>
+
+      {items.length ? (
+        <>
+          <div class="article-list" id="search-results-list">
+            {items.map((item: any, index: number) => {
+              const record = records[index];
+              return (
+                <div
+                  class="search-result-item"
+                  data-search-result
+                  data-search-text={record.searchText}
+                  data-search-category={record.normalizedCategory}
+                  data-search-source={record.normalizedSource}
+                >
+                  <ArticleCard signal={item.publicSignal} />
+                </div>
+              );
+            })}
+          </div>
+          <div class="public-empty-state" id="search-empty-state" hidden>
+            <p>No published intelligence matches those filters.</p>
+          </div>
+        </>
+      ) : (
+        <div class="public-empty-state">
+          <p>{feed.emptyState || 'No published intelligence is available yet.'}</p>
+        </div>
+      )}
+    </section>
+  </PublicListingPage>
+
+  <script>
+    const normalizeSearchText = (value = '') => String(value)
+      .normalize('NFKD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, ' ')
+      .trim()
+      .replace(/\s+/g, ' ');
+
+    const queryInput = document.querySelector<HTMLInputElement>('#public-search-query');
+    const categorySelect = document.querySelector<HTMLSelectElement>('#public-search-category');
+    const sourceSelect = document.querySelector<HTMLSelectElement>('#public-search-source');
+    const resultCount = document.querySelector<HTMLElement>('#search-result-count');
+    const emptyState = document.querySelector<HTMLElement>('#search-empty-state');
+    const results = [...document.querySelectorAll<HTMLElement>('[data-search-result]')];
+
+    const updateResults = () => {
+      const tokens = normalizeSearchText(queryInput?.value || '').split(' ').filter(Boolean);
+      const category = categorySelect?.value || '';
+      const source = sourceSelect?.value || '';
+      let visibleCount = 0;
+
+      for (const result of results) {
+        const text = result.dataset.searchText || '';
+        const matchesQuery = tokens.every((token) => text.includes(token));
+        const matchesCategory = !category || result.dataset.searchCategory === category;
+        const matchesSource = !source || result.dataset.searchSource === source;
+        const visible = matchesQuery && matchesCategory && matchesSource;
+        result.hidden = !visible;
+        if (visible) visibleCount += 1;
+      }
+
+      if (resultCount) {
+        resultCount.textContent = `${visibleCount} ${visibleCount === 1 ? 'result' : 'results'}`;
+      }
+      if (emptyState) emptyState.hidden = visibleCount !== 0;
+    };
+
+    queryInput?.addEventListener('input', updateResults);
+    categorySelect?.addEventListener('change', updateResults);
+    sourceSelect?.addEventListener('change', updateResults);
+    updateResults();
+  </script>
+
+  <style>
+    .search-page {
+      display: grid;
+      gap: 1.5rem;
+    }
+
+    .search-controls {
+      display: grid;
+      grid-template-columns: minmax(16rem, 1.4fr) minmax(12rem, 0.8fr) minmax(12rem, 0.8fr);
+      gap: 1rem;
+      padding: 1rem;
+      border: 1px solid var(--cc-line);
+      background: var(--cc-surface);
+    }
+
+    .search-field {
+      display: grid;
+      gap: 0.45rem;
+    }
+
+    .search-field label {
+      color: var(--cc-muted);
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0;
+      text-transform: uppercase;
+    }
+
+    .search-field input,
+    .search-field select {
+      width: 100%;
+      min-height: 2.75rem;
+      border: 1px solid var(--cc-line-strong);
+      border-radius: 3px;
+      background: var(--cc-bg);
+      color: var(--cc-ink);
+      font: inherit;
+      padding: 0.7rem 0.8rem;
+    }
+
+    .search-field input::placeholder {
+      color: var(--cc-dim);
+    }
+
+    .search-field input:focus,
+    .search-field select:focus {
+      border-color: var(--cc-cyan);
+      outline: 2px solid var(--cc-cyan);
+      outline-offset: 2px;
+    }
+
+    .search-result-item[hidden],
+    #search-empty-state[hidden] {
+      display: none;
+    }
+
+    @media (max-width: 820px) {
+      .search-controls {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</Layout>

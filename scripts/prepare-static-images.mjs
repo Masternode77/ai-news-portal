@@ -58,13 +58,14 @@ export async function refreshCollection(label, filePath) {
       try {
         const imageSet = await generateArticleImageSet(nextItem);
         const metadata = metadataPatchFromImageSet(imageSet);
-        if (metadata.generatedImage) {
+        if (metadata.generatedImage && imageSet.status === 'generated') {
           nextItem = withGeneratedArticleImage(item, metadata.generatedImage, metadata);
           changed += 1;
           console.log(`[prepare-static-images] ${label}: image2 refreshed ${item.id} -> ${metadata.generatedImage}`);
           updated.push(nextItem);
           continue;
         }
+        console.warn(`[prepare-static-images] ${label}: image2 unavailable ${item.id}; trying source image`);
       } catch (error) {
         console.warn(`[prepare-static-images] ${label}: image2 skipped ${item.id} -> ${error.message}`);
       }
