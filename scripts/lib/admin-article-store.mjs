@@ -7,6 +7,7 @@ const ADMIN_ACTIONS = new Set([
   'publish',
   'save-draft',
   'unpublish',
+  'schedule',
   'hide',
   'noindex',
   'regenerate-article',
@@ -100,11 +101,12 @@ function applyPatch(article = {}, patch = {}) {
     next.expertLens = text(patch.expertLensShort);
     next.expertLensFull.thesis = text(patch.expertLensShort);
   }
-  for (const field of ['category', 'region', 'source', 'sourceUrl', 'canonicalUrl', 'sourceImage', 'generatedImage', 'heroImage', 'thumbnailImage', 'imageAlt', 'imagePrompt', 'publishedAt']) {
+  for (const field of ['category', 'region', 'source', 'sourceUrl', 'canonicalUrl', 'sourceImage', 'generatedImage', 'heroImage', 'thumbnailImage', 'imageAlt', 'imagePrompt', 'publishedAt', 'scheduledAt']) {
     if (field in patch) next[field] = text(patch[field]);
   }
   if ('public_status' in patch || 'status' in patch) next.public_status = text(patch.public_status ?? patch.status);
   if ('tags' in patch) next.tags = normalizeTags(patch.tags);
+  if ('entities' in patch) next.entities = normalizeTags(patch.entities);
   return next;
 }
 
@@ -154,6 +156,12 @@ function applyAction(next, action, patch, actor, timestamp) {
     next.draft = true;
     next.articlePagePublished = false;
     next.homepagePublished = false;
+  } else if (action === 'schedule') {
+    next.public_status = 'scheduled';
+    next.draft = true;
+    next.articlePagePublished = false;
+    next.homepagePublished = false;
+    next.scheduledAt = text(patch.scheduledAt);
   } else if (action === 'hide') {
     next.public_status = 'hidden';
     next.hidden = true;
@@ -246,11 +254,21 @@ function escapeHtml(value = '') {
 }
 
 export function buildAdminArticlePreview(article = {}) {
-  const title = escapeHtml(article.expertLensFull?.finalHeadline || article.title);
-  const dek = escapeHtml(article.deck || article.summary);
-  const body = escapeHtml(bodyText(article)).replace(/\n{2,}/g, '</p><p>').replace(/\n/g, '<br>');
-  const image = escapeHtml(article.heroImage || article.generatedImage || article.sourceImage);
-  const alt = escapeHtml(article.imageAlt || title);
+  const titleText = text(article.expertLensFull?.finalHeadline || article.title);
+  const dekText = text(article.deck || article.summary);
+  const articleBody = bodyText(article);
+  const imageText = text(article.heroImage || article.generatedImage || article.sourceImage);
+  const title = escapeHtml(titleText);
+  const dek = escapeHtml(dekText);
+  const body = escapeHtml(articleBody).replace(/\n{2,}/g, '</p><p>').replace(/\n/g, '<br>');
+  const image = escapeHtml(imageText);
+  const alt = escapeHtml(article.imageAlt || titleText);
   const imageHtml = image ? '<img src="' + image + '" alt="' + alt + '">' : '';
-  return { title, dek, image, html: '<article class="admin-preview-article">' + imageHtml + '<h1>' + title + '</h1><p>' + dek + '</p><p>' + body + '</p></article>' };
+  return {
+    title: titleText,
+    dek: dekText,
+    text: articleBody,
+    image: imageText,
+    html: '<article class="admin-preview-article">' + imageHtml + '<h1>' + title + '</h1><p>' + dek + '</p><p>' + body + '</p></article>',
+  };
 }

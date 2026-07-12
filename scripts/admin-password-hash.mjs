@@ -25,10 +25,11 @@ if (!password) {
   process.exitCode = 1;
 } else {
   const hash = hashAdminPassword(password);
-  const [, salt = '', derived = ''] = hash.split('$');
+  const [, algorithm = '', , parameters = '', salt = '', derived = ''] = hash.split('$');
   const payload = {
     dryRun: flags.has('--dry-run'),
-    algorithm: 'scrypt',
+    algorithm,
+    parameters,
     saltLength: salt.length,
     derivedKeyLength: derived.length,
     env: `ADMIN_PASSWORD_HASH=${hash}`,
@@ -36,6 +37,7 @@ if (!password) {
   console.log([
     payload.env,
     `algorithm=${payload.algorithm}`,
+    `parameters=${payload.parameters}`,
     `saltLength=${payload.saltLength}`,
     `derivedKeyLength=${payload.derivedKeyLength}`,
     'Store this hash in ADMIN_PASSWORD_HASH and rotate ADMIN_SESSION_SECRET at the same time.',

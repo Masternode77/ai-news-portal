@@ -2,12 +2,11 @@
 import Layout from '../../layouts/Layout.astro';
 import LatestAnalysisFeed from '../../components/LatestAnalysisFeed.astro';
 import PublicListingPage from '../../components/PublicListingPage.astro';
-import latestNews from '../../data/latest-news.json';
-import archivedNews from '../../data/archived-news.json';
+import { publicContentInventory } from '../../lib/public-content-inventory.js';
 import { SITE } from '../../config/site';
 import { buildArchiveFeed } from '../../../scripts/lib/archive-feed-builder.mjs';
 
-const feed = buildArchiveFeed([...latestNews, ...archivedNews], { page: 1, pageSize: 50 });
+const feed = buildArchiveFeed(publicContentInventory, { page: 1, pageSize: 50 });
 ---
 <Layout title={`Publication archive | ${SITE.name}`} description="Browse the Compute Current publication archive." canonicalPath="/archive/">
   <PublicListingPage

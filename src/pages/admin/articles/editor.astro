@@ -1,0 +1,66 @@
+---
+import AdminCmsShell from '../../../components/AdminCmsShell.astro';
+---
+
+<AdminCmsShell
+  title="Article editor"
+  description="Edit a private Compute Current article"
+  canonicalPath="/admin/articles/editor/"
+  view="article-editor"
+>
+  <section class="admin-panel admin-editor" data-admin-article-editor>
+    <form class="admin-form admin-edit-form" id="admin-article-form">
+      <input name="version" type="hidden" />
+      <label><span>Headline</span><input name="title" required /></label>
+      <label><span>Deck</span><textarea name="summary" rows="3"></textarea></label>
+      <label><span>Article body</span><textarea name="bodyMarkdown" rows="18" required></textarea></label>
+      <div class="admin-field-grid">
+        <label><span>Category</span><input name="category" /></label>
+        <label><span>Region</span><input name="region" /></label>
+        <label><span>Source</span><input name="source" /></label>
+        <label><span>Source URL</span><input name="sourceUrl" type="url" /></label>
+        <label><span>Published at</span><input name="publishedAt" type="datetime-local" /></label>
+        <label><span>Publish at</span><input name="scheduledAt" type="datetime-local" /></label>
+        <label>
+          <span>Public status</span>
+          <select name="public_status">
+            <option value="draft">Draft</option>
+            <option value="published">Published</option>
+            <option value="scheduled">Scheduled</option>
+            <option value="unpublished">Unpublished</option>
+            <option value="quarantined">Quarantined</option>
+            <option value="deleted">Deleted</option>
+          </select>
+        </label>
+      </div>
+      <label><span>Tags</span><input name="tags" /></label>
+      <label><span>Entities</span><input name="entities" /></label>
+      <label><span>Canonical URL</span><input name="canonicalUrl" type="url" /></label>
+      <div class="admin-field-grid">
+        <label><span>Hero image</span><input name="heroImage" /></label>
+        <label><span>Thumbnail image</span><input name="thumbnailImage" /></label>
+      </div>
+      <label><span>Image alt text</span><input name="imageAlt" /></label>
+      <label><span>Image prompt</span><textarea name="imagePrompt" rows="3"></textarea></label>
+      <label><span>Image</span><input name="media" type="file" accept="image/png,image/jpeg,image/webp" /></label>
+      <div class="admin-action-row" aria-label="Article actions">
+        <button type="submit" data-action="save-draft">Save draft</button>
+        <button type="submit" data-action="publish" data-admin-only>Publish</button>
+        <button type="submit" data-action="unpublish" data-admin-only>Unpublish</button>
+        <button type="submit" data-action="schedule" data-admin-only>Schedule</button>
+        <button type="submit" data-action="hide" data-admin-only>Hide</button>
+        <button type="submit" data-action="noindex" data-admin-only>Noindex</button>
+        <button type="submit" data-action="regenerate-article">Regenerate draft</button>
+        <button type="submit" data-action="regenerate-brief">Regenerate brief</button>
+        <button type="submit" data-action="regenerate-image">Regenerate image</button>
+        <button type="submit" data-action="upload-image">Use image</button>
+        <button type="submit" data-action="soft-delete" data-admin-only>Delete</button>
+        <button type="submit" data-action="restore" data-admin-only>Restore</button>
+        <button type="submit" data-action="permanent-delete" data-admin-only>Permanently delete</button>
+        <button type="button" data-action="preview">Preview</button>
+      </div>
+    </form>
+    <section id="admin-preview" class="admin-preview" aria-label="Draft preview"></section>
+    <section id="admin-revisions" class="admin-preview" aria-label="Revision history"></section>
+  </section>
+</AdminCmsShell>

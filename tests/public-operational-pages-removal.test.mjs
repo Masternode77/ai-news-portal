@@ -79,7 +79,9 @@ test('sitemap and RSS endpoints exclude every retired route', () => {
     assert.doesNotMatch(sitemapBuilderSource, new RegExp(route.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')));
     assert.match(rssSource, new RegExp(route.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')));
   }
-  assert.match(sitemapSource, /buildSitemapEntries\(\[\.\.\.latestNews, \.\.\.archivedNews\]\)/);
+  assert.match(sitemapSource, /import \{ publicContentInventory \} from '\.\.\/lib\/public-content-inventory\.js'/);
+  assert.match(sitemapSource, /buildSitemapEntries\(publicContentInventory\)/);
+  assert.match(rssSource, /buildRssItems\(publicContentInventory\)/);
   assert.match(rssSource, /filter\(\(item\) => !pointsToRemovedRoute\(item\.link, meta\.site\)\)/);
 });
 

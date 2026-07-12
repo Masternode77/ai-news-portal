@@ -40,10 +40,9 @@ test('public search matching checks query tokens, category, and source', () => {
 test('search route uses the public archive feed as its searchable source', () => {
   const route = fs.readFileSync('src/pages/search.astro', 'utf8');
 
-  assert.match(route, /import latestNews from '\.\.\/data\/latest-news\.json'/);
-  assert.match(route, /import archivedNews from '\.\.\/data\/archived-news\.json'/);
+  assert.match(route, /import \{ publicContentInventory \} from '\.\.\/lib\/public-content-inventory\.js'/);
   assert.match(route, /import \{ buildArchiveFeed \} from '\.\.\/\.\.\/scripts\/lib\/archive-feed-builder\.mjs'/);
-  assert.match(route, /buildArchiveFeed\(\[\.\.\.latestNews,\s*\.\.\.archivedNews\],\s*\{/);
+  assert.match(route, /buildArchiveFeed\(publicContentInventory,\s*\{/);
   assert.match(route, /pageSize:\s*SEARCH_PAGE_SIZE/);
   assert.match(route, /const SEARCH_PAGE_SIZE = 10000/);
   assert.doesNotMatch(route, /search-index\.json/);

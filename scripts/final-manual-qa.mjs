@@ -80,7 +80,7 @@ async function startAdminServer() {
   };
   process.env.ADMIN_USERNAME = 'final-qa-admin';
   process.env.ADMIN_PASSWORD_HASH = hashAdminPassword('correct-password', 'final-qa-salt');
-  process.env.ADMIN_SESSION_SECRET = 'final-qa-session-secret-with-enough-entropy';
+  process.env.ADMIN_SESSION_SECRET = 'final-qa-session-secret-with-at-least-sixty-four-bytes-0123456789abcdef';
   const server = http.createServer((req, res) => {
     if ((req.url || '').startsWith('/api/admin/login')) {
       loginHandler(req, res);

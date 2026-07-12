@@ -53,11 +53,11 @@ test('admin credentials require ADMIN_PASSWORD_HASH and configured username', ()
   assert.equal(credentialsMatch({ username: 'owner', password: 'plaintext-legacy-password' }), false);
 });
 
-test('admin session cookie is signed, httponly, strict, expiring, and carries csrf metadata', () => {
+test('admin session cookie is signed, httponly, strict, expiring, and carries csrf metadata', async () => {
   resetEnv();
   process.env.ADMIN_USERNAME = 'owner';
   process.env.ADMIN_PASSWORD_HASH = hashAdminPassword('not-used-for-session-test', 'session-test-salt');
-  process.env.ADMIN_SESSION_SECRET = 'test-session-secret-with-enough-entropy';
+  process.env.ADMIN_SESSION_SECRET = 'test-session-secret-with-at-least-sixty-four-bytes-0123456789abcdef';
 
   const cookie = createSessionCookie('owner');
   assert.match(cookie, /cc_admin=/);
@@ -67,9 +67,22 @@ test('admin session cookie is signed, httponly, strict, expiring, and carries cs
   assert.doesNotMatch(cookie, /test-session-secret/);
 
   const res = mockRes();
-  const session = requireAdmin(mockReq({ cookie }), res);
+  const session = await requireAdmin(mockReq({ cookie }), res);
   assert.equal(res.ended, undefined);
   assert.equal(session.sub, 'owner');
   assert.equal(typeof session.csrf, 'string');
   assert.ok(session.csrf.length >= 32);
+});
+
+test('admin session authentication fails closed when the signing secret is shorter than 64 bytes', async () => {
+  resetEnv();
+  process.env.ADMIN_USERNAME = 'owner';
+  process.env.ADMIN_PASSWORD_HASH = hashAdminPassword('not-used-for-session-test', 'weak-secret-test-salt');
+  process.env.ADMIN_SESSION_SECRET = 'too-short';
+
+  const res = mockRes();
+  const session = await requireAdmin(mockReq(), res);
+  assert.equal(session, null);
+  assert.equal(res.statusCode, 503);
+  assert.doesNotMatch(res.body, /too-short|ADMIN_SESSION_SECRET/);
 });

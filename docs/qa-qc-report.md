@@ -1,11 +1,11 @@
 # AI News Portal QA/QC Report
 
-Generated at: 2026-06-18T04:57:14.351Z
+Generated at: 2026-07-12T04:25:58.275Z
 Verdict: deployable with operational follow-up
 
 ## Commands Run
 
-- `npm run content:gate` -> skipped (0)
+- `npm run content:gate` -> passed (0)
 - `git diff --name-only --diff-filter=U` -> passed
 - `JSON.parse(src/data/latest-news.json)` -> passed
 - `JSON.parse(src/data/archived-news.json)` -> passed
@@ -22,18 +22,16 @@ Verdict: deployable with operational follow-up
 ## Pass/Fail
 
 - Verdict: deployable with operational follow-up
-- Local gate: skipped (prior gate evidence required)
+- Local gate: passed
 - Merge/data integrity: passed
 - Local distribution: passed
-- Live verification: failed
+- Live verification: passed
 - Cache purge: skipped
 
 ## Remaining Risks
 
-- live URL verification failed or is not yet deployed
 - skipped staging step: URL not provided
 - cache purge skipped by QA/QC non-goal
-- local content gate skipped in this run; use prior gate evidence before release
 - This QA/QC workflow does not use production secrets and does not execute cache purge.
 
 ## Cleanup Receipts

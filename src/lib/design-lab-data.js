@@ -1,5 +1,4 @@
-import archivedNews from '../data/archived-news.json' with { type: 'json' };
-import latestNews from '../data/latest-news.json' with { type: 'json' };
+import { publicContentInventory } from './public-content-inventory.js';
 import { articleImageVariants } from '../../scripts/lib/article-image-surface.mjs';
 import { safePublicHttpUrl } from './public-url.js';
 
@@ -99,7 +98,7 @@ const STORY_EDITORIAL = [
   },
 ];
 
-const records = new Map([...latestNews, ...archivedNews].map((article) => [article.id, article]));
+const records = new Map(publicContentInventory.map((article) => [article.id, article]));
 
 function storyFor(editorial) {
   const article = records.get(editorial.id);

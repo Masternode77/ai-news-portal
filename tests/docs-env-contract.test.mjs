@@ -26,6 +26,9 @@ test('operator docs cover admin, image, cycle, automation, and deployment duties
   for (const phrase of [
     'ADMIN_PASSWORD_HASH',
     'ADMIN_SESSION_SECRET',
+    'DATABASE_URL',
+    'BLOB_READ_WRITE_TOKEN',
+    'npm run admin:migrate',
     'secret rotation',
     'IMAGE_PROVIDER=image2',
     'category fallback',
@@ -49,6 +52,7 @@ test('env docs audit passes and password hash dry run hides plaintext', () => {
     cwd: new URL('..', import.meta.url),
     encoding: 'utf8',
   });
-  assert.match(output, /ADMIN_PASSWORD_HASH=scrypt\$/);
+  assert.match(output, /ADMIN_PASSWORD_HASH=\$argon2id\$/);
+  assert.match(output, /parameters=m=19456,t=2,p=1/);
   assert.doesNotMatch(output, /test-password/);
 });

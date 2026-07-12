@@ -1,0 +1,27 @@
+---
+import AdminCmsShell from '../../../components/AdminCmsShell.astro';
+---
+
+<AdminCmsShell
+  title="New article"
+  description="Create a private Compute Current article draft"
+  canonicalPath="/admin/articles/new/"
+  view="article-new"
+>
+  <section class="admin-panel admin-editor" data-admin-article-editor data-new-article="true">
+    <form class="admin-form admin-edit-form" id="admin-article-form">
+      <label><span>Headline</span><input name="title" required /></label>
+      <label><span>Deck</span><textarea name="summary" rows="3"></textarea></label>
+      <label><span>Article body</span><textarea name="bodyMarkdown" rows="18" required></textarea></label>
+      <div class="admin-field-grid">
+        <label><span>Category</span><input name="category" /></label>
+        <label><span>Source</span><input name="source" /></label>
+        <label><span>Source URL</span><input name="sourceUrl" type="url" /></label>
+        <label><span>Publish at</span><input name="scheduledAt" type="datetime-local" /></label>
+      </div>
+      <label><span>Tags</span><input name="tags" /></label>
+      <label><span>Entities</span><input name="entities" /></label>
+      <div class="admin-action-row"><button type="submit">Create draft</button></div>
+    </form>
+  </section>
+</AdminCmsShell>

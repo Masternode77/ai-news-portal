@@ -1,39 +1,80 @@
 # Admin CMS Report
 
-Generated at: 2026-05-31T08:00:00.000Z
+Updated: 2026-07-12
 
-The admin surface now has private routes, login/session protection, article edit/publish/hide/noindex flows, dashboard/review-queue views, audit logs, and generated-output exclusion from public discovery surfaces.
+## Status
+
+The consolidated admin CMS is implemented on the upgrade branch. Static admin pages are
+thin, noindex shells; article, revision, audit, media, and session data are returned only
+from authenticated APIs. Production persistence is fail-closed until Postgres and Vercel
+Blob credentials are configured.
+
+## Architecture
+
+- Auth: signed HttpOnly, SameSite=Strict, Secure cookies in Vercel/production; CSRF on
+  mutations; Argon2id password hash; admin/editor authorization; durable session revocation
+  and login throttling in Postgres.
+- Data: Postgres production adapter plus atomic file-backed local/test adapter.
+- History: optimistic versions, immutable revisions and audit records, soft deletion,
+  elevated permanent-delete confirmation.
+- Media: PNG/JPEG/WebP signature checks, 3 MB and 24 MP limits, rotation/resize, metadata
+  stripping by WebP re-encoding, Vercel Blob in production.
+- Publication: every article mutation writes an outbox event in the same transaction.
+  `admin:export-public` regenerates the complete static public read model; production builds
+  run it automatically when `DATABASE_URL` is configured.
+
+## Routes
+
+Implemented shells: `/admin/login/`, `/admin/dashboard/`, `/admin/articles/`,
+`/admin/articles/new/`, `/admin/articles/editor/?id=...`, `/admin/sources/`,
+`/admin/quarantine/`, `/admin/pipeline/`, and `/admin/audit-log/`. Vercel rewrites expose
+the requested pretty article edit routes without embedding article data in static HTML.
 
 ## Commands Run
 
-- `node --test tests/admin-auth.test.mjs tests/admin-routes.test.mjs tests/admin-editor.test.mjs tests/admin-dashboard.test.mjs`
-- `node --test tests/admin-security.test.mjs tests/admin-audit-log.test.mjs tests/admin-article-store.test.mjs`
-- `node ./scripts/audit-admin-exclusion.mjs`
-- `node scripts/admin-password-hash.mjs --password test-password --dry-run`
-- `npm run content:gate`
+- `node --test tests/admin-public-read-model.test.mjs tests/admin-cms-api.test.mjs tests/admin-media.test.mjs tests/admin-cms-service.test.mjs tests/admin-storage-local.test.mjs tests/admin-storage-postgres.test.mjs`: 27 passed, 0 failed.
+- `npm audit --audit-level=low`: passed with 0 known dependency vulnerabilities.
 
 ## Artifacts
 
-- Admin exclusion report: `docs/admin-exclusion-report.md`
-- Admin setup guide: `docs/admin-setup.md`
-- Password-hash dry run log: `evidence/compute-current-omo-ultra-rebuild/task-15-password-hash.log`
-- Admin dashboard screenshot: `evidence/compute-current-omo-ultra-rebuild/task-10-admin-dashboard.png`
-- Edit/publish screenshot: `evidence/compute-current-omo-ultra-rebuild/task-11-edit-publish.png`
+- `.cache/admin-public-read-model.json`: ignored build-time publication read model with CMS ownership tombstones.
+- `scripts/export-admin-public-read-model.mjs`: prebuild export that leaves outbox events pending.
+- `src/plugins/storage/migrations/001_admin_cms.sql`: durable CMS schema and indexes.
+- `tests/admin-cms-api.test.mjs`, `tests/admin-media.test.mjs`, and
+  `tests/admin-public-read-model.test.mjs`: API, media privacy, and publication regression coverage.
 
 ## Pass/Fail
 
-- Passed: admin sitemap negative test fails when admin appears in sitemap, then passes with the current exclusion filter.
-- Passed: admin exclusion audit checked generated admin pages plus index files and reported no failures.
-- Passed: unauthenticated and wrong-password paths are covered by tests; authenticated success depends on configured hash/session secrets.
+- PASS: targeted admin security and storage suite, 27 passed and 0 failed.
+- PASS: deleted records are hidden from editors and public fallback content.
+- PASS: production uploads remain private until a successful public read-model export promotes them.
+- BLOCKED: live managed Postgres migration, Blob upload, and deployment-restart persistence require preview credentials.
+
+Additional verification evidence:
+
+- Media API integration covers login, CSRF rejection, upload, normalization, local serving,
+  audit provenance, and malformed base64 rejection.
+- Local persistence is tested across adapter instances; Postgres SQL is covered with
+  injected transaction clients. A live managed Postgres migration has not run because no
+  production database credential is available in this checkout.
+
+## Production Requirements
+
+`DATABASE_URL`, `ADMIN_USERNAME`, `ADMIN_PASSWORD_HASH`, `ADMIN_SESSION_SECRET`,
+`ADMIN_ROLE` (or `ADMIN_USER_ROLES`), `BLOB_READ_WRITE_TOKEN`, and
+`ADMIN_MEDIA_PROVIDER=vercel-blob`. Run `npm run admin:migrate` before enabling login.
 
 ## Remaining Risks
 
-- Production admin writes need real GitHub credentials and rotated admin secrets; this local run did not exercise live repository writes.
-- Admin rate-limit and audit-log files should be monitored after launch for repeated failed logins.
-- Any future public route change must rerun the admin exclusion audit before deployment.
+Production CMS CRUD is not claimed complete until a preview has a managed Postgres database,
+Blob token, migration receipt, restart-persistence test, and a verified rebuild trigger after
+runtime publish/unpublish actions. Outbox acknowledgement is deliberately disabled until a
+post-deployment consumer can verify the deployed read-model version before acknowledging rows.
 
 ## Cleanup Receipts
 
-- Admin QA screenshots and logs are retained as evidence.
-- Dry-run password hashing did not print the plaintext password and created no reusable credential.
-- No admin session, browser context, or dev server remains active from the recorded QA.
+- Removed data-bearing static admin output in favor of noindex shells and authenticated APIs.
+- Kept runtime state under ignored `.cache/`, `.omx/`, `.omo/`, `dist/`, `artifacts/`, and
+  `evidence/` paths; none of those paths is a CMS source of truth.
+- Preserved the legacy GitHub helpers only as compatibility surfaces; the new CMS storage path
+  does not write source JSON or the Vercel deployment filesystem in production.

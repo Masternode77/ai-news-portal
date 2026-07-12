@@ -52,6 +52,13 @@ function textContent(html) {
     .trim();
 }
 
+function withoutApprovedAdminEntry(html) {
+  const approvedEntry = /<a\s+href=["']\/admin\/login\/["']\s+rel=["']nofollow["']>Admin<\/a>/gi;
+  const matches = html.match(approvedEntry) || [];
+  assert.equal(matches.length, 1, 'expected one discreet nofollow Admin login link');
+  return html.replace(approvedEntry, '');
+}
+
 test('legacy conversion routes render as noindex public reference pages', async () => {
   for (const routePath of legacyOpenRoutes) {
     const html = await readDistHtml(routePath);
@@ -91,7 +98,11 @@ test('built public production routes exist and indexes exclude admin routes', as
   assert.match(sitemap, /<urlset\b/i);
   assert.doesNotMatch(rss, /\/admin(?:\/|%2F)/i, 'RSS should not expose admin routes');
   assert.doesNotMatch(sitemap, /\/admin(?:\/|%2F)/i, 'sitemap should not expose admin routes');
-  assert.doesNotMatch(archive, /href=["']\/admin(?:\/|["'])/i, 'archive should not link admin routes');
+  assert.doesNotMatch(
+    withoutApprovedAdminEntry(archive),
+    /href=["']\/admin(?:\/|["'])/i,
+    'archive should expose only the approved Admin login link',
+  );
 });
 
 test('public conversion routes avoid paid surfaces and template article language', async () => {

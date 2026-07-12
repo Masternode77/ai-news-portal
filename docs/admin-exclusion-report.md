@@ -1,7 +1,7 @@
 # Admin Exclusion Report
 
-Generated at: 2026-06-04T15:26:41.233Z
-Admin pages checked: 1043
+Generated at: 2026-07-12T04:25:58.035Z
+Admin pages checked: 11
 Index files checked: 4
 
 ## Failures

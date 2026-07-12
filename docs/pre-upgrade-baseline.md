@@ -73,3 +73,10 @@ The annotated tag resolves to the production SHA and is independent of the upgra
 branch. Before any merge, preview verification must prove that the tagged revision can
 still be selected for a Vercel redeploy. Production remains unchanged until all preview
 gates pass.
+
+## 2026-07-12 Security Checkpoint
+
+After adding the Postgres and Vercel Blob adapters, `npm audit --audit-level=low` still
+reports `found 0 vulnerabilities`. Runtime folders (`.omx`, `.omo`, `.cache`, `dist`,
+`artifacts`, and `evidence`) remain ignored and are not release inputs. No tracked AGENTS
+guidance file is modified in the admin CMS checkpoint.

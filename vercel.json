@@ -2,6 +2,28 @@
   "framework": "astro",
   "buildCommand": "npm run build",
   "outputDirectory": "dist",
+  "rewrites": [
+    {
+      "source": "/admin/articles/:id/edit",
+      "destination": "/admin/articles/editor/?id=:id"
+    },
+    {
+      "source": "/admin/articles/:id",
+      "destination": "/admin/articles/editor/?id=:id"
+    }
+  ],
+  "redirects": [
+    { "source": "/admin", "destination": "/admin/login/", "permanent": false },
+    { "source": "/admin.html", "destination": "/admin/login/", "permanent": false },
+    { "source": "/admin/edit/:id", "destination": "/admin/articles/:id/edit", "permanent": false },
+    { "source": "/admin/source-health", "destination": "/admin/sources/", "permanent": false },
+    { "source": "/admin/content-quality", "destination": "/admin/quarantine/", "permanent": false },
+    { "source": "/admin/content-quality/:id", "destination": "/admin/quarantine/", "permanent": false },
+    { "source": "/admin/claim-ledger", "destination": "/admin/quarantine/", "permanent": false },
+    { "source": "/admin/editorial-cycles", "destination": "/admin/pipeline/", "permanent": false },
+    { "source": "/admin/editorial-cycles/:id", "destination": "/admin/pipeline/", "permanent": false },
+    { "source": "/admin/signal-clusters", "destination": "/admin/pipeline/", "permanent": false }
+  ],
   "headers": [
     {
       "source": "/(.*)",
@@ -43,6 +65,13 @@
           "key": "X-Robots-Tag",
           "value": "noindex, nofollow"
         }
+      ]
+    },
+    {
+      "source": "/admin/(.*)",
+      "headers": [
+        { "key": "Cache-Control", "value": "no-store, private" },
+        { "key": "X-Robots-Tag", "value": "noindex, nofollow" }
       ]
     }
   ]

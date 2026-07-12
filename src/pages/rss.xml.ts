@@ -1,6 +1,5 @@
 import rss from '@astrojs/rss';
-import latestNews from '../data/latest-news.json';
-import archivedNews from '../data/archived-news.json';
+import { publicContentInventory } from '../lib/public-content-inventory.js';
 import { buildRssItems, rssMetadata } from '../../scripts/lib/rss-builder.mjs';
 
 const removedPublicRoutes = new Set([
@@ -21,7 +20,7 @@ function pointsToRemovedRoute(link: string, site: string) {
 
 export function GET() {
   const meta = rssMetadata();
-  const items = buildRssItems([...latestNews, ...archivedNews])
+  const items = buildRssItems(publicContentInventory)
     .filter((item) => !pointsToRemovedRoute(item.link, meta.site));
 
   return rss({

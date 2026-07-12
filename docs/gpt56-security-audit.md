@@ -2,8 +2,9 @@
 
 ## Release disposition
 
-Request changes. No critical finding was confirmed. Four high, seven medium, and one
-low finding require remediation or a documented external control before release.
+Local remediation accepted; preview verification is still required. No critical finding
+was confirmed. The four high, seven medium, and one low baseline findings have code or
+documented external controls on the upgrade branch.
 
 ## High severity
 
@@ -31,10 +32,10 @@ Admin configuration responses disclose exact environment variable names. Failed-
 logs contain attacker-controlled username/IP data and the in-memory audit array is not
 bounded.
 
-## Controls already present
+## Controls present at the read-only baseline
 
 - Admin credentials fail closed when missing.
-- Passwords use scrypt rather than plaintext.
+- Passwords now use Argon2id; the read-only baseline used scrypt rather than plaintext.
 - Session cookies are signed, HttpOnly, Secure in production, and SameSite Strict.
 - Article mutations validate CSRF tokens.
 - Admin routes are excluded from sitemap and marked noindex.
@@ -51,3 +52,13 @@ dashboard and image data. New tests are required for closing-script JSON-LD, URL
 IPv4/IPv6/private/link-local redirects, oversized/compressed bodies, every admin action,
 audit read failures, dashboard HTML payloads, path traversal/symlinks, MIME confusion,
 and deployed security headers.
+
+## Remediation checkpoint
+
+The public-surface security fixes were committed in earlier upgrade checkpoints. The admin
+checkpoint adds Argon2id credentials, durable Postgres auth/session state, strict role validation, bounded JSON,
+generic failures, HMAC IP identifiers, validated/re-encoded image uploads, optimistic
+concurrency, immutable history, and a transactional publication outbox. The current admin
+targeted admin suite passes 35/35 and `npm audit --audit-level=low` reports zero findings. See
+`security-fix-report.md` for the consolidated receipt. Deployed CSP/header and managed-service
+checks remain preview gates, so this document is not production approval.

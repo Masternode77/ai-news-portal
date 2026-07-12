@@ -1,0 +1,111 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { SITE } from '../config/site';
+
+const {
+  title,
+  description,
+  canonicalPath,
+  view,
+  login = false,
+} = Astro.props;
+
+const navigation = [
+  ['/admin/dashboard/', 'Dashboard'],
+  ['/admin/articles/', 'Articles'],
+  ['/admin/sources/', 'Sources'],
+  ['/admin/quarantine/', 'Quarantine'],
+  ['/admin/pipeline/', 'Pipeline'],
+  ['/admin/audit-log/', 'Audit log'],
+];
+---
+
+<Layout
+  title={`${title} | ${SITE.name}`}
+  description={description}
+  canonicalPath={canonicalPath}
+  noindex={true}
+>
+  <main class="admin-shell admin-cms-shell" data-admin-cms data-admin-view={view} data-login-view={login ? 'true' : 'false'}>
+    <header class="admin-header">
+      <a class="admin-back" href="/" rel="nofollow">Public site</a>
+      <div>
+        <p class="eyebrow">Compute Current CMS</p>
+        <h1>{title}</h1>
+      </div>
+      {!login && <button id="admin-logout" class="admin-secondary" type="button">Sign out</button>}
+    </header>
+
+    {!login && (
+      <nav class="admin-cms-nav" aria-label="CMS sections">
+        {navigation.map(([href, label]) => (
+          <a href={href} aria-current={canonicalPath === href ? 'page' : undefined}>{label}</a>
+        ))}
+      </nav>
+    )}
+
+    <p id="admin-session-status" class="admin-status" role="status" aria-live="polite">
+      {login ? 'Sign in to continue.' : 'Checking session...'}
+    </p>
+
+    <div id="admin-cms-content" hidden={!login}>
+      <slot />
+    </div>
+  </main>
+
+  <script>
+    // @ts-nocheck
+    const shell = document.querySelector('[data-admin-cms]');
+    const content = document.getElementById('admin-cms-content');
+    const status = document.getElementById('admin-session-status');
+    const logout = document.getElementById('admin-logout');
+    const loginView = shell?.getAttribute('data-login-view') === 'true';
+
+    const setStatus = (message, type = '') => {
+      if (!status) return;
+      status.textContent = message;
+      status.dataset.type = type;
+    };
+
+    const requestJson = async (url, options = {}) => {
+      const response = await fetch(url, { credentials: 'same-origin', ...options });
+      const payload = await response.json().catch(() => ({}));
+      if (!response.ok) throw Object.assign(new Error(payload.error || 'Request failed.'), { status: response.status });
+      return payload;
+    };
+
+    window.computeCurrentAdmin = { requestJson, setStatus, csrfToken: '' };
+
+    const checkSession = async () => {
+      try {
+        const session = await requestJson('/api/admin/login');
+        window.computeCurrentAdmin.csrfToken = session.csrfToken || '';
+        window.computeCurrentAdmin.user = session.user || '';
+        window.computeCurrentAdmin.role = session.role || 'admin';
+        if (loginView) {
+          window.location.replace('/admin/dashboard/');
+          return;
+        }
+        if (content) content.hidden = false;
+        setStatus(`Signed in as ${session.user || 'admin'}.`, 'success');
+        window.dispatchEvent(new CustomEvent('compute-current-admin-ready', { detail: session }));
+      } catch (error) {
+        if (loginView) return;
+        const next = encodeURIComponent(window.location.pathname + window.location.search);
+        window.location.replace(`/admin/login/?next=${next}`);
+      }
+    };
+
+    logout?.addEventListener('click', async () => {
+      const csrfToken = window.computeCurrentAdmin?.csrfToken || '';
+      await requestJson('/api/admin/login', {
+        method: 'DELETE',
+        headers: csrfToken ? { 'X-CSRF-Token': csrfToken } : {},
+      }).catch(() => ({}));
+      window.location.replace('/admin/login/');
+    });
+
+    checkSession();
+  </script>
+  <script is:inline src="/admin-cms.js" defer></script>
+</Layout>

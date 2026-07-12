@@ -1,0 +1,37 @@
+---
+import AdminCmsShell from '../../../components/AdminCmsShell.astro';
+---
+
+<AdminCmsShell
+  title="Articles"
+  description="Private Compute Current article manager"
+  canonicalPath="/admin/articles/"
+  view="articles"
+>
+  <section class="admin-panel">
+    <div class="admin-editor-top">
+      <form class="admin-form admin-toolbar" id="admin-article-filters">
+        <label><span>Search</span><input name="q" type="search" /></label>
+        <label>
+          <span>Status</span>
+          <select name="status">
+            <option value="">All</option>
+            <option value="draft">Draft</option>
+            <option value="published">Published</option>
+            <option value="scheduled">Scheduled</option>
+            <option value="unpublished">Unpublished</option>
+            <option value="quarantined">Quarantined</option>
+          </select>
+        </label>
+        <button type="submit">Filter</button>
+      </form>
+      <a class="button" href="/admin/articles/new/">New article</a>
+    </div>
+    <div class="admin-table-wrap">
+      <table class="admin-table">
+        <thead><tr><th>Article</th><th>Status</th><th>Source</th><th>Updated</th></tr></thead>
+        <tbody id="admin-article-rows"><tr><td colspan="4">Loading articles...</td></tr></tbody>
+      </table>
+    </div>
+  </section>
+</AdminCmsShell>

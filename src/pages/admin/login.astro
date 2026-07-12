@@ -1,0 +1,47 @@
+---
+import AdminCmsShell from '../../components/AdminCmsShell.astro';
+---
+
+<AdminCmsShell
+  title="Admin login"
+  description="Private Compute Current CMS login"
+  canonicalPath="/admin/login/"
+  view="login"
+  login={true}
+>
+  <section class="admin-panel admin-login-panel">
+    <form class="admin-form" id="admin-login-form">
+      <label>
+        <span>Username</span>
+        <input name="username" autocomplete="username" required />
+      </label>
+      <label>
+        <span>Password</span>
+        <input name="password" type="password" autocomplete="current-password" required />
+      </label>
+      <button type="submit">Sign in</button>
+    </form>
+  </section>
+
+  <script>
+    // @ts-nocheck
+    const form = document.getElementById('admin-login-form');
+    form?.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      const admin = window.computeCurrentAdmin;
+      try {
+        admin.setStatus('Signing in...');
+        await admin.requestJson('/api/admin/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(Object.fromEntries(new FormData(form))),
+        });
+        const next = new URLSearchParams(window.location.search).get('next');
+        const safeNext = next?.startsWith('/admin/') && !next.startsWith('//') ? next : '/admin/dashboard/';
+        window.location.replace(safeNext);
+      } catch (error) {
+        admin.setStatus(error.message, 'error');
+      }
+    });
+  </script>
+</AdminCmsShell>

@@ -17,7 +17,7 @@
     "prepare:static-images": "node ./scripts/prepare-static-images.mjs",
     "regenerate:stock-card-images": "node ./scripts/regenerate-stock-card-images.mjs",
     "backfill:article-metadata": "node ./scripts/backfill-article-metadata.mjs",
-    "build": "npm run prepare:static-images && astro build",
+    "build": "npm run prepare:static-images && node ./scripts/export-admin-public-read-model.mjs --if-configured && astro build && node ./scripts/prune-dist-images.mjs",
     "check": "astro check",
     "preview": "astro preview",
     "astro": "astro",
@@ -45,6 +45,8 @@
     "regenerate:narrative-dna": "node ./scripts/regenerate-narrative-dna-articles.mjs",
     "regenerate:public-content-v2": "node ./scripts/regenerate-public-content-v2.mjs",
     "migrate:legacy": "node ./scripts/migrate-legacy-content.mjs",
+    "admin:migrate": "node ./scripts/migrate-admin-storage.mjs",
+    "admin:export-public": "node ./scripts/export-admin-public-read-model.mjs",
     "regen:latest100": "node ./scripts/regenerate-latest100.mjs",
     "generate:missing-images": "node ./scripts/generate-missing-images.mjs",
     "purge:deployment-cache": "node ./scripts/purge-deployment-cache.mjs",
@@ -79,7 +81,10 @@
   "dependencies": {
     "@astrojs/rss": "^4.0.12",
     "@astrojs/sitemap": "^3.6.0",
+    "@node-rs/argon2": "^2.0.2",
+    "@vercel/blob": "^2.6.1",
     "astro": "^7.0.7",
+    "postgres": "^3.4.9",
     "sharp": "^0.34.5"
   },
   "devDependencies": {

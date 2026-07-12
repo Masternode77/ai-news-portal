@@ -16,7 +16,7 @@ import { auditAdminExclusion } from '../scripts/audit-admin-exclusion.mjs';
 function configureAuth() {
   process.env.ADMIN_USERNAME = 'owner';
   process.env.ADMIN_PASSWORD_HASH = hashAdminPassword('correct-password', 'admin-security-test-salt');
-  process.env.ADMIN_SESSION_SECRET = 'admin-security-session-secret-with-enough-entropy';
+  process.env.ADMIN_SESSION_SECRET = 'admin-security-session-secret-with-at-least-sixty-four-bytes-0123456789';
   delete process.env.ADMIN_PASSWORD;
   resetLoginSecurityForTests();
 }

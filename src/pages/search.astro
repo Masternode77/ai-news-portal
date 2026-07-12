@@ -2,8 +2,7 @@
 import Layout from '../layouts/Layout.astro';
 import ArticleCard from '../components/ArticleCard.astro';
 import PublicListingPage from '../components/PublicListingPage.astro';
-import latestNews from '../data/latest-news.json';
-import archivedNews from '../data/archived-news.json';
+import { publicContentInventory } from '../lib/public-content-inventory.js';
 import { SITE } from '../config/site';
 import { buildArchiveFeed } from '../../scripts/lib/archive-feed-builder.mjs';
 import {
@@ -12,7 +11,7 @@ import {
 } from '../lib/public-search.js';
 
 const SEARCH_PAGE_SIZE = 10000;
-const feed = buildArchiveFeed([...latestNews, ...archivedNews], {
+const feed = buildArchiveFeed(publicContentInventory, {
   page: 1,
   pageSize: SEARCH_PAGE_SIZE,
 });

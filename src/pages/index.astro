@@ -4,14 +4,13 @@ import ArticleCardImage from '../components/ArticleCardImage.astro';
 import LatestAnalysisFeed from '../components/LatestAnalysisFeed.astro';
 import PublicSiteHeader from '../components/PublicSiteHeader.astro';
 import PublicSiteFooter from '../components/PublicSiteFooter.astro';
-import latestNews from '../data/latest-news.json';
-import archivedNews from '../data/archived-news.json';
+import { publicContentInventory } from '../lib/public-content-inventory.js';
 import taxonomyPages from '../data/taxonomy-pages.json';
 import { SITE } from '../config/site';
 import { buildHomepageFeed } from '../../scripts/lib/homepage-feed-builder.mjs';
 import { selectHomepageVisualLead } from '../../scripts/lib/homepage-visual-lead.mjs';
 
-const homepageArticles = process.env.HOMEPAGE_FIXTURE === 'empty' ? [] : [...latestNews, ...archivedNews];
+const homepageArticles = process.env.HOMEPAGE_FIXTURE === 'empty' ? [] : publicContentInventory;
 const feed = buildHomepageFeed(homepageArticles, { limit: 50, minimumVisible: 30 });
 const dateFormatter = new Intl.DateTimeFormat('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
 const leadSignal = selectHomepageVisualLead(feed);

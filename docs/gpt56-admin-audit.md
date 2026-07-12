@@ -1,8 +1,9 @@
 # GPT-5.6 admin audit
 
-## Current capability
+## Read-only baseline capability
 
-The existing code is a useful authenticated editor foundation and must be consolidated,
+At the start of the upgrade, the existing code was a useful authenticated editor foundation
+that needed consolidation rather than a parallel replacement. It provided
 not replaced in parallel. It provides signed eight-hour HttpOnly/SameSite cookies,
 scrypt password verification, CSRF tokens for article mutations, GitHub API persistence,
 escaped editor previews, noindex metadata, and admin sitemap exclusions.
@@ -59,6 +60,7 @@ revision transaction.
 7. Redirect unauthenticated page access to `/admin/login` and return `no-store` for all
    auth/admin APIs.
 
+The upgrade checkpoint implements the required consolidation with Argon2id and durable adapters.
 Production CRUD remains externally blocked until database, object-storage, and auth
 credentials are provided and migrations are run. The integration can be implemented
 and tested locally and in preview with fail-closed production configuration.

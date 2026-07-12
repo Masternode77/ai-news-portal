@@ -807,6 +807,27 @@ time {
   border-bottom: 3px solid var(--text);
 }
 
+.admin-cms-nav {
+  display: flex;
+  gap: 4px;
+  overflow-x: auto;
+  margin-top: 14px;
+  border-bottom: 1px solid var(--line);
+}
+
+.admin-cms-nav a {
+  flex: 0 0 auto;
+  padding: 11px 12px;
+  color: var(--muted);
+  font-size: 0.82rem;
+  font-weight: 850;
+}
+
+.admin-cms-nav a[aria-current="page"] {
+  border-bottom: 3px solid var(--accent-strong);
+  color: var(--text);
+}
+
 .admin-header h1,
 .admin-panel h2 {
   font-size: clamp(2.1rem, 4.5vw, 4rem);
@@ -984,7 +1005,30 @@ time {
 }
 
 .admin-count-grid {
+  display: grid;
   grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.admin-count-grid > div {
+  display: grid;
+  gap: 8px;
+  min-width: 0;
+  padding: 14px;
+  border: 1px solid var(--line);
+  background: #fff;
+}
+
+.admin-count-grid span {
+  overflow-wrap: anywhere;
+  color: var(--muted);
+  font-size: 0.72rem;
+  font-weight: 850;
+  text-transform: capitalize;
+}
+
+.admin-count-grid strong {
+  font-size: 1.6rem;
 }
 
 .admin-queue-grid,

@@ -2,13 +2,12 @@
 import Layout from '../../layouts/Layout.astro';
 import LatestAnalysisFeed from '../../components/LatestAnalysisFeed.astro';
 import PublicListingPage from '../../components/PublicListingPage.astro';
-import latestNews from '../../data/latest-news.json';
-import archivedNews from '../../data/archived-news.json';
+import { publicContentInventory } from '../../lib/public-content-inventory.js';
 import { SITE } from '../../config/site';
 import { buildArchiveFeed } from '../../../scripts/lib/archive-feed-builder.mjs';
 
 export function getStaticPaths() {
-  const rootFeed = buildArchiveFeed([...latestNews, ...archivedNews], { page: 1, pageSize: 50 });
+  const rootFeed = buildArchiveFeed(publicContentInventory, { page: 1, pageSize: 50 });
   return Array.from({ length: Math.max(0, rootFeed.pageCount - 1) }, (_, index) => {
     const pageNumber = index + 2;
     return {
@@ -19,7 +18,7 @@ export function getStaticPaths() {
 }
 
 const { pageNumber } = Astro.props;
-const feed = buildArchiveFeed([...latestNews, ...archivedNews], { page: pageNumber, pageSize: 50 });
+const feed = buildArchiveFeed(publicContentInventory, { page: pageNumber, pageSize: 50 });
 ---
 <Layout title={`Publication archive page ${pageNumber} | ${SITE.name}`} description="Compute Current publication archive page." canonicalPath={`/archive/${pageNumber}/`}>
   <PublicListingPage
