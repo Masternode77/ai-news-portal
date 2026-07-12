@@ -181,6 +181,49 @@ test('admin APIs map malformed JSON, missing versions, and editor authorization 
   assert.equal(forbiddenAudit.statusCode, 403);
 });
 
+test('permanent deletion requires both admin role and the article-specific confirmation', async () => {
+  const admin = await session('admin');
+  const created = await call(articlesHandler, {
+    method: 'POST',
+    headers: authHeaders(admin, true),
+    body: { title: 'Permanent deletion boundary' },
+  });
+  const article = created.json().article;
+  const softDeleted = await call(articleHandler, {
+    method: 'PATCH',
+    headers: authHeaders(admin, true),
+    body: { id: article.id, action: 'soft-delete', expectedVersion: article.version },
+  });
+  const version = softDeleted.json().article.version;
+
+  const missingConfirmation = await call(articleHandler, {
+    method: 'DELETE',
+    headers: authHeaders(admin, true),
+    body: { id: article.id, expectedVersion: version },
+  });
+  assert.equal(missingConfirmation.statusCode, 400);
+
+  const editorSession = createSession('owner', { role: 'editor' });
+  const editor = { cookie: editorSession.cookie, csrf: editorSession.csrfToken };
+  const forbiddenEditor = await call(articleHandler, {
+    method: 'DELETE',
+    headers: authHeaders(editor, true),
+    body: {
+      id: article.id,
+      expectedVersion: version,
+      confirmation: permanentDeleteConfirmation(article.id),
+    },
+  });
+  assert.equal(forbiddenEditor.statusCode, 403);
+
+  const stillPresent = await call(articleHandler, {
+    method: 'GET',
+    url: `/api/admin/article?id=${article.id}&includeDeleted=true`,
+    headers: authHeaders(admin),
+  });
+  assert.equal(stillPresent.statusCode, 200);
+});
+
 test('admin media API validates, normalizes, stores, serves, and audits an authenticated upload', async () => {
   const auth = await session('admin');
   const directory = await fs.mkdtemp(path.join(os.tmpdir(), 'admin-media-api-'));

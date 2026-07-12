@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
-import { runContentCycleForArticle } from '../scripts/run-content-cycle.mjs';
+import { runContentCycleForArticle } from './helpers/content-cycle-fixture.mjs';
 
 test('content cycle downgrades a longform candidate when generated claims fail fidelity', async () => {
   const result = await runContentCycleForArticle({

@@ -21,6 +21,12 @@ the reachability step reduces
 `dist` to 5.6 MB, about 97.9%. Publication builds do not acknowledge outbox events, so an
 export, Astro, pruning, or deployment failure cannot consume them.
 
+`npm run audit:performance` is now part of `content:gate`. It fails the release when the static
+output exceeds any of these explicit ceilings: 10 MB total, 150 KB browser JavaScript, 150 KB CSS,
+150 KB for the largest HTML document, or 500 KB for the largest image. The current measured output
+is 5,095,581 bytes total, 11,432 bytes of JavaScript, 100,239 bytes of CSS, 100,020 bytes for the
+largest HTML page, and 335,600 bytes for the largest image.
+
 ## Final Preview Lighthouse
 
 Measured against deployment `dpl_9qoXHkYVspAM5FHBExEc6iqyzTuT`:

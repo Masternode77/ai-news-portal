@@ -40,11 +40,18 @@ The credential-free `/api/admin/articles` request returned the intended generic 
 `Cache-Control: no-store`. This receipt comes from preview
 `dpl_9xvuthwXDaPnhN1nNVqXH1Xh8sD7` built from implementation SHA `8f60816f`.
 
+The local browser harness now drives the built admin UI against the real API handlers and an
+isolated file/media store. All 17 required scenarios pass: redirect, login, create, title/body/
+category/source edits, preview, image upload, save, publish, unpublish, soft delete, restore,
+revision display, exact permanent-delete confirmation, and logout/session rejection. Public
+discovery propagation is covered separately by the sitemap/RSS integration test.
+
 ## Commands Run
 
 - `node --test tests/admin-public-read-model.test.mjs tests/admin-cms-api.test.mjs tests/admin-media.test.mjs tests/admin-cms-service.test.mjs tests/admin-storage-local.test.mjs tests/admin-storage-postgres.test.mjs tests/admin-route-contract.test.mjs`: passed, 0 failed.
 - `npm audit --audit-level=low`: passed with 0 known dependency vulnerabilities.
 - `node --test tests/managed-admin-persistence.test.mjs tests/admin-storage-local.test.mjs tests/admin-storage-postgres.test.mjs`: passed; covers probe boundaries, reconnect, Blob round trip, lifecycle, audit, outbox, and multi-error cleanup reporting without managed credentials.
+- `npm run qa:admin:browser`: passed 17/17 scenarios against the fresh local build; evidence is written under the ignored `artifacts/admin-browser-e2e/` directory and all temporary state is removed.
 - `npm run admin:verify-managed -- --phase=cycle --target=preview`: rejected before any write because preview scope and credentials were absent.
 
 ## Artifacts
@@ -56,10 +63,14 @@ The credential-free `/api/admin/articles` request returned the intended generic 
 - `scripts/lib/managed-admin-persistence.mjs`: credential-redacted probe and bounded cleanup.
 - `tests/admin-cms-api.test.mjs`, `tests/admin-media.test.mjs`, and
   `tests/admin-public-read-model.test.mjs`: API, media privacy, and publication regression coverage.
+- `scripts/qa-admin-browser-e2e.mjs`: local-only browser lifecycle harness. It uses project
+  Playwright when available, accepts `PLAYWRIGHT_NODE_MODULES`, and otherwise reports a clear
+  unavailable-runtime failure without adding a production dependency.
 
 ## Pass/Fail
 
 - PASS: targeted admin security and storage suite, 27 passed and 0 failed.
+- PASS: browser admin lifecycle, 17 passed and 0 failed; publish/unpublish sitemap/RSS discovery is integration-tested.
 - PASS: deleted records are hidden from editors and public fallback content.
 - PASS: production uploads remain private until a successful public read-model export promotes them.
 - BLOCKED: live managed Postgres migration, Blob upload, and deployment-restart persistence require preview credentials.

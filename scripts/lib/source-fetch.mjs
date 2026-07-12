@@ -2,8 +2,13 @@ import { PIPELINE_OFFLINE } from './constants.mjs';
 import { stripHtml, truncate } from './normalize.mjs';
 import { analyzeExtractionQuality } from './quality-gate.mjs';
 import { safeHttpFetch } from './safe-http-fetch.mjs';
+import { SourceRequestCoordinator } from './source-request-coordinator.mjs';
 
 const GENERIC_ADAPTER = 'generic';
+
+export const sourceRequestCoordinator = new SourceRequestCoordinator({
+  onEvent: (event) => console.warn(JSON.stringify({ component: 'source-fetch', ...event })),
+});
 
 const SOURCE_ADAPTERS = [
   {
@@ -243,22 +248,44 @@ export async function fetchArticleExtraction({
   title = '',
   fallbackSnippet = '',
   timeoutMs = 12000,
+  coordinator = sourceRequestCoordinator,
 } = {}) {
   if (PIPELINE_OFFLINE) {
     return fallbackExtraction(url, fallbackSnippet, 'pipeline_offline');
   }
 
   try {
-    const response = await safeHttpFetch(url, {
-      timeoutMs,
-      headers: {
-        'user-agent': 'Mozilla/5.0 (compatible; AINewsPortalBot/1.0)',
-        accept: 'text/html,application/xhtml+xml',
-      },
-      allowedMimeTypes: ['text/html', 'application/xhtml+xml'],
-      maxRedirects: 4,
-      maxCompressedBytes: 2 * 1024 * 1024,
-      maxDecompressedBytes: 4 * 1024 * 1024,
+    const response = await coordinator.execute(url, async () => {
+      try {
+        const result = await safeHttpFetch(url, {
+          timeoutMs,
+          headers: {
+            'user-agent': 'Mozilla/5.0 (compatible; AINewsPortalBot/1.0)',
+            accept: 'text/html,application/xhtml+xml',
+          },
+          allowedMimeTypes: ['text/html', 'application/xhtml+xml'],
+          maxRedirects: 4,
+          maxCompressedBytes: 2 * 1024 * 1024,
+          maxDecompressedBytes: 4 * 1024 * 1024,
+        });
+        if (result.status === 408 || result.status === 429 || result.status >= 500) {
+          throw Object.assign(new Error(`source returned HTTP ${result.status}`), {
+            code: 'source_http_status',
+            status: result.status,
+            retryable: true,
+          });
+        }
+        return result;
+      } catch (error) {
+        if (error?.retryable === true) throw error;
+        const message = error?.message || '';
+        const retryable = /timed out|aborted|fetch failed|socket|network|ECONN|EAI_AGAIN/i.test(message);
+        if (!retryable) throw error;
+        throw Object.assign(new Error(message, { cause: error }), {
+          code: error?.code || 'source_network_failure',
+          retryable: true,
+        });
+      }
     });
 
     if (!response.ok) {
@@ -272,7 +299,11 @@ export async function fetchArticleExtraction({
       fallbackSnippet,
     });
   } catch (error) {
-    const reason = /timed out|aborted/i.test(error?.message || '')
+    const reason = error?.code === 'source_http_status'
+      ? `http_${error.status}`
+      : error?.code === 'source_circuit_open'
+        ? 'source_circuit_open'
+        : /timed out|aborted/i.test(error?.message || '')
       ? 'timeout'
       : /non-public|HTTP\(S\)|credentials|downgrade|redirect/i.test(error?.message || '')
         ? 'unsafe_source_url'

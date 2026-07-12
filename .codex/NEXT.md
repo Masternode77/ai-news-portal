@@ -8,37 +8,35 @@
 - No push or production promotion has been performed.
 
 ## Latest completed checklist item
-- Deployed exact-commit preview `dpl_9xvuthwXDaPnhN1nNVqXH1Xh8sD7` from the Linux remote builder.
-- Merged the current content stream without unresolved conflicts or dropped remote records.
-- Repaired two verified source photos and 66 byte-duplicate legacy image records.
-- Re-ran route, fail-closed API, visual, image, Lighthouse, and production-identity checks.
-- Verified public/admin routes and lazy-loaded images on the final preview.
-- Added a tested Vercel ignored-build rule for dashboard/pipeline state-only commits.
-- Observed external `main` automation advance production; this branch did not promote it.
-- Migrated all seven production content phases to one registry-driven resumable orchestrator.
-- Reduced `scripts/pipeline.mjs` to a compatibility alias and removed deterministic outage longform.
-- Added extraction-only evidence freezing, strict model-output schemas, lifecycle replay validation,
-  fail-closed stale-longform removal, and cross-runner publication output bundles.
-- Deployed and browser-verified the canonical cutover preview from local commit `8f60816f`.
+- Retired every remaining independent runtime mutation entrypoint behind canonical wrappers.
+- Isolated the old fixture cycle under `tests/helpers` and deleted the direct public-feed writer.
+- Added fail-closed legacy argument handling so retired flags cannot trigger production cycles.
+- Added bounded source retries, origin spacing, in-process circuits, redacted events, and metrics.
+- Added enforced static performance budgets to `content:gate`.
+- Added and ran the local browser CMS lifecycle harness: 17/17 scenarios passed.
+- Isolated the legacy Blog v4 regression report under a temp path so tests no longer dirty docs.
+- Independent full-diff re-review returned APPROVE with zero open findings.
 
 ## Changed files
-- Architecture/editorial: `src/core/`, `src/adapters/`, `src/plugins/content/`, `scripts/lib/`, CLI entry points.
-- Admin/storage: `api/admin/`, `src/admin/`, `src/plugins/storage/`, `migrations/`.
-- Public product: public routes/components/styles, RSS, sitemap, search, taxonomy.
-- Release/security: `package.json`, lockfile, `vercel.json`, runbooks and audits.
-- Image durability: generator seed, duplicate audit/repair, tests, data, and generated rasters.
-- Final receipts: `docs/final-gpt56-upgrade-report.md`, visual/performance reports.
+- Runtime retirement: legacy command scripts, `scripts/lib/legacy-content-command-wrapper.mjs`,
+  deleted `scripts/lib/public-feed-regenerator.mjs`, and `tests/helpers/content-cycle-fixture.mjs`.
+- Reliability/performance: `scripts/lib/source-request-coordinator.mjs`, source fetch integration,
+  static budget audit, package gates, and focused tests.
+- CMS QA: `scripts/qa-admin-browser-e2e.mjs`, API/public-discovery tests, and report updates.
+- Hygiene: legacy Blog v4 report-path isolation, plans, acceptance matrix, architecture reports.
 
 ## Validation results
-- Current `npm test`: 487 total, 486 passed, 0 failed, 1 intentional skip.
-- Latest receipt, evidence, migration, and fidelity regression suite: 54 passed, 0 failed.
+- Current `npm test`: 507 total, 506 passed, 0 failed, 1 intentional skip.
+- Admin browser E2E: 17 passed, 0 failed; all temporary CMS state cleaned.
 - Quality, relevance, taxonomy, and repetition scripts: passed.
 - `npm run check`: 0 errors, 0 warnings, 11 existing type hints.
 - `npm audit --audit-level=low`: 0 vulnerabilities; baseline was 18.
 - `npm run build`: 61 pages; 85 generated assets retained, 4,097 pruned.
-- `npm run content:gate`: passed all public/content/image/admin gates.
-- Independent review found reason-code evidence, preview-scope, and cleanup-error masking defects;
-  all are fixed and regression-covered. Final re-review returned APPROVE with no open findings.
+- `npm run content:gate`: passed public/content/image/admin/performance gates.
+- Static budgets passed: 5.10 MB dist, 11.4 KB JS, 100.2 KB CSS, 100.0 KB largest HTML,
+  335.6 KB largest image.
+- Independent review found unsafe ignored legacy flags and machine-specific Playwright discovery;
+  both are fixed and regression-covered. Final re-review returned APPROVE with no open findings.
 - Canonical preview public routes: 4/4 returned 200; retired routes: 5/5 returned 404.
 - Admin pretty routes: 3/3 returned 200 with private/no-store caching.
 - Admin APIs without preview credentials: intended generic 503, no-store, noindex.
@@ -55,5 +53,6 @@
 - Production promotion requires explicit preview approval.
 
 ## Exact next step
+- Commit the verified local closure, deploy that exact commit to preview, and refresh route/visual receipts.
 - Present the exact-commit preview for human approval and keep managed persistence blocked on preview credentials.
 - Keep push, production promotion, production secrets, and cache purge excluded pending explicit approval.

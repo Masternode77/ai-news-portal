@@ -1,5 +1,4 @@
-import { regeneratePublicFeed } from './lib/public-feed-regenerator.mjs';
+#!/usr/bin/env node
+import { runLegacyContentCommand } from './lib/legacy-content-command-wrapper.mjs';
 
-const result = await regeneratePublicFeed({ longformTarget: Number(process.env.LONGFORM_TARGET || 15) });
-console.log(`longform regenerated: ${result.counts.longform}`);
-if (result.counts.longform < 10) process.exitCode = 1;
+await runLegacyContentCommand('regenerate:longform-analysis', 'generate');

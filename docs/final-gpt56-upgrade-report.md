@@ -33,6 +33,10 @@ production secret or cache purge; the connected `main` branch did deploy indepen
   transition records under `src/core/`.
 - Consolidated production entry points around the canonical content cycle while retaining
   reviewed compatibility surfaces for legacy callers.
+- Retired the remaining direct public-feed, cleanup, missing-image, scheduler, and fixture-cycle
+  mutation paths. Legacy command names now delegate to the canonical command surface, the old
+  fixture engine is isolated under `tests/helpers`, and the independent public-feed writer is
+  deleted behind a repository contract test.
 - Added strict source-grounded relevance, source-fidelity checks, safe downgrade behavior,
   bottleneck-axis diversity, and explicit image provenance handling.
 - Added blind, digest-bound review packets and a fail-closed scorer for the outstanding
@@ -45,6 +49,10 @@ production secret or cache purge; the connected `main` branch did deploy indepen
   for the full cycle. The former 532-line `pipeline.mjs` is now only a compatibility alias.
 - Publication replay now verifies the active run ID, pipeline version, and output-manifest run ID
   before reusing a receipt; stale or incomplete receipts fail closed.
+- Source HTTP requests now use bounded exponential backoff for classified transient failures,
+  per-origin request spacing, circuit open/recovery, redacted structured events, and aggregate
+  metrics. Durable cycle failure checkpoints remain the dead-letter equivalent; per-source circuit
+  state is intentionally documented as in-process rather than falsely claimed durable.
 - Extraction-only evidence facts are exact source sentences, generated summaries cannot validate
   themselves, and legacy migration commands are read-only diagnostics that reject `--apply`.
 - Removed public operational/dashboard routes and unified homepage, archive, search, article,
@@ -80,6 +88,10 @@ production secret or cache purge; the connected `main` branch did deploy indepen
 - Added a preview-only two-phase managed persistence probe for migration, Postgres CRUD,
   revisions, audit, outbox, private Blob round trips, restart/deployment survival, and cleanup.
   Production scope is rejected and primary plus cleanup failures are reported together.
+- Added a local-only browser E2E harness over the built admin UI and real API handlers. Its 17
+  lifecycle scenarios pass, including image upload, revisions, publish/unpublish, deletion,
+  exact permanent-delete confirmation, and rejected sessions; sitemap/RSS propagation is covered
+  by the public read-model integration suite.
 
 ### Security
 
@@ -108,13 +120,14 @@ three prototypes remain noindex and are not production routes.
 | --- | --- |
 | Clean install | `npm ci` passed |
 | Dependency security | `npm audit --audit-level=low`: 0 vulnerabilities |
-| Full tests | 487 total, 486 passed, 0 failed, 1 intentional skip |
+| Full tests | 507 total, 506 passed, 0 failed, 1 intentional skip |
 | Editorial scripts | quality, relevance, taxonomy, repetition passed |
 | Astro check | 0 errors, 0 warnings, 11 existing type hints |
 | Build | 61 pages; 85 images retained; 4,097 pruned |
 | Content gate | passed all public, copy, image, feed, and admin exclusion audits |
 | QA/QC | deployable with operational follow-up |
-| Code review | APPROVED after reason-code evidence, preview scope, and cleanup error masking findings were fixed and regression-verified. |
+| Admin browser E2E | 17/17 local UI/API lifecycle scenarios passed; public discovery integration passed |
+| Code review | APPROVED after legacy-argument and Playwright-portability findings were fixed and regression-verified; final re-review found 0 issues. |
 | Preview public routes | homepage, archive, search, and representative article returned 200 |
 | Removed public routes | 5/5 returned 404 |
 | Preview admin pretty routes | 3/3 returned 200 with private/no-store caching |
@@ -123,6 +136,7 @@ three prototypes remain noindex and are not production routes.
 | Deployed image uniqueness | homepage 39/39; archive 40/40; duplicate groups 0 |
 | Lighthouse mobile | 97 performance, 100 accessibility, 92 best practices |
 | Lighthouse desktop | 100 performance, 100 accessibility, 92 best practices |
+| Static performance budget | 5.10 MB dist, 11.4 KB JS, 100.2 KB CSS, 100.0 KB largest HTML, 335.6 KB largest image; all within enforced limits |
 | Production action by this branch | none; external `main` automation advanced production during QA |
 
 The preview SEO score of 69 is expected because Vercel adds `x-robots-tag: noindex`. The two

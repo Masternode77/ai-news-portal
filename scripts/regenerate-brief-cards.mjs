@@ -1,5 +1,4 @@
-import { regeneratePublicFeed } from './lib/public-feed-regenerator.mjs';
+#!/usr/bin/env node
+import { runLegacyContentCommand } from './lib/legacy-content-command-wrapper.mjs';
 
-const result = await regeneratePublicFeed({ briefTarget: Number(process.env.BRIEF_TARGET || 35) });
-console.log(`brief cards regenerated: ${result.counts.brief + result.counts.signal}`);
-if (result.counts.brief + result.counts.signal < 20) process.exitCode = 1;
+await runLegacyContentCommand('regenerate:brief-cards', 'generate');

@@ -7,6 +7,8 @@ import { exportAdminPublicReadModel } from '../scripts/export-admin-public-read-
 import { createLocalAdminStorage } from '../src/plugins/storage/index.mjs';
 import { ADMIN_PUBLIC_READ_MODEL_PATH, readAdminPublicReadModel } from '../src/lib/admin-public-read-model.js';
 import { mergePublicContentInventory } from '../src/lib/public-content-inventory.js';
+import { buildRssItems } from '../scripts/lib/rss-builder.mjs';
+import { buildSitemapEntries } from '../scripts/lib/sitemap-builder.mjs';
 
 test('admin publication export makes published records visible and removes unpublished records', async () => {
   const directory = await fs.mkdtemp(path.join(os.tmpdir(), 'admin-public-model-'));
@@ -85,4 +87,37 @@ test('CMS ownership tombstones prevent non-public legacy records from reappearin
     [],
   );
   assert.deepEqual(merged.map((article) => article.id), ['cms-public', 'legacy-public']);
+});
+
+test('admin publish and unpublish propagate through sitemap and RSS discovery', async () => {
+  const directory = await fs.mkdtemp(path.join(os.tmpdir(), 'admin-public-discovery-'));
+  const outputPath = path.join(directory, 'public.json');
+  const rows = [
+    ...JSON.parse(await fs.readFile(new URL('../src/data/latest-news.json', import.meta.url), 'utf8')),
+    ...JSON.parse(await fs.readFile(new URL('../src/data/archived-news.json', import.meta.url), 'utf8')),
+  ];
+  const article = rows.find((row) => row.id === '99520a2a1435cecd');
+  assert.ok(article, 'expected the curated longform discovery fixture');
+  const storage = createLocalAdminStorage({ storageKey: `public-discovery-${Math.random()}` });
+  try {
+    await storage.createArticle(article, { action: 'publish', actor: 'admin' });
+    await exportAdminPublicReadModel({ storage, outputPath });
+    let inventory = mergePublicContentInventory(readAdminPublicReadModel(outputPath), [], []);
+    assert.equal(buildSitemapEntries(inventory).some((entry) => entry.loc === `/news/${article.id}/`), true);
+    assert.equal(buildRssItems(inventory).some((entry) => entry.link === `/news/${article.id}/`), true);
+
+    await storage.updateArticle(article.id, {
+      public_status: 'unpublished',
+      articlePagePublished: false,
+      homepagePublished: false,
+      draft: true,
+    }, { expectedVersion: 1, action: 'unpublish', actor: 'admin' });
+    await exportAdminPublicReadModel({ storage, outputPath });
+    inventory = mergePublicContentInventory(readAdminPublicReadModel(outputPath), [], []);
+    assert.equal(inventory.length, 0);
+    assert.equal(buildSitemapEntries(inventory).some((entry) => entry.loc === `/news/${article.id}/`), false);
+    assert.equal(buildRssItems(inventory).some((entry) => entry.link === `/news/${article.id}/`), false);
+  } finally {
+    await fs.rm(directory, { recursive: true, force: true });
+  }
 });

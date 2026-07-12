@@ -1,3 +1,4 @@
-import { runEmergencyCleanup } from './emergency-cleanup-public-content.mjs';
+#!/usr/bin/env node
+import { runLegacyContentCommand } from './lib/legacy-content-command-wrapper.mjs';
 
-await runEmergencyCleanup();
+await runLegacyContentCommand('quarantine:low-quality-content', 'review');

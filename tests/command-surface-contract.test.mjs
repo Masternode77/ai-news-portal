@@ -19,6 +19,14 @@ const legacyGenerationScripts = [
   'regenerate-latest100.mjs',
   'run-editorial-cycle.mjs',
   'regenerate-autonomous-analyses-v1.mjs',
+  'regenerate-public-feed.mjs',
+  'regenerate-longform-analysis.mjs',
+  'regenerate-brief-cards.mjs',
+  'run-content-cycle.mjs',
+  'schedule-content-cycle.mjs',
+  'emergency-cleanup-public-content.mjs',
+  'quarantine-low-quality-content.mjs',
+  'generate-missing-images.mjs',
 ];
 
 const canonicalEntrypoint = 'node ./scripts/content-command-surface.mjs';
@@ -89,6 +97,28 @@ test('legacy generation entrypoints cannot execute independent writer implementa
     assert.match(source, /runLegacyContentCommand/, `${file} must delegate to the canonical engine`);
     assert.ok(source.split('\n').length < 10, `${file} must remain a thin compatibility wrapper`);
     assert.doesNotMatch(source, /writeJsonFile|writeFile|syncArchiveArtifacts|attachExpertLens/);
+  }
+});
+
+test('retired runtime writers are removed or isolated to test helpers', () => {
+  assert.equal(
+    fs.existsSync(new URL('../scripts/lib/public-feed-regenerator.mjs', import.meta.url)),
+    false,
+    'independent public feed writer must be deleted',
+  );
+
+  const runtimeSources = fs.readdirSync(new URL('../scripts', import.meta.url), { recursive: true })
+    .filter((file) => String(file).endsWith('.mjs'))
+    .map((file) => ({
+      file: String(file),
+      source: fs.readFileSync(new URL(`../scripts/${file}`, import.meta.url), 'utf8'),
+    }));
+  for (const { file, source } of runtimeSources) {
+    assert.doesNotMatch(
+      source,
+      /tests\/helpers\/content-cycle-fixture|\.\.\/tests\/helpers\/content-cycle-fixture/,
+      `${file} must not execute the retired fixture engine`,
+    );
   }
 });
 

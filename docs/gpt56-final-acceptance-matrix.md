@@ -16,7 +16,7 @@ does not mean a live preview database or production workflow was exercised.
 | # | Requirement | Result | Evidence or remaining condition |
 | ---: | --- | --- | --- |
 | 1 | One canonical content engine | PASS | Seven phase commands and the production cycle use the registry composition and resumable orchestrator; `scripts/pipeline.mjs` is a compatibility alias. |
-| 2 | Legacy engines disabled or removed | PARTIAL | Production entry points are constrained and the legacy map classifies wrappers, but reviewed compatibility implementations remain pending post-cutover deletion. |
+| 2 | Legacy engines disabled or removed | PASS | Every discovered runtime generation/mutation entrypoint is a thin canonical wrapper; the fixture cycle is test-only, the independent public-feed writer is deleted, and a repository contract prevents reintroduction. Bounded quality primitives still used by the canonical graph remain intentionally. |
 | 3 | Plugin registry works | PASS | Contract, registry, provider health, dependency, configuration, and lifecycle tests pass under `src/core/`. |
 | 4 | Provider addition does not require core-orchestrator edits | PASS | Providers register through the composition/registry boundary; source-specific implementations are not imported by the orchestrator. |
 
@@ -55,7 +55,7 @@ does not mean a live preview database or production workflow was exercised.
 | ---: | --- | --- | --- |
 | 19 | Homepage Admin link exists | PASS | Discreet `nofollow` link is test-covered; admin stays out of sitemap and robots indexing. |
 | 20 | Secure login works | PASS (local) | Seeded login, Argon2id, cookie, CSRF, lockout, revocation, role, and logout integration tests pass; unconfigured preview APIs fail closed. |
-| 21 | Create/edit/publish/unpublish/delete/restore work | PASS (local) | CMS/API and public-read-model tests cover the lifecycle; live managed preview CRUD remains part of item 23. |
+| 21 | Create/edit/publish/unpublish/delete/restore work | PASS (local) | The built UI passes all 17 browser lifecycle scenarios against real handlers and isolated storage; sitemap/RSS publication propagation is integration-tested. Live managed preview CRUD remains part of item 23. |
 | 22 | Revisions and audit logs work | PASS (local) | Atomic local/Postgres adapter tests cover immutable revisions, before/after audit, actor/session metadata, and outbox writes. |
 | 23 | Persistence survives process restart/deployment | BLOCKED | Local fresh-process persistence and a preview-only two-phase verifier pass locally; managed credentials and a cross-deployment receipt are absent. |
 | 24 | Unauthorized access is blocked | PASS | Admin security tests and preview route/API checks verify redirects or generic no-store denial without data exposure. |
@@ -69,7 +69,7 @@ does not mean a live preview database or production workflow was exercised.
 | 27 | Security audit passes | PASS | `npm audit --audit-level=low` reports zero findings; threat model and fix report list operational follow-up. |
 | 28 | Visual QA passes | PASS | Exact-preview QA reports no broken images, placeholders, errors, or overflow. |
 | 29 | SEO audit passes | PASS WITH PREVIEW CAVEAT | Canonical/feed/schema/noindex tests pass; preview Lighthouse SEO is intentionally reduced by Vercel's preview noindex header. |
-| 30 | Performance targets met or blockers documented | PASS | Lighthouse performance is 97 mobile/100 desktop, accessibility 100; field INP/traffic telemetry is documented as post-approval work. |
+| 30 | Performance targets met or blockers documented | PASS | Lighthouse performance is 97 mobile/100 desktop and accessibility is 100. `content:gate` now enforces static dist, JS, CSS, HTML, and image ceilings; field INP/traffic telemetry remains documented post-approval work. |
 
 ## Release
 

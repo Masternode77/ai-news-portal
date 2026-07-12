@@ -39,8 +39,9 @@ become a public routing decision.
 - Storage and security coverage is relevant only when directly connected to AI or data
   center deployment decisions.
 - Current broad keyword rules accept isolated mentions of GPU, chip, storage, or power.
-- Feed status has no durable failure history, circuit state, redirect policy, or verified
-  last-good timestamp in the canonical public model.
+- Feed status has no durable failure history, persisted circuit state, or verified last-good
+  timestamp in the canonical public model. Redirects are now revalidated by the shared safe HTTP
+  adapter; source requests also have bounded retry, per-origin spacing, and an in-process circuit.
 
 ## Required health model
 
@@ -60,5 +61,5 @@ and unsupported content types fail closed.
 2. Remove registry default category as a public decision input.
 3. Add per-source precision metrics to the 150-item relevance benchmark.
 4. Apply stricter core evidence requirements to all broad editorial and component feeds.
-5. Persist circuit and last-good state so temporary failure cannot corrupt public state.
+5. Persist the current in-process circuit metrics and last-good state across serverless instances.
 6. Re-run the report from CI and preview before enabling a repaired connector.

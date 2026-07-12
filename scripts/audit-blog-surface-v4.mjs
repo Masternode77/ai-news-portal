@@ -96,7 +96,12 @@ function auditArticle(article = {}) {
   };
 }
 
-export async function auditBlogSurfaceV4({ latest = latestNews, archived = archivedNews, requireBuiltPages = false } = {}) {
+export async function auditBlogSurfaceV4({
+  latest = latestNews,
+  archived = archivedNews,
+  requireBuiltPages = false,
+  reportPath = REPORT_PATH,
+} = {}) {
   const homepage = homepageBlogSurfaceResult(latest);
   const blogs = latest.filter(isLocalHomepageBlog).slice(0, 20);
   const articleResults = blogs.map((article) => ({ article, result: auditArticle(article) }));
@@ -176,8 +181,8 @@ export async function auditBlogSurfaceV4({ latest = latestNews, archived = archi
     ...(reasons.length ? reasons.map((reason) => `- ${reason}`) : ['- none']),
   ];
 
-  await fs.mkdir(path.dirname(REPORT_PATH), { recursive: true });
-  await fs.writeFile(REPORT_PATH, `${reportLines.join('\n')}\n`, 'utf8');
+  await fs.mkdir(path.dirname(reportPath), { recursive: true });
+  await fs.writeFile(reportPath, `${reportLines.join('\n')}\n`, 'utf8');
 
   return {
     ok: reasons.length === 0,
@@ -188,7 +193,7 @@ export async function auditBlogSurfaceV4({ latest = latestNews, archived = archi
     archetypes,
     missingBuiltDetailPages,
     builtDetailForbidden,
-    reportPath: REPORT_PATH,
+    reportPath,
   };
 }
 

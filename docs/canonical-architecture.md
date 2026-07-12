@@ -118,9 +118,13 @@ Admin pages use server-authenticated routes, role policies, CSRF, durable rate l
 bounded bodies, optimistic revisions, soft delete, immutable audit records, and
 `Cache-Control: no-store`. Public rendering uses script-safe JSON and HTTP(S)-only links.
 
-Retries use exponential backoff with jitter and only retry classified transient errors.
-Circuit state and failed jobs are persisted. Every job is idempotent; dead-lettered items
-remain inspectable and cannot modify public state.
+Source requests retry only classified transient failures with bounded exponential backoff,
+enforce per-origin spacing, and open an in-process per-origin circuit after consecutive terminal
+failures. Structured events expose redacted origin-level retry/circuit activity and aggregate
+request metrics. Durable cycle checkpoints retain failed phase, provider, and retryability state;
+that checkpoint is the current dead-letter equivalent and cannot publish a partial cycle. Every
+publication job is idempotent. Per-source circuit state itself is not yet durable across serverless
+instances and remains an operational hardening item.
 
 ## Pure build and release
 

@@ -15,7 +15,7 @@ Production promotion is outside this approval state.
 | --- | --- | --- |
 | Canonical contracts and registry | PASS | Contracts, registry, lifecycle, transition records, and provider tests exist under `src/core/`. |
 | One active production engine | PASS | All seven phase commands and `content:cycle --production` use one registry/composition/checkpoint path; `scripts/pipeline.mjs` is a thin compatibility alias. |
-| Legacy engines disabled or removed | PARTIAL | Legacy inventory and wrappers are documented and production entry points are constrained; not every legacy implementation is deleted. |
+| Legacy engines disabled or removed | PASS | Direct feed regeneration, cleanup, image migration, scheduling, and fixture-cycle runtime entrypoints are canonical wrappers; the independent feed writer is deleted and the old fixture engine is isolated under tests. Active bounded quality primitives are retained. |
 | Provider extensibility | PASS | Registry and plugin contracts allow provider registration without source-specific orchestrator imports. |
 | Public operational pages removed | PASS | Five retired URLs return 404; navigation, feeds, sitemap, and schema audits pass. |
 | Source attribution and public copy | PASS | Attribution remains visible; public process language and repeated banned formulas are gated. |
@@ -23,14 +23,14 @@ Production promotion is outside this approval state.
 | 150 relevance / 40 writing labels | BLOCKED | Machine fixtures exist, but independent human labels were not supplied; precision, recall, and sub-5% FPR are not claimed. |
 | Three design options | PASS | All routes, representative data, desktop/mobile artifacts, comparison, and winner scoring exist. |
 | Selected responsive design | PASS | Midnight Intelligence is promoted; preview browser QA reports no overflow, overlays, console errors, broken images, or placeholder labels. |
-| Secure admin implementation | PASS | Auth, CSRF, roles, revisions, audit, media, CRUD services, and fail-closed APIs are covered locally. |
+| Secure admin implementation | PASS | Auth, CSRF, roles, revisions, audit, media, CRUD services, and fail-closed APIs are covered locally; the built UI passes all 17 browser lifecycle scenarios and sitemap/RSS propagation is integration-tested. |
 | Managed CMS persistence | BLOCKED | A preview-only two-phase verifier is implemented and locally regression-tested, but preview Postgres and Blob credentials are absent; a live migration/upload/restart receipt cannot be produced. |
 | Dependency security | PASS | `npm audit --audit-level=low` reports zero findings on the upgrade branch. |
-| Tests, build, content gate | PASS | Full suite: 487 total, 486 passed, 0 failed, 1 intentional skip. Astro check, 61-page build, public/content/image/admin gates, and dependency audit pass. |
+| Tests, build, content gate | PASS | Full suite: 507 total, 506 passed, 0 failed, 1 intentional skip. Astro check, 61-page build, public/content/image/admin/performance gates, browser admin E2E, and dependency audit pass. |
 | Preview and rendered QA | PASS | Canonical cutover preview is Ready; public/retired/admin route contracts and desktop/mobile/article rendering pass with no broken images, placeholders, browser errors, or overflow. |
 | Rollback path | PASS WITH CAVEAT | Tag checkout, clean install, and build passed; rollback baseline retains 18 dependency findings. |
 | Dashboard-only deploy suppression | PASS ON BRANCH | `vercel.json` uses a tested fail-open ignore script for dashboard/pipeline state-only commits; it takes effect only after branch integration. |
-| Independent code review | PASS | Final re-review approved the benchmark and managed-persistence changes after all cleanup-error findings were regression-covered. |
+| Independent code review | PASS | Final re-review approved the full diff after fail-closed legacy argument handling and portable Playwright discovery were regression-covered; no findings remain. |
 | PR, merge, production smoke | NOT STARTED | Explicit preview approval and push/PR authorization were not given. No production promotion or cache purge was run by this branch. |
 
 The exact 35-item final-acceptance accounting is maintained in

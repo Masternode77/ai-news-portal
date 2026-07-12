@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import test from 'node:test';
-import { runContentCycleForFixture } from '../scripts/run-content-cycle.mjs';
+import { runContentCycleForFixture } from './helpers/content-cycle-fixture.mjs';
 import { runPublishCycle } from '../scripts/lib/publish-cycle.mjs';
 
 const fixture = new URL('./fixtures/content-cycle-mixed.json', import.meta.url);

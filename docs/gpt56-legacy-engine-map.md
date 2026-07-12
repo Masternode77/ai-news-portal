@@ -64,17 +64,24 @@ These modules represent complete or overlapping engine generations. Their produc
 entry points must be disabled first; useful primitives are migrated from the preceding
 table.
 
-| Module | Reason | Replacement |
+| Module | Runtime status | Replacement or retained boundary |
 | --- | --- | --- |
-| `blog-engine-v4.mjs` | Parallel full writer/router | Canonical editorial passes |
-| `longform-engine.mjs` | Independent deterministic long-form path | Route-aware writer; Source Signal fallback only |
-| `editorial-story-engine-v2.mjs` | Parallel story orchestration | Canonical orchestrator |
-| `editorial-humanizer.mjs` | Regex-first humanization | Critic plus paragraph rewrite |
-| `narrative-dna.mjs` | Legacy narrative generation | Angle/outline/diversity contracts |
-| `expert-insight-engine.mjs` | Overlapping insight generator | Evidence and editorial route passes |
-| `article-blueprints.mjs` | Universal blueprint pressure | Route-specific outline provider |
-| `public-feed-regenerator.mjs` | Independent public store writer | Public read-model builder |
-| `legacy-migration.mjs` | One-off historical migration implementation | Versioned canonical importer |
+| `blog-engine-v4.mjs` | Disabled from runtime entrypoints; retained by legacy regression fixtures only | Canonical editorial passes |
+| `longform-engine.mjs` | Disabled as a runtime generator; retained for diagnostics and test-fixture quality assertions | Route-aware writer; Source Signal fallback only |
+| `editorial-story-engine-v2.mjs` | Disabled from runtime entrypoints; retained by a direct legacy regression test only | Canonical orchestrator |
+| `public-feed-regenerator.mjs` | Deleted after command and output-contract parity | Canonical public read-model builder |
+| `legacy-migration.mjs` | Apply path disabled; retained for read-only migration diagnostics and tests | Versioned canonical importer |
+
+`editorial-humanizer.mjs`, `narrative-dna.mjs`, `expert-insight-engine.mjs`, and
+`article-blueprints.mjs` are not classified as retired runtime engines after the final call-graph
+audit. The canonical production composition still reaches bounded policy/provider functions in
+those modules through `content.mjs`, `expert-lens.mjs`, and the review gates. Their eventual
+decomposition is a migration concern; deleting them now would remove active fidelity, insight,
+or diversity behavior.
+
+Compatibility wrappers accept no legacy mutation flags. `--help` returns the canonical migration
+target without execution; retired arguments such as `--fixture` and `--dry-run` fail before the
+canonical command can run.
 
 ## Delete after verification
 
@@ -106,6 +113,13 @@ migration, and Vercel preview verification pass.
 | `migrate:legacy` | Manual | Versioned `content:import` | Read-only diagnostic; apply disabled | After migration sign-off |
 | `regen:latest100` | Manual | `content:review` | Complete: thin compatibility wrapper | After migration sign-off |
 | `regenerate:autonomous-analyses-v1` | Manual | `content:generate` | Complete: independent writes disabled | After preview approval |
+| `regenerate-public-feed.mjs` | Historical direct script | `content:cycle` | Complete: thin compatibility wrapper | After preview approval |
+| `regenerate-longform-analysis.mjs` | Historical direct script | `content:generate` | Complete: thin compatibility wrapper | After preview approval |
+| `regenerate-brief-cards.mjs` | Historical direct script | `content:generate` | Complete: thin compatibility wrapper | After preview approval |
+| `run-content-cycle.mjs` | Historical fixture CLI | `content:cycle` | Complete: runtime wrapper; fixture implementation isolated under `tests/helpers/` | After fixture retirement |
+| `schedule-content-cycle.mjs` | Historical fixture scheduler | `content:cycle` | Complete: thin compatibility wrapper | After preview approval |
+| `cleanup:public-content` | Historical direct repair writer | `content:review` | Complete: thin compatibility wrapper | After preview approval |
+| `generate:missing-images` | Historical direct migration writer | `content:cycle` | Complete: canonical image phase only | After preview approval |
 | `migrate:autonomous-desk-v1` | Manual | Versioned `content:import` | Read-only diagnostic; apply disabled | After migration sign-off |
 | `audit:content-quality` | Manual | `content:eval` | Consolidate assertions | After parity |
 | `audit:public-surface` | Manual | `audit:public` | Compatibility wrapper | After parity |
