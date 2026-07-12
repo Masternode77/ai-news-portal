@@ -48,7 +48,7 @@ jobs:
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
           SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
           SUPABASE_ARCHIVE_TABLE: ${{ secrets.SUPABASE_ARCHIVE_TABLE }}
-        run: npm run pipeline
+        run: npm run content:cycle
 
       - name: Validate production build
         run: npm run build
@@ -71,7 +71,12 @@ jobs:
             exit 0
           fi
 
-          git commit -m "chore: refresh news surface and archive [skip ci]"
+          changed_files="$(git diff --cached --name-only)"
+          if echo "$changed_files" | grep -Eq '^(src/data/(latest-news|archived-news|search-index|news-pool)\.json|public/generated/)'; then
+            git commit -m "chore: refresh news surface and archive"
+          else
+            git commit -m "chore: refresh dashboard state [skip ci]"
+          fi
           git push origin HEAD:main || {
             git pull --rebase --autostash origin main
             git push origin HEAD:main

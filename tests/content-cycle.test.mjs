@@ -160,7 +160,11 @@ test('publish cycle detailPage false edge keeps thin briefs source-linked', asyn
   assert.equal(result.artifacts.rssItems.find((rssItem) => rssItem.title === item.title)?.link, sourceUrl);
 });
 
-test('package exposes npm run content:cycle', () => {
+test('package routes npm run content:cycle through the guarded command surface', () => {
   const pkg = JSON.parse(fs.readFileSync(new URL('../package.json', import.meta.url), 'utf8'));
-  assert.match(pkg.scripts['content:cycle'], /run-content-cycle\.mjs/);
+  assert.equal(
+    pkg.scripts['content:cycle'],
+    'node ./scripts/content-command-surface.mjs cycle --production',
+  );
+  assert.doesNotMatch(pkg.scripts['content:cycle'], /run-content-cycle\.mjs|--fixture|CANONICAL_FIXTURE_HELPER/);
 });

@@ -6,6 +6,30 @@ import dashboardHandler from '../api/admin/dashboard.js';
 import { createSession, hashAdminPassword, resetLoginSecurityForTests } from '../api/admin/_auth.js';
 import { buildSitemapEntries, sitemapXml } from '../scripts/lib/sitemap-builder.mjs';
 
+const vercel = JSON.parse(fs.readFileSync(new URL('../vercel.json', import.meta.url), 'utf8'));
+
+function rewriteFor(pathname) {
+  for (const rewrite of vercel.rewrites || []) {
+    const sourceParts = rewrite.source.split('/').filter(Boolean);
+    const pathParts = pathname.split('/').filter(Boolean);
+    if (sourceParts.length !== pathParts.length) continue;
+
+    const params = {};
+    const matches = sourceParts.every((part, index) => {
+      if (!part.startsWith(':')) return part === pathParts[index];
+      params[part.slice(1)] = pathParts[index];
+      return Boolean(pathParts[index]);
+    });
+    if (!matches) continue;
+
+    return {
+      source: rewrite.source,
+      destination: rewrite.destination.replace(/:([A-Za-z0-9_]+)/g, (_, key) => params[key] || ''),
+    };
+  }
+  return null;
+}
+
 test('robots and sitemap surfaces keep admin routes out of public indexes', () => {
   const robots = fs.readFileSync(new URL('../src/pages/robots.txt.ts', import.meta.url), 'utf8');
   assert.match(robots, /Disallow: \/admin\//);
@@ -17,6 +41,51 @@ test('robots and sitemap surfaces keep admin routes out of public indexes', () =
 
   const astroConfig = fs.readFileSync(new URL('../astro.config.mjs', import.meta.url), 'utf8');
   assert.match(astroConfig, /pathname\.startsWith\('\/admin'\)/);
+});
+
+test('Vercel rewrites public admin article URLs to the existing secure editor shell', () => {
+  const rewrites = vercel.rewrites || [];
+  const sources = rewrites.map((rewrite) => rewrite.source);
+  const newIndex = sources.indexOf('/admin/articles/new');
+  const editIndex = sources.indexOf('/admin/articles/:id/edit');
+  const showIndex = sources.indexOf('/admin/articles/:id');
+
+  assert.notEqual(newIndex, -1);
+  assert.notEqual(editIndex, -1);
+  assert.notEqual(showIndex, -1);
+  assert.ok(newIndex < editIndex);
+  assert.ok(editIndex < showIndex);
+
+  assert.deepEqual(rewriteFor('/admin/articles/new'), {
+    source: '/admin/articles/new',
+    destination: '/admin/articles/new/',
+  });
+  assert.deepEqual(rewriteFor('/admin/articles/source-123/edit'), {
+    source: '/admin/articles/:id/edit',
+    destination: '/admin/articles/editor/?id=source-123',
+  });
+  assert.deepEqual(rewriteFor('/admin/articles/source-123'), {
+    source: '/admin/articles/:id',
+    destination: '/admin/articles/editor/?id=source-123',
+  });
+});
+
+test('public admin article URL contract does not add a second admin UI or public article exposure', () => {
+  const adminHeader = vercel.headers.find((entry) => entry.source === '/admin/(.*)');
+  assert.ok(adminHeader);
+  assert.ok(adminHeader.headers.some((header) => header.key === 'Cache-Control' && /no-store/.test(header.value)));
+  assert.ok(adminHeader.headers.some((header) => header.key === 'X-Robots-Tag' && /noindex/.test(header.value)));
+
+  const editorSource = fs.readFileSync(new URL('../src/pages/admin/articles/editor.astro', import.meta.url), 'utf8');
+  assert.match(editorSource, /AdminCmsShell/);
+  assert.match(editorSource, /canonicalPath="\/admin\/articles\/editor\/"/);
+
+  assert.equal(fs.existsSync(new URL('../src/pages/admin/articles/[id].astro', import.meta.url)), false);
+  assert.equal(fs.existsSync(new URL('../src/pages/admin/articles/[id]/edit.astro', import.meta.url)), false);
+
+  const sitemap = sitemapXml(buildSitemapEntries([{ id: 'source-123', public_status: 'draft' }]));
+  assert.doesNotMatch(sitemap, /\/admin\/articles\/source-123/);
+  assert.doesNotMatch(sitemap, /\/news\/source-123/);
 });
 
 test('/admin and /admin.html render only a login shell with no private data payload', () => {

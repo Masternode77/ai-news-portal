@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import { execFileSync } from 'node:child_process';
 import { mkdtempSync, rmSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
@@ -129,6 +130,35 @@ test('local admin storage persists to disk across new adapter instances', async 
     const second = localStorage({ filePath });
     assert.equal((await second.getArticle('article-1')).title, 'Persisted article');
     assert.deepEqual((await second.listAuditEntries()).map((entry) => entry.action), ['create']);
+  } finally {
+    rmSync(dir, { recursive: true, force: true });
+  }
+});
+
+test('local admin storage persists across fresh Node processes', () => {
+  const dir = mkdtempSync(join(tmpdir(), 'admin-storage-process-'));
+  const filePath = join(dir, 'storage.json');
+  const storageModule = new URL('../src/plugins/storage/index.mjs', import.meta.url).href;
+  const environment = { ...process.env, ADMIN_TEST_STORAGE_PATH: filePath, ADMIN_TEST_STORAGE_MODULE: storageModule };
+  const run = (source) => execFileSync(process.execPath, ['--input-type=module', '--eval', source], {
+    encoding: 'utf8',
+    env: environment,
+  }).trim();
+
+  try {
+    run(`
+      const { createLocalAdminStorage } = await import(process.env.ADMIN_TEST_STORAGE_MODULE);
+      const storage = createLocalAdminStorage({ filePath: process.env.ADMIN_TEST_STORAGE_PATH });
+      await storage.createArticle({ id: 'process-article', title: 'Survives restart' }, { actor: 'editor' });
+    `);
+    const output = run(`
+      const { createLocalAdminStorage } = await import(process.env.ADMIN_TEST_STORAGE_MODULE);
+      const storage = createLocalAdminStorage({ filePath: process.env.ADMIN_TEST_STORAGE_PATH });
+      const article = await storage.getArticle('process-article');
+      const audit = await storage.listAuditEntries({ articleId: 'process-article' });
+      process.stdout.write(JSON.stringify({ title: article?.title, actions: audit.map((entry) => entry.action) }));
+    `);
+    assert.deepEqual(JSON.parse(output), { title: 'Survives restart', actions: ['create'] });
   } finally {
     rmSync(dir, { recursive: true, force: true });
   }

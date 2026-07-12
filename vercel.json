@@ -9,6 +9,10 @@
   },
   "rewrites": [
     {
+      "source": "/admin/articles/new",
+      "destination": "/admin/articles/new/"
+    },
+    {
       "source": "/admin/articles/:id/edit",
       "destination": "/admin/articles/editor/?id=:id"
     },
