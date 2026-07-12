@@ -174,6 +174,12 @@ body:has(.publication-article) {
   text-transform: uppercase;
 }
 
+.public-lead-meta time,
+.public-site .story-meta time,
+.publication-article .story-meta time {
+  color: var(--cc-muted);
+}
+
 .public-lead-meta span:first-child,
 .public-signal-label {
   color: var(--cc-amber);

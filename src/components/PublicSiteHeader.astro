@@ -1,6 +1,4 @@
 ---
-import { SITE } from '../config/site';
-
 const { activePath = Astro.url.pathname } = Astro.props;
 const links = [
   ['Power', '/category/power-grid/'],
@@ -14,7 +12,7 @@ const links = [
 ---
 <header class="public-site-header">
   <div class="public-utility-row">
-    <a class="public-brand" href="/" aria-label={`${SITE.name} home`}>
+    <a class="public-brand" href="/">
       <span>Compute</span>
       <strong>Current</strong>
     </a>

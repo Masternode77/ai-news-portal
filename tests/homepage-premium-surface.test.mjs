@@ -69,3 +69,12 @@ test('homepage avoids internal workflow and generic promotional vocabulary', () 
   assert.doesNotMatch(combined, /operating board|qualifying signal|cycle status|generation version|deskwork|intelligence desk/i);
   assert.doesNotMatch(combined, /AI revolution|unlock the future|transform your business|cutting-edge AI|game-changing/i);
 });
+
+test('public publication chrome preserves accessible names and date contrast', () => {
+  const header = read('src/components/PublicSiteHeader.astro');
+  const styles = read('src/styles/public-intelligence.css');
+
+  assert.match(header, /<a class="public-brand" href="\/">/);
+  assert.doesNotMatch(header, /public-brand[^>]+aria-label/);
+  assert.match(styles, /\.public-lead-meta time,[\s\S]*\.public-site \.story-meta time[\s\S]*color:\s*var\(--cc-muted\)/);
+});
