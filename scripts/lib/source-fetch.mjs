@@ -217,6 +217,27 @@ export async function fetchArticleExcerpt(url, fallbackSnippet = '', timeoutMs =
   return articleText;
 }
 
+export function extractArticleHtml({
+  html = '',
+  url = '',
+  title = '',
+  fallbackSnippet = '',
+} = {}) {
+  const adapter = adapterForUrl(url);
+  const articleSection = extractSection(html, adapter);
+  const { rawText, cleanedText } = paragraphTextFromSection(articleSection, adapter);
+  const articleText = truncateAtSentence(cleanedText || fallbackSnippet, 1800);
+  const extractionQa = analyzeExtractionQuality({
+    title,
+    articleText,
+    fallbackSnippet,
+    sourceUrl: url,
+    sourceDomainAdapter: adapter.id,
+    rawText,
+  });
+  return { articleText, extractionQa };
+}
+
 export async function fetchArticleExtraction({
   url,
   title = '',
@@ -226,8 +247,6 @@ export async function fetchArticleExtraction({
   if (PIPELINE_OFFLINE) {
     return fallbackExtraction(url, fallbackSnippet, 'pipeline_offline');
   }
-
-  const adapter = adapterForUrl(url);
 
   try {
     const response = await safeHttpFetch(url, {
@@ -246,20 +265,12 @@ export async function fetchArticleExtraction({
       return fallbackExtraction(url, fallbackSnippet, `http_${response.status}`);
     }
 
-    const html = await response.text();
-    const articleSection = extractSection(html, adapter);
-    const { rawText, cleanedText } = paragraphTextFromSection(articleSection, adapter);
-    const articleText = truncateAtSentence(cleanedText || fallbackSnippet, 1800);
-    const extractionQa = analyzeExtractionQuality({
+    return extractArticleHtml({
+      html: await response.text(),
+      url,
       title,
-      articleText,
       fallbackSnippet,
-      sourceUrl: url,
-      sourceDomainAdapter: adapter.id,
-      rawText,
     });
-
-    return { articleText, extractionQa };
   } catch (error) {
     const reason = /timed out|aborted/i.test(error?.message || '')
       ? 'timeout'

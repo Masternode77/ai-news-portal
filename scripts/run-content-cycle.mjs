@@ -14,6 +14,11 @@ import {
 } from './lib/public-content-tier-router.mjs';
 import { buildEvidencePack } from './lib/evidence-pack-builder.mjs';
 import { generateLongformAnalysis, longformQualityResult } from './lib/longform-engine.mjs';
+import { sourceFidelityCheck } from './lib/source-fidelity-check.mjs';
+import {
+  checkClaimsAgainstEvidence,
+  seoMetadataClaimsSupported,
+} from './lib/source-fidelity-claim-check.mjs';
 import { forbiddenPublicPhraseMatches } from './lib/copy-quality-guard.mjs';
 import { sectionCount, visibleBodyLength } from './lib/visible-body-length.mjs';
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
@@ -80,8 +85,8 @@ export async function runContentCycleForArticle(article = {}) {
   };
   const evidencePack = buildEvidencePack(routedArticle);
   const tierRoute = routePublicContentTier(routedArticle, { evidencePack });
-  const tier = normalizeTier(tierRoute.tier);
-  const publicStatus = tier === PUBLIC_CONTENT_TIERS.HIDDEN ? 'hidden' : 'draft';
+  const requestedTier = normalizeTier(tierRoute.tier);
+  const publicStatus = requestedTier === PUBLIC_CONTENT_TIERS.HIDDEN ? 'hidden' : 'draft';
   if (process.env.FORCE_GENERATION_FAILURE === '1') {
     const failureReasons = unique([...extraction.reasons, ...(publicExtraction.block_reasons || []), ...(longformExtraction.block_reasons || []), ...(relevance.blocked_reasons || []), ...(tierRoute.reasons || []), ...(evidencePack.blockReasons || []), 'forced_generation_failure']);
     return {
@@ -113,13 +118,29 @@ export async function runContentCycleForArticle(article = {}) {
       reasons: failureReasons,
     };
   }
-  const brief = tier === PUBLIC_CONTENT_TIERS.EDITORIAL_BRIEF
-    ? buildEditorialBrief(routedArticle, evidencePack)
-    : '';
-  const longformArticle = tier === PUBLIC_CONTENT_TIERS.LONGFORM_ANALYSIS && longformExtraction.ok
+  const longformArticle = requestedTier === PUBLIC_CONTENT_TIERS.LONGFORM_ANALYSIS && longformExtraction.ok
     ? generateLongformAnalysis(routedArticle, { evidencePack })
     : null;
   const longformBody = longformArticle?.expertLensFull?.finalArticleBody || '';
+  const sourceFidelity = longformArticle
+    ? sourceFidelityCheck(longformArticle, evidencePack, longformBody)
+    : null;
+  const claimFidelity = longformArticle
+    ? checkClaimsAgainstEvidence(longformBody, evidencePack)
+    : null;
+  const seoFidelity = longformArticle
+    ? seoMetadataClaimsSupported(longformArticle, evidencePack)
+    : null;
+  const editorialGatesPass = sourceFidelity?.ok === true
+    && claimFidelity?.ok === true
+    && (claimFidelity.unsupportedClaims?.length || 0) === 0
+    && seoFidelity?.ok === true;
+  const tier = requestedTier === PUBLIC_CONTENT_TIERS.LONGFORM_ANALYSIS && !editorialGatesPass
+    ? PUBLIC_CONTENT_TIERS.EDITORIAL_BRIEF
+    : requestedTier;
+  const brief = tier === PUBLIC_CONTENT_TIERS.EDITORIAL_BRIEF
+    ? buildEditorialBrief(routedArticle, evidencePack)
+    : '';
   const longformQuality = longformBody
     ? longformQualityResult({ expertLensFull: { finalArticleBody: longformBody } })
     : null;
@@ -130,6 +151,9 @@ export async function runContentCycleForArticle(article = {}) {
     ...(relevance.blocked_reasons || []),
     ...(tierRoute.reasons || []),
     ...(evidencePack.blockReasons || []),
+    ...(requestedTier === PUBLIC_CONTENT_TIERS.LONGFORM_ANALYSIS && !editorialGatesPass
+      ? ['longform_editorial_fidelity_failed']
+      : []),
   ]);
   return {
     id: clean(article.id),
@@ -151,19 +175,22 @@ export async function runContentCycleForArticle(article = {}) {
     coreFeedEligible: relevance.visibility === 'core'
       && [PUBLIC_CONTENT_TIERS.LONGFORM_ANALYSIS, PUBLIC_CONTENT_TIERS.EDITORIAL_BRIEF].includes(tier)
       && publicStatus !== 'hidden',
-    detailPage: tier === PUBLIC_CONTENT_TIERS.LONGFORM_ANALYSIS && longformExtraction.ok,
-    longformGenerated: tier === PUBLIC_CONTENT_TIERS.LONGFORM_ANALYSIS && longformExtraction.ok,
-    bodyVisibleCharacters: visibleBodyLength(longformBody),
+    detailPage: tier === PUBLIC_CONTENT_TIERS.LONGFORM_ANALYSIS && editorialGatesPass,
+    longformGenerated: Boolean(longformArticle),
+    bodyVisibleCharacters: visibleBodyLength(tier === PUBLIC_CONTENT_TIERS.LONGFORM_ANALYSIS ? longformBody : brief),
     facts: evidencePack.facts.length,
     sections: sectionCount(longformBody),
     bannedPhraseMatches: forbiddenPublicPhraseMatches([longformBody, brief].filter(Boolean).join('\n\n')),
     longformQuality,
-    finalArticleBody: longformBody || brief,
+    finalArticleBody: tier === PUBLIC_CONTENT_TIERS.LONGFORM_ANALYSIS ? longformBody : brief,
     brief,
     briefWordCount: wordCount(brief),
     wordCount: wordCount(brief || longformBody),
     evidenceFactCount: evidencePack.facts.length,
     sourceEvidenceCharacters: extraction.cleaned_source_length,
+    source_fidelity: sourceFidelity,
+    claim_fidelity: claimFidelity,
+    seo_fidelity: seoFidelity,
     reasons,
   };
 }

@@ -10,6 +10,14 @@ import { buildRegionIndex } from './lib/region-index.mjs';
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const REPORT_PATH = path.join(ROOT, 'docs/taxonomy-pages-report.md');
 
+export function taxonomyGeneratedAt(items = []) {
+  const timestamps = items
+    .flatMap((item) => [item.updatedAt, item.analysisPublishedAt, item.publishedAt])
+    .map((value) => new Date(value || 0).getTime())
+    .filter(Number.isFinite);
+  return new Date(timestamps.length ? Math.max(...timestamps) : 0).toISOString();
+}
+
 export async function rebuildTaxonomyPages() {
   const [latest, archived] = await Promise.all([
     readJsonFile(LATEST_NEWS_PATH, []),
@@ -17,7 +25,7 @@ export async function rebuildTaxonomyPages() {
   ]);
   const all = [...latest, ...archived];
   const taxonomy = {
-    generatedAt: new Date().toISOString(),
+    generatedAt: taxonomyGeneratedAt(all),
     categories: buildCategoryPages(all),
     companies: buildCompanyIndex(all),
     regions: buildRegionIndex(all),

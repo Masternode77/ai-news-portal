@@ -6,7 +6,7 @@ import { runPublishCycle } from '../scripts/lib/publish-cycle.mjs';
 
 const fixture = new URL('./fixtures/content-cycle-mixed.json', import.meta.url);
 
-test('full offline content cycle updates article, image, RSS, sitemap, cache, and review artifacts together', async () => {
+test('full offline content cycle downgrades unsupported longform while updating public artifacts together', async () => {
   const result = await runContentCycleForFixture(fixture);
 
   assert.equal(result.mode, 'full-cycle');
@@ -15,7 +15,17 @@ test('full offline content cycle updates article, image, RSS, sitemap, cache, an
   assert.ok(result.artifacts.searchIndex.some((article) => article.searchText?.includes('Utility schedule now controls')));
   assert.ok(result.artifacts.imageManifest.every((image) => image.heroImage && image.thumbnailImage && image.ogImage));
   assert.ok(result.artifacts.rssItems.length >= 1);
-  assert.ok(result.artifacts.sitemapEntries.some((entry) => entry.loc?.startsWith('/news/')));
+  const downgraded = result.artifacts.latestNews.find((article) => article.id === 'fact-rich-ai-campus');
+  const cycleResult = result.results.find((article) => article.id === 'fact-rich-ai-campus');
+  assert.equal(downgraded.public_content_tier, 'editorial_brief');
+  assert.equal(downgraded.articlePagePublished, false);
+  assert.equal(cycleResult.tier, 'editorial_brief');
+  assert.ok(cycleResult.reasons.includes('longform_editorial_fidelity_failed'));
+  assert.equal(result.artifacts.sitemapEntries.some((entry) => entry.loc === '/news/fact-rich-ai-campus/'), false);
+  assert.equal(
+    result.artifacts.rssItems.find((item) => item.title === downgraded.title)?.link,
+    'https://example.com/fact-rich-ai-campus',
+  );
   assert.deepEqual(result.artifacts.cacheReport.updatedArtifacts.sort(), [
     'adminReviewQueue',
     'imageManifest',
@@ -56,6 +66,10 @@ test('publish cycle keeps internal cycle status out of public artifacts', async 
     sitemapEntries: result.artifacts.sitemapEntries,
   });
   assert.doesNotMatch(publicText, /completed_no_qualifying_signals|routing_decision|reviewQueue|pipeline_status|cycle_status/i);
+  const attemptedLongform = result.artifacts.latestNews.find((article) => article.id === 'fact-rich-ai-campus');
+  assert.equal(attemptedLongform.public_content_tier, 'editorial_brief');
+  assert.equal(attemptedLongform.articlePagePublished, false);
+  assert.equal(result.artifacts.sitemapEntries.some((entry) => entry.loc === '/news/fact-rich-ai-campus/'), false);
 });
 
 test('publish cycle keeps source-link briefs off local detail pages', async () => {

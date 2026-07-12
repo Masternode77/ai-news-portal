@@ -3,29 +3,38 @@ import test from 'node:test';
 import { getRssString } from '@astrojs/rss';
 import { buildRssItems, rssMetadata } from '../scripts/lib/rss-builder.mjs';
 import { findInternalLanguageHits } from '../scripts/lib/internal-language-guard.mjs';
+import { generateLongformAnalysis } from '../scripts/lib/longform-engine.mjs';
+import { repairPublicLongformRecord } from '../scripts/repair-public-longform-inventory.mjs';
+
+function validLongform(overrides = {}) {
+  const articleText = 'A utility filing ties a contracted AI campus to substation delivery, transformer procurement, cooling completion, customer fit-out, financing, and a dated energization milestone. '.repeat(12);
+  const article = generateLongformAnalysis({
+    id: 'a',
+    title: 'Grid delivery sets the schedule for a contracted AI campus',
+    source: 'Infrastructure Filing',
+    sourceUrl: 'https://example.com/contracted-campus',
+    publishedAt: '2026-05-20T00:00:00Z',
+    category: 'Power & Grid',
+    primary_category: 'Power & Grid',
+    infrastructure_layer: 'power',
+    extraction_quality_score: 0.95,
+    infrastructure_relevance_score: 0.9,
+    articleText,
+    rawText: articleText,
+    summary: 'A contracted campus still depends on utility and construction milestones.',
+    ...overrides,
+  });
+  return {
+    ...article,
+    source_fidelity: { ok: true },
+    claim_fidelity: { ok: true, unsupportedClaims: [] },
+    seo_fidelity: { ok: true },
+  };
+}
 
 test('rss builder excludes archived internal items', () => {
-  const articleText = 'Published data center infrastructure analysis connects verified source evidence to power, storage, and capacity milestones. '.repeat(16);
   const items = buildRssItems([
-    {
-      id: 'a',
-      title: 'Published analysis',
-      publishedAt: '2026-05-20T00:00:00Z',
-      articlePagePublished: true,
-      homepagePublished: true,
-      archiveOnly: false,
-      noindex: false,
-      seo_noindex: false,
-      public_status: 'published',
-      publishing_route: 'Featured Analysis',
-      public_routing: { visibility: 'core' },
-      extraction_quality_score: 0.95,
-      infrastructure_relevance_score: 0.9,
-      category: 'Power & Grid',
-      articleText,
-      expertLensFull: { finalArticleBody: articleText },
-      deck: 'Clean public deck.',
-    },
+    validLongform(),
     { id: 'b', title: 'Archived', publishedAt: '2026-05-20T00:00:00Z', articlePagePublished: false, archiveOnly: true, public_status: 'archive_only_noindex', deck: 'Hidden.' },
   ]);
   assert.equal(items.length, 1);
@@ -61,6 +70,56 @@ test('rss builder preserves external source links for source-only public briefs'
 
   assert.equal(items.length, 1);
   assert.equal(items[0].link, 'https://example.com/source-only-capacity-signal');
+});
+
+test('rss builder includes a repaired core source signal without stale longform copy', () => {
+  const sourceText = 'A source filing connects a 300 MW data center campus to utility delivery, substation work, cooling systems, financing milestones, and customer-ready capacity. '.repeat(8);
+  const repaired = repairPublicLongformRecord({
+    ...validLongform({
+      id: 'repaired-core-source',
+      sourceUrl: 'https://example.com/repaired-core-source',
+      articleText: sourceText,
+      rawText: sourceText,
+    }),
+    expertLensFull: { finalArticleBody: 'Too short for local publication.' },
+  });
+  const items = buildRssItems([repaired]);
+  assert.equal(repaired.public_status, 'signal');
+  assert.equal(repaired.expertLensFull, undefined);
+  assert.equal(items.length, 1);
+  assert.equal(items[0].link, 'https://example.com/repaired-core-source');
+  assert.doesNotMatch(`${items[0].title} ${items[0].description}`, /longform|quality gate|noindex/i);
+});
+
+test('rss builder omits a failed local longform when its fallback source URL is unsafe', () => {
+  const article = validLongform({ sourceUrl: 'javascript:alert(1)' });
+  article.expertLensFull.finalArticleBody = 'Too short for a public local article.';
+
+  assert.deepEqual(buildRssItems([article]), []);
+});
+
+test('rss builder omits a source-only item without a safe external URL', () => {
+  const publicSourceText = 'Verified AI infrastructure source text connects capacity planning, power access, grid constraints, and cloud demand to a public market signal. '.repeat(8);
+  const article = {
+    id: 'source-only-without-url',
+    title: 'Source-only capacity signal without a URL',
+    publishedAt: '2026-05-21T00:00:00Z',
+    articlePagePublished: false,
+    homepagePublished: true,
+    archiveOnly: false,
+    noindex: false,
+    seo_noindex: false,
+    public_status: 'published',
+    public_routing: { visibility: 'adjacent' },
+    extraction_quality_score: 0.9,
+    infrastructure_relevance_score: 0.8,
+    category: 'Cloud Capacity',
+    articleText: publicSourceText,
+    rawText: publicSourceText,
+    deck: 'Clean public deck.',
+  };
+
+  assert.deepEqual(buildRssItems([article]), []);
 });
 
 test('rss builder omits extraction-clean weak self-driving items without source-backed infrastructure fit', () => {
@@ -204,28 +263,7 @@ test('rss builder omits eligible items when generated card copy cannot pass the 
 });
 
 test('rss metadata binds media namespace when feed items include media content', async () => {
-  const articleText = 'Published data center infrastructure analysis connects verified source evidence to power, storage, and capacity milestones. '.repeat(16);
-  const items = buildRssItems([
-    {
-      id: 'a',
-      title: 'Published analysis',
-      publishedAt: '2026-05-20T00:00:00Z',
-      articlePagePublished: true,
-      homepagePublished: true,
-      archiveOnly: false,
-      noindex: false,
-      seo_noindex: false,
-      public_status: 'published',
-      publishing_route: 'Featured Analysis',
-      public_routing: { visibility: 'core' },
-      extraction_quality_score: 0.95,
-      infrastructure_relevance_score: 0.9,
-      category: 'Power & Grid',
-      articleText,
-      expertLensFull: { finalArticleBody: articleText },
-      deck: 'Clean public deck.',
-    },
-  ]);
+  const items = buildRssItems([validLongform()]);
 
   const xml = await getRssString({
     ...rssMetadata(),

@@ -21,15 +21,11 @@ function extractConcurrency(jobName) {
   };
 }
 
-test('update-news workflow serializes every main-writing job in one queue', () => {
-  // Given: both scheduled jobs can commit generated data back to main.
+test('update-news workflow has one serialized main-writing job', () => {
   const updateNews = extractConcurrency('update-news');
-  const dashboardSync = extractConcurrency('dashboard-sync');
 
-  // When: the workflow concurrency policy is inspected.
-  // Then: both writers use the same non-canceling queue so generated commits cannot race into rebase conflicts.
   assert.equal(updateNews.group, 'ai-news-portal-main-writes');
-  assert.equal(dashboardSync.group, updateNews.group);
   assert.equal(updateNews.cancelInProgress, 'false');
-  assert.equal(dashboardSync.cancelInProgress, 'false');
+  assert.doesNotMatch(workflow, /^  dashboard-sync:/m);
+  assert.match(extractJobBlock('update-news'), /git push origin HEAD:main/);
 });

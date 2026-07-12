@@ -1,41 +1,40 @@
-import { shouldNoindexArticle } from '../../src/lib/seo-safeguards.js';
 import { CATEGORY_PAGES } from './taxonomy-page-builder.mjs';
-import { DEFAULT_COMPANIES } from './company-entity-index.mjs';
-import { DEFAULT_REGIONS } from './region-index.mjs';
+import { buildCompanyIndex } from './company-entity-index.mjs';
+import { buildRegionIndex } from './region-index.mjs';
 import { articleOpenGraphImage, isTrustedPublicImage } from './article-image-surface.mjs';
+import { isPublicLongformArticle } from './public-surface-eligibility.mjs';
 
-function slugify(value = '') {
-  return String(value).toLowerCase().replace(/&/g, 'and').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+function lastModifiedFor(items = []) {
+  const timestamps = items
+    .flatMap((item) => [item.updatedAt, item.analysisPublishedAt, item.publishedAt])
+    .map((value) => new Date(value || 0).getTime())
+    .filter(Number.isFinite);
+  return new Date(timestamps.length ? Math.max(...timestamps) : 0).toISOString();
 }
 
 export function buildSitemapEntries(items = []) {
-  const now = new Date().toISOString();
+  const lastmod = lastModifiedFor(items);
   const staticPages = [
     '/',
-    '/about/',
-    '/methodology/',
-    '/editorial-policy/',
-    '/ai-disclosure/',
     '/archive/',
-    '/contact/',
   ];
   const articlePages = items
-    .filter((item) => item?.id && item.articlePagePublished !== false && item.archiveOnly !== true && item.public_status !== 'archive_only_noindex' && item.public_status !== 'quarantined' && !shouldNoindexArticle(item))
+    .filter(isPublicLongformArticle)
     .map((item) => {
       const image = articleOpenGraphImage(item);
       return {
         loc: `/news/${item.id}/`,
-        lastmod: item.updatedAt || item.analysisPublishedAt || item.publishedAt || now,
+        lastmod: item.updatedAt || item.analysisPublishedAt || item.publishedAt || lastmod,
         image: isTrustedPublicImage(image) ? image : '',
       };
     });
   const taxonomy = [
     ...CATEGORY_PAGES.map(([slug]) => `/category/${slug}/`),
-    ...DEFAULT_REGIONS.map((name) => `/region/${slugify(name)}/`),
-    ...DEFAULT_COMPANIES.map((name) => `/company/${slugify(name)}/`),
-  ].map((loc) => ({ loc, lastmod: now }));
+    ...buildRegionIndex(items).map((page) => `/region/${page.slug}/`),
+    ...buildCompanyIndex(items).map((page) => `/company/${page.slug}/`),
+  ].map((loc) => ({ loc, lastmod }));
   return [
-    ...staticPages.map((loc) => ({ loc, lastmod: now })),
+    ...staticPages.map((loc) => ({ loc, lastmod })),
     ...taxonomy,
     ...articlePages,
   ];

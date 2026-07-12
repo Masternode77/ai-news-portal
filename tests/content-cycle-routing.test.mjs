@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import test from 'node:test';
 import { runContentCycleForArticle } from '../scripts/run-content-cycle.mjs';
 
-test('content cycle routes clean infrastructure evidence to a longform candidate', async () => {
+test('content cycle downgrades a longform candidate when generated claims fail fidelity', async () => {
   const result = await runContentCycleForArticle({
     id: 'clean-infra',
     title: 'Data center campus waits on 300 MW grid upgrade',
@@ -20,8 +20,15 @@ test('content cycle routes clean infrastructure evidence to a longform candidate
   });
 
   assert.equal(result.extraction_passed, true);
-  assert.equal(result.tier, 'longform_analysis');
+  assert.equal(result.rawTier, 'longform_analysis');
+  assert.equal(result.tier, 'editorial_brief');
   assert.equal(result.coreFeedEligible, true);
+  assert.equal(result.detailPage, false);
+  assert.equal(result.longformGenerated, true);
+  assert.equal(result.source_fidelity.ok, true);
+  assert.equal(result.claim_fidelity.ok, false);
+  assert.equal(result.seo_fidelity.ok, false);
+  assert.ok(result.reasons.includes('longform_editorial_fidelity_failed'));
   assert.match(result.public_status, /draft|published/);
 });
 

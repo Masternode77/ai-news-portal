@@ -8,6 +8,7 @@ test('archive feed excludes hidden/noindex items and uses publication copy', () 
       id: 'a',
       title: 'Power queue reshapes data center timing',
       source: 'Utility Dive',
+      sourceUrl: 'https://example.com/power-queue',
       publishedAt: '2026-05-20T00:00:00Z',
       public_content_tier: 'editorial_brief',
       homepagePublished: true,

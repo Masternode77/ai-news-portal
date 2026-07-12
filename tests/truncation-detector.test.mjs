@@ -14,3 +14,8 @@ test('allows normal complete copy', () => {
   const result = detectTruncationArtifacts('NetApp connects backup and DR to OpenShift platform readiness.');
   assert.equal(result.ok, true);
 });
+
+test('allows consecutive initials without treating them as clipped single letters', () => {
+  const result = detectTruncationArtifacts('TSMC CEO C.C. Wei says capacity will remain constrained.');
+  assert.equal(result.ok, true);
+});

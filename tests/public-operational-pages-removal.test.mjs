@@ -57,15 +57,29 @@ test('all public surfaces contain no retired links or labels', () => {
   assert.doesNotMatch(source, /correctionPolicy|publishingPrinciples/);
 });
 
+test('deployment and visual QA scripts do not require retired routes', () => {
+  const operationalScripts = [
+    'scripts/verify-production-surface.mjs',
+    'scripts/qa-commercial-visual.mjs',
+    'scripts/lib/source-feed-discovery.mjs',
+  ].map(read).join('\n');
+
+  for (const route of removedRoutes) {
+    assert.doesNotMatch(operationalScripts, new RegExp(route.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')));
+  }
+});
+
 test('sitemap and RSS endpoints exclude every retired route', () => {
   const sitemapSource = read('src/pages/sitemap.xml.ts');
+  const sitemapBuilderSource = read('scripts/lib/sitemap-builder.mjs');
   const rssSource = read('src/pages/rss.xml.ts');
 
   for (const route of removedRoutes) {
-    assert.match(sitemapSource, new RegExp(route.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')));
+    assert.doesNotMatch(sitemapSource, new RegExp(route.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')));
+    assert.doesNotMatch(sitemapBuilderSource, new RegExp(route.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')));
     assert.match(rssSource, new RegExp(route.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')));
   }
-  assert.match(sitemapSource, /filter\(\(entry\) => !removedPublicRoutes\.has\(entry\.loc\)\)/);
+  assert.match(sitemapSource, /buildSitemapEntries\(\[\.\.\.latestNews, \.\.\.archivedNews\]\)/);
   assert.match(rssSource, /filter\(\(item\) => !pointsToRemovedRoute\(item\.link, meta\.site\)\)/);
 });
 

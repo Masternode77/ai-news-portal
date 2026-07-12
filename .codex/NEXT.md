@@ -3,39 +3,38 @@
 ## Current branch
 - `upgrade/gpt-5-6-sol`, based on production `origin/main` SHA `19089b66`.
 - Rollback tag: `backup/pre-gpt56-upgrade-20260711T091118Z`.
-- Security/dependency and repository-guidance commits replayed; branch is two commits ahead before audit docs.
+- Branch carries the local upgrade checkpoints; production remains unchanged.
 
 ## Latest completed checklist item
-- Completed read-only repository, production, Vercel, content, image, admin, security, SEO, performance, CI/CD, desktop, and mobile audit.
-- Documented the canonical target architecture before major refactoring.
-- Classified all 165 `scripts/lib` runtime modules.
+- Enforced one strict longform contract across homepage, RSS, sitemap, and article routes.
+- Added fail-closed source, claim, and SEO fidelity checks at generation and publish boundaries; failed longforms become source-linked briefs.
+- Repaired legacy longform inventory with a dry-run-first, checksummed, rollback-ready migration.
+- Normalized all non-longform lifecycle states: 120 source signals, 52 downgraded records, and one retained gated local analysis.
+- Rebuilt taxonomy from current data with deterministic timestamps and complete sitemap paths.
+- Removed stale operational routes from verification and visual QA scripts.
 
-## Changed files
-- `docs/pre-upgrade-baseline.md`
-- `docs/gpt56-full-audit.md`
-- `docs/gpt56-runtime-map.md`
-- `docs/gpt56-legacy-engine-map.md`
-- `docs/gpt56-admin-audit.md`
-- `docs/gpt56-security-audit.md`
-- `docs/gpt56-design-audit.md`
-- `docs/gpt56-risk-register.md`
-- `docs/canonical-architecture.md`
-- `docs/plugin-contracts.md`
-- `docs/plugin-development-guide.md`
-- `docs/legacy-engine-migration.md`
+## Changed surfaces
+- `scripts/repair-public-longform-inventory.mjs` and focused migration tests.
+- Public feed/RSS/sitemap/publish-cycle eligibility and regression tests.
+- Current archived/search/taxonomy read models and Applied Digital raster variants.
+- Deployment verification, source discovery, and commercial visual QA route contracts.
 
 ## Validation results
-- Upgrade branch `npm audit --json`: 0 vulnerabilities.
-- Audit documentation check: 12/12 present.
-- Legacy inventory check: 165/165 runtime modules classified.
-- `git diff --check`: passed.
-- Clean origin baseline build: passed, 1,532 pages, 33.86 seconds locally.
-- Clean origin baseline tests after build: 252/256 passed; four documented pre-existing failures.
+- Final full suite: 350 passed, 0 failed, 1 conditional skip (351 total).
+- `npm run check`: 0 errors, 11 existing hints.
+- `npm audit`: 0 vulnerabilities at every severity across 406 dependencies.
+- `npm run content:gate`: passed; build produced 1,520 pages.
+- Public, image, admin-exclusion, and local production-surface audits passed.
+- Current policy audit: 44 homepage cards, 58 archive-feed items, one gated longform route, and 0 broken images.
+- Claim probes cover attached power and financial units, punctuationless and factual title-case copy, all body sentences, controlled relation anchors, unsupported guarantees, and premise-bound inference.
+- Post-build migration rerun: 0 changes; input digest `7568b0dd5ff3d7f509babc9bf9728653a1cb9d7e8a345926911815088a8d2ea6`.
+- Consecutive taxonomy rebuilds were byte-identical: `ae56793607a7931214cc07366e6b5a6171222f12be4a2589bf420e856992397b`.
+- LOC review: tracked non-data `+1,062/-274`, new migration/tests `1,379` lines, read models `+110,015/-134,116`, and three WebP variants (43,318 bytes).
+- Runtime reports, logs, artifacts, and AGENTS files are clean and excluded from this checkpoint.
 
 ## Blockers
-- Production DB, object storage, and admin credentials are not available; integration must fail closed and production CRUD cannot be claimed.
-- Production remains unchanged until preview gates pass.
+- Production DB, object storage, and admin credentials are unavailable; production CRUD cannot be claimed.
+- Production remains unchanged until the three design prototypes and preview approval gate are complete.
 
 ## Exact next step
-- Commit the audit/architecture checkpoint.
-- Implement regression tests for public-route removal and the highest-severity security boundaries before changing behavior.
+- Continue to the three prototype design round before preview deployment.

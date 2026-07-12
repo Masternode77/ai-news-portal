@@ -1,11 +1,12 @@
 import { cleanEditorialText } from '../../src/lib/editorial-display.js';
-import { rssItemEligible } from './seo-quality-policy.mjs';
 import { sanitizePublicCopy } from './internal-language-guard.mjs';
 import { cardCopyQualityResult, generateCardCopy } from './card-copy-quality-gate.mjs';
 import { articleOpenGraphImage, isTrustedPublicImage } from './article-image-surface.mjs';
+import { isPublicLongformArticle, isPublicRssArticle } from './public-surface-eligibility.mjs';
+import { safeSourceUrlFor } from '../../src/lib/seo-safeguards.js';
 
 function rssLinkFor(item = {}) {
-  return item.articlePagePublished === false ? item.sourceUrl || item.url || '/' : `/news/${item.id}/`;
+  return isPublicLongformArticle(item) ? `/news/${item.id}/` : safeSourceUrlFor(item);
 }
 
 function absoluteSiteUrl(pathOrUrl = '', site = 'https://www.computecurrent.com') {
@@ -40,9 +41,10 @@ export function buildRssItems(items = []) {
   const out = [];
 
   for (const item of items
-    .filter((item) => item?.id && item?.publishedAt && rssItemEligible(item) && item.archiveOnly !== true && item.public_status !== 'archive_only_noindex')
+    .filter((item) => item?.id && item?.publishedAt && isPublicRssArticle(item))
     .sort((a, b) => new Date(b.analysisPublishedAt || b.publishedAt).getTime() - new Date(a.analysisPublishedAt || a.publishedAt).getTime())) {
     const link = rssLinkFor(item);
+    if (!link) continue;
     if (seenLinks.has(link)) {
       continue;
     }

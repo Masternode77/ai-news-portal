@@ -9,12 +9,13 @@ const DEFAULT_SCREENSHOTS = [
   'evidence/compute-current-omo-ultra-rebuild/task-14-homepage.png',
   'evidence/compute-current-omo-ultra-rebuild/task-14-article.png',
 ];
-const PUBLIC_REFERENCE_ROUTES = ['/contact/', '/methodology/', '/editorial-policy/', '/ai-disclosure/'];
-const LEGACY_OPEN_ROUTES = ['/subscribe/', '/pricing/', '/sample/', '/briefing/'];
+const PUBLICATION_ROUTES = ['/archive/', '/sample/'];
+const INDEXED_PUBLICATION_ROUTES = ['/archive/'];
+const LEGACY_OPEN_ROUTES = ['/subscribe/', '/pricing/', '/briefing/'];
+const NONINDEXED_ROUTES = [...LEGACY_OPEN_ROUTES, '/sample/'];
 const SMOKE_PATHS = [
   '/',
-  ...PUBLIC_REFERENCE_ROUTES,
-  '/archive/',
+  ...PUBLICATION_ROUTES,
   '/rss.xml',
   '/sitemap.xml',
   '/sitemap-index.xml',
@@ -84,12 +85,12 @@ async function inspectLocalDistributionDetails(distDir) {
   const sitemapIndex = await readText(path.join(distDir, 'sitemap-index.xml'));
   const childSitemap = await firstAstroChildSitemap(distDir);
   const childXml = childSitemap ? await readText(path.join(distDir, childSitemap)) : '';
-  const homepageMissingPublicLinks = [...PUBLIC_REFERENCE_ROUTES, '/archive/', '/rss.xml'].filter((route) => !homepage.includes(`href="${route}"`) && !homepage.includes(`href='${route}'`));
+  const homepageMissingPublicLinks = [...PUBLICATION_ROUTES, '/rss.xml'].filter((route) => !homepage.includes(`href="${route}"`) && !homepage.includes(`href='${route}'`));
   const homepageUnexpectedLegacyLinks = LEGACY_OPEN_ROUTES.filter((route) => homepage.includes(`href="${route}"`) || homepage.includes(`href='${route}'`));
-  const customSitemapMissingPublic = PUBLIC_REFERENCE_ROUTES.filter((route) => !sitemap.includes(route));
-  const customSitemapUnexpectedLegacy = LEGACY_OPEN_ROUTES.filter((route) => sitemap.includes(route));
-  const astroSitemapMissingPublic = PUBLIC_REFERENCE_ROUTES.filter((route) => !childXml.includes(route));
-  const astroSitemapUnexpectedLegacy = LEGACY_OPEN_ROUTES.filter((route) => childXml.includes(route));
+  const customSitemapMissingPublic = INDEXED_PUBLICATION_ROUTES.filter((route) => !sitemap.includes(route));
+  const customSitemapUnexpectedLegacy = NONINDEXED_ROUTES.filter((route) => sitemap.includes(route));
+  const astroSitemapMissingPublic = INDEXED_PUBLICATION_ROUTES.filter((route) => !childXml.includes(route));
+  const astroSitemapUnexpectedLegacy = NONINDEXED_ROUTES.filter((route) => childXml.includes(route));
   const rssLocalNewsIds = localNewsIdsFromXml(rss);
   const rssLocalFileStatuses = await Promise.all(rssLocalNewsIds.map(async (id) => ({
     id,
@@ -129,8 +130,7 @@ async function inspectLocalDist(distDir) {
     'sitemap.xml',
     'sitemap-index.xml',
     'robots.txt',
-    'archive/index.html',
-    ...PUBLIC_REFERENCE_ROUTES.map(routeFile),
+    ...PUBLICATION_ROUTES.map(routeFile),
     ...LEGACY_OPEN_ROUTES.map(routeFile),
   ];
   const files = await Promise.all(requiredFiles.map((file) => distFileStatus(absolute, file)));

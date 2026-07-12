@@ -6,8 +6,17 @@ import { isPublicLongformArticle } from './lib/public-surface-eligibility.mjs';
 export function publicFeedVolumeResult(all = [...latestNews, ...archivedNews]) {
   const eligible = all.filter(publicHomepageFeedEligible);
   const feed = buildHomepageFeed(all, { limit: 50, minimumVisible: 30 });
-  const qualityLongformCount = all.filter(isPublicLongformArticle).length;
-  const targetLongformCount = Math.min(10, qualityLongformCount);
+  const qualityLongforms = all.filter(isPublicLongformArticle);
+  const newestPublishedAt = Math.max(0, ...eligible.map((article) => new Date(
+    article.analysisPublishedAt || article.publishedAt || article.updatedAt || 0,
+  ).getTime()).filter(Number.isFinite));
+  const freshnessWindowMs = 45 * 24 * 60 * 60 * 1000;
+  const freshQualityLongformCount = qualityLongforms.filter((article) => {
+    const publishedAt = new Date(article.analysisPublishedAt || article.publishedAt || article.updatedAt || 0).getTime();
+    return Number.isFinite(publishedAt) && newestPublishedAt - publishedAt <= freshnessWindowMs;
+  }).length;
+  const qualityLongformCount = qualityLongforms.length;
+  const targetLongformCount = Math.min(10, freshQualityLongformCount);
   const longformCount = feed.items.filter(isPublicLongformArticle).length;
   const shortCount = feed.items.filter((article) => article.public_content_tier === 'editorial_brief' || article.public_content_tier === 'signal_card' || article.signalCardOnly === true).length;
   const reasons = [];
@@ -21,6 +30,7 @@ export function publicFeedVolumeResult(all = [...latestNews, ...archivedNews]) {
     homepageCount: feed.items.length,
     longformCount,
     qualityLongformCount,
+    freshQualityLongformCount,
     targetLongformCount,
     shortCount,
   };

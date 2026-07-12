@@ -6,9 +6,9 @@ import { guardPublicTemplatePhrases } from '../scripts/lib/public-template-phras
 
 const distDir = path.resolve('dist');
 const legacyOpenRoutes = ['/subscribe/', '/pricing/', '/sample/', '/briefing/'];
-const publicReferenceRoutes = ['/contact/', '/methodology/', '/editorial-policy/', '/ai-disclosure/'];
-const publicHomepageLinks = ['/archive/', '/methodology/', '/editorial-policy/', '/ai-disclosure/', '/contact/', '/rss.xml'];
-const productionRoutes = ['/', '/archive/', '/rss.xml', '/sitemap.xml', ...legacyOpenRoutes, ...publicReferenceRoutes];
+const retiredOperationalRoutes = ['/contact/', '/methodology/', '/editorial-policy/', '/ai-disclosure/'];
+const publicHomepageLinks = ['/archive/', '/sample/', '/rss.xml'];
+const productionRoutes = ['/', '/archive/', '/rss.xml', '/sitemap.xml', ...legacyOpenRoutes];
 
 function distHtmlPath(routePath) {
   const normalized = routePath.replace(/^\/|\/$/g, '');
@@ -60,18 +60,20 @@ test('legacy conversion routes render as noindex public reference pages', async 
   }
 });
 
-test('homepage links to public reference routes before latest signals', async () => {
+test('homepage links to publication surfaces before latest analysis', async () => {
   const homepage = await fs.readFile(path.join(distDir, 'index.html'), 'utf8');
-  const latestSignalsIndex = homepage.indexOf('Latest Signals');
+  const latestAnalysisIndex = homepage.indexOf('Latest Analysis');
 
-  assert.notEqual(latestSignalsIndex, -1, 'expected Latest Signals section');
+  assert.notEqual(latestAnalysisIndex, -1, 'expected Latest Analysis section');
   for (const routePath of publicHomepageLinks) {
     const linkMatch = homepage.match(new RegExp(`href=["']${routePath}["']`));
     assert.ok(linkMatch, `expected homepage link to ${routePath}`);
-    assert.ok(linkMatch.index < latestSignalsIndex, `${routePath} should appear before Latest Signals`);
+    assert.ok(linkMatch.index < latestAnalysisIndex, `${routePath} should appear before Latest Analysis`);
   }
-  assert.match(homepage, /href=["']\/contact\/["']/);
-  for (const routePath of legacyOpenRoutes) {
+  for (const routePath of retiredOperationalRoutes) {
+    assert.doesNotMatch(homepage, new RegExp(`href=["']${routePath}["']`), `homepage should not link retired operational route ${routePath}`);
+  }
+  for (const routePath of legacyOpenRoutes.filter((routePath) => routePath !== '/sample/')) {
     assert.doesNotMatch(homepage, new RegExp(`href=["']${routePath}["']`), `homepage should not link legacy conversion route ${routePath}`);
   }
 });
@@ -92,8 +94,8 @@ test('built public production routes exist and indexes exclude admin routes', as
   assert.doesNotMatch(archive, /href=["']\/admin(?:\/|["'])/i, 'archive should not link admin routes');
 });
 
-test('public and legacy reference routes avoid paid conversion surfaces and template article language', async () => {
-  for (const routePath of [...legacyOpenRoutes, ...publicReferenceRoutes]) {
+test('public conversion routes avoid paid surfaces and template article language', async () => {
+  for (const routePath of legacyOpenRoutes) {
     const html = await readDistHtml(routePath);
     const text = textContent(html);
     assert.doesNotMatch(

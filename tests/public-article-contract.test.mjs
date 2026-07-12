@@ -7,6 +7,7 @@ import {
   isRssEligible,
   isSitemapEligible,
   migratePublicArticleContract,
+  migratePublicArticleRecord,
   publicArticlePath,
   publicArticleUrl,
   validatePublicArticleContract,
@@ -141,6 +142,39 @@ test('exposes deterministic public URL, sitemap, RSS, and admin helpers', () => 
   assert.equal(isSitemapEligible(hidden), false);
   assert.equal(isRssEligible(hidden), false);
   assert.equal(isAdminEditable(hidden), true);
+});
+
+test('source-linked editorial briefs remain RSS eligible without a local detail route', () => {
+  const article = legacyArticle({
+    public_content_tier: 'editorial_brief',
+    articlePagePublished: false,
+  });
+  const contract = migratePublicArticleContract(article).contract;
+
+  assert.equal(publicArticlePath(contract), '');
+  assert.equal(publicArticleUrl(contract), article.sourceUrl);
+  assert.equal(isRssEligible(contract), true);
+});
+
+test('unsafe source destinations never become public compatibility URLs or RSS entries', () => {
+  for (const publicContentTier of ['editorial_brief', 'signal_card']) {
+    const article = legacyArticle({
+      id: `unsafe-${publicContentTier}`,
+      sourceUrl: 'javascript:alert(1)',
+      public_content_tier: publicContentTier,
+      articlePagePublished: false,
+      signalCardOnly: true,
+    });
+    const contract = migratePublicArticleContract(article).contract;
+    const migrated = migratePublicArticleRecord(article);
+
+    assert.equal(publicArticleUrl(contract), '', publicContentTier);
+    assert.equal(isRssEligible(contract), false, publicContentTier);
+    assert.equal(migrated.public_url, '', publicContentTier);
+    assert.equal(migrated.publicUrl, '', publicContentTier);
+    assert.equal(migrated.public_rss_eligible, false, publicContentTier);
+    assert.equal(migrated.publicRssEligible, false, publicContentTier);
+  }
 });
 
 test('rejects malformed public article contracts with actionable errors', () => {

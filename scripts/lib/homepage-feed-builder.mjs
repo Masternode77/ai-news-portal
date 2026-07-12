@@ -2,7 +2,7 @@ import { buildPublicPresentation } from './public-presentation.mjs';
 import { routePublicLane } from './public-lane-router.mjs';
 import { cardCopyQualityResult, generateCardCopy } from './card-copy-quality-gate.mjs';
 import { publicEmptyStateText } from './public-empty-state-copy.mjs';
-import { isPublicLongformArticle } from './public-surface-eligibility.mjs';
+import { isPublicHomepageArticle, isPublicLongformArticle, publicSurfaceDecision } from './public-surface-eligibility.mjs';
 import {
   inferBottleneckAxis,
   orderByFirstViewportAxisDiversity,
@@ -15,11 +15,9 @@ function dateMs(article = {}) {
 
 function publicEligible(article = {}) {
   if (!article?.id) return false;
-  if (article.homepagePublished === false) return false;
-  if (article.archiveOnly === true) return false;
   if (article.public_content_tier === 'hidden') return false;
   if (article.public_status === 'quarantined' || article.public_status === 'archive_only_noindex') return false;
-  return true;
+  return isPublicHomepageArticle(article);
 }
 
 function canonicalFeedKey(article = {}) {
@@ -43,6 +41,7 @@ function dedupeFeedItems(items = []) {
 }
 
 function decorate(article = {}, options = {}) {
+  const surface = publicSurfaceDecision(article);
   const fallbackRoute = routePublicLane(article);
   const articleRoute = article.public_routing || fallbackRoute;
   const route = article.public_content_tier && article.public_content_tier !== 'hidden' && articleRoute.visibility === 'archive'
@@ -66,7 +65,7 @@ function decorate(article = {}, options = {}) {
   if (!copyQuality.ok) {
     return null;
   }
-  const detailHref = isPublicLongformArticle(article) ? `/news/${article.id}/` : '';
+  const detailHref = surface.detailPage ? `/news/${article.id}/` : '';
   return {
     ...article,
     publicSignal: {
@@ -82,20 +81,57 @@ function decorate(article = {}, options = {}) {
       cta: copy.cta,
       bottleneck_axis: bottleneckAxis,
       view_detail: detailHref,
-      read_source: article.sourceUrl || article.url || presentation.read_source || '',
+      read_source: surface.sourceHref,
     },
   };
+}
+
+function selectVisibleItems(sorted = [], count = 0, longformTarget = 3, firstViewportCount = 5, longformMaxAgeDays = 45) {
+  const newestDate = dateMs(sorted[0]);
+  const maximumAgeMs = longformMaxAgeDays * 24 * 60 * 60 * 1000;
+  const current = sorted.filter((article) => (
+    !isPublicLongformArticle(article) || newestDate - dateMs(article) <= maximumAgeMs
+  ));
+  const selected = orderByFirstViewportAxisDiversity(
+    current.slice(0, count),
+    { firstViewportCount },
+  );
+  const selectedIds = new Set(selected.map((article) => article.id));
+  const reservedLongforms = current
+    .filter(isPublicLongformArticle)
+    .slice(0, longformTarget);
+
+  for (const article of reservedLongforms) {
+    if (selectedIds.has(article.id)) continue;
+    const replacementIndex = selected.findLastIndex((entry, index) => (
+      index >= firstViewportCount && !isPublicLongformArticle(entry)
+    ));
+    if (replacementIndex < 0) break;
+    selectedIds.delete(selected[replacementIndex].id);
+    selected[replacementIndex] = article;
+    selectedIds.add(article.id);
+  }
+
+  return selected;
 }
 
 export function buildHomepageFeed(items = [], options = {}) {
   const limit = options.limit || 50;
   const minimumVisible = options.minimumVisible || 30;
+  const eligibility = options.eligibility || publicEligible;
   const sorted = dedupeFeedItems(items
-    .filter(publicEligible)
+    .filter(eligibility)
     .sort((a, b) => dateMs(b) - dateMs(a)));
-  const visible = orderByFirstViewportAxisDiversity(
-    sorted.slice(0, Math.max(Math.min(limit, sorted.length), Math.min(minimumVisible, sorted.length))),
-    { firstViewportCount: options.firstViewportCount || 5 },
+  const visibleCount = Math.max(
+    Math.min(limit, sorted.length),
+    Math.min(minimumVisible, sorted.length),
+  );
+  const visible = selectVisibleItems(
+    sorted,
+    visibleCount,
+    options.longformTarget ?? 3,
+    options.firstViewportCount || 5,
+    options.longformMaxAgeDays ?? 45,
   );
   const recentDecks = [];
   const decorated = visible.map((article) => {

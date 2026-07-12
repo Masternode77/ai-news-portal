@@ -29,7 +29,7 @@ async function fetchText(url, fetcher, timeoutMs = 10000) {
   try {
     const response = await fetcher(url, {
       headers: {
-        'User-Agent': 'ComputeCurrentBot/1.0 (+https://www.computecurrent.com/methodology/)',
+        'User-Agent': 'ComputeCurrentBot/1.0 (+https://www.computecurrent.com/)',
         Accept: 'application/rss+xml, application/atom+xml, application/xml, text/xml, text/html;q=0.9,*/*;q=0.5',
       },
       signal: controller.signal,

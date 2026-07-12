@@ -9,6 +9,15 @@ function clean(value = '') {
   return String(value || '').replace(/\s+/g, ' ').trim();
 }
 
+function cleanArticleBody(value = '') {
+  return String(value || '')
+    .replace(/\r\n?/g, '\n')
+    .split(/\n{2,}/)
+    .map(clean)
+    .filter(Boolean)
+    .join('\n\n');
+}
+
 function slugify(value = '') {
   return clean(value).toLowerCase().replace(/&/g, 'and').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').slice(0, 96);
 }
@@ -44,9 +53,27 @@ function publicRoutingFor(result = {}) {
   };
 }
 
+function editorialGatesPass(result = {}) {
+  return result.source_fidelity?.ok === true
+    && result.claim_fidelity?.ok === true
+    && (result.claim_fidelity?.unsupportedClaims?.length || 0) === 0
+    && result.seo_fidelity?.ok === true;
+}
+
+function failClosedPublishResult(result = {}) {
+  if (result.tier !== 'longform_analysis' || editorialGatesPass(result)) return result;
+  return {
+    ...result,
+    tier: 'editorial_brief',
+    detailPage: false,
+    finalArticleBody: result.brief || '',
+    reasons: [...new Set([...(result.reasons || []), 'longform_editorial_fidelity_failed'])],
+  };
+}
+
 function materializeArticle(source = {}, result = {}, now = new Date().toISOString()) {
   const images = imagePaths(source);
-  const body = clean(result.finalArticleBody || result.longformBody || result.brief || source.articleText || source.summary);
+  const body = cleanArticleBody(result.finalArticleBody || result.longformBody || result.brief || source.articleText || source.summary);
   const deck = clean(source.summary || result.brief || result.reasons?.[0]);
   const articlePagePublished = result.detailPage === true;
   return {
@@ -56,6 +83,7 @@ function materializeArticle(source = {}, result = {}, now = new Date().toISOStri
     summary: deck,
     source: clean(source.source),
     sourceUrl: clean(source.sourceUrl || source.url),
+    primaryHref: articlePagePublished ? `/news/${clean(source.id || result.id)}/` : clean(source.sourceUrl || source.url),
     publishedAt: source.publishedAt || now,
     analysisPublishedAt: now,
     updatedAt: now,
@@ -85,6 +113,9 @@ function materializeArticle(source = {}, result = {}, now = new Date().toISOStri
       metaDescription: deck,
       finalArticleBody: body,
     },
+    ...(result.source_fidelity ? { source_fidelity: result.source_fidelity } : {}),
+    ...(result.claim_fidelity ? { claim_fidelity: result.claim_fidelity } : {}),
+    ...(result.seo_fidelity ? { seo_fidelity: result.seo_fidelity } : {}),
   };
 }
 
@@ -120,7 +151,7 @@ export async function runPublishCycle({ articles = [], routeArticle, now = new D
   const results = [];
 
   for (const article of articles) {
-    const result = await routeArticle(article);
+    const result = failClosedPublishResult(await routeArticle(article));
     results.push(result);
     if (result.coreFeedEligible && result.tier !== 'hidden' && result.tier !== 'source_only') {
       published.push(materializeArticle(article, result, now));

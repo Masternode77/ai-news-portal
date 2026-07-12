@@ -4,12 +4,14 @@ import test from 'node:test';
 import { buildArchiveFeed } from '../scripts/lib/archive-feed-builder.mjs';
 import { buildHomepageFeed } from '../scripts/lib/homepage-feed-builder.mjs';
 import { findInternalLanguageHits } from '../scripts/lib/internal-language-guard.mjs';
+import { generateLongformAnalysis } from '../scripts/lib/longform-engine.mjs';
 
 function item(index, tier = 'editorial_brief') {
   return {
     id: `item-${index}`,
     title: `AI infrastructure item ${index}`,
     source: index % 2 ? 'Utility Dive' : 'Data Center Dynamics',
+    sourceUrl: `https://example.com/infrastructure-item-${index}`,
     publishedAt: new Date(Date.UTC(2026, 4, 20, index % 24)).toISOString(),
     primary_category: index % 2 ? 'Power & Grid' : 'Data Centers',
     infrastructure_layer: index % 2 ? 'power' : 'data center facility',
@@ -19,6 +21,27 @@ function item(index, tier = 'editorial_brief') {
     seo_noindex: false,
     deck: `A concrete ${index % 2 ? 'power' : 'data center'} constraint changes capacity planning for AI infrastructure buyers.`,
   };
+}
+
+function withPassedEditorialGates(article = {}) {
+  return {
+    ...article,
+    source_fidelity: { ok: true },
+    claim_fidelity: { ok: true, unsupportedClaims: [] },
+    seo_fidelity: { ok: true },
+  };
+}
+
+function qualityLongform(index, overrides = {}) {
+  const articleText = 'A utility filing ties a contracted AI campus to substation delivery, transformer procurement, cooling completion, customer fit-out, financing, and a dated energization milestone. '.repeat(12);
+  return withPassedEditorialGates(generateLongformAnalysis({
+    ...item(index),
+    articleText,
+    rawText: articleText,
+    extraction_quality_score: 0.95,
+    infrastructure_relevance_score: 0.9,
+    ...overrides,
+  }));
 }
 
 function axisItem(index, axis, hoursAgo = index) {
@@ -95,6 +118,74 @@ test('homepage feed exposes 30 to 50 public cards when enough eligible items exi
   assert.equal(feed.sections[0].title, 'Latest Analysis');
 });
 
+test('homepage feed never renders an unsafe source URL', () => {
+  const unsafe = {
+    ...item(999, 'signal_card'),
+    sourceUrl: 'javascript:alert(1)',
+    url: 'javascript:alert(2)',
+    articlePagePublished: false,
+    signalCardOnly: true,
+  };
+  const feed = buildHomepageFeed([unsafe], { limit: 1, minimumVisible: 0 });
+
+  assert.equal(feed.items.length, 0);
+  assert.equal(feed.featured, null);
+});
+
+test('homepage feed reserves a slot only for a fresh quality longform outside the newest card window', () => {
+  const articleText = 'A utility filing ties a contracted AI campus to substation delivery, transformer procurement, cooling completion, customer fit-out, financing, and a dated energization milestone. '.repeat(12);
+  const longform = withPassedEditorialGates(generateLongformAnalysis({
+    id: 'older-quality-analysis',
+    title: 'A contracted campus moves from demand risk to delivery risk',
+    source: 'Infrastructure Filing',
+    sourceUrl: 'https://example.com/older-quality-analysis',
+    publishedAt: '2026-05-19T22:00:00Z',
+    primary_category: 'Power & Grid',
+    infrastructure_layer: 'power',
+    extraction_quality_score: 0.95,
+    infrastructure_relevance_score: 0.9,
+    articleText,
+    rawText: articleText,
+    summary: 'A contracted campus still depends on utility and construction milestones.',
+  }));
+  const recentBriefs = Array.from({ length: 60 }, (_, index) => ({
+    ...item(index + 200),
+    publishedAt: new Date(Date.UTC(2026, 4, 20, 23, 59 - index)).toISOString(),
+  }));
+
+  const feed = buildHomepageFeed([...recentBriefs, longform], { limit: 50, minimumVisible: 30 });
+
+  assert.equal(feed.items.length, 50);
+  assert.equal(feed.items.some((entry) => entry.id === longform.id), true);
+  assert.ok(feed.items.findIndex((entry) => entry.id === longform.id) >= 5);
+});
+
+test('homepage feed does not promote a stale longform into Latest Analysis', () => {
+  const articleText = 'A utility filing ties a contracted AI campus to substation delivery, transformer procurement, cooling completion, customer fit-out, financing, and a dated energization milestone. '.repeat(12);
+  const stale = generateLongformAnalysis({
+    id: 'stale-quality-analysis',
+    title: 'An old contracted campus analysis remains available in the archive',
+    source: 'Infrastructure Filing',
+    sourceUrl: 'https://example.com/stale-quality-analysis',
+    publishedAt: '2026-03-01T00:00:00Z',
+    primary_category: 'Power & Grid',
+    infrastructure_layer: 'power',
+    extraction_quality_score: 0.95,
+    infrastructure_relevance_score: 0.9,
+    articleText,
+    rawText: articleText,
+  });
+  const recentBriefs = Array.from({ length: 20 }, (_, index) => ({
+    ...item(index + 300),
+    publishedAt: new Date(Date.UTC(2026, 4, 20, 23, 59 - index)).toISOString(),
+  }));
+  Object.assign(stale, withPassedEditorialGates(stale));
+  const feed = buildHomepageFeed([...recentBriefs, stale], { limit: 50, minimumVisible: 30 });
+  const archive = buildArchiveFeed([...recentBriefs, stale], { page: 1, pageSize: 50 });
+  assert.equal(feed.items.some((entry) => entry.id === stale.id), false);
+  assert.equal(archive.items.some((entry) => entry.id === stale.id), true);
+});
+
 test('homepage and archive feeds exclude weak general AI items without dropping below 30 cards', () => {
   const weakTitles = ['AI Is Reshaping Self-Driving Cars, Wayve CEO Says', 'Vibe coding is spreading, but engineering is not going away', 'Orlando Bravo Says Thoma Bravo Has Become AI-Centric'];
   const articles = [
@@ -130,7 +221,7 @@ test('homepage first viewport cards represent distinct bottleneck axes when elig
 
 test('homepage feed mixes longform and short public items without internal buckets', () => {
   const feed = buildHomepageFeed([
-    item(1, 'longform_analysis'),
+    qualityLongform(1),
     item(2, 'editorial_brief'),
     item(3, 'signal_card'),
     { ...item(4, 'hidden'), homepagePublished: false, archiveOnly: true },
@@ -190,22 +281,16 @@ test('homepage feed avoids visible standalone blueprint without mutating source 
 });
 
 test('homepage feed keeps longform count while replacing persisted blueprint deck', () => {
-  const article = {
+  const article = qualityLongform(88, {
     id: 'longform-blueprint-fixture',
     title: 'Grid capacity update',
     source: 'Example Source',
     sourceUrl: 'https://example.com/longform-blueprint',
     publishedAt: '2026-05-22T00:00:00Z',
-    homepagePublished: true,
-    archiveOnly: false,
-    public_status: 'published',
-    public_content_tier: 'longform_analysis',
-    articlePagePublished: true,
-    public_routing: { visibility: 'core' },
     deck: 'The source described a deployment blueprint for grid capacity planning with named operators and procurement timing.',
     why_it_matters: 'The grid update changes interconnection timing for AI campus delivery.',
     infrastructure_layer: 'grid',
-  };
+  });
   const feed = buildHomepageFeed([article], { limit: 1, minimumVisible: 0 });
   const signal = feed.items[0].publicSignal;
   const publicText = JSON.stringify({
@@ -234,8 +319,7 @@ test('homepage feed only links to article detail pages that pass public longform
     },
   ]);
 
-  assert.equal(feed.items[0].publicSignal.view_detail, '');
-  assert.equal(feed.items[0].publicSignal.read_source, 'https://example.com/source-story');
+  assert.equal(feed.items.length, 0);
 });
 
 test('homepage cards use a public board layout', () => {

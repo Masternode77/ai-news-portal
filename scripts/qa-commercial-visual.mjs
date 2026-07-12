@@ -10,12 +10,9 @@ const STATUS_DIR = path.dirname(STATUS_PATH);
 const SCREENSHOT_DIR = EVIDENCE_DIR ? path.join(EVIDENCE_DIR, 'visual-commercial') : path.join(ROOT, 'artifacts', 'visual-commercial');
 const REQUIRED_VISUAL_QA = process.env.GITHUB_ACTIONS === 'true';
 const baseTargets = [
-  { path: '/', slug: 'home', requiredLinks: ['/archive/', '/methodology/', '/editorial-policy/', '/ai-disclosure/', '/contact/', '/rss.xml'] },
-  { path: '/methodology/', slug: 'methodology', requiredLinks: [] },
-  { path: '/editorial-policy/', slug: 'editorial-policy', requiredLinks: [] },
-  { path: '/ai-disclosure/', slug: 'ai-disclosure', requiredLinks: [] },
-  { path: '/contact/', slug: 'contact', requiredLinks: ['mailto:briefings@computecurrent.com'] },
+  { path: '/', slug: 'home', requiredLinks: ['/archive/', '/sample/', '/rss.xml'] },
   { path: '/archive/', slug: 'archive', requiredLinks: [] },
+  { path: '/sample/', slug: 'sample', requiredLinks: [] },
 ];
 
 const viewports = [

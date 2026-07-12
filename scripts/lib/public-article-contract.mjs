@@ -3,6 +3,7 @@ import {
   articleImageVariants,
 } from './article-image-surface.mjs';
 import { sourceAttributionFor, sourceUrlFor } from '../../src/lib/seo-safeguards.js';
+import { safePublicHttpUrl } from '../../src/lib/public-url.js';
 
 export const PUBLIC_ARTICLE_STATUSES = {
   DRAFT: 'draft',
@@ -420,8 +421,11 @@ export function publicArticlePath(article = {}) {
 
 export function publicArticleUrl(article = {}, options = {}) {
   const contract = asContract(article);
-  if (contract.status === PUBLIC_ARTICLE_STATUSES.PUBLISHED && contract.tier === PUBLIC_ARTICLE_TIERS.SOURCE_ONLY) {
-    return contract.source?.url || contract.sourceUrl || '';
+  if (
+    contract.status === PUBLIC_ARTICLE_STATUSES.PUBLISHED
+    && contract.tier !== PUBLIC_ARTICLE_TIERS.LONGFORM_ANALYSIS
+  ) {
+    return safePublicHttpUrl(contract.source?.url || contract.sourceUrl);
   }
   const path = publicArticlePath(contract);
   if (path) return withSiteUrl(path, options.siteUrl);
@@ -442,6 +446,7 @@ export function isRssEligible(article = {}) {
   return contract.status === PUBLIC_ARTICLE_STATUSES.PUBLISHED
     && contract.visibility?.homepage === true
     && contract.visibility?.noindex !== true
+    && validatePublicArticleContract(contract).ok
     && Boolean(publicArticleUrl(contract));
 }
 

@@ -54,11 +54,13 @@ function publicSignalLabel(layer = '', strict = {}) {
   return 'Core Signal';
 }
 
-function deckFor(article = {}, evidencePack = {}, angle = {}) {
-  const actor = evidencePack.namedActors?.[0] || article.source || 'AI infrastructure buyers';
-  const layer = evidencePack.affectedInfrastructureLayer || 'AI infrastructure';
-  const lens = angle.lens || 'execution risk';
-  return guardPublicCopy(sentence(`${actor} turns ${layer} into a ${lens.toLowerCase()} decision point for capacity planners`)).text;
+function deckFor(article = {}, evidencePack = {}) {
+  const fact = (isPublishableEvidenceLine(article.summary) ? article.summary : '')
+    || (evidencePack.facts || []).find(isPublishableEvidenceLine)
+    || evidencePack.evidenceText
+    || article.title
+    || '';
+  return guardPublicCopy(sentence(fact)).text;
 }
 
 function whyFor(article = {}, evidencePack = {}) {
@@ -286,7 +288,7 @@ export function generateBlogArticle(article = {}, options = {}) {
   const length = blogLengthResult(finalBody, route.route);
   const quality = humanBlogQualityScore({ ...article, blog_route: route.route }, evidencePack, finalBody);
   const lane = laneFromLayer(evidencePack.affectedInfrastructureLayer, route.strict);
-  const deck = deckFor(article, evidencePack, angle);
+  const deck = deckFor(article, evidencePack);
   const why = whyFor(article, evidencePack);
   const cleanCorpus = cleanEvidenceCorpus(evidencePack);
   const primaryCategory = article.primary_category || article.category || route.strict?.laneTitle || 'AI Infrastructure';

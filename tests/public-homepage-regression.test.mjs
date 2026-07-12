@@ -31,8 +31,8 @@ test('homepage source uses publication vocabulary for reader-facing actions', ()
     'Publication archive',
     'Read the latest',
     'Browse the archive',
-    'How we source',
-    'Editorial policy',
+    'Source-linked analysis',
+    'Recent intelligence',
   ];
   const missing = required.filter((phrase) => !new RegExp(phrase, 'i').test(source));
   assert.deepEqual(missing, [], `homepage source is missing publication vocabulary: ${missing.join(', ')}`);

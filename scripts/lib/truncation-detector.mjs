@@ -34,24 +34,25 @@ export function detectTruncationArtifacts(text = '', options = {}) {
   if (!normalized) {
     return { ok: true, artifacts };
   }
+  const scanText = normalized.replace(/\b(?:[A-Z]\.){2,}/g, (initials) => initials.replaceAll('.', ''));
 
-  if (/(?:^|\s)(?:clo|[b-d])\.(?:\s|$)/i.test(normalized)) {
+  if (/(?:^|\s)(?:clo|[b-d])\.(?:\s|$)/i.test(scanText)) {
     artifacts.push('single_letter_or_clo_sentence_fragment');
   }
 
-  if (/(?:^|\s)(?:fuelin|hundreds\s+o)\.(?:\s|$)/i.test(normalized)) {
+  if (/(?:^|\s)(?:fuelin|hundreds\s+o)\.(?:\s|$)/i.test(scanText)) {
     artifacts.push('known_clipped_sentence_fragment');
   }
 
-  if (/(?:^|\s)[a-z]\.(?:\s|$)/.test(normalized)) {
+  if (/(?:^|\s)[a-z]\.(?:\s|$)/.test(scanText)) {
     artifacts.push('single_lowercase_letter_sentence_fragment');
   }
 
-  if (!options.allowEllipsis && /(?:…|\.{3})/.test(normalized)) {
+  if (!options.allowEllipsis && /(?:…|\.{3})/.test(scanText)) {
     artifacts.push('ellipsis_truncation_artifact');
   }
 
-  const sentenceLike = normalized
+  const sentenceLike = scanText
     .split(/(?<=[.!?])\s+/)
     .map((sentence) => sentence.trim())
     .filter(Boolean);
@@ -65,7 +66,7 @@ export function detectTruncationArtifacts(text = '', options = {}) {
     }
   }
 
-  const lastToken = normalized.match(/\b([A-Za-z]{1,16})\.?$/)?.[1]?.toLowerCase();
+  const lastToken = scanText.match(/\b([A-Za-z]{1,16})\.?$/)?.[1]?.toLowerCase();
   if (
     lastToken &&
     INCOMPLETE_TERMINALS.has(lastToken) &&
