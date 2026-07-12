@@ -1,3 +1,4 @@
+import crypto from 'node:crypto';
 import fs from 'node:fs';
 import path from 'node:path';
 import latestNews from '../src/data/latest-news.json' with { type: 'json' };
@@ -13,6 +14,7 @@ import {
   articleImageAlt,
   isRemoteImage,
   localArticleImageExists,
+  localArticleImagePath,
 } from './lib/article-image-surface.mjs';
 import { isStockDerivedCardImage } from './lib/stock-card-image-detector.mjs';
 
@@ -174,6 +176,42 @@ export function publicImageSurfaceFailures(surface = 'public', items = []) {
   });
 }
 
+export function publicImageByteDuplicateFailures(surface = 'public', items = []) {
+  const byHash = new Map();
+
+  for (const item of uniqueById(items)) {
+    const image = item?.publicSignal?.image || item?.public_presentation?.image || articleCardImage(item);
+    const localPath = localArticleImagePath(image);
+    if (!localPath || !fs.existsSync(localPath)) continue;
+
+    const hash = crypto.createHash('sha256').update(fs.readFileSync(localPath)).digest('hex');
+    const matches = byHash.get(hash) || [];
+    matches.push({ id: item.id, image });
+    byHash.set(hash, matches);
+  }
+
+  return [...byHash.entries()]
+    .filter(([, matches]) => matches.length > 1)
+    .map(([hash, matches]) => {
+      const details = matches.map(({ id, image }) => `${id}=${image}`).join(',');
+      return `${surface}:duplicate_image_bytes:${hash}:${details}`;
+    });
+}
+
+export function publicImageDuplicateSurfaceFailures({
+  homepage = [],
+  archive = [],
+  search = [],
+  taxonomy = [],
+} = {}) {
+  return [
+    ...publicImageByteDuplicateFailures('homepage', homepage),
+    ...publicImageByteDuplicateFailures('archive-feed', archive),
+    ...publicImageByteDuplicateFailures('search-index', search),
+    ...publicImageByteDuplicateFailures('taxonomy', taxonomy),
+  ];
+}
+
 export function auditPublicImages({ distRoot = path.join(process.cwd(), 'dist') } = {}) {
   const allArticles = [...latestNews, ...archivedNews];
   const homepage = buildHomepageFeed(allArticles, { limit: 50, minimumVisible: 30 });
@@ -188,6 +226,12 @@ export function auditPublicImages({ distRoot = path.join(process.cwd(), 'dist') 
     ...publicImageSurfaceFailures('archive-feed', archive.items),
     ...publicImageSurfaceFailures('search-index', searchIndex),
     ...publicImageSurfaceFailures('taxonomy', taxonomy),
+    ...publicImageDuplicateSurfaceFailures({
+      homepage: homepage.items,
+      archive: archive.items,
+      search: searchIndex,
+      taxonomy,
+    }),
     ...longform
       .filter((item) => !articleDisplayImage(item))
       .map((item) => `longform:${item.id}:missing_article_image`),

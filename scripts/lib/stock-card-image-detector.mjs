@@ -13,6 +13,7 @@ const AI_IMAGE_PROVIDERS = new Set([
 ]);
 
 const LOCAL_EDITORIAL_IMAGE_PROVIDERS = new Set([
+  'local-generated',
   'local-placeholder',
   'category-fallback',
 ]);

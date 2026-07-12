@@ -8,7 +8,7 @@ import { canonicalArticleImagePaths } from './image-store.mjs';
 
 export const LOCAL_GENERATED_METADATA = {
   generatedImageProvider: 'local-generated',
-  generatedImageModel: 'deterministic-editorial-raster',
+  generatedImageModel: 'deterministic-editorial-raster-v2',
   imageStatus: 'generated',
 };
 

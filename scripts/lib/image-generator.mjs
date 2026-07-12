@@ -1,3 +1,4 @@
+import crypto from 'node:crypto';
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import sharp from 'sharp';
@@ -20,14 +21,13 @@ const MAX_SOURCE_IMAGE_BYTES = 16 * 1024 * 1024;
 const MAX_SOURCE_IMAGE_PIXELS = 40_000_000;
 
 function colorFromId(id = 'abcdef1234567890') {
-  const a = parseInt(id.slice(0, 2), 16) || 64;
-  const b = parseInt(id.slice(2, 4), 16) || 96;
-  const c = parseInt(id.slice(4, 6), 16) || 128;
+  const digest = crypto.createHash('sha256').update(String(id || 'abcdef1234567890')).digest();
+  const [a, b, c, d, e, f, g, h, i] = digest;
 
   return {
     one: `rgb(${40 + (a % 120)} ${64 + (b % 120)} ${96 + (c % 100)})`,
-    two: `rgb(${90 + (c % 120)} ${70 + (a % 100)} ${110 + (b % 100)})`,
-    three: `rgb(${90 + (b % 80)} ${160 + (c % 70)} ${190 + (a % 40)})`,
+    two: `rgb(${90 + (d % 120)} ${70 + (e % 100)} ${110 + (f % 100)})`,
+    three: `rgb(${90 + (g % 80)} ${160 + (h % 70)} ${190 + (i % 40)})`,
   };
 }
 

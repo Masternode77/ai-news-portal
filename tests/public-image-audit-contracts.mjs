@@ -6,6 +6,8 @@ import test from 'node:test';
 import {
   auditPublicImages,
   discoverRenderedPublicImageFiles,
+  publicImageByteDuplicateFailures,
+  publicImageDuplicateSurfaceFailures,
   publicImageSurfaceFailures,
   renderedImageFailures,
 } from '../scripts/audit-public-images.mjs';
@@ -118,5 +120,35 @@ export function registerPublicImageAuditContractTests() {
     assert.ok(failures.includes(`fixture:stock-derived:stock_derived_public_image:${EXISTING_PUBLIC_IMAGE}`));
     assert.equal(failures.some((failure) => failure.includes('source-canonical')), false);
     assert.ok(failures.includes('fixture:remote-public:remote_public_image:https://example.com/source.jpg'));
+  });
+
+  test('public image audit rejects byte-identical artwork assigned to different cards', () => {
+    const failures = publicImageByteDuplicateFailures('homepage', [
+      { id: 'first-card', publicSignal: { image: EXISTING_PUBLIC_IMAGE } },
+      { id: 'second-card', publicSignal: { image: EXISTING_PUBLIC_IMAGE } },
+      { id: 'first-card', publicSignal: { image: EXISTING_PUBLIC_IMAGE } },
+    ]);
+
+    assert.equal(failures.length, 1);
+    assert.match(failures[0], /^homepage:duplicate_image_bytes:[a-f0-9]{64}:/);
+    assert.match(failures[0], /first-card=/);
+    assert.match(failures[0], /second-card=/);
+  });
+
+  test('public image duplicate gate covers search and taxonomy beyond the homepage feed', () => {
+    const duplicateCards = [
+      { id: 'search-first', publicSignal: { image: EXISTING_PUBLIC_IMAGE } },
+      { id: 'search-second', publicSignal: { image: EXISTING_PUBLIC_IMAGE } },
+    ];
+    const failures = publicImageDuplicateSurfaceFailures({
+      homepage: [],
+      archive: [],
+      search: duplicateCards,
+      taxonomy: duplicateCards,
+    });
+
+    assert.equal(failures.length, 2);
+    assert.match(failures[0], /^search-index:duplicate_image_bytes:/);
+    assert.match(failures[1], /^taxonomy:duplicate_image_bytes:/);
   });
 }
