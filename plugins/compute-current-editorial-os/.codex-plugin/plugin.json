@@ -1,0 +1,34 @@
+{
+  "name": "compute-current-editorial-os",
+  "version": "0.1.0",
+  "description": "Repo-local Compute Current editorial skill pack with operator playbooks for quality, audits, and release verification.",
+  "author": {
+    "name": "Compute Current"
+  },
+  "license": "UNLICENSED",
+  "keywords": [
+    "compute-current",
+    "editorial",
+    "source-quality",
+    "public-audit",
+    "visual-qa"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Compute Current Editorial OS",
+    "shortDescription": "Editorial workflow, QA, and release checks",
+    "longDescription": "A repo-local pack of Compute Current editorial skills plus reference playbooks for source health, evidence, drafting, fidelity, public audits, visual QA, security, and deployment verification.",
+    "developerName": "Compute Current",
+    "category": "Developer Tools",
+    "capabilities": [
+      "Interactive",
+      "Read",
+      "Write"
+    ],
+    "defaultPrompt": [
+      "Audit this source for publication readiness.",
+      "Run the editorial release gate.",
+      "Check public copy and visual QA."
+    ]
+  }
+}
