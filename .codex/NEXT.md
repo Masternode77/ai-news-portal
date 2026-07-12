@@ -2,7 +2,8 @@
 
 ## Current branch
 - `upgrade/gpt-5-6-sol`, merged with `origin/main` SHA `f8bc10a2`.
-- Last previewed implementation SHA: `3f88df4c`; the current cutover is not yet previewed.
+- Last previewed implementation SHA: `7c97b6d2`.
+- Canonical cutover preview: `dpl_2BxCaNmSH9kTvnXNd4FziacMb6Tq`.
 - Rollback tag: `backup/pre-gpt56-upgrade-20260711T091118Z`.
 - No push or production promotion has been performed.
 
@@ -18,6 +19,7 @@
 - Reduced `scripts/pipeline.mjs` to a compatibility alias and removed deterministic outage longform.
 - Added extraction-only evidence freezing, strict model-output schemas, lifecycle replay validation,
   fail-closed stale-longform removal, and cross-runner publication output bundles.
+- Deployed and browser-verified the canonical cutover preview from local commit `7c97b6d2`.
 
 ## Changed files
 - Architecture/editorial: `src/core/`, `src/adapters/`, `src/plugins/content/`, `scripts/lib/`, CLI entry points.
@@ -38,10 +40,10 @@
 - Initial code review approved the image/receipt changes. Architecture review then found three
   trust-boundary defects; all are fixed and regression-covered. Two fresh independent reruns could
   not start because the agent quota was exhausted, so final closure used full-suite and negative probes.
-- Preview public routes: 4/4 returned 200; retired routes: 5/5 returned 404.
+- Canonical preview public routes: 4/4 returned 200; retired routes: 5/5 returned 404.
 - Admin pretty routes: 3/3 returned 200 with private/no-store caching.
 - Admin APIs without preview credentials: intended generic 503, no-store, noindex.
-- Exact-commit visual QA: desktop/mobile homepage and desktop article passed; 0 broken images,
+- Canonical preview visual QA: desktop/mobile homepage, archive, and article passed; 0 broken images,
   placeholders, app errors, or overflow.
 - Deployed image bytes: homepage 39/39 and archive 40/40 unique.
 - Lighthouse mobile: performance 97, accessibility 100, best practices 92.
@@ -54,5 +56,5 @@
 - Production promotion requires explicit preview approval.
 
 ## Exact next step
-- Create the Lore commit, then deploy and verify a new exact-commit preview for the canonical cutover.
+- Present the exact-HEAD preview for human approval and keep managed persistence work blocked on credentials.
 - Keep push, production promotion, production secrets, and cache purge excluded pending explicit approval.

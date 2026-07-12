@@ -20,9 +20,9 @@ production secret or cache purge; the connected `main` branch did deploy indepen
 | Baseline production SHA | `19089b66627be58d5066376902ff382d2a018137` |
 | Merged `origin/main` SHA | `f8bc10a220a6b910e703375d337dcd3f40ea0467` |
 | Rollback tag | `backup/pre-gpt56-upgrade-20260711T091118Z` |
-| Verified implementation SHA | Pending final canonical-cutover commit |
-| Preview deployment | Pending exact-commit canonical-cutover preview |
-| Preview URL | Pending exact-commit canonical-cutover preview |
+| Verified implementation SHA | `7c97b6d262ca86b58686986c4c8186d6b30a0f93` |
+| Preview deployment | `dpl_2BxCaNmSH9kTvnXNd4FziacMb6Tq` (`READY`, preview target) |
+| Preview URL | `https://ai-news-portal-3e74jqkkk-masternode77s-projects.vercel.app` |
 | Latest observed production | `dpl_9cRkkosCcwjY6fV3EvLT7DM36bTV` (external `main` automation, not this branch) |
 
 ## Delivered Platform
@@ -123,6 +123,11 @@ three prototypes remain noindex and are not production routes.
 The preview SEO score of 69 is expected because Vercel adds `x-robots-tag: noindex`. The two
 Best Practices deductions are the Vercel Preview Toolbar script being blocked by the site's
 intentional self-only CSP, not application JavaScript failures.
+
+The canonical cutover preview was also checked after lazy-load traversal: homepage desktop and
+mobile each rendered 39 unique images, archive rendered 40, and the representative article
+rendered its lead image. Browser QA found zero failed image responses, visible placeholder labels,
+console errors, page errors, or horizontal overflow.
 
 ## LOC and Repository Hygiene
 

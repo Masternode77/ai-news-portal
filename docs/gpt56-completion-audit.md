@@ -27,19 +27,19 @@ Production promotion is outside this approval state.
 | Managed CMS persistence | BLOCKED | Preview Postgres, Blob, and admin credentials are absent; live migration, upload, restart, and rebuild-trigger receipts cannot be produced. |
 | Dependency security | PASS | `npm audit --audit-level=low` reports zero findings on the upgrade branch. |
 | Tests, build, content gate | PASS | Full suite: 480 total, 479 passed, 0 failed, 1 intentional skip. Astro check, 61-page build, public/content/image/admin gates, and dependency audit pass. |
-| Preview and rendered QA | PENDING REFRESH | The prior preview remains Ready, but the canonical cutover needs a new exact-commit preview and rendered verification. |
+| Preview and rendered QA | PASS | Canonical cutover preview is Ready; public/retired/admin route contracts and desktop/mobile/article rendering pass with no broken images, placeholders, browser errors, or overflow. |
 | Rollback path | PASS WITH CAVEAT | Tag checkout, clean install, and build passed; rollback baseline retains 18 dependency findings. |
 | Dashboard-only deploy suppression | PASS ON BRANCH | `vercel.json` uses a tested fail-open ignore script for dashboard/pipeline state-only commits; it takes effect only after branch integration. |
 | PR, merge, production smoke | NOT STARTED | Explicit preview approval and push/PR authorization were not given. No production promotion or cache purge was run by this branch. |
 
 ## Preview Receipt
 
-- URL: `https://ai-news-portal-kn646hbhp-masternode77s-projects.vercel.app`
-- Deployment: `dpl_9xCSF6wHsFtNwCwV37S8xXYR1tet`, target `preview`, status `Ready`.
-- Implementation: `3f88df4c93f2b55c75dc8a3172e4f6834bc5858a`.
+- URL: `https://ai-news-portal-3e74jqkkk-masternode77s-projects.vercel.app`
+- Deployment: `dpl_2BxCaNmSH9kTvnXNd4FziacMb6Tq`, target `preview`, status `Ready`.
+- Implementation: `7c97b6d262ca86b58686986c4c8186d6b30a0f93`.
 - Public routes: homepage, archive, search, and representative article returned 200.
 - Retired routes: about, editorial policy, methodology, AI disclosure, and contact returned 404.
-- Browser: exact-commit homepage desktop/mobile each loaded 39 images and the article loaded 1;
+- Browser: homepage desktop/mobile each loaded 39 unique images, archive loaded 40, and the article loaded 1;
   zero broken images, placeholders, console/page errors, or horizontal overflow after lazy-load traversal.
 - Admin: three pretty article routes returned 200 with private/no-store caching; unconfigured API returned generic no-store 503.
 
