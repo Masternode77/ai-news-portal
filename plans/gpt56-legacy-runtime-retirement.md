@@ -28,7 +28,7 @@ production graph.
 - [x] Re-run targeted command, fixture, public output, image, and content-cycle tests.
 - [x] Update the legacy map, acceptance matrix, final report, and `.codex/NEXT.md`.
 - [x] Run full test, check, build, content gate, dependency audit, and independent review.
-- [ ] Commit with a Lore message and verify an exact-commit preview only.
+- [x] Commit with a Lore message and verify an exact-commit preview only.
 
 ## Files Likely To Change
 

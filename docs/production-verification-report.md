@@ -1,26 +1,26 @@
 # Production Verification Report
 
-Generated at: 2026-07-12T05:43:57.732Z
-Build ID: 0.0.1:dist-mtime-1783834612408
+Generated at: 2026-07-12T12:58:38.384Z
+Build ID: 0.0.1:dist-mtime-1783860097145
 
 ## Target URL Summary
 
 - Local URL: /Users/josh/Documents/New project 2/dist
-- Staging URL: https://ai-news-portal-g93sbqwbc-masternode77s-projects.vercel.app
+- Staging URL: https://ai-news-portal-j0t0zyxm4-masternode77s-projects.vercel.app
 - Live URL: https://computecurrent.com
 
 ## Commands Run
 
-- `node scripts/verify-production-surface.mjs --local-dist dist --staging https://ai-news-portal-g93sbqwbc-masternode77s-projects.vercel.app --live https://computecurrent.com --skip-cache-purge --out docs/production-verification-report.md --json evidence/gpt56-upgrade/production-verification.json`
+- `node scripts/verify-production-surface.mjs --local-dist dist --staging https://ai-news-portal-j0t0zyxm4-masternode77s-projects.vercel.app --live https://computecurrent.com --skip-cache-purge --out docs/production-verification-report.md --json artifacts/final-7cb5e449-preview/production-verification.json`
 
 ## Artifacts
 
-- JSON result: `evidence/gpt56-upgrade/production-verification.json`
+- JSON result: `artifacts/final-7cb5e449-preview/production-verification.json`
 - Markdown report: `docs/production-verification-report.md`
-- Screenshot: `evidence/gpt56-upgrade/preview-home-desktop.png` (present, 4089498 bytes)
-- Screenshot: `evidence/gpt56-upgrade/preview-home-mobile.png` (present, 3771940 bytes)
-- Screenshot: `evidence/gpt56-upgrade/preview-archive-desktop.png` (present, 3559249 bytes)
-- Screenshot: `evidence/gpt56-upgrade/preview-article-desktop.png` (present, 1221607 bytes)
+- Screenshot: `artifacts/final-7cb5e449-preview/home-desktop-viewport.png` (present)
+- Screenshot: `artifacts/final-7cb5e449-preview/home-mobile-viewport.png` (present)
+- Screenshot: `artifacts/final-7cb5e449-preview/archive-desktop-decoded.png` (present)
+- Screenshot: `artifacts/final-7cb5e449-preview/article-desktop-viewport.png` (present)
 
 ## Pass/Fail
 
@@ -45,14 +45,14 @@ Build ID: 0.0.1:dist-mtime-1783834612408
   - RSS local news links: 2
   - RSS local missing files: none
 - local: skipped local step: URL not provided
-- staging URL: https://ai-news-portal-g93sbqwbc-masternode77s-projects.vercel.app
-  - https://ai-news-portal-g93sbqwbc-masternode77s-projects.vercel.app/: live status passed 200
-  - https://ai-news-portal-g93sbqwbc-masternode77s-projects.vercel.app/archive/: live status passed 200
-  - https://ai-news-portal-g93sbqwbc-masternode77s-projects.vercel.app/sample/: live status passed 200
-  - https://ai-news-portal-g93sbqwbc-masternode77s-projects.vercel.app/rss.xml: live status passed 200
-  - https://ai-news-portal-g93sbqwbc-masternode77s-projects.vercel.app/sitemap.xml: live status passed 200
-  - https://ai-news-portal-g93sbqwbc-masternode77s-projects.vercel.app/sitemap-index.xml: live status passed 200
-  - https://ai-news-portal-g93sbqwbc-masternode77s-projects.vercel.app/robots.txt: live status passed 200
+- staging URL: https://ai-news-portal-j0t0zyxm4-masternode77s-projects.vercel.app
+  - https://ai-news-portal-j0t0zyxm4-masternode77s-projects.vercel.app/: live status passed 200
+  - https://ai-news-portal-j0t0zyxm4-masternode77s-projects.vercel.app/archive/: live status passed 200
+  - https://ai-news-portal-j0t0zyxm4-masternode77s-projects.vercel.app/sample/: live status passed 200
+  - https://ai-news-portal-j0t0zyxm4-masternode77s-projects.vercel.app/rss.xml: live status passed 200
+  - https://ai-news-portal-j0t0zyxm4-masternode77s-projects.vercel.app/sitemap.xml: live status passed 200
+  - https://ai-news-portal-j0t0zyxm4-masternode77s-projects.vercel.app/sitemap-index.xml: live status passed 200
+  - https://ai-news-portal-j0t0zyxm4-masternode77s-projects.vercel.app/robots.txt: live status passed 200
 - live URL: https://computecurrent.com
   - https://computecurrent.com/: live status passed 200
   - https://computecurrent.com/archive/: live status passed 200
@@ -66,11 +66,12 @@ Build ID: 0.0.1:dist-mtime-1783834612408
 
 ## Remaining Risks
 
-- Preview and live route health passed, but cache freshness was not asserted because purge is explicitly excluded.
-- Preview Postgres, Blob, and admin credentials are absent, so durable CMS persistence remains an operational follow-up.
+- Preview and live route health passed, but no cache freshness claim is made because purge is excluded.
+- Preview and live are intentionally not pixel-identical: production still serves the previous design pending approval.
+- Preview Postgres, Blob, and admin credentials remain absent, so managed CMS persistence is not proven.
 - Existing Astro check hints remain informational unless they become build errors.
 
 ## Cleanup Receipts
 
-- No dev server, tmux session, browser context, temp directory, or cache-purge credential was created by this harness run.
-- Fresh screenshots were captured from the exact preview deployment; no browser process remained open.
+- No dev server, tmux session, temp directory, or cache-purge credential was created by this harness run.
+- Fresh exact-preview and production comparison screenshots were captured; all browser processes closed.

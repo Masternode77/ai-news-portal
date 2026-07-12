@@ -38,14 +38,14 @@ The exact 35-item final-acceptance accounting is maintained in
 
 ## Preview Receipt
 
-- URL: `https://ai-news-portal-i7uvleecb-masternode77s-projects.vercel.app`
-- Deployment: `dpl_9xvuthwXDaPnhN1nNVqXH1Xh8sD7`, target `preview`, status `Ready`.
-- Implementation: `8f60816ffd4a1ecabe1e017aa15bb7d21cac5f08`.
+- URL: `https://ai-news-portal-j0t0zyxm4-masternode77s-projects.vercel.app`
+- Deployment: `dpl_DGw5wWEmjC69SV9cJEg9Jj9sCbmW`, target `preview`, status `Ready`.
+- Implementation: `7cb5e449ef4e0a3027982c8d2fcd38bf22434dbf`.
 - Public routes: homepage, archive, search, and representative article returned 200.
 - Retired routes: about, editorial policy, methodology, AI disclosure, and contact returned 404.
 - Browser: homepage desktop/mobile each loaded 39 unique images, archive loaded 40, and the article loaded 1;
   zero broken images, placeholders, console/page errors, or horizontal overflow after lazy-load traversal.
-- Captures: `artifacts/final-8f60816-preview/` contains exact-preview desktop/mobile home,
+- Captures: `artifacts/final-7cb5e449-preview/` contains exact-preview desktop/mobile home,
   archive, article, and machine-readable QA receipts.
 - Admin: three pretty article routes returned 200 with private/no-store caching; unconfigured API returned generic no-store 503.
 
@@ -53,6 +53,6 @@ The exact 35-item final-acceptance accounting is maintained in
 
 While this preview was being verified, the connected `main` branch produced new production
 deployments from automated state-only commits. The latest observation was production deployment
-`dpl_9cRkkosCcwjY6fV3EvLT7DM36bTV`, created at `2026-07-12T09:16:50.428Z`. This branch did not
-create or promote that deployment. The new ignored-build rule prevents the same class of commit
-after it is reviewed and integrated.
+`dpl_6ffKPvH7wsgqHGaVxkosGyAR2Ue7` from `main` SHA `b22ceeb2`. This branch did not create or
+promote that deployment. Production remains on the previous operating-board design; the exact
+preview is therefore correctly different until a human approves promotion.

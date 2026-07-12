@@ -2,8 +2,8 @@
 
 ## Current branch
 - `upgrade/gpt-5-6-sol`, merged with `origin/main` SHA `f8bc10a2`.
-- Last previewed implementation SHA: `8f60816f`.
-- Canonical cutover preview: `dpl_9xvuthwXDaPnhN1nNVqXH1Xh8sD7`.
+- Last previewed implementation SHA: `7cb5e449`.
+- Canonical cutover preview: `dpl_DGw5wWEmjC69SV9cJEg9Jj9sCbmW`.
 - Rollback tag: `backup/pre-gpt56-upgrade-20260711T091118Z`.
 - No push or production promotion has been performed.
 
@@ -16,6 +16,9 @@
 - Added and ran the local browser CMS lifecycle harness: 17/17 scenarios passed.
 - Isolated the legacy Blog v4 regression report under a temp path so tests no longer dirty docs.
 - Independent full-diff re-review returned APPROVE with zero open findings.
+- Deployed exact commit `7cb5e449` to preview `dpl_DGw5wWEmjC69SV9cJEg9Jj9sCbmW`.
+- Verified routes, admin fail-closed headers, 7 visual captures, nonblank pixels, and Lighthouse.
+- Confirmed production remains on the previous design and was not changed by this branch.
 
 ## Changed files
 - Runtime retirement: legacy command scripts, `scripts/lib/legacy-content-command-wrapper.mjs`,
@@ -45,6 +48,8 @@
 - Deployed image bytes: homepage 39/39 and archive 40/40 unique.
 - Lighthouse mobile: performance 97, accessibility 100, best practices 92.
 - Lighthouse desktop: performance 100, accessibility 100, best practices 92.
+- Exact preview metadata binds deployment to full SHA `7cb5e449ef4e0a3027982c8d2fcd38bf22434dbf`.
+- Preview vs production is intentionally different pending human approval; route health passes on both.
 
 ## Blockers
 - Preview Postgres, Blob, and admin credentials are absent; managed persistence is not proven.
@@ -53,6 +58,5 @@
 - Production promotion requires explicit preview approval.
 
 ## Exact next step
-- Commit the verified local closure, deploy that exact commit to preview, and refresh route/visual receipts.
 - Present the exact-commit preview for human approval and keep managed persistence blocked on preview credentials.
 - Keep push, production promotion, production secrets, and cache purge excluded pending explicit approval.

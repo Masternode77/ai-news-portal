@@ -4,13 +4,14 @@ Updated: 2026-07-12
 
 ## Final Preview
 
-- Deployment: `dpl_9qoXHkYVspAM5FHBExEc6iqyzTuT`
-- URL: `https://ai-news-portal-g93sbqwbc-masternode77s-projects.vercel.app`
-- Product commit: `f674c1df`
-- Production comparison deployment: `dpl_EtTdsEikynpmsq9sUQSaDch76PFF` (unchanged)
+- Deployment: `dpl_DGw5wWEmjC69SV9cJEg9Jj9sCbmW`
+- URL: `https://ai-news-portal-j0t0zyxm4-masternode77s-projects.vercel.app`
+- Product commit: `7cb5e449ef4e0a3027982c8d2fcd38bf22434dbf`
+- Production comparison deployment: `dpl_6ffKPvH7wsgqHGaVxkosGyAR2Ue7` at `b22ceeb2` (external `main`)
 
-Chromium captured the exact preview after scrolling every page through its complete
-lazy-loaded image inventory. Homepage desktop, homepage mobile, archive desktop, and the published article
+Chromium captured the exact preview after eagerly decoding and scrolling each page through its
+complete lazy-loaded image inventory. Homepage desktop/mobile, archive desktop/mobile, search,
+and the published article desktop/mobile
 all returned 200 with zero application console errors, failed requests, broken images,
 `ChatGPT Image2 Visual` placeholder text, or horizontal overflow.
 
@@ -19,7 +20,10 @@ all returned 200 with zero application console errors, failed requests, broken i
 | Homepage | 1440 x 1000 | 39/39 | 39/39 | 0 | no |
 | Homepage | 390 x 844 | 39/39 | 39/39 | 0 | no |
 | Archive | 1440 x 1000 | 40/40 | 40/40 | 0 | no |
+| Archive | 390 x 844 | 40/40 | 40/40 | 0 | no |
+| Search | 1440 x 1000 | 40/40 | 40/40 | 0 | no |
 | Published article | 1440 x 1000 | 1/1 | 1/1 | 0 | no |
+| Published article | 390 x 844 | 1/1 | 1/1 | 0 | no |
 
 The duplicate audit also covers all 30 latest, 709 archive, 739 search, and 73 taxonomy
 records. It reports zero duplicate-byte groups on each public surface. Two legacy cards now
@@ -28,11 +32,17 @@ migrated to the SHA-256-seeded v2 generator.
 
 Screenshots:
 
-- `evidence/gpt56-upgrade/preview-home-desktop.png`
-- `evidence/gpt56-upgrade/preview-home-mobile.png`
-- `evidence/gpt56-upgrade/preview-archive-desktop.png`
-- `evidence/gpt56-upgrade/preview-article-desktop.png`
-- Receipt: `evidence/gpt56-upgrade/preview-browser-qa.json`
+- `artifacts/final-7cb5e449-preview/home-desktop-viewport.png`
+- `artifacts/final-7cb5e449-preview/home-mobile-viewport.png`
+- `artifacts/final-7cb5e449-preview/home-desktop-decoded.png`
+- `artifacts/final-7cb5e449-preview/archive-desktop-decoded.png`
+- `artifacts/final-7cb5e449-preview/article-desktop-viewport.png`
+- Receipt: `artifacts/final-7cb5e449-preview/visual-qa.json`
+
+Sharp pixel statistics mark every retained capture nonblank. Same-viewport production captures
+are not pixel-identical: `computecurrent.com` still serves the previous operating-board design,
+while the preview serves Midnight Intelligence. That mismatch is the expected pre-approval state,
+not a failed or partial preview render.
 
 ## Accessibility Follow-up
 

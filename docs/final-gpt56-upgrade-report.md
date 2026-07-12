@@ -20,10 +20,10 @@ production secret or cache purge; the connected `main` branch did deploy indepen
 | Baseline production SHA | `19089b66627be58d5066376902ff382d2a018137` |
 | Merged `origin/main` SHA | `f8bc10a220a6b910e703375d337dcd3f40ea0467` |
 | Rollback tag | `backup/pre-gpt56-upgrade-20260711T091118Z` |
-| Verified implementation SHA | `8f60816ffd4a1ecabe1e017aa15bb7d21cac5f08` |
-| Preview deployment | `dpl_9xvuthwXDaPnhN1nNVqXH1Xh8sD7` (`READY`, preview target) |
-| Preview URL | `https://ai-news-portal-i7uvleecb-masternode77s-projects.vercel.app` |
-| Latest observed production | `dpl_9cRkkosCcwjY6fV3EvLT7DM36bTV` (external `main` automation, not this branch) |
+| Verified implementation SHA | `7cb5e449ef4e0a3027982c8d2fcd38bf22434dbf` |
+| Preview deployment | `dpl_DGw5wWEmjC69SV9cJEg9Jj9sCbmW` (`READY`, preview target) |
+| Preview URL | `https://ai-news-portal-j0t0zyxm4-masternode77s-projects.vercel.app` |
+| Latest observed production | `dpl_6ffKPvH7wsgqHGaVxkosGyAR2Ue7` at `b22ceeb2` (external `main` automation, not this branch) |
 
 ## Delivered Platform
 
@@ -147,6 +147,11 @@ The canonical cutover preview was also checked after lazy-load traversal: homepa
 mobile each rendered 39 unique images, archive rendered 40, and the representative article
 rendered its lead image. Browser QA found zero failed image responses, visible placeholder labels,
 console errors, page errors, or horizontal overflow.
+
+The exact preview and `computecurrent.com` are intentionally not pixel-identical before approval.
+The preview shows the selected Midnight Intelligence publication while production still shows the
+earlier operating-board homepage from external `main`. Same-viewport comparison confirmed the
+difference; no production promotion or cache operation was used to conceal it.
 
 ## LOC and Repository Hygiene
 

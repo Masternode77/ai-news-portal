@@ -29,7 +29,7 @@ largest HTML page, and 335,600 bytes for the largest image.
 
 ## Final Preview Lighthouse
 
-Measured against deployment `dpl_9qoXHkYVspAM5FHBExEc6iqyzTuT`:
+Measured against exact implementation deployment `dpl_DGw5wWEmjC69SV9cJEg9Jj9sCbmW`:
 
 | Profile | Performance | Accessibility | Best Practices | SEO | FCP | LCP | TBT | CLS |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
@@ -47,8 +47,8 @@ RSS, robots, and public inventory contracts pass separately; production remains 
 
 Raw reports:
 
-- `evidence/gpt56-upgrade/lighthouse-home-mobile.json`
-- `evidence/gpt56-upgrade/lighthouse-home-desktop.json`
+- `artifacts/final-7cb5e449-preview/lighthouse-mobile.json`
+- `artifacts/final-7cb5e449-preview/lighthouse-desktop.json`
 
 ## Page Samples
 

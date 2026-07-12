@@ -38,7 +38,7 @@ The final preview verified `/admin/articles/new`, `/admin/articles/test-article`
 `/admin/articles/test-article/edit` as HTTP 200 shells with `Cache-Control: no-store, private`.
 The credential-free `/api/admin/articles` request returned the intended generic HTTP 503 with
 `Cache-Control: no-store`. This receipt comes from preview
-`dpl_9xvuthwXDaPnhN1nNVqXH1Xh8sD7` built from implementation SHA `8f60816f`.
+`dpl_DGw5wWEmjC69SV9cJEg9Jj9sCbmW` built from implementation SHA `7cb5e449`.
 
 The local browser harness now drives the built admin UI against the real API handlers and an
 isolated file/media store. All 17 required scenarios pass: redirect, login, create, title/body/
