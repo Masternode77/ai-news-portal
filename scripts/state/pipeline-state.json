@@ -617,7 +617,9 @@
     "a1fee5100d241378",
     "0a04e0eda905e032",
     "13bd7ea3346eca8b",
-    "5cd5131207b30031"
+    "5cd5131207b30031",
+    "c81b0a25d6f03a46",
+    "6f2198206c2b09b9"
   ],
   "dayPlans": {
     "2026-03-24": {
@@ -29519,76 +29521,455 @@
         "1": true,
         "2": true
       }
-    }
-  },
-  "runHistory": [
-    {
-      "at": "2026-06-03T12:04:17.148Z",
-      "day": "2026-06-03",
-      "slot": 2,
-      "publishedCount": 0,
-      "signalCardCount": 2,
-      "archiveOnlyCount": 0,
-      "processedIds": [
-        "cdbfc43e525a9f0a",
-        "7c134ffe7093d5d3"
-      ],
-      "blockedCount": 2,
-      "blockedItems": [
+    },
+    "2026-07-14": {
+      "date": "2026-07-14",
+      "createdAt": "2026-07-13T17:20:01.646Z",
+      "refreshedAt": "2026-07-13T17:20:01.646Z",
+      "candidateWindowHours": 24,
+      "curatedItems": [
         {
-          "id": "cdbfc43e525a9f0a",
-          "title": "1 Megawatt Racks In Data Centers",
+          "id": "6f2198206c2b09b9",
+          "source": "Data Center POST",
+          "url": "https://datacenterpost.com/the-super-grid-transformer-revolution-powering-ai-data-centers/",
+          "title": "The Super-Grid Transformer Revolution Powering AI Data Centers",
+          "snippet": "TL;DR Unprecedented electricity demands from massive AI workloads, where individual server racks can exceed 100 kW, are overwhelming traditional electrical architectures, making robust power design a key differentiator…",
+          "contentText": "TL;DR Unprecedented electricity demands from massive AI workloads, where individual server racks can exceed 100 kW, are overwhelming traditional electrical architectures, making robust power design a key differentiator for hyperscale data centers. Operators are shifting to &#8220;super-grid&#8221; transformers that connect directly to high-voltage transmission networks (at 380 kV or above). This direct link bypasses local distribution networks, dramatically reducing transmission energy losses and boosting overall reliability. Connecting directly to the transmission grid allows the Wustermark site to operate on 100% certified renewable energy, utilize 2N electrical redundancy, and support a &#8220;zero-generator&#8221; backup strategy. # # # As artificial intelligence (AI) reshapes the glo…",
+          "publishedAt": "2026-07-13T16:00:35.000Z",
+          "sourceImage": "https://d3qut6qyo6tw2j.cloudfront.net/bin/uploads/2026/07/09110314/DCP-Blog-Submission_7.13.26-2-1024x512.png",
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "Colocation & Wholesale",
+          "category": "Power & Grid",
+          "primary_category": "Power & Grid",
+          "secondary_category": "Interconnection and power procurement",
+          "infrastructure_layer": "Power",
+          "affected_stakeholders": [
+            "data center operators",
+            "utilities",
+            "cloud capacity teams",
+            "investors"
+          ],
+          "article_type": "Operations Update",
+          "urgency_score": 0.68,
+          "taxonomy_confidence": 0.95,
+          "taxonomy_reasons": [
+            "power",
+            "grid",
+            "electricity",
+            "transmission",
+            "transformer"
+          ],
+          "direct_ai_infrastructure_relevance": 0.82,
+          "data_center_relevance": 1,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0,
+          "power_grid_relevance": 1,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0.4,
           "infrastructure_relevance_score": 1,
           "infrastructure_relevance_tier": "full_memo",
           "infrastructure_relevance_action": "generate_full_memo",
           "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, ai data center, neocloud)",
-            "data_center_relevance:0.97(data center, data centers)",
-            "cloud_capacity_relevance:0.32(hyperscalers)",
-            "semiconductor_relevance:0.58(semiconductor, gpu)",
-            "power_grid_relevance:0.63(power, megawatt)"
+            "direct_ai_infrastructure_relevance:0.82",
+            "data_center_relevance:1.00(data center, data centers, colocation)",
+            "power_grid_relevance:1.00(power, grid, electricity)",
+            "enterprise_ai_infrastructure_relevance:0.40(backup, ai workloads)"
           ],
-          "extraction_quality_score": 0.73,
-          "source_domain_adapter": "semiengineering",
-          "content_length": 627,
-          "boilerplate_ratio": 0,
-          "repetition_blocked": false,
-          "repetition_block_reasons": [],
-          "repetition_check": null,
-          "expert_insight_complete": true,
-          "expert_insight_missing_fields": [],
-          "reason": "fail_closed: source_text_incomplete:source_evidence_length_below_1200"
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 0.82,
+            "data_center_relevance": 1,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0,
+            "power_grid_relevance": 1,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0.4,
+            "infrastructure_relevance_score": 1,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:0.82",
+              "data_center_relevance:1.00(data center, data centers, colocation)",
+              "power_grid_relevance:1.00(power, grid, electricity)",
+              "enterprise_ai_infrastructure_relevance:0.40(backup, ai workloads)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 88
         },
         {
-          "id": "7c134ffe7093d5d3",
-          "title": "Continuous thermal monitoring",
-          "infrastructure_relevance_score": 0.925,
+          "id": "c81b0a25d6f03a46",
+          "source": "Toms Hardware",
+          "url": "https://www.tomshardware.com/tech-industry/semiconductors/micron-commits-500-million-to-globalwafers-texas-wafer-plant-as-it-raises-us-spending-to-250-billion",
+          "title": "Micron commits $500 million to GlobalWafers' Texas wafer plant as it raises U.S. spending to $250 billion — memory maker aims to manufacture 40% of DRAM in the US by 2035",
+          "snippet": "Running until 2035, the $250 billion spending target is attached to a goal of making 40% of Micron's DRAM in the U.S. by the mid-2030s.",
+          "contentText": "Micron committed up to $3 billion to the U.S. semiconductor supply chain last week. Of that, $500 million goes to GlobalWafers as strategic financing — subject to definitive agreements and closing conditions — for its 300mm raw silicon wafer plant in Sherman, Texas, and the two companies will sign a 10-year agreement for access to that plant's output. Ben Tessone, Micron's senior vice president and chief procurement officer, tied the move to securing \"critical input materials.\" In a second announcement from Boise the same day, Micron raised its planned US spending to more than $250 billion through 2035 , up from $200 billion, and poured the first load of concrete at its Clay, New York megafab a quarter ahead of schedule. Running until 2035, the $250 billion spending target is attached to…",
+          "publishedAt": "2026-07-13T17:09:27.000Z",
+          "sourceImage": "https://cdn.mos.cms.futurecdn.net/MKPAJtT8MT8FuEjoJ2s7Ko-1280-80.jpg",
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "category": "Semiconductors",
+          "primary_category": "Semiconductors",
+          "secondary_category": "Accelerators, memory, and advanced packaging",
+          "infrastructure_layer": "Silicon",
+          "affected_stakeholders": [
+            "semiconductor suppliers",
+            "hyperscalers",
+            "server OEMs",
+            "investors"
+          ],
+          "article_type": "Financing / M&A",
+          "urgency_score": 0.5,
+          "taxonomy_confidence": 0.88,
+          "taxonomy_reasons": [
+            "semiconductor",
+            "gpu",
+            "wafer"
+          ],
+          "direct_ai_infrastructure_relevance": 1,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 1,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0.32,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.985,
           "infrastructure_relevance_tier": "full_memo",
           "infrastructure_relevance_action": "generate_full_memo",
           "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:0.78",
-            "data_center_relevance:0.92(data center, colocation, campus)",
-            "power_grid_relevance:0.22(power)",
-            "cooling_relevance:0.41(thermal)",
-            "capital_markets_relevance:0.28(capex)"
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "semiconductor_relevance:1.00(semiconductor, semiconductors, wafer)",
+            "capital_markets_relevance:0.32(financing)"
           ],
-          "extraction_quality_score": 0.86,
-          "source_domain_adapter": "generic",
-          "content_length": 1137,
-          "boilerplate_ratio": 0,
-          "repetition_blocked": false,
-          "repetition_block_reasons": [],
-          "repetition_check": null,
-          "expert_insight_complete": false,
-          "expert_insight_missing_fields": [
-            "concrete_facts",
-            "named_companies"
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 1,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 1,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0.32,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.985,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+              "semiconductor_relevance:1.00(semiconductor, semiconductors, wafer)",
+              "capital_markets_relevance:0.32(financing)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 87
+        },
+        {
+          "id": "88d7ebe8fccdc0be",
+          "source": "StorageReview",
+          "url": "https://www.storagereview.com/news/ddn-and-nebul-validate-kv-cache-acceleration-for-nvidia-based-ai-factories",
+          "title": "DDN and Nebul Validate KV Cache Acceleration for NVIDIA-Based AI Factories",
+          "snippet": "At the RAISE Summit in Paris, DDN highlighted its ongoing collaboration with Nebul, a European sovereign-hybrid cloud provider, focused on improving the efficiency of large-scale AI inference deployments. Announced last…",
+          "contentText": "At the RAISE Summit in Paris, DDN highlighted its ongoing collaboration with Nebul, a European sovereign-hybrid cloud provider, focused on improving the efficiency of large-scale AI inference deployments. Announced last week, the effort combines Nebul&#8217;s inference platform, DDN&#8217;s Infinia data intelligence architecture, and NVIDIA accelerated computing to address a growing production AI constraint: the cost and performance implications of moving data during inference. DDN positions the work around key production metrics, including GPU utilization, token throughput, cost per token, and latency. The premise is that model training establishes the value of an AI asset, while inference determines its operational and commercial return. As agentic AI, retrieval-augmented generation, an…",
+          "publishedAt": "2026-07-13T16:58:40.000Z",
+          "sourceImage": "https://www.storagereview.com/wp-content/uploads/2026/07/Storagereview-ddn-pr-advance-ai-inference-web-logos.png",
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "category": "AI Infrastructure",
+          "primary_category": "AI Infrastructure",
+          "secondary_category": "GPU clusters and deployment readiness",
+          "infrastructure_layer": "Compute",
+          "affected_stakeholders": [
+            "operators",
+            "hyperscalers",
+            "cloud buyers",
+            "investors"
           ],
-          "reason": "fail_closed: source_text_incomplete:source_evidence_length_below_1200"
+          "article_type": "Product / Platform Update",
+          "urgency_score": 0.47,
+          "taxonomy_confidence": 0.77,
+          "taxonomy_reasons": [
+            "ai infrastructure",
+            "neocloud"
+          ],
+          "direct_ai_infrastructure_relevance": 1,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0.598,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0.28,
+          "infrastructure_relevance_score": 0.897,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "semiconductor_relevance:0.60(nvidia, gpu)",
+            "enterprise_ai_infrastructure_relevance:0.28(hybrid cloud)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 1,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0.598,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0.28,
+            "infrastructure_relevance_score": 0.897,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+              "semiconductor_relevance:0.60(nvidia, gpu)",
+              "enterprise_ai_infrastructure_relevance:0.28(hybrid cloud)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 84
+        },
+        {
+          "id": "7df5976461bdd032",
+          "source": "HPCwire",
+          "url": "https://www.hpcwire.com/off-the-wire/nord-quantique-achieves-sub-0-1-spam-errors-in-bosonic-qubit-study/",
+          "title": "Nord Quantique Achieves Sub-0.1% SPAM Errors in Bosonic Qubit Study",
+          "snippet": "SHERBROOKE, Quebec, July 13, 2026 — Nord Quantique, a quantum computing company advancing efficient, scalable, and error corrected architectures, recently published a research paper demonstrating quantum error correctio…",
+          "contentText": "SHERBROOKE, Quebec, July 13, 2026 &#8212; Nord Quantique , a quantum computing company advancing efficient, scalable, and error corrected architectures, recently published a research paper demonstrating quantum error correction (QEC) of a single-mode grid state qubit with state preparation and measurement (SPAM) errors below 0.1%; a roughly 100-fold improvement over prior results in comparable GKP-based systems, and now on par with error rates routinely seen in leading superconducting transmon qubit platforms. SPAM errors represent a fundamental challenge in quantum computing: even the most sophisticated error-correction protocols can be undermined by poorly prepared input states or unreliable readout. Nord Quantique&#8217;s research directly addresses this bottleneck and is compatible wi…",
+          "publishedAt": "2026-07-13T15:27:48.000Z",
+          "sourceImage": "https://www.hpcwire.com/wp-content/uploads/2025/12/nord-quantique-logo-rect-300x135.png",
+          "region": "Global",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "category": "AI Infrastructure",
+          "primary_category": "AI Infrastructure",
+          "secondary_category": "GPU clusters and deployment readiness",
+          "infrastructure_layer": "Compute",
+          "affected_stakeholders": [
+            "operators",
+            "hyperscalers",
+            "cloud buyers",
+            "investors"
+          ],
+          "article_type": "Research / Technical",
+          "urgency_score": 0.54,
+          "taxonomy_confidence": 0.77,
+          "taxonomy_reasons": [
+            "ai infrastructure",
+            "neocloud"
+          ],
+          "direct_ai_infrastructure_relevance": 1,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0.22,
+          "power_grid_relevance": 0.28,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.827,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "semiconductor_relevance:0.22(gpu)",
+            "power_grid_relevance:0.28(grid)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 1,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0.22,
+            "power_grid_relevance": 0.28,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.827,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+              "semiconductor_relevance:0.22(gpu)",
+              "power_grid_relevance:0.28(grid)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 81
+        },
+        {
+          "id": "4f71858e04cb7b68",
+          "source": "Utility Dive",
+          "url": "https://www.utilitydive.com/news/texas-puc-approves-ride-through-rules-data-centers/825051/",
+          "title": "Texas PUC approves ‘ride-through’ rules for data centers",
+          "snippet": "“There is no debate that voltage and frequency excursions on the transmission network create reliability concerns, which increase with the interconnection of each new large computational load,” wrote a PUC staffer.",
+          "contentText": "&ldquo;There is no debate that voltage and frequency excursions on the transmission network create reliability concerns, which increase with the interconnection of each new large computational load,&rdquo; wrote a PUC staffer.",
+          "publishedAt": "2026-07-13T14:25:32.000Z",
+          "sourceImage": "https://imgproxy.divecdn.com/aKs5lQ4g-yxYycpwm_naYyzJPGWcrVhuUIDffdlle7U/g:ce/rs:fill:1600:900:1/Z3M6Ly9kaXZlc2l0ZS1zdG9yYWdlL2RpdmVpbWFnZS9pbnN0YWxsX3RyYW5zbWlzc2lvbi5qcGc=.webp",
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "Power / Grid / Energy",
+          "category": "Power & Grid",
+          "primary_category": "Power & Grid",
+          "secondary_category": "Interconnection and power procurement",
+          "infrastructure_layer": "Power",
+          "affected_stakeholders": [
+            "data center operators",
+            "utilities",
+            "cloud capacity teams",
+            "investors"
+          ],
+          "article_type": "Other",
+          "urgency_score": 0.75,
+          "taxonomy_confidence": 0.93,
+          "taxonomy_reasons": [
+            "power",
+            "grid",
+            "interconnection",
+            "transmission"
+          ],
+          "direct_ai_infrastructure_relevance": 0,
+          "data_center_relevance": 0.55,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0,
+          "power_grid_relevance": 1,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.771,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "data_center_relevance:0.55(data centers)",
+            "power_grid_relevance:1.00(power, grid, interconnection)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 0,
+            "data_center_relevance": 0.55,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0,
+            "power_grid_relevance": 1,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.771,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "data_center_relevance:0.55(data centers)",
+              "power_grid_relevance:1.00(power, grid, interconnection)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 78
+        },
+        {
+          "id": "b423a1128ac7427c",
+          "source": "Capacity Media",
+          "url": "https://capacityglobal.com/news/bcs-consultancy-oskar-lampe-interview-africa/",
+          "title": "Why South Africa could become Africa’s digital infrastructure gateway",
+          "snippet": "BCS Consultancy’s Oskar Lampe tells Capacity why South Africa could lead Africa’s data centre growth, with the market set to hit $5.28bn by 2031. The post Why South Africa could become Africa’s digital infrastructure ga…",
+          "contentText": "As technology and AI capabilities scale worldwide, the larger data centre markets – including North America, Europe and the Nordics – have continued to grow. However, rapid innovation has also paved the way for newer destinations for hyperscale investment, including the Middle East, Italy and Africa. Africa has been regarded as one of the most promising long-term opportunities in the industry for some time. South Africa in particular has emerged as one of the continent’s most established digital infrastructure hubs, according to BCS Consultancy ’s regional director, Oskar Lampe, explained to Capacity. “The scale of the opportunity is now growing,” Lampe said. “As investment accelerates and the market matures, developers, operators and technology companies are increasingly looking at Afric…",
+          "publishedAt": "2026-07-13T15:16:32.000Z",
+          "sourceImage": "https://capacityglobal.com/wp-content/uploads/2026/06/ITW-Africa-new-in-yellow.png",
+          "region": "APAC",
+          "language": "en",
+          "defaultCategory": "Hyperscalers & Cloud",
+          "category": "Cloud Capacity",
+          "primary_category": "Cloud Capacity",
+          "secondary_category": "Hyperscale regions and accelerator availability",
+          "infrastructure_layer": "Cloud Platform",
+          "affected_stakeholders": [
+            "hyperscalers",
+            "cloud buyers",
+            "enterprise IT",
+            "operators"
+          ],
+          "article_type": "Capacity Expansion",
+          "urgency_score": 0.47,
+          "taxonomy_confidence": 0.57,
+          "taxonomy_reasons": [
+            "fallback_taxonomy"
+          ],
+          "direct_ai_infrastructure_relevance": 0.64,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0.76,
+          "semiconductor_relevance": 0,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.652,
+          "infrastructure_relevance_tier": "signal_card",
+          "infrastructure_relevance_action": "publish_signal_card_only",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:0.64",
+            "cloud_capacity_relevance:0.76(cloud capacity, hyperscalers)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 0.64,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0.76,
+            "semiconductor_relevance": 0,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.652,
+            "infrastructure_relevance_tier": "signal_card",
+            "infrastructure_relevance_action": "publish_signal_card_only",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:0.64",
+              "cloud_capacity_relevance:0.76(cloud capacity, hyperscalers)"
+            ],
+            "infrastructureRelevanceAction": "publish_signal_card_only",
+            "articlePagePublished": false,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 73
         }
       ],
-      "archiveOnlyItems": []
-    },
+      "curatedIds": [
+        "6f2198206c2b09b9",
+        "c81b0a25d6f03a46",
+        "88d7ebe8fccdc0be",
+        "7df5976461bdd032",
+        "4f71858e04cb7b68",
+        "b423a1128ac7427c"
+      ],
+      "publishedIds": [
+        "c81b0a25d6f03a46",
+        "6f2198206c2b09b9"
+      ],
+      "slotPublications": {
+        "0": true
+      }
+    }
+  },
+  "runHistory": [
     {
       "at": "2026-06-03T18:52:20.455Z",
       "day": "2026-06-04",
@@ -42899,7 +43280,135 @@
         }
       ],
       "archiveOnlyItems": []
+    },
+    {
+      "at": "2026-07-13T17:20:01.646Z",
+      "day": "2026-07-14",
+      "slot": 0,
+      "publishedCount": 0,
+      "signalCardCount": 1,
+      "archiveOnlyCount": 0,
+      "repetitionBlockedCount": 1,
+      "publishedIds": [],
+      "processedIds": [
+        "c81b0a25d6f03a46",
+        "6f2198206c2b09b9"
+      ],
+      "blockedCount": 1,
+      "blockedItems": [
+        {
+          "id": "c81b0a25d6f03a46",
+          "title": "Micron commits $500 million to GlobalWafers' Texas wafer plant as it raises U.S. spending to $250 billion — memory maker aims to manufacture 40% of DRAM in the US by 2035",
+          "infrastructure_relevance_score": 1,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "cloud_capacity_relevance:0.32(hyperscalers)",
+            "semiconductor_relevance:1.00(semiconductor, semiconductors, wafer)",
+            "power_grid_relevance:0.22(power)",
+            "capital_markets_relevance:0.32(financing)"
+          ],
+          "extraction_quality_score": 1,
+          "source_domain_adapter": "generic",
+          "content_length": 1703,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": false,
+          "repetition_block_reasons": [],
+          "repetition_check": null,
+          "expert_insight_complete": false,
+          "expert_insight_missing_fields": [
+            "named_companies"
+          ],
+          "reason": "expert_insight_missing_fields named_companies"
+        }
+      ],
+      "repetitionBlockedItems": [
+        {
+          "id": "6f2198206c2b09b9",
+          "title": "The Super-Grid Transformer Revolution Powering AI Data Centers",
+          "infrastructure_relevance_score": 1,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:0.82",
+            "data_center_relevance:1.00(data center, data centers, colocation)",
+            "cloud_capacity_relevance:0.32(hyperscalers)",
+            "power_grid_relevance:1.00(power, grid, utility)",
+            "cooling_relevance:0.82(cooling, liquid cooling)",
+            "enterprise_ai_infrastructure_relevance:0.64(backup, ai workload, ai workloads)"
+          ],
+          "extraction_quality_score": 1,
+          "source_domain_adapter": "datacenterpost",
+          "content_length": 1693,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": true,
+          "repetition_block_reasons": [
+            "repeated_sentence_ratio>0.12",
+            "heading_sequence_similarity>0.75",
+            "conclusion_similarity>0.7"
+          ],
+          "repetition_check": {
+            "compared_article_count": 20,
+            "repeated_sentence_ratio": 0.3333333333333333,
+            "repeated_paragraph_ratio": 0.3333333333333333,
+            "heading_sequence_similarity": 1,
+            "banned_phrase_count": 0,
+            "banned_phrase_counts": {},
+            "recent_banned_phrase_counts": {},
+            "ngram_overlap": 0.33070866141732286,
+            "blueprint_repetition": 1,
+            "conclusion_similarity": 1,
+            "repeated_sentence_count": 2,
+            "repeated_paragraph_count": 2,
+            "heading_sequence": [
+              "Power-Market Move",
+              "Operating Lever",
+              "Grid Exposure",
+              "Metric To Watch"
+            ],
+            "blocked": true,
+            "reasons": [
+              "repeated_sentence_ratio>0.12",
+              "heading_sequence_similarity>0.75",
+              "conclusion_similarity>0.7"
+            ]
+          },
+          "expert_insight_complete": true,
+          "expert_insight_missing_fields": [],
+          "reason": "repeated_sentence_ratio>0.12; heading_sequence_similarity>0.75; conclusion_similarity>0.7"
+        }
+      ],
+      "signalCardItems": [
+        {
+          "id": "c81b0a25d6f03a46",
+          "title": "Micron commits $500 million to GlobalWafers' Texas wafer plant as it raises U.S. spending to $250 billion — memory maker aims to manufacture 40% of DRAM in the US by 2035",
+          "infrastructure_relevance_score": 1,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "cloud_capacity_relevance:0.32(hyperscalers)",
+            "semiconductor_relevance:1.00(semiconductor, semiconductors, wafer)",
+            "power_grid_relevance:0.22(power)",
+            "capital_markets_relevance:0.32(financing)"
+          ],
+          "extraction_quality_score": 1,
+          "source_domain_adapter": "generic",
+          "content_length": 1703,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": false,
+          "repetition_block_reasons": [],
+          "repetition_check": null,
+          "expert_insight_complete": false,
+          "expert_insight_missing_fields": [
+            "named_companies"
+          ],
+          "reason": "expert_insight_missing_fields named_companies"
+        }
+      ],
+      "archiveOnlyItems": []
     }
   ],
-  "lastRunAt": "2026-07-13T10:34:39.252Z"
+  "lastRunAt": "2026-07-13T17:20:01.646Z"
 }
