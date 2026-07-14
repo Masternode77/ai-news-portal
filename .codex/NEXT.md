@@ -2,7 +2,9 @@
 
 ## Current branch
 - `upgrade/gpt-5-6-sol`, merged with `origin/main` SHA `f8bc10a2`.
-- HEAD before the public-copy implementation commit: `ec44f386`.
+- Verified implementation SHA: `d43aac3c6a8cece730fe2b19dd67b879cfee3205`.
+- Exact preview: `dpl_DzvwjCbAqMKrWE9R4vFLAXUqCHrZ` at
+  `https://ai-news-portal-3iohdc1vt-masternode77s-projects.vercel.app` (`READY`).
 - Rollback tag: `backup/pre-gpt56-upgrade-20260711T091118Z`.
 - No push, production promotion, production-secret operation, or cache purge has been performed.
 
@@ -47,6 +49,12 @@
   no broken images, overflow, clipping, or overlap.
 - Independent code review: APPROVE; architecture review found no remaining implementation defects;
   canonical search/taxonomy projections and rendered membership each showed 0 mismatches.
+- Exact-preview routes: 7 public routes returned 200, 5 retired routes returned 404, admin UI returned
+  200, and the unconfigured admin API returned 503 with `no-store` and `noindex,nofollow`.
+- Exact-preview browser QA: homepage 31/31 desktop and mobile, archive 32/32, search 32/32,
+  article 1/1, and APAC 19/19 images decoded; 0 placeholder labels, browser errors, broken images,
+  overflow, or clipped cards.
+- Production remained on `dpl_CCvT6FCRjFsGfUJ5Ra5h4AYb76Dy`; no alias or cache operation changed it.
 
 ## Blockers
 - Preview Postgres, Blob, and admin credentials are absent; managed persistence is not proven.
@@ -55,6 +63,6 @@
 - Production promotion requires explicit preview approval.
 
 ## Exact next step
-- Create the Lore implementation commit from the fully reviewed and verified tree.
-- Deploy that exact clean commit to Vercel preview, verify routes/images/screenshots, and commit the receipt.
+- Commit this exact-preview receipt locally and keep the worktree clean.
+- Await human content labels and managed preview Postgres/Blob credentials for the two remaining gates.
 - Keep push, production promotion, production secrets, and cache purge excluded.

@@ -30,7 +30,7 @@ legacy templates.
       taxonomy/search artifacts through existing generators.
 - [x] Run focused tests, build, public audits, full tests, and `content:gate`.
 - [x] Inspect desktop/mobile and RSS output, then request independent code review.
-- [ ] Commit with a Lore message and deploy the exact commit to preview only.
+- [x] Commit with a Lore message and deploy the exact commit to preview only.
 
 ## Likely Files
 

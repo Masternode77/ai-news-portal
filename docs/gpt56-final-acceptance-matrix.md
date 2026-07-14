@@ -67,7 +67,7 @@ does not mean a live preview database or production workflow was exercised.
 | 25 | Tests pass | PASS | Current full suite reports 554 tests: 553 passed, 0 failed, and 1 intentional skip. |
 | 26 | Build passes | PASS | Astro check reports 0 errors and `content:gate` rebuilds and audits the static output successfully. |
 | 27 | Security audit passes | PASS | `npm audit --audit-level=low` reports zero findings; threat model and fix report list operational follow-up. |
-| 28 | Visual QA passes | PASS | Local desktop/mobile QA loaded 31 homepage, 32 archive, and one article image with zero broken images, clipping, overlap, or overflow; exact-preview verification remains the release step. |
+| 28 | Visual QA passes | PASS | Exact-preview browser QA decoded homepage 31/31 desktop and mobile, archive 32/32, search 32/32, article 1/1, and APAC 19/19 images with zero broken images, placeholder labels, clipping, or overflow. |
 | 29 | SEO audit passes | PASS WITH PREVIEW CAVEAT | Canonical/feed/schema/noindex tests pass; preview Lighthouse SEO is intentionally reduced by Vercel's preview noindex header. |
 | 30 | Performance targets met or blockers documented | PASS | Lighthouse performance is 97 mobile/100 desktop and accessibility is 100. `content:gate` now enforces static dist, JS, CSS, HTML, and image ceilings; field INP/traffic telemetry remains documented post-approval work. |
 
@@ -75,11 +75,11 @@ does not mean a live preview database or production workflow was exercised.
 
 | # | Requirement | Result | Evidence or remaining condition |
 | ---: | --- | --- | --- |
-| 31 | Preview deployment is verified | PENDING | The current source-boundary implementation passes local gates; its exact clean commit still needs a preview deployment and fresh route/image/screenshot receipt. |
+| 31 | Preview deployment is verified | PASS | Implementation `d43aac3c` is `READY` as preview `dpl_DzvwjCbAqMKrWE9R4vFLAXUqCHrZ`; public, retired, admin, image, and screenshot receipts pass. |
 | 32 | PR has migration and risk summary | NOT STARTED | Push/PR authorization and preview approval were not given; migration/risk material is ready in reports and runbooks. |
-| 33 | Production unchanged before preview approval | PASS | This branch performed no production promotion, cache purge, or production-secret operation. |
+| 33 | Production unchanged before preview approval | PASS | Production remained on `dpl_CCvT6FCRjFsGfUJ5Ra5h4AYb76Dy`; this branch performed no production promotion, cache purge, or production-secret operation. |
 | 34 | Rollback is tested | PASS WITH CAVEAT | Tagged baseline passed isolated clean install/build; that emergency baseline retains 18 dependency findings. |
-| 35 | Final report has exact SHA and preview URL | PENDING | The implementation commit and exact preview receipt will be recorded after deployment; the previous preview is retained only as historical evidence. |
+| 35 | Final report has exact SHA and preview URL | PASS | `docs/final-gpt56-upgrade-report.md` records the verified implementation SHA, deployment ID, preview URL, and route/image receipt. |
 
 ## Open Gates
 

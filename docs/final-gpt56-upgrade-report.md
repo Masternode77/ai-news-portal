@@ -20,10 +20,10 @@ production secret or cache purge; the connected `main` branch did deploy indepen
 | Baseline production SHA | `19089b66627be58d5066376902ff382d2a018137` |
 | Merged `origin/main` SHA | `f8bc10a220a6b910e703375d337dcd3f40ea0467` |
 | Rollback tag | `backup/pre-gpt56-upgrade-20260711T091118Z` |
-| Verified implementation SHA | Pending the local public-copy implementation commit |
-| Preview deployment | Pending exact-commit preview deployment; historical preview `dpl_DGw5wWEmjC69SV9cJEg9Jj9sCbmW` is not the final receipt |
-| Preview URL | Pending exact-commit preview deployment |
-| Latest observed production | `dpl_6ffKPvH7wsgqHGaVxkosGyAR2Ue7` at `b22ceeb2` (external `main` automation, not this branch) |
+| Verified implementation SHA | `d43aac3c6a8cece730fe2b19dd67b879cfee3205` |
+| Preview deployment | `dpl_DzvwjCbAqMKrWE9R4vFLAXUqCHrZ` (`READY`, preview target) |
+| Preview URL | `https://ai-news-portal-3iohdc1vt-masternode77s-projects.vercel.app` |
+| Latest observed production | `dpl_CCvT6FCRjFsGfUJ5Ra5h4AYb76Dy` (external production deployment, unchanged by this branch) |
 
 ## Delivered Platform
 
@@ -75,8 +75,8 @@ production secret or cache purge; the connected `main` branch did deploy indepen
 - Replaced two duplicate legacy cards with verified source photographs and migrated 66 records
   that shared one fallback raster to the SHA-256-seeded v2 generator. The audit now rejects
   duplicate image bytes across homepage, archive, search, and taxonomy surfaces.
-- Reduced static output from 1,532 pages to 61; the final build retained 85 reachable generated
-  assets and pruned 4,097.
+- Reduced static output from 1,532 pages to 59; the exact preview build retained 68 reachable
+  generated assets and pruned 4,114.
 
 ### Durable admin CMS
 
@@ -128,17 +128,17 @@ three prototypes remain noindex and are not production routes.
 | Full tests | 554 total, 553 passed, 0 failed, 1 intentional skip |
 | Editorial scripts | quality, relevance, taxonomy, repetition passed |
 | Astro check | 0 errors, 0 warnings, 11 existing type hints |
-| Build | 61 pages; 85 images retained; 4,097 pruned |
+| Build | Exact preview built 59 pages; 68 generated assets retained; 4,114 pruned |
 | Content gate | passed all public, copy, image, feed, and admin exclusion audits |
 | QA/QC | deployable with operational follow-up |
 | Admin browser E2E | 17/17 local UI/API lifecycle scenarios passed; public discovery integration passed |
 | Code review | Independent final code review APPROVED; architecture review found no remaining implementation defects after search, source-evidence, taxonomy freshness, and canonical-membership fixes. |
-| Preview public routes | Pending exact-current-commit preview receipt |
-| Removed public routes | Pending exact-current-commit preview receipt |
-| Preview admin pretty routes | Pending exact-current-commit preview receipt |
-| Preview admin APIs | Pending exact-current-commit preview receipt |
-| Visual QA | Local 8/8 desktop/mobile captures passed; homepage 31/31, archive 32/32, article 1/1 images decoded with no broken images, overflow, clipping, or overlap |
-| Local rendered image coverage | homepage 31/31; archive 32/32; representative article 1/1; broken images 0 |
+| Preview public routes | Homepage, archive, search, article, power-grid, APAC, and design-lab routes returned 200 |
+| Removed public routes | `/about/`, `/editorial-policy/`, `/methodology/`, `/ai-disclosure/`, and `/contact/` returned 404 |
+| Preview admin pretty routes | `/admin/` and `/admin/login/` returned 200 |
+| Preview admin APIs | `/api/admin/articles` returned intended 503 with `no-store` and `noindex,nofollow` |
+| Visual QA | Exact-preview browser checks passed with 0 broken images, placeholder labels, errors, overflow, or clipped cards |
+| Preview rendered image coverage | homepage 31/31 desktop and mobile; archive 32/32; search 32/32; article 1/1; APAC 19/19 |
 | Lighthouse mobile | 97 performance, 100 accessibility, 92 best practices |
 | Lighthouse desktop | 100 performance, 100 accessibility, 92 best practices |
 | Static performance budget | 4,604,449 B dist, 11,432 B JS, 100,239 B CSS, 93,875 B largest HTML, 335,600 B largest image; all within enforced limits |
@@ -148,16 +148,17 @@ The preview SEO score of 69 is expected because Vercel adds `x-robots-tag: noind
 Best Practices deductions are the Vercel Preview Toolbar script being blocked by the site's
 intentional self-only CSP, not application JavaScript failures.
 
-The current local build was checked after lazy-load traversal: homepage desktop and mobile each
-rendered all 31 card images, archive rendered all 32, and the representative article rendered its
-lead image. Browser QA found zero failed image responses, visible placeholder labels, console
-errors, page errors, clipping, overlap, or horizontal overflow. The exact-current-commit preview
-receipt remains pending.
+The exact preview was checked after lazy-load traversal: homepage desktop and mobile each rendered
+all 31 images, archive and search rendered all 32, the representative article rendered its lead
+image, and APAC rendered all 19 canonical members. Browser QA found zero failed image responses,
+visible placeholder labels, console errors, page errors, clipping, or horizontal overflow.
+Screenshots and machine-readable evidence are under `artifacts/preview-final/`.
 
 The exact preview and `computecurrent.com` are intentionally not pixel-identical before approval.
 The preview shows the selected Midnight Intelligence publication while production still shows the
 earlier operating-board homepage from external `main`. Same-viewport comparison confirmed the
-difference; no production promotion or cache operation was used to conceal it.
+difference. Production remained on `dpl_CCvT6FCRjFsGfUJ5Ra5h4AYb76Dy`; no production promotion,
+alias change, or cache operation was used to conceal it.
 
 ## LOC and Repository Hygiene
 
