@@ -1,6 +1,6 @@
 # Final GPT-5.6 Upgrade Report
 
-Updated: 2026-07-12
+Updated: 2026-07-14
 
 ## Executive Verdict
 
@@ -20,9 +20,9 @@ production secret or cache purge; the connected `main` branch did deploy indepen
 | Baseline production SHA | `19089b66627be58d5066376902ff382d2a018137` |
 | Merged `origin/main` SHA | `f8bc10a220a6b910e703375d337dcd3f40ea0467` |
 | Rollback tag | `backup/pre-gpt56-upgrade-20260711T091118Z` |
-| Verified implementation SHA | `7cb5e449ef4e0a3027982c8d2fcd38bf22434dbf` |
-| Preview deployment | `dpl_DGw5wWEmjC69SV9cJEg9Jj9sCbmW` (`READY`, preview target) |
-| Preview URL | `https://ai-news-portal-j0t0zyxm4-masternode77s-projects.vercel.app` |
+| Verified implementation SHA | Pending the local public-copy implementation commit |
+| Preview deployment | Pending exact-commit preview deployment; historical preview `dpl_DGw5wWEmjC69SV9cJEg9Jj9sCbmW` is not the final receipt |
+| Preview URL | Pending exact-commit preview deployment |
 | Latest observed production | `dpl_6ffKPvH7wsgqHGaVxkosGyAR2Ue7` at `b22ceeb2` (external `main` automation, not this branch) |
 
 ## Delivered Platform
@@ -57,6 +57,11 @@ production secret or cache purge; the connected `main` branch did deploy indepen
   themselves, and legacy migration commands are read-only diagnostics that reject `--apply`.
 - Removed public operational/dashboard routes and unified homepage, archive, search, article,
   RSS, sitemap, category, company, and region surfaces on one public inventory.
+- Removed deterministic public-card copy fallbacks. Source signals now require verified extracted
+  evidence, contaminated legacy source fields fail closed, and card eligibility is shared across
+  homepage, archive, RSS, search, and taxonomy surfaces.
+- Moved taxonomy regeneration into the production publisher lifecycle and narrowed generated
+  search artifacts to one shared public projection, preventing future publish/repair drift.
 
 ### Public publication
 
@@ -64,9 +69,9 @@ production secret or cache purge; the connected `main` branch did deploy indepen
   list-style stories, source/date/category context, and decision-oriented card copy.
 - Added reader search and strengthened archive, taxonomy, article evidence, related discovery,
   source attribution, and report/share controls.
-- Homepage and article images use the canonical raster surface. Final preview inspection found
-  39/39 unique homepage images and 40/40 unique archive images, with zero broken assets or
-  visible default placeholder labels.
+- Homepage and article images use the canonical raster surface. Final local inspection loaded
+  31/31 homepage images, 32/32 archive images, and the representative article image, with zero
+  broken assets or visible default placeholder labels.
 - Replaced two duplicate legacy cards with verified source photographs and migrated 66 records
   that shared one fallback raster to the SHA-256-seeded v2 generator. The audit now rejects
   duplicate image bytes across homepage, archive, search, and taxonomy surfaces.
@@ -120,33 +125,34 @@ three prototypes remain noindex and are not production routes.
 | --- | --- |
 | Clean install | `npm ci` passed |
 | Dependency security | `npm audit --audit-level=low`: 0 vulnerabilities |
-| Full tests | 507 total, 506 passed, 0 failed, 1 intentional skip |
+| Full tests | 554 total, 553 passed, 0 failed, 1 intentional skip |
 | Editorial scripts | quality, relevance, taxonomy, repetition passed |
 | Astro check | 0 errors, 0 warnings, 11 existing type hints |
 | Build | 61 pages; 85 images retained; 4,097 pruned |
 | Content gate | passed all public, copy, image, feed, and admin exclusion audits |
 | QA/QC | deployable with operational follow-up |
 | Admin browser E2E | 17/17 local UI/API lifecycle scenarios passed; public discovery integration passed |
-| Code review | APPROVED after legacy-argument and Playwright-portability findings were fixed and regression-verified; final re-review found 0 issues. |
-| Preview public routes | homepage, archive, search, and representative article returned 200 |
-| Removed public routes | 5/5 returned 404 |
-| Preview admin pretty routes | 3/3 returned 200 with private/no-store caching |
-| Preview admin APIs | intended generic 503 fail-closed response |
-| Visual QA | Exact-commit desktop/mobile checks passed; 0 broken images/errors/overflow/placeholders |
-| Deployed image uniqueness | homepage 39/39; archive 40/40; duplicate groups 0 |
+| Code review | Independent final code review APPROVED; architecture review found no remaining implementation defects after search, source-evidence, taxonomy freshness, and canonical-membership fixes. |
+| Preview public routes | Pending exact-current-commit preview receipt |
+| Removed public routes | Pending exact-current-commit preview receipt |
+| Preview admin pretty routes | Pending exact-current-commit preview receipt |
+| Preview admin APIs | Pending exact-current-commit preview receipt |
+| Visual QA | Local 8/8 desktop/mobile captures passed; homepage 31/31, archive 32/32, article 1/1 images decoded with no broken images, overflow, clipping, or overlap |
+| Local rendered image coverage | homepage 31/31; archive 32/32; representative article 1/1; broken images 0 |
 | Lighthouse mobile | 97 performance, 100 accessibility, 92 best practices |
 | Lighthouse desktop | 100 performance, 100 accessibility, 92 best practices |
-| Static performance budget | 5.10 MB dist, 11.4 KB JS, 100.2 KB CSS, 100.0 KB largest HTML, 335.6 KB largest image; all within enforced limits |
+| Static performance budget | 4,604,449 B dist, 11,432 B JS, 100,239 B CSS, 93,875 B largest HTML, 335,600 B largest image; all within enforced limits |
 | Production action by this branch | none; external `main` automation advanced production during QA |
 
 The preview SEO score of 69 is expected because Vercel adds `x-robots-tag: noindex`. The two
 Best Practices deductions are the Vercel Preview Toolbar script being blocked by the site's
 intentional self-only CSP, not application JavaScript failures.
 
-The canonical cutover preview was also checked after lazy-load traversal: homepage desktop and
-mobile each rendered 39 unique images, archive rendered 40, and the representative article
-rendered its lead image. Browser QA found zero failed image responses, visible placeholder labels,
-console errors, page errors, or horizontal overflow.
+The current local build was checked after lazy-load traversal: homepage desktop and mobile each
+rendered all 31 card images, archive rendered all 32, and the representative article rendered its
+lead image. Browser QA found zero failed image responses, visible placeholder labels, console
+errors, page errors, clipping, overlap, or horizontal overflow. The exact-current-commit preview
+receipt remains pending.
 
 The exact preview and `computecurrent.com` are intentionally not pixel-identical before approval.
 The preview shows the selected Midnight Intelligence publication while production still shows the

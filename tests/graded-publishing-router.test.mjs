@@ -2,7 +2,14 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { routeGradedPublishing } from '../scripts/lib/graded-publishing-router.mjs';
 
-const cleanEvidence = `${'A clean source sentence about data center power, cloud capacity, storage, memory, and deployment timing. '.repeat(20)}Final source sentence complete.`;
+const cleanEvidence = [
+  'The filing identifies a data center power interconnection.',
+  'Cloud capacity depends on a dated substation delivery milestone.',
+  'Storage procurement is scheduled before customer deployment.',
+  'Memory supply is allocated to the first operating phase.',
+  'The campus commissioning plan names a final energization date.',
+  'The source closes with a complete construction update.',
+].join(' ');
 
 test('graded router sends clean infrastructure items to local blog routes', () => {
   const core = routeGradedPublishing({

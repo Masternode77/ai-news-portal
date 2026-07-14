@@ -75,6 +75,15 @@ function materializeArticle(source = {}, result = {}, now = new Date().toISOStri
   const images = imagePaths(source);
   const body = cleanArticleBody(result.finalArticleBody || result.longformBody || result.brief || source.articleText || source.summary);
   const deck = clean(source.summary || result.brief || result.reasons?.[0]);
+  const contentText = clean(
+    source.cleaned_source_text
+      || source.extractedText
+      || source.sourceText
+      || source.rawText
+      || source.articleText
+      || source.contentText
+      || '',
+  );
   const articlePagePublished = result.detailPage === true;
   return {
     id: clean(source.id || result.id),
@@ -95,8 +104,9 @@ function materializeArticle(source = {}, result = {}, now = new Date().toISOStri
     tags: [...new Set([source.infrastructure_layer, source.primary_category, source.category].map(clean).filter(Boolean))],
     public_status: 'published',
     public_content_tier: result.tier,
+    contentText,
     articleText: clean(source.articleText || source.cleaned_source_text),
-    cleaned_source_text: clean(source.cleaned_source_text || source.articleText),
+    cleaned_source_text: contentText,
     articlePagePublished,
     homepagePublished: true,
     archiveOnly: false,

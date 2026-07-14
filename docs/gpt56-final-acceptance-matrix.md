@@ -1,6 +1,6 @@
 # GPT-5.6 Final Acceptance Matrix
 
-Updated: 2026-07-12
+Updated: 2026-07-14
 
 ## Verdict
 
@@ -34,7 +34,7 @@ does not mean a live preview database or production workflow was exercised.
 | # | Requirement | Result | Evidence or remaining condition |
 | ---: | --- | --- | --- |
 | 9 | Irrelevant articles do not enter core lanes | BLOCKED | Machine routing regressions pass, but the independent 150-item labels are incomplete; real-world core FPR is not claimed. |
-| 10 | Generic repeated formulas are absent | PASS | Banned-pattern, repetition, opening/deck, and public-copy audits pass across the current corpus. |
+| 10 | Generic repeated formulas are absent | PASS | Card, archive, search, taxonomy, detail, and RSS output share the source-grounded copy boundary. The rebuilt `dist` has zero matches for the legacy formulas, and repetition/public-copy audits pass across the current reader-visible corpus. |
 | 11 | Source fidelity passes | PASS | Extraction-only evidence, unsupported-claim, numeric-claim, and source-fidelity tests pass. |
 | 12 | Weak items downgrade safely | PASS | Failed generation retains clean relevant sources as Source Signals and removes stale longform. |
 | 13 | No deterministic longform fallback exists | PASS | Editorial outage and partial-output tests fail closed to Source Signal. |
@@ -64,10 +64,10 @@ does not mean a live preview database or production workflow was exercised.
 
 | # | Requirement | Result | Evidence or remaining condition |
 | ---: | --- | --- | --- |
-| 25 | Tests pass | PASS | Full-suite receipt is recorded in `docs/final-gpt56-upgrade-report.md`. |
-| 26 | Build passes | PASS | Astro check/build and 61-page output pass. |
+| 25 | Tests pass | PASS | Current full suite reports 554 tests: 553 passed, 0 failed, and 1 intentional skip. |
+| 26 | Build passes | PASS | Astro check reports 0 errors and `content:gate` rebuilds and audits the static output successfully. |
 | 27 | Security audit passes | PASS | `npm audit --audit-level=low` reports zero findings; threat model and fix report list operational follow-up. |
-| 28 | Visual QA passes | PASS | Exact-preview QA reports no broken images, placeholders, errors, or overflow. |
+| 28 | Visual QA passes | PASS | Local desktop/mobile QA loaded 31 homepage, 32 archive, and one article image with zero broken images, clipping, overlap, or overflow; exact-preview verification remains the release step. |
 | 29 | SEO audit passes | PASS WITH PREVIEW CAVEAT | Canonical/feed/schema/noindex tests pass; preview Lighthouse SEO is intentionally reduced by Vercel's preview noindex header. |
 | 30 | Performance targets met or blockers documented | PASS | Lighthouse performance is 97 mobile/100 desktop and accessibility is 100. `content:gate` now enforces static dist, JS, CSS, HTML, and image ceilings; field INP/traffic telemetry remains documented post-approval work. |
 
@@ -75,11 +75,11 @@ does not mean a live preview database or production workflow was exercised.
 
 | # | Requirement | Result | Evidence or remaining condition |
 | ---: | --- | --- | --- |
-| 31 | Preview deployment is verified | PASS | Exact-commit preview, route probes, screenshots, image traversal, and Lighthouse receipts are recorded. |
+| 31 | Preview deployment is verified | PENDING | The current source-boundary implementation passes local gates; its exact clean commit still needs a preview deployment and fresh route/image/screenshot receipt. |
 | 32 | PR has migration and risk summary | NOT STARTED | Push/PR authorization and preview approval were not given; migration/risk material is ready in reports and runbooks. |
 | 33 | Production unchanged before preview approval | PASS | This branch performed no production promotion, cache purge, or production-secret operation. |
 | 34 | Rollback is tested | PASS WITH CAVEAT | Tagged baseline passed isolated clean install/build; that emergency baseline retains 18 dependency findings. |
-| 35 | Final report has exact SHA and preview URL | PASS | `docs/final-gpt56-upgrade-report.md` records the verified implementation SHA, deployment ID, and preview URL. |
+| 35 | Final report has exact SHA and preview URL | PENDING | The implementation commit and exact preview receipt will be recorded after deployment; the previous preview is retained only as historical evidence. |
 
 ## Open Gates
 

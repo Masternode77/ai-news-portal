@@ -1,7 +1,9 @@
 import { hasInternalPublicLanguage, sanitizePublicCopy } from './internal-language-guard.mjs';
-import { angleFor, deckForAngle, whyForFallback } from './card-copy-fallbacks.mjs';
 import { hasSourceBackedCardProductFit } from './card-copy-product-fit.mjs';
+import { guardPublicCopy } from './copy-quality-guard.mjs';
 import { normalizeProperNouns } from './proper-noun-normalizer.mjs';
+import { guardPublicTemplatePhrases } from './public-template-phrase-guard.mjs';
+import { SOURCE_EXCERPT_FIELDS, stripGeneratedSourceScaffolding } from './source-evidence-integrity.mjs';
 
 const INTERNAL_CARD_PATTERNS = [
   /^Compute Current is keeping/i,
@@ -15,6 +17,8 @@ const INTERNAL_CARD_PATTERNS = [
 ];
 
 const WHY_IT_MATTERS_LABEL = /^Why it\s+matters:\s*/i;
+const SOURCE_BOILERPLATE = /\b(?:all rights reserved|copyright|privacy policy|terms of use|gift this article|take our survey|want more .{0,80} stories|the post .{0,160} appeared first on|connects to .{0,100} decisions tracked by Compute Current|names .{0,100} as relevant actors or entities)\b/i;
+const SOURCE_PERIOD_SENTINEL = '\uE000';
 
 const LABEL_BY_TIER = {
   longform_analysis: 'Analysis',
@@ -62,17 +66,98 @@ function safeDisplayTitle(article = {}, title = '', rawTitle = title) {
   return candidates.find((candidate) => candidate && !hasInternalPublicLanguage(candidate) && !INTERNAL_CARD_PATTERNS.some((pattern) => pattern.test(candidate))) || '';
 }
 
-function clipped(value = '', max = 96) {
-  const text = compact(value).replace(/[,;:!?.\s]+$/g, '');
-  if (text.length <= max) return text;
-  const shortened = text.slice(0, max).replace(/\s+\S*$/g, '').replace(/[,;:!?.\s]+$/g, '');
-  return shortened || text.slice(0, max).replace(/[,;:!?.\s]+$/g, '');
-}
-
 function sentence(value = '') {
   const text = compact(value);
   if (!text) return '';
   return /[.!?]$/.test(text) ? text : `${text}.`;
+}
+
+function decodeNumericEntity(value = '', radix = 10) {
+  const codePoint = Number.parseInt(value, radix);
+  if (
+    !Number.isInteger(codePoint)
+    || codePoint < 0
+    || codePoint > 0x10ffff
+    || (codePoint >= 0xd800 && codePoint <= 0xdfff)
+  ) {
+    return ' ';
+  }
+  return String.fromCodePoint(codePoint);
+}
+
+function decodeSourceEntities(value = '') {
+  return String(value || '')
+    .replace(/<[^>]+>/g, ' ')
+    .replace(/&#x([0-9a-f]+);/gi, (_, hex) => decodeNumericEntity(hex, 16))
+    .replace(/&#(\d+);/g, (_, decimal) => decodeNumericEntity(decimal, 10))
+    .replace(/&(nbsp|ensp|emsp);/gi, ' ')
+    .replace(/&amp;/gi, '&')
+    .replace(/&quot;/gi, '"')
+    .replace(/&(apos|rsquo|lsquo);/gi, "'")
+    .replace(/&(rdquo|ldquo);/gi, '"')
+    .replace(/&mdash;/gi, '—')
+    .replace(/&ndash;/gi, '–')
+    .replace(/&hellip;/gi, '…')
+    .replace(/\s+/g, ' ')
+    .replace(/^TL;DR\s*/i, '')
+    .trim();
+}
+
+function clipSourceSentence(value = '', maxLength = 260) {
+  const text = compact(value);
+  if (text.length <= maxLength) return text;
+  const clipped = text.slice(0, maxLength - 1).replace(/\s+\S*$/g, '').replace(/[,;:\s]+$/g, '');
+  return clipped ? `${clipped}…` : '';
+}
+
+function sourceSentences(value = '') {
+  const protectedText = decodeSourceEntities(value)
+    .replace(/\b(?:[A-Za-z]\.){2,}/g, (match) => match.replaceAll('.', SOURCE_PERIOD_SENTINEL))
+    .replace(/\b(?:Co|Corp|Inc|Ltd|LLC|Dr|Mr|Ms|Mrs|Prof|St|No)\./gi, (match) => (
+      `${match.slice(0, -1)}${SOURCE_PERIOD_SENTINEL}`
+    ));
+  return protectedText
+    .split(/(?<=[.!?])\s+/)
+    .map((sentenceValue) => sentenceValue.replaceAll(SOURCE_PERIOD_SENTINEL, '.').trim())
+    .filter(Boolean);
+}
+
+function normalizedComparison(value = '') {
+  return compact(value).toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();
+}
+
+export function isSourceAttributionScaffolding(value = '', article = {}) {
+  const decoded = decodeSourceEntities(value);
+  const match = decoded.match(/^[^.!?]{1,120}\breported:\s*(.+)$/i);
+  if (!match) return false;
+  const reportedKey = normalizedComparison(match[1]);
+  const titleKey = normalizedComparison(article.title);
+  return Boolean(titleKey && (reportedKey === titleKey || reportedKey === `${titleKey} source`));
+}
+
+function safeSourceSentence(value = '', article = {}) {
+  const candidate = clipSourceSentence(value);
+  if (candidate.length < 45 || SOURCE_BOILERPLATE.test(candidate)) return '';
+  const candidateKey = normalizedComparison(candidate);
+  const titleKey = normalizedComparison(article.title);
+  if (titleKey && (candidateKey === titleKey || candidateKey === `${titleKey} source`)) return '';
+  if (/^[a-z]/.test(candidate)) return '';
+  if (isSourceAttributionScaffolding(candidate, article)) return '';
+  if (hasInternalPublicLanguage(candidate)) return '';
+  if (!guardPublicTemplatePhrases(candidate).ok) return '';
+  const guarded = guardPublicCopy(candidate, { allowEllipsis: true });
+  return guarded.ok ? sentence(guarded.text).replace(/…\.$/, '…') : '';
+}
+
+export function sourceCardExcerpt(article = {}) {
+  for (const field of SOURCE_EXCERPT_FIELDS) {
+    const sourceText = stripGeneratedSourceScaffolding(article[field], article).text;
+    for (const candidate of sourceSentences(sourceText)) {
+      const safe = safeSourceSentence(candidate, article);
+      if (safe) return safe;
+    }
+  }
+  return '';
 }
 
 function labelFor(article = {}) {
@@ -105,52 +190,40 @@ function layerFor(article = {}) {
   return compact(layer).toLowerCase();
 }
 
-function whySubjectFor(article = {}) {
-  const title = clipped(titleFor(article).replace(/\s+[|—-]\s+.*$/, ''), 76);
-  const source = clipped(article.source || '', 34);
-  if (source && title && !title.toLowerCase().includes(source.toLowerCase())) {
-    return clipped(`The ${source} update on ${title}`, 96);
-  }
-  return title || clipped(`${actorFor(article)} ${layerFor(article)} update`, 96);
-}
-
 function deckFor(article = {}) {
   const persisted = article.public_presentation?.deck || article.deck || article.expertLensFull?.metaDescription || article.summary || article.snippet;
   const cleanPersisted = sanitizePublicCopy(persisted || '');
+  const guardedPersisted = guardPublicCopy(cleanPersisted, { allowEllipsis: true });
   if (
     isLongformAnalysis(article)
     && cleanPersisted
     && cleanPersisted.length >= 60
     && !INTERNAL_CARD_PATTERNS.some((pattern) => pattern.test(cleanPersisted))
     && !hasInternalPublicLanguage(cleanPersisted)
+    && guardedPersisted.ok
+    && guardPublicTemplatePhrases(cleanPersisted).ok
   ) {
     return sentence(cleanPersisted).slice(0, 260);
   }
-  const actor = actorFor(article);
-  const layer = layerFor(article);
-  const title = titleFor(article);
-  const titleContext = clipped(title.replace(/\s+[|—-]\s+.*$/, ''), 96);
-  return deckForAngle(angleFor(article), titleContext || actor || layer, article);
+  return sourceCardExcerpt(article);
 }
 
 function whyFor(article = {}) {
   const persisted = article.public_presentation?.why_it_matters || article.publicSignal?.why_it_matters || article.why_it_matters || article.evidence_pack?.operatingImplication;
   const cleanPersisted = cleanWhyItMatters(persisted || '');
+  const guardedPersisted = guardPublicCopy(cleanPersisted, { allowEllipsis: true });
   if (
     isLongformAnalysis(article)
     && cleanPersisted
     && cleanPersisted.length >= 30
     && !INTERNAL_CARD_PATTERNS.some((pattern) => pattern.test(cleanPersisted))
     && !hasInternalPublicLanguage(cleanPersisted)
+    && guardedPersisted.ok
+    && guardPublicTemplatePhrases(cleanPersisted).ok
   ) {
     return sentence(cleanPersisted).slice(0, 220);
   }
-  const layer = layerFor(article);
-  return whyForFallback(article, {
-    angle: angleFor(article),
-    layer,
-    subject: whySubjectFor(article),
-  });
+  return '';
 }
 
 export function generateCardCopy(article = {}) {
@@ -180,7 +253,8 @@ export function cardCopyQualityResult(copy = {}, article = undefined) {
     reasons.push('internal_qualification_language');
   }
   if (hasInternalPublicLanguage(text)) reasons.push('internal_public_language');
-  if (!/\b(power|grid|utility|data center|campus|cloud|capacity|cooling|rack|chip|gpu|hbm|memory|capital|deal|policy|siting|interconnection|operator|buyer|supplier|platform)\b/i.test(text)) {
+  if (!guardPublicTemplatePhrases(text).ok) reasons.push('public_template_phrase');
+  if (!/\b(power|grid|utility|data cent(?:er|re)s?|campus|cloud|capacity|cooling|rack|chip|gpu|hbm|memory|capital|deal|policy|siting|interconnection|operator|buyer|supplier|platform|semiconductor|foundry|fab|wafer|fiber|network|storage|energization|substation|\d+\s?nm|\d+(?:\.\d+)?\s?(?:mw|gw|tbps))\b/i.test(text)) {
     reasons.push('missing_concrete_infrastructure_noun');
   }
   if (article && !hasSourceBackedCardProductFit(article)) reasons.push('unsupported_product_fit');

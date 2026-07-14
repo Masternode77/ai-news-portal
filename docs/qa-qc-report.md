@@ -1,6 +1,6 @@
 # AI News Portal QA/QC Report
 
-Generated at: 2026-07-12T04:25:58.275Z
+Generated at: 2026-07-14T02:42:48.194Z
 Verdict: deployable with operational follow-up
 
 ## Commands Run
@@ -25,11 +25,12 @@ Verdict: deployable with operational follow-up
 - Local gate: passed
 - Merge/data integrity: passed
 - Local distribution: passed
-- Live verification: passed
+- Live verification: skipped
 - Cache purge: skipped
 
 ## Remaining Risks
 
+- skipped live step: URL not provided
 - skipped staging step: URL not provided
 - cache purge skipped by QA/QC non-goal
 - This QA/QC workflow does not use production secrets and does not execute cache purge.

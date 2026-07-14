@@ -76,6 +76,13 @@ test('publish cycle keeps internal cycle status out of public artifacts', async 
 
 test('publish cycle keeps source-link briefs off local detail pages', async () => {
   const sourceUrl = 'https://example.com/utility-campus-grid-queue';
+  const sourceText = [
+    'The utility now expects interconnect studies to set the campus energization path.',
+    'Project filings say the first phase depends on a signed service agreement, transformer delivery, and a final substation construction schedule.',
+    'The developer told county officials that AI training demand is still reserved, but the campus cannot ramp racks until the utility completes feeder work.',
+    'Local planners identified grid studies, road access, and backup generation permits as the decision points that could shift the opening date.',
+    'Power equipment suppliers and interconnection engineering are named as the limiting factors for the first two halls.',
+  ].join(' ');
   const result = await runPublishCycle({
     articles: [{
       id: 'utility-campus-grid-queue',
@@ -84,13 +91,8 @@ test('publish cycle keeps source-link briefs off local detail pages', async () =
       sourceUrl,
       publishedAt: '2026-05-30T10:00:00.000Z',
       summary: 'A utility interconnect queue shifted the energization date for a compute campus.',
-      articleText: [
-        'The utility now expects interconnect studies to set the campus energization path.',
-        'Project filings say the first phase depends on a signed service agreement, transformer delivery, and a final substation construction schedule.',
-        'The developer told county officials that AI training demand is still reserved, but the campus cannot ramp racks until the utility completes feeder work.',
-        'Local planners identified grid studies, road access, and backup generation permits as the decision points that could shift the opening date.',
-        'Power equipment suppliers and interconnection engineering are named as the limiting factors for the first two halls.',
-      ].join(' '),
+      contentText: sourceText,
+      articleText: sourceText,
       primary_category: 'Power & Grid',
       infrastructure_layer: 'Power',
       extraction_quality_score: 0.88,
@@ -119,6 +121,13 @@ test('publish cycle keeps source-link briefs off local detail pages', async () =
 
 test('publish cycle detailPage false edge keeps thin briefs source-linked', async () => {
   const sourceUrl = 'https://example.com/thin-grid-brief';
+  const sourceText = [
+    'A short grid update identified interconnect milestones as the active timing constraint for a planned compute campus.',
+    'The source said the developer still has customer reservations, but energization depends on utility studies, transformer delivery, and a signed service agreement.',
+    'County filings list substation construction, road access, and backup generation permits as the open decision points.',
+    'Operators are watching whether the utility can align feeder work with the first building handoff.',
+    'Power equipment suppliers and interconnection engineering remain the limiting factors for the initial halls.',
+  ].join(' ');
   const result = await runPublishCycle({
     articles: [{
       id: 'thin-grid-brief',
@@ -127,13 +136,8 @@ test('publish cycle detailPage false edge keeps thin briefs source-linked', asyn
       sourceUrl,
       publishedAt: '2026-05-30T10:00:00.000Z',
       summary: 'A short grid update keeps operators watching interconnect milestones.',
-      articleText: [
-        'A short grid update identified interconnect milestones as the active timing constraint for a planned compute campus.',
-        'The source said the developer still has customer reservations, but energization depends on utility studies, transformer delivery, and a signed service agreement.',
-        'County filings list substation construction, road access, and backup generation permits as the open decision points.',
-        'Operators are watching whether the utility can align feeder work with the first building handoff.',
-        'Power equipment suppliers and interconnection engineering remain the limiting factors for the initial halls.',
-      ].join(' '),
+      contentText: sourceText,
+      articleText: sourceText,
       primary_category: 'Power & Grid',
       infrastructure_layer: 'Power',
       extraction_quality_score: 0.82,
@@ -158,6 +162,86 @@ test('publish cycle detailPage false edge keeps thin briefs source-linked', asyn
   assert.equal(item.articlePagePublished, false);
   assert.equal(result.artifacts.sitemapEntries.some((entry) => entry.loc === '/news/thin-grid-brief/'), false);
   assert.equal(result.artifacts.rssItems.find((rssItem) => rssItem.title === item.title)?.link, sourceUrl);
+});
+
+test('publish cycle prefers cleaned extraction over conflicting generated content fields', async () => {
+  const trustedSource = 'The utility filing sets transformer delivery and substation construction milestones before the planned AI data center campus can energize in 2028.';
+  const fabricated = 'Fabricated operator commentary claims unlimited cloud capacity is already available.';
+  const result = await runPublishCycle({
+    articles: [{
+      id: 'source-precedence-grid-filing',
+      title: 'Utility filing sets 2028 campus energization milestones',
+      source: 'Example Grid Dispatch',
+      sourceUrl: 'https://example.com/source-precedence-grid-filing',
+      publishedAt: '2026-05-30T10:00:00.000Z',
+      summary: fabricated,
+      contentText: fabricated,
+      articleText: fabricated,
+      cleaned_source_text: trustedSource,
+      primary_category: 'Power & Grid',
+      infrastructure_layer: 'Power',
+      extraction_quality_score: 0.9,
+      infrastructure_relevance_score: 0.9,
+    }],
+    routeArticle: async (article) => ({
+      id: article.id,
+      title: article.title,
+      tier: 'editorial_brief',
+      coreFeedEligible: true,
+      detailPage: false,
+      brief: article.summary,
+      reasons: [],
+      relevance: { score: 0.9, visibility: 'core', laneKey: 'power-grid' },
+    }),
+    now: '2026-05-31T08:00:00.000Z',
+  });
+
+  const item = result.artifacts.latestNews[0];
+  const rssItem = result.artifacts.rssItems.find((entry) => entry.title === item.title);
+  assert.equal(item.contentText, trustedSource);
+  assert.equal(item.cleaned_source_text, trustedSource);
+  assert.match(rssItem.description, /transformer delivery and substation construction/);
+  assert.doesNotMatch(rssItem.description, /unlimited cloud capacity/i);
+});
+
+test('publish cycle preserves extracted article text without laundering feed snippets', async () => {
+  const trustedSource = 'The grid operator filing says a 240 MW data centre cannot energize until a new substation and transformer bank enter service.';
+  const generatedSnippet = 'Generated snippet claims unlimited AI cloud capacity is immediately available.';
+  const result = await runPublishCycle({
+    articles: [{
+      id: 'article-text-source-boundary',
+      title: 'Grid filing sets the substation sequence for a 240 MW data centre',
+      source: 'Example Grid Dispatch',
+      sourceUrl: 'https://example.com/article-text-source-boundary',
+      publishedAt: '2026-05-30T10:00:00.000Z',
+      summary: generatedSnippet,
+      snippet: generatedSnippet,
+      contentText: generatedSnippet,
+      articleText: trustedSource,
+      primary_category: 'Power & Grid',
+      infrastructure_layer: 'Power',
+      extraction_quality_score: 0.9,
+      infrastructure_relevance_score: 0.9,
+    }],
+    routeArticle: async (article) => ({
+      id: article.id,
+      title: article.title,
+      tier: 'editorial_brief',
+      coreFeedEligible: true,
+      detailPage: false,
+      brief: article.summary,
+      reasons: [],
+      relevance: { score: 0.9, visibility: 'core', laneKey: 'power-grid' },
+    }),
+    now: '2026-05-31T08:00:00.000Z',
+  });
+
+  const item = result.artifacts.latestNews[0];
+  const rssItem = result.artifacts.rssItems.find((entry) => entry.title === item.title);
+  assert.equal(item.contentText, trustedSource);
+  assert.equal(item.cleaned_source_text, trustedSource);
+  assert.match(rssItem.description, /240 MW data centre/);
+  assert.doesNotMatch(rssItem.description, /unlimited AI cloud capacity/i);
 });
 
 test('package routes npm run content:cycle through the guarded command surface', () => {

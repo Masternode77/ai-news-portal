@@ -29,18 +29,6 @@ function canonicalFeedKey(article = {}) {
   return `title:${source}:${title}`;
 }
 
-const UNSAFE_SOURCE_EXCERPT = /\b(gives (?:buyers|operators)|shows where|ties .{0,80} timing|matters most for|puts .{0,80} planning|changes how|the practical checkpoint|the exposed dependency|sharper read|remains a source-linked ai infrastructure signal)\b/i;
-
-function sourceExcerptForCard(article = {}) {
-  const text = String(article.contentText || article.extractedText || article.sourceText || '').replace(/\s+/g, ' ').trim();
-  if (!text) return '';
-  const candidate = text.split(/(?<=[.!?])\s+/)[0]?.trim() || '';
-  if (candidate.length < 55 || UNSAFE_SOURCE_EXCERPT.test(candidate)) return '';
-  if (candidate.length <= 240) return candidate;
-  const clipped = candidate.slice(0, 237).replace(/\s+\S*$/, '').trim();
-  return clipped ? `${clipped}...` : '';
-}
-
 function dedupeFeedItems(items = []) {
   const seen = new Set();
   const deduped = [];
@@ -74,7 +62,6 @@ function decorate(article = {}, options = {}) {
   const presentation = buildPublicPresentation(article, { route, recentDecks: options.recentDecks || [] });
   const copy = generateCardCopy(article);
   const sourceOnly = !surface.detailPage;
-  const sourceExcerpt = sourceOnly ? sourceExcerptForCard(article) : '';
   const bottleneckAxis = inferBottleneckAxis(article);
   const copyQuality = cardCopyQualityResult(copy, article);
   if (!copyQuality.ok) {
@@ -89,7 +76,7 @@ function decorate(article = {}, options = {}) {
       label: copy.label,
       title: copy.title,
       homepage_headline: String(article.leadHeadline || '').trim(),
-      deck: sourceOnly ? sourceExcerpt : copy.deck,
+      deck: copy.deck,
       why_it_matters: sourceOnly ? '' : copy.why_it_matters,
       source: copy.source,
       date: copy.date,
@@ -102,6 +89,10 @@ function decorate(article = {}, options = {}) {
       read_source: surface.sourceHref,
     },
   };
+}
+
+export function publicCardPresentable(article = {}) {
+  return cardCopyQualityResult(generateCardCopy(article), article).ok;
 }
 
 function selectVisibleItems(sorted = [], count = 0, longformTarget = 3, firstViewportCount = 5, longformMaxAgeDays = 45) {
@@ -139,6 +130,7 @@ export function buildHomepageFeed(items = [], options = {}) {
   const eligibility = options.eligibility || publicEligible;
   const sorted = dedupeFeedItems(items
     .filter(eligibility)
+    .filter(publicCardPresentable)
     .sort((a, b) => dateMs(b) - dateMs(a)));
   const visibleCount = Math.max(
     Math.min(limit, sorted.length),

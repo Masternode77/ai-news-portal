@@ -3,35 +3,27 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { readJsonFile, writeJsonFile } from './lib/state-store.mjs';
 import { LATEST_NEWS_PATH, ARCHIVE_NEWS_PATH } from './lib/constants.mjs';
-import { buildCategoryPages, archivePages } from './lib/taxonomy-page-builder.mjs';
-import { buildCompanyIndex } from './lib/company-entity-index.mjs';
-import { buildRegionIndex } from './lib/region-index.mjs';
+import { buildTaxonomyProjection, taxonomyGeneratedAt } from './lib/taxonomy-projection.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-const REPORT_PATH = path.join(ROOT, 'docs/taxonomy-pages-report.md');
+const DEFAULT_PATHS = {
+  latest: path.join(ROOT, LATEST_NEWS_PATH),
+  archive: path.join(ROOT, ARCHIVE_NEWS_PATH),
+  taxonomy: path.join(ROOT, 'src/data/taxonomy-pages.json'),
+  report: path.join(ROOT, 'docs/taxonomy-pages-report.md'),
+};
 
-export function taxonomyGeneratedAt(items = []) {
-  const timestamps = items
-    .flatMap((item) => [item.updatedAt, item.analysisPublishedAt, item.publishedAt])
-    .map((value) => new Date(value || 0).getTime())
-    .filter(Number.isFinite);
-  return new Date(timestamps.length ? Math.max(...timestamps) : 0).toISOString();
-}
+export { taxonomyGeneratedAt };
 
-export async function rebuildTaxonomyPages() {
+export async function rebuildTaxonomyPages(options = {}) {
+  const paths = { ...DEFAULT_PATHS, ...(options.paths || {}) };
   const [latest, archived] = await Promise.all([
-    readJsonFile(LATEST_NEWS_PATH, []),
-    readJsonFile(ARCHIVE_NEWS_PATH, []),
+    readJsonFile(paths.latest, []),
+    readJsonFile(paths.archive, []),
   ]);
   const all = [...latest, ...archived];
-  const taxonomy = {
-    generatedAt: taxonomyGeneratedAt(all),
-    categories: buildCategoryPages(all),
-    companies: buildCompanyIndex(all),
-    regions: buildRegionIndex(all),
-    archive: archivePages(all),
-  };
-  await writeJsonFile('src/data/taxonomy-pages.json', taxonomy);
+  const taxonomy = buildTaxonomyProjection(all);
+  await writeJsonFile(paths.taxonomy, taxonomy);
   const report = [
     '# Taxonomy Pages Report',
     '',
@@ -41,8 +33,8 @@ export async function rebuildTaxonomyPages() {
     `Region pages: ${taxonomy.regions.length}`,
     `Archive pages: ${taxonomy.archive.length}`,
   ];
-  await fs.mkdir(path.dirname(REPORT_PATH), { recursive: true });
-  await fs.writeFile(REPORT_PATH, `${report.join('\n')}\n`, 'utf8');
+  await fs.mkdir(path.dirname(paths.report), { recursive: true });
+  await fs.writeFile(paths.report, `${report.join('\n')}\n`, 'utf8');
   return taxonomy;
 }
 

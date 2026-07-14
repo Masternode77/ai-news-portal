@@ -110,7 +110,9 @@ export async function writeFallbackArticleImageSet(article = {}, metadata = {}, 
     .webp({ quality: 88 })
     .toBuffer();
   writes.push(() => writeSafePublicFile(publicDir, legacyFile, legacyOutput));
-  await Promise.all(writes.map((write) => write()));
+  for (const write of writes) {
+    await write();
+  }
 
   return { ...metadata, ...paths };
 }

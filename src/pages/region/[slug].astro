@@ -4,14 +4,14 @@ import LatestAnalysisFeed from '../../components/LatestAnalysisFeed.astro';
 import PublicListingPage from '../../components/PublicListingPage.astro';
 import taxonomyPages from '../../data/taxonomy-pages.json';
 import { SITE } from '../../config/site';
-import { buildHomepageFeed } from '../../../scripts/lib/homepage-feed-builder.mjs';
+import { buildTaxonomyListingFeed } from '../../../scripts/lib/taxonomy-page-builder.mjs';
 
 export function getStaticPaths() {
   return (taxonomyPages.regions || []).map((page) => ({ params: { slug: page.slug }, props: { page } }));
 }
 
 const { page } = Astro.props;
-const feed = buildHomepageFeed(page.items || [], { limit: 50, minimumVisible: 0 });
+const feed = buildTaxonomyListingFeed(page.items || []);
 ---
 <Layout title={`${page.name} | ${SITE.name}`} description={`Compute Current regional coverage for ${page.name}.`} canonicalPath={`/region/${page.slug}/`}>
   <PublicListingPage

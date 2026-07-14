@@ -80,13 +80,13 @@ function articleLinks(homeHtml = '') {
   }).slice(0, ARTICLE_LIMIT);
 }
 
-function homepageCards(homeHtml = '') {
+export function parseHomepageCards(homeHtml = '') {
   return [...homeHtml.matchAll(/<article\b[^>]*data-public-card[^>]*>[\s\S]*?<\/article>/gi)].map((match) => {
     const html = match[0];
     const id = html.match(/data-article-id=["']([^"']+)["']/i)?.[1] || '';
     const lane = html.match(/data-lane=["']([^"']+)["']/i)?.[1] || '';
     const deckAttr = html.match(/data-deck=["']([^"']*)["']/i)?.[1] || '';
-    const deck = decodeHtml(deckAttr) || stripHtml(html.match(/class=["'][^"']*signal-deck[^"']*["'][^>]*>([\s\S]*?)<\/p>/i)?.[1] || '');
+    const deck = decodeHtml(deckAttr) || stripHtml(html.match(/class=["'][^"']*(?:signal-deck|article-deck)[^"']*["'][^>]*>([\s\S]*?)<\/p>/i)?.[1] || '');
     return { id, lane, deck, html, text: stripHtml(html) };
   });
 }
@@ -198,7 +198,7 @@ export async function runContentQualityAudit(options = {}) {
   try {
     const failures = [];
     const homeHtml = await fetchText(`${resolvedBaseUrl}/`);
-    const cards = homepageCards(homeHtml);
+    const cards = parseHomepageCards(homeHtml);
     const links = articleLinks(homeHtml);
     const pages = [];
 

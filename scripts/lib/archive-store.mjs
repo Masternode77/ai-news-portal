@@ -8,8 +8,8 @@ import {
 } from './constants.mjs';
 import { hydrateExpertLens, mergeArticleRecords } from './expert-lens.mjs';
 import { readJsonFile, writeJsonFile } from './state-store.mjs';
-import { slugify, unique } from './normalize.mjs';
-import { taxonomySearchFields } from './taxonomy.mjs';
+import { slugify } from './normalize.mjs';
+import { buildProjectedSearchText } from '../../src/lib/public-search-projection.js';
 
 function mergeUniqueArticles(articles) {
   const merged = new Map();
@@ -28,48 +28,12 @@ function mergeUniqueArticles(articles) {
   return orderedIds.map((id) => merged.get(id));
 }
 
-function toSearchableArticle(article) {
+export function toSearchableArticle(article) {
   const hydrated = hydrateExpertLens(article);
-  const fullLens = hydrated.expertLensFull || {};
   return {
     ...hydrated,
     slug: hydrated.slug || slugify(hydrated.title),
-    searchText: unique(
-      [
-        hydrated.title,
-        hydrated.source,
-        hydrated.primary_category,
-        hydrated.secondary_category,
-        hydrated.infrastructure_layer,
-        hydrated.article_type,
-        hydrated.expert_insight?.bottleneck_type,
-        hydrated.expert_insight?.who_gains_leverage,
-        hydrated.expert_insight?.who_takes_execution_risk,
-        hydrated.expert_insight?.timing_dependency,
-        hydrated.expert_insight?.counterargument,
-        hydrated.expert_insight?.next_observable_signal,
-        hydrated.category,
-        hydrated.region,
-        hydrated.summary,
-        hydrated.expertLensShort,
-        fullLens.thesis,
-        fullLens.whatHappened,
-        fullLens.whyThisMatters,
-        fullLens.marketMissing,
-        fullLens.investors,
-        fullLens.operators,
-        fullLens.hyperscalers,
-        fullLens.watchNext,
-        fullLens.finalHeadline,
-        fullLens.metaDescription,
-        hydrated.articleText,
-        ...(hydrated.affected_stakeholders || []),
-        ...(hydrated.expert_insight?.concrete_facts || []),
-        ...(hydrated.expert_insight?.named_companies || []),
-        ...taxonomySearchFields(hydrated),
-        ...(hydrated.tags || []),
-      ].filter(Boolean)
-    ).join(' '),
+    searchText: buildProjectedSearchText(hydrated),
   };
 }
 

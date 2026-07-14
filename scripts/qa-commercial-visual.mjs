@@ -101,6 +101,29 @@ async function targets() {
   return article ? [...baseTargets, article] : baseTargets;
 }
 
+async function settleLazyImages(page) {
+  await page.evaluate(async () => {
+    const pause = (milliseconds) => new Promise((resolve) => setTimeout(resolve, milliseconds));
+    const step = Math.max(window.innerHeight * 0.75, 320);
+    const bottom = Math.max(0, document.documentElement.scrollHeight - window.innerHeight);
+    for (let position = 0; position < bottom; position += step) {
+      window.scrollTo(0, position);
+      await pause(80);
+    }
+    window.scrollTo(0, bottom);
+    await pause(160);
+  });
+  let imageWaitTimedOut = false;
+  try {
+    await page.waitForFunction(() => Array.from(document.images).every((image) => image.complete), { timeout: 30000 });
+  } catch {
+    imageWaitTimedOut = true;
+  } finally {
+    await page.evaluate(() => window.scrollTo(0, 0));
+  }
+  return imageWaitTimedOut;
+}
+
 async function pageChecks(page, target, screenshotPath) {
   return page.evaluate(({ requiredLinks }) => {
     const maxFindings = 12;
@@ -165,10 +188,23 @@ async function pageChecks(page, target, screenshotPath) {
     const links = Array.from(document.querySelectorAll('a')).map((anchor) => anchor.getAttribute('href') || '');
     const bodyText = document.body?.innerText || '';
     const interactiveCount = document.querySelectorAll('a, button').length;
+    const images = Array.from(document.images);
+    const brokenImages = images
+      .filter((image) => image.currentSrc && (!image.complete || image.naturalWidth === 0))
+      .slice(0, maxFindings)
+      .map((image) => ({
+        alt: image.alt || '',
+        src: image.currentSrc,
+        complete: image.complete,
+        naturalWidth: image.naturalWidth,
+      }));
     return {
       title: document.title,
       bodyTextLength: bodyText.trim().length,
       interactiveCount,
+      imageCount: images.length,
+      decodedImageCount: images.filter((image) => image.complete && image.naturalWidth > 0).length,
+      brokenImages,
       viewportWidth,
       documentWidth,
       horizontalOverflow: documentWidth > viewportWidth + 1,
@@ -235,12 +271,14 @@ async function main() {
           deviceScaleFactor: 1,
         });
         const response = await page.goto(`${baseUrl}${target.path}`, { waitUntil: 'networkidle', timeout: 60000 });
+        const imageWaitTimedOut = await settleLazyImages(page);
         const screenshotPath = path.join(SCREENSHOT_DIR, `${target.slug}-${viewport.name}.png`);
         await page.screenshot({ path: screenshotPath, fullPage: true });
         results.push({
           route: target.path,
           viewport: viewport.name,
           status: response?.status() || 0,
+          imageWaitTimedOut,
           ...(await pageChecks(page, target, screenshotPath)),
         });
         await page.close();
@@ -258,6 +296,9 @@ async function main() {
     || result.horizontalOverflow
     || result.clippedElements.length > 0
     || result.overlappingElements.length > 0
+    || result.imageWaitTimedOut
+    || result.brokenImages.length > 0
+    || result.decodedImageCount !== result.imageCount
     || result.bodyTextLength === 0
     || result.missingRequiredLinks.length > 0
   ));

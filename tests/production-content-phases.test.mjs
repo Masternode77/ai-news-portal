@@ -490,7 +490,9 @@ test('publish persists a preparing receipt before any public read-model side eff
       events.push('archive');
       return { latest: articles, supabaseStatus: 'skipped' };
     },
-    writeJson: async () => { events.push('json'); },
+    writeJson: async (filePath) => {
+      events.push(filePath.endsWith('taxonomy-pages.json') ? 'taxonomy' : 'json');
+    },
   });
 
   assert.deepEqual(events, [
@@ -499,9 +501,41 @@ test('publish persists a preparing receipt before any public read-model side eff
     'images',
     'archive',
     'json',
+    'taxonomy',
     'state:completed',
     'receipt:completed',
   ]);
+});
+
+test('publish rebuilds taxonomy from the same latest and archive generation', async () => {
+  const state = { publishedIds: [], dayPlans: {}, runHistory: [], publicationReceipts: {} };
+  const written = new Map();
+  let taxonomyInputIds = [];
+  await runProductionPublish({
+    reviewPassed: [{ id: 'new-public-item', title: 'New public item', publishedAt: '2026-07-14T00:00:00.000Z' }],
+  }, {
+    runId: 'cycle-taxonomy-projection',
+    pipelineVersion: '5.6.1-test',
+  }, {
+    readState: async () => state,
+    writeState: async () => {},
+    backfillImages: async (articles) => articles,
+    syncArchive: async (articles) => ({
+      latest: articles,
+      archive: [{ id: 'prior-archive', title: 'Prior archive' }],
+      supabaseStatus: 'skipped',
+    }),
+    buildTaxonomy: (articles) => {
+      taxonomyInputIds = articles.map((article) => article.id);
+      return { categories: [], companies: [], regions: [], archive: [] };
+    },
+    writeJson: async (filePath, value) => written.set(filePath, value),
+  });
+
+  assert.deepEqual(taxonomyInputIds, ['new-public-item', 'prior-archive']);
+  assert.deepEqual(written.get('src/data/taxonomy-pages.json'), {
+    categories: [], companies: [], regions: [], archive: [],
+  });
 });
 
 test('publish bundles every refreshed image variant without copying unchanged inventory', async () => {
@@ -548,5 +582,6 @@ test('publish bundles every refreshed image variant without copying unchanged in
     'public/generated/articles/fresh/og.webp',
     'public/generated/fresh.webp',
   ]);
+  assert.ok(capturedPaths.includes('src/data/taxonomy-pages.json'));
   assert.equal(result.value.publication.outputManifest.runId, 'cycle-image-bundle');
 });

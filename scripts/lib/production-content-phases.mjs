@@ -6,6 +6,7 @@ import {
   PIPELINE_STATE_PATH,
   PIPELINE_USE_EXISTING_POOL,
   SEARCH_INDEX_PATH,
+  TAXONOMY_PAGES_PATH,
 } from './constants.mjs';
 import { readArchiveSnapshot, syncArchiveArtifacts } from './archive-store.mjs';
 import {
@@ -50,6 +51,7 @@ import {
   writePipelineState,
 } from './state-store.mjs';
 import { stableArticleId, truncate } from './normalize.mjs';
+import { buildTaxonomyProjection } from './taxonomy-projection.mjs';
 
 const RETRY_DELAY_MS = Number(process.env.PIPELINE_RETRY_DELAY_MS || 15_000);
 
@@ -88,12 +90,18 @@ function legacyPoolFromLatest(existingLatest = []) {
 }
 
 function normalizeExistingArticle(item) {
+  const sourceContent = item.cleaned_source_text
+    || item.extractedText
+    || item.sourceText
+    || item.rawText
+    || item.contentText
+    || '';
   return hydrateExpertLens({
     ...item,
     id: item.id || stableArticleId(item.url, item.title),
     source: item.source || 'Legacy Source',
-    snippet: item.snippet || truncate(item.summary || item.title, 220),
-    contentText: item.contentText || truncate(item.articleText || item.summary || item.snippet || item.title, 800),
+    snippet: item.snippet || '',
+    contentText: truncate(sourceContent, 800),
     publishedAt: item.publishedAt || new Date().toISOString(),
     sourceImage: item.sourceImage || item.image || null,
     region: item.region || 'Global',
@@ -664,6 +672,7 @@ function publicationOutputPaths(imageOutputs = []) {
     NEWS_POOL_PATH,
     ARCHIVE_NEWS_PATH,
     SEARCH_INDEX_PATH,
+    TAXONOMY_PAGES_PATH,
     ...imagePaths,
   ];
 }
@@ -681,6 +690,7 @@ function assertReusablePublicationReceipt(receipt, context = {}) {
 export async function runProductionPublish(payload = {}, context = {}, dependencies = {}) {
   const services = {
     backfillImages: backfillLocalImages,
+    buildTaxonomy: buildTaxonomyProjection,
     readState: readPipelineState,
     syncArchive: syncArchiveArtifacts,
     writeJson: writeJsonFile,
@@ -771,8 +781,10 @@ export async function runProductionPublish(payload = {}, context = {}, dependenc
   const backfillResult = await services.backfillImages(merged, { collectOutputs: true });
   const withImages = Array.isArray(backfillResult) ? backfillResult : backfillResult.articles;
   const refreshedImagePaths = Array.isArray(backfillResult) ? [] : backfillResult.outputPaths;
-  const { latest, supabaseStatus } = await services.syncArchive(withImages, retainedArchive);
+  const { latest, archive = retainedArchive, supabaseStatus } = await services.syncArchive(withImages, retainedArchive);
   await services.writeJson(LATEST_NEWS_PATH, latest);
+  const taxonomy = services.buildTaxonomy([...latest, ...archive]);
+  await services.writeJson(TAXONOMY_PAGES_PATH, taxonomy);
   if (payload.fetchedLive) await services.writeJson(NEWS_POOL_PATH, payload.pool || []);
 
   applyPublicationMetadata({
@@ -792,6 +804,7 @@ export async function runProductionPublish(payload = {}, context = {}, dependenc
     signalCardCount: signals.length,
     archiveOnlyCount: archiveOnly.length,
     removedFailClosedCount: processedItems.length - publicUpdates.length,
+    taxonomyCategoryCount: taxonomy.categories.length,
     supabaseStatus,
   };
   completeProductionPublication(state, {

@@ -65,6 +65,7 @@ export async function extractContentSource(item) {
     ...item,
     slug: slugify(item.title),
     articleText,
+    cleaned_source_text: articleText,
     content_length: extractionQa.content_length,
     boilerplate_ratio: extractionQa.boilerplate_ratio,
     title_body_similarity: extractionQa.title_body_similarity,

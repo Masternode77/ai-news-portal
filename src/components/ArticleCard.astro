@@ -20,7 +20,13 @@ const provenanceKind = signal.image_provenance_kind || 'image2';
 const readerImpact = Array.isArray(signal.reader_impact) ? signal.reader_impact.slice(0, 4) : [];
 const whyItMatters = signal.why_it_matters ? String(signal.why_it_matters).replace(/^Why it\s+matters:\s*/i, '') : '';
 ---
-<article class="article-list-card" data-public-card>
+<article
+  class="article-list-card"
+  data-public-card
+  data-article-id={signal.id}
+  data-lane={signal.lane_key || signal.lane || ''}
+  data-deck={signal.deck || ''}
+>
   <ArticleCardImage
     image={image}
     imageAlt={imageAlt}

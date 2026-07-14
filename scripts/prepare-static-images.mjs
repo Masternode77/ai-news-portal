@@ -77,7 +77,7 @@ export async function refreshCollection(label, filePath) {
         overwrite: imageRecordLooksDefault(nextItem),
       });
       if (!canonical.skipped) {
-        nextItem = withGeneratedArticleImage(item, canonical.paths.heroImage, {
+        const canonicalizedItem = withGeneratedArticleImage(item, canonical.paths.heroImage, {
           heroImage: canonical.paths.heroImage,
           thumbnailImage: canonical.paths.thumbnailImage,
           ogImage: canonical.paths.ogImage,
@@ -86,9 +86,13 @@ export async function refreshCollection(label, filePath) {
           generatedImageModel: 'origin-canonical',
           imageStatus: 'source-canonical',
         });
-        changed += 1;
+        const recordChanged = JSON.stringify(canonicalizedItem) !== JSON.stringify(item);
+        nextItem = canonicalizedItem;
+        if (recordChanged) changed += 1;
         canonicalChanged += canonical.changed;
-        console.log(`[prepare-static-images] ${label}: canonicalized source ${item.id} -> ${canonical.paths.heroImage}`);
+        if (recordChanged || canonical.changed) {
+          console.log(`[prepare-static-images] ${label}: canonicalized source ${item.id} -> ${canonical.paths.heroImage}`);
+        }
         updated.push(nextItem);
         continue;
       }

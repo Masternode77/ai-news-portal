@@ -180,6 +180,41 @@ test('rss builder descriptions do not expose compact-signal fallback copy', () =
   assert.doesNotMatch(items[0].description, /compact signal on AI capacity planning/i);
 });
 
+test('rss builder uses source-grounded descriptions when persisted signal copy contains legacy templates', () => {
+  const sourceSentence = 'A utility filing gives the AI data center campus a 2028 energization target and identifies the substation equipment required before commissioning.';
+  const sourceText = `${sourceSentence} The filing does not identify a final tenant.`;
+  const items = buildRssItems([
+    {
+      id: 'legacy-template-rss',
+      title: 'Utility filing sets a 2028 campus energization target',
+      publishedAt: '2026-05-22T00:00:00Z',
+      articlePagePublished: false,
+      homepagePublished: true,
+      archiveOnly: false,
+      noindex: false,
+      seo_noindex: false,
+      public_status: 'published',
+      public_content_tier: 'signal_card',
+      public_routing: { visibility: 'adjacent' },
+      extraction_quality_score: 0.9,
+      infrastructure_relevance_score: 0.8,
+      category: 'Power & Grid',
+      infrastructure_layer: 'grid',
+      source: 'Utility Filing',
+      contentText: sourceText,
+      articleText: sourceText.repeat(6),
+      rawText: sourceText.repeat(6),
+      sourceUrl: 'https://example.com/legacy-template-rss',
+      summary: 'The campus ties AI buildout timing to power procurement; the practical checkpoint is substation delivery.',
+      deck: 'The campus ties AI buildout timing to power procurement; the practical checkpoint is substation delivery.',
+    },
+  ]);
+
+  assert.equal(items.length, 1);
+  assert.equal(items[0].description, sourceSentence);
+  assert.doesNotMatch(items[0].description, /ties AI buildout timing|the practical checkpoint|the exposed dependency/i);
+});
+
 test('rss builder uses safe public-facing copy for eligible items with visible internal wording', () => {
   const publicSourceText = 'Verified AI infrastructure source text connects grid capacity planning, power access, utility procurement, and cloud demand to a public market signal. '.repeat(8);
   const items = buildRssItems([

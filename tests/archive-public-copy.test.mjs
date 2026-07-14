@@ -13,6 +13,8 @@ test('archive feed excludes hidden/noindex items and uses publication copy', () 
       public_content_tier: 'editorial_brief',
       homepagePublished: true,
       archiveOnly: false,
+      contentText: 'A utility queue update changes timing for AI infrastructure capacity.',
+      snippet: 'A utility queue update changes timing for AI infrastructure capacity.',
       deck: 'A utility queue update changes timing for AI infrastructure capacity.',
     },
     {

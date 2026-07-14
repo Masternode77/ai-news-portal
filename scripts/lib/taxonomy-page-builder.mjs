@@ -1,4 +1,4 @@
-import { publicArchiveEligible } from './archive-feed-builder.mjs';
+import { buildArchiveFeed, publicArchiveEligible } from './archive-feed-builder.mjs';
 
 export const CATEGORY_PAGES = [
   ['power-grid', 'Power & Grid'],
@@ -18,6 +18,13 @@ function slugify(value = '') {
 
 export function publicTaxonomyItems(items = []) {
   return items.filter(publicArchiveEligible);
+}
+
+export function buildTaxonomyListingFeed(items = []) {
+  return buildArchiveFeed(items, {
+    page: 1,
+    pageSize: Math.max(1, items.length),
+  });
 }
 
 export function categoryForArticle(article = {}) {

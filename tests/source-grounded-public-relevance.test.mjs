@@ -44,6 +44,20 @@ test('accepts a pipeline-managed brief when cleaned source text carries a physic
   assert.equal(result.sourceAnchored, true);
 });
 
+test('prefers cleaned source text over conflicting generated content text', () => {
+  const result = sourceGroundedPublicRelevance({
+    title: 'Enterprise platform update',
+    cleaned_source_text: 'The company updated its employee portal and account settings for enterprise customers.',
+    contentText: 'Generated copy claims a utility substation delay will constrain a 620 MW AI data center campus.',
+    infrastructure_relevance_score: 0.94,
+    public_routing: { visibility: 'adjacent' },
+    sourceUrl: 'https://example.com/platform-update',
+  });
+
+  assert.equal(result.ok, false);
+  assert.equal(result.sourceAnchored, false);
+});
+
 test('blocks generic AI-agent stories even when generated copy carries infrastructure terms', () => {
   const result = sourceGroundedPublicRelevance({
     title: 'New AI agents automate software work',
@@ -67,6 +81,23 @@ test('does not treat a generated source-linked signal sentence as source evidenc
 
   assert.equal(result.ok, false);
   assert.equal(result.unsafeSourceText, true);
+});
+
+test('fails closed when generated editorial scaffolding is appended to extracted source text', () => {
+  const result = sourceGroundedPublicRelevance({
+    title: 'Utility filing sets a 620 MW AI campus schedule',
+    cleaned_source_text: [
+      'A utility filing says the 620 MW data center campus cannot energize before two substations are delivered.',
+      'Why it matters: compute constraints can change build schedules, buyer commitments, and cost assumptions before demand shows up in revenue.',
+    ].join(' '),
+    infrastructure_relevance_score: 0.94,
+    public_routing: { visibility: 'core' },
+    sourceUrl: 'https://example.com/utility-filing',
+  });
+
+  assert.equal(result.ok, false);
+  assert.equal(result.unsafeSourceText, true);
+  assert.deepEqual(result.contaminatedSourceFields, ['cleaned_source_text']);
 });
 
 test('legacy fixtures without extracted text require an explicit relevance score', () => {

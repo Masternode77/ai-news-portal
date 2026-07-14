@@ -1,4 +1,5 @@
 import fs from 'node:fs';
+import { bannedPhraseMatches } from './banned-phrases.mjs';
 import { hasMalformedProperNouns, malformedProperNouns, normalizeProperNouns } from './proper-noun-normalizer.mjs';
 import { projectConfigPath } from './project-root.mjs';
 import { detectTruncationArtifacts } from './truncation-detector.mjs';
@@ -70,7 +71,8 @@ export function duplicateFirstWordPrefixes(items = [], count = 8) {
   const seen = new Map();
   const duplicates = [];
   for (const item of items) {
-    const prefix = firstWords(item.text || item.deck || item, count);
+    const candidate = typeof item === 'string' ? item : item?.text || item?.deck || '';
+    const prefix = firstWords(candidate, count);
     if (!prefix) continue;
     if (seen.has(prefix)) {
       duplicates.push({ prefix, first: seen.get(prefix), second: item });
@@ -103,15 +105,18 @@ export function guardPublicCopy(value = '', options = {}) {
   const malformed = malformedProperNouns(original);
   const normalized = normalizeProperNouns(original);
   const forbidden = forbiddenPublicPhraseMatches(normalized);
+  const banned = bannedPhraseMatches(normalized);
   const truncation = detectTruncationArtifacts(normalized, { allowEllipsis: options.allowEllipsis === true });
   const reasons = [];
   if (forbidden.length) reasons.push(...forbidden.map((phrase) => `forbidden_phrase:${phrase}`));
+  if (Object.keys(banned).length) reasons.push(...Object.keys(banned).map((phrase) => `banned_phrase:${phrase}`));
   if (!truncation.ok) reasons.push(...truncation.artifacts);
   if (hasMalformedProperNouns(original)) reasons.push(...malformed.map((item) => `proper_noun:${item.observed}->${item.expected}`));
   return {
     ok: reasons.length === 0,
     text: normalized,
     forbidden,
+    banned,
     truncation,
     malformed_proper_nouns: malformed,
     reasons,

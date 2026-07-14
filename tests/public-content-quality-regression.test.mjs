@@ -5,6 +5,12 @@ import { guardPublicTemplatePhrases } from '../scripts/lib/public-template-phras
 import { detectBoilerplate } from '../scripts/lib/boilerplate-detector.mjs';
 import { detectTruncationArtifacts } from '../scripts/lib/truncation-detector.mjs';
 import { rssItemEligible, sitemapArticleEligible } from '../scripts/lib/seo-quality-policy.mjs';
+import { cardCopyQualityResult, generateCardCopy } from '../scripts/lib/card-copy-quality-gate.mjs';
+import { publicSurfaceDecision } from '../scripts/lib/public-surface-eligibility.mjs';
+import { toSearchableArticle } from '../scripts/lib/archive-store.mjs';
+import latestNews from '../src/data/latest-news.json' with { type: 'json' };
+import archivedNews from '../src/data/archived-news.json' with { type: 'json' };
+import searchIndex from '../src/data/search-index.json' with { type: 'json' };
 
 const cleanSource = `${'NetApp and Red Hat OpenShift backup, storage, and disaster recovery controls matter for enterprise AI platform infrastructure. '.repeat(18)}Final sentence complete.`;
 
@@ -33,6 +39,16 @@ test('public guard rejects emergency template, boilerplate, and truncation leaks
   assert.equal(detectTruncationArtifacts(text, { allowEllipsis: true }).ok, false);
 });
 
+test('public guard rejects legacy card formulas observed in the built RSS feed', () => {
+  for (const text of [
+    'The project ties AI buildout timing to power procurement and utility capacity.',
+    'The practical checkpoint is substation delivery.',
+    'The exposed dependency is utility energization.',
+  ]) {
+    assert.equal(guardPublicTemplatePhrases(text).ok, false, text);
+  }
+});
+
 test('quarantined records are excluded from sitemap and RSS eligibility', () => {
   const article = {
     id: 'dirty-source',
@@ -49,4 +65,23 @@ test('quarantined records are excluded from sitemap and RSS eligibility', () => 
 
   assert.equal(sitemapArticleEligible(article), false);
   assert.equal(rssItemEligible(article), false);
+});
+
+test('every shared public-surface decision satisfies source integrity and card quality', () => {
+  for (const article of [...latestNews, ...archivedNews]) {
+    const decision = publicSurfaceDecision(article);
+    if (!decision.homepage && !decision.archive && !decision.rss) continue;
+    assert.equal(decision.sourceIntegrity.ok, true, article.id);
+    assert.equal(cardCopyQualityResult(generateCardCopy(article), article).ok, true, article.id);
+  }
+});
+
+test('latest, archive, and search artifacts share the canonical search projection', () => {
+  const corpus = [...latestNews, ...archivedNews];
+  const searchById = new Map(searchIndex.map((article) => [article.id, article.searchText]));
+  for (const article of corpus) {
+    const expected = toSearchableArticle(article).searchText;
+    assert.equal(article.searchText, expected, `corpus:${article.id}`);
+    assert.equal(searchById.get(article.id), expected, `search-index:${article.id}`);
+  }
 });

@@ -1,9 +1,9 @@
 # Public Surface Regression Report
 
-Generated at: 2026-05-17T14:44:50.263Z
-Base URL: https://www.computecurrent.com
-Homepage cards checked: 18
-Detail pages checked: 5
+Generated at: 2026-07-14T01:59:52.189Z
+Base URL: http://127.0.0.1:64009
+Homepage cards checked: 30
+Detail pages checked: 0
 
 ## Counts
 
@@ -16,65 +16,35 @@ Detail pages checked: 5
 
 ## Before / After Examples
 
-### China Data Centers Tap Spot Power Trading First Time: Report
-- Old deck: China’s spot power trading experiment gives large data centers a new operating lever, but only if volatility can translate into predictable energy cost.
-- New deck: China’s spot power trading experiment gives large data centers a new operating lever, but only if volatility can translate into predictable energy cost.
+### AI Data Centers Are Driving Nuclear's Next Commercial Test
+- Old deck: Supermicro puts facility planning in focus as charting the future of data center, cloud, and AI infrastructure riot platforms operates large-scale bitcoin mining facilities in texas and kentucky and is increasingly positionin.
+- New deck: From SMRs and microreactors to reactor restarts, uprates, and gas-plus-nuclear energy strategies, AI data center growth is accelerating a broad commercial push toward firm nuclear-backed power infrastructure.
+- Old lane: Stack Shifts
+- New lane: Operator Alerts
+
+### Delta Electronics and the Rise of the AI Infrastructure Stack: How Chip-to-Grid Thinking Is Reshaping AI Data Center Design
+- Old deck: Facility is the useful lens on Chip-to-Grid Thinking Is Reshaping AI Data because the source points to a specific operating decision.
+- New deck: Delta Electronics’ Kelly Gray outlines how AI infrastructure is driving a convergence of high-voltage DC power, liquid cooling, microgrids, digital twins, and chip-to-grid systems design as the industry races to build the next generation of AI factories.
 - Old lane: Policy/Risk Watch
 - New lane: Policy/Risk Watch
 
-### Arm Holdings to Face US Antitrust Probe Over Chip Tech
-- Old deck: Arm stays on the public watchlist until clean source evidence ties it to a concrete infrastructure decision.
-- New deck: Arm stays on the public watchlist until clean source evidence ties it to a concrete infrastructure decision.
-- Old lane: Adjacent Watchlist
-- New lane: Adjacent Watchlist
-
-### NetApp Expands OpenShift Data Management With Faster VM Backup, DR, and Cloud Scale Support
-- Old deck: NetApp’s OpenShift update turns backup and DR into a platform-readiness issue for enterprise AI workloads.
-- New deck: NetApp’s OpenShift update turns backup and DR into a platform-readiness issue for enterprise AI workloads.
+### AMD announces MI350P PCIe AI accelerator card with 144GB of HBM3E — roughly 40% faster in FP16 and FP8 theoretical compute compared to NVIDIA's H200 NVL competitor
+- Old deck: n/a
+- New deck: AMD launches a new MI350P PCIe AI-accelerator card with half the cores and memory of its flagship Instinct MI355X GPU.
 - Old lane: Stack Shifts
-- New lane: Stack Shifts
+- New lane: Policy/Risk Watch
 
-### AI Data Centers Are Driving Nuclear's Next Commercial Test
-- Old deck: Supermicro puts facility planning in focus as charting the future of data center, cloud, and AI infrastructure riot platforms operates large-scale bitcoin mining facilities in texas and kentucky and is increasingly positionin.
-- New deck: Supermicro puts facility planning in focus as charting the future of data center, cloud, and AI infrastructure riot platforms operates large-scale bitcoin mining facilities in texas and kentucky and is increasingly positionin.
-- Old lane: Stack Shifts
-- New lane: Stack Shifts
+### Data Centers: Data Centers: 365 Data Centers and Aphorio Carter Ignite 200 MW AI Data Center Boom Across U.S. Markets
+- Old deck: arm turns the reported move into a power market signal question for infrastructure buyers.
+- New deck: The move comes at a pivotal moment for the data center industry, where exploding AI demands are straining power and infrastructure.
+- Old lane: Policy/Risk Watch
+- New lane: Policy/Risk Watch
 
-### Inside Paul Tudor Jones’ Sports AI Startup
-- Old deck: SumerSports is an adjacent AI application signal until it changes compute buying, cloud capacity, or enterprise platform architecture.
-- New deck: SumerSports is an adjacent AI application signal until it changes compute buying, cloud capacity, or enterprise platform architecture.
-- Old lane: Adjacent Watchlist
-- New lane: Adjacent Watchlist
-
-### Veeam Expands Data Resilience Portfolio with DataAI Command Platform, v13.1 Updates, and AI Trust Framework
-- Old deck: Veeam Expands Data gives investor signals readers a concrete compute signal to test against source evidence.
-- New deck: Veeam Expands Data gives investor signals readers a concrete compute signal to test against source evidence.
-- Old lane: Investor Signals
-- New lane: Investor Signals
-
-### Earnings Roundup: Neoclouds Shift From GPU Race to Power Wars
-- Old deck: Google stays on the public watchlist until clean source evidence ties it to a concrete infrastructure decision.
-- New deck: Google stays on the public watchlist until clean source evidence ties it to a concrete infrastructure decision.
-- Old lane: Adjacent Watchlist
-- New lane: Adjacent Watchlist
-
-### Chip Industry Week in Review
-- Old deck: H200 controls, IC funding, and packaging pressure make the chip roundup a supply-chain map rather than a single delivery thesis.
-- New deck: H200 controls, IC funding, and packaging pressure make the chip roundup a supply-chain map rather than a single delivery thesis.
-- Old lane: Market Maps
-- New lane: Market Maps
-
-### Navigating the AI Inflection Point and the Future of Digital Infrastructure
-- Old deck: Gives investor signals readers a concrete facility signal to test against source evidence.
-- New deck: Gives investor signals readers a concrete facility signal to test against source evidence.
-- Old lane: Investor Signals
-- New lane: Investor Signals
-
-### What’s new with Google Data Cloud
-- Old deck: Google is a technical bottleneck item for stack shifts readers, with the infrastructure read limited to source-backed facts.
-- New deck: Google is a technical bottleneck item for stack shifts readers, with the infrastructure read limited to source-backed facts.
-- Old lane: Stack Shifts
-- New lane: Stack Shifts
+### Denmark presses pause on new data center grid connections as total requests hit 60 GW — Nordic nation is the latest to put the brakes on AI buildouts
+- Old deck: Toms Hardware adds a source-specific power market signal signal for policy/risk watch readers.
+- New deck: Denmark's Energinet grid operator has pressed pause on new connection requests in the country as potential new data centers and other installations put total demands of up to 60 GW on its docket.
+- Old lane: Policy/Risk Watch
+- New lane: Policy/Risk Watch
 
 
 ## Failures
@@ -83,8 +53,4 @@ Detail pages checked: 5
 
 ## Checked Detail URLs
 
-- https://www.computecurrent.com/news/47270f6d05c43680/
-- https://www.computecurrent.com/news/080548f8c96249b6/
-- https://www.computecurrent.com/news/af45a6f9a7a983f9/
-- https://www.computecurrent.com/news/18495307e5a94019/
-- https://www.computecurrent.com/news/c1fb0077cc25e13b/
+- None

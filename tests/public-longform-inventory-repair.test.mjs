@@ -39,6 +39,7 @@ function assertNoStaleMetadata(article) {
 }
 
 function claimedLongform(id = 'legacy-thin') {
+  const sourceText = 'A utility filing confirms a contracted campus, power allocation, construction schedule, and customer delivery date. '.repeat(12);
   return {
     id,
     title: 'A contracted campus still has to reach energization',
@@ -67,7 +68,8 @@ function claimedLongform(id = 'legacy-thin') {
       editorial_thesis: 'stale nested thesis',
       narrative_dna: { blueprintId: 'stale-blueprint' },
     },
-    articleText: 'A utility filing confirms a contracted campus, power allocation, construction schedule, and customer delivery date. '.repeat(12),
+    contentText: sourceText,
+    articleText: sourceText,
     expertLensFull: {
       finalArticleBody: 'A short body cannot support a public analysis page.',
     },

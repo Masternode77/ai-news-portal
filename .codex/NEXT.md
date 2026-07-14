@@ -2,54 +2,51 @@
 
 ## Current branch
 - `upgrade/gpt-5-6-sol`, merged with `origin/main` SHA `f8bc10a2`.
-- Last previewed implementation SHA: `7cb5e449`.
-- Canonical cutover preview: `dpl_DGw5wWEmjC69SV9cJEg9Jj9sCbmW`.
+- HEAD before the public-copy implementation commit: `ec44f386`.
 - Rollback tag: `backup/pre-gpt56-upgrade-20260711T091118Z`.
-- No push or production promotion has been performed.
+- No push, production promotion, production-secret operation, or cache purge has been performed.
 
 ## Latest completed checklist item
-- Retired every remaining independent runtime mutation entrypoint behind canonical wrappers.
-- Isolated the old fixture cycle under `tests/helpers` and deleted the direct public-feed writer.
-- Added fail-closed legacy argument handling so retired flags cannot trigger production cycles.
-- Added bounded source retries, origin spacing, in-process circuits, redacted events, and metrics.
-- Added enforced static performance budgets to `content:gate`.
-- Added and ran the local browser CMS lifecycle harness: 17/17 scenarios passed.
-- Isolated the legacy Blog v4 regression report under a temp path so tests no longer dirty docs.
-- Independent full-diff re-review returned APPROVE with zero open findings.
-- Deployed exact commit `7cb5e449` to preview `dpl_DGw5wWEmjC69SV9cJEg9Jj9sCbmW`.
-- Verified routes, admin fail-closed headers, 7 visual captures, nonblank pixels, and Lighthouse.
-- Confirmed production remains on the previous design and was not changed by this branch.
+- Removed deterministic card-copy templates and made extracted source evidence the public-card boundary.
+- Added contamination detection and repair for trusted source fields; generated summaries cannot validate themselves.
+- Unified homepage, archive, RSS, search, and taxonomy on shared eligibility and projection decisions.
+- Added publisher-owned taxonomy regeneration so future cycles cannot recreate repair-only drift.
+- Made public-copy repair transactional, CWD-independent, digest-checked, and idempotent.
+- Normalized current latest/archive/search/taxonomy data; quarantined records fail closed.
+- Restricted the homepage visual lead to recent, dated, real Image2-provider assets.
+- Added full-scroll image decoding checks to commercial visual QA.
+- Completed independent code review and architecture review with no remaining implementation findings.
 
 ## Changed files
-- Runtime retirement: legacy command scripts, `scripts/lib/legacy-content-command-wrapper.mjs`,
-  deleted `scripts/lib/public-feed-regenerator.mjs`, and `tests/helpers/content-cycle-fixture.mjs`.
-- Reliability/performance: `scripts/lib/source-request-coordinator.mjs`, source fetch integration,
-  static budget audit, package gates, and focused tests.
-- CMS QA: `scripts/qa-admin-browser-e2e.mjs`, API/public-discovery tests, and report updates.
-- Hygiene: legacy Blog v4 report-path isolation, plans, acceptance matrix, architecture reports.
+- Source/copy boundary: `scripts/lib/source-evidence-integrity.mjs`, card quality/relevance/public eligibility,
+  publish and production phase helpers, banned phrases, feed builders, and `ArticleCard.astro`.
+- Derived projections: `src/lib/public-search-projection.js`, `scripts/lib/taxonomy-projection.mjs`,
+  archive/search/taxonomy generation and publisher output manifests.
+- Repair/data: `scripts/repair-public-card-copy.mjs`, latest/archive/search/taxonomy JSON,
+  generated audit reports, and focused regression tests.
+- Image/visual reliability: Image2 visual lead freshness, static-image idempotency, image-store fallback writes,
+  and lazy-image traversal in commercial visual QA.
 
 ## Validation results
-- Current `npm test`: 507 total, 506 passed, 0 failed, 1 intentional skip.
-- Admin browser E2E: 17 passed, 0 failed; all temporary CMS state cleaned.
-- Quality, relevance, taxonomy, and repetition scripts: passed.
+- Current corpus: 739 records; latest 30, archive 709, search 739.
+- Fail-closed classification: 75 missing-source records, 68 card-quality failures, 3 curated source signals restored.
+- Source evidence repair applied to 13 legacy records; current public source contamination is 0.
+- Repair dry-run: every mutation counter 0, including `searchArtifactMismatches`; immutable digest
+  `65e3dcdd5dc49eae280672130fb3273c10ea3a5c21b914f3915eed22b4115223`.
+- Public inventory: 33 eligible records, 31 homepage cards, 32 archive cards, one longform route;
+  canonical taxonomy membership is 32 after one duplicate source URL is collapsed.
+- Full `npm test`: 554 total, 553 passed, 0 failed, 1 intentional skip.
 - `npm run check`: 0 errors, 0 warnings, 11 existing type hints.
 - `npm audit --audit-level=low`: 0 vulnerabilities; baseline was 18.
-- `npm run build`: 61 pages; 85 generated assets retained, 4,097 pruned.
-- `npm run content:gate`: passed public/content/image/admin/performance gates.
-- Static budgets passed: 5.10 MB dist, 11.4 KB JS, 100.2 KB CSS, 100.0 KB largest HTML,
-  335.6 KB largest image.
-- Independent review found unsafe ignored legacy flags and machine-specific Playwright discovery;
-  both are fixed and regression-covered. Final re-review returned APPROVE with no open findings.
-- Canonical preview public routes: 4/4 returned 200; retired routes: 5/5 returned 404.
-- Admin pretty routes: 3/3 returned 200 with private/no-store caching.
-- Admin APIs without preview credentials: intended generic 503, no-store, noindex.
-- Canonical preview visual QA: desktop/mobile homepage, archive, and article passed; 0 broken images,
-  placeholders, app errors, or overflow.
-- Deployed image bytes: homepage 39/39 and archive 40/40 unique.
-- Lighthouse mobile: performance 97, accessibility 100, best practices 92.
-- Lighthouse desktop: performance 100, accessibility 100, best practices 92.
-- Exact preview metadata binds deployment to full SHA `7cb5e449ef4e0a3027982c8d2fcd38bf22434dbf`.
-- Preview vs production is intentionally different pending human approval; route health passes on both.
+- `npm run content:gate`: passed; public copy, image, admin exclusion, and performance audits passed.
+- Rendered audit: 7 pages, 1 article, 30 cards, 0 broken images; homepage audit 31/33.
+- Static budgets: 4,604,449 B dist, 11,432 B JS, 100,239 B CSS, 93,875 B largest HTML,
+  335,600 B largest image.
+- `npm run qa:qc -- --skip-live`: deployable with operational follow-up.
+- Commercial visual QA: 8/8 captures passed; homepage 31/31, archive 32/32, article 1/1 images decoded;
+  no broken images, overflow, clipping, or overlap.
+- Independent code review: APPROVE; architecture review found no remaining implementation defects;
+  canonical search/taxonomy projections and rendered membership each showed 0 mismatches.
 
 ## Blockers
 - Preview Postgres, Blob, and admin credentials are absent; managed persistence is not proven.
@@ -58,5 +55,6 @@
 - Production promotion requires explicit preview approval.
 
 ## Exact next step
-- Present the exact-commit preview for human approval and keep managed persistence blocked on preview credentials.
-- Keep push, production promotion, production secrets, and cache purge excluded pending explicit approval.
+- Create the Lore implementation commit from the fully reviewed and verified tree.
+- Deploy that exact clean commit to Vercel preview, verify routes/images/screenshots, and commit the receipt.
+- Keep push, production promotion, production secrets, and cache purge excluded.

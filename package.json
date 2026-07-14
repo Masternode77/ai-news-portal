@@ -85,6 +85,8 @@
     "migrate:autonomous-desk-v1": "node ./scripts/migrate-autonomous-editorial-desk-v1.mjs",
     "repair:public-longforms": "node ./scripts/repair-public-longform-inventory.mjs",
     "repair:public-longforms:apply": "node ./scripts/repair-public-longform-inventory.mjs --apply",
+    "repair:public-card-copy": "node ./scripts/repair-public-card-copy.mjs",
+    "repair:public-card-copy:apply": "node ./scripts/repair-public-card-copy.mjs --apply",
     "regenerate:autonomous-analyses-v1": "node ./scripts/regenerate-autonomous-analyses-v1.mjs",
     "rebuild:taxonomy-pages": "node ./scripts/rebuild-taxonomy-pages.mjs",
     "audit:autonomous-public": "npm run build && node ./scripts/audit-autonomous-public-surface.mjs",

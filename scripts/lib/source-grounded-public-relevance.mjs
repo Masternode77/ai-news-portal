@@ -1,4 +1,5 @@
 import { classifyInfrastructureRelevance } from './relevance-classifier.mjs';
+import { firstVerifiedSourceText, sourceEvidenceIntegrity } from './source-evidence-integrity.mjs';
 
 const STRONG_INFRASTRUCTURE_TITLE = /\b(ai infrastructure|ai data cent(?:er|re)|data cent(?:er|re)s?|datacenter|cloud infrastructure|cloud region|cloud capacity|hyperscale|hyperscaler|interconnection|substation|transmission|765\s*kv|liquid[- ]cooling|direct[- ]to[- ]chip|rack|server|supercomput|semiconductor|chipmaker|foundry|fabrication|fab\b|hbm|high[- ]bandwidth memory|accelerator|gpu liquidity|fiber|fibre|connectivity corridor|thermal monitoring|powerstore|poweredge|storage infrastructure|kv cache)\b/i;
 const SOURCE_INFRASTRUCTURE_ANCHOR = /\b(ai campus|ai infrastructure|data cent(?:er|re)s?|datacenter|cloud region|hyperscale|interconnection|substation|transmission|utility|grid|power equipment|transformer|liquid[- ]cooling|rack|server|semiconductor|foundry|fab\b|hbm|accelerator|fiber|fibre|storage infrastructure)\b/i;
@@ -6,14 +7,7 @@ const CONSUMER_OR_OFF_TOPIC_TITLE = /\b(gaming|game|stream deck|handheld|laptop|
 const UNSAFE_GENERATED_SOURCE_TEXT = /\b(remains a source-linked ai infrastructure signal|compact signal on ai capacity planning|gives infrastructure readers)\b/i;
 
 function firstSourceText(article = {}) {
-  return String(
-    article.contentText
-      || article.extractedText
-      || article.cleaned_source_text
-      || article.sourceText
-      || article.rawText
-      || '',
-  ).trim();
+  return firstVerifiedSourceText(article);
 }
 
 function persistedScore(article = {}) {
@@ -37,7 +31,8 @@ export function sourceGroundedPublicRelevance(article = {}) {
   const score = Number(result.infrastructure_relevance_score || 0);
   const hardNegative = CONSUMER_OR_OFF_TOPIC_TITLE.test(title);
   const strongTitle = STRONG_INFRASTRUCTURE_TITLE.test(title);
-  const unsafeSourceText = UNSAFE_GENERATED_SOURCE_TEXT.test(sourceText);
+  const sourceIntegrity = sourceEvidenceIntegrity(article);
+  const unsafeSourceText = sourceIntegrity.contaminated || UNSAFE_GENERATED_SOURCE_TEXT.test(sourceText);
   const sourceAnchored = !unsafeSourceText && SOURCE_INFRASTRUCTURE_ANCHOR.test(`${title} ${sourceText}`);
   const pipelineManaged = Boolean(
     article.infrastructure_relevance
@@ -49,6 +44,7 @@ export function sourceGroundedPublicRelevance(article = {}) {
   const ok = Boolean(
     title
       && !hardNegative
+      && !unsafeSourceText
       && (
         score >= 0.55
         || (strongTitle && score >= 0.28)
@@ -63,6 +59,7 @@ export function sourceGroundedPublicRelevance(article = {}) {
     strongTitle,
     sourceAnchored,
     unsafeSourceText,
+    contaminatedSourceFields: sourceIntegrity.contaminatedFields,
     hardNegative,
     usedLegacyFallback: legacyFallback,
   };

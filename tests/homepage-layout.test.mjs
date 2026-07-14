@@ -8,6 +8,7 @@ import { findInternalLanguageHits } from '../scripts/lib/internal-language-guard
 import { generateLongformAnalysis } from '../scripts/lib/longform-engine.mjs';
 
 function item(index, tier = 'editorial_brief') {
+  const sourceSentence = `A utility filing documents a concrete ${index % 2 ? 'power' : 'data center'} constraint for AI infrastructure buyers.`;
   return {
     id: `item-${index}`,
     title: `AI infrastructure item ${index}`,
@@ -20,6 +21,8 @@ function item(index, tier = 'editorial_brief') {
     homepagePublished: true,
     archiveOnly: false,
     seo_noindex: false,
+    contentText: sourceSentence,
+    snippet: sourceSentence,
     deck: `A concrete ${index % 2 ? 'power' : 'data center'} constraint changes capacity planning for AI infrastructure buyers.`,
   };
 }
@@ -81,6 +84,7 @@ function axisItem(index, axis, hoursAgo = index) {
   return {
     ...item(index),
     ...byAxis[axis],
+    contentText: byAxis[axis].deck,
     id: `axis-${axis}-${index}`,
     infrastructure_relevance_score: 0.9,
     publishedAt: new Date(Date.UTC(2026, 4, 20, 12 - hoursAgo)).toISOString(),
@@ -118,6 +122,52 @@ test('homepage feed exposes 30 to 50 public cards when enough eligible items exi
   assert.equal(feed.items.every((entry) => entry.publicSignal.title), true);
   assert.equal(feed.sections.length, 1);
   assert.equal(feed.sections[0].title, 'Latest Analysis');
+});
+
+test('homepage feed backfills past newer cards that fail public copy quality', () => {
+  const invalid = Array.from({ length: 3 }, (_, index) => ({
+    ...item(index + 900),
+    publishedAt: new Date(Date.UTC(2026, 5, 1, 12 - index)).toISOString(),
+    contentText: '',
+    extractedText: '',
+    sourceText: '',
+    rawText: '',
+    snippet: '',
+    infrastructure_relevance_score: 0.9,
+  }));
+  const valid = Array.from({ length: 3 }, (_, index) => ({
+    ...item(index + 910),
+    publishedAt: new Date(Date.UTC(2026, 4, 31, 12 - index)).toISOString(),
+  }));
+
+  const feed = buildHomepageFeed([...invalid, ...valid], { limit: 3, minimumVisible: 0 });
+
+  assert.equal(feed.items.length, 3);
+  assert.deepEqual(feed.items.map((entry) => entry.id).sort(), valid.map((entry) => entry.id).sort());
+});
+
+test('archive pagination counts only cards that can be rendered', () => {
+  const invalid = {
+    ...item(920),
+    publishedAt: '2026-06-01T12:00:00.000Z',
+    contentText: '',
+    extractedText: '',
+    sourceText: '',
+    rawText: '',
+    snippet: '',
+    infrastructure_relevance_score: 0.9,
+  };
+  const valid = Array.from({ length: 3 }, (_, index) => ({
+    ...item(index + 930),
+    publishedAt: new Date(Date.UTC(2026, 4, 31, 12 - index)).toISOString(),
+  }));
+
+  const feed = buildArchiveFeed([invalid, ...valid], { page: 1, pageSize: 2 });
+
+  assert.equal(feed.total, 3);
+  assert.equal(feed.pageCount, 2);
+  assert.equal(feed.items.length, 2);
+  assert.equal(feed.items.some((entry) => entry.id === invalid.id), false);
 });
 
 test('homepage feed never renders an unsafe source URL', () => {
@@ -279,6 +329,8 @@ test('homepage feed avoids visible standalone blueprint without mutating source 
     homepagePublished: true,
     archiveOnly: false,
     generatedImage: '/generated/fallbacks/cloud-capacity.svg',
+    snippet: 'Google describes the systems and capacity planning behind its AI data center architecture.',
+    contentText: 'Google describes the systems and capacity planning behind its AI data center architecture.',
     public_presentation: {
       image_alt: 'Google: Architecting the blueprint for AI data center capacity editorial visual',
     },

@@ -8,6 +8,8 @@ import {
   publicArticleContract,
 } from './public-article-contract.mjs';
 import { sourceGroundedPublicRelevant } from './source-grounded-public-relevance.mjs';
+import { cardCopyQualityResult, generateCardCopy } from './card-copy-quality-gate.mjs';
+import { sourceEvidenceIntegrity } from './source-evidence-integrity.mjs';
 
 function persistedEditorialGatesPass(article = {}) {
   return article.repetition_blocked !== true
@@ -35,7 +37,14 @@ export function publicSurfaceDecision(article = {}) {
   const detailPage = strictLocalLongformEligible(article, contract);
   const failedLongform = contract.tier === PUBLIC_ARTICLE_TIERS.LONGFORM_ANALYSIS && !detailPage;
   const sourceRelevant = sourceGroundedPublicRelevant(article);
-  const hasPublicDestination = sourceRelevant && !failedLongform && (detailPage || Boolean(sourceHref));
+  const sourceIntegrity = sourceEvidenceIntegrity(article);
+  const cardQuality = cardCopyQualityResult(generateCardCopy(article), article);
+  const cardPresentable = cardQuality.ok;
+  const hasPublicDestination = sourceRelevant
+    && sourceIntegrity.ok
+    && cardPresentable
+    && !failedLongform
+    && (detailPage || Boolean(sourceHref));
   const archive = hasPublicDestination
     && contract.status === 'published'
     && contract.visibility.public === true
@@ -49,10 +58,13 @@ export function publicSurfaceDecision(article = {}) {
   return {
     contract,
     archive,
+    cardPresentable,
+    cardQualityReasons: cardQuality.reasons,
     detailPage,
     homepage,
     sourceRelevant,
     sourceHref,
+    sourceIntegrity,
     rss: homepage && isRssEligible(contract),
   };
 }

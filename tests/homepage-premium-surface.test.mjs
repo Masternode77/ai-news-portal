@@ -4,6 +4,7 @@ import test from 'node:test';
 import latestNews from '../src/data/latest-news.json' with { type: 'json' };
 import archivedNews from '../src/data/archived-news.json' with { type: 'json' };
 import { buildHomepageFeed } from '../scripts/lib/homepage-feed-builder.mjs';
+import { selectHomepageVisualLead } from '../scripts/lib/homepage-visual-lead.mjs';
 
 function read(path) {
   return fs.readFileSync(path, 'utf8');
@@ -47,9 +48,10 @@ test('mobile lead shows the visual early without viewport-scaled type', () => {
 
 test('homepage keeps a substantial eligible feed with an image and destination for every first-view item', () => {
   const feed = buildHomepageFeed([...latestNews, ...archivedNews], { limit: 50, minimumVisible: 30 });
+  const lead = selectHomepageVisualLead(feed);
 
   assert.ok(feed.items.length >= 30);
-  assert.equal(feed.featured?.publicSignal?.homepage_headline, "Rapidus puts Japan's 2nm return on one Hokkaido fab");
+  assert.equal(lead?.homepage_headline, "Rapidus puts Japan's 2nm return on one Hokkaido fab");
   for (const item of feed.items.slice(0, 6)) {
     assert.ok(item.publicSignal?.title, item.id);
     assert.ok(item.publicSignal?.view_detail || item.publicSignal?.read_source, item.id);

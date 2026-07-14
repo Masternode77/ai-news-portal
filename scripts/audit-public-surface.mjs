@@ -68,7 +68,7 @@ function homepageCards(homeHtml = '') {
     const id = html.match(/data-article-id=["']([^"']+)["']/i)?.[1] || '';
     const lane = html.match(/data-lane=["']([^"']+)["']/i)?.[1] || '';
     const deckAttr = html.match(/data-deck=["']([^"']*)["']/i)?.[1] || '';
-    const deck = decodeHtml(deckAttr) || stripHtml(html.match(/class=["'][^"']*signal-deck[^"']*["'][^>]*>([\s\S]*?)<\/p>/i)?.[1] || '');
+    const deck = decodeHtml(deckAttr) || stripHtml(html.match(/class=["'][^"']*(?:signal-deck|article-deck)[^"']*["'][^>]*>([\s\S]*?)<\/p>/i)?.[1] || '');
     return { id, lane, deck, html, text: stripHtml(html) };
   });
 }
@@ -147,9 +147,14 @@ function lowRelevanceCoreViolations(cards = []) {
   });
 }
 
-function beforeAfterExamples(limit = 10) {
+function beforeAfterExamples(cards = [], limit = 10) {
+  const renderedIds = new Set(cards.map((card) => card.id).filter(Boolean));
   return [...ARTICLE_BY_ID.values()]
-    .filter((article) => article.regeneration_v2_audit && article.public_presentation)
+    .filter((article) => (
+      renderedIds.has(article.id)
+      && article.regeneration_v2_audit
+      && article.public_presentation
+    ))
     .slice(0, limit)
     .map((article) => ({
       title: article.title,
@@ -238,7 +243,7 @@ export async function runAudit(options = {}) {
       if (count > 2) failures.push(`detail heading sequence appears ${count} times: ${sequence}`);
     }
 
-    const examples = beforeAfterExamples(10);
+    const examples = beforeAfterExamples(cards, 10);
     const report = [
       '# Public Surface Regression Report',
       '',
@@ -273,7 +278,7 @@ export async function runAudit(options = {}) {
       '',
       '## Checked Detail URLs',
       '',
-      ...pages.map((page) => `- ${page.url}`),
+      ...(pages.length ? pages.map((page) => `- ${page.url}`) : ['- None']),
     ].join('\n');
 
     await fs.writeFile(REPORT_PATH, `${report}\n`, 'utf8');

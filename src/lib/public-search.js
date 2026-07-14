@@ -1,3 +1,5 @@
+import { buildProjectedSearchText } from './public-search-projection.js';
+
 export function normalizeSearchText(value = '') {
   return String(value)
     .normalize('NFKD')
@@ -16,22 +18,10 @@ export function searchTokens(query = '') {
 export function buildPublicSearchRecord(item = {}) {
   const signal = item.publicSignal || item;
   const title = signal.title || '';
-  const deck = signal.deck || '';
-  const whyItMatters = signal.why_it_matters || '';
   const category = signal.category || '';
   const source = signal.source || '';
-  const label = signal.signal_label || signal.label || '';
-  const date = signal.date || signal.publishedAt || '';
   const href = signal.view_detail || signal.read_source || '';
-  const searchable = [
-    title,
-    deck,
-    whyItMatters,
-    category,
-    source,
-    label,
-    date,
-  ].join(' ');
+  const searchable = buildProjectedSearchText(item);
 
   return {
     id: item.id || signal.id || href || title,

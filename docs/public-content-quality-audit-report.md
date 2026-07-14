@@ -1,8 +1,8 @@
 # Public Content Quality Audit Report
 
-Generated at: 2026-05-19T23:54:48.007Z
-Base URL: http://127.0.0.1:53916
-Homepage cards checked: 4
+Generated at: 2026-07-14T01:59:52.746Z
+Base URL: http://127.0.0.1:64011
+Homepage cards checked: 30
 Detail pages checked: 0
 
 ## Counts

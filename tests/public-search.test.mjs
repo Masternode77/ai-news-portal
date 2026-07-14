@@ -8,6 +8,10 @@ import {
   publicSearchFilterOptions,
   searchTokens,
 } from '../src/lib/public-search.js';
+import { buildArchiveFeed } from '../scripts/lib/archive-feed-builder.mjs';
+import latestNews from '../src/data/latest-news.json' with { type: 'json' };
+import archivedNews from '../src/data/archived-news.json' with { type: 'json' };
+import searchIndex from '../src/data/search-index.json' with { type: 'json' };
 
 test('public search normalizes punctuation, accents, and spacing', () => {
   assert.equal(normalizeSearchText('  GPU-ready São Paulo capacity!!!  '), 'gpu ready sao paulo capacity');
@@ -46,4 +50,21 @@ test('search route uses the public archive feed as its searchable source', () =>
   assert.match(route, /pageSize:\s*SEARCH_PAGE_SIZE/);
   assert.match(route, /const SEARCH_PAGE_SIZE = 10000/);
   assert.doesNotMatch(route, /search-index\.json/);
+});
+
+test('rendered archive search records match the persisted canonical projection', () => {
+  const feed = buildArchiveFeed([...latestNews, ...archivedNews], {
+    page: 1,
+    pageSize: 10000,
+  });
+  const persistedById = new Map(searchIndex.map((article) => [article.id, article.searchText]));
+
+  for (const item of feed.items) {
+    const record = buildPublicSearchRecord(item);
+    assert.equal(
+      record.searchText,
+      normalizeSearchText(persistedById.get(item.id)),
+      item.id,
+    );
+  }
 });

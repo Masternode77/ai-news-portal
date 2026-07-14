@@ -1,4 +1,4 @@
-import { buildHomepageFeed, dedupeFeedItems } from './homepage-feed-builder.mjs';
+import { buildHomepageFeed, dedupeFeedItems, publicCardPresentable } from './homepage-feed-builder.mjs';
 import { publicEmptyStateText } from './public-empty-state-copy.mjs';
 import { isPublicArchiveArticle } from './public-surface-eligibility.mjs';
 
@@ -15,6 +15,7 @@ export function buildArchiveFeed(items = [], options = {}) {
   const pageSize = options.pageSize || 50;
   const publicItems = dedupeFeedItems(items
     .filter(archiveEligible)
+    .filter(publicCardPresentable)
     .sort((a, b) => dateMs(b) - dateMs(a)));
   const page = Math.max(1, Number(options.page || 1));
   const pageItems = publicItems.slice((page - 1) * pageSize, page * pageSize);
