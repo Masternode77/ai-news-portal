@@ -621,7 +621,9 @@
     "c81b0a25d6f03a46",
     "6f2198206c2b09b9",
     "4e456603e60e8083",
-    "f4c1da58ae1cf44b"
+    "f4c1da58ae1cf44b",
+    "c7ae25d85f99454d",
+    "1dfc1606ffe66c8c"
   ],
   "dayPlans": {
     "2026-03-24": {
@@ -29527,19 +29529,224 @@
     "2026-07-14": {
       "date": "2026-07-14",
       "createdAt": "2026-07-13T17:20:01.646Z",
-      "refreshedAt": "2026-07-13T23:56:18.121Z",
+      "refreshedAt": "2026-07-14T09:14:36.780Z",
       "candidateWindowHours": 24,
       "curatedItems": [
         {
-          "id": "f4c1da58ae1cf44b",
-          "source": "TechCrunch AI",
-          "url": "https://techcrunch.com/2026/07/13/satya-nadella-has-issued-a-shocking-warning-to-companies-using-ai/",
-          "title": "Satya Nadella has issued a shocking warning to companies using AI",
-          "snippet": "Of all the debates raging about the potential downsides of AI, there is one worry causing the most hand-wringing among AI enthusiasts in Silicon Valley — that the giant AI labs that sell proprietary models are somehow a…",
-          "contentText": "Of all the debates raging about the potential downsides of AI, there is one worry causing the most hand-wringing among AI enthusiasts in Silicon Valley — that the giant AI labs that sell proprietary models are somehow acting like Trojan horses.",
-          "publishedAt": "2026-07-13T20:59:00.000Z",
+          "id": "c7ae25d85f99454d",
+          "source": "Semiconductor Engineering",
+          "url": "https://semiengineering.com/research-bits-july-14/",
+          "title": "Research Bits: July 14",
+          "snippet": "Cerebellum-inspired memtransistor; fungal mycelium PCB; doping organic semiconductors. The post Research Bits: July 14 appeared first on Semiconductor Engineering.",
+          "contentText": "Cerebellum-inspired memtransistor Researchers from Northwestern University and University of Illinois at Chicago developed a cerebellum-inspired memtransistor for anomaly detection that ignores expected inputs and rapidly detects unexpected events while using less energy than conventional AI. “Today’s AI is remarkably good at recognizing patterns, but it often spends enormous amounts of computing power to continuously analyze streams of data—even when nothing has changed,” said Mark Hersam, a professor of materials science and engineering, medicine, and chemistry at Northwestern, in a press release. “Therefore, it burns energy on unnecessary analysis.” Based on molybdenum disulfide, the device uses an asymmetric transistor architecture in which one electrode partially overlapped the semic…",
+          "publishedAt": "2026-07-14T07:01:12.000Z",
           "sourceImage": null,
           "region": "US",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "category": "AI Infrastructure",
+          "primary_category": "AI Infrastructure",
+          "secondary_category": "GPU clusters and deployment readiness",
+          "infrastructure_layer": "Compute",
+          "affected_stakeholders": [
+            "operators",
+            "hyperscalers",
+            "cloud buyers",
+            "investors"
+          ],
+          "article_type": "Product / Platform Update",
+          "urgency_score": 0.57,
+          "taxonomy_confidence": 0.77,
+          "taxonomy_reasons": [
+            "ai infrastructure",
+            "neocloud"
+          ],
+          "direct_ai_infrastructure_relevance": 1,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0.94,
+          "power_grid_relevance": 0.22,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.972,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "semiconductor_relevance:0.94(semiconductor, semiconductors, gpu)",
+            "power_grid_relevance:0.22(power)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 1,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0.94,
+            "power_grid_relevance": 0.22,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.972,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+              "semiconductor_relevance:0.94(semiconductor, semiconductors, gpu)",
+              "power_grid_relevance:0.22(power)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 87
+        },
+        {
+          "id": "1dfc1606ffe66c8c",
+          "source": "Toms Hardware",
+          "url": "https://www.tomshardware.com/pc-components/enclosures/boutique-diy-hi-fi-solution-lets-you-repurpose-your-old-ide-optical-drives-as-a-standalone-audio-player-usd190-cd-rom-player-01-features-a-laser-cut-enclosure-and-a-custom-pcb",
+          "title": "Boutique DIY Hi-Fi solution lets you repurpose your old IDE optical drives as a standalone audio player — $190 CD-ROM Player 01 features a laser-cut enclosure and a custom PCB",
+          "snippet": "A stylish new product encourages the repurposing of old IDE optical drives as standalone audio players.",
+          "contentText": "A stylish new product encourages the repurposing of old IDE optical drives as standalone audio players. Boutique South Korean electronic device maker das_POD has launched the CD-ROM PLAYER 01 (ships worldwide), and it has some distinct Teenage Engineering -a-like design flair. Any similarity to genuine TE products is purely accidental, we’re sure. The new self-assembly and bring-your-own optical drive enclosure costs from $190. These guys are making a universal laser cut enclosure with a custom pcb for repurposed old cd-drives.The project is called CD-ROM PLAYER-01, by das_POD. pic.twitter.com/3w8kkyNbKl July 10, 2026 This das_POD product is “designed to be assembled, repaired, and owned,” says the maker. In contrast to a conventional hi-fi CD music player , the CD-ROM PLAYER 01 is suppli…",
+          "publishedAt": "2026-07-14T09:00:00.000Z",
+          "sourceImage": "https://cdn.mos.cms.futurecdn.net/JGeCow99TBDKGMTLxrv3nL-1280-80.jpg",
+          "region": "Korea",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "category": "AI Infrastructure",
+          "primary_category": "AI Infrastructure",
+          "secondary_category": "GPU clusters and deployment readiness",
+          "infrastructure_layer": "Compute",
+          "affected_stakeholders": [
+            "operators",
+            "hyperscalers",
+            "cloud buyers",
+            "investors"
+          ],
+          "article_type": "Research / Technical",
+          "urgency_score": 0.43,
+          "taxonomy_confidence": 0.77,
+          "taxonomy_reasons": [
+            "ai infrastructure",
+            "neocloud"
+          ],
+          "direct_ai_infrastructure_relevance": 1,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0.22,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.778,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "semiconductor_relevance:0.22(gpu)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 1,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0.22,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.778,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+              "semiconductor_relevance:0.22(gpu)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 79
+        },
+        {
+          "id": "14195f3e8601556b",
+          "source": "Capacity Media",
+          "url": "https://capacityglobal.com/news/nokia-extends-5g-deal-with-taiwan-mobile/",
+          "title": "Nokia and Taiwan Mobile team up to build AI-native 5G network in Taiwan",
+          "snippet": "Nokia has signed a 5G expansion agreement with Taiwan Mobile to advance the operator's transition to AI-native mobile networks across Taiwan, the companies announced on July 14, 2026. Financial terms of the deal were no…",
+          "contentText": "Under the agreement, Nokia will supply its AirScale portfolio, including next-generation baseband and radio equipment, alongside AI-driven software, to upgrade Taiwan Mobile&#8217;s existing network infrastructure. The vendor said the deployment is designed to support new 5G services and monetisation opportunities as AI traffic on the network grows. The rollout spans four areas: network intelligence, infrastructure capacity, energy management and resilience. On the intelligence side, Nokia will deploy predictive analytics and automation software, including its Predictive Hardware Analytics service and MantaRay SON self-organising network tool, aimed at closed-loop network assurance. On infrastructure, new baseband and radio equipment is intended to lift network capacity and uplink perform…",
+          "publishedAt": "2026-07-14T08:56:01.000Z",
+          "sourceImage": "https://capacityglobal.com/wp-content/uploads/2026/06/itw-asia-new-logo.png",
+          "region": "APAC",
+          "language": "en",
+          "defaultCategory": "Hyperscalers & Cloud",
+          "category": "Cloud Capacity",
+          "primary_category": "Cloud Capacity",
+          "secondary_category": "Hyperscale regions and accelerator availability",
+          "infrastructure_layer": "Cloud Platform",
+          "affected_stakeholders": [
+            "hyperscalers",
+            "cloud buyers",
+            "enterprise IT",
+            "operators"
+          ],
+          "article_type": "Capacity Expansion",
+          "urgency_score": 0.47,
+          "taxonomy_confidence": 0.57,
+          "taxonomy_reasons": [
+            "fallback_taxonomy"
+          ],
+          "direct_ai_infrastructure_relevance": 0.64,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0.76,
+          "semiconductor_relevance": 0,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.652,
+          "infrastructure_relevance_tier": "signal_card",
+          "infrastructure_relevance_action": "publish_signal_card_only",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:0.64",
+            "cloud_capacity_relevance:0.76(cloud capacity, hyperscalers)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 0.64,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0.76,
+            "semiconductor_relevance": 0,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.652,
+            "infrastructure_relevance_tier": "signal_card",
+            "infrastructure_relevance_action": "publish_signal_card_only",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:0.64",
+              "cloud_capacity_relevance:0.76(cloud capacity, hyperscalers)"
+            ],
+            "infrastructureRelevanceAction": "publish_signal_card_only",
+            "articlePagePublished": false,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 73
+        },
+        {
+          "id": "1c044ed1f338de00",
+          "source": "TechCrunch AI",
+          "url": "https://techcrunch.com/2026/07/13/already-rich-already-successful-why-the-last-wave-of-tech-winners-is-grinding-again/",
+          "title": "Already rich, already successful, why the last wave of tech winners is grinding again",
+          "snippet": "They're rolling up their sleeves again, seemingly out of fear of missing AI's defining moment and, presumably, the irresistible allure of making even more money -- potentially a lot more.",
+          "contentText": "They're rolling up their sleeves again, seemingly out of fear of missing AI's defining moment and, presumably, the irresistible allure of making even more money -- potentially a lot more.",
+          "publishedAt": "2026-07-14T02:46:42.000Z",
+          "sourceImage": null,
+          "region": "Global",
           "language": "en",
           "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
           "category": "AI Infrastructure",
@@ -29596,145 +29803,7 @@
             "archiveOnly": false,
             "archiveOnlyReason": null
           },
-          "score": 79
-        },
-        {
-          "id": "4e456603e60e8083",
-          "source": "TechCrunch AI",
-          "url": "https://techcrunch.com/2026/07/13/hermes-agent-maker-nous-research-in-talks-for-new-funding-at-1-5b-valuation/",
-          "title": "Hermes agent maker Nous Research in talks for new funding at $1.5B valuation",
-          "snippet": "The company is raising at least $75 million, led by Robot, with significant participation from USV and other prominent investors.",
-          "contentText": "The company is raising at least $75 million, led by Robot, with significant participation from USV and other prominent investors.",
-          "publishedAt": "2026-07-13T23:31:18.000Z",
-          "sourceImage": null,
-          "region": "US",
-          "language": "en",
-          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
-          "category": "Capital Markets",
-          "primary_category": "Capital Markets",
-          "secondary_category": "Financing, valuation, and capital structure",
-          "infrastructure_layer": "Capital",
-          "affected_stakeholders": [
-            "investors",
-            "lenders",
-            "developers",
-            "operators"
-          ],
-          "article_type": "Financing / M&A",
-          "urgency_score": 0.56,
-          "taxonomy_confidence": 0.78,
-          "taxonomy_reasons": [
-            "funding",
-            "valuation"
-          ],
-          "direct_ai_infrastructure_relevance": 1,
-          "data_center_relevance": 0,
-          "cloud_capacity_relevance": 0,
-          "semiconductor_relevance": 0.22,
-          "power_grid_relevance": 0,
-          "cooling_relevance": 0,
-          "capital_markets_relevance": 0.729,
-          "enterprise_ai_infrastructure_relevance": 0,
-          "infrastructure_relevance_score": 0.925,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "semiconductor_relevance:0.22(gpu)",
-            "capital_markets_relevance:0.73(funding, valuation)"
-          ],
-          "infrastructure_relevance": {
-            "direct_ai_infrastructure_relevance": 1,
-            "data_center_relevance": 0,
-            "cloud_capacity_relevance": 0,
-            "semiconductor_relevance": 0.22,
-            "power_grid_relevance": 0,
-            "cooling_relevance": 0,
-            "capital_markets_relevance": 0.729,
-            "enterprise_ai_infrastructure_relevance": 0,
-            "infrastructure_relevance_score": 0.925,
-            "infrastructure_relevance_tier": "full_memo",
-            "infrastructure_relevance_action": "generate_full_memo",
-            "infrastructure_relevance_reasons": [
-              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-              "semiconductor_relevance:0.22(gpu)",
-              "capital_markets_relevance:0.73(funding, valuation)"
-            ],
-            "infrastructureRelevanceAction": "generate_full_memo",
-            "articlePagePublished": true,
-            "homepagePublished": true,
-            "archiveOnly": false,
-            "archiveOnlyReason": null
-          },
-          "score": 78
-        },
-        {
-          "id": "d1a462604e90ac6d",
-          "source": "Semiconductor Engineering",
-          "url": "https://semiengineering.com/near-memory-dequantization-architecture-in-custom-hbm-for-llm-inference-sk-hynix/",
-          "title": "Near-memory Dequantization Architecture In Custom HBM for LLM inference (SK hynix)",
-          "snippet": "Researchers from SK hynix published a technical paper titled “StreamDQ: Near-Memory Weight DeQuantization in Custom HBM for Scalable AI Inference Acceleration.” The paper proposes StreamDQ for “a lightweight architectur…",
-          "contentText": "Researchers from SK hynix published a technical paper titled “StreamDQ: Near-Memory Weight DeQuantization in Custom HBM for Scalable AI Inference Acceleration.” The paper proposes StreamDQ for “a lightweight architectural enhancement that enables on-the-fly dequantization in the memory subsystem for high-throughput, large-batch LLM inference,” and reports “up to 7.08× speedup and 90.23% lower energy” for mixed-precision GEMM. Find the technical paper here . July 2026. Jeong, Minki, Daegun Yoon, Soohong Ahn, Seungyong Lee, Nameun Kang, Hyeonseok Ju, Ieryung Park, Joonseop Sim, Youngpyo Joo, and Hoshik Kim. “StreamDQ: Near-Memory Weight DeQuantization in Custom HBM for Scalable AI Inference Acceleration.” arXiv, July 2026. https://doi.org/10.48550/arXiv.2607.08993. The post Near-memory Dequ…",
-          "publishedAt": "2026-07-13T19:36:14.000Z",
-          "sourceImage": null,
-          "region": "US",
-          "language": "en",
-          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
-          "category": "Semiconductors",
-          "primary_category": "Semiconductors",
-          "secondary_category": "Accelerators, memory, and advanced packaging",
-          "infrastructure_layer": "Silicon",
-          "affected_stakeholders": [
-            "semiconductor suppliers",
-            "hyperscalers",
-            "server OEMs",
-            "investors"
-          ],
-          "article_type": "Supply Chain",
-          "urgency_score": 0.48,
-          "taxonomy_confidence": 0.8,
-          "taxonomy_reasons": [
-            "gpu",
-            "hbm"
-          ],
-          "direct_ai_infrastructure_relevance": 1,
-          "data_center_relevance": 0,
-          "cloud_capacity_relevance": 0,
-          "semiconductor_relevance": 1,
-          "power_grid_relevance": 0,
-          "cooling_relevance": 0,
-          "capital_markets_relevance": 0,
-          "enterprise_ai_infrastructure_relevance": 0,
-          "infrastructure_relevance_score": 0.95,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "semiconductor_relevance:1.00(semiconductor, hbm, gpu)"
-          ],
-          "infrastructure_relevance": {
-            "direct_ai_infrastructure_relevance": 1,
-            "data_center_relevance": 0,
-            "cloud_capacity_relevance": 0,
-            "semiconductor_relevance": 1,
-            "power_grid_relevance": 0,
-            "cooling_relevance": 0,
-            "capital_markets_relevance": 0,
-            "enterprise_ai_infrastructure_relevance": 0,
-            "infrastructure_relevance_score": 0.95,
-            "infrastructure_relevance_tier": "full_memo",
-            "infrastructure_relevance_action": "generate_full_memo",
-            "infrastructure_relevance_reasons": [
-              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-              "semiconductor_relevance:1.00(semiconductor, hbm, gpu)"
-            ],
-            "infrastructureRelevanceAction": "generate_full_memo",
-            "articlePagePublished": true,
-            "homepagePublished": true,
-            "archiveOnly": false,
-            "archiveOnlyReason": null
-          },
-          "score": 78
+          "score": 71
         },
         {
           "id": "7171d6cabdb6cf7f",
@@ -29805,239 +29874,102 @@
             "archiveOnly": false,
             "archiveOnlyReason": null
           },
-          "score": 76
+          "score": 70
         },
         {
-          "id": "6c00f246152016d5",
-          "source": "Toms Hardware",
-          "url": "https://www.tomshardware.com/pc-components/gpus/amazon-prime-members-can-get-this-asus-rtx-5060-for-just-usd2-above-msrp-upgrade-to-blackwell-gaming-power-for-less-than-the-cost-of-an-rtx-3060",
-          "title": "Amazon Prime members can get this Asus RTX 5060 for just $2 above MSRP — upgrade to Blackwell gaming power for less than the cost of an RTX 3060",
-          "snippet": "Amazon is giving some Prime customers a deep discount on Asus's Prime RTX 5060 8GB OC, bringing its price to just $2 above MSRP and beating the Prime Day deals we saw on these cards.",
-          "contentText": "If you're looking for a relatively affordable graphics card upgrade, the landscape has been barren of late, even during the peak of Prime Day. But Amazon is back with a deal on Asus' Prime RTX 5060 that beats even the best Prime Day lows we saw — at least if you're one of the lucky Prime subscribers it deems worthy. If you do qualify, you can get this card for just $301.62, or just $2 above MSRP, which is as low a price as you'll find anywhere for an RTX 5060 right now. Asus Prime RTX 5060 8GB OC Edition for $301.62 on Amazon To get this deal, you need to be a Prime member, but you also need to meet some other secret criteria. Most of the Tom's Hardware staff and several friends were eligible for the discount, but at least one of my friends didn't see it despite being a Prime member, so i…",
-          "publishedAt": "2026-07-13T18:53:10.000Z",
-          "sourceImage": "https://cdn.mos.cms.futurecdn.net/mAgDH8iTZfNDHDLhEEi47C-1280-80.jpg",
-          "region": "US",
-          "language": "en",
-          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
-          "category": "AI Infrastructure",
-          "primary_category": "AI Infrastructure",
-          "secondary_category": "GPU clusters and deployment readiness",
-          "infrastructure_layer": "Compute",
-          "affected_stakeholders": [
-            "operators",
-            "hyperscalers",
-            "cloud buyers",
-            "investors"
-          ],
-          "article_type": "Other",
-          "urgency_score": 0.53,
-          "taxonomy_confidence": 0.77,
-          "taxonomy_reasons": [
-            "ai infrastructure",
-            "neocloud"
-          ],
-          "direct_ai_infrastructure_relevance": 1,
-          "data_center_relevance": 0,
-          "cloud_capacity_relevance": 0,
-          "semiconductor_relevance": 0.22,
-          "power_grid_relevance": 0.297,
-          "cooling_relevance": 0,
-          "capital_markets_relevance": 0,
-          "enterprise_ai_infrastructure_relevance": 0,
-          "infrastructure_relevance_score": 0.83,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "semiconductor_relevance:0.22(gpu)",
-            "power_grid_relevance:0.30(power)"
-          ],
-          "infrastructure_relevance": {
-            "direct_ai_infrastructure_relevance": 1,
-            "data_center_relevance": 0,
-            "cloud_capacity_relevance": 0,
-            "semiconductor_relevance": 0.22,
-            "power_grid_relevance": 0.297,
-            "cooling_relevance": 0,
-            "capital_markets_relevance": 0,
-            "enterprise_ai_infrastructure_relevance": 0,
-            "infrastructure_relevance_score": 0.83,
-            "infrastructure_relevance_tier": "full_memo",
-            "infrastructure_relevance_action": "generate_full_memo",
-            "infrastructure_relevance_reasons": [
-              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-              "semiconductor_relevance:0.22(gpu)",
-              "power_grid_relevance:0.30(power)"
-            ],
-            "infrastructureRelevanceAction": "generate_full_memo",
-            "articlePagePublished": true,
-            "homepagePublished": true,
-            "archiveOnly": false,
-            "archiveOnlyReason": null
-          },
-          "score": 73
-        },
-        {
-          "id": "525918da0be27035",
+          "id": "d159b9ac7f6b57a5",
           "source": "Data Center Knowledge",
-          "url": "https://www.datacenterknowledge.com/data-center-construction/meta-s-5-gw-hyperion-campus-signals-ai-s-shift-into-utility-territory",
-          "title": "Meta’s 5 GW Hyperion Turns AI into a Grid Anchor",
-          "snippet": "Meta’s Louisiana AI campus grows to 5 GW, a scale analysts say could influence generation, transmission, and utility planning across the region.",
-          "contentText": "Meta’s Louisiana AI campus grows to 5 GW, a scale analysts say could influence generation, transmission, and utility planning across the region.",
-          "publishedAt": "2026-07-13T19:04:14.000Z",
-          "sourceImage": "https://eu-images.contentstack.com/v3/assets/blt8eb3cdfc1fce5194/bltbcafe599416396f5/6a553803e49c54288877bc20/Hyperion_Meta_1800x1013.jpg?width=720&quality=80&disable=upscale",
-          "region": "US",
+          "url": "https://www.datacenterknowledge.com/networking/a-guide-to-network-redundancy-in-data-centers",
+          "title": "A Guide to Network Redundancy in Data Centers",
+          "snippet": "Data center network redundancy ensures reliable connectivity by minimizing downtime risks with backup connections and equipment.",
+          "contentText": "Data center network redundancy ensures reliable connectivity by minimizing downtime risks with backup connections and equipment.",
+          "publishedAt": "2026-07-14T09:00:00.000Z",
+          "sourceImage": "https://eu-images.contentstack.com/v3/assets/blt8eb3cdfc1fce5194/bltab000fc749456806/6a556bf519775d6c188f64f3/data-center-network-redundancy.jpg?width=720&quality=80&disable=upscale",
+          "region": "Global",
           "language": "en",
           "defaultCategory": "Colocation & Wholesale",
-          "category": "Power & Grid",
-          "primary_category": "Power & Grid",
-          "secondary_category": "Interconnection and power procurement",
-          "infrastructure_layer": "Power",
+          "category": "Data Centers",
+          "primary_category": "Data Centers",
+          "secondary_category": "Campus development and colocation capacity",
+          "infrastructure_layer": "Facility",
           "affected_stakeholders": [
             "data center operators",
-            "utilities",
-            "cloud capacity teams",
+            "developers",
+            "site selectors",
             "investors"
           ],
-          "article_type": "Other",
-          "urgency_score": 0.59,
-          "taxonomy_confidence": 0.95,
+          "article_type": "Operations Update",
+          "urgency_score": 0.41,
+          "taxonomy_confidence": 0.85,
           "taxonomy_reasons": [
-            "grid",
-            "utility",
-            "transmission",
-            "gw"
+            "data center",
+            "colocation",
+            "wholesale"
           ],
-          "direct_ai_infrastructure_relevance": 0.82,
-          "data_center_relevance": 0.92,
+          "direct_ai_infrastructure_relevance": 0,
+          "data_center_relevance": 1,
           "cloud_capacity_relevance": 0,
           "semiconductor_relevance": 0,
-          "power_grid_relevance": 1,
+          "power_grid_relevance": 0,
           "cooling_relevance": 0,
           "capital_markets_relevance": 0,
-          "enterprise_ai_infrastructure_relevance": 0,
-          "infrastructure_relevance_score": 0.967,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
+          "enterprise_ai_infrastructure_relevance": 0.34,
+          "infrastructure_relevance_score": 0.725,
+          "infrastructure_relevance_tier": "signal_card",
+          "infrastructure_relevance_action": "publish_signal_card_only",
           "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:0.82",
-            "data_center_relevance:0.92(data center, colocation, campus)",
-            "power_grid_relevance:1.00(grid, utility, gw)"
+            "data_center_relevance:1.00(data center, data centers, colocation)",
+            "enterprise_ai_infrastructure_relevance:0.34(backup, networking)"
           ],
           "infrastructure_relevance": {
-            "direct_ai_infrastructure_relevance": 0.82,
-            "data_center_relevance": 0.92,
+            "direct_ai_infrastructure_relevance": 0,
+            "data_center_relevance": 1,
             "cloud_capacity_relevance": 0,
             "semiconductor_relevance": 0,
-            "power_grid_relevance": 1,
+            "power_grid_relevance": 0,
             "cooling_relevance": 0,
             "capital_markets_relevance": 0,
-            "enterprise_ai_infrastructure_relevance": 0,
-            "infrastructure_relevance_score": 0.967,
-            "infrastructure_relevance_tier": "full_memo",
-            "infrastructure_relevance_action": "generate_full_memo",
+            "enterprise_ai_infrastructure_relevance": 0.34,
+            "infrastructure_relevance_score": 0.725,
+            "infrastructure_relevance_tier": "signal_card",
+            "infrastructure_relevance_action": "publish_signal_card_only",
             "infrastructure_relevance_reasons": [
-              "direct_ai_infrastructure_relevance:0.82",
-              "data_center_relevance:0.92(data center, colocation, campus)",
-              "power_grid_relevance:1.00(grid, utility, gw)"
+              "data_center_relevance:1.00(data center, data centers, colocation)",
+              "enterprise_ai_infrastructure_relevance:0.34(backup, networking)"
             ],
-            "infrastructureRelevanceAction": "generate_full_memo",
-            "articlePagePublished": true,
+            "infrastructureRelevanceAction": "publish_signal_card_only",
+            "articlePagePublished": false,
             "homepagePublished": true,
             "archiveOnly": false,
             "archiveOnlyReason": null
           },
-          "score": 72
+          "score": 69
         }
       ],
       "curatedIds": [
-        "f4c1da58ae1cf44b",
-        "4e456603e60e8083",
-        "d1a462604e90ac6d",
+        "c7ae25d85f99454d",
+        "1dfc1606ffe66c8c",
+        "14195f3e8601556b",
+        "1c044ed1f338de00",
         "7171d6cabdb6cf7f",
-        "6c00f246152016d5",
-        "525918da0be27035"
+        "d159b9ac7f6b57a5"
       ],
       "publishedIds": [
         "c81b0a25d6f03a46",
         "6f2198206c2b09b9",
         "4e456603e60e8083",
-        "f4c1da58ae1cf44b"
+        "f4c1da58ae1cf44b",
+        "c7ae25d85f99454d",
+        "1dfc1606ffe66c8c"
       ],
       "slotPublications": {
         "0": true,
-        "1": true
+        "1": true,
+        "2": true
       }
     }
   },
   "runHistory": [
-    {
-      "at": "2026-06-04T01:43:59.981Z",
-      "day": "2026-06-04",
-      "slot": 1,
-      "publishedCount": 0,
-      "signalCardCount": 2,
-      "archiveOnlyCount": 0,
-      "processedIds": [
-        "765b73bd6d1a360d",
-        "0cb4cb6214ae6b14"
-      ],
-      "blockedCount": 2,
-      "blockedItems": [
-        {
-          "id": "765b73bd6d1a360d",
-          "title": "Berkeley Lab’s MODMD Approach Advances Quantum Simulations Beyond Ground States",
-          "infrastructure_relevance_score": 1,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud, hpc)",
-            "data_center_relevance:0.42(data centers)",
-            "cloud_capacity_relevance:0.32(hyperscalers)",
-            "semiconductor_relevance:1.00(semiconductor, nvidia, amd)",
-            "power_grid_relevance:0.22(power)",
-            "capital_markets_relevance:0.28(funding)"
-          ],
-          "extraction_quality_score": 1,
-          "source_domain_adapter": "generic",
-          "content_length": 1670,
-          "boilerplate_ratio": 0,
-          "repetition_blocked": false,
-          "repetition_block_reasons": [],
-          "repetition_check": null,
-          "expert_insight_complete": true,
-          "expert_insight_missing_fields": [],
-          "reason": "fail_closed: source_text_incomplete:ellipsis_truncation_artifact, ellipsis_truncation_artifact"
-        },
-        {
-          "id": "0cb4cb6214ae6b14",
-          "title": "Qualcomm Announces Dragonfly Brand for Data Center Products, More Info to Come June 24th",
-          "infrastructure_relevance_score": 0.921,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "data_center_relevance:0.55(data center)",
-            "cloud_capacity_relevance:0.32(hyperscalers)",
-            "semiconductor_relevance:0.22(gpu)",
-            "power_grid_relevance:0.22(power)"
-          ],
-          "extraction_quality_score": 1,
-          "source_domain_adapter": "servethehome",
-          "content_length": 1773,
-          "boilerplate_ratio": 0,
-          "repetition_blocked": false,
-          "repetition_block_reasons": [],
-          "repetition_check": null,
-          "expert_insight_complete": false,
-          "expert_insight_missing_fields": [
-            "named_companies"
-          ],
-          "reason": "expert_insight_missing_fields named_companies"
-        }
-      ],
-      "archiveOnlyItems": []
-    },
     {
       "at": "2026-06-04T10:43:26.194Z",
       "day": "2026-06-04",
@@ -43469,7 +43401,134 @@
         }
       ],
       "archiveOnlyItems": []
+    },
+    {
+      "at": "2026-07-14T09:14:36.780Z",
+      "day": "2026-07-14",
+      "slot": 2,
+      "publishedCount": 0,
+      "signalCardCount": 1,
+      "archiveOnlyCount": 0,
+      "repetitionBlockedCount": 1,
+      "publishedIds": [],
+      "processedIds": [
+        "c7ae25d85f99454d",
+        "1dfc1606ffe66c8c"
+      ],
+      "blockedCount": 1,
+      "blockedItems": [
+        {
+          "id": "c7ae25d85f99454d",
+          "title": "Research Bits: July 14",
+          "infrastructure_relevance_score": 1,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "cloud_capacity_relevance:0.32(hyperscalers)",
+            "semiconductor_relevance:0.94(semiconductor, semiconductors, gpu)",
+            "power_grid_relevance:0.22(power)",
+            "capital_markets_relevance:0.28(capex)"
+          ],
+          "extraction_quality_score": 1,
+          "source_domain_adapter": "semiengineering",
+          "content_length": 1674,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": false,
+          "repetition_block_reasons": [],
+          "repetition_check": null,
+          "expert_insight_complete": false,
+          "expert_insight_missing_fields": [
+            "named_companies"
+          ],
+          "reason": "expert_insight_missing_fields named_companies"
+        }
+      ],
+      "repetitionBlockedItems": [
+        {
+          "id": "1dfc1606ffe66c8c",
+          "title": "Boutique DIY Hi-Fi solution lets you repurpose your old IDE optical drives as a standalone audio player — $190 CD-ROM Player 01 features a laser-cut enclosure and a custom PCB",
+          "infrastructure_relevance_score": 0.87,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "cloud_capacity_relevance:0.32(hyperscalers)",
+            "semiconductor_relevance:0.22(gpu)",
+            "power_grid_relevance:0.22(power)",
+            "capital_markets_relevance:0.28(capex)"
+          ],
+          "extraction_quality_score": 1,
+          "source_domain_adapter": "generic",
+          "content_length": 1631,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": true,
+          "repetition_block_reasons": [
+            "repeated_sentence_ratio>0.12",
+            "heading_sequence_similarity>0.75",
+            "conclusion_similarity>0.7"
+          ],
+          "repetition_check": {
+            "compared_article_count": 20,
+            "repeated_sentence_ratio": 0.14285714285714285,
+            "repeated_paragraph_ratio": 0.16666666666666666,
+            "heading_sequence_similarity": 1,
+            "banned_phrase_count": 0,
+            "banned_phrase_counts": {},
+            "recent_banned_phrase_counts": {},
+            "ngram_overlap": 0.4528301886792453,
+            "blueprint_repetition": 1,
+            "conclusion_similarity": 0.9271050693011066,
+            "repeated_sentence_count": 1,
+            "repeated_paragraph_count": 1,
+            "heading_sequence": [
+              "System Change",
+              "Bottleneck",
+              "Engineering Tradeoff",
+              "Validation Metric"
+            ],
+            "blocked": true,
+            "reasons": [
+              "repeated_sentence_ratio>0.12",
+              "heading_sequence_similarity>0.75",
+              "conclusion_similarity>0.7"
+            ]
+          },
+          "expert_insight_complete": true,
+          "expert_insight_missing_fields": [],
+          "reason": "repeated_sentence_ratio>0.12; heading_sequence_similarity>0.75; conclusion_similarity>0.7"
+        }
+      ],
+      "signalCardItems": [
+        {
+          "id": "c7ae25d85f99454d",
+          "title": "Research Bits: July 14",
+          "infrastructure_relevance_score": 1,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "cloud_capacity_relevance:0.32(hyperscalers)",
+            "semiconductor_relevance:0.94(semiconductor, semiconductors, gpu)",
+            "power_grid_relevance:0.22(power)",
+            "capital_markets_relevance:0.28(capex)"
+          ],
+          "extraction_quality_score": 1,
+          "source_domain_adapter": "semiengineering",
+          "content_length": 1674,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": false,
+          "repetition_block_reasons": [],
+          "repetition_check": null,
+          "expert_insight_complete": false,
+          "expert_insight_missing_fields": [
+            "named_companies"
+          ],
+          "reason": "expert_insight_missing_fields named_companies"
+        }
+      ],
+      "archiveOnlyItems": []
     }
   ],
-  "lastRunAt": "2026-07-13T23:56:18.121Z"
+  "lastRunAt": "2026-07-14T09:14:36.780Z"
 }
