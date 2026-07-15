@@ -629,7 +629,9 @@
     "92047d14db22997b",
     "187ec8a0b9e6ba78",
     "51191e097865c42b",
-    "e1912c9cd69c0da2"
+    "e1912c9cd69c0da2",
+    "f3bbc43217cca76d",
+    "65e767c739e4a51d"
   ],
   "dayPlans": {
     "2026-03-24": {
@@ -30414,137 +30416,449 @@
         "1": true,
         "2": true
       }
+    },
+    "2026-07-16": {
+      "date": "2026-07-16",
+      "createdAt": "2026-07-15T16:39:23.739Z",
+      "refreshedAt": "2026-07-15T16:39:23.739Z",
+      "candidateWindowHours": 24,
+      "curatedItems": [
+        {
+          "id": "f3bbc43217cca76d",
+          "source": "Toms Hardware",
+          "url": "https://www.tomshardware.com/pc-components/liquid-cooling/asrock-phantom-gaming-and-steel-legend-360-lcd-review",
+          "title": "ASRock Phantom Gaming and Steel Legend 360 LCD review: An impressive cooling debut",
+          "snippet": "ASRock has entered the cooling market with the Phantom Gaming 360 LCD and Steel Legend 360 LCD AIOs. We’ve tested both liquid coolers with AMD’s Ryzen 9 9950X3D to benchmark their thermal proficiency.",
+          "contentText": "ASRock is well known among PC enthusiasts for its graphics cards, motherboards, power supplies, and gaming monitors. Now, it has entered the market for liquid cooling solutions. We’re looking at two of the company’s first AIOs here, the Phantom Gaming 360 LCD and Steel Legend 360 LCD. Both of these liquid coolers feature 3.4-inch 480 x 480 displays for showing off animations and monitoring performance metrics. Aside from aesthetics, the main differences between the two are the included fans and radiator size. The Steel Legend 360 incorporates a standard 27 mm thick radiator, whereas the Phantom Gaming 360 uses a thicker-than-normal 32 mm radiator. (Image credit: Tom's Hardware) Let's take a look at the specifications and features of the coolers, then we’ll go over thermal and noise benchm…",
+          "publishedAt": "2026-07-15T16:11:45.000Z",
+          "sourceImage": "https://cdn.mos.cms.futurecdn.net/4gAWAWNW22eCSRgFPP9cDQ-1280-80.jpg",
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "category": "Cooling & Facility Engineering",
+          "primary_category": "Cooling & Facility Engineering",
+          "secondary_category": "Thermal design and rack density",
+          "infrastructure_layer": "Cooling",
+          "affected_stakeholders": [
+            "operators",
+            "equipment vendors",
+            "data center developers",
+            "enterprise IT"
+          ],
+          "article_type": "Research / Technical",
+          "urgency_score": 0.58,
+          "taxonomy_confidence": 0.88,
+          "taxonomy_reasons": [
+            "cooling",
+            "liquid cooling",
+            "thermal"
+          ],
+          "direct_ai_infrastructure_relevance": 1,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0.44,
+          "power_grid_relevance": 0.22,
+          "cooling_relevance": 1,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 1,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "semiconductor_relevance:0.44(amd, gpu)",
+            "power_grid_relevance:0.22(power)",
+            "cooling_relevance:1.00(cooling, liquid cooling, thermal)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 1,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0.44,
+            "power_grid_relevance": 0.22,
+            "cooling_relevance": 1,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 1,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+              "semiconductor_relevance:0.44(amd, gpu)",
+              "power_grid_relevance:0.22(power)",
+              "cooling_relevance:1.00(cooling, liquid cooling, thermal)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 88
+        },
+        {
+          "id": "65e767c739e4a51d",
+          "source": "Data Center POST",
+          "url": "https://datacenterpost.com/edge-data-center-market-to-surpass-usd-71-9-billion-by-2035/",
+          "title": "Edge Data Center Market to Surpass USD 71.9 Billion by 2035",
+          "snippet": "TL;DR The global edge data center market is projected to surge from USD 14.7 billion in 2025 to USD 71.9 billion by 2035 at a rapid 17.5% CAGR. Demand is fueled by the need for low-latency processing, real-time computin…",
+          "contentText": "TL;DR The global edge data center market is projected to surge from USD 14.7 billion in 2025 to USD 71.9 billion by 2035 at a rapid 17.5% CAGR. Demand is fueled by the need for low-latency processing, real-time computing, near-source AI inference, and strict data residency compliance. Leading global providers are prioritizing modular deployments, energy efficiency, automation, and strategic telecom partnerships to handle rising workloads. # # # The global edge data center market was valued at USD 14.7 billion in 2025 and is estimated to grow at a CAGR of 17.5% to reach USD 71.9 billion by 2035, according to a recent report by Global Market Insights Inc. Market expansion reflects the accelerating demand for low-latency digital infrastructure as real-time computing requirements continue to…",
+          "publishedAt": "2026-07-15T16:00:55.000Z",
+          "sourceImage": "https://d3qut6qyo6tw2j.cloudfront.net/bin/uploads/2026/07/14111217/DCP_Edge-Data-Center-Market_Image-1024x512.jpg",
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "Colocation & Wholesale",
+          "category": "Data Centers",
+          "primary_category": "Data Centers",
+          "secondary_category": "Campus development and colocation capacity",
+          "infrastructure_layer": "Facility",
+          "affected_stakeholders": [
+            "data center operators",
+            "developers",
+            "site selectors",
+            "investors"
+          ],
+          "article_type": "Capacity Expansion",
+          "urgency_score": 0.45,
+          "taxonomy_confidence": 0.86,
+          "taxonomy_reasons": [
+            "data center",
+            "colocation",
+            "wholesale"
+          ],
+          "direct_ai_infrastructure_relevance": 0.78,
+          "data_center_relevance": 0.89,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.838,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:0.78",
+            "data_center_relevance:0.89(data center, colocation)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 0.78,
+            "data_center_relevance": 0.89,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.838,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:0.78",
+              "data_center_relevance:0.89(data center, colocation)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 81
+        },
+        {
+          "id": "e2a2eeb40cb21604",
+          "source": "StorageReview",
+          "url": "https://www.storagereview.com/news/ibm-power-s1112-brings-local-ai-inference-to-the-edge-as-power-goes-autonomous",
+          "title": "IBM Power S1112 Brings Local AI Inference to the Edge as Power Goes Autonomous",
+          "snippet": "IBM has expanded its Power server lineup with new software to automate infrastructure management and application development. The announcements include IBM Power Autonomous Operations, an agentic control layer for syste…",
+          "contentText": "IBM has expanded its Power server lineup with new software to automate infrastructure management and application development. The announcements include IBM Power Autonomous Operations, an agentic control layer for system management, and the IBM Bob Premium Package for i, an AI-driven development assistant for IBM i environments. IBM also introduced the Power S1112, a compact single-socket Power11 server designed for on-premises AI inference. The releases build on last year&#8217;s Power11 launch, which IBM positioned around availability, resiliency, and scale across on-premises and IBM Cloud deployments. The company frames these newer additions as extending autonomous IT capabilities across the platform, from application code through runtime operations. IBM cited its Institute for Busines…",
+          "publishedAt": "2026-07-15T15:06:40.000Z",
+          "sourceImage": "https://www.storagereview.com/wp-content/uploads/2026/07/IBM-Power-S1112.png",
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "category": "AI Infrastructure",
+          "primary_category": "AI Infrastructure",
+          "secondary_category": "GPU clusters and deployment readiness",
+          "infrastructure_layer": "Compute",
+          "affected_stakeholders": [
+            "operators",
+            "hyperscalers",
+            "cloud buyers",
+            "investors"
+          ],
+          "article_type": "Product / Platform Update",
+          "urgency_score": 0.57,
+          "taxonomy_confidence": 0.77,
+          "taxonomy_reasons": [
+            "ai infrastructure",
+            "neocloud"
+          ],
+          "direct_ai_infrastructure_relevance": 1,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0.22,
+          "power_grid_relevance": 0.297,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.83,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "semiconductor_relevance:0.22(gpu)",
+            "power_grid_relevance:0.30(power)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 1,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0.22,
+            "power_grid_relevance": 0.297,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.83,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+              "semiconductor_relevance:0.22(gpu)",
+              "power_grid_relevance:0.30(power)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 81
+        },
+        {
+          "id": "782ca6a69788fbd7",
+          "source": "HPCwire",
+          "url": "https://www.hpcwire.com/off-the-wire/esa-brings-quantum-computing-to-earth-observation/",
+          "title": "ESA Brings Quantum Computing to Earth Observation",
+          "snippet": "July 15, 2026 — The European Space Agency (ESA) has installed its first quantum computer, called Bell-1, at its Earth observation centre in Italy. The move marks a significant step in exploring how quantum technology co…",
+          "contentText": "July 15, 2026 &#8212; The European Space Agency (ESA) has installed its first quantum computer, called Bell-1, at its Earth observation centre in Italy. The move marks a significant step in exploring how quantum technology could be merged with classical high-performance computing to improve the speed and efficiency of processing huge amounts of satellite data. Credit: Equal1 Every day, ESA&#8217;s satellites generate vast volumes of complex data that support Earth science, climate modeling, disaster response and a wide range of societal applications. As quantities of data continue to grow – and are increasingly analyzed using machine learning – the limitations of traditional computing are becoming increasingly apparent. Quantum computing could unlock entirely new ways to process complex E…",
+          "publishedAt": "2026-07-15T16:28:32.000Z",
+          "sourceImage": "https://www.hpcwire.com/wp-content/uploads/2026/07/Equal1-bell-1-298x300.png",
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "category": "AI Infrastructure",
+          "primary_category": "AI Infrastructure",
+          "secondary_category": "GPU clusters and deployment readiness",
+          "infrastructure_layer": "Compute",
+          "affected_stakeholders": [
+            "operators",
+            "hyperscalers",
+            "cloud buyers",
+            "investors"
+          ],
+          "article_type": "Other",
+          "urgency_score": 0.43,
+          "taxonomy_confidence": 0.77,
+          "taxonomy_reasons": [
+            "ai infrastructure",
+            "neocloud"
+          ],
+          "direct_ai_infrastructure_relevance": 1,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0.22,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.778,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud, high-performance computing)",
+            "semiconductor_relevance:0.22(gpu)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 1,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0.22,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.778,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud, high-performance computing)",
+              "semiconductor_relevance:0.22(gpu)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 79
+        },
+        {
+          "id": "08a24787d06c2eda",
+          "source": "TechCrunch AI",
+          "url": "https://techcrunch.com/2026/07/15/microsoft-patches-record-number-of-security-vulnerabilities-citing-its-use-of-ai/",
+          "title": "Microsoft patches record number of security vulnerabilities, citing its use of AI",
+          "snippet": "Microsoft's monthly release of security fixes, dubbed Patch Tuesday, resolved a record 570 security vulnerabilities across the company's product line, thanks to discoveries with AI.",
+          "contentText": "Microsoft's monthly release of security fixes, dubbed Patch Tuesday, resolved a record 570 security vulnerabilities across the company's product line, thanks to discoveries with AI.",
+          "publishedAt": "2026-07-15T16:20:18.000Z",
+          "sourceImage": null,
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "category": "AI Infrastructure",
+          "primary_category": "AI Infrastructure",
+          "secondary_category": "GPU clusters and deployment readiness",
+          "infrastructure_layer": "Compute",
+          "affected_stakeholders": [
+            "operators",
+            "hyperscalers",
+            "cloud buyers",
+            "investors"
+          ],
+          "article_type": "Product / Platform Update",
+          "urgency_score": 0.43,
+          "taxonomy_confidence": 0.77,
+          "taxonomy_reasons": [
+            "ai infrastructure",
+            "neocloud"
+          ],
+          "direct_ai_infrastructure_relevance": 1,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0.22,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.778,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "semiconductor_relevance:0.22(gpu)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 1,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0.22,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.778,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+              "semiconductor_relevance:0.22(gpu)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 79
+        },
+        {
+          "id": "54709889243bebfb",
+          "source": "Data Center Dynamics",
+          "url": "https://www.datacenterdynamics.com/en/news/north-carolina-ai-data-center-proposal-withdrawn-as-county-officials-mull-moratorium/",
+          "title": "North Carolina AI data center proposal withdrawn as county officials mull moratorium",
+          "snippet": "The project could have cost $19.2 billion with an initial proposed capacity of 300MW",
+          "contentText": "The project could have cost $19.2 billion with an initial proposed capacity of 300MW",
+          "publishedAt": "2026-07-15T15:50:00.000Z",
+          "sourceImage": "https://media.datacenterdynamics.com/media/images/Tarboro_DC.2e16d0ba.fill-750x500.png",
+          "region": "APAC",
+          "language": "en",
+          "defaultCategory": "Colocation & Wholesale",
+          "category": "Data Centers",
+          "primary_category": "Data Centers",
+          "secondary_category": "Campus development and colocation capacity",
+          "infrastructure_layer": "Facility",
+          "affected_stakeholders": [
+            "data center operators",
+            "developers",
+            "site selectors",
+            "investors"
+          ],
+          "article_type": "Capacity Expansion",
+          "urgency_score": 0.71,
+          "taxonomy_confidence": 0.86,
+          "taxonomy_reasons": [
+            "data center",
+            "colocation",
+            "wholesale"
+          ],
+          "direct_ai_infrastructure_relevance": 0.78,
+          "data_center_relevance": 0.89,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.838,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:0.78(ai data center)",
+            "data_center_relevance:0.89(data center, colocation)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 0.78,
+            "data_center_relevance": 0.89,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.838,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:0.78(ai data center)",
+              "data_center_relevance:0.89(data center, colocation)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 74
+        }
+      ],
+      "curatedIds": [
+        "f3bbc43217cca76d",
+        "65e767c739e4a51d",
+        "e2a2eeb40cb21604",
+        "782ca6a69788fbd7",
+        "08a24787d06c2eda",
+        "54709889243bebfb"
+      ],
+      "publishedIds": [
+        "f3bbc43217cca76d",
+        "65e767c739e4a51d"
+      ],
+      "slotPublications": {
+        "0": true
+      }
     }
   },
   "runHistory": [
-    {
-      "at": "2026-06-05T10:54:06.429Z",
-      "day": "2026-06-05",
-      "slot": 2,
-      "publishedCount": 0,
-      "signalCardCount": 1,
-      "archiveOnlyCount": 0,
-      "repetitionBlockedCount": 1,
-      "publishedIds": [],
-      "processedIds": [
-        "ff19a60ff4691fd6",
-        "100115ec8124e387"
-      ],
-      "blockedCount": 1,
-      "blockedItems": [
-        {
-          "id": "ff19a60ff4691fd6",
-          "title": "Reduce Memory Redesigns With Shift-Left",
-          "infrastructure_relevance_score": 1,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "cloud_capacity_relevance:0.32(hyperscalers)",
-            "semiconductor_relevance:0.94(semiconductor, high-bandwidth memory, gpu)",
-            "power_grid_relevance:0.58(power, interconnection)",
-            "capital_markets_relevance:0.28(capex)"
-          ],
-          "extraction_quality_score": 1,
-          "source_domain_adapter": "semiengineering",
-          "content_length": 1766,
-          "boilerplate_ratio": 0,
-          "repetition_blocked": false,
-          "repetition_block_reasons": [],
-          "repetition_check": null,
-          "expert_insight_complete": false,
-          "expert_insight_missing_fields": [
-            "concrete_facts",
-            "named_companies"
-          ],
-          "reason": "expert_insight_missing_fields concrete_facts, named_companies"
-        }
-      ],
-      "repetitionBlockedItems": [
-        {
-          "id": "100115ec8124e387",
-          "title": "Seoul Purpose: How NVIDIA and South Korea Are Building the Future of AI",
-          "infrastructure_relevance_score": 0.932,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "cloud_capacity_relevance:0.32(hyperscalers)",
-            "semiconductor_relevance:0.60(nvidia, gpu)",
-            "power_grid_relevance:0.22(power)"
-          ],
-          "extraction_quality_score": 1,
-          "source_domain_adapter": "generic",
-          "content_length": 1270,
-          "boilerplate_ratio": 0,
-          "repetition_blocked": true,
-          "repetition_block_reasons": [
-            "repeated_sentence_ratio>0.12",
-            "heading_sequence_similarity>0.75",
-            "conclusion_similarity>0.7"
-          ],
-          "repetition_check": {
-            "compared_article_count": 20,
-            "repeated_sentence_ratio": 0.16666666666666666,
-            "repeated_paragraph_ratio": 0.16666666666666666,
-            "heading_sequence_similarity": 1,
-            "banned_phrase_count": 0,
-            "banned_phrase_counts": {},
-            "recent_banned_phrase_counts": {},
-            "ngram_overlap": 0.4380952380952381,
-            "blueprint_repetition": 2,
-            "conclusion_similarity": 0.9271050693011066,
-            "repeated_sentence_count": 1,
-            "repeated_paragraph_count": 1,
-            "heading_sequence": [
-              "System Change",
-              "Bottleneck",
-              "Engineering Tradeoff",
-              "Validation Metric"
-            ],
-            "blocked": true,
-            "reasons": [
-              "repeated_sentence_ratio>0.12",
-              "heading_sequence_similarity>0.75",
-              "conclusion_similarity>0.7"
-            ]
-          },
-          "expert_insight_complete": true,
-          "expert_insight_missing_fields": [],
-          "reason": "repeated_sentence_ratio>0.12; heading_sequence_similarity>0.75; conclusion_similarity>0.7"
-        }
-      ],
-      "signalCardItems": [
-        {
-          "id": "ff19a60ff4691fd6",
-          "title": "Reduce Memory Redesigns With Shift-Left",
-          "infrastructure_relevance_score": 1,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "cloud_capacity_relevance:0.32(hyperscalers)",
-            "semiconductor_relevance:0.94(semiconductor, high-bandwidth memory, gpu)",
-            "power_grid_relevance:0.58(power, interconnection)",
-            "capital_markets_relevance:0.28(capex)"
-          ],
-          "extraction_quality_score": 1,
-          "source_domain_adapter": "semiengineering",
-          "content_length": 1766,
-          "boilerplate_ratio": 0,
-          "repetition_blocked": false,
-          "repetition_block_reasons": [],
-          "repetition_check": null,
-          "expert_insight_complete": false,
-          "expert_insight_missing_fields": [
-            "concrete_facts",
-            "named_companies"
-          ],
-          "reason": "expert_insight_missing_fields concrete_facts, named_companies"
-        }
-      ],
-      "archiveOnlyItems": []
-    },
     {
       "at": "2026-06-05T17:22:44.567Z",
       "day": "2026-06-06",
@@ -43918,7 +44232,130 @@
         }
       ],
       "archiveOnlyItems": []
+    },
+    {
+      "at": "2026-07-15T16:39:23.739Z",
+      "day": "2026-07-16",
+      "slot": 0,
+      "publishedCount": 0,
+      "signalCardCount": 0,
+      "archiveOnlyCount": 0,
+      "repetitionBlockedCount": 2,
+      "publishedIds": [],
+      "processedIds": [
+        "f3bbc43217cca76d",
+        "65e767c739e4a51d"
+      ],
+      "blockedCount": 0,
+      "blockedItems": [],
+      "repetitionBlockedItems": [
+        {
+          "id": "f3bbc43217cca76d",
+          "title": "ASRock Phantom Gaming and Steel Legend 360 LCD review: An impressive cooling debut",
+          "infrastructure_relevance_score": 1,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "cloud_capacity_relevance:0.32(hyperscalers)",
+            "semiconductor_relevance:0.44(amd, gpu)",
+            "power_grid_relevance:0.22(power)",
+            "cooling_relevance:1.00(cooling, liquid cooling, thermal)"
+          ],
+          "extraction_quality_score": 1,
+          "source_domain_adapter": "generic",
+          "content_length": 1795,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": true,
+          "repetition_block_reasons": [
+            "repeated_sentence_ratio>0.12",
+            "heading_sequence_similarity>0.75",
+            "conclusion_similarity>0.7"
+          ],
+          "repetition_check": {
+            "compared_article_count": 20,
+            "repeated_sentence_ratio": 0.14285714285714285,
+            "repeated_paragraph_ratio": 0.16666666666666666,
+            "heading_sequence_similarity": 1,
+            "banned_phrase_count": 0,
+            "banned_phrase_counts": {},
+            "recent_banned_phrase_counts": {},
+            "ngram_overlap": 0.42452830188679247,
+            "blueprint_repetition": 1,
+            "conclusion_similarity": 0.9511897312113418,
+            "repeated_sentence_count": 1,
+            "repeated_paragraph_count": 1,
+            "heading_sequence": [
+              "System Change",
+              "Bottleneck",
+              "Engineering Tradeoff",
+              "Validation Metric"
+            ],
+            "blocked": true,
+            "reasons": [
+              "repeated_sentence_ratio>0.12",
+              "heading_sequence_similarity>0.75",
+              "conclusion_similarity>0.7"
+            ]
+          },
+          "expert_insight_complete": true,
+          "expert_insight_missing_fields": [],
+          "reason": "repeated_sentence_ratio>0.12; heading_sequence_similarity>0.75; conclusion_similarity>0.7"
+        },
+        {
+          "id": "65e767c739e4a51d",
+          "title": "Edge Data Center Market to Surpass USD 71.9 Billion by 2035",
+          "infrastructure_relevance_score": 0.972,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:0.78",
+            "data_center_relevance:1.00(data center, data centers, colocation)",
+            "cloud_capacity_relevance:0.32(hyperscalers)",
+            "power_grid_relevance:0.22(power)"
+          ],
+          "extraction_quality_score": 1,
+          "source_domain_adapter": "datacenterpost",
+          "content_length": 1606,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": true,
+          "repetition_block_reasons": [
+            "repeated_sentence_ratio>0.12",
+            "conclusion_similarity>0.7"
+          ],
+          "repetition_check": {
+            "compared_article_count": 20,
+            "repeated_sentence_ratio": 0.2,
+            "repeated_paragraph_ratio": 0.2,
+            "heading_sequence_similarity": 0,
+            "banned_phrase_count": 0,
+            "banned_phrase_counts": {},
+            "recent_banned_phrase_counts": {},
+            "ngram_overlap": 0.3106060606060606,
+            "blueprint_repetition": 1,
+            "conclusion_similarity": 0.9511897312113418,
+            "repeated_sentence_count": 1,
+            "repeated_paragraph_count": 1,
+            "heading_sequence": [
+              "Policy Move",
+              "Infrastructure Exposure",
+              "Who Benefits",
+              "Watch Item"
+            ],
+            "blocked": true,
+            "reasons": [
+              "repeated_sentence_ratio>0.12",
+              "conclusion_similarity>0.7"
+            ]
+          },
+          "expert_insight_complete": true,
+          "expert_insight_missing_fields": [],
+          "reason": "repeated_sentence_ratio>0.12; conclusion_similarity>0.7"
+        }
+      ],
+      "signalCardItems": [],
+      "archiveOnlyItems": []
     }
   ],
-  "lastRunAt": "2026-07-15T09:19:21.338Z"
+  "lastRunAt": "2026-07-15T16:39:23.739Z"
 }
