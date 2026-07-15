@@ -625,7 +625,9 @@
     "c7ae25d85f99454d",
     "1dfc1606ffe66c8c",
     "983c62e10589eded",
-    "018b3a5f45b1d14d"
+    "018b3a5f45b1d14d",
+    "92047d14db22997b",
+    "187ec8a0b9e6ba78"
   ],
   "dayPlans": {
     "2026-03-24": {
@@ -29973,218 +29975,73 @@
     "2026-07-15": {
       "date": "2026-07-15",
       "createdAt": "2026-07-14T16:21:45.310Z",
-      "refreshedAt": "2026-07-14T16:21:45.310Z",
+      "refreshedAt": "2026-07-14T23:55:20.386Z",
       "candidateWindowHours": 24,
       "curatedItems": [
         {
-          "id": "983c62e10589eded",
-          "source": "Data Center POST",
-          "url": "https://datacenterpost.com/speed-to-deploy-how-modular-data-centers-cut-deployment-timelines-by-up-to-50/",
-          "title": "Speed-to-Deploy: How Modular Data Centers Cut Deployment Timelines by Up to 50%",
-          "snippet": "TL;DR Replacing sequential on-site construction with parallel factory production allows modular units to deliver in just 8-16 weeks, compared to the 18-36 months required for traditional builds. Modular infrastructure i…",
-          "contentText": "TL;DR Replacing sequential on-site construction with parallel factory production allows modular units to deliver in just 8-16 weeks, compared to the 18-36 months required for traditional builds. Modular infrastructure is roughly 15-25% cheaper to construct, with total project costs (including financing and risk-adjusted contingency) favoring modular by 15-25% for deployments below 10 MW. This rapid deployment significantly reduces exposure to specification obsolescence driven by fast-evolving AI workloads. Rather than assembling separate components on-site, modular units integrate power, cooling, racks, and security. These systems undergo full integration testing in a controlled factory environment before delivery, eliminating the most common sources of on-site commissioning delays. While…",
-          "publishedAt": "2026-07-14T16:00:45.000Z",
-          "sourceImage": "https://d3qut6qyo6tw2j.cloudfront.net/bin/uploads/2026/07/13145323/DCP-Blog-Submission_7.14.2026-1024x512.png",
-          "region": "US",
-          "language": "en",
-          "defaultCategory": "Colocation & Wholesale",
-          "category": "Data Centers",
-          "primary_category": "Data Centers",
-          "secondary_category": "Campus development and colocation capacity",
-          "infrastructure_layer": "Facility",
-          "affected_stakeholders": [
-            "data center operators",
-            "developers",
-            "site selectors",
-            "investors"
-          ],
-          "article_type": "Financing / M&A",
-          "urgency_score": 0.57,
-          "taxonomy_confidence": 0.77,
-          "taxonomy_reasons": [
-            "colocation",
-            "wholesale"
-          ],
-          "direct_ai_infrastructure_relevance": 0.82,
-          "data_center_relevance": 1,
-          "cloud_capacity_relevance": 0,
-          "semiconductor_relevance": 0,
-          "power_grid_relevance": 0.42,
-          "cooling_relevance": 0.34,
-          "capital_markets_relevance": 0.32,
-          "enterprise_ai_infrastructure_relevance": 0.24,
-          "infrastructure_relevance_score": 0.98,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:0.82",
-            "data_center_relevance:1.00(data center, data centers, colocation)",
-            "power_grid_relevance:0.42(power, mw)",
-            "cooling_relevance:0.34(cooling)",
-            "capital_markets_relevance:0.32(financing)",
-            "enterprise_ai_infrastructure_relevance:0.24(ai workloads)"
-          ],
-          "infrastructure_relevance": {
-            "direct_ai_infrastructure_relevance": 0.82,
-            "data_center_relevance": 1,
-            "cloud_capacity_relevance": 0,
-            "semiconductor_relevance": 0,
-            "power_grid_relevance": 0.42,
-            "cooling_relevance": 0.34,
-            "capital_markets_relevance": 0.32,
-            "enterprise_ai_infrastructure_relevance": 0.24,
-            "infrastructure_relevance_score": 0.98,
-            "infrastructure_relevance_tier": "full_memo",
-            "infrastructure_relevance_action": "generate_full_memo",
-            "infrastructure_relevance_reasons": [
-              "direct_ai_infrastructure_relevance:0.82",
-              "data_center_relevance:1.00(data center, data centers, colocation)",
-              "power_grid_relevance:0.42(power, mw)",
-              "cooling_relevance:0.34(cooling)",
-              "capital_markets_relevance:0.32(financing)",
-              "enterprise_ai_infrastructure_relevance:0.24(ai workloads)"
-            ],
-            "infrastructureRelevanceAction": "generate_full_memo",
-            "articlePagePublished": true,
-            "homepagePublished": true,
-            "archiveOnly": false,
-            "archiveOnlyReason": null
-          },
-          "score": 87
-        },
-        {
-          "id": "018b3a5f45b1d14d",
-          "source": "Toms Hardware",
-          "url": "https://www.tomshardware.com/tech-industry/data-centers/elon-musks-colossus-2-data-center-installed-59-natural-gas-turbines-without-permission-report-claims-thousands-of-tons-of-pollutants-reportedly-impact-black-communities-in-mississippi-already-suffering-from-elevated-lung-disease-rates",
-          "title": "Elon Musk’s Colossus 2 data center installed 59 natural gas turbines without permission, report claims — thousands of tons of pollutants reportedly impact Black communities in Mississippi already suffering from elevated lung disease rates",
-          "snippet": "The population of the communities surrounding the Colossus 2 site, which is in the center of a lawsuit involving unpermitted natural gas turbines and pollution, is predominantly Black.",
-          "contentText": "Elon Musk's Colossus 2 xAI data center, which runs independently of the power grid through on-site natural gas turbines, is said to be releasing thousands of tons of nitrogen oxide and carbon monoxide every year. According to Reuters , the company has installed 59 temporary, mobile natural gas turbines without permission, and these unpermitted portable units mostly heavily affect the communities surrounding the site, which happen to be predominantly Black and are already suffering disproportionately high lung disease rates. xAI has claimed that it’s running 27 turbines without any permits, saying that it’s exempted because of their temporary nature. Elon Musk’s alleged use of illegal turbines isn’t a new issue, with the community discovering that it’s been using over 30 gas turbines on th…",
-          "publishedAt": "2026-07-14T15:55:29.000Z",
-          "sourceImage": "https://cdn.mos.cms.futurecdn.net/77phirBmFdjwgvvZh2Pr8Q-1280-80.png",
-          "region": "US",
+          "id": "187ec8a0b9e6ba78",
+          "source": "StorageReview",
+          "url": "https://www.storagereview.com/news/supermicros-edge-ai-appliances-drop-the-per-site-storage-array-with-portworx-and-openshift",
+          "title": "Supermicro’s Edge AI Appliances Drop the Per-Site Storage Array With Portworx and OpenShift",
+          "snippet": "Supermicro has introduced Kubernetes Edge AI Appliances, developed in partnership with Red Hat and Everpure. The pre-integrated systems combine Supermicro edge servers, Red Hat OpenShift, and the Portworx by Everpure Ku…",
+          "contentText": "Supermicro has introduced Kubernetes Edge AI Appliances, developed in partnership with Red Hat and Everpure. The pre-integrated systems combine Supermicro edge servers, Red Hat OpenShift, and the Portworx by Everpure Kubernetes data management platform to support AI inference, containers, and virtual machines across distributed sites. The offering is positioned as a validated, software-preloaded deployment model for organizations that need to standardize AI infrastructure outside the data center. Supermicro is targeting edge environments where limited onsite IT resources, intermittent network connectivity, and the operational overhead of managing separate storage arrays can complicate deployment. Red Hat OpenShift provides the Kubernetes and hybrid-cloud application layer, giving organiza…",
+          "publishedAt": "2026-07-14T17:44:58.000Z",
+          "sourceImage": "https://www.storagereview.com/wp-content/uploads/2026/07/Storagereview-supermicro-edge-appliances.jpeg",
+          "region": "Global",
           "language": "en",
           "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
-          "category": "AI Infrastructure",
-          "primary_category": "AI Infrastructure",
-          "secondary_category": "GPU clusters and deployment readiness",
-          "infrastructure_layer": "Compute",
+          "category": "Enterprise AI Infrastructure",
+          "primary_category": "Enterprise AI Infrastructure",
+          "secondary_category": "Enterprise deployment operations",
+          "infrastructure_layer": "Enterprise Platform",
           "affected_stakeholders": [
-            "operators",
-            "hyperscalers",
+            "enterprise IT",
             "cloud buyers",
-            "investors"
-          ],
-          "article_type": "Other",
-          "urgency_score": 0.65,
-          "taxonomy_confidence": 0.77,
-          "taxonomy_reasons": [
-            "ai infrastructure",
-            "neocloud"
-          ],
-          "direct_ai_infrastructure_relevance": 1,
-          "data_center_relevance": 0.55,
-          "cloud_capacity_relevance": 0,
-          "semiconductor_relevance": 0.22,
-          "power_grid_relevance": 0.5,
-          "cooling_relevance": 0,
-          "capital_markets_relevance": 0,
-          "enterprise_ai_infrastructure_relevance": 0,
-          "infrastructure_relevance_score": 0.921,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "data_center_relevance:0.55(data center)",
-            "semiconductor_relevance:0.22(gpu)",
-            "power_grid_relevance:0.50(power, grid)"
-          ],
-          "infrastructure_relevance": {
-            "direct_ai_infrastructure_relevance": 1,
-            "data_center_relevance": 0.55,
-            "cloud_capacity_relevance": 0,
-            "semiconductor_relevance": 0.22,
-            "power_grid_relevance": 0.5,
-            "cooling_relevance": 0,
-            "capital_markets_relevance": 0,
-            "enterprise_ai_infrastructure_relevance": 0,
-            "infrastructure_relevance_score": 0.921,
-            "infrastructure_relevance_tier": "full_memo",
-            "infrastructure_relevance_action": "generate_full_memo",
-            "infrastructure_relevance_reasons": [
-              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-              "data_center_relevance:0.55(data center)",
-              "semiconductor_relevance:0.22(gpu)",
-              "power_grid_relevance:0.50(power, grid)"
-            ],
-            "infrastructureRelevanceAction": "generate_full_memo",
-            "articlePagePublished": true,
-            "homepagePublished": true,
-            "archiveOnly": false,
-            "archiveOnlyReason": null
-          },
-          "score": 85
-        },
-        {
-          "id": "b701fee7ca84f29c",
-          "source": "NVIDIA Blog",
-          "url": "https://blogs.nvidia.com/blog/performance-per-watt-ai-infrastructure-efficiency/",
-          "title": "Why Performance per Watt Is the Ultimate Metric for AI Infrastructure Efficiency",
-          "snippet": "Power is AI infrastructure’s inescapable constraint. How many tokens an AI factory can generate within a fixed power budget determines its revenue and profitability. Because of this, performance per watt — a metric that…",
-          "contentText": "Power is AI infrastructure’s inescapable constraint. How many tokens an AI factory can generate within a fixed power budget determines its revenue and profitability. Because of this, performance per watt — a metric that can’t be gamed, only earned through real-world results — is the foundation for AI factories. As agentic AI drives token demand higher, the infrastructure decisions organizations make today will determine who scales and who doesn’t in a power-constrained world. Virtually every frontier AI model today runs on a mixture-of-experts (MoE) architecture. Serving MoE at rack scale demands codesign across every layer of the system and software stack, plus the operational depth earned from running these models under real production load. With the NVIDIA Blackwell NVL72 platform , th…",
-          "publishedAt": "2026-07-14T15:00:20.000Z",
-          "sourceImage": "https://blogs.nvidia.com/wp-content/uploads/2026/07/performance-per-watt-ai-infra-efficiency.jpg",
-          "region": "US",
-          "language": "en",
-          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
-          "category": "AI Infrastructure",
-          "primary_category": "AI Infrastructure",
-          "secondary_category": "GPU clusters and deployment readiness",
-          "infrastructure_layer": "Compute",
-          "affected_stakeholders": [
-            "operators",
-            "hyperscalers",
-            "cloud buyers",
-            "investors"
+            "platform teams",
+            "software vendors"
           ],
           "article_type": "Product / Platform Update",
-          "urgency_score": 0.54,
-          "taxonomy_confidence": 0.8,
+          "urgency_score": 0.5,
+          "taxonomy_confidence": 0.9,
           "taxonomy_reasons": [
-            "ai infrastructure",
-            "neocloud"
+            "openshift",
+            "kubernetes",
+            "storage"
           ],
           "direct_ai_infrastructure_relevance": 1,
-          "data_center_relevance": 0,
+          "data_center_relevance": 0.42,
           "cloud_capacity_relevance": 0,
-          "semiconductor_relevance": 0.5,
-          "power_grid_relevance": 0.22,
+          "semiconductor_relevance": 0.22,
+          "power_grid_relevance": 0,
           "cooling_relevance": 0,
           "capital_markets_relevance": 0,
-          "enterprise_ai_infrastructure_relevance": 0,
-          "infrastructure_relevance_score": 0.875,
+          "enterprise_ai_infrastructure_relevance": 0.94,
+          "infrastructure_relevance_score": 1,
           "infrastructure_relevance_tier": "full_memo",
           "infrastructure_relevance_action": "generate_full_memo",
           "infrastructure_relevance_reasons": [
             "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "semiconductor_relevance:0.50(nvidia, gpu)",
-            "power_grid_relevance:0.22(power)"
+            "data_center_relevance:0.42(data center)",
+            "semiconductor_relevance:0.22(gpu)",
+            "enterprise_ai_infrastructure_relevance:0.94(openshift, kubernetes, data management)"
           ],
           "infrastructure_relevance": {
             "direct_ai_infrastructure_relevance": 1,
-            "data_center_relevance": 0,
+            "data_center_relevance": 0.42,
             "cloud_capacity_relevance": 0,
-            "semiconductor_relevance": 0.5,
-            "power_grid_relevance": 0.22,
+            "semiconductor_relevance": 0.22,
+            "power_grid_relevance": 0,
             "cooling_relevance": 0,
             "capital_markets_relevance": 0,
-            "enterprise_ai_infrastructure_relevance": 0,
-            "infrastructure_relevance_score": 0.875,
+            "enterprise_ai_infrastructure_relevance": 0.94,
+            "infrastructure_relevance_score": 1,
             "infrastructure_relevance_tier": "full_memo",
             "infrastructure_relevance_action": "generate_full_memo",
             "infrastructure_relevance_reasons": [
               "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-              "semiconductor_relevance:0.50(nvidia, gpu)",
-              "power_grid_relevance:0.22(power)"
+              "data_center_relevance:0.42(data center)",
+              "semiconductor_relevance:0.22(gpu)",
+              "enterprise_ai_infrastructure_relevance:0.94(openshift, kubernetes, data management)"
             ],
             "infrastructureRelevanceAction": "generate_full_memo",
             "articlePagePublished": true,
@@ -30192,18 +30049,18 @@
             "archiveOnly": false,
             "archiveOnlyReason": null
           },
-          "score": 83
+          "score": 80
         },
         {
-          "id": "9926123e82210ac9",
-          "source": "StorageReview",
-          "url": "https://www.storagereview.com/review/samsung-990-ssd-review-a-value-gen4-ssd-for-expensive-times",
-          "title": "Samsung 990 SSD Review: A Value Gen4 SSD for Expensive Times",
-          "snippet": "Samsung’s new 990 SSD joins the consumer lineup as a mainstream PCIe Gen4 drive that prioritizes efficiency and value over raw speed. Samsung calls it its most power-efficient SSD to date, claiming up to 38% better powe…",
-          "contentText": "Samsung&#8217;s new 990 SSD joins the consumer lineup as a mainstream PCIe Gen4 drive that prioritizes efficiency and value over raw speed. Samsung calls it its most power-efficient SSD to date, claiming up to 38% better power efficiency than the 990 PRO . The 2TB model is rated at 7,250MB/s sequential read and 6,450MB/s write, with random I/O up to 850K IOPS read and 1,200K IOPS write. The 1TB model steps down slightly to 7,150MB/s sequential read, 700K IOPS random read, and 1,100K IOPS random write. The drive ships in 1TB and 2TB capacities at MSRPs of $269.99 and $529.99, respectively. The name deserves a modest explanation. Samsung&#8217;s 990 family already includes the 990 PRO, 990 EVO , and 990 EVO Plus. The plain &#8220;990&#8221; now sits alongside them as an entry SSD rather tha…",
-          "publishedAt": "2026-07-14T16:00:24.000Z",
-          "sourceImage": "https://www.storagereview.com/wp-content/uploads/2026/07/StorageReview-Samsung-990-6.jpg",
-          "region": "APAC",
+          "id": "92047d14db22997b",
+          "source": "TechCrunch AI",
+          "url": "https://techcrunch.com/2026/07/14/openais-first-hardware-device-is-reportedly-a-screenless-speaker-that-can-move/",
+          "title": "OpenAI’s first hardware device is reportedly a screenless speaker that can move",
+          "snippet": "The device is weirdly described as involving \"mechanical elements that can move on their own\" and the Bloomberg report includes the detail that the device is designed to \"feel like a companion and become a physical mani…",
+          "contentText": "The device is weirdly described as involving \"mechanical elements that can move on their own\" and the Bloomberg report includes the detail that the device is designed to \"feel like a companion and become a physical manifestation of OpenAI’s ChatGPT.\"",
+          "publishedAt": "2026-07-14T22:22:24.000Z",
+          "sourceImage": null,
+          "region": "Global",
           "language": "en",
           "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
           "category": "AI Infrastructure",
@@ -30217,7 +30074,7 @@
             "investors"
           ],
           "article_type": "Other",
-          "urgency_score": 0.52,
+          "urgency_score": 0.43,
           "taxonomy_confidence": 0.77,
           "taxonomy_reasons": [
             "ai infrastructure",
@@ -30227,34 +30084,32 @@
           "data_center_relevance": 0,
           "cloud_capacity_relevance": 0,
           "semiconductor_relevance": 0.22,
-          "power_grid_relevance": 0.22,
+          "power_grid_relevance": 0,
           "cooling_relevance": 0,
           "capital_markets_relevance": 0,
           "enterprise_ai_infrastructure_relevance": 0,
-          "infrastructure_relevance_score": 0.813,
+          "infrastructure_relevance_score": 0.778,
           "infrastructure_relevance_tier": "full_memo",
           "infrastructure_relevance_action": "generate_full_memo",
           "infrastructure_relevance_reasons": [
             "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "semiconductor_relevance:0.22(gpu)",
-            "power_grid_relevance:0.22(power)"
+            "semiconductor_relevance:0.22(gpu)"
           ],
           "infrastructure_relevance": {
             "direct_ai_infrastructure_relevance": 1,
             "data_center_relevance": 0,
             "cloud_capacity_relevance": 0,
             "semiconductor_relevance": 0.22,
-            "power_grid_relevance": 0.22,
+            "power_grid_relevance": 0,
             "cooling_relevance": 0,
             "capital_markets_relevance": 0,
             "enterprise_ai_infrastructure_relevance": 0,
-            "infrastructure_relevance_score": 0.813,
+            "infrastructure_relevance_score": 0.778,
             "infrastructure_relevance_tier": "full_memo",
             "infrastructure_relevance_action": "generate_full_memo",
             "infrastructure_relevance_reasons": [
               "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-              "semiconductor_relevance:0.22(gpu)",
-              "power_grid_relevance:0.22(power)"
+              "semiconductor_relevance:0.22(gpu)"
             ],
             "infrastructureRelevanceAction": "generate_full_memo",
             "articlePagePublished": true,
@@ -30262,17 +30117,87 @@
             "archiveOnly": false,
             "archiveOnlyReason": null
           },
-          "score": 80
+          "score": 79
         },
         {
-          "id": "7ae944b6b0c09115",
+          "id": "66b0598b515b73dd",
           "source": "Toms Hardware",
-          "url": "https://www.tomshardware.com/pc-components/ssds/samsung-990-2tb-ssd-review",
-          "title": "Samsung 990 2TB SSD Review: New flash, familiar speeds",
-          "snippet": "The Samsung 990 is the QLC variant of the manufacturer’s 990 EVO Plus. Despite having newer flash, it largely performs like last-gen, with mediocre power efficiency.",
-          "contentText": "Samsung is back with another solid-state drive, and this time it's something a little bit different. The 990 is a QLC-based 990 EVO Plus, positioned as a budget drive that can still push a lot of bandwidth. It’s a little late to the game and not quite what was rumored for the 990 QVO, but it does bring some new technology to the table. We’re always interested in seeing what Samsung puts out, and this time is no different. It should not be confused as being part of Samsung’s Pro line or, for that matter, the EVO line, so keep that in mind. The drive has its ups and downs, but in this challenging market, and for a budget drive, that’s to be expected. Samsung is still well-regarded for its name and reliable hardware, even as there has been a massive push towards enterprise, away from the con…",
-          "publishedAt": "2026-07-14T16:00:00.000Z",
-          "sourceImage": "https://cdn.mos.cms.futurecdn.net/vbYJXmQsyTqgpvquNJD7y6-1280-80.jpg",
+          "url": "https://www.tomshardware.com/tech-industry/artificial-intelligence/us-govt-allows-chinese-telecom-giant-zte-to-purchase-nvidia-h200-ai-chips-firm-joins-alibaba-tencent-and-bytedance-in-access-to-hopper-tech",
+          "title": "US gov't allows Chinese telecom giant ZTE to purchase Nvidia H200 AI chips — firm joins Alibaba, Tencent, and ByteDance in access to Hopper tech",
+          "snippet": "The United States has licensed Chinese telecom giant ZTE to purchase restricted Nvidia H200 AI chips, but Chinese regulators and domestic procurement initiatives may limit the material impact of the change.",
+          "contentText": "The Sino-American chip wars have resulted in many back-and-forth salvos and negotiations as the countries try and strike a balance between technology access and trade. Currently, both sides have set respective import and export controls, letting specific companies on a case-by-case basis. Today, Reuters reports that Chinese telecoms giant ZTE and server firm Maginfra have received U.S. approval to buy Nvidia's last-gen H200 \"Hopper\" chips. ZTE joins a club that counts Alibaba, Tencent, ByteDance, and JD.com among the roughly 10-strong group of Chinese companies with U.S. clearance for those purchases. Additionally, an apparent subsidiary of Kingsoft Cloud got approval to buy AMD accelerators equivalent to Nvidia's H200, presumably Instinct MI300X-class chips. Over on the Chinese side of t…",
+          "publishedAt": "2026-07-14T19:46:26.000Z",
+          "sourceImage": "https://cdn.mos.cms.futurecdn.net/4tsCCBgB9mYcXBed7UdUSS-1280-80.jpg",
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "category": "Semiconductors",
+          "primary_category": "Semiconductors",
+          "secondary_category": "Accelerators, memory, and advanced packaging",
+          "infrastructure_layer": "Silicon",
+          "affected_stakeholders": [
+            "semiconductor suppliers",
+            "hyperscalers",
+            "server OEMs",
+            "investors"
+          ],
+          "article_type": "Policy / Regulation",
+          "urgency_score": 0.55,
+          "taxonomy_confidence": 0.93,
+          "taxonomy_reasons": [
+            "chip",
+            "gpu",
+            "nvidia",
+            "amd"
+          ],
+          "direct_ai_infrastructure_relevance": 1,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0.818,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.91,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "semiconductor_relevance:0.82(nvidia, amd, gpu)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 1,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0.818,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.91,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+              "semiconductor_relevance:0.82(nvidia, amd, gpu)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 76
+        },
+        {
+          "id": "9dc925789b3faa32",
+          "source": "ServeTheHome",
+          "url": "https://www.servethehome.com/lenovo-thinkstation-p3-ultra-sff-g2-review-intel-nvidia-a-bit-bigger-and-a-bit-better/",
+          "title": "Lenovo ThinkStation P3 Ultra SFF G2 Review A Bit Bigger and a Bit Better",
+          "snippet": "Today we are taking a look at Lenovo's more spacious mini-PC workstation, the ThinkStation P3 Ultra SFF Gen 2. With multiple PCIe slots, the P3 Ultra seeks to strike a fine balance between size and expandability The pos…",
+          "contentText": "Today we are taking a look at Lenovo's more spacious mini-PC workstation, the ThinkStation P3 Ultra SFF Gen 2. With multiple PCIe slots, the P3 Ultra seeks to strike a fine balance between size and expandability The post Lenovo ThinkStation P3 Ultra SFF G2 Review A Bit Bigger and a Bit Better appeared first on ServeTheHome .",
+          "publishedAt": "2026-07-14T17:00:56.000Z",
+          "sourceImage": null,
           "region": "US",
           "language": "en",
           "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
@@ -30286,8 +30211,8 @@
             "cloud buyers",
             "investors"
           ],
-          "article_type": "Market Analysis",
-          "urgency_score": 0.52,
+          "article_type": "Other",
+          "urgency_score": 0.46,
           "taxonomy_confidence": 0.77,
           "taxonomy_reasons": [
             "ai infrastructure",
@@ -30296,35 +30221,33 @@
           "direct_ai_infrastructure_relevance": 1,
           "data_center_relevance": 0,
           "cloud_capacity_relevance": 0,
-          "semiconductor_relevance": 0.22,
-          "power_grid_relevance": 0.22,
+          "semiconductor_relevance": 0.7,
+          "power_grid_relevance": 0,
           "cooling_relevance": 0,
           "capital_markets_relevance": 0,
           "enterprise_ai_infrastructure_relevance": 0,
-          "infrastructure_relevance_score": 0.813,
+          "infrastructure_relevance_score": 0.884,
           "infrastructure_relevance_tier": "full_memo",
           "infrastructure_relevance_action": "generate_full_memo",
           "infrastructure_relevance_reasons": [
             "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "semiconductor_relevance:0.22(gpu)",
-            "power_grid_relevance:0.22(power)"
+            "semiconductor_relevance:0.70(nvidia, intel, gpu)"
           ],
           "infrastructure_relevance": {
             "direct_ai_infrastructure_relevance": 1,
             "data_center_relevance": 0,
             "cloud_capacity_relevance": 0,
-            "semiconductor_relevance": 0.22,
-            "power_grid_relevance": 0.22,
+            "semiconductor_relevance": 0.7,
+            "power_grid_relevance": 0,
             "cooling_relevance": 0,
             "capital_markets_relevance": 0,
             "enterprise_ai_infrastructure_relevance": 0,
-            "infrastructure_relevance_score": 0.813,
+            "infrastructure_relevance_score": 0.884,
             "infrastructure_relevance_tier": "full_memo",
             "infrastructure_relevance_action": "generate_full_memo",
             "infrastructure_relevance_reasons": [
               "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-              "semiconductor_relevance:0.22(gpu)",
-              "power_grid_relevance:0.22(power)"
+              "semiconductor_relevance:0.70(nvidia, intel, gpu)"
             ],
             "infrastructureRelevanceAction": "generate_full_memo",
             "articlePagePublished": true,
@@ -30332,17 +30255,17 @@
             "archiveOnly": false,
             "archiveOnlyReason": null
           },
-          "score": 80
+          "score": 75
         },
         {
-          "id": "f335c1240a5edee1",
-          "source": "HPCwire",
-          "url": "https://www.hpcwire.com/off-the-wire/inl-links-hpc-ai-and-digital-twin-to-control-research-reactor-remotely/",
-          "title": "INL Links HPC, AI and Digital Twin to Control Research Reactor Remotely",
-          "snippet": "IDAHO FALLS, Idaho, July 14, 2026 — For the first time, researchers from Idaho National Laboratory, the Grainger College of Engineering at the University of Illinois Urbana-Champaign, and Purdue University used a geogra…",
-          "contentText": "IDAHO FALLS, Idaho, July 14, 2026 &#8212; For the first time, researchers from Idaho National Laboratory , the Grainger College of Engineering at the University of Illinois Urbana-Champaign, and Purdue University used a geographically distributed control system to remotely and automatically adjust the power of a research reactor in real time, with the reactor’s own safety systems retaining full control throughout. Using INL’s high performance computing systems, researchers remotely adjusted the power of a Purdue University research reactor in real time for the first time. Credit: INL. Working with PUR1, a low-power research reactor at Purdue, the team first demonstrated remote power adjustments through an automatic adjustment system called a digital control loop, then made the loop furthe…",
-          "publishedAt": "2026-07-14T13:38:50.000Z",
-          "sourceImage": "https://www.hpcwire.com/wp-content/uploads/2026/07/INL-P-12356-04-1-1450x967-1-300x200.png",
+          "id": "694a443da818661c",
+          "source": "NVIDIA Blog",
+          "url": "https://blogs.nvidia.com/blog/nemotron-open-models-ai-trust-control-customize/",
+          "title": "Nemotron Labs: How Open Models Give Enterprises and Nations AI They Can Trust, Control and Customize",
+          "snippet": "Enterprises have plenty of powerful models to choose from. The real test is whether the AI an enterprise builds uniquely addresses the needs of the business: improving workflows, tapping into domain knowledge and exceed…",
+          "contentText": "Editor’s note: This post is part of the Nemotron Labs blog series, which explores how the latest open models, datasets and training techniques help businesses build specialized AI systems and applications on NVIDIA platforms. Each post highlights practical ways to use an open stack to deliver real value in production — from transparent research copilots to scalable AI agents. Enterprises have plenty of powerful models to choose from. The real test is whether the AI an enterprise builds uniquely addresses the needs of the business: improving workflows, tapping into domain knowledge and exceeding standards for accuracy and trust. Increasingly, competitive AI advantage comes from how organizations build with available models, more than which one they choose. Open models like NVIDIA Nemotron…",
+          "publishedAt": "2026-07-14T16:45:13.000Z",
+          "sourceImage": "https://blogs.nvidia.com/wp-content/uploads/2026/07/nemotron-labs-open-models-blog-feature-image.jpg",
           "region": "US",
           "language": "en",
           "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
@@ -30357,45 +30280,42 @@
             "investors"
           ],
           "article_type": "Research / Technical",
-          "urgency_score": 0.52,
-          "taxonomy_confidence": 0.88,
+          "urgency_score": 0.45,
+          "taxonomy_confidence": 0.77,
           "taxonomy_reasons": [
             "ai infrastructure",
-            "neocloud",
-            "hpc"
+            "neocloud"
           ],
           "direct_ai_infrastructure_relevance": 1,
           "data_center_relevance": 0,
           "cloud_capacity_relevance": 0,
-          "semiconductor_relevance": 0.22,
-          "power_grid_relevance": 0.22,
+          "semiconductor_relevance": 0.5,
+          "power_grid_relevance": 0,
           "cooling_relevance": 0,
           "capital_markets_relevance": 0,
           "enterprise_ai_infrastructure_relevance": 0,
-          "infrastructure_relevance_score": 0.813,
+          "infrastructure_relevance_score": 0.84,
           "infrastructure_relevance_tier": "full_memo",
           "infrastructure_relevance_action": "generate_full_memo",
           "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud, hpc)",
-            "semiconductor_relevance:0.22(gpu)",
-            "power_grid_relevance:0.22(power)"
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "semiconductor_relevance:0.50(nvidia, gpu)"
           ],
           "infrastructure_relevance": {
             "direct_ai_infrastructure_relevance": 1,
             "data_center_relevance": 0,
             "cloud_capacity_relevance": 0,
-            "semiconductor_relevance": 0.22,
-            "power_grid_relevance": 0.22,
+            "semiconductor_relevance": 0.5,
+            "power_grid_relevance": 0,
             "cooling_relevance": 0,
             "capital_markets_relevance": 0,
             "enterprise_ai_infrastructure_relevance": 0,
-            "infrastructure_relevance_score": 0.813,
+            "infrastructure_relevance_score": 0.84,
             "infrastructure_relevance_tier": "full_memo",
             "infrastructure_relevance_action": "generate_full_memo",
             "infrastructure_relevance_reasons": [
-              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud, hpc)",
-              "semiconductor_relevance:0.22(gpu)",
-              "power_grid_relevance:0.22(power)"
+              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+              "semiconductor_relevance:0.50(nvidia, gpu)"
             ],
             "infrastructureRelevanceAction": "generate_full_memo",
             "articlePagePublished": true,
@@ -30403,147 +30323,98 @@
             "archiveOnly": false,
             "archiveOnlyReason": null
           },
-          "score": 80
+          "score": 73
+        },
+        {
+          "id": "969a1920d20777da",
+          "source": "TechCrunch AI",
+          "url": "https://techcrunch.com/2026/07/14/lorde-says-ai-glasses-are-not-sexy/",
+          "title": "Lorde says AI glasses are “not sexy”",
+          "snippet": "\"Increasingly in our world, it gets harder and harder to know what is real,\" Lorde said on stage.",
+          "contentText": "\"Increasingly in our world, it gets harder and harder to know what is real,\" Lorde said on stage.",
+          "publishedAt": "2026-07-14T23:10:02.000Z",
+          "sourceImage": null,
+          "region": "Global",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "category": "AI Infrastructure",
+          "primary_category": "AI Infrastructure",
+          "secondary_category": "GPU clusters and deployment readiness",
+          "infrastructure_layer": "Compute",
+          "affected_stakeholders": [
+            "operators",
+            "hyperscalers",
+            "cloud buyers",
+            "investors"
+          ],
+          "article_type": "Other",
+          "urgency_score": 0.43,
+          "taxonomy_confidence": 0.77,
+          "taxonomy_reasons": [
+            "ai infrastructure",
+            "neocloud"
+          ],
+          "direct_ai_infrastructure_relevance": 1,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0.22,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.778,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "semiconductor_relevance:0.22(gpu)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 1,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0.22,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.778,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+              "semiconductor_relevance:0.22(gpu)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 72
         }
       ],
       "curatedIds": [
-        "983c62e10589eded",
-        "018b3a5f45b1d14d",
-        "b701fee7ca84f29c",
-        "9926123e82210ac9",
-        "7ae944b6b0c09115",
-        "f335c1240a5edee1"
+        "187ec8a0b9e6ba78",
+        "92047d14db22997b",
+        "66b0598b515b73dd",
+        "9dc925789b3faa32",
+        "694a443da818661c",
+        "969a1920d20777da"
       ],
       "publishedIds": [
         "983c62e10589eded",
-        "018b3a5f45b1d14d"
+        "018b3a5f45b1d14d",
+        "92047d14db22997b",
+        "187ec8a0b9e6ba78"
       ],
       "slotPublications": {
-        "0": true
+        "0": true,
+        "1": true
       }
     }
   },
   "runHistory": [
-    {
-      "at": "2026-06-04T17:48:48.391Z",
-      "day": "2026-06-05",
-      "slot": 0,
-      "publishedCount": 0,
-      "signalCardCount": 1,
-      "archiveOnlyCount": 0,
-      "repetitionBlockedCount": 1,
-      "publishedIds": [],
-      "processedIds": [
-        "505eebbbd007231a",
-        "01b8b1d203605f0e"
-      ],
-      "blockedCount": 1,
-      "blockedItems": [
-        {
-          "id": "505eebbbd007231a",
-          "title": "TSMC CEO C.C. Wei says, ‘It will be a long time before we can meet customer demand’ — tells shareholders that he will keep prices stable, refrain from implementing price hikes",
-          "infrastructure_relevance_score": 1,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "cloud_capacity_relevance:0.64(hyperscaler, hyperscalers)",
-            "semiconductor_relevance:1.00(semiconductor, semiconductors, intel)",
-            "power_grid_relevance:0.22(power)"
-          ],
-          "extraction_quality_score": 1,
-          "source_domain_adapter": "generic",
-          "content_length": 1721,
-          "boilerplate_ratio": 0,
-          "repetition_blocked": false,
-          "repetition_block_reasons": [],
-          "repetition_check": null,
-          "expert_insight_complete": true,
-          "expert_insight_missing_fields": [],
-          "reason": "fail_closed: source_text_incomplete:incomplete_terminal:c, incomplete_terminal:c, sentence_completion_score_below_0.92:0.82"
-        }
-      ],
-      "repetitionBlockedItems": [
-        {
-          "id": "01b8b1d203605f0e",
-          "title": "CoolIT Systems Demonstrates 15kW Coldplate, Extending Single-Phase DLC Beyond 2030",
-          "infrastructure_relevance_score": 1,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "data_center_relevance:0.84(data center, data centers)",
-            "cloud_capacity_relevance:0.32(hyperscalers)",
-            "semiconductor_relevance:0.44(accelerator, gpu)",
-            "power_grid_relevance:0.22(power)",
-            "cooling_relevance:1.00(cooling, liquid cooling, thermal)"
-          ],
-          "extraction_quality_score": 1,
-          "source_domain_adapter": "storagereview",
-          "content_length": 1708,
-          "boilerplate_ratio": 0,
-          "repetition_blocked": true,
-          "repetition_block_reasons": [
-            "heading_sequence_similarity>0.75",
-            "conclusion_similarity>0.7"
-          ],
-          "repetition_check": {
-            "compared_article_count": 20,
-            "repeated_sentence_ratio": 0,
-            "repeated_paragraph_ratio": 0,
-            "heading_sequence_similarity": 1,
-            "banned_phrase_count": 0,
-            "banned_phrase_counts": {},
-            "recent_banned_phrase_counts": {},
-            "ngram_overlap": 0.39669421487603307,
-            "blueprint_repetition": 2,
-            "conclusion_similarity": 0.9511897312113418,
-            "repeated_sentence_count": 0,
-            "repeated_paragraph_count": 0,
-            "heading_sequence": [
-              "Technical Signal",
-              "Failure Domain",
-              "Operator Exposure",
-              "Benchmark To Watch"
-            ],
-            "blocked": true,
-            "reasons": [
-              "heading_sequence_similarity>0.75",
-              "conclusion_similarity>0.7"
-            ]
-          },
-          "expert_insight_complete": true,
-          "expert_insight_missing_fields": [],
-          "reason": "heading_sequence_similarity>0.75; conclusion_similarity>0.7"
-        }
-      ],
-      "signalCardItems": [
-        {
-          "id": "505eebbbd007231a",
-          "title": "TSMC CEO C.C. Wei says, ‘It will be a long time before we can meet customer demand’ — tells shareholders that he will keep prices stable, refrain from implementing price hikes",
-          "infrastructure_relevance_score": 1,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "cloud_capacity_relevance:0.64(hyperscaler, hyperscalers)",
-            "semiconductor_relevance:1.00(semiconductor, semiconductors, intel)",
-            "power_grid_relevance:0.22(power)"
-          ],
-          "extraction_quality_score": 1,
-          "source_domain_adapter": "generic",
-          "content_length": 1721,
-          "boilerplate_ratio": 0,
-          "repetition_blocked": false,
-          "repetition_block_reasons": [],
-          "repetition_check": null,
-          "expert_insight_complete": true,
-          "expert_insight_missing_fields": [],
-          "reason": "fail_closed: source_text_incomplete:incomplete_terminal:c, incomplete_terminal:c, sentence_completion_score_below_0.92:0.82"
-        }
-      ],
-      "archiveOnlyItems": []
-    },
     {
       "at": "2026-06-05T00:11:32.395Z",
       "day": "2026-06-05",
@@ -43984,7 +43855,131 @@
       ],
       "signalCardItems": [],
       "archiveOnlyItems": []
+    },
+    {
+      "at": "2026-07-14T23:55:20.386Z",
+      "day": "2026-07-15",
+      "slot": 1,
+      "publishedCount": 0,
+      "signalCardCount": 0,
+      "archiveOnlyCount": 0,
+      "repetitionBlockedCount": 2,
+      "publishedIds": [],
+      "processedIds": [
+        "92047d14db22997b",
+        "187ec8a0b9e6ba78"
+      ],
+      "blockedCount": 0,
+      "blockedItems": [],
+      "repetitionBlockedItems": [
+        {
+          "id": "92047d14db22997b",
+          "title": "OpenAI’s first hardware device is reportedly a screenless speaker that can move",
+          "infrastructure_relevance_score": 0.87,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "cloud_capacity_relevance:0.32(hyperscalers)",
+            "semiconductor_relevance:0.22(gpu)",
+            "power_grid_relevance:0.22(power)"
+          ],
+          "extraction_quality_score": 1,
+          "source_domain_adapter": "techcrunch",
+          "content_length": 1681,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": true,
+          "repetition_block_reasons": [
+            "repeated_sentence_ratio>0.12",
+            "heading_sequence_similarity>0.75",
+            "conclusion_similarity>0.7"
+          ],
+          "repetition_check": {
+            "compared_article_count": 20,
+            "repeated_sentence_ratio": 0.3333333333333333,
+            "repeated_paragraph_ratio": 0.3333333333333333,
+            "heading_sequence_similarity": 1,
+            "banned_phrase_count": 0,
+            "banned_phrase_counts": {},
+            "recent_banned_phrase_counts": {},
+            "ngram_overlap": 0.6410256410256411,
+            "blueprint_repetition": 2,
+            "conclusion_similarity": 0.9271050693011066,
+            "repeated_sentence_count": 2,
+            "repeated_paragraph_count": 2,
+            "heading_sequence": [
+              "Technical Signal",
+              "Failure Domain",
+              "Operator Exposure",
+              "Benchmark To Watch"
+            ],
+            "blocked": true,
+            "reasons": [
+              "repeated_sentence_ratio>0.12",
+              "heading_sequence_similarity>0.75",
+              "conclusion_similarity>0.7"
+            ]
+          },
+          "expert_insight_complete": true,
+          "expert_insight_missing_fields": [],
+          "reason": "repeated_sentence_ratio>0.12; heading_sequence_similarity>0.75; conclusion_similarity>0.7"
+        },
+        {
+          "id": "187ec8a0b9e6ba78",
+          "title": "Supermicro’s Edge AI Appliances Drop the Per-Site Storage Array With Portworx and OpenShift",
+          "infrastructure_relevance_score": 1,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "data_center_relevance:0.42(data center)",
+            "cloud_capacity_relevance:0.32(hyperscalers)",
+            "semiconductor_relevance:0.22(gpu)",
+            "power_grid_relevance:0.22(power)",
+            "enterprise_ai_infrastructure_relevance:0.94(openshift, kubernetes, data management)"
+          ],
+          "extraction_quality_score": 1,
+          "source_domain_adapter": "storagereview",
+          "content_length": 1720,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": true,
+          "repetition_block_reasons": [
+            "repeated_sentence_ratio>0.12",
+            "conclusion_similarity>0.7"
+          ],
+          "repetition_check": {
+            "compared_article_count": 20,
+            "repeated_sentence_ratio": 0.2857142857142857,
+            "repeated_paragraph_ratio": 0.3333333333333333,
+            "heading_sequence_similarity": 0,
+            "banned_phrase_count": 0,
+            "banned_phrase_counts": {},
+            "recent_banned_phrase_counts": {},
+            "ngram_overlap": 0.4406779661016949,
+            "blueprint_repetition": 1,
+            "conclusion_similarity": 0.9271050693011066,
+            "repeated_sentence_count": 2,
+            "repeated_paragraph_count": 2,
+            "heading_sequence": [
+              "Platform Move",
+              "Resilience Read",
+              "Enterprise Exposure",
+              "Proof Point"
+            ],
+            "blocked": true,
+            "reasons": [
+              "repeated_sentence_ratio>0.12",
+              "conclusion_similarity>0.7"
+            ]
+          },
+          "expert_insight_complete": true,
+          "expert_insight_missing_fields": [],
+          "reason": "repeated_sentence_ratio>0.12; conclusion_similarity>0.7"
+        }
+      ],
+      "signalCardItems": [],
+      "archiveOnlyItems": []
     }
   ],
-  "lastRunAt": "2026-07-14T16:21:45.310Z"
+  "lastRunAt": "2026-07-14T23:55:20.386Z"
 }
