@@ -633,7 +633,9 @@
     "f3bbc43217cca76d",
     "65e767c739e4a51d",
     "d7b07a9a9546b27c",
-    "f88081e9101dffa7"
+    "f88081e9101dffa7",
+    "d1be5b3776a7b63e",
+    "cba4f6850a5b7805"
   ],
   "dayPlans": {
     "2026-03-24": {
@@ -30422,72 +30424,70 @@
     "2026-07-16": {
       "date": "2026-07-16",
       "createdAt": "2026-07-15T16:39:23.739Z",
-      "refreshedAt": "2026-07-16T00:00:35.075Z",
+      "refreshedAt": "2026-07-16T09:23:18.578Z",
       "candidateWindowHours": 24,
       "curatedItems": [
         {
-          "id": "d7b07a9a9546b27c",
-          "source": "HPCwire",
-          "url": "https://www.hpcwire.com/off-the-wire/gigaios-gryf-and-manticore-earn-nutanix-validation-for-enterprise-ai-and-kubernetes-workloads/",
-          "title": "GigaIO’s Gryf and Manticore Earn Nutanix Validation for Enterprise AI and Kubernetes Workloads",
-          "snippet": "Partnership with Flywheel Data makes solutions available now, focusing initially on the needs of military and intelligence agencies. CARLSBAD, Calif., July 15, 2026 — GigaIO, a pioneer in delivering datacenter-class com…",
-          "contentText": "Partnership with Flywheel Data makes solutions available now, focusing initially on the needs of military and intelligence agencies. CARLSBAD, Calif., July 15, 2026 &#8212; GigaIO , a pioneer in delivering datacenter-class computing at the edge, has had its edge products Gryf and Manticore verified for the Nutanix Kubernetes Platform (Nutanix NKP) and Nutanix Enterprise AI (Nutanix NAI), making edge computing as easy and straightforward to manage as data center or cloud resources. The combination of Gryf, NKP, and NAI solves the last mile of enterprise generative or agentic AI at the tactical edge; by packaging datacenter-class hardware into an airline-friendly, composable suitcase, organizations can deploy secure, cloud-native AI applications anywhere on earth. Flywheel Data, an authoriz…",
-          "publishedAt": "2026-07-15T22:05:04.000Z",
-          "sourceImage": "https://www.hpcwire.com/wp-content/uploads/2023/11/GIGAIO-300x157.jpg",
+          "id": "d1be5b3776a7b63e",
+          "source": "Semiconductor Engineering",
+          "url": "https://semiengineering.com/why-metal-tim-warpage-simulations-fail-and-how-to-fix-them/",
+          "title": "Why Metal TIM Warpage Simulations Fail—And How To Fix Them",
+          "snippet": "Characterizing the properties of thermal interface materials under actual application conditions. The post Why Metal TIM Warpage Simulations Fail—And How To Fix Them appeared first on Semiconductor Engineering.",
+          "contentText": "By Dambi Jo, JiHyun Kim, GaHyeon Kim, TaeKyeong Hwang, WonChul Do, and KyungRok Park In the semiconductor packaging industry, it is common practice to predict warpage and stress levels through simulation prior to actual product fabrication. This approach helps minimize the cost and time associated with prototype production [1]. The need for simulation-driven design and material optimization has grown increasingly critical in recent years, as the cost of producing high-performance package prototypes has increased significantly. However, as packages become more advanced and materials more diverse, accurate prediction through simulation has become increasingly challenging, thereby highlighting the growing importance of simulation validation [2]. Recently, the demand for high-performance semi…",
+          "publishedAt": "2026-07-16T07:08:58.000Z",
+          "sourceImage": "https://i0.wp.com/semiengineering.com/wp-content/uploads/2026/07/Amkor_Metal-TIM-Warpage-Sim-table1.webp?resize=529%2C382&#038;ssl=1",
           "region": "US",
           "language": "en",
           "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
-          "category": "Enterprise AI Infrastructure",
-          "primary_category": "Enterprise AI Infrastructure",
-          "secondary_category": "Enterprise deployment operations",
-          "infrastructure_layer": "Enterprise Platform",
+          "category": "AI Infrastructure",
+          "primary_category": "AI Infrastructure",
+          "secondary_category": "GPU clusters and deployment readiness",
+          "infrastructure_layer": "Compute",
           "affected_stakeholders": [
-            "enterprise IT",
+            "operators",
+            "hyperscalers",
             "cloud buyers",
-            "platform teams",
-            "software vendors"
+            "investors"
           ],
-          "article_type": "Product / Platform Update",
-          "urgency_score": 0.5,
-          "taxonomy_confidence": 0.78,
+          "article_type": "Supply Chain",
+          "urgency_score": 0.47,
+          "taxonomy_confidence": 0.77,
           "taxonomy_reasons": [
-            "enterprise ai",
-            "kubernetes"
+            "ai infrastructure",
+            "neocloud"
           ],
           "direct_ai_infrastructure_relevance": 1,
-          "data_center_relevance": 0.84,
+          "data_center_relevance": 0,
           "cloud_capacity_relevance": 0,
-          "semiconductor_relevance": 0.22,
+          "semiconductor_relevance": 0.58,
           "power_grid_relevance": 0,
-          "cooling_relevance": 0,
+          "cooling_relevance": 0.3,
           "capital_markets_relevance": 0,
-          "enterprise_ai_infrastructure_relevance": 0.729,
-          "infrastructure_relevance_score": 0.985,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.893,
           "infrastructure_relevance_tier": "full_memo",
           "infrastructure_relevance_action": "generate_full_memo",
           "infrastructure_relevance_reasons": [
             "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "data_center_relevance:0.84(data center, datacenter)",
-            "semiconductor_relevance:0.22(gpu)",
-            "enterprise_ai_infrastructure_relevance:0.73(enterprise ai, kubernetes)"
+            "semiconductor_relevance:0.58(semiconductor, gpu)",
+            "cooling_relevance:0.30(thermal)"
           ],
           "infrastructure_relevance": {
             "direct_ai_infrastructure_relevance": 1,
-            "data_center_relevance": 0.84,
+            "data_center_relevance": 0,
             "cloud_capacity_relevance": 0,
-            "semiconductor_relevance": 0.22,
+            "semiconductor_relevance": 0.58,
             "power_grid_relevance": 0,
-            "cooling_relevance": 0,
+            "cooling_relevance": 0.3,
             "capital_markets_relevance": 0,
-            "enterprise_ai_infrastructure_relevance": 0.729,
-            "infrastructure_relevance_score": 0.985,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.893,
             "infrastructure_relevance_tier": "full_memo",
             "infrastructure_relevance_action": "generate_full_memo",
             "infrastructure_relevance_reasons": [
               "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-              "data_center_relevance:0.84(data center, datacenter)",
-              "semiconductor_relevance:0.22(gpu)",
-              "enterprise_ai_infrastructure_relevance:0.73(enterprise ai, kubernetes)"
+              "semiconductor_relevance:0.58(semiconductor, gpu)",
+              "cooling_relevance:0.30(thermal)"
             ],
             "infrastructureRelevanceAction": "generate_full_memo",
             "articlePagePublished": true,
@@ -30495,17 +30495,157 @@
             "archiveOnly": false,
             "archiveOnlyReason": null
           },
-          "score": 87
+          "score": 84
         },
         {
-          "id": "f88081e9101dffa7",
-          "source": "NVIDIA Blog",
-          "url": "https://blogs.nvidia.com/blog/jetson-thor-robotics-edge-ai-agent/",
-          "title": "NVIDIA Introduces New Jetson Thor Computers to Advance Mainstream Robotics and Edge AI",
-          "snippet": "General-purpose robots and autonomous machines are moving from research labs to real-world mass-market deployment, creating demand for compact, power-efficient AI supercomputers capable of running foundation models at t…",
-          "contentText": "General-purpose robots and autonomous machines are moving from research labs to real-world mass-market deployment, creating demand for compact, power-efficient AI supercomputers capable of running foundation models at the edge. To meet that need, NVIDIA today introduced the T3000 and T2000, new modules based on the NVIDIA Thor architecture that enable mass-market robotics and edge AI applications at scale. Jetson AGX Thor is powering this next generation of humanoid and robotic systems, with growing adoption across industries. Leading companies — including 1X , Agile Robots , Amazon Robotics , Boston Dynamics , FANUC , Hitachi and Techman Robot — are building on the platform. Unlocking Humanoid and Robotics Deployment With T3000 The hardware underpinning those capabilities starts with the…",
-          "publishedAt": "2026-07-15T23:00:54.000Z",
-          "sourceImage": "https://blogs.nvidia.com/wp-content/uploads/2026/07/robotics-jetson-T3000-T2000-jhh-japan-1280x680-1.jpg",
+          "id": "cba4f6850a5b7805",
+          "source": "Semiconductor Engineering",
+          "url": "https://semiengineering.com/from-feature-scale-simulation-to-digital-twins-helping-process-engineers-tackle-growing-complexity/",
+          "title": "From Feature-Scale Simulation To Digital Twins: Helping Process Engineers Tackle Growing Complexity",
+          "snippet": "Physics-grounded workflows help process teams to explore, understand, and act on a rapidly expanding innovation space. The post From Feature-Scale Simulation To Digital Twins: Helping Process Engineers Tackle Growing Co…",
+          "contentText": "For process engineers facing rising manufacturing complexity, physics-based simulation provides the foundation for understanding what is happening on the wafer. AI, automation, and digital twins become powerful only when they build on that foundation, enabling faster exploration without losing trust, calibration, or engineering judgment. The growing challenge of semiconductor manufacturing Semiconductor manufacturing has always been complex, but that complexity is compounding. Advanced nodes bring more etch-intensive integration schemes, tighter atomic-scale requirements, new materials, narrower process windows, and stronger coupling among plasma conditions, reaction chemistry, transport, and evolving geometry. Process teams must move faster with fewer opportunities for trial-and-error le…",
+          "publishedAt": "2026-07-16T07:06:16.000Z",
+          "sourceImage": "https://i0.wp.com/semiengineering.com/wp-content/uploads/2026/07/Synopsys_Feature-Scale-Sim-to-Digital-Twins-fig1.webp?resize=611%2C294&#038;ssl=1",
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "category": "Semiconductors",
+          "primary_category": "Semiconductors",
+          "secondary_category": "Accelerators, memory, and advanced packaging",
+          "infrastructure_layer": "Silicon",
+          "affected_stakeholders": [
+            "semiconductor suppliers",
+            "hyperscalers",
+            "server OEMs",
+            "investors"
+          ],
+          "article_type": "Supply Chain",
+          "urgency_score": 0.47,
+          "taxonomy_confidence": 0.82,
+          "taxonomy_reasons": [
+            "semiconductor",
+            "gpu",
+            "wafer"
+          ],
+          "direct_ai_infrastructure_relevance": 1,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0.82,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.91,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "semiconductor_relevance:0.82(semiconductor, wafer, gpu)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 1,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0.82,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.91,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+              "semiconductor_relevance:0.82(semiconductor, wafer, gpu)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 84
+        },
+        {
+          "id": "8ab7dc77682150de",
+          "source": "Data Center Dynamics",
+          "url": "https://www.datacenterdynamics.com/en/videos/dcd-studio-cooling-the-future-selecting-the-right-thermal-strategy-with-jerry-toth-eaton/",
+          "title": "DCD Studio: Cooling the future - Selecting the right thermal strategy with Jerry Toth, Boyd Thermal",
+          "snippet": "Emma Strutton speaks with Jerry Toth about how liquid cooling is transforming data center infrastructure to support higher rack densities, greater efficiency, and sustainable AI growth.",
+          "contentText": "Emma Strutton speaks with Jerry Toth about how liquid cooling is transforming data center infrastructure to support higher rack densities, greater efficiency, and sustainable AI growth.",
+          "publishedAt": "2026-07-16T08:49:00.000Z",
+          "sourceImage": "https://media.datacenterdynamics.com/media/images/thumb_5_L0bpCKg.2e16d0ba.fill-750x500.jpg",
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "Colocation & Wholesale",
+          "category": "Cooling & Facility Engineering",
+          "primary_category": "Cooling & Facility Engineering",
+          "secondary_category": "Thermal design and rack density",
+          "infrastructure_layer": "Cooling",
+          "affected_stakeholders": [
+            "operators",
+            "equipment vendors",
+            "data center developers",
+            "enterprise IT"
+          ],
+          "article_type": "Other",
+          "urgency_score": 0.48,
+          "taxonomy_confidence": 0.91,
+          "taxonomy_reasons": [
+            "cooling",
+            "liquid cooling",
+            "thermal"
+          ],
+          "direct_ai_infrastructure_relevance": 0.78,
+          "data_center_relevance": 0.76,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 1,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.937,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:0.78",
+            "data_center_relevance:0.76(data center, colocation)",
+            "cooling_relevance:1.00(cooling, liquid cooling, thermal)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 0.78,
+            "data_center_relevance": 0.76,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 1,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.937,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:0.78",
+              "data_center_relevance:0.76(data center, colocation)",
+              "cooling_relevance:1.00(cooling, liquid cooling, thermal)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 81
+        },
+        {
+          "id": "16db7cc9e41440c5",
+          "source": "Toms Hardware",
+          "url": "https://www.tomshardware.com/video-games/playstation/open-source-ps3-emulator-says-its-now-compatible-with-over-75-percent-of-all-ps3-games-on-pc-rpcs3-announcement-comes-weeks-after-sony-announced-the-shuttering-of-the-playstation-store-for-ps3-and-ps-vita-by-july-2027",
+          "title": "75% of all PS3 games reportedly now run on PC via open-source emulator RPCS3 — announcement comes weeks after Sony's plan to shutter the PlayStation Store for PS3 and PS Vita by",
+          "snippet": "The RPCS3 team has successfully ensured that more than 2,600 PS3 titles are now compatible with the emulator. This means that 75.33% of all PS3 games can now be played on Windows, Linux, macOS, and FreeBSD using either…",
+          "contentText": "RPCS3, a multi-platform open-source PlayStation 3 emulator and debugger, has revealed that 2,681 of the total 3,559 PS3 titles are now compatible with its software, meaning a huge majority of games can now be played on Windows, Linux, macOS, and FreeBSD. The developers of the app said on X that RPCS3 is continually being worked on and that they’re targeting full preservation of the entire PS3 library. This is an important development for PlayStation 3 owners and enthusiasts, especially as Sony said that it will stop making physical game discs by 2028 and shut down the PlayStation Store for PS3 and PS Vita a year before that. 75% of all PlayStation 3 games are now PLAYABLE on PC!RPCS3 continues to be improved with new features, fixes, and optimisations, bringing it ever closer to preservin…",
+          "publishedAt": "2026-07-16T09:00:00.000Z",
+          "sourceImage": "https://cdn.mos.cms.futurecdn.net/fhjBsHVJ7Tw3Tio7tgKUsP-1280-80.png",
           "region": "US",
           "language": "en",
           "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
@@ -30520,7 +30660,7 @@
             "investors"
           ],
           "article_type": "Product / Platform Update",
-          "urgency_score": 0.55,
+          "urgency_score": 0.43,
           "taxonomy_confidence": 0.77,
           "taxonomy_reasons": [
             "ai infrastructure",
@@ -30529,35 +30669,33 @@
           "direct_ai_infrastructure_relevance": 1,
           "data_center_relevance": 0,
           "cloud_capacity_relevance": 0,
-          "semiconductor_relevance": 0.598,
-          "power_grid_relevance": 0.22,
+          "semiconductor_relevance": 0.22,
+          "power_grid_relevance": 0,
           "cooling_relevance": 0,
           "capital_markets_relevance": 0,
           "enterprise_ai_infrastructure_relevance": 0,
-          "infrastructure_relevance_score": 0.897,
+          "infrastructure_relevance_score": 0.778,
           "infrastructure_relevance_tier": "full_memo",
           "infrastructure_relevance_action": "generate_full_memo",
           "infrastructure_relevance_reasons": [
             "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "semiconductor_relevance:0.60(nvidia, gpu)",
-            "power_grid_relevance:0.22(power)"
+            "semiconductor_relevance:0.22(gpu)"
           ],
           "infrastructure_relevance": {
             "direct_ai_infrastructure_relevance": 1,
             "data_center_relevance": 0,
             "cloud_capacity_relevance": 0,
-            "semiconductor_relevance": 0.598,
-            "power_grid_relevance": 0.22,
+            "semiconductor_relevance": 0.22,
+            "power_grid_relevance": 0,
             "cooling_relevance": 0,
             "capital_markets_relevance": 0,
             "enterprise_ai_infrastructure_relevance": 0,
-            "infrastructure_relevance_score": 0.897,
+            "infrastructure_relevance_score": 0.778,
             "infrastructure_relevance_tier": "full_memo",
             "infrastructure_relevance_action": "generate_full_memo",
             "infrastructure_relevance_reasons": [
               "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-              "semiconductor_relevance:0.60(nvidia, gpu)",
-              "power_grid_relevance:0.22(power)"
+              "semiconductor_relevance:0.22(gpu)"
             ],
             "infrastructureRelevanceAction": "generate_full_memo",
             "articlePagePublished": true,
@@ -30565,18 +30703,18 @@
             "archiveOnly": false,
             "archiveOnlyReason": null
           },
-          "score": 84
+          "score": 79
         },
         {
-          "id": "3a6af07a76f6a787",
-          "source": "Data Center Frontier",
-          "url": "https://www.datacenterfrontier.com/machine-learning/article/55388486/comparing-space-driven-data-center-strategies-modular-satellites-vs-integrated-rocket-nodes",
-          "title": "Comparing Space-Driven Data Center Strategies: Modular Satellites vs. Integrated Rocket Nodes",
-          "snippet": "Orbital Compute’s proposed 100,000-satellite network and Cowboy Space’s vertically integrated Stampede system offer sharply different visions for moving gigawatts of AI infrastructure beyond the terrestrial power grid.",
-          "contentText": "Orbital Compute’s proposed 100,000-satellite network and Cowboy Space’s vertically integrated Stampede system offer sharply different visions for moving gigawatts of AI infrastructure beyond the terrestrial power grid.",
-          "publishedAt": "2026-07-15T22:42:10.000Z",
-          "sourceImage": "https://img.datacenterfrontier.com/files/base/ebm/datacenterfrontier/image/2026/07/6a468bb1ef3d3bdb703d710d-orbital_compute.png",
-          "region": "Global",
+          "id": "fc422805fb3bfe1f",
+          "source": "Data Center Knowledge",
+          "url": "https://www.datacenterknowledge.com/regulations/what-britain-s-next-prime-minister-could-mean-for-uk-data-centers",
+          "title": "What Britain’s Next Prime Minister Could Mean for UK Data Centers",
+          "snippet": "Incoming UK Prime Minister Andy Burnham appears to favor homegrown AI, but planning disputes and data center moratoriums could cause early friction.",
+          "contentText": "Incoming UK Prime Minister Andy Burnham appears to favor homegrown AI, but planning disputes and data center moratoriums could cause early friction.",
+          "publishedAt": "2026-07-16T07:30:00.000Z",
+          "sourceImage": "https://eu-images.contentstack.com/v3/assets/blt8eb3cdfc1fce5194/bltb0d3295a69ea2064/6a57afe2863fd4511ac00e70/Andy-Burnham-Getty.jpg?width=720&quality=80&disable=upscale",
+          "region": "US",
           "language": "en",
           "defaultCategory": "Colocation & Wholesale",
           "category": "Data Centers",
@@ -30590,115 +30728,43 @@
             "investors"
           ],
           "article_type": "Other",
-          "urgency_score": 0.64,
-          "taxonomy_confidence": 0.86,
+          "urgency_score": 0.47,
+          "taxonomy_confidence": 0.85,
           "taxonomy_reasons": [
             "data center",
             "colocation",
             "wholesale"
           ],
-          "direct_ai_infrastructure_relevance": 0.82,
-          "data_center_relevance": 0.89,
+          "direct_ai_infrastructure_relevance": 0.78,
+          "data_center_relevance": 1,
           "cloud_capacity_relevance": 0,
           "semiconductor_relevance": 0,
-          "power_grid_relevance": 0.84,
-          "cooling_relevance": 0,
-          "capital_markets_relevance": 0,
-          "enterprise_ai_infrastructure_relevance": 0,
-          "infrastructure_relevance_score": 0.886,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:0.82(ai infrastructure)",
-            "data_center_relevance:0.89(data center, colocation)",
-            "power_grid_relevance:0.84(power, grid, gigawatts)"
-          ],
-          "infrastructure_relevance": {
-            "direct_ai_infrastructure_relevance": 0.82,
-            "data_center_relevance": 0.89,
-            "cloud_capacity_relevance": 0,
-            "semiconductor_relevance": 0,
-            "power_grid_relevance": 0.84,
-            "cooling_relevance": 0,
-            "capital_markets_relevance": 0,
-            "enterprise_ai_infrastructure_relevance": 0,
-            "infrastructure_relevance_score": 0.886,
-            "infrastructure_relevance_tier": "full_memo",
-            "infrastructure_relevance_action": "generate_full_memo",
-            "infrastructure_relevance_reasons": [
-              "direct_ai_infrastructure_relevance:0.82(ai infrastructure)",
-              "data_center_relevance:0.89(data center, colocation)",
-              "power_grid_relevance:0.84(power, grid, gigawatts)"
-            ],
-            "infrastructureRelevanceAction": "generate_full_memo",
-            "articlePagePublished": true,
-            "homepagePublished": true,
-            "archiveOnly": false,
-            "archiveOnlyReason": null
-          },
-          "score": 83
-        },
-        {
-          "id": "947bf81a9a32758d",
-          "source": "VentureBeat AI",
-          "url": "https://venturebeat.com/ai/agentic-orchestration-enterprise-ai-organizations-have-a-deployment-problem-not-a-platform-problem-and-most-are-calling-chatbots-agents",
-          "title": "Agentic orchestration: Enterprise AI organizations have a deployment problem, not a platform problem — and most are calling chatbots agents",
-          "snippet": "Across 101 enterprises, agent orchestration is consolidating onto model-provider platforms — Anthropic’s Claude leads by a wide margin — chosen for the gravity of the underlying model and judged on reliable multi-step e…",
-          "contentText": "Across 101 enterprises, agent orchestration is consolidating onto model-provider platforms — Anthropic’s Claude leads by a wide margin — chosen for the gravity of the underlying model and judged on reliable multi-step execution. But the ambition runs well ahead of the reality: most deployed “agents” are still chatbot wrappers, the control plane enterprises expect is deliberately hybrid to avoid lock-in, and real-time fiscal control over token burn remains the exception. This wave of VentureBeat Pulse Research examines enterprise agent orchestration: which platforms enterprises run on, what drives the choice, what they optimize for, how they expect agent control to be structured, and — most revealingly — how orchestrated their deployed “agents” actually are and how tightly they control the…",
-          "publishedAt": "2026-07-15T22:24:17.000Z",
-          "sourceImage": "https://images.ctfassets.net/jdtwqhzvc2n1/3YcL8Sbx04RQsgnRvbYfs5/6620b35dd75cc138cb57cf72a9773f07/VentureBeat-Research-1.png?w=300&q=30",
-          "region": "Global",
-          "language": "en",
-          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
-          "category": "AI Infrastructure",
-          "primary_category": "AI Infrastructure",
-          "secondary_category": "GPU clusters and deployment readiness",
-          "infrastructure_layer": "Compute",
-          "affected_stakeholders": [
-            "operators",
-            "hyperscalers",
-            "cloud buyers",
-            "investors"
-          ],
-          "article_type": "Product / Platform Update",
-          "urgency_score": 0.46,
-          "taxonomy_confidence": 0.77,
-          "taxonomy_reasons": [
-            "ai infrastructure",
-            "neocloud"
-          ],
-          "direct_ai_infrastructure_relevance": 1,
-          "data_center_relevance": 0,
-          "cloud_capacity_relevance": 0,
-          "semiconductor_relevance": 0.22,
           "power_grid_relevance": 0,
           "cooling_relevance": 0,
           "capital_markets_relevance": 0,
-          "enterprise_ai_infrastructure_relevance": 0.432,
-          "infrastructure_relevance_score": 0.86,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.902,
           "infrastructure_relevance_tier": "full_memo",
           "infrastructure_relevance_action": "generate_full_memo",
           "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "semiconductor_relevance:0.22(gpu)",
-            "enterprise_ai_infrastructure_relevance:0.43(enterprise ai)"
+            "direct_ai_infrastructure_relevance:0.78",
+            "data_center_relevance:1.00(data center, data centers, colocation)"
           ],
           "infrastructure_relevance": {
-            "direct_ai_infrastructure_relevance": 1,
-            "data_center_relevance": 0,
+            "direct_ai_infrastructure_relevance": 0.78,
+            "data_center_relevance": 1,
             "cloud_capacity_relevance": 0,
-            "semiconductor_relevance": 0.22,
+            "semiconductor_relevance": 0,
             "power_grid_relevance": 0,
             "cooling_relevance": 0,
             "capital_markets_relevance": 0,
-            "enterprise_ai_infrastructure_relevance": 0.432,
-            "infrastructure_relevance_score": 0.86,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.902,
             "infrastructure_relevance_tier": "full_memo",
             "infrastructure_relevance_action": "generate_full_memo",
             "infrastructure_relevance_reasons": [
-              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-              "semiconductor_relevance:0.22(gpu)",
-              "enterprise_ai_infrastructure_relevance:0.43(enterprise ai)"
+              "direct_ai_infrastructure_relevance:0.78",
+              "data_center_relevance:1.00(data center, data centers, colocation)"
             ],
             "infrastructureRelevanceAction": "generate_full_memo",
             "articlePagePublished": true,
@@ -30706,7 +30772,7 @@
             "archiveOnly": false,
             "archiveOnlyReason": null
           },
-          "score": 82
+          "score": 77
         },
         {
           "id": "15d46a5a1f6b2608",
@@ -30779,223 +30845,33 @@
             "archiveOnly": false,
             "archiveOnlyReason": null
           },
-          "score": 80
-        },
-        {
-          "id": "c9e988170126b988",
-          "source": "HPCwire",
-          "url": "https://www.hpcwire.com/off-the-wire/berkeley-lab-how-genesis-missions-american-science-cloud-advances-innovation/",
-          "title": "Berkeley Lab: How Genesis Mission’s American Science Cloud Advances Innovation",
-          "snippet": "July 15, 2026 — As the Director of the Scientific Networking Division at Lawrence Berkeley National Laboratory (Berkeley Lab) and Executive Director of the Energy Sciences Network (ESnet), Inder Monga is an expert in ke…",
-          "contentText": "July 15, 2026 &#8212; As the Director of the Scientific Networking Division at Lawrence Berkeley National Laboratory (Berkeley Lab) and Executive Director of the Energy Sciences Network (ESnet) , Inder Monga is an expert in keeping the flow of scientific data running 24/7. ESnet is the Department of Energy’s High Performance Network user facility, which provides high-performance data transfer connections linking all 17 national laboratories and 28 user facilities, scientific instruments, universities, and other research institutions across the world. From left: Inder Monga, ESnet Executive Director and American Science Cloud (AmSC) Project Deputy; Georgia Tourassi, Associate Laboratory Director of the Computing and Computational Sciences Directorate at Oak Ridge National Laboratory and le…",
-          "publishedAt": "2026-07-15T22:11:04.000Z",
-          "sourceImage": "https://www.hpcwire.com/wp-content/uploads/2026/07/1190x750-Monga-Confab-300x189.jpg",
-          "region": "US",
-          "language": "en",
-          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
-          "category": "AI Infrastructure",
-          "primary_category": "AI Infrastructure",
-          "secondary_category": "GPU clusters and deployment readiness",
-          "infrastructure_layer": "Compute",
-          "affected_stakeholders": [
-            "operators",
-            "hyperscalers",
-            "cloud buyers",
-            "investors"
-          ],
-          "article_type": "Research / Technical",
-          "urgency_score": 0.43,
-          "taxonomy_confidence": 0.77,
-          "taxonomy_reasons": [
-            "ai infrastructure",
-            "neocloud"
-          ],
-          "direct_ai_infrastructure_relevance": 1,
-          "data_center_relevance": 0,
-          "cloud_capacity_relevance": 0,
-          "semiconductor_relevance": 0.22,
-          "power_grid_relevance": 0,
-          "cooling_relevance": 0,
-          "capital_markets_relevance": 0,
-          "enterprise_ai_infrastructure_relevance": 0.18,
-          "infrastructure_relevance_score": 0.778,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "semiconductor_relevance:0.22(gpu)"
-          ],
-          "infrastructure_relevance": {
-            "direct_ai_infrastructure_relevance": 1,
-            "data_center_relevance": 0,
-            "cloud_capacity_relevance": 0,
-            "semiconductor_relevance": 0.22,
-            "power_grid_relevance": 0,
-            "cooling_relevance": 0,
-            "capital_markets_relevance": 0,
-            "enterprise_ai_infrastructure_relevance": 0.18,
-            "infrastructure_relevance_score": 0.778,
-            "infrastructure_relevance_tier": "full_memo",
-            "infrastructure_relevance_action": "generate_full_memo",
-            "infrastructure_relevance_reasons": [
-              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-              "semiconductor_relevance:0.22(gpu)"
-            ],
-            "infrastructureRelevanceAction": "generate_full_memo",
-            "articlePagePublished": true,
-            "homepagePublished": true,
-            "archiveOnly": false,
-            "archiveOnlyReason": null
-          },
-          "score": 79
+          "score": 74
         }
       ],
       "curatedIds": [
-        "d7b07a9a9546b27c",
-        "f88081e9101dffa7",
-        "3a6af07a76f6a787",
-        "947bf81a9a32758d",
-        "15d46a5a1f6b2608",
-        "c9e988170126b988"
+        "d1be5b3776a7b63e",
+        "cba4f6850a5b7805",
+        "8ab7dc77682150de",
+        "16db7cc9e41440c5",
+        "fc422805fb3bfe1f",
+        "15d46a5a1f6b2608"
       ],
       "publishedIds": [
         "f3bbc43217cca76d",
         "65e767c739e4a51d",
         "d7b07a9a9546b27c",
-        "f88081e9101dffa7"
+        "f88081e9101dffa7",
+        "d1be5b3776a7b63e",
+        "cba4f6850a5b7805"
       ],
       "slotPublications": {
         "0": true,
-        "1": true
+        "1": true,
+        "2": true
       }
     }
   },
   "runHistory": [
-    {
-      "at": "2026-06-06T00:09:10.411Z",
-      "day": "2026-06-06",
-      "slot": 1,
-      "publishedCount": 0,
-      "signalCardCount": 1,
-      "archiveOnlyCount": 0,
-      "repetitionBlockedCount": 1,
-      "publishedIds": [],
-      "processedIds": [
-        "11e5a8688f0a263b",
-        "2c0269e1c13b0ed9"
-      ],
-      "blockedCount": 1,
-      "blockedItems": [
-        {
-          "id": "11e5a8688f0a263b",
-          "title": "Read-Centric DTCO for IGZO FeFETs 3D Heterogeneous AI memories (imec, KU Leuven)",
-          "infrastructure_relevance_score": 0.928,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "cloud_capacity_relevance:0.32(hyperscalers)",
-            "semiconductor_relevance:0.58(semiconductor, gpu)",
-            "power_grid_relevance:0.22(power)"
-          ],
-          "extraction_quality_score": 0.84,
-          "source_domain_adapter": "semiengineering",
-          "content_length": 761,
-          "boilerplate_ratio": 0,
-          "repetition_blocked": false,
-          "repetition_block_reasons": [],
-          "repetition_check": null,
-          "expert_insight_complete": false,
-          "expert_insight_missing_fields": [
-            "concrete_facts",
-            "named_companies"
-          ],
-          "reason": "fail_closed: source_text_incomplete:source_evidence_length_below_1200"
-        }
-      ],
-      "repetitionBlockedItems": [
-        {
-          "id": "2c0269e1c13b0ed9",
-          "title": "Intel Launches Xeon 6+ on 18A With 288 E-Cores, E835 200GbE Ethernet, and Crescent Island GPU Details",
-          "infrastructure_relevance_score": 0.973,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "data_center_relevance:0.42(data center)",
-            "cloud_capacity_relevance:0.32(hyperscalers)",
-            "semiconductor_relevance:0.79(intel, accelerator, gpu)",
-            "power_grid_relevance:0.22(power)"
-          ],
-          "extraction_quality_score": 1,
-          "source_domain_adapter": "storagereview",
-          "content_length": 1585,
-          "boilerplate_ratio": 0,
-          "repetition_blocked": true,
-          "repetition_block_reasons": [
-            "heading_sequence_similarity>0.75",
-            "conclusion_similarity>0.7"
-          ],
-          "repetition_check": {
-            "compared_article_count": 20,
-            "repeated_sentence_ratio": 0,
-            "repeated_paragraph_ratio": 0,
-            "heading_sequence_similarity": 1,
-            "banned_phrase_count": 0,
-            "banned_phrase_counts": {},
-            "recent_banned_phrase_counts": {},
-            "ngram_overlap": 0.5042735042735043,
-            "blueprint_repetition": 1,
-            "conclusion_similarity": 0.9511897312113418,
-            "repeated_sentence_count": 0,
-            "repeated_paragraph_count": 0,
-            "heading_sequence": [
-              "Technical Signal",
-              "Failure Domain",
-              "Operator Exposure",
-              "Benchmark To Watch"
-            ],
-            "blocked": true,
-            "reasons": [
-              "heading_sequence_similarity>0.75",
-              "conclusion_similarity>0.7"
-            ]
-          },
-          "expert_insight_complete": true,
-          "expert_insight_missing_fields": [],
-          "reason": "heading_sequence_similarity>0.75; conclusion_similarity>0.7"
-        }
-      ],
-      "signalCardItems": [
-        {
-          "id": "11e5a8688f0a263b",
-          "title": "Read-Centric DTCO for IGZO FeFETs 3D Heterogeneous AI memories (imec, KU Leuven)",
-          "infrastructure_relevance_score": 0.928,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "cloud_capacity_relevance:0.32(hyperscalers)",
-            "semiconductor_relevance:0.58(semiconductor, gpu)",
-            "power_grid_relevance:0.22(power)"
-          ],
-          "extraction_quality_score": 0.84,
-          "source_domain_adapter": "semiengineering",
-          "content_length": 761,
-          "boilerplate_ratio": 0,
-          "repetition_blocked": false,
-          "repetition_block_reasons": [],
-          "repetition_check": null,
-          "expert_insight_complete": false,
-          "expert_insight_missing_fields": [
-            "concrete_facts",
-            "named_companies"
-          ],
-          "reason": "fail_closed: source_text_incomplete:source_evidence_length_below_1200"
-        }
-      ],
-      "archiveOnlyItems": []
-    },
     {
       "at": "2026-06-06T09:30:07.195Z",
       "day": "2026-06-06",
@@ -44369,7 +44245,136 @@
         }
       ],
       "archiveOnlyItems": []
+    },
+    {
+      "at": "2026-07-16T09:23:18.578Z",
+      "day": "2026-07-16",
+      "slot": 2,
+      "publishedCount": 0,
+      "signalCardCount": 1,
+      "archiveOnlyCount": 0,
+      "repetitionBlockedCount": 1,
+      "publishedIds": [],
+      "processedIds": [
+        "d1be5b3776a7b63e",
+        "cba4f6850a5b7805"
+      ],
+      "blockedCount": 1,
+      "blockedItems": [
+        {
+          "id": "d1be5b3776a7b63e",
+          "title": "Why Metal TIM Warpage Simulations Fail—And How To Fix Them",
+          "infrastructure_relevance_score": 0.928,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud, hpc)",
+            "cloud_capacity_relevance:0.32(hyperscalers)",
+            "semiconductor_relevance:0.58(semiconductor, gpu)",
+            "power_grid_relevance:0.22(power)",
+            "cooling_relevance:0.30(thermal)"
+          ],
+          "extraction_quality_score": 1,
+          "source_domain_adapter": "semiengineering",
+          "content_length": 1726,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": false,
+          "repetition_block_reasons": [],
+          "repetition_check": null,
+          "expert_insight_complete": false,
+          "expert_insight_missing_fields": [
+            "concrete_facts",
+            "named_companies"
+          ],
+          "reason": "expert_insight_missing_fields concrete_facts, named_companies"
+        }
+      ],
+      "repetitionBlockedItems": [
+        {
+          "id": "cba4f6850a5b7805",
+          "title": "From Feature-Scale Simulation To Digital Twins: Helping Process Engineers Tackle Growing Complexity",
+          "infrastructure_relevance_score": 0.98,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "cloud_capacity_relevance:0.32(hyperscalers)",
+            "semiconductor_relevance:0.82(semiconductor, wafer, gpu)",
+            "power_grid_relevance:0.22(power)",
+            "capital_markets_relevance:0.28(capex)"
+          ],
+          "extraction_quality_score": 1,
+          "source_domain_adapter": "semiengineering",
+          "content_length": 1787,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": true,
+          "repetition_block_reasons": [
+            "repeated_sentence_ratio>0.12",
+            "heading_sequence_similarity>0.75",
+            "conclusion_similarity>0.7"
+          ],
+          "repetition_check": {
+            "compared_article_count": 20,
+            "repeated_sentence_ratio": 0.2857142857142857,
+            "repeated_paragraph_ratio": 0.3333333333333333,
+            "heading_sequence_similarity": 1,
+            "banned_phrase_count": 0,
+            "banned_phrase_counts": {},
+            "recent_banned_phrase_counts": {},
+            "ngram_overlap": 0.5,
+            "blueprint_repetition": 1,
+            "conclusion_similarity": 0.9511897312113418,
+            "repeated_sentence_count": 2,
+            "repeated_paragraph_count": 2,
+            "heading_sequence": [
+              "Deal Signal",
+              "Contract Quality",
+              "Operating Dependency",
+              "Investor Test"
+            ],
+            "blocked": true,
+            "reasons": [
+              "repeated_sentence_ratio>0.12",
+              "heading_sequence_similarity>0.75",
+              "conclusion_similarity>0.7"
+            ]
+          },
+          "expert_insight_complete": true,
+          "expert_insight_missing_fields": [],
+          "reason": "repeated_sentence_ratio>0.12; heading_sequence_similarity>0.75; conclusion_similarity>0.7"
+        }
+      ],
+      "signalCardItems": [
+        {
+          "id": "d1be5b3776a7b63e",
+          "title": "Why Metal TIM Warpage Simulations Fail—And How To Fix Them",
+          "infrastructure_relevance_score": 0.928,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud, hpc)",
+            "cloud_capacity_relevance:0.32(hyperscalers)",
+            "semiconductor_relevance:0.58(semiconductor, gpu)",
+            "power_grid_relevance:0.22(power)",
+            "cooling_relevance:0.30(thermal)"
+          ],
+          "extraction_quality_score": 1,
+          "source_domain_adapter": "semiengineering",
+          "content_length": 1726,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": false,
+          "repetition_block_reasons": [],
+          "repetition_check": null,
+          "expert_insight_complete": false,
+          "expert_insight_missing_fields": [
+            "concrete_facts",
+            "named_companies"
+          ],
+          "reason": "expert_insight_missing_fields concrete_facts, named_companies"
+        }
+      ],
+      "archiveOnlyItems": []
     }
   ],
-  "lastRunAt": "2026-07-16T00:00:35.075Z"
+  "lastRunAt": "2026-07-16T09:23:18.578Z"
 }
