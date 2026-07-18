@@ -81,12 +81,16 @@ test('configuration is validated before a provider factory runs and instances ar
     },
     create: ({ config }) => {
       creates += 1;
-      return { limit: config.limit };
+      return {
+        limit: config.limit,
+        discover: async () => ({ ok: true, value: [] }),
+        checkpoint: async () => ({ ok: true }),
+      };
     },
   }), { config: { limit: 20 } });
 
-  assert.deepEqual(await registry.instantiate('source.discovery'), { limit: 20 });
-  assert.deepEqual(await registry.instantiate('source.discovery'), { limit: 20 });
+  assert.equal((await registry.instantiate('source.discovery')).limit, 20);
+  assert.equal((await registry.instantiate('source.discovery')).limit, 20);
   assert.equal(creates, 1);
 
   const invalid = new PluginRegistry().register(plugin('source.atom', ['source.discovery'], {

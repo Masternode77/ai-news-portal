@@ -2,6 +2,7 @@ import fs from 'node:fs/promises';
 import http from 'node:http';
 import path from 'node:path';
 import { createRequire } from 'node:module';
+import { pathToFileURL } from 'node:url';
 import sharp from 'sharp';
 
 const ROOT = process.cwd();
@@ -9,23 +10,26 @@ const DIST_DIR = path.join(ROOT, 'dist');
 const OUTPUT_DIR = path.join(ROOT, 'artifacts', 'design-options');
 const STATUS_PATH = path.join(OUTPUT_DIR, 'design-qa.json');
 
-const themes = [
+export const themes = [
   { slug: 'midnight-intelligence', short: 'midnight' },
   { slug: 'research-ledger', short: 'ledger' },
   { slug: 'signal-mosaic', short: 'mosaic' },
 ];
 
-const views = [
+export const views = [
   { name: 'home', suffix: '', requiresImage: true },
   { name: 'article', suffix: 'article/', requiresImage: true },
   { name: 'states', suffix: 'states/', requiresImage: false },
+  { name: 'navigation', suffix: 'navigation/', requiresImage: false },
 ];
 
-const viewports = [
+export const viewports = [
   { name: 'desktop', width: 1440, height: 1000 },
   { name: 'tablet', width: 834, height: 1112 },
   { name: 'mobile', width: 390, height: 844 },
 ];
+
+export const expectedCaptures = themes.length * views.length * viewports.length;
 
 function contentType(filePath) {
   if (filePath.endsWith('.html')) return 'text/html; charset=utf-8';
@@ -274,6 +278,7 @@ async function main() {
   const report = {
     checkedAt: new Date().toISOString(),
     status: failures.length ? 'failed' : 'passed',
+    expectedCaptures,
     captures: results.length,
     failures,
     results,
@@ -283,4 +288,6 @@ async function main() {
   if (failures.length) process.exitCode = 1;
 }
 
-await main();
+if (process.argv[1] && import.meta.url === pathToFileURL(path.resolve(process.argv[1])).href) {
+  await main();
+}

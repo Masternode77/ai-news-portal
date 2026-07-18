@@ -481,14 +481,18 @@ export async function generateCandidate(article, recentBlueprintIds, dependencie
   const frozenEvidencePack = structuredClone(article.evidence_pack);
   const metadata = await generateMetadata(article);
   if (!metadata.ok) throw Object.assign(new Error(metadata.error.code), metadata.error, { retryable: metadata.retryable });
-  const imageResult = await withTimeout(
-    `generate image ${article.id}`,
-    () => ensureImage({ ...metadata.article, forceAiImage: true, forceImageRefresh: true }),
-    45_000,
-  );
+  let draftInput = metadata.article;
+  if (dependencies.generateImage !== false) {
+    const imageResult = await withTimeout(
+      `generate image ${article.id}`,
+      () => ensureImage({ ...metadata.article, forceAiImage: true, forceImageRefresh: true }),
+      45_000,
+    );
+    draftInput = { ...metadata.article, ...imageMetadataPatch(imageResult) };
+  }
   const [draft] = await withTimeout(
     `generate editorial draft ${article.id}`,
-    () => attachLens([{ ...metadata.article, ...imageMetadataPatch(imageResult) }], { recentBlueprintIds }),
+    () => attachLens([draftInput], { recentBlueprintIds }),
     90_000,
   );
   return { ...draft, evidence_pack: frozenEvidencePack };
@@ -548,6 +552,50 @@ function reviewFidelity(article) {
     && (claims.unsupportedClaims?.length || 0) === 0
     && seo.ok === true;
   return { ok, source, claims, seo };
+}
+
+export function reviewGeneratedCandidate(article = {}, recentRecords = []) {
+  const fidelity = reviewFidelity(article);
+  const reviewed = {
+    ...article,
+    source_fidelity: fidelity.source,
+    claim_fidelity: fidelity.claims,
+    seo_fidelity: fidelity.seo,
+  };
+  if (!fidelity.ok) {
+    return {
+      ok: false,
+      code: 'source_fidelity_failed',
+      article: reviewed,
+    };
+  }
+  const { passed, blocked } = splitByRepetitionGate([reviewed], recentRecords);
+  if (!passed.length) {
+    return {
+      ok: false,
+      code: 'repetition_gate_failed',
+      article: blocked[0] || reviewed,
+    };
+  }
+  const decision = publicSurfaceDecision(passed[0]);
+  const publiclyReviewed = {
+    ...passed[0],
+    public_eligibility: {
+      detailPage: decision.detailPage,
+      homepage: decision.homepage,
+      archive: decision.archive,
+      rss: decision.rss,
+      sourceRelevant: decision.sourceRelevant,
+    },
+  };
+  if (!decision.detailPage) {
+    return {
+      ok: false,
+      code: 'public_longform_ineligible',
+      article: publiclyReviewed,
+    };
+  }
+  return { ok: true, article: publiclyReviewed };
 }
 
 export async function runProductionReview(payload = {}) {

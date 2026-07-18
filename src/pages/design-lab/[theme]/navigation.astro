@@ -1,0 +1,14 @@
+---
+import DesignLabNavigation from '../../../components/design-lab/DesignLabNavigation.astro';
+import DesignLabShell from '../../../components/design-lab/DesignLabShell.astro';
+import { DESIGN_LAB_THEMES } from '../../../lib/design-lab-data.js';
+
+export function getStaticPaths() {
+  return DESIGN_LAB_THEMES.map((theme) => ({ params: { theme: theme.slug }, props: { theme } }));
+}
+
+const { theme } = Astro.props;
+---
+<DesignLabShell theme={theme} currentView="navigation">
+  <DesignLabNavigation theme={theme} />
+</DesignLabShell>

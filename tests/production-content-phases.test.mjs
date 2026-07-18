@@ -4,8 +4,10 @@ import {
   beginProductionPublication,
   buildProductionPublishAccounting,
   completeProductionPublication,
+  generateCandidate,
   productionPublicationReceipt,
   prepareReconciliationCandidates,
+  reviewGeneratedCandidate,
   runProductionClassify,
   runProductionCluster,
   runProductionGenerate,
@@ -261,6 +263,20 @@ test('review reuses generation evidence and persists every public eligibility ga
   assert.equal(reviewed.seo_fidelity.ok, true);
   assert.equal(publicSurfaceDecision(reviewed).detailPage, true);
   assert.deepEqual(result.transitions.map(({ toState }) => toState), ['publish_ready']);
+
+  const ineligible = {
+    ...reviewed,
+    public_content_tier: 'source_signal',
+    public_status: 'draft',
+    draft: true,
+    signalCardOnly: true,
+    articlePagePublished: false,
+    homepagePublished: false,
+  };
+  const directReview = reviewGeneratedCandidate(ineligible, []);
+  assert.equal(directReview.ok, false);
+  assert.equal(directReview.code, 'public_longform_ineligible');
+  assert.equal(directReview.article.public_eligibility.detailPage, false);
 });
 
 test('generated summary cannot enter extraction evidence or self-validate unsupported claims', async () => {
@@ -311,6 +327,29 @@ test('generate fails the phase on unexpected implementation errors instead of ma
     () => runProductionGenerate({ editorialCandidates: [broken] }),
     (error) => error instanceof TypeError && /unexpected evidence access failure/.test(error.message),
   );
+});
+
+test('editorial-only generation can skip image writes while preserving canonical draft generation', async () => {
+  const source = extractedArticle({ id: 'editorial-only', length: 1_300 });
+  source.evidence_pack = buildSourceEvidencePack(source);
+  let imageCalls = 0;
+  let draftInput;
+  const result = await generateCandidate(source, [], {
+    generateImage: false,
+    generateMetadata: async (article) => ({ ok: true, article }),
+    ensureImage: async () => {
+      imageCalls += 1;
+      throw new Error('image generation must be skipped');
+    },
+    attachLens: async ([article]) => {
+      draftInput = article;
+      return [{ ...article, expertLensFull: { finalArticleBody: 'Editorial-only draft.' } }];
+    },
+  });
+
+  assert.equal(imageCalls, 0);
+  assert.equal(draftInput.id, source.id);
+  assert.equal(result.expertLensFull.finalArticleBody, 'Editorial-only draft.');
 });
 
 test('publish accounting marks extraction and classification rejects as processed blockers', () => {

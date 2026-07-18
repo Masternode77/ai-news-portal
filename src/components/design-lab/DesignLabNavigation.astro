@@ -1,0 +1,309 @@
+---
+import { DESIGN_LAB_THEMES } from '../../lib/design-lab-data.js';
+
+const { theme } = Astro.props;
+const base = `/design-lab/${theme.slug}/`;
+const sectionLinks = [
+  { label: 'Power', href: '/category/power-grid/' },
+  { label: 'Capacity', href: '/category/data-centers/' },
+  { label: 'Silicon', href: '/category/semiconductors/' },
+  { label: 'Cooling', href: '/category/cooling/' },
+];
+const viewLinks = [
+  { label: 'Front Page', href: base },
+  { label: 'Lead Analysis', href: `${base}article/` },
+  { label: 'Coverage Status', href: `${base}states/` },
+  { label: 'Navigation', href: `${base}navigation/` },
+];
+---
+<header class="dl-navigation-header">
+  <span>Navigation system</span>
+  <h1>Clear location at every level</h1>
+  <p>Section, view, and design-option links keep the current destination visible while preserving a strong keyboard focus state.</p>
+</header>
+
+<div class="dl-navigation-grid" data-navigation-state-view>
+  <section class="dl-navigation-panel" aria-labelledby="section-navigation-title">
+    <div class="dl-navigation-title">
+      <span>Publication level</span>
+      <h2 id="section-navigation-title">Section navigation</h2>
+    </div>
+    <nav class="dl-navigation-example" aria-label="Section navigation states">
+      {sectionLinks.map((link, index) => (
+        <a
+          href={link.href}
+          aria-current={index === 0 ? 'page' : undefined}
+          data-nav-state={index === 0 ? 'current' : index === 2 ? 'focus-visible' : 'default'}
+        >
+          {link.label}
+        </a>
+      ))}
+    </nav>
+    <p>The active section carries a persistent surface treatment; keyboard focus remains distinct from selection.</p>
+  </section>
+
+  <section class="dl-navigation-panel" aria-labelledby="view-navigation-title">
+    <div class="dl-navigation-title">
+      <span>Page level</span>
+      <h2 id="view-navigation-title">View navigation</h2>
+    </div>
+    <nav class="dl-navigation-example" aria-label="Prototype view navigation states">
+      {viewLinks.map((link) => (
+        <a
+          href={link.href}
+          aria-current={link.label === 'Navigation' ? 'page' : undefined}
+          data-nav-state={link.label === 'Navigation' ? 'current' : 'default'}
+        >
+          {link.label}
+        </a>
+      ))}
+    </nav>
+    <p>The selected view follows readers when they compare the same surface across all three design options.</p>
+  </section>
+
+  <section class="dl-navigation-panel" aria-labelledby="theme-navigation-title">
+    <div class="dl-navigation-title">
+      <span>Design level</span>
+      <h2 id="theme-navigation-title">Option navigation</h2>
+    </div>
+    <nav class="dl-navigation-example" aria-label="Design option navigation states">
+      {DESIGN_LAB_THEMES.map((option) => (
+        <a
+          href={`/design-lab/${option.slug}/navigation/`}
+          aria-current={theme.slug === option.slug ? 'page' : undefined}
+          data-nav-state={theme.slug === option.slug ? 'current' : 'default'}
+        >
+          {option.shortName}
+        </a>
+      ))}
+    </nav>
+    <p>The route stays on this navigation view when a different visual direction is selected.</p>
+  </section>
+</div>
+
+<section class="dl-navigation-key" aria-labelledby="navigation-key-title">
+  <div>
+    <span>State key</span>
+    <h2 id="navigation-key-title">One visual language, three clear states</h2>
+  </div>
+  <ul>
+    <li><i data-key-state="default"></i><strong>Default</strong><span>Available destination</span></li>
+    <li><i data-key-state="current"></i><strong>Current</strong><span>Selected destination</span></li>
+    <li><i data-key-state="focus-visible"></i><strong>Keyboard focus</strong><span>Next actionable destination</span></li>
+  </ul>
+</section>
+
+<style>
+  .dl-navigation-header {
+    max-width: 920px;
+    padding: 64px 0 34px;
+  }
+
+  .dl-navigation-header > span,
+  .dl-navigation-title > span,
+  .dl-navigation-key > div > span {
+    color: var(--dl-accent);
+    font-size: 0.72rem;
+    font-weight: 850;
+    text-transform: uppercase;
+  }
+
+  .dl-navigation-header h1 {
+    margin: 18px 0;
+    color: var(--dl-text);
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 4.2rem;
+    line-height: 1;
+    overflow-wrap: anywhere;
+  }
+
+  .dl-navigation-header p,
+  .dl-navigation-panel > p {
+    color: var(--dl-muted);
+    line-height: 1.6;
+  }
+
+  .dl-navigation-header p {
+    max-width: 65ch;
+    margin: 0;
+    font-size: 1.05rem;
+  }
+
+  .dl-navigation-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 18px;
+    padding: 24px 0 44px;
+  }
+
+  .dl-navigation-panel {
+    display: flex;
+    min-width: 0;
+    min-height: 390px;
+    padding: 24px;
+    border: 1px solid var(--dl-line);
+    border-radius: 4px;
+    background: var(--dl-surface);
+    flex-direction: column;
+  }
+
+  .dl-navigation-title h2,
+  .dl-navigation-key h2 {
+    margin: 7px 0 0;
+    color: var(--dl-text);
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 1.85rem;
+    line-height: 1.08;
+  }
+
+  .dl-navigation-example {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 9px;
+    margin: 30px 0;
+    padding: 18px;
+    border-block: 1px solid var(--dl-line);
+  }
+
+  .dl-navigation-example a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 38px;
+    padding: 0 11px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    color: var(--dl-muted);
+    font-size: 0.76rem;
+    font-weight: 800;
+    text-decoration: none;
+  }
+
+  .dl-navigation-example a[data-nav-state="current"] {
+    border-color: var(--dl-line);
+    background: var(--dl-surface-strong);
+    color: var(--dl-text);
+  }
+
+  .dl-navigation-example a[data-nav-state="focus-visible"] {
+    color: var(--dl-text);
+    outline: 3px solid var(--dl-signal);
+    outline-offset: 3px;
+  }
+
+  .dl-navigation-panel > p {
+    margin: auto 0 0;
+    font-size: 0.9rem;
+  }
+
+  .dl-navigation-key {
+    display: grid;
+    grid-template-columns: minmax(240px, 0.7fr) minmax(0, 1.3fr);
+    gap: 40px;
+    padding: 36px 0 72px;
+    border-top: 1px solid var(--dl-line);
+  }
+
+  .dl-navigation-key ul {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    border-top: 1px solid var(--dl-line);
+  }
+
+  .dl-navigation-key li {
+    display: grid;
+    min-width: 0;
+    padding: 18px;
+    border-right: 1px solid var(--dl-line);
+    border-bottom: 1px solid var(--dl-line);
+    gap: 7px;
+  }
+
+  .dl-navigation-key i {
+    display: block;
+    width: 32px;
+    height: 8px;
+    margin-bottom: 8px;
+    border: 1px solid var(--dl-line);
+    border-radius: 4px;
+  }
+
+  .dl-navigation-key i[data-key-state="current"] {
+    background: var(--dl-surface-strong);
+  }
+
+  .dl-navigation-key i[data-key-state="focus-visible"] {
+    border-color: var(--dl-signal);
+    box-shadow: 0 0 0 2px var(--dl-signal);
+  }
+
+  .dl-navigation-key strong {
+    color: var(--dl-text);
+    font-size: 0.84rem;
+  }
+
+  .dl-navigation-key li span {
+    color: var(--dl-muted);
+    font-size: 0.75rem;
+    line-height: 1.4;
+  }
+
+  :global(.design-lab-signal-mosaic) .dl-navigation-header h1,
+  :global(.design-lab-signal-mosaic) .dl-navigation-title h2,
+  :global(.design-lab-signal-mosaic) .dl-navigation-key h2 {
+    font-family: Arial, Helvetica, sans-serif;
+    text-transform: uppercase;
+  }
+
+  :global(.design-lab-signal-mosaic) .dl-navigation-panel {
+    border-top: 5px solid var(--dl-signal);
+  }
+
+  :global(.design-lab-signal-mosaic) .dl-navigation-panel:nth-child(2) {
+    border-top-color: var(--dl-accent);
+  }
+
+  :global(.design-lab-signal-mosaic) .dl-navigation-panel:nth-child(3) {
+    border-top-color: var(--dl-alert);
+  }
+
+  @media (max-width: 820px) {
+    .dl-navigation-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .dl-navigation-panel:last-child {
+      grid-column: 1 / -1;
+    }
+
+    .dl-navigation-key {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 560px) {
+    .dl-navigation-header h1 {
+      font-size: 2.55rem;
+      line-height: 1.02;
+    }
+
+    .dl-navigation-grid,
+    .dl-navigation-key ul {
+      grid-template-columns: 1fr;
+    }
+
+    .dl-navigation-panel:last-child {
+      grid-column: auto;
+    }
+
+    .dl-navigation-panel {
+      min-height: 330px;
+    }
+
+    .dl-navigation-key li {
+      border-right: 0;
+    }
+  }
+</style>

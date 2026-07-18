@@ -37,7 +37,14 @@ function nowIso(value) {
 }
 
 function bodyText(article = {}) {
-  return text(article.expertLensFull?.finalArticleBody || article.fullArticleText || article.articleText || article.contentText || article.snippet);
+  return text(
+    article.expertLensFull?.finalArticleBody
+      || article.bodyMarkdown
+      || article.fullArticleText
+      || article.articleText
+      || article.contentText
+      || article.snippet,
+  );
 }
 
 function score(value) {
@@ -101,6 +108,25 @@ function applyPatch(article = {}, patch = {}) {
     next.expertLens = text(patch.expertLensShort);
     next.expertLensFull.thesis = text(patch.expertLensShort);
   }
+  if (patch.expertLensFull && typeof patch.expertLensFull === 'object' && !Array.isArray(patch.expertLensFull)) {
+    next.expertLensFull = clone(patch.expertLensFull);
+  }
+  for (const field of [
+    'source_fidelity',
+    'claim_fidelity',
+    'seo_fidelity',
+    'repetition_check',
+    'repetition_blocked',
+    'repetition_block_reasons',
+    'public_eligibility',
+    'generation_version',
+    'narrative_dna',
+    'dynamic_brief_label',
+    'article_blueprint',
+    'articleBlueprint',
+  ]) {
+    if (field in patch) next[field] = clone(patch[field]);
+  }
   for (const field of ['category', 'region', 'source', 'sourceUrl', 'canonicalUrl', 'sourceImage', 'generatedImage', 'heroImage', 'thumbnailImage', 'imageAlt', 'imagePrompt', 'publishedAt', 'scheduledAt']) {
     if (field in patch) next[field] = text(patch[field]);
   }
@@ -135,7 +161,7 @@ function isPubliclyEligible(article = {}) {
 function requestRegeneration(article, type, patch, actor, timestamp) {
   article.admin_regeneration_request = {
     type,
-    prompt: text(patch.editPrompt || patch.imagePrompt || patch.prompt),
+    prompt: text(patch.editPrompt || patch.imagePrompt || patch.prompt).slice(0, 2_000),
     requestedAt: timestamp,
     requestedBy: actor,
   };

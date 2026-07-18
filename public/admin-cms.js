@@ -241,15 +241,62 @@
     target?.append(list);
   }
 
+  function renderSourceHealth(rows) {
+    const target = byId('admin-source-list');
+    clear(target);
+    const list = document.createElement('ul');
+    for (const row of rows) {
+      const item = document.createElement('li');
+      item.append(
+        element('strong', row.source_name || row.source_id || 'Unknown source'),
+        element('small', [row.source_id, row.status].filter(Boolean).join(' · ') || 'Status unavailable'),
+      );
+      list.append(item);
+    }
+    if (!rows.length) list.append(element('li', 'No source-health records.'));
+    target?.append(list);
+  }
+
+  function renderQuarantine(rows) {
+    const target = byId('admin-quarantine-list');
+    clear(target);
+    const list = document.createElement('ul');
+    for (const row of rows) {
+      const item = document.createElement('li');
+      const status = row.deletedAt ? 'deleted' : row.public_status || 'quarantined';
+      const reason = row.quarantine_reason
+        || row.qualityGateReason
+        || row.archiveOnlyReason
+        || row.seo_noindex_reasons?.[0]
+        || 'No review reason recorded.';
+      item.append(
+        element('strong', row.title || row.id || 'Untitled article'),
+        element('small', [status, row.source].filter(Boolean).join(' · ')),
+        element('small', `Reason: ${reason}`),
+      );
+      if (row.id) {
+        item.append(element('a', 'Review in editor', {
+          href: `/admin/articles/${encodeURIComponent(row.id)}/edit`,
+        }));
+      }
+      list.append(item);
+    }
+    if (!rows.length) list.append(element('li', 'No quarantined records.'));
+    target?.append(list);
+  }
+
   async function loadOperations(view) {
     const mapping = {
-      sources: ['admin-source-list', 'name'],
-      quarantine: ['admin-quarantine-list', 'title'],
       pipeline: ['admin-pipeline-runs', 'id'],
     };
-    const [target, label] = mapping[view];
     const result = await request(`/api/admin/operations?view=${encodeURIComponent(view)}`);
-    renderSimpleList(target, result.rows || [], label);
+    const rows = result.rows || [];
+    if (view === 'sources') renderSourceHealth(rows);
+    else if (view === 'quarantine') renderQuarantine(rows);
+    else {
+      const [target, label] = mapping[view];
+      renderSimpleList(target, rows, label);
+    }
   }
 
   async function loadAudit() {

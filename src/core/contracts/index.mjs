@@ -7,3 +7,8 @@ export {
   validatePluginConfig,
   validatePluginManifest,
 } from './plugin-manifest.mjs';
+export {
+  PROVIDER_CONTRACTS,
+  validateProviderCapabilities,
+  validateProviderInstance,
+} from './provider-instance.mjs';

@@ -1,5 +1,6 @@
 import { randomUUID } from 'node:crypto';
 import { applyAdminArticleAction } from '../../scripts/lib/admin-article-store.mjs';
+import { regenerateAdminEditorial } from '../../scripts/lib/admin-editorial-regenerator.mjs';
 import { AdminStorageError, assertAdminStorageAdapter } from '../plugins/storage/index.mjs';
 
 function text(value) {
@@ -82,10 +83,16 @@ function isLiveArticle(article = {}) {
 }
 
 export class AdminCmsService {
-  constructor({ storage, idGenerator = randomUUID, clock = () => new Date() }) {
+  constructor({
+    storage,
+    idGenerator = randomUUID,
+    clock = () => new Date(),
+    editorialRegenerator = regenerateAdminEditorial,
+  }) {
     this.storage = assertAdminStorageAdapter(storage);
     this.idGenerator = idGenerator;
     this.clock = clock;
+    this.editorialRegenerator = editorialRegenerator;
   }
 
   async listArticles(query = {}) {
@@ -103,11 +110,15 @@ export class AdminCmsService {
     if (!title) throw new AdminStorageError('article title is required', 'missing_title');
     const id = text(input.id) || `${slug(title) || 'article'}-${this.idGenerator().slice(0, 8)}`;
     const now = this.clock().toISOString();
+    const inputFull = input.expertLensFull && typeof input.expertLensFull === 'object' && !Array.isArray(input.expertLensFull)
+      ? structuredClone(input.expertLensFull)
+      : {};
+    const summary = text(input.summary || input.dek);
     const article = {
       ...structuredClone(input),
       id,
       title,
-      summary: text(input.summary || input.dek),
+      summary,
       category: text(input.category),
       source: text(input.source),
       sourceUrl: text(input.sourceUrl),
@@ -118,6 +129,12 @@ export class AdminCmsService {
       articlePagePublished: false,
       homepagePublished: false,
       scheduledAt: text(input.scheduledAt),
+      expertLensFull: {
+        ...inputFull,
+        finalHeadline: text(inputFull.finalHeadline || title),
+        metaDescription: text(inputFull.metaDescription || summary),
+        finalArticleBody: text(input.bodyMarkdown || input.finalArticleBody || inputFull.finalArticleBody),
+      },
       updatedAt: now,
     };
     return this.storage.createArticle(article, {
@@ -177,8 +194,32 @@ export class AdminCmsService {
     const current = await this.storage.getArticle(id, { includeDeleted: true });
     if (!current) throw new AdminStorageError(`article ${id} was not found`, 'article_not_found');
     if (current.deletedAt) throw new AdminStorageError(`article ${id} is deleted`, 'article_deleted');
+    if (action !== 'preview' && current.version !== expectedVersion) {
+      throw new AdminStorageError(
+        `article version conflict: expected ${expectedVersion}, found ${current.version}`,
+        'version_conflict',
+      );
+    }
     if (actor.role === 'editor' && action !== 'preview' && isLiveArticle(current)) {
       throw new AdminStorageError('Editors cannot mutate live or scheduled articles', 'admin_action_forbidden');
+    }
+    if (['regenerate-article', 'regenerate-brief'].includes(action)) {
+      try {
+        const recentArticles = await this.storage.listArticles({ includeDeleted: false });
+        const regenerationPatch = await this.editorialRegenerator({
+          article: structuredClone(current),
+          type: action === 'regenerate-brief' ? 'brief' : 'article',
+          prompt: text(input.editPrompt || input.prompt),
+          recentArticles,
+        });
+        input = { ...input, ...regenerationPatch };
+      } catch (error) {
+        if (error instanceof AdminStorageError) throw error;
+        throw new AdminStorageError(
+          'Editorial regeneration failed its source or quality checks',
+          text(error?.code) || 'editorial_regeneration_failed',
+        );
+      }
     }
     const result = applyAdminArticleAction({
       article: current,
@@ -193,7 +234,12 @@ export class AdminCmsService {
         ...result,
         preview: {
           ...result.preview,
-          text: text(result.article.expertLensFull?.finalArticleBody || result.article.articleText || result.article.contentText),
+          text: text(
+            result.article.expertLensFull?.finalArticleBody
+              || result.article.bodyMarkdown
+              || result.article.articleText
+              || result.article.contentText,
+          ),
         },
       };
     }

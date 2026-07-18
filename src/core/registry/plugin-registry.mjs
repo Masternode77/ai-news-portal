@@ -3,6 +3,10 @@ import {
   validatePlugin,
   validatePluginConfig,
 } from '../contracts/plugin-manifest.mjs';
+import {
+  validateProviderCapabilities,
+  validateProviderInstance,
+} from '../contracts/provider-instance.mjs';
 
 export class PluginRegistryError extends Error {
   constructor(message, code = 'plugin_registry_error') {
@@ -137,12 +141,17 @@ export class PluginRegistry {
     const { plugin, config } = registration;
     if (!this.#instances.has(plugin.manifest.id)) {
       validatePluginConfig(plugin.manifest.configSchema, config);
-      const created = Promise.resolve(plugin.create({
-        ...this.#pluginContext,
-        config: structuredClone(config),
-        manifest: plugin.manifest,
-        registry: this,
-      }));
+      validateProviderCapabilities(plugin.manifest.capabilities, { providerId: plugin.manifest.id });
+      const created = Promise.resolve()
+        .then(() => plugin.create({
+          ...this.#pluginContext,
+          config: structuredClone(config),
+          manifest: plugin.manifest,
+          registry: this,
+        }))
+        .then((instance) => validateProviderInstance(instance, plugin.manifest.capabilities, {
+          providerId: plugin.manifest.id,
+        }));
       this.#instances.set(plugin.manifest.id, created);
       created.catch(() => this.#instances.delete(plugin.manifest.id));
     }
