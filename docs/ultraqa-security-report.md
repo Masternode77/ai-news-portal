@@ -56,10 +56,11 @@ operations rather than hidden code-completion claims.
 | UQ-40 | Two retries publish the same reconciliation identity | Verify and replay a completed identity without invoking providers | Pass | Same-identity replay keeps the provider count unchanged |
 | UQ-41 | Durable receipt belongs to a different execution owner | Bind completed receipts and output verification to execution identity | Pass | Receipt-identity mismatch is rejected before bundle verification |
 | UQ-42 | Abandoned lock is auto-reclaimed while its owner may still write | Never auto-reclaim; require explicit operator cleanup and fence each publish side effect | Pass | Stale-token rejection and mid-provider ownership-loss regressions |
+| UQ-43 | Title-only triage is mistaken for source-grounded publication authority | Label review output advisory, forbid publication/permanent rejection, and leave execution input unchanged | Pass | Read-only digest proof, advisory review regression, and current 2/6/17 candidate receipt |
 
 ## Verification Receipt
 
-- Full tests: 620 total, 619 passed, 0 failed, 1 intentional skip.
+- Full tests: 621 total, 620 passed, 0 failed, 1 intentional skip.
 - Focused security tests: 76 passed, 0 failed.
 - Reconciliation and canonical-orchestrator security tests: 96 passed, 0 failed.
 - Source provenance: 26/26 articles and 104/104 variants matched; no missing, mismatch,
@@ -82,9 +83,9 @@ release follow-ups and do not justify production promotion without preview appro
 
 ## Exact Preview Receipt
 
-- Implementation: `52a8e9c1fa7228f6b8ebb90a7db3635282674bbe`.
-- Deployment: `dpl_DZ3HVDMsRT7D9iQtJYaZ6kyMTjfp`, status `READY`.
-- URL: `https://ai-news-portal-6441tjea6-masternode77s-projects.vercel.app`.
+- Implementation: `bfdc5a2662aeec55cde200cd8b10194677bb0f90`.
+- Deployment: `dpl_5bcw7DWGYPRXhJTnYDXTqaVwov93`, status `READY`.
+- URL: `https://ai-news-portal-1rorqn6s5-masternode77s-projects.vercel.app`.
 - Eight public routes returned 200 and five retired operational routes returned 404.
 - Homepage security headers include CSP, HSTS, nosniff, frame denial, referrer policy, and
   permissions policy. The unconfigured admin API returned generic 503 with `no-store` and

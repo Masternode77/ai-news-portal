@@ -2,13 +2,13 @@
 
 ## Current branch
 - `upgrade/gpt-5-6-sol`; latest verified implementation checkpoint
-  `52a8e9c1fa7228f6b8ebb90a7db3635282674bbe`.
-- Exact implementation preview: `dpl_DZ3HVDMsRT7D9iQtJYaZ6kyMTjfp` at
-  `https://ai-news-portal-6441tjea6-masternode77s-projects.vercel.app` (`READY`, preview target).
+  `bfdc5a2662aeec55cde200cd8b10194677bb0f90`.
+- Exact implementation preview: `dpl_5bcw7DWGYPRXhJTnYDXTqaVwov93` at
+  `https://ai-news-portal-1rorqn6s5-masternode77s-projects.vercel.app` (`READY`, preview target).
 - Rollback tag: `backup/pre-gpt56-upgrade-20260711T091118Z`.
 - No push, production promotion, production-secret operation, or cache purge has been performed.
-- Latest separately observed production: `dpl_AVpthdEkw2tgb6YmsVg1XnkUftK9`;
-  current `origin/main` is `6dd5bc41585b68487770c9c32620cc8b7907cc6d`.
+- Latest separately observed production: `dpl_THrq4thMxWBNnExaVLKBcb2WqATH`;
+  current `origin/main` is `f92084d303f20dfb37e86a69f7046a74ab205a4b`.
 
 ## Latest completed checklist item
 - Reconciled source-image provenance, publication dedupe, immutable GitHub Actions, and generated-data cleanup.
@@ -19,11 +19,15 @@
   and replayed completed identical identities without provider execution.
 - Corrected the production-surface verifier so `--help` is read-only, checked targets produce accurate
   risk text, and fresh screenshot paths can be bound into the receipt.
-- Deployed implementation `52a8e9c1` to the exact preview and completed route, header, admin, log,
+- Added a read-only `--review` view that labels title-only triage as advisory, reports core/adjacent/archive
+  counts, and keeps canonical extraction and classification as the only publication authority.
+- Deployed implementation `bfdc5a26` to the exact preview and completed route, header, admin, log,
   desktop/mobile visual, image, placeholder, overflow, and production-comparison checks.
-- Re-audited current `origin/main`: 120 newer commits comprise 100 dashboard snapshots and 20 content
+- Re-audited current `origin/main`: 121 newer commits comprise 101 dashboard snapshots and 20 content
   refreshes; 749 upstream rows resolve to 724 already-present sources, 25 source-only candidates,
   and 0 rejected rows.
+- Advisory title-only review reports 2 core, 6 adjacent, and 17 archive candidates; this is not an
+  execution filter and every candidate still requires canonical source extraction.
 - Confirmed a raw merge remains unsafe because it would bypass upgraded relevance, fidelity,
   repetition, provenance, and image gates.
 
@@ -34,10 +38,10 @@
   extraction, identity/checkpoint/lease fencing, package commands, and regressions.
 - Verification: `scripts/verify-production-surface.mjs`, `tests/qa-qc-workflow.test.mjs`, final reports,
   production verification receipt, visual QA report, security reports, and this handoff.
-- Local ignored evidence: `artifacts/preview-52a8e9c1/`.
+- Local ignored evidence: `artifacts/preview-bfdc5a26/`.
 
 ## Validation results
-- Full `npm test`: 620 total, 619 passed, 0 failed, 1 intentional skip; follow-on editorial gates pass.
+- Full `npm test`: 621 total, 620 passed, 0 failed, 1 intentional skip; follow-on editorial gates pass.
 - QA/QC verifier tests: 8/8 passed; reconciliation/orchestrator security set: 96/96 passed.
 - Focused security: 76/76 passed; `npm audit --audit-level=low`: 0 vulnerabilities.
 - Tracked secret scan: no real credentials/private keys; only an `example.invalid` fixture matched.
@@ -54,7 +58,7 @@
   policy, and preview noindex; final Vercel error-log query returned no application errors.
 - Browser QA: homepage 31/31 desktop/mobile, archive 32/32, search 32/32, article 1/1, and APAC 19/19
   images decoded with 0 broken images, placeholder labels, app errors, failed requests, or overflow.
-- Fresh 1440x900 comparison differs on 99.9998% of pixels, confirming production still serves the old
+- Fresh 1440x900 comparison differs on 100% of pixels, confirming production still serves the old
   command-center design while the preview serves Midnight Intelligence.
 - Human benchmark packets remain reviewer-empty; the scorer fails closed without `reviewer.id`.
 - Managed persistence contract: 4/4 local tests pass; live preview credentials are absent.

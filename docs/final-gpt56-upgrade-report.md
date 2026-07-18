@@ -21,11 +21,11 @@ continued its automated content deployments independently during QA.
 | Baseline production SHA | `19089b66627be58d5066376902ff382d2a018137` |
 | Integrated `origin/main` baseline | `f8bc10a220a6b910e703375d337dcd3f40ea0467` |
 | Rollback tag | `backup/pre-gpt56-upgrade-20260711T091118Z` |
-| Verified implementation SHA | `52a8e9c1fa7228f6b8ebb90a7db3635282674bbe` |
-| Verification tooling SHA | `52a8e9c1fa7228f6b8ebb90a7db3635282674bbe` |
-| Preview deployment | `dpl_DZ3HVDMsRT7D9iQtJYaZ6kyMTjfp` (`READY`, preview target) |
-| Preview URL | `https://ai-news-portal-6441tjea6-masternode77s-projects.vercel.app` |
-| Latest observed production | `dpl_AVpthdEkw2tgb6YmsVg1XnkUftK9` (external `main`, unchanged by this branch); separately observed `origin/main` is `6dd5bc41585b68487770c9c32620cc8b7907cc6d` |
+| Verified implementation SHA | `bfdc5a2662aeec55cde200cd8b10194677bb0f90` |
+| Verification tooling SHA | `bfdc5a2662aeec55cde200cd8b10194677bb0f90` |
+| Preview deployment | `dpl_5bcw7DWGYPRXhJTnYDXTqaVwov93` (`READY`, preview target) |
+| Preview URL | `https://ai-news-portal-1rorqn6s5-masternode77s-projects.vercel.app` |
+| Latest observed production | `dpl_THrq4thMxWBNnExaVLKBcb2WqATH` (external `main`, unchanged by this branch); separately observed `origin/main` is `f92084d303f20dfb37e86a69f7046a74ab205a4b` |
 
 ## Delivered Platform
 
@@ -69,6 +69,9 @@ continued its automated content deployments independently during QA.
   extraction. Active checkpoints are bound to the audited revision and candidate SHA-256 digest,
   immutable initial input is retained for partial-publish recovery, and mismatched, oversized, or
   concurrent runs fail before provider work.
+- Added a title-only advisory review to the read-only audit so operators can see core, adjacent,
+  and archive-shaped drift before spending provider calls. Its output explicitly forbids publication
+  or permanent rejection without canonical source extraction and classification.
 
 ### Public publication
 
@@ -136,7 +139,7 @@ three prototypes remain noindex and are not production routes.
 | --- | --- |
 | Clean install | `npm ci` passed |
 | Dependency security | `npm audit --audit-level=low`: 0 vulnerabilities |
-| Full tests | 620 total, 619 passed, 0 failed, 1 intentional skip |
+| Full tests | 621 total, 620 passed, 0 failed, 1 intentional skip |
 | Focused security tests | 76 passed, 0 failed |
 | Reconciliation/orchestrator security tests | 96 passed, 0 failed |
 | Editorial scripts | quality, relevance, taxonomy, repetition passed |
@@ -166,18 +169,18 @@ The exact preview was checked after lazy-load traversal: homepage desktop and mo
 all 31 images, archive and search rendered all 32, the representative article rendered its lead
 image, and APAC rendered all 19 canonical members. Browser QA found zero failed image responses,
 visible placeholder labels, console errors, page errors, clipping, or horizontal overflow.
-Screenshots and the machine-readable receipt are under `artifacts/preview-52a8e9c1/`.
+Screenshots and the machine-readable receipt are under `artifacts/preview-bfdc5a26/`.
 
 The exact preview and `computecurrent.com` are intentionally not pixel-identical before approval.
 The preview shows the selected Midnight Intelligence publication while production still shows the
 earlier operating-board homepage from external `main`. Same-viewport comparison confirmed the
-difference. Production later advanced independently to `dpl_AVpthdEkw2tgb6YmsVg1XnkUftK9`;
-`origin/main` was separately observed at `6dd5bc41`. No production promotion, alias change, or cache
+difference. Production later advanced independently to `dpl_THrq4thMxWBNnExaVLKBcb2WqATH`;
+`origin/main` was separately observed at `f92084d3`. No production promotion, alias change, or cache
 operation was performed by this branch.
 
 ## Current Production Content Reconciliation
 
-The latest `origin/main` is 120 automated commits ahead of the integrated baseline: 100 dashboard
+The latest `origin/main` is 121 automated commits ahead of the integrated baseline: 101 dashboard
 snapshot updates and 20 news/archive/dashboard refreshes. Those refreshes touch no product code;
 their net surface is four article JSON stores, pipeline state, one deleted-on-this-branch dashboard
 artifact, and 242 generated-image paths.
@@ -188,11 +191,13 @@ dashboard artifact. Several incoming records are visibly outside the product def
 consumer hardware and general software stories. Directly accepting generated stores would bypass
 the upgraded relevance, source-fidelity, repetition, canonical-source, and image-provenance gates.
 A current read-only audit resolved `origin/main` to
-`6dd5bc41585b68487770c9c32620cc8b7907cc6d` and examined 749 upstream rows. Canonical-source
+`f92084d303f20dfb37e86a69f7046a74ab205a4b` and examined 749 upstream rows. Canonical-source
 comparison found 724 already present and 25 unique re-ingestion candidates, with 0 rejected rows.
 Every candidate contains only `id`, `title`, `source`, `url`, `publishedAt`, and `snippet`; policy
 sets every upstream snippet to an empty string so evidence must be extracted again from the source.
 Generated copy, images, routing, scores, and other legacy projection fields do not cross the boundary.
+The advisory title-only review reports 2 core, 6 adjacent, and 17 archive-shaped candidates. These
+labels are operator hints only; they do not alter the 25-candidate execution input.
 
 The release path is to run
 `npm run content:reconcile-upstream -- --execute --production --revision=origin/main` in a safe
@@ -209,8 +214,8 @@ rejected.
 
 ## LOC and Repository Hygiene
 
-Implementation `52a8e9c1` against the rollback baseline spans 815 paths, including 390 binary paths.
-Git's textual counters report 136,115 additions and 157,059 deletions, a net reduction of 20,944
+Implementation `bfdc5a26` against the rollback baseline spans 815 paths, including 390 binary paths.
+Git's textual counters report 136,194 additions and 157,059 deletions, a net reduction of 20,865
 lines. This comparison includes the integrated `f8bc10a2` content baseline as well as the
 architecture, coverage, security, image-provenance, and generated-data cleanup in this branch.
 

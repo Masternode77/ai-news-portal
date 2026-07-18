@@ -4,11 +4,11 @@ Updated: 2026-07-19
 
 ## Final Preview
 
-- Deployment: `dpl_DZ3HVDMsRT7D9iQtJYaZ6kyMTjfp`
-- URL: `https://ai-news-portal-6441tjea6-masternode77s-projects.vercel.app`
-- Product commit: `52a8e9c1fa7228f6b8ebb90a7db3635282674bbe`
-- Separately observed production deployment: `dpl_AVpthdEkw2tgb6YmsVg1XnkUftK9`
-- Separately observed `origin/main`: `6dd5bc41585b68487770c9c32620cc8b7907cc6d`
+- Deployment: `dpl_5bcw7DWGYPRXhJTnYDXTqaVwov93`
+- URL: `https://ai-news-portal-1rorqn6s5-masternode77s-projects.vercel.app`
+- Product commit: `bfdc5a2662aeec55cde200cd8b10194677bb0f90`
+- Separately observed production deployment: `dpl_THrq4thMxWBNnExaVLKBcb2WqATH`
+- Separately observed `origin/main`: `f92084d303f20dfb37e86a69f7046a74ab205a4b`
 
 Chromium captured the exact preview after decoding and scrolling the complete lazy-loaded image
 inventory. Every checked route returned 200 with zero application console errors, page errors,
@@ -29,18 +29,18 @@ image audit reports zero broken public images or placeholder labels. Source prov
 
 Screenshots:
 
-- `artifacts/preview-52a8e9c1/home-desktop.png`
-- `artifacts/preview-52a8e9c1/home-mobile.png`
-- `artifacts/preview-52a8e9c1/archive-desktop.png`
-- `artifacts/preview-52a8e9c1/search-desktop.png`
-- `artifacts/preview-52a8e9c1/article-desktop.png`
-- `artifacts/preview-52a8e9c1/apac-desktop.png`
-- Receipt: `artifacts/preview-52a8e9c1/visual-qa.json`
+- `artifacts/preview-bfdc5a26/home-desktop.png`
+- `artifacts/preview-bfdc5a26/home-mobile.png`
+- `artifacts/preview-bfdc5a26/archive-desktop.png`
+- `artifacts/preview-bfdc5a26/search-desktop.png`
+- `artifacts/preview-bfdc5a26/article-desktop.png`
+- `artifacts/preview-bfdc5a26/apac-desktop.png`
+- Receipt: `artifacts/preview-bfdc5a26/visual-qa.json`
 
 Sharp pixel statistics mark every retained capture nonblank. A fresh 1440 x 900 comparison found
-1,295,997 of 1,296,000 pixels different (99.9998%). `computecurrent.com` still serves the previous
-command-center design while the preview serves Midnight Intelligence. That mismatch is the
-expected pre-approval state, not a failed or partial preview render.
+all 1,296,000 pixels different. `computecurrent.com` still serves the previous command-center
+design while the preview serves Midnight Intelligence. That mismatch is the expected pre-approval
+state, not a failed or partial preview render.
 
 ## Accessibility Follow-up
 
