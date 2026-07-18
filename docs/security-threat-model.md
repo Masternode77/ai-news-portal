@@ -1,6 +1,6 @@
 # Security Threat Model
 
-Updated: 2026-07-12
+Updated: 2026-07-18
 
 ## Assets and Trust Boundaries
 
@@ -15,15 +15,15 @@ trust boundaries.
 | Threat | Primary controls | Residual risk |
 | --- | --- | --- |
 | Credential stuffing | Argon2id hashes, 64+ byte HMAC signing secrets, durable per-IP throttling, failed-login records | Managed edge rate limits are still recommended |
-| Session theft/replay | HttpOnly, Secure, SameSite=Strict, expiry, server-side revocation | No second factor is implemented |
+| Session theft/replay | HttpOnly, Secure, SameSite=Strict, expiry, server-side revocation, live account-version and role validation | No second factor is implemented |
 | CSRF/unauthorized mutation | CSRF token plus role/action authorization on every mutation | OAuth/2FA remains a future hardening option |
 | Stored/reflected XSS | Astro escaping, script-safe structured data, DOM `textContent`, no `innerHTML` in CMS controller | Continue payload regression tests when renderers change |
-| SSRF/unsafe URLs | HTTP(S)-only public/admin URLs and centralized source fetch protections | New connectors require threat review |
+| SSRF/unsafe URLs | Centralized source fetch protections; private-address rejection; no HTTPS downgrade; OAuth image runtime restricted to credential-free HTTPS and exact-origin bearer forwarding | New connectors require threat review |
 | Upload attacks | MIME and magic-byte match, bounded bytes/pixels, safe decode, WebP re-encode, private local path | Vercel request-size limits constrain large media |
 | Path traversal | normalized object keys and media paths outside source/public output | Object-store policy remains an external control |
-| Lost/partial writes | transactions, optimistic versions, atomic local rename, immutable history, transactional outbox | Outbox consumer is not yet deployed |
+| Lost/partial writes | transactions, optimistic versions, atomic local rename, immutable history, transactional outbox, malformed canonical state rejection | Outbox consumer is not yet deployed |
 | Secret/log leakage | generic 5xx messages, IP HMACs, bounded fields, ignored runtime artifacts | Vercel/GitHub log retention must be configured externally |
-| Dependency compromise | lockfile, Node engine pin, `npm audit` release gate | Audit does not replace provenance review |
+| CI or dependency compromise | exact lockfile versions, Node engine pin, `npx --no-install`, trusted-main secret scope, `npm audit` release gate | Audit does not replace provenance review |
 
 ## Fail-Closed Policy
 

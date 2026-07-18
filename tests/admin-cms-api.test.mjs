@@ -122,6 +122,7 @@ test('storage-backed admin APIs cover create, list, get, preview, save, revision
     method: 'PATCH', headers: authHeaders(auth, true), body: { id: article.id, action: 'soft-delete', expectedVersion: 2 },
   });
   assert.equal(softDeleted.json().article.version, 3);
+  process.env.ADMIN_ROLE = 'editor';
   const editorSession = createSession('owner', { role: 'editor' });
   const editorAuth = { cookie: editorSession.cookie, csrf: editorSession.csrfToken };
   const editorDeletedDetail = await call(articleHandler, {
@@ -135,6 +136,7 @@ test('storage-backed admin APIs cover create, list, get, preview, save, revision
   const editorDashboard = await call(dashboardHandler, { method: 'GET', url: '/api/admin/dashboard', headers: authHeaders(editorAuth) });
   assert.equal(editorDashboard.statusCode, 200);
   assert.equal(editorDashboard.json().articles.some((item) => item.id === article.id), false);
+  process.env.ADMIN_ROLE = 'admin';
   const adminDeletedDetail = await call(articleHandler, {
     method: 'GET', url: `/api/admin/article?id=${article.id}&includeDeleted=true`, headers: authHeaders(auth),
   });
@@ -203,6 +205,7 @@ test('permanent deletion requires both admin role and the article-specific confi
   });
   assert.equal(missingConfirmation.statusCode, 400);
 
+  process.env.ADMIN_ROLE = 'editor';
   const editorSession = createSession('owner', { role: 'editor' });
   const editor = { cookie: editorSession.cookie, csrf: editorSession.csrfToken };
   const forbiddenEditor = await call(articleHandler, {
@@ -216,6 +219,7 @@ test('permanent deletion requires both admin role and the article-specific confi
   });
   assert.equal(forbiddenEditor.statusCode, 403);
 
+  process.env.ADMIN_ROLE = 'admin';
   const stillPresent = await call(articleHandler, {
     method: 'GET',
     url: `/api/admin/article?id=${article.id}&includeDeleted=true`,
@@ -303,6 +307,7 @@ test('editor cannot mutate or attach media to an article after it becomes live',
   });
   assert.equal(published.statusCode, 200, JSON.stringify(published.json()));
 
+  process.env.ADMIN_ROLE = 'editor';
   const editorSession = createSession('owner', { role: 'editor' });
   const editor = { cookie: editorSession.cookie, csrf: editorSession.csrfToken };
   for (const action of ['save-draft', 'regenerate-image']) {
@@ -322,6 +327,7 @@ test('editor cannot mutate or attach media to an article after it becomes live',
   });
   assert.equal(upload.statusCode, 403);
 
+  process.env.ADMIN_ROLE = 'admin';
   const unchanged = await call(articleHandler, {
     method: 'GET', url: `/api/admin/article?id=${articleId}`, headers: authHeaders(admin),
   });

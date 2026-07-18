@@ -166,6 +166,17 @@ function roleClaims(role = ROLE_ADMIN) {
   };
 }
 
+function accountVersion(username, role) {
+  const expectedUsername = process.env.ADMIN_USERNAME || '';
+  if (!expectedUsername || !safeEqual(username, expectedUsername)) {
+    throw new Error('admin_account_changed');
+  }
+  return crypto
+    .createHmac('sha256', getSessionSecret())
+    .update(`${username}\0${role}\0${process.env.ADMIN_PASSWORD_HASH || ''}`)
+    .digest('base64url');
+}
+
 function actionSetForRole(role = ROLE_ADMIN) {
   const normalized = normalizeRole(role);
   if (!normalized) return new Set();
@@ -204,6 +215,7 @@ function sessionPayload(username = 'admin', now = Date.now(), options = {}) {
     sid: options.sid || crypto.randomBytes(24).toString('base64url'),
     sub: username,
     ...claims,
+    authv: accountVersion(username, claims.role),
     exp: Math.floor(now / 1000) + SESSION_TTL_SECONDS,
     csrf: crypto.randomBytes(32).toString('base64url'),
   };
@@ -262,6 +274,16 @@ export async function requireAdmin(req, res, options = {}) {
     session.role = normalizeRole(session.role || session.roles?.[0]);
     if (!session.role) throw new Error('invalid_session_role');
     session.roles = roleClaims(session.role).roles;
+    const currentRole = roleForUsername(session.sub);
+    const currentAccountVersion = accountVersion(session.sub, currentRole);
+    if (
+      session.role !== currentRole
+      || !session.authv
+      || !safeEqual(session.authv, currentAccountVersion)
+    ) {
+      json(res, 401, { error: 'Admin session expired.' });
+      return null;
+    }
     if (!session.exp || session.exp < Math.floor(Date.now() / 1000)) {
       json(res, 401, { error: 'Admin session expired.' });
       return null;

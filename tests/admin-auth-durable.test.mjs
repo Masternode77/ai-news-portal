@@ -110,6 +110,36 @@ test('admin session claims include durable session id and editor role authorizat
   assert.equal(res.statusCode, 403);
 });
 
+test('role and credential changes invalidate existing signed sessions', async () => {
+  resetEnv();
+  configureAuth({ role: 'admin' });
+  const login = await call(loginHandler, {
+    method: 'POST',
+    body: { username: 'owner', password: 'correct-password' },
+  });
+  const cookie = login.getHeader('set-cookie');
+
+  process.env.ADMIN_ROLE = 'editor';
+  let response = await call(loginHandler, {
+    method: 'GET',
+    headers: { cookie },
+  });
+  assert.equal(response.statusCode, 401);
+
+  resetEnv();
+  configureAuth({ role: 'admin' });
+  const secondLogin = await call(loginHandler, {
+    method: 'POST',
+    body: { username: 'owner', password: 'correct-password' },
+  });
+  process.env.ADMIN_PASSWORD_HASH = hashAdminPassword('rotated-password', 'admin-durable-test-salt');
+  response = await call(loginHandler, {
+    method: 'GET',
+    headers: { cookie: secondLogin.getHeader('set-cookie') },
+  });
+  assert.equal(response.statusCode, 401);
+});
+
 test('logout requires csrf and revokes the session id in durable auth state', async () => {
   resetEnv();
   const stateFile = await tempStateFile();

@@ -22,8 +22,37 @@ function extractImagePayload(payload) {
   };
 }
 
+export function runtimeImageRequestHeaders(endpoint, imageUrl, accessToken) {
+  try {
+    if (!isSecureChatGptRuntimeEndpoint(endpoint) || !isSecureChatGptRuntimeEndpoint(imageUrl)) {
+      return {};
+    }
+    if (new URL(endpoint).origin !== new URL(imageUrl).origin) return {};
+  } catch {
+    return {};
+  }
+  return accessToken ? { Authorization: `Bearer ${accessToken}` } : {};
+}
+
+export function isSecureChatGptRuntimeEndpoint(value) {
+  try {
+    const endpoint = new URL(value);
+    return (
+      endpoint.protocol === 'https:' &&
+      Boolean(endpoint.hostname) &&
+      !endpoint.username &&
+      !endpoint.password
+    );
+  } catch {
+    return false;
+  }
+}
+
 export function createChatGptOauthRuntimeProvider() {
-  if (!CHATGPT_IMAGE_OAUTH_ENDPOINT || !CHATGPT_IMAGE_OAUTH_ACCESS_TOKEN) {
+  if (
+    !isSecureChatGptRuntimeEndpoint(CHATGPT_IMAGE_OAUTH_ENDPOINT) ||
+    !CHATGPT_IMAGE_OAUTH_ACCESS_TOKEN
+  ) {
     return null;
   }
 
@@ -66,9 +95,15 @@ export function createChatGptOauthRuntimeProvider() {
       }
 
       if (image.url) {
-        return writeFetchedImage(item, image.url, {
-          Authorization: `Bearer ${CHATGPT_IMAGE_OAUTH_ACCESS_TOKEN}`,
-        });
+        return writeFetchedImage(
+          item,
+          image.url,
+          runtimeImageRequestHeaders(
+            CHATGPT_IMAGE_OAUTH_ENDPOINT,
+            image.url,
+            CHATGPT_IMAGE_OAUTH_ACCESS_TOKEN,
+          ),
+        );
       }
 
       throw new Error('No image bytes returned by ChatGPT image runtime');

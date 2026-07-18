@@ -70,12 +70,16 @@ export function createPostgresAdminAuthSecurityHooks({ databaseUrl = process.env
         const safeMetadata = { ...metadata, ipHash: hashNetworkValue(metadata.ip) };
         delete safeMetadata.ip;
         await sql.begin(async (transaction) => {
-          await query(transaction, `
+          const users = await query(transaction, `
             insert into admin_users (id, username, role, password_hash, disabled_at, created_at, updated_at)
             values ($1, $1, $2, $3, null, now(), now())
             on conflict (id) do update
-              set role = excluded.role, password_hash = excluded.password_hash, disabled_at = null, updated_at = now()
+              set role = excluded.role, password_hash = excluded.password_hash, updated_at = now()
+            returning id, disabled_at
           `, [session.sub, session.role, process.env.ADMIN_PASSWORD_HASH || 'external-auth']);
+          if (!users?.length || users[0].disabled_at) {
+            throw new Error('admin_account_disabled');
+          }
           await query(transaction, `
             insert into admin_sessions (id, user_id, role, expires_at, revoked_at, metadata, created_at, updated_at)
             values ($1, $2, $3, $4, null, $5::jsonb, now(), now())
@@ -87,13 +91,26 @@ export function createPostgresAdminAuthSecurityHooks({ databaseUrl = process.env
       },
       async isRevoked(session) {
         const rows = await query(sql, `
-          select revoked_at, expires_at
+          select
+            admin_sessions.revoked_at,
+            admin_sessions.expires_at,
+            admin_sessions.role as session_role,
+            admin_users.role as user_role,
+            admin_users.disabled_at,
+            admin_users.password_hash
           from admin_sessions
-          where id = $1 and user_id = $2
+          join admin_users on admin_users.id = admin_sessions.user_id
+          where admin_sessions.id = $1 and admin_sessions.user_id = $2
           limit 1
         `, [session.sid, session.sub]);
         const row = rows?.[0];
-        return !row || Boolean(row.revoked_at) || new Date(row.expires_at).getTime() <= Date.now();
+        return !row
+          || Boolean(row.revoked_at)
+          || Boolean(row.disabled_at)
+          || new Date(row.expires_at).getTime() <= Date.now()
+          || row.session_role !== row.user_role
+          || row.session_role !== session.role
+          || row.password_hash !== process.env.ADMIN_PASSWORD_HASH;
       },
       async revoke({ session, revoked }) {
         const rows = await query(sql, `

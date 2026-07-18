@@ -22,6 +22,10 @@ import {
   validateRasterImageBytes,
 } from '../scripts/lib/image-providers/shared.mjs';
 import {
+  isSecureChatGptRuntimeEndpoint,
+  runtimeImageRequestHeaders,
+} from '../scripts/lib/image-providers/chatgpt-oauth-runtime.mjs';
+import {
   writeArticleImageSetFromBytes,
   writeFallbackArticleImageSet,
 } from '../scripts/lib/image-store.mjs';
@@ -98,6 +102,44 @@ test('cross-origin redirects strip credentials and POST redirect bodies', () => 
   assert.equal(options.method, 'GET');
   assert.equal(options.body, undefined);
   assert.deepEqual(options.headers, { 'x-trace': 'safe' });
+});
+
+test('ChatGPT runtime credentials are scoped to the configured runtime origin', () => {
+  assert.equal(isSecureChatGptRuntimeEndpoint('https://runtime.example/v1/images'), true);
+  assert.equal(isSecureChatGptRuntimeEndpoint('http://runtime.example/v1/images'), false);
+  assert.equal(isSecureChatGptRuntimeEndpoint('https://user:pass@runtime.example/v1/images'), false);
+  assert.deepEqual(
+    runtimeImageRequestHeaders(
+      'https://runtime.example/v1/images',
+      'https://runtime.example/v1/files/image.png',
+      'runtime-secret',
+    ),
+    { Authorization: 'Bearer runtime-secret' },
+  );
+  assert.deepEqual(
+    runtimeImageRequestHeaders(
+      'http://runtime.example/v1/images',
+      'http://runtime.example/v1/files/image.png',
+      'runtime-secret',
+    ),
+    {},
+  );
+  assert.deepEqual(
+    runtimeImageRequestHeaders(
+      'https://runtime.example/v1/images',
+      'https://cdn.example/image.png',
+      'runtime-secret',
+    ),
+    {},
+  );
+  assert.deepEqual(
+    runtimeImageRequestHeaders(
+      'https://runtime.example/v1/images',
+      'not-a-url',
+      'runtime-secret',
+    ),
+    {},
+  );
 });
 
 test('safe fetch applies injected DNS policy before opening a request', async () => {

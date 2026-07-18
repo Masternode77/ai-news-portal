@@ -14,12 +14,33 @@ async function ensureDir(filePath) {
 }
 
 export async function readJsonFile(filePath, defaultValue) {
+  let raw;
   try {
-    const raw = await fs.readFile(filePath, 'utf8');
-    return JSON.parse(raw);
-  } catch {
-    return defaultValue;
+    raw = await fs.readFile(filePath, 'utf8');
+  } catch (error) {
+    if (error?.code === 'ENOENT') return defaultValue;
+    throw error;
   }
+
+  let parsed;
+  try {
+    parsed = JSON.parse(raw);
+  } catch (error) {
+    throw new Error(`Unable to parse JSON state file: ${filePath}`, { cause: error });
+  }
+
+  if (Array.isArray(defaultValue) && !Array.isArray(parsed)) {
+    throw new Error(`JSON state file must contain an array: ${filePath}`);
+  }
+  if (
+    defaultValue
+    && typeof defaultValue === 'object'
+    && !Array.isArray(defaultValue)
+    && (!parsed || typeof parsed !== 'object' || Array.isArray(parsed))
+  ) {
+    throw new Error(`JSON state file must contain an object: ${filePath}`);
+  }
+  return parsed;
 }
 
 export async function writeJsonFile(filePath, value) {

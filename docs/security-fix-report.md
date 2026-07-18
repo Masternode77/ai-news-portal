@@ -1,6 +1,6 @@
 # Security Fix Report
 
-Updated: 2026-07-12
+Updated: 2026-07-18
 
 ## Dependency Remediation
 
@@ -29,14 +29,31 @@ found 0 vulnerabilities
   soft deletion, and a transactional publication outbox. Builds never acknowledge outbox
   events; they remain pending until a separately verified post-deployment consumer exists.
 - Corrected auth/schema mismatches for user disablement and session role/update timestamps.
+- Bound signed sessions to the configured username, role, and password hash so credential or
+  authorization changes invalidate existing sessions. PostgreSQL-backed validation now compares
+  the live user role, password hash, and disabled state on every authenticated request.
+- Preserved account disablement during PostgreSQL login registration. A disabled account now
+  aborts before a new durable session can be inserted.
+- Restricted the ChatGPT image runtime to credential-free HTTPS endpoints. Provider-returned
+  image URLs receive the OAuth bearer only when they use HTTPS and exactly match the configured
+  runtime origin.
+- Changed canonical JSON state reads to default only when a file is absent. Malformed JSON,
+  incompatible top-level shapes, and other I/O failures now fail closed.
+- Restricted Percy credentials to a manual workflow dispatch on `main`. Pull-request code never
+  receives the token, Playwright and Percy are exact lockfile dependencies, and
+  `npx --no-install` prevents an implicit package download.
 - Added CMS ownership tombstones so unpublished or deleted CMS records cannot reappear from
   legacy JSON fallbacks, and blocked editor access to deleted records.
 
 ## Verification
 
-`npm test` ran 422 tests: 421 passed, none failed, and one intentional skip, followed by passing
-quality, relevance, taxonomy, and repetition commands. `npm audit --audit-level=low` reports
-zero findings. Build, content gate, and preview header checks remain separate release receipts.
+`npm test` ran 562 tests: 561 passed, none failed, and one intentional skip, followed by passing
+quality, relevance, taxonomy, and repetition commands. The focused security set passed 42/42 on
+three consecutive final runs. The local admin browser exercised all 17 lifecycle scenarios and
+commercial visual QA passed all eight captures. `npm audit --audit-level=low` reports zero
+findings, the resolved dependency tree is valid, and a structured tracked-file scan found no
+credential or private-key candidates. Independent architecture and code reviews approved the
+final implementation with no actionable findings.
 
 ## External Hardening
 

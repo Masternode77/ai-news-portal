@@ -8,8 +8,6 @@ jobs:
   visual-qa:
     runs-on: ubuntu-latest
     timeout-minutes: 10
-    env:
-      PERCY_TOKEN: ${{ secrets.PERCY_TOKEN }}
     permissions:
       contents: read
     steps:
@@ -28,10 +26,8 @@ jobs:
       - name: Build
         run: npm run build
 
-      - name: Install visual QA runtime
-        run: |
-          npm install --no-save playwright @percy/cli
-          npx playwright install --with-deps chromium
+      - name: Install browser runtime
+        run: npx --no-install playwright install --with-deps chromium
 
       - name: Visual capture
         run: npm run qa:visual:capture
@@ -57,5 +53,7 @@ jobs:
           if-no-files-found: warn
 
       - name: Percy snapshot
-        if: ${{ github.event_name == 'pull_request' && env.PERCY_TOKEN != '' }}
+        if: ${{ github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main' }}
+        env:
+          PERCY_TOKEN: ${{ secrets.PERCY_TOKEN }}
         run: npm run qa:visual:percy
