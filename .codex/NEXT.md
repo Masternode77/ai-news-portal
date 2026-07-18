@@ -2,13 +2,13 @@
 
 ## Current branch
 - `upgrade/gpt-5-6-sol`; latest verified implementation checkpoint
-  `29d55b6e3c9e1e04eb04d16716e9315181b1ddbf`.
-- Exact implementation preview: `dpl_9mJQDSzMLSHMWdewDe3g5pHNJBdZ` at
-  `https://ai-news-portal-iyge1kj3t-masternode77s-projects.vercel.app` (`READY`, preview target).
+  `f735cc40590abf3158afef7cd0f996dd91a8d6a9`.
+- Exact implementation preview: `dpl_J5jbRixDCBLoqEvRqN4gmZKKVvWs` at
+  `https://ai-news-portal-8f02vryvd-masternode77s-projects.vercel.app` (`READY`, preview target).
 - Rollback tag: `backup/pre-gpt56-upgrade-20260711T091118Z`.
 - No push, production promotion, production-secret operation, or cache purge has been performed.
-- Latest separately observed production: `dpl_THrq4thMxWBNnExaVLKBcb2WqATH`;
-  current `origin/main` is `f92084d303f20dfb37e86a69f7046a74ab205a4b`.
+- Latest separately observed production: `dpl_Bt7BbS4jdFCAN7aMcw3zizDNFJBs`;
+  current `origin/main` is `b3544f5a34b48ff8bf89877e18513122ee3cf29b`.
 
 ## Latest completed checklist item
 - Reconciled source-image provenance, publication dedupe, immutable GitHub Actions, and generated-data cleanup.
@@ -25,9 +25,11 @@
   stale Astro-risk sentence; the type check now has no diagnostics or hints.
 - Preserved canonical nullable empty-state contracts after independent review and pinned builds to
   Node 22 so Vercel cannot silently adopt an unreviewed future major.
-- Deployed implementation `29d55b6e` to the exact preview and completed route, header, admin, log,
+- Deleted five unreferenced numbered image-provider snapshots whose divergent network/write paths
+  bypassed canonical media guards, and added their regression contract to `content:gate`.
+- Deployed implementation `f735cc40` to the exact preview and completed route, header, admin, log,
   desktop/mobile visual, image, placeholder, overflow, and production-comparison checks.
-- Re-audited current `origin/main`: 121 newer commits comprise 101 dashboard snapshots and 20 content
+- Re-audited current `origin/main`: 122 newer commits comprise 102 dashboard snapshots and 20 content
   refreshes; 749 upstream rows resolve to 724 already-present sources, 25 source-only candidates,
   and 0 rejected rows.
 - Advisory title-only review reports 2 core, 6 adjacent, and 17 archive candidates; this is not an
@@ -43,10 +45,11 @@
 - Verification: `scripts/verify-production-surface.mjs`, `tests/qa-qc-workflow.test.mjs`, final reports,
   production verification receipt, visual QA report, security reports, and this handoff.
 - Public UI typing: eight shared components, the article route, and their inherited public-signal contract.
-- Local ignored evidence: `artifacts/preview-29d55b6e/`.
+- Image-provider cleanup: five numbered snapshots deleted; release-gated recurrence test added.
+- Local ignored evidence: `artifacts/preview-f735cc40/`.
 
 ## Validation results
-- Full `npm test`: 621 total, 620 passed, 0 failed, 1 intentional skip; follow-on editorial gates pass.
+- Full `npm test`: 622 total, 621 passed, 0 failed, 1 intentional skip; follow-on editorial gates pass.
 - QA/QC workflow/report-contract tests: 11/11 passed; reconciliation/orchestrator security set: 96/96 passed.
 - Focused security: 76/76 passed; `npm audit --audit-level=low`: 0 vulnerabilities.
 - Tracked secret scan: no real credentials/private keys; only an `example.invalid` fixture matched.
@@ -57,7 +60,8 @@
 - Local admin browser: all 17 real-handler lifecycle scenarios passed.
 - Independent code review found 0 critical/high/medium/low defects and returned `APPROVE`;
   the nullable-contract re-review found and closed two medium issues, then returned `APPROVE` with
-  0 findings; architecture re-review returned `CLEAR / APPROVE`.
+  0 findings; the provider-cleanup review found and closed two medium issues, then returned
+  `APPROVE` with 0 findings; architecture re-review returned `CLEAR / APPROVE`.
 - Exact preview: eight public routes returned 200, five retired routes returned 404, and admin pages
   returned private/no-store responses; the unconfigured API returned a generic no-store 503.
 - Preview security headers include CSP, HSTS, nosniff, frame denial, referrer policy, permissions

@@ -72,7 +72,7 @@ found 0 vulnerabilities
 
 ## Verification
 
-`npm test` ran 621 tests: 620 passed, none failed, and one intentional skip, followed by passing
+`npm test` ran 622 tests: 621 passed, none failed, and one intentional skip, followed by passing
 quality, relevance, taxonomy, and repetition commands. The final focused security set passed
 76/76, and the reconciliation/orchestrator security set passed 96/96. The local admin browser exercised all 17 lifecycle scenarios and commercial visual QA
 passed all eight captures. The source-image provenance audit regenerated and matched all 104

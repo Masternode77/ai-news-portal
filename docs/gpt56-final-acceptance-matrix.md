@@ -65,7 +65,7 @@ does not mean a live preview database or production workflow was exercised.
 
 | # | Requirement | Result | Evidence or remaining condition |
 | ---: | --- | --- | --- |
-| 25 | Tests pass | PASS | Current full suite reports 621 tests: 620 passed, 0 failed, and 1 intentional skip. Focused security coverage reports 76/76 passed; the final reconciliation/orchestrator security set reports 96/96 passed. |
+| 25 | Tests pass | PASS | Current full suite reports 622 tests: 621 passed, 0 failed, and 1 intentional skip. Focused security coverage reports 76/76 passed; the final reconciliation/orchestrator security set reports 96/96 passed. |
 | 26 | Build passes | PASS | Astro check reports 0 errors, 0 warnings, and 0 hints; `content:gate` rebuilds and audits the static output successfully. |
 | 27 | Security audit passes | PASS | `npm audit --audit-level=low` reports zero findings; threat model and fix report list operational follow-up. |
 | 28 | Visual QA passes | PASS | Exact-preview browser QA decoded homepage 31/31 desktop and mobile, archive 32/32, search 32/32, article 1/1, and APAC 19/19 images with zero broken images, placeholder labels, clipping, or overflow. |
@@ -76,9 +76,9 @@ does not mean a live preview database or production workflow was exercised.
 
 | # | Requirement | Result | Evidence or remaining condition |
 | ---: | --- | --- | --- |
-| 31 | Preview deployment is verified | PASS | Implementation `29d55b6e` is `READY` as preview `dpl_9mJQDSzMLSHMWdewDe3g5pHNJBdZ`; public, retired, admin, image, provenance, and screenshot receipts pass. |
+| 31 | Preview deployment is verified | PASS | Implementation `f735cc40` is `READY` as preview `dpl_J5jbRixDCBLoqEvRqN4gmZKKVvWs`; public, retired, admin, image, provenance, and screenshot receipts pass. |
 | 32 | PR has migration and risk summary | NOT STARTED | Push/PR authorization and preview approval were not given; migration/risk material is ready in reports and runbooks. |
-| 33 | Production unchanged by this branch before preview approval | PASS | The connected `main` automation independently advanced production to `dpl_THrq4thMxWBNnExaVLKBcb2WqATH`; `origin/main` was separately observed at `f92084d3`. This branch performed no production promotion, alias change, cache purge, or production-secret operation. |
+| 33 | Production unchanged by this branch before preview approval | PASS | The connected `main` automation independently advanced production to `dpl_Bt7BbS4jdFCAN7aMcw3zizDNFJBs`; `origin/main` was separately observed at `b3544f5a`. This branch performed no production promotion, alias change, cache purge, or production-secret operation. |
 | 34 | Rollback is tested | PASS WITH CAVEAT | Tagged baseline passed isolated clean install/build; that emergency baseline retains 18 dependency findings. |
 | 35 | Final report has exact SHA and preview URL | PASS | `docs/final-gpt56-upgrade-report.md` records the verified implementation SHA, deployment ID, preview URL, and route/image receipt. |
 | 36 | Current production content is reconciled without bypassing new gates | PASS (implementation) / BLOCKED (operation) | The current read-only audit yields 25 unique canonical-source candidates. Its explicitly non-authoritative title-only review reports 2 core, 6 adjacent, and 17 archive-shaped items. The guarded command strips generated fields and snippets, re-enters the canonical lifecycle, constrains redirects, binds retries and receipts to revision/digest/identity, and fails closed on concurrent or abandoned locks. Provider-backed re-ingestion was intentionally not run. |

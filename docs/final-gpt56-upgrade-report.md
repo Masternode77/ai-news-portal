@@ -21,11 +21,11 @@ continued its automated content deployments independently during QA.
 | Baseline production SHA | `19089b66627be58d5066376902ff382d2a018137` |
 | Integrated `origin/main` baseline | `f8bc10a220a6b910e703375d337dcd3f40ea0467` |
 | Rollback tag | `backup/pre-gpt56-upgrade-20260711T091118Z` |
-| Verified implementation SHA | `29d55b6e3c9e1e04eb04d16716e9315181b1ddbf` |
-| Verification tooling SHA | `29d55b6e3c9e1e04eb04d16716e9315181b1ddbf` |
-| Preview deployment | `dpl_9mJQDSzMLSHMWdewDe3g5pHNJBdZ` (`READY`, preview target) |
-| Preview URL | `https://ai-news-portal-iyge1kj3t-masternode77s-projects.vercel.app` |
-| Latest observed production | `dpl_THrq4thMxWBNnExaVLKBcb2WqATH` (external `main`, unchanged by this branch); separately observed `origin/main` is `f92084d303f20dfb37e86a69f7046a74ab205a4b` |
+| Verified implementation SHA | `f735cc40590abf3158afef7cd0f996dd91a8d6a9` |
+| Verification tooling SHA | `f735cc40590abf3158afef7cd0f996dd91a8d6a9` |
+| Preview deployment | `dpl_J5jbRixDCBLoqEvRqN4gmZKKVvWs` (`READY`, preview target) |
+| Preview URL | `https://ai-news-portal-8f02vryvd-masternode77s-projects.vercel.app` |
+| Latest observed production | `dpl_Bt7BbS4jdFCAN7aMcw3zizDNFJBs` (external `main`, unchanged by this branch); separately observed `origin/main` is `b3544f5a34b48ff8bf89877e18513122ee3cf29b` |
 
 ## Delivered Platform
 
@@ -141,7 +141,7 @@ three prototypes remain noindex and are not production routes.
 | --- | --- |
 | Clean install | `npm ci` passed |
 | Dependency security | `npm audit --audit-level=low`: 0 vulnerabilities |
-| Full tests | 621 total, 620 passed, 0 failed, 1 intentional skip |
+| Full tests | 622 total, 621 passed, 0 failed, 1 intentional skip |
 | Focused security tests | 76 passed, 0 failed |
 | Reconciliation/orchestrator security tests | 96 passed, 0 failed |
 | Editorial scripts | quality, relevance, taxonomy, repetition passed |
@@ -150,7 +150,7 @@ three prototypes remain noindex and are not production routes.
 | Content gate | passed all public, copy, image, feed, and admin exclusion audits |
 | QA/QC | deployable with operational follow-up |
 | Admin browser E2E | 17/17 local UI/API lifecycle scenarios passed; public discovery integration passed |
-| Code review | A nullable-contract review found and closed two medium issues; the independent second pass found 0 issues and APPROVED. The architecture review returned CLEAR / APPROVE. |
+| Code review | Nullable-contract and provider-cleanup reviews each found and closed two medium issues; both independent second passes found 0 issues and APPROVED. The architecture review returned CLEAR / APPROVE. |
 | Preview public routes | Homepage, archive, search, article, power-grid, APAC, RSS, and sitemap returned 200 |
 | Removed public routes | `/about/`, `/editorial-policy/`, `/methodology/`, `/ai-disclosure/`, and `/contact/` returned 404 |
 | Preview admin pretty routes | `/admin/` and `/admin/login/` returned 200 |
@@ -171,13 +171,13 @@ The exact preview was checked after lazy-load traversal: homepage desktop and mo
 all 31 images, archive and search rendered all 32, the representative article rendered its lead
 image, and APAC rendered all 19 canonical members. Browser QA found zero failed image responses,
 visible placeholder labels, console errors, page errors, clipping, or horizontal overflow.
-Screenshots and the machine-readable receipt are under `artifacts/preview-29d55b6e/`.
+Screenshots and the machine-readable receipts are under `artifacts/preview-f735cc40/`.
 
 The exact preview and `computecurrent.com` are intentionally not pixel-identical before approval.
 The preview shows the selected Midnight Intelligence publication while production still shows the
 earlier operating-board homepage from external `main`. Same-viewport comparison confirmed the
-difference. Production later advanced independently to `dpl_THrq4thMxWBNnExaVLKBcb2WqATH`;
-`origin/main` was separately observed at `f92084d3`. No production promotion, alias change, or cache
+difference. Production later advanced independently to `dpl_Bt7BbS4jdFCAN7aMcw3zizDNFJBs`;
+`origin/main` was separately observed at `b3544f5a`. No production promotion, alias change, or cache
 operation was performed by this branch.
 
 ## Current Production Content Reconciliation
@@ -193,7 +193,7 @@ dashboard artifact. Several incoming records are visibly outside the product def
 consumer hardware and general software stories. Directly accepting generated stores would bypass
 the upgraded relevance, source-fidelity, repetition, canonical-source, and image-provenance gates.
 A current read-only audit resolved `origin/main` to
-`f92084d303f20dfb37e86a69f7046a74ab205a4b` and examined 749 upstream rows. Canonical-source
+`b3544f5a34b48ff8bf89877e18513122ee3cf29b` and examined 749 upstream rows. Canonical-source
 comparison found 724 already present and 25 unique re-ingestion candidates, with 0 rejected rows.
 Every candidate contains only `id`, `title`, `source`, `url`, `publishedAt`, and `snippet`; policy
 sets every upstream snippet to an empty string so evidence must be extracted again from the source.
@@ -216,8 +216,8 @@ rejected.
 
 ## LOC and Repository Hygiene
 
-Implementation `29d55b6e` against the rollback baseline spans 822 paths, including 390 binary paths.
-Git's textual counters report 136,340 additions and 157,070 deletions, a net reduction of 20,730
+Implementation `f735cc40` against the rollback baseline spans 830 paths, including 390 binary paths.
+Git's textual counters report 136,365 additions and 157,355 deletions, a net reduction of 20,990
 lines. This comparison includes the integrated `f8bc10a2` content baseline as well as the
 architecture, coverage, security, image-provenance, and generated-data cleanup in this branch.
 

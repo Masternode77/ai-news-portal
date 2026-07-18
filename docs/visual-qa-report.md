@@ -4,11 +4,11 @@ Updated: 2026-07-19
 
 ## Final Preview
 
-- Deployment: `dpl_9mJQDSzMLSHMWdewDe3g5pHNJBdZ`
-- URL: `https://ai-news-portal-iyge1kj3t-masternode77s-projects.vercel.app`
-- Product commit: `29d55b6e3c9e1e04eb04d16716e9315181b1ddbf`
-- Separately observed production deployment: `dpl_THrq4thMxWBNnExaVLKBcb2WqATH`
-- Separately observed `origin/main`: `f92084d303f20dfb37e86a69f7046a74ab205a4b`
+- Deployment: `dpl_J5jbRixDCBLoqEvRqN4gmZKKVvWs`
+- URL: `https://ai-news-portal-8f02vryvd-masternode77s-projects.vercel.app`
+- Product commit: `f735cc40590abf3158afef7cd0f996dd91a8d6a9`
+- Separately observed production deployment: `dpl_Bt7BbS4jdFCAN7aMcw3zizDNFJBs`
+- Separately observed `origin/main`: `b3544f5a34b48ff8bf89877e18513122ee3cf29b`
 
 Chromium captured the exact preview after decoding and scrolling the complete lazy-loaded image
 inventory. Every checked route returned 200 with zero application console errors, page errors,
@@ -17,7 +17,7 @@ failed requests, broken images, `ChatGPT Image2 Visual` placeholder text, or hor
 | Surface | Viewport | Loaded images | Broken | Placeholder | Overflow |
 | --- | ---: | ---: | ---: | ---: | --- |
 | Homepage | 1440 x 900 | 31/31 | 0 | 0 | no |
-| Homepage | 390 x 844 | 31/31 | 0 | 0 | no |
+| Homepage | 412 x 915 | 31/31 | 0 | 0 | no |
 | Archive | 1440 x 900 | 32/32 | 0 | 0 | no |
 | Search | 1440 x 900 | 32/32 | 0 | 0 | no |
 | Published article | 1440 x 900 | 1/1 | 0 | 0 | no |
@@ -29,13 +29,14 @@ image audit reports zero broken public images or placeholder labels. Source prov
 
 Screenshots:
 
-- `artifacts/preview-29d55b6e/home-desktop.png`
-- `artifacts/preview-29d55b6e/home-mobile.png`
-- `artifacts/preview-29d55b6e/archive-desktop.png`
-- `artifacts/preview-29d55b6e/search-desktop.png`
-- `artifacts/preview-29d55b6e/article-desktop.png`
-- `artifacts/preview-29d55b6e/apac-desktop.png`
-- Receipt: `artifacts/preview-29d55b6e/visual-qa.json`
+- `artifacts/preview-f735cc40/home-desktop.png`
+- `artifacts/preview-f735cc40/home-mobile.png`
+- `artifacts/preview-f735cc40/archive-desktop.png`
+- `artifacts/preview-f735cc40/search-desktop.png`
+- `artifacts/preview-f735cc40/article-desktop.png`
+- `artifacts/preview-f735cc40/apac-desktop.png`
+- HTTP image receipt: `artifacts/preview-f735cc40/homepage-images.json`
+- Production verifier receipt: `artifacts/preview-f735cc40/production-verification.json`
 
 Sharp pixel statistics mark every retained capture nonblank. A fresh 1440 x 900 comparison found
 1,295,997 of 1,296,000 pixels different (99.9998%). `computecurrent.com` still serves the previous
