@@ -12,6 +12,7 @@ import {
   runProductionPublish,
 } from '../scripts/lib/production-content-phases.mjs';
 import { publicSurfaceDecision } from '../scripts/lib/public-surface-eligibility.mjs';
+import { syncArchiveArtifacts } from '../scripts/lib/archive-store.mjs';
 import { buildEvidencePack, buildSourceEvidencePack } from '../scripts/lib/evidence-pack-builder.mjs';
 import {
   CURATED_ARTICLE_ID,
@@ -279,6 +280,112 @@ test('publish removes stale public longform when the same source now fails extra
   assert.deepEqual(archiveInput, []);
   assert.deepEqual(latestOutput, []);
   assert.deepEqual(state.publishedIds, ['stale-longform']);
+});
+
+test('production publish deduplicates only public canonical sources and preserves semantic URLs', async () => {
+  const state = { publishedIds: [], dayPlans: {}, runHistory: [], publicationReceipts: {} };
+  const current = {
+    id: 'current-source',
+    title: 'Current source record',
+    sourceUrl: 'https://example.com/report/Grid?id=1&utm_source=feed',
+    publishedAt: '2026-07-18T00:00:00.000Z',
+  };
+  const staleDuplicate = {
+    ...current,
+    id: 'stale-source',
+    sourceUrl: 'https://example.com/report/Grid?id=1#details',
+    publishedAt: '2026-07-17T00:00:00.000Z',
+  };
+  const semanticQuery = {
+    ...current,
+    id: 'semantic-query',
+    sourceUrl: 'https://example.com/report/Grid?id=2',
+  };
+  const caseSensitivePath = {
+    ...current,
+    id: 'case-sensitive-path',
+    sourceUrl: 'https://example.com/report/grid?id=1',
+  };
+  const hiddenHistorical = {
+    ...staleDuplicate,
+    id: 'hidden-historical',
+    archiveOnly: true,
+  };
+  let publishedIds = [];
+
+  await runProductionPublish({
+    reviewPassed: [current, semanticQuery, caseSensitivePath],
+    existingLatest: [staleDuplicate],
+    existingArchive: [hiddenHistorical],
+  }, {
+    runId: 'cycle-canonical-source-dedupe',
+    pipelineVersion: '5.6.1-test',
+  }, {
+    readState: async () => state,
+    writeState: async () => {},
+    writeJson: async () => {},
+    publicDecision: (article) => ({
+      archive: article.archiveOnly !== true,
+      homepage: article.archiveOnly !== true,
+    }),
+    backfillImages: async (articles) => {
+      publishedIds = articles.map((article) => article.id);
+      return articles;
+    },
+    syncArchive: async (articles) => ({ latest: articles, archive: [], supabaseStatus: 'skipped' }),
+  });
+
+  assert.deepEqual(new Set(publishedIds), new Set([
+    'current-source',
+    'semantic-query',
+    'case-sensitive-path',
+    'hidden-historical',
+  ]));
+  assert.equal(publishedIds.includes('stale-source'), false);
+});
+
+test('real archive synchronizer cannot reintroduce a stale public canonical source', async () => {
+  const current = {
+    id: 'canonical-newer',
+    title: 'Current canonical record',
+    sourceUrl: 'https://example.com/report/Grid?id=1&utm_source=feed',
+    publishedAt: '2026-07-18T00:00:00.000Z',
+  };
+  const stale = {
+    ...current,
+    id: 'canonical-stale-archive',
+    sourceUrl: 'https://example.com/report/Grid?id=1#details',
+    publishedAt: '2026-07-17T00:00:00.000Z',
+  };
+  const semanticQuery = {
+    ...current,
+    id: 'semantic-query-archive',
+    sourceUrl: 'https://example.com/report/Grid?id=2',
+  };
+  const hiddenHistory = {
+    ...stale,
+    id: 'hidden-history',
+    archiveOnly: true,
+  };
+  const writes = new Map();
+
+  const result = await syncArchiveArtifacts(
+    [current, semanticQuery],
+    [stale, hiddenHistory],
+    {
+      publicDecision: (article) => ({
+        archive: article.archiveOnly !== true,
+        homepage: article.archiveOnly !== true,
+      }),
+      upsertArchive: async () => ({ pushed: false, reason: 'test' }),
+      writeJson: async (filePath, value) => writes.set(filePath, value),
+    },
+  );
+
+  assert.deepEqual(result.latest.map((article) => article.id), ['canonical-newer', 'semantic-query-archive']);
+  assert.deepEqual(result.archive.map((article) => article.id), ['hidden-history']);
+  assert.equal(writes.get('src/data/search-index.json').some((article) => article.id === 'canonical-stale-archive'), false);
+  assert.equal(writes.get('src/data/search-index.json').some((article) => article.id === 'hidden-history'), true);
 });
 
 test('publication receipts retain retry attempts and a stable completion result', () => {

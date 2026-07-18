@@ -32,8 +32,18 @@ test('update-news workflow has one serialized main-writing job', () => {
 
 test('update-news workflow restores and preserves cycle checkpoints and publication receipts', () => {
   const job = extractJobBlock('update-news');
-  assert.match(job, /uses: actions\/cache\/restore@v4/);
+  assert.match(job, /uses: actions\/cache\/restore@0057852bfaa89a56745cba8c7296529d2fc39830 # v4\.3\.0/);
   assert.match(job, /path: \.cache\/content-cycle(?:\s|$)/);
   assert.match(job, /restore-keys:\s*\|[\s\S]*content-cycle-v2-\$\{\{ runner\.os \}\}-\$\{\{ github\.ref_name \}\}-/);
-  assert.match(job, /if: always\(\)[\s\S]*uses: actions\/cache\/save@v4/);
+  assert.match(job, /if: always\(\)[\s\S]*uses: actions\/cache\/save@0057852bfaa89a56745cba8c7296529d2fc39830 # v4\.3\.0/);
+});
+
+test('update-news workflow verifies source-image provenance after the production build', () => {
+  const buildIndex = workflow.indexOf('run: npm run build');
+  const provenanceIndex = workflow.indexOf('run: npm run audit:source-image-provenance');
+  const commitIndex = workflow.indexOf('- name: Commit and push updates');
+
+  assert.ok(buildIndex >= 0);
+  assert.ok(provenanceIndex > buildIndex);
+  assert.ok(commitIndex > provenanceIndex);
 });

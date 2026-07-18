@@ -4,6 +4,7 @@ import { buildRssItems } from './rss-builder.mjs';
 import { buildSitemapEntries } from './sitemap-builder.mjs';
 import { buildCategoryPages, archivePages } from './taxonomy-page-builder.mjs';
 import { buildAdminReviewQueueEntry, mergeAdminReviewQueue } from './admin-review-queue.mjs';
+import { uniqueByCanonicalSource } from './canonical-source.mjs';
 
 function clean(value = '') {
   return String(value || '').replace(/\s+/g, ' ').trim();
@@ -20,17 +21,6 @@ function cleanArticleBody(value = '') {
 
 function slugify(value = '') {
   return clean(value).toLowerCase().replace(/&/g, 'and').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').slice(0, 96);
-}
-
-function uniqueById(items = []) {
-  const seen = new Set();
-  const out = [];
-  for (const item of items) {
-    if (!item?.id || seen.has(item.id)) continue;
-    seen.add(item.id);
-    out.push(item);
-  }
-  return out;
 }
 
 function imagePaths(article = {}) {
@@ -172,8 +162,8 @@ export async function runPublishCycle({ articles = [], routeArticle, now = new D
     }
   }
 
-  const latestNews = uniqueById([...published, ...(existing.latestNews || [])]).slice(0, 50);
-  const searchIndex = uniqueById([...latestNews, ...(existing.searchIndex || [])])
+  const latestNews = uniqueByCanonicalSource([...published, ...(existing.latestNews || [])]).slice(0, 50);
+  const searchIndex = uniqueByCanonicalSource([...latestNews, ...(existing.searchIndex || [])])
     .map((article) => ({ ...article, searchText: searchText(article) }));
   const taxonomyPages = {
     categories: buildCategoryPages(latestNews),

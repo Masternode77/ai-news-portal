@@ -74,6 +74,71 @@ test('publish cycle keeps internal cycle status out of public artifacts', async 
   assert.equal(result.artifacts.sitemapEntries.some((entry) => entry.loc === '/news/fact-rich-ai-campus/'), false);
 });
 
+test('publish cycle keeps one public record per canonical source URL', async () => {
+  const sourceUrl = 'https://example.com/reports/grid-capacity?utm_source=feed';
+  const article = {
+    id: 'new-grid-capacity',
+    title: 'New grid capacity report',
+    source: 'Example Grid Dispatch',
+    sourceUrl,
+    summary: 'A utility report changes the delivery sequence for a compute campus.',
+    articleText: 'The utility report ties substation construction and transformer delivery to the campus energization date.',
+    primary_category: 'Power & Grid',
+  };
+  const existingDuplicate = {
+    ...article,
+    id: 'old-grid-capacity',
+    title: 'Old duplicate grid capacity report',
+    sourceUrl: 'https://example.com/reports/grid-capacity#section',
+  };
+  const semanticQueryOne = {
+    ...article,
+    id: 'semantic-query-one',
+    sourceUrl: 'https://example.com/reports/grid-capacity?id=1',
+  };
+  const semanticQueryTwo = {
+    ...article,
+    id: 'semantic-query-two',
+    sourceUrl: 'https://example.com/reports/grid-capacity?id=2',
+  };
+  const caseSensitivePath = {
+    ...article,
+    id: 'case-sensitive-path',
+    sourceUrl: 'https://example.com/reports/Grid-Capacity',
+  };
+  const result = await runPublishCycle({
+    articles: [article],
+    existing: {
+      latestNews: [existingDuplicate, semanticQueryOne, semanticQueryTwo, caseSensitivePath],
+      searchIndex: [existingDuplicate, semanticQueryOne, semanticQueryTwo, caseSensitivePath],
+    },
+    routeArticle: async () => ({
+      id: article.id,
+      title: article.title,
+      tier: 'editorial_brief',
+      coreFeedEligible: true,
+      detailPage: false,
+      brief: article.summary,
+      reasons: [],
+      relevance: { score: 0.9, visibility: 'core', laneKey: 'power-grid' },
+    }),
+    now: '2026-05-31T08:00:00.000Z',
+  });
+
+  assert.deepEqual(result.artifacts.latestNews.map((item) => item.id), [
+    'new-grid-capacity',
+    'semantic-query-one',
+    'semantic-query-two',
+    'case-sensitive-path',
+  ]);
+  assert.deepEqual(result.artifacts.searchIndex.map((item) => item.id), [
+    'new-grid-capacity',
+    'semantic-query-one',
+    'semantic-query-two',
+    'case-sensitive-path',
+  ]);
+});
+
 test('publish cycle keeps source-link briefs off local detail pages', async () => {
   const sourceUrl = 'https://example.com/utility-campus-grid-queue';
   const sourceText = [

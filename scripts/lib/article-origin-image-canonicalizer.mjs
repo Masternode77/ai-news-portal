@@ -17,6 +17,7 @@ import {
 } from './image-providers/shared.mjs';
 import {
   ensureSafePublicOutputTarget,
+  readBoundedRegularFile,
   writeSafePublicFile,
 } from './safe-public-file.mjs';
 
@@ -118,15 +119,12 @@ function canonicalImageTargets(paths = {}, publicDir = '') {
   ];
 }
 
-async function writeMissingVariants(missing = [], source, publicDir) {
-  const validated = await validateRasterImageBytes(source, '', {
-    maxBytes: MAX_SOURCE_IMAGE_BYTES,
-    maxPixels: MAX_SOURCE_IMAGE_PIXELS,
-  });
-  await Promise.all(missing.map(async (entry) => {
+async function writeMissingVariants(missing = [], source, publicDir, options = {}) {
+  const staged = [];
+  for (const entry of missing) {
     const variant = ARTICLE_IMAGE_VARIANTS[entry.key] || ARTICLE_IMAGE_VARIANTS.hero;
     const outputPath = await ensureSafePublicOutputTarget(publicDir, entry.filePath);
-    const output = await sharp(validated.bytes, {
+    const output = await sharp(source, {
       failOn: 'error',
       limitInputPixels: MAX_SOURCE_IMAGE_PIXELS,
       animated: false,
@@ -136,16 +134,46 @@ async function writeMissingVariants(missing = [], source, publicDir) {
       .resize(variant.width, variant.height, { fit: 'cover', position: 'attention' })
       .webp({ quality: 88 })
       .toBuffer();
-    await writeSafePublicFile(publicDir, outputPath, output);
-  }));
+    let backup = null;
+    try {
+      const stats = await fs.lstat(outputPath);
+      if (stats.isSymbolicLink() || !stats.isFile()) throw new Error('Image output must be a regular file');
+      backup = await readBoundedRegularFile(outputPath, {
+        maxBytes: MAX_SOURCE_IMAGE_BYTES,
+        expectedStats: stats,
+      });
+    } catch (error) {
+      if (error?.code !== 'ENOENT') throw error;
+    }
+    staged.push({ outputPath, output, backup });
+  }
+
+  const writePublicFile = options.writePublicFile || writeSafePublicFile;
+  const applied = [];
+  try {
+    for (const entry of staged) {
+      await writePublicFile(publicDir, entry.outputPath, entry.output);
+      applied.push(entry);
+    }
+  } catch (error) {
+    const rollbackErrors = [];
+    for (const entry of [...applied].reverse()) {
+      try {
+        if (entry.backup === null) {
+          await fs.rm(await ensureSafePublicOutputTarget(publicDir, entry.outputPath), { force: true });
+        }
+        else await writeSafePublicFile(publicDir, entry.outputPath, entry.backup);
+      } catch (rollbackError) {
+        rollbackErrors.push(rollbackError.message);
+      }
+    }
+    if (rollbackErrors.length) error.message = `${error.message}; rollback failed: ${rollbackErrors.join(', ')}`;
+    throw error;
+  }
 }
 
 async function readLocalSourceImage(filePath = '') {
-  const stats = await fs.stat(filePath);
-  if (!stats.isFile() || stats.size > MAX_SOURCE_IMAGE_BYTES) {
-    throw new Error('Local source image exceeds the byte limit');
-  }
-  return fs.readFile(filePath);
+  return readBoundedRegularFile(filePath, { maxBytes: MAX_SOURCE_IMAGE_BYTES });
 }
 
 async function fetchRemoteSourceImage(url = '') {
@@ -167,11 +195,37 @@ async function fetchRemoteSourceImage(url = '') {
 
   const contentType = response.headers.get('content-type') || '';
   const bytes = Buffer.from(await response.arrayBuffer());
-  const validated = await validateRasterImageBytes(bytes, contentType, {
-    maxBytes: MAX_SOURCE_IMAGE_BYTES,
-    maxPixels: MAX_SOURCE_IMAGE_PIXELS,
-  });
-  return { bytes: validated.bytes };
+  return { bytes, contentType };
+}
+
+async function writeRemoteSourceVariants(remote, missing, publicDir, paths, options = {}) {
+  if (remote.invalid) {
+    return { changed: 0, skipped: true, reason: 'invalid_source_image_url', paths };
+  }
+  if (!remote.url) {
+    return { changed: 0, skipped: true, reason: 'missing_local_source_image', paths };
+  }
+  if (PIPELINE_OFFLINE) {
+    return { changed: 0, skipped: true, reason: 'pipeline_offline', paths };
+  }
+
+  const fetchSource = options.fetchRemoteSourceImage || fetchRemoteSourceImage;
+  const fetched = await fetchSource(remote.url).catch(() => ({ error: 'source_image_fetch_failed' }));
+  if (fetched.error || !fetched.bytes) {
+    return { changed: 0, skipped: true, reason: fetched.error || 'source_image_fetch_failed', paths };
+  }
+
+  let validated;
+  try {
+    validated = await validateRasterImageBytes(fetched.bytes, fetched.contentType || '', {
+      maxBytes: MAX_SOURCE_IMAGE_BYTES,
+      maxPixels: MAX_SOURCE_IMAGE_PIXELS,
+    });
+  } catch {
+    return { changed: 0, skipped: true, reason: 'invalid_source_image', paths };
+  }
+  await writeMissingVariants(missing, validated.bytes, publicDir, options);
+  return { changed: missing.length, skipped: false, paths };
 }
 
 export async function ensureCanonicalArticleImageSet(item = {}, options = {}) {
@@ -198,37 +252,26 @@ export async function ensureCanonicalArticleImageSet(item = {}, options = {}) {
     return { changed: 0, skipped: false, paths };
   }
 
+  const remote = remoteSourceImageFor(item);
+  if (options.overwrite === true && (remote.url || remote.invalid)) {
+    return writeRemoteSourceVariants(remote, missing, publicDir, paths, options);
+  }
+
   const sourceFile = localSourceImageFileFor(item);
   if (await fileExists(sourceFile)) {
+    const bytes = await readLocalSourceImage(sourceFile);
+    let validated;
     try {
-      const bytes = await readLocalSourceImage(sourceFile);
-      await writeMissingVariants(missing, bytes, publicDir);
-      return { changed: missing.length, skipped: false, paths };
+      validated = await validateRasterImageBytes(bytes, '', {
+        maxBytes: MAX_SOURCE_IMAGE_BYTES,
+        maxPixels: MAX_SOURCE_IMAGE_PIXELS,
+      });
     } catch {
       return { changed: 0, skipped: true, reason: 'invalid_local_source_image', paths };
     }
-  }
-
-  const remote = remoteSourceImageFor(item);
-  if (remote.invalid) {
-    return { changed: 0, skipped: true, reason: 'invalid_source_image_url', paths };
-  }
-  if (!remote.url) {
-    return { changed: 0, skipped: true, reason: 'missing_local_source_image', paths };
-  }
-  if (PIPELINE_OFFLINE) {
-    return { changed: 0, skipped: true, reason: 'pipeline_offline', paths };
-  }
-
-  const fetched = await fetchRemoteSourceImage(remote.url).catch(() => ({ error: 'source_image_fetch_failed' }));
-  if (fetched.error) {
-    return { changed: 0, skipped: true, reason: fetched.error, paths };
-  }
-
-  try {
-    await writeMissingVariants(missing, fetched.bytes, publicDir);
+    await writeMissingVariants(missing, validated.bytes, publicDir, options);
     return { changed: missing.length, skipped: false, paths };
-  } catch {
-    return { changed: 0, skipped: true, reason: 'invalid_source_image', paths };
   }
+
+  return writeRemoteSourceVariants(remote, missing, publicDir, paths, options);
 }

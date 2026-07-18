@@ -20,10 +20,11 @@ trust boundaries.
 | Stored/reflected XSS | Astro escaping, script-safe structured data, DOM `textContent`, no `innerHTML` in CMS controller | Continue payload regression tests when renderers change |
 | SSRF/unsafe URLs | Centralized source fetch protections; private-address rejection; no HTTPS downgrade; OAuth image runtime restricted to credential-free HTTPS and exact-origin bearer forwarding | New connectors require threat review |
 | Upload attacks | MIME and magic-byte match, bounded bytes/pixels, safe decode, WebP re-encode, private local path | Vercel request-size limits constrain large media |
-| Path traversal | normalized object keys and media paths outside source/public output | Object-store policy remains an external control |
+| Source-image substitution | Four-variant source regeneration and SHA-256 comparison, bounded no-follow reads, staged promotion, rollback | Provenance is equivalence to the source URL's current bytes, not an immutable upstream snapshot |
+| Path traversal | normalized object keys and media paths, real-path containment, symlink rejection, no-follow reads | Object-store policy remains an external control |
 | Lost/partial writes | transactions, optimistic versions, atomic local rename, immutable history, transactional outbox, malformed canonical state rejection | Outbox consumer is not yet deployed |
 | Secret/log leakage | generic 5xx messages, IP HMACs, bounded fields, ignored runtime artifacts | Vercel/GitHub log retention must be configured externally |
-| CI or dependency compromise | exact lockfile versions, Node engine pin, `npx --no-install`, trusted-main secret scope, `npm audit` release gate | Audit does not replace provenance review |
+| CI or dependency compromise | exact lockfile versions, immutable GitHub Actions SHAs, Node engine pin, `npx --no-install`, trusted-main secret scope, `npm audit` release gate | Audit does not replace provenance review |
 
 ## Fail-Closed Policy
 

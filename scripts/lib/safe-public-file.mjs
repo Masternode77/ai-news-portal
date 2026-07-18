@@ -1,4 +1,5 @@
 import { randomUUID } from 'node:crypto';
+import { constants as fsConstants } from 'node:fs';
 import fs from 'node:fs/promises';
 import path from 'node:path';
 
@@ -86,4 +87,36 @@ export async function writeSafePublicFile(publicDir, filePath, bytes) {
     await fs.rm(tempPath, { force: true }).catch(() => {});
   }
   return target;
+}
+
+export async function readBoundedRegularFile(filePath, options = {}) {
+  const maxBytes = Number(options.maxBytes);
+  if (!Number.isSafeInteger(maxBytes) || maxBytes < 1) {
+    throw new TypeError('readBoundedRegularFile requires a positive maxBytes');
+  }
+  const noFollow = fsConstants.O_NOFOLLOW || 0;
+  const handle = await fs.open(filePath, fsConstants.O_RDONLY | noFollow);
+  try {
+    const stats = await handle.stat();
+    if (!stats.isFile()) throw new Error('File must be a regular file');
+    if (options.expectedStats
+      && (stats.dev !== options.expectedStats.dev || stats.ino !== options.expectedStats.ino)) {
+      throw new Error('File identity changed before the bounded read');
+    }
+
+    const chunks = [];
+    let total = 0;
+    while (total <= maxBytes) {
+      const remaining = maxBytes + 1 - total;
+      const buffer = Buffer.allocUnsafe(Math.min(64 * 1024, remaining));
+      const { bytesRead } = await handle.read(buffer, 0, buffer.length, null);
+      if (bytesRead === 0) break;
+      chunks.push(buffer.subarray(0, bytesRead));
+      total += bytesRead;
+    }
+    if (total > maxBytes) throw new Error('File exceeds the bounded read limit');
+    return Buffer.concat(chunks, total);
+  } finally {
+    await handle.close();
+  }
 }

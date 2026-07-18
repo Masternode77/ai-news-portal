@@ -10,6 +10,8 @@ import { hydrateExpertLens, mergeArticleRecords } from './expert-lens.mjs';
 import { readJsonFile, writeJsonFile } from './state-store.mjs';
 import { slugify } from './normalize.mjs';
 import { buildProjectedSearchText } from '../../src/lib/public-search-projection.js';
+import { uniqueByCanonicalSource } from './canonical-source.mjs';
+import { publicSurfaceDecision } from './public-surface-eligibility.mjs';
 
 function mergeUniqueArticles(articles) {
   const merged = new Map();
@@ -104,9 +106,14 @@ function isHomepageSuppressed(article = {}) {
 }
 
 export function splitLatestAndArchive(articles) {
-  const sorted = mergeUniqueArticles(articles).sort(
+  const sorted = uniqueByCanonicalSource(mergeUniqueArticles(articles).sort(
     (a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime()
-  );
+  ), {
+    isEligible: (article) => {
+      const decision = publicSurfaceDecision(article);
+      return decision.homepage === true || decision.archive === true;
+    },
+  });
   const homepageEligible = sorted.filter((article) => !isHomepageSuppressed(article));
   const forcedArchive = sorted.filter(isHomepageSuppressed);
 
@@ -116,15 +123,32 @@ export function splitLatestAndArchive(articles) {
   };
 }
 
-export async function syncArchiveArtifacts(latestArticles, priorArchive = []) {
+export async function syncArchiveArtifacts(latestArticles, priorArchive = [], options = {}) {
+  const publicDecision = options.publicDecision || publicSurfaceDecision;
   const { latest, overflow } = splitLatestAndArchive(latestArticles);
-  const archive = mergeUniqueArticles([...overflow, ...priorArchive]).map(toSearchableArticle);
-  const latestSearchable = latest.map(toSearchableArticle);
+  const latestIds = new Set(latest.map((article) => article.id));
+  const inventory = uniqueByCanonicalSource(
+    mergeUniqueArticles([...latest, ...overflow, ...priorArchive]),
+    {
+      isEligible: (article) => {
+        const decision = publicDecision(article);
+        return decision.homepage === true || decision.archive === true;
+      },
+    },
+  );
+  const inventoryById = new Map(inventory.map((article) => [article.id, article]));
+  const finalLatest = latest.map((article) => inventoryById.get(article.id)).filter(Boolean);
+  const archiveRecords = inventory.filter((article) => !latestIds.has(article.id));
+  const archive = archiveRecords.map(toSearchableArticle);
+  const latestSearchable = finalLatest.map(toSearchableArticle);
+  const overflowIds = new Set(overflow.map((article) => article.id));
+  const archiveUpserts = archiveRecords.filter((article) => overflowIds.has(article.id));
 
   let supabaseStatus = { pushed: false, reason: 'not_attempted' };
   try {
-    supabaseStatus = await upsertSupabaseArchive(
-      overflow.map((article) => ({
+    const upsertArchive = options.upsertArchive || upsertSupabaseArchive;
+    supabaseStatus = await upsertArchive(
+      archiveUpserts.map((article) => ({
         ...article,
         slug: article.slug || slugify(article.title),
       }))
@@ -133,11 +157,12 @@ export async function syncArchiveArtifacts(latestArticles, priorArchive = []) {
     supabaseStatus = { pushed: false, reason: error.message };
   }
 
-  await writeJsonFile(ARCHIVE_NEWS_PATH, archive);
-  await writeJsonFile(SEARCH_INDEX_PATH, mergeUniqueArticles([...latestSearchable, ...archive]));
+  const writeJson = options.writeJson || writeJsonFile;
+  await writeJson(ARCHIVE_NEWS_PATH, archive);
+  await writeJson(SEARCH_INDEX_PATH, mergeUniqueArticles([...latestSearchable, ...archive]));
 
   return {
-    latest,
+    latest: finalLatest,
     archive,
     supabaseStatus,
   };

@@ -9,6 +9,7 @@ import { fileURLToPath, pathToFileURL } from 'node:url';
 import { promisify } from 'node:util';
 import sharp from 'sharp';
 import { ensureCanonicalArticleImageSet } from '../scripts/prepare-static-images.mjs';
+import { writeSafePublicFile } from '../scripts/lib/safe-public-file.mjs';
 
 const execFileAsync = promisify(execFile);
 const repoRoot = path.dirname(fileURLToPath(new URL('../package.json', import.meta.url)));
@@ -119,6 +120,121 @@ test('article origin canonicalization', async (t) => {
         assert.ok(result.paths.legacyImage.endsWith('/origin-local-fixture.webp'));
         for (const publicPath of expectedPaths) {
           await fs.access(path.join(publicDir, publicPath.replace(/^\//, '')));
+        }
+      });
+    } finally {
+      await fs.rm(root, { recursive: true, force: true });
+    }
+  });
+
+  await t.test('overwrite refreshes source-canonical output from the remote source instead of the stale hero', async () => {
+    const { root, publicDir } = await makeTempProject();
+    const article = {
+      id: 'origin-overwrite-fixture',
+      title: 'Remote source replaces a stale canonical hero',
+      generatedImage: '/generated/origin-overwrite-fixture/stale.png',
+    };
+    const staleFile = path.join(publicDir, article.generatedImage.replace(/^\//, ''));
+
+    try {
+      await withCwd(root, async () => {
+        await createFixturePng(staleFile);
+        const initial = await ensureCanonicalArticleImageSet(article, { publicDir });
+        const remoteBytes = await sharp({
+          create: {
+            width: 64,
+            height: 36,
+            channels: 4,
+            background: { r: 12, g: 190, b: 44, alpha: 1 },
+          },
+        }).png().toBuffer();
+        let remoteCalls = 0;
+
+        const refreshed = await ensureCanonicalArticleImageSet({
+          ...article,
+          sourceImage: 'https://source.example/real.png',
+          heroImage: initial.paths.heroImage,
+          generatedImage: initial.paths.heroImage,
+          generatedImageProvider: 'source-image',
+          generatedImageModel: 'origin-canonical',
+          imageStatus: 'source-canonical',
+        }, {
+          publicDir,
+          overwrite: true,
+          fetchRemoteSourceImage: async () => {
+            remoteCalls += 1;
+            return { bytes: remoteBytes };
+          },
+        });
+
+        const pixel = await sharp(path.join(publicDir, refreshed.paths.heroImage.replace(/^\//, '')))
+          .resize(1, 1)
+          .removeAlpha()
+          .raw()
+          .toBuffer();
+        assert.equal(refreshed.skipped, false);
+        assert.equal(remoteCalls, 1);
+        assert.ok(pixel[1] > pixel[2] * 2, `expected green remote source, received ${[...pixel]}`);
+      });
+    } finally {
+      await fs.rm(root, { recursive: true, force: true });
+    }
+  });
+
+  await t.test('variant promotion rolls back earlier files when a later write fails', async () => {
+    const { root, publicDir } = await makeTempProject();
+    const article = {
+      id: 'origin-rollback-fixture',
+      title: 'Canonical variants remain consistent after a failed promotion',
+      generatedImage: '/generated/origin-rollback-fixture/source.png',
+    };
+    const sourceFile = path.join(publicDir, article.generatedImage.replace(/^\//, ''));
+
+    try {
+      await withCwd(root, async () => {
+        await createFixturePng(sourceFile);
+        const initial = await ensureCanonicalArticleImageSet(article, { publicDir });
+        const publicPaths = [
+          initial.paths.heroImage,
+          initial.paths.thumbnailImage,
+          initial.paths.ogImage,
+          initial.paths.legacyImage,
+        ];
+        const originals = await Promise.all(publicPaths.map((publicPath) => (
+          fs.readFile(path.join(publicDir, publicPath.replace(/^\//, '')))
+        )));
+        const remoteBytes = await sharp({
+          create: {
+            width: 64,
+            height: 36,
+            channels: 4,
+            background: { r: 12, g: 190, b: 44, alpha: 1 },
+          },
+        }).png().toBuffer();
+        let writes = 0;
+
+        await assert.rejects(
+          ensureCanonicalArticleImageSet({
+            ...article,
+            ...initial.paths,
+            sourceImage: 'https://source.example/real.png',
+          }, {
+            publicDir,
+            overwrite: true,
+            fetchRemoteSourceImage: async () => ({ bytes: remoteBytes }),
+            writePublicFile: async (...args) => {
+              writes += 1;
+              if (writes === 2) throw new Error('simulated canonical promotion failure');
+              return writeSafePublicFile(...args);
+            },
+          }),
+          /simulated canonical promotion failure/,
+        );
+        for (let index = 0; index < publicPaths.length; index += 1) {
+          assert.deepEqual(
+            await fs.readFile(path.join(publicDir, publicPaths[index].replace(/^\//, ''))),
+            originals[index],
+          );
         }
       });
     } finally {

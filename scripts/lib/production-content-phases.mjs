@@ -52,6 +52,7 @@ import {
 } from './state-store.mjs';
 import { stableArticleId, truncate } from './normalize.mjs';
 import { buildTaxonomyProjection } from './taxonomy-projection.mjs';
+import { uniqueByCanonicalSource } from './canonical-source.mjs';
 
 const RETRY_DELAY_MS = Number(process.env.PIPELINE_RETRY_DELAY_MS || 15_000);
 
@@ -691,6 +692,7 @@ export async function runProductionPublish(payload = {}, context = {}, dependenc
   const services = {
     backfillImages: backfillLocalImages,
     buildTaxonomy: buildTaxonomyProjection,
+    publicDecision: publicSurfaceDecision,
     readState: readPipelineState,
     syncArchive: syncArchiveArtifacts,
     writeJson: writeJsonFile,
@@ -771,13 +773,19 @@ export async function runProductionPublish(payload = {}, context = {}, dependenc
   const processedIds = new Set(processedItems.map((article) => article.id));
   const existing = dedupeById(existingLatest).filter((article) => !processedIds.has(article.id));
   const retainedArchive = dedupeById(existingArchive).filter((article) => !processedIds.has(article.id));
-  const merged = sortForPipelineVisibility(dedupeById([
+  const mergedById = sortForPipelineVisibility(dedupeById([
     ...passed,
     ...signals,
     ...archiveOnly,
     ...existing,
     ...retainedArchive,
   ]));
+  const merged = uniqueByCanonicalSource(mergedById, {
+    isEligible: (article) => {
+      const decision = services.publicDecision(article);
+      return decision.homepage === true || decision.archive === true;
+    },
+  });
   const backfillResult = await services.backfillImages(merged, { collectOutputs: true });
   const withImages = Array.isArray(backfillResult) ? backfillResult : backfillResult.articles;
   const refreshedImagePaths = Array.isArray(backfillResult) ? [] : backfillResult.outputPaths;
