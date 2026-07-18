@@ -90,6 +90,9 @@
   policy, and preview noindex; final Vercel error-log query returned no application errors.
 - Browser QA: homepage 31/31 desktop/mobile, archive 32/32, search 32/32, article 1/1, and APAC 19/19
   images decoded with 0 broken images, placeholder labels, app errors, failed requests, or overflow.
+- Adversarial preview HTTP probes passed 10/10 twice; the focused 81-test security/state/publish set
+  passed three consecutive runs (243/243), including stale-owner, resume, and false-green behavior.
+- Homepage image byte audit found 31 valid URLs and 31 unique SHA-256 hashes with no default duplicate.
 - Fresh 1440x900 comparison differs on 81.5236% of pixels, confirming production still serves the
   old command-center design while the preview serves Midnight Intelligence.
 - Human benchmark packets remain reviewer-empty; the scorer fails closed without `reviewer.id`.

@@ -117,3 +117,44 @@ release follow-ups and do not justify production promotion without preview appro
   across 81.5236% of pixels, so production still does not serve this reviewed preview.
 - Evidence: `artifacts/preview-e37bc9c9/` (ignored local runtime artifacts).
 - Production promotion and cache purge were not performed.
+
+## Adversarial E2E Completion
+
+Goal: prove the exact preview fails closed under malformed and hostile requests, does not mistake
+success-looking output for a pass, survives interruption/replay boundaries, and serves distinct real
+image bytes. The run remained read-only against preview and production and excluded secrets, cache
+purge, production writes, and promotion.
+
+| ID | User/attacker model | Scenario | Command or harness | Expected signal | Actual result | Fixes applied | Evidence | Cleanup |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| ADV-01 | Normal reader | Public routes, desktop/mobile imagery, and article hero | Playwright exact-preview suite | 200, decoded images, no browser errors | Pass: 6 surfaces; 146/146 aggregate image decodes | None | `visual-qa.json` | Captures intentionally retained under ignored artifacts |
+| ADV-02 | Malformed client | Invalid content type, broken JSON, 70 KiB body, unsupported methods | Bounded preview HTTP harness | 4xx or fail-closed 503, `no-store`, no echo | Pass: all rejected without input/config leakage | None | `adversarial-e2e.json` ADV-HTTP-04..06 | No server mutation |
+| ADV-03 | Traversal/XSS client | Encoded path traversal and Unicode script query | Bounded preview HTTP harness | 404 or escaped inert text | Pass: traversal 404; no executable reflection | None | `adversarial-e2e.json` ADV-HTTP-02..03 | No server mutation |
+| ADV-04 | Prompt-injection attacker | Forged cookie/CSRF plus instruction and script payload | Bounded preview HTTP harness | Auth fails closed; no payload, CORS, stack, or secret echo | Pass: generic 503, `no-store`, no hostile Origin grant | None | `adversarial-e2e.json` ADV-HTTP-07..09 | No server mutation |
+| ADV-05 | Interrupted publisher | Failed phase, replaced owner, stale receipt, and replay | Canonical orchestrator and production-phase tests | Resume only matching identity; fence stale owner | Pass across the focused 81-test set | None | Three regression runs | Temporary test state removed by test hooks |
+| ADV-06 | Dirty-worktree operator | Runtime evidence and OMX state coexist with tracked source | Git status before and after probes | No unrelated tracked file changed or hidden | Pass: tracked worktree remained clean until intentional report edits | None | Pre/post `git status --short` | Ignored artifacts retained intentionally |
+| ADV-07 | Hung child process | Child waits 10 seconds | 250 ms bounded spawn harness | Child terminated; no late success accepted | Pass: `SIGTERM`, no leaked success | None | Inline harness receipt | Child exited; no process retained |
+| ADV-08 | Flaky implementation | Repeat security/state/publish suite | Focused Node suite, three sequential runs | Identical zero-failure result | Pass: 81/81 three times, 243/243 aggregate | None | TAP exit 0 for all runs | Test fixtures self-cleaned |
+| ADV-09 | Misleading command | Prints `ALL TESTS PASSED` then exits 7 | Exit-semantics harness and QA verdict tests | Nonzero exit remains failure | Pass: success text rejected; QA contract 8/8 | None | Inline harness and focused suite | Fixture process exited |
+| ADV-10 | Default-image regression | Same image reused under different cards | Fetch all homepage images and hash bytes | 31 valid responses and 31 unique hashes | Pass: 31/31 unique; 12,866-404,420 bytes | None | `adversarial-e2e.json` image audit | No downloaded file retained |
+
+### Commands and Failures
+
+- Two bounded preview HTTP passes completed 10/10 scenarios each; every request used a 10-second
+  abort limit. The persisted final receipt reports `ok: true`.
+- The focused admin, auth, outbound-media, state, checkpoint, QA-verdict, and publication suite
+  passed 81/81 on each of three clean reruns. `npm audit --audit-level=low` found 0 vulnerabilities.
+- One initial output-truncation wrapper used zsh's read-only `status` variable. Product tests in that
+  run passed 81/81, but the wrapper correctly remained failed. It was classified as harness setup
+  failure, replaced with a direct no-pipe runner, and all three required reruns passed.
+- No product defect was found in this adversarial cycle, so no product code was changed.
+
+### Residual Risks and Cleanup
+
+- Managed preview Postgres, Blob, and authenticated admin write behavior remain untested because
+  preview-only credentials are absent. The safe substitute verified generic fail-closed responses
+  and exercised authenticated lifecycle behavior against real local handlers.
+- Workflow cancel wording is not a public product surface. The safe substitute exercised interrupted
+  checkpoints, stale ownership, replay, and resume fencing without mutating production.
+- All temporary child processes exited. Runtime evidence is intentionally retained under the ignored
+  `artifacts/preview-e37bc9c9/` directory; no temporary source harness was created.
