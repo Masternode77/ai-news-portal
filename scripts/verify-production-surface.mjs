@@ -32,6 +32,21 @@ function parseArgs(argv = process.argv.slice(2)) {
   return args;
 }
 
+function usage() {
+  return [
+    'Usage: node scripts/verify-production-surface.mjs [options]',
+    '',
+    'Options:',
+    '  --local-dist <path>       Built static output to inspect',
+    '  --staging <url>           Preview deployment URL',
+    '  --live <url>              Live deployment URL',
+    '  --skip-cache-purge        Never invoke the cache purge endpoint',
+    '  --screenshots <a,b,...>   Screenshot paths to include in the receipt',
+    '  --out <path>              Markdown report path',
+    '  --json <path>             JSON receipt path',
+  ].join('\n');
+}
+
 async function readJson(filePath) {
   try {
     return JSON.parse(await fs.readFile(filePath, 'utf8'));
@@ -222,6 +237,31 @@ async function screenshotArtifacts(paths = DEFAULT_SCREENSHOTS) {
   return out;
 }
 
+function requestedScreenshots(value) {
+  if (Array.isArray(value)) return value;
+  if (typeof value !== 'string' || !value.trim()) return DEFAULT_SCREENSHOTS;
+  return value.split(',').map((item) => item.trim()).filter(Boolean);
+}
+
+export function productionVerificationRisks(result = {}) {
+  const risks = [];
+  if (result.live?.skipped) {
+    risks.push('Live routes were not checked because no live URL was supplied.');
+  } else if (!result.live?.ok) {
+    risks.push('One or more live route checks failed.');
+  } else if (result.cachePurge?.status !== 'purged') {
+    risks.push('Live route health passed, but no cache-freshness claim is made because cache purge was excluded.');
+  }
+
+  if (result.staging?.skipped) {
+    risks.push('Staging was not checked because no staging URL was supplied.');
+  } else if (!result.staging?.ok) {
+    risks.push('One or more staging route checks failed.');
+  }
+  risks.push('Existing Astro check hints remain informational unless they become build errors.');
+  return risks;
+}
+
 function linesForUrl(result) {
   if (result.skipped) return [`- ${result.label}: ${result.blocker}`];
   return [
@@ -277,14 +317,12 @@ async function writeReport(result, reportPath) {
     '',
     '## Remaining Risks',
     '',
-    '- Live content freshness cannot be asserted unless the live URL checks and cache purge both succeed in the same credentialed run.',
-    '- Staging was not checked when no staging URL was supplied.',
-    '- Existing Astro check hints remain informational unless they become build errors.',
+    ...productionVerificationRisks(result).map((risk) => `- ${risk}`),
     '',
     '## Cleanup Receipts',
     '',
     '- No dev server, tmux session, browser context, temp directory, or cache-purge credential was created by this harness run.',
-    '- Screenshot artifacts reused from Task 14 local browser QA; no screenshot process remained open.',
+    '- Screenshot artifacts listed above were verified by path; no screenshot process remained open.',
     '',
   ];
   await fs.writeFile(reportPath, lines.join('\n'), 'utf8');
@@ -298,7 +336,7 @@ export async function verifyProductionSurface(options = {}) {
     inspectUrl('staging', options.staging),
     inspectUrl('live', options.live),
     maybePurgeCache(options),
-    screenshotArtifacts(),
+    screenshotArtifacts(requestedScreenshots(options.screenshots)),
   ]);
   const result = {
     generatedAt: new Date().toISOString(),
@@ -323,7 +361,12 @@ export async function verifyProductionSurface(options = {}) {
 }
 
 if (fileURLToPath(import.meta.url) === process.argv[1]) {
-  const result = await verifyProductionSurface(parseArgs());
+  const args = parseArgs();
+  if (args.help) {
+    console.log(usage());
+    process.exit(0);
+  }
+  const result = await verifyProductionSurface(args);
   console.log(`production verification harness completed: localDist=${result.localDist.ok ? 'passed' : 'failed'}, live=${result.live.ok ? 'passed' : result.live.skipped ? 'skipped' : 'failed'}, cache=${result.cachePurge.status}`);
   if (!result.localDist.ok) process.exitCode = 1;
 }

@@ -1,9 +1,13 @@
 import assert from 'node:assert/strict';
+import { spawnSync } from 'node:child_process';
 import fs from 'node:fs';
 import http from 'node:http';
 import test from 'node:test';
 import { fileURLToPath } from 'node:url';
-import { maybePurgeCache } from '../scripts/verify-production-surface.mjs';
+import {
+  maybePurgeCache,
+  productionVerificationRisks,
+} from '../scripts/verify-production-surface.mjs';
 import { classifyQaQcVerdict, runQaQc } from '../scripts/run-qa-qc.mjs';
 
 const passedLocalProduction = {
@@ -125,6 +129,40 @@ test('cache purge is skipped by default and only runs with explicit opt-in', asy
   const purged = await maybePurgeCache({ purgeCache: true });
   assert.equal(purged.status, 'purged');
   assert.equal(postCount, 1);
+});
+
+test('production verifier help is read-only', async (t) => {
+  const reportPath = fileURLToPath(new URL('../evidence/qa-qc/test-verifier-help.md', import.meta.url));
+  await fs.promises.rm(reportPath, { force: true });
+  t.after(() => fs.promises.rm(reportPath, { force: true }));
+
+  const result = spawnSync(
+    process.execPath,
+    ['scripts/verify-production-surface.mjs', '--help', '--out', reportPath],
+    { cwd: fileURLToPath(new URL('..', import.meta.url)), encoding: 'utf8' },
+  );
+
+  assert.equal(result.status, 0);
+  assert.match(result.stdout, /Usage: node scripts\/verify-production-surface\.mjs/);
+  assert.equal(fs.existsSync(reportPath), false);
+});
+
+test('production verifier reports only risks that match checked targets', () => {
+  const checked = productionVerificationRisks({
+    live: { ok: true, skipped: false },
+    staging: { ok: true, skipped: false },
+    cachePurge: { status: 'skipped' },
+  });
+  assert.match(checked.join('\n'), /cache-freshness claim/);
+  assert.doesNotMatch(checked.join('\n'), /Staging was not checked/);
+
+  const skipped = productionVerificationRisks({
+    live: { skipped: true },
+    staging: { skipped: true },
+    cachePurge: { status: 'skipped' },
+  });
+  assert.match(skipped.join('\n'), /Live routes were not checked/);
+  assert.match(skipped.join('\n'), /Staging was not checked/);
 });
 
 test('QA/QC docs and package script expose the reusable workflow contract', () => {

@@ -1,36 +1,38 @@
 # Production Verification Report
 
-Generated at: 2026-07-12T12:58:38.384Z
-Build ID: 0.0.1:dist-mtime-1783860097145
+Generated at: 2026-07-18T17:54:22.548Z
+Build ID: 0.0.1:dist-mtime-1784396000381
 
 ## Target URL Summary
 
 - Local URL: /Users/josh/Documents/New project 2/dist
-- Staging URL: https://ai-news-portal-j0t0zyxm4-masternode77s-projects.vercel.app
+- Staging URL: https://ai-news-portal-aw96819c4-masternode77s-projects.vercel.app
 - Live URL: https://computecurrent.com
 
 ## Commands Run
 
-- `node scripts/verify-production-surface.mjs --local-dist dist --staging https://ai-news-portal-j0t0zyxm4-masternode77s-projects.vercel.app --live https://computecurrent.com --skip-cache-purge --out docs/production-verification-report.md --json artifacts/final-7cb5e449-preview/production-verification.json`
+- `node scripts/verify-production-surface.mjs --local-dist dist --staging https://ai-news-portal-aw96819c4-masternode77s-projects.vercel.app --live https://computecurrent.com --skip-cache-purge --screenshots artifacts/preview-d214bed7/home-desktop.png,artifacts/preview-d214bed7/home-mobile.png,artifacts/preview-d214bed7/archive-desktop.png,artifacts/preview-d214bed7/search-desktop.png,artifacts/preview-d214bed7/article-desktop.png,artifacts/preview-d214bed7/apac-desktop.png --out docs/production-verification-report.md --json artifacts/preview-d214bed7/production-verification.json`
 
 ## Artifacts
 
-- JSON result: `artifacts/final-7cb5e449-preview/production-verification.json`
+- JSON result: `artifacts/preview-d214bed7/production-verification.json`
 - Markdown report: `docs/production-verification-report.md`
-- Screenshot: `artifacts/final-7cb5e449-preview/home-desktop-viewport.png` (present)
-- Screenshot: `artifacts/final-7cb5e449-preview/home-mobile-viewport.png` (present)
-- Screenshot: `artifacts/final-7cb5e449-preview/archive-desktop-decoded.png` (present)
-- Screenshot: `artifacts/final-7cb5e449-preview/article-desktop-viewport.png` (present)
+- Screenshot: `artifacts/preview-d214bed7/home-desktop.png` (present, 3749135 bytes)
+- Screenshot: `artifacts/preview-d214bed7/home-mobile.png` (present, 3920768 bytes)
+- Screenshot: `artifacts/preview-d214bed7/archive-desktop.png` (present, 3427874 bytes)
+- Screenshot: `artifacts/preview-d214bed7/search-desktop.png` (present, 3420938 bytes)
+- Screenshot: `artifacts/preview-d214bed7/article-desktop.png` (present, 1891837 bytes)
+- Screenshot: `artifacts/preview-d214bed7/apac-desktop.png` (present, 1973231 bytes)
 
 ## Pass/Fail
 
 - Local dist status: passed
-  - index.html: present (75505 bytes)
-  - rss.xml: present (40043 bytes)
-  - sitemap.xml: present (5069 bytes)
+  - index.html: present (70611 bytes)
+  - rss.xml: present (29092 bytes)
+  - sitemap.xml: present (4794 bytes)
   - sitemap-index.xml: present (193 bytes)
   - robots.txt: present (122 bytes)
-  - archive/index.html: present (75792 bytes)
+  - archive/index.html: present (71530 bytes)
   - sample/index.html: present (5380 bytes)
   - subscribe/index.html: present (4206 bytes)
   - pricing/index.html: present (4459 bytes)
@@ -45,14 +47,14 @@ Build ID: 0.0.1:dist-mtime-1783860097145
   - RSS local news links: 2
   - RSS local missing files: none
 - local: skipped local step: URL not provided
-- staging URL: https://ai-news-portal-j0t0zyxm4-masternode77s-projects.vercel.app
-  - https://ai-news-portal-j0t0zyxm4-masternode77s-projects.vercel.app/: live status passed 200
-  - https://ai-news-portal-j0t0zyxm4-masternode77s-projects.vercel.app/archive/: live status passed 200
-  - https://ai-news-portal-j0t0zyxm4-masternode77s-projects.vercel.app/sample/: live status passed 200
-  - https://ai-news-portal-j0t0zyxm4-masternode77s-projects.vercel.app/rss.xml: live status passed 200
-  - https://ai-news-portal-j0t0zyxm4-masternode77s-projects.vercel.app/sitemap.xml: live status passed 200
-  - https://ai-news-portal-j0t0zyxm4-masternode77s-projects.vercel.app/sitemap-index.xml: live status passed 200
-  - https://ai-news-portal-j0t0zyxm4-masternode77s-projects.vercel.app/robots.txt: live status passed 200
+- staging URL: https://ai-news-portal-aw96819c4-masternode77s-projects.vercel.app
+  - https://ai-news-portal-aw96819c4-masternode77s-projects.vercel.app/: live status passed 200
+  - https://ai-news-portal-aw96819c4-masternode77s-projects.vercel.app/archive/: live status passed 200
+  - https://ai-news-portal-aw96819c4-masternode77s-projects.vercel.app/sample/: live status passed 200
+  - https://ai-news-portal-aw96819c4-masternode77s-projects.vercel.app/rss.xml: live status passed 200
+  - https://ai-news-portal-aw96819c4-masternode77s-projects.vercel.app/sitemap.xml: live status passed 200
+  - https://ai-news-portal-aw96819c4-masternode77s-projects.vercel.app/sitemap-index.xml: live status passed 200
+  - https://ai-news-portal-aw96819c4-masternode77s-projects.vercel.app/robots.txt: live status passed 200
 - live URL: https://computecurrent.com
   - https://computecurrent.com/: live status passed 200
   - https://computecurrent.com/archive/: live status passed 200
@@ -66,12 +68,10 @@ Build ID: 0.0.1:dist-mtime-1783860097145
 
 ## Remaining Risks
 
-- Preview and live route health passed, but no cache freshness claim is made because purge is excluded.
-- Preview and live are intentionally not pixel-identical: production still serves the previous design pending approval.
-- Preview Postgres, Blob, and admin credentials remain absent, so managed CMS persistence is not proven.
+- Live route health passed, but no cache-freshness claim is made because cache purge was excluded.
 - Existing Astro check hints remain informational unless they become build errors.
 
 ## Cleanup Receipts
 
-- No dev server, tmux session, temp directory, or cache-purge credential was created by this harness run.
-- Fresh exact-preview and production comparison screenshots were captured; all browser processes closed.
+- No dev server, tmux session, browser context, temp directory, or cache-purge credential was created by this harness run.
+- Screenshot artifacts listed above were verified by path; no screenshot process remained open.
