@@ -8,6 +8,8 @@ import { buildArticleImagePrompt, articleImageAltText } from '../scripts/lib/art
 import { generateArticleImageSet, metadataPatchFromImageSet } from '../scripts/lib/image2-provider.mjs';
 import { createImageProvider, describeImageProvider } from '../scripts/lib/image-providers/index.mjs';
 
+const packageJson = JSON.parse(fs.readFileSync(new URL('../package.json', import.meta.url), 'utf8'));
+
 function fixtureArticle(overrides = {}) {
   return {
     id: 'image2-fixture-001',
@@ -23,6 +25,17 @@ function fixtureArticle(overrides = {}) {
     ...overrides,
   };
 }
+
+test('image provider directory contains no duplicate snapshot modules', () => {
+  const providerDirectory = new URL('../scripts/lib/image-providers/', import.meta.url);
+  const duplicateSnapshots = fs
+    .readdirSync(providerDirectory)
+    .filter((entry) => /\s+\d+\.mjs$/i.test(entry))
+    .sort();
+
+  assert.deepEqual(duplicateSnapshots, []);
+  assert.match(packageJson.scripts['content:gate'], /tests\/image-generation\.test\.mjs/);
+});
 
 test('image2 is the canonical configured image provider', () => {
   const provider = createImageProvider('image2');

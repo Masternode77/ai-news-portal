@@ -57,8 +57,8 @@ M .omo/boulder.json
 ## Current Image Handling
 
 - Current provider default: `IMAGE_PROVIDER=chatgpt`, `OPENAI_IMAGE_MODEL=gpt-image-2`.
-- Provider registry files: `chatgpt-oauth-runtime 2.mjs`, `chatgpt-oauth-runtime.mjs`, `gemini 2.mjs`, `gemini.mjs`, `index 2.mjs`, `index.mjs`, `openai-image-api 2.mjs`, `openai-image-api.mjs`, `shared 2.mjs`, `shared.mjs`.
-- Duplicate provider files needing cleanup decision: `chatgpt-oauth-runtime 2.mjs`, `gemini 2.mjs`, `index 2.mjs`, `openai-image-api 2.mjs`, `shared 2.mjs`.
+- Provider registry files: `chatgpt-oauth-runtime.mjs`, `gemini.mjs`, `index.mjs`, `openai-image-api.mjs`, `shared.mjs`.
+- Duplicate provider files needing cleanup decision: none found.
 - Public generated assets directory: `public/generated/`.
 - Homepage-eligible records missing a reachable display image or fallback: 0; examples: none found.
 

@@ -68,7 +68,7 @@
     "audit:public": "node ./scripts/audit-rendered-public-output.mjs && node ./scripts/audit-public-copy.mjs && node ./scripts/audit-public-article-quality.mjs && npm run audit:homepage && npm run audit:feed-volume",
     "audit:production": "node ./scripts/verify-production-surface.mjs --skip-cache-purge",
     "audit:admin": "node ./scripts/audit-admin-exclusion.mjs",
-    "content:gate": "npm run check && npm run build && node --test tests/public-output.test.mjs tests/image-output.test.mjs tests/admin-security.test.mjs tests/content-cycle.test.mjs && npm run audit:public && npm run audit:images && npm run audit:admin && npm run audit:performance",
+    "content:gate": "npm run check && npm run build && node --test tests/public-output.test.mjs tests/image-output.test.mjs tests/image-generation.test.mjs tests/admin-security.test.mjs tests/content-cycle.test.mjs && npm run audit:public && npm run audit:images && npm run audit:admin && npm run audit:performance",
     "audit:autonomous-current": "node ./scripts/audit-autonomous-current-state.mjs",
     "run:editorial-cycle": "node ./scripts/run-editorial-cycle.mjs",
     "content:ingest": "node ./scripts/content-command-surface.mjs ingest",

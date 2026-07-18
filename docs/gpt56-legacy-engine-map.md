@@ -83,19 +83,12 @@ Compatibility wrappers accept no legacy mutation flags. `--help` returns the can
 target without execution; retired arguments such as `--fixture` and `--dry-run` fail before the
 canonical command can run.
 
-## Delete after verification
+## Deleted after verification
 
-| Module | Reason |
-| --- | --- |
-| `image-providers/chatgpt-oauth-runtime 2.mjs` | Unreferenced duplicate snapshot |
-| `image-providers/gemini 2.mjs` | Unreferenced duplicate snapshot |
-| `image-providers/index 2.mjs` | Unreferenced duplicate snapshot |
-| `image-providers/openai-image-api 2.mjs` | Unreferenced duplicate snapshot |
-| `image-providers/shared 2.mjs` | Unreferenced duplicate snapshot |
-| `card-copy-fallbacks.mjs` | Contains generic banned fallback prose |
-
-No deletion occurs until import parity, command-call search, tests, generated-data
-migration, and Vercel preview verification pass.
+The five unreferenced `image-providers/* 2.mjs` snapshots and the generic
+`card-copy-fallbacks.mjs` module were deleted after import parity, command-call search, tests,
+generated-data migration, and Vercel preview verification passed. A provider-directory regression
+test rejects numbered snapshot modules so older provider code cannot silently return.
 
 ## Command migration table
 
