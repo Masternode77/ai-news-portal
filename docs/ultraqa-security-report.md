@@ -66,10 +66,12 @@ operations rather than hidden code-completion claims.
 | UQ-50 | Provider 307/308 redirect exfiltrates a request body or API key | Allow cross-origin replay only for GET/HEAD and remove generic/provider credential headers | Pass | Explicit 307/308 POST rejection and Image2/Gemini-style API-key stripping regressions |
 | UQ-51 | Legacy AI adapter is publicly mislabeled as Image2 | Reserve Image2 provenance for the canonical provider and label legacy adapters by provider family | Pass | ChatGPT, OpenAI API, and Gemini provenance regressions plus explicit production force-order documentation |
 | UQ-52 | Generated OMO audit overstates the public homepage surface | Reuse the canonical homepage eligibility predicate and require corpus-level metric parity | Pass | Audit parity 5/5; eligible 32, heuristic low-relevance 1, missing images 0 |
+| UQ-53 | Test or audit commands mutate tracked reports or skip the rendered build | Build first, preserve an existing dirty diff byte-for-byte, reject new tracked mutations, and require explicit report output | Pass | Seven behavior contracts plus a 649/649 hermetic full-suite run |
 
 ## Verification Receipt
 
-- Full tests: 642 total, 641 passed, 0 failed, 1 intentional skip.
+- Full tests: 649 total, 649 passed, 0 failed, 0 skipped; the build-backed runner preserved the
+  pre-existing tracked diff byte-for-byte.
 - Astro check: 0 errors, 0 warnings, 0 hints.
 - Focused redirect and image-provider tests: 35 passed, 0 failed; offline Image2 orchestration:
   19 passed, 0 failed.
@@ -132,7 +134,7 @@ purge, production writes, and promotion.
 | ADV-03 | Traversal/XSS client | Encoded path traversal and Unicode script query | Bounded preview HTTP harness | 404 or escaped inert text | Pass: traversal 404; no executable reflection | None | `adversarial-e2e.json` ADV-HTTP-02..03 | No server mutation |
 | ADV-04 | Prompt-injection attacker | Forged cookie/CSRF plus instruction and script payload | Bounded preview HTTP harness | Auth fails closed; no payload, CORS, stack, or secret echo | Pass: generic 503, `no-store`, no hostile Origin grant | None | `adversarial-e2e.json` ADV-HTTP-07..09 | No server mutation |
 | ADV-05 | Interrupted publisher | Failed phase, replaced owner, stale receipt, and replay | Canonical orchestrator and production-phase tests | Resume only matching identity; fence stale owner | Pass across the focused 81-test set | None | Three regression runs | Temporary test state removed by test hooks |
-| ADV-06 | Dirty-worktree operator | Runtime evidence and OMX state coexist with tracked source | Git status before and after probes | No unrelated tracked file changed or hidden | Pass: tracked worktree remained clean until intentional report edits | None | Pre/post `git status --short` | Ignored artifacts retained intentionally |
+| ADV-06 | Dirty-worktree operator | Runtime evidence and OMX state coexist with tracked source | Git snapshot before and after the hermetic suite | No unrelated tracked file changed or hidden | Pass: pre-existing tracked diff remained byte-for-byte identical; default audits added no diff | None | Seven test-runner behavior contracts and pre/post diff hash | Ignored artifacts retained intentionally |
 | ADV-07 | Hung child process | Child waits 10 seconds | 250 ms bounded spawn harness | Child terminated; no late success accepted | Pass: `SIGTERM`, no leaked success | None | Inline harness receipt | Child exited; no process retained |
 | ADV-08 | Flaky implementation | Repeat security/state/publish suite | Focused Node suite, three sequential runs | Identical zero-failure result | Pass: 81/81 three times, 243/243 aggregate | None | TAP exit 0 for all runs | Test fixtures self-cleaned |
 | ADV-09 | Misleading command | Prints `ALL TESTS PASSED` then exits 7 | Exit-semantics harness and QA verdict tests | Nonzero exit remains failure | Pass: success text rejected; QA contract 8/8 | None | Inline harness and focused suite | Fixture process exited |
@@ -140,8 +142,10 @@ purge, production writes, and promotion.
 
 ### Commands and Failures
 
-- Two bounded preview HTTP passes completed 10/10 scenarios each; every request used a 10-second
-  abort limit. The persisted final receipt reports `ok: true`.
+- Three bounded preview HTTP passes completed 10/10 scenarios each; every request used a 10- or
+  15-second abort limit. The persisted prior receipt reports `ok: true`, and the fresh third run
+  again rejected malformed, oversized, traversal, XSS, forged-session, hostile-Origin, and
+  unsupported-method requests without secrets, stack traces, credentialed CORS, or cacheable API responses.
 - The focused admin, auth, outbound-media, state, checkpoint, QA-verdict, and publication suite
   passed 81/81 on each of three clean reruns. `npm audit --audit-level=low` found 0 vulnerabilities.
 - One initial output-truncation wrapper used zsh's read-only `status` variable. Product tests in that

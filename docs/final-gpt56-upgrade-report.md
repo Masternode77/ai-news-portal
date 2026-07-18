@@ -21,11 +21,11 @@ continued its automated content deployments independently during QA.
 | Baseline production SHA | `19089b66627be58d5066376902ff382d2a018137` |
 | Integrated `origin/main` baseline | `f8bc10a220a6b910e703375d337dcd3f40ea0467` |
 | Rollback tag | `backup/pre-gpt56-upgrade-20260711T091118Z` |
-| Verified implementation SHA | `f735cc40590abf3158afef7cd0f996dd91a8d6a9` |
-| Verification tooling SHA | `f735cc40590abf3158afef7cd0f996dd91a8d6a9` |
-| Preview deployment | `dpl_J5jbRixDCBLoqEvRqN4gmZKKVvWs` (`READY`, preview target) |
-| Preview URL | `https://ai-news-portal-8f02vryvd-masternode77s-projects.vercel.app` |
-| Latest observed production | `dpl_Bt7BbS4jdFCAN7aMcw3zizDNFJBs` (external `main`, unchanged by this branch); separately observed `origin/main` is `b3544f5a34b48ff8bf89877e18513122ee3cf29b` |
+| Verified implementation SHA | `e37bc9c9e0f01691d79ea073ecf6a3eaa7785bd9` |
+| Verification tooling SHA | `1fd774f4b362d6003d0ed1bc07d61e61d63a4e2d` |
+| Preview deployment | `dpl_3P3ryw94P78z66ZJa1bopUAqSBu6` (`READY`, preview target) |
+| Preview URL | `https://ai-news-portal-ef65tm1iq-masternode77s-projects.vercel.app` |
+| Latest observed production | `dpl_8gDg7q7eyfUubUEeeXW8zq4Pd9pz` (`https://ai-news-portal-d8c9wlkzr-masternode77s-projects.vercel.app`; external `main`, unchanged by this branch); separately observed `origin/main` is `c312b4d0ae6a4c9a9f1897ce1e0585b0247c2bf0` |
 
 ## Delivered Platform
 
@@ -141,7 +141,9 @@ three prototypes remain noindex and are not production routes.
 | --- | --- |
 | Clean install | `npm ci` passed |
 | Dependency security | `npm audit --audit-level=low`: 0 vulnerabilities |
-| Full tests | 622 total, 621 passed, 0 failed, 1 intentional skip |
+| Full tests | 649 total, 649 passed, 0 failed, 0 skipped; build-backed runner preserved the pre-existing tracked diff |
+| Adversarial admin/auth/state/publish loop | 81/81 passed in each of three consecutive runs (243/243) |
+| Adversarial preview HTTP | 10/10 passed in each of three bounded runs; malformed, oversized, traversal, XSS, forged-session, hostile-Origin, and unsupported-method probes failed closed |
 | Focused security tests | 76 passed, 0 failed |
 | Reconciliation/orchestrator security tests | 96 passed, 0 failed |
 | Editorial scripts | quality, relevance, taxonomy, repetition passed |
@@ -160,7 +162,7 @@ three prototypes remain noindex and are not production routes.
 | Source-image provenance | 26/26 articles and 104/104 public variants matched source-canonical bytes |
 | Lighthouse mobile | 97 performance, 100 accessibility, 92 best practices |
 | Lighthouse desktop | 100 performance, 100 accessibility, 92 best practices |
-| Static performance budget | 7,260,589 B dist, 11,432 B JS, 100,239 B CSS, 93,875 B largest HTML, 404,420 B largest image; all within enforced limits |
+| Static performance budget | 7,260,645 B dist, 11,432 B JS, 100,239 B CSS, 93,885 B largest HTML, 404,420 B largest image; all within enforced limits |
 | Production action by this branch | none; external `main` automation advanced production during QA |
 
 The preview SEO score of 69 is expected because Vercel adds `x-robots-tag: noindex`. The two
@@ -171,18 +173,18 @@ The exact preview was checked after lazy-load traversal: homepage desktop and mo
 all 31 images, archive and search rendered all 32, the representative article rendered its lead
 image, and APAC rendered all 19 canonical members. Browser QA found zero failed image responses,
 visible placeholder labels, console errors, page errors, clipping, or horizontal overflow.
-Screenshots and the machine-readable receipts are under `artifacts/preview-f735cc40/`.
+Screenshots and the machine-readable receipts are under `artifacts/preview-e37bc9c9/`.
 
 The exact preview and `computecurrent.com` are intentionally not pixel-identical before approval.
 The preview shows the selected Midnight Intelligence publication while production still shows the
 earlier operating-board homepage from external `main`. Same-viewport comparison confirmed the
-difference. Production later advanced independently to `dpl_Bt7BbS4jdFCAN7aMcw3zizDNFJBs`;
-`origin/main` was separately observed at `b3544f5a`. No production promotion, alias change, or cache
+difference. Production later advanced independently to `dpl_8gDg7q7eyfUubUEeeXW8zq4Pd9pz`;
+`origin/main` was separately observed at `c312b4d0`. No production promotion, alias change, or cache
 operation was performed by this branch.
 
 ## Current Production Content Reconciliation
 
-The latest `origin/main` is 121 automated commits ahead of the integrated baseline: 101 dashboard
+The latest `origin/main` is 125 automated commits ahead of the integrated baseline: 105 dashboard
 snapshot updates and 20 news/archive/dashboard refreshes. Those refreshes touch no product code;
 their net surface is four article JSON stores, pipeline state, one deleted-on-this-branch dashboard
 artifact, and 242 generated-image paths.
@@ -193,7 +195,7 @@ dashboard artifact. Several incoming records are visibly outside the product def
 consumer hardware and general software stories. Directly accepting generated stores would bypass
 the upgraded relevance, source-fidelity, repetition, canonical-source, and image-provenance gates.
 A current read-only audit resolved `origin/main` to
-`b3544f5a34b48ff8bf89877e18513122ee3cf29b` and examined 749 upstream rows. Canonical-source
+`c312b4d0ae6a4c9a9f1897ce1e0585b0247c2bf0` and examined 749 upstream rows. Canonical-source
 comparison found 724 already present and 25 unique re-ingestion candidates, with 0 rejected rows.
 Every candidate contains only `id`, `title`, `source`, `url`, `publishedAt`, and `snippet`; policy
 sets every upstream snippet to an empty string so evidence must be extracted again from the source.
@@ -216,8 +218,8 @@ rejected.
 
 ## LOC and Repository Hygiene
 
-Implementation `f735cc40` against the rollback baseline spans 830 paths, including 390 binary paths.
-Git's textual counters report 136,365 additions and 157,355 deletions, a net reduction of 20,990
+Implementation `e37bc9c9` against the rollback baseline spans 837 paths, including 390 binary paths.
+Git's textual counters report 137,609 additions and 157,615 deletions, a net reduction of 20,006
 lines. This comparison includes the integrated `f8bc10a2` content baseline as well as the
 architecture, coverage, security, image-provenance, and generated-data cleanup in this branch.
 

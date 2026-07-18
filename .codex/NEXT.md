@@ -3,12 +3,13 @@
 ## Current branch
 - `upgrade/gpt-5-6-sol`; latest verified implementation checkpoint
   `e37bc9c9e0f01691d79ea073ecf6a3eaa7785bd9`.
+- Latest local QA tooling checkpoint: `1fd774f4b362d6003d0ed1bc07d61e61d63a4e2d`.
 - Exact implementation preview: `dpl_3P3ryw94P78z66ZJa1bopUAqSBu6` at
   `https://ai-news-portal-ef65tm1iq-masternode77s-projects.vercel.app` (`READY`, preview target).
 - Rollback tag: `backup/pre-gpt56-upgrade-20260711T091118Z`.
 - No push, production promotion, production-secret operation, or cache purge has been performed.
-- Latest separately observed production: `dpl_Bt7BbS4jdFCAN7aMcw3zizDNFJBs`;
-  current `origin/main` is `b3544f5a34b48ff8bf89877e18513122ee3cf29b`.
+- Latest separately observed production: `dpl_8gDg7q7eyfUubUEeeXW8zq4Pd9pz`;
+  current `origin/main` is `c312b4d0ae6a4c9a9f1897ce1e0585b0247c2bf0`.
 
 ## Latest completed checklist item
 - Reconciled source-image provenance, publication dedupe, immutable GitHub Actions, and generated-data cleanup.
@@ -42,7 +43,7 @@
   the public corpus at 32 eligible records, one heuristic low-relevance item, and zero missing images.
 - Deployed implementation `e37bc9c9` to the exact preview and completed route, header, admin, log,
   desktop/mobile visual, image, placeholder, overflow, and production-comparison checks.
-- Re-audited current `origin/main`: 122 newer commits comprise 102 dashboard snapshots and 20 content
+- Re-audited current `origin/main`: 125 newer commits comprise 105 dashboard snapshots and 20 content
   refreshes; 749 upstream rows resolve to 724 already-present sources, 25 source-only candidates,
   and 0 rejected rows.
 - Advisory title-only review reports 2 core, 6 adjacent, and 17 archive candidates; this is not an
@@ -66,7 +67,8 @@
 - Local ignored evidence: `artifacts/preview-e37bc9c9/`.
 
 ## Validation results
-- Full `npm test`: 642 total, 641 passed, 0 failed, 1 intentional skip; follow-on editorial gates pass.
+- Hermetic `npm test`: 649 total, 649 passed, 0 failed, 0 skipped; build and follow-on editorial
+  gates pass without changing the pre-existing tracked diff.
 - QA/QC workflow/report-contract tests: 11/11 passed; reconciliation/orchestrator security set: 96/96 passed.
 - Focused redirect/image security: 35/35; normal and offline image orchestration: 19/19 each;
   `npm audit --audit-level=low`: 0 vulnerabilities.
@@ -90,8 +92,10 @@
   policy, and preview noindex; final Vercel error-log query returned no application errors.
 - Browser QA: homepage 31/31 desktop/mobile, archive 32/32, search 32/32, article 1/1, and APAC 19/19
   images decoded with 0 broken images, placeholder labels, app errors, failed requests, or overflow.
-- Adversarial preview HTTP probes passed 10/10 twice; the focused 81-test security/state/publish set
+- Adversarial preview HTTP probes passed 10/10 in three bounded runs; the focused 81-test security/state/publish set
   passed three consecutive runs (243/243), including stale-owner, resume, and false-green behavior.
+- QA cleanup re-review found 0 code defects; seven behavioral contracts prove build/test ordering,
+  dirty-worktree preservation, tracked mutation rejection, and explicit audit report writes.
 - Homepage image byte audit found 31 valid URLs and 31 unique SHA-256 hashes with no default duplicate.
 - Fresh 1440x900 comparison differs on 81.5236% of pixels, confirming production still serves the
   old command-center design while the preview serves Midnight Intelligence.
