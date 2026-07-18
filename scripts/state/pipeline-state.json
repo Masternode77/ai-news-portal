@@ -647,7 +647,9 @@
     "ae3251e611528cc2",
     "357db13f84864f5d",
     "ee48aa72ca03d15a",
-    "a1a4c31349252a40"
+    "a1a4c31349252a40",
+    "5628e0cd5c20a8c1",
+    "bbb6a75432449f34"
   ],
   "dayPlans": {
     "2026-03-24": {
@@ -31769,137 +31771,451 @@
         "1": true,
         "2": true
       }
-    }
-  },
-  "runHistory": [
-    {
-      "at": "2026-06-08T12:06:48.990Z",
-      "day": "2026-06-08",
-      "slot": 2,
-      "publishedCount": 0,
-      "signalCardCount": 1,
-      "archiveOnlyCount": 0,
-      "repetitionBlockedCount": 1,
-      "publishedIds": [],
-      "processedIds": [
-        "4156574a03ed622e",
-        "4b923832280e243e"
-      ],
-      "blockedCount": 1,
-      "blockedItems": [
+    },
+    "2026-07-19": {
+      "date": "2026-07-19",
+      "createdAt": "2026-07-18T16:03:19.608Z",
+      "refreshedAt": "2026-07-18T16:03:19.608Z",
+      "candidateWindowHours": 24,
+      "curatedItems": [
         {
-          "id": "4156574a03ed622e",
-          "title": "DCD>Studio: Designing AI infrastructure as a complete system, with Peter De Bock, Eaton",
-          "infrastructure_relevance_score": 0.934,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:0.82(ai infrastructure)",
-            "data_center_relevance:0.92(data center, colocation, campus)",
-            "power_grid_relevance:0.52(power, megawatt)",
-            "cooling_relevance:0.82(cooling, liquid cooling)",
-            "capital_markets_relevance:0.28(capex)"
+          "id": "5628e0cd5c20a8c1",
+          "source": "Toms Hardware",
+          "url": "https://www.tomshardware.com/pc-components/cpus/grab-amds-ryzen-7-5800x3d-10th-anniversary-cpu-with-motherboard-and-16gb-ram-for-just-usd529-save-over-usd100-on-this-epic-amd-gaming-bundle",
+          "title": "Grab AMD’s Ryzen 7 5800X3D 10th Anniversary CPU with motherboard and 16GB RAM for just $529 — save over $100 on this epic AMD gaming bundle",
+          "snippet": "Newegg has a great combo bundle on sale with over $100 in savings for the fastest DDR4 gaming system you can build today. It pairs a Ryzen 7 5800X3D with 16GB of CL16 DDR4-3200 RAM and an Asus TUF Gaming B550-Plus WiFi…",
+          "contentText": "Thanks to the ongoing component crisis caused by the AI boom, it's a particularly difficult time to build a gaming PC. Despite ample supply, most parts are overpriced, forcing consumers to resort to patience or finding deals. We've done the latter and found an enticing AM4 bundle on Newegg consisting of a Ryzen 7 5800X3D, 16GB of DDR4 RAM, and a feature-rich B550 motherboard — all for just $529.99 right now. You'll be saving over $100 in this combo compared to buying these items separately. Check out this deal on Newegg The star of the show is the Ryzen 7 5800X3D , the CPU that kickstarted AMD's gaming dominance, as it was the first X3D chip the company ever made. Newegg is bundling the 10th Anniversary Edition here with a Carbide Ice Pad that you can use in place of thermal paste. The sp…",
+          "publishedAt": "2026-07-18T15:19:27.000Z",
+          "sourceImage": "https://cdn.mos.cms.futurecdn.net/oKunzKLo3D6PPpT5Jt8ajj-1280-80.png",
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "category": "Semiconductors",
+          "primary_category": "Semiconductors",
+          "secondary_category": "Accelerators, memory, and advanced packaging",
+          "infrastructure_layer": "Silicon",
+          "affected_stakeholders": [
+            "semiconductor suppliers",
+            "hyperscalers",
+            "server OEMs",
+            "investors"
           ],
-          "extraction_quality_score": 0.25,
-          "source_domain_adapter": "generic",
-          "content_length": 229,
-          "boilerplate_ratio": 0,
-          "repetition_blocked": false,
-          "repetition_block_reasons": [],
-          "repetition_check": null,
-          "expert_insight_complete": false,
-          "expert_insight_missing_fields": [
-            "concrete_facts",
-            "named_companies"
+          "article_type": "Supply Chain",
+          "urgency_score": 0.46,
+          "taxonomy_confidence": 0.8,
+          "taxonomy_reasons": [
+            "chip",
+            "gpu",
+            "amd"
           ],
-          "reason": "fail_closed: source_text_incomplete:source_evidence_length_below_500, source_evidence_length_below_1200"
-        }
-      ],
-      "repetitionBlockedItems": [
-        {
-          "id": "4b923832280e243e",
-          "title": "Nvidia and SK hynix ink multi-year memory co-development and supply agreement — seeks to address extended development cycles",
-          "infrastructure_relevance_score": 1,
+          "direct_ai_infrastructure_relevance": 1,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0.517,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0.3,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.879,
           "infrastructure_relevance_tier": "full_memo",
           "infrastructure_relevance_action": "generate_full_memo",
           "infrastructure_relevance_reasons": [
             "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "cloud_capacity_relevance:0.32(hyperscalers)",
-            "semiconductor_relevance:1.00(semiconductor, nvidia, hbm)",
+            "semiconductor_relevance:0.52(amd, gpu)",
+            "cooling_relevance:0.30(thermal)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 1,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0.517,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0.3,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.879,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+              "semiconductor_relevance:0.52(amd, gpu)",
+              "cooling_relevance:0.30(thermal)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 83
+        },
+        {
+          "id": "bbb6a75432449f34",
+          "source": "Data Center Dynamics",
+          "url": "https://www.datacenterdynamics.com/en/opinions/how-ai-demand-is-redefining-risk-for-us-data-center-developers/",
+          "title": "Sponsored: How AI demand is redefining risk for US data center developers",
+          "snippet": "Rapid AI-driven data center growth is colliding with US power system constraints and community push-back amidst a fragmented policy landscape, raising risks for developers across the full project lifecycle",
+          "contentText": "Rapid AI-driven data center growth is colliding with US power system constraints and community push-back amidst a fragmented policy landscape, raising risks for developers across the full project lifecycle",
+          "publishedAt": "2026-07-18T15:00:00.000Z",
+          "sourceImage": "https://media.datacenterdynamics.com/media/images/Hasan_Tarique.2e16d0ba.fill-750x500.jpg",
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "Colocation & Wholesale",
+          "category": "Data Centers",
+          "primary_category": "Data Centers",
+          "secondary_category": "Campus development and colocation capacity",
+          "infrastructure_layer": "Facility",
+          "affected_stakeholders": [
+            "data center operators",
+            "developers",
+            "site selectors",
+            "investors"
+          ],
+          "article_type": "Policy / Regulation",
+          "urgency_score": 0.54,
+          "taxonomy_confidence": 0.86,
+          "taxonomy_reasons": [
+            "data center",
+            "colocation",
+            "wholesale"
+          ],
+          "direct_ai_infrastructure_relevance": 0.78,
+          "data_center_relevance": 0.89,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0,
+          "power_grid_relevance": 0.22,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.873,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:0.78",
+            "data_center_relevance:0.89(data center, colocation)",
             "power_grid_relevance:0.22(power)"
           ],
-          "extraction_quality_score": 1,
-          "source_domain_adapter": "generic",
-          "content_length": 1677,
-          "boilerplate_ratio": 0,
-          "repetition_blocked": true,
-          "repetition_block_reasons": [
-            "repeated_sentence_ratio>0.12",
-            "heading_sequence_similarity>0.75",
-            "conclusion_similarity>0.7"
-          ],
-          "repetition_check": {
-            "compared_article_count": 20,
-            "repeated_sentence_ratio": 0.14285714285714285,
-            "repeated_paragraph_ratio": 0.16666666666666666,
-            "heading_sequence_similarity": 1,
-            "banned_phrase_count": 0,
-            "banned_phrase_counts": {},
-            "recent_banned_phrase_counts": {},
-            "ngram_overlap": 0.41025641025641024,
-            "blueprint_repetition": 1,
-            "conclusion_similarity": 0.9511897312113418,
-            "repeated_sentence_count": 1,
-            "repeated_paragraph_count": 1,
-            "heading_sequence": [
-              "Cost Signal",
-              "Below The Accelerator Layer",
-              "Buyer Exposure",
-              "Planning Metric"
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 0.78,
+            "data_center_relevance": 0.89,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0,
+            "power_grid_relevance": 0.22,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.873,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:0.78",
+              "data_center_relevance:0.89(data center, colocation)",
+              "power_grid_relevance:0.22(power)"
             ],
-            "blocked": true,
-            "reasons": [
-              "repeated_sentence_ratio>0.12",
-              "heading_sequence_similarity>0.75",
-              "conclusion_similarity>0.7"
-            ]
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
           },
-          "expert_insight_complete": true,
-          "expert_insight_missing_fields": [],
-          "reason": "repeated_sentence_ratio>0.12; heading_sequence_similarity>0.75; conclusion_similarity>0.7"
-        }
-      ],
-      "signalCardItems": [
+          "score": 83
+        },
         {
-          "id": "4156574a03ed622e",
-          "title": "DCD>Studio: Designing AI infrastructure as a complete system, with Peter De Bock, Eaton",
-          "infrastructure_relevance_score": 0.934,
+          "id": "f2fa4efa7dd70b60",
+          "source": "Toms Hardware",
+          "url": "https://www.tomshardware.com/pc-components/gpus/nvidia-rtx-50-super-gpus-are-reportedly-ready-but-stuck-in-limbo-due-to-excessive-gddr7-pricing-3gb-gddr7-module-costs-triple-the-price-of-2gb",
+          "title": "Nvidia RTX 50 Super GPUs are reportedly ready, but stuck in limbo due to excessive GDDR7 pricing — 3GB GDDR7 module costs triple the price of 2GB",
+          "snippet": "The 3GB GDDR7 chips that the RTX 50 Super GPUs will use reportedly cost twice to thrice as much as the 2GB chips found on vanilla RTX 50-series graphics cards. This would likely push the retail price of these GPUs way b…",
+          "contentText": "The upcoming Super refresh of the Nvidia RTX 50-series GPU is reportedly on hold due to the high cost of 3GB GDDR7 memory chips. A VideoCardz source confirmed that one board partner already has RTX 50 Super GPUs on hand, but Nvidia has allegedly told the company that the products are on hold because of the price of 3GB GDDR7 memory chips. This means that the AI GPU giant has already set an internal release date but is reportedly pushing it back because of memory pricing. If the cost of GDDR7 chips becomes too high, then the RTX 50 Super GPUs would either have a selling price that’s way above Nvidia’s targeted MSRP or, if it forces its partners to stick with or remain close to its set prices, GPU board manufacturers wouldn’t just make any units at all, as they’re going to lose money with e…",
+          "publishedAt": "2026-07-18T13:45:42.000Z",
+          "sourceImage": "https://cdn.mos.cms.futurecdn.net/CBBS7c4u3Y3LJcY55ryv2W-1280-80.jpg",
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "category": "AI Infrastructure",
+          "primary_category": "AI Infrastructure",
+          "secondary_category": "GPU clusters and deployment readiness",
+          "infrastructure_layer": "Compute",
+          "affected_stakeholders": [
+            "operators",
+            "hyperscalers",
+            "cloud buyers",
+            "investors"
+          ],
+          "article_type": "Product / Platform Update",
+          "urgency_score": 0.46,
+          "taxonomy_confidence": 0.77,
+          "taxonomy_reasons": [
+            "ai infrastructure",
+            "neocloud"
+          ],
+          "direct_ai_infrastructure_relevance": 1,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0.598,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.862,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "semiconductor_relevance:0.60(nvidia, gpu)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 1,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0.598,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.862,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+              "semiconductor_relevance:0.60(nvidia, gpu)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 82
+        },
+        {
+          "id": "39eb0aae77d6b712",
+          "source": "StorageReview",
+          "url": "https://www.storagereview.com/news/dell-outsells-the-rest-of-idcs-top-five-combined-in-q1-external-storage",
+          "title": "Dell Outsells the Rest of IDC’s Top Five Combined in Q1 External Storage",
+          "snippet": "Dell Technologies closed the first quarter of 2026 as the top external enterprise storage vendor worldwide, according to IDC’s Worldwide Quarterly Enterprise Storage Systems Tracker released in June, posting 31.2% marke…",
+          "contentText": "Dell Technologies closed the first quarter of 2026 as the top external enterprise storage vendor worldwide, according to IDC&#8217;s Worldwide Quarterly Enterprise Storage Systems Tracker released in June, posting 31.2% market share on 40.8% year-over-year growth, nearly double the 22.7% pace of the overall segment. By IDC&#8217;s count, the rest of the top five vendors combined did not outsell Dell for the quarter. While the share figure is the headline, Dell&#8217;s broader message is that the result reflects continued execution around three customer priorities: private cloud flexibility, AI infrastructure built on enterprise-owned data, and cyber resilience embedded into the platform. That positioning is especially relevant for Dell because the enterprise storage conversation has shift…",
+          "publishedAt": "2026-07-18T15:36:04.000Z",
+          "sourceImage": "https://www.storagereview.com/wp-content/uploads/2026/07/Dell-number-one.jpg",
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "category": "AI Infrastructure",
+          "primary_category": "AI Infrastructure",
+          "secondary_category": "GPU clusters and deployment readiness",
+          "infrastructure_layer": "Compute",
+          "affected_stakeholders": [
+            "operators",
+            "hyperscalers",
+            "cloud buyers",
+            "investors"
+          ],
+          "article_type": "Product / Platform Update",
+          "urgency_score": 0.44,
+          "taxonomy_confidence": 0.77,
+          "taxonomy_reasons": [
+            "ai infrastructure",
+            "neocloud"
+          ],
+          "direct_ai_infrastructure_relevance": 1,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0.22,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0.243,
+          "infrastructure_relevance_score": 0.818,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "semiconductor_relevance:0.22(gpu)",
+            "enterprise_ai_infrastructure_relevance:0.24(storage)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 1,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0.22,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0.243,
+            "infrastructure_relevance_score": 0.818,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+              "semiconductor_relevance:0.22(gpu)",
+              "enterprise_ai_infrastructure_relevance:0.24(storage)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 80
+        },
+        {
+          "id": "e12ec5e0744e889e",
+          "source": "Data Center Frontier",
+          "url": "https://www.datacenterfrontier.com/machine-learning/news/55391799/the-ai-infrastructure-split-screen",
+          "title": "The AI Infrastructure Split Screen: Capital Rush Meets Community Resistance",
+          "snippet": "Mid-July’s data center news cycle revealed an industry accumulating capital, land and gigawatts at extraordinary speed—while encountering increasingly organized resistance over power, water, land use and who ultimately…",
+          "contentText": "Mid-July’s data center news cycle revealed an industry accumulating capital, land and gigawatts at extraordinary speed—while encountering increasingly organized resistance over power, water, land use and who ultimately benefits from the buildout.",
+          "publishedAt": "2026-07-17T20:45:10.000Z",
+          "sourceImage": "https://img.datacenterfrontier.com/files/base/ebm/datacenterfrontier/image/2026/07/6a5a8c4de6ee4eaaafefc301-datacenter_splitschreen.png",
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "Colocation & Wholesale",
+          "category": "Data Centers",
+          "primary_category": "Data Centers",
+          "secondary_category": "Campus development and colocation capacity",
+          "infrastructure_layer": "Facility",
+          "affected_stakeholders": [
+            "data center operators",
+            "developers",
+            "site selectors",
+            "investors"
+          ],
+          "article_type": "Other",
+          "urgency_score": 0.52,
+          "taxonomy_confidence": 0.81,
+          "taxonomy_reasons": [
+            "data center",
+            "colocation",
+            "wholesale"
+          ],
+          "direct_ai_infrastructure_relevance": 0.82,
+          "data_center_relevance": 0.76,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0,
+          "power_grid_relevance": 0.56,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.828,
           "infrastructure_relevance_tier": "full_memo",
           "infrastructure_relevance_action": "generate_full_memo",
           "infrastructure_relevance_reasons": [
             "direct_ai_infrastructure_relevance:0.82(ai infrastructure)",
-            "data_center_relevance:0.92(data center, colocation, campus)",
-            "power_grid_relevance:0.52(power, megawatt)",
-            "cooling_relevance:0.82(cooling, liquid cooling)",
-            "capital_markets_relevance:0.28(capex)"
+            "data_center_relevance:0.76(data center, colocation)",
+            "power_grid_relevance:0.56(power, gigawatts)"
           ],
-          "extraction_quality_score": 0.25,
-          "source_domain_adapter": "generic",
-          "content_length": 229,
-          "boilerplate_ratio": 0,
-          "repetition_blocked": false,
-          "repetition_block_reasons": [],
-          "repetition_check": null,
-          "expert_insight_complete": false,
-          "expert_insight_missing_fields": [
-            "concrete_facts",
-            "named_companies"
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 0.82,
+            "data_center_relevance": 0.76,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0,
+            "power_grid_relevance": 0.56,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.828,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:0.82(ai infrastructure)",
+              "data_center_relevance:0.76(data center, colocation)",
+              "power_grid_relevance:0.56(power, gigawatts)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 61
+        },
+        {
+          "id": "8f28a063ff49a2e4",
+          "source": "HPCwire",
+          "url": "https://www.hpcwire.com/off-the-wire/fastflowlm-joins-amd-to-advance-ai-inference/",
+          "title": "FastFlowLM Joins AMD to Advance AI Inference",
+          "snippet": "July 17, 2026 — Recently, the FastFlowLM team joined AMD, marking another key step in AMD’s strategy to advance AI performance and efficiency across the stack. FastFlowLM developed a lightweight, highly optimized infere…",
+          "contentText": "July 17, 2026 &#8212; Recently, the FastFlowLM team joined AMD , marking another key step in AMD&#8217;s strategy to advance AI performance and efficiency across the stack. FastFlowLM developed a lightweight, highly optimized inference software flow that delivers fast, efficient large language and multimodal model performance directly on AMD technology-powered AI PCs and workstations. Credit: Shutterstock FastFlowLM was built in the open-source ecosystem and made possible with IRON, the open-source NPU compiler technology developed and released by the AMD Research and Advanced Development (RAD) Group. Incubated by RAD and shaped through engagements with external researchers and developers, IRON underpins a fully open stack for AMD leadership agentic AI platforms. That open foundation earn…",
+          "publishedAt": "2026-07-17T19:21:58.000Z",
+          "sourceImage": "https://www.hpcwire.com/wp-content/uploads/2021/10/shutterstock_amd_hq-300x200.jpg",
+          "region": "Global",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "category": "AI Infrastructure",
+          "primary_category": "AI Infrastructure",
+          "secondary_category": "GPU clusters and deployment readiness",
+          "infrastructure_layer": "Compute",
+          "affected_stakeholders": [
+            "operators",
+            "hyperscalers",
+            "cloud buyers",
+            "investors"
           ],
-          "reason": "fail_closed: source_text_incomplete:source_evidence_length_below_500, source_evidence_length_below_1200"
+          "article_type": "Product / Platform Update",
+          "urgency_score": 0.45,
+          "taxonomy_confidence": 0.77,
+          "taxonomy_reasons": [
+            "ai infrastructure",
+            "neocloud"
+          ],
+          "direct_ai_infrastructure_relevance": 1,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0.517,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.844,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "semiconductor_relevance:0.52(amd, gpu)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 1,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0.517,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.844,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+              "semiconductor_relevance:0.52(amd, gpu)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 61
         }
       ],
-      "archiveOnlyItems": []
-    },
+      "curatedIds": [
+        "5628e0cd5c20a8c1",
+        "bbb6a75432449f34",
+        "f2fa4efa7dd70b60",
+        "39eb0aae77d6b712",
+        "e12ec5e0744e889e",
+        "8f28a063ff49a2e4"
+      ],
+      "publishedIds": [
+        "5628e0cd5c20a8c1",
+        "bbb6a75432449f34"
+      ],
+      "slotPublications": {
+        "0": true
+      }
+    }
+  },
+  "runHistory": [
     {
       "at": "2026-06-08T18:05:17.848Z",
       "day": "2026-06-09",
@@ -45223,7 +45539,130 @@
       ],
       "signalCardItems": [],
       "archiveOnlyItems": []
+    },
+    {
+      "at": "2026-07-18T16:03:19.608Z",
+      "day": "2026-07-19",
+      "slot": 0,
+      "publishedCount": 0,
+      "signalCardCount": 0,
+      "archiveOnlyCount": 0,
+      "repetitionBlockedCount": 2,
+      "publishedIds": [],
+      "processedIds": [
+        "5628e0cd5c20a8c1",
+        "bbb6a75432449f34"
+      ],
+      "blockedCount": 0,
+      "blockedItems": [],
+      "repetitionBlockedItems": [
+        {
+          "id": "5628e0cd5c20a8c1",
+          "title": "Grab AMD’s Ryzen 7 5800X3D 10th Anniversary CPU with motherboard and 16GB RAM for just $529 — save over $100 on this epic AMD gaming bundle",
+          "infrastructure_relevance_score": 0.914,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "cloud_capacity_relevance:0.32(hyperscalers)",
+            "semiconductor_relevance:0.52(amd, gpu)",
+            "power_grid_relevance:0.22(power)",
+            "cooling_relevance:0.30(thermal)"
+          ],
+          "extraction_quality_score": 1,
+          "source_domain_adapter": "generic",
+          "content_length": 1792,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": true,
+          "repetition_block_reasons": [
+            "repeated_sentence_ratio>0.12",
+            "heading_sequence_similarity>0.75",
+            "conclusion_similarity>0.7"
+          ],
+          "repetition_check": {
+            "compared_article_count": 20,
+            "repeated_sentence_ratio": 0.14285714285714285,
+            "repeated_paragraph_ratio": 0.16666666666666666,
+            "heading_sequence_similarity": 1,
+            "banned_phrase_count": 0,
+            "banned_phrase_counts": {},
+            "recent_banned_phrase_counts": {},
+            "ngram_overlap": 0.5188679245283019,
+            "blueprint_repetition": 2,
+            "conclusion_similarity": 0.9511897312113418,
+            "repeated_sentence_count": 1,
+            "repeated_paragraph_count": 1,
+            "heading_sequence": [
+              "System Change",
+              "Bottleneck",
+              "Engineering Tradeoff",
+              "Validation Metric"
+            ],
+            "blocked": true,
+            "reasons": [
+              "repeated_sentence_ratio>0.12",
+              "heading_sequence_similarity>0.75",
+              "conclusion_similarity>0.7"
+            ]
+          },
+          "expert_insight_complete": true,
+          "expert_insight_missing_fields": [],
+          "reason": "repeated_sentence_ratio>0.12; heading_sequence_similarity>0.75; conclusion_similarity>0.7"
+        },
+        {
+          "id": "bbb6a75432449f34",
+          "title": "Sponsored: How AI demand is redefining risk for US data center developers",
+          "infrastructure_relevance_score": 1,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:0.82(ai infrastructure)",
+            "data_center_relevance:1.00(data center, data centers, colocation)",
+            "power_grid_relevance:1.00(power, grid, interconnection)",
+            "capital_markets_relevance:0.28(capex)"
+          ],
+          "extraction_quality_score": 1,
+          "source_domain_adapter": "generic",
+          "content_length": 1715,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": true,
+          "repetition_block_reasons": [
+            "repeated_sentence_ratio>0.12",
+            "conclusion_similarity>0.7"
+          ],
+          "repetition_check": {
+            "compared_article_count": 20,
+            "repeated_sentence_ratio": 0.2,
+            "repeated_paragraph_ratio": 0.2,
+            "heading_sequence_similarity": 0.25,
+            "banned_phrase_count": 0,
+            "banned_phrase_counts": {},
+            "recent_banned_phrase_counts": {},
+            "ngram_overlap": 0.19230769230769232,
+            "blueprint_repetition": 1,
+            "conclusion_similarity": 1,
+            "repeated_sentence_count": 1,
+            "repeated_paragraph_count": 1,
+            "heading_sequence": [
+              "The Map",
+              "Control Points",
+              "Who Is Exposed",
+              "Signals To Separate"
+            ],
+            "blocked": true,
+            "reasons": [
+              "repeated_sentence_ratio>0.12",
+              "conclusion_similarity>0.7"
+            ]
+          },
+          "expert_insight_complete": true,
+          "expert_insight_missing_fields": [],
+          "reason": "repeated_sentence_ratio>0.12; conclusion_similarity>0.7"
+        }
+      ],
+      "signalCardItems": [],
+      "archiveOnlyItems": []
     }
   ],
-  "lastRunAt": "2026-07-18T08:56:52.337Z"
+  "lastRunAt": "2026-07-18T16:03:19.608Z"
 }
