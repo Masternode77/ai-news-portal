@@ -26,14 +26,13 @@ Public QA covers rendered pages, public copy, article quality, homepage volume, 
 
 ## Pass/Fail
 
-- Passed: content gate completed with Astro check, build, public-output tests, image audit, rendered public audit, and admin audit.
-- Passed: rendered audit checked 20 pages, 14 article pages, 46 cards, and 0 broken images.
+- Passed: content gate completed with an Astro 0/0/0 check, 59-page build, public-output tests, image audit, rendered public audit, and admin audit.
+- Passed: rendered audit checked 7 representative pages, 1 public article page, 30 rendered cards, and 0 broken images; the image audit covered 48 rendered public pages.
 - Passed: admin exclusion audit reported no sitemap/RSS/admin noindex failures.
 
 ## Remaining Risks
 
 - Public QA is a local build result until deployment verification confirms the live URL and cache purge state.
-- Existing Astro check hints are not build blockers but should be tracked before tightening compiler settings.
 - Additional mobile viewport coverage would further reduce layout regression risk.
 
 ## Cleanup Receipts

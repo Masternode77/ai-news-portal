@@ -4,9 +4,9 @@ Updated: 2026-07-19
 
 ## Final Preview
 
-- Deployment: `dpl_5bcw7DWGYPRXhJTnYDXTqaVwov93`
-- URL: `https://ai-news-portal-1rorqn6s5-masternode77s-projects.vercel.app`
-- Product commit: `bfdc5a2662aeec55cde200cd8b10194677bb0f90`
+- Deployment: `dpl_9mJQDSzMLSHMWdewDe3g5pHNJBdZ`
+- URL: `https://ai-news-portal-iyge1kj3t-masternode77s-projects.vercel.app`
+- Product commit: `29d55b6e3c9e1e04eb04d16716e9315181b1ddbf`
 - Separately observed production deployment: `dpl_THrq4thMxWBNnExaVLKBcb2WqATH`
 - Separately observed `origin/main`: `f92084d303f20dfb37e86a69f7046a74ab205a4b`
 
@@ -29,18 +29,18 @@ image audit reports zero broken public images or placeholder labels. Source prov
 
 Screenshots:
 
-- `artifacts/preview-bfdc5a26/home-desktop.png`
-- `artifacts/preview-bfdc5a26/home-mobile.png`
-- `artifacts/preview-bfdc5a26/archive-desktop.png`
-- `artifacts/preview-bfdc5a26/search-desktop.png`
-- `artifacts/preview-bfdc5a26/article-desktop.png`
-- `artifacts/preview-bfdc5a26/apac-desktop.png`
-- Receipt: `artifacts/preview-bfdc5a26/visual-qa.json`
+- `artifacts/preview-29d55b6e/home-desktop.png`
+- `artifacts/preview-29d55b6e/home-mobile.png`
+- `artifacts/preview-29d55b6e/archive-desktop.png`
+- `artifacts/preview-29d55b6e/search-desktop.png`
+- `artifacts/preview-29d55b6e/article-desktop.png`
+- `artifacts/preview-29d55b6e/apac-desktop.png`
+- Receipt: `artifacts/preview-29d55b6e/visual-qa.json`
 
 Sharp pixel statistics mark every retained capture nonblank. A fresh 1440 x 900 comparison found
-all 1,296,000 pixels different. `computecurrent.com` still serves the previous command-center
-design while the preview serves Midnight Intelligence. That mismatch is the expected pre-approval
-state, not a failed or partial preview render.
+1,295,997 of 1,296,000 pixels different (99.9998%). `computecurrent.com` still serves the previous
+command-center design while the preview serves Midnight Intelligence. That mismatch is the expected
+pre-approval state, not a failed or partial preview render.
 
 ## Accessibility Follow-up
 

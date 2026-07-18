@@ -66,7 +66,7 @@ does not mean a live preview database or production workflow was exercised.
 | # | Requirement | Result | Evidence or remaining condition |
 | ---: | --- | --- | --- |
 | 25 | Tests pass | PASS | Current full suite reports 621 tests: 620 passed, 0 failed, and 1 intentional skip. Focused security coverage reports 76/76 passed; the final reconciliation/orchestrator security set reports 96/96 passed. |
-| 26 | Build passes | PASS | Astro check reports 0 errors and `content:gate` rebuilds and audits the static output successfully. |
+| 26 | Build passes | PASS | Astro check reports 0 errors, 0 warnings, and 0 hints; `content:gate` rebuilds and audits the static output successfully. |
 | 27 | Security audit passes | PASS | `npm audit --audit-level=low` reports zero findings; threat model and fix report list operational follow-up. |
 | 28 | Visual QA passes | PASS | Exact-preview browser QA decoded homepage 31/31 desktop and mobile, archive 32/32, search 32/32, article 1/1, and APAC 19/19 images with zero broken images, placeholder labels, clipping, or overflow. |
 | 29 | SEO audit passes | PASS WITH PREVIEW CAVEAT | Canonical/feed/schema/noindex tests pass; preview Lighthouse SEO is intentionally reduced by Vercel's preview noindex header. |
@@ -76,7 +76,7 @@ does not mean a live preview database or production workflow was exercised.
 
 | # | Requirement | Result | Evidence or remaining condition |
 | ---: | --- | --- | --- |
-| 31 | Preview deployment is verified | PASS | Implementation `bfdc5a26` is `READY` as preview `dpl_5bcw7DWGYPRXhJTnYDXTqaVwov93`; public, retired, admin, image, provenance, and screenshot receipts pass. |
+| 31 | Preview deployment is verified | PASS | Implementation `29d55b6e` is `READY` as preview `dpl_9mJQDSzMLSHMWdewDe3g5pHNJBdZ`; public, retired, admin, image, provenance, and screenshot receipts pass. |
 | 32 | PR has migration and risk summary | NOT STARTED | Push/PR authorization and preview approval were not given; migration/risk material is ready in reports and runbooks. |
 | 33 | Production unchanged by this branch before preview approval | PASS | The connected `main` automation independently advanced production to `dpl_THrq4thMxWBNnExaVLKBcb2WqATH`; `origin/main` was separately observed at `f92084d3`. This branch performed no production promotion, alias change, cache purge, or production-secret operation. |
 | 34 | Rollback is tested | PASS WITH CAVEAT | Tagged baseline passed isolated clean install/build; that emergency baseline retains 18 dependency findings. |

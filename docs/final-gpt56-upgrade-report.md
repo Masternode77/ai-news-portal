@@ -21,10 +21,10 @@ continued its automated content deployments independently during QA.
 | Baseline production SHA | `19089b66627be58d5066376902ff382d2a018137` |
 | Integrated `origin/main` baseline | `f8bc10a220a6b910e703375d337dcd3f40ea0467` |
 | Rollback tag | `backup/pre-gpt56-upgrade-20260711T091118Z` |
-| Verified implementation SHA | `bfdc5a2662aeec55cde200cd8b10194677bb0f90` |
-| Verification tooling SHA | `bfdc5a2662aeec55cde200cd8b10194677bb0f90` |
-| Preview deployment | `dpl_5bcw7DWGYPRXhJTnYDXTqaVwov93` (`READY`, preview target) |
-| Preview URL | `https://ai-news-portal-1rorqn6s5-masternode77s-projects.vercel.app` |
+| Verified implementation SHA | `29d55b6e3c9e1e04eb04d16716e9315181b1ddbf` |
+| Verification tooling SHA | `29d55b6e3c9e1e04eb04d16716e9315181b1ddbf` |
+| Preview deployment | `dpl_9mJQDSzMLSHMWdewDe3g5pHNJBdZ` (`READY`, preview target) |
+| Preview URL | `https://ai-news-portal-iyge1kj3t-masternode77s-projects.vercel.app` |
 | Latest observed production | `dpl_THrq4thMxWBNnExaVLKBcb2WqATH` (external `main`, unchanged by this branch); separately observed `origin/main` is `f92084d303f20dfb37e86a69f7046a74ab205a4b` |
 
 ## Delivered Platform
@@ -120,6 +120,8 @@ continued its automated content deployments independently during QA.
   and fail-closed configuration.
 - No tracked credential or private key was introduced. Runtime/evidence folders are ignored and
   stale tracked OMX/OMO state was removed.
+- Pinned the deployment runtime to Node 22 after Vercel demonstrated that the prior open-ended range
+  selected Node 24 and would continue adopting unreviewed future majors.
 
 ## Design Decision
 
@@ -143,12 +145,12 @@ three prototypes remain noindex and are not production routes.
 | Focused security tests | 76 passed, 0 failed |
 | Reconciliation/orchestrator security tests | 96 passed, 0 failed |
 | Editorial scripts | quality, relevance, taxonomy, repetition passed |
-| Astro check | 0 errors, 0 warnings, 11 existing type hints |
+| Astro check | 0 errors, 0 warnings, 0 hints |
 | Build | Exact preview built 59 pages; 68 generated assets retained; 4,109 pruned |
 | Content gate | passed all public, copy, image, feed, and admin exclusion audits |
 | QA/QC | deployable with operational follow-up |
 | Admin browser E2E | 17/17 local UI/API lifecycle scenarios passed; public discovery integration passed |
-| Code review | Independent final code review found 0 critical/high/medium/low defects and APPROVED; independent architecture review returned CLEAR / APPROVE. |
+| Code review | A nullable-contract review found and closed two medium issues; the independent second pass found 0 issues and APPROVED. The architecture review returned CLEAR / APPROVE. |
 | Preview public routes | Homepage, archive, search, article, power-grid, APAC, RSS, and sitemap returned 200 |
 | Removed public routes | `/about/`, `/editorial-policy/`, `/methodology/`, `/ai-disclosure/`, and `/contact/` returned 404 |
 | Preview admin pretty routes | `/admin/` and `/admin/login/` returned 200 |
@@ -169,7 +171,7 @@ The exact preview was checked after lazy-load traversal: homepage desktop and mo
 all 31 images, archive and search rendered all 32, the representative article rendered its lead
 image, and APAC rendered all 19 canonical members. Browser QA found zero failed image responses,
 visible placeholder labels, console errors, page errors, clipping, or horizontal overflow.
-Screenshots and the machine-readable receipt are under `artifacts/preview-bfdc5a26/`.
+Screenshots and the machine-readable receipt are under `artifacts/preview-29d55b6e/`.
 
 The exact preview and `computecurrent.com` are intentionally not pixel-identical before approval.
 The preview shows the selected Midnight Intelligence publication while production still shows the
@@ -214,8 +216,8 @@ rejected.
 
 ## LOC and Repository Hygiene
 
-Implementation `bfdc5a26` against the rollback baseline spans 815 paths, including 390 binary paths.
-Git's textual counters report 136,194 additions and 157,059 deletions, a net reduction of 20,865
+Implementation `29d55b6e` against the rollback baseline spans 822 paths, including 390 binary paths.
+Git's textual counters report 136,340 additions and 157,070 deletions, a net reduction of 20,730
 lines. This comparison includes the integrated `f8bc10a2` content baseline as well as the
 architecture, coverage, security, image-provenance, and generated-data cleanup in this branch.
 

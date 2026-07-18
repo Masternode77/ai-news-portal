@@ -79,7 +79,8 @@ passed all eight captures. The source-image provenance audit regenerated and mat
 hero, thumbnail, OpenGraph, and legacy variants across 26 public source-canonical articles.
 `npm audit --audit-level=low` reports zero findings, the resolved dependency tree is valid, and a
 structured tracked-file scan found no real credential or private-key candidates; its only match
-was an `example.invalid` fixture. See `ultraqa-security-report.md` for the adversarial matrix.
+was an `example.invalid` fixture. Astro reports zero errors, warnings, and hints. See
+`ultraqa-security-report.md` for the adversarial matrix.
 
 ## External Hardening
 

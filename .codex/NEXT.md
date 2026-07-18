@@ -2,9 +2,9 @@
 
 ## Current branch
 - `upgrade/gpt-5-6-sol`; latest verified implementation checkpoint
-  `bfdc5a2662aeec55cde200cd8b10194677bb0f90`.
-- Exact implementation preview: `dpl_5bcw7DWGYPRXhJTnYDXTqaVwov93` at
-  `https://ai-news-portal-1rorqn6s5-masternode77s-projects.vercel.app` (`READY`, preview target).
+  `29d55b6e3c9e1e04eb04d16716e9315181b1ddbf`.
+- Exact implementation preview: `dpl_9mJQDSzMLSHMWdewDe3g5pHNJBdZ` at
+  `https://ai-news-portal-iyge1kj3t-masternode77s-projects.vercel.app` (`READY`, preview target).
 - Rollback tag: `backup/pre-gpt56-upgrade-20260711T091118Z`.
 - No push, production promotion, production-secret operation, or cache purge has been performed.
 - Latest separately observed production: `dpl_THrq4thMxWBNnExaVLKBcb2WqATH`;
@@ -21,7 +21,11 @@
   risk text, and fresh screenshot paths can be bound into the receipt.
 - Added a read-only `--review` view that labels title-only triage as advisory, reports core/adjacent/archive
   counts, and keeps canonical extraction and classification as the only publication authority.
-- Deployed implementation `bfdc5a26` to the exact preview and completed route, header, admin, log,
+- Typed the remaining Astro component and article-data boundaries and removed the verifier's hardcoded
+  stale Astro-risk sentence; the type check now has no diagnostics or hints.
+- Preserved canonical nullable empty-state contracts after independent review and pinned builds to
+  Node 22 so Vercel cannot silently adopt an unreviewed future major.
+- Deployed implementation `29d55b6e` to the exact preview and completed route, header, admin, log,
   desktop/mobile visual, image, placeholder, overflow, and production-comparison checks.
 - Re-audited current `origin/main`: 121 newer commits comprise 101 dashboard snapshots and 20 content
   refreshes; 749 upstream rows resolve to 724 already-present sources, 25 source-only candidates,
@@ -38,28 +42,30 @@
   extraction, identity/checkpoint/lease fencing, package commands, and regressions.
 - Verification: `scripts/verify-production-surface.mjs`, `tests/qa-qc-workflow.test.mjs`, final reports,
   production verification receipt, visual QA report, security reports, and this handoff.
-- Local ignored evidence: `artifacts/preview-bfdc5a26/`.
+- Public UI typing: eight shared components, the article route, and their inherited public-signal contract.
+- Local ignored evidence: `artifacts/preview-29d55b6e/`.
 
 ## Validation results
 - Full `npm test`: 621 total, 620 passed, 0 failed, 1 intentional skip; follow-on editorial gates pass.
-- QA/QC verifier tests: 8/8 passed; reconciliation/orchestrator security set: 96/96 passed.
+- QA/QC workflow/report-contract tests: 11/11 passed; reconciliation/orchestrator security set: 96/96 passed.
 - Focused security: 76/76 passed; `npm audit --audit-level=low`: 0 vulnerabilities.
 - Tracked secret scan: no real credentials/private keys; only an `example.invalid` fixture matched.
 - Source provenance: 26/26 articles and 104/104 variants matched with no unsafe/missing/mismatch result.
-- `npm run check`: 0 errors, 0 warnings, 11 existing type hints.
+- `npm run check`: 0 errors, 0 warnings, 0 hints.
 - `npm run content:gate`: passed; 59 pages built and all public/image/admin/performance audits passed.
 - Public inventory: latest 30, archive 708, search 738, taxonomy 32, homepage 31, one longform route.
 - Local admin browser: all 17 real-handler lifecycle scenarios passed.
 - Independent code review found 0 critical/high/medium/low defects and returned `APPROVE`;
-  architecture re-review returned `CLEAR / APPROVE`.
+  the nullable-contract re-review found and closed two medium issues, then returned `APPROVE` with
+  0 findings; architecture re-review returned `CLEAR / APPROVE`.
 - Exact preview: eight public routes returned 200, five retired routes returned 404, and admin pages
   returned private/no-store responses; the unconfigured API returned a generic no-store 503.
 - Preview security headers include CSP, HSTS, nosniff, frame denial, referrer policy, permissions
   policy, and preview noindex; final Vercel error-log query returned no application errors.
 - Browser QA: homepage 31/31 desktop/mobile, archive 32/32, search 32/32, article 1/1, and APAC 19/19
   images decoded with 0 broken images, placeholder labels, app errors, failed requests, or overflow.
-- Fresh 1440x900 comparison differs on 100% of pixels, confirming production still serves the old
-  command-center design while the preview serves Midnight Intelligence.
+- Fresh 1440x900 comparison differs on 99.9998% of pixels, confirming production still serves the
+  old command-center design while the preview serves Midnight Intelligence.
 - Human benchmark packets remain reviewer-empty; the scorer fails closed without `reviewer.id`.
 - Managed persistence contract: 4/4 local tests pass; live preview credentials are absent.
 

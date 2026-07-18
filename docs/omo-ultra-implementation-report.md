@@ -33,7 +33,8 @@ This report closes the 16-task Compute Current rebuild plan. The work replaced l
 
 - Live production freshness must be verified in a credentialed deployment run before any release note claims the live site is updated.
 - The repo still contains a broad historical diff from the full rebuild; future changes should stay scoped and avoid reworking completed surfaces without new evidence.
-- Astro check hints remain informational but should be paid down before a stricter type gate.
+- The remaining Astro type hints were paid down on 2026-07-19; the current check reports zero
+  errors, warnings, and hints.
 
 ## Cleanup Receipts
 
