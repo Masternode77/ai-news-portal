@@ -5,9 +5,11 @@ import {
   buildProductionPublishAccounting,
   completeProductionPublication,
   productionPublicationReceipt,
+  prepareReconciliationCandidates,
   runProductionClassify,
   runProductionCluster,
   runProductionGenerate,
+  runProductionIngest,
   runProductionReview,
   runProductionPublish,
 } from '../scripts/lib/production-content-phases.mjs';
@@ -18,6 +20,7 @@ import {
   CURATED_ARTICLE_ID,
   repairPublicLongformRecord,
 } from '../scripts/repair-public-longform-inventory.mjs';
+import { sourceCandidateFromUpstream } from '../scripts/lib/upstream-content-reconciliation.mjs';
 
 function sourceText(minimumLength) {
   const sentences = [
@@ -86,6 +89,81 @@ function curatedLongformInput() {
 function outputManifest(runId) {
   return { schemaVersion: 1, runId, files: [] };
 }
+
+function reconciliationCandidate(overrides = {}) {
+  return sourceCandidateFromUpstream({
+    title: 'Utility files 300 MW interconnection plan for an AI data center',
+    source: 'Test Infrastructure Wire',
+    url: 'https://example.com/grid-plan',
+    publishedAt: '2026-07-18T00:00:00.000Z',
+    snippet: 'The filing identifies a substation schedule and transformer delivery dependency.',
+    ...overrides,
+  });
+}
+
+test('reconciliation candidates enter production ingest as source-only discoveries', async () => {
+  const candidate = reconciliationCandidate();
+  const prepared = prepareReconciliationCandidates([candidate], [{ domain: 'example.com' }]);
+  assert.equal(prepared.length, 1);
+  assert.deepEqual(Object.keys(prepared[0]).sort(), [
+    'id',
+    'publishedAt',
+    'snippet',
+    'source',
+    'title',
+    'url',
+  ]);
+
+  const result = await runProductionIngest({
+    reconciliationCandidates: [candidate],
+    reconciliationRevision: 'a'.repeat(40),
+    now: '2026-07-19T00:00:00.000Z',
+  }, { runId: 'reconciliation-test' }, {
+    readState: async () => ({ publishedIds: [], dayPlans: {}, runHistory: [] }),
+    readLatest: async () => [],
+    readArchive: async () => [],
+    loadRegistry: async () => [{ domain: 'example.com' }],
+  });
+
+  assert.equal(result.ok, true);
+  assert.equal(result.value.fetchedLive, false);
+  assert.equal(result.value.reconciliation.revision, 'a'.repeat(40));
+  assert.deepEqual(result.value.reconciliation.allowedDomains, ['example.com']);
+  assert.deepEqual(result.value.picked, prepared);
+  assert.equal(JSON.stringify(result.value.picked).includes('Legacy generated body'), false);
+  assert.deepEqual(result.transitions.map(({ reason }) => reason.code), ['upstream_source_reconciliation']);
+});
+
+test('reconciliation ingest fails closed for unsafe, unregistered, or oversized batches', () => {
+  assert.throws(
+    () => prepareReconciliationCandidates([
+      reconciliationCandidate({ url: 'https://127.0.0.1/private' }),
+    ], [{ domain: 'example.com' }]),
+    /canonical source discovery fields/,
+  );
+  assert.throws(
+    () => prepareReconciliationCandidates([
+      reconciliationCandidate({ url: 'https://unknown.example/story' }),
+    ], [{ domain: 'example.com' }]),
+    /rejected 1 source discovery row/,
+  );
+  assert.throws(
+    () => prepareReconciliationCandidates(
+      Array.from({ length: 31 }, (_, index) => reconciliationCandidate({
+        url: `https://example.com/story-${index}`,
+      })),
+      [{ domain: 'example.com' }],
+    ),
+    /at most 30/,
+  );
+  assert.throws(
+    () => prepareReconciliationCandidates([{
+      ...reconciliationCandidate(),
+      articleText: 'Generated projection data is not source discovery.',
+    }], [{ domain: 'example.com' }]),
+    /canonical source discovery fields/,
+  );
+});
 
 test('classify uses the canonical fail-closed public extraction boundary', async () => {
   const clean = extractedArticle({ id: 'clean', length: 700 });
@@ -452,6 +530,44 @@ test('publish replay uses its completion receipt without repeating public writes
 
   assert.deepEqual(result.value.publication, publication);
   assert.deepEqual(result.transitions.map(({ toState }) => toState), ['published']);
+});
+
+test('publish stops before public writes when execution ownership is lost mid-provider', async () => {
+  let ownershipValid = true;
+  let publicWrites = 0;
+  const durableState = { publicationReceipts: {} };
+
+  await assert.rejects(
+    () => runProductionPublish({}, {
+      runId: 'cycle-fenced-publish',
+      pipelineVersion: '5.6.0-test',
+      executionIdentity: {
+        kind: 'upstream-reconciliation',
+        revision: 'a'.repeat(40),
+        fingerprint: 'b'.repeat(64),
+      },
+      assertExecutionOwnership: async () => {
+        if (!ownershipValid) {
+          throw Object.assign(new Error('content cycle lease ownership was lost'), {
+            code: 'checkpoint_lease_lost',
+          });
+        }
+      },
+    }, {
+      receiptStore: {
+        load: async () => durableState,
+        save: async () => { ownershipValid = false; },
+      },
+      readState: async () => ({ publicationReceipts: {} }),
+      writeState: async () => { publicWrites += 1; },
+      writeJson: async () => { publicWrites += 1; },
+      syncArchive: async () => { publicWrites += 1; },
+      backfillImages: async () => { publicWrites += 1; },
+    }),
+    /lease ownership was lost/,
+  );
+
+  assert.equal(publicWrites, 0);
 });
 
 test('publish reconciles durable completion after a fresh runner without repeating public writes', async () => {

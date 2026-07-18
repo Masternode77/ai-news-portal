@@ -1,7 +1,7 @@
 import { domainFor } from './autonomous-desk-utils.mjs';
 
 const TIER_1 = [/sec\.gov$/, /investor\./, /nvidia\.com$/, /cloud\.google\.com$/, /aws\.amazon\.com$/, /azure\.microsoft\.com$/, /bloomberg\.com$/];
-const TIER_2 = [/datacenterdynamics\.com$/, /datacenterfrontier\.com$/, /datacenterknowledge\.com$/, /uptimeinstitute\.com$/, /hpcwire\.com$/, /insidehpc\.com$/, /semiengineering\.com$/, /servethehome\.com$/, /utilitydive\.com$/, /power-eng\.com$/, /capacitymedia\.com$/, /blocksandfiles\.com$/];
+const TIER_2 = [/datacenterdynamics\.com$/, /datacenterfrontier\.com$/, /datacenterknowledge\.com$/, /uptimeinstitute\.com$/, /hpcwire\.com$/, /insidehpc\.com$/, /semiengineering\.com$/, /servethehome\.com$/, /utilitydive\.com$/, /power-eng\.com$/, /capacityglobal\.com$/, /blocksandfiles\.com$/];
 const TIER_3 = [/siliconangle\.com$/, /theregister\.com$/, /techcrunch\.com$/, /venturebeat\.com$/];
 
 export function sourceCredibilityTier(item = {}) {

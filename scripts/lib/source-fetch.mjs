@@ -249,6 +249,7 @@ export async function fetchArticleExtraction({
   fallbackSnippet = '',
   timeoutMs = 12000,
   coordinator = sourceRequestCoordinator,
+  allowedDomains,
 } = {}) {
   if (PIPELINE_OFFLINE) {
     return fallbackExtraction(url, fallbackSnippet, 'pipeline_offline');
@@ -265,6 +266,7 @@ export async function fetchArticleExtraction({
           },
           allowedMimeTypes: ['text/html', 'application/xhtml+xml'],
           maxRedirects: 4,
+          allowedDomains,
           maxCompressedBytes: 2 * 1024 * 1024,
           maxDecompressedBytes: 4 * 1024 * 1024,
         });

@@ -8,6 +8,7 @@ import {
   FilePublicationReceiptStore,
 } from '../core/state/index.mjs';
 import { PRODUCTION_CONTENT_PLUGINS } from '../plugins/content/production-content-plugins.mjs';
+import { assertUpstreamReconciliationExecution } from './upstream-reconciliation-execution.mjs';
 
 export const CONTENT_PIPELINE_VERSION = '5.6.1';
 
@@ -63,20 +64,48 @@ export function createProductionContentCycle({
         const receipt = receiptState.publicationReceipts?.[checkpoint.runId];
         if (receipt?.status !== 'completed'
           || receipt.pipelineVersion !== checkpoint.pipelineVersion
-          || receipt.result?.outputManifest?.runId !== checkpoint.runId) {
+          || receipt.result?.outputManifest?.runId !== checkpoint.runId
+          || JSON.stringify(receipt.executionIdentity ?? null)
+            !== JSON.stringify(checkpoint.executionIdentity ?? null)) {
           return { ok: false, code: 'completed_publication_receipt_missing' };
         }
         return resolvedPublicationOutputBundleStore.verifyAndRestore(receipt.result.outputManifest);
       },
       pipelineVersion: CONTENT_PIPELINE_VERSION,
+      executionIdentityValidator: assertUpstreamReconciliationExecution,
     }),
   };
 }
 
-export async function runCanonicalContentCommand(command, options = {}) {
-  const { orchestrator } = createProductionContentCycle(options);
-  if (command === 'cycle') {
-    return orchestrator.runCycle({ production: options.production === true, input: options.input });
+async function withCheckpointLease(checkpointStore, operation) {
+  const releaseLease = typeof checkpointStore.acquireLease === 'function'
+    ? await checkpointStore.acquireLease()
+    : async () => {};
+  try {
+    return await operation();
+  } finally {
+    await releaseLease();
   }
-  return orchestrator.runPhase(command, { input: options.input });
+}
+
+export async function verifyCanonicalContentCheckpoint(options = {}) {
+  const { checkpointStore, orchestrator } = createProductionContentCycle(options);
+  return withCheckpointLease(checkpointStore, () => orchestrator.verifyCurrentCheckpoint());
+}
+
+export async function runCanonicalContentCommand(command, options = {}) {
+  const { checkpointStore, orchestrator } = createProductionContentCycle(options);
+  return withCheckpointLease(checkpointStore, async () => {
+    if (command === 'cycle') {
+      return await orchestrator.runCycle({
+        production: options.production === true,
+        input: options.input,
+        executionIdentity: options.executionIdentity,
+      });
+    }
+    return await orchestrator.runPhase(command, {
+      input: options.input,
+      executionIdentity: options.executionIdentity,
+    });
+  });
 }

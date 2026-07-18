@@ -53,6 +53,14 @@ import {
 import { stableArticleId, truncate } from './normalize.mjs';
 import { buildTaxonomyProjection } from './taxonomy-projection.mjs';
 import { uniqueByCanonicalSource } from './canonical-source.mjs';
+import {
+  buildUpstreamReconciliationAudit,
+} from './upstream-content-reconciliation.mjs';
+import { loadSourceRegistry } from './source-registry.mjs';
+import {
+  assertCanonicalSourceCandidateBatch,
+  MAX_UPSTREAM_RECONCILIATION_CANDIDATES,
+} from '../../src/adapters/upstream-reconciliation-execution.mjs';
 
 const RETRY_DELAY_MS = Number(process.env.PIPELINE_RETRY_DELAY_MS || 15_000);
 
@@ -240,19 +248,69 @@ function transition(article, fromState, toState, code, detail) {
   };
 }
 
-export async function runProductionIngest(payload = {}, context = {}) {
+export function prepareReconciliationCandidates(records, sourceRegistry = []) {
+  if (!Array.isArray(records) || records.length === 0) {
+    throw new Error('reconciliation requires at least one source discovery row');
+  }
+  if (records.length > MAX_UPSTREAM_RECONCILIATION_CANDIDATES) {
+    throw new Error(`reconciliation accepts at most ${MAX_UPSTREAM_RECONCILIATION_CANDIDATES} source discovery rows`);
+  }
+  assertCanonicalSourceCandidateBatch(records);
+
+  const audit = buildUpstreamReconciliationAudit([], records, {
+    allowedDomains: sourceRegistry.map((source) => source.domain),
+  });
+  if (audit.rejected.length) {
+    throw new Error(`reconciliation rejected ${audit.rejected.length} source discovery row(s)`);
+  }
+  if (!audit.candidates.length) {
+    throw new Error('reconciliation contains no unique source discovery rows');
+  }
+  return audit.candidates;
+}
+
+function reconciliationRevision(value = '') {
+  const revision = String(value || '').trim();
+  if (!/^[a-f0-9]{40}$/.test(revision)) {
+    throw new Error('reconciliation revision must be a full lowercase commit SHA');
+  }
+  return revision;
+}
+
+export async function runProductionIngest(payload = {}, context = {}, services = {}) {
   const now = new Date(payload.now || Date.now());
+  const readState = services.readState || (() => readPipelineState(PIPELINE_STATE_PATH));
+  const readLatest = services.readLatest || (() => readJsonFile(LATEST_NEWS_PATH, []));
+  const readArchive = services.readArchive || (() => readArchiveSnapshot());
   const [state, existingLatest, existingArchive] = await Promise.all([
-    readPipelineState(PIPELINE_STATE_PATH),
-    readJsonFile(LATEST_NEWS_PATH, []),
-    readArchiveSnapshot(),
+    readState(),
+    readLatest(),
+    readArchive(),
   ]);
-  const { pool, fetchedLive } = await loadPool(existingLatest);
+  const isReconciliation = Object.hasOwn(payload, 'reconciliationCandidates');
+  let pool;
+  let fetchedLive;
+  let reconciliation = null;
+  if (isReconciliation) {
+    const loadRegistry = services.loadRegistry || loadSourceRegistry;
+    const registry = await loadRegistry();
+    pool = prepareReconciliationCandidates(payload.reconciliationCandidates, registry);
+    fetchedLive = false;
+    reconciliation = {
+      revision: reconciliationRevision(payload.reconciliationRevision),
+      candidateCount: pool.length,
+      allowedDomains: registry.map((source) => source.domain),
+    };
+  } else {
+    ({ pool, fetchedLive } = await loadPool(existingLatest));
+  }
   let todayKey = null;
   let plan = null;
   let slot = null;
   let picked = [];
-  if (pool.length) {
+  if (isReconciliation) {
+    picked = pool;
+  } else if (pool.length) {
     ({ key: todayKey, plan } = await planForToday(pool, state, now));
     ({ slot, picked } = pickItemsForRun(plan, now));
   }
@@ -270,6 +328,7 @@ export async function runProductionIngest(payload = {}, context = {}) {
       plan,
       slot,
       picked,
+      reconciliation,
       recentBlueprintIds: blueprintHistoryFromRecords([...(existingLatest || []), ...(existingArchive || [])]),
     },
     discoveries: picked.map((article) => ({ id: article.id, sourceVersion: sourceVersion(article) })),
@@ -277,8 +336,10 @@ export async function runProductionIngest(payload = {}, context = {}) {
       article,
       'discovered',
       'fetched',
-      'feed_item_fetched',
-      'The source item was fetched from the configured feed connector.',
+      isReconciliation ? 'upstream_source_reconciliation' : 'feed_item_fetched',
+      isReconciliation
+        ? 'The source discovery was admitted for fresh extraction through the canonical lifecycle.'
+        : 'The source item was fetched from the configured feed connector.',
     )),
   };
 }
@@ -291,7 +352,12 @@ export async function runProductionExtract(payload = {}) {
     try {
       const article = await withTimeout(
         `extract source ${item.id}`,
-        () => withSingleRetry(`extract source ${item.id}`, () => extractContentSource(item)),
+        () => withSingleRetry(
+          `extract source ${item.id}`,
+          () => extractContentSource(item, {
+            allowedDomains: payload.reconciliation?.allowedDomains,
+          }),
+        ),
         75_000,
       );
       extracted.push(article);
@@ -569,7 +635,12 @@ export function productionPublicationReceipt(state, runId) {
   return publicationReceipts(state)[runId] || null;
 }
 
-export function beginProductionPublication(state, { runId, pipelineVersion, startedAt }) {
+export function beginProductionPublication(state, {
+  runId,
+  pipelineVersion,
+  startedAt,
+  executionIdentity = null,
+}) {
   if (typeof runId !== 'string' || !runId.trim()) {
     throw Object.assign(new Error('production publication requires a run id'), { code: 'missing_run_id' });
   }
@@ -579,6 +650,7 @@ export function beginProductionPublication(state, { runId, pipelineVersion, star
   receipts[runId] = {
     runId,
     pipelineVersion,
+    ...(executionIdentity ? { executionIdentity: structuredClone(executionIdentity) } : {}),
     status: 'preparing',
     startedAt: prior?.startedAt || startedAt,
     attempts: Number(prior?.attempts || 0) + 1,
@@ -681,7 +753,9 @@ function publicationOutputPaths(imageOutputs = []) {
 function assertReusablePublicationReceipt(receipt, context = {}) {
   if (receipt?.runId !== context.runId
     || receipt?.pipelineVersion !== context.pipelineVersion
-    || receipt?.result?.outputManifest?.runId !== context.runId) {
+    || receipt?.result?.outputManifest?.runId !== context.runId
+    || JSON.stringify(receipt?.executionIdentity ?? null)
+      !== JSON.stringify(context.executionIdentity ?? null)) {
     const error = new Error('completed publication receipt does not match the active content cycle');
     error.code = 'publication_receipt_context_mismatch';
     throw error;
@@ -699,11 +773,22 @@ export async function runProductionPublish(payload = {}, context = {}, dependenc
     writeState: writePipelineState,
     ...dependencies,
   };
+  const assertExecutionOwnership = typeof context.assertExecutionOwnership === 'function'
+    ? context.assertExecutionOwnership
+    : async () => {};
+  const fenced = async (operation) => {
+    await assertExecutionOwnership();
+    const result = await operation();
+    await assertExecutionOwnership();
+    return result;
+  };
   const now = new Date(payload.now || Date.now());
+  await assertExecutionOwnership();
   const [state, durableReceiptState] = await Promise.all([
     services.readState(PIPELINE_STATE_PATH),
     services.receiptStore?.load() || Promise.resolve({ publicationReceipts: {} }),
   ]);
+  await assertExecutionOwnership();
   const existingLatest = payload.existingLatest || [];
   const existingArchive = payload.existingArchive || [];
   const passed = payload.reviewPassed || [];
@@ -730,11 +815,13 @@ export async function runProductionPublish(payload = {}, context = {}, dependenc
   if (completedReceipt) {
     assertReusablePublicationReceipt(completedReceipt, context);
     if (services.outputBundleStore) {
-      await services.outputBundleStore.verifyAndRestore(completedReceipt.result.outputManifest);
+      await fenced(() => services.outputBundleStore.verifyAndRestore(
+        completedReceipt.result.outputManifest,
+      ));
     }
     if (durableReceipt?.status !== 'completed' && services.receiptStore) {
       mirrorPublicationReceipt(durableReceiptState, completedReceipt);
-      await services.receiptStore.save(durableReceiptState);
+      await fenced(() => services.receiptStore.save(durableReceiptState));
     }
     if (stateReceipt?.status !== 'completed') {
       applyPublicationMetadata({
@@ -749,7 +836,7 @@ export async function runProductionPublish(payload = {}, context = {}, dependenc
         archiveOnly,
       });
       mirrorPublicationReceipt(state, completedReceipt);
-      await services.writeState(PIPELINE_STATE_PATH, state);
+      await fenced(() => services.writeState(PIPELINE_STATE_PATH, state));
     }
     console.log(`[content-cycle] publish replay run=${context.runId}`);
     return {
@@ -762,14 +849,16 @@ export async function runProductionPublish(payload = {}, context = {}, dependenc
     runId: context.runId,
     pipelineVersion: context.pipelineVersion,
     startedAt: now.toISOString(),
+    executionIdentity: context.executionIdentity,
   });
   beginProductionPublication(state, {
     runId: context.runId,
     pipelineVersion: context.pipelineVersion,
     startedAt: now.toISOString(),
+    executionIdentity: context.executionIdentity,
   });
-  if (services.receiptStore) await services.receiptStore.save(durableReceiptState);
-  await services.writeState(PIPELINE_STATE_PATH, state);
+  if (services.receiptStore) await fenced(() => services.receiptStore.save(durableReceiptState));
+  await fenced(() => services.writeState(PIPELINE_STATE_PATH, state));
   const processedIds = new Set(processedItems.map((article) => article.id));
   const existing = dedupeById(existingLatest).filter((article) => !processedIds.has(article.id));
   const retainedArchive = dedupeById(existingArchive).filter((article) => !processedIds.has(article.id));
@@ -786,14 +875,20 @@ export async function runProductionPublish(payload = {}, context = {}, dependenc
       return decision.homepage === true || decision.archive === true;
     },
   });
-  const backfillResult = await services.backfillImages(merged, { collectOutputs: true });
+  const backfillResult = await fenced(
+    () => services.backfillImages(merged, { collectOutputs: true }),
+  );
   const withImages = Array.isArray(backfillResult) ? backfillResult : backfillResult.articles;
   const refreshedImagePaths = Array.isArray(backfillResult) ? [] : backfillResult.outputPaths;
-  const { latest, archive = retainedArchive, supabaseStatus } = await services.syncArchive(withImages, retainedArchive);
-  await services.writeJson(LATEST_NEWS_PATH, latest);
+  const { latest, archive = retainedArchive, supabaseStatus } = await fenced(
+    () => services.syncArchive(withImages, retainedArchive),
+  );
+  await fenced(() => services.writeJson(LATEST_NEWS_PATH, latest));
   const taxonomy = services.buildTaxonomy([...latest, ...archive]);
-  await services.writeJson(TAXONOMY_PAGES_PATH, taxonomy);
-  if (payload.fetchedLive) await services.writeJson(NEWS_POOL_PATH, payload.pool || []);
+  await fenced(() => services.writeJson(TAXONOMY_PAGES_PATH, taxonomy));
+  if (payload.fetchedLive) {
+    await fenced(() => services.writeJson(NEWS_POOL_PATH, payload.pool || []));
+  }
 
   applyPublicationMetadata({
     state,
@@ -820,11 +915,13 @@ export async function runProductionPublish(payload = {}, context = {}, dependenc
     completedAt: now.toISOString(),
     result: publication,
   });
-  await services.writeState(PIPELINE_STATE_PATH, state);
+  await fenced(() => services.writeState(PIPELINE_STATE_PATH, state));
   if (services.outputBundleStore) {
-    const outputManifest = await services.outputBundleStore.capture(
-      context.runId,
-      publicationOutputPaths(refreshedImagePaths),
+    const outputManifest = await fenced(
+      () => services.outputBundleStore.capture(
+        context.runId,
+        publicationOutputPaths(refreshedImagePaths),
+      ),
     );
     publication = { ...publication, outputManifest };
   }
@@ -833,7 +930,7 @@ export async function runProductionPublish(payload = {}, context = {}, dependenc
     completedAt: now.toISOString(),
     result: publication,
   });
-  if (services.receiptStore) await services.receiptStore.save(durableReceiptState);
+  if (services.receiptStore) await fenced(() => services.receiptStore.save(durableReceiptState));
   console.log(`[content-cycle] publish run=${context.runId} longform=${passed.length} signals=${signals.length} archive=${archiveOnly.length}`);
   return {
     ok: true,

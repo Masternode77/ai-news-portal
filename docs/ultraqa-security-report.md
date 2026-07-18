@@ -1,6 +1,6 @@
 # UltraQA and Security Report
 
-Updated: 2026-07-18
+Updated: 2026-07-19
 
 ## Disposition
 
@@ -39,11 +39,29 @@ operations rather than hidden code-completion claims.
 | UQ-23 | Stale public archive reintroduces duplicate source | Canonical dedupe again at the final persisted projection | Pass | Real archive synchronizer integration regression |
 | UQ-24 | Invalid or missing source-canonical URL | Keep the record in scope and fail the provenance CLI | Pass | Invalid-URL subprocess regression; exit 1 |
 | UQ-25 | Image promotion filesystem failure | Roll back prior writes and propagate the original failure | Pass | Canonicalizer transaction rejection regression |
+| UQ-26 | Generated upstream projection crosses the trust boundary | Retain only source discovery fields and discard unproven generated snippets | Pass | Reconciliation source-only projection tests and current audit |
+| UQ-27 | Unregistered or attacker-controlled source URL | Require HTTPS, registered domains, and reject credentials, ports, IP/local hosts, controls, and oversized URLs | Pass | Adversarial reconciliation URL tests |
+| UQ-28 | Malformed upstream row or empty allowlist | Reject per row and fail closed without coercion or audit termination | Pass | Malformed-row and empty-registry regressions |
+| UQ-29 | Tracking or query-order dedupe collision | Remove tracking keys case-insensitively, sort semantic keys, and preserve path/value case | Pass | Canonical-source normalization regressions |
+| UQ-30 | Accidental reconciliation execution | Require both `--execute` and `--production`; expose no direct JSON writer | Pass | CLI subprocess and command-surface tests |
+| UQ-31 | Oversized reconciliation poisons the global checkpoint | Reject more than 30 candidates before any cycle/checkpoint call | Pass | Zero-cycle preflight regression |
+| UQ-32 | Failed checkpoint resumes unrelated content | Bind active/failed checkpoints and completion receipts to revision plus candidate digest | Pass | Ordinary-to-reconciliation, same-identity resume, revision/digest mismatch tests |
+| UQ-33 | Partial publish changes the next audit result | Resume pending reconciliation from immutable initial input before reading mutable local projections | Pass | Partial-publish retry regression |
+| UQ-34 | Generic caller bypasses reconciliation semantics | Require canonical text, RFC3339 timestamp, stable ID, normalized HTTPS URL, source-only schema, digest, revision, and identity before checkpoint access | Pass | Production composition and ingest boundary regressions |
+| UQ-35 | Concurrent or long-running processes mutate one checkpoint | Hold an exclusive tokenized filesystem lease with heartbeat outside cached checkpoint state | Pass | Concurrent-owner, heartbeat, and clean-release regressions |
+| UQ-36 | Audit and ingest disagree on canonical candidate bytes | Reconstruct every candidate through one shared constructor and byte-compare canonical fields | Pass | Entity-decoding, sanitizer-phrase, stable-ID, and composition regressions |
+| UQ-37 | Stale owner resumes after lease-token replacement | Assert current ownership before verification, provider execution, and every save | Pass | Replacement-token fencing keeps provider calls at zero and preserves the new lease |
+| UQ-38 | Public redirect escapes the registered source boundary | Validate the initial URL and every redirect hop against the source registry | Pass | Registered redirect succeeds; unregistered redirect and extraction fail closed |
+| UQ-39 | Legacy feed or marker-free text is mistaken for source evidence | Discard all upstream snippets and require fresh canonical extraction | Pass | Feed, marker-free, generated-projection, and entity regressions |
+| UQ-40 | Two retries publish the same reconciliation identity | Verify and replay a completed identity without invoking providers | Pass | Same-identity replay keeps the provider count unchanged |
+| UQ-41 | Durable receipt belongs to a different execution owner | Bind completed receipts and output verification to execution identity | Pass | Receipt-identity mismatch is rejected before bundle verification |
+| UQ-42 | Abandoned lock is auto-reclaimed while its owner may still write | Never auto-reclaim; require explicit operator cleanup and fence each publish side effect | Pass | Stale-token rejection and mid-provider ownership-loss regressions |
 
 ## Verification Receipt
 
-- Full tests: 580 total, 579 passed, 0 failed, 1 intentional skip.
+- Full tests: 618 total, 617 passed, 0 failed, 1 intentional skip.
 - Focused security tests: 76 passed, 0 failed.
+- Reconciliation and canonical-orchestrator security tests: 96 passed, 0 failed.
 - Source provenance: 26/26 articles and 104/104 variants matched; no missing, mismatch,
   metadata-path error, unavailable source, or unsafe local file.
 - Build: 59 pages; rendered public audit found 7 checked pages, 30 cards, and 0 broken images.
@@ -52,11 +70,14 @@ operations rather than hidden code-completion claims.
 - Performance: 7,260,589-byte dist, 11,432-byte browser JS, 100,239-byte CSS, 93,875-byte
   largest HTML, and 404,420-byte largest image, all within configured budgets.
 - Dependency audit: 0 vulnerabilities.
+- Independent review: code review found 0 critical/high/medium/low defects and returned `APPROVE`;
+  architecture review returned `CLEAR / APPROVE`.
 
 ## Remaining Operations
 
 Managed preview persistence cannot be proven without preview-only Postgres, Blob, and admin
-credentials. Human relevance and writing labels are also still outstanding. These are explicit
+credentials. Human relevance and writing labels are also still outstanding. The 23 audited
+production-source candidates have not been run through the guarded canonical command. These are explicit
 release follow-ups and do not justify production promotion without preview approval.
 
 ## Exact Preview Receipt

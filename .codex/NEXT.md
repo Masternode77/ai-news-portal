@@ -1,8 +1,8 @@
 # NEXT
 
 ## Current branch
-- `upgrade/gpt-5-6-sol`, HEAD receipt commit `1db8bfedfb79dfed23cc10dcf8779405516f10b2`;
-  verified implementation `58ff8bf31635aafb9456207d5c063144b0f0d3ae`.
+- `upgrade/gpt-5-6-sol`; latest committed checkpoint `f5608e3a`. The upstream-reconciliation
+  implementation and fresh verification are included in the current local checkpoint.
 - Exact preview: `dpl_931jMss3886U8GtBRyWvM1Eozuba` at
   `https://ai-news-portal-l1gqlehby-masternode77s-projects.vercel.app` (`READY`, implementation `58ff8bf3`).
 - Rollback tag: `backup/pre-gpt56-upgrade-20260711T091118Z`.
@@ -22,6 +22,22 @@
 - Confirmed the incoming delta has no product code, but adds 39 archive/search candidates and
   conflicts in three generated article stores plus the retired dashboard artifact.
 - Confirmed a raw merge would bypass upgraded relevance/fidelity/provenance gates; it is rejected.
+- Re-audited `origin/main` at `f110e8c2`: 747 rows, 724 canonical sources already present,
+  23 source-only re-ingestion candidates, and 0 rejected.
+- Added read-only audit and dual-flag execution commands that feed only source discovery into the
+  canonical production lifecycle; no generated upstream copy or image crosses the boundary.
+- Bound active/failed reconciliation checkpoints and completion receipts to the audited revision
+  plus candidate digest; mismatches and batches over 30 fail before provider/checkpoint work.
+- Preserved immutable initial input for partial-publish resume and added an exclusive process lease
+  outside cached checkpoint state.
+- Unified candidate construction across audit, composition, and ingest so entity decoding,
+  sanitizer rejection, stable IDs, and fingerprints cannot drift between boundaries.
+- Fenced completed-output verification, provider calls, and checkpoint saves against lease-token
+  replacement; a displaced owner cannot continue or delete the replacement lease.
+- Dropped every upstream snippet, constrained redirect hops to registered domains, and bound durable
+  publication receipts to the active reconciliation execution identity.
+- Removed automatic stale-lock takeover and replay completed identical identities without provider
+  execution; abandoned leases now require explicit operator cleanup.
 
 ## Changed files
 - Provenance: `scripts/repair-public-source-images.mjs`, image canonicalizer, package scripts,
@@ -30,9 +46,15 @@
   archive store, production/fixture regressions, archive/search data, and duplicate asset deletion.
 - Supply chain: both GitHub workflows plus immutable-action regression tests.
 - Reports: security fix report, threat model, UltraQA security report, and this handoff.
+- Reconciliation: `scripts/audit-upstream-content-reconciliation.mjs`,
+  `scripts/reconcile-upstream-content.mjs`, source-only reconciliation library, canonical ingest,
+  cycle identity/checkpoint plumbing, source registry/domain updates, package scripts, and tests.
+- Current reports: final upgrade report, acceptance matrix, security reports, threat model, and this handoff.
 
 ## Validation results
-- Full `npm test`: 580 total, 579 passed, 0 failed, 1 intentional skip; follow-on quality commands pass.
+- Full `npm test`: 618 total, 617 passed, 0 failed, 1 intentional skip; follow-on quality commands pass.
+- Reconciliation/orchestrator security set: 96/96 passed, including redirect-domain escape,
+  snippet provenance, same-identity replay, receipt identity, stale-lock, and mid-publish fencing.
 - Focused security: 76/76 passed; `npm audit --audit-level=low`: 0 vulnerabilities.
 - Tracked secret scan: no real credentials/private keys; only an `example.invalid` fixture matched.
 - Source provenance: 26/26 articles and 104/104 variants matched; 0 missing/mismatch/path/unsafe failures.
@@ -45,7 +67,8 @@
   404,420 B largest image.
 - Commercial visual QA: 8/8 captures; actual Applied Digital source image appears on home and article.
 - Local admin browser: all 17 real-handler lifecycle scenarios passed.
-- Independent code re-review and architecture reconfirmation both approved.
+- Independent final code review found 0 critical/high/medium/low defects and returned `APPROVE`;
+  the architecture re-review returned `CLEAR / APPROVE`.
 - Exact preview: eight public routes returned 200, five retired routes returned 404, and the
   unconfigured admin API returned generic 503 with `no-store` and `noindex, nofollow`.
 - Exact-preview browser: home 31/31 desktop/mobile, archive 32/32, search 32/32, article 1/1,
@@ -58,13 +81,14 @@
 ## Blockers
 - Preview Postgres, Blob, and admin credentials are absent; managed persistence is not proven.
 - Independent 150-item relevance and 40-sample writing labels require human review.
-- The 39 `origin/main`-only content candidates require canonical re-ingestion and a fresh preview;
-  direct generated-JSON merge is unsafe.
+- The 23 canonical-source `origin/main` candidates require guarded canonical re-ingestion and a
+  fresh preview; direct generated-JSON merge is unsafe.
 - OAuth/2FA, firewall, backups, monitoring, and secret rotation are operational follow-up.
 - Production promotion requires explicit preview approval.
 
 ## Exact next step
-- Re-ingest the 39 current-production candidates through the canonical pipeline when a safe
-  preview content-refresh window is opened; rerun content, provenance, browser, and visual gates.
+- In a safe preview content-refresh window, run
+  `npm run content:reconcile-upstream -- --execute --production --revision=origin/main`; then rerun
+  content, provenance, browser, and visual gates and deploy a refreshed preview.
 - Await managed preview persistence credentials, independent human labels, and preview approval.
 - Keep push, production promotion, production secrets, and cache purge excluded.

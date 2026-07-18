@@ -1,4 +1,6 @@
+import { createHash, randomUUID } from 'node:crypto';
 import fs from 'node:fs/promises';
+import os from 'node:os';
 import path from 'node:path';
 import { isCanonicalState } from './lifecycle.mjs';
 import { validateTransitionRecord } from './transition-record.mjs';
@@ -35,6 +37,25 @@ function validVersion(value) {
 
 function validTimestamp(value) {
   return nonEmptyString(value) && Number.isFinite(Date.parse(value));
+}
+
+function validExecutionIdentity(value) {
+  if (value === undefined || value === null) return true;
+  return value
+    && typeof value === 'object'
+    && !Array.isArray(value)
+    && nonEmptyString(value.kind)
+    && nonEmptyString(value.revision)
+    && nonEmptyString(value.fingerprint);
+}
+
+function validExecutionInput(checkpoint) {
+  if (checkpoint.executionIdentity === undefined || checkpoint.executionIdentity === null) {
+    return checkpoint.executionInput === undefined || checkpoint.executionInput === null;
+  }
+  return checkpoint.executionInput
+    && typeof checkpoint.executionInput === 'object'
+    && !Array.isArray(checkpoint.executionInput);
 }
 
 function samePhasePrefix(phases) {
@@ -114,7 +135,9 @@ function validateCheckpoint(checkpoint) {
     || !checkpoint.lifecycle.articles
     || typeof checkpoint.lifecycle.articles !== 'object'
     || Array.isArray(checkpoint.lifecycle.articles)
-    || !Array.isArray(checkpoint.lifecycle.transitions)) {
+    || !Array.isArray(checkpoint.lifecycle.transitions)
+    || !validExecutionIdentity(checkpoint.executionIdentity)
+    || !validExecutionInput(checkpoint)) {
     throw new FileCycleCheckpointError('content cycle checkpoint shape is invalid', 'invalid_checkpoint');
   }
   const nextPhase = CONTENT_CYCLE_PHASES[checkpoint.completedPhases.length] || null;
@@ -155,6 +178,90 @@ export class FileCycleCheckpointStore {
       throw new FileCycleCheckpointError('checkpoint path is required', 'invalid_checkpoint_path');
     }
     this.filePath = path.resolve(filePath);
+    const lockKey = createHash('sha256').update(this.filePath).digest('hex').slice(0, 24);
+    this.lockPath = path.join(os.tmpdir(), `compute-current-content-cycle-${lockKey}.lock`);
+    this.activeLeaseToken = null;
+    this.leaseLost = false;
+  }
+
+  async assertLeaseOwnership() {
+    if (!this.activeLeaseToken) return;
+    if (this.leaseLost) {
+      throw new FileCycleCheckpointError('content cycle lease ownership was lost', 'checkpoint_lease_lost');
+    }
+    try {
+      const current = JSON.parse(await fs.readFile(this.lockPath, 'utf8'));
+      if (current?.token !== this.activeLeaseToken) {
+        this.leaseLost = true;
+        throw new FileCycleCheckpointError('content cycle lease ownership was lost', 'checkpoint_lease_lost');
+      }
+    } catch (error) {
+      if (error instanceof FileCycleCheckpointError) throw error;
+      this.leaseLost = true;
+      throw new FileCycleCheckpointError('content cycle lease ownership was lost', 'checkpoint_lease_lost');
+    }
+  }
+
+  async acquireLease({ staleMs = 6 * 60 * 60 * 1000 } = {}) {
+    await fs.mkdir(path.dirname(this.lockPath), { recursive: true });
+    const token = randomUUID();
+    let handle;
+
+    try {
+      handle = await fs.open(this.lockPath, 'wx', 0o600);
+    } catch (error) {
+      if (error?.code === 'EEXIST') {
+        throw new FileCycleCheckpointError('another content cycle is already running', 'checkpoint_locked');
+      }
+      throw new FileCycleCheckpointError('content cycle lease could not be acquired', 'checkpoint_lease_failed');
+    }
+
+    try {
+      await handle.writeFile(`${JSON.stringify({ token, acquiredAt: new Date().toISOString() })}\n`, 'utf8');
+    } catch {
+      await handle.close().catch(() => {});
+      await fs.rm(this.lockPath, { force: true }).catch(() => {});
+      throw new FileCycleCheckpointError('content cycle lease could not be persisted', 'checkpoint_lease_failed');
+    }
+    this.activeLeaseToken = token;
+    this.leaseLost = false;
+
+    let released = false;
+    let heartbeat = Promise.resolve();
+    const heartbeatMs = Math.max(10, Math.min(60_000, Math.floor(staleMs / 3)));
+    const heartbeatTimer = setInterval(() => {
+      heartbeat = heartbeat.then(async () => {
+        if (released) return;
+        try {
+          const current = JSON.parse(await fs.readFile(this.lockPath, 'utf8'));
+          if (current?.token !== token) {
+            this.leaseLost = true;
+            return;
+          }
+          if (released) return;
+          const now = new Date();
+          await fs.utimes(this.lockPath, now, now);
+        } catch {
+          this.leaseLost = true;
+        }
+      });
+    }, heartbeatMs);
+    heartbeatTimer.unref?.();
+
+    return async () => {
+      if (released) return;
+      released = true;
+      clearInterval(heartbeatTimer);
+      await heartbeat.catch(() => {});
+      await handle.close().catch(() => {});
+      try {
+        const current = JSON.parse(await fs.readFile(this.lockPath, 'utf8'));
+        if (current?.token === token) await fs.rm(this.lockPath, { force: true });
+      } catch {
+        // A missing or replaced lease is not owned by this caller.
+      }
+      if (this.activeLeaseToken === token) this.activeLeaseToken = null;
+    };
   }
 
   async load() {
@@ -169,6 +276,7 @@ export class FileCycleCheckpointStore {
   }
 
   async save(checkpoint) {
+    await this.assertLeaseOwnership();
     const valid = clone(validateCheckpoint(checkpoint));
     await fs.mkdir(path.dirname(this.filePath), { recursive: true });
     const temporaryPath = `${this.filePath}.${process.pid}.${Date.now()}.tmp`;

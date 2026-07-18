@@ -1,6 +1,6 @@
 # Security Fix Report
 
-Updated: 2026-07-18
+Updated: 2026-07-19
 
 ## Dependency Remediation
 
@@ -49,12 +49,32 @@ found 0 vulnerabilities
 - Added bounded, no-follow source-image provenance reads, four-variant hash verification, staged
   repairs, and whole-batch rollback. Missing assets are repairable; unsafe paths, symlinks, source
   failures, or metadata conflicts fail before mutation.
+- Added source-only reconciliation for newer upstream content. Generated copy, images, routing, and
+  quality metadata are stripped; only registered HTTPS sources may be re-fetched through the
+  canonical extraction and publication gates.
+- Bound reconciliation checkpoints and receipts to the audited commit plus deterministic candidate
+  digest. Mismatched retries and batches over 30 candidates fail before provider or checkpoint work.
+- Preserved immutable reconciliation input for partial-publish recovery, validated payload/identity
+  pairs at the production composition boundary, and serialized canonical commands with an
+  exclusive tokenized lease outside cached checkpoint state.
+- Reused one candidate constructor across audit, composition, and ingest so decoded entities,
+  sanitizer rejection, stable IDs, and candidate fingerprints describe the same bytes.
+- Added lease fencing before completed-output verification, provider calls, and checkpoint saves;
+  a replaced token now invalidates the old owner without deleting the replacement lease.
+- Discarded every upstream snippet, including feed text, so reconciliation must obtain new source
+  evidence through the canonical extractor instead of inferring provenance from legacy projections.
+- Restricted the initial source request and every redirect hop to the configured source registry;
+  a public but unregistered redirect now fails closed.
+- Removed automatic stale-lock takeover. An abandoned lease requires explicit operator cleanup,
+  preventing a second process from publishing while an old owner may still be running.
+- Bound durable publication receipts to execution identity, replayed completed identical identities
+  without provider calls, and fenced every durable or public publish side effect before and after it.
 
 ## Verification
 
-`npm test` ran 580 tests: 579 passed, none failed, and one intentional skip, followed by passing
+`npm test` ran 618 tests: 617 passed, none failed, and one intentional skip, followed by passing
 quality, relevance, taxonomy, and repetition commands. The final focused security set passed
-76/76. The local admin browser exercised all 17 lifecycle scenarios and commercial visual QA
+76/76, and the reconciliation/orchestrator security set passed 96/96. The local admin browser exercised all 17 lifecycle scenarios and commercial visual QA
 passed all eight captures. The source-image provenance audit regenerated and matched all 104
 hero, thumbnail, OpenGraph, and legacy variants across 26 public source-canonical articles.
 `npm audit --audit-level=low` reports zero findings, the resolved dependency tree is valid, and a

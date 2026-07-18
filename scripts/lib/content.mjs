@@ -55,11 +55,12 @@ export function validateEditorialMetadataPayload(payload) {
   return { summary, insight, tags, imagePrompt };
 }
 
-export async function extractContentSource(item) {
+export async function extractContentSource(item, options = {}) {
   const { articleText, extractionQa } = await fetchArticleExtraction({
     url: item.url,
     title: item.title,
     fallbackSnippet: item.snippet,
+    allowedDomains: options.allowedDomains,
   });
   return {
     ...item,

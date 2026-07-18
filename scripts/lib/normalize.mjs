@@ -5,7 +5,7 @@ export function normalizeUrl(url = '') {
   try {
     const parsed = new URL(url);
     parsed.hash = '';
-    const dropParams = [
+    const dropParams = new Set([
       'utm_source',
       'utm_medium',
       'utm_campaign',
@@ -16,8 +16,11 @@ export function normalizeUrl(url = '') {
       'gclid',
       'mc_cid',
       'mc_eid',
-    ];
-    dropParams.forEach((param) => parsed.searchParams.delete(param));
+    ]);
+    for (const param of [...parsed.searchParams.keys()]) {
+      if (dropParams.has(param.toLowerCase())) parsed.searchParams.delete(param);
+    }
+    parsed.searchParams.sort();
     return parsed.toString();
   } catch {
     return url.trim();

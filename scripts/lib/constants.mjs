@@ -279,7 +279,7 @@ export const FEEDS = [
   },
   {
     source: 'Capacity Media',
-    url: 'https://www.capacitymedia.com/feed/',
+    url: 'https://capacityglobal.com/feed/',
     region: 'Global',
     language: 'en',
     defaultCategory: 'Hyperscalers & Cloud',

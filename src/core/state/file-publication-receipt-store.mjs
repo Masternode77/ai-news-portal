@@ -20,6 +20,17 @@ function validTimestamp(value) {
   return nonEmptyString(value) && Number.isFinite(Date.parse(value));
 }
 
+function validExecutionIdentity(value) {
+  return value === undefined || (
+    value
+    && typeof value === 'object'
+    && !Array.isArray(value)
+    && nonEmptyString(value.kind)
+    && nonEmptyString(value.revision)
+    && nonEmptyString(value.fingerprint)
+  );
+}
+
 function validateReceipt(receipt, runId) {
   if (!receipt
     || typeof receipt !== 'object'
@@ -29,7 +40,8 @@ function validateReceipt(receipt, runId) {
     || !RECEIPT_STATUSES.has(receipt.status)
     || !validTimestamp(receipt.startedAt)
     || !Number.isInteger(receipt.attempts)
-    || receipt.attempts < 1) {
+    || receipt.attempts < 1
+    || !validExecutionIdentity(receipt.executionIdentity)) {
     throw new FilePublicationReceiptError('publication receipt is invalid', 'invalid_publication_receipt');
   }
   if (receipt.status === 'completed'

@@ -84,6 +84,22 @@ test('outbound URL policy permits only HTTP(S) and blocks HTTPS downgrade redire
     validateRedirectTarget('https://source.example/start', '/next').href,
     'https://source.example/next',
   );
+  assert.equal(
+    validateRedirectTarget(
+      'https://news.source.example/start',
+      'https://source.example/next',
+      { allowedDomains: ['source.example'] },
+    ).href,
+    'https://source.example/next',
+  );
+  assert.throws(
+    () => validateRedirectTarget(
+      'https://source.example/start',
+      'https://unregistered.example/next',
+      { allowedDomains: ['source.example'] },
+    ),
+    /registered domain/i,
+  );
 });
 
 test('cross-origin redirects strip credentials and POST redirect bodies', () => {
@@ -162,6 +178,20 @@ test('article extraction fails closed to feed text for an unsafe source URL', as
     url: 'http://169.254.169.254/latest/meta-data/',
     title: 'Utility queue delays data center interconnection',
     fallbackSnippet,
+  });
+
+  assert.equal(result.articleText, fallbackSnippet);
+  assert.equal(result.extractionQa.extraction_failure_reason, 'unsafe_source_url');
+  assert.equal(result.extractionQa.extraction_quality_score, 0);
+});
+
+test('article extraction rejects sources outside its reconciliation registry boundary', async () => {
+  const fallbackSnippet = 'Untrusted fallback text must not qualify as extracted evidence.';
+  const result = await fetchArticleExtraction({
+    url: 'https://unregistered.example/story',
+    title: 'Unregistered redirect target',
+    fallbackSnippet,
+    allowedDomains: ['registered.example'],
   });
 
   assert.equal(result.articleText, fallbackSnippet);

@@ -23,6 +23,9 @@ test('public URL guards allow only credential-free HTTP(S) links and local absol
   assert.equal(safePublicHttpUrl('http://[::1]/admin'), '');
   assert.equal(safePublicHttpUrl('http://[::ffff:127.0.0.1]/admin'), '');
   assert.equal(safePublicHttpUrl('http://[::ffff:7f00:1]/admin'), '');
+  assert.equal(safePublicHttpUrl('https://foo.localhost/admin'), '');
+  assert.equal(safePublicHttpUrl('https://localhost./admin'), '');
+  assert.equal(safePublicHttpUrl('https://service.local./admin'), '');
   assert.equal(safePublicHref('/news/report/'), '/news/report/');
   assert.equal(safePublicHref('//example.com/report'), '');
   assert.equal(safePublicHref('/news\\report'), '');

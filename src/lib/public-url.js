@@ -16,8 +16,14 @@ function isNonPublicIpv4(hostname) {
 }
 
 function isNonPublicHostname(hostname) {
-  const value = hostname.replace(/^\[|\]$/g, '').toLowerCase();
-  if (!value || value === 'localhost' || value.endsWith('.localhost')) return true;
+  const value = hostname.replace(/^\[|\]$/g, '').replace(/\.+$/, '').toLowerCase();
+  if (
+    !value
+    || value === 'localhost'
+    || value.endsWith('.localhost')
+    || value === 'local'
+    || value.endsWith('.local')
+  ) return true;
   if (isNonPublicIpv4(value)) return true;
   if (!value.includes(':')) return false;
   if (value.startsWith('::')) return true;

@@ -17,6 +17,41 @@ function nonEmptyString(value) {
   return typeof value === 'string' && value.trim().length > 0;
 }
 
+function normalizeExecutionIdentity(value) {
+  if (value === undefined || value === null) return null;
+  if (!value || typeof value !== 'object' || Array.isArray(value)) {
+    throw new ContentCycleError('content cycle execution identity is invalid', 'invalid_execution_identity');
+  }
+  const identity = {
+    kind: nonEmptyString(value.kind) ? value.kind.trim() : '',
+    revision: nonEmptyString(value.revision) ? value.revision.trim() : '',
+    fingerprint: nonEmptyString(value.fingerprint) ? value.fingerprint.trim() : '',
+  };
+  if (!identity.kind || !identity.revision || !identity.fingerprint) {
+    throw new ContentCycleError('content cycle execution identity is invalid', 'invalid_execution_identity');
+  }
+  return identity;
+}
+
+function sameExecutionIdentity(left, right) {
+  const normalizedLeft = normalizeExecutionIdentity(left);
+  const normalizedRight = normalizeExecutionIdentity(right);
+  return normalizedLeft?.kind === normalizedRight?.kind
+    && normalizedLeft?.revision === normalizedRight?.revision
+    && normalizedLeft?.fingerprint === normalizedRight?.fingerprint;
+}
+
+function assertExecutionIdentity(checkpoint, requestedIdentity) {
+  const checkpointIdentity = normalizeExecutionIdentity(checkpoint.executionIdentity);
+  const normalizedRequest = normalizeExecutionIdentity(requestedIdentity);
+  if (!sameExecutionIdentity(checkpointIdentity, normalizedRequest)) {
+    throw new ContentCycleError(
+      'active content cycle checkpoint belongs to a different execution',
+      'checkpoint_execution_identity_mismatch',
+    );
+  }
+}
+
 function defaultCapabilities() {
   return Object.fromEntries(CONTENT_CYCLE_PHASES.map((phase) => [phase, `content.${phase}`]));
 }
@@ -27,6 +62,7 @@ function validateDependencies({
   completedRunVerifier,
   phaseCapabilities,
   pipelineVersion,
+  executionIdentityValidator,
 }) {
   if (!registry || typeof registry.resolve !== 'function' || typeof registry.instantiate !== 'function') {
     throw new ContentCycleError('content cycle requires a plugin registry', 'invalid_registry');
@@ -40,6 +76,9 @@ function validateDependencies({
   if (!nonEmptyString(pipelineVersion)) {
     throw new ContentCycleError('content cycle pipeline version is required', 'invalid_pipeline_version');
   }
+  if (executionIdentityValidator !== undefined && typeof executionIdentityValidator !== 'function') {
+    throw new ContentCycleError('execution identity validator must be a function', 'invalid_execution_identity_validator');
+  }
   for (const phase of CONTENT_CYCLE_PHASES) {
     if (!nonEmptyString(phaseCapabilities[phase])) {
       throw new ContentCycleError(`content cycle capability is missing for ${phase}`, 'missing_phase_capability');
@@ -47,7 +86,7 @@ function validateDependencies({
   }
 }
 
-function newCheckpoint({ runId, timestamp, pipelineVersion, input }) {
+function newCheckpoint({ runId, timestamp, pipelineVersion, input, executionIdentity }) {
   return {
     schemaVersion: 1,
     pipelineVersion,
@@ -58,6 +97,8 @@ function newCheckpoint({ runId, timestamp, pipelineVersion, input }) {
     createdAt: timestamp,
     updatedAt: timestamp,
     payload: structuredClone(input || {}),
+    executionIdentity: normalizeExecutionIdentity(executionIdentity),
+    executionInput: executionIdentity ? structuredClone(input || {}) : null,
     providerReceipts: [],
     failure: null,
     lifecycle: { articles: {}, transitions: [] },
@@ -150,6 +191,7 @@ export class ContentCycleOrchestrator {
     completedRunVerifier,
     phaseCapabilities = defaultCapabilities(),
     pipelineVersion,
+    executionIdentityValidator,
     clock = () => new Date(),
     idGenerator = randomUUID,
   }) {
@@ -159,18 +201,21 @@ export class ContentCycleOrchestrator {
       completedRunVerifier,
       phaseCapabilities,
       pipelineVersion,
+      executionIdentityValidator,
     });
     this.registry = registry;
     this.checkpointStore = checkpointStore;
     this.completedRunVerifier = completedRunVerifier;
     this.phaseCapabilities = Object.freeze({ ...phaseCapabilities });
     this.pipelineVersion = pipelineVersion;
+    this.executionIdentityValidator = executionIdentityValidator;
     this.clock = clock;
     this.idGenerator = idGenerator;
   }
 
   async verifyCompletedRun(checkpoint) {
     if (!this.completedRunVerifier) return { ok: true, restored: [] };
+    await this.checkpointStore.assertLeaseOwnership?.();
     let result;
     try {
       result = await this.completedRunVerifier(structuredClone(checkpoint));
@@ -189,13 +234,33 @@ export class ContentCycleOrchestrator {
     return result;
   }
 
-  createCheckpoint(input = {}) {
+  async verifyCurrentCheckpoint() {
+    const checkpoint = await this.checkpointStore.load();
+    if (!checkpoint) return { status: 'missing', runId: null, executionIdentity: null };
+    assertCheckpointVersion(checkpoint, this.pipelineVersion);
+    if (checkpoint.status !== 'completed') {
+      throw new ContentCycleError(
+        'content cycle checkpoint is not completed',
+        'checkpoint_not_completed',
+      );
+    }
+    const verification = await this.verifyCompletedRun(checkpoint);
+    return {
+      status: 'completed',
+      runId: checkpoint.runId,
+      executionIdentity: normalizeExecutionIdentity(checkpoint.executionIdentity),
+      restored: Array.isArray(verification?.restored) ? [...verification.restored] : [],
+    };
+  }
+
+  createCheckpoint(input = {}, executionIdentity = null) {
     const timestamp = this.clock().toISOString();
     return newCheckpoint({
       runId: `content-cycle-${this.idGenerator()}`,
       timestamp,
       pipelineVersion: this.pipelineVersion,
       input,
+      executionIdentity,
     });
   }
 
@@ -212,6 +277,7 @@ export class ContentCycleOrchestrator {
     checkpoint.failure = null;
     checkpoint.updatedAt = this.clock().toISOString();
     await this.checkpointStore.save(checkpoint);
+    await this.checkpointStore.assertLeaseOwnership?.();
 
     let result;
     try {
@@ -221,8 +287,12 @@ export class ContentCycleOrchestrator {
         pipelineVersion: checkpoint.pipelineVersion,
         providerId: selected.manifest.id,
         providerVersion: selected.manifest.version,
+        executionIdentity: normalizeExecutionIdentity(checkpoint.executionIdentity),
+        assertExecutionOwnership: async () => this.checkpointStore.assertLeaseOwnership?.(),
       }));
+      await this.checkpointStore.assertLeaseOwnership?.();
     } catch (error) {
+      if (error?.code === 'checkpoint_lease_lost') throw error;
       result = { ok: false, error: safeProviderFailure(error), retryable: error?.retryable === true };
     }
 
@@ -274,19 +344,21 @@ export class ContentCycleOrchestrator {
     }
   }
 
-  async runPhase(phase, { input = {} } = {}) {
+  async runPhase(phase, { input = {}, executionIdentity = null } = {}) {
+    this.executionIdentityValidator?.(input, executionIdentity);
     const index = phaseIndex(phase);
     let checkpoint = await this.checkpointStore.load();
     if (checkpoint) assertCheckpointVersion(checkpoint, this.pipelineVersion);
     if (checkpoint?.status === 'completed') await this.verifyCompletedRun(checkpoint);
     if (phase === 'ingest' && (!checkpoint || checkpoint.status === 'completed')) {
-      checkpoint = this.createCheckpoint(input);
+      checkpoint = this.createCheckpoint(input, executionIdentity);
       await this.checkpointStore.save(checkpoint);
     }
     if (!checkpoint) {
       throw new ContentCycleError('content cycle checkpoint is missing; run content:ingest first', 'missing_checkpoint');
     }
     assertCheckpointVersion(checkpoint, this.pipelineVersion);
+    assertExecutionIdentity(checkpoint, executionIdentity);
     if (checkpoint.completedPhases.includes(phase)) {
       return { status: checkpoint.status, phase, runId: checkpoint.runId, replayed: true };
     }
@@ -301,16 +373,31 @@ export class ContentCycleOrchestrator {
     return { status: completed.status, phase, runId: completed.runId, replayed: false };
   }
 
-  async runCycle({ production = false, input = {} } = {}) {
+  async runCycle({ production = false, input = {}, executionIdentity = null } = {}) {
     if (production !== true) {
       throw new ContentCycleError('full content cycle requires an explicit production boundary', 'production_boundary_required');
     }
+    this.executionIdentityValidator?.(input, executionIdentity);
     let checkpoint = await this.checkpointStore.load();
     if (checkpoint) assertCheckpointVersion(checkpoint, this.pipelineVersion);
-    if (checkpoint?.status === 'completed') await this.verifyCompletedRun(checkpoint);
+    if (checkpoint?.status === 'completed') {
+      await this.verifyCompletedRun(checkpoint);
+      if (executionIdentity !== null
+        && sameExecutionIdentity(checkpoint.executionIdentity, executionIdentity)) {
+        return {
+          status: checkpoint.status,
+          runId: checkpoint.runId,
+          completedPhases: [...checkpoint.completedPhases],
+          executionIdentity: normalizeExecutionIdentity(checkpoint.executionIdentity),
+          replayed: true,
+        };
+      }
+    }
     if (!checkpoint || checkpoint.status === 'completed') {
-      checkpoint = this.createCheckpoint(input);
+      checkpoint = this.createCheckpoint(input, executionIdentity);
       await this.checkpointStore.save(checkpoint);
+    } else {
+      assertExecutionIdentity(checkpoint, executionIdentity);
     }
     assertCheckpointVersion(checkpoint, this.pipelineVersion);
     for (const phase of CONTENT_CYCLE_PHASES.slice(checkpoint.completedPhases.length)) {
@@ -320,6 +407,7 @@ export class ContentCycleOrchestrator {
       status: checkpoint.status,
       runId: checkpoint.runId,
       completedPhases: [...checkpoint.completedPhases],
+      executionIdentity: normalizeExecutionIdentity(checkpoint.executionIdentity),
       replayed: false,
     };
   }

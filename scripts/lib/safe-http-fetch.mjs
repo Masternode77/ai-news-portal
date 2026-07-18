@@ -174,7 +174,24 @@ export async function resolveSafeHttpTarget(value, options = {}) {
   };
 }
 
-export function validateRedirectTarget(currentValue, location) {
+function normalizedAllowedDomain(value = '') {
+  return String(value).trim().replace(/^www\./, '').replace(/\.+$/, '').toLowerCase();
+}
+
+function assertAllowedDomain(value, allowedDomains) {
+  if (allowedDomains === undefined) return;
+  if (!Array.isArray(allowedDomains) || allowedDomains.length === 0) {
+    throw new Error('Outbound source requires at least one registered domain');
+  }
+  const hostname = parseHttpUrl(value).hostname.replace(/^www\./, '').replace(/\.+$/, '').toLowerCase();
+  const allowed = allowedDomains.some((domain) => {
+    const normalized = normalizedAllowedDomain(domain);
+    return normalized && (hostname === normalized || hostname.endsWith(`.${normalized}`));
+  });
+  if (!allowed) throw new Error('Outbound redirect target is outside the registered domain set');
+}
+
+export function validateRedirectTarget(currentValue, location, options = {}) {
   const current = parseHttpUrl(currentValue);
   let next;
   try {
@@ -185,6 +202,7 @@ export function validateRedirectTarget(currentValue, location) {
   if (current.protocol === 'https:' && next.protocol !== 'https:') {
     throw new Error('HTTPS redirect downgrade is not allowed');
   }
+  assertAllowedDomain(next, options.allowedDomains);
   return next;
 }
 
@@ -360,6 +378,7 @@ export async function safeHttpFetch(value, options = {}) {
   const timeoutMs = options.timeoutMs || DEFAULT_TIMEOUT_MS;
   const deadline = Date.now() + timeoutMs;
   let currentUrl = parseHttpUrl(value);
+  assertAllowedDomain(currentUrl, options.allowedDomains);
   let requestOptions = {
     ...options,
     timeoutMs,
@@ -394,7 +413,9 @@ export async function safeHttpFetch(value, options = {}) {
     if ([301, 302, 303, 307, 308].includes(statusCode) && location) {
       response.destroy();
       if (redirects === maxRedirects) throw new Error(`Outbound redirect limit exceeded (${maxRedirects})`);
-      const nextUrl = validateRedirectTarget(currentUrl, location);
+      const nextUrl = validateRedirectTarget(currentUrl, location, {
+        allowedDomains: options.allowedDomains,
+      });
       requestOptions = redirectedRequestOptions(statusCode, requestOptions, currentUrl, nextUrl);
       currentUrl = nextUrl;
       continue;

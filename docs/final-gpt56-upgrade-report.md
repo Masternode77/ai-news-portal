@@ -8,7 +8,7 @@ The Compute Current upgrade is **deployable with operational follow-up** and rea
 preview approval. The public publication, canonical editorial foundation, secure CMS integration,
 design prototypes, tests, preview packaging, and rollback controls are implemented and verified.
 Full goal completion is not claimed: managed preview persistence, human-labeled content
-benchmarks, and canonical reconciliation of newer production content remain open. This branch did
+benchmarks, and execution of canonical reconciliation for newer production content remain open. This branch did
 not promote production and used no production secret or cache purge; the connected `main` branch
 continued its automated content deployments independently during QA.
 
@@ -64,6 +64,11 @@ continued its automated content deployments independently during QA.
   homepage, archive, RSS, search, and taxonomy surfaces.
 - Moved taxonomy regeneration into the production publisher lifecycle and narrowed generated
   search artifacts to one shared public projection, preventing future publish/repair drift.
+- Added a read-only `origin/main` reconciliation audit and a guarded execution command. Only six
+  source-discovery fields cross the boundary; generated copy and images are discarded before fresh
+  extraction. Active checkpoints are bound to the audited revision and candidate SHA-256 digest,
+  immutable initial input is retained for partial-publish recovery, and mismatched, oversized, or
+  concurrent runs fail before provider work.
 
 ### Public publication
 
@@ -131,15 +136,16 @@ three prototypes remain noindex and are not production routes.
 | --- | --- |
 | Clean install | `npm ci` passed |
 | Dependency security | `npm audit --audit-level=low`: 0 vulnerabilities |
-| Full tests | 580 total, 579 passed, 0 failed, 1 intentional skip |
+| Full tests | 618 total, 617 passed, 0 failed, 1 intentional skip |
 | Focused security tests | 76 passed, 0 failed |
+| Reconciliation/orchestrator security tests | 96 passed, 0 failed |
 | Editorial scripts | quality, relevance, taxonomy, repetition passed |
 | Astro check | 0 errors, 0 warnings, 11 existing type hints |
 | Build | Exact preview built 59 pages; 68 generated assets retained; 4,109 pruned |
 | Content gate | passed all public, copy, image, feed, and admin exclusion audits |
 | QA/QC | deployable with operational follow-up |
 | Admin browser E2E | 17/17 local UI/API lifecycle scenarios passed; public discovery integration passed |
-| Code review | Independent final code review APPROVED; architecture review found no remaining implementation defects after search, source-evidence, taxonomy freshness, and canonical-membership fixes. |
+| Code review | Independent final code review found 0 critical/high/medium/low defects and APPROVED; independent architecture review returned CLEAR / APPROVE. |
 | Preview public routes | Homepage, archive, search, article, power-grid, APAC, and design-lab routes returned 200 |
 | Removed public routes | `/about/`, `/editorial-policy/`, `/methodology/`, `/ai-disclosure/`, and `/contact/` returned 404 |
 | Preview admin pretty routes | `/admin/` and `/admin/login/` returned 200 |
@@ -173,15 +179,33 @@ difference. Production later advanced independently to `dpl_Hw1vrgH1qmc4Y2pRsW3g
 The latest `origin/main` is 117 automated commits ahead of the integrated baseline: 98 dashboard
 snapshot updates and 19 news/archive/dashboard refreshes. Those refreshes touch no product code;
 their net surface is four article JSON stores, pipeline state, one deleted-on-this-branch dashboard
-artifact, and 217 generated-image paths. They add 39 archive/search records relative to this branch.
+artifact, and 217 generated-image paths. They add 39 archive/search records by legacy ID comparison
+relative to this branch.
 
 A read-only three-way merge simulation found content conflicts in `archived-news.json`,
 `latest-news.json`, and `search-index.json`, plus a modify/delete conflict for the retired public
 dashboard artifact. Several incoming records are visibly outside the product definition, including
 consumer hardware and general software stories. Directly accepting generated stores would bypass
 the upgraded relevance, source-fidelity, repetition, canonical-source, and image-provenance gates.
-The release path is therefore to re-ingest the 39 candidates through the canonical pipeline, review
-the resulting public projection, and deploy a new preview. A raw merge or JSON overwrite is rejected.
+A current read-only audit resolved `origin/main` to
+`f110e8c28cfc08ec453804e4b06298cd19dbb347` and examined 747 upstream rows. Canonical-source
+comparison found 724 already present and 23 unique re-ingestion candidates, with 0 rejected rows.
+Every candidate contains only `id`, `title`, `source`, `url`, `publishedAt`, and `snippet`; policy
+sets every upstream snippet to an empty string so evidence must be extracted again from the source.
+Generated copy, images, routing, scores, and other legacy projection fields do not cross the boundary.
+
+The release path is to run
+`npm run content:reconcile-upstream -- --execute --production --revision=origin/main` in a safe
+preview content-refresh window. The command re-runs the 23 candidates through the canonical
+extraction, relevance, fidelity, repetition, image, review, and publication gates. It requires both
+execution flags, enforces a 30-candidate preflight limit, binds retries to the audited revision and
+candidate digest, resumes partial publication from immutable initial input before re-auditing local
+state, verifies the completion receipt identity, and holds an exclusive process lease. Candidate
+construction is shared by audit, composition, and ingest, and a displaced lease owner is fenced
+before completed-output verification, provider execution, checkpoint persistence, and each durable
+or public publish side effect. Locks are never reclaimed automatically; an abandoned lock requires
+explicit operator cleanup. The command has not been executed. A raw merge or JSON overwrite remains
+rejected.
 
 ## LOC and Repository Hygiene
 
@@ -200,8 +224,9 @@ remains outside release inputs.
    revision, media, restart-persistence, and outbox verification against preview infrastructure.
 2. Produce independent human labels for 150 relevance items and 40 writing samples before
    claiming precision, recall, or a sub-5% false-positive rate.
-3. Re-ingest the 39 newer `origin/main` content candidates through the canonical pipeline and
-   generate a fresh preview; do not merge the conflicting generated JSON stores directly.
+3. In a safe preview content-refresh window, execute the guarded canonical reconciliation for the
+   23 audited candidates, rerun content/provenance/visual gates, and generate a fresh preview. Do
+   not merge the conflicting generated JSON stores directly.
 4. Configure OAuth/2FA if required, plus Vercel Firewall, managed database backups, least-privilege
    credentials, monitoring, and secret rotation.
 5. Review the refreshed preview screenshots and selected design. Only then push and promote using the
