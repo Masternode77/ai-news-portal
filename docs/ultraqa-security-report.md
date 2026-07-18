@@ -58,3 +58,17 @@ operations rather than hidden code-completion claims.
 Managed preview persistence cannot be proven without preview-only Postgres, Blob, and admin
 credentials. Human relevance and writing labels are also still outstanding. These are explicit
 release follow-ups and do not justify production promotion without preview approval.
+
+## Exact Preview Receipt
+
+- Implementation: `58ff8bf31635aafb9456207d5c063144b0f0d3ae`.
+- Deployment: `dpl_931jMss3886U8GtBRyWvM1Eozuba`, status `READY`.
+- URL: `https://ai-news-portal-l1gqlehby-masternode77s-projects.vercel.app`.
+- Eight public routes returned 200 and five retired operational routes returned 404.
+- Homepage security headers include CSP, HSTS, nosniff, frame denial, referrer policy, and
+  permissions policy. The unconfigured admin API returned generic 503 with `no-store` and
+  `noindex, nofollow`.
+- Browser QA decoded 31/31 homepage images on desktop and mobile, 32/32 archive images,
+  32/32 search images, the representative article image, and 19/19 APAC images. It found no
+  broken image, placeholder label, console/page error, or horizontal overflow.
+- Production promotion and cache purge were not performed.

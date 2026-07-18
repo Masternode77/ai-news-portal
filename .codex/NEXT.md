@@ -1,10 +1,9 @@
 # NEXT
 
 ## Current branch
-- `upgrade/gpt-5-6-sol`, current committed HEAD `649682b8083127f7604f2ad08cf01cd059762ed7`.
-- Current source-image provenance, production dedupe, and CI pinning changes are not committed yet.
-- Last exact preview: `dpl_4ynXQhbvBsQRTQRAHLMa3ip6oV7t` at
-  `https://ai-news-portal-613ziqy6d-masternode77s-projects.vercel.app` (`READY`, implementation `649682b8`).
+- `upgrade/gpt-5-6-sol`, implementation commit `58ff8bf31635aafb9456207d5c063144b0f0d3ae`.
+- Exact preview: `dpl_931jMss3886U8GtBRyWvM1Eozuba` at
+  `https://ai-news-portal-l1gqlehby-masternode77s-projects.vercel.app` (`READY`, implementation `58ff8bf3`).
 - Rollback tag: `backup/pre-gpt56-upgrade-20260711T091118Z`.
 - No push, production promotion, production-secret operation, or cache purge has been performed.
 
@@ -41,6 +40,10 @@
 - Commercial visual QA: 8/8 captures; actual Applied Digital source image appears on home and article.
 - Local admin browser: all 17 real-handler lifecycle scenarios passed.
 - Independent code re-review and architecture reconfirmation both approved.
+- Exact preview: eight public routes returned 200, five retired routes returned 404, and the
+  unconfigured admin API returned generic 503 with `no-store` and `noindex, nofollow`.
+- Exact-preview browser: home 31/31 desktop/mobile, archive 32/32, search 32/32, article 1/1,
+  and APAC 19/19 images decoded; 0 broken images, placeholder labels, errors, or overflow.
 
 ## Blockers
 - Preview Postgres, Blob, and admin credentials are absent; managed persistence is not proven.
@@ -49,6 +52,6 @@
 - Production promotion requires explicit preview approval.
 
 ## Exact next step
-- Create the local Lore implementation commit from the approved, verified diff.
-- Deploy that exact commit to preview only and verify routes, headers, images, and admin fail-closed behavior.
+- Commit this exact-preview receipt locally and keep the worktree clean.
+- Await managed preview persistence credentials, human content labels, and preview approval.
 - Keep push, production promotion, production secrets, and cache purge excluded.
