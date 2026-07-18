@@ -4,11 +4,12 @@ import {
   OPENAI_IMAGE_QUALITY,
   OPENAI_IMAGE_SIZE,
 } from '../constants.mjs';
+import { articleImageAltText } from '../article-image-prompt.mjs';
+import { writeArticleImageSetFromBytes } from '../image-store.mjs';
 import {
   buildImagePrompt,
   fetchWithTimeout,
   SUPPORTED_RASTER_MIME_TYPES,
-  writeImageBytes,
 } from './shared.mjs';
 
 const MAX_PROVIDER_IMAGE_BYTES = 16 * 1024 * 1024;
@@ -91,24 +92,43 @@ export async function requestOpenAiImage(options = {}) {
   throw new Error('No image bytes returned by OpenAI image API');
 }
 
-export function createOpenAiImageApiProvider() {
-  const apiKey = process.env.OPENAI_API_KEY;
+export function createOpenAiImageApiProvider(options = {}) {
+  const apiKey = options.apiKey ?? process.env.OPENAI_API_KEY;
   if (!apiKey) {
     return null;
   }
 
+  const model = options.model || OPENAI_IMAGE_MODEL;
+  const requestImage = options.requestImage || requestOpenAiImage;
+  const generateSet = async (item) => {
+    const prompt = buildImagePrompt(item);
+    const image = await requestImage({
+      apiKey,
+      model,
+      prompt,
+      size: OPENAI_IMAGE_SIZE,
+      quality: OPENAI_IMAGE_QUALITY,
+    });
+
+    return writeArticleImageSetFromBytes(item, image.bytes, {
+      provider: 'openai-api',
+      model,
+      prompt,
+      alt: item.imageAlt || articleImageAltText(item),
+      generatedAt: new Date().toISOString(),
+      status: 'generated',
+      error: '',
+    }, { publicDir: options.publicDir, mimeType: image.mimeType });
+  };
+
   return {
     name: 'openai-api',
+    model,
     async generate(item) {
-      const image = await requestOpenAiImage({
-        apiKey,
-        model: OPENAI_IMAGE_MODEL,
-        prompt: buildImagePrompt(item),
-        size: OPENAI_IMAGE_SIZE,
-        quality: OPENAI_IMAGE_QUALITY,
-      });
-
-      return writeImageBytes(item, image.bytes, image.mimeType);
+      return (await generateSet(item)).heroImage;
+    },
+    async generateWithMetadata(item) {
+      return generateSet(item);
     },
   };
 }

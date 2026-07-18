@@ -51,11 +51,11 @@ do not exist.
 
 ## Images
 
-The default provider is `chatgpt`, but the scheduled workflow passes Gemini credentials
-without setting `IMAGE_PROVIDER`, and does not pass the OpenAI/Image2 endpoint variables.
-Provider failure silently falls back to source or local poster images. Provenance then
-classifies anything not explicitly marked as source as `ChatGPT Image2 visual`, so the
-public label can be false.
+At audit time, the default provider was `chatgpt`, while the scheduled workflow passed
+Gemini credentials without setting `IMAGE_PROVIDER`. That mismatch has been resolved:
+Image2 is now the default, the scheduled workflow maps `OPENAI_API_KEY`, and source
+artwork is attempted before provider generation unless `forceAiImage` explicitly requests
+a regenerated visual. Provenance still requires explicit source or generated metadata.
 
 All latest records have a generated WebP path, but 22 of 30 are source-canonical and
 eight lack complete provider/status/hero metadata. Images have no responsive `srcset`,

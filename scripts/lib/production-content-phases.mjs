@@ -22,8 +22,11 @@ import {
   mergeArticleRecords,
 } from './expert-lens.mjs';
 import { fetchNewsPool } from './fetch-feeds.mjs';
-import { ensureArticleImage, needsImageRefresh } from './image-generator.mjs';
-import { canonicalArticleImagePaths } from './image-store.mjs';
+import {
+  ensureArticleImageResult,
+  imageMetadataPatch,
+  needsImageRefresh,
+} from './image-generator.mjs';
 import { splitByExpertInsightGate } from './expert-insight-engine.mjs';
 import { buildSourceEvidencePack } from './evidence-pack-builder.mjs';
 import { sourceFidelityCheck } from './source-fidelity-check.mjs';
@@ -173,27 +176,33 @@ async function loadPool(existingLatest) {
   };
 }
 
-async function backfillLocalImages(articles = [], { collectOutputs = false } = {}) {
+export async function backfillLocalImages(articles = [], {
+  collectOutputs = false,
+  ensureImage = ensureArticleImageResult,
+} = {}) {
   const results = await Promise.all(articles.map(async (article) => {
     if (!(await needsImageRefresh(article))) return { article, outputPaths: [] };
-    let generatedImage;
+    let imageResult;
     try {
-      generatedImage = await withTimeout(
+      imageResult = await withTimeout(
         `image refresh ${article.id}`,
-        () => ensureArticleImage(article),
+        () => ensureImage(article),
         45_000,
       );
     } catch (error) {
       console.warn(`[content-cycle] image refresh skipped for ${article.id} -> ${error.message}`);
       return { article, outputPaths: [] };
     }
-    const { slug: _imageSlug, ...imagePaths } = canonicalArticleImagePaths(article, {
-      extension: 'webp',
-      legacyExtension: 'webp',
-    });
+    const imagePatch = imageMetadataPatch(imageResult);
+    const outputPaths = [
+      imagePatch.heroImage,
+      imagePatch.thumbnailImage,
+      imagePatch.ogImage,
+      imagePatch.legacyImage,
+    ].filter(Boolean);
     return {
-      article: { ...article, ...imagePaths, generatedImage },
-      outputPaths: [...new Set([generatedImage, ...Object.values(imagePaths)])],
+      article: { ...article, ...imagePatch },
+      outputPaths: [...new Set(outputPaths)],
     };
   }));
   const updatedArticles = results.map((result) => result.article);
@@ -460,23 +469,26 @@ export async function runProductionCluster(payload = {}) {
   };
 }
 
-async function generateCandidate(article, recentBlueprintIds) {
+export async function generateCandidate(article, recentBlueprintIds, dependencies = {}) {
+  const generateMetadata = dependencies.generateMetadata || generateEditorialMetadata;
+  const ensureImage = dependencies.ensureImage || ensureArticleImageResult;
+  const attachLens = dependencies.attachLens || attachExpertLensStrict;
   if (article.evidence_pack?.ok !== true || article.evidence_pack?.origin !== 'extraction_only') {
     throw Object.assign(new Error('source evidence pack is missing or invalid'), {
       code: 'editorial_generation_invalid',
     });
   }
   const frozenEvidencePack = structuredClone(article.evidence_pack);
-  const metadata = await generateEditorialMetadata(article);
+  const metadata = await generateMetadata(article);
   if (!metadata.ok) throw Object.assign(new Error(metadata.error.code), metadata.error, { retryable: metadata.retryable });
-  const generatedImage = await withTimeout(
+  const imageResult = await withTimeout(
     `generate image ${article.id}`,
-    () => ensureArticleImage({ ...metadata.article, forceAiImage: true, forceImageRefresh: true }),
+    () => ensureImage({ ...metadata.article, forceAiImage: true, forceImageRefresh: true }),
     45_000,
   );
   const [draft] = await withTimeout(
     `generate editorial draft ${article.id}`,
-    () => attachExpertLensStrict([{ ...metadata.article, generatedImage }], { recentBlueprintIds }),
+    () => attachLens([{ ...metadata.article, ...imageMetadataPatch(imageResult) }], { recentBlueprintIds }),
     90_000,
   );
   return { ...draft, evidence_pack: frozenEvidencePack };

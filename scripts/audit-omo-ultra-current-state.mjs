@@ -6,6 +6,7 @@ import { fileURLToPath } from 'node:url';
 import latestNews from '../src/data/latest-news.json' with { type: 'json' };
 import archivedNews from '../src/data/archived-news.json' with { type: 'json' };
 import { FEEDS, IMAGE_PROVIDER, OPENAI_IMAGE_MODEL } from './lib/constants.mjs';
+import { publicHomepageFeedEligible } from './lib/homepage-feed-builder.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const REPORT_PATH = path.join(ROOT, 'docs/omo-ultra-audit.md');
@@ -92,15 +93,6 @@ function articlePublicText(article = {}) {
   ].filter(Boolean).join(' '));
 }
 
-function homepageEligible(article = {}) {
-  if (!article?.id) return false;
-  if (article.homepagePublished === false) return false;
-  if (article.archiveOnly === true) return false;
-  if (article.public_content_tier === 'hidden') return false;
-  if (article.public_status === 'quarantined' || article.public_status === 'archive_only_noindex') return false;
-  return true;
-}
-
 function localImagePath(image = '') {
   const value = cleanText(image);
   if (!value || /^https?:\/\//i.test(value)) return '';
@@ -185,8 +177,8 @@ function countRouteFiles() {
   return {
     homepage: fileExists('src/pages/index.astro'),
     article: fileExists('src/pages/news/[id].astro'),
-    adminEdit: fileExists('src/pages/admin/edit/[id].astro'),
-    dashboard: fileExists('src/pages/dashboard.astro'),
+    adminEdit: fileExists('src/pages/admin/articles/editor.astro'),
+    dashboard: fileExists('src/pages/admin/dashboard.astro'),
     sitemap: fileExists('src/pages/sitemap.xml.ts'),
     rss: fileExists('src/pages/rss.xml.ts'),
     robots: fileExists('src/pages/robots.txt.ts'),
@@ -208,7 +200,7 @@ function analyzeArticles() {
     if (/\b(?:fuelin|clo|Hundreds o)\./i.test(text)) clippedItems.push(article);
   }
 
-  const homepageItems = all.filter(homepageEligible);
+  const homepageItems = all.filter(publicHomepageFeedEligible);
   const lowRelevanceHomepage = homepageItems.filter((article) => {
     const text = articlePublicText(article);
     return scoreFor(article) < 0.68
@@ -250,8 +242,10 @@ export async function buildOmoUltraAudit() {
   const packageJson = JSON.parse(await readText('package.json') || '{}');
   const astroConfig = await readText('astro.config.mjs');
   const authSource = await readText('api/admin/_auth.js');
+  const adminStorageSource = await readText('src/plugins/storage/index.mjs');
   const constantsSource = await readText('scripts/lib/constants.mjs');
   const pipelineSource = await readText('scripts/pipeline.mjs');
+  const productionPhasesSource = await readText('scripts/lib/production-content-phases.mjs');
   const homepageSource = await readText('src/pages/index.astro');
   const articleSource = await readText('src/pages/news/[id].astro');
   const routes = countRouteFiles();
@@ -307,9 +301,9 @@ export async function buildOmoUltraAudit() {
     '## Content Generation Pipeline',
     '',
     `- Entrypoint: \`scripts/pipeline.mjs\`.`,
-    `- Pipeline imports extraction/relevance/repetition/expert-insight/image gates: ${/splitByInfrastructureRelevance|splitByRepetitionGate|ensureArticleImage|splitByArticleQualityGate/.test(pipelineSource) ? 'yes' : 'needs review'}.`,
+    `- Canonical production phases import extraction/relevance/repetition/expert-insight/image gates: ${/splitByInfrastructureRelevance/.test(productionPhasesSource) && /splitByRepetitionGate/.test(productionPhasesSource) && /ensureArticleImageResult/.test(productionPhasesSource) && /splitByArticleQualityGate/.test(productionPhasesSource) ? 'yes' : 'needs review'}.`,
     `- Generation modules live under \`scripts/lib/\`, with additional editorial rules in \`scripts/lib/AGENTS.override.md\`.`,
-    `- Risk: the current pipeline has many guard modules but not one audited end-to-end public contract tying extraction QA, tiering, image metadata, rendered output, and admin review queue together.`,
+    `- The canonical command surface and production phase composition tie extraction QA, relevance, repetition, image metadata, publication receipts, and public eligibility together; \`scripts/pipeline.mjs\` remains a compatibility entrypoint (${pipelineSource.length} bytes).`,
     '',
     '## Current Image Handling',
     '',
@@ -333,17 +327,17 @@ export async function buildOmoUltraAudit() {
     '',
     '## Current Admin and Dashboard Routes',
     '',
-    `- Admin edit route: \`src/pages/admin/edit/[id].astro\`=${routes.adminEdit}.`,
-    `- Existing admin/serverless APIs: \`api/admin/login.js\`, \`api/admin/article.js\`, \`api/admin/_auth.js\`, \`api/admin/_github.js\`.`,
-    `- Existing dashboard route: \`src/pages/dashboard.astro\`=${routes.dashboard}.`,
-    `- Current admin is an article editor seed, not the requested full CMS dashboard/review queue/image regeneration surface.`,
+    `- Admin edit route: \`src/pages/admin/articles/editor.astro\`=${routes.adminEdit}.`,
+    `- Existing admin/serverless APIs cover login, dashboard, articles, article actions, revisions, media, audit, and operations under \`api/admin/\`.`,
+    `- Existing dashboard route: \`src/pages/admin/dashboard.astro\`=${routes.dashboard}.`,
+    `- The private CMS includes article queues, editor actions, image regeneration/upload, revision history, audit log, quarantine, source, and pipeline surfaces.`,
     '',
     '## Authentication and Environment Variables',
     '',
-    `- Current auth helper references plaintext-style envs: ${/ADMIN_PASSWORD/.test(authSource) ? '`ADMIN_PASSWORD` detected' : '`ADMIN_PASSWORD` not detected'}.`,
-    `- Requested secure envs not fully implemented: \`ADMIN_USERNAME\`, \`ADMIN_PASSWORD_HASH\`, \`ADMIN_SESSION_SECRET\`.`,
+    `- Authentication requires \`ADMIN_USERNAME\`, Argon2id password verification via \`ADMIN_PASSWORD_HASH\`, and a strong \`ADMIN_SESSION_SECRET\`: ${/ADMIN_USERNAME/.test(authSource) && /ADMIN_PASSWORD_HASH/.test(authSource) && /ADMIN_SESSION_SECRET/.test(authSource) && /verifyArgon2/.test(authSource) ? 'implemented' : 'needs review'}.`,
+    `- Session revocation, role/action authorization, CSRF validation, login throttling, and audit hooks are enforced by \`api/admin/_auth.js\`.`,
     `- Existing env constants include image, OpenRouter, Supabase, and pipeline settings in \`scripts/lib/constants.mjs\` (${constantsSource.length} bytes).`,
-    `- Security risk: current password comparison must be replaced with hash verification, CSRF protection, rate limiting/logging, and stronger session secret naming.`,
+    `- Admin storage is adapter-backed: local atomic storage is development-only and ${/PostgresAdminStorage/.test(adminStorageSource) && /production_storage_required/.test(adminStorageSource) ? 'Postgres in production fails closed when unconfigured' : 'production storage needs review'}.`,
     '',
     '## Deployment Platform Assumptions',
     '',
@@ -361,7 +355,7 @@ export async function buildOmoUltraAudit() {
     '',
     `- Why old Editor's Brief templates are still live: legacy JSON body/deck fields still contain old generated copy and article pages are rendered from those persisted fields until migration/regeneration rewrites or hides them. Matches found: ${articles.editorBriefItems.length}; examples: ${sample(articles.editorBriefItems)}.`,
     `- Why banned phrases still appear: phrase guards exist, but legacy records and fallback/presentation fields predate the current guard path. Current configured/brief phrase matches: ${articles.phraseMatches.length}; examples: ${sample(articles.phraseMatches.map((entry) => entry.article))}.`,
-    `- Why low-relevance items still appear in the homepage feed: homepage eligibility currently allows records unless explicit flags such as \`homepagePublished=false\`, \`archiveOnly=true\`, hidden tier, or quarantined status are set. Low-relevance homepage examples: ${articles.lowRelevanceHomepage.length}; examples: ${sample(articles.lowRelevanceHomepage)}.`,
+    `- Why low-relevance items still appear in the homepage feed: the canonical homepage predicate requires a public destination, source-grounded relevance, source integrity, and presentable card copy; remaining heuristic matches require editorial review rather than bypassing that predicate. Low-relevance homepage examples: ${articles.lowRelevanceHomepage.length}; examples: ${sample(articles.lowRelevanceHomepage)}.`,
     `- Why images are not reliably visible per article: display code supports multiple legacy fields and local fallbacks, but not every eligible record has a generated/fallback asset that exists on disk. Missing image examples: ${sample(articles.missingImages)}.`,
     `- Clipped extraction fragments detected in persisted public copy: ${articles.clippedItems.length}; examples: ${sample(articles.clippedItems)}.`,
     '',
@@ -369,7 +363,7 @@ export async function buildOmoUltraAudit() {
     '',
     `- Where admin should be implemented safely: extend \`src/pages/admin/\` for noindexed private shells and root \`api/admin/\` for Vercel-protected APIs, using shared auth/session/CSRF middleware in \`api/admin/_auth.js\` or a replacement module.`,
     `- Admin must remain excluded by \`astro.config.mjs\` sitemap filter and \`src/pages/robots.txt.ts\`, and private data must only load after authenticated API calls.`,
-    `- File-backed CMS writes should go through the existing GitHub-backed store pattern in \`api/admin/_github.js\`, with conflict handling, audit log writes, and post-save artifact regeneration.`,
+    `- CMS writes go through \`src/admin/admin-cms-service.mjs\` and the storage adapters under \`src/plugins/storage/\`; the GitHub helper is compatibility-only and must not bypass the canonical service.`,
   ];
 
   const markdown = `${lines.join('\n')}\n`;

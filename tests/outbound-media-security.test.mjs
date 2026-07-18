@@ -120,6 +120,42 @@ test('cross-origin redirects strip credentials and POST redirect bodies', () => 
   assert.deepEqual(options.headers, { 'x-trace': 'safe' });
 });
 
+test('cross-origin 307 and 308 redirects reject non-idempotent request replay', () => {
+  for (const statusCode of [307, 308]) {
+    assert.throws(
+      () => redirectedRequestOptions(statusCode, {
+        method: 'POST',
+        body: '{"prompt":"secret"}',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-Goog-Api-Key': 'provider-secret',
+        },
+      }, new URL('https://provider.example/generate'), new URL('https://attacker.example/collect')),
+      /cross-origin redirect.*non-idempotent/i,
+    );
+  }
+});
+
+test('cross-origin redirects strip provider API credentials', () => {
+  const options = redirectedRequestOptions(307, {
+    method: 'GET',
+    headers: {
+      Authorization: 'Bearer secret',
+      Cookie: 'session=secret',
+      'Proxy-Authorization': 'Basic secret',
+      'X-Goog-Api-Key': 'gemini-secret',
+      'X-Api-Key': 'provider-secret',
+      'Api-Key': 'generic-secret',
+      Apikey: 'alternate-secret',
+      'X-Auth-Token': 'auth-token',
+      'X-Access-Token': 'access-token',
+      'X-Trace': 'safe',
+    },
+  }, new URL('https://provider.example/start'), new URL('https://cdn.example/image'));
+
+  assert.deepEqual(options.headers, { 'x-trace': 'safe' });
+});
+
 test('ChatGPT runtime credentials are scoped to the configured runtime origin', () => {
   assert.equal(isSecureChatGptRuntimeEndpoint('https://runtime.example/v1/images'), true);
   assert.equal(isSecureChatGptRuntimeEndpoint('http://runtime.example/v1/images'), false);

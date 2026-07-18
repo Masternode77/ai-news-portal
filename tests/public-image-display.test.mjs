@@ -28,10 +28,10 @@ const HPCWIRE_REMOTE_IMAGE_REGRESSION_IDS = [
 ];
 const FORBIDDEN_VISIBLE_PROVENANCE_LABELS = /ChatGPT Image2 visual|Editorial visual|Original source image/;
 
-function assertPublicImage2Provenance(provenance, expected) {
+function assertPublicImageProvenance(provenance, expected) {
   assert.equal(typeof provenance.label, 'string');
   assert.notEqual(provenance.label.length, 0);
-  assert.equal(provenance.kind, 'image2');
+  assert.equal(provenance.kind, expected.kind || 'image2');
   assert.equal(provenance.provider, expected.provider);
   assert.equal(provenance.status, expected.status);
   assert.equal(provenance.variant, expected.variant);
@@ -169,7 +169,8 @@ test('article image surface keeps public imagery Image2-centered when only sourc
   assert.equal(articleOpenGraphImage(article), '/generated/fallbacks/power-grid.svg');
   assert.equal(variants.thumbnail.status, 'fallback');
   assert.equal(variants.thumbnail.provider, 'category-fallback');
-  assertPublicImage2Provenance(articleImageProvenance(article, 'thumbnail'), {
+  assertPublicImageProvenance(articleImageProvenance(article, 'thumbnail'), {
+    kind: 'fallback',
     provider: 'category-fallback',
     status: 'fallback',
     variant: 'thumbnail',
@@ -181,7 +182,7 @@ test('article image surface keeps public imagery Image2-centered when only sourc
   assert.equal(presentation.image_status, 'fallback');
   assert.equal(typeof presentation.image_provenance_label, 'string');
   assert.notEqual(presentation.image_provenance_label.length, 0);
-  assert.equal(presentation.image_provenance_kind, 'image2');
+  assert.equal(presentation.image_provenance_kind, 'fallback');
   assert.match(presentation.image_alt, /Utility capacity queue/);
 });
 
@@ -204,7 +205,8 @@ test('article image surface prefers local generated images over source artwork',
   assert.equal(articleOpenGraphImage(article), article.generatedImage);
   assert.equal(variants.thumbnail.status, 'placeholder');
   assert.equal(variants.thumbnail.provider, 'local-placeholder');
-  assertPublicImage2Provenance(articleImageProvenance(article, 'thumbnail'), {
+  assertPublicImageProvenance(articleImageProvenance(article, 'thumbnail'), {
+    kind: 'fallback',
     provider: 'local-placeholder',
     status: 'placeholder',
     variant: 'thumbnail',
@@ -236,13 +238,36 @@ test('article image surface prefers canonical image2 hero metadata', () => {
   assert.equal(presentation.image_provenance_kind, 'image2');
 });
 
-test('article image provenance labels fallback and missing metadata as image2 visuals', () => {
+test('article image provenance distinguishes legacy AI providers from Image2', () => {
+  const cases = [
+    ['chatgpt', 'ChatGPT generated visual'],
+    ['openai-api', 'OpenAI generated visual'],
+    ['legacy-gemini', 'Gemini generated visual'],
+  ];
+
+  for (const [provider, label] of cases) {
+    const provenance = articleImageProvenance({
+      id: `provider-${provider}`,
+      title: `${provider} provider fixture`,
+      heroImage: '/generated/fallbacks/data-centers.svg',
+      generatedImageProvider: provider,
+      imageStatus: 'generated',
+    });
+
+    assert.equal(provenance.kind, 'ai');
+    assert.equal(provenance.label, label);
+    assert.equal(provenance.provider, provider);
+  }
+});
+
+test('article image provenance labels fallback and missing metadata honestly', () => {
   const article = {
     id: 'image_surface_fallback_fixture',
     title: 'Unmapped AI infrastructure signal',
   };
 
-  assertPublicImage2Provenance(articleImageProvenance(article, 'thumbnail'), {
+  assertPublicImageProvenance(articleImageProvenance(article, 'thumbnail'), {
+    kind: 'fallback',
     provider: 'category-fallback',
     status: 'fallback',
     variant: 'thumbnail',
@@ -251,7 +276,7 @@ test('article image provenance labels fallback and missing metadata as image2 vi
   const presentation = buildPublicPresentation(article);
   assert.equal(typeof presentation.image_provenance_label, 'string');
   assert.notEqual(presentation.image_provenance_label.length, 0);
-  assert.equal(presentation.image_provenance_kind, 'image2');
+  assert.equal(presentation.image_provenance_kind, 'fallback');
 });
 
 registerPublicImageAuditContractTests();

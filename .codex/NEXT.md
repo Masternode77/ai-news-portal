@@ -27,6 +27,19 @@
   Node 22 so Vercel cannot silently adopt an unreviewed future major.
 - Deleted five unreferenced numbered image-provider snapshots whose divergent network/write paths
   bypassed canonical media guards, and added their regression contract to `content:gate`.
+- Made Image2 the scheduled/default provider while preserving publisher artwork first unless AI
+  regeneration is explicitly forced; every successful source/provider/local path now produces
+  canonical hero, thumbnail, OpenGraph, and legacy WebPs with honest provenance.
+- Rejected empty fresh provider results instead of inheriting stale artwork, retained bounded
+  failover reasons, and made stock regeneration persist the complete structured image contract.
+- Corrected the OMO current-state audit so it detects the modern CMS routes, Argon2id/CSRF/session
+  controls, canonical content command, and Postgres production storage boundary.
+- Rejected cross-origin 307/308 non-read-only request replay and stripped generic/provider API-key
+  headers on permitted redirects; the Image2 stock path now tests the real provider factory.
+- Reserved Image2 provenance for the canonical provider, labeled legacy ChatGPT/OpenAI/Gemini
+  artwork honestly, and documented that production editorial candidates explicitly force Image2.
+- Bound the OMO audit to the canonical homepage eligibility predicate; its current report now matches
+  the public corpus at 32 eligible records, one heuristic low-relevance item, and zero missing images.
 - Deployed implementation `f735cc40` to the exact preview and completed route, header, admin, log,
   desktop/mobile visual, image, placeholder, overflow, and production-comparison checks.
 - Re-audited current `origin/main`: 122 newer commits comprise 102 dashboard snapshots and 20 content
@@ -46,22 +59,31 @@
   production verification receipt, visual QA report, security reports, and this handoff.
 - Public UI typing: eight shared components, the article route, and their inherited public-signal contract.
 - Image-provider cleanup: five numbered snapshots deleted; release-gated recurrence test added.
+- Image pipeline: provider registry, canonical writers, production image persistence, stock
+  regeneration, workflow/default configuration, public provenance, docs, and regressions.
+- Audit hygiene: `scripts/audit-omo-ultra-current-state.mjs`, its contract test, QA reports, and
+  this handoff.
 - Local ignored evidence: `artifacts/preview-f735cc40/`.
 
 ## Validation results
-- Full `npm test`: 622 total, 621 passed, 0 failed, 1 intentional skip; follow-on editorial gates pass.
+- Full `npm test`: 642 total, 641 passed, 0 failed, 1 intentional skip; follow-on editorial gates pass.
 - QA/QC workflow/report-contract tests: 11/11 passed; reconciliation/orchestrator security set: 96/96 passed.
-- Focused security: 76/76 passed; `npm audit --audit-level=low`: 0 vulnerabilities.
+- Focused redirect/image security: 35/35; normal and offline image orchestration: 19/19 each;
+  `npm audit --audit-level=low`: 0 vulnerabilities.
 - Tracked secret scan: no real credentials/private keys; only an `example.invalid` fixture matched.
 - Source provenance: 26/26 articles and 104/104 variants matched with no unsafe/missing/mismatch result.
 - `npm run check`: 0 errors, 0 warnings, 0 hints.
 - `npm run content:gate`: passed; 59 pages built and all public/image/admin/performance audits passed.
+- Release-gate selected tests: 41/41; rendered audit: 7 pages, 30 cards, 0 broken images.
+- `npm run qa:qc`: deployable with operational follow-up; live verification passed, staging absent,
+  cache purge skipped.
 - Public inventory: latest 30, archive 708, search 738, taxonomy 32, homepage 31, one longform route.
 - Local admin browser: all 17 real-handler lifecycle scenarios passed.
 - Independent code review found 0 critical/high/medium/low defects and returned `APPROVE`;
   the nullable-contract re-review found and closed two medium issues, then returned `APPROVE` with
   0 findings; the provider-cleanup review found and closed two medium issues, then returned
-  `APPROVE` with 0 findings; architecture re-review returned `CLEAR / APPROVE`.
+  `APPROVE` with 0 findings; architecture re-review returned `CLEAR / APPROVE`; the final image,
+  redirect, provenance, and audit-parity review closed all findings and returned `APPROVE`.
 - Exact preview: eight public routes returned 200, five retired routes returned 404, and admin pages
   returned private/no-store responses; the unconfigured API returned a generic no-store 503.
 - Preview security headers include CSP, HSTS, nosniff, frame denial, referrer policy, permissions
@@ -82,8 +104,10 @@
 - Push/PR and production promotion require explicit preview approval.
 
 ## Exact next step
-- In a safe preview content-refresh window, run
-  `npm run content:reconcile-upstream -- --execute --production --revision=origin/main`; then rerun
-  content, provenance, browser, and visual gates and deploy a refreshed preview.
+- Create a Lore source commit and deploy that exact commit to a Vercel preview; rerun route, header,
+  image, browser, and visual checks against its URL.
+- In a later safe preview content-refresh window, run
+  `npm run content:reconcile-upstream -- --execute --production --revision=origin/main`; then refresh
+  the preview after canonical extraction and publication gates pass.
 - Await managed preview persistence credentials, independent human labels, and preview approval.
 - Keep push, production promotion, production secrets, and cache purge excluded.

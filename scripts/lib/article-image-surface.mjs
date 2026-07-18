@@ -211,10 +211,27 @@ export function articleImageProvenance(article = {}, variant = 'hero') {
   const variants = articleImageVariants(article);
   const selected = variants[variant] || variants.hero;
   const provider = clean(selected.provider);
+  const normalizedProvider = provider.toLowerCase();
   const status = clean(selected.status);
-  const kind = status === 'source' || provider === 'source-image' ? 'source' : 'image2';
+  const source = status === 'source' || /^(?:source|source-image)$/.test(provider);
+  const image2 = !source && normalizedProvider === 'image2';
+  const ai = !source && !image2 && AI_IMAGE_PROVIDER_RE.test(provider);
+  const kind = source ? 'source' : image2 ? 'image2' : ai ? 'ai' : 'fallback';
+  const label = kind === 'source'
+    ? 'Original source image'
+    : kind === 'image2'
+      ? 'ChatGPT Image2 visual'
+      : kind === 'ai' && /gemini|nano/.test(normalizedProvider)
+        ? 'Gemini generated visual'
+        : kind === 'ai' && /chatgpt/.test(normalizedProvider)
+          ? 'ChatGPT generated visual'
+          : kind === 'ai' && /openai|gpt-image/.test(normalizedProvider)
+            ? 'OpenAI generated visual'
+            : kind === 'ai'
+              ? 'AI generated visual'
+              : 'Editorial fallback visual';
   return {
-    label: kind === 'source' ? 'Original source image' : 'ChatGPT Image2 visual',
+    label,
     kind,
     provider,
     status,

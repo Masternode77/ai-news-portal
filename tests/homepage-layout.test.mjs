@@ -359,7 +359,7 @@ test('homepage feed avoids visible standalone blueprint without mutating source 
   assert.equal(signal.image_variant, 'thumbnail');
   assert.equal(typeof signal.image_provenance_label, 'string');
   assert.notEqual(signal.image_provenance_label.length, 0);
-  assert.equal(signal.image_provenance_kind, 'image2');
+  assert.equal(signal.image_provenance_kind, 'fallback');
   assert.doesNotMatch(signalText, /ChatGPT Image2 visual|Editorial visual|Original source image/);
   assert.deepEqual(hits, []);
 });

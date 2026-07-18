@@ -3,7 +3,11 @@ import fs from 'node:fs/promises';
 import path from 'node:path';
 import sharp from 'sharp';
 import { IMAGE_PROVIDER, PIPELINE_OFFLINE } from './constants.mjs';
-import { ARTICLE_IMAGE_VARIANTS, canonicalArticleImagePaths } from './image-store.mjs';
+import {
+  ARTICLE_IMAGE_VARIANTS,
+  canonicalArticleImagePaths,
+  writeArticleImageSetFromBytes,
+} from './image-store.mjs';
 import { createImageProvider } from './image-providers/index.mjs';
 import {
   ensureGeneratedOutDir,
@@ -11,7 +15,6 @@ import {
   safeGeneratedImageId,
   SUPPORTED_RASTER_MIME_TYPES,
   validateRasterImageBytes,
-  writeImageBytes,
 } from './image-providers/shared.mjs';
 import { localArticleImagePath } from './article-image-surface.mjs';
 import { isStockDerivedCardImage } from './stock-card-image-detector.mjs';
@@ -137,39 +140,75 @@ async function writeLocalEditorialRasterSet(item = {}) {
 
 async function writeLocalEditorialImageSet(item) {
   const paths = await writeLocalEditorialRasterSet(item);
-  return paths.heroImage;
+  return {
+    ...paths,
+    provider: 'local-placeholder',
+    model: 'local-raster',
+    status: 'fallback',
+    error: '',
+  };
 }
 
-async function generateLocalPoster(item) {
-  if (PIPELINE_OFFLINE) {
-    return null;
-  }
+function normalizeImageResult(item = {}, result, metadata = {}, options = {}) {
+  const value = typeof result === 'string' ? { heroImage: result } : (result || {});
+  const fresh = options.fresh === true;
+  const heroImage = value.heroImage
+    || value.generatedImage
+    || (fresh ? '' : item.heroImage || item.generatedImage || '');
+  if (!heroImage) return null;
+  const valueHas = (field) => Object.prototype.hasOwnProperty.call(value, field);
+  const metadataHas = (field) => Object.prototype.hasOwnProperty.call(metadata, field);
+  const scalar = (field, itemField, fallback = '') => {
+    if (valueHas(field)) return value[field] ?? fallback;
+    if (metadataHas(field)) return metadata[field] ?? fallback;
+    return fresh ? fallback : (item[itemField] ?? fallback);
+  };
+  return {
+    heroImage,
+    thumbnailImage: value.thumbnailImage || (fresh ? heroImage : item.thumbnailImage || heroImage),
+    ogImage: value.ogImage || (fresh ? heroImage : item.ogImage || heroImage),
+    legacyImage: value.legacyImage || (fresh ? heroImage : item.legacyImage || heroImage),
+    prompt: value.prompt || item.imagePrompt || '',
+    alt: value.alt || item.imageAlt || '',
+    provider: scalar('provider', 'generatedImageProvider', fresh ? '' : item.imageProvider || 'local-placeholder'),
+    model: scalar('model', 'generatedImageModel', fresh ? '' : item.imageModel || 'local-raster'),
+    status: scalar('status', 'imageStatus', fresh ? 'generated' : 'generated'),
+    error: scalar('error', 'imageError', ''),
+    generatedAt: scalar('generatedAt', 'imageGeneratedAt', ''),
+  };
+}
 
-  const sourceImage = item.sourceImage || item.image || null;
-  if (!sourceImage) {
-    return null;
-  }
+function withStageFailures(result, failures = []) {
+  if (!result || failures.length === 0) return result;
+  const reasons = [result.error, ...failures].filter(Boolean).join('; ').slice(0, 500);
+  return { ...result, error: reasons };
+}
 
-  const response = await fetchWithTimeout(sourceImage, {
-    headers: {
-      'user-agent': 'Mozilla/5.0 (compatible; AINewsPortalBot/1.0)',
-    },
-    safeFetch: {
-      allowedMimeTypes: SUPPORTED_RASTER_MIME_TYPES,
-      maxRedirects: 3,
-      maxCompressedBytes: MAX_SOURCE_IMAGE_BYTES,
-      maxDecompressedBytes: MAX_SOURCE_IMAGE_BYTES,
-    },
-  }, 20000);
+export function imageMetadataPatch(result = {}) {
+  const normalized = normalizeImageResult({}, result);
+  if (!normalized) return {};
+  return {
+    generatedImage: normalized.heroImage,
+    heroImage: normalized.heroImage,
+    thumbnailImage: normalized.thumbnailImage,
+    ogImage: normalized.ogImage,
+    legacyImage: normalized.legacyImage,
+    imagePrompt: normalized.prompt,
+    imageAlt: normalized.alt,
+    generatedImageProvider: normalized.provider,
+    generatedImageModel: normalized.model,
+    imageProvider: normalized.provider,
+    imageModel: normalized.model,
+    imageStatus: normalized.status,
+    imageError: normalized.error,
+    imageGeneratedAt: normalized.generatedAt,
+  };
+}
 
-  if (!response.ok) {
-    throw new Error(`Source image fetch failed: ${response.status}`);
-  }
-
-  const bytes = Buffer.from(await response.arrayBuffer());
+export async function writeSourcePosterImageSet(item, bytes, mime = '', options = {}) {
   const validated = await validateRasterImageBytes(
     bytes,
-    response.headers.get('content-type') || '',
+    mime,
     { maxBytes: MAX_SOURCE_IMAGE_BYTES, maxPixels: MAX_SOURCE_IMAGE_PIXELS },
   );
   const imageId = safeGeneratedImageId(item);
@@ -214,7 +253,49 @@ async function generateLocalPoster(item) {
     .jpeg({ quality: 88, mozjpeg: true })
     .toBuffer();
 
-  return writeImageBytes(item, output, 'image/jpeg');
+  return writeArticleImageSetFromBytes(item, output, {
+    provider: 'source',
+    model: 'publisher-artwork',
+    status: 'source',
+    error: '',
+  }, {
+    publicDir: options.publicDir || path.join(process.cwd(), 'public'),
+    mimeType: 'image/jpeg',
+  });
+}
+
+async function generateLocalPoster(item) {
+  if (PIPELINE_OFFLINE) {
+    return null;
+  }
+
+  const sourceImage = item.sourceImage || item.image || null;
+  if (!sourceImage) {
+    return null;
+  }
+
+  const response = await fetchWithTimeout(sourceImage, {
+    headers: {
+      'user-agent': 'Mozilla/5.0 (compatible; AINewsPortalBot/1.0)',
+    },
+    safeFetch: {
+      allowedMimeTypes: SUPPORTED_RASTER_MIME_TYPES,
+      maxRedirects: 3,
+      maxCompressedBytes: MAX_SOURCE_IMAGE_BYTES,
+      maxDecompressedBytes: MAX_SOURCE_IMAGE_BYTES,
+    },
+  }, 20000);
+
+  if (!response.ok) {
+    throw new Error(`Source image fetch failed: ${response.status}`);
+  }
+
+  const result = await writeSourcePosterImageSet(
+    item,
+    Buffer.from(await response.arrayBuffer()),
+    response.headers.get('content-type') || '',
+  );
+  return result;
 }
 
 export async function needsImageRefresh(item) {
@@ -244,35 +325,109 @@ export async function needsImageRefresh(item) {
   return false;
 }
 
-export async function ensureArticleImage(item) {
+export function imageGenerationStages(item = {}) {
+  if (item?.requireProviderImage) return ['provider'];
+  const hasSourceImage = Boolean(item?.sourceImage || item?.image);
+  if (!hasSourceImage) return ['provider', 'local'];
+
+  return item?.forceAiImage
+    ? ['provider', 'source', 'local']
+    : ['source', 'provider', 'local'];
+}
+
+export async function ensureArticleImageResult(item, options = {}) {
   await ensureGeneratedOutDir();
+  const offline = options.offline ?? PIPELINE_OFFLINE;
+  const stageFailures = [];
+  const recordFailure = (stage, detail) => {
+    const message = String(detail?.message || detail || 'unavailable').replace(/\s+/g, ' ').trim();
+    stageFailures.push(`${stage}: ${message.slice(0, 220)}`);
+  };
 
   if (!(await needsImageRefresh(item))) {
-    return item.generatedImage;
+    return normalizeImageResult(item, item.generatedImage);
   }
 
   if (item?.forcePlaceholderImage) {
-    return writeLocalEditorialImageSet(item);
+    const local = await (options.generateLocal || writeLocalEditorialImageSet)(item);
+    return normalizeImageResult(item, local, {
+      provider: 'local-placeholder',
+      model: 'local-raster',
+      status: 'fallback',
+    }, { fresh: true });
   }
 
-  const provider = createImageProvider();
+  const provider = options.provider === undefined ? createImageProvider() : options.provider;
+  const generateSource = options.generateSource || generateLocalPoster;
+  const generateLocal = options.generateLocal || writeLocalEditorialImageSet;
 
-  if (provider && !PIPELINE_OFFLINE) {
-    try {
-      return await provider.generate(item);
-    } catch (error) {
-      console.error(`[pipeline] ${provider.name} image fallback for ${item.id}: ${error.message}`);
+  for (const stage of imageGenerationStages(item)) {
+    if (stage === 'source') {
+      try {
+        const poster = await generateSource(item);
+        if (poster) {
+          const normalized = normalizeImageResult(item, poster, {
+            provider: 'source',
+            model: 'publisher-artwork',
+            status: 'source',
+          }, { fresh: true });
+          if (!normalized) throw new Error('source returned no image path');
+          return withStageFailures(normalized, stageFailures);
+        }
+      } catch (error) {
+        recordFailure('source', error);
+        console.error(`[pipeline] source poster fallback for ${item.id}: ${error.message}`);
+      }
+      continue;
     }
-  } else if (IMAGE_PROVIDER !== 'local' && !PIPELINE_OFFLINE) {
-    console.warn(`[pipeline] IMAGE_PROVIDER="${IMAGE_PROVIDER}" is not fully configured; using local image fallback`);
+
+    if (stage === 'provider') {
+      if (provider && !offline) {
+        try {
+          const generated = typeof provider.generateWithMetadata === 'function'
+            ? await provider.generateWithMetadata(item)
+            : await provider.generate(item);
+          const normalized = normalizeImageResult(item, generated, {
+            provider: provider.name,
+            model: provider.model || '',
+            status: 'generated',
+            error: '',
+          }, { fresh: true });
+          if (!normalized) throw new Error(`${provider.name} returned no image path`);
+          return withStageFailures(normalized, stageFailures);
+        } catch (error) {
+          if (item?.requireProviderImage) throw error;
+          recordFailure('provider', error);
+          console.error(`[pipeline] ${provider.name} image fallback for ${item.id}: ${error.message}`);
+        }
+      } else if (item?.requireProviderImage) {
+        throw new Error(`IMAGE_PROVIDER="${IMAGE_PROVIDER}" is not fully configured`);
+      } else if (IMAGE_PROVIDER !== 'local' && !offline) {
+        recordFailure('provider', `IMAGE_PROVIDER="${IMAGE_PROVIDER}" is not fully configured`);
+        console.warn(`[pipeline] IMAGE_PROVIDER="${IMAGE_PROVIDER}" is not fully configured; using local image fallback`);
+      } else if (offline && IMAGE_PROVIDER !== 'local') {
+        recordFailure('provider', 'pipeline offline');
+      }
+      continue;
+    }
+
+    const local = await generateLocal(item);
+    return withStageFailures(normalizeImageResult(item, local, {
+      provider: 'local-placeholder',
+      model: 'local-raster',
+      status: 'fallback',
+    }, { fresh: true }), stageFailures);
   }
 
-  try {
-    const poster = await generateLocalPoster(item);
-    if (poster) return poster;
-  } catch (error) {
-    console.error(`[pipeline] source poster fallback for ${item.id}: ${error.message}`);
-  }
+  const local = await generateLocal(item);
+  return withStageFailures(normalizeImageResult(item, local, {
+    provider: 'local-placeholder',
+    model: 'local-raster',
+    status: 'fallback',
+  }, { fresh: true }), stageFailures);
+}
 
-  return writeLocalEditorialImageSet(item);
+export async function ensureArticleImage(item, options = {}) {
+  const result = await ensureArticleImageResult(item, options);
+  return result?.heroImage || '';
 }

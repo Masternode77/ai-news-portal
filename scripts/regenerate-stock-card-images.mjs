@@ -1,7 +1,9 @@
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { buildHomepageFeed, publicHomepageFeedEligible } from './lib/homepage-feed-builder.mjs';
-import { ensureArticleImage } from './lib/image-generator.mjs';
+import { ensureArticleImageResult, imageMetadataPatch } from './lib/image-generator.mjs';
 import { createImageProvider, describeImageProvider } from './lib/image-providers/index.mjs';
-import { ARCHIVE_NEWS_PATH, LATEST_NEWS_PATH, OPENAI_IMAGE_MODEL, SEARCH_INDEX_PATH } from './lib/constants.mjs';
+import { ARCHIVE_NEWS_PATH, LATEST_NEWS_PATH, SEARCH_INDEX_PATH } from './lib/constants.mjs';
 import { isStockDerivedCardImage, stockDerivedImageReason } from './lib/stock-card-image-detector.mjs';
 import { readJsonFile, writeJsonFile } from './lib/state-store.mjs';
 
@@ -9,6 +11,31 @@ const args = new Set(process.argv.slice(2));
 const DRY_RUN = args.has('--dry-run');
 const ALLOW_LOCAL_PLACEHOLDER = args.has('--allow-local-placeholder');
 const TARGET_HOME_ONLY = args.has('--homepage-only');
+const ARTICLE_IMAGE_FIELDS = [
+  'generatedImage',
+  'heroImage',
+  'thumbnailImage',
+  'ogImage',
+  'legacyImage',
+  'imagePrompt',
+  'imageAlt',
+  'generatedImageProvider',
+  'generatedImageModel',
+  'imageProvider',
+  'imageModel',
+  'imageStatus',
+  'imageError',
+  'imageGeneratedAt',
+  'stockImageReplacedAt',
+];
+
+function articleImagePatch(article = {}) {
+  return Object.fromEntries(
+    ARTICLE_IMAGE_FIELDS
+      .filter((field) => Object.prototype.hasOwnProperty.call(article, field))
+      .map((field) => [field, article[field]]),
+  );
+}
 
 function canonicalKey(article = {}) {
   const url = String(article.sourceUrl || article.url || article.link || '').trim().toLowerCase();
@@ -49,20 +76,24 @@ function imagePromptForArticle(article = {}) {
   ].join('\n');
 }
 
-async function generateReplacement(article, provider) {
+export async function generateReplacement(article, provider, options = {}) {
+  const allowLocalPlaceholder = options.allowLocalPlaceholder ?? ALLOW_LOCAL_PLACEHOLDER;
   const input = {
     ...article,
     imagePrompt: imagePromptForArticle(article),
-    forceAiImage: !ALLOW_LOCAL_PLACEHOLDER,
+    forceAiImage: !allowLocalPlaceholder,
+    requireProviderImage: !allowLocalPlaceholder,
     forceImageRefresh: true,
-    forcePlaceholderImage: ALLOW_LOCAL_PLACEHOLDER,
+    forcePlaceholderImage: allowLocalPlaceholder,
   };
-  const generatedImage = await ensureArticleImage(input);
+  const ensureImage = options.ensureImage || ensureArticleImageResult;
+  const result = await ensureImage(input, {
+    provider,
+    ...options.imageOptions,
+  });
   return {
-    generatedImage,
-    generatedImageProvider: ALLOW_LOCAL_PLACEHOLDER ? 'local-placeholder' : provider.name,
-    generatedImageModel: ALLOW_LOCAL_PLACEHOLDER ? 'local-svg' : OPENAI_IMAGE_MODEL,
-    stockImageReplacedAt: new Date().toISOString(),
+    ...imageMetadataPatch(result),
+    stockImageReplacedAt: (options.now || (() => new Date()))().toISOString(),
   };
 }
 
@@ -74,10 +105,7 @@ function patchCollection(items = [], replacementsByKey = new Map()) {
     changed += 1;
     return {
       ...item,
-      generatedImage: replacement.generatedImage,
-      generatedImageProvider: replacement.generatedImageProvider,
-      generatedImageModel: replacement.generatedImageModel,
-      stockImageReplacedAt: replacement.stockImageReplacedAt,
+      ...replacement,
     };
   });
   return { changed, updated };
@@ -91,10 +119,7 @@ function syncCollectionImages(items = [], sourceByKey = new Map()) {
 
     const next = {
       ...item,
-      generatedImage: source.generatedImage,
-      generatedImageProvider: source.generatedImageProvider,
-      generatedImageModel: source.generatedImageModel,
-      stockImageReplacedAt: source.stockImageReplacedAt,
+      ...articleImagePatch(source),
     };
 
     if (item.publicSignal?.image) {
@@ -105,10 +130,7 @@ function syncCollectionImages(items = [], sourceByKey = new Map()) {
     }
 
     if (
-      next.generatedImage !== item.generatedImage ||
-      next.generatedImageProvider !== item.generatedImageProvider ||
-      next.generatedImageModel !== item.generatedImageModel ||
-      next.stockImageReplacedAt !== item.stockImageReplacedAt ||
+      ARTICLE_IMAGE_FIELDS.some((field) => next[field] !== item[field]) ||
       next.publicSignal?.image !== item.publicSignal?.image
     ) {
       changed += 1;
@@ -135,7 +157,7 @@ async function main() {
   const providerPlan = describeImageProvider();
 
   console.log(
-    `[stock-card-images] targets=${targets.length} provider=${providerPlan.active} configured=${providerPlan.configured} model=${OPENAI_IMAGE_MODEL}`
+    `[stock-card-images] targets=${targets.length} provider=${providerPlan.active} configured=${providerPlan.configured} model=${provider?.model || 'none'}`
   );
 
   for (const target of targets) {
@@ -148,7 +170,7 @@ async function main() {
 
   if (!provider && !ALLOW_LOCAL_PLACEHOLDER) {
     throw new Error(
-      'No image provider is configured. Set CHATGPT_IMAGE_OAUTH_ENDPOINT/CHATGPT_IMAGE_OAUTH_ACCESS_TOKEN or IMAGE_PROVIDER=openai-api with OPENAI_API_KEY, or rerun with --allow-local-placeholder.'
+      'No image provider is configured. Set IMAGE_PROVIDER=image2 with OPENAI_API_KEY, or rerun with --allow-local-placeholder.'
     );
   }
 
@@ -179,7 +201,9 @@ async function main() {
   );
 }
 
-main().catch((error) => {
-  console.error(`[stock-card-images] fatal: ${error.message}`);
-  process.exitCode = 1;
-});
+if (process.argv[1] && fileURLToPath(import.meta.url) === path.resolve(process.argv[1])) {
+  main().catch((error) => {
+    console.error(`[stock-card-images] fatal: ${error.message}`);
+    process.exitCode = 1;
+  });
+}

@@ -12,7 +12,7 @@ export const PIPELINE_USE_EXISTING_POOL = process.env.PIPELINE_USE_EXISTING_POOL
 export const PIPELINE_OFFLINE =
   process.env.PIPELINE_OFFLINE === '1' || process.env.CODEX_SANDBOX_NETWORK_DISABLED === '1';
 
-export const IMAGE_PROVIDER = process.env.IMAGE_PROVIDER || 'chatgpt';
+export const IMAGE_PROVIDER = process.env.IMAGE_PROVIDER || 'image2';
 export const CHATGPT_IMAGE_OAUTH_ENDPOINT = process.env.CHATGPT_IMAGE_OAUTH_ENDPOINT || '';
 export const CHATGPT_IMAGE_OAUTH_ACCESS_TOKEN = process.env.CHATGPT_IMAGE_OAUTH_ACCESS_TOKEN || '';
 export const OPENAI_IMAGE_API_URL = process.env.OPENAI_IMAGE_API_URL || 'https://api.openai.com/v1/images/generations';

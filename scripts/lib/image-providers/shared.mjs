@@ -147,7 +147,7 @@ export async function writeBase64Image(item, data, mime = 'image/png') {
   return writeImageBytes(item, Buffer.from(data, 'base64'), mime);
 }
 
-export async function writeFetchedImage(item, url, headers = {}) {
+export async function fetchImageBytes(url, headers = {}) {
   const response = await fetchWithTimeout(url, {
     headers,
     safeFetch: {
@@ -163,5 +163,10 @@ export async function writeFetchedImage(item, url, headers = {}) {
 
   const mime = response.headers.get('content-type') || '';
   const bytes = Buffer.from(await response.arrayBuffer());
-  return writeImageBytes(item, bytes, mime);
+  return { bytes, mimeType: mime };
+}
+
+export async function writeFetchedImage(item, url, headers = {}) {
+  const image = await fetchImageBytes(url, headers);
+  return writeImageBytes(item, image.bytes, image.mimeType);
 }

@@ -10,6 +10,17 @@ const DEFAULT_MAX_COMPRESSED_BYTES = 16 * 1024 * 1024;
 const DEFAULT_MAX_DECOMPRESSED_BYTES = 24 * 1024 * 1024;
 const DEFAULT_MAX_REDIRECTS = 4;
 const DEFAULT_TIMEOUT_MS = 20_000;
+const CROSS_ORIGIN_CREDENTIAL_HEADERS = [
+  'authorization',
+  'cookie',
+  'proxy-authorization',
+  'x-goog-api-key',
+  'x-api-key',
+  'api-key',
+  'apikey',
+  'x-auth-token',
+  'x-access-token',
+];
 
 const IPV4_BLOCKS = [
   ['0.0.0.0', 8],
@@ -364,10 +375,12 @@ export function redirectedRequestOptions(statusCode, options, from, to) {
     next.headers = Object.fromEntries(headers.entries());
   }
   if (from.origin !== to.origin) {
+    const method = String(next.method || 'GET').toUpperCase();
+    if (method !== 'GET' && method !== 'HEAD') {
+      throw new Error('Cross-origin redirect for non-idempotent request is not allowed');
+    }
     const headers = new Headers(next.headers || {});
-    headers.delete('authorization');
-    headers.delete('cookie');
-    headers.delete('proxy-authorization');
+    for (const name of CROSS_ORIGIN_CREDENTIAL_HEADERS) headers.delete(name);
     next.headers = Object.fromEntries(headers.entries());
   }
   return next;

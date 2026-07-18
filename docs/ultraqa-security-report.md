@@ -18,7 +18,7 @@ operations rather than hidden code-completion claims.
 | UQ-02 | Stolen or stale session | Credential/role/disable/logout changes revoke access | Pass | Durable auth and Postgres auth tests |
 | UQ-03 | CSRF and unauthorized mutation | Every mutation requires token and role/action grant | Pass | Admin auth/API tests |
 | UQ-04 | Private-network SSRF or downgrade redirect | Reject reserved IPs, DNS violations, credentialed URLs, HTTPS downgrade | Pass | Outbound media security tests |
-| UQ-05 | Cross-origin credential forwarding | Strip auth and redirected POST body | Pass | Redirect and Image2 runtime-origin tests |
+| UQ-05 | Cross-origin credential forwarding | Strip auth, provider API keys, and redirected POST body | Pass | 302 credential stripping plus 307/308 replay rejection tests |
 | UQ-06 | Compressed body or image bomb | Bound compressed/decompressed bytes and pixels | Pass | Response reader and raster validation tests |
 | UQ-07 | MIME confusion or corrupt raster | Decode and re-encode only validated bytes | Pass | Upload and Image2 byte tests |
 | UQ-08 | Traversal or symlink escape | Lexical/real-path containment plus no-follow read/write | Pass | Image output, provenance, and static containment tests |
@@ -60,25 +60,37 @@ operations rather than hidden code-completion claims.
 | UQ-44 | Untyped Astro props conceal incompatible public data shapes | Type the shared signal contract and component/article boundaries; require a diagnostic-free check | Pass | Astro check 0 errors, 0 warnings, 0 hints; public regressions 46/46 |
 | UQ-45 | Open-ended Node engines silently adopt an unreviewed future major | Pin builds to Node 22 and verify the resolved Vercel runtime | Pass | Final preview rebuilt on Node 22 without the automatic-major warning |
 | UQ-46 | Stale provider snapshots retain divergent unguarded fetch/write paths | Delete numbered snapshots and release-gate their absence | Pass | Five snapshots removed; media/audit tests 21/21; cleanup re-review APPROVE |
+| UQ-47 | Empty or legacy provider result is mislabeled as fresh Image2 artwork | Reject pathless fresh results, retain bounded failover reasons, and persist honest provider/model/status/error | Pass | Empty string/object, source-provider failover, production backfill, and candidate persistence regressions |
+| UQ-48 | Provider creates one legacy image while metadata claims canonical variants | Route Image2, ChatGPT runtime, OpenAI API, Gemini, and local fallback through canonical variant writers | Pass | Executable stock regeneration checks real WebPs at 1536x864, 1200x900, and 1200x630 |
+| UQ-49 | Generated audit report describes removed routes and insecure legacy auth as current | Detect modern CMS routes and report Argon2id, CSRF, durable auth, and Postgres fail-closed controls | Pass | OMO audit contract 4/4 and regenerated current-state report |
+| UQ-50 | Provider 307/308 redirect exfiltrates a request body or API key | Allow cross-origin replay only for GET/HEAD and remove generic/provider credential headers | Pass | Explicit 307/308 POST rejection and Image2/Gemini-style API-key stripping regressions |
+| UQ-51 | Legacy AI adapter is publicly mislabeled as Image2 | Reserve Image2 provenance for the canonical provider and label legacy adapters by provider family | Pass | ChatGPT, OpenAI API, and Gemini provenance regressions plus explicit production force-order documentation |
+| UQ-52 | Generated OMO audit overstates the public homepage surface | Reuse the canonical homepage eligibility predicate and require corpus-level metric parity | Pass | Audit parity 5/5; eligible 32, heuristic low-relevance 1, missing images 0 |
 
 ## Verification Receipt
 
-- Full tests: 622 total, 621 passed, 0 failed, 1 intentional skip.
+- Full tests: 642 total, 641 passed, 0 failed, 1 intentional skip.
 - Astro check: 0 errors, 0 warnings, 0 hints.
-- Focused security tests: 76 passed, 0 failed.
+- Focused redirect and image-provider tests: 35 passed, 0 failed; offline Image2 orchestration:
+  19 passed, 0 failed.
 - Reconciliation and canonical-orchestrator security tests: 96 passed, 0 failed.
 - Source provenance: 26/26 articles and 104/104 variants matched; no missing, mismatch,
   metadata-path error, unavailable source, or unsafe local file.
-- Build: 59 pages; rendered public audit found 7 checked pages, 30 cards, and 0 broken images.
+- Build: 59 pages; release-gate selected tests 41/41; rendered public audit found 7 checked
+  pages, 30 cards, and 0 broken images.
 - Public projections: latest 30, archive 708, search 738, taxonomy 32, homepage 31.
 - Admin exclusion: 11 admin pages and 4 index files passed.
-- Performance: 7,260,589-byte dist, 11,432-byte browser JS, 100,239-byte CSS, 93,875-byte
+- Performance: 7,260,645-byte dist, 11,432-byte browser JS, 100,239-byte CSS, 93,885-byte
   largest HTML, and 404,420-byte largest image, all within configured budgets.
 - Dependency audit: 0 vulnerabilities.
-- Independent review: code review found 0 critical/high/medium/low defects and returned `APPROVE`;
-  the focused nullable-contract re-review closed two medium findings and then returned `APPROVE`
-  with 0 findings; the provider-cleanup review also closed two medium findings and returned
-  `APPROVE` with 0 findings; architecture review returned `CLEAR / APPROVE`.
+- Independent review iteratively found and closed stale-variant inheritance, incomplete provenance,
+  pathless provider success, legacy single-file output, failover receipt defects, cross-origin
+  provider credential replay, legacy provider mislabeling, and audit eligibility drift. The final
+  full-diff re-review returned `APPROVE` with zero remaining findings.
+- QA/QC runner: `deployable with operational follow-up`; live verification passed, staging URL was
+  not configured, and cache purge was skipped.
+- Harness note: an earlier accidental overlap of two release gates caused a transient Astro chunk
+  race; both processes were cleaned up and every subsequent single-run gate passed with exit 0.
 
 ## Remaining Operations
 

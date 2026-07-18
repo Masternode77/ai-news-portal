@@ -47,15 +47,23 @@ export async function generateArticleImageSet(article = {}, options = {}) {
   const apiKey = options.apiKey ?? process.env.OPENAI_API_KEY;
 
   if (offline || !apiKey) {
+    if (options.throwOnError) {
+      throw new Error(offline
+        ? 'PIPELINE_OFFLINE prevents Image2 generation'
+        : 'OPENAI_API_KEY is required for Image2 generation');
+    }
     return writeFallbackArticleImageSet(article, {
       ...base,
+      provider: 'local-placeholder',
+      model: 'local-raster',
       status: 'fallback',
       error: offline ? 'PIPELINE_OFFLINE enabled; wrote local fallback image set.' : 'OPENAI_API_KEY missing; wrote local fallback image set.',
     }, { publicDir });
   }
 
   try {
-    const image = await requestOpenAiImage({
+    const requestImage = options.requestImage || requestOpenAiImage;
+    const image = await requestImage({
       apiKey,
       model: base.model,
       prompt: base.prompt,
@@ -75,6 +83,8 @@ export async function generateArticleImageSet(article = {}, options = {}) {
     if (options.throwOnError) throw error;
     return writeFallbackArticleImageSet(article, {
       ...base,
+      provider: 'local-placeholder',
+      model: 'local-raster',
       status: 'fallback',
       error: error?.message || 'OpenAI image request failed; wrote local fallback image set.',
     }, { publicDir });
@@ -82,14 +92,25 @@ export async function generateArticleImageSet(article = {}, options = {}) {
 }
 
 export function createImage2Provider(options = {}) {
+  const offline = options.offline ?? PIPELINE_OFFLINE;
+  const apiKey = options.apiKey ?? process.env.OPENAI_API_KEY;
+  if (offline || !apiKey) return null;
+
+  const generationOptions = {
+    ...options,
+    apiKey,
+    offline: false,
+    throwOnError: true,
+  };
   return {
     name: 'image2',
+    model: generationOptions.model || OPENAI_IMAGE_MODEL || 'gpt-image-2',
     async generate(item) {
-      const result = await generateArticleImageSet(item, options);
+      const result = await generateArticleImageSet(item, generationOptions);
       return result.heroImage;
     },
     async generateWithMetadata(item) {
-      return generateArticleImageSet(item, options);
+      return generateArticleImageSet(item, generationOptions);
     },
   };
 }
