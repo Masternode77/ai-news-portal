@@ -1,12 +1,13 @@
 # GPT-5.6 Final Acceptance Matrix
 
-Updated: 2026-07-14
+Updated: 2026-07-19
 
 ## Verdict
 
 The branch is ready for preview review and remaining preview-only operational checks. It is not
 complete and must not be promoted: independent human content labels, managed Postgres/Blob
-restart evidence, a reviewed PR, and explicit preview approval remain outstanding.
+restart evidence, current-production content reconciliation, a reviewed PR, and explicit preview
+approval remain outstanding.
 
 `PASS (local)` means implementation and automated evidence pass without managed credentials. It
 does not mean a live preview database or production workflow was exercised.
@@ -64,7 +65,7 @@ does not mean a live preview database or production workflow was exercised.
 
 | # | Requirement | Result | Evidence or remaining condition |
 | ---: | --- | --- | --- |
-| 25 | Tests pass | PASS | Current full suite reports 554 tests: 553 passed, 0 failed, and 1 intentional skip. |
+| 25 | Tests pass | PASS | Current full suite reports 580 tests: 579 passed, 0 failed, and 1 intentional skip. Focused security coverage reports 76/76 passed. |
 | 26 | Build passes | PASS | Astro check reports 0 errors and `content:gate` rebuilds and audits the static output successfully. |
 | 27 | Security audit passes | PASS | `npm audit --audit-level=low` reports zero findings; threat model and fix report list operational follow-up. |
 | 28 | Visual QA passes | PASS | Exact-preview browser QA decoded homepage 31/31 desktop and mobile, archive 32/32, search 32/32, article 1/1, and APAC 19/19 images with zero broken images, placeholder labels, clipping, or overflow. |
@@ -75,14 +76,16 @@ does not mean a live preview database or production workflow was exercised.
 
 | # | Requirement | Result | Evidence or remaining condition |
 | ---: | --- | --- | --- |
-| 31 | Preview deployment is verified | PASS | Implementation `d43aac3c` is `READY` as preview `dpl_DzvwjCbAqMKrWE9R4vFLAXUqCHrZ`; public, retired, admin, image, and screenshot receipts pass. |
+| 31 | Preview deployment is verified | PASS | Implementation `58ff8bf3` is `READY` as preview `dpl_931jMss3886U8GtBRyWvM1Eozuba`; public, retired, admin, image, provenance, and screenshot receipts pass. |
 | 32 | PR has migration and risk summary | NOT STARTED | Push/PR authorization and preview approval were not given; migration/risk material is ready in reports and runbooks. |
-| 33 | Production unchanged before preview approval | PASS | Production remained on `dpl_CCvT6FCRjFsGfUJ5Ra5h4AYb76Dy`; this branch performed no production promotion, cache purge, or production-secret operation. |
+| 33 | Production unchanged by this branch before preview approval | PASS | The connected `main` automation independently advanced production to `dpl_Hw1vrgH1qmc4Y2pRsW3g5nXxKY1D` at `f110e8c2`. This branch performed no production promotion, alias change, cache purge, or production-secret operation. |
 | 34 | Rollback is tested | PASS WITH CAVEAT | Tagged baseline passed isolated clean install/build; that emergency baseline retains 18 dependency findings. |
 | 35 | Final report has exact SHA and preview URL | PASS | `docs/final-gpt56-upgrade-report.md` records the verified implementation SHA, deployment ID, preview URL, and route/image receipt. |
+| 36 | Current production content is reconciled without bypassing new gates | BLOCKED | Since the integrated `f8bc10a2` baseline, `origin/main` added 39 archive records through 19 automated content refreshes. A raw merge conflicts in three generated data stores and includes out-of-scope candidates; candidates must be re-ingested through the canonical relevance, fidelity, repetition, and image-provenance gates. |
 
 ## Open Gates
 
 1. Independent reviewers complete and score the generated 150-item relevance and 40-item writing packets.
 2. Preview operators provide isolated Postgres and Blob credentials and run the two-phase persistence receipt across a restart or deployment.
-3. A human approves the preview; only then may the branch be pushed, opened as a PR, reviewed, merged, and production-smoked.
+3. Re-ingest the 39 `origin/main`-only candidates through the canonical pipeline; do not merge the generated JSON stores or deleted dashboard artifact directly.
+4. A human approves the refreshed preview; only then may the branch be pushed, opened as a PR, reviewed, merged, and production-smoked.

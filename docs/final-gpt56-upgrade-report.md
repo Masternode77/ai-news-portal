@@ -1,15 +1,16 @@
 # Final GPT-5.6 Upgrade Report
 
-Updated: 2026-07-14
+Updated: 2026-07-19
 
 ## Executive Verdict
 
 The Compute Current upgrade is **deployable with operational follow-up** and ready for human
 preview approval. The public publication, canonical editorial foundation, secure CMS integration,
 design prototypes, tests, preview packaging, and rollback controls are implemented and verified.
-Full goal completion is not claimed: managed preview persistence and human-labeled content
-benchmarks remain open. This branch did not promote production and used no
-production secret or cache purge; the connected `main` branch did deploy independently during QA.
+Full goal completion is not claimed: managed preview persistence, human-labeled content
+benchmarks, and canonical reconciliation of newer production content remain open. This branch did
+not promote production and used no production secret or cache purge; the connected `main` branch
+continued its automated content deployments independently during QA.
 
 ## Release Identity
 
@@ -18,12 +19,13 @@ production secret or cache purge; the connected `main` branch did deploy indepen
 | Repository | `Masternode77/ai-news-portal` |
 | Branch | `upgrade/gpt-5-6-sol` |
 | Baseline production SHA | `19089b66627be58d5066376902ff382d2a018137` |
-| Merged `origin/main` SHA | `f8bc10a220a6b910e703375d337dcd3f40ea0467` |
+| Integrated `origin/main` baseline | `f8bc10a220a6b910e703375d337dcd3f40ea0467` |
 | Rollback tag | `backup/pre-gpt56-upgrade-20260711T091118Z` |
-| Verified implementation SHA | `d43aac3c6a8cece730fe2b19dd67b879cfee3205` |
-| Preview deployment | `dpl_DzvwjCbAqMKrWE9R4vFLAXUqCHrZ` (`READY`, preview target) |
-| Preview URL | `https://ai-news-portal-3iohdc1vt-masternode77s-projects.vercel.app` |
-| Latest observed production | `dpl_CCvT6FCRjFsGfUJ5Ra5h4AYb76Dy` (external production deployment, unchanged by this branch) |
+| Verified implementation SHA | `58ff8bf31635aafb9456207d5c063144b0f0d3ae` |
+| Local verification-receipt commit | `1db8bfedfb79dfed23cc10dcf8779405516f10b2` |
+| Preview deployment | `dpl_931jMss3886U8GtBRyWvM1Eozuba` (`READY`, preview target) |
+| Preview URL | `https://ai-news-portal-l1gqlehby-masternode77s-projects.vercel.app` |
+| Latest observed production | `dpl_Hw1vrgH1qmc4Y2pRsW3g5nXxKY1D` at `f110e8c28cfc08ec453804e4b06298cd19dbb347` (external `main` deployment, unchanged by this branch) |
 
 ## Delivered Platform
 
@@ -76,7 +78,11 @@ production secret or cache purge; the connected `main` branch did deploy indepen
   that shared one fallback raster to the SHA-256-seeded v2 generator. The audit now rejects
   duplicate image bytes across homepage, archive, search, and taxonomy surfaces.
 - Reduced static output from 1,532 pages to 59; the exact preview build retained 68 reachable
-  generated assets and pruned 4,114.
+  generated assets and pruned 4,109.
+- Replaced 19 stale synthetic source-canonical image sets with source-derived rasters, verified all
+  hero, thumbnail, OpenGraph, and legacy variants, and made image promotion transactional.
+- Added semantic canonical-source deduplication at the production publication boundary without
+  collapsing case-sensitive paths or meaningful query parameters.
 
 ### Durable admin CMS
 
@@ -125,10 +131,11 @@ three prototypes remain noindex and are not production routes.
 | --- | --- |
 | Clean install | `npm ci` passed |
 | Dependency security | `npm audit --audit-level=low`: 0 vulnerabilities |
-| Full tests | 554 total, 553 passed, 0 failed, 1 intentional skip |
+| Full tests | 580 total, 579 passed, 0 failed, 1 intentional skip |
+| Focused security tests | 76 passed, 0 failed |
 | Editorial scripts | quality, relevance, taxonomy, repetition passed |
 | Astro check | 0 errors, 0 warnings, 11 existing type hints |
-| Build | Exact preview built 59 pages; 68 generated assets retained; 4,114 pruned |
+| Build | Exact preview built 59 pages; 68 generated assets retained; 4,109 pruned |
 | Content gate | passed all public, copy, image, feed, and admin exclusion audits |
 | QA/QC | deployable with operational follow-up |
 | Admin browser E2E | 17/17 local UI/API lifecycle scenarios passed; public discovery integration passed |
@@ -139,9 +146,10 @@ three prototypes remain noindex and are not production routes.
 | Preview admin APIs | `/api/admin/articles` returned intended 503 with `no-store` and `noindex,nofollow` |
 | Visual QA | Exact-preview browser checks passed with 0 broken images, placeholder labels, errors, overflow, or clipped cards |
 | Preview rendered image coverage | homepage 31/31 desktop and mobile; archive 32/32; search 32/32; article 1/1; APAC 19/19 |
+| Source-image provenance | 26/26 articles and 104/104 public variants matched source-canonical bytes |
 | Lighthouse mobile | 97 performance, 100 accessibility, 92 best practices |
 | Lighthouse desktop | 100 performance, 100 accessibility, 92 best practices |
-| Static performance budget | 4,604,449 B dist, 11,432 B JS, 100,239 B CSS, 93,875 B largest HTML, 335,600 B largest image; all within enforced limits |
+| Static performance budget | 7,260,589 B dist, 11,432 B JS, 100,239 B CSS, 93,875 B largest HTML, 404,420 B largest image; all within enforced limits |
 | Production action by this branch | none; external `main` automation advanced production during QA |
 
 The preview SEO score of 69 is expected because Vercel adds `x-robots-tag: noindex`. The two
@@ -152,20 +160,35 @@ The exact preview was checked after lazy-load traversal: homepage desktop and mo
 all 31 images, archive and search rendered all 32, the representative article rendered its lead
 image, and APAC rendered all 19 canonical members. Browser QA found zero failed image responses,
 visible placeholder labels, console errors, page errors, clipping, or horizontal overflow.
-Screenshots and machine-readable evidence are under `artifacts/preview-final/`.
+Screenshots and the machine-readable receipt are under `artifacts/preview-58ff8bf3/`.
 
 The exact preview and `computecurrent.com` are intentionally not pixel-identical before approval.
 The preview shows the selected Midnight Intelligence publication while production still shows the
 earlier operating-board homepage from external `main`. Same-viewport comparison confirmed the
-difference. Production remained on `dpl_CCvT6FCRjFsGfUJ5Ra5h4AYb76Dy`; no production promotion,
-alias change, or cache operation was used to conceal it.
+difference. Production later advanced independently to `dpl_Hw1vrgH1qmc4Y2pRsW3g5nXxKY1D` at
+`f110e8c2`; no production promotion, alias change, or cache operation was performed by this branch.
+
+## Current Production Content Reconciliation
+
+The latest `origin/main` is 117 automated commits ahead of the integrated baseline: 98 dashboard
+snapshot updates and 19 news/archive/dashboard refreshes. Those refreshes touch no product code;
+their net surface is four article JSON stores, pipeline state, one deleted-on-this-branch dashboard
+artifact, and 217 generated-image paths. They add 39 archive/search records relative to this branch.
+
+A read-only three-way merge simulation found content conflicts in `archived-news.json`,
+`latest-news.json`, and `search-index.json`, plus a modify/delete conflict for the retired public
+dashboard artifact. Several incoming records are visibly outside the product definition, including
+consumer hardware and general software stories. Directly accepting generated stores would bypass
+the upgraded relevance, source-fidelity, repetition, canonical-source, and image-provenance gates.
+The release path is therefore to re-ingest the 39 candidates through the canonical pipeline, review
+the resulting public projection, and deploy a new preview. A raw merge or JSON overwrite is rejected.
 
 ## LOC and Repository Hygiene
 
-The final product merge against the rollback baseline spans 594 paths, including 316 binary
-image paths. Git's textual counters report 137,038 additions and 142,755 deletions, a net
-reduction of 5,717 lines. That comparison includes the 19 upstream content commits merged from
-`origin/main` as well as the architecture, coverage, and generated-data cleanup in this branch.
+The current branch against the rollback baseline spans 801 paths, including 390 binary paths.
+Git's textual counters report 133,848 additions and 157,045 deletions, a net reduction of 23,197
+lines. This comparison includes the integrated `f8bc10a2` content baseline as well as the
+architecture, coverage, security, image-provenance, and generated-data cleanup in this branch.
 
 Tracked `.omo` and `.omx` runtime state was removed, `.omx/` is repository-ignored, stale AGENTS
 guidance was corrected for Postgres/storage-adapter ownership, and build/evidence/runtime output
@@ -177,9 +200,11 @@ remains outside release inputs.
    revision, media, restart-persistence, and outbox verification against preview infrastructure.
 2. Produce independent human labels for 150 relevance items and 40 writing samples before
    claiming precision, recall, or a sub-5% false-positive rate.
-3. Configure OAuth/2FA if required, plus Vercel Firewall, managed database backups, least-privilege
+3. Re-ingest the 39 newer `origin/main` content candidates through the canonical pipeline and
+   generate a fresh preview; do not merge the conflicting generated JSON stores directly.
+4. Configure OAuth/2FA if required, plus Vercel Firewall, managed database backups, least-privilege
    credentials, monitoring, and secret rotation.
-4. Review the preview screenshots and selected design. Only then push and promote using the
+5. Review the refreshed preview screenshots and selected design. Only then push and promote using the
    release runbook. Cache purge remains explicitly excluded.
 
 ## Rollback and Recommendation
