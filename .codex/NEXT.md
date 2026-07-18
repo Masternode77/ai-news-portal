@@ -2,9 +2,9 @@
 
 ## Current branch
 - `upgrade/gpt-5-6-sol`; latest verified implementation checkpoint
-  `f735cc40590abf3158afef7cd0f996dd91a8d6a9`.
-- Exact implementation preview: `dpl_J5jbRixDCBLoqEvRqN4gmZKKVvWs` at
-  `https://ai-news-portal-8f02vryvd-masternode77s-projects.vercel.app` (`READY`, preview target).
+  `e37bc9c9e0f01691d79ea073ecf6a3eaa7785bd9`.
+- Exact implementation preview: `dpl_3P3ryw94P78z66ZJa1bopUAqSBu6` at
+  `https://ai-news-portal-ef65tm1iq-masternode77s-projects.vercel.app` (`READY`, preview target).
 - Rollback tag: `backup/pre-gpt56-upgrade-20260711T091118Z`.
 - No push, production promotion, production-secret operation, or cache purge has been performed.
 - Latest separately observed production: `dpl_Bt7BbS4jdFCAN7aMcw3zizDNFJBs`;
@@ -40,7 +40,7 @@
   artwork honestly, and documented that production editorial candidates explicitly force Image2.
 - Bound the OMO audit to the canonical homepage eligibility predicate; its current report now matches
   the public corpus at 32 eligible records, one heuristic low-relevance item, and zero missing images.
-- Deployed implementation `f735cc40` to the exact preview and completed route, header, admin, log,
+- Deployed implementation `e37bc9c9` to the exact preview and completed route, header, admin, log,
   desktop/mobile visual, image, placeholder, overflow, and production-comparison checks.
 - Re-audited current `origin/main`: 122 newer commits comprise 102 dashboard snapshots and 20 content
   refreshes; 749 upstream rows resolve to 724 already-present sources, 25 source-only candidates,
@@ -63,7 +63,7 @@
   regeneration, workflow/default configuration, public provenance, docs, and regressions.
 - Audit hygiene: `scripts/audit-omo-ultra-current-state.mjs`, its contract test, QA reports, and
   this handoff.
-- Local ignored evidence: `artifacts/preview-f735cc40/`.
+- Local ignored evidence: `artifacts/preview-e37bc9c9/`.
 
 ## Validation results
 - Full `npm test`: 642 total, 641 passed, 0 failed, 1 intentional skip; follow-on editorial gates pass.
@@ -75,8 +75,8 @@
 - `npm run check`: 0 errors, 0 warnings, 0 hints.
 - `npm run content:gate`: passed; 59 pages built and all public/image/admin/performance audits passed.
 - Release-gate selected tests: 41/41; rendered audit: 7 pages, 30 cards, 0 broken images.
-- `npm run qa:qc`: deployable with operational follow-up; live verification passed, staging absent,
-  cache purge skipped.
+- `npm run qa:qc`: deployable with operational follow-up; live verification passed and cache purge
+  skipped; the subsequent exact-preview harness passed local, staging, and live read-only checks.
 - Public inventory: latest 30, archive 708, search 738, taxonomy 32, homepage 31, one longform route.
 - Local admin browser: all 17 real-handler lifecycle scenarios passed.
 - Independent code review found 0 critical/high/medium/low defects and returned `APPROVE`;
@@ -90,7 +90,7 @@
   policy, and preview noindex; final Vercel error-log query returned no application errors.
 - Browser QA: homepage 31/31 desktop/mobile, archive 32/32, search 32/32, article 1/1, and APAC 19/19
   images decoded with 0 broken images, placeholder labels, app errors, failed requests, or overflow.
-- Fresh 1440x900 comparison differs on 99.9998% of pixels, confirming production still serves the
+- Fresh 1440x900 comparison differs on 81.5236% of pixels, confirming production still serves the
   old command-center design while the preview serves Midnight Intelligence.
 - Human benchmark packets remain reviewer-empty; the scorer fails closed without `reviewer.id`.
 - Managed persistence contract: 4/4 local tests pass; live preview credentials are absent.
@@ -104,8 +104,8 @@
 - Push/PR and production promotion require explicit preview approval.
 
 ## Exact next step
-- Create a Lore source commit and deploy that exact commit to a Vercel preview; rerun route, header,
-  image, browser, and visual checks against its URL.
+- Preserve the exact-preview receipt and obtain explicit preview approval before push, PR, or
+  production promotion.
 - In a later safe preview content-refresh window, run
   `npm run content:reconcile-upstream -- --execute --production --revision=origin/main`; then refresh
   the preview after canonical extraction and publication gates pass.

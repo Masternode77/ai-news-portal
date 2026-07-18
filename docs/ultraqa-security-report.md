@@ -87,8 +87,8 @@ operations rather than hidden code-completion claims.
   pathless provider success, legacy single-file output, failover receipt defects, cross-origin
   provider credential replay, legacy provider mislabeling, and audit eligibility drift. The final
   full-diff re-review returned `APPROVE` with zero remaining findings.
-- QA/QC runner: `deployable with operational follow-up`; live verification passed, staging URL was
-  not configured, and cache purge was skipped.
+- QA/QC runner: `deployable with operational follow-up`; live verification passed and cache purge
+  was skipped. A subsequent exact-preview pass supplied the deployment URL and passed staging checks.
 - Harness note: an earlier accidental overlap of two release gates caused a transient Astro chunk
   race; both processes were cleaned up and every subsequent single-run gate passed with exit 0.
 
@@ -101,14 +101,19 @@ release follow-ups and do not justify production promotion without preview appro
 
 ## Exact Preview Receipt
 
-- Implementation: `f735cc40590abf3158afef7cd0f996dd91a8d6a9`.
-- Deployment: `dpl_J5jbRixDCBLoqEvRqN4gmZKKVvWs`, status `READY`.
-- URL: `https://ai-news-portal-8f02vryvd-masternode77s-projects.vercel.app`.
+- Implementation: `e37bc9c9e0f01691d79ea073ecf6a3eaa7785bd9`.
+- Deployment: `dpl_3P3ryw94P78z66ZJa1bopUAqSBu6`, status `READY`, target `preview`.
+- URL: `https://ai-news-portal-ef65tm1iq-masternode77s-projects.vercel.app`.
 - Eight public routes returned 200 and five retired operational routes returned 404.
 - Homepage security headers include CSP, HSTS, nosniff, frame denial, referrer policy, and
   permissions policy. The unconfigured admin API returned generic 503 with `no-store` and
   `noindex, nofollow`.
 - Browser QA decoded 31/31 homepage images on desktop and mobile, 32/32 archive images,
   32/32 search images, the representative article image, and 19/19 APAC images. It found no
-  broken image, placeholder label, console/page error, or horizontal overflow.
+  broken image, placeholder label, console/page error, failed application request, or horizontal
+  overflow. The representative article displays its image above the body.
+- Vercel's final one-hour error-log query returned no application errors. Read-only local, preview,
+  and live route verification passed; the current 1440x900 preview and production viewports differ
+  across 81.5236% of pixels, so production still does not serve this reviewed preview.
+- Evidence: `artifacts/preview-e37bc9c9/` (ignored local runtime artifacts).
 - Production promotion and cache purge were not performed.
