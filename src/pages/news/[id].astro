@@ -39,8 +39,17 @@ import {
 } from '../../../scripts/lib/article-image-surface.mjs';
 import { relatedArticlesFor } from '../../../scripts/lib/related-articles.mjs';
 
+type ArticleRecord = Record<string, any> & {
+  id: string;
+  tags?: string[];
+};
+
+interface Props {
+  article?: ArticleRecord;
+}
+
 export function getStaticPaths() {
-  const allArticles = publicContentInventory;
+  const allArticles = publicContentInventory as ArticleRecord[];
   const seenArticleIds = new Set<string>();
 
   return allArticles
@@ -58,15 +67,15 @@ export function getStaticPaths() {
     }));
 }
 
-const allArticles = publicContentInventory;
+const allArticles = publicContentInventory as ArticleRecord[];
 
-const { article } = Astro.props;
-const articleRecord = article as any;
+const { article } = Astro.props as Props;
 
 if (!article) {
   throw new Error('Article not found');
 }
 
+const articleRecord = article;
 const displayTitle = displayHeadline(articleRecord);
 const publicRouting = articleRecord.public_routing || routePublicLane(articleRecord);
 const publicPresentation = buildPublicPresentation(articleRecord, { route: publicRouting });

@@ -1,5 +1,19 @@
 ---
-const { evidence = {}, claimSummary = {} } = Astro.props;
+interface Props {
+  evidence?: {
+    verifiedFacts?: string[];
+    verified_facts?: string[];
+    keyNumbers?: unknown[];
+    sourceCount?: number;
+    source_count?: number;
+    uncertainty?: string;
+  };
+  claimSummary?: {
+    unsupported_claim_count?: number;
+  };
+}
+
+const { evidence = {}, claimSummary = {} } = Astro.props as Props;
 const facts = evidence.verifiedFacts || evidence.verified_facts || [];
 const keyNumbers = evidence.keyNumbers || [];
 ---

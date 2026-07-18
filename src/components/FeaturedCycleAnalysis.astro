@@ -1,6 +1,16 @@
 ---
 import PublicSignalCard from './PublicSignalCard.astro';
-const { items = [], fallbackItems = [], statusLabel = '' } = Astro.props;
+import type { ComponentProps } from 'astro/types';
+
+type FeedItem = { publicSignal: ComponentProps<typeof PublicSignalCard>['signal'] };
+
+interface Props {
+  items?: FeedItem[];
+  fallbackItems?: FeedItem[];
+  statusLabel?: string;
+}
+
+const { items = [], fallbackItems = [], statusLabel = '' } = Astro.props as Props;
 const displayItems = items.length ? items : fallbackItems;
 const showingFallback = !items.length && fallbackItems.length;
 ---

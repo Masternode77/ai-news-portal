@@ -2,7 +2,30 @@
 import ArticleCardImage from './ArticleCardImage.astro';
 import { safePublicHttpUrl, safePublicPath } from '../lib/public-url.js';
 
-const { signal, compact = false, priority = false } = Astro.props;
+export interface Props {
+  signal: {
+    id?: string;
+    lane_key?: string;
+    title?: string;
+    deck?: string;
+    why_it_matters?: string;
+    signal_label?: string;
+    editorial_lens?: string;
+    region?: string;
+    reader_impact?: string[];
+    image?: string;
+    image_url?: string;
+    image_alt?: string;
+    image_provenance_label?: string;
+    image_provenance_kind?: string;
+    view_detail?: string;
+    read_source?: string;
+  };
+  compact?: boolean;
+  priority?: boolean;
+}
+
+const { signal, compact = false, priority = false } = Astro.props as Props;
 const impact = Array.isArray(signal.reader_impact) ? signal.reader_impact.slice(0, 4) : [];
 const image = signal.image || signal.image_url || '/generated/fallbacks/ai-infrastructure.svg';
 const imageAlt = signal.image_alt || `${signal.title || 'Compute Current signal'} visual`;

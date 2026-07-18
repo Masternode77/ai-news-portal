@@ -155,6 +155,7 @@ test('production verifier reports only risks that match checked targets', () => 
   });
   assert.match(checked.join('\n'), /cache-freshness claim/);
   assert.doesNotMatch(checked.join('\n'), /Staging was not checked/);
+  assert.doesNotMatch(checked.join('\n'), /Astro check hints/);
 
   const skipped = productionVerificationRisks({
     live: { skipped: true },

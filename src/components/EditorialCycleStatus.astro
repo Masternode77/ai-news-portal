@@ -1,8 +1,34 @@
 ---
-const { model } = Astro.props;
+interface Props {
+  model?: {
+    freshness?: {
+      state?: string;
+      label?: string;
+      latest_source_scanned_at?: string | null;
+      latest_published_analysis_at?: string | null;
+    };
+    latestCycle?: {
+      published_analyses?: unknown[];
+    } | null;
+    stats?: {
+      publishedThisCycle?: number;
+    };
+  };
+}
+
+type Assert<T extends true> = T;
+type StatusModel = NonNullable<Props['model']>;
+type FreshnessModel = NonNullable<StatusModel['freshness']>;
+export type NullableStatusContract = [
+  Assert<null extends StatusModel['latestCycle'] ? true : false>,
+  Assert<null extends FreshnessModel['latest_source_scanned_at'] ? true : false>,
+  Assert<null extends FreshnessModel['latest_published_analysis_at'] ? true : false>,
+];
+
+const { model } = Astro.props as Props;
 const freshness = model?.freshness || {};
 const cycle = model?.latestCycle || {};
-const fmt = (value) => value ? new Date(value).toLocaleString('en-US', { month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' }) : 'n/a';
+const fmt = (value?: string | null) => value ? new Date(value).toLocaleString('en-US', { month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' }) : 'n/a';
 ---
 <section class="cycle-status" aria-label="Latest update">
   <div>

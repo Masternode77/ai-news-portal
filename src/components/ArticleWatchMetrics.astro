@@ -1,5 +1,10 @@
 ---
-const { metrics = [], changeView = [] } = Astro.props;
+interface Props {
+  metrics?: string[];
+  changeView?: string[];
+}
+
+const { metrics = [], changeView = [] } = Astro.props as Props;
 ---
 <section class="detail-section what-to-watch">
   <h2>What to watch</h2>

@@ -1,5 +1,31 @@
 ---
-const { quality } = Astro.props;
+interface Props {
+  quality?: {
+    relevance_score?: number | null;
+    urgency_score?: number | null;
+    extraction_quality_score?: number | null;
+    article_blueprint?: string | null;
+    routing_decision?: string;
+    source_adapter?: string | null;
+    generation_version?: string | null;
+    source_evidence_length?: number;
+    blocked_reasons?: string[];
+    narrative_dna?: Record<string, unknown>;
+  };
+}
+
+type Assert<T extends true> = T;
+type QualityModel = NonNullable<Props['quality']>;
+export type NullableQualityContract = [
+  Assert<null extends QualityModel['relevance_score'] ? true : false>,
+  Assert<null extends QualityModel['urgency_score'] ? true : false>,
+  Assert<null extends QualityModel['extraction_quality_score'] ? true : false>,
+  Assert<null extends QualityModel['article_blueprint'] ? true : false>,
+  Assert<null extends QualityModel['source_adapter'] ? true : false>,
+  Assert<null extends QualityModel['generation_version'] ? true : false>,
+];
+
+const { quality } = Astro.props as Props;
 const dna = quality?.narrative_dna || {};
 const blocked = Array.isArray(quality?.blocked_reasons) ? quality.blocked_reasons : [];
 ---

@@ -1,6 +1,12 @@
 ---
 import PublicSignalCard from './PublicSignalCard.astro';
-const { items = [] } = Astro.props;
+import type { ComponentProps } from 'astro/types';
+
+interface Props {
+  items?: Array<{ publicSignal: ComponentProps<typeof PublicSignalCard>['signal'] }>;
+}
+
+const { items = [] } = Astro.props as Props;
 ---
 <section class="intelligence-section active-watchlist">
   <div class="lane-heading">

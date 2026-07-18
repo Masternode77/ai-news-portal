@@ -258,7 +258,6 @@ export function productionVerificationRisks(result = {}) {
   } else if (!result.staging?.ok) {
     risks.push('One or more staging route checks failed.');
   }
-  risks.push('Existing Astro check hints remain informational unless they become build errors.');
   return risks;
 }
 
