@@ -1,6 +1,15 @@
-import { auditRenderedPublicOutput, renderedOutputReportPath } from './lib/rendered-output-audit.mjs';
+import path from 'node:path';
+import { parseArgs } from 'node:util';
+import { auditRenderedPublicOutput } from './lib/rendered-output-audit.mjs';
 
-const result = await auditRenderedPublicOutput({ reportPath: renderedOutputReportPath });
+const { values } = parseArgs({
+  options: {
+    out: { type: 'string' },
+  },
+});
+const result = await auditRenderedPublicOutput({
+  reportPath: values.out ? path.resolve(values.out) : undefined,
+});
 
 if (!result.ok) {
   console.error(`rendered public output audit failed:\n${result.failures.slice(0, 80).join('\n')}`);

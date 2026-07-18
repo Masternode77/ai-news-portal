@@ -7,9 +7,10 @@ Public QA covers rendered pages, public copy, article quality, homepage volume, 
 ## Commands Run
 
 - `npm run content:gate`
-- `node ./scripts/audit-rendered-public-output.mjs`
+- `node ./scripts/audit-rendered-public-output.mjs --out docs/rendered-public-output-report.md`
 - `node ./scripts/audit-public-copy.mjs`
 - `node ./scripts/audit-public-article-quality.mjs`
+- `node ./scripts/audit-admin-exclusion.mjs --out docs/admin-exclusion-report.md`
 - `npm run audit:homepage`
 - `npm run audit:feed-volume`
 - `npm run audit:images`

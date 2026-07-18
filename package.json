@@ -34,7 +34,7 @@
     "test:repetition": "node ./scripts/test-repetition-detector.mjs",
     "test:expert-insight": "PIPELINE_OFFLINE=1 OPENROUTER_API_KEY= node ./scripts/test-expert-insight-engine.mjs",
     "test:public-content": "node ./scripts/test-public-content-regression.mjs",
-    "test": "node --test tests/*.test.mjs && npm run test:quality-gate && npm run test:relevance && npm run test:taxonomy && npm run test:repetition",
+    "test": "node ./scripts/run-test-suite.mjs",
     "test:quality-gates": "node --test tests/article-detail-quality-gate.test.mjs tests/boilerplate-detector.test.mjs tests/homepage-quality-filter.test.mjs tests/public-template-phrase-guard.test.mjs tests/seo-quality-policy.test.mjs tests/source-extraction-fail-closed.test.mjs tests/source-text-completeness.test.mjs tests/strict-infrastructure-relevance-router.test.mjs tests/truncation-detector.test.mjs tests/proper-noun-normalizer.test.mjs",
     "test:source-expansion": "node --test tests/source-registry.test.mjs tests/source-feed-discovery.test.mjs",
     "test:blog-engine-v4": "node --test tests/graded-publishing-router.test.mjs tests/blog-eligibility-policy.test.mjs tests/blog-engine-v4.test.mjs tests/blog-length-policy.test.mjs tests/blog-tone-selector.test.mjs tests/blog-archetype-selector.test.mjs tests/human-blog-quality-score.test.mjs tests/multi-source-corroboration.test.mjs tests/source-fidelity-claim-check.test.mjs tests/homepage-blog-surface-policy.test.mjs tests/homepage-backfill.test.mjs tests/article-page-template.test.mjs tests/blog-surface-v4-regression.test.mjs",

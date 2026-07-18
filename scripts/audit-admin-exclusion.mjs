@@ -1,10 +1,10 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { parseArgs } from 'node:util';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const DEFAULT_DIST_DIR = path.join(ROOT, 'dist');
-const DEFAULT_REPORT_PATH = path.join(ROOT, 'docs/admin-exclusion-report.md');
 
 async function exists(filePath) {
   try {
@@ -100,7 +100,14 @@ export async function auditAdminExclusion(options = {}) {
 }
 
 if (fileURLToPath(import.meta.url) === process.argv[1]) {
-  const result = await auditAdminExclusion({ reportPath: DEFAULT_REPORT_PATH });
+  const { values } = parseArgs({
+    options: {
+      out: { type: 'string' },
+    },
+  });
+  const result = await auditAdminExclusion({
+    reportPath: values.out ? path.resolve(values.out) : undefined,
+  });
   if (!result.ok) {
     console.error(`admin exclusion audit failed:\n${result.failures.slice(0, 80).join('\n')}`);
     process.exitCode = 1;

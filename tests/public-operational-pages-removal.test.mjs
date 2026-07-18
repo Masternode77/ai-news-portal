@@ -126,10 +126,10 @@ test('robots keeps admin surfaces excluded without naming retired routes', () =>
   }
 });
 
-test('rendered build omits retired routes from files, sitemap, and RSS', {
-  skip: !process.env.PUBLIC_BUILD_DIR,
-}, () => {
+test('rendered build omits retired routes from files, sitemap, and RSS', () => {
+  assert.ok(process.env.PUBLIC_BUILD_DIR, 'PUBLIC_BUILD_DIR must identify the test build');
   const buildDir = path.resolve(process.env.PUBLIC_BUILD_DIR);
+  assert.equal(fs.existsSync(buildDir), true, 'build directory must exist before rendered checks');
   for (const routeFile of removedRouteFiles) {
     const routeName = path.basename(routeFile, '.astro');
     assert.equal(

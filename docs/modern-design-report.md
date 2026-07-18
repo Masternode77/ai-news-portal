@@ -10,7 +10,7 @@ The public surface now prioritizes a dense infrastructure intelligence workflow:
 - `npm run build`
 - `npm run check`
 - Browser QA against built output for `/` and a `/news/<id>/` article.
-- `node ./scripts/audit-rendered-public-output.mjs`
+- `node ./scripts/audit-rendered-public-output.mjs --out docs/rendered-public-output-report.md`
 
 ## Artifacts
 
