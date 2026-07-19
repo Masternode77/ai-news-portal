@@ -130,6 +130,8 @@ release follow-ups and do not justify production promotion without preview appro
 - All 12 design-lab routes returned 200 with `noindex,nofollow` and no sitemap exposure. Vercel's
   deployment-scoped error-log query returned no application errors.
 - Evidence: `artifacts/preview-c9518bee/` (ignored local runtime artifacts).
+- Deployment-bound adversarial evidence: `adversarial-e2e.json` records three 10/10 hostile HTTP
+  passes and 31/31 unique full-homepage image hashes with `ok: true`.
 - Production promotion and cache purge were not performed.
 
 ## Adversarial E2E Completion
@@ -154,10 +156,10 @@ purge, production writes, and promotion.
 
 ### Commands and Failures
 
-- Three bounded preview HTTP passes completed 10/10 scenarios each; every request used a 10- or
-  15-second abort limit. The persisted prior receipt reports `ok: true`, and the fresh third run
-  again rejected malformed, oversized, traversal, XSS, forged-session, hostile-Origin, and
-  unsupported-method requests without secrets, stack traces, credentialed CORS, or cacheable API responses.
+- Three bounded preview HTTP passes completed 10/10 scenarios each; every request used a 15-second
+  abort limit. The deployment-bound receipt reports `ok: true` and rejects malformed, oversized,
+  traversal, XSS, forged-session, hostile-Origin, and unsupported-method requests without secrets,
+  stack traces, credentialed CORS, or cacheable API responses.
 - The focused admin, auth, outbound-media, state, checkpoint, QA-verdict, publication, and bundle
   boundary suite passed 129/129 on each of three clean reruns. `npm audit --audit-level=low` found
   0 vulnerabilities.
@@ -173,5 +175,7 @@ purge, production writes, and promotion.
   and exercised authenticated lifecycle behavior against real local handlers.
 - Workflow cancel wording is not a public product surface. The safe substitute exercised interrupted
   checkpoints, stale ownership, replay, and resume fencing without mutating production.
+- Read-only integration preflight against `origin/main` reports eight generated/data conflicts.
+  Guarded reconciliation and regenerated projections are required before integration approval.
 - All temporary child processes exited. Runtime evidence is intentionally retained under the ignored
   `artifacts/preview-c9518bee/` directory; no temporary source harness was created.

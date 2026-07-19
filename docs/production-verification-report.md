@@ -1,30 +1,28 @@
 # Production Verification Report
 
-Generated at: 2026-07-18T21:37:35.182Z
-Build ID: 0.0.1:dist-mtime-1784409861081
+Generated at: 2026-07-19T00:24:37.787Z
+Build ID: 0.0.1:dist-mtime-1784418828164
 
 ## Target URL Summary
 
 - Local URL: /Users/josh/Documents/New project 2/dist
-- Staging URL: https://ai-news-portal-ef65tm1iq-masternode77s-projects.vercel.app
+- Staging URL: https://ai-news-portal-piewufgxu-masternode77s-projects.vercel.app
 - Live URL: https://computecurrent.com
 
 ## Commands Run
 
-- `node scripts/verify-production-surface.mjs --local-dist dist --staging https://ai-news-portal-ef65tm1iq-masternode77s-projects.vercel.app --live https://computecurrent.com --skip-cache-purge --screenshots artifacts/preview-e37bc9c9/home-desktop.png,artifacts/preview-e37bc9c9/home-mobile.png,artifacts/preview-e37bc9c9/archive-desktop.png,artifacts/preview-e37bc9c9/search-desktop.png,artifacts/preview-e37bc9c9/article-desktop.png,artifacts/preview-e37bc9c9/apac-desktop.png,artifacts/preview-e37bc9c9/preview-viewport.png,artifacts/preview-e37bc9c9/production-viewport.png --out docs/production-verification-report.md --json artifacts/preview-e37bc9c9/production-verification.json`
+- `node scripts/verify-production-surface.mjs --local-dist dist --staging https://ai-news-portal-piewufgxu-masternode77s-projects.vercel.app --live https://computecurrent.com --skip-cache-purge --screenshots artifacts/preview-c9518bee/home-desktop.png,artifacts/preview-c9518bee/home-mobile.png,artifacts/preview-c9518bee/archive-desktop.png,artifacts/preview-c9518bee/search-desktop.png,artifacts/preview-c9518bee/article-desktop.png,artifacts/preview-c9518bee/apac-desktop.png --out docs/production-verification-report.md --json artifacts/preview-c9518bee/production-verification.json`
 
 ## Artifacts
 
-- JSON result: `artifacts/preview-e37bc9c9/production-verification.json`
+- JSON result: `artifacts/preview-c9518bee/production-verification.json`
 - Markdown report: `docs/production-verification-report.md`
-- Screenshot: `artifacts/preview-e37bc9c9/home-desktop.png` (present, 3719970 bytes)
-- Screenshot: `artifacts/preview-e37bc9c9/home-mobile.png` (present, 3920768 bytes)
-- Screenshot: `artifacts/preview-e37bc9c9/archive-desktop.png` (present, 3427874 bytes)
-- Screenshot: `artifacts/preview-e37bc9c9/search-desktop.png` (present, 3420938 bytes)
-- Screenshot: `artifacts/preview-e37bc9c9/article-desktop.png` (present, 1891837 bytes)
-- Screenshot: `artifacts/preview-e37bc9c9/apac-desktop.png` (present, 1973231 bytes)
-- Screenshot: `artifacts/preview-e37bc9c9/preview-viewport.png` (present, 711968 bytes)
-- Screenshot: `artifacts/preview-e37bc9c9/production-viewport.png` (present, 565076 bytes)
+- Screenshot: `artifacts/preview-c9518bee/home-desktop.png` (present, 3902935 bytes)
+- Screenshot: `artifacts/preview-c9518bee/home-mobile.png` (present, 3920768 bytes)
+- Screenshot: `artifacts/preview-c9518bee/archive-desktop.png` (present, 3427874 bytes)
+- Screenshot: `artifacts/preview-c9518bee/search-desktop.png` (present, 3420938 bytes)
+- Screenshot: `artifacts/preview-c9518bee/article-desktop.png` (present, 1891837 bytes)
+- Screenshot: `artifacts/preview-c9518bee/apac-desktop.png` (present, 1973231 bytes)
 
 ## Pass/Fail
 
@@ -49,14 +47,14 @@ Build ID: 0.0.1:dist-mtime-1784409861081
   - RSS local news links: 2
   - RSS local missing files: none
 - local: skipped local step: URL not provided
-- staging URL: https://ai-news-portal-ef65tm1iq-masternode77s-projects.vercel.app
-  - https://ai-news-portal-ef65tm1iq-masternode77s-projects.vercel.app/: live status passed 200
-  - https://ai-news-portal-ef65tm1iq-masternode77s-projects.vercel.app/archive/: live status passed 200
-  - https://ai-news-portal-ef65tm1iq-masternode77s-projects.vercel.app/sample/: live status passed 200
-  - https://ai-news-portal-ef65tm1iq-masternode77s-projects.vercel.app/rss.xml: live status passed 200
-  - https://ai-news-portal-ef65tm1iq-masternode77s-projects.vercel.app/sitemap.xml: live status passed 200
-  - https://ai-news-portal-ef65tm1iq-masternode77s-projects.vercel.app/sitemap-index.xml: live status passed 200
-  - https://ai-news-portal-ef65tm1iq-masternode77s-projects.vercel.app/robots.txt: live status passed 200
+- staging URL: https://ai-news-portal-piewufgxu-masternode77s-projects.vercel.app
+  - https://ai-news-portal-piewufgxu-masternode77s-projects.vercel.app/: live status passed 200
+  - https://ai-news-portal-piewufgxu-masternode77s-projects.vercel.app/archive/: live status passed 200
+  - https://ai-news-portal-piewufgxu-masternode77s-projects.vercel.app/sample/: live status passed 200
+  - https://ai-news-portal-piewufgxu-masternode77s-projects.vercel.app/rss.xml: live status passed 200
+  - https://ai-news-portal-piewufgxu-masternode77s-projects.vercel.app/sitemap.xml: live status passed 200
+  - https://ai-news-portal-piewufgxu-masternode77s-projects.vercel.app/sitemap-index.xml: live status passed 200
+  - https://ai-news-portal-piewufgxu-masternode77s-projects.vercel.app/robots.txt: live status passed 200
 - live URL: https://computecurrent.com
   - https://computecurrent.com/: live status passed 200
   - https://computecurrent.com/archive/: live status passed 200

@@ -4,9 +4,9 @@ Updated: 2026-07-19
 
 ## Final Preview
 
-- Deployment: `dpl_3P3ryw94P78z66ZJa1bopUAqSBu6`
-- URL: `https://ai-news-portal-ef65tm1iq-masternode77s-projects.vercel.app`
-- Product commit: `e37bc9c9e0f01691d79ea073ecf6a3eaa7785bd9`
+- Deployment: `dpl_HpRXGKfUMERRsu25iCcYpWVvsr1S`
+- URL: `https://ai-news-portal-piewufgxu-masternode77s-projects.vercel.app`
+- Product commit: `c9518bee64736aecf81a1c22ef9e40df4d963e18`
 - Separately observed production deployment: `dpl_6vJ55zh7jsFTQziQgxe4rnrGpy1j`
 - Separately observed `origin/main`: `f345f6798f90ef82c37fc01fd537157e112eafc9`
 
@@ -29,18 +29,19 @@ image audit reports zero broken public images or placeholder labels. Source prov
 
 Screenshots:
 
-- `artifacts/preview-e37bc9c9/home-desktop.png`
-- `artifacts/preview-e37bc9c9/home-mobile.png`
-- `artifacts/preview-e37bc9c9/archive-desktop.png`
-- `artifacts/preview-e37bc9c9/search-desktop.png`
-- `artifacts/preview-e37bc9c9/article-desktop.png`
-- `artifacts/preview-e37bc9c9/apac-desktop.png`
-- Visual browser receipt: `artifacts/preview-e37bc9c9/visual-qa.json`
-- Production verifier receipt: `artifacts/preview-e37bc9c9/production-verification.json`
-- Adversarial HTTP and image receipt: `artifacts/preview-e37bc9c9/adversarial-e2e.json`
+- `artifacts/preview-c9518bee/home-desktop.png`
+- `artifacts/preview-c9518bee/home-mobile.png`
+- `artifacts/preview-c9518bee/archive-desktop.png`
+- `artifacts/preview-c9518bee/search-desktop.png`
+- `artifacts/preview-c9518bee/article-desktop.png`
+- `artifacts/preview-c9518bee/apac-desktop.png`
+- Visual browser receipt: `artifacts/preview-c9518bee/visual-qa.json`
+- Adversarial HTTP/image receipt: `artifacts/preview-c9518bee/adversarial-e2e.json`
+- Production verifier receipt: `artifacts/preview-c9518bee/production-verification.json`
+- Pixel-difference receipt: `artifacts/preview-c9518bee/preview-production-diff.json`
 
 Sharp pixel statistics mark every retained capture nonblank. A fresh 1440 x 900 comparison found
-1,056,546 of 1,296,000 pixels different (81.5236%). `computecurrent.com` still serves the previous
+973,956 of 1,296,000 pixels different (75.1509%). `computecurrent.com` still serves the previous
 command-center design while the preview serves Midnight Intelligence. That mismatch is the expected
 pre-approval state, not a failed or partial preview render.
 
@@ -52,7 +53,7 @@ desktop.
 
 ## Design Options
 
-The design-lab harness captured 27 route and viewport combinations for Midnight Intelligence,
+The design-lab harness captured 36 route and viewport combinations for Midnight Intelligence,
 Research Ledger, and Signal Mosaic. Its JSON verdict passed with zero console errors, failed
 images, clipped text, horizontal overflow, repeated first-viewport images, or exposed admin links.
 All design routes remain noindex.
@@ -62,4 +63,5 @@ and Signal Mosaic scored 8.73. Evidence is stored under `artifacts/design-option
 
 ## Verdict
 
-Visual QA passes for preview approval. Production was not promoted or changed by this branch.
+Visual QA passes for interim design review. Final release approval must bind to the refreshed preview
+created after guarded reconciliation. Production was not promoted or changed by this branch.

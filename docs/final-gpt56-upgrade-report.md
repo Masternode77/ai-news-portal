@@ -4,8 +4,8 @@ Updated: 2026-07-19
 
 ## Executive Verdict
 
-The Compute Current upgrade is **deployable with operational follow-up** and ready for human
-preview approval. The public publication, canonical editorial foundation, secure CMS integration,
+The Compute Current upgrade is **deployable with operational follow-up** and ready for interim human
+preview review. The public publication, canonical editorial foundation, secure CMS integration,
 design prototypes, tests, preview packaging, and rollback controls are implemented and verified.
 Full goal completion is not claimed: managed preview persistence, human-labeled content
 benchmarks, and execution of canonical reconciliation for newer production content remain open. This branch did
@@ -143,8 +143,8 @@ three prototypes remain noindex and are not production routes.
 | Dependency security | `npm audit --audit-level=low`: 0 vulnerabilities |
 | Full tests | 671 total, 671 passed, 0 failed, 0 skipped; build-backed runner preserved the pre-existing tracked diff |
 | Adversarial admin/auth/state/publish loop | 129/129 passed in each of three consecutive runs (387/387) |
-| Adversarial preview HTTP | 12 hostile or invalid cases failed closed; malformed, oversized, traversal, XSS, forged-session, hostile-Origin, and unsupported-method probes exposed no internals |
-| Focused security tests | 76 passed, 0 failed |
+| Adversarial preview HTTP | 10 hostile or invalid cases passed in three bounded runs; malformed, oversized, traversal, XSS, forged-session, hostile-Origin, and unsupported-method probes exposed no internals |
+| Focused security tests | 129/129 passed in three consecutive runs (387/387) |
 | Reconciliation/orchestrator security tests | 96 passed, 0 failed |
 | Editorial scripts | quality, relevance, taxonomy, repetition passed |
 | Astro check | 0 errors, 0 warnings, 0 hints |
@@ -191,9 +191,9 @@ snapshot updates and 21 news/archive/dashboard refreshes. Those refreshes touch 
 their net surface is four article JSON stores, pipeline state, one deleted-on-this-branch dashboard
 artifact, and 242 generated-image paths.
 
-A read-only three-way merge simulation found content conflicts in `archived-news.json`,
-`latest-news.json`, and `search-index.json`, plus a modify/delete conflict for the retired public
-dashboard artifact. Several incoming records are visibly outside the product definition, including
+A read-only three-way merge simulation found eight conflicts: `archived-news.json`,
+`latest-news.json`, `search-index.json`, the retired public dashboard artifact, and four generated
+image variants. Several incoming records are visibly outside the product definition, including
 consumer hardware and general software stories. Directly accepting generated stores would bypass
 the upgraded relevance, source-fidelity, repetition, canonical-source, and image-provenance gates.
 A current read-only audit resolved `origin/main` to
@@ -203,11 +203,11 @@ Every candidate contains only `id`, `title`, `source`, `url`, `publishedAt`, and
 sets every upstream snippet to an empty string so evidence must be extracted again from the source.
 Generated copy, images, routing, scores, and other legacy projection fields do not cross the boundary.
 The advisory title-only review reports 2 core, 6 adjacent, and 19 archive-shaped candidates. These
-labels are operator hints only; they do not alter the 25-candidate execution input.
+labels are operator hints only; they do not alter the 27-candidate execution input.
 
 The release path is to run
 `npm run content:reconcile-upstream -- --execute --production --revision=origin/main` in a safe
-preview content-refresh window. The command re-runs the 25 candidates through the canonical
+preview content-refresh window. The command re-runs the 27 candidates through the canonical
 extraction, relevance, fidelity, repetition, image, review, and publication gates. It requires both
 execution flags, enforces a 30-candidate preflight limit, binds retries to the audited revision and
 candidate digest, resumes partial publication from immutable initial input before re-auditing local
@@ -241,7 +241,7 @@ remains outside release inputs.
    not merge the conflicting generated JSON stores directly.
 4. Configure OAuth/2FA if required, plus Vercel Firewall, managed database backups, least-privilege
    credentials, monitoring, and secret rotation.
-5. Review the refreshed preview screenshots and selected design. Only then push and promote using the
+5. Review and explicitly approve the refreshed preview screenshots and selected design. Only then push and promote using the
    release runbook. Cache purge remains explicitly excluded.
 
 ## Rollback and Recommendation

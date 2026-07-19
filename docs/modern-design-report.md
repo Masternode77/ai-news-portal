@@ -1,6 +1,6 @@
 # Modern Design Report
 
-Generated at: 2026-05-31T08:00:00.000Z
+Updated: 2026-07-19
 
 The public surface now prioritizes a dense infrastructure intelligence workflow: a scanner-friendly homepage, image-backed cards, category navigation, resilient empty states, article hero imagery, and article pages that preserve source context without exposing internal pipeline language.
 
@@ -14,23 +14,25 @@ The public surface now prioritizes a dense infrastructure intelligence workflow:
 
 ## Artifacts
 
-- Homepage screenshot: `evidence/compute-current-omo-ultra-rebuild/task-14-homepage.png`
-- Article screenshot: `evidence/compute-current-omo-ultra-rebuild/task-14-article.png`
-- Browser QA JSON: `evidence/compute-current-omo-ultra-rebuild/task-14-browser-qa.json`
+- Homepage screenshots: `artifacts/preview-c9518bee/home-desktop.png`, `home-mobile.png`
+- Article screenshot: `artifacts/preview-c9518bee/article-desktop.png`
+- Browser QA JSON: `artifacts/preview-c9518bee/visual-qa.json`
+- Adversarial image-byte QA JSON: `artifacts/preview-c9518bee/adversarial-e2e.json`
 - Rendered output report: `docs/rendered-public-output-report.md`
 - Components: `src/components/ArticleCard.astro`, `src/components/FeaturedArticle.astro`, `src/components/ArticleHeroImage.astro`, `src/components/CategoryNav.astro`
 
 ## Pass/Fail
 
-- Passed: rendered audit checked 20 pages, 14 article pages, 46 cards, and 0 broken images.
-- Passed: homepage browser QA confirmed public cards render with image-backed presentation.
-- Passed: article browser QA confirmed hero image presence and article body length suitable for longform reading.
+- Passed: rendered audit checked 7 representative pages, 30 cards, and 0 broken images.
+- Passed: exact-preview homepage QA decoded 31/31 images on desktop and mobile with no placeholders,
+  errors, failed application requests, or overflow; byte hashing found 31/31 unique images.
+- Passed: exact-preview article QA confirmed a decoded 1536x864 hero above the body.
 
 ## Remaining Risks
 
-- Visual QA is local-build evidence. Production visual parity still depends on deployment and cache state.
+- The exact preview is verified; production remains intentionally different until approval.
 - Future homepage copy changes should continue using public-output audits so internal queue labels do not reappear.
-- Accessibility polish can still improve beyond the current automated and browser smoke coverage.
+- Cache freshness is not claimed because cache purge was excluded.
 
 ## Cleanup Receipts
 

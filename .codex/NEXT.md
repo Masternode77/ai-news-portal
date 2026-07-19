@@ -90,13 +90,13 @@
   and all ten required admin paths were private/no-store/noindex; the API failed closed with 503.
 - Preview security headers include CSP, HSTS, nosniff, frame denial, referrer policy, and noindex; the deployment error-log query returned no application errors.
 - Browser QA: desktop/mobile homepage, archive, and article passed with no console errors or overflow; the first-screen images and article hero decoded.
-- Adversarial preview HTTP probes failed closed for 12 hostile/invalid cases; the focused 129-test
+- Adversarial preview HTTP probes passed 10/10 in three bounded runs; the focused 129-test
   security/state/publish set passed three consecutive runs (387/387).
 - QA cleanup re-review found 0 code defects; seven behavioral contracts prove build/test ordering,
   dirty-worktree preservation, tracked mutation rejection, and explicit audit report writes.
 - First-screen image byte audit found 10 valid WebPs and 10 unique SHA-256 hashes with no default duplicate.
 - Vercel bundles clear 250 MB: media 21,180 KiB, others 772-1,912 KiB locally; remote functions are 671-871 KiB.
-- Fresh 1440x900 comparison differs on 81.5236% of pixels, confirming production still serves the
+- Fresh 1440x900 comparison differs on 75.1509% of pixels, confirming production still serves the
   old command-center design while the preview serves Midnight Intelligence.
 - Human benchmark packets remain reviewer-empty; the scorer fails closed without `reviewer.id`.
 - Managed persistence contract: 4/4 local tests pass; live preview credentials are absent.
@@ -106,14 +106,15 @@
 - Independent 150-item relevance and 40-sample writing labels require human review.
 - The 27 current canonical-source candidates require guarded canonical re-ingestion and a refreshed
   preview; direct generated-JSON merge is unsafe.
+- Read-only `git merge-tree` preflight against `origin/main` reports 8 generated/data conflicts;
+  integration is not ready until reconciliation and regenerated projections replace raw merging.
 - OAuth/2FA, firewall, backups, monitoring, and secret rotation are operational follow-up.
 - Push/PR and production promotion require explicit preview approval.
 
 ## Exact next step
-- Preserve the exact-preview receipt and obtain explicit preview approval before push, PR, or
-  production promotion.
-- In a later safe preview content-refresh window, run
-  `npm run content:reconcile-upstream -- --execute --production --revision=origin/main`; then refresh
-  the preview after canonical extraction and publication gates pass.
-- Await managed preview persistence credentials, independent human labels, and preview approval.
+- When preview-only provider access is available, run the guarded reconciliation in a safe preview
+  content-refresh window, rerun all gates, regenerate projections, and deploy a fresh preview.
+- Obtain explicit human approval only for that refreshed preview; then resolve integration from the
+  regenerated outputs before push, PR, merge, or production promotion.
+- Await managed preview persistence credentials and independent human labels.
 - Keep push, production promotion, production secrets, and cache purge excluded.
