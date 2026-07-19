@@ -2,14 +2,14 @@
 
 ## Current branch
 - `upgrade/gpt-5-6-sol`; latest verified implementation checkpoint
-  `e37bc9c9e0f01691d79ea073ecf6a3eaa7785bd9`.
+  `c9518bee64736aecf81a1c22ef9e40df4d963e18`.
 - Latest local QA tooling checkpoint: `1fd774f4b362d6003d0ed1bc07d61e61d63a4e2d`.
-- Exact implementation preview: `dpl_3P3ryw94P78z66ZJa1bopUAqSBu6` at
-  `https://ai-news-portal-ef65tm1iq-masternode77s-projects.vercel.app` (`READY`, preview target).
+- Exact implementation preview: `dpl_HpRXGKfUMERRsu25iCcYpWVvsr1S` at
+  `https://ai-news-portal-piewufgxu-masternode77s-projects.vercel.app` (`READY`, preview target).
 - Rollback tag: `backup/pre-gpt56-upgrade-20260711T091118Z`.
 - No push, production promotion, production-secret operation, or cache purge has been performed.
-- Latest separately observed production: `dpl_8gDg7q7eyfUubUEeeXW8zq4Pd9pz`;
-  current `origin/main` is `c312b4d0ae6a4c9a9f1897ce1e0585b0247c2bf0`.
+- Latest separately observed production: `dpl_6vJ55zh7jsFTQziQgxe4rnrGpy1j`;
+  current `origin/main` is `f345f6798f90ef82c37fc01fd537157e112eafc9`.
 
 ## Latest completed checklist item
 - Reconciled source-image provenance, publication dedupe, immutable GitHub Actions, and generated-data cleanup.
@@ -41,12 +41,12 @@
   artwork honestly, and documented that production editorial candidates explicitly force Image2.
 - Bound the OMO audit to the canonical homepage eligibility predicate; its current report now matches
   the public corpus at 32 eligible records, one heuristic low-relevance item, and zero missing images.
-- Deployed implementation `e37bc9c9` to the exact preview and completed route, header, admin, log,
+- Deployed implementation `c9518bee` to the exact preview and completed route, header, admin, log,
   desktop/mobile visual, image, placeholder, overflow, and production-comparison checks.
-- Re-audited current `origin/main`: 125 newer commits comprise 105 dashboard snapshots and 20 content
-  refreshes; 749 upstream rows resolve to 724 already-present sources, 25 source-only candidates,
+- Re-audited current `origin/main`: 128 newer commits comprise 107 dashboard snapshots and 21 content
+  refreshes; 751 upstream rows resolve to 724 already-present sources, 27 source-only candidates,
   and 0 rejected rows.
-- Advisory title-only review reports 2 core, 6 adjacent, and 17 archive candidates; this is not an
+- Advisory title-only review reports 2 core, 6 adjacent, and 19 archive candidates; this is not an
   execution filter and every candidate still requires canonical source extraction.
 - Confirmed a raw merge remains unsafe because it would bypass upgraded relevance, fidelity,
   repetition, provenance, and image gates.
@@ -64,10 +64,10 @@
   regeneration, workflow/default configuration, public provenance, docs, and regressions.
 - Audit hygiene: `scripts/audit-omo-ultra-current-state.mjs`, its contract test, QA reports, and
   this handoff.
-- Local ignored evidence: `artifacts/preview-e37bc9c9/`.
+- Local ignored evidence: `artifacts/preview-c9518bee/`.
 
 ## Validation results
-- Hermetic `npm test`: 649 total, 649 passed, 0 failed, 0 skipped; build and follow-on editorial
+- Hermetic `npm test`: 671 total, 671 passed, 0 failed, 0 skipped; build and follow-on editorial
   gates pass without changing the pre-existing tracked diff.
 - QA/QC workflow/report-contract tests: 11/11 passed; reconciliation/orchestrator security set: 96/96 passed.
 - Focused redirect/image security: 35/35; normal and offline image orchestration: 19/19 each;
@@ -75,7 +75,7 @@
 - Tracked secret scan: no real credentials/private keys; only an `example.invalid` fixture matched.
 - Source provenance: 26/26 articles and 104/104 variants matched with no unsafe/missing/mismatch result.
 - `npm run check`: 0 errors, 0 warnings, 0 hints.
-- `npm run content:gate`: passed; 59 pages built and all public/image/admin/performance audits passed.
+- `npm run content:gate`: passed; 62 pages built and all public/image/admin/performance audits passed.
 - Release-gate selected tests: 41/41; rendered audit: 7 pages, 30 cards, 0 broken images.
 - `npm run qa:qc`: deployable with operational follow-up; live verification passed and cache purge
   skipped; the subsequent exact-preview harness passed local, staging, and live read-only checks.
@@ -86,17 +86,16 @@
   0 findings; the provider-cleanup review found and closed two medium issues, then returned
   `APPROVE` with 0 findings; architecture re-review returned `CLEAR / APPROVE`; the final image,
   redirect, provenance, and audit-parity review closed all findings and returned `APPROVE`.
-- Exact preview: eight public routes returned 200, five retired routes returned 404, and admin pages
-  returned private/no-store responses; the unconfigured API returned a generic no-store 503.
-- Preview security headers include CSP, HSTS, nosniff, frame denial, referrer policy, permissions
-  policy, and preview noindex; final Vercel error-log query returned no application errors.
-- Browser QA: homepage 31/31 desktop/mobile, archive 32/32, search 32/32, article 1/1, and APAC 19/19
-  images decoded with 0 broken images, placeholder labels, app errors, failed requests, or overflow.
-- Adversarial preview HTTP probes passed 10/10 in three bounded runs; the focused 81-test security/state/publish set
-  passed three consecutive runs (243/243), including stale-owner, resume, and false-green behavior.
+- Exact preview: eight public and twelve design routes returned 200, five retired routes returned 404,
+  and all ten required admin paths were private/no-store/noindex; the API failed closed with 503.
+- Preview security headers include CSP, HSTS, nosniff, frame denial, referrer policy, and noindex; the deployment error-log query returned no application errors.
+- Browser QA: desktop/mobile homepage, archive, and article passed with no console errors or overflow; the first-screen images and article hero decoded.
+- Adversarial preview HTTP probes failed closed for 12 hostile/invalid cases; the focused 129-test
+  security/state/publish set passed three consecutive runs (387/387).
 - QA cleanup re-review found 0 code defects; seven behavioral contracts prove build/test ordering,
   dirty-worktree preservation, tracked mutation rejection, and explicit audit report writes.
-- Homepage image byte audit found 31 valid URLs and 31 unique SHA-256 hashes with no default duplicate.
+- First-screen image byte audit found 10 valid WebPs and 10 unique SHA-256 hashes with no default duplicate.
+- Vercel bundles clear 250 MB: media 21,180 KiB, others 772-1,912 KiB locally; remote functions are 671-871 KiB.
 - Fresh 1440x900 comparison differs on 81.5236% of pixels, confirming production still serves the
   old command-center design while the preview serves Midnight Intelligence.
 - Human benchmark packets remain reviewer-empty; the scorer fails closed without `reviewer.id`.
@@ -105,7 +104,7 @@
 ## Blockers
 - Preview Postgres, Blob, and admin credentials are absent; managed persistence is not proven.
 - Independent 150-item relevance and 40-sample writing labels require human review.
-- The 25 current canonical-source candidates require guarded canonical re-ingestion and a refreshed
+- The 27 current canonical-source candidates require guarded canonical re-ingestion and a refreshed
   preview; direct generated-JSON merge is unsafe.
 - OAuth/2FA, firewall, backups, monitoring, and secret rotation are operational follow-up.
 - Push/PR and production promotion require explicit preview approval.

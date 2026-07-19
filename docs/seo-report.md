@@ -1,6 +1,6 @@
 # SEO Report
 
-Updated: 2026-07-12
+Updated: 2026-07-19
 
 ## Verified Controls
 
@@ -16,8 +16,8 @@ Updated: 2026-07-12
 
 ## Local Evidence
 
-The full test run ran 422 tests: 421 passed, none failed, and one skip. The 61-page Astro build
-completed successfully. Public output, sitemap/RSS, structured-data, thin-page, source
+The build-backed hermetic suite ran 671 tests: all 671 passed with no failures or skips, and the
+62-page Astro build completed successfully. Public output, sitemap/RSS, structured-data, thin-page, source
 attribution, admin exclusion, and retired-route contracts are included in the test and content
 gate surfaces.
 
@@ -26,4 +26,6 @@ gate surfaces.
 The exact Vercel preview was measured. Its Lighthouse SEO score is 69 because Vercel adds
 `x-robots-tag: noindex` to previews; this is expected and prevents accidental indexing. Field
 search-engine behavior and social-card cache freshness still require post-approval production
-observation. Production remains unchanged during this review.
+observation. Lighthouse 13.4.0 reproduced the score on both mobile and desktop against
+`dpl_HpRXGKfUMERRsu25iCcYpWVvsr1S`; raw reports are retained under
+`artifacts/preview-c9518bee/`. Production remains unchanged during this review.

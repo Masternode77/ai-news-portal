@@ -1,6 +1,6 @@
 # Admin CMS Report
 
-Updated: 2026-07-12
+Updated: 2026-07-19
 
 ## Status
 
@@ -26,6 +26,10 @@ and can split write and verification across separate processes or preview deploy
 - Publication: every article mutation writes an outbox event in the same transaction.
   `admin:export-public` regenerates the complete static public read model; production builds
   run it automatically when `DATABASE_URL` is configured.
+- Editorial regeneration: article and brief requests re-enter the canonical extraction-only
+  evidence, generation, source-fidelity, claim, SEO, and repetition gates. Stale versions are
+  rejected before provider access, failed generations create no revision or audit record, and
+  serverless regeneration does not write generated image files.
 
 ## Routes
 
@@ -34,11 +38,12 @@ Implemented shells: `/admin/login/`, `/admin/dashboard/`, `/admin/articles/`,
 `/admin/quarantine/`, `/admin/pipeline/`, and `/admin/audit-log/`. Vercel rewrites expose
 the requested pretty article edit routes without embedding article data in static HTML.
 
-The final preview verified `/admin/articles/new`, `/admin/articles/test-article`, and
-`/admin/articles/test-article/edit` as HTTP 200 shells with `Cache-Control: no-store, private`.
-The credential-free `/api/admin/articles` request returned the intended generic HTTP 503 with
-`Cache-Control: no-store`. This receipt comes from preview
-`dpl_DGw5wWEmjC69SV9cJEg9Jj9sCbmW` built from implementation SHA `7cb5e449`.
+The exact final preview verified all ten required login, dashboard, article list/new/view/edit,
+sources, quarantine, pipeline, and audit-log paths as HTTP 200 shells with
+`Cache-Control: no-store, private` and `noindex`. The dynamic article view and edit paths exercise
+the Vercel rewrites rather than a duplicate admin UI. The credential-free API returned the
+intended generic HTTP 503 with `Cache-Control: no-store`. This receipt comes from preview
+`dpl_HpRXGKfUMERRsu25iCcYpWVvsr1S` built from implementation SHA `c9518bee`.
 
 The local browser harness now drives the built admin UI against the real API handlers and an
 isolated file/media store. All 17 required scenarios pass: redirect, login, create, title/body/
@@ -52,6 +57,8 @@ discovery propagation is covered separately by the sitemap/RSS integration test.
 - `npm audit --audit-level=low`: passed with 0 known dependency vulnerabilities.
 - `node --test tests/managed-admin-persistence.test.mjs tests/admin-storage-local.test.mjs tests/admin-storage-postgres.test.mjs`: passed; covers probe boundaries, reconnect, Blob round trip, lifecycle, audit, outbox, and multi-error cleanup reporting without managed credentials.
 - `npm run qa:admin:browser`: passed 17/17 scenarios against the fresh local build; evidence is written under the ignored `artifacts/admin-browser-e2e/` directory and all temporary state is removed.
+- Exact-preview route probe: passed 10/10 required admin paths, including the dynamic article view
+  and edit rewrites; every response was private, no-store, noindex, and free of configuration values.
 - `npm run admin:verify-managed -- --phase=cycle --target=preview`: rejected before any write because preview scope and credentials were absent.
 
 ## Artifacts
@@ -69,8 +76,11 @@ discovery propagation is covered separately by the sitemap/RSS integration test.
 
 ## Pass/Fail
 
-- PASS: targeted admin security and storage suite, 27 passed and 0 failed.
+- PASS: hermetic full suite, 671 passed, 0 failed, and 0 skipped; focused route/persistence set,
+  11 passed and 0 failed.
 - PASS: browser admin lifecycle, 17 passed and 0 failed; publish/unpublish sitemap/RSS discovery is integration-tested.
+- PASS: adversarial regeneration coverage rejects stale versions, hostile editorial direction,
+  insufficient source evidence, and failed quality gates without partial persistence.
 - PASS: deleted records are hidden from editors and public fallback content.
 - PASS: production uploads remain private until a successful public read-model export promotes them.
 - BLOCKED: live managed Postgres migration, Blob upload, and deployment-restart persistence require preview credentials.

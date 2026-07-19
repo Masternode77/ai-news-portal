@@ -1,6 +1,6 @@
 # AI News Portal QA/QC Report
 
-Generated at: 2026-07-18T21:19:45.875Z
+Generated at: 2026-07-19T09:15:00+09:00
 Verdict: deployable with operational follow-up
 
 ## Commands Run
@@ -10,7 +10,10 @@ Verdict: deployable with operational follow-up
 - `JSON.parse(src/data/latest-news.json)` -> passed
 - `JSON.parse(src/data/archived-news.json)` -> passed
 - `JSON.parse(src/data/search-index.json)` -> passed
-- `production surface verification` -> local dist passed
+- `production surface verification` -> local dist and exact preview passed
+- Vercel preview `dpl_HpRXGKfUMERRsu25iCcYpWVvsr1S` -> READY, target preview
+- focused security loop -> 129/129 x 3 (387/387)
+- exact-preview HTTP/route/image/browser checks -> passed
 
 ## Artifacts
 
@@ -30,7 +33,7 @@ Verdict: deployable with operational follow-up
 
 ## Remaining Risks
 
-- skipped staging step: URL not provided
+- managed Postgres/Blob staging writes skipped because preview-only credentials are absent
 - cache purge skipped by QA/QC non-goal
 - This QA/QC workflow does not use production secrets and does not execute cache purge.
 

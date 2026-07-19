@@ -1,6 +1,6 @@
 # Performance Report
 
-Updated: 2026-07-12
+Updated: 2026-07-19
 
 ## Build Measurement
 
@@ -8,28 +8,29 @@ Measured locally on macOS with Node 22+ using `/usr/bin/time -l npm run build`:
 
 | Metric | Audit baseline | Upgrade branch |
 | --- | ---: | ---: |
-| Static pages | 1,532 | 61 |
-| Astro build phase | not retained | 16.44 s |
-| Full build including image preparation | not retained | 31.12 s |
-| Peak resident memory | not retained | 997,277,696 bytes |
-| Browser JavaScript | not retained | 11,432 bytes / 1 file |
-| CSS | not retained | 100,126 bytes / 2 files |
+| Static pages | 1,532 | 62 |
+| Astro-reported build | not retained | 61 s |
+| Full build including image preparation | not retained | 76.05 s real |
+| Peak resident memory | not retained | 950,534,144 bytes |
+| Browser JavaScript | not retained | 13,110 bytes / 1 file |
+| CSS | not retained | 105,431 bytes / 2 files |
 
 The first measured build copied 4,154 historical generated assets and produced a 272 MB
-`dist`. The final post-merge build retained 85 referenced generated assets and pruned 4,097;
-the reachability step reduces
-`dist` to 5.6 MB, about 97.9%. Publication builds do not acknowledge outbox events, so an
+`dist`. The exact implementation build retained 68 referenced generated assets and pruned 4,109;
+the reachability step reduces `dist` to 7.26 MB, about 97% from that initial measurement.
+Publication builds do not acknowledge outbox events, so an
 export, Astro, pruning, or deployment failure cannot consume them.
 
 `npm run audit:performance` is now part of `content:gate`. It fails the release when the static
 output exceeds any of these explicit ceilings: 10 MB total, 150 KB browser JavaScript, 150 KB CSS,
 150 KB for the largest HTML document, or 500 KB for the largest image. The current measured output
-is 5,095,581 bytes total, 11,432 bytes of JavaScript, 100,239 bytes of CSS, 100,020 bytes for the
-largest HTML page, and 335,600 bytes for the largest image.
+is 7,292,794 bytes total, 13,110 bytes of JavaScript, 105,431 bytes of CSS, 93,885 bytes for the
+largest HTML page, and 404,420 bytes for the largest image.
 
 ## Final Preview Lighthouse
 
-Measured against exact implementation deployment `dpl_DGw5wWEmjC69SV9cJEg9Jj9sCbmW`:
+Measured with Lighthouse 13.4.0 against exact implementation deployment
+`dpl_HpRXGKfUMERRsu25iCcYpWVvsr1S`:
 
 | Profile | Performance | Accessibility | Best Practices | SEO | FCP | LCP | TBT | CLS |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
@@ -47,18 +48,28 @@ RSS, robots, and public inventory contracts pass separately; production remains 
 
 Raw reports:
 
-- `artifacts/final-7cb5e449-preview/lighthouse-mobile.json`
-- `artifacts/final-7cb5e449-preview/lighthouse-desktop.json`
+- `artifacts/preview-c9518bee/lighthouse-mobile.json`
+- `artifacts/preview-c9518bee/lighthouse-desktop.json`
+
+The deploy bundle boundary was also measured before and after the serverless import split. Local
+Vercel output is 21,180 KiB for the media function and 772-1,912 KiB for every other admin
+function, all well below the 250 MB limit. The remote Linux deployment reports 671-871 KiB
+function artifacts and completed without a size warning.
 
 ## Page Samples
 
-- Homepage HTML: 75,505 bytes.
-- Archive HTML: 75,792 bytes.
-- Search HTML: 100,020 bytes.
-- Published article HTML: 19,154 bytes.
+- Homepage HTML: 70,621 bytes.
+- Archive HTML: 71,540 bytes.
+- Search HTML: 93,885 bytes.
+- Published article HTML: 19,260 bytes.
 
 ## Remaining Risks
 
 These are lab measurements, not field Core Web Vitals. INP and long-window user telemetry need
 real production traffic after approval. Search and archive remain the largest HTML documents
 because they intentionally provide a usable publication feed without client-side fetching.
+The current Lighthouse image-delivery insight estimates roughly 600 KiB of avoidable mobile image
+transfer and 1.15 MiB on desktop, primarily because 1200-pixel editorial thumbnails serve cards
+rendered at 240-390 pixels. Performance still clears the requested score and enforced budgets;
+a smaller canonical card variant is the next image-pipeline optimization and requires a fresh
+preview/provenance cycle rather than an unreviewed late asset rewrite.

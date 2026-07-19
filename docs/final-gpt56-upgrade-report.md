@@ -21,11 +21,11 @@ continued its automated content deployments independently during QA.
 | Baseline production SHA | `19089b66627be58d5066376902ff382d2a018137` |
 | Integrated `origin/main` baseline | `f8bc10a220a6b910e703375d337dcd3f40ea0467` |
 | Rollback tag | `backup/pre-gpt56-upgrade-20260711T091118Z` |
-| Verified implementation SHA | `e37bc9c9e0f01691d79ea073ecf6a3eaa7785bd9` |
+| Verified implementation SHA | `c9518bee64736aecf81a1c22ef9e40df4d963e18` |
 | Verification tooling SHA | `1fd774f4b362d6003d0ed1bc07d61e61d63a4e2d` |
-| Preview deployment | `dpl_3P3ryw94P78z66ZJa1bopUAqSBu6` (`READY`, preview target) |
-| Preview URL | `https://ai-news-portal-ef65tm1iq-masternode77s-projects.vercel.app` |
-| Latest observed production | `dpl_8gDg7q7eyfUubUEeeXW8zq4Pd9pz` (`https://ai-news-portal-d8c9wlkzr-masternode77s-projects.vercel.app`; external `main`, unchanged by this branch); separately observed `origin/main` is `c312b4d0ae6a4c9a9f1897ce1e0585b0247c2bf0` |
+| Preview deployment | `dpl_HpRXGKfUMERRsu25iCcYpWVvsr1S` (`READY`, preview target) |
+| Preview URL | `https://ai-news-portal-piewufgxu-masternode77s-projects.vercel.app` |
+| Latest observed production | `dpl_6vJ55zh7jsFTQziQgxe4rnrGpy1j` (`https://ai-news-portal-a99xy05y0-masternode77s-projects.vercel.app`; external `main`, unchanged by this branch); separately observed `origin/main` is `f345f6798f90ef82c37fc01fd537157e112eafc9` |
 
 ## Delivered Platform
 
@@ -85,7 +85,7 @@ continued its automated content deployments independently during QA.
 - Replaced two duplicate legacy cards with verified source photographs and migrated 66 records
   that shared one fallback raster to the SHA-256-seeded v2 generator. The audit now rejects
   duplicate image bytes across homepage, archive, search, and taxonomy surfaces.
-- Reduced static output from 1,532 pages to 59; the exact preview build retained 68 reachable
+- Reduced static output from 1,532 pages to 62; the exact preview build retained 68 reachable
   generated assets and pruned 4,109.
 - Replaced 19 stale synthetic source-canonical image sets with source-derived rasters, verified all
   hero, thumbnail, OpenGraph, and legacy variants, and made image promotion transactional.
@@ -127,9 +127,9 @@ continued its automated content deployments independently during QA.
 
 | Option | Score | Preview |
 | --- | ---: | --- |
-| Midnight Intelligence | **9.16** | `/design-lab/midnight-intelligence/` |
-| Research Ledger | 9.08 | `/design-lab/research-ledger/` |
-| Signal Mosaic | 8.73 | `/design-lab/signal-mosaic/` |
+| Midnight Intelligence | **9.16** | `https://ai-news-portal-piewufgxu-masternode77s-projects.vercel.app/design-lab/midnight-intelligence/` |
+| Research Ledger | 9.08 | `https://ai-news-portal-piewufgxu-masternode77s-projects.vercel.app/design-lab/research-ledger/` |
+| Signal Mosaic | 8.73 | `https://ai-news-portal-piewufgxu-masternode77s-projects.vercel.app/design-lab/signal-mosaic/` |
 
 Midnight Intelligence is recommended because it preserves the existing institutional dark
 identity while improving visual priority, article reading, hierarchy, and mobile behavior. All
@@ -141,51 +141,53 @@ three prototypes remain noindex and are not production routes.
 | --- | --- |
 | Clean install | `npm ci` passed |
 | Dependency security | `npm audit --audit-level=low`: 0 vulnerabilities |
-| Full tests | 649 total, 649 passed, 0 failed, 0 skipped; build-backed runner preserved the pre-existing tracked diff |
-| Adversarial admin/auth/state/publish loop | 81/81 passed in each of three consecutive runs (243/243) |
-| Adversarial preview HTTP | 10/10 passed in each of three bounded runs; malformed, oversized, traversal, XSS, forged-session, hostile-Origin, and unsupported-method probes failed closed |
+| Full tests | 671 total, 671 passed, 0 failed, 0 skipped; build-backed runner preserved the pre-existing tracked diff |
+| Adversarial admin/auth/state/publish loop | 129/129 passed in each of three consecutive runs (387/387) |
+| Adversarial preview HTTP | 12 hostile or invalid cases failed closed; malformed, oversized, traversal, XSS, forged-session, hostile-Origin, and unsupported-method probes exposed no internals |
 | Focused security tests | 76 passed, 0 failed |
 | Reconciliation/orchestrator security tests | 96 passed, 0 failed |
 | Editorial scripts | quality, relevance, taxonomy, repetition passed |
 | Astro check | 0 errors, 0 warnings, 0 hints |
-| Build | Exact preview built 59 pages; 68 generated assets retained; 4,109 pruned |
+| Build | Current implementation built 62 pages; 68 generated assets retained; 4,109 pruned |
 | Content gate | passed all public, copy, image, feed, and admin exclusion audits |
 | QA/QC | deployable with operational follow-up |
 | Admin browser E2E | 17/17 local UI/API lifecycle scenarios passed; public discovery integration passed |
 | Code review | Nullable-contract and provider-cleanup reviews each found and closed two medium issues; both independent second passes found 0 issues and APPROVED. The architecture review returned CLEAR / APPROVE. |
 | Preview public routes | Homepage, archive, search, article, power-grid, APAC, RSS, and sitemap returned 200 |
 | Removed public routes | `/about/`, `/editorial-policy/`, `/methodology/`, `/ai-disclosure/`, and `/contact/` returned 404 |
-| Preview admin pretty routes | `/admin/` and `/admin/login/` returned 200 |
+| Preview admin routes | All 10 required login, dashboard, article list/new/view/edit, sources, quarantine, pipeline, and audit-log paths returned 200 with private/no-store/noindex controls |
 | Preview admin APIs | `/api/admin/articles` returned intended 503 with `no-store` and `noindex,nofollow` |
 | Visual QA | Exact-preview browser checks passed with 0 broken images, placeholder labels, errors, overflow, or clipped cards |
-| Preview rendered image coverage | homepage 31/31 desktop and mobile; archive 32/32; search 32/32; article 1/1; APAC 19/19 |
+| Design preview routes | All 12 home, article, state, and navigation routes returned 200 with noindex and no sitemap exposure |
+| Preview rendered image coverage | first-screen homepage 10/10 distinct WebPs; article hero 1/1 at 1536x864; desktop/mobile/archive captures had no overflow or console errors |
 | Source-image provenance | 26/26 articles and 104/104 public variants matched source-canonical bytes |
 | Lighthouse mobile | 97 performance, 100 accessibility, 92 best practices |
 | Lighthouse desktop | 100 performance, 100 accessibility, 92 best practices |
-| Static performance budget | 7,260,645 B dist, 11,432 B JS, 100,239 B CSS, 93,885 B largest HTML, 404,420 B largest image; all within enforced limits |
+| Static performance budget | 7,292,794 B dist, 13,110 B JS, 105,431 B CSS, 93,885 B largest HTML, 404,420 B largest image; all within enforced limits |
+| Vercel function bundles | local output: media 21,180 KiB, all others 772-1,912 KiB; remote Linux artifacts 671-871 KiB; no function approaches 250 MB |
 | Production action by this branch | none; external `main` automation advanced production during QA |
 
 The preview SEO score of 69 is expected because Vercel adds `x-robots-tag: noindex`. The two
 Best Practices deductions are the Vercel Preview Toolbar script being blocked by the site's
 intentional self-only CSP, not application JavaScript failures.
 
-The exact preview was checked after lazy-load traversal: homepage desktop and mobile each rendered
-all 31 images, archive and search rendered all 32, the representative article rendered its lead
-image, and APAC rendered all 19 canonical members. Browser QA found zero failed image responses,
-visible placeholder labels, console errors, page errors, clipping, or horizontal overflow.
-Screenshots and the machine-readable receipts are under `artifacts/preview-e37bc9c9/`.
+The exact preview was checked in Chromium at 1440px and 390px. The first-screen homepage audit
+decoded ten distinct WebPs with ten unique SHA-256 hashes, and the representative article rendered
+its 1536x864 lead image above the body. Browser QA found zero console/page errors, clipping, or
+horizontal overflow. Screenshots and machine-readable reports are under
+`artifacts/preview-c9518bee/`.
 
 The exact preview and `computecurrent.com` are intentionally not pixel-identical before approval.
 The preview shows the selected Midnight Intelligence publication while production still shows the
 earlier operating-board homepage from external `main`. Same-viewport comparison confirmed the
-difference. Production later advanced independently to `dpl_8gDg7q7eyfUubUEeeXW8zq4Pd9pz`;
-`origin/main` was separately observed at `c312b4d0`. No production promotion, alias change, or cache
+difference. Production later advanced independently to `dpl_6vJ55zh7jsFTQziQgxe4rnrGpy1j`;
+`origin/main` was separately observed at `f345f679`. No production promotion, alias change, or cache
 operation was performed by this branch.
 
 ## Current Production Content Reconciliation
 
-The latest `origin/main` is 125 automated commits ahead of the integrated baseline: 105 dashboard
-snapshot updates and 20 news/archive/dashboard refreshes. Those refreshes touch no product code;
+The latest `origin/main` is 128 automated commits ahead of the integrated baseline: 107 dashboard
+snapshot updates and 21 news/archive/dashboard refreshes. Those refreshes touch no product code;
 their net surface is four article JSON stores, pipeline state, one deleted-on-this-branch dashboard
 artifact, and 242 generated-image paths.
 
@@ -195,12 +197,12 @@ dashboard artifact. Several incoming records are visibly outside the product def
 consumer hardware and general software stories. Directly accepting generated stores would bypass
 the upgraded relevance, source-fidelity, repetition, canonical-source, and image-provenance gates.
 A current read-only audit resolved `origin/main` to
-`c312b4d0ae6a4c9a9f1897ce1e0585b0247c2bf0` and examined 749 upstream rows. Canonical-source
-comparison found 724 already present and 25 unique re-ingestion candidates, with 0 rejected rows.
+`f345f6798f90ef82c37fc01fd537157e112eafc9` and examined 751 upstream rows. Canonical-source
+comparison found 724 already present and 27 unique re-ingestion candidates, with 0 rejected rows.
 Every candidate contains only `id`, `title`, `source`, `url`, `publishedAt`, and `snippet`; policy
 sets every upstream snippet to an empty string so evidence must be extracted again from the source.
 Generated copy, images, routing, scores, and other legacy projection fields do not cross the boundary.
-The advisory title-only review reports 2 core, 6 adjacent, and 17 archive-shaped candidates. These
+The advisory title-only review reports 2 core, 6 adjacent, and 19 archive-shaped candidates. These
 labels are operator hints only; they do not alter the 25-candidate execution input.
 
 The release path is to run
@@ -218,7 +220,8 @@ rejected.
 
 ## LOC and Repository Hygiene
 
-Implementation `e37bc9c9` against the rollback baseline spans 837 paths, including 390 binary paths.
+Implementation `c9518bee` against the rollback baseline spans the reviewed platform upgrade,
+including the serverless bundle-boundary split and its regression coverage.
 Git's textual counters report 137,609 additions and 157,615 deletions, a net reduction of 20,006
 lines. This comparison includes the integrated `f8bc10a2` content baseline as well as the
 architecture, coverage, security, image-provenance, and generated-data cleanup in this branch.
@@ -234,7 +237,7 @@ remains outside release inputs.
 2. Produce independent human labels for 150 relevance items and 40 writing samples before
    claiming precision, recall, or a sub-5% false-positive rate.
 3. In a safe preview content-refresh window, execute the guarded canonical reconciliation for the
-   25 audited candidates, rerun content/provenance/visual gates, and generate a fresh preview. Do
+   27 audited candidates, rerun content/provenance/visual gates, and generate a fresh preview. Do
    not merge the conflicting generated JSON stores directly.
 4. Configure OAuth/2FA if required, plus Vercel Firewall, managed database backups, least-privilege
    credentials, monitoring, and secret rotation.

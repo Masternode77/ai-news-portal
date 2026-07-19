@@ -7,8 +7,8 @@ Updated: 2026-07-19
 - Deployment: `dpl_3P3ryw94P78z66ZJa1bopUAqSBu6`
 - URL: `https://ai-news-portal-ef65tm1iq-masternode77s-projects.vercel.app`
 - Product commit: `e37bc9c9e0f01691d79ea073ecf6a3eaa7785bd9`
-- Separately observed production deployment: `dpl_8gDg7q7eyfUubUEeeXW8zq4Pd9pz`
-- Separately observed `origin/main`: `c312b4d0ae6a4c9a9f1897ce1e0585b0247c2bf0`
+- Separately observed production deployment: `dpl_6vJ55zh7jsFTQziQgxe4rnrGpy1j`
+- Separately observed `origin/main`: `f345f6798f90ef82c37fc01fd537157e112eafc9`
 
 Chromium captured the exact preview after decoding and scrolling the complete lazy-loaded image
 inventory. Every checked route returned 200 with zero application console errors, page errors,

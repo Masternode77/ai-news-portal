@@ -14,6 +14,16 @@ This checkpoint does not replace the production homepage. All three options rema
 isolated under noindex `/design-lab/` routes until approval and final public-surface
 quality gates.
 
+## Immutable preview URLs
+
+- Midnight Intelligence: `https://ai-news-portal-piewufgxu-masternode77s-projects.vercel.app/design-lab/midnight-intelligence/`
+- Research Ledger: `https://ai-news-portal-piewufgxu-masternode77s-projects.vercel.app/design-lab/research-ledger/`
+- Signal Mosaic: `https://ai-news-portal-piewufgxu-masternode77s-projects.vercel.app/design-lab/signal-mosaic/`
+
+Each option also exposes `/article/`, `/states/`, and `/navigation/` beneath its URL. The navigation
+surface demonstrates distinct current, default, and keyboard-focus states at publication, view, and
+design-option levels. The new immutable preview receipt below replaces the earlier nine-route probe.
+
 ## Weighted score
 
 Scores use the requested 10-point scale and weights. Weighted totals are rounded to
@@ -55,8 +65,11 @@ two decimal places.
 
 ## Rendered evidence
 
-- 27 captures: three options x homepage/article/states x desktop/tablet/mobile.
-- Chromium QA result: 27 passed, 0 failed.
+- 36 captures: three options x homepage/article/states/navigation x desktop/tablet/mobile.
+- Local build route inventory: 12 design routes, all noindex and absent from the sitemap.
+- Chromium QA result: 36 passed, 0 failed.
+- Exact preview: all 12 routes returned 200, emitted `noindex,nofollow`, and remained absent from
+  `sitemap-0.xml` on deployment `dpl_HpRXGKfUMERRsu25iCcYpWVvsr1S`.
 - No horizontal overflow, clipped HTML text, failed images, repeated visible image
   URLs, console errors, blank screenshots, exposed admin links, or internal pipeline
   terms. A manual image review also confirmed that card artwork contains no cropped
@@ -76,8 +89,8 @@ screenshots are saved in the same directory, including:
 - `ledger-desktop.png`, `ledger-tablet.png`, `ledger-mobile.png`
 - `mosaic-desktop.png`, `mosaic-tablet.png`, `mosaic-mobile.png`
 
-Article and reader-state captures follow the same naming pattern with `-article-` and
-`-states-` segments.
+Article, reader-state, and navigation captures follow the same naming pattern with `-article-`,
+`-states-`, and `-navigation-` segments.
 
 ## Promotion gate
 

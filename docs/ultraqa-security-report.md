@@ -56,7 +56,7 @@ operations rather than hidden code-completion claims.
 | UQ-40 | Two retries publish the same reconciliation identity | Verify and replay a completed identity without invoking providers | Pass | Same-identity replay keeps the provider count unchanged |
 | UQ-41 | Durable receipt belongs to a different execution owner | Bind completed receipts and output verification to execution identity | Pass | Receipt-identity mismatch is rejected before bundle verification |
 | UQ-42 | Abandoned lock is auto-reclaimed while its owner may still write | Never auto-reclaim; require explicit operator cleanup and fence each publish side effect | Pass | Stale-token rejection and mid-provider ownership-loss regressions |
-| UQ-43 | Title-only triage is mistaken for source-grounded publication authority | Label review output advisory, forbid publication/permanent rejection, and leave execution input unchanged | Pass | Read-only digest proof, advisory review regression, and current 2/6/17 candidate receipt |
+| UQ-43 | Title-only triage is mistaken for source-grounded publication authority | Label review output advisory, forbid publication/permanent rejection, and leave execution input unchanged | Pass | Read-only digest proof, advisory review regression, and current 2/6/19 candidate receipt |
 | UQ-44 | Untyped Astro props conceal incompatible public data shapes | Type the shared signal contract and component/article boundaries; require a diagnostic-free check | Pass | Astro check 0 errors, 0 warnings, 0 hints; public regressions 46/46 |
 | UQ-45 | Open-ended Node engines silently adopt an unreviewed future major | Pin builds to Node 22 and verify the resolved Vercel runtime | Pass | Final preview rebuilt on Node 22 without the automatic-major warning |
 | UQ-46 | Stale provider snapshots retain divergent unguarded fetch/write paths | Delete numbered snapshots and release-gate their absence | Pass | Five snapshots removed; media/audit tests 21/21; cleanup re-review APPROVE |
@@ -66,11 +66,18 @@ operations rather than hidden code-completion claims.
 | UQ-50 | Provider 307/308 redirect exfiltrates a request body or API key | Allow cross-origin replay only for GET/HEAD and remove generic/provider credential headers | Pass | Explicit 307/308 POST rejection and Image2/Gemini-style API-key stripping regressions |
 | UQ-51 | Legacy AI adapter is publicly mislabeled as Image2 | Reserve Image2 provenance for the canonical provider and label legacy adapters by provider family | Pass | ChatGPT, OpenAI API, and Gemini provenance regressions plus explicit production force-order documentation |
 | UQ-52 | Generated OMO audit overstates the public homepage surface | Reuse the canonical homepage eligibility predicate and require corpus-level metric parity | Pass | Audit parity 5/5; eligible 32, heuristic low-relevance 1, missing images 0 |
-| UQ-53 | Test or audit commands mutate tracked reports or skip the rendered build | Build first, preserve an existing dirty diff byte-for-byte, reject new tracked mutations, and require explicit report output | Pass | Seven behavior contracts plus a 649/649 hermetic full-suite run |
+| UQ-53 | Test or audit commands mutate tracked reports or skip the rendered build | Build first, preserve an existing dirty diff byte-for-byte, reject new tracked mutations, and require explicit report output | Pass | Seven behavior contracts plus a 671/671 hermetic full-suite run |
+| UQ-54 | Admin regeneration bypasses canonical evidence or persists a partial failure | Re-enter extraction-only generation and every editorial quality gate; persist one audited revision only after success | Pass | Stale version, hostile direction, source failure, quality failure, and success lifecycle tests |
+| UQ-55 | Provider manifest passes while its factory returns an empty object | Validate all required operations on the concrete instance before caching and reject unregistered capabilities | Pass | Sixteen domain/phase contracts reject every missing operation, malformed `content.*` factory, and misspelled capability |
+| UQ-56 | Source/quarantine metadata executes markup or unsafe links | Render all upstream values as text and encode the article identifier in editor links | Pass | Browser-DOM tests with hostile source, reason, and identifier values |
+| UQ-57 | Design prototypes omit navigation and interaction states | Render and inspect current/default/focus navigation at every theme and viewport | Pass | 36/36 Playwright captures, including six manually inspected desktop/mobile navigation views |
+| UQ-58 | Shared admin imports inflate every Vercel function past the platform limit | Split storage construction, media-only Sharp loading, and lightweight editorial lifecycle modules; exclude generated/public caches from functions | Pass | Local bundles: media 21,180 KiB, all others 772-1,912 KiB; remote Linux functions 671-871 KiB |
+| UQ-59 | Function exclusions silently remove runtime policy data | Pin required policy/data files with `includeFiles` and recursively inspect every admin entrypoint import graph | Pass | Bundle-boundary regression plus remote preview build and admin fail-closed probes |
+| UQ-60 | Preview reports success while serving stale or unsafe output | Bind route, header, image-hash, browser, Lighthouse, design noindex, and error-log checks to one deployment ID | Pass | `dpl_HpRXGKfUMERRsu25iCcYpWVvsr1S`, target preview, status READY |
 
 ## Verification Receipt
 
-- Full tests: 649 total, 649 passed, 0 failed, 0 skipped; the build-backed runner preserved the
+- Full tests: 671 total, 671 passed, 0 failed, 0 skipped; the build-backed runner preserved the
   pre-existing tracked diff byte-for-byte.
 - Astro check: 0 errors, 0 warnings, 0 hints.
 - Focused redirect and image-provider tests: 35 passed, 0 failed; offline Image2 orchestration:
@@ -78,12 +85,19 @@ operations rather than hidden code-completion claims.
 - Reconciliation and canonical-orchestrator security tests: 96 passed, 0 failed.
 - Source provenance: 26/26 articles and 104/104 variants matched; no missing, mismatch,
   metadata-path error, unavailable source, or unsafe local file.
-- Build: 59 pages; release-gate selected tests 41/41; rendered public audit found 7 checked
+- Build: 62 pages; release-gate selected tests 41/41; rendered public audit found 7 checked
   pages, 30 cards, and 0 broken images.
 - Public projections: latest 30, archive 708, search 738, taxonomy 32, homepage 31.
 - Admin exclusion: 11 admin pages and 4 index files passed.
-- Performance: 7,260,645-byte dist, 11,432-byte browser JS, 100,239-byte CSS, 93,885-byte
+- Performance: 7,292,794-byte dist, 13,110-byte browser JS, 105,431-byte CSS, 93,885-byte
   largest HTML, and 404,420-byte largest image, all within configured budgets.
+- Function packaging: media 21,180 KiB and all other local admin functions 772-1,912 KiB;
+  the remote Linux build reported 671-871 KiB artifacts with no size warning.
+- Focused security suite: 129/129 passed in three identical consecutive runs (387/387), including
+  regeneration prompt injection, stale versions, provider contracts, source UI XSS, auth, CSRF,
+  SSRF, redirects, raster limits, state corruption, and workflow credential scoping.
+- Visual QA: 36/36 design captures and 17/17 admin lifecycle scenarios passed; browser and server
+  processes closed and temporary state was removed.
 - Dependency audit: 0 vulnerabilities.
 - Independent review iteratively found and closed stale-variant inheritance, incomplete provenance,
   pathless provider success, legacy single-file output, failover receipt defects, cross-origin
@@ -97,27 +111,25 @@ operations rather than hidden code-completion claims.
 ## Remaining Operations
 
 Managed preview persistence cannot be proven without preview-only Postgres, Blob, and admin
-credentials. Human relevance and writing labels are also still outstanding. The 25 audited
+credentials. Human relevance and writing labels are also still outstanding. The 27 audited
 production-source candidates have not been run through the guarded canonical command. These are explicit
 release follow-ups and do not justify production promotion without preview approval.
 
 ## Exact Preview Receipt
 
-- Implementation: `e37bc9c9e0f01691d79ea073ecf6a3eaa7785bd9`.
-- Deployment: `dpl_3P3ryw94P78z66ZJa1bopUAqSBu6`, status `READY`, target `preview`.
-- URL: `https://ai-news-portal-ef65tm1iq-masternode77s-projects.vercel.app`.
+- Implementation: `c9518bee64736aecf81a1c22ef9e40df4d963e18`.
+- Deployment: `dpl_HpRXGKfUMERRsu25iCcYpWVvsr1S`, status `READY`, target `preview`.
+- URL: `https://ai-news-portal-piewufgxu-masternode77s-projects.vercel.app`.
 - Eight public routes returned 200 and five retired operational routes returned 404.
 - Homepage security headers include CSP, HSTS, nosniff, frame denial, referrer policy, and
   permissions policy. The unconfigured admin API returned generic 503 with `no-store` and
   `noindex, nofollow`.
-- Browser QA decoded 31/31 homepage images on desktop and mobile, 32/32 archive images,
-  32/32 search images, the representative article image, and 19/19 APAC images. It found no
-  broken image, placeholder label, console/page error, failed application request, or horizontal
-  overflow. The representative article displays its image above the body.
-- Vercel's final one-hour error-log query returned no application errors. Read-only local, preview,
-  and live route verification passed; the current 1440x900 preview and production viewports differ
-  across 81.5236% of pixels, so production still does not serve this reviewed preview.
-- Evidence: `artifacts/preview-e37bc9c9/` (ignored local runtime artifacts).
+- Browser QA loaded desktop/mobile homepage, archive, and article surfaces with no console/page
+  error or horizontal overflow. The first-screen homepage has 10/10 distinct WebPs and the
+  representative article displays a decoded 1536x864 image above the body.
+- All 12 design-lab routes returned 200 with `noindex,nofollow` and no sitemap exposure. Vercel's
+  deployment-scoped error-log query returned no application errors.
+- Evidence: `artifacts/preview-c9518bee/` (ignored local runtime artifacts).
 - Production promotion and cache purge were not performed.
 
 ## Adversarial E2E Completion
@@ -133,12 +145,12 @@ purge, production writes, and promotion.
 | ADV-02 | Malformed client | Invalid content type, broken JSON, 70 KiB body, unsupported methods | Bounded preview HTTP harness | 4xx or fail-closed 503, `no-store`, no echo | Pass: all rejected without input/config leakage | None | `adversarial-e2e.json` ADV-HTTP-04..06 | No server mutation |
 | ADV-03 | Traversal/XSS client | Encoded path traversal and Unicode script query | Bounded preview HTTP harness | 404 or escaped inert text | Pass: traversal 404; no executable reflection | None | `adversarial-e2e.json` ADV-HTTP-02..03 | No server mutation |
 | ADV-04 | Prompt-injection attacker | Forged cookie/CSRF plus instruction and script payload | Bounded preview HTTP harness | Auth fails closed; no payload, CORS, stack, or secret echo | Pass: generic 503, `no-store`, no hostile Origin grant | None | `adversarial-e2e.json` ADV-HTTP-07..09 | No server mutation |
-| ADV-05 | Interrupted publisher | Failed phase, replaced owner, stale receipt, and replay | Canonical orchestrator and production-phase tests | Resume only matching identity; fence stale owner | Pass across the focused 81-test set | None | Three regression runs | Temporary test state removed by test hooks |
+| ADV-05 | Interrupted publisher | Failed phase, replaced owner, stale receipt, and replay | Canonical orchestrator and production-phase tests | Resume only matching identity; fence stale owner | Pass across the focused 129-test set | None | Three regression runs | Temporary test state removed by test hooks |
 | ADV-06 | Dirty-worktree operator | Runtime evidence and OMX state coexist with tracked source | Git snapshot before and after the hermetic suite | No unrelated tracked file changed or hidden | Pass: pre-existing tracked diff remained byte-for-byte identical; default audits added no diff | None | Seven test-runner behavior contracts and pre/post diff hash | Ignored artifacts retained intentionally |
 | ADV-07 | Hung child process | Child waits 10 seconds | 250 ms bounded spawn harness | Child terminated; no late success accepted | Pass: `SIGTERM`, no leaked success | None | Inline harness receipt | Child exited; no process retained |
-| ADV-08 | Flaky implementation | Repeat security/state/publish suite | Focused Node suite, three sequential runs | Identical zero-failure result | Pass: 81/81 three times, 243/243 aggregate | None | TAP exit 0 for all runs | Test fixtures self-cleaned |
+| ADV-08 | Flaky implementation | Repeat security/state/publish suite | Focused Node suite, three sequential runs | Identical zero-failure result | Pass: 129/129 three times, 387/387 aggregate | None | TAP exit 0 for all runs | Test fixtures self-cleaned |
 | ADV-09 | Misleading command | Prints `ALL TESTS PASSED` then exits 7 | Exit-semantics harness and QA verdict tests | Nonzero exit remains failure | Pass: success text rejected; QA contract 8/8 | None | Inline harness and focused suite | Fixture process exited |
-| ADV-10 | Default-image regression | Same image reused under different cards | Fetch all homepage images and hash bytes | 31 valid responses and 31 unique hashes | Pass: 31/31 unique; 12,866-404,420 bytes | None | `adversarial-e2e.json` image audit | No downloaded file retained |
+| ADV-10 | Default-image regression | Same image reused under different cards | Fetch all first-screen homepage images and hash bytes | Every visible image decodes and has unique bytes | Pass: 10/10 unique; 12,866-404,420 bytes | None | Exact-preview Playwright image audit | No downloaded file retained |
 
 ### Commands and Failures
 
@@ -146,10 +158,11 @@ purge, production writes, and promotion.
   15-second abort limit. The persisted prior receipt reports `ok: true`, and the fresh third run
   again rejected malformed, oversized, traversal, XSS, forged-session, hostile-Origin, and
   unsupported-method requests without secrets, stack traces, credentialed CORS, or cacheable API responses.
-- The focused admin, auth, outbound-media, state, checkpoint, QA-verdict, and publication suite
-  passed 81/81 on each of three clean reruns. `npm audit --audit-level=low` found 0 vulnerabilities.
+- The focused admin, auth, outbound-media, state, checkpoint, QA-verdict, publication, and bundle
+  boundary suite passed 129/129 on each of three clean reruns. `npm audit --audit-level=low` found
+  0 vulnerabilities.
 - One initial output-truncation wrapper used zsh's read-only `status` variable. Product tests in that
-  run passed 81/81, but the wrapper correctly remained failed. It was classified as harness setup
+  run passed its product tests, but the wrapper correctly remained failed. It was classified as harness setup
   failure, replaced with a direct no-pipe runner, and all three required reruns passed.
 - No product defect was found in this adversarial cycle, so no product code was changed.
 
@@ -161,4 +174,4 @@ purge, production writes, and promotion.
 - Workflow cancel wording is not a public product surface. The safe substitute exercised interrupted
   checkpoints, stale ownership, replay, and resume fencing without mutating production.
 - All temporary child processes exited. Runtime evidence is intentionally retained under the ignored
-  `artifacts/preview-e37bc9c9/` directory; no temporary source harness was created.
+  `artifacts/preview-c9518bee/` directory; no temporary source harness was created.

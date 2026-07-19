@@ -31,7 +31,7 @@ candidates remain incomplete. Production promotion is outside this approval stat
 | Rollback path | PASS WITH CAVEAT | Tag checkout, clean install, and build passed; that emergency baseline retains 18 dependency findings. |
 | Dashboard-only deploy suppression | PASS ON BRANCH | `vercel.json` uses a tested fail-open ignore script for dashboard/pipeline state-only commits; it takes effect only after integration. |
 | Independent code review | PASS | Final code review found no findings and approved; the provider-cleanup review closed two medium findings and approved on re-review; architecture review returned `CLEAR / APPROVE`. |
-| Current upstream content | BLOCKED (operation) | Read-only audit of `origin/main` at `c312b4d0` finds 25 source-only candidates; advisory title-only triage is 2 core, 6 adjacent, and 17 archive-shaped, but guarded canonical re-ingestion has not been executed. |
+| Current upstream content | BLOCKED (operation) | Read-only audit of `origin/main` at `f345f679` finds 27 source-only candidates; advisory title-only triage is 2 core, 6 adjacent, and 19 archive-shaped, but guarded canonical re-ingestion has not been executed. |
 | PR, merge, production smoke | NOT STARTED | Preview approval and push/PR authorization were not given. No production promotion or cache purge was run by this branch. |
 
 The exact 36-item final-acceptance accounting is maintained in
@@ -56,8 +56,8 @@ The exact 36-item final-acceptance accounting is maintained in
 ## External State Note
 
 While the preview was being verified, connected `main` automation continued independently. The
-latest observed production deployment is `dpl_8gDg7q7eyfUubUEeeXW8zq4Pd9pz`; current `origin/main`
-was separately observed at `c312b4d0ae6a4c9a9f1897ce1e0585b0247c2bf0`. This branch did not create
+latest observed production deployment is `dpl_6vJ55zh7jsFTQziQgxe4rnrGpy1j`; current `origin/main`
+was separately observed at `f345f6798f90ef82c37fc01fd537157e112eafc9`. This branch did not create
 or promote that deployment. A fresh same-viewport comparison differs on 81.5236% of pixels:
 production still shows the previous command-center design while the exact preview shows Midnight
 Intelligence, which is the expected pre-approval state.

@@ -44,7 +44,7 @@ does not mean a live preview database or production workflow was exercised.
 
 | # | Requirement | Result | Evidence or remaining condition |
 | ---: | --- | --- | --- |
-| 14 | Three complete design options exist | PASS | Midnight Intelligence, Research Ledger, and Signal Mosaic cover home, article, navigation, and states. |
+| 14 | Three complete design options exist | PASS | Midnight Intelligence, Research Ledger, and Signal Mosaic cover home, article, navigation, and states; all 12 exact-preview routes return 200 with noindex, remain outside the sitemap, and 36 visual captures pass. |
 | 15 | Each option uses real article imagery | PASS | Shared representative content and image audits report no blank placeholders or repeated viewport image. |
 | 16 | Each has desktop and mobile screenshots | PASS | `artifacts/design-options/` contains desktop, tablet, and mobile captures for home, article, and states. |
 | 17 | Winner selected by documented scoring | PASS | `docs/design-options-comparison.md` selects Midnight Intelligence at 9.16/10. |
@@ -59,16 +59,16 @@ does not mean a live preview database or production workflow was exercised.
 | 21 | Create/edit/publish/unpublish/delete/restore work | PASS (local) | The built UI passes all 17 browser lifecycle scenarios against real handlers and isolated storage; sitemap/RSS publication propagation is integration-tested. Live managed preview CRUD remains part of item 23. |
 | 22 | Revisions and audit logs work | PASS (local) | Atomic local/Postgres adapter tests cover immutable revisions, before/after audit, actor/session metadata, and outbox writes. |
 | 23 | Persistence survives process restart/deployment | BLOCKED | Local fresh-process persistence and a preview-only two-phase verifier pass locally; managed credentials and a cross-deployment receipt are absent. |
-| 24 | Unauthorized access is blocked | PASS | Admin security tests and preview route/API checks verify redirects or generic no-store denial without data exposure. |
+| 24 | Unauthorized access is blocked | PASS | Admin security tests and exact-preview checks verify all 10 required shells are private/no-store/noindex while unauthenticated APIs return generic denial without data exposure. |
 
 ## Engineering
 
 | # | Requirement | Result | Evidence or remaining condition |
 | ---: | --- | --- | --- |
-| 25 | Tests pass | PASS | The build-backed hermetic full suite reports 649 tests: 649 passed, 0 failed, and 0 skipped, while preserving the pre-existing tracked diff byte-for-byte. The final adversarial 81-test admin/auth/state/publish set passed three consecutive runs (243/243); the reconciliation/orchestrator security set reports 96/96 passed. |
+| 25 | Tests pass | PASS | The build-backed hermetic full suite reports 671 tests: 671 passed, 0 failed, and 0 skipped, while preserving the pre-existing tracked diff byte-for-byte. The 129-test adversarial security set passed three consecutive runs (387/387); the reconciliation/orchestrator security set reports 96/96 passed. |
 | 26 | Build passes | PASS | Astro check reports 0 errors, 0 warnings, and 0 hints; `content:gate` rebuilds and audits the static output successfully. |
 | 27 | Security audit passes | PASS | `npm audit --audit-level=low` reports zero findings; threat model and fix report list operational follow-up. |
-| 28 | Visual QA passes | PASS | Exact-preview browser QA decoded homepage 31/31 desktop and mobile, archive 32/32, search 32/32, article 1/1, and APAC 19/19 images with zero broken images, placeholder labels, clipping, or overflow. |
+| 28 | Visual QA passes | PASS | Exact-preview desktop/mobile homepage, archive, and article captures returned 200 with zero console errors or horizontal overflow. The first-screen image audit decoded 10/10 distinct WebPs; the article hero decoded at 1536x864. |
 | 29 | SEO audit passes | PASS WITH PREVIEW CAVEAT | Canonical/feed/schema/noindex tests pass; preview Lighthouse SEO is intentionally reduced by Vercel's preview noindex header. |
 | 30 | Performance targets met or blockers documented | PASS | Lighthouse performance is 97 mobile/100 desktop and accessibility is 100. `content:gate` now enforces static dist, JS, CSS, HTML, and image ceilings; field INP/traffic telemetry remains documented post-approval work. |
 
@@ -76,16 +76,16 @@ does not mean a live preview database or production workflow was exercised.
 
 | # | Requirement | Result | Evidence or remaining condition |
 | ---: | --- | --- | --- |
-| 31 | Preview deployment is verified | PASS | Implementation `e37bc9c9` is `READY` as preview `dpl_3P3ryw94P78z66ZJa1bopUAqSBu6`; public, retired, admin, image, provenance, adversarial, and screenshot receipts pass. |
+| 31 | Preview deployment is verified | PASS | Implementation `c9518bee` is `READY` as preview `dpl_HpRXGKfUMERRsu25iCcYpWVvsr1S`; public, retired, 12 design, 10 admin, image, provenance, adversarial, bundle, log, and screenshot receipts pass. |
 | 32 | PR has migration and risk summary | NOT STARTED | Push/PR authorization and preview approval were not given; migration/risk material is ready in reports and runbooks. |
-| 33 | Production unchanged by this branch before preview approval | PASS | The connected `main` automation independently advanced production to `dpl_8gDg7q7eyfUubUEeeXW8zq4Pd9pz`; `origin/main` was separately observed at `c312b4d0`. This branch performed no production promotion, alias change, cache purge, or production-secret operation. |
+| 33 | Production unchanged by this branch before preview approval | PASS | The connected `main` automation independently advanced production to `dpl_6vJ55zh7jsFTQziQgxe4rnrGpy1j`; `origin/main` was separately observed at `f345f679`. This branch performed no production promotion, alias change, cache purge, or production-secret operation. |
 | 34 | Rollback is tested | PASS WITH CAVEAT | Tagged baseline passed isolated clean install/build; that emergency baseline retains 18 dependency findings. |
 | 35 | Final report has exact SHA and preview URL | PASS | `docs/final-gpt56-upgrade-report.md` records the verified implementation SHA, deployment ID, preview URL, and route/image receipt. |
-| 36 | Current production content is reconciled without bypassing new gates | PASS (implementation) / BLOCKED (operation) | The read-only audit at `origin/main` revision `c312b4d0` yields 25 unique canonical-source candidates. Its explicitly non-authoritative title-only review reports 2 core, 6 adjacent, and 17 archive-shaped items. The guarded command strips generated fields and snippets, re-enters the canonical lifecycle, constrains redirects, binds retries and receipts to revision/digest/identity, and fails closed on concurrent or abandoned locks. Provider-backed re-ingestion was intentionally not run. |
+| 36 | Current production content is reconciled without bypassing new gates | PASS (implementation) / BLOCKED (operation) | The read-only audit at `origin/main` revision `f345f679` yields 27 unique canonical-source candidates. Its explicitly non-authoritative title-only review reports 2 core, 6 adjacent, and 19 archive-shaped items. The guarded command strips generated fields and snippets, re-enters the canonical lifecycle, constrains redirects, binds retries and receipts to revision/digest/identity, and fails closed on concurrent or abandoned locks. Provider-backed re-ingestion was intentionally not run. |
 
 ## Open Gates
 
 1. Independent reviewers complete and score the generated 150-item relevance and 40-item writing packets.
 2. Preview operators provide isolated Postgres and Blob credentials and run the two-phase persistence receipt across a restart or deployment.
-3. Run the guarded canonical reconciliation for the 25 audited `origin/main` candidates in a safe preview content-refresh window; do not merge generated JSON stores or the deleted dashboard artifact directly.
+3. Run the guarded canonical reconciliation for the 27 audited `origin/main` candidates in a safe preview content-refresh window; do not merge generated JSON stores or the deleted dashboard artifact directly.
 4. A human approves the refreshed preview; only then may the branch be pushed, opened as a PR, reviewed, merged, and production-smoked.
