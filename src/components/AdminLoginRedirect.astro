@@ -1,0 +1,23 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { SITE } from '../config/site';
+---
+<Layout
+  title={`Admin login | ${SITE.name}`}
+  description="Private Compute Current admin login"
+  canonicalPath="/admin/login/"
+  noindex={true}
+>
+  <main class="admin-shell">
+    <section class="admin-panel">
+      <p class="eyebrow">Admin</p>
+      <h1>Continue to sign in</h1>
+      <p>This address has moved to the canonical admin login.</p>
+      <a href="/admin/login/" rel="nofollow">Continue</a>
+    </section>
+  </main>
+
+  <script is:inline>
+    window.location.replace('/admin/login/');
+  </script>
+</Layout>

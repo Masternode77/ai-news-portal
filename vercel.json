@@ -25,7 +25,9 @@
   ],
   "redirects": [
     { "source": "/admin", "destination": "/admin/login/", "permanent": false },
+    { "source": "/admin/", "destination": "/admin/login/", "permanent": false },
     { "source": "/admin.html", "destination": "/admin/login/", "permanent": false },
+    { "source": "/admin.html/", "destination": "/admin/login/", "permanent": false },
     { "source": "/admin/edit/:id", "destination": "/admin/articles/:id/edit", "permanent": false },
     { "source": "/admin/source-health", "destination": "/admin/sources/", "permanent": false },
     { "source": "/admin/content-quality", "destination": "/admin/quarantine/", "permanent": false },

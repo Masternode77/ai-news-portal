@@ -88,16 +88,25 @@ test('public admin article URL contract does not add a second admin UI or public
   assert.doesNotMatch(sitemap, /\/news\/source-123/);
 });
 
-test('/admin and /admin.html render only a login shell with no private data payload', () => {
+test('/admin and /admin.html converge on the canonical login without a duplicate auth client', () => {
   const adminSource = fs.readFileSync(new URL('../src/pages/admin.astro', import.meta.url), 'utf8');
   const adminHtmlSource = fs.readFileSync(new URL('../src/pages/admin.html.astro', import.meta.url), 'utf8');
+  const redirectSource = fs.readFileSync(
+    new URL('../src/components/AdminLoginRedirect.astro', import.meta.url),
+    'utf8',
+  );
 
   for (const source of [adminSource, adminHtmlSource]) {
-    assert.match(source, /noindex=\{true\}/);
-    assert.match(source, /\/api\/admin\/login/);
-    assert.doesNotMatch(source, /latest-news\.json|archived-news\.json|buildAdmin/);
-    assert.doesNotMatch(source, /ADMIN_PASSWORD|ADMIN_SESSION_SECRET|ADMIN_PASSWORD_HASH/);
+    assert.match(source, /AdminLoginRedirect/);
+    assert.doesNotMatch(source, /\/api\/admin\/login|<form|type="password"/);
   }
+
+  assert.match(redirectSource, /canonicalPath="\/admin\/login\/"/);
+  assert.match(redirectSource, /noindex=\{true\}/);
+  assert.match(redirectSource, /window\.location\.replace\('\/admin\/login\/'\)/);
+  assert.doesNotMatch(redirectSource, /\/api\/admin\/login|<form|type="password"/);
+  assert.doesNotMatch(redirectSource, /latest-news\.json|archived-news\.json|buildAdmin/);
+  assert.doesNotMatch(redirectSource, /ADMIN_PASSWORD|ADMIN_SESSION_SECRET|ADMIN_PASSWORD_HASH/);
 });
 
 function configureDashboardAuth() {
@@ -170,6 +179,6 @@ test('admin dashboard route is API-backed and does not embed private article dat
   assert.match(shellSource, new RegExp('noindex=\\{true\\}'));
   assert.match(shellSource, /\/api\/admin\/login/);
   assert.doesNotMatch(dashboardSource, new RegExp('latest-news\\.json|archived-news\\.json|source-health\\.json|claim-ledger\\.json|editorial-cycles\\.json'));
-  assert.match(adminSource, new RegExp('/admin/dashboard/'));
-  assert.match(adminHtmlSource, new RegExp('/admin/dashboard/'));
+  assert.match(adminSource, /AdminLoginRedirect/);
+  assert.match(adminHtmlSource, /AdminLoginRedirect/);
 });
