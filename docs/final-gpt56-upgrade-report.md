@@ -141,7 +141,7 @@ three prototypes remain noindex and are not production routes.
 | --- | --- |
 | Clean install | `npm ci` passed |
 | Dependency security | `npm audit --audit-level=low`: 0 vulnerabilities |
-| Full tests | 671 total, 671 passed, 0 failed, 0 skipped; build-backed runner preserved the pre-existing tracked diff |
+| Full tests | 676 total, 676 passed, 0 failed, 0 skipped; build-backed runner preserved the pre-existing tracked diff |
 | Adversarial admin/auth/state/publish loop | 129/129 passed in each of three consecutive runs (387/387) |
 | Adversarial preview HTTP | 10 hostile or invalid cases passed in three bounded runs; malformed, oversized, traversal, XSS, forged-session, hostile-Origin, and unsupported-method probes exposed no internals |
 | Focused security tests | 129/129 passed in three consecutive runs (387/387) |
@@ -191,9 +191,11 @@ snapshot updates and 21 news/archive/dashboard refreshes. Those refreshes touch 
 their net surface is four article JSON stores, pipeline state, one deleted-on-this-branch dashboard
 artifact, and 242 generated-image paths.
 
-A read-only three-way merge simulation found eight conflicts: `archived-news.json`,
-`latest-news.json`, `search-index.json`, the retired public dashboard artifact, and four generated
-image variants. Several incoming records are visibly outside the product definition, including
+A native three-way merge simulation in an isolated temporary object database found eight conflicts:
+`archived-news.json`, `latest-news.json`, `search-index.json`, the retired public dashboard artifact,
+and four generated image variants. The repository object database and merge working tree remained
+unchanged; `docs/upstream-integration-preflight.md` is the tracked receipt. Several incoming records
+are visibly outside the product definition, including
 consumer hardware and general software stories. Directly accepting generated stores would bypass
 the upgraded relevance, source-fidelity, repetition, canonical-source, and image-provenance gates.
 A current read-only audit resolved `origin/main` to

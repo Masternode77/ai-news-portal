@@ -14,6 +14,7 @@ const FINAL_REPORTS = [
   'docs/qa-qc-report.md',
   'docs/deployment-checklist.md',
   'docs/production-verification-report.md',
+  'docs/upstream-integration-preflight.md',
 ];
 
 test('final reports include commands, artifacts, pass/fail, risks, and cleanup receipts', () => {

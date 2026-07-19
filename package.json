@@ -64,6 +64,7 @@
     "audit:feed-volume": "node scripts/audit-public-feed-volume.mjs",
     "audit:performance": "node scripts/audit-performance-budget.mjs",
     "audit:upstream-content": "node ./scripts/audit-upstream-content-reconciliation.mjs",
+    "audit:integration": "node ./scripts/audit-upstream-integration.mjs",
     "qa:admin:browser": "node scripts/qa-admin-browser-e2e.mjs",
     "audit:public": "node ./scripts/audit-rendered-public-output.mjs && node ./scripts/audit-public-copy.mjs && node ./scripts/audit-public-article-quality.mjs && npm run audit:homepage && npm run audit:feed-volume",
     "audit:production": "node ./scripts/verify-production-surface.mjs --skip-cache-purge",

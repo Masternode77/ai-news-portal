@@ -66,7 +66,7 @@ operations rather than hidden code-completion claims.
 | UQ-50 | Provider 307/308 redirect exfiltrates a request body or API key | Allow cross-origin replay only for GET/HEAD and remove generic/provider credential headers | Pass | Explicit 307/308 POST rejection and Image2/Gemini-style API-key stripping regressions |
 | UQ-51 | Legacy AI adapter is publicly mislabeled as Image2 | Reserve Image2 provenance for the canonical provider and label legacy adapters by provider family | Pass | ChatGPT, OpenAI API, and Gemini provenance regressions plus explicit production force-order documentation |
 | UQ-52 | Generated OMO audit overstates the public homepage surface | Reuse the canonical homepage eligibility predicate and require corpus-level metric parity | Pass | Audit parity 5/5; eligible 32, heuristic low-relevance 1, missing images 0 |
-| UQ-53 | Test or audit commands mutate tracked reports or skip the rendered build | Build first, preserve an existing dirty diff byte-for-byte, reject new tracked mutations, and require explicit report output | Pass | Seven behavior contracts plus a 671/671 hermetic full-suite run |
+| UQ-53 | Test or audit commands mutate tracked reports or skip the rendered build | Build first, preserve an existing dirty diff byte-for-byte, reject new tracked mutations, and require explicit report output | Pass | Seven behavior contracts plus a 676/676 hermetic full-suite run |
 | UQ-54 | Admin regeneration bypasses canonical evidence or persists a partial failure | Re-enter extraction-only generation and every editorial quality gate; persist one audited revision only after success | Pass | Stale version, hostile direction, source failure, quality failure, and success lifecycle tests |
 | UQ-55 | Provider manifest passes while its factory returns an empty object | Validate all required operations on the concrete instance before caching and reject unregistered capabilities | Pass | Sixteen domain/phase contracts reject every missing operation, malformed `content.*` factory, and misspelled capability |
 | UQ-56 | Source/quarantine metadata executes markup or unsafe links | Render all upstream values as text and encode the article identifier in editor links | Pass | Browser-DOM tests with hostile source, reason, and identifier values |
@@ -74,10 +74,11 @@ operations rather than hidden code-completion claims.
 | UQ-58 | Shared admin imports inflate every Vercel function past the platform limit | Split storage construction, media-only Sharp loading, and lightweight editorial lifecycle modules; exclude generated/public caches from functions | Pass | Local bundles: media 21,180 KiB, all others 772-1,912 KiB; remote Linux functions 671-871 KiB |
 | UQ-59 | Function exclusions silently remove runtime policy data | Pin required policy/data files with `includeFiles` and recursively inspect every admin entrypoint import graph | Pass | Bundle-boundary regression plus remote preview build and admin fail-closed probes |
 | UQ-60 | Preview reports success while serving stale or unsafe output | Bind route, header, image-hash, browser, Lighthouse, design noindex, and error-log checks to one deployment ID | Pass | `dpl_HpRXGKfUMERRsu25iCcYpWVvsr1S`, target preview, status READY |
+| UQ-61 | Integration audit mutates the repository or diverges from native Git semantics | Run native Git merge semantics in a cleaned isolated object database, constrain receipt paths, and compare object/worktree state before and after | Pass | Integration preflight tests cover content, binary, modify/delete, clean overlap, directory/file conflict, `merge=union`, multiple merge bases, CLI exit codes, safe nested receipts, traversal-like output paths, and unchanged repository state |
 
 ## Verification Receipt
 
-- Full tests: 671 total, 671 passed, 0 failed, 0 skipped; the build-backed runner preserved the
+- Full tests: 676 total, 676 passed, 0 failed, 0 skipped; the build-backed runner preserved the
   pre-existing tracked diff byte-for-byte.
 - Astro check: 0 errors, 0 warnings, 0 hints.
 - Focused redirect and image-provider tests: 35 passed, 0 failed; offline Image2 orchestration:
@@ -175,7 +176,8 @@ purge, production writes, and promotion.
   and exercised authenticated lifecycle behavior against real local handlers.
 - Workflow cancel wording is not a public product surface. The safe substitute exercised interrupted
   checkpoints, stale ownership, replay, and resume fencing without mutating production.
-- Read-only integration preflight against `origin/main` reports eight generated/data conflicts.
-  Guarded reconciliation and regenerated projections are required before integration approval.
+- `npm run audit:integration` reports eight generated/data conflicts against `origin/main` while
+  leaving the repository object database and merge working tree unchanged. Guarded reconciliation
+  and regenerated projections are required before integration approval.
 - All temporary child processes exited. Runtime evidence is intentionally retained under the ignored
   `artifacts/preview-c9518bee/` directory; no temporary source harness was created.

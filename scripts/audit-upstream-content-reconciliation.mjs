@@ -3,6 +3,7 @@ import { execFileSync } from 'node:child_process';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { ARCHIVE_NEWS_PATH, LATEST_NEWS_PATH } from './lib/constants.mjs';
+import { assertSafeRevision } from './lib/safe-git-revision.mjs';
 import { readJsonFile } from './lib/state-store.mjs';
 import { routeStrictInfrastructureRelevance } from './lib/strict-infrastructure-relevance-router.mjs';
 import { buildUpstreamReconciliationAudit } from './lib/upstream-content-reconciliation.mjs';
@@ -10,7 +11,7 @@ import { loadSourceRegistry } from './lib/source-registry.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const UPSTREAM_ARCHIVE_PATH = 'src/data/archived-news.json';
-const SAFE_REVISION = /^(?!.*(?:\.\.|@\{|[~^:?*[\]\\]))[A-Za-z0-9][A-Za-z0-9._/-]{0,127}$/;
+export { assertSafeRevision };
 
 function usage() {
   return [
@@ -57,13 +58,6 @@ export function parseArgs(argv = process.argv.slice(2)) {
     throw new Error('--json and --review are mutually exclusive');
   }
   return parsed;
-}
-
-export function assertSafeRevision(revision = '') {
-  if (!SAFE_REVISION.test(revision)) {
-    throw new Error(`unsafe revision: ${revision || '(empty)'}`);
-  }
-  return revision;
 }
 
 export function resolveRevision(revision, options = {}) {

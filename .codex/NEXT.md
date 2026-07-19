@@ -48,8 +48,8 @@
   and 0 rejected rows.
 - Advisory title-only review reports 2 core, 6 adjacent, and 19 archive candidates; this is not an
   execution filter and every candidate still requires canonical source extraction.
-- Confirmed a raw merge remains unsafe because it would bypass upgraded relevance, fidelity,
-  repetition, provenance, and image gates.
+- Added a native-Git integration preflight with isolated object storage; independent adversarial
+  review closed all six findings and returned `APPROVE`, while raw generated-data merging stays blocked.
 
 ## Changed files
 - Core upgrade: canonical content cycle, source fidelity/relevance gates, public publication, admin CMS,
@@ -62,12 +62,12 @@
 - Image-provider cleanup: five numbered snapshots deleted; release-gated recurrence test added.
 - Image pipeline: provider registry, canonical writers, production image persistence, stock
   regeneration, workflow/default configuration, public provenance, docs, and regressions.
-- Audit hygiene: `scripts/audit-omo-ultra-current-state.mjs`, its contract test, QA reports, and
-  this handoff.
+- Integration/audit hygiene: native integration preflight, shared safe-revision utility, semantics
+  regressions, OMO state audit, QA reports, and this handoff.
 - Local ignored evidence: `artifacts/preview-c9518bee/`.
 
 ## Validation results
-- Hermetic `npm test`: 671 total, 671 passed, 0 failed, 0 skipped; build and follow-on editorial
+- Hermetic `npm test`: 676 total, 676 passed, 0 failed, 0 skipped; build and follow-on editorial
   gates pass without changing the pre-existing tracked diff.
 - QA/QC workflow/report-contract tests: 11/11 passed; reconciliation/orchestrator security set: 96/96 passed.
 - Focused redirect/image security: 35/35; normal and offline image orchestration: 19/19 each;
@@ -106,8 +106,8 @@
 - Independent 150-item relevance and 40-sample writing labels require human review.
 - The 27 current canonical-source candidates require guarded canonical re-ingestion and a refreshed
   preview; direct generated-JSON merge is unsafe.
-- Read-only `git merge-tree` preflight against `origin/main` reports 8 generated/data conflicts;
-  integration is not ready until reconciliation and regenerated projections replace raw merging.
+- `npm run audit:integration` uses an isolated temporary object database and reports 8 generated/data
+  conflicts; integration requires reconciliation and regenerated projections instead of raw merging.
 - OAuth/2FA, firewall, backups, monitoring, and secret rotation are operational follow-up.
 - Push/PR and production promotion require explicit preview approval.
 
