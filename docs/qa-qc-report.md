@@ -1,12 +1,25 @@
 # AI News Portal QA/QC Report
 
-Updated at: 2026-07-19T10:04:07+09:00
+Updated at: 2026-07-19T11:29:09+09:00
 Preview verdict: deployable with operational follow-up; upstream integration blocked
 
 ## Commands Run
 
 - `npm run content:gate` -> passed (0)
-- `npm test` -> 676 total, 676 passed, 0 failed, 0 skipped; dirty worktree preserved
+- `npm test` -> 687 total, 687 passed, 0 failed, 0 skipped; dirty worktree preserved
+- reconciliation/orchestrator/image focused suite -> 99/99 passed
+- `npm run check` -> 0 errors, 0 warnings, 0 hints
+- `npm audit --audit-level=low` -> 0 vulnerabilities
+- `vercel env ls` -> no variables configured for the linked project; no value or secret was read
+- guarded reconciliation without provider credentials -> exited 1 before checkpoint, audit, or cycle
+  access; tracked worktree bytes were unchanged
+- isolated 27-candidate offline rehearsal -> exited 1 at `reconciliation_classification_empty`,
+  persisted a retryable failed checkpoint, and wrote no generated image or public data projection
+- strict reconciliation publish test -> preserved provider-only Image2 metadata, skipped ordinary
+  fallback backfill, bound four distinct generated variants to the owning article before state access,
+  rejected borrowed or shared paths, and included all four paths in the durable publication bundle
+- editorial reconciliation ordering test -> generated Image2 only after the expert lens finalized the
+  headline, so canonical paths remain valid when the editorial provider changes the source title
 - `git diff --name-only --diff-filter=U` -> passed (current working tree has no unresolved paths)
 - `npm run audit:integration -- --revision=origin/main --out=docs/upstream-integration-preflight.md --json=artifacts/preview-c9518bee/integration-preflight.json` -> exited 1 as expected with 8 generated/data conflicts; repository object database and merge working tree unchanged, requested receipts updated
 - `JSON.parse(src/data/latest-news.json)` -> passed
@@ -49,4 +62,5 @@ Preview verdict: deployable with operational follow-up; upstream integration blo
 - No production secret was read or required.
 - Cache purge was explicitly skipped by the QA/QC workflow.
 - Integration simulation wrote only to a cleaned temporary object database; the requested Markdown and ignored JSON receipts are the only persistent outputs.
+- Reconciliation rehearsals used no provider or production secret and did not reach public-file writes.
 - No dev server, tmux session, browser context, or bound port is left running by this script.

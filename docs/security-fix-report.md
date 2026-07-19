@@ -72,10 +72,10 @@ found 0 vulnerabilities
 
 ## Verification
 
-The build-backed hermetic `npm test` ran 671 tests: all 671 passed with no failures or skips, followed by passing
+The build-backed hermetic `npm test` ran 687 tests: all 687 passed with no failures or skips, followed by passing
 quality, relevance, taxonomy, and repetition commands. The final focused security set passed
 129/129 in three consecutive runs (387/387), and the reconciliation/orchestrator security set
-passed 96/96. The local admin browser exercised all 17 lifecycle scenarios and design visual QA
+passed 99/99. The local admin browser exercised all 17 lifecycle scenarios and design visual QA
 passed 36/36 captures. The source-image provenance audit regenerated and matched all 104
 hero, thumbnail, OpenGraph, and legacy variants across 26 public source-canonical articles.
 `npm audit --audit-level=low` reports zero findings, the resolved dependency tree is valid, and a

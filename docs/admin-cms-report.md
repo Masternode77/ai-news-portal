@@ -76,7 +76,7 @@ discovery propagation is covered separately by the sitemap/RSS integration test.
 
 ## Pass/Fail
 
-- PASS: hermetic full suite, 671 passed, 0 failed, and 0 skipped; focused route/persistence set,
+- PASS: hermetic full suite, 687 passed, 0 failed, and 0 skipped; focused route/persistence set,
   11 passed and 0 failed.
 - PASS: browser admin lifecycle, 17 passed and 0 failed; publish/unpublish sitemap/RSS discovery is integration-tested.
 - PASS: adversarial regeneration coverage rejects stale versions, hostile editorial direction,

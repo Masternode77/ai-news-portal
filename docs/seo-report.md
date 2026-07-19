@@ -16,7 +16,7 @@ Updated: 2026-07-19
 
 ## Local Evidence
 
-The build-backed hermetic suite ran 671 tests: all 671 passed with no failures or skips, and the
+The build-backed hermetic suite ran 687 tests: all 687 passed with no failures or skips, and the
 62-page Astro build completed successfully. Public output, sitemap/RSS, structured-data, thin-page, source
 attribution, admin exclusion, and retired-route contracts are included in the test and content
 gate surfaces.

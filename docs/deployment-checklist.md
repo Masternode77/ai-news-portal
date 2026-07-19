@@ -49,9 +49,11 @@ This checklist separates local, staging, and production actions so credentialed 
 ## Staging Verification
 
 1. Configure staging `ADMIN_USERNAME`, `ADMIN_PASSWORD_HASH`, and `ADMIN_SESSION_SECRET`.
-2. Configure `IMAGE_PROVIDER=image2`; add `OPENAI_API_KEY` only if staging should generate paid images.
+2. For guarded upstream reconciliation, configure preview-only `OPENROUTER_API_KEY`,
+   `IMAGE_PROVIDER=image2`, and `OPENAI_API_KEY`; the command rejects offline or fallback execution.
 3. Configure GitHub token access only to the staging branch.
-4. Run `npm run content:cycle`, then `npm run content:gate`.
+4. Follow `docs/upstream-reconciliation-runbook.md` for source-only reconciliation; otherwise run
+   `npm run content:cycle`, then `npm run content:gate`.
 5. Run `npm run purge:cache` and confirm the report is either purged or explicitly skipped due missing cache-purge credentials.
 
 ## Production Verification

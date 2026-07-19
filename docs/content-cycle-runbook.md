@@ -51,7 +51,7 @@ The scheduled GitHub job restores and saves the whole `.cache/content-cycle` dir
 `actions/cache`. The save step uses `if: always()` so both the failed provider checkpoint and
 the publication receipt journal survive the ephemeral runner and can resume on the next
 serialized job. Cache namespace `content-cycle-v2` prevents pre-bundle checkpoints from being
-replayed by pipeline version `5.6.1`.
+replayed by pipeline version `5.6.2`.
 
 ## Quality behavior
 

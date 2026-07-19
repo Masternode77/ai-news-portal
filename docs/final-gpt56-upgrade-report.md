@@ -141,18 +141,18 @@ three prototypes remain noindex and are not production routes.
 | --- | --- |
 | Clean install | `npm ci` passed |
 | Dependency security | `npm audit --audit-level=low`: 0 vulnerabilities |
-| Full tests | 676 total, 676 passed, 0 failed, 0 skipped; build-backed runner preserved the pre-existing tracked diff |
+| Full tests | 687 total, 687 passed, 0 failed, 0 skipped; build-backed runner preserved the pre-existing tracked diff |
 | Adversarial admin/auth/state/publish loop | 129/129 passed in each of three consecutive runs (387/387) |
 | Adversarial preview HTTP | 10 hostile or invalid cases passed in three bounded runs; malformed, oversized, traversal, XSS, forged-session, hostile-Origin, and unsupported-method probes exposed no internals |
 | Focused security tests | 129/129 passed in three consecutive runs (387/387) |
-| Reconciliation/orchestrator security tests | 96 passed, 0 failed |
+| Reconciliation/orchestrator security tests | 99 passed, 0 failed |
 | Editorial scripts | quality, relevance, taxonomy, repetition passed |
 | Astro check | 0 errors, 0 warnings, 0 hints |
 | Build | Current implementation built 62 pages; 68 generated assets retained; 4,109 pruned |
 | Content gate | passed all public, copy, image, feed, and admin exclusion audits |
 | QA/QC | deployable with operational follow-up |
 | Admin browser E2E | 17/17 local UI/API lifecycle scenarios passed; public discovery integration passed |
-| Code review | Nullable-contract and provider-cleanup reviews each found and closed two medium issues; both independent second passes found 0 issues and APPROVED. The architecture review returned CLEAR / APPROVE. |
+| Code review | Nullable-contract and provider-cleanup reviews each found and closed two medium issues. Reconciliation review closed two medium issues, one high ordering defect, and documentation drift before final APPROVE. The architecture review returned CLEAR / APPROVE. |
 | Preview public routes | Homepage, archive, search, article, power-grid, APAC, RSS, and sitemap returned 200 |
 | Removed public routes | `/about/`, `/editorial-policy/`, `/methodology/`, `/ai-disclosure/`, and `/contact/` returned 404 |
 | Preview admin routes | All 10 required login, dashboard, article list/new/view/edit, sources, quarantine, pipeline, and audit-log paths returned 200 with private/no-store/noindex controls |
@@ -217,8 +217,14 @@ state, verifies the completion receipt identity, and holds an exclusive process 
 construction is shared by audit, composition, and ingest, and a displaced lease owner is fenced
 before completed-output verification, provider execution, checkpoint persistence, and each durable
 or public publish side effect. Locks are never reclaimed automatically; an abandoned lock requires
-explicit operator cleanup. The command has not been executed. A raw merge or JSON overwrite remains
-rejected.
+explicit operator cleanup. Provider readiness is checked before state access: reconciliation requires
+online access, `OPENROUTER_API_KEY`, `IMAGE_PROVIDER=image2`, and `OPENAI_API_KEY`. A batch with zero
+successful fetches or zero sources passing extraction QA fails before publication and remains retryable
+from its immutable checkpoint. Pipeline `5.6.2` rejects older checkpoints. Reconciliation cannot
+downgrade editorial or Image2 failures to fallback output: each public update must retain four distinct,
+existing canonical Image2 files, and publish captures all four in the durable recovery bundle before
+completion. The guarded provider-backed command has not completed. A raw merge or
+JSON overwrite remains rejected; `docs/upstream-reconciliation-runbook.md` is the operator procedure.
 
 ## LOC and Repository Hygiene
 

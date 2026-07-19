@@ -66,7 +66,7 @@ operations rather than hidden code-completion claims.
 | UQ-50 | Provider 307/308 redirect exfiltrates a request body or API key | Allow cross-origin replay only for GET/HEAD and remove generic/provider credential headers | Pass | Explicit 307/308 POST rejection and Image2/Gemini-style API-key stripping regressions |
 | UQ-51 | Legacy AI adapter is publicly mislabeled as Image2 | Reserve Image2 provenance for the canonical provider and label legacy adapters by provider family | Pass | ChatGPT, OpenAI API, and Gemini provenance regressions plus explicit production force-order documentation |
 | UQ-52 | Generated OMO audit overstates the public homepage surface | Reuse the canonical homepage eligibility predicate and require corpus-level metric parity | Pass | Audit parity 5/5; eligible 32, heuristic low-relevance 1, missing images 0 |
-| UQ-53 | Test or audit commands mutate tracked reports or skip the rendered build | Build first, preserve an existing dirty diff byte-for-byte, reject new tracked mutations, and require explicit report output | Pass | Seven behavior contracts plus a 676/676 hermetic full-suite run |
+| UQ-53 | Test or audit commands mutate tracked reports or skip the rendered build | Build first, preserve an existing dirty diff byte-for-byte, reject new tracked mutations, and require explicit report output | Pass | Seven behavior contracts plus a 687/687 hermetic full-suite run |
 | UQ-54 | Admin regeneration bypasses canonical evidence or persists a partial failure | Re-enter extraction-only generation and every editorial quality gate; persist one audited revision only after success | Pass | Stale version, hostile direction, source failure, quality failure, and success lifecycle tests |
 | UQ-55 | Provider manifest passes while its factory returns an empty object | Validate all required operations on the concrete instance before caching and reject unregistered capabilities | Pass | Sixteen domain/phase contracts reject every missing operation, malformed `content.*` factory, and misspelled capability |
 | UQ-56 | Source/quarantine metadata executes markup or unsafe links | Render all upstream values as text and encode the article identifier in editor links | Pass | Browser-DOM tests with hostile source, reason, and identifier values |
@@ -75,15 +75,20 @@ operations rather than hidden code-completion claims.
 | UQ-59 | Function exclusions silently remove runtime policy data | Pin required policy/data files with `includeFiles` and recursively inspect every admin entrypoint import graph | Pass | Bundle-boundary regression plus remote preview build and admin fail-closed probes |
 | UQ-60 | Preview reports success while serving stale or unsafe output | Bind route, header, image-hash, browser, Lighthouse, design noindex, and error-log checks to one deployment ID | Pass | `dpl_HpRXGKfUMERRsu25iCcYpWVvsr1S`, target preview, status READY |
 | UQ-61 | Integration audit mutates the repository or diverges from native Git semantics | Run native Git merge semantics in a cleaned isolated object database, constrain receipt paths, and compare object/worktree state before and after | Pass | Integration preflight tests cover content, binary, modify/delete, clean overlap, directory/file conflict, `merge=union`, multiple merge bases, CLI exit codes, safe nested receipts, traversal-like output paths, and unchanged repository state |
+| UQ-62 | Missing providers consume immutable reconciliation identity or rewrite projections | Require online OpenRouter editorial and Image2 credentials before any checkpoint, audit, or cycle access | Pass | Missing-key subprocess exits 1 with unchanged tracked bytes; provider-boundary unit test proves no state/audit/cycle access |
+| UQ-63 | Zero useful upstream results publish an empty cycle | Fail the reconciliation at extraction when every fetch fails and at classification when no source passes extraction QA | Pass | Two phase regressions plus isolated 27-candidate offline rehearsal; no generated image or public projection writes |
+| UQ-64 | Validated reconciliation imagery is downgraded or omitted from recovery | Skip fallback backfill for reconciled public updates; require four distinct canonical regular files before state access and capture each in the durable output bundle | Pass | Provider-only generate/publish regression verifies ordering, provenance, distinct paths, no fallback call, and four bundled variants |
+| UQ-65 | One article borrows or shares another article's Image2 files | Bind all four paths to `canonicalArticleImagePaths(article)` and reject any path claimed by multiple updates | Pass | Real filesystem verifier accepts the owner set; borrowed and shared sets fail before state or receipt access |
+| UQ-66 | Editorial provider changes the headline after image slug selection | Attach the expert lens first, then generate and validate Image2 paths from the final article | Pass | Injected editorial regression changes the headline and verifies the final canonical Image2 set succeeds |
 
 ## Verification Receipt
 
-- Full tests: 676 total, 676 passed, 0 failed, 0 skipped; the build-backed runner preserved the
+- Full tests: 687 total, 687 passed, 0 failed, 0 skipped; the build-backed runner preserved the
   pre-existing tracked diff byte-for-byte.
 - Astro check: 0 errors, 0 warnings, 0 hints.
 - Focused redirect and image-provider tests: 35 passed, 0 failed; offline Image2 orchestration:
   19 passed, 0 failed.
-- Reconciliation and canonical-orchestrator security tests: 96 passed, 0 failed.
+- Reconciliation and canonical-orchestrator security tests: 99 passed, 0 failed.
 - Source provenance: 26/26 articles and 104/104 variants matched; no missing, mismatch,
   metadata-path error, unavailable source, or unsafe local file.
 - Build: 62 pages; release-gate selected tests 41/41; rendered public audit found 7 checked
@@ -103,7 +108,8 @@ operations rather than hidden code-completion claims.
 - Independent review iteratively found and closed stale-variant inheritance, incomplete provenance,
   pathless provider success, legacy single-file output, failover receipt defects, cross-origin
   provider credential replay, legacy provider mislabeling, and audit eligibility drift. The final
-  full-diff re-review returned `APPROVE` with zero remaining findings.
+  reconciliation review also closed borrowed/shared image ownership and final-headline generation
+  ordering defects; the final full-diff re-review returned `APPROVE` with zero remaining findings.
 - QA/QC runner: `deployable with operational follow-up`; live verification passed and cache purge
   was skipped. A subsequent exact-preview pass supplied the deployment URL and passed staging checks.
 - Harness note: an earlier accidental overlap of two release gates caused a transient Astro chunk

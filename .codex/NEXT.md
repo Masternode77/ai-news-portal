@@ -3,7 +3,8 @@
 ## Current branch
 - `upgrade/gpt-5-6-sol`; latest verified implementation checkpoint
   `c9518bee64736aecf81a1c22ef9e40df4d963e18`.
-- Latest local QA tooling checkpoint: `1fd774f4b362d6003d0ed1bc07d61e61d63a4e2d`.
+- Latest committed reconciliation implementation: `49bea8dac4ec43fd71cde0d276ebca22b76e1ca8`;
+  the final QA/QC evidence and runbook are the current documentation checkpoint.
 - Exact implementation preview: `dpl_HpRXGKfUMERRsu25iCcYpWVvsr1S` at
   `https://ai-news-portal-piewufgxu-masternode77s-projects.vercel.app` (`READY`, preview target).
 - Rollback tag: `backup/pre-gpt56-upgrade-20260711T091118Z`.
@@ -48,14 +49,14 @@
   and 0 rejected rows.
 - Advisory title-only review reports 2 core, 6 adjacent, and 19 archive candidates; this is not an
   execution filter and every candidate still requires canonical source extraction.
-- Added a native-Git integration preflight with isolated object storage; independent adversarial
-  review closed all six findings and returned `APPROVE`, while raw generated-data merging stays blocked.
+- Added native-Git integration preflight plus provider and zero-success reconciliation guards; offline
+  rehearsal now fails before publish with no generated/data writes, while raw merging stays blocked.
 
 ## Changed files
 - Core upgrade: canonical content cycle, source fidelity/relevance gates, public publication, admin CMS,
   security controls, image provenance, publication dedupe, and immutable CI actions.
-- Reconciliation: upstream audit/execution commands, source-only candidate construction, registry-bound
-  extraction, identity/checkpoint/lease fencing, package commands, and regressions.
+- Reconciliation: upstream audit/execution commands, provider preflight, zero-success source-QA guards,
+  source-only input, identity/checkpoint/lease fencing, runbook, package commands, and regressions.
 - Verification: `scripts/verify-production-surface.mjs`, `tests/qa-qc-workflow.test.mjs`, final reports,
   production verification receipt, visual QA report, security reports, and this handoff.
 - Public UI typing: eight shared components, the article route, and their inherited public-signal contract.
@@ -67,9 +68,9 @@
 - Local ignored evidence: `artifacts/preview-c9518bee/`.
 
 ## Validation results
-- Hermetic `npm test`: 676 total, 676 passed, 0 failed, 0 skipped; build and follow-on editorial
+- Hermetic `npm test`: 687 total, 687 passed, 0 failed, 0 skipped; build and follow-on editorial
   gates pass without changing the pre-existing tracked diff.
-- QA/QC workflow/report-contract tests: 11/11 passed; reconciliation/orchestrator security set: 96/96 passed.
+- QA/QC workflow/report-contract tests: 11/11 passed; reconciliation/orchestrator security set: 99/99 passed.
 - Focused redirect/image security: 35/35; normal and offline image orchestration: 19/19 each;
   `npm audit --audit-level=low`: 0 vulnerabilities.
 - Tracked secret scan: no real credentials/private keys; only an `example.invalid` fixture matched.
@@ -85,7 +86,8 @@
   the nullable-contract re-review found and closed two medium issues, then returned `APPROVE` with
   0 findings; the provider-cleanup review found and closed two medium issues, then returned
   `APPROVE` with 0 findings; architecture re-review returned `CLEAR / APPROVE`; the final image,
-  redirect, provenance, and audit-parity review closed all findings and returned `APPROVE`.
+  redirect, provenance, and audit-parity review closed all findings and returned `APPROVE`; the
+  reconciliation review closed two medium and one high issue before final `APPROVE`.
 - Exact preview: eight public and twelve design routes returned 200, five retired routes returned 404,
   and all ten required admin paths were private/no-store/noindex; the API failed closed with 503.
 - Preview security headers include CSP, HSTS, nosniff, frame denial, referrer policy, and noindex; the deployment error-log query returned no application errors.
@@ -98,23 +100,20 @@
 - Vercel bundles clear 250 MB: media 21,180 KiB, others 772-1,912 KiB locally; remote functions are 671-871 KiB.
 - Fresh 1440x900 comparison differs on 75.1509% of pixels, confirming production still serves the
   old command-center design while the preview serves Midnight Intelligence.
-- Human benchmark packets remain reviewer-empty; the scorer fails closed without `reviewer.id`.
-- Managed persistence contract: 4/4 local tests pass; live preview credentials are absent.
+- Human benchmarks remain reviewer-empty; managed persistence passes 4/4 locally but lacks preview credentials.
+- Guarded reconciliation rehearsal fails before publish and leaves tracked output unchanged.
 
 ## Blockers
-- Preview Postgres, Blob, and admin credentials are absent; managed persistence is not proven.
+- The linked Vercel project reports zero environment variables; preview provider, Postgres, Blob, and
+  admin credentials are absent, so provider-backed reconciliation and managed persistence are unproven.
 - Independent 150-item relevance and 40-sample writing labels require human review.
-- The 27 current canonical-source candidates require guarded canonical re-ingestion and a refreshed
-  preview; direct generated-JSON merge is unsafe.
-- `npm run audit:integration` uses an isolated temporary object database and reports 8 generated/data
-  conflicts; integration requires reconciliation and regenerated projections instead of raw merging.
+- The 27 candidates and 8 generated/data conflicts require guarded re-ingestion, regenerated projections,
+  and a refreshed preview; direct generated-JSON or image merging is unsafe.
 - OAuth/2FA, firewall, backups, monitoring, and secret rotation are operational follow-up.
 - Push/PR and production promotion require explicit preview approval.
 
 ## Exact next step
-- When preview-only provider access is available, run the guarded reconciliation in a safe preview
-  content-refresh window, rerun all gates, regenerate projections, and deploy a fresh preview.
-- Obtain explicit human approval only for that refreshed preview; then resolve integration from the
-  regenerated outputs before push, PR, merge, or production promotion.
-- Await managed preview persistence credentials and independent human labels.
-- Keep push, production promotion, production secrets, and cache purge excluded.
+- When preview-only `OPENROUTER_API_KEY` and `OPENAI_API_KEY` access is available, follow the runbook in
+  a safe preview content-refresh window, rerun all gates, regenerate projections, and deploy a preview.
+- After all gates pass, obtain approval for that preview before integration or promotion.
+- Await managed persistence credentials and human labels; keep production secrets and cache purge excluded.
