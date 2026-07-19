@@ -1,6 +1,6 @@
 # AI News Portal QA/QC Report
 
-Updated at: 2026-07-19T11:29:09+09:00
+Updated at: 2026-07-19T11:59:25+09:00
 Preview verdict: deployable with operational follow-up; upstream integration blocked
 
 ## Commands Run
@@ -10,6 +10,7 @@ Preview verdict: deployable with operational follow-up; upstream integration blo
 - reconciliation/orchestrator/image focused suite -> 99/99 passed
 - `npm run check` -> 0 errors, 0 warnings, 0 hints
 - `npm audit --audit-level=low` -> 0 vulnerabilities
+- current auth/admin/SSRF/XSS/storage/security suite -> 128/128 passed
 - `vercel env ls` -> no variables configured for the linked project; no value or secret was read
 - guarded reconciliation without provider credentials -> exited 1 before checkpoint, audit, or cycle
   access; tracked worktree bytes were unchanged
@@ -26,17 +27,20 @@ Preview verdict: deployable with operational follow-up; upstream integration blo
 - `JSON.parse(src/data/archived-news.json)` -> passed
 - `JSON.parse(src/data/search-index.json)` -> passed
 - `production surface verification` -> local dist and exact preview passed
-- Vercel preview `dpl_HpRXGKfUMERRsu25iCcYpWVvsr1S` -> READY, target preview
+- Vercel preview `dpl_9xCxsn8EboAyPjMdgN9takLAfskh` -> READY, target preview,
+  implementation `5b1e1d55bb728f49589a9ca89cbec767220c6aaa`
 - focused security loop -> 129/129 x 3 (387/387)
-- exact-preview HTTP/route/image/browser checks -> passed
+- exact-preview HTTP/route/image/browser checks -> 21/21 passed
+- exact-preview design/admin route-policy checks -> 22/22 passed
+- Vercel runtime log review -> no error-level events; only expected fail-closed admin API 503s
 
 ## Artifacts
 
-- Exact-preview visual result: `artifacts/preview-c9518bee/visual-qa.json`
-- Exact-preview adversarial result: `artifacts/preview-c9518bee/adversarial-e2e.json`
+- Exact-preview browser result: `artifacts/preview-5b1e1d55/preview-browser-verification.json`
+- Exact-preview screenshots: `artifacts/preview-5b1e1d55/`
 - Markdown report: `docs/qa-qc-report.md`
 - Production verification report: `docs/production-verification-report.md`
-- Production verification JSON: `artifacts/preview-c9518bee/production-verification.json`
+- Production verification JSON: `artifacts/preview-5b1e1d55/production-verification.json`
 - Tracked integration preflight: `docs/upstream-integration-preflight.md`
 - Integration preflight JSON: `artifacts/preview-c9518bee/integration-preflight.json`
 

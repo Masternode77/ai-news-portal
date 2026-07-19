@@ -40,15 +40,15 @@ The exact 36-item final-acceptance accounting is maintained in
 
 ## Preview Receipt
 
-- URL: `https://ai-news-portal-piewufgxu-masternode77s-projects.vercel.app`
-- Deployment: `dpl_HpRXGKfUMERRsu25iCcYpWVvsr1S`, target `preview`, status `READY`.
-- Implementation: `c9518bee64736aecf81a1c22ef9e40df4d963e18`.
+- URL: `https://ai-news-portal-hppzyrwyh-masternode77s-projects.vercel.app`
+- Deployment: `dpl_9xCxsn8EboAyPjMdgN9takLAfskh`, target `preview`, status `READY`.
+- Implementation: `5b1e1d55bb728f49589a9ca89cbec767220c6aaa`.
 - Public routes: homepage, archive, search, representative article, power-grid, APAC, RSS, and sitemap returned 200.
 - Retired routes: about, editorial policy, methodology, AI disclosure, and contact returned 404.
-- Browser: homepage desktop/mobile loaded 31/31 images, archive and search 32/32, article 1/1,
-  and APAC 19/19; zero broken images, placeholders, application errors, failed requests, or overflow.
-- Captures: `artifacts/preview-c9518bee/` contains exact-preview desktop/mobile screenshots,
-  visual/adversarial receipts, production comparison, integration preflight, and production-verification JSON.
+- Browser: homepage desktop/mobile loaded 31/31 images, archive 32/32, and article 1/1; zero broken
+  images, placeholders, unexpected application errors, failed public requests, or overflow.
+- Captures: `artifacts/preview-5b1e1d55/` contains exact-preview desktop/mobile, archive, article,
+  and admin screenshots plus browser and production-verification JSON receipts.
 - Admin: pretty routes returned 200 with private/no-store caching; the unconfigured API returned
   generic no-store 503 without leaking configuration details.
 - Security: CSP, HSTS, nosniff, frame denial, referrer and permissions policies, and preview

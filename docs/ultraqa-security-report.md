@@ -73,7 +73,7 @@ operations rather than hidden code-completion claims.
 | UQ-57 | Design prototypes omit navigation and interaction states | Render and inspect current/default/focus navigation at every theme and viewport | Pass | 36/36 Playwright captures, including six manually inspected desktop/mobile navigation views |
 | UQ-58 | Shared admin imports inflate every Vercel function past the platform limit | Split storage construction, media-only Sharp loading, and lightweight editorial lifecycle modules; exclude generated/public caches from functions | Pass | Local bundles: media 21,180 KiB, all others 772-1,912 KiB; remote Linux functions 671-871 KiB |
 | UQ-59 | Function exclusions silently remove runtime policy data | Pin required policy/data files with `includeFiles` and recursively inspect every admin entrypoint import graph | Pass | Bundle-boundary regression plus remote preview build and admin fail-closed probes |
-| UQ-60 | Preview reports success while serving stale or unsafe output | Bind route, header, image-hash, browser, Lighthouse, design noindex, and error-log checks to one deployment ID | Pass | `dpl_HpRXGKfUMERRsu25iCcYpWVvsr1S`, target preview, status READY |
+| UQ-60 | Preview reports success while serving stale or unsafe output | Bind route, header, image, browser, design noindex, admin no-store, and error-log checks to one deployment ID | Pass | `dpl_9xCxsn8EboAyPjMdgN9takLAfskh`, target preview, status READY; 21/21 browser/HTTP and 22/22 route-policy checks |
 | UQ-61 | Integration audit mutates the repository or diverges from native Git semantics | Run native Git merge semantics in a cleaned isolated object database, constrain receipt paths, and compare object/worktree state before and after | Pass | Integration preflight tests cover content, binary, modify/delete, clean overlap, directory/file conflict, `merge=union`, multiple merge bases, CLI exit codes, safe nested receipts, traversal-like output paths, and unchanged repository state |
 | UQ-62 | Missing providers consume immutable reconciliation identity or rewrite projections | Require online OpenRouter editorial and Image2 credentials before any checkpoint, audit, or cycle access | Pass | Missing-key subprocess exits 1 with unchanged tracked bytes; provider-boundary unit test proves no state/audit/cycle access |
 | UQ-63 | Zero useful upstream results publish an empty cycle | Fail the reconciliation at extraction when every fetch fails and at classification when no source passes extraction QA | Pass | Two phase regressions plus isolated 27-candidate offline rehearsal; no generated image or public projection writes |
@@ -105,6 +105,8 @@ operations rather than hidden code-completion claims.
 - Visual QA: 36/36 design captures and 17/17 admin lifecycle scenarios passed; browser and server
   processes closed and temporary state was removed.
 - Dependency audit: 0 vulnerabilities.
+- Current broad security regression: 128/128 auth, admin, storage, SSRF, XSS, raster, public-render,
+  and workflow-credential tests passed against the latest source state.
 - Independent review iteratively found and closed stale-variant inheritance, incomplete provenance,
   pathless provider success, legacy single-file output, failover receipt defects, cross-origin
   provider credential replay, legacy provider mislabeling, and audit eligibility drift. The final
@@ -124,21 +126,21 @@ release follow-ups and do not justify production promotion without preview appro
 
 ## Exact Preview Receipt
 
-- Implementation: `c9518bee64736aecf81a1c22ef9e40df4d963e18`.
-- Deployment: `dpl_HpRXGKfUMERRsu25iCcYpWVvsr1S`, status `READY`, target `preview`.
-- URL: `https://ai-news-portal-piewufgxu-masternode77s-projects.vercel.app`.
-- Eight public routes returned 200 and five retired operational routes returned 404.
+- Implementation: `5b1e1d55bb728f49589a9ca89cbec767220c6aaa`.
+- Deployment: `dpl_9xCxsn8EboAyPjMdgN9takLAfskh`, status `READY`, target `preview`.
+- URL: `https://ai-news-portal-hppzyrwyh-masternode77s-projects.vercel.app`.
+- Six public/feed routes returned 200, five retired operational routes returned 404, and the
+  production-surface harness separately passed its seven staging routes.
 - Homepage security headers include CSP, HSTS, nosniff, frame denial, referrer policy, and
   permissions policy. The unconfigured admin API returned generic 503 with `no-store` and
   `noindex, nofollow`.
-- Browser QA loaded desktop/mobile homepage, archive, and article surfaces with no console/page
-  error or horizontal overflow. The first-screen homepage has 10/10 distinct WebPs and the
-  representative article displays a decoded 1536x864 image above the body.
-- All 12 design-lab routes returned 200 with `noindex,nofollow` and no sitemap exposure. Vercel's
+- Browser QA loaded desktop/mobile homepage, archive, article, and admin-login surfaces with no
+  unexpected console/page error or horizontal overflow. Homepage images decoded 31/31 at each
+  viewport, archive 32/32, and the representative article 1/1 above the body.
+- All 12 design-lab routes returned 200 with `noindex` and no sitemap exposure. Vercel's
   deployment-scoped error-log query returned no application errors.
-- Evidence: `artifacts/preview-c9518bee/` (ignored local runtime artifacts).
-- Deployment-bound adversarial evidence: `adversarial-e2e.json` records three 10/10 hostile HTTP
-  passes and 31/31 unique full-homepage image hashes with `ok: true`.
+- Evidence: `artifacts/preview-5b1e1d55/` (ignored local runtime artifacts); the browser receipt is
+  bound to the implementation SHA and deployment ID and records 21/21 checks with `ok: true`.
 - Production promotion and cache purge were not performed.
 
 ## Adversarial E2E Completion
@@ -186,4 +188,4 @@ purge, production writes, and promotion.
   leaving the repository object database and merge working tree unchanged. Guarded reconciliation
   and regenerated projections are required before integration approval.
 - All temporary child processes exited. Runtime evidence is intentionally retained under the ignored
-  `artifacts/preview-c9518bee/` directory; no temporary source harness was created.
+  `artifacts/preview-5b1e1d55/` directory; the temporary browser harness was deleted after capture.

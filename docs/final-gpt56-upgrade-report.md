@@ -21,10 +21,10 @@ continued its automated content deployments independently during QA.
 | Baseline production SHA | `19089b66627be58d5066376902ff382d2a018137` |
 | Integrated `origin/main` baseline | `f8bc10a220a6b910e703375d337dcd3f40ea0467` |
 | Rollback tag | `backup/pre-gpt56-upgrade-20260711T091118Z` |
-| Verified implementation SHA | `c9518bee64736aecf81a1c22ef9e40df4d963e18` |
+| Verified implementation SHA | `5b1e1d55bb728f49589a9ca89cbec767220c6aaa` |
 | Verification tooling SHA | `1fd774f4b362d6003d0ed1bc07d61e61d63a4e2d` |
-| Preview deployment | `dpl_HpRXGKfUMERRsu25iCcYpWVvsr1S` (`READY`, preview target) |
-| Preview URL | `https://ai-news-portal-piewufgxu-masternode77s-projects.vercel.app` |
+| Preview deployment | `dpl_9xCxsn8EboAyPjMdgN9takLAfskh` (`READY`, preview target) |
+| Preview URL | `https://ai-news-portal-hppzyrwyh-masternode77s-projects.vercel.app` |
 | Latest observed production | `dpl_6vJ55zh7jsFTQziQgxe4rnrGpy1j` (`https://ai-news-portal-a99xy05y0-masternode77s-projects.vercel.app`; external `main`, unchanged by this branch); separately observed `origin/main` is `f345f6798f90ef82c37fc01fd537157e112eafc9` |
 
 ## Delivered Platform
@@ -127,9 +127,9 @@ continued its automated content deployments independently during QA.
 
 | Option | Score | Preview |
 | --- | ---: | --- |
-| Midnight Intelligence | **9.16** | `https://ai-news-portal-piewufgxu-masternode77s-projects.vercel.app/design-lab/midnight-intelligence/` |
-| Research Ledger | 9.08 | `https://ai-news-portal-piewufgxu-masternode77s-projects.vercel.app/design-lab/research-ledger/` |
-| Signal Mosaic | 8.73 | `https://ai-news-portal-piewufgxu-masternode77s-projects.vercel.app/design-lab/signal-mosaic/` |
+| Midnight Intelligence | **9.16** | `https://ai-news-portal-hppzyrwyh-masternode77s-projects.vercel.app/design-lab/midnight-intelligence/` |
+| Research Ledger | 9.08 | `https://ai-news-portal-hppzyrwyh-masternode77s-projects.vercel.app/design-lab/research-ledger/` |
+| Signal Mosaic | 8.73 | `https://ai-news-portal-hppzyrwyh-masternode77s-projects.vercel.app/design-lab/signal-mosaic/` |
 
 Midnight Intelligence is recommended because it preserves the existing institutional dark
 identity while improving visual priority, article reading, hierarchy, and mobile behavior. All
@@ -145,6 +145,7 @@ three prototypes remain noindex and are not production routes.
 | Adversarial admin/auth/state/publish loop | 129/129 passed in each of three consecutive runs (387/387) |
 | Adversarial preview HTTP | 10 hostile or invalid cases passed in three bounded runs; malformed, oversized, traversal, XSS, forged-session, hostile-Origin, and unsupported-method probes exposed no internals |
 | Focused security tests | 129/129 passed in three consecutive runs (387/387) |
+| Current broad security regression | 128/128 auth, admin, storage, SSRF, XSS, raster, and workflow tests passed |
 | Reconciliation/orchestrator security tests | 99 passed, 0 failed |
 | Editorial scripts | quality, relevance, taxonomy, repetition passed |
 | Astro check | 0 errors, 0 warnings, 0 hints |
@@ -157,7 +158,7 @@ three prototypes remain noindex and are not production routes.
 | Removed public routes | `/about/`, `/editorial-policy/`, `/methodology/`, `/ai-disclosure/`, and `/contact/` returned 404 |
 | Preview admin routes | All 10 required login, dashboard, article list/new/view/edit, sources, quarantine, pipeline, and audit-log paths returned 200 with private/no-store/noindex controls |
 | Preview admin APIs | `/api/admin/articles` returned intended 503 with `no-store` and `noindex,nofollow` |
-| Visual QA | Exact-preview browser checks passed with 0 broken images, placeholder labels, errors, overflow, or clipped cards |
+| Visual QA | Latest exact-preview 21/21 browser/HTTP checks passed with 0 broken images, placeholder labels, unexpected errors, overflow, or clipped cards |
 | Design preview routes | All 12 home, article, state, and navigation routes returned 200 with noindex and no sitemap exposure |
 | Preview rendered image coverage | first-screen homepage 10/10 distinct WebPs; article hero 1/1 at 1536x864; desktop/mobile/archive captures had no overflow or console errors |
 | Source-image provenance | 26/26 articles and 104/104 public variants matched source-canonical bytes |
@@ -171,11 +172,12 @@ The preview SEO score of 69 is expected because Vercel adds `x-robots-tag: noind
 Best Practices deductions are the Vercel Preview Toolbar script being blocked by the site's
 intentional self-only CSP, not application JavaScript failures.
 
-The exact preview was checked in Chromium at 1440px and 390px. The first-screen homepage audit
-decoded ten distinct WebPs with ten unique SHA-256 hashes, and the representative article rendered
-its 1536x864 lead image above the body. Browser QA found zero console/page errors, clipping, or
-horizontal overflow. Screenshots and machine-readable reports are under
-`artifacts/preview-c9518bee/`.
+The latest exact preview was checked in Chromium at 1440px and 390px. Both homepage viewports
+decoded 31/31 images, the archive decoded 32/32, and the representative article rendered its lead
+image above the body. Browser QA found zero unexpected console/page errors, clipping, or horizontal
+overflow. The admin login's single 503 resource event is the expected missing-preview-credential
+failure and its API response remains generic, no-store, and noindex. Screenshots and the
+deployment-bound receipt are under `artifacts/preview-5b1e1d55/`.
 
 The exact preview and `computecurrent.com` are intentionally not pixel-identical before approval.
 The preview shows the selected Midnight Intelligence publication while production still shows the

@@ -2,11 +2,11 @@
 
 ## Current branch
 - `upgrade/gpt-5-6-sol`; latest verified implementation checkpoint
-  `c9518bee64736aecf81a1c22ef9e40df4d963e18`.
+  `5b1e1d55bb728f49589a9ca89cbec767220c6aaa`.
 - Latest committed reconciliation implementation: `49bea8dac4ec43fd71cde0d276ebca22b76e1ca8`;
   the final QA/QC evidence and runbook are the current documentation checkpoint.
-- Exact implementation preview: `dpl_HpRXGKfUMERRsu25iCcYpWVvsr1S` at
-  `https://ai-news-portal-piewufgxu-masternode77s-projects.vercel.app` (`READY`, preview target).
+- Exact implementation preview: `dpl_9xCxsn8EboAyPjMdgN9takLAfskh` at
+  `https://ai-news-portal-hppzyrwyh-masternode77s-projects.vercel.app` (`READY`, preview target).
 - Rollback tag: `backup/pre-gpt56-upgrade-20260711T091118Z`.
 - No push, production promotion, production-secret operation, or cache purge has been performed.
 - Latest separately observed production: `dpl_6vJ55zh7jsFTQziQgxe4rnrGpy1j`;
@@ -42,7 +42,7 @@
   artwork honestly, and documented that production editorial candidates explicitly force Image2.
 - Bound the OMO audit to the canonical homepage eligibility predicate; its current report now matches
   the public corpus at 32 eligible records, one heuristic low-relevance item, and zero missing images.
-- Deployed implementation `c9518bee` to the exact preview and completed route, header, admin, log,
+- Deployed implementation `5b1e1d55` to the exact preview and completed route, header, admin, log,
   desktop/mobile visual, image, placeholder, overflow, and production-comparison checks.
 - Re-audited current `origin/main`: 128 newer commits comprise 107 dashboard snapshots and 21 content
   refreshes; 751 upstream rows resolve to 724 already-present sources, 27 source-only candidates,
@@ -65,7 +65,7 @@
   regeneration, workflow/default configuration, public provenance, docs, and regressions.
 - Integration/audit hygiene: native integration preflight, shared safe-revision utility, semantics
   regressions, OMO state audit, QA reports, and this handoff.
-- Local ignored evidence: `artifacts/preview-c9518bee/`.
+- Local ignored evidence: `artifacts/preview-5b1e1d55/`.
 
 ## Validation results
 - Hermetic `npm test`: 687 total, 687 passed, 0 failed, 0 skipped; build and follow-on editorial
@@ -92,6 +92,8 @@
   and all ten required admin paths were private/no-store/noindex; the API failed closed with 503.
 - Preview security headers include CSP, HSTS, nosniff, frame denial, referrer policy, and noindex; the deployment error-log query returned no application errors.
 - Browser QA: desktop/mobile homepage, archive, and article passed with no console errors or overflow; the first-screen images and article hero decoded.
+- Latest preview: 21/21 HTTP/browser, 22/22 route-policy, and 128/128 security checks passed;
+  Vercel logs contained only expected fail-closed admin 503s.
 - Adversarial preview HTTP probes passed 10/10 in three bounded runs; the focused 129-test
   security/state/publish set passed three consecutive runs (387/387).
 - QA cleanup re-review found 0 code defects; seven behavioral contracts prove build/test ordering,
@@ -102,7 +104,6 @@
   old command-center design while the preview serves Midnight Intelligence.
 - Human benchmarks remain reviewer-empty; managed persistence passes 4/4 locally but lacks preview credentials.
 - Guarded reconciliation rehearsal fails before publish and leaves tracked output unchanged.
-
 ## Blockers
 - The linked Vercel project reports zero environment variables; preview provider, Postgres, Blob, and
   admin credentials are absent, so provider-backed reconciliation and managed persistence are unproven.
@@ -111,7 +112,6 @@
   and a refreshed preview; direct generated-JSON or image merging is unsafe.
 - OAuth/2FA, firewall, backups, monitoring, and secret rotation are operational follow-up.
 - Push/PR and production promotion require explicit preview approval.
-
 ## Exact next step
 - When preview-only `OPENROUTER_API_KEY` and `OPENAI_API_KEY` access is available, follow the runbook in
   a safe preview content-refresh window, rerun all gates, regenerate projections, and deploy a preview.

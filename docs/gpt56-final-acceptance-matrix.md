@@ -76,7 +76,7 @@ does not mean a live preview database or production workflow was exercised.
 
 | # | Requirement | Result | Evidence or remaining condition |
 | ---: | --- | --- | --- |
-| 31 | Preview deployment is verified | PASS | Implementation `c9518bee` is `READY` as preview `dpl_HpRXGKfUMERRsu25iCcYpWVvsr1S` at `https://ai-news-portal-piewufgxu-masternode77s-projects.vercel.app`; public, retired, 12 design, 10 admin, image, provenance, bundle, log, and screenshot receipts pass. The deployment-bound adversarial receipt records three 10/10 hostile HTTP passes and 31/31 unique homepage image hashes. |
+| 31 | Preview deployment is verified | PASS | Implementation `5b1e1d55` is `READY` as preview `dpl_9xCxsn8EboAyPjMdgN9takLAfskh` at `https://ai-news-portal-hppzyrwyh-masternode77s-projects.vercel.app`; 21/21 browser/HTTP checks and 22/22 design/admin route-policy checks pass with current security headers, decoded imagery, clean public browser logs, and expected fail-closed admin API behavior. |
 | 32 | PR has migration and risk summary | NOT STARTED | Push/PR authorization and preview approval were not given; migration/risk material is ready in reports and runbooks. |
 | 33 | Production unchanged by this branch before preview approval | PASS | The connected `main` automation independently advanced production to `dpl_6vJ55zh7jsFTQziQgxe4rnrGpy1j`; `origin/main` was separately observed at `f345f679`. This branch performed no production promotion, alias change, cache purge, or production-secret operation. |
 | 34 | Rollback is tested | PASS WITH CAVEAT | Tagged baseline passed isolated clean install/build; that emergency baseline retains 18 dependency findings. |
