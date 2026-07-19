@@ -13,7 +13,8 @@ import mediaHandler from '../api/admin/media.js';
 import operationsHandler from '../api/admin/operations.js';
 import revisionsHandler from '../api/admin/revisions.js';
 import { hashAdminPassword, resetLoginSecurityForTests } from '../api/admin/_auth.js';
-import { configureAdminMediaStorageForTests, configureAdminStorageForTests } from '../api/admin/_storage.js';
+import { configureAdminMediaStorageForTests } from '../api/admin/_media-storage.js';
+import { configureAdminStorageForTests } from '../api/admin/_storage.js';
 import { createAdminMediaStorage, createLocalAdminStorage, permanentDeleteConfirmation } from '../src/plugins/storage/index.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');

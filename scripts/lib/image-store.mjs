@@ -1,42 +1,21 @@
 import path from 'node:path';
 import sharp from 'sharp';
-import { articleImageAltText, imageSlugPart } from './article-image-prompt.mjs';
+import { articleImageAltText } from './article-image-prompt.mjs';
+import {
+  ARTICLE_IMAGE_VARIANTS,
+  canonicalArticleImagePaths,
+} from './article-image-paths.mjs';
 import { validateRasterImageBytes } from './image-providers/shared.mjs';
 import { publicFilePath, writeSafePublicFile } from './safe-public-file.mjs';
 
+export {
+  ARTICLE_IMAGE_VARIANTS,
+  articleImageSlug,
+  canonicalArticleImagePaths,
+} from './article-image-paths.mjs';
+
 const MAX_ARTICLE_IMAGE_BYTES = 16 * 1024 * 1024;
 const MAX_ARTICLE_IMAGE_PIXELS = 40_000_000;
-
-export const ARTICLE_IMAGE_VARIANTS = {
-  hero: { file: 'hero', width: 1536, height: 864, label: '16:9 hero' },
-  thumbnail: { file: 'thumbnail', width: 1200, height: 900, label: '4:3 thumbnail' },
-  og: { file: 'og', width: 1200, height: 630, label: '1.91:1 OpenGraph' },
-};
-
-function cleanId(value = '') {
-  return String(value || '').replace(/[^a-zA-Z0-9_-]/g, '').slice(0, 80);
-}
-
-export function articleImageSlug(article = {}) {
-  const id = cleanId(article.id);
-  const title = imageSlugPart(article.expertLensFull?.finalHeadline || article.title || '');
-  return [id, title].filter(Boolean).join('-') || 'article-image';
-}
-
-export function canonicalArticleImagePaths(article = {}, options = {}) {
-  const slug = options.slug || articleImageSlug(article);
-  const extension = String(options.extension || 'svg').replace(/^\./, '');
-  const base = `/generated/articles/${slug}`;
-  const id = cleanId(article.id || slug);
-  const legacyExtension = String(options.legacyExtension || extension).replace(/^\./, '');
-  return {
-    slug,
-    heroImage: `${base}/${ARTICLE_IMAGE_VARIANTS.hero.file}.${extension}`,
-    thumbnailImage: `${base}/${ARTICLE_IMAGE_VARIANTS.thumbnail.file}.${extension}`,
-    ogImage: `${base}/${ARTICLE_IMAGE_VARIANTS.og.file}.${extension}`,
-    legacyImage: `/generated/${id}.${legacyExtension}`,
-  };
-}
 
 function escapeXml(value = '') {
   return String(value || '')

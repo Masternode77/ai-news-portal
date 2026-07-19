@@ -1,6 +1,6 @@
 import fs from 'node:fs';
 import path from 'node:path';
-import { canonicalArticleImagePaths } from './image-store.mjs';
+import { canonicalArticleImagePaths } from './article-image-paths.mjs';
 
 export const ARTICLE_IMAGE_FIELDS = [
   'heroImage',

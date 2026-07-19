@@ -5,7 +5,8 @@
   "ignoreCommand": "node ./scripts/vercel-ignore-build.mjs",
   "functions": {
     "api/admin/*.js": {
-      "includeFiles": "{config/**/*.yml,config/**/*.json,src/data/{editorial-cycles,claim-ledger,source-health}.json}"
+      "includeFiles": "{config/**/*.yml,config/**/*.json,src/data/{editorial-cycles,claim-ledger,source-health}.json}",
+      "excludeFiles": "{.cache/**,public/generated/**,src/data/{latest-news,archived-news,search-index,taxonomy-pages}.json}"
     }
   },
   "rewrites": [

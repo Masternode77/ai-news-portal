@@ -1,13 +1,10 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { createAdminCmsService } from '../../src/admin/admin-cms-service.mjs';
-import { createAdminStorage } from '../../src/plugins/storage/index.mjs';
-import { createAdminMediaStorage } from '../../src/plugins/storage/admin-media-storage.mjs';
+import { createAdminStorage } from '../../src/plugins/storage/admin-storage-factory.mjs';
 
 let configuredStorage = null;
 let storagePromise = null;
-let configuredMediaStorage = null;
-let mediaStorage = null;
 
 function readJson(name, fallback = []) {
   try {
@@ -51,18 +48,7 @@ export async function getAdminCmsService() {
   return createAdminCmsService({ storage: await getAdminStorage() });
 }
 
-export function getAdminMediaStorage() {
-  if (configuredMediaStorage) return configuredMediaStorage;
-  mediaStorage ||= createAdminMediaStorage();
-  return mediaStorage;
-}
-
 export function configureAdminStorageForTests(storage = null) {
   configuredStorage = storage;
   storagePromise = null;
-}
-
-export function configureAdminMediaStorageForTests(storage = null) {
-  configuredMediaStorage = storage;
-  mediaStorage = null;
 }

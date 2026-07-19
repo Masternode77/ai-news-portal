@@ -242,7 +242,7 @@ export async function buildOmoUltraAudit() {
   const packageJson = JSON.parse(await readText('package.json') || '{}');
   const astroConfig = await readText('astro.config.mjs');
   const authSource = await readText('api/admin/_auth.js');
-  const adminStorageSource = await readText('src/plugins/storage/index.mjs');
+  const adminStorageSource = await readText('src/plugins/storage/admin-storage-factory.mjs');
   const constantsSource = await readText('scripts/lib/constants.mjs');
   const pipelineSource = await readText('scripts/pipeline.mjs');
   const productionPhasesSource = await readText('scripts/lib/production-content-phases.mjs');

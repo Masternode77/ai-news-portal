@@ -1,7 +1,7 @@
 import { randomUUID } from 'node:crypto';
 import { applyAdminArticleAction } from '../../scripts/lib/admin-article-store.mjs';
 import { regenerateAdminEditorial } from '../../scripts/lib/admin-editorial-regenerator.mjs';
-import { AdminStorageError, assertAdminStorageAdapter } from '../plugins/storage/index.mjs';
+import { AdminStorageError, assertAdminStorageAdapter } from '../plugins/storage/admin-storage-contract.mjs';
 
 function text(value) {
   return String(value ?? '').trim();

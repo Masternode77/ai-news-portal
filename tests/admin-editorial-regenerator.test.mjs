@@ -1,6 +1,27 @@
 import assert from 'node:assert/strict';
+import fs from 'node:fs/promises';
+import path from 'node:path';
 import test from 'node:test';
+import { fileURLToPath, pathToFileURL } from 'node:url';
 import { regenerateAdminEditorial } from '../scripts/lib/admin-editorial-regenerator.mjs';
+
+const STATIC_RELATIVE_IMPORT = /(?:import|export)\s+(?:[\s\S]*?\s+from\s+)?['"](\.[^'"]+)['"]/g;
+
+async function relativeImportGraph(entryUrl) {
+  const pending = [fileURLToPath(entryUrl)];
+  const seen = new Map();
+  while (pending.length) {
+    const file = pending.pop();
+    if (seen.has(file)) continue;
+    const source = await fs.readFile(file, 'utf8');
+    seen.set(file, source);
+    for (const match of source.matchAll(STATIC_RELATIVE_IMPORT)) {
+      const imported = fileURLToPath(new URL(match[1], pathToFileURL(file)));
+      pending.push(imported);
+    }
+  }
+  return seen;
+}
 
 function evidencePack() {
   return {
@@ -29,6 +50,20 @@ function generatedArticle(candidate) {
     repetition_blocked: false,
   };
 }
+
+test('admin editorial lifecycle stays outside heavyweight image and publication modules', async () => {
+  const graph = await relativeImportGraph(
+    new URL('../scripts/lib/admin-editorial-regenerator.mjs', import.meta.url),
+  );
+  const relativeFiles = [...graph.keys()].map((file) => path.relative(process.cwd(), file));
+  const combined = [...graph.values()].join('\n');
+  assert.equal(relativeFiles.some((file) => file.endsWith('production-content-phases.mjs')), false);
+  assert.equal(relativeFiles.some((file) => file.endsWith('image-generator.mjs')), false);
+  assert.equal(relativeFiles.some((file) => file.endsWith('image-store.mjs')), false);
+  assert.equal(relativeFiles.some((file) => file.includes('/image-providers/')), false);
+  assert.equal(/from\s+['"]sharp['"]/.test(combined), false);
+  assert.equal(combined.includes('ensureArticleImage'), false);
+});
 
 test('admin editorial regeneration treats hostile direction as bounded preference, not evidence', async () => {
   const article = { id: 'grid-1', title: 'Grid queue', summary: 'Generated summary must be excluded.' };

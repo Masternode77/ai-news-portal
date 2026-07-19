@@ -1,7 +1,8 @@
 import crypto from 'node:crypto';
 import { authorizeAdminAction, json, readJson, requireAdmin } from './_auth.js';
 import { adminError, requestContext } from './_request.js';
-import { getAdminMediaStorage, getAdminStorage } from './_storage.js';
+import { getAdminMediaStorage } from './_media-storage.js';
+import { getAdminStorage } from './_storage.js';
 
 const MAX_MEDIA_JSON_BYTES = 4 * 1024 * 1024;
 

@@ -1,9 +1,9 @@
 import { buildSourceEvidencePack } from './evidence-pack-builder.mjs';
 import { blueprintHistoryFromRecords } from './expert-lens.mjs';
 import {
-  generateCandidate,
+  generateEditorialCandidate,
   reviewGeneratedCandidate,
-} from './production-content-phases.mjs';
+} from './editorial-candidate-lifecycle.mjs';
 
 const MAX_EDITORIAL_DIRECTION_LENGTH = 2_000;
 
@@ -95,7 +95,7 @@ export async function regenerateAdminEditorial({
     throw regenerationError('unsupported editorial regeneration type', 'invalid_regeneration_type');
   }
   const buildEvidence = dependencies.buildEvidence || buildSourceEvidencePack;
-  const generate = dependencies.generate || generateCandidate;
+  const generate = dependencies.generate || generateEditorialCandidate;
   const review = dependencies.review || reviewGeneratedCandidate;
   const evidencePack = buildEvidence(article);
   if (!evidencePack.ok || evidencePack.origin !== 'extraction_only') {

@@ -1,5 +1,5 @@
 import { createHmac, randomUUID } from 'node:crypto';
-import { AdminStorageError } from '../../src/plugins/storage/index.mjs';
+import { AdminStorageError } from '../../src/plugins/storage/admin-storage-contract.mjs';
 import { json } from './_auth.js';
 
 function header(req, name) {

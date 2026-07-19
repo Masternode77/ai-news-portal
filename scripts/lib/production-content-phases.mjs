@@ -12,15 +12,18 @@ import { readArchiveSnapshot, syncArchiveArtifacts } from './archive-store.mjs';
 import {
   classifyExtractedContent,
   extractContentSource,
-  generateEditorialMetadata,
 } from './content.mjs';
 import { planForToday, pickItemsForRun, updatePlanAfterRun } from './curate.mjs';
 import {
-  attachExpertLensStrict,
   blueprintHistoryFromRecords,
   hydrateExpertLens,
   mergeArticleRecords,
 } from './expert-lens.mjs';
+import {
+  generateEditorialCandidate,
+  reviewCandidateFidelity,
+  reviewGeneratedCandidate,
+} from './editorial-candidate-lifecycle.mjs';
 import { fetchNewsPool } from './fetch-feeds.mjs';
 import {
   ensureArticleImageResult,
@@ -29,11 +32,6 @@ import {
 } from './image-generator.mjs';
 import { splitByExpertInsightGate } from './expert-insight-engine.mjs';
 import { buildSourceEvidencePack } from './evidence-pack-builder.mjs';
-import { sourceFidelityCheck } from './source-fidelity-check.mjs';
-import {
-  checkClaimsAgainstEvidence,
-  seoMetadataClaimsSupported,
-} from './source-fidelity-claim-check.mjs';
 import {
   ARTICLE_PAGE_QUALITY_THRESHOLD,
   splitByArticleQualityGate,
@@ -470,32 +468,21 @@ export async function runProductionCluster(payload = {}) {
 }
 
 export async function generateCandidate(article, recentBlueprintIds, dependencies = {}) {
-  const generateMetadata = dependencies.generateMetadata || generateEditorialMetadata;
   const ensureImage = dependencies.ensureImage || ensureArticleImageResult;
-  const attachLens = dependencies.attachLens || attachExpertLensStrict;
-  if (article.evidence_pack?.ok !== true || article.evidence_pack?.origin !== 'extraction_only') {
-    throw Object.assign(new Error('source evidence pack is missing or invalid'), {
-      code: 'editorial_generation_invalid',
-    });
-  }
-  const frozenEvidencePack = structuredClone(article.evidence_pack);
-  const metadata = await generateMetadata(article);
-  if (!metadata.ok) throw Object.assign(new Error(metadata.error.code), metadata.error, { retryable: metadata.retryable });
-  let draftInput = metadata.article;
-  if (dependencies.generateImage !== false) {
-    const imageResult = await withTimeout(
-      `generate image ${article.id}`,
-      () => ensureImage({ ...metadata.article, forceAiImage: true, forceImageRefresh: true }),
-      45_000,
-    );
-    draftInput = { ...metadata.article, ...imageMetadataPatch(imageResult) };
-  }
-  const [draft] = await withTimeout(
-    `generate editorial draft ${article.id}`,
-    () => attachLens([draftInput], { recentBlueprintIds }),
-    90_000,
-  );
-  return { ...draft, evidence_pack: frozenEvidencePack };
+  return generateEditorialCandidate(article, recentBlueprintIds, {
+    generateMetadata: dependencies.generateMetadata,
+    attachLens: dependencies.attachLens,
+    transformDraftInput: dependencies.generateImage === false
+      ? undefined
+      : async (metadataArticle) => {
+        const imageResult = await withTimeout(
+          `generate image ${article.id}`,
+          () => ensureImage({ ...metadataArticle, forceAiImage: true, forceImageRefresh: true }),
+          45_000,
+        );
+        return { ...metadataArticle, ...imageMetadataPatch(imageResult) };
+      },
+  });
 }
 
 const DOWNGRADEABLE_GENERATION_FAILURES = new Set([
@@ -533,69 +520,10 @@ export async function runProductionGenerate(payload = {}) {
   };
 }
 
-function reviewFidelity(article) {
-  const body = article.expertLensFull?.finalArticleBody || '';
-  const evidence = article.evidence_pack;
-  if (evidence?.ok !== true || evidence?.origin !== 'extraction_only') {
-    return {
-      ok: false,
-      source: { ok: false, unsupported: ['missing_extraction_evidence_pack'] },
-      claims: { ok: false, totalClaims: 0, unsupportedClaims: ['missing_extraction_evidence_pack'] },
-      seo: { ok: false, totalClaims: 0, unsupportedClaims: ['missing_extraction_evidence_pack'] },
-    };
-  }
-  const source = sourceFidelityCheck(article, evidence, body);
-  const claims = checkClaimsAgainstEvidence(body, evidence);
-  const seo = seoMetadataClaimsSupported(article, evidence);
-  const ok = source.ok === true
-    && claims.ok === true
-    && (claims.unsupportedClaims?.length || 0) === 0
-    && seo.ok === true;
-  return { ok, source, claims, seo };
-}
+export { reviewGeneratedCandidate };
 
-export function reviewGeneratedCandidate(article = {}, recentRecords = []) {
-  const fidelity = reviewFidelity(article);
-  const reviewed = {
-    ...article,
-    source_fidelity: fidelity.source,
-    claim_fidelity: fidelity.claims,
-    seo_fidelity: fidelity.seo,
-  };
-  if (!fidelity.ok) {
-    return {
-      ok: false,
-      code: 'source_fidelity_failed',
-      article: reviewed,
-    };
-  }
-  const { passed, blocked } = splitByRepetitionGate([reviewed], recentRecords);
-  if (!passed.length) {
-    return {
-      ok: false,
-      code: 'repetition_gate_failed',
-      article: blocked[0] || reviewed,
-    };
-  }
-  const decision = publicSurfaceDecision(passed[0]);
-  const publiclyReviewed = {
-    ...passed[0],
-    public_eligibility: {
-      detailPage: decision.detailPage,
-      homepage: decision.homepage,
-      archive: decision.archive,
-      rss: decision.rss,
-      sourceRelevant: decision.sourceRelevant,
-    },
-  };
-  if (!decision.detailPage) {
-    return {
-      ok: false,
-      code: 'public_longform_ineligible',
-      article: publiclyReviewed,
-    };
-  }
-  return { ok: true, article: publiclyReviewed };
+function reviewFidelity(article) {
+  return reviewCandidateFidelity(article);
 }
 
 export async function runProductionReview(payload = {}) {
