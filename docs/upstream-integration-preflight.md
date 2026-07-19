@@ -1,13 +1,14 @@
 # Upstream Integration Preflight
 
-Generated at: 2026-07-19T00:58:54.810Z
+Generated at: 2026-07-19T01:39:43.860Z
 
 ## Result
 
 - Integration ready: no
-- Current commit: `2b78941fcd1fe4c9abedd6f03c043d681183f125`
+- Current commit: `5989eb4404486a26c46e377413c9dfb6b2dfbb8d`
 - Upstream commit: `f345f6798f90ef82c37fc01fd537157e112eafc9`
-- Ahead / behind: 56 / 128
+- Audit script SHA-256: `4f44b9ce3978c8a4440f10a490aa1f1bdeb19f0454621ca95a5d8fcfb5d7de61`
+- Ahead / behind: 57 / 128
 - Overlapping paths: 8
 - Conflicts: 8
 - Unexpected source/config conflicts: 0
