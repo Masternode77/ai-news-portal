@@ -10,7 +10,7 @@ import {
 import { PRODUCTION_CONTENT_PLUGINS } from '../plugins/content/production-content-plugins.mjs';
 import { assertUpstreamReconciliationExecution } from './upstream-reconciliation-execution.mjs';
 
-export const CONTENT_PIPELINE_VERSION = '5.6.1';
+export const CONTENT_PIPELINE_VERSION = '5.6.2';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
 

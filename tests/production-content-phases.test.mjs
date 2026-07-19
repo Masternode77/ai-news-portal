@@ -1,6 +1,11 @@
 import assert from 'node:assert/strict';
+import fs from 'node:fs/promises';
+import path from 'node:path';
 import test from 'node:test';
 import {
+  assertReconciliationClassificationProgress,
+  assertReconciliationExtractionProgress,
+  assertReconciliationProviderCompletion,
   beginProductionPublication,
   buildProductionPublishAccounting,
   completeProductionPublication,
@@ -23,6 +28,38 @@ import {
   repairPublicLongformRecord,
 } from '../scripts/repair-public-longform-inventory.mjs';
 import { sourceCandidateFromUpstream } from '../scripts/lib/upstream-content-reconciliation.mjs';
+import { canonicalArticleImagePaths } from '../scripts/lib/article-image-paths.mjs';
+
+const PROJECT_ROOT = process.cwd();
+
+async function writeGeneratedImageFixtures(t, article) {
+  const paths = canonicalArticleImagePaths(article, {
+    extension: 'webp',
+    legacyExtension: 'webp',
+  });
+  const publicPaths = [
+    paths.heroImage,
+    paths.thumbnailImage,
+    paths.ogImage,
+    paths.legacyImage,
+  ];
+  for (const publicPath of publicPaths) {
+    const filePath = path.join(PROJECT_ROOT, 'public', publicPath);
+    await fs.mkdir(path.dirname(filePath), { recursive: true });
+    await fs.writeFile(filePath, `image2-fixture:${article.id}:${publicPath}`);
+  }
+  t.after(async () => {
+    await Promise.all(publicPaths.map((publicPath) => fs.rm(
+      path.join(PROJECT_ROOT, 'public', publicPath),
+      { force: true },
+    )));
+    await fs.rm(path.dirname(path.join(PROJECT_ROOT, 'public', paths.heroImage)), {
+      force: true,
+      recursive: true,
+    });
+  });
+  return paths;
+}
 
 function sourceText(minimumLength) {
   const sentences = [
@@ -167,6 +204,42 @@ test('reconciliation ingest fails closed for unsafe, unregistered, or oversized 
   );
 });
 
+test('reconciliation extraction fails closed when every source fetch fails', () => {
+  assert.doesNotThrow(() => assertReconciliationExtractionProgress({}, []));
+  assert.doesNotThrow(() => assertReconciliationExtractionProgress({
+    reconciliation: { candidateCount: 2 },
+  }, [{ id: 'extracted-one' }]));
+
+  assert.throws(
+    () => assertReconciliationExtractionProgress({
+      reconciliation: { candidateCount: 27 },
+    }, []),
+    (error) => {
+      assert.equal(error.code, 'reconciliation_extraction_empty');
+      assert.match(error.message, /extracted 0 of 27 candidates/);
+      return true;
+    },
+  );
+});
+
+test('reconciliation classification fails closed when no source passes extraction QA', () => {
+  assert.doesNotThrow(() => assertReconciliationClassificationProgress({}, []));
+  assert.doesNotThrow(() => assertReconciliationClassificationProgress({
+    reconciliation: { candidateCount: 2 },
+  }, [{ id: 'clean-one' }]));
+
+  assert.throws(
+    () => assertReconciliationClassificationProgress({
+      reconciliation: { candidateCount: 27 },
+    }, []),
+    (error) => {
+      assert.equal(error.code, 'reconciliation_classification_empty');
+      assert.match(error.message, /0 of 27 candidates passed source extraction QA/);
+      return true;
+    },
+  );
+});
+
 test('classify uses the canonical fail-closed public extraction boundary', async () => {
   const clean = extractedArticle({ id: 'clean', length: 700 });
   const thin = extractedArticle({ id: 'thin', length: 220 });
@@ -198,6 +271,281 @@ test('cluster downgrades clean but insufficient evidence to a source signal', as
   assert.deepEqual(result.value.signalCards.map(({ id }) => id), ['source-only']);
   assert.equal(result.value.signalCards[0].signalCardReason, 'source_evidence_insufficient_for_longform');
   assert.deepEqual(result.transitions.map(({ toState }) => toState), ['source_signal']);
+});
+
+test('reconciliation generation rejects provider fallback and records successful Image2 work', async () => {
+  const signal = { ...extractedArticle({ id: 'signal-image2', length: 700 }), signalCardOnly: true };
+  const fallback = async () => ({
+    heroImage: '/generated/fallback.webp',
+    thumbnailImage: '/generated/fallback-thumb.webp',
+    ogImage: '/generated/fallback-og.webp',
+    legacyImage: '/generated/fallback-legacy.webp',
+    provider: 'local-placeholder',
+    status: 'fallback',
+  });
+  await assert.rejects(
+    () => runProductionGenerate({
+      reconciliation: { candidateCount: 1 },
+      signalCards: [signal],
+    }, {}, { ensureImage: fallback }),
+    (error) => error.code === 'reconciliation_image2_required',
+  );
+
+  const image2Paths = canonicalArticleImagePaths(signal, {
+    extension: 'webp',
+    legacyExtension: 'webp',
+  });
+  const image2 = async () => ({
+    ...image2Paths,
+    provider: 'image2',
+    model: 'gpt-image-2',
+    status: 'generated',
+  });
+  const result = await runProductionGenerate({
+    reconciliation: { candidateCount: 1 },
+    signalCards: [signal],
+  }, {}, { ensureImage: image2 });
+
+  assert.equal(result.value.signalCards[0].imageProvider, 'image2');
+  assert.deepEqual(result.value.reconciliationProviders, {
+    editorialRequired: 0,
+    editorialSucceeded: 0,
+    image2Required: 1,
+    image2Succeeded: 1,
+  });
+  assert.doesNotThrow(() => assertReconciliationProviderCompletion(
+    result.value,
+    result.value.signalCards,
+  ));
+});
+
+test('reconciliation editorial Image2 paths follow the final generated headline', async () => {
+  const article = extractedArticle({ id: 'final-headline-image2', length: 1_300 });
+  article.evidence_pack = buildSourceEvidencePack(article);
+  const finalHeadline = 'Grid delivery changes the capacity timeline';
+  let imageInput;
+
+  const result = await runProductionGenerate({
+    reconciliation: { candidateCount: 1 },
+    editorialCandidates: [article],
+  }, {}, {
+    generateMetadata: async (input) => ({ ok: true, article: input }),
+    attachLens: async ([input]) => [{
+      ...input,
+      expertLensFull: {
+        finalHeadline,
+        finalArticleBody: 'A source-grounded infrastructure analysis.',
+      },
+    }],
+    ensureImage: async (input) => {
+      imageInput = input;
+      return {
+        ...canonicalArticleImagePaths(input, {
+          extension: 'webp',
+          legacyExtension: 'webp',
+        }),
+        provider: 'image2',
+        model: 'gpt-image-2',
+        status: 'generated',
+      };
+    },
+  });
+
+  assert.notEqual(article.title, finalHeadline);
+  assert.equal(imageInput.expertLensFull.finalHeadline, finalHeadline);
+  assert.equal(result.value.generatedDrafts[0].expertLensFull.finalHeadline, finalHeadline);
+  assert.doesNotThrow(() => assertReconciliationProviderCompletion(
+    result.value,
+    result.value.generatedDrafts,
+  ));
+});
+
+test('reconciliation publication rejects missing provider completion evidence', () => {
+  assert.doesNotThrow(() => assertReconciliationProviderCompletion({}, []));
+  assert.throws(
+    () => assertReconciliationProviderCompletion({
+      reconciliation: { candidateCount: 1 },
+      reconciliationProviders: {
+        editorialRequired: 0,
+        editorialSucceeded: 0,
+        image2Required: 1,
+        image2Succeeded: 0,
+      },
+    }, [{ id: 'fallback', imageProvider: 'local-placeholder' }]),
+    (error) => error.code === 'reconciliation_provider_completion_invalid',
+  );
+  const repeatedPath = '/generated/articles/repeated/hero.webp';
+  assert.throws(
+    () => assertReconciliationProviderCompletion({
+      reconciliation: { candidateCount: 1 },
+      reconciliationProviders: {
+        editorialRequired: 0,
+        editorialSucceeded: 0,
+        image2Required: 1,
+        image2Succeeded: 1,
+      },
+    }, [{
+      id: 'repeated',
+      imageProvider: 'image2',
+      imageStatus: 'generated',
+      heroImage: repeatedPath,
+      thumbnailImage: repeatedPath,
+      ogImage: repeatedPath,
+      legacyImage: repeatedPath,
+    }]),
+    (error) => error.code === 'reconciliation_provider_completion_invalid',
+  );
+  const shared = {
+    id: 'shared-image2',
+    title: 'Shared Image2 article',
+    imageProvider: 'image2',
+    imageStatus: 'generated',
+  };
+  Object.assign(shared, canonicalArticleImagePaths(shared, {
+    extension: 'webp',
+    legacyExtension: 'webp',
+  }));
+  assert.throws(
+    () => assertReconciliationProviderCompletion({
+      reconciliation: { candidateCount: 1 },
+      reconciliationProviders: {
+        editorialRequired: 0,
+        editorialSucceeded: 0,
+        image2Required: 1,
+        image2Succeeded: 1,
+      },
+    }, [shared, { ...shared }]),
+    (error) => error.code === 'reconciliation_provider_completion_invalid',
+  );
+});
+
+test('reconciliation publish rejects fallback evidence before state or receipt access', async () => {
+  let stateAccesses = 0;
+  const unexpectedAccess = async () => {
+    stateAccesses += 1;
+    return { publicationReceipts: {} };
+  };
+
+  await assert.rejects(
+    () => runProductionPublish({
+      reconciliation: { candidateCount: 1 },
+      reconciliationProviders: {
+        editorialRequired: 0,
+        editorialSucceeded: 0,
+        image2Required: 1,
+        image2Succeeded: 0,
+      },
+      signalCards: [{
+        id: 'fallback-signal',
+        imageProvider: 'local-placeholder',
+        imageStatus: 'fallback',
+      }],
+    }, {
+      runId: 'reconciliation-provider-failure',
+      pipelineVersion: '5.6.2-test',
+    }, {
+      readState: unexpectedAccess,
+      receiptStore: { load: unexpectedAccess },
+    }),
+    (error) => error.code === 'reconciliation_provider_completion_invalid',
+  );
+
+  assert.equal(stateAccesses, 0);
+});
+
+test('reconciliation publish preserves validated Image2 output and bundles all four variants', async (t) => {
+  const signal = {
+    id: `strict-image2-signal-${process.pid}-${Date.now()}`,
+    title: 'Strict Image2 signal',
+    publishedAt: '2026-07-19T00:00:00.000Z',
+    imageProvider: 'image2',
+    imageStatus: 'generated',
+  };
+  Object.assign(signal, await writeGeneratedImageFixtures(t, signal));
+  const events = [];
+  let capturedPaths = [];
+  const result = await runProductionPublish({
+    reconciliation: { candidateCount: 1 },
+    reconciliationProviders: {
+      editorialRequired: 0,
+      editorialSucceeded: 0,
+      image2Required: 1,
+      image2Succeeded: 1,
+    },
+    signalCards: [signal],
+  }, {
+    runId: 'reconciliation-image2-bundle',
+    pipelineVersion: '5.6.2-test',
+  }, {
+    readState: async () => {
+      events.push('read-state');
+      return { publishedIds: [], dayPlans: {}, runHistory: [], publicationReceipts: {} };
+    },
+    writeState: async () => {},
+    writeJson: async () => {},
+    publicDecision: () => ({ homepage: true, archive: true }),
+    backfillImages: async () => {
+      throw new Error('validated reconciliation images must not enter fallback backfill');
+    },
+    syncArchive: async (articles) => ({ latest: articles, archive: [], supabaseStatus: 'skipped' }),
+    buildTaxonomy: () => ({ categories: [], companies: [], regions: [], archive: [] }),
+    outputBundleStore: {
+      capture: async (runId, paths) => {
+        capturedPaths = paths;
+        return outputManifest(runId);
+      },
+    },
+  });
+
+  assert.deepEqual(events, ['read-state']);
+  assert.deepEqual(capturedPaths.slice(-4), [
+    `public${signal.heroImage}`,
+    `public${signal.thumbnailImage}`,
+    `public${signal.ogImage}`,
+    `public${signal.legacyImage}`,
+  ]);
+  assert.equal(result.value.publication.outputManifest.runId, 'reconciliation-image2-bundle');
+});
+
+test('reconciliation rejects another article image set before state access', async (t) => {
+  const owner = {
+    id: `image2-owner-${process.pid}-${Date.now()}`,
+    title: 'Owner article',
+  };
+  const ownerPaths = await writeGeneratedImageFixtures(t, owner);
+  let stateAccesses = 0;
+  const unexpectedAccess = async () => {
+    stateAccesses += 1;
+    throw new Error('state must remain untouched');
+  };
+
+  await assert.rejects(
+    () => runProductionPublish({
+      reconciliation: { candidateCount: 1 },
+      reconciliationProviders: {
+        editorialRequired: 0,
+        editorialSucceeded: 0,
+        image2Required: 1,
+        image2Succeeded: 1,
+      },
+      signalCards: [{
+        id: `image2-borrower-${process.pid}-${Date.now()}`,
+        title: 'Borrower article',
+        imageProvider: 'image2',
+        imageStatus: 'generated',
+        ...ownerPaths,
+      }],
+    }, {
+      runId: 'reconciliation-borrowed-image2',
+      pipelineVersion: '5.6.2-test',
+    }, {
+      readState: unexpectedAccess,
+      receiptStore: { load: unexpectedAccess },
+    }),
+    (error) => error.code === 'reconciliation_provider_completion_invalid',
+  );
+
+  assert.equal(stateAccesses, 0);
 });
 
 test('review downgrade removes an unapproved draft from the public read-model payload', async () => {

@@ -1,3 +1,6 @@
+import fs from 'node:fs/promises';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 import {
   ARCHIVE_NEWS_PATH,
   LATEST_NEWS_LIMIT,
@@ -30,6 +33,7 @@ import {
   imageMetadataPatch,
   needsImageRefresh,
 } from './image-generator.mjs';
+import { canonicalArticleImagePaths } from './article-image-paths.mjs';
 import { splitByExpertInsightGate } from './expert-insight-engine.mjs';
 import { buildSourceEvidencePack } from './evidence-pack-builder.mjs';
 import {
@@ -64,6 +68,7 @@ import {
 } from '../../src/adapters/upstream-reconciliation-execution.mjs';
 
 const RETRY_DELAY_MS = Number(process.env.PIPELINE_RETRY_DELAY_MS || 15_000);
+const PROJECT_ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
 
 async function withSingleRetry(label, fn) {
   try {
@@ -351,7 +356,44 @@ export async function runProductionIngest(payload = {}, context = {}, services =
   };
 }
 
-export async function runProductionExtract(payload = {}) {
+function reconciliationCandidateCount(payload = {}) {
+  if (!payload.reconciliation) return null;
+  const candidateCount = payload.reconciliation.candidateCount;
+  if (!Number.isSafeInteger(candidateCount) || candidateCount < 1) {
+    const error = new Error('upstream reconciliation has an invalid candidate count');
+    error.code = 'reconciliation_candidate_count_invalid';
+    throw error;
+  }
+  return candidateCount;
+}
+
+export function assertReconciliationExtractionProgress(payload = {}, extracted = []) {
+  const candidateCount = reconciliationCandidateCount(payload);
+  if (candidateCount === null) return;
+  if (extracted.length === 0) {
+    const error = new Error(
+      `upstream reconciliation extracted 0 of ${candidateCount} candidates; refusing to complete`,
+    );
+    error.code = 'reconciliation_extraction_empty';
+    throw error;
+  }
+}
+
+export function assertReconciliationClassificationProgress(payload = {}, cleanSources = []) {
+  const candidateCount = reconciliationCandidateCount(payload);
+  if (candidateCount === null) return;
+  if (cleanSources.length === 0) {
+    const error = new Error(
+      `upstream reconciliation: 0 of ${candidateCount} candidates passed source extraction QA`,
+    );
+    error.code = 'reconciliation_classification_empty';
+    throw error;
+  }
+}
+
+export async function runProductionExtract(payload = {}, _context = {}, services = {}) {
+  const extractSource = services.extractSource || extractContentSource;
+  const retry = services.retry || withSingleRetry;
   const extracted = [];
   const extractionFailed = [];
   const transitions = [];
@@ -359,9 +401,9 @@ export async function runProductionExtract(payload = {}) {
     try {
       const article = await withTimeout(
         `extract source ${item.id}`,
-        () => withSingleRetry(
+        () => retry(
           `extract source ${item.id}`,
-          () => extractContentSource(item, {
+          () => extractSource(item, {
             allowedDomains: payload.reconciliation?.allowedDomains,
           }),
         ),
@@ -374,6 +416,7 @@ export async function runProductionExtract(payload = {}) {
       transitions.push(transition(item, 'fetched', 'extraction_failed', 'source_extraction_failed', 'The source body could not be extracted after the bounded retry.'));
     }
   }
+  assertReconciliationExtractionProgress(payload, extracted);
   return { ok: true, value: { ...payload, extracted, extractionFailed }, transitions };
 }
 
@@ -396,6 +439,7 @@ export async function runProductionClassify(payload = {}) {
       transitions.push(transition(article, 'extracted', 'extraction_failed', 'source_quality_failed', 'Extraction evidence failed the public classification boundary.'));
     }
   }
+  assertReconciliationClassificationProgress(payload, cleanSources);
   return { ok: true, value: { ...payload, cleanSources, classificationRejected }, transitions };
 }
 
@@ -472,15 +516,20 @@ export async function generateCandidate(article, recentBlueprintIds, dependencie
   return generateEditorialCandidate(article, recentBlueprintIds, {
     generateMetadata: dependencies.generateMetadata,
     attachLens: dependencies.attachLens,
-    transformDraftInput: dependencies.generateImage === false
+    transformDraftOutput: dependencies.generateImage === false
       ? undefined
-      : async (metadataArticle) => {
+      : async (draftArticle) => {
         const imageResult = await withTimeout(
           `generate image ${article.id}`,
-          () => ensureImage({ ...metadataArticle, forceAiImage: true, forceImageRefresh: true }),
+          () => ensureImage({
+            ...draftArticle,
+            forceAiImage: true,
+            forceImageRefresh: true,
+            requireProviderImage: dependencies.requireProviderImage === true,
+          }),
           45_000,
         );
-        return { ...metadataArticle, ...imageMetadataPatch(imageResult) };
+        return { ...draftArticle, ...imageMetadataPatch(imageResult) };
       },
   });
 }
@@ -491,25 +540,168 @@ const DOWNGRADEABLE_GENERATION_FAILURES = new Set([
   'expert_insight_incomplete',
 ]);
 
-export async function runProductionGenerate(payload = {}) {
+function reconciliationImage2Error(message) {
+  return Object.assign(new Error(message), { code: 'reconciliation_image2_required' });
+}
+
+function assertImage2Article(article = {}, claimedPaths = null) {
+  const imagePaths = [
+    article.heroImage,
+    article.thumbnailImage,
+    article.ogImage,
+    article.legacyImage,
+  ];
+  const expected = canonicalArticleImagePaths(article, {
+    extension: 'webp',
+    legacyExtension: 'webp',
+  });
+  const expectedPaths = [
+    expected.heroImage,
+    expected.thumbnailImage,
+    expected.ogImage,
+    expected.legacyImage,
+  ];
+  const canonicalPaths = imagePaths.every((value, index) => value === expectedPaths[index])
+    && new Set(imagePaths).size === imagePaths.length;
+  if (article.imageProvider !== 'image2'
+    || article.imageStatus !== 'generated'
+    || !canonicalPaths) {
+    throw reconciliationImage2Error(
+      `upstream reconciliation requires a fresh Image2 image set for ${article.id || 'unknown article'}`,
+    );
+  }
+  for (const imagePath of imagePaths) {
+    if (claimedPaths?.has(imagePath)) {
+      throw reconciliationImage2Error(
+        `upstream reconciliation cannot reuse Image2 output ${imagePath}`,
+      );
+    }
+    claimedPaths?.add(imagePath);
+  }
+  return article;
+}
+
+async function verifyReconciliationImageFiles(articles = []) {
+  const generatedRoot = path.resolve(PROJECT_ROOT, 'public/generated');
+  const realGeneratedRoot = await fs.realpath(generatedRoot);
+  const publicPaths = articles.flatMap((article) => [
+    article.heroImage,
+    article.thumbnailImage,
+    article.ogImage,
+    article.legacyImage,
+  ]);
+  for (const publicPath of new Set(publicPaths)) {
+    const filePath = path.resolve(PROJECT_ROOT, `public${publicPath}`);
+    if (!filePath.startsWith(`${generatedRoot}${path.sep}`)) {
+      throw reconciliationImage2Error(`Image2 output escaped generated storage: ${publicPath}`);
+    }
+    let fileStat;
+    let realPath;
+    try {
+      [fileStat, realPath] = await Promise.all([fs.lstat(filePath), fs.realpath(filePath)]);
+    } catch {
+      throw reconciliationImage2Error(`Image2 output is missing: ${publicPath}`);
+    }
+    if (!fileStat.isFile()
+      || fileStat.isSymbolicLink()
+      || fileStat.size < 1
+      || !realPath.startsWith(`${realGeneratedRoot}${path.sep}`)) {
+      throw reconciliationImage2Error(`Image2 output is not a regular generated file: ${publicPath}`);
+    }
+  }
+}
+
+async function generateRequiredImage2Articles(articles = [], ensureImage = ensureArticleImageResult) {
+  const generated = [];
+  for (const article of articles) {
+    const imageResult = await withTimeout(
+      `generate required Image2 image ${article.id}`,
+      () => ensureImage({
+        ...article,
+        forceAiImage: true,
+        forceImageRefresh: true,
+        requireProviderImage: true,
+      }),
+      45_000,
+    );
+    generated.push(assertImage2Article({ ...article, ...imageMetadataPatch(imageResult) }));
+  }
+  return generated;
+}
+
+function uniqueArticleCount(articles = []) {
+  return new Set(articles.map((article) => article?.id).filter(Boolean)).size;
+}
+
+export function assertReconciliationProviderCompletion(payload = {}, publicUpdates = []) {
+  if (!payload.reconciliation) return;
+  const evidence = payload.reconciliationProviders;
+  const editorialRequired = uniqueArticleCount(payload.editorialCandidates || []);
+  const image2Required = uniqueArticleCount(publicUpdates);
+  const providerCountsValid = evidence
+    && evidence.editorialRequired === editorialRequired
+    && evidence.editorialSucceeded === editorialRequired
+    && evidence.image2Required === image2Required
+    && evidence.image2Succeeded === image2Required;
+  try {
+    const claimedPaths = new Set();
+    for (const article of publicUpdates) assertImage2Article(article, claimedPaths);
+  } catch (error) {
+    const completionError = new Error(error.message);
+    completionError.code = 'reconciliation_provider_completion_invalid';
+    throw completionError;
+  }
+  if (!providerCountsValid) {
+    const error = new Error('upstream reconciliation provider completion evidence is incomplete');
+    error.code = 'reconciliation_provider_completion_invalid';
+    throw error;
+  }
+}
+
+export async function runProductionGenerate(payload = {}, _context = {}, dependencies = {}) {
+  const isReconciliation = reconciliationCandidateCount(payload) !== null;
   const generatedDrafts = [];
   const generationFailed = [];
   const recentBlueprintIds = [...(payload.recentBlueprintIds || [])];
   for (const article of payload.editorialCandidates || []) {
     try {
-      const draft = await generateCandidate(article, recentBlueprintIds);
-      generatedDrafts.push(draft);
+      const draft = await generateCandidate(article, recentBlueprintIds, {
+        ...dependencies,
+        requireProviderImage: isReconciliation,
+      });
+      generatedDrafts.push(isReconciliation ? assertImage2Article(draft) : draft);
       if (draft.article_blueprint) recentBlueprintIds.unshift(draft.article_blueprint);
     } catch (error) {
+      if (isReconciliation) throw error;
       if (!DOWNGRADEABLE_GENERATION_FAILURES.has(error?.code)) throw error;
       generationFailed.push(asSignalCard(article, error.code || 'editorial_generation_failed'));
     }
   }
-  const signalCards = await backfillLocalImages(payload.signalCards || []);
-  const failedSignals = await backfillLocalImages(generationFailed);
+  const ensureImage = dependencies.ensureImage || ensureArticleImageResult;
+  const signalCards = isReconciliation
+    ? await generateRequiredImage2Articles(payload.signalCards || [], ensureImage)
+    : await backfillLocalImages(payload.signalCards || [], { ensureImage });
+  const archiveOnly = isReconciliation
+    ? await generateRequiredImage2Articles(payload.archiveOnly || [], ensureImage)
+    : payload.archiveOnly;
+  const failedSignals = await backfillLocalImages(generationFailed, { ensureImage });
+  const image2Articles = [...generatedDrafts, ...signalCards, ...(archiveOnly || [])];
+  const reconciliationProviders = isReconciliation ? {
+    editorialRequired: uniqueArticleCount(payload.editorialCandidates || []),
+    editorialSucceeded: uniqueArticleCount(generatedDrafts),
+    image2Required: uniqueArticleCount(image2Articles),
+    image2Succeeded: uniqueArticleCount(image2Articles),
+  } : undefined;
   return {
     ok: true,
-    value: { ...payload, generatedDrafts, generationFailed: failedSignals, signalCards },
+    value: {
+      ...payload,
+      generatedDrafts,
+      generationFailed: failedSignals,
+      signalCards,
+      archiveOnly,
+      ...(reconciliationProviders ? { reconciliationProviders } : {}),
+    },
     transitions: (payload.editorialCandidates || []).map((article) => transition(
       article,
       'editorial_candidate',
@@ -757,6 +949,7 @@ export async function runProductionPublish(payload = {}, context = {}, dependenc
     publicDecision: publicSurfaceDecision,
     readState: readPipelineState,
     syncArchive: syncArchiveArtifacts,
+    verifyReconciliationImages: verifyReconciliationImageFiles,
     writeJson: writeJsonFile,
     writeState: writePipelineState,
     ...dependencies,
@@ -771,17 +964,12 @@ export async function runProductionPublish(payload = {}, context = {}, dependenc
     return result;
   };
   const now = new Date(payload.now || Date.now());
-  await assertExecutionOwnership();
-  const [state, durableReceiptState] = await Promise.all([
-    services.readState(PIPELINE_STATE_PATH),
-    services.receiptStore?.load() || Promise.resolve({ publicationReceipts: {} }),
-  ]);
-  await assertExecutionOwnership();
   const existingLatest = payload.existingLatest || [];
   const existingArchive = payload.existingArchive || [];
   const passed = payload.reviewPassed || [];
   const signals = payload.finalSignalCards || payload.signalCards || [];
   const archiveOnly = payload.archiveOnly || [];
+  const publishableUpdates = [...passed, ...signals, ...archiveOnly];
   const {
     publicUpdates,
     processedItems,
@@ -795,6 +983,40 @@ export async function runProductionPublish(payload = {}, context = {}, dependenc
     classificationRejected: payload.classificationRejected,
     blocked: payload.blocked,
   });
+  assertReconciliationProviderCompletion(payload, publishableUpdates);
+  const processedIds = new Set(processedItems.map((article) => article.id));
+  const existing = dedupeById(existingLatest).filter((article) => !processedIds.has(article.id));
+  const retainedArchive = dedupeById(existingArchive).filter((article) => !processedIds.has(article.id));
+  const mergedById = sortForPipelineVisibility(dedupeById([
+    ...passed,
+    ...signals,
+    ...archiveOnly,
+    ...existing,
+    ...retainedArchive,
+  ]));
+  const merged = uniqueByCanonicalSource(mergedById, {
+    isEligible: (article) => {
+      const decision = services.publicDecision(article);
+      return decision.homepage === true || decision.archive === true;
+    },
+  });
+  let withImages = merged;
+  let refreshedImagePaths = [];
+  if (payload.reconciliation) {
+    await services.verifyReconciliationImages(publishableUpdates);
+    refreshedImagePaths = publishableUpdates.flatMap((article) => [
+      article.heroImage,
+      article.thumbnailImage,
+      article.ogImage,
+      article.legacyImage,
+    ]);
+  }
+  await assertExecutionOwnership();
+  const [state, durableReceiptState] = await Promise.all([
+    services.readState(PIPELINE_STATE_PATH),
+    services.receiptStore?.load() || Promise.resolve({ publicationReceipts: {} }),
+  ]);
+  await assertExecutionOwnership();
   const stateReceipt = productionPublicationReceipt(state, context.runId);
   const durableReceipt = productionPublicationReceipt(durableReceiptState, context.runId);
   const completedReceipt = services.receiptStore
@@ -847,27 +1069,13 @@ export async function runProductionPublish(payload = {}, context = {}, dependenc
   });
   if (services.receiptStore) await fenced(() => services.receiptStore.save(durableReceiptState));
   await fenced(() => services.writeState(PIPELINE_STATE_PATH, state));
-  const processedIds = new Set(processedItems.map((article) => article.id));
-  const existing = dedupeById(existingLatest).filter((article) => !processedIds.has(article.id));
-  const retainedArchive = dedupeById(existingArchive).filter((article) => !processedIds.has(article.id));
-  const mergedById = sortForPipelineVisibility(dedupeById([
-    ...passed,
-    ...signals,
-    ...archiveOnly,
-    ...existing,
-    ...retainedArchive,
-  ]));
-  const merged = uniqueByCanonicalSource(mergedById, {
-    isEligible: (article) => {
-      const decision = services.publicDecision(article);
-      return decision.homepage === true || decision.archive === true;
-    },
-  });
-  const backfillResult = await fenced(
-    () => services.backfillImages(merged, { collectOutputs: true }),
-  );
-  const withImages = Array.isArray(backfillResult) ? backfillResult : backfillResult.articles;
-  const refreshedImagePaths = Array.isArray(backfillResult) ? [] : backfillResult.outputPaths;
+  if (!payload.reconciliation) {
+    const backfillResult = await fenced(
+      () => services.backfillImages(merged, { collectOutputs: true }),
+    );
+    withImages = Array.isArray(backfillResult) ? backfillResult : backfillResult.articles;
+    refreshedImagePaths = Array.isArray(backfillResult) ? [] : backfillResult.outputPaths;
+  }
   const { latest, archive = retainedArchive, supabaseStatus } = await fenced(
     () => services.syncArchive(withImages, retainedArchive),
   );

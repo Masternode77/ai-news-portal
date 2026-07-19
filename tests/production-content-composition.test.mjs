@@ -22,7 +22,7 @@ test('production composition registers exactly one ordered provider per canonica
   const { registry } = createProductionContentCycle();
   const description = registry.describe();
 
-  assert.equal(CONTENT_PIPELINE_VERSION, '5.6.1');
+  assert.equal(CONTENT_PIPELINE_VERSION, '5.6.2');
   assert.deepEqual(
     description.capabilities.map(({ capability }) => capability).sort(),
     expectedPhases.map((phase) => `content.${phase}`).sort(),

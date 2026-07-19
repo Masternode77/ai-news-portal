@@ -5,6 +5,7 @@ import { fileURLToPath } from 'node:url';
 import test from 'node:test';
 import {
   assertExecutionBoundary,
+  assertReconciliationProviderReadiness,
   parseArgs,
   runUpstreamReconciliation,
 } from '../scripts/reconcile-upstream-content.mjs';
@@ -24,6 +25,15 @@ function sourceCandidate(overrides = {}) {
     snippet: '',
     ...overrides,
   });
+}
+
+function providerEnv(overrides = {}) {
+  return {
+    IMAGE_PROVIDER: 'image2',
+    OPENAI_API_KEY: 'test-only-image-key',
+    OPENROUTER_API_KEY: 'test-only-editorial-key',
+    ...overrides,
+  };
 }
 
 test('upstream reconciliation execution is wired only to the canonical lifecycle', () => {
@@ -47,6 +57,38 @@ test('upstream reconciliation execution requires two explicit boundary flags', (
   assert.equal(result.stdout, '');
 });
 
+test('upstream reconciliation requires online editorial and Image2 providers before state access', async () => {
+  assert.throws(() => assertReconciliationProviderReadiness({}), /OPENROUTER_API_KEY/);
+  assert.throws(
+    () => assertReconciliationProviderReadiness(providerEnv({ OPENAI_API_KEY: '' })),
+    /OPENAI_API_KEY/,
+  );
+  assert.throws(
+    () => assertReconciliationProviderReadiness(providerEnv({ IMAGE_PROVIDER: 'local' })),
+    /IMAGE_PROVIDER=image2/,
+  );
+  assert.throws(
+    () => assertReconciliationProviderReadiness(providerEnv({ PIPELINE_OFFLINE: '1' })),
+    /online provider access/,
+  );
+  assert.doesNotThrow(() => assertReconciliationProviderReadiness(providerEnv()));
+
+  let stateAccesses = 0;
+  await assert.rejects(
+    () => runUpstreamReconciliation(
+      { revision: 'origin/main', execute: true, production: true },
+      {
+        env: {},
+        checkpointLoader: async () => { stateAccesses += 1; },
+        auditRunner: async () => { stateAccesses += 1; },
+        cycleRunner: async () => { stateAccesses += 1; },
+      },
+    ),
+    /OPENROUTER_API_KEY/,
+  );
+  assert.equal(stateAccesses, 0);
+});
+
 test('upstream reconciliation passes only audited source candidates to one canonical cycle', async () => {
   const candidate = sourceCandidate({ snippet: 'Source snippet.' });
   const calls = [];
@@ -59,6 +101,7 @@ test('upstream reconciliation passes only audited source candidates to one canon
         counts: { upstream: 1, alreadyPresent: 0, reingest: 1, rejected: 0 },
         candidates: [candidate],
       }),
+      env: providerEnv(),
       checkpointLoader: async () => null,
       cycleRunner: async (...args) => {
         calls.push(args);
@@ -111,6 +154,7 @@ test('upstream reconciliation rejects oversized audits before the canonical cycl
             (_, index) => sourceCandidate({ url: `${candidate.url}/${index}` }),
           ),
         }),
+        env: providerEnv(),
         checkpointLoader: async () => null,
         cycleRunner: async () => { cycleCalls += 1; },
       },
@@ -132,6 +176,7 @@ test('upstream reconciliation rejects a canonical receipt for a different audite
           counts: { upstream: 1, alreadyPresent: 0, reingest: 1, rejected: 0 },
           candidates: [sourceCandidate()],
         }),
+        env: providerEnv(),
         checkpointLoader: async () => null,
         cycleRunner: async () => ({
           status: 'completed',
@@ -155,6 +200,7 @@ test('upstream reconciliation resumes its immutable checkpoint before a changed 
   let auditCalls = 0;
   let cycleCalls = 0;
   const options = {
+    env: providerEnv(),
     checkpointLoader: async () => checkpoint,
     revisionResolver: async () => resolvedRevision,
     auditRunner: async () => {
@@ -214,6 +260,7 @@ test('upstream reconciliation performs no cycle for an empty current audit', asy
         counts: { upstream: 0, alreadyPresent: 0, reingest: 0, rejected: 0 },
         candidates: [],
       }),
+      env: providerEnv(),
       checkpointLoader: async () => null,
       completedCheckpointVerifier: async () => {
         verificationCalls += 1;

@@ -35,15 +35,15 @@ export async function generateEditorialCandidate(article, recentBlueprintIds = [
   if (!metadata.ok) {
     throw Object.assign(new Error(metadata.error.code), metadata.error, { retryable: metadata.retryable });
   }
-  const draftInput = dependencies.transformDraftInput
-    ? await dependencies.transformDraftInput(metadata.article)
-    : metadata.article;
   const [draft] = await withTimeout(
     `generate editorial draft ${article.id}`,
-    () => attachLens([draftInput], { recentBlueprintIds }),
+    () => attachLens([metadata.article], { recentBlueprintIds }),
     90_000,
   );
-  return { ...draft, evidence_pack: frozenEvidencePack };
+  const finalDraft = dependencies.transformDraftOutput
+    ? await dependencies.transformDraftOutput(draft)
+    : draft;
+  return { ...finalDraft, evidence_pack: frozenEvidencePack };
 }
 
 export function reviewCandidateFidelity(article) {

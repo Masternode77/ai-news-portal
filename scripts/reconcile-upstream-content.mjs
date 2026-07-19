@@ -67,6 +67,30 @@ export function assertExecutionBoundary(args = {}) {
   }
 }
 
+export function assertReconciliationProviderReadiness(env = process.env) {
+  if (env.PIPELINE_OFFLINE === '1' || env.CODEX_SANDBOX_NETWORK_DISABLED === '1') {
+    const error = new Error('upstream reconciliation requires online provider access');
+    error.code = 'reconciliation_provider_offline';
+    throw error;
+  }
+  if (!String(env.OPENROUTER_API_KEY || '').trim()) {
+    const error = new Error('OPENROUTER_API_KEY is required for upstream reconciliation');
+    error.code = 'reconciliation_editorial_provider_missing';
+    throw error;
+  }
+  const imageProvider = String(env.IMAGE_PROVIDER || 'image2').trim();
+  if (imageProvider !== 'image2') {
+    const error = new Error('upstream reconciliation requires IMAGE_PROVIDER=image2');
+    error.code = 'reconciliation_image_provider_invalid';
+    throw error;
+  }
+  if (!String(env.OPENAI_API_KEY || '').trim()) {
+    const error = new Error('OPENAI_API_KEY is required for upstream reconciliation Image2 generation');
+    error.code = 'reconciliation_image_provider_missing';
+    throw error;
+  }
+}
+
 function assertReceiptIdentity(receipt, executionIdentity) {
   if (JSON.stringify(receipt?.executionIdentity) !== JSON.stringify(executionIdentity)) {
     throw new Error('canonical content cycle receipt does not match the audited reconciliation input');
@@ -83,6 +107,7 @@ async function loadCanonicalCheckpoint() {
 
 export async function runUpstreamReconciliation(args, options = {}) {
   assertExecutionBoundary(args);
+  assertReconciliationProviderReadiness(options.env || process.env);
   const auditRunner = options.auditRunner || runUpstreamReconciliationAudit;
   const cycleRunner = options.cycleRunner || runCanonicalContentCommand;
   const checkpointLoader = options.checkpointLoader || loadCanonicalCheckpoint;

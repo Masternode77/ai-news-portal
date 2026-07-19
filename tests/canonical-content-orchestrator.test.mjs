@@ -13,6 +13,10 @@ import {
   FileCycleCheckpointError,
   FileCycleCheckpointStore,
 } from '../src/core/state/index.mjs';
+import {
+  runProductionClassify,
+  runProductionExtract,
+} from '../scripts/lib/production-content-phases.mjs';
 
 const CAPABILITIES = Object.freeze(Object.fromEntries(
   CONTENT_CYCLE_PHASES.map((phase) => [phase, `content.${phase}`]),
@@ -140,6 +144,118 @@ test('a completed identified cycle replays without executing providers again', a
   assert.equal(replay.runId, first.runId);
   assert.equal(replay.replayed, true);
   assert.equal(calls.length, CONTENT_CYCLE_PHASES.length);
+});
+
+test('reconciliation extraction failure persists before extract and remains retryable', async (t) => {
+  const source = {
+    id: 'source-1',
+    title: 'Grid filing',
+    url: 'https://example.com/grid',
+    publishedAt: '2026-07-18T00:00:00.000Z',
+  };
+  const ingest = async () => ({
+    ok: true,
+    value: { picked: [source], reconciliation: { candidateCount: 1 } },
+    discoveries: [{ id: source.id, sourceVersion: source.publishedAt }],
+    transitions: [{
+      articleId: source.id,
+      fromState: 'discovered',
+      toState: 'fetched',
+      sourceVersion: source.publishedAt,
+      reason: { code: 'reconciliation_ingest', detail: 'Fixture reconciliation source.' },
+    }],
+  });
+  let extractAttempts = 0;
+  const extract = (payload) => runProductionExtract(payload, {}, {
+    extractSource: async () => {
+      extractAttempts += 1;
+      throw Object.assign(new Error('source unavailable'), { code: 'source_unavailable' });
+    },
+    retry: async (_label, operation) => operation(),
+  });
+  const { checkpointStore, directory, orchestrator } = await harness({ ingest, extract });
+  t.after(() => fs.rm(directory, { recursive: true, force: true }));
+  const executionIdentity = reconciliationIdentity();
+
+  await assert.rejects(
+    () => orchestrator.runCycle({ production: true, executionIdentity }),
+    (error) => error.code === 'reconciliation_extraction_empty',
+  );
+  let checkpoint = await checkpointStore.load();
+  assert.equal(checkpoint.status, 'failed');
+  assert.deepEqual(checkpoint.completedPhases, ['ingest']);
+
+  await assert.rejects(
+    () => orchestrator.runCycle({ production: true, executionIdentity }),
+    (error) => error.code === 'reconciliation_extraction_empty',
+  );
+  checkpoint = await checkpointStore.load();
+  assert.equal(checkpoint.status, 'failed');
+  assert.deepEqual(checkpoint.completedPhases, ['ingest']);
+  assert.equal(extractAttempts, 2);
+});
+
+test('reconciliation classification failure persists before classify and remains retryable', async (t) => {
+  const source = {
+    id: 'source-1',
+    title: 'Thin grid filing',
+    source: 'Test Wire',
+    url: 'https://example.com/grid',
+    sourceUrl: 'https://example.com/grid',
+    publishedAt: '2026-07-18T00:00:00.000Z',
+    articleText: 'Too short.',
+    content_length: 10,
+    extraction_quality_score: 0.1,
+    extraction_qa: { extraction_quality_score: 0.1 },
+  };
+  const ingest = async () => ({
+    ok: true,
+    value: { reconciliation: { candidateCount: 1 } },
+    discoveries: [{ id: source.id, sourceVersion: source.publishedAt }],
+    transitions: [{
+      articleId: source.id,
+      fromState: 'discovered',
+      toState: 'fetched',
+      sourceVersion: source.publishedAt,
+      reason: { code: 'reconciliation_ingest', detail: 'Fixture reconciliation source.' },
+    }],
+  });
+  const extract = async (payload) => ({
+    ok: true,
+    value: { ...payload, extracted: [source] },
+    transitions: [{
+      articleId: source.id,
+      fromState: 'fetched',
+      toState: 'extracted',
+      sourceVersion: source.publishedAt,
+      reason: { code: 'source_extracted', detail: 'Fixture extraction.' },
+    }],
+  });
+  let classifyAttempts = 0;
+  const classify = async (payload) => {
+    classifyAttempts += 1;
+    return runProductionClassify(payload);
+  };
+  const { checkpointStore, directory, orchestrator } = await harness({ ingest, extract, classify });
+  t.after(() => fs.rm(directory, { recursive: true, force: true }));
+  const executionIdentity = reconciliationIdentity();
+
+  await assert.rejects(
+    () => orchestrator.runCycle({ production: true, executionIdentity }),
+    (error) => error.code === 'reconciliation_classification_empty',
+  );
+  let checkpoint = await checkpointStore.load();
+  assert.equal(checkpoint.status, 'failed');
+  assert.deepEqual(checkpoint.completedPhases, ['ingest', 'extract']);
+
+  await assert.rejects(
+    () => orchestrator.runCycle({ production: true, executionIdentity }),
+    (error) => error.code === 'reconciliation_classification_empty',
+  );
+  checkpoint = await checkpointStore.load();
+  assert.equal(checkpoint.status, 'failed');
+  assert.deepEqual(checkpoint.completedPhases, ['ingest', 'extract']);
+  assert.equal(classifyAttempts, 2);
 });
 
 test('completed checkpoint verification restores durable outputs without starting a new run', async (t) => {
