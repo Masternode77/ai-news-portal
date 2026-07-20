@@ -659,7 +659,9 @@
     "2e537256fe72a630",
     "353edcdc490cdee5",
     "d04813487bf37921",
-    "ebab65c30980d2fc"
+    "ebab65c30980d2fc",
+    "9dfd1597f0704d12",
+    "db2816d92e4f305c"
   ],
   "dayPlans": {
     "2026-03-24": {
@@ -32656,74 +32658,446 @@
         "1": true,
         "2": true
       }
-    }
-  },
-  "runHistory": [
-    {
-      "at": "2026-06-10T11:02:10.301Z",
-      "day": "2026-06-10",
-      "slot": 2,
-      "publishedCount": 0,
-      "signalCardCount": 2,
-      "archiveOnlyCount": 0,
-      "processedIds": [
-        "b7244d39e1ebc4e6",
-        "d9a48b6706188b9f"
-      ],
-      "blockedCount": 2,
-      "blockedItems": [
+    },
+    "2026-07-21": {
+      "date": "2026-07-21",
+      "createdAt": "2026-07-20T16:38:35.161Z",
+      "refreshedAt": "2026-07-20T16:38:35.161Z",
+      "candidateWindowHours": 24,
+      "curatedItems": [
         {
-          "id": "b7244d39e1ebc4e6",
-          "title": "Building AI Factories for the Future of Sovereign AI",
-          "infrastructure_relevance_score": 0.919,
+          "id": "9dfd1597f0704d12",
+          "source": "Data Center Frontier",
+          "url": "https://www.datacenterfrontier.com/cooling/article/55389787/tech-explainer-data-center-cooling-air-evaporative-liquid-and-hybrid-approaches",
+          "title": "Tech Explainer: Data Center Cooling - Air, Evaporative, Liquid, and Hybrid Approaches",
+          "snippet": "This explainer examines the major approaches to data center cooling—from chilled-water and evaporative systems to direct-to-chip liquid cooling—and the tradeoffs in energy, water use, density, cost and operational compl…",
+          "contentText": "This explainer examines the major approaches to data center cooling—from chilled-water and evaporative systems to direct-to-chip liquid cooling—and the tradeoffs in energy, water use, density, cost and operational complexity that determine where each method fits.",
+          "publishedAt": "2026-07-20T15:56:09.000Z",
+          "sourceImage": "https://img.datacenterfrontier.com/files/base/ebm/datacenterfrontier/image/2026/07/6a5e4467c5a5dd97c0289c49-dreamstime_xxl_436062540.png",
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "Colocation & Wholesale",
+          "category": "Cooling & Facility Engineering",
+          "primary_category": "Cooling & Facility Engineering",
+          "secondary_category": "Thermal design and rack density",
+          "infrastructure_layer": "Cooling",
+          "affected_stakeholders": [
+            "operators",
+            "equipment vendors",
+            "data center developers",
+            "enterprise IT"
+          ],
+          "article_type": "Other",
+          "urgency_score": 0.45,
+          "taxonomy_confidence": 0.88,
+          "taxonomy_reasons": [
+            "cooling",
+            "liquid cooling",
+            "direct-to-chip"
+          ],
+          "direct_ai_infrastructure_relevance": 0,
+          "data_center_relevance": 0.89,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 1,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.846,
           "infrastructure_relevance_tier": "full_memo",
           "infrastructure_relevance_action": "generate_full_memo",
           "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud, hpc)",
-            "cloud_capacity_relevance:0.54(hyperscalers, aws)",
-            "semiconductor_relevance:0.44(amd, gpu)",
-            "power_grid_relevance:0.22(power)"
+            "data_center_relevance:0.89(data center, colocation)",
+            "cooling_relevance:1.00(cooling, liquid cooling, direct-to-chip)"
           ],
-          "extraction_quality_score": 0.95,
-          "source_domain_adapter": "generic",
-          "content_length": 1366,
-          "boilerplate_ratio": 0,
-          "repetition_blocked": false,
-          "repetition_block_reasons": [],
-          "repetition_check": null,
-          "expert_insight_complete": true,
-          "expert_insight_missing_fields": [],
-          "reason": "fail_closed: source_text_incomplete:ellipsis_truncation_artifact, ellipsis_truncation_artifact"
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 0,
+            "data_center_relevance": 0.89,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 1,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.846,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "data_center_relevance:0.89(data center, colocation)",
+              "cooling_relevance:1.00(cooling, liquid cooling, direct-to-chip)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 82
         },
         {
-          "id": "d9a48b6706188b9f",
-          "title": "3D-printed nozzles could revolutionize drug and self-healing material manufacturing — MIT-developed triaxial electrospray design makes cleanroom fabrication optional",
-          "infrastructure_relevance_score": 0.928,
+          "id": "db2816d92e4f305c",
+          "source": "StorageReview",
+          "url": "https://www.storagereview.com/news/nvidia-omniverse-libraries-put-ai-agents-to-work-prepping-3d-content-for-simulation",
+          "title": "NVIDIA Omniverse Libraries Put AI Agents to Work Prepping 3D Content for Simulation",
+          "snippet": "NVIDIA has introduced Omniverse libraries, a set of software components designed to bring physical AI capabilities into existing 3D applications and prepare content for simulation. The libraries are intended to help dev…",
+          "contentText": "NVIDIA has introduced Omniverse libraries, a set of software components designed to bring physical AI capabilities into existing 3D applications and prepare content for simulation. The libraries are intended to help developers, technical artists, and engineering teams build workflows that inspect scenes, validate assets, model physical behavior, and generate sensor data for robotics, factory automation, and autonomous-system development. Physical AI systems typically require training and validation in simulated environments before deployment. That process depends on more than photorealistic 3D content. Simulation assets must include correct geometry, materials, scale, labels, sensor definitions, and physical properties such as mass, friction, and collision behavior. NVIDIA positions the n…",
+          "publishedAt": "2026-07-20T15:37:09.000Z",
+          "sourceImage": "https://www.storagereview.com/wp-content/uploads/2026/07/Storagereview-nvidia-Agent-Toolkit-on-DGX-Station.jpg",
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "category": "AI Infrastructure",
+          "primary_category": "AI Infrastructure",
+          "secondary_category": "GPU clusters and deployment readiness",
+          "infrastructure_layer": "Compute",
+          "affected_stakeholders": [
+            "operators",
+            "hyperscalers",
+            "cloud buyers",
+            "investors"
+          ],
+          "article_type": "Product / Platform Update",
+          "urgency_score": 0.46,
+          "taxonomy_confidence": 0.77,
+          "taxonomy_reasons": [
+            "ai infrastructure",
+            "neocloud"
+          ],
+          "direct_ai_infrastructure_relevance": 1,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0.598,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.862,
           "infrastructure_relevance_tier": "full_memo",
           "infrastructure_relevance_action": "generate_full_memo",
           "infrastructure_relevance_reasons": [
             "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "cloud_capacity_relevance:0.32(hyperscalers)",
-            "semiconductor_relevance:0.58(semiconductor, gpu)",
+            "semiconductor_relevance:0.60(nvidia, gpu)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 1,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0.598,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.862,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+              "semiconductor_relevance:0.60(nvidia, gpu)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 82
+        },
+        {
+          "id": "313cc21f165e212a",
+          "source": "NVIDIA Blog",
+          "url": "https://blogs.nvidia.com/blog/siggraph-news-2026/",
+          "title": "At SIGGRAPH, NVIDIA Advances Graphics and Simulation With Agentic and Physical AI",
+          "snippet": "From open models to real-time simulation, AI and graphics breakthroughs are transforming media, content creation and robotics.",
+          "contentText": "At this year’s SIGGRAPH conference, running through Thursday, July 23, in Los Angeles, attendees can discover how leading graphics research, neural rendering, simulation and AI are transforming how worlds are created and understood by people and machines. The NVIDIA keynote , taking place today, July 20, at 3:45 p.m. PT, will feature NVIDIA AI research and engineering leaders Neil Ashton, Edward Liu and Ming-Yu Liu discussing neural rendering techniques, world models and simulation methods for AI, built by AI. Read on for the latest from the SIGGRAPH conference, with NVIDIA and partners showcasing: Model Context Protocol connections bring agentic AI to content creation New Synthetic Video Detector NIM microservice Cosmos 3 Edge open world model for local physical AI NVIDIA NemoClaw on DGX…",
+          "publishedAt": "2026-07-20T15:00:53.000Z",
+          "sourceImage": "https://blogs.nvidia.com/wp-content/uploads/2026/07/siggraph-featured-still-1920x1080-1.jpg",
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "category": "AI Infrastructure",
+          "primary_category": "AI Infrastructure",
+          "secondary_category": "GPU clusters and deployment readiness",
+          "infrastructure_layer": "Compute",
+          "affected_stakeholders": [
+            "operators",
+            "hyperscalers",
+            "cloud buyers",
+            "investors"
+          ],
+          "article_type": "Research / Technical",
+          "urgency_score": 0.46,
+          "taxonomy_confidence": 0.77,
+          "taxonomy_reasons": [
+            "ai infrastructure",
+            "neocloud"
+          ],
+          "direct_ai_infrastructure_relevance": 1,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0.598,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.862,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "semiconductor_relevance:0.60(nvidia, gpu)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 1,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0.598,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.862,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+              "semiconductor_relevance:0.60(nvidia, gpu)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 82
+        },
+        {
+          "id": "a15e13cf92232623",
+          "source": "Data Center POST",
+          "url": "https://datacenterpost.com/brownfield-lan-in-the-usa-how-future-proof-is-todays-cabling/",
+          "title": "Brownfield LAN in the USA: How Future-Proof is Today’s Cabling?",
+          "snippet": "TL;DR Legacy LAN cabling is struggling to keep pace with the high-speed connectivity and power demands driven by AI and advanced PoE devices. Organizations frequently delay infrastructure upgrades because active equipme…",
+          "contentText": "TL;DR Legacy LAN cabling is struggling to keep pace with the high-speed connectivity and power demands driven by AI and advanced PoE devices. Organizations frequently delay infrastructure upgrades because active equipment is more visible, yet hardware cannot perform better than the underlying cable link. Upgrading legacy connectivity reduces troubleshooting, secures power delivery, and prevents expensive emergency network replacements. # # # Originally posted on Telecom Newsroom . Local area network (LAN) infrastructures across the United States are facing unprecedented demands due to the rapid expansion of artificial intelligence, faster connectivity requirements, and high-power Power over Ethernet (PoE) demands. Many organizations delay essential cabling upgrades because their current n…",
+          "publishedAt": "2026-07-20T14:00:21.000Z",
+          "sourceImage": "https://d3qut6qyo6tw2j.cloudfront.net/bin/uploads/2026/07/17123918/2-1024x512.png",
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "Colocation & Wholesale",
+          "category": "Data Centers",
+          "primary_category": "Data Centers",
+          "secondary_category": "Campus development and colocation capacity",
+          "infrastructure_layer": "Facility",
+          "affected_stakeholders": [
+            "data center operators",
+            "developers",
+            "site selectors",
+            "investors"
+          ],
+          "article_type": "Capacity Expansion",
+          "urgency_score": 0.66,
+          "taxonomy_confidence": 0.73,
+          "taxonomy_reasons": [
+            "colocation",
+            "wholesale"
+          ],
+          "direct_ai_infrastructure_relevance": 0.78,
+          "data_center_relevance": 0.76,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0,
+          "power_grid_relevance": 0.22,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.805,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:0.78",
+            "data_center_relevance:0.76(data center, colocation)",
             "power_grid_relevance:0.22(power)"
           ],
-          "extraction_quality_score": 1,
-          "source_domain_adapter": "generic",
-          "content_length": 1662,
-          "boilerplate_ratio": 0,
-          "repetition_blocked": false,
-          "repetition_block_reasons": [],
-          "repetition_check": null,
-          "expert_insight_complete": false,
-          "expert_insight_missing_fields": [
-            "concrete_facts",
-            "named_companies"
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 0.78,
+            "data_center_relevance": 0.76,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0,
+            "power_grid_relevance": 0.22,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.805,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:0.78",
+              "data_center_relevance:0.76(data center, colocation)",
+              "power_grid_relevance:0.22(power)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 80
+        },
+        {
+          "id": "ff084f32033de5fe",
+          "source": "HPCwire",
+          "url": "https://www.hpcwire.com/off-the-wire/israel-innovation-authority-launches-national-quantum-computing-infrastructure-initiative/",
+          "title": "Israel Innovation Authority Launches National Quantum Computing Infrastructure Initiative",
+          "snippet": "July 20, 2026 — The Israel Innovation Authority has launched a new call for proposals to establish a national research and development infrastructure that will provide Israeli industry and academia with access to advanc…",
+          "contentText": "July 20, 2026 &#8212; The Israel Innovation Authority has launched a new call for proposals to establish a national research and development infrastructure that will provide Israeli industry and academia with access to advanced quantum computing capabilities. The infrastructure will integrate at least three different quantum processing technologies and serve as a national center for the evaluation, integration, and adoption of quantum computing technologies. It will enable companies and researchers to test technologies, compare platforms, and develop applications across a range of quantum computing architectures, with the goal of accelerating research and development while strengthening Israel’s position at the forefront of quantum computing. Minister of Innovation, Science and Technology…",
+          "publishedAt": "2026-07-20T16:20:29.000Z",
+          "sourceImage": "https://www.hpcwire.com/wp-content/uploads/2026/07/Israel-Innovation-Authority-300x167.png",
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "category": "AI Infrastructure",
+          "primary_category": "AI Infrastructure",
+          "secondary_category": "GPU clusters and deployment readiness",
+          "infrastructure_layer": "Compute",
+          "affected_stakeholders": [
+            "operators",
+            "hyperscalers",
+            "cloud buyers",
+            "investors"
           ],
-          "reason": "expert_insight_missing_fields concrete_facts, named_companies"
+          "article_type": "Product / Platform Update",
+          "urgency_score": 0.43,
+          "taxonomy_confidence": 0.77,
+          "taxonomy_reasons": [
+            "ai infrastructure",
+            "neocloud"
+          ],
+          "direct_ai_infrastructure_relevance": 1,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0.22,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.778,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "semiconductor_relevance:0.22(gpu)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 1,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0.22,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.778,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+              "semiconductor_relevance:0.22(gpu)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 79
+        },
+        {
+          "id": "a730ea954123b077",
+          "source": "Bloomberg Technology",
+          "url": "https://www.bloomberg.com/news/articles/2026-07-20/z-ai-completes-giant-data-center-with-chinese-chips-to-train-ai",
+          "title": "Z.AI Completes Giant Data Center With Chinese Chips to Train AI",
+          "snippet": "Z.AI has completed construction of a giant data center that houses only Chinese-made chips, a big step in Beijing’s efforts to replace restricted Nvidia Corp. silicon for future AI development.",
+          "contentText": "Z.AI has completed construction of a giant data center that houses only Chinese-made chips, a big step in Beijing’s efforts to replace restricted Nvidia Corp. silicon for future AI development.",
+          "publishedAt": "2026-07-20T15:02:36.000Z",
+          "sourceImage": null,
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "Hyperscalers & Cloud",
+          "category": "Data Centers",
+          "primary_category": "Data Centers",
+          "secondary_category": "Campus development and colocation capacity",
+          "infrastructure_layer": "Facility",
+          "affected_stakeholders": [
+            "data center operators",
+            "developers",
+            "site selectors",
+            "investors"
+          ],
+          "article_type": "Other",
+          "urgency_score": 0.43,
+          "taxonomy_confidence": 0.65,
+          "taxonomy_reasons": [
+            "data center"
+          ],
+          "direct_ai_infrastructure_relevance": 0.78,
+          "data_center_relevance": 0.55,
+          "cloud_capacity_relevance": 0.32,
+          "semiconductor_relevance": 0.28,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.793,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:0.78",
+            "data_center_relevance:0.55(data center)",
+            "cloud_capacity_relevance:0.32(hyperscalers)",
+            "semiconductor_relevance:0.28(nvidia)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 0.78,
+            "data_center_relevance": 0.55,
+            "cloud_capacity_relevance": 0.32,
+            "semiconductor_relevance": 0.28,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.793,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:0.78",
+              "data_center_relevance:0.55(data center)",
+              "cloud_capacity_relevance:0.32(hyperscalers)",
+              "semiconductor_relevance:0.28(nvidia)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 79
         }
       ],
-      "archiveOnlyItems": []
-    },
+      "curatedIds": [
+        "9dfd1597f0704d12",
+        "db2816d92e4f305c",
+        "313cc21f165e212a",
+        "a15e13cf92232623",
+        "ff084f32033de5fe",
+        "a730ea954123b077"
+      ],
+      "publishedIds": [
+        "9dfd1597f0704d12",
+        "db2816d92e4f305c"
+      ],
+      "slotPublications": {
+        "0": true
+      }
+    }
+  },
+  "runHistory": [
     {
       "at": "2026-06-10T18:08:18.455Z",
       "day": "2026-06-11",
@@ -45967,7 +46341,131 @@
         }
       ],
       "archiveOnlyItems": []
+    },
+    {
+      "at": "2026-07-20T16:38:35.161Z",
+      "day": "2026-07-21",
+      "slot": 0,
+      "publishedCount": 0,
+      "signalCardCount": 0,
+      "archiveOnlyCount": 0,
+      "repetitionBlockedCount": 2,
+      "publishedIds": [],
+      "processedIds": [
+        "9dfd1597f0704d12",
+        "db2816d92e4f305c"
+      ],
+      "blockedCount": 0,
+      "blockedItems": [],
+      "repetitionBlockedItems": [
+        {
+          "id": "9dfd1597f0704d12",
+          "title": "Tech Explainer: Data Center Cooling - Air, Evaporative, Liquid, and Hybrid Approaches",
+          "infrastructure_relevance_score": 1,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:0.82(high-performance computing, rack density)",
+            "data_center_relevance:1.00(data center, data centers, colocation)",
+            "cloud_capacity_relevance:0.32(hyperscalers)",
+            "semiconductor_relevance:0.22(accelerator)",
+            "power_grid_relevance:0.46(power, electricity)",
+            "cooling_relevance:1.00(cooling, liquid cooling, direct-to-chip)"
+          ],
+          "extraction_quality_score": 1,
+          "source_domain_adapter": "datacenterfrontier",
+          "content_length": 1617,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": true,
+          "repetition_block_reasons": [
+            "heading_sequence_similarity>0.75",
+            "conclusion_similarity>0.7"
+          ],
+          "repetition_check": {
+            "compared_article_count": 20,
+            "repeated_sentence_ratio": 0,
+            "repeated_paragraph_ratio": 0,
+            "heading_sequence_similarity": 1,
+            "banned_phrase_count": 0,
+            "banned_phrase_counts": {},
+            "recent_banned_phrase_counts": {},
+            "ngram_overlap": 0.4793388429752066,
+            "blueprint_repetition": 1,
+            "conclusion_similarity": 0.9511897312113418,
+            "repeated_sentence_count": 0,
+            "repeated_paragraph_count": 0,
+            "heading_sequence": [
+              "Capital Move",
+              "Demand Evidence",
+              "Execution Risk",
+              "Milestone To Watch"
+            ],
+            "blocked": true,
+            "reasons": [
+              "heading_sequence_similarity>0.75",
+              "conclusion_similarity>0.7"
+            ]
+          },
+          "expert_insight_complete": true,
+          "expert_insight_missing_fields": [],
+          "reason": "heading_sequence_similarity>0.75; conclusion_similarity>0.7"
+        },
+        {
+          "id": "db2816d92e4f305c",
+          "title": "NVIDIA Omniverse Libraries Put AI Agents to Work Prepping 3D Content for Simulation",
+          "infrastructure_relevance_score": 0.932,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "cloud_capacity_relevance:0.32(hyperscalers)",
+            "semiconductor_relevance:0.60(nvidia, gpu)",
+            "power_grid_relevance:0.22(power)"
+          ],
+          "extraction_quality_score": 1,
+          "source_domain_adapter": "storagereview",
+          "content_length": 1796,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": true,
+          "repetition_block_reasons": [
+            "repeated_sentence_ratio>0.12",
+            "heading_sequence_similarity>0.75",
+            "conclusion_similarity>0.7"
+          ],
+          "repetition_check": {
+            "compared_article_count": 20,
+            "repeated_sentence_ratio": 0.16666666666666666,
+            "repeated_paragraph_ratio": 0.16666666666666666,
+            "heading_sequence_similarity": 1,
+            "banned_phrase_count": 0,
+            "banned_phrase_counts": {},
+            "recent_banned_phrase_counts": {},
+            "ngram_overlap": 0.4666666666666667,
+            "blueprint_repetition": 1,
+            "conclusion_similarity": 0.9271050693011066,
+            "repeated_sentence_count": 1,
+            "repeated_paragraph_count": 1,
+            "heading_sequence": [
+              "System Change",
+              "Bottleneck",
+              "Engineering Tradeoff",
+              "Validation Metric"
+            ],
+            "blocked": true,
+            "reasons": [
+              "repeated_sentence_ratio>0.12",
+              "heading_sequence_similarity>0.75",
+              "conclusion_similarity>0.7"
+            ]
+          },
+          "expert_insight_complete": true,
+          "expert_insight_missing_fields": [],
+          "reason": "repeated_sentence_ratio>0.12; heading_sequence_similarity>0.75; conclusion_similarity>0.7"
+        }
+      ],
+      "signalCardItems": [],
+      "archiveOnlyItems": []
     }
   ],
-  "lastRunAt": "2026-07-20T10:20:05.480Z"
+  "lastRunAt": "2026-07-20T16:38:35.161Z"
 }
