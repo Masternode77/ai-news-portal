@@ -669,7 +669,9 @@
     "b626744f59a8c32a",
     "bcb0a678fe60a9d8",
     "18fbe734437bf62a",
-    "e93824e3e0c27782"
+    "e93824e3e0c27782",
+    "e0c6c3644f1f2253",
+    "449190b94ad96d20"
   ],
   "dayPlans": {
     "2026-03-24": {
@@ -33120,18 +33122,366 @@
     "2026-07-22": {
       "date": "2026-07-22",
       "createdAt": "2026-07-21T16:27:49.167Z",
-      "refreshedAt": "2026-07-21T23:57:32.335Z",
+      "refreshedAt": "2026-07-22T09:34:49.311Z",
       "candidateWindowHours": 24,
       "curatedItems": [
         {
-          "id": "18fbe734437bf62a",
-          "source": "HPCwire",
-          "url": "https://www.hpcwire.com/off-the-wire/aws-a-framework-for-quantum-classical-integration-decisions/",
-          "title": "AWS: A Framework for Quantum-Classical Integration Decisions",
-          "snippet": "July 21, 2026 — As quantum computing matures toward fault tolerance, a pressing question faces the high-performance computing (HPC) community: why is tightly integrating quantum processors to classical supercomputing in…",
-          "contentText": "July 21, 2026 &#8212; As quantum computing matures toward fault tolerance, a pressing question faces the high-performance computing (HPC) community: why is tightly integrating quantum processors to classical supercomputing infrastructure important? Credit: Shutterstock Today, algorithm researchers from Amazon Web Services (AWS), Lawrence Berkeley National Laboratory (LBNL), National Aeronautics and Space Administration (NASA), and NVIDIA published a performance model for hybrid quantum-classical workflows that evaluates whether a given hybrid workload is accelerated by low-latency integration of quantum and classical resources, or if standard network connectivity is sufficient. Two levels, Two Different Answers Discussions about quantum-classical connectivity often conflate two fundamenta…",
-          "publishedAt": "2026-07-21T21:32:59.000Z",
-          "sourceImage": "https://www.hpcwire.com/wp-content/uploads/2020/06/shutterstock_aws-1-300x200.jpg",
+          "id": "e0c6c3644f1f2253",
+          "source": "Toms Hardware",
+          "url": "https://www.tomshardware.com/tech-industry/artificial-intelligence/openais-gpt-5-6-sol-and-unreleased-ai-models-break-out-of-testing-environment-in-unprecedented-cybersecurity-incident-rogue-agents-hacked-huggingfaces-production-servers-with-thousands-of-individual-actions-across-a-swarm-of-short-lived-sandboxes",
+          "title": "OpenAI's GPT-5.6 Sol and unreleased AI models break out of testing environment in 'unprecedented cybersecurity incident' — rogue agents hacked HuggingFace's production servers with 'thousands of individual actions across a swarm of short-lived sandboxes'",
+          "snippet": "OpenAI's GPT-5.6 Sol and its gang escape from their cage and hack into HuggingFace's production servers — unprecedented incident raises eyebrows and pulses",
+          "contentText": "Not too long ago, Anthropic CEO Dario Amodei described Claude Mythos as capable of cyber-warfare, spawning all sorts of mythology that became popular reading at investors' desks, and even at the U.S. government table, which issued an export control order for it . Now, it's OpenAI's turn to do the same, with a blog post describing how a bot cyber-gang including its upcoming GPT-5.6 Sol and an \"even more capable pre-release model\" all broke out of their virtual cage and eventually into Hugging Face's production infrastructure , during an attack capability test. OpenAI described the snafu as an \"unprecedented cyber incident.\" Go deeper with TH Premium: AI and data centers (Image credit: Microsoft) Photonics and high-speed data movement is the next big AI bottleneck The data center cooling st…",
+          "publishedAt": "2026-07-22T09:23:35.000Z",
+          "sourceImage": "https://cdn.mos.cms.futurecdn.net/ShSMEwkvvkfPy2AxiZJ376-1280-80.jpg",
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "category": "AI Infrastructure",
+          "primary_category": "AI Infrastructure",
+          "secondary_category": "GPU clusters and deployment readiness",
+          "infrastructure_layer": "Compute",
+          "affected_stakeholders": [
+            "operators",
+            "hyperscalers",
+            "cloud buyers",
+            "investors"
+          ],
+          "article_type": "Product / Platform Update",
+          "urgency_score": 0.5,
+          "taxonomy_confidence": 0.77,
+          "taxonomy_reasons": [
+            "ai infrastructure",
+            "neocloud"
+          ],
+          "direct_ai_infrastructure_relevance": 1,
+          "data_center_relevance": 0.84,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0.22,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0.34,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.985,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "data_center_relevance:0.84(data center, data centers)",
+            "semiconductor_relevance:0.22(gpu)",
+            "cooling_relevance:0.34(cooling)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 1,
+            "data_center_relevance": 0.84,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0.22,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0.34,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.985,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+              "data_center_relevance:0.84(data center, data centers)",
+              "semiconductor_relevance:0.22(gpu)",
+              "cooling_relevance:0.34(cooling)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 87
+        },
+        {
+          "id": "449190b94ad96d20",
+          "source": "Semiconductor Engineering",
+          "url": "https://semiengineering.com/bringing-design-data-management-into-the-developer-workflow/",
+          "title": "Bringing Design Data Management into the Developer Workflow",
+          "snippet": "Bridging the gap between modern development environments and enterprise EDA data management. The post Bringing Design Data Management into the Developer Workflow appeared first on Semiconductor Engineering.",
+          "contentText": "As digital design workflows increasingly center on modern, text-based development environments, engineers expect the same efficiency from design data management as they do from coding tools. Visual Studio Code (VS Code) has become a preferred platform for developing RTL, HDL, scripts, and verification assets, offering a flexible and extensible workspace that streamlines day-to-day engineering tasks. Yet many organizations still rely on disconnected data management processes that require engineers to switch between editors, command-line tools, and separate repositories to manage versions, collaboration, and design history. This white paper explores how Keysight SOS for Visual Studio Code bridges the gap between modern development environments and enterprise EDA data management. By embeddin…",
+          "publishedAt": "2026-07-22T07:01:40.000Z",
+          "sourceImage": null,
+          "region": "Global",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "category": "AI Infrastructure",
+          "primary_category": "AI Infrastructure",
+          "secondary_category": "GPU clusters and deployment readiness",
+          "infrastructure_layer": "Compute",
+          "affected_stakeholders": [
+            "operators",
+            "hyperscalers",
+            "cloud buyers",
+            "investors"
+          ],
+          "article_type": "Product / Platform Update",
+          "urgency_score": 0.47,
+          "taxonomy_confidence": 0.77,
+          "taxonomy_reasons": [
+            "ai infrastructure",
+            "neocloud"
+          ],
+          "direct_ai_infrastructure_relevance": 1,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0.58,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0.243,
+          "infrastructure_relevance_score": 0.893,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "semiconductor_relevance:0.58(semiconductor, gpu)",
+            "enterprise_ai_infrastructure_relevance:0.24(data management)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 1,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0.58,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0.243,
+            "infrastructure_relevance_score": 0.893,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+              "semiconductor_relevance:0.58(semiconductor, gpu)",
+              "enterprise_ai_infrastructure_relevance:0.24(data management)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 84
+        },
+        {
+          "id": "8c1826bf14dcac36",
+          "source": "Semiconductor Engineering",
+          "url": "https://semiengineering.com/blog-review-july-22-3/",
+          "title": "Blog Review: July 22",
+          "snippet": "Securing physical AI; agents need feedback; 3D-IC security; chiplet interoperability; RF digital twins. The post Blog Review: July 22 appeared first on Semiconductor Engineering.",
+          "contentText": "Synopsys&#8217; Dana Neustadter and Ilya Tolchinsky warn that physical AI creates a different kind of security challenge that requires continuous runtime assurance to ensure outputs remain within safe operating bounds as conditions change. Cadence&#8217;s Hamid Shojaei argues that building a reliable agent for chip design relies on closing the loop, where the agent proposes something, a tool gives it real high-quality feedback, the agent reasons over that feedback and refines, and you repeat until you converge. In a podcast, Siemens&#8217; Tova Levy chats with Chris Jones of Crypto Quantique about what it takes to build hardware security into silicon from the ground up and why the move to 3D-IC architectures is making that challenge dramatically harder. Arm&#8217;s Francisco Socal explain…",
+          "publishedAt": "2026-07-22T07:01:38.000Z",
+          "sourceImage": null,
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "category": "Semiconductors",
+          "primary_category": "Semiconductors",
+          "secondary_category": "Accelerators, memory, and advanced packaging",
+          "infrastructure_layer": "Silicon",
+          "affected_stakeholders": [
+            "semiconductor suppliers",
+            "hyperscalers",
+            "server OEMs",
+            "investors"
+          ],
+          "article_type": "Research / Technical",
+          "urgency_score": 0.45,
+          "taxonomy_confidence": 0.78,
+          "taxonomy_reasons": [
+            "semiconductor",
+            "chip",
+            "gpu"
+          ],
+          "direct_ai_infrastructure_relevance": 1,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0.58,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.858,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "semiconductor_relevance:0.58(semiconductor, gpu)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 1,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0.58,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.858,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+              "semiconductor_relevance:0.58(semiconductor, gpu)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 82
+        },
+        {
+          "id": "e0f4932795b54e0b",
+          "source": "TechCrunch AI",
+          "url": "https://techcrunch.com/2026/07/22/synthesias-ai-training-platform-is-moving-beyond-videos-into-live-coaching/",
+          "title": "Synthesia’s AI training platform is moving beyond videos into live coaching",
+          "snippet": "Synthesia launched AI Roleplay Sessions, an interactive enterprise training platform where employees practice workplace conversations with AI avatars that provide feedback, scoring, and analytics to help companies measu…",
+          "contentText": "Synthesia launched AI Roleplay Sessions, an interactive enterprise training platform where employees practice workplace conversations with AI avatars that provide feedback, scoring, and analytics to help companies measure training effectiveness.",
+          "publishedAt": "2026-07-22T08:00:00.000Z",
+          "sourceImage": null,
+          "region": "Global",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "category": "AI Infrastructure",
+          "primary_category": "AI Infrastructure",
+          "secondary_category": "GPU clusters and deployment readiness",
+          "infrastructure_layer": "Compute",
+          "affected_stakeholders": [
+            "operators",
+            "hyperscalers",
+            "cloud buyers",
+            "investors"
+          ],
+          "article_type": "Product / Platform Update",
+          "urgency_score": 0.43,
+          "taxonomy_confidence": 0.77,
+          "taxonomy_reasons": [
+            "ai infrastructure",
+            "neocloud"
+          ],
+          "direct_ai_infrastructure_relevance": 1,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0.22,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.778,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "semiconductor_relevance:0.22(gpu)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 1,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0.22,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.778,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+              "semiconductor_relevance:0.22(gpu)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 79
+        },
+        {
+          "id": "6fd41837854c2d90",
+          "source": "Data Center Knowledge",
+          "url": "https://www.datacenterknowledge.com/data-center-construction/ai-data-center-boom-strains-global-construction-capacity",
+          "title": "AI Data Center Boom Strains Global Construction Capacity",
+          "snippet": "Data center construction is now the most capacity-constrained sector globally, driven by the rapid growth of AI infrastructure and labor shortages.",
+          "contentText": "Data center construction is now the most capacity-constrained sector globally, driven by the rapid growth of AI infrastructure and labor shortages.",
+          "publishedAt": "2026-07-22T09:00:00.000Z",
+          "sourceImage": "https://eu-images.contentstack.com/v3/assets/blt8eb3cdfc1fce5194/blt15bd6c442075c404/6a5fee64b534f51ac8ba9251/Data-Center-Construction-Getty.jpg?width=720&quality=80&disable=upscale",
+          "region": "APAC",
+          "language": "en",
+          "defaultCategory": "Colocation & Wholesale",
+          "category": "Data Centers",
+          "primary_category": "Data Centers",
+          "secondary_category": "Campus development and colocation capacity",
+          "infrastructure_layer": "Facility",
+          "affected_stakeholders": [
+            "data center operators",
+            "developers",
+            "site selectors",
+            "investors"
+          ],
+          "article_type": "Capacity Expansion",
+          "urgency_score": 0.56,
+          "taxonomy_confidence": 0.86,
+          "taxonomy_reasons": [
+            "data center",
+            "colocation",
+            "wholesale"
+          ],
+          "direct_ai_infrastructure_relevance": 1,
+          "data_center_relevance": 0.89,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.926,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, ai data center)",
+            "data_center_relevance:0.89(data center, colocation)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 1,
+            "data_center_relevance": 0.89,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.926,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, ai data center)",
+              "data_center_relevance:0.89(data center, colocation)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 78
+        },
+        {
+          "id": "d732e41d894cf74b",
+          "source": "Semiconductor Engineering",
+          "url": "https://semiengineering.com/enabling-comprehensive-cwe-based-assurance-for-risc-v-processors/",
+          "title": "Enabling Comprehensive CWE-based Assurance for RISC-V Processors",
+          "snippet": "A scalable, Common Weakness Enumeration (CWE)–based security assurance methodology for third-party RISC-V processor IP. The post Enabling Comprehensive CWE-based Assurance for RISC-V Processors appeared first on Semicon…",
+          "contentText": "Abstract This paper presents a scalable, Common Weakness Enumeration (CWE)–based security assurance methodology for third-party RISC-V processor IP, developed collaboratively by Cycuity, BAE Systems, and SiFive. The approach adapts the MITRE Corporation CWE framework to systematically derive security requirements, verification properties, and evidence for RISC-V cores treated as third-party IP. By introducing reusable assurance templates, portable security tests, and a “golden model” reference, the methodology reduces non-recurring engineering effort while enabling consistent, repeatable verification across implementations. Demonstrated on all 60 CWEs in scope for SiFive’s X280 processor, results show improved scalability, portability, and efficiency in achieving comprehensive hardware se…",
+          "publishedAt": "2026-07-22T07:01:35.000Z",
+          "sourceImage": null,
           "region": "US",
           "language": "en",
           "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
@@ -33146,226 +33496,7 @@
             "investors"
           ],
           "article_type": "Research / Technical",
-          "urgency_score": 0.46,
-          "taxonomy_confidence": 0.85,
-          "taxonomy_reasons": [
-            "ai infrastructure",
-            "neocloud",
-            "hpc"
-          ],
-          "direct_ai_infrastructure_relevance": 1,
-          "data_center_relevance": 0,
-          "cloud_capacity_relevance": 0.297,
-          "semiconductor_relevance": 0.5,
-          "power_grid_relevance": 0,
-          "cooling_relevance": 0,
-          "capital_markets_relevance": 0,
-          "enterprise_ai_infrastructure_relevance": 0,
-          "infrastructure_relevance_score": 0.875,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud, high-performance computing)",
-            "cloud_capacity_relevance:0.30(aws)",
-            "semiconductor_relevance:0.50(nvidia, gpu)"
-          ],
-          "infrastructure_relevance": {
-            "direct_ai_infrastructure_relevance": 1,
-            "data_center_relevance": 0,
-            "cloud_capacity_relevance": 0.297,
-            "semiconductor_relevance": 0.5,
-            "power_grid_relevance": 0,
-            "cooling_relevance": 0,
-            "capital_markets_relevance": 0,
-            "enterprise_ai_infrastructure_relevance": 0,
-            "infrastructure_relevance_score": 0.875,
-            "infrastructure_relevance_tier": "full_memo",
-            "infrastructure_relevance_action": "generate_full_memo",
-            "infrastructure_relevance_reasons": [
-              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud, high-performance computing)",
-              "cloud_capacity_relevance:0.30(aws)",
-              "semiconductor_relevance:0.50(nvidia, gpu)"
-            ],
-            "infrastructureRelevanceAction": "generate_full_memo",
-            "articlePagePublished": true,
-            "homepagePublished": true,
-            "archiveOnly": false,
-            "archiveOnlyReason": null
-          },
-          "score": 83
-        },
-        {
-          "id": "e93824e3e0c27782",
-          "source": "NVIDIA Blog",
-          "url": "https://blogs.nvidia.com/blog/wistron-manufacturing-texas/",
-          "title": "Built in Fort Worth: Wistron Opens Advanced Manufacturing Plant to Produce NVIDIA AI Systems",
-          "snippet": "The AI era runs on AI infrastructure. Many of these advanced systems are built and tested in Texas. Wistron opened its first U.S. manufacturing facility today in Fort Worth — a 324,000-square-foot greenfield plant produ…",
-          "contentText": "The AI era runs on AI infrastructure. Many of these advanced systems are built and tested in Texas. Wistron opened its first U.S. manufacturing facility today in Fort Worth — a 324,000-square-foot greenfield plant producing superchips at the heart of some of the world’s most capable AI systems. In front of an audience of Wistron executives, Taiwan government officials and local Fort Worth leaders, NVIDIA founder and CEO Jensen Huang took the stage with Wistron Chairman Simon Lin at the factory’s opening ceremony to talk about what it means to build the infrastructure for the AI era in America. “Manufacturing is an essential pillar for every economy and every country,” Huang said. “Building chip plants, packaging plants, computer system plants like this, and AI factories all over the Unite…",
-          "publishedAt": "2026-07-21T22:35:45.000Z",
-          "sourceImage": "https://blogs.nvidia.com/wp-content/uploads/2026/07/wistron-event-july2026-kv-3840x2160-1-scaled.jpg",
-          "region": "APAC",
-          "language": "en",
-          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
-          "category": "Semiconductors",
-          "primary_category": "Semiconductors",
-          "secondary_category": "Accelerators, memory, and advanced packaging",
-          "infrastructure_layer": "Silicon",
-          "affected_stakeholders": [
-            "semiconductor suppliers",
-            "hyperscalers",
-            "server OEMs",
-            "investors"
-          ],
-          "article_type": "Capacity Expansion",
-          "urgency_score": 0.46,
-          "taxonomy_confidence": 0.81,
-          "taxonomy_reasons": [
-            "chip",
-            "gpu",
-            "nvidia"
-          ],
-          "direct_ai_infrastructure_relevance": 1,
-          "data_center_relevance": 0,
-          "cloud_capacity_relevance": 0,
-          "semiconductor_relevance": 0.598,
-          "power_grid_relevance": 0,
-          "cooling_relevance": 0,
-          "capital_markets_relevance": 0,
-          "enterprise_ai_infrastructure_relevance": 0,
-          "infrastructure_relevance_score": 0.862,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "semiconductor_relevance:0.60(nvidia, gpu)"
-          ],
-          "infrastructure_relevance": {
-            "direct_ai_infrastructure_relevance": 1,
-            "data_center_relevance": 0,
-            "cloud_capacity_relevance": 0,
-            "semiconductor_relevance": 0.598,
-            "power_grid_relevance": 0,
-            "cooling_relevance": 0,
-            "capital_markets_relevance": 0,
-            "enterprise_ai_infrastructure_relevance": 0,
-            "infrastructure_relevance_score": 0.862,
-            "infrastructure_relevance_tier": "full_memo",
-            "infrastructure_relevance_action": "generate_full_memo",
-            "infrastructure_relevance_reasons": [
-              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-              "semiconductor_relevance:0.60(nvidia, gpu)"
-            ],
-            "infrastructureRelevanceAction": "generate_full_memo",
-            "articlePagePublished": true,
-            "homepagePublished": true,
-            "archiveOnly": false,
-            "archiveOnlyReason": null
-          },
-          "score": 82
-        },
-        {
-          "id": "ef3d31a853685aea",
-          "source": "Data Center POST",
-          "url": "https://datacenterpost.com/the-dfw-data-center-boom-has-a-blind-spot-the-mid-market/",
-          "title": "The DFW Data Center Boom Has a Blind Spot: The Mid-Market",
-          "snippet": "TL;DR While Dallas-Fort Worth is one of the fastest-growing data center markets in North America, colocation vacancy has dropped to an all-time low of 1.8%, and 88% of the 700+ MW currently under construction is pre-lea…",
-          "contentText": "TL;DR While Dallas-Fort Worth is one of the fastest-growing data center markets in North America, colocation vacancy has dropped to an all-time low of 1.8%, and 88% of the 700+ MW currently under construction is pre-leased. Hyperscalers dominate the market, structurally excluding mid-market AI operators, regional healthcare systems, and financial firms because developers prioritize multi-megawatt deals and design retail colocation for traditional IT rather than GPU workloads. Traditional air-cooling systems fail beyond 30 to 40 kW per rack, whereas modern GPU servers push densities to 80 to 130 kW, making immersion cooling an architectural necessity for next-generation AI workloads. # # # Dallas-Fort Worth is one of the largest and fastest-growing data center markets in North America. How…",
-          "publishedAt": "2026-07-21T16:00:40.000Z",
-          "sourceImage": "https://d3qut6qyo6tw2j.cloudfront.net/bin/uploads/2026/07/20150600/DCP-Blog-_The-Mid-Market_7.21.2026-1024x512.png",
-          "region": "US",
-          "language": "en",
-          "defaultCategory": "Colocation & Wholesale",
-          "category": "Data Centers",
-          "primary_category": "Data Centers",
-          "secondary_category": "Campus development and colocation capacity",
-          "infrastructure_layer": "Facility",
-          "affected_stakeholders": [
-            "data center operators",
-            "developers",
-            "site selectors",
-            "investors"
-          ],
-          "article_type": "Market Analysis",
-          "urgency_score": 0.47,
-          "taxonomy_confidence": 0.86,
-          "taxonomy_reasons": [
-            "data center",
-            "colocation",
-            "wholesale"
-          ],
-          "direct_ai_infrastructure_relevance": 0.82,
-          "data_center_relevance": 0.89,
-          "cloud_capacity_relevance": 0.32,
-          "semiconductor_relevance": 0.22,
-          "power_grid_relevance": 0.5,
-          "cooling_relevance": 0.66,
-          "capital_markets_relevance": 0,
-          "enterprise_ai_infrastructure_relevance": 0.24,
-          "infrastructure_relevance_score": 0.917,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:0.82",
-            "data_center_relevance:0.89(data center, colocation)",
-            "cloud_capacity_relevance:0.32(hyperscalers)",
-            "semiconductor_relevance:0.22(gpu)",
-            "power_grid_relevance:0.50(megawatt, mw)",
-            "cooling_relevance:0.66(cooling, immersion)",
-            "enterprise_ai_infrastructure_relevance:0.24(ai workloads)"
-          ],
-          "infrastructure_relevance": {
-            "direct_ai_infrastructure_relevance": 0.82,
-            "data_center_relevance": 0.89,
-            "cloud_capacity_relevance": 0.32,
-            "semiconductor_relevance": 0.22,
-            "power_grid_relevance": 0.5,
-            "cooling_relevance": 0.66,
-            "capital_markets_relevance": 0,
-            "enterprise_ai_infrastructure_relevance": 0.24,
-            "infrastructure_relevance_score": 0.917,
-            "infrastructure_relevance_tier": "full_memo",
-            "infrastructure_relevance_action": "generate_full_memo",
-            "infrastructure_relevance_reasons": [
-              "direct_ai_infrastructure_relevance:0.82",
-              "data_center_relevance:0.89(data center, colocation)",
-              "cloud_capacity_relevance:0.32(hyperscalers)",
-              "semiconductor_relevance:0.22(gpu)",
-              "power_grid_relevance:0.50(megawatt, mw)",
-              "cooling_relevance:0.66(cooling, immersion)",
-              "enterprise_ai_infrastructure_relevance:0.24(ai workloads)"
-            ],
-            "infrastructureRelevanceAction": "generate_full_memo",
-            "articlePagePublished": true,
-            "homepagePublished": true,
-            "archiveOnly": false,
-            "archiveOnlyReason": null
-          },
-          "score": 77
-        },
-        {
-          "id": "5fc0807414de0b28",
-          "source": "Semiconductor Engineering",
-          "url": "https://semiengineering.com/hw-based-methods-to-dynamically-throttle-ai-performance-princeton-university/",
-          "title": "HW-based Methods to Dynamically Throttle AI Performance (Princeton University)",
-          "snippet": "Researchers from Princeton University published a technical paper titled “Hardware Mechanisms to Dynamically Throttle AI Performance.” Abstract Excerpt: “In this paper, we introduce a set of microarchitecture knobs whic…",
-          "contentText": "Researchers from Princeton University published a technical paper titled “Hardware Mechanisms to Dynamically Throttle AI Performance.” Abstract Excerpt: “In this paper, we introduce a set of microarchitecture knobs which dynamically control the available hardware resources to limit AI performance at runtime. We evaluate candidate knobs spanning the GPU memory subsystem, across capacity, bandwidth, latency and frequency dimensions, and narrow down to four strong candidates: L2 size, L2 latency, L2 bandwidth, and shared memory port access rate.&#8221; Find the technical paper here . July 2026. Ma, Haiyue, Lauren Malek, Joseph Forzani, and David Wentzlaff. “Hardware Mechanisms to Dynamically Throttle AI Performance.” arXiv, July 2026. https://doi.org/10.48550/arXiv.2607.18069. The post HW-ba…",
-          "publishedAt": "2026-07-21T18:41:34.000Z",
-          "sourceImage": null,
-          "region": "APAC",
-          "language": "en",
-          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
-          "category": "AI Infrastructure",
-          "primary_category": "AI Infrastructure",
-          "secondary_category": "GPU clusters and deployment readiness",
-          "infrastructure_layer": "Compute",
-          "affected_stakeholders": [
-            "operators",
-            "hyperscalers",
-            "cloud buyers",
-            "investors"
-          ],
-          "article_type": "Capacity Expansion",
-          "urgency_score": 0.53,
+          "urgency_score": 0.45,
           "taxonomy_confidence": 0.77,
           "taxonomy_reasons": [
             "ai infrastructure",
@@ -33408,291 +33539,33 @@
             "archiveOnly": false,
             "archiveOnlyReason": null
           },
-          "score": 74
-        },
-        {
-          "id": "4802576b0360bab0",
-          "source": "Toms Hardware",
-          "url": "https://www.tomshardware.com/pc-components/gpus/nvidia-shows-off-dlss-5-with-three-ai-modes-for-different-levels-of-detail-upscaler-can-switch-between-models-in-real-time",
-          "title": "Nvidia shows off DLSS 5 with three AI modes for different levels of detail — upscaler can switch between models in real-time",
-          "snippet": "DLSS 5 gets a second showing with Nvidia opening up the upscaler to object-level tweaking for developers with three different models.",
-          "contentText": "Nvidia first debuted DLSS 5 earlier this year to a strong, critical response. The upscaling tech was almost slammed by some press and enthusiasts for overstepping its boundaries and going too far with AI. Go deeper with TH Premium: GPUs (Image credit: Noctua) Desktop Roadmap Enterprise Roadmap Rubin in-depth The Stout Owl: The ultimate Noctua G2 PC At the time, Nvidia reassured the community that DLSS 5 would preserve artistic intent and CEO Jensen Huang even went as far as to claim that gamers didn't understand it . Now, at SIGGRAPH, the company has once again showcased DLSS 5, and it admittedly looks different this time around. The main takeaway is the introduction of three different models with varying levels of detail and impact on performance. A game doesn't need to be confined to a…",
-          "publishedAt": "2026-07-21T17:46:05.000Z",
-          "sourceImage": "https://cdn.mos.cms.futurecdn.net/ZLpm6CmyMocnQe5NqqyVTM-1280-80.jpg",
-          "region": "US",
-          "language": "en",
-          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
-          "category": "AI Infrastructure",
-          "primary_category": "AI Infrastructure",
-          "secondary_category": "GPU clusters and deployment readiness",
-          "infrastructure_layer": "Compute",
-          "affected_stakeholders": [
-            "operators",
-            "hyperscalers",
-            "cloud buyers",
-            "investors"
-          ],
-          "article_type": "Other",
-          "urgency_score": 0.46,
-          "taxonomy_confidence": 0.77,
-          "taxonomy_reasons": [
-            "ai infrastructure",
-            "neocloud"
-          ],
-          "direct_ai_infrastructure_relevance": 1,
-          "data_center_relevance": 0,
-          "cloud_capacity_relevance": 0,
-          "semiconductor_relevance": 0.598,
-          "power_grid_relevance": 0,
-          "cooling_relevance": 0,
-          "capital_markets_relevance": 0,
-          "enterprise_ai_infrastructure_relevance": 0,
-          "infrastructure_relevance_score": 0.862,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "semiconductor_relevance:0.60(nvidia, gpu)"
-          ],
-          "infrastructure_relevance": {
-            "direct_ai_infrastructure_relevance": 1,
-            "data_center_relevance": 0,
-            "cloud_capacity_relevance": 0,
-            "semiconductor_relevance": 0.598,
-            "power_grid_relevance": 0,
-            "cooling_relevance": 0,
-            "capital_markets_relevance": 0,
-            "enterprise_ai_infrastructure_relevance": 0,
-            "infrastructure_relevance_score": 0.862,
-            "infrastructure_relevance_tier": "full_memo",
-            "infrastructure_relevance_action": "generate_full_memo",
-            "infrastructure_relevance_reasons": [
-              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-              "semiconductor_relevance:0.60(nvidia, gpu)"
-            ],
-            "infrastructureRelevanceAction": "generate_full_memo",
-            "articlePagePublished": true,
-            "homepagePublished": true,
-            "archiveOnly": false,
-            "archiveOnlyReason": null
-          },
-          "score": 74
-        },
-        {
-          "id": "b7144b2cc6b467b2",
-          "source": "StorageReview",
-          "url": "https://www.storagereview.com/review/dell-pro-5-16-amd-review-the-desk-first-amd-option-in-dells-pro-laptop-line",
-          "title": "Dell Pro 5 16 (AMD) Review: The Desk-First AMD Option in Dell’s Pro Laptop Line",
-          "snippet": "The Dell Pro 5 16 is the large-screen entry in Dell’s commercial Pro laptop line, and the one that leads on value rather than portability. Our review unit pairs the AMD Ryzen AI 9 HX PRO 470 (12 cores, 24 threads, 55 TO…",
-          "contentText": "The Dell Pro 5 16 is the large-screen entry in Dell&#8217;s commercial Pro laptop line, and the one that leads on value rather than portability. Our review unit pairs the AMD Ryzen AI 9 HX PRO 470 (12 cores, 24 threads, 55 TOPS NPU) with AMD Radeon 890M integrated graphics, 64 GB of DDR5-5600 RAM, a 1 TB SSD, and a 16-inch WQXGA display. At $4,648 as configured (Dell.com single-unit, before the volume discounts most fleets actually pay), it comes in below the rest of the Pro family we tested. To be fair, this is a commercial fleet machine. The questions that matter are sustained productivity, manageability, serviceability, battery, and total cost of ownership. It ships with AMD PRO manageability, Dell SafeBIOS and SafeID, quantum-resistant BIOS verification, and ProSupport Next Business D…",
-          "publishedAt": "2026-07-21T20:30:05.000Z",
-          "sourceImage": "https://www.storagereview.com/wp-content/uploads/2026/07/StorageReview-Dell-Pro-5-16-AMD-1.jpg",
-          "region": "US",
-          "language": "en",
-          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
-          "category": "AI Infrastructure",
-          "primary_category": "AI Infrastructure",
-          "secondary_category": "GPU clusters and deployment readiness",
-          "infrastructure_layer": "Compute",
-          "affected_stakeholders": [
-            "operators",
-            "hyperscalers",
-            "cloud buyers",
-            "investors"
-          ],
-          "article_type": "Other",
-          "urgency_score": 0.45,
-          "taxonomy_confidence": 0.77,
-          "taxonomy_reasons": [
-            "ai infrastructure",
-            "neocloud"
-          ],
-          "direct_ai_infrastructure_relevance": 1,
-          "data_center_relevance": 0,
-          "cloud_capacity_relevance": 0,
-          "semiconductor_relevance": 0.517,
-          "power_grid_relevance": 0,
-          "cooling_relevance": 0,
-          "capital_markets_relevance": 0,
-          "enterprise_ai_infrastructure_relevance": 0,
-          "infrastructure_relevance_score": 0.844,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "semiconductor_relevance:0.52(amd, gpu)"
-          ],
-          "infrastructure_relevance": {
-            "direct_ai_infrastructure_relevance": 1,
-            "data_center_relevance": 0,
-            "cloud_capacity_relevance": 0,
-            "semiconductor_relevance": 0.517,
-            "power_grid_relevance": 0,
-            "cooling_relevance": 0,
-            "capital_markets_relevance": 0,
-            "enterprise_ai_infrastructure_relevance": 0,
-            "infrastructure_relevance_score": 0.844,
-            "infrastructure_relevance_tier": "full_memo",
-            "infrastructure_relevance_action": "generate_full_memo",
-            "infrastructure_relevance_reasons": [
-              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-              "semiconductor_relevance:0.52(amd, gpu)"
-            ],
-            "infrastructureRelevanceAction": "generate_full_memo",
-            "articlePagePublished": true,
-            "homepagePublished": true,
-            "archiveOnly": false,
-            "archiveOnlyReason": null
-          },
-          "score": 73
+          "score": 78
         }
       ],
       "curatedIds": [
-        "18fbe734437bf62a",
-        "e93824e3e0c27782",
-        "ef3d31a853685aea",
-        "5fc0807414de0b28",
-        "4802576b0360bab0",
-        "b7144b2cc6b467b2"
+        "e0c6c3644f1f2253",
+        "449190b94ad96d20",
+        "8c1826bf14dcac36",
+        "e0f4932795b54e0b",
+        "6fd41837854c2d90",
+        "d732e41d894cf74b"
       ],
       "publishedIds": [
         "b626744f59a8c32a",
         "bcb0a678fe60a9d8",
         "18fbe734437bf62a",
-        "e93824e3e0c27782"
+        "e93824e3e0c27782",
+        "e0c6c3644f1f2253",
+        "449190b94ad96d20"
       ],
       "slotPublications": {
         "0": true,
-        "1": true
+        "1": true,
+        "2": true
       }
     }
   },
   "runHistory": [
-    {
-      "at": "2026-06-12T00:20:36.150Z",
-      "day": "2026-06-12",
-      "slot": 1,
-      "publishedCount": 0,
-      "signalCardCount": 1,
-      "archiveOnlyCount": 0,
-      "repetitionBlockedCount": 1,
-      "publishedIds": [],
-      "processedIds": [
-        "086e4ec09aa1d6e4",
-        "a6510893b0b154ba"
-      ],
-      "blockedCount": 1,
-      "blockedItems": [
-        {
-          "id": "086e4ec09aa1d6e4",
-          "title": "CIQ Unveils Fuzzball 4.0 with Native Storage Integration and Multi-Cloud Support",
-          "infrastructure_relevance_score": 0.958,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud, hpc)",
-            "cloud_capacity_relevance:0.32(hyperscalers)",
-            "semiconductor_relevance:0.72(nvidia, amd, gpu)",
-            "power_grid_relevance:0.22(power)",
-            "capital_markets_relevance:0.24(ipo)",
-            "enterprise_ai_infrastructure_relevance:0.64(backup, storage, ai workloads)"
-          ],
-          "extraction_quality_score": 1,
-          "source_domain_adapter": "generic",
-          "content_length": 1729,
-          "boilerplate_ratio": 0,
-          "repetition_blocked": false,
-          "repetition_block_reasons": [],
-          "repetition_check": null,
-          "expert_insight_complete": true,
-          "expert_insight_missing_fields": [],
-          "reason": "fail_closed: source_text_incomplete:ellipsis_truncation_artifact, ellipsis_truncation_artifact"
-        }
-      ],
-      "repetitionBlockedItems": [
-        {
-          "id": "a6510893b0b154ba",
-          "title": "OpenAI bans China-linked ChatGPT accounts that amplified US data center electricity price backlash — used AI-generated cartoons to stoke fears over U.S. data center energy costs",
-          "infrastructure_relevance_score": 1,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "data_center_relevance:0.97(data center, data centers)",
-            "cloud_capacity_relevance:0.32(hyperscalers)",
-            "semiconductor_relevance:0.22(gpu)",
-            "power_grid_relevance:1.00(power, grid, interconnection)"
-          ],
-          "extraction_quality_score": 1,
-          "source_domain_adapter": "generic",
-          "content_length": 1712,
-          "boilerplate_ratio": 0,
-          "repetition_blocked": true,
-          "repetition_block_reasons": [
-            "repeated_sentence_ratio>0.12",
-            "heading_sequence_similarity>0.75",
-            "conclusion_similarity>0.7"
-          ],
-          "repetition_check": {
-            "compared_article_count": 20,
-            "repeated_sentence_ratio": 0.5,
-            "repeated_paragraph_ratio": 0.5,
-            "heading_sequence_similarity": 1,
-            "banned_phrase_count": 0,
-            "banned_phrase_counts": {},
-            "recent_banned_phrase_counts": {},
-            "ngram_overlap": 0.36363636363636365,
-            "blueprint_repetition": 2,
-            "conclusion_similarity": 1,
-            "repeated_sentence_count": 3,
-            "repeated_paragraph_count": 3,
-            "heading_sequence": [
-              "Power-Market Move",
-              "Operating Lever",
-              "Grid Exposure",
-              "Metric To Watch"
-            ],
-            "blocked": true,
-            "reasons": [
-              "repeated_sentence_ratio>0.12",
-              "heading_sequence_similarity>0.75",
-              "conclusion_similarity>0.7"
-            ]
-          },
-          "expert_insight_complete": true,
-          "expert_insight_missing_fields": [],
-          "reason": "repeated_sentence_ratio>0.12; heading_sequence_similarity>0.75; conclusion_similarity>0.7"
-        }
-      ],
-      "signalCardItems": [
-        {
-          "id": "086e4ec09aa1d6e4",
-          "title": "CIQ Unveils Fuzzball 4.0 with Native Storage Integration and Multi-Cloud Support",
-          "infrastructure_relevance_score": 0.958,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud, hpc)",
-            "cloud_capacity_relevance:0.32(hyperscalers)",
-            "semiconductor_relevance:0.72(nvidia, amd, gpu)",
-            "power_grid_relevance:0.22(power)",
-            "capital_markets_relevance:0.24(ipo)",
-            "enterprise_ai_infrastructure_relevance:0.64(backup, storage, ai workloads)"
-          ],
-          "extraction_quality_score": 1,
-          "source_domain_adapter": "generic",
-          "content_length": 1729,
-          "boilerplate_ratio": 0,
-          "repetition_blocked": false,
-          "repetition_block_reasons": [],
-          "repetition_check": null,
-          "expert_insight_complete": true,
-          "expert_insight_missing_fields": [],
-          "reason": "fail_closed: source_text_incomplete:ellipsis_truncation_artifact, ellipsis_truncation_artifact"
-        }
-      ],
-      "archiveOnlyItems": []
-    },
     {
       "at": "2026-06-12T11:07:00.858Z",
       "day": "2026-06-12",
@@ -46877,7 +46750,132 @@
         }
       ],
       "archiveOnlyItems": []
+    },
+    {
+      "at": "2026-07-22T09:34:49.311Z",
+      "day": "2026-07-22",
+      "slot": 2,
+      "publishedCount": 0,
+      "signalCardCount": 0,
+      "archiveOnlyCount": 0,
+      "repetitionBlockedCount": 2,
+      "publishedIds": [],
+      "processedIds": [
+        "e0c6c3644f1f2253",
+        "449190b94ad96d20"
+      ],
+      "blockedCount": 0,
+      "blockedItems": [],
+      "repetitionBlockedItems": [
+        {
+          "id": "e0c6c3644f1f2253",
+          "title": "OpenAI's GPT-5.6 Sol and unreleased AI models break out of testing environment in 'unprecedented cybersecurity incident' — rogue agents hacked HuggingFace's production servers with 'thousands of individual actions across a swarm of short-lived sandboxes'",
+          "infrastructure_relevance_score": 0.985,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "data_center_relevance:0.84(data center, data centers)",
+            "cloud_capacity_relevance:0.32(hyperscalers)",
+            "semiconductor_relevance:0.22(gpu)",
+            "power_grid_relevance:0.22(power)",
+            "cooling_relevance:0.34(cooling)"
+          ],
+          "extraction_quality_score": 1,
+          "source_domain_adapter": "generic",
+          "content_length": 1621,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": true,
+          "repetition_block_reasons": [
+            "repeated_sentence_ratio>0.12",
+            "heading_sequence_similarity>0.75",
+            "conclusion_similarity>0.7"
+          ],
+          "repetition_check": {
+            "compared_article_count": 20,
+            "repeated_sentence_ratio": 0.16666666666666666,
+            "repeated_paragraph_ratio": 0.16666666666666666,
+            "heading_sequence_similarity": 1,
+            "banned_phrase_count": 0,
+            "banned_phrase_counts": {},
+            "recent_banned_phrase_counts": {},
+            "ngram_overlap": 0.4205607476635514,
+            "blueprint_repetition": 2,
+            "conclusion_similarity": 0.9271050693011066,
+            "repeated_sentence_count": 1,
+            "repeated_paragraph_count": 1,
+            "heading_sequence": [
+              "System Change",
+              "Bottleneck",
+              "Engineering Tradeoff",
+              "Validation Metric"
+            ],
+            "blocked": true,
+            "reasons": [
+              "repeated_sentence_ratio>0.12",
+              "heading_sequence_similarity>0.75",
+              "conclusion_similarity>0.7"
+            ]
+          },
+          "expert_insight_complete": true,
+          "expert_insight_missing_fields": [],
+          "reason": "repeated_sentence_ratio>0.12; heading_sequence_similarity>0.75; conclusion_similarity>0.7"
+        },
+        {
+          "id": "449190b94ad96d20",
+          "title": "Bringing Design Data Management into the Developer Workflow",
+          "infrastructure_relevance_score": 0.928,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "cloud_capacity_relevance:0.32(hyperscalers)",
+            "semiconductor_relevance:0.58(semiconductor, gpu)",
+            "power_grid_relevance:0.22(power)",
+            "enterprise_ai_infrastructure_relevance:0.24(data management)"
+          ],
+          "extraction_quality_score": 1,
+          "source_domain_adapter": "semiengineering",
+          "content_length": 1647,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": true,
+          "repetition_block_reasons": [
+            "repeated_sentence_ratio>0.12",
+            "conclusion_similarity>0.7"
+          ],
+          "repetition_check": {
+            "compared_article_count": 20,
+            "repeated_sentence_ratio": 0.16666666666666666,
+            "repeated_paragraph_ratio": 0.2,
+            "heading_sequence_similarity": 0.25,
+            "banned_phrase_count": 0,
+            "banned_phrase_counts": {},
+            "recent_banned_phrase_counts": {},
+            "ngram_overlap": 0.2900763358778626,
+            "blueprint_repetition": 1,
+            "conclusion_similarity": 0.9271050693011066,
+            "repeated_sentence_count": 1,
+            "repeated_paragraph_count": 1,
+            "heading_sequence": [
+              "The Map",
+              "Control Points",
+              "Who Is Exposed",
+              "Signals To Separate"
+            ],
+            "blocked": true,
+            "reasons": [
+              "repeated_sentence_ratio>0.12",
+              "conclusion_similarity>0.7"
+            ]
+          },
+          "expert_insight_complete": true,
+          "expert_insight_missing_fields": [],
+          "reason": "repeated_sentence_ratio>0.12; conclusion_similarity>0.7"
+        }
+      ],
+      "signalCardItems": [],
+      "archiveOnlyItems": []
     }
   ],
-  "lastRunAt": "2026-07-21T23:57:32.335Z"
+  "lastRunAt": "2026-07-22T09:34:49.311Z"
 }
