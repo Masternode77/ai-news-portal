@@ -671,7 +671,9 @@
     "18fbe734437bf62a",
     "e93824e3e0c27782",
     "e0c6c3644f1f2253",
-    "449190b94ad96d20"
+    "449190b94ad96d20",
+    "3a1afd8f959f47b0",
+    "f6e71823b1eae091"
   ],
   "dayPlans": {
     "2026-03-24": {
@@ -33563,131 +33565,450 @@
         "1": true,
         "2": true
       }
+    },
+    "2026-07-23": {
+      "date": "2026-07-23",
+      "createdAt": "2026-07-22T16:26:27.424Z",
+      "refreshedAt": "2026-07-22T16:26:27.424Z",
+      "candidateWindowHours": 24,
+      "curatedItems": [
+        {
+          "id": "f6e71823b1eae091",
+          "source": "Toms Hardware",
+          "url": "https://www.tomshardware.com/tech-industry/semiconductors/intel-4-gets-its-first-foundry-customer-in-fortinet-three-years-after-intel-scoped-the-node-to-meteor-lake",
+          "title": "Fortinet becomes Intel 4's first foundry customer, following firewall ASIC deal — CEO Lip-Bu Tan's promised foundry wins begin to surface, but on a mature node",
+          "snippet": "Intel will design, package, and fabricate Fortinet's sixth-generation Security Processor (SP6) on its Intel 4 node.",
+          "contentText": "Intel will design, package, and fabricate Fortinet's sixth-generation Security Processor (SP6) on its Intel 4 node, the companies announced on July 21 , giving the process its first named external foundry customer, roughly three years after it entered production. Intel told Tom's Hardware the agreement reflects \"the strategy Intel outlined for Intel 4 several years ago,\" including support for custom networking ASIC workloads. Intel's own record from those years reads differently, however, with the company's 2021 roadmap having scoped Intel 4 to two internal products. And through 2022, it told engineers and investors that Intel 3, not Intel 4, would be its first process offered to foundry customers. Intel 4's record Intel's Accelerated announcement back in July 2021 said that Intel 4 would…",
+          "publishedAt": "2026-07-22T16:17:41.000Z",
+          "sourceImage": "https://cdn.mos.cms.futurecdn.net/sc4jMRDcUQARDogxU6vbKM-1280-80.jpg",
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "category": "Semiconductors",
+          "primary_category": "Semiconductors",
+          "secondary_category": "Accelerators, memory, and advanced packaging",
+          "infrastructure_layer": "Silicon",
+          "affected_stakeholders": [
+            "semiconductor suppliers",
+            "hyperscalers",
+            "server OEMs",
+            "investors"
+          ],
+          "article_type": "Other",
+          "urgency_score": 0.48,
+          "taxonomy_confidence": 0.91,
+          "taxonomy_reasons": [
+            "gpu",
+            "intel",
+            "asic"
+          ],
+          "direct_ai_infrastructure_relevance": 1,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 1,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0.18,
+          "infrastructure_relevance_score": 0.95,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "semiconductor_relevance:1.00(semiconductors, intel, gpu)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 1,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 1,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0.18,
+            "infrastructure_relevance_score": 0.95,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+              "semiconductor_relevance:1.00(semiconductors, intel, gpu)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 86
+        },
+        {
+          "id": "3a1afd8f959f47b0",
+          "source": "HPCwire",
+          "url": "https://www.hpcwire.com/off-the-wire/quantinuum-and-softbank-publish-white-paper-on-scaling-practical-quantum-computing-use-cases/",
+          "title": "Quantinuum and SoftBank Publish White Paper on Scaling Practical Quantum Computing Use Cases",
+          "snippet": "TOKYO and BROOMFIELD, Colo., July 22, 2026 — Quantinuum and SoftBank Corp. have announced the publication of “Quantum Computing Frontiers,” a joint white paper that maps two commercially-relevant quantum computing appli…",
+          "contentText": "TOKYO and BROOMFIELD, Colo., July 22, 2026 &#8212; Quantinuum and SoftBank Corp. have announced the publication of &#8220;Quantum Computing Frontiers,&#8221; a joint white paper that maps two commercially-relevant quantum computing application areas against Quantinuum&#8217;s hardware roadmap. The analysis examines how advances in quantum hardware and algorithms could affect when these applications become practical for industrial use. SoftBank Corp. and Quantinuum will use the roadmap to inform their exploration of future quantum AI data center services and related business models. The paper focuses on two representative application domains that SoftBank is actively using Quantinuum&#8217;s systems to research: quantum chemistry for new materials discovery and energy research, and topolog…",
+          "publishedAt": "2026-07-22T16:22:02.000Z",
+          "sourceImage": "https://www.hpcwire.com/wp-content/uploads/2025/01/Quantinuum_1-300x169.jpg",
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "category": "AI Infrastructure",
+          "primary_category": "AI Infrastructure",
+          "secondary_category": "GPU clusters and deployment readiness",
+          "infrastructure_layer": "Compute",
+          "affected_stakeholders": [
+            "operators",
+            "hyperscalers",
+            "cloud buyers",
+            "investors"
+          ],
+          "article_type": "Research / Technical",
+          "urgency_score": 0.47,
+          "taxonomy_confidence": 0.77,
+          "taxonomy_reasons": [
+            "ai infrastructure",
+            "neocloud"
+          ],
+          "direct_ai_infrastructure_relevance": 1,
+          "data_center_relevance": 0.68,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0.22,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.915,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, ai data center, neocloud)",
+            "data_center_relevance:0.68(data center, colo)",
+            "semiconductor_relevance:0.22(gpu)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 1,
+            "data_center_relevance": 0.68,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0.22,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.915,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, ai data center, neocloud)",
+              "data_center_relevance:0.68(data center, colo)",
+              "semiconductor_relevance:0.22(gpu)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 84
+        },
+        {
+          "id": "49e2ff8412427a6b",
+          "source": "Data Center POST",
+          "url": "https://datacenterpost.com/why-digital-infrastructure-needs-a-new-approach-and-why-this-matters-now/",
+          "title": "Why Digital Infrastructure Needs a New Approach and Why This Matters Now",
+          "snippet": "TL; DR Sustainability in digital infrastructure starts before a data center opens, with construction methods playing a major role in environmental impact. Modular construction reduces disruption by shifting much of the…",
+          "contentText": "TL; DR Sustainability in digital infrastructure starts before a data center opens, with construction methods playing a major role in environmental impact. Modular construction reduces disruption by shifting much of the work off-site, which can lower noise, traffic, waste, and the project’s overall carbon footprint. The article frames human sustainability as part of the equation, arguing that factory-based work can improve worker stability, safety, retention, and quality of life. Long-term community value matters as much as speed or efficiency, so Mod42 emphasizes workforce development, local partnerships, and future community initiatives alongside infrastructure delivery. # # # Digital infrastructure is expanding at unprecedented rates. AI workloads, cloud migration, and edge computing ar…",
+          "publishedAt": "2026-07-22T16:00:49.000Z",
+          "sourceImage": "https://d3qut6qyo6tw2j.cloudfront.net/bin/uploads/2026/07/21121907/Mod42-DCP-Blog_July-2026-1024x512.png",
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "Colocation & Wholesale",
+          "category": "Data Centers",
+          "primary_category": "Data Centers",
+          "secondary_category": "Campus development and colocation capacity",
+          "infrastructure_layer": "Facility",
+          "affected_stakeholders": [
+            "data center operators",
+            "developers",
+            "site selectors",
+            "investors"
+          ],
+          "article_type": "Capacity Expansion",
+          "urgency_score": 0.44,
+          "taxonomy_confidence": 0.81,
+          "taxonomy_reasons": [
+            "data center",
+            "colocation",
+            "wholesale"
+          ],
+          "direct_ai_infrastructure_relevance": 0.78,
+          "data_center_relevance": 0.76,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0.24,
+          "infrastructure_relevance_score": 0.805,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:0.78",
+            "data_center_relevance:0.76(data center, colocation)",
+            "enterprise_ai_infrastructure_relevance:0.24(ai workloads)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 0.78,
+            "data_center_relevance": 0.76,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0.24,
+            "infrastructure_relevance_score": 0.805,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:0.78",
+              "data_center_relevance:0.76(data center, colocation)",
+              "enterprise_ai_infrastructure_relevance:0.24(ai workloads)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 80
+        },
+        {
+          "id": "5988b5d3c15a10b7",
+          "source": "NVIDIA Blog",
+          "url": "https://blogs.nvidia.com/blog/medical-physics-simulation-open-source/",
+          "title": "NVIDIA Open Sources First GPU-Accelerated Medical Physics Simulation Framework",
+          "snippet": "Before a healthcare robot can be useful in the real world, it has to learn how the physical world pushes back. Anatomy varies. Instruments bend, press, slip and interact with tissue. Imaging can be noisy or incomplete.…",
+          "contentText": "Before a healthcare robot can be useful in the real world, it has to learn how the physical world pushes back. Anatomy varies. Instruments bend, press, slip and interact with tissue. Imaging can be noisy or incomplete. And the rare, edge scenarios developers most need to understand don’t appear on schedule. That creates one of the biggest bottlenecks in healthcare robotics: obtaining the enormous amount of varied data developers need to train, test and improve robot behavior. NVIDIA Medical Physics Simulation framework — a new open source, GPU-accelerated capability within NVIDIA Isaac for Healthcare — announced today, helps medical robotics developers model anatomy-device interaction, generate hard-to-capture scenarios, test in silico, and train or evaluate robot policies before hardware…",
+          "publishedAt": "2026-07-22T13:00:11.000Z",
+          "sourceImage": "https://blogs.nvidia.com/wp-content/uploads/2026/07/medical-physica-simulation.png",
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "category": "Semiconductors",
+          "primary_category": "Semiconductors",
+          "secondary_category": "Accelerators, memory, and advanced packaging",
+          "infrastructure_layer": "Silicon",
+          "affected_stakeholders": [
+            "semiconductor suppliers",
+            "hyperscalers",
+            "server OEMs",
+            "investors"
+          ],
+          "article_type": "Other",
+          "urgency_score": 0.46,
+          "taxonomy_confidence": 0.77,
+          "taxonomy_reasons": [
+            "gpu",
+            "nvidia"
+          ],
+          "direct_ai_infrastructure_relevance": 1,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0.675,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.878,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "semiconductor_relevance:0.68(nvidia, gpu)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 1,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0.675,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.878,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+              "semiconductor_relevance:0.68(nvidia, gpu)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 75
+        },
+        {
+          "id": "2d23b9224e7ccb36",
+          "source": "StorageReview",
+          "url": "https://www.storagereview.com/review/the-token-efficient-path-for-long-context-inference-kv-cache-offload-to-flash",
+          "title": "The Token-Efficient Path for Long-Context Inference: KV Cache Offload to Flash",
+          "snippet": "Enterprise AI infrastructure has shifted from optimizing training models to serving them, and that changes the economics. Training is a capital project with an endpoint. Inference is a production workload that runs as l…",
+          "contentText": "Enterprise AI infrastructure has shifted from optimizing training models to serving them, and that changes the economics. Training is a capital project with an endpoint. Inference is a production workload that runs as long as the service is live, with output measured in tokens. This is the tokenomics problem now facing AI operators: once the GPUs are racked and the power budget is set, the business depends on how many tokens the hardware produces. In long, multi-turn workloads, the same context is repeatedly passed through the model as conversations grow. The GPU already paid to process those tokens once, but when the KV cache is evicted, the system has to prefill that context again. That makes the enemy recompute. At any scale, that is not a rounding error. It is expense handed back as p…",
+          "publishedAt": "2026-07-22T12:17:43.000Z",
+          "sourceImage": "https://www.storagereview.com/wp-content/uploads/2026/06/StorageReview-Solidigm-KVCache-PS1030-1.jpg",
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "category": "AI Infrastructure",
+          "primary_category": "AI Infrastructure",
+          "secondary_category": "GPU clusters and deployment readiness",
+          "infrastructure_layer": "Compute",
+          "affected_stakeholders": [
+            "operators",
+            "hyperscalers",
+            "cloud buyers",
+            "investors"
+          ],
+          "article_type": "Product / Platform Update",
+          "urgency_score": 0.54,
+          "taxonomy_confidence": 0.77,
+          "taxonomy_reasons": [
+            "ai infrastructure",
+            "neocloud"
+          ],
+          "direct_ai_infrastructure_relevance": 1,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0.22,
+          "power_grid_relevance": 0.22,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0.32,
+          "infrastructure_relevance_score": 0.87,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "semiconductor_relevance:0.22(gpu)",
+            "power_grid_relevance:0.22(power)",
+            "enterprise_ai_infrastructure_relevance:0.32(enterprise ai)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 1,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0.22,
+            "power_grid_relevance": 0.22,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0.32,
+            "infrastructure_relevance_score": 0.87,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+              "semiconductor_relevance:0.22(gpu)",
+              "power_grid_relevance:0.22(power)",
+              "enterprise_ai_infrastructure_relevance:0.32(enterprise ai)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 75
+        },
+        {
+          "id": "97607521931a55c1",
+          "source": "TechCrunch AI",
+          "url": "https://techcrunch.com/2026/07/22/arcee-a-us-open-source-ai-lab-says-chinese-models-are-not-inherently-dangerous/",
+          "title": "Arcee, a US open source AI lab, says Chinese models are not inherently dangerous",
+          "snippet": "As Chinese AI models grow in capability and popularity among US companies, the arguing over what should be done about them has reached a fever pitch.",
+          "contentText": "As Chinese AI models grow in capability and popularity among US companies, the arguing over what should be done about them has reached a fever pitch.",
+          "publishedAt": "2026-07-22T16:24:08.000Z",
+          "sourceImage": null,
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "category": "AI Infrastructure",
+          "primary_category": "AI Infrastructure",
+          "secondary_category": "GPU clusters and deployment readiness",
+          "infrastructure_layer": "Compute",
+          "affected_stakeholders": [
+            "operators",
+            "hyperscalers",
+            "cloud buyers",
+            "investors"
+          ],
+          "article_type": "Other",
+          "urgency_score": 0.43,
+          "taxonomy_confidence": 0.77,
+          "taxonomy_reasons": [
+            "ai infrastructure",
+            "neocloud"
+          ],
+          "direct_ai_infrastructure_relevance": 1,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0.22,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.778,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "semiconductor_relevance:0.22(gpu)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 1,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0.22,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.778,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+              "semiconductor_relevance:0.22(gpu)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 72
+        }
+      ],
+      "curatedIds": [
+        "f6e71823b1eae091",
+        "3a1afd8f959f47b0",
+        "49e2ff8412427a6b",
+        "5988b5d3c15a10b7",
+        "2d23b9224e7ccb36",
+        "97607521931a55c1"
+      ],
+      "publishedIds": [
+        "3a1afd8f959f47b0",
+        "f6e71823b1eae091"
+      ],
+      "slotPublications": {
+        "0": true
+      }
     }
   },
   "runHistory": [
-    {
-      "at": "2026-06-12T11:07:00.858Z",
-      "day": "2026-06-12",
-      "slot": 2,
-      "publishedCount": 0,
-      "signalCardCount": 1,
-      "archiveOnlyCount": 0,
-      "repetitionBlockedCount": 1,
-      "publishedIds": [],
-      "processedIds": [
-        "675ef7fdfbe922e5",
-        "a5b3e7f3552cfae8"
-      ],
-      "blockedCount": 1,
-      "blockedItems": [
-        {
-          "id": "675ef7fdfbe922e5",
-          "title": "Chip Industry Week In Review",
-          "infrastructure_relevance_score": 1,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "cloud_capacity_relevance:0.32(hyperscalers)",
-            "semiconductor_relevance:1.00(semiconductor, nvidia, intel)",
-            "power_grid_relevance:0.22(power)",
-            "capital_markets_relevance:0.32(financing)"
-          ],
-          "extraction_quality_score": 0.53,
-          "source_domain_adapter": "semiengineering",
-          "content_length": 418,
-          "boilerplate_ratio": 0,
-          "repetition_blocked": false,
-          "repetition_block_reasons": [],
-          "repetition_check": null,
-          "expert_insight_complete": true,
-          "expert_insight_missing_fields": [],
-          "reason": "fail_closed: source_text_incomplete:source_evidence_length_below_500, source_evidence_length_below_1200, sentence_completion_score_below_0.92:0.425"
-        }
-      ],
-      "repetitionBlockedItems": [
-        {
-          "id": "a5b3e7f3552cfae8",
-          "title": "Get 32GB of DDR5 RAM for only $255 in this 2-item combo from Newegg — just $514.99 gets you Corsair Vengeance RGB RAM and a Gigabyte X870 Aorus Elite motherboard, 26% off",
-          "infrastructure_relevance_score": 0.897,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "cloud_capacity_relevance:0.32(hyperscalers)",
-            "semiconductor_relevance:0.44(amd, gpu)",
-            "power_grid_relevance:0.22(power)"
-          ],
-          "extraction_quality_score": 1,
-          "source_domain_adapter": "generic",
-          "content_length": 1348,
-          "boilerplate_ratio": 0,
-          "repetition_blocked": true,
-          "repetition_block_reasons": [
-            "repeated_sentence_ratio>0.12",
-            "heading_sequence_similarity>0.75",
-            "conclusion_similarity>0.7"
-          ],
-          "repetition_check": {
-            "compared_article_count": 20,
-            "repeated_sentence_ratio": 0.14285714285714285,
-            "repeated_paragraph_ratio": 0.16666666666666666,
-            "heading_sequence_similarity": 1,
-            "banned_phrase_count": 0,
-            "banned_phrase_counts": {},
-            "recent_banned_phrase_counts": {},
-            "ngram_overlap": 0.45689655172413796,
-            "blueprint_repetition": 1,
-            "conclusion_similarity": 0.9271050693011066,
-            "repeated_sentence_count": 1,
-            "repeated_paragraph_count": 1,
-            "heading_sequence": [
-              "Technical Signal",
-              "Failure Domain",
-              "Operator Exposure",
-              "Benchmark To Watch"
-            ],
-            "blocked": true,
-            "reasons": [
-              "repeated_sentence_ratio>0.12",
-              "heading_sequence_similarity>0.75",
-              "conclusion_similarity>0.7"
-            ]
-          },
-          "expert_insight_complete": true,
-          "expert_insight_missing_fields": [],
-          "reason": "repeated_sentence_ratio>0.12; heading_sequence_similarity>0.75; conclusion_similarity>0.7"
-        }
-      ],
-      "signalCardItems": [
-        {
-          "id": "675ef7fdfbe922e5",
-          "title": "Chip Industry Week In Review",
-          "infrastructure_relevance_score": 1,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "cloud_capacity_relevance:0.32(hyperscalers)",
-            "semiconductor_relevance:1.00(semiconductor, nvidia, intel)",
-            "power_grid_relevance:0.22(power)",
-            "capital_markets_relevance:0.32(financing)"
-          ],
-          "extraction_quality_score": 0.53,
-          "source_domain_adapter": "semiengineering",
-          "content_length": 418,
-          "boilerplate_ratio": 0,
-          "repetition_blocked": false,
-          "repetition_block_reasons": [],
-          "repetition_check": null,
-          "expert_insight_complete": true,
-          "expert_insight_missing_fields": [],
-          "reason": "fail_closed: source_text_incomplete:source_evidence_length_below_500, source_evidence_length_below_1200, sentence_completion_score_below_0.92:0.425"
-        }
-      ],
-      "archiveOnlyItems": []
-    },
     {
       "at": "2026-06-12T17:40:41.190Z",
       "day": "2026-06-13",
@@ -46875,7 +47196,130 @@
       ],
       "signalCardItems": [],
       "archiveOnlyItems": []
+    },
+    {
+      "at": "2026-07-22T16:26:27.424Z",
+      "day": "2026-07-23",
+      "slot": 0,
+      "publishedCount": 0,
+      "signalCardCount": 1,
+      "archiveOnlyCount": 0,
+      "repetitionBlockedCount": 1,
+      "publishedIds": [],
+      "processedIds": [
+        "3a1afd8f959f47b0",
+        "f6e71823b1eae091"
+      ],
+      "blockedCount": 1,
+      "blockedItems": [
+        {
+          "id": "3a1afd8f959f47b0",
+          "title": "Quantinuum and SoftBank Publish White Paper on Scaling Practical Quantum Computing Use Cases",
+          "infrastructure_relevance_score": 0.95,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, ai data center, neocloud)",
+            "data_center_relevance:0.68(data center, colo)",
+            "cloud_capacity_relevance:0.32(hyperscalers)",
+            "semiconductor_relevance:0.50(nvidia, gpu)",
+            "power_grid_relevance:0.50(power, grid)"
+          ],
+          "extraction_quality_score": 1,
+          "source_domain_adapter": "generic",
+          "content_length": 1660,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": false,
+          "repetition_block_reasons": [],
+          "repetition_check": null,
+          "expert_insight_complete": true,
+          "expert_insight_missing_fields": [],
+          "reason": "fail_closed: source_text_incomplete:ellipsis_truncation_artifact, ellipsis_truncation_artifact"
+        }
+      ],
+      "repetitionBlockedItems": [
+        {
+          "id": "f6e71823b1eae091",
+          "title": "Fortinet becomes Intel 4's first foundry customer, following firewall ASIC deal — CEO Lip-Bu Tan's promised foundry wins begin to surface, but on a mature node",
+          "infrastructure_relevance_score": 1,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "data_center_relevance:0.42(data center)",
+            "cloud_capacity_relevance:0.32(hyperscalers)",
+            "semiconductor_relevance:1.00(semiconductors, intel, fab)",
+            "power_grid_relevance:0.22(power)"
+          ],
+          "extraction_quality_score": 1,
+          "source_domain_adapter": "generic",
+          "content_length": 1784,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": true,
+          "repetition_block_reasons": [
+            "repeated_sentence_ratio>0.12",
+            "heading_sequence_similarity>0.75",
+            "conclusion_similarity>0.7"
+          ],
+          "repetition_check": {
+            "compared_article_count": 20,
+            "repeated_sentence_ratio": 0.2857142857142857,
+            "repeated_paragraph_ratio": 0.3333333333333333,
+            "heading_sequence_similarity": 1,
+            "banned_phrase_count": 0,
+            "banned_phrase_counts": {},
+            "recent_banned_phrase_counts": {},
+            "ngram_overlap": 0.5916666666666667,
+            "blueprint_repetition": 2,
+            "conclusion_similarity": 0.9511897312113418,
+            "repeated_sentence_count": 2,
+            "repeated_paragraph_count": 2,
+            "heading_sequence": [
+              "Technical Signal",
+              "Failure Domain",
+              "Operator Exposure",
+              "Benchmark To Watch"
+            ],
+            "blocked": true,
+            "reasons": [
+              "repeated_sentence_ratio>0.12",
+              "heading_sequence_similarity>0.75",
+              "conclusion_similarity>0.7"
+            ]
+          },
+          "expert_insight_complete": true,
+          "expert_insight_missing_fields": [],
+          "reason": "repeated_sentence_ratio>0.12; heading_sequence_similarity>0.75; conclusion_similarity>0.7"
+        }
+      ],
+      "signalCardItems": [
+        {
+          "id": "3a1afd8f959f47b0",
+          "title": "Quantinuum and SoftBank Publish White Paper on Scaling Practical Quantum Computing Use Cases",
+          "infrastructure_relevance_score": 0.95,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, ai data center, neocloud)",
+            "data_center_relevance:0.68(data center, colo)",
+            "cloud_capacity_relevance:0.32(hyperscalers)",
+            "semiconductor_relevance:0.50(nvidia, gpu)",
+            "power_grid_relevance:0.50(power, grid)"
+          ],
+          "extraction_quality_score": 1,
+          "source_domain_adapter": "generic",
+          "content_length": 1660,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": false,
+          "repetition_block_reasons": [],
+          "repetition_check": null,
+          "expert_insight_complete": true,
+          "expert_insight_missing_fields": [],
+          "reason": "fail_closed: source_text_incomplete:ellipsis_truncation_artifact, ellipsis_truncation_artifact"
+        }
+      ],
+      "archiveOnlyItems": []
     }
   ],
-  "lastRunAt": "2026-07-22T09:34:49.311Z"
+  "lastRunAt": "2026-07-22T16:26:27.424Z"
 }
