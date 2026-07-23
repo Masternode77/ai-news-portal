@@ -673,7 +673,9 @@
     "e0c6c3644f1f2253",
     "449190b94ad96d20",
     "3a1afd8f959f47b0",
-    "f6e71823b1eae091"
+    "f6e71823b1eae091",
+    "c8276d5c6320d1bd",
+    "cc32d73c64cccdd8"
   ],
   "dayPlans": {
     "2026-03-24": {
@@ -33569,18 +33571,18 @@
     "2026-07-23": {
       "date": "2026-07-23",
       "createdAt": "2026-07-22T16:26:27.424Z",
-      "refreshedAt": "2026-07-22T16:26:27.424Z",
+      "refreshedAt": "2026-07-23T00:01:59.203Z",
       "candidateWindowHours": 24,
       "curatedItems": [
         {
-          "id": "f6e71823b1eae091",
-          "source": "Toms Hardware",
-          "url": "https://www.tomshardware.com/tech-industry/semiconductors/intel-4-gets-its-first-foundry-customer-in-fortinet-three-years-after-intel-scoped-the-node-to-meteor-lake",
-          "title": "Fortinet becomes Intel 4's first foundry customer, following firewall ASIC deal — CEO Lip-Bu Tan's promised foundry wins begin to surface, but on a mature node",
-          "snippet": "Intel will design, package, and fabricate Fortinet's sixth-generation Security Processor (SP6) on its Intel 4 node.",
-          "contentText": "Intel will design, package, and fabricate Fortinet's sixth-generation Security Processor (SP6) on its Intel 4 node, the companies announced on July 21 , giving the process its first named external foundry customer, roughly three years after it entered production. Intel told Tom's Hardware the agreement reflects \"the strategy Intel outlined for Intel 4 several years ago,\" including support for custom networking ASIC workloads. Intel's own record from those years reads differently, however, with the company's 2021 roadmap having scoped Intel 4 to two internal products. And through 2022, it told engineers and investors that Intel 3, not Intel 4, would be its first process offered to foundry customers. Intel 4's record Intel's Accelerated announcement back in July 2021 said that Intel 4 would…",
-          "publishedAt": "2026-07-22T16:17:41.000Z",
-          "sourceImage": "https://cdn.mos.cms.futurecdn.net/sc4jMRDcUQARDogxU6vbKM-1280-80.jpg",
+          "id": "cc32d73c64cccdd8",
+          "source": "StorageReview",
+          "url": "https://www.storagereview.com/review/dell-pro-7-14-amd-review-ryzen-ai-9-hx-pro-470-in-a-2-8-pound-business-laptop",
+          "title": "Dell Pro 7 14 AMD Review: Ryzen AI 9 HX PRO 470 in a 2.8-Pound Business Laptop",
+          "snippet": "Dell sent us four Pro laptops this cycle, covering two sizes, two product tiers, and both AMD and Intel platforms. The two Pro 5 models approach the business-laptop formula from different directions: the Pro 5 16 AMD us…",
+          "contentText": "Dell sent us four Pro laptops this cycle, covering two sizes, two product tiers, and both AMD and Intel platforms. The two Pro 5 models approach the business-laptop formula from different directions: the Pro 5 16 AMD uses a larger chassis, replaceable DDR5 memory, and the Ryzen AI 9 HX PRO 470, while the compact Pro 5 14 Intel combines a Core Ultra X7 368H with fast LPCAMM2 memory and Arc B390 graphics. Dell then moves up to the thinner Pro 7 14 chassis with a choice of Intel or AMD processors. The AMD model reviewed here features the same 12-core, 24-thread Ryzen chip and 55 TOPS NPU as the Pro 5 16, but pairs it with 64GB of LPDDR5x-8533 memory, Radeon 890M graphics, a 1TB SSD, and a 14-inch WUXGA display. Putting the same processor into two very different laptops gives us a useful look…",
+          "publishedAt": "2026-07-22T21:13:27.000Z",
+          "sourceImage": "https://www.storagereview.com/wp-content/uploads/2026/07/StorageReview-Dell-Pro-7-14-AMD-05.jpg",
           "region": "US",
           "language": "en",
           "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
@@ -33594,44 +33596,45 @@
             "server OEMs",
             "investors"
           ],
-          "article_type": "Other",
-          "urgency_score": 0.48,
+          "article_type": "Supply Chain",
+          "urgency_score": 0.46,
           "taxonomy_confidence": 0.91,
           "taxonomy_reasons": [
+            "chip",
             "gpu",
-            "intel",
-            "asic"
+            "amd",
+            "intel"
           ],
           "direct_ai_infrastructure_relevance": 1,
           "data_center_relevance": 0,
           "cloud_capacity_relevance": 0,
-          "semiconductor_relevance": 1,
+          "semiconductor_relevance": 0.717,
           "power_grid_relevance": 0,
           "cooling_relevance": 0,
           "capital_markets_relevance": 0,
-          "enterprise_ai_infrastructure_relevance": 0.18,
-          "infrastructure_relevance_score": 0.95,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.888,
           "infrastructure_relevance_tier": "full_memo",
           "infrastructure_relevance_action": "generate_full_memo",
           "infrastructure_relevance_reasons": [
             "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "semiconductor_relevance:1.00(semiconductors, intel, gpu)"
+            "semiconductor_relevance:0.72(amd, intel, gpu)"
           ],
           "infrastructure_relevance": {
             "direct_ai_infrastructure_relevance": 1,
             "data_center_relevance": 0,
             "cloud_capacity_relevance": 0,
-            "semiconductor_relevance": 1,
+            "semiconductor_relevance": 0.717,
             "power_grid_relevance": 0,
             "cooling_relevance": 0,
             "capital_markets_relevance": 0,
-            "enterprise_ai_infrastructure_relevance": 0.18,
-            "infrastructure_relevance_score": 0.95,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.888,
             "infrastructure_relevance_tier": "full_memo",
             "infrastructure_relevance_action": "generate_full_memo",
             "infrastructure_relevance_reasons": [
               "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-              "semiconductor_relevance:1.00(semiconductors, intel, gpu)"
+              "semiconductor_relevance:0.72(amd, intel, gpu)"
             ],
             "infrastructureRelevanceAction": "generate_full_memo",
             "articlePagePublished": true,
@@ -33639,17 +33642,17 @@
             "archiveOnly": false,
             "archiveOnlyReason": null
           },
-          "score": 86
+          "score": 83
         },
         {
-          "id": "3a1afd8f959f47b0",
+          "id": "c8276d5c6320d1bd",
           "source": "HPCwire",
-          "url": "https://www.hpcwire.com/off-the-wire/quantinuum-and-softbank-publish-white-paper-on-scaling-practical-quantum-computing-use-cases/",
-          "title": "Quantinuum and SoftBank Publish White Paper on Scaling Practical Quantum Computing Use Cases",
-          "snippet": "TOKYO and BROOMFIELD, Colo., July 22, 2026 — Quantinuum and SoftBank Corp. have announced the publication of “Quantum Computing Frontiers,” a joint white paper that maps two commercially-relevant quantum computing appli…",
-          "contentText": "TOKYO and BROOMFIELD, Colo., July 22, 2026 &#8212; Quantinuum and SoftBank Corp. have announced the publication of &#8220;Quantum Computing Frontiers,&#8221; a joint white paper that maps two commercially-relevant quantum computing application areas against Quantinuum&#8217;s hardware roadmap. The analysis examines how advances in quantum hardware and algorithms could affect when these applications become practical for industrial use. SoftBank Corp. and Quantinuum will use the roadmap to inform their exploration of future quantum AI data center services and related business models. The paper focuses on two representative application domains that SoftBank is actively using Quantinuum&#8217;s systems to research: quantum chemistry for new materials discovery and energy research, and topolog…",
-          "publishedAt": "2026-07-22T16:22:02.000Z",
-          "sourceImage": "https://www.hpcwire.com/wp-content/uploads/2025/01/Quantinuum_1-300x169.jpg",
+          "url": "https://www.hpcwire.com/2026/07/22/putting-ai-for-science-and-engineering-into-overdrive-at-genesis-mission-summit/",
+          "title": "Putting AI for Science and Engineering Into Overdrive at Genesis Mission Summit",
+          "snippet": "The integration of AI into scientific and engineering workflows will kickstart an unprecedented period of progress, Energy Secretary Chris Wright said at today’s inaugural Genesis Mission Summit in Washington, D.C. “We…",
+          "contentText": "The integration of AI into scientific and engineering workflows will kickstart an unprecedented period of progress, Energy Secretary Chris Wright said at today’s inaugural Genesis Mission Summit in Washington, D.C. “We will see a…rapid transformation of human understanding, of nature, of physics, of how to harness beneficial technologies for humans,” Wright told about 650 government officials, scientists, media types, and others who piled into the Capital Hilton a few blocks from the White House today. “The next 10 years will be the most revolutionary 10 years in the scientific and energy worlds in human history.” The Department of Energy is seeding that future scientific progress through Genesis Mission, the moonshot-style program unveiled nearly eight months ago to harness emerging AI t…",
+          "publishedAt": "2026-07-22T21:12:33.000Z",
+          "sourceImage": "https://www.hpcwire.com/wp-content/uploads/2026/02/genesis_mission_logo-300x180.png",
           "region": "US",
           "language": "en",
           "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
@@ -33664,43 +33667,41 @@
             "investors"
           ],
           "article_type": "Research / Technical",
-          "urgency_score": 0.47,
+          "urgency_score": 0.43,
           "taxonomy_confidence": 0.77,
           "taxonomy_reasons": [
             "ai infrastructure",
             "neocloud"
           ],
           "direct_ai_infrastructure_relevance": 1,
-          "data_center_relevance": 0.68,
+          "data_center_relevance": 0,
           "cloud_capacity_relevance": 0,
           "semiconductor_relevance": 0.22,
           "power_grid_relevance": 0,
           "cooling_relevance": 0,
           "capital_markets_relevance": 0,
           "enterprise_ai_infrastructure_relevance": 0,
-          "infrastructure_relevance_score": 0.915,
+          "infrastructure_relevance_score": 0.778,
           "infrastructure_relevance_tier": "full_memo",
           "infrastructure_relevance_action": "generate_full_memo",
           "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, ai data center, neocloud)",
-            "data_center_relevance:0.68(data center, colo)",
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
             "semiconductor_relevance:0.22(gpu)"
           ],
           "infrastructure_relevance": {
             "direct_ai_infrastructure_relevance": 1,
-            "data_center_relevance": 0.68,
+            "data_center_relevance": 0,
             "cloud_capacity_relevance": 0,
             "semiconductor_relevance": 0.22,
             "power_grid_relevance": 0,
             "cooling_relevance": 0,
             "capital_markets_relevance": 0,
             "enterprise_ai_infrastructure_relevance": 0,
-            "infrastructure_relevance_score": 0.915,
+            "infrastructure_relevance_score": 0.778,
             "infrastructure_relevance_tier": "full_memo",
             "infrastructure_relevance_action": "generate_full_memo",
             "infrastructure_relevance_reasons": [
-              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, ai data center, neocloud)",
-              "data_center_relevance:0.68(data center, colo)",
+              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
               "semiconductor_relevance:0.22(gpu)"
             ],
             "infrastructureRelevanceAction": "generate_full_memo",
@@ -33709,17 +33710,17 @@
             "archiveOnly": false,
             "archiveOnlyReason": null
           },
-          "score": 84
+          "score": 79
         },
         {
-          "id": "49e2ff8412427a6b",
+          "id": "5ec7591a81275356",
           "source": "Data Center POST",
-          "url": "https://datacenterpost.com/why-digital-infrastructure-needs-a-new-approach-and-why-this-matters-now/",
-          "title": "Why Digital Infrastructure Needs a New Approach and Why This Matters Now",
-          "snippet": "TL; DR Sustainability in digital infrastructure starts before a data center opens, with construction methods playing a major role in environmental impact. Modular construction reduces disruption by shifting much of the…",
-          "contentText": "TL; DR Sustainability in digital infrastructure starts before a data center opens, with construction methods playing a major role in environmental impact. Modular construction reduces disruption by shifting much of the work off-site, which can lower noise, traffic, waste, and the project’s overall carbon footprint. The article frames human sustainability as part of the equation, arguing that factory-based work can improve worker stability, safety, retention, and quality of life. Long-term community value matters as much as speed or efficiency, so Mod42 emphasizes workforce development, local partnerships, and future community initiatives alongside infrastructure delivery. # # # Digital infrastructure is expanding at unprecedented rates. AI workloads, cloud migration, and edge computing ar…",
-          "publishedAt": "2026-07-22T16:00:49.000Z",
-          "sourceImage": "https://d3qut6qyo6tw2j.cloudfront.net/bin/uploads/2026/07/21121907/Mod42-DCP-Blog_July-2026-1024x512.png",
+          "url": "https://datacenterpost.com/dc-blox-selected-for-landmark-federal-ai-and-energy-infrastructure-initiative/",
+          "title": "DC BLOX Selected for Landmark Federal AI and Energy Infrastructure Initiative",
+          "snippet": "TL;DR DC BLOX has been selected as the digital infrastructure partner in a consortium chosen by the U.S. Department of Energy’s National Nuclear Security Administration (NNSA). The proposed project includes a 1-gigawatt…",
+          "contentText": "TL;DR DC BLOX has been selected as the digital infrastructure partner in a consortium chosen by the U.S. Department of Energy&#8217;s National Nuclear Security Administration (NNSA). The proposed project includes a 1-gigawatt AI data center campus and approximately 2 gigawatts of dedicated on-site power generation at the Savannah River Site in South Carolina. The initiative combines advanced digital infrastructure with reliable energy generation to accelerate AI innovation and support long-term economic growth. The project builds on DC BLOX&#8217;s investments across the Southeast and reinforces its commitment to delivering resilient, next-generation infrastructure for hyperscale AI and cloud computing. # # # The infrastructure powering the next generation of artificial intelligence is ta…",
+          "publishedAt": "2026-07-22T17:00:17.000Z",
+          "sourceImage": "https://d3qut6qyo6tw2j.cloudfront.net/bin/uploads/2026/07/22103519/DCP-Submission-V1-wo-Headshot-adjust-colors-to-match-branding-3-1024x512.png",
           "region": "US",
           "language": "en",
           "defaultCategory": "Colocation & Wholesale",
@@ -33733,114 +33734,120 @@
             "site selectors",
             "investors"
           ],
-          "article_type": "Capacity Expansion",
-          "urgency_score": 0.44,
-          "taxonomy_confidence": 0.81,
+          "article_type": "Partnership",
+          "urgency_score": 0.57,
+          "taxonomy_confidence": 0.92,
+          "taxonomy_reasons": [
+            "data center",
+            "colocation",
+            "campus",
+            "wholesale"
+          ],
+          "direct_ai_infrastructure_relevance": 0.82,
+          "data_center_relevance": 0.92,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0,
+          "power_grid_relevance": 1,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.967,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:0.82(ai data center)",
+            "data_center_relevance:0.92(data center, colocation, campus)",
+            "power_grid_relevance:1.00(power, gigawatt, gigawatts)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 0.82,
+            "data_center_relevance": 0.92,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0,
+            "power_grid_relevance": 1,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.967,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:0.82(ai data center)",
+              "data_center_relevance:0.92(data center, colocation, campus)",
+              "power_grid_relevance:1.00(power, gigawatt, gigawatts)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 79
+        },
+        {
+          "id": "7e21794608b743bc",
+          "source": "Data Center Dynamics",
+          "url": "https://www.datacenterdynamics.com/en/news/google-increases-2026-capex-195-205bn-as-it-accelerates-ai-data-center-buildout/",
+          "title": "Google increases 2026 capex to $195-205bn as it accelerates AI data center buildout",
+          "snippet": "Record Google Cloud revenue, but investors are uneasy about growing capex commitments",
+          "contentText": "Record Google Cloud revenue, but investors are uneasy about growing capex commitments",
+          "publishedAt": "2026-07-22T22:00:00.000Z",
+          "sourceImage": "https://media.datacenterdynamics.com/media/images/Google_Cloud.b09a7cd8.fill-750x500.jpg",
+          "region": "Global",
+          "language": "en",
+          "defaultCategory": "Colocation & Wholesale",
+          "category": "Data Centers",
+          "primary_category": "Data Centers",
+          "secondary_category": "Campus development and colocation capacity",
+          "infrastructure_layer": "Facility",
+          "affected_stakeholders": [
+            "data center operators",
+            "developers",
+            "site selectors",
+            "investors"
+          ],
+          "article_type": "Earnings / Guidance",
+          "urgency_score": 0.47,
+          "taxonomy_confidence": 0.86,
           "taxonomy_reasons": [
             "data center",
             "colocation",
             "wholesale"
           ],
           "direct_ai_infrastructure_relevance": 0.78,
-          "data_center_relevance": 0.76,
-          "cloud_capacity_relevance": 0,
+          "data_center_relevance": 0.89,
+          "cloud_capacity_relevance": 0.24,
           "semiconductor_relevance": 0,
           "power_grid_relevance": 0,
           "cooling_relevance": 0,
-          "capital_markets_relevance": 0,
-          "enterprise_ai_infrastructure_relevance": 0.24,
-          "infrastructure_relevance_score": 0.805,
+          "capital_markets_relevance": 0.378,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.908,
           "infrastructure_relevance_tier": "full_memo",
           "infrastructure_relevance_action": "generate_full_memo",
           "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:0.78",
-            "data_center_relevance:0.76(data center, colocation)",
-            "enterprise_ai_infrastructure_relevance:0.24(ai workloads)"
+            "direct_ai_infrastructure_relevance:0.78(ai data center)",
+            "data_center_relevance:0.89(data center, colocation)",
+            "cloud_capacity_relevance:0.24(google cloud)",
+            "capital_markets_relevance:0.38(capex)"
           ],
           "infrastructure_relevance": {
             "direct_ai_infrastructure_relevance": 0.78,
-            "data_center_relevance": 0.76,
-            "cloud_capacity_relevance": 0,
+            "data_center_relevance": 0.89,
+            "cloud_capacity_relevance": 0.24,
             "semiconductor_relevance": 0,
             "power_grid_relevance": 0,
             "cooling_relevance": 0,
-            "capital_markets_relevance": 0,
-            "enterprise_ai_infrastructure_relevance": 0.24,
-            "infrastructure_relevance_score": 0.805,
-            "infrastructure_relevance_tier": "full_memo",
-            "infrastructure_relevance_action": "generate_full_memo",
-            "infrastructure_relevance_reasons": [
-              "direct_ai_infrastructure_relevance:0.78",
-              "data_center_relevance:0.76(data center, colocation)",
-              "enterprise_ai_infrastructure_relevance:0.24(ai workloads)"
-            ],
-            "infrastructureRelevanceAction": "generate_full_memo",
-            "articlePagePublished": true,
-            "homepagePublished": true,
-            "archiveOnly": false,
-            "archiveOnlyReason": null
-          },
-          "score": 80
-        },
-        {
-          "id": "5988b5d3c15a10b7",
-          "source": "NVIDIA Blog",
-          "url": "https://blogs.nvidia.com/blog/medical-physics-simulation-open-source/",
-          "title": "NVIDIA Open Sources First GPU-Accelerated Medical Physics Simulation Framework",
-          "snippet": "Before a healthcare robot can be useful in the real world, it has to learn how the physical world pushes back. Anatomy varies. Instruments bend, press, slip and interact with tissue. Imaging can be noisy or incomplete.…",
-          "contentText": "Before a healthcare robot can be useful in the real world, it has to learn how the physical world pushes back. Anatomy varies. Instruments bend, press, slip and interact with tissue. Imaging can be noisy or incomplete. And the rare, edge scenarios developers most need to understand don’t appear on schedule. That creates one of the biggest bottlenecks in healthcare robotics: obtaining the enormous amount of varied data developers need to train, test and improve robot behavior. NVIDIA Medical Physics Simulation framework — a new open source, GPU-accelerated capability within NVIDIA Isaac for Healthcare — announced today, helps medical robotics developers model anatomy-device interaction, generate hard-to-capture scenarios, test in silico, and train or evaluate robot policies before hardware…",
-          "publishedAt": "2026-07-22T13:00:11.000Z",
-          "sourceImage": "https://blogs.nvidia.com/wp-content/uploads/2026/07/medical-physica-simulation.png",
-          "region": "US",
-          "language": "en",
-          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
-          "category": "Semiconductors",
-          "primary_category": "Semiconductors",
-          "secondary_category": "Accelerators, memory, and advanced packaging",
-          "infrastructure_layer": "Silicon",
-          "affected_stakeholders": [
-            "semiconductor suppliers",
-            "hyperscalers",
-            "server OEMs",
-            "investors"
-          ],
-          "article_type": "Other",
-          "urgency_score": 0.46,
-          "taxonomy_confidence": 0.77,
-          "taxonomy_reasons": [
-            "gpu",
-            "nvidia"
-          ],
-          "direct_ai_infrastructure_relevance": 1,
-          "data_center_relevance": 0,
-          "cloud_capacity_relevance": 0,
-          "semiconductor_relevance": 0.675,
-          "power_grid_relevance": 0,
-          "cooling_relevance": 0,
-          "capital_markets_relevance": 0,
-          "enterprise_ai_infrastructure_relevance": 0,
-          "infrastructure_relevance_score": 0.878,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "semiconductor_relevance:0.68(nvidia, gpu)"
-          ],
-          "infrastructure_relevance": {
-            "direct_ai_infrastructure_relevance": 1,
-            "data_center_relevance": 0,
-            "cloud_capacity_relevance": 0,
-            "semiconductor_relevance": 0.675,
-            "power_grid_relevance": 0,
-            "cooling_relevance": 0,
-            "capital_markets_relevance": 0,
+            "capital_markets_relevance": 0.378,
             "enterprise_ai_infrastructure_relevance": 0,
-            "infrastructure_relevance_score": 0.878,
+            "infrastructure_relevance_score": 0.908,
             "infrastructure_relevance_tier": "full_memo",
             "infrastructure_relevance_action": "generate_full_memo",
             "infrastructure_relevance_reasons": [
-              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-              "semiconductor_relevance:0.68(nvidia, gpu)"
+              "direct_ai_infrastructure_relevance:0.78(ai data center)",
+              "data_center_relevance:0.89(data center, colocation)",
+              "cloud_capacity_relevance:0.24(google cloud)",
+              "capital_markets_relevance:0.38(capex)"
             ],
             "infrastructureRelevanceAction": "generate_full_memo",
             "articlePagePublished": true,
@@ -33848,18 +33855,18 @@
             "archiveOnly": false,
             "archiveOnlyReason": null
           },
-          "score": 75
+          "score": 77
         },
         {
-          "id": "2d23b9224e7ccb36",
-          "source": "StorageReview",
-          "url": "https://www.storagereview.com/review/the-token-efficient-path-for-long-context-inference-kv-cache-offload-to-flash",
-          "title": "The Token-Efficient Path for Long-Context Inference: KV Cache Offload to Flash",
-          "snippet": "Enterprise AI infrastructure has shifted from optimizing training models to serving them, and that changes the economics. Training is a capital project with an endpoint. Inference is a production workload that runs as l…",
-          "contentText": "Enterprise AI infrastructure has shifted from optimizing training models to serving them, and that changes the economics. Training is a capital project with an endpoint. Inference is a production workload that runs as long as the service is live, with output measured in tokens. This is the tokenomics problem now facing AI operators: once the GPUs are racked and the power budget is set, the business depends on how many tokens the hardware produces. In long, multi-turn workloads, the same context is repeatedly passed through the model as conversations grow. The GPU already paid to process those tokens once, but when the KV cache is evicted, the system has to prefill that context again. That makes the enemy recompute. At any scale, that is not a rounding error. It is expense handed back as p…",
-          "publishedAt": "2026-07-22T12:17:43.000Z",
-          "sourceImage": "https://www.storagereview.com/wp-content/uploads/2026/06/StorageReview-Solidigm-KVCache-PS1030-1.jpg",
-          "region": "US",
+          "id": "3b48276516254fe3",
+          "source": "TechCrunch AI",
+          "url": "https://techcrunch.com/2026/07/22/after-shocking-quarter-ibm-insists-that-ai-isnt-killing-the-mainframe/",
+          "title": "After shocking quarter, IBM insists that AI isn’t killing the mainframe",
+          "snippet": "After IBM's stock crashed last week on warnings of a poor mainframe sales, the CEO explained that AI wrecked corporate hardware budget, temporarily.",
+          "contentText": "After IBM's stock crashed last week on warnings of a poor mainframe sales, the CEO explained that AI wrecked corporate hardware budget, temporarily.",
+          "publishedAt": "2026-07-22T23:47:54.000Z",
+          "sourceImage": null,
+          "region": "Global",
           "language": "en",
           "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
           "category": "AI Infrastructure",
@@ -33872,8 +33879,8 @@
             "cloud buyers",
             "investors"
           ],
-          "article_type": "Product / Platform Update",
-          "urgency_score": 0.54,
+          "article_type": "Other",
+          "urgency_score": 0.43,
           "taxonomy_confidence": 0.77,
           "taxonomy_reasons": [
             "ai infrastructure",
@@ -33883,36 +33890,32 @@
           "data_center_relevance": 0,
           "cloud_capacity_relevance": 0,
           "semiconductor_relevance": 0.22,
-          "power_grid_relevance": 0.22,
+          "power_grid_relevance": 0,
           "cooling_relevance": 0,
           "capital_markets_relevance": 0,
-          "enterprise_ai_infrastructure_relevance": 0.32,
-          "infrastructure_relevance_score": 0.87,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.778,
           "infrastructure_relevance_tier": "full_memo",
           "infrastructure_relevance_action": "generate_full_memo",
           "infrastructure_relevance_reasons": [
             "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "semiconductor_relevance:0.22(gpu)",
-            "power_grid_relevance:0.22(power)",
-            "enterprise_ai_infrastructure_relevance:0.32(enterprise ai)"
+            "semiconductor_relevance:0.22(gpu)"
           ],
           "infrastructure_relevance": {
             "direct_ai_infrastructure_relevance": 1,
             "data_center_relevance": 0,
             "cloud_capacity_relevance": 0,
             "semiconductor_relevance": 0.22,
-            "power_grid_relevance": 0.22,
+            "power_grid_relevance": 0,
             "cooling_relevance": 0,
             "capital_markets_relevance": 0,
-            "enterprise_ai_infrastructure_relevance": 0.32,
-            "infrastructure_relevance_score": 0.87,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.778,
             "infrastructure_relevance_tier": "full_memo",
             "infrastructure_relevance_action": "generate_full_memo",
             "infrastructure_relevance_reasons": [
               "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-              "semiconductor_relevance:0.22(gpu)",
-              "power_grid_relevance:0.22(power)",
-              "enterprise_ai_infrastructure_relevance:0.32(enterprise ai)"
+              "semiconductor_relevance:0.22(gpu)"
             ],
             "infrastructureRelevanceAction": "generate_full_memo",
             "articlePagePublished": true,
@@ -33920,16 +33923,16 @@
             "archiveOnly": false,
             "archiveOnlyReason": null
           },
-          "score": 75
+          "score": 72
         },
         {
-          "id": "97607521931a55c1",
+          "id": "169347234a5fcbda",
           "source": "TechCrunch AI",
-          "url": "https://techcrunch.com/2026/07/22/arcee-a-us-open-source-ai-lab-says-chinese-models-are-not-inherently-dangerous/",
-          "title": "Arcee, a US open source AI lab, says Chinese models are not inherently dangerous",
-          "snippet": "As Chinese AI models grow in capability and popularity among US companies, the arguing over what should be done about them has reached a fever pitch.",
-          "contentText": "As Chinese AI models grow in capability and popularity among US companies, the arguing over what should be done about them has reached a fever pitch.",
-          "publishedAt": "2026-07-22T16:24:08.000Z",
+          "url": "https://techcrunch.com/2026/07/22/google-justifies-its-massive-ai-spending-with-a-booming-cloud-business/",
+          "title": "Google justifies its massive AI spending with a booming cloud business",
+          "snippet": "Google's cloud business is thriving, as companies adopting its AI and AI infrastructure services help the tech giant to report record profits.",
+          "contentText": "Google's cloud business is thriving, as companies adopting its AI and AI infrastructure services help the tech giant to report record profits.",
+          "publishedAt": "2026-07-22T22:01:52.000Z",
           "sourceImage": null,
           "region": "US",
           "language": "en",
@@ -33992,90 +33995,26 @@
         }
       ],
       "curatedIds": [
-        "f6e71823b1eae091",
-        "3a1afd8f959f47b0",
-        "49e2ff8412427a6b",
-        "5988b5d3c15a10b7",
-        "2d23b9224e7ccb36",
-        "97607521931a55c1"
+        "cc32d73c64cccdd8",
+        "c8276d5c6320d1bd",
+        "5ec7591a81275356",
+        "7e21794608b743bc",
+        "3b48276516254fe3",
+        "169347234a5fcbda"
       ],
       "publishedIds": [
         "3a1afd8f959f47b0",
-        "f6e71823b1eae091"
+        "f6e71823b1eae091",
+        "c8276d5c6320d1bd",
+        "cc32d73c64cccdd8"
       ],
       "slotPublications": {
-        "0": true
+        "0": true,
+        "1": true
       }
     }
   },
   "runHistory": [
-    {
-      "at": "2026-06-12T17:40:41.190Z",
-      "day": "2026-06-13",
-      "slot": 0,
-      "publishedCount": 0,
-      "signalCardCount": 2,
-      "archiveOnlyCount": 0,
-      "processedIds": [
-        "a59d45c851a43761",
-        "0c9b835e82146f42"
-      ],
-      "blockedCount": 2,
-      "blockedItems": [
-        {
-          "id": "a59d45c851a43761",
-          "title": "PNNL: Everything You Need to Know About Building Data Centers, in One Place",
-          "infrastructure_relevance_score": 1,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud, hpc)",
-            "data_center_relevance:0.97(data center, data centers)",
-            "cloud_capacity_relevance:0.32(hyperscalers)",
-            "semiconductor_relevance:0.72(nvidia, amd, gpu)",
-            "power_grid_relevance:1.00(power, grid, utilities)",
-            "capital_markets_relevance:0.24(ipo)"
-          ],
-          "extraction_quality_score": 1,
-          "source_domain_adapter": "generic",
-          "content_length": 1677,
-          "boilerplate_ratio": 0,
-          "repetition_blocked": false,
-          "repetition_block_reasons": [],
-          "repetition_check": null,
-          "expert_insight_complete": true,
-          "expert_insight_missing_fields": [],
-          "reason": "fail_closed: source_text_incomplete:ellipsis_truncation_artifact, ellipsis_truncation_artifact"
-        },
-        {
-          "id": "0c9b835e82146f42",
-          "title": "Foresight Earns Best AI Innovation Recognition at Datacloud Global Congress",
-          "infrastructure_relevance_score": 0.972,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:0.78(ai infrastructure)",
-            "data_center_relevance:1.00(data center, data centers, colocation)",
-            "cloud_capacity_relevance:0.32(hyperscalers)",
-            "power_grid_relevance:0.22(power)",
-            "capital_markets_relevance:0.56(funding, capex)"
-          ],
-          "extraction_quality_score": 1,
-          "source_domain_adapter": "datacenterpost",
-          "content_length": 1634,
-          "boilerplate_ratio": 0,
-          "repetition_blocked": false,
-          "repetition_block_reasons": [],
-          "repetition_check": null,
-          "expert_insight_complete": false,
-          "expert_insight_missing_fields": [
-            "named_companies"
-          ],
-          "reason": "expert_insight_missing_fields named_companies"
-        }
-      ],
-      "archiveOnlyItems": []
-    },
     {
       "at": "2026-06-13T00:21:44.197Z",
       "day": "2026-06-13",
@@ -47319,7 +47258,131 @@
         }
       ],
       "archiveOnlyItems": []
+    },
+    {
+      "at": "2026-07-23T00:01:59.203Z",
+      "day": "2026-07-23",
+      "slot": 1,
+      "publishedCount": 0,
+      "signalCardCount": 1,
+      "archiveOnlyCount": 0,
+      "repetitionBlockedCount": 1,
+      "publishedIds": [],
+      "processedIds": [
+        "c8276d5c6320d1bd",
+        "cc32d73c64cccdd8"
+      ],
+      "blockedCount": 1,
+      "blockedItems": [
+        {
+          "id": "c8276d5c6320d1bd",
+          "title": "Putting AI for Science and Engineering Into Overdrive at Genesis Mission Summit",
+          "infrastructure_relevance_score": 0.87,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud, high-performance computing)",
+            "cloud_capacity_relevance:0.32(hyperscalers)",
+            "semiconductor_relevance:0.22(gpu)",
+            "power_grid_relevance:0.22(power)"
+          ],
+          "extraction_quality_score": 0.98,
+          "source_domain_adapter": "generic",
+          "content_length": 1352,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": false,
+          "repetition_block_reasons": [],
+          "repetition_check": null,
+          "expert_insight_complete": false,
+          "expert_insight_missing_fields": [
+            "named_companies"
+          ],
+          "reason": "fail_closed: source_text_incomplete:ellipsis_truncation_artifact, ellipsis_truncation_artifact"
+        }
+      ],
+      "repetitionBlockedItems": [
+        {
+          "id": "cc32d73c64cccdd8",
+          "title": "Dell Pro 7 14 AMD Review: Ryzen AI 9 HX PRO 470 in a 2.8-Pound Business Laptop",
+          "infrastructure_relevance_score": 0.958,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "cloud_capacity_relevance:0.32(hyperscalers)",
+            "semiconductor_relevance:0.72(amd, intel, gpu)",
+            "power_grid_relevance:0.22(power)"
+          ],
+          "extraction_quality_score": 1,
+          "source_domain_adapter": "storagereview",
+          "content_length": 1650,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": true,
+          "repetition_block_reasons": [
+            "repeated_sentence_ratio>0.12",
+            "heading_sequence_similarity>0.75",
+            "conclusion_similarity>0.7"
+          ],
+          "repetition_check": {
+            "compared_article_count": 20,
+            "repeated_sentence_ratio": 0.2857142857142857,
+            "repeated_paragraph_ratio": 0.3333333333333333,
+            "heading_sequence_similarity": 1,
+            "banned_phrase_count": 0,
+            "banned_phrase_counts": {},
+            "recent_banned_phrase_counts": {},
+            "ngram_overlap": 0.6666666666666666,
+            "blueprint_repetition": 1,
+            "conclusion_similarity": 0.9511897312113418,
+            "repeated_sentence_count": 2,
+            "repeated_paragraph_count": 2,
+            "heading_sequence": [
+              "Technical Signal",
+              "Failure Domain",
+              "Operator Exposure",
+              "Benchmark To Watch"
+            ],
+            "blocked": true,
+            "reasons": [
+              "repeated_sentence_ratio>0.12",
+              "heading_sequence_similarity>0.75",
+              "conclusion_similarity>0.7"
+            ]
+          },
+          "expert_insight_complete": true,
+          "expert_insight_missing_fields": [],
+          "reason": "repeated_sentence_ratio>0.12; heading_sequence_similarity>0.75; conclusion_similarity>0.7"
+        }
+      ],
+      "signalCardItems": [
+        {
+          "id": "c8276d5c6320d1bd",
+          "title": "Putting AI for Science and Engineering Into Overdrive at Genesis Mission Summit",
+          "infrastructure_relevance_score": 0.87,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud, high-performance computing)",
+            "cloud_capacity_relevance:0.32(hyperscalers)",
+            "semiconductor_relevance:0.22(gpu)",
+            "power_grid_relevance:0.22(power)"
+          ],
+          "extraction_quality_score": 0.98,
+          "source_domain_adapter": "generic",
+          "content_length": 1352,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": false,
+          "repetition_block_reasons": [],
+          "repetition_check": null,
+          "expert_insight_complete": false,
+          "expert_insight_missing_fields": [
+            "named_companies"
+          ],
+          "reason": "fail_closed: source_text_incomplete:ellipsis_truncation_artifact, ellipsis_truncation_artifact"
+        }
+      ],
+      "archiveOnlyItems": []
     }
   ],
-  "lastRunAt": "2026-07-22T16:26:27.424Z"
+  "lastRunAt": "2026-07-23T00:01:59.203Z"
 }
