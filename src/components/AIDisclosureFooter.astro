@@ -7,4 +7,10 @@ const { canonicalUrl = '' } = Astro.props;
     <a href="/ai-disclosure/">Read the disclosure</a>.
   </p>
   {canonicalUrl ? <p class="canonical-note">Canonical page: <a href={canonicalUrl}>{canonicalUrl}</a></p> : null}
+  <nav class="policy-link-row disclosure-policy-links" aria-label="Publication policies">
+    <a href="/editorial-policy/">Editorial policy</a>
+    <a href="/privacy/">Privacy</a>
+    <a href="/terms/">Terms</a>
+    <a href="/contact/">Contact</a>
+  </nav>
 </section>

@@ -1,7 +1,9 @@
 ---
 import ArticleCardImage from './ArticleCardImage.astro';
+import { categoryKey } from '../lib/category-visuals';
 
 const { signal = {} } = Astro.props;
+const catKey = categoryKey(signal.category || signal.editorial_lens || '');
 const detailHref = signal.view_detail || '';
 const sourceHref = signal.read_source || '';
 const href = detailHref || sourceHref || '';
@@ -19,7 +21,7 @@ const provenanceKind = signal.image_provenance_kind || 'image2';
 const readerImpact = Array.isArray(signal.reader_impact) ? signal.reader_impact.slice(0, 4) : [];
 const whyItMatters = signal.why_it_matters ? String(signal.why_it_matters).replace(/^Why it\s+matters:\s*/i, '') : '';
 ---
-<article class="article-list-card" data-public-card>
+<article class="article-list-card" data-public-card data-cat={catKey}>
   <ArticleCardImage
     image={image}
     imageAlt={imageAlt}

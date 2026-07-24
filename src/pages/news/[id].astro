@@ -5,6 +5,7 @@ import ArticleHeroImage from '../../components/ArticleHeroImage.astro';
 import LongformArticleBody from '../../components/LongformArticleBody.astro';
 import SourceAttribution from '../../components/SourceAttribution.astro';
 import AIDisclosureFooter from '../../components/AIDisclosureFooter.astro';
+import AdSlot from '../../components/monetize/AdSlot.astro';
 import RelatedArticles from '../../components/RelatedArticles.astro';
 import latestNews from '../../data/latest-news.json';
 import archivedNews from '../../data/archived-news.json';
@@ -130,6 +131,8 @@ const structuredData = buildArticleStructuredData({
 
         {articleBodyBlocks.length ? <LongformArticleBody blocks={articleBodyBlocks} /> : null}
 
+        <AdSlot variant="article" />
+
         <SourceAttribution source={sourceAttribution} />
 
         <AIDisclosureFooter canonicalUrl={articleUrl} />
@@ -143,6 +146,8 @@ const structuredData = buildArticleStructuredData({
         ) : null}
 
         <RelatedArticles articles={related} currentId={articleRecord.id} />
+
+        <AdSlot variant="box" />
       </div>
     </article>
   </main>

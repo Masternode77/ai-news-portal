@@ -1,22 +1,25 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import CategoryNav from '../components/CategoryNav.astro';
 import ArticleCardImage from '../components/ArticleCardImage.astro';
 import FeaturedArticle from '../components/FeaturedArticle.astro';
 import LatestAnalysisFeed from '../components/LatestAnalysisFeed.astro';
+import TickerTape from '../components/home/TickerTape.astro';
+import PulseBoard from '../components/home/PulseBoard.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+import AdSlot from '../components/monetize/AdSlot.astro';
 import latestNews from '../data/latest-news.json';
 import archivedNews from '../data/archived-news.json';
 import { SITE } from '../config/site';
-import { buildHomepageFeed } from '../../scripts/lib/homepage-feed-builder.mjs';
+import { buildHomepageFeed, publicHomepageFeedEligible } from '../../scripts/lib/homepage-feed-builder.mjs';
 import { selectHomepageVisualLead } from '../../scripts/lib/homepage-visual-lead.mjs';
+import { categoryKey, categoryShortLabel } from '../lib/category-visuals';
 
 const boardTitle = SITE.name;
-const routes = SITE.commercial.routes;
-const ctas = SITE.commercial.ctas;
 const homepageArticles = process.env.HOMEPAGE_FIXTURE === 'empty' ? [] : [...latestNews, ...archivedNews];
 const feed = buildHomepageFeed(homepageArticles, { limit: 50, minimumVisible: 30 });
 const featuredSignal = feed.featured?.publicSignal || null;
 const dateFormatter = new Intl.DateTimeFormat('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+const longDateFormatter = new Intl.DateTimeFormat('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' });
 const topSources = Array.from(new Set(feed.items.map((entry) => entry.publicSignal?.source).filter(Boolean))).slice(0, 3);
 const leadSignal = selectHomepageVisualLead(feed);
 const leadListExclusions = new Set([feed.featured?.publicSignal?.id, leadSignal?.id].filter(Boolean));
@@ -25,37 +28,53 @@ const leadHref = leadSignal?.view_detail || leadSignal?.read_source || '/archive
 const leadDate = leadSignal?.date ? dateFormatter.format(new Date(leadSignal.date)) : 'Latest analysis';
 const leadImage = leadSignal?.image || '/generated/fallbacks/ai-infrastructure.svg';
 const leadImageAlt = leadSignal?.image_alt || (leadSignal?.title ? `${leadSignal.title} editorial visual` : 'Compute Current editorial visual');
-const marketContext = [
-  {
-    label: 'Constraint watched',
-    value: featuredSignal?.category || 'Capacity stack',
-  },
-  {
-    label: 'Reader impact',
-    value: featuredSignal?.signal_label || 'Operator focus',
-  },
-  {
-    label: 'Source mix',
-    value: topSources.length ? topSources.join(', ') : 'Public sources',
-  },
+
+const articleDateMs = (article: Record<string, unknown> = {}) => {
+  const stamp = new Date(String(article.analysisPublishedAt || article.publishedAt || article.updatedAt || 0)).getTime();
+  return Number.isFinite(stamp) ? stamp : 0;
+};
+const eligibleAll = homepageArticles.filter(publicHomepageFeedEligible);
+const nowMs = Date.now();
+const weekMs = 7 * 24 * 60 * 60 * 1000;
+const publishedThisWeek = eligibleAll.filter((article) => nowMs - articleDateMs(article) <= weekMs).length;
+const uniqueSources = new Set(eligibleAll.map((article) => article.source).filter(Boolean)).size;
+const uniqueRegions = new Set(eligibleAll.map((article) => article.region).filter(Boolean)).size;
+const latestStampMs = eligibleAll.reduce((max, article) => Math.max(max, articleDateMs(article)), 0);
+const editionDate = longDateFormatter.format(latestStampMs ? new Date(latestStampMs) : new Date());
+const updatedLabel = latestStampMs ? `Latest publish · ${dateFormatter.format(new Date(latestStampMs))}` : '';
+
+const pulseMetrics = [
+  { label: 'Analyses this week', value: publishedThisWeek, hint: 'published in the last 7 days' },
+  { label: 'Stories on file', value: eligibleAll.length, hint: 'live and archived coverage' },
+  { label: 'Sources followed', value: uniqueSources, hint: 'outlets, filings, and primary posts' },
+  { label: 'Regions covered', value: uniqueRegions, hint: 'markets in the current record' },
 ];
 
-const intelligenceProducts = [
-  {
-    label: 'Power Watch',
-    title: 'Grid access, energization timing, generation tie-ups, and site constraints.',
-    href: '/category/power-grid/',
-  },
-  {
-    label: 'Capacity Watch',
-    title: 'Data center demand, cloud commitments, rack density, and lease movement.',
-    href: '/category/data-centers/',
-  },
-  {
-    label: 'Source Trail',
-    title: 'Original links, visual source notes, archive search, and public methodology.',
-    href: routes.methodology,
-  },
+const mixCounts = new Map<string, { label: string; count: number; cat: string }>();
+for (const item of feed.items) {
+  const label = item.publicSignal?.category || 'AI Infrastructure';
+  const key = categoryKey(label);
+  const entry = mixCounts.get(key) || { label: categoryShortLabel(label), count: 0, cat: key };
+  entry.count += 1;
+  mixCounts.set(key, entry);
+}
+const mixTotal = feed.items.length || 1;
+const coverageMix = Array.from(mixCounts.values())
+  .sort((a, b) => b.count - a.count)
+  .slice(0, 6)
+  .map((entry) => ({ ...entry, share: Math.max(1, Math.round((entry.count / mixTotal) * 100)) }));
+
+const tickerItems = feed.items.slice(0, 14).map((item) => ({
+  title: item.publicSignal?.title || '',
+  href: item.publicSignal?.view_detail || item.publicSignal?.read_source || '',
+  category: item.publicSignal?.category || '',
+  source: item.publicSignal?.source || '',
+}));
+
+const marketContext = [
+  { label: 'Constraint watched', value: featuredSignal?.category || 'Capacity stack' },
+  { label: 'Reader impact', value: featuredSignal?.signal_label || 'Operator focus' },
+  { label: 'Source mix', value: topSources.length ? topSources.join(', ') : 'Public sources' },
 ];
 
 const operatingReads = [
@@ -66,156 +85,195 @@ const operatingReads = [
   'Capital and policy risk',
 ];
 
-const navLinks = [
-  ['Power & Grid', '/category/power-grid/'],
-  ['Data Centers', '/category/data-centers/'],
-  ['Cloud Capacity', '/category/cloud-capacity/'],
-  ['Semiconductors', '/category/semiconductors/'],
-  ['Cooling', '/category/cooling/'],
-  ['Capital Markets', '/category/capital-markets/'],
-  ['Policy & Siting', '/category/regulation/'],
-  ['Archive', '/archive/'],
+const lanes = [
+  { label: 'Power Watch', title: 'Grid access, energization timing, generation tie-ups, and site constraints.', href: '/category/power-grid/', cat: 'power' },
+  { label: 'Capacity Watch', title: 'Data center demand, cloud commitments, rack density, and lease movement.', href: '/category/data-centers/', cat: 'datacenter' },
+  { label: 'Silicon Watch', title: 'Accelerators, memory, packaging, and the supply picture behind compute.', href: '/category/semiconductors/', cat: 'silicon' },
+  { label: 'Cooling Watch', title: 'Liquid cooling shifts, water strategy, and thermal limits at density.', href: '/category/cooling/', cat: 'cooling' },
+  { label: 'Capital Watch', title: 'Financing rounds, project debt, M&A, and infrastructure market moves.', href: '/category/capital-markets/', cat: 'capital' },
+  { label: 'Source Trail', title: 'Original links, visual source notes, archive search, and public methodology.', href: '/methodology/', cat: 'ai' },
 ];
+
+const structuredData = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'NewsMediaOrganization',
+      '@id': `${SITE.url}/#organization`,
+      name: SITE.name,
+      url: SITE.url,
+      logo: { '@type': 'ImageObject', url: `${SITE.url}${SITE.defaultOgImage}` },
+      contactPoint: { '@type': 'ContactPoint', contactType: 'editorial', email: SITE.contactEmail },
+    },
+    {
+      '@type': 'WebSite',
+      '@id': `${SITE.url}/#website`,
+      url: SITE.url,
+      name: SITE.name,
+      description: SITE.description,
+      inLanguage: 'en',
+      publisher: { '@id': `${SITE.url}/#organization` },
+    },
+  ],
+};
 ---
 <Layout title={boardTitle} description="Open AI infrastructure intelligence for power, data centers, chips, cloud capacity, cooling, and capital." canonicalPath="/">
-  <main class="page-shell autonomous-home publication-home">
-    <header class="publication-header command-center-header">
-      <div class="edition-line">
-        <span>AI Infrastructure Intelligence</span>
-        <span>Updated every 8 hours</span>
-        <a href="/rss.xml">RSS</a>
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(structuredData)}></script>
+
+  <div class="terminal-bg" aria-hidden="true">
+    <div class="terminal-bg-grid"></div>
+    <div class="terminal-bg-orb terminal-bg-orb-a"></div>
+    <div class="terminal-bg-orb terminal-bg-orb-b"></div>
+    <div class="terminal-bg-beam"></div>
+  </div>
+
+  <main class="page-shell autonomous-home publication-home terminal-home">
+    <div class="terminal-topline">
+      <span class="topline-live"><i aria-hidden="true"></i>Publishing every 8 hours</span>
+      <span class="topline-edition">{editionDate}</span>
+      <span class="topline-clock"><span data-utc-clock></span></span>
+      <a class="topline-rss" href="/rss.xml">RSS</a>
+    </div>
+
+    <header class="terminal-masthead">
+      <a class="masthead-brand" href="/" aria-label={`${boardTitle} home`}>
+        <span class="masthead-mark" aria-hidden="true"></span>
+        <span class="masthead-name"><b>Compute</b><b>Current</b></span>
+      </a>
+      <nav class="masthead-nav" aria-label="Primary coverage navigation">
+        <a href="/category/power-grid/">Power</a>
+        <a href="/category/data-centers/">Data Centers</a>
+        <a href="/category/cloud-capacity/">Cloud</a>
+        <a href="/category/semiconductors/">Silicon</a>
+        <a href="/category/capital-markets/">Capital</a>
+        <a href="/archive/">Archive</a>
+      </nav>
+      <div class="masthead-actions">
+        <a class="btn-ghost masthead-contact" href="/contact/">Contact</a>
+        <a class="btn-primary" href="/rss.xml">Get the feed</a>
       </div>
-
-      <div class="masthead-row">
-        <div class="hero-copy">
-          <p class="eyebrow">AI Infrastructure Intelligence</p>
-          <h1 aria-label={boardTitle}>
-            <span>Compute</span>
-            <span>Current</span>
-          </h1>
-          <p>
-            Source-linked analysis on the bottlenecks shaping AI capacity, power, and capital flows.
-          </p>
-          <p class="hero-deck">
-            A public publication for readers who need the source trail behind data center buildouts, grid constraints,
-            silicon supply, cooling shifts, cloud capacity, policy, and capital movement.
-          </p>
-          <nav class="commercial-actions homepage-commercial-actions" aria-label="Public intelligence actions">
-            <a href={routes.archive}>Read the latest</a>
-            <a href={routes.methodology}>How we source</a>
-            <a href={routes.editorialPolicy}>{ctas.sample}</a>
-            <a href={routes.archive}>{ctas.recentAnalysis}</a>
-          </nav>
-          <nav class="homepage-secondary-actions" aria-label="Public reference links">
-            <a href={routes.rss}>RSS</a>
-            <a href={routes.editorialPolicy}>Editorial policy</a>
-            <a href={routes.contact}>{ctas.contact}</a>
-          </nav>
-
-          <div class="operating-read-row" aria-label="Coverage lanes">
-            {operatingReads.map((read) => <span>{read}</span>)}
-          </div>
-        </div>
-        <aside
-          class="hero-brief premium-intelligence-desk"
-          data-homepage-premium-surface="intelligence-desk"
-          aria-labelledby="premium-desk-heading"
-        >
-          <div class="premium-desk-kicker">
-            <span>Infrastructure Intelligence Desk</span>
-            <em>{leadDate}</em>
-          </div>
-          <div class="premium-desk-grid">
-            <div class="premium-desk-primary">
-              <p class="eyebrow">Market read</p>
-              <h2 id="premium-desk-heading" data-premium-hero-headline>
-                Watch the constraint before it becomes the story.
-              </h2>
-              <p>
-                Compute Current ranks public AI infrastructure developments by their effect on power access,
-                site delivery, accelerated compute supply, cooling strategy, and capital exposure.
-              </p>
-            </div>
-
-            <div class="premium-market-context" data-premium-market-context aria-label="Current market context">
-              {marketContext.map((item) => (
-                <article>
-                  <span>{item.label}</span>
-                  <strong>{item.value}</strong>
-                </article>
-              ))}
-            </div>
-
-            <article class="premium-lead-card" data-premium-lead-card>
-              <div data-premium-lead-visual>
-                <ArticleCardImage
-                  image={leadImage}
-                  imageAlt={leadImageAlt}
-                  href={leadHref}
-                  className="premium-lead-card-image"
-                  linkClassName="premium-lead-card-visual"
-                  priority={true}
-                  ariaLabel={leadSignal?.title || 'Read lead analysis'}
-                  provenanceLabel=""
-                  provenanceKind=""
-                />
-              </div>
-              <div class="premium-lead-card-copy">
-                <span>{leadSignal?.source || 'Editorial desk'}</span>
-                <h3>{leadSignal?.title || 'AI infrastructure analysis is being prepared for publication.'}</h3>
-                <p>
-                  {leadSignal?.deck ||
-                    'The publication is monitoring source-linked infrastructure intelligence across power, sites, silicon, cooling, and capital.'}
-                </p>
-                <a class="detail-link" href={leadHref}>Read lead analysis</a>
-              </div>
-            </article>
-          </div>
-        </aside>
-      </div>
-
-      <section class="command-product-strip" aria-label="Compute Current public intelligence lanes">
-        {intelligenceProducts.map((product) => (
-          <a href={product.href}>
-            <span>{product.label}</span>
-            <strong>{product.title}</strong>
-          </a>
-        ))}
-      </section>
-
-      <CategoryNav links={navLinks} />
     </header>
 
-    <FeaturedArticle signal={feed.featured?.publicSignal} />
+    <TickerTape items={tickerItems} />
+
+    <section class="terminal-hero">
+      <div class="hero-copy">
+        <p class="eyebrow hero-eyebrow">AI Infrastructure Intelligence</p>
+        <h1 class="hero-wordmark" aria-label={boardTitle}>
+          <span>Compute</span>
+          <span>Current</span>
+        </h1>
+        <p class="hero-lede">
+          Source-linked analysis on the bottlenecks shaping AI capacity, power, and capital flows.
+        </p>
+        <p class="hero-deck">
+          A public publication for readers who need the source trail behind data center buildouts, grid constraints,
+          silicon supply, cooling shifts, cloud capacity, policy, and capital movement.
+        </p>
+        <div class="hero-actions">
+          <a class="btn-primary" href="/archive/">Read the latest</a>
+          <a class="btn-ghost" href="/methodology/">How we source</a>
+          <a class="btn-ghost" href="/editorial-policy/">Editorial policy</a>
+        </div>
+        <div class="hero-chips" aria-label="Coverage lanes">
+          {operatingReads.map((read) => <span>{read}</span>)}
+        </div>
+      </div>
+
+      <aside class="hero-panel" aria-labelledby="hero-lead-heading">
+        <div class="hero-panel-kicker">
+          <span>On the desk</span>
+          <em>{leadDate}</em>
+        </div>
+        <article class="hero-lead">
+          <ArticleCardImage
+            image={leadImage}
+            imageAlt={leadImageAlt}
+            href={leadHref}
+            className="hero-lead-img"
+            linkClassName="hero-lead-media"
+            priority={true}
+            ariaLabel={leadSignal?.title || 'Read lead analysis'}
+            provenanceLabel=""
+            provenanceKind=""
+          />
+          <div class="hero-lead-copy">
+            <span class="hero-lead-source">{leadSignal?.source || 'Editorial desk'}</span>
+            <h2 id="hero-lead-heading">{leadSignal?.title || 'AI infrastructure analysis is being prepared for publication.'}</h2>
+            <p>
+              {leadSignal?.deck ||
+                'The publication is monitoring source-linked infrastructure intelligence across power, sites, silicon, cooling, and capital.'}
+            </p>
+            <a class="hero-lead-link" href={leadHref}>Read lead analysis</a>
+          </div>
+        </article>
+        <div class="hero-context" aria-label="Current market context">
+          {marketContext.map((item) => (
+            <div class="hero-context-tile">
+              <span>{item.label}</span>
+              <strong>{item.value}</strong>
+            </div>
+          ))}
+        </div>
+      </aside>
+    </section>
+
+    <PulseBoard metrics={pulseMetrics} mix={coverageMix} updatedLabel={updatedLabel} />
+
+    <FeaturedArticle signal={featuredSignal} />
+
+    <AdSlot variant="leaderboard" class="home-ad" />
 
     <LatestAnalysisFeed
       feed={latestFeed}
       title="Latest Analysis"
       eyebrow="Recent intelligence"
       dek="Source-linked analysis and briefs from the AI infrastructure buildout."
+      monetize={true}
     />
 
-    <section class="search-shell publication-search">
-      <div class="search-copy">
-        <p class="eyebrow">Publication archive</p>
-        <h2>Browse the archive</h2>
-      </div>
-      <p class="archive-note">
-        Browse AI infrastructure coverage by source, date, category, provenance, and operating context.
-      </p>
-      <a class="detail-link archive-link" href="/archive/">Browse the archive</a>
+    <section class="lane-strip" aria-label="Compute Current coverage lanes">
+      {lanes.map((lane) => (
+        <a class="lane-card" href={lane.href} data-cat={lane.cat}>
+          <span class="lane-label"><i aria-hidden="true"></i>{lane.label}</span>
+          <strong>{lane.title}</strong>
+          <span class="lane-arrow" aria-hidden="true">&rarr;</span>
+        </a>
+      ))}
     </section>
 
-    <footer class="transparency-footer" aria-label="Editorial links">
-      <nav class="policy-link-row" aria-label="Publication pages">
-        <a href="/about/">About</a>
-        <a href="/editorial-policy/">Editorial policy</a>
-        <a href="/methodology/">Methodology</a>
-        <a href="/ai-disclosure/">AI-assisted Disclosure</a>
-        <a href={routes.contact}>{ctas.contact}</a>
-        <a href="/rss.xml">RSS</a>
-        <a href="/sitemap.xml">Sitemap</a>
-      </nav>
-    </footer>
+    <section class="current-band">
+      <div class="current-band-copy">
+        <p class="eyebrow">Stay with the story</p>
+        <h2>The buildout does not wait. Neither does the desk.</h2>
+        <p>New source-linked analysis publishes every 8 hours. Follow along wherever you read.</p>
+      </div>
+      <div class="current-band-actions">
+        <a class="btn-primary" href="/rss.xml">Subscribe via RSS</a>
+        <a class="btn-ghost" href="/contact/">Share a source</a>
+      </div>
+    </section>
+
+    <section class="archive-band">
+      <div class="archive-band-copy">
+        <p class="eyebrow">Publication archive</p>
+        <h2>Browse the archive</h2>
+        <p>AI infrastructure coverage by source, date, category, provenance, and operating context.</p>
+      </div>
+      <a class="btn-ghost archive-band-link" href="/archive/">Browse the archive</a>
+    </section>
+
+    <SiteFooter />
   </main>
+
+  <script>
+    const clock = document.querySelector('[data-utc-clock]');
+    if (clock) {
+      const tick = () => {
+        clock.textContent = `${new Date().toISOString().slice(11, 19)} UTC`;
+      };
+      tick();
+      window.setInterval(tick, 1000);
+    }
+  </script>
 </Layout>

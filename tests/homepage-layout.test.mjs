@@ -254,8 +254,10 @@ test('homepage composes dedicated publication components', () => {
   const styles = fs.readFileSync('src/styles/global.css', 'utf8');
 
   assert.match(source, /FeaturedArticle/);
-  assert.match(source, /CategoryNav/);
-  assert.match(source, /hero-brief/);
+  assert.match(source, /TickerTape/);
+  assert.match(source, /PulseBoard/);
+  assert.match(source, /SiteFooter/);
+  assert.match(source, /hero-panel/);
   assert.match(source, /Latest Analysis/);
   assert.match(source, /Publication archive/);
   assert.match(source, /Read the latest/);

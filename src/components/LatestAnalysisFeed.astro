@@ -1,6 +1,7 @@
 ---
 import ArticleCard from './ArticleCard.astro';
 import FeedFilterBar from './FeedFilterBar.astro';
+import AdSlot from './monetize/AdSlot.astro';
 
 const {
   feed = { items: [], filters: [], emptyState: 'No new stories yet.' },
@@ -8,8 +9,11 @@ const {
   eyebrow = 'Latest Analysis',
   dek = 'A live stream of AI infrastructure analysis, briefs, and market signals.',
   showFilters = true,
+  monetize = false,
 } = Astro.props;
 const items = feed.items || [];
+// Feed-embedded promo/ad positions (after the 6th and 18th cards).
+const adAfter = new Set([5, 17]);
 ---
 <section class="latest-analysis-feed" aria-label={title}>
   <div class="feed-heading">
@@ -22,7 +26,12 @@ const items = feed.items || [];
   {showFilters && feed.filters?.length ? <FeedFilterBar filters={feed.filters} /> : null}
   {items.length ? (
     <div class="article-list">
-      {items.map((item: any) => <ArticleCard signal={item.publicSignal} />)}
+      {items.map((item: any, index: number) => (
+        <>
+          <ArticleCard signal={item.publicSignal} />
+          {monetize && adAfter.has(index) && index < items.length - 1 ? <AdSlot variant="infeed" /> : null}
+        </>
+      ))}
     </div>
   ) : (
     <div class="public-empty-state">

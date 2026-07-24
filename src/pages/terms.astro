@@ -1,0 +1,84 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { SITE } from '../config/site';
+
+const effectiveDate = 'July 24, 2026';
+---
+<Layout
+  title={`Terms of Use | ${SITE.name}`}
+  description="Terms of use for Compute Current: content license, accuracy limits, no investment advice, and linking policy."
+  canonicalPath="/terms/"
+>
+  <main class="policy-shell">
+    <a class="back-link" href="/">Latest analysis</a>
+    <article class="policy-page">
+      <p class="eyebrow">Terms of Use</p>
+      <h1>Read freely. Decide responsibly.</h1>
+      <p class="policy-lede">
+        By reading Compute Current you agree to these terms. Effective date: {effectiveDate}.
+      </p>
+
+      <section>
+        <h2>What this site is</h2>
+        <p>
+          Compute Current publishes analysis and briefs about AI infrastructure: power, data centers,
+          semiconductors, cloud capacity, cooling, policy, and capital flows. Coverage is source-linked and
+          produced with AI-assisted editorial tooling as described in the
+          <a href="/ai-disclosure/">AI-assisted disclosure</a> and <a href="/editorial-policy/">editorial policy</a>.
+        </p>
+      </section>
+
+      <section>
+        <h2>Not investment, legal, or engineering advice</h2>
+        <p>
+          Content is provided for general information only. Nothing here is investment advice, a recommendation
+          to buy or sell any security, legal advice, or engineering guidance for a specific facility. Verify
+          material facts against the linked primary sources before acting on them.
+        </p>
+      </section>
+
+      <section>
+        <h2>Accuracy and corrections</h2>
+        <p>
+          We work from public sources and apply quality checks, but errors can survive. If you find one, email
+          <a href={`mailto:${SITE.contactEmail}`}>{SITE.contactEmail}</a> with the article link and the source
+          for the correction; corrections are applied to the published page.
+        </p>
+      </section>
+
+      <section>
+        <h2>License and linking</h2>
+        <p>
+          You may link to any page and quote brief excerpts with attribution and a link back. Republishing full
+          articles, scraping the site into a competing feed, or training commercial models on the full text
+          requires written permission. Third-party sources remain the property of their publishers.
+        </p>
+      </section>
+
+      <section>
+        <h2>Advertising and third-party links</h2>
+        <p>
+          Pages may carry clearly labeled advertising and links to external sites. We are not responsible for the
+          content, terms, or privacy practices of external destinations. See the
+          <a href="/privacy/">privacy policy</a> for how advertising and measurement cookies are handled.
+        </p>
+      </section>
+
+      <section>
+        <h2>No warranty; limitation of liability</h2>
+        <p>
+          The site is provided &ldquo;as is&rdquo; without warranties of any kind. To the maximum extent permitted
+          by law, Compute Current is not liable for losses arising from reliance on published content or from
+          interruptions of the service.
+        </p>
+      </section>
+
+      <nav class="policy-link-row" aria-label="Related pages">
+        <a href="/privacy/">Privacy policy</a>
+        <a href="/editorial-policy/">Editorial policy</a>
+        <a href="/methodology/">Methodology</a>
+        <a href="/contact/">Contact</a>
+      </nav>
+    </article>
+  </main>
+</Layout>

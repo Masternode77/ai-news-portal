@@ -1,0 +1,44 @@
+---
+// Continuous headline tape. Pure CSS marquee: the track holds two copies of
+// the run; translateX(-50%) loops seamlessly. Pauses on hover, degrades to a
+// horizontally scrollable strip when reduced motion is requested.
+import { categoryKey } from '../../lib/category-visuals';
+
+interface TapeItem {
+  title: string;
+  href: string;
+  category?: string;
+  source?: string;
+}
+
+const { items = [] } = Astro.props as { items: TapeItem[] };
+const tapeItems = items.filter((item) => item?.title && item?.href).slice(0, 16);
+const duration = Math.max(36, tapeItems.length * 5.5);
+---
+{tapeItems.length >= 4 ? (
+  <div class="tape" style={`--tape-duration:${duration}s`}>
+    <span class="tape-flag"><i class="tape-dot" aria-hidden="true"></i>Wire</span>
+    <div class="tape-mask">
+      <div class="tape-track">
+        <div class="tape-run">
+          {tapeItems.map((item) => (
+            <a class="tape-item" href={item.href} data-cat={categoryKey(item.category)}>
+              <i aria-hidden="true"></i>
+              <span class="tape-title">{item.title}</span>
+              {item.source ? <span class="tape-source">{item.source}</span> : null}
+            </a>
+          ))}
+        </div>
+        <div class="tape-run" aria-hidden="true">
+          {tapeItems.map((item) => (
+            <a class="tape-item" href={item.href} data-cat={categoryKey(item.category)} tabindex="-1">
+              <i aria-hidden="true"></i>
+              <span class="tape-title">{item.title}</span>
+              {item.source ? <span class="tape-source">{item.source}</span> : null}
+            </a>
+          ))}
+        </div>
+      </div>
+    </div>
+  </div>
+) : null}

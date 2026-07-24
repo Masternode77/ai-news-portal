@@ -1,0 +1,55 @@
+---
+// Cookie consent surface, rendered only when ads or analytics are configured.
+// Works with the Google Consent Mode v2 defaults bootstrapped in Layout.astro.
+import { consentRequired } from '../../lib/monetization';
+---
+{consentRequired ? (
+  <>
+    <div id="cc-consent" class="consent-shell" role="dialog" aria-live="polite" aria-label="Cookie preferences" hidden>
+      <div class="consent-copy">
+        <strong>Cookies on Compute Current</strong>
+        <p>
+          We use cookies for anonymous traffic measurement and, where enabled, advertising.
+          Choose what you allow. Details in the <a href="/privacy/">privacy policy</a>.
+        </p>
+      </div>
+      <div class="consent-actions">
+        <button type="button" class="consent-btn consent-accept" data-consent-accept>Allow all</button>
+        <button type="button" class="consent-btn consent-decline" data-consent-decline>Essential only</button>
+      </div>
+    </div>
+    <script is:inline>
+      (function () {
+        var KEY = 'ccConsentV1';
+        var box = document.getElementById('cc-consent');
+        if (!box) return;
+        function signal(granted) {
+          try {
+            if (typeof window.gtag === 'function') {
+              window.gtag('consent', 'update', {
+                ad_storage: granted ? 'granted' : 'denied',
+                ad_user_data: granted ? 'granted' : 'denied',
+                ad_personalization: granted ? 'granted' : 'denied',
+                analytics_storage: granted ? 'granted' : 'denied',
+              });
+            }
+          } catch (e) { /* consent update is best-effort */ }
+        }
+        function choose(granted) {
+          try { localStorage.setItem(KEY, granted ? 'granted' : 'denied'); } catch (e) { /* private mode */ }
+          signal(granted);
+          box.hidden = true;
+        }
+        var stored = null;
+        try { stored = localStorage.getItem(KEY); } catch (e) { /* private mode */ }
+        if (stored === 'granted' || stored === 'denied') {
+          signal(stored === 'granted');
+          return;
+        }
+        box.hidden = false;
+        box.querySelector('[data-consent-accept]').addEventListener('click', function () { choose(true); });
+        box.querySelector('[data-consent-decline]').addEventListener('click', function () { choose(false); });
+      })();
+    </script>
+  </>
+) : null}
