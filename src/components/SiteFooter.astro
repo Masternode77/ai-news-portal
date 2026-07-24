@@ -1,0 +1,61 @@
+---
+import { SITE } from '../config/site';
+
+const year = 2026;
+const coverage = [
+  ['Power & Grid', '/category/power-grid/'],
+  ['Data Centers', '/category/data-centers/'],
+  ['Cloud Capacity', '/category/cloud-capacity/'],
+  ['Semiconductors', '/category/semiconductors/'],
+  ['Cooling', '/category/cooling/'],
+  ['Capital Markets', '/category/capital-markets/'],
+  ['Policy & Siting', '/category/regulation/'],
+];
+const publication = [
+  ['About', '/about/'],
+  ['Methodology', '/methodology/'],
+  ['Editorial policy', '/editorial-policy/'],
+  ['AI-assisted Disclosure', '/ai-disclosure/'],
+  ['Contact', '/contact/'],
+];
+const reference = [
+  ['Archive', '/archive/'],
+  ['RSS feed', '/rss.xml'],
+  ['Sitemap', '/sitemap.xml'],
+  ['Privacy policy', '/privacy/'],
+  ['Terms of use', '/terms/'],
+];
+---
+<footer class="site-footer" aria-label="Site footer">
+  <div class="site-footer-grid">
+    <div class="site-footer-brand">
+      <a class="site-footer-wordmark" href="/">
+        <span>Compute</span><span>Current</span>
+      </a>
+      <p>
+        Source-linked intelligence on the AI buildout: power, data centers, silicon, cloud capacity,
+        cooling, policy, and capital. Refreshed every 8 hours.
+      </p>
+      <a class="site-footer-rss" href="/rss.xml">
+        <i aria-hidden="true"></i>
+        Subscribe via RSS
+      </a>
+    </div>
+    <nav class="site-footer-col" aria-label="Coverage">
+      <span class="site-footer-title">Coverage</span>
+      {coverage.map(([label, href]) => <a href={href}>{label}</a>)}
+    </nav>
+    <nav class="site-footer-col" aria-label="Publication">
+      <span class="site-footer-title">Publication</span>
+      {publication.map(([label, href]) => <a href={href}>{label}</a>)}
+    </nav>
+    <nav class="site-footer-col" aria-label="Reference">
+      <span class="site-footer-title">Reference</span>
+      {reference.map(([label, href]) => <a href={href}>{label}</a>)}
+    </nav>
+  </div>
+  <div class="site-footer-bar">
+    <span>© {year} {SITE.name}. Every analysis links its original source.</span>
+    <span class="site-footer-domain">{SITE.domain}</span>
+  </div>
+</footer>

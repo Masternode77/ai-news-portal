@@ -27,7 +27,7 @@ function getTemplateSource(source) {
   return frontmatterEnd >= 0 ? source.slice(frontmatterEnd + 3) : source;
 }
 
-test('homepage premium surface renders a named intelligence desk module before the feed', () => {
+test('homepage hero desk module renders before the feed', () => {
   const source = readText('../src/pages/index.astro');
   const templateSource = getTemplateSource(source);
   const feedSource = readText('../src/components/LatestAnalysisFeed.astro');
@@ -35,17 +35,14 @@ test('homepage premium surface renders a named intelligence desk module before t
   assert.match(source, /FeaturedArticle/);
   assert.match(source, /LatestAnalysisFeed/);
   assert.match(source, /ArticleCardImage/);
-  assert.match(source, /data-homepage-premium-surface="intelligence-desk"/);
-  assert.match(source, /Infrastructure Intelligence Desk/);
-  assert.match(source, /data-premium-hero-headline/);
-  assert.match(source, /data-premium-market-context/);
-  assert.match(source, /data-premium-lead-card/);
-  assert.match(source, /data-premium-lead-visual/);
+  assert.match(source, /class="hero-panel"/);
+  assert.match(source, /hero-lead-heading/);
+  assert.match(source, /aria-label="Current market context"/);
   assert.match(source, /leadImage/);
   assert.match(source, /provenanceLabel=""/);
   assert.doesNotMatch(source, /leadImageProvenanceLabel/);
-  assert.ok(templateSource.indexOf('data-homepage-premium-surface="intelligence-desk"') < templateSource.indexOf('FeaturedArticle'));
-  assert.ok(templateSource.indexOf('data-homepage-premium-surface="intelligence-desk"') < templateSource.indexOf('LatestAnalysisFeed'));
+  assert.ok(templateSource.indexOf('class="hero-panel"') < templateSource.indexOf('FeaturedArticle'));
+  assert.ok(templateSource.indexOf('class="hero-panel"') < templateSource.indexOf('LatestAnalysisFeed'));
   assert.match(feedSource, /ArticleCard/);
 });
 
@@ -65,28 +62,24 @@ test('homepage redesign exposes publication masthead before latest analysis', ()
   assert.ok(publicationMastheadIndex < latestAnalysisIndex, 'publication masthead should appear before Latest Analysis');
 });
 
-test('homepage premium surface is part of the first viewport masthead system', () => {
+test('homepage hero desk is part of the first viewport system', () => {
   const source = readText('../src/pages/index.astro');
   const templateSource = getTemplateSource(source);
-  const markerIndex = templateSource.indexOf('data-homepage-premium-surface="intelligence-desk"');
-  const deskHeadingIndex = templateSource.indexOf('Infrastructure Intelligence Desk');
-  const heroBriefIndex = templateSource.search(/class="[^"]*\bhero-brief\b[^"]*"/);
-  const categoryNavIndex = templateSource.indexOf('CategoryNav');
-  const headerCloseIndex = templateSource.indexOf('</header>');
+  const mastheadIndex = templateSource.indexOf('terminal-masthead');
+  const tapeIndex = templateSource.indexOf('TickerTape');
+  const heroIndex = templateSource.indexOf('terminal-hero');
+  const panelIndex = templateSource.indexOf('class="hero-panel"');
+  const featuredIndex = templateSource.indexOf('FeaturedArticle');
 
-  assert.notEqual(markerIndex, -1, 'expected premium surface marker');
-  assert.notEqual(deskHeadingIndex, -1, 'expected named intelligence desk heading');
-  assert.notEqual(heroBriefIndex, -1, 'expected hero brief in masthead');
-  assert.notEqual(categoryNavIndex, -1, 'expected category navigation');
-  assert.notEqual(headerCloseIndex, -1, 'expected publication header close');
-  assert.ok(markerIndex > heroBriefIndex, 'premium surface should be attached to the hero brief');
-  assert.match(
-    templateSource,
-    /class="[^"]*\bhero-brief\b[^"]*"[\s\S]*data-homepage-premium-surface="intelligence-desk"/,
-  );
-  assert.ok(markerIndex < categoryNavIndex, 'premium surface should render before CategoryNav');
-  assert.ok(deskHeadingIndex < categoryNavIndex, 'desk heading should render before CategoryNav');
-  assert.ok(markerIndex < headerCloseIndex, 'premium surface should stay inside the first viewport header');
+  assert.notEqual(mastheadIndex, -1, 'expected sticky publication masthead');
+  assert.notEqual(tapeIndex, -1, 'expected headline tape');
+  assert.notEqual(heroIndex, -1, 'expected hero section');
+  assert.notEqual(panelIndex, -1, 'expected hero desk panel');
+  assert.notEqual(featuredIndex, -1, 'expected featured story');
+  assert.ok(mastheadIndex < tapeIndex, 'masthead should render before the headline tape');
+  assert.ok(tapeIndex < heroIndex, 'headline tape should render before the hero');
+  assert.ok(heroIndex < panelIndex, 'hero desk panel should live inside the hero section');
+  assert.ok(panelIndex < featuredIndex, 'hero desk should render before the featured story');
 });
 
 test('homepage premium surface keeps the intelligence deck readable on mobile', () => {

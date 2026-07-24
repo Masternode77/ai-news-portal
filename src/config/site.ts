@@ -7,7 +7,7 @@ export const SITE = {
   tagline: 'AI infrastructure, data center, semiconductor, and power intelligence, refreshed every 8 hours.',
   description:
     'Decision-grade intelligence on AI infrastructure, data centers, semiconductors, cloud capacity, cooling, power grids, and capital flows.',
-  defaultOgImage: '/og-default.svg',
+  defaultOgImage: '/og-default.png',
   rssPath: '/rss.xml',
   contactEmail: 'briefings@computecurrent.com',
   commercial: {
@@ -21,6 +21,8 @@ export const SITE = {
       methodology: '/methodology/',
       editorialPolicy: '/editorial-policy/',
       aiDisclosure: '/ai-disclosure/',
+      privacy: '/privacy/',
+      terms: '/terms/',
       rss: '/rss.xml',
     },
     ctas: {

@@ -1,0 +1,88 @@
+---
+// Universal advertising surface.
+//
+// Real AdSense units render only when PUBLIC_ADSENSE_CLIENT (and the matching
+// slot id) are configured. Until then each placement renders a first-party
+// house promo so the layout stays intentional during the AdSense review
+// period and no external request is ever made.
+import { ADSENSE_CLIENT, adsEnabled, slotFor } from '../../lib/monetization';
+
+interface Props {
+  variant?: 'leaderboard' | 'infeed' | 'article' | 'box';
+  class?: string;
+}
+
+const { variant = 'leaderboard', class: className = '' } = Astro.props;
+const slotId = slotFor(variant);
+const renderAd = adsEnabled && Boolean(slotId);
+
+const HOUSE: Record<string, { kicker: string; title: string; copy: string; cta: string; href: string; external?: boolean }> = {
+  leaderboard: {
+    kicker: 'From Compute Current',
+    title: 'Follow the buildout as it happens.',
+    copy: 'Source-linked AI infrastructure analysis, refreshed every 8 hours. Add the feed to your reader and never miss a shift in power, silicon, or capacity.',
+    cta: 'Subscribe via RSS',
+    href: '/rss.xml',
+  },
+  infeed: {
+    kicker: 'From Compute Current',
+    title: 'Want this feed in your inbox tooling?',
+    copy: 'Every analysis lands in the public RSS feed the moment it publishes.',
+    cta: 'Get the feed',
+    href: '/rss.xml',
+  },
+  article: {
+    kicker: 'From Compute Current',
+    title: 'Keep reading the infrastructure record.',
+    copy: 'Browse the full archive of source-linked coverage across power, data centers, silicon, cooling, and capital.',
+    cta: 'Browse the archive',
+    href: '/archive/',
+  },
+  box: {
+    kicker: 'Partner with us',
+    title: 'Reach the people building AI infrastructure.',
+    copy: 'Compute Current readers track power, data center, semiconductor, and capital decisions. Sponsorship and placement inquiries are open.',
+    cta: 'Contact the desk',
+    href: '/contact/',
+  },
+};
+
+const house = HOUSE[variant] || HOUSE.leaderboard;
+const isFluid = variant === 'article';
+---
+{renderAd ? (
+  <div class:list={['ad-slot', `ad-slot-${variant}`, className]} data-ad-shell>
+    <span class="ad-slot-label">Advertisement</span>
+    {isFluid ? (
+      <ins
+        class="adsbygoogle"
+        style="display:block; text-align:center;"
+        data-ad-client={ADSENSE_CLIENT}
+        data-ad-slot={slotId}
+        data-ad-layout="in-article"
+        data-ad-format="fluid"
+      ></ins>
+    ) : (
+      <ins
+        class="adsbygoogle"
+        style="display:block"
+        data-ad-client={ADSENSE_CLIENT}
+        data-ad-slot={slotId}
+        data-ad-format="auto"
+        data-full-width-responsive="true"
+      ></ins>
+    )}
+    <script is:inline>
+      (window.adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+) : (
+  <aside class:list={['ad-slot', 'house-promo', `ad-slot-${variant}`, className]} aria-label="Compute Current promotion">
+    <span class="house-promo-label">{house.kicker}</span>
+    <div class="house-promo-body">
+      <strong>{house.title}</strong>
+      <p>{house.copy}</p>
+    </div>
+    <a class="house-promo-cta" href={house.href}>{house.cta}</a>
+  </aside>
+)}

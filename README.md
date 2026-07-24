@@ -1,6 +1,23 @@
-# AI / Data Center Signal Board
+# Compute Current — AI Infrastructure Intelligence
 
 Production-ready Astro portal for curated AI, data center, semiconductor, power, and cloud infrastructure intelligence.
+
+## Monetization & analytics (env-gated)
+
+Ads and analytics ship fully wired but disabled until real IDs exist. No external
+requests are made while the variables are blank; ad placements render first-party
+house promos instead.
+
+- `PUBLIC_ADSENSE_CLIENT` (`ca-pub-…`) enables the AdSense loader, the
+  `google-adsense-account` meta tag, and the live `/ads.txt` entry.
+- `PUBLIC_ADSENSE_SLOT_LEADERBOARD` / `_INFEED` / `_ARTICLE` / `_BOX` bind the
+  homepage leaderboard, feed-embedded, in-article, and article-footer units.
+- `PUBLIC_GA4_ID` (`G-…`) enables Google Analytics 4 with Consent Mode v2
+  (denied-by-default in EEA/UK/CH plus an on-site consent banner).
+- Compliance surfaces: `/privacy/`, `/terms/`, consent banner, and a dynamic
+  `/ads.txt` generated from the publisher ID.
+
+Full setup walkthrough (Korean): [`docs/monetization-setup.md`](docs/monetization-setup.md).
 
 ## What changed in this update
 

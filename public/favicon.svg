@@ -1,7 +1,15 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Compute Current">
-  <rect width="64" height="64" rx="14" fill="#070b14"/>
-  <path d="M14 35c6-12 15-18 27-18h8" fill="none" stroke="#8bd3ff" stroke-width="5" stroke-linecap="round"/>
-  <path d="M50 29c-6 12-15 18-27 18h-8" fill="none" stroke="#72f2a7" stroke-width="5" stroke-linecap="round"/>
-  <path d="M43 11l8 6-8 6" fill="none" stroke="#8bd3ff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
-  <path d="M21 41l-8 6 8 6" fill="none" stroke="#72f2a7" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+  <defs>
+    <linearGradient id="ccg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#22d3ee"/>
+      <stop offset="55%" stop-color="#60a5fa"/>
+      <stop offset="100%" stop-color="#a78bfa"/>
+    </linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="14" fill="#070b15"/>
+  <rect x="1" y="1" width="62" height="62" rx="13" fill="none" stroke="url(#ccg)" stroke-opacity="0.55" stroke-width="2"/>
+  <path d="M14 35c6-12 15-18 27-18h8" fill="none" stroke="#67e8f9" stroke-width="5" stroke-linecap="round"/>
+  <path d="M50 29c-6 12-15 18-27 18h-8" fill="none" stroke="#a78bfa" stroke-width="5" stroke-linecap="round"/>
+  <path d="M43 11l8 6-8 6" fill="none" stroke="#67e8f9" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M21 41l-8 6 8 6" fill="none" stroke="#a78bfa" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
 </svg>

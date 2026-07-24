@@ -1,0 +1,101 @@
+---
+// Coverage metrics band. All values are computed at build time from the real
+// article data passed in by the page — nothing here is invented client-side.
+interface Metric {
+  label: string;
+  value: number;
+  suffix?: string;
+  hint?: string;
+}
+
+interface MixSegment {
+  label: string;
+  count: number;
+  share: number; // 0..100
+  cat: string;
+}
+
+const {
+  metrics = [],
+  mix = [],
+  updatedLabel = '',
+} = Astro.props as { metrics: Metric[]; mix: MixSegment[]; updatedLabel: string };
+const numberFormatter = new Intl.NumberFormat('en-US');
+---
+<section class="pulse" aria-label="Coverage metrics">
+  <div class="pulse-head">
+    <p class="eyebrow">Coverage pulse</p>
+    <h2>The desk in numbers</h2>
+    {updatedLabel ? <span class="pulse-updated">{updatedLabel}</span> : null}
+  </div>
+  <div class="pulse-grid">
+    {metrics.map((metric) => (
+      <div class="pulse-tile">
+        <span class="pulse-value">
+          <strong data-countup={metric.value}>{numberFormatter.format(metric.value)}</strong>
+          {metric.suffix ? <em>{metric.suffix}</em> : null}
+        </span>
+        <span class="pulse-label">{metric.label}</span>
+        {metric.hint ? <span class="pulse-hint">{metric.hint}</span> : null}
+      </div>
+    ))}
+  </div>
+  {mix.length ? (
+    <div class="pulse-mix">
+      <span class="pulse-mix-title">Coverage mix</span>
+      <div class="pulse-mix-bar" role="img" aria-label={`Coverage mix: ${mix.map((seg) => `${seg.label} ${seg.share}%`).join(', ')}`}>
+        {mix.map((seg) => (
+          <i data-cat={seg.cat} style={`width:${Math.max(seg.share, 3)}%`}></i>
+        ))}
+      </div>
+      <div class="pulse-mix-legend">
+        {mix.map((seg) => (
+          <span class="pulse-mix-chip" data-cat={seg.cat}>
+            <i aria-hidden="true"></i>
+            {seg.label}
+            <em>{seg.share}%</em>
+          </span>
+        ))}
+      </div>
+    </div>
+  ) : null}
+</section>
+<script>
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const format = (value: number) => new Intl.NumberFormat('en-US').format(Math.round(value));
+  const animate = (el: HTMLElement) => {
+    const target = Number(el.dataset.countup || '0');
+    if (!Number.isFinite(target) || target <= 0 || reduceMotion) return;
+    const started = performance.now();
+    const duration = 950;
+    const step = (now: number) => {
+      const progress = Math.min((now - started) / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      el.textContent = format(target * eased);
+      if (progress < 1) requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
+  };
+  const tiles = Array.from(document.querySelectorAll<HTMLElement>('[data-countup]'));
+  if ('IntersectionObserver' in window && !reduceMotion) {
+    const seen = new WeakSet<Element>();
+    const observer = new IntersectionObserver((entries) => {
+      for (const entry of entries) {
+        if (entry.isIntersecting && !seen.has(entry.target)) {
+          seen.add(entry.target);
+          animate(entry.target as HTMLElement);
+          observer.unobserve(entry.target);
+        }
+      }
+    }, { threshold: 0.4 });
+    tiles.forEach((tile) => observer.observe(tile));
+    // Ensure final values are always in place shortly after load.
+    window.addEventListener('load', () => {
+      window.setTimeout(() => {
+        tiles.forEach((tile) => {
+          if (!seen.has(tile)) tile.textContent = format(Number(tile.dataset.countup || '0'));
+        });
+      }, 350);
+    });
+  }
+</script>

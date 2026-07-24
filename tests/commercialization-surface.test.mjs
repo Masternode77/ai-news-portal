@@ -60,17 +60,20 @@ test('legacy conversion routes render as noindex public reference pages', async 
   }
 });
 
-test('homepage links to public reference routes before latest signals', async () => {
+test('homepage links to public reference routes before the latest analysis feed', async () => {
   const homepage = await fs.readFile(path.join(distDir, 'index.html'), 'utf8');
-  const latestSignalsIndex = homepage.indexOf('Latest Signals');
+  const latestAnalysisIndex = homepage.indexOf('Latest Analysis');
 
-  assert.notEqual(latestSignalsIndex, -1, 'expected Latest Signals section');
-  for (const routePath of publicHomepageLinks) {
+  assert.notEqual(latestAnalysisIndex, -1, 'expected Latest Analysis section');
+  const navigationLinks = ['/archive/', '/methodology/', '/editorial-policy/', '/contact/', '/rss.xml'];
+  for (const routePath of navigationLinks) {
     const linkMatch = homepage.match(new RegExp(`href=["']${routePath}["']`));
     assert.ok(linkMatch, `expected homepage link to ${routePath}`);
-    assert.ok(linkMatch.index < latestSignalsIndex, `${routePath} should appear before Latest Signals`);
+    assert.ok(linkMatch.index < latestAnalysisIndex, `${routePath} should appear before Latest Analysis`);
   }
-  assert.match(homepage, /href=["']\/contact\/["']/);
+  for (const routePath of publicHomepageLinks) {
+    assert.match(homepage, new RegExp(`href=["']${routePath}["']`), `expected homepage link to ${routePath}`);
+  }
   for (const routePath of legacyOpenRoutes) {
     assert.doesNotMatch(homepage, new RegExp(`href=["']${routePath}["']`), `homepage should not link legacy conversion route ${routePath}`);
   }

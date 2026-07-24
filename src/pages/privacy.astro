@@ -1,0 +1,117 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { SITE } from '../config/site';
+import { adsEnabled, analyticsEnabled } from '../lib/monetization';
+
+const effectiveDate = 'July 24, 2026';
+---
+<Layout
+  title={`Privacy Policy | ${SITE.name}`}
+  description="How Compute Current handles data: server logs, cookies, consent choices, analytics, and advertising services."
+  canonicalPath="/privacy/"
+>
+  <main class="policy-shell">
+    <a class="back-link" href="/">Latest analysis</a>
+    <article class="policy-page">
+      <p class="eyebrow">Privacy Policy</p>
+      <h1>Your data, kept boring on purpose.</h1>
+      <p class="policy-lede">
+        Compute Current is a publicly readable publication. We collect as little as possible, we ask before
+        measurement or advertising cookies are used where consent applies, and we never sell personal data.
+        Effective date: {effectiveDate}.
+      </p>
+
+      <section>
+        <h2>Who operates this site</h2>
+        <p>
+          Compute Current publishes AI infrastructure coverage at {SITE.url}. For any privacy question or request,
+          email <a href={`mailto:${SITE.contactEmail}`}>{SITE.contactEmail}</a>.
+        </p>
+      </section>
+
+      <section>
+        <h2>What we collect automatically</h2>
+        <p>
+          Our hosting provider processes standard server logs (IP address, user agent, requested URL, timestamp)
+          to serve pages, protect the service from abuse, and diagnose failures. Logs are retained only as long as
+          the hosting platform needs them for those purposes.
+        </p>
+      </section>
+
+      <section>
+        <h2>Analytics</h2>
+        <p>
+          {analyticsEnabled
+            ? 'This site uses Google Analytics 4 to understand aggregate readership: which pages are read, roughly where readers come from, and which sources send traffic. Analytics cookies are only set according to your consent choice. Reports are aggregated and are not used to identify individual readers.'
+            : 'When analytics are enabled, this site uses Google Analytics 4 to understand aggregate readership. Analytics cookies are only set according to your consent choice, and reports are aggregated, never used to identify individual readers.'}
+        </p>
+      </section>
+
+      <section>
+        <h2>Advertising</h2>
+        <p>
+          {adsEnabled
+            ? 'This site shows advertising served by Google AdSense. Google and its partners may use cookies or device identifiers to serve and measure ads, including, where you consent, personalized ads.'
+            : 'This site is prepared to show advertising served by Google AdSense. Once active, Google and its partners may use cookies or device identifiers to serve and measure ads, including, where you consent, personalized ads.'}
+          You can control ad personalization in your Google account at
+          <a href="https://adssettings.google.com" target="_blank" rel="noopener noreferrer">adssettings.google.com</a>,
+          and read how Google uses data from partner sites at
+          <a href="https://policies.google.com/technologies/partner-sites" target="_blank" rel="noopener noreferrer">policies.google.com/technologies/partner-sites</a>.
+        </p>
+      </section>
+
+      <section>
+        <h2>Cookies and your choices</h2>
+        <p>
+          Where measurement or advertising services are active, a consent notice lets you choose between
+          &ldquo;Allow all&rdquo; and &ldquo;Essential only.&rdquo; Your choice is stored in your browser
+          (local storage key <code>ccConsentV1</code>) and applied through Google Consent Mode. To change your
+          decision later, clear this site&rsquo;s browsing data and reload; the notice will appear again.
+          Declining never blocks access to any content.
+        </p>
+      </section>
+
+      <section>
+        <h2>Legal bases</h2>
+        <p>
+          Where the GDPR or similar laws apply, we rely on legitimate interest for serving pages and security
+          logging, and on your consent for analytics and advertising storage. You may withdraw consent at any
+          time as described above.
+        </p>
+      </section>
+
+      <section>
+        <h2>Your rights</h2>
+        <p>
+          Depending on your jurisdiction (including the EU/EEA, UK, and California), you may have rights to
+          access, correct, delete, or restrict processing of personal data, and to opt out of the sale or sharing
+          of personal information. We do not sell personal information. To exercise any right, email
+          <a href={`mailto:${SITE.contactEmail}`}>{SITE.contactEmail}</a> and we will respond within 30 days.
+        </p>
+      </section>
+
+      <section>
+        <h2>Children</h2>
+        <p>
+          This site is professional infrastructure coverage and is not directed to children under 13. We do not
+          knowingly collect personal information from children.
+        </p>
+      </section>
+
+      <section>
+        <h2>Changes</h2>
+        <p>
+          If this policy changes materially, the effective date above is updated and the new version is published
+          at this address.
+        </p>
+      </section>
+
+      <nav class="policy-link-row" aria-label="Related pages">
+        <a href="/terms/">Terms of Use</a>
+        <a href="/editorial-policy/">Editorial policy</a>
+        <a href="/ai-disclosure/">AI-assisted Disclosure</a>
+        <a href="/contact/">Contact</a>
+      </nav>
+    </article>
+  </main>
+</Layout>

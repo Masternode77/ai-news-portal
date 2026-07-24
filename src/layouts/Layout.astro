@@ -1,9 +1,18 @@
 ---
 import OpenGraphImage from '../components/OpenGraphImage.astro';
+import ConsentBanner from '../components/monetize/ConsentBanner.astro';
 import '../styles/global.css';
 import '../styles/redesign.css';
 import '../styles/public-intelligence.css';
+import '../styles/terminal.css';
 import { SITE } from '../config/site';
+import {
+  ADSENSE_CLIENT,
+  GA4_ID,
+  adsEnabled,
+  analyticsEnabled,
+  consentRequired,
+} from '../lib/monetization';
 
 export interface Props {
   title?: string;
@@ -26,6 +35,22 @@ const {
 const joinUrl = (base: string, path: string) =>
   `${base.replace(/\/$/, '')}/${path.replace(/^\//, '')}`;
 const canonical = canonicalPath ? joinUrl(SITE.url, canonicalPath) : joinUrl(SITE.url, Astro.url.pathname);
+
+// Google Consent Mode v2 bootstrap. Defaults to granted globally, denied in
+// EEA/UK/CH until the visitor chooses; a stored choice is re-applied on load.
+const CONSENT_REGIONS = [
+  'AT', 'BE', 'BG', 'HR', 'CY', 'CZ', 'DK', 'EE', 'FI', 'FR', 'DE', 'GR', 'HU', 'IE', 'IT',
+  'LV', 'LT', 'LU', 'MT', 'NL', 'PL', 'PT', 'RO', 'SK', 'SI', 'ES', 'SE', 'IS', 'LI', 'NO',
+  'GB', 'CH',
+];
+const consentBootstrap = [
+  'window.dataLayer=window.dataLayer||[];',
+  'function gtag(){dataLayer.push(arguments);}',
+  "gtag('consent','default',{ad_storage:'granted',ad_user_data:'granted',ad_personalization:'granted',analytics_storage:'granted'});",
+  `gtag('consent','default',{ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied',analytics_storage:'denied',wait_for_update:500,region:${JSON.stringify(CONSENT_REGIONS)}});`,
+  "try{var __cc=localStorage.getItem('ccConsentV1');if(__cc==='granted'||__cc==='denied'){gtag('consent','update',{ad_storage:__cc,ad_user_data:__cc,ad_personalization:__cc,analytics_storage:__cc});}}catch(e){}",
+  analyticsEnabled ? `gtag('js',new Date());gtag('config','${GA4_ID}');` : '',
+].join('');
 ---
 <!doctype html>
 <html lang="en">
@@ -38,18 +63,41 @@ const canonical = canonicalPath ? joinUrl(SITE.url, canonicalPath) : joinUrl(SIT
     <link rel="canonical" href={canonical} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="alternate" type="application/rss+xml" title={`${SITE.name} RSS`} href={SITE.rssPath} />
-    <meta name="theme-color" content="#090b12" />
+    <link rel="preload" href="/fonts/space-grotesk-var.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/ibm-plex-mono-500.woff2" as="font" type="font/woff2" crossorigin />
+    <meta name="theme-color" content="#04060c" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content={type} />
     <meta property="og:url" content={canonical} />
+    <meta property="og:locale" content="en_US" />
     <OpenGraphImage image={image} alt={description} />
     <meta property="og:site_name" content={SITE.name} />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
+    {consentRequired ? <script is:inline set:html={consentBootstrap}></script> : null}
+    {analyticsEnabled ? (
+      <>
+        <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin />
+        <script is:inline async src={`https://www.googletagmanager.com/gtag/js?id=${GA4_ID}`}></script>
+      </>
+    ) : null}
+    {adsEnabled ? (
+      <>
+        <meta name="google-adsense-account" content={ADSENSE_CLIENT} />
+        <link rel="preconnect" href="https://pagead2.googlesyndication.com" crossorigin />
+        <script
+          is:inline
+          async
+          src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${ADSENSE_CLIENT}`}
+          crossorigin="anonymous"
+        ></script>
+      </>
+    ) : null}
   </head>
   <body>
     <slot />
+    <ConsentBanner />
   </body>
 </html>
