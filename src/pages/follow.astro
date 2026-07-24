@@ -1,0 +1,91 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { SITE } from '../config/site';
+
+const feedUrl = `${SITE.url}/rss.xml`;
+const encodedFeed = encodeURIComponent(feedUrl);
+const readers = [
+  { name: 'Feedly', href: `https://feedly.com/i/subscription/feed%2F${encodedFeed}` },
+  { name: 'Inoreader', href: `https://www.inoreader.com/feed/${encodedFeed}` },
+  { name: 'NewsBlur', href: `https://newsblur.com/?url=${encodedFeed}` },
+];
+---
+<Layout
+  title={`Follow | ${SITE.name}`}
+  description="Get every new Compute Current analysis automatically — follow by feed reader or check the archive."
+  canonicalPath="/follow/"
+>
+  <main class="policy-shell follow-page">
+    <a class="back-link" href="/">Latest analysis</a>
+    <article class="policy-page">
+      <p class="eyebrow">Follow</p>
+      <h1>Never miss a new analysis.</h1>
+      <p class="policy-lede">
+        Compute Current publishes new source-linked coverage several times a day.
+        The easiest way to follow along is a feed reader — no account with us, no email required.
+      </p>
+
+      <section>
+        <h2>1. Copy the feed address</h2>
+        <p>This address is the machine-readable version of the site. It always contains the latest coverage.</p>
+        <div class="feed-copy-row">
+          <code class="feed-url" id="feed-url">{feedUrl}</code>
+          <button type="button" class="feed-copy-btn" data-copy-feed>Copy</button>
+        </div>
+      </section>
+
+      <section>
+        <h2>2. Paste it into any feed reader</h2>
+        <p>
+          Feed readers check the address for you and show new articles the moment they publish.
+          If you already use one, paste the address above. Otherwise these are solid free options:
+        </p>
+        <div class="reader-row">
+          {readers.map((reader) => (
+            <a class="reader-chip" href={reader.href} target="_blank" rel="noopener noreferrer">
+              Add to {reader.name}
+            </a>
+          ))}
+        </div>
+        <p class="reader-note">
+          Apple News-style apps (NetNewsWire, Reeder) and most email clients with feed support work the same way:
+          add a feed, paste the address.
+        </p>
+      </section>
+
+      <section>
+        <h2>Prefer the site itself?</h2>
+        <p>
+          Everything also lands in the <a href="/archive/">publication archive</a>, newest first.
+          Bookmark the <a href="/">homepage</a> — it refreshes several times a day.
+        </p>
+      </section>
+
+      <nav class="policy-link-row" aria-label="Related pages">
+        <a href="/archive/">Archive</a>
+        <a href="/about/">About</a>
+        <a href="/contact/">Contact</a>
+      </nav>
+    </article>
+  </main>
+
+  <script>
+    const button = document.querySelector<HTMLButtonElement>('[data-copy-feed]');
+    const urlNode = document.getElementById('feed-url');
+    if (button && urlNode) {
+      button.addEventListener('click', async () => {
+        try {
+          await navigator.clipboard.writeText(urlNode.textContent?.trim() || '');
+          button.textContent = 'Copied';
+          window.setTimeout(() => { button.textContent = 'Copy'; }, 1800);
+        } catch {
+          const range = document.createRange();
+          range.selectNodeContents(urlNode);
+          const selection = window.getSelection();
+          selection?.removeAllRanges();
+          selection?.addRange(range);
+        }
+      });
+    }
+  </script>
+</Layout>
