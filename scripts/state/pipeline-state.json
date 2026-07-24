@@ -683,7 +683,9 @@
     "2aaf121befd83f12",
     "63a4d7f4b0a2084e",
     "8f544f8e304557fb",
-    "a5d98183d2323c76"
+    "a5d98183d2323c76",
+    "73bc6b51bc81f46c",
+    "52a12f705e646a11"
   ],
   "dayPlans": {
     "2026-03-24": {
@@ -34483,131 +34485,447 @@
         "1": true,
         "2": true
       }
+    },
+    "2026-07-25": {
+      "date": "2026-07-25",
+      "createdAt": "2026-07-24T16:48:15.657Z",
+      "refreshedAt": "2026-07-24T16:48:15.657Z",
+      "candidateWindowHours": 24,
+      "curatedItems": [
+        {
+          "id": "73bc6b51bc81f46c",
+          "source": "HPCwire",
+          "url": "https://www.hpcwire.com/off-the-wire/supermicro-introduces-new-server-portfolio-with-6th-gen-amd-epyc-9006-series-cpus/",
+          "title": "Supermicro Introduces New Server Portfolio with 6th Gen AMD EPYC 9006 Series CPUs",
+          "snippet": "SAN JOSE, Calif., July 24, 2026 — Super Micro Computer, Inc. has announced its next-generation H15 server portfolio powered by 6th Gen AMD EPYC 9006 Series CPUs, optimized for next generation GPUs including AMD Instinct…",
+          "contentText": "SAN JOSE, Calif., July 24, 2026 &#8212; Super Micro Computer, Inc. has announced its next-generation H15 server portfolio powered by 6th Gen AMD EPYC 9006 Series CPUs, optimized for next generation GPUs including AMD Instinct, and connected by AMD Pensando networking. With up to 256 cores and 512 threads, H15 systems meet the growing compute demands of cloud, enterprise, storage, high-performance computing (HPC), and agentic AI workloads. With breakthrough 1.7x generational CPU performance improvement, expanded memory and I/O bandwidth, and industry-leading compute density, customers are now able to run more concurrent AI agents, accelerate enterprise applications, and maximize host-node performance while operating within existing power envelopes. &#8220;The latest AMD powered additions t…",
+          "publishedAt": "2026-07-24T15:22:01.000Z",
+          "sourceImage": "https://www.hpcwire.com/wp-content/uploads/2026/07/PR_Image_AMD_Venice_1200x628_CM_for-distribution-300x157.jpg",
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "category": "AI Infrastructure",
+          "primary_category": "AI Infrastructure",
+          "secondary_category": "GPU clusters and deployment readiness",
+          "infrastructure_layer": "Compute",
+          "affected_stakeholders": [
+            "operators",
+            "hyperscalers",
+            "cloud buyers",
+            "investors"
+          ],
+          "article_type": "Supply Chain",
+          "urgency_score": 0.56,
+          "taxonomy_confidence": 0.85,
+          "taxonomy_reasons": [
+            "ai infrastructure",
+            "neocloud",
+            "hpc"
+          ],
+          "direct_ai_infrastructure_relevance": 1,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0.517,
+          "power_grid_relevance": 0.22,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0.6,
+          "infrastructure_relevance_score": 0.932,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud, high-performance computing)",
+            "semiconductor_relevance:0.52(amd, gpu)",
+            "power_grid_relevance:0.22(power)",
+            "enterprise_ai_infrastructure_relevance:0.60(storage, networking, ai workloads)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 1,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0.517,
+            "power_grid_relevance": 0.22,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0.6,
+            "infrastructure_relevance_score": 0.932,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud, high-performance computing)",
+              "semiconductor_relevance:0.52(amd, gpu)",
+              "power_grid_relevance:0.22(power)",
+              "enterprise_ai_infrastructure_relevance:0.60(storage, networking, ai workloads)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 85
+        },
+        {
+          "id": "52a12f705e646a11",
+          "source": "Toms Hardware",
+          "url": "https://www.tomshardware.com/desktops/mini-pcs/geekom-a9-max-2026-mini-pc-review",
+          "title": "Geekom A9 Max 2026 review: Gorgon Point in a compact Mini PC",
+          "snippet": "Mini PC specialist Geekom has updated its A9 Max design with AMD’s latest mobile silicon. The incremental improvements of the AMD Ryzen AI 9 HX470 are supported by a revamped Ice Blast 3.0 cooling solution with larger f…",
+          "contentText": "AMD introduced its mid-cycle Ryzen AI 400 chips for laptops at the beginning of the year. Predictably, mini PC makers have decided to update their Ryzen AI 300 designs from last year with the newest generation processors. While the gains from the new silicon might be politely described as incremental, Geekom here has also taken the opportunity to upgrade the cooling system. The firm also decided to go with a single 32GB DDR5-5600 SODIMM configuration here. Considering the ongoing RAM shortages, it says it decided to do so to allow for less wasteful upgrades down the line. However, AMD iGPUs like the Radeon 890M here, are heavily impacted by the reduced bandwidth of using single-channel system RAM. Nevertheless, the 32GB/2TB device configuration supplied looks like a relatively generous of…",
+          "publishedAt": "2026-07-24T16:30:00.000Z",
+          "sourceImage": "https://cdn.mos.cms.futurecdn.net/z35K3byjsP6G8JjC4FxAQU-1280-80.jpg",
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "category": "AI Infrastructure",
+          "primary_category": "AI Infrastructure",
+          "secondary_category": "GPU clusters and deployment readiness",
+          "infrastructure_layer": "Compute",
+          "affected_stakeholders": [
+            "operators",
+            "hyperscalers",
+            "cloud buyers",
+            "investors"
+          ],
+          "article_type": "Product / Platform Update",
+          "urgency_score": 0.46,
+          "taxonomy_confidence": 0.77,
+          "taxonomy_reasons": [
+            "ai infrastructure",
+            "neocloud"
+          ],
+          "direct_ai_infrastructure_relevance": 1,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0.44,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0.34,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.862,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "semiconductor_relevance:0.44(amd, gpu)",
+            "cooling_relevance:0.34(cooling)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 1,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0.44,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0.34,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.862,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+              "semiconductor_relevance:0.44(amd, gpu)",
+              "cooling_relevance:0.34(cooling)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 82
+        },
+        {
+          "id": "675db573d0cfe51e",
+          "source": "StorageReview",
+          "url": "https://www.storagereview.com/news/amds-lux-becomes-the-first-genesis-mission-supercomputer-with-discovery-to-follow-in-2028",
+          "title": "AMD’s Lux Becomes the First Genesis Mission Supercomputer, With Discovery to Follow in 2028",
+          "snippet": "AMD has outlined its role in two planned Oak Ridge National Laboratory supercomputing platforms, Lux and Discovery, positioned to support the U.S. Department of Energy’s Genesis Mission. The initiative brings together n…",
+          "contentText": "AMD has outlined its role in two planned Oak Ridge National Laboratory supercomputing platforms, Lux and Discovery, positioned to support the U.S. Department of Energy&#8217;s Genesis Mission. The initiative brings together national laboratories, industry, academia, and other partners to apply AI, simulation, and scientific data to energy, discovery science, and national-security research. Lux, under construction at Oak Ridge National Laboratory in Tennessee, is expected to become the first fully operational Genesis Mission platform. Funded projects are expected to begin using the system in October 2026. The system is intended to provide a unified environment for conventional high-performance computing workloads and cloud-native AI services. Combining AMD GPUs, CPUs, and Networking Lux wi…",
+          "publishedAt": "2026-07-24T16:34:09.000Z",
+          "sourceImage": "https://www.storagereview.com/wp-content/uploads/2026/07/Storagereview-Lux-supercomputer-02-2.jpg",
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "category": "AI Infrastructure",
+          "primary_category": "AI Infrastructure",
+          "secondary_category": "GPU clusters and deployment readiness",
+          "infrastructure_layer": "Compute",
+          "affected_stakeholders": [
+            "operators",
+            "hyperscalers",
+            "cloud buyers",
+            "investors"
+          ],
+          "article_type": "Product / Platform Update",
+          "urgency_score": 0.45,
+          "taxonomy_confidence": 0.77,
+          "taxonomy_reasons": [
+            "ai infrastructure",
+            "neocloud"
+          ],
+          "direct_ai_infrastructure_relevance": 1,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0.517,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0.18,
+          "infrastructure_relevance_score": 0.844,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud, high-performance computing)",
+            "semiconductor_relevance:0.52(amd, gpu)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 1,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0.517,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0.18,
+            "infrastructure_relevance_score": 0.844,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud, high-performance computing)",
+              "semiconductor_relevance:0.52(amd, gpu)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 81
+        },
+        {
+          "id": "82250005172e6bc3",
+          "source": "TechCrunch AI",
+          "url": "https://techcrunch.com/2026/07/24/as-us-weighs-response-to-chinese-ai-industry-urges-against-broad-open-weight-restrictions/",
+          "title": "As US weighs response to Chinese AI, industry urges against broad open-weight restrictions",
+          "snippet": "AI companies, including Nvidia and Mistral, urge policymakers to avoid broad restrictions on open-weight AI models as Washington debates responses to Chinese AI and alleged model distillation.",
+          "contentText": "AI companies, including Nvidia and Mistral, urge policymakers to avoid broad restrictions on open-weight AI models as Washington debates responses to Chinese AI and alleged model distillation.",
+          "publishedAt": "2026-07-24T15:51:49.000Z",
+          "sourceImage": null,
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "category": "AI Infrastructure",
+          "primary_category": "AI Infrastructure",
+          "secondary_category": "GPU clusters and deployment readiness",
+          "infrastructure_layer": "Compute",
+          "affected_stakeholders": [
+            "operators",
+            "hyperscalers",
+            "cloud buyers",
+            "investors"
+          ],
+          "article_type": "Other",
+          "urgency_score": 0.45,
+          "taxonomy_confidence": 0.77,
+          "taxonomy_reasons": [
+            "ai infrastructure",
+            "neocloud"
+          ],
+          "direct_ai_infrastructure_relevance": 1,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0.5,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.84,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "semiconductor_relevance:0.50(nvidia, gpu)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 1,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0.5,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.84,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+              "semiconductor_relevance:0.50(nvidia, gpu)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 81
+        },
+        {
+          "id": "1240da0c16d84bbb",
+          "source": "Toms Hardware",
+          "url": "https://www.tomshardware.com/tech-industry/artificial-intelligence/openais-huggingface-breach-heralds-an-unprecedented-age-of-ai-cyber-warfare-contemporary-llms-have-caused-massive-upheaval-in-cybersecurity-and-its-only-going-to-get-worse",
+          "title": "OpenAI's HuggingFace breach heralds an unprecedented age of AI cyber warfare — contemporary LLMs have caused massive upheaval in cybersecurity, and it's only going to get worse",
+          "snippet": "Contemporary AI bots are far too competent at cybersecurity, and humanity may have reached a tipping point where it's hard to keep up.",
+          "contentText": "This week, OpenAI revealed that during a purported capability test with no safeguards, a set of bots, including its upcoming GPT-5.6 Sol, hacked their way out of their locked-down network and into Hugging Face's production infrastructure. Only months ago, Anthropic made a splash in the news when its CEO, Dario Amodei, said its new Mythos model had cyberwarfare capabilities , which prompted a strong reaction in the AI space and among government entities, most notably the U.S. Bureau of Industry and Security, which issued an export-control order for the model, which it has since slightly loosened. Despite the bluster that AI CEOs like Dario Amodei and Sam Altman make over the capabilities of new models, frontier-level LLMs are now proven to be stalwarts in cybersecurity. It's a fact that LL…",
+          "publishedAt": "2026-07-24T16:12:08.000Z",
+          "sourceImage": "https://cdn.mos.cms.futurecdn.net/kPxCHxxwzziH8ZDLc52RCX-1280-80.jpg",
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "category": "AI Infrastructure",
+          "primary_category": "AI Infrastructure",
+          "secondary_category": "GPU clusters and deployment readiness",
+          "infrastructure_layer": "Compute",
+          "affected_stakeholders": [
+            "operators",
+            "hyperscalers",
+            "cloud buyers",
+            "investors"
+          ],
+          "article_type": "Other",
+          "urgency_score": 0.43,
+          "taxonomy_confidence": 0.77,
+          "taxonomy_reasons": [
+            "ai infrastructure",
+            "neocloud"
+          ],
+          "direct_ai_infrastructure_relevance": 1,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0.22,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.778,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "semiconductor_relevance:0.22(gpu)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 1,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0.22,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.778,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+              "semiconductor_relevance:0.22(gpu)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 79
+        },
+        {
+          "id": "f8f541906c95029a",
+          "source": "Toms Hardware",
+          "url": "https://www.tomshardware.com/laptops/dell-14s-review",
+          "title": "Dell 14S review: High-class design and 20+ hour battery life",
+          "snippet": "The Dell 14S makes good on its promise of serving as a cheaper alternative to the pricier XPS 14.",
+          "contentText": "If you want the performance of Dell’s XPS family but don’t want to lay out the cash to step up to a slightly snazzier design and higher resolution display, the Dell 14S is a cheaper alternative. The 14S is Dell’s mainstream 14-inch laptop, starting at $1,269 compared to $1,589 for the XPS 14. A nearly $300 difference is nothing to sneeze at in this economy, so we’ll take a look at the 14S and what it offers for a cost-sensitive audience. And with an as-tested price of $1,469, we’ll see whether it still represents good value compared to its more expensive sibling. Design of the Dell 14S (2026) Although the 14S is a lower-priced alternative to the XPS 14, it doesn't skimp on features or build quality. Like the trendier XPS 14, the 14S features an aluminum chassis finished in celestial blue…",
+          "publishedAt": "2026-07-24T16:10:39.000Z",
+          "sourceImage": "https://cdn.mos.cms.futurecdn.net/XVZsYYxz7cEgqhBDkWB64N-1280-80.jpg",
+          "region": "Global",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "category": "AI Infrastructure",
+          "primary_category": "AI Infrastructure",
+          "secondary_category": "GPU clusters and deployment readiness",
+          "infrastructure_layer": "Compute",
+          "affected_stakeholders": [
+            "operators",
+            "hyperscalers",
+            "cloud buyers",
+            "investors"
+          ],
+          "article_type": "Other",
+          "urgency_score": 0.43,
+          "taxonomy_confidence": 0.77,
+          "taxonomy_reasons": [
+            "ai infrastructure",
+            "neocloud"
+          ],
+          "direct_ai_infrastructure_relevance": 1,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0.22,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.778,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "semiconductor_relevance:0.22(gpu)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 1,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0.22,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.778,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+              "semiconductor_relevance:0.22(gpu)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 75
+        }
+      ],
+      "curatedIds": [
+        "73bc6b51bc81f46c",
+        "52a12f705e646a11",
+        "675db573d0cfe51e",
+        "82250005172e6bc3",
+        "1240da0c16d84bbb",
+        "f8f541906c95029a"
+      ],
+      "publishedIds": [
+        "73bc6b51bc81f46c",
+        "52a12f705e646a11"
+      ],
+      "slotPublications": {
+        "0": true
+      }
     }
   },
   "runHistory": [
-    {
-      "at": "2026-06-14T16:43:00.585Z",
-      "day": "2026-06-15",
-      "slot": 0,
-      "publishedCount": 0,
-      "signalCardCount": 0,
-      "archiveOnlyCount": 0,
-      "repetitionBlockedCount": 2,
-      "publishedIds": [],
-      "processedIds": [
-        "28f6d80a16b9d90f",
-        "b4c3ebc29ea27eeb"
-      ],
-      "blockedCount": 0,
-      "blockedItems": [],
-      "repetitionBlockedItems": [
-        {
-          "id": "28f6d80a16b9d90f",
-          "title": "Amazon says its data centers consume only 0.075% of the water Americans use for watering their lawns and gardens — company also boasts of its improvements in water efficiency",
-          "infrastructure_relevance_score": 1,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "data_center_relevance:0.97(data center, data centers)",
-            "cloud_capacity_relevance:0.32(hyperscalers)",
-            "semiconductor_relevance:0.22(gpu)",
-            "power_grid_relevance:0.22(power)",
-            "cooling_relevance:0.34(cooling)"
-          ],
-          "extraction_quality_score": 1,
-          "source_domain_adapter": "generic",
-          "content_length": 1601,
-          "boilerplate_ratio": 0,
-          "repetition_blocked": true,
-          "repetition_block_reasons": [
-            "repeated_sentence_ratio>0.12",
-            "conclusion_similarity>0.7"
-          ],
-          "repetition_check": {
-            "compared_article_count": 20,
-            "repeated_sentence_ratio": 0.3333333333333333,
-            "repeated_paragraph_ratio": 0.4,
-            "heading_sequence_similarity": 0,
-            "banned_phrase_count": 0,
-            "banned_phrase_counts": {},
-            "recent_banned_phrase_counts": {},
-            "ngram_overlap": 0.5230769230769231,
-            "blueprint_repetition": 1,
-            "conclusion_similarity": 0.9271050693011066,
-            "repeated_sentence_count": 2,
-            "repeated_paragraph_count": 2,
-            "heading_sequence": [
-              "Policy Move",
-              "Infrastructure Exposure",
-              "Who Benefits",
-              "Watch Item"
-            ],
-            "blocked": true,
-            "reasons": [
-              "repeated_sentence_ratio>0.12",
-              "conclusion_similarity>0.7"
-            ]
-          },
-          "expert_insight_complete": true,
-          "expert_insight_missing_fields": [],
-          "reason": "repeated_sentence_ratio>0.12; conclusion_similarity>0.7"
-        },
-        {
-          "id": "b4c3ebc29ea27eeb",
-          "title": "Antropic Halts Access to Fable 5 and Mythos 5",
-          "infrastructure_relevance_score": 0.87,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "cloud_capacity_relevance:0.32(hyperscalers)",
-            "semiconductor_relevance:0.22(gpu)",
-            "power_grid_relevance:0.22(power)"
-          ],
-          "extraction_quality_score": 1,
-          "source_domain_adapter": "servethehome",
-          "content_length": 1710,
-          "boilerplate_ratio": 0,
-          "repetition_blocked": true,
-          "repetition_block_reasons": [
-            "repeated_sentence_ratio>0.12",
-            "conclusion_similarity>0.7"
-          ],
-          "repetition_check": {
-            "compared_article_count": 20,
-            "repeated_sentence_ratio": 0.2857142857142857,
-            "repeated_paragraph_ratio": 0.4,
-            "heading_sequence_similarity": 0,
-            "banned_phrase_count": 0,
-            "banned_phrase_counts": {},
-            "recent_banned_phrase_counts": {},
-            "ngram_overlap": 0.34306569343065696,
-            "blueprint_repetition": 2,
-            "conclusion_similarity": 0.9271050693011066,
-            "repeated_sentence_count": 2,
-            "repeated_paragraph_count": 2,
-            "heading_sequence": [
-              "Market Pieces",
-              "Land Power Capital Chips",
-              "Demand Test",
-              "What To Split Out"
-            ],
-            "blocked": true,
-            "reasons": [
-              "repeated_sentence_ratio>0.12",
-              "conclusion_similarity>0.7"
-            ]
-          },
-          "expert_insight_complete": true,
-          "expert_insight_missing_fields": [],
-          "reason": "repeated_sentence_ratio>0.12; conclusion_similarity>0.7"
-        }
-      ],
-      "signalCardItems": [],
-      "archiveOnlyItems": []
-    },
     {
       "at": "2026-06-15T00:14:01.889Z",
       "day": "2026-06-15",
@@ -47842,7 +48160,130 @@
         }
       ],
       "archiveOnlyItems": []
+    },
+    {
+      "at": "2026-07-24T16:48:15.657Z",
+      "day": "2026-07-25",
+      "slot": 0,
+      "publishedCount": 0,
+      "signalCardCount": 1,
+      "archiveOnlyCount": 0,
+      "repetitionBlockedCount": 1,
+      "publishedIds": [],
+      "processedIds": [
+        "73bc6b51bc81f46c",
+        "52a12f705e646a11"
+      ],
+      "blockedCount": 1,
+      "blockedItems": [
+        {
+          "id": "73bc6b51bc81f46c",
+          "title": "Supermicro Introduces New Server Portfolio with 6th Gen AMD EPYC 9006 Series CPUs",
+          "infrastructure_relevance_score": 0.975,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud, high-performance computing)",
+            "cloud_capacity_relevance:0.32(hyperscalers)",
+            "semiconductor_relevance:0.80(nvidia, amd, gpu)",
+            "power_grid_relevance:0.50(power, grid)",
+            "enterprise_ai_infrastructure_relevance:0.60(storage, networking, ai workloads)"
+          ],
+          "extraction_quality_score": 1,
+          "source_domain_adapter": "generic",
+          "content_length": 1609,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": false,
+          "repetition_block_reasons": [],
+          "repetition_check": null,
+          "expert_insight_complete": true,
+          "expert_insight_missing_fields": [],
+          "reason": "fail_closed: source_text_incomplete:ellipsis_truncation_artifact, ellipsis_truncation_artifact"
+        }
+      ],
+      "repetitionBlockedItems": [
+        {
+          "id": "52a12f705e646a11",
+          "title": "Geekom A9 Max 2026 review: Gorgon Point in a compact Mini PC",
+          "infrastructure_relevance_score": 0.897,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "cloud_capacity_relevance:0.32(hyperscalers)",
+            "semiconductor_relevance:0.44(amd, gpu)",
+            "power_grid_relevance:0.22(power)",
+            "cooling_relevance:0.34(cooling)"
+          ],
+          "extraction_quality_score": 1,
+          "source_domain_adapter": "generic",
+          "content_length": 1743,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": true,
+          "repetition_block_reasons": [
+            "repeated_sentence_ratio>0.12",
+            "heading_sequence_similarity>0.75",
+            "conclusion_similarity>0.7"
+          ],
+          "repetition_check": {
+            "compared_article_count": 20,
+            "repeated_sentence_ratio": 0.16666666666666666,
+            "repeated_paragraph_ratio": 0.16666666666666666,
+            "heading_sequence_similarity": 1,
+            "banned_phrase_count": 0,
+            "banned_phrase_counts": {},
+            "recent_banned_phrase_counts": {},
+            "ngram_overlap": 0.42592592592592593,
+            "blueprint_repetition": 1,
+            "conclusion_similarity": 0.9271050693011066,
+            "repeated_sentence_count": 1,
+            "repeated_paragraph_count": 1,
+            "heading_sequence": [
+              "System Change",
+              "Bottleneck",
+              "Engineering Tradeoff",
+              "Validation Metric"
+            ],
+            "blocked": true,
+            "reasons": [
+              "repeated_sentence_ratio>0.12",
+              "heading_sequence_similarity>0.75",
+              "conclusion_similarity>0.7"
+            ]
+          },
+          "expert_insight_complete": true,
+          "expert_insight_missing_fields": [],
+          "reason": "repeated_sentence_ratio>0.12; heading_sequence_similarity>0.75; conclusion_similarity>0.7"
+        }
+      ],
+      "signalCardItems": [
+        {
+          "id": "73bc6b51bc81f46c",
+          "title": "Supermicro Introduces New Server Portfolio with 6th Gen AMD EPYC 9006 Series CPUs",
+          "infrastructure_relevance_score": 0.975,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud, high-performance computing)",
+            "cloud_capacity_relevance:0.32(hyperscalers)",
+            "semiconductor_relevance:0.80(nvidia, amd, gpu)",
+            "power_grid_relevance:0.50(power, grid)",
+            "enterprise_ai_infrastructure_relevance:0.60(storage, networking, ai workloads)"
+          ],
+          "extraction_quality_score": 1,
+          "source_domain_adapter": "generic",
+          "content_length": 1609,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": false,
+          "repetition_block_reasons": [],
+          "repetition_check": null,
+          "expert_insight_complete": true,
+          "expert_insight_missing_fields": [],
+          "reason": "fail_closed: source_text_incomplete:ellipsis_truncation_artifact, ellipsis_truncation_artifact"
+        }
+      ],
+      "archiveOnlyItems": []
     }
   ],
-  "lastRunAt": "2026-07-24T09:28:47.157Z"
+  "lastRunAt": "2026-07-24T16:48:15.657Z"
 }
