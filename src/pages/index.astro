@@ -120,14 +120,7 @@ const structuredData = {
 <Layout title={boardTitle} description="Open AI infrastructure intelligence for power, data centers, chips, cloud capacity, cooling, and capital." canonicalPath="/">
   <script is:inline type="application/ld+json" set:html={JSON.stringify(structuredData)}></script>
 
-  <div class="terminal-bg" aria-hidden="true">
-    <div class="terminal-bg-grid"></div>
-    <div class="terminal-bg-orb terminal-bg-orb-a"></div>
-    <div class="terminal-bg-orb terminal-bg-orb-b"></div>
-    <div class="terminal-bg-beam"></div>
-  </div>
-
-  <main class="page-shell autonomous-home publication-home terminal-home">
+  <main class="page-shell terminal-home">
     <div class="terminal-topline">
       <span class="topline-live"><i aria-hidden="true"></i>Publishing every 8 hours</span>
       <span class="topline-edition">{editionDate}</span>
@@ -150,7 +143,7 @@ const structuredData = {
       </nav>
       <div class="masthead-actions">
         <a class="btn-ghost masthead-contact" href="/contact/">Contact</a>
-        <a class="btn-primary" href="/rss.xml">Get the feed</a>
+        <a class="btn-primary" href="/follow/">Follow</a>
       </div>
     </header>
 
@@ -249,7 +242,7 @@ const structuredData = {
         <p>New source-linked analysis publishes every 8 hours. Follow along wherever you read.</p>
       </div>
       <div class="current-band-actions">
-        <a class="btn-primary" href="/rss.xml">Subscribe via RSS</a>
+        <a class="btn-primary" href="/follow/">Follow Compute Current</a>
         <a class="btn-ghost" href="/contact/">Share a source</a>
       </div>
     </section>

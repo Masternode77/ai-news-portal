@@ -8,6 +8,9 @@ export function GET() {
 
   return rss({
     ...meta,
+    // Renders the feed as a readable page when opened in a browser that
+    // supports XSLT; feed readers ignore the stylesheet entirely.
+    stylesheet: '/feed.xsl',
     items: buildRssItems([...latestNews, ...archivedNews]),
   });
 }
