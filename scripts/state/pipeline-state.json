@@ -693,7 +693,9 @@
     "41ef798f7652a63b",
     "129eef080ad82cc4",
     "391c19846bd8bae0",
-    "5f2e188fe9a2ea37"
+    "5f2e188fe9a2ea37",
+    "986a4e5c0a0a11f9",
+    "2a7bfbb600c07ddf"
   ],
   "dayPlans": {
     "2026-03-24": {
@@ -34936,89 +34938,18 @@
     "2026-07-26": {
       "date": "2026-07-26",
       "createdAt": "2026-07-25T16:09:44.764Z",
-      "refreshedAt": "2026-07-26T00:02:31.866Z",
+      "refreshedAt": "2026-07-26T09:21:59.296Z",
       "candidateWindowHours": 24,
       "curatedItems": [
         {
-          "id": "5f2e188fe9a2ea37",
-          "source": "StorageReview",
-          "url": "https://www.storagereview.com/news/supermicro-h15-servers-pair-6th-gen-epyc-with-mi350p-gpu-systems-and-the-helios-rack",
-          "title": "Supermicro H15 Servers Pair 6th Gen EPYC With MI350P GPU Systems and the Helios Rack",
-          "snippet": "Supermicro introduced its new H15 server portfolio, built around 6th Gen AMD EPYC 9006 Series CPUs. These servers are designed to work with AMD Instinct GPUs and AMD Pensando networking solutions. In addition, Supermicr…",
-          "contentText": "Supermicro introduced its new H15 server portfolio, built around 6th Gen AMD EPYC 9006 Series CPUs. These servers are designed to work with AMD Instinct GPUs and AMD Pensando networking solutions. In addition, Supermicro is expanding its AMD GPU offerings with new PCIe GPU servers built for AMD Instinct MI350P GPUs and the previously announced Supermicro AMD Helios rack-scale platform, which incorporates AMD Instinct MI455X GPUs. This announcement includes details about the CPU platform, GPU and networking hardware, and the rack-scale system that integrates these components, targeting agentic AI, cloud, enterprise, and HPC workloads. H15 Architecture and CPU Platform The H15 architecture is based on Supermicro&#8217;s Data Center Building Block Solutions (DCBBS), which standardizes modula…",
-          "publishedAt": "2026-07-25T18:08:19.000Z",
-          "sourceImage": "https://www.storagereview.com/wp-content/uploads/2026/07/StorageReview-AMD-Advancing-AI-2026-4.jpg",
-          "region": "US",
-          "language": "en",
-          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
-          "category": "AI Infrastructure",
-          "primary_category": "AI Infrastructure",
-          "secondary_category": "GPU clusters and deployment readiness",
-          "infrastructure_layer": "Compute",
-          "affected_stakeholders": [
-            "operators",
-            "hyperscalers",
-            "cloud buyers",
-            "investors"
-          ],
-          "article_type": "Product / Platform Update",
-          "urgency_score": 0.62,
-          "taxonomy_confidence": 0.85,
-          "taxonomy_reasons": [
-            "ai infrastructure",
-            "neocloud",
-            "hpc"
-          ],
-          "direct_ai_infrastructure_relevance": 1,
-          "data_center_relevance": 0.42,
-          "cloud_capacity_relevance": 0,
-          "semiconductor_relevance": 0.517,
-          "power_grid_relevance": 0,
-          "cooling_relevance": 0,
-          "capital_markets_relevance": 0,
-          "enterprise_ai_infrastructure_relevance": 0.18,
-          "infrastructure_relevance_score": 0.879,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud, hpc)",
-            "data_center_relevance:0.42(data center)",
-            "semiconductor_relevance:0.52(amd, gpu)"
-          ],
-          "infrastructure_relevance": {
-            "direct_ai_infrastructure_relevance": 1,
-            "data_center_relevance": 0.42,
-            "cloud_capacity_relevance": 0,
-            "semiconductor_relevance": 0.517,
-            "power_grid_relevance": 0,
-            "cooling_relevance": 0,
-            "capital_markets_relevance": 0,
-            "enterprise_ai_infrastructure_relevance": 0.18,
-            "infrastructure_relevance_score": 0.879,
-            "infrastructure_relevance_tier": "full_memo",
-            "infrastructure_relevance_action": "generate_full_memo",
-            "infrastructure_relevance_reasons": [
-              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud, hpc)",
-              "data_center_relevance:0.42(data center)",
-              "semiconductor_relevance:0.52(amd, gpu)"
-            ],
-            "infrastructureRelevanceAction": "generate_full_memo",
-            "articlePagePublished": true,
-            "homepagePublished": true,
-            "archiveOnly": false,
-            "archiveOnlyReason": null
-          },
-          "score": 75
-        },
-        {
-          "id": "391c19846bd8bae0",
+          "id": "2a7bfbb600c07ddf",
           "source": "Toms Hardware",
-          "url": "https://www.tomshardware.com/tech-industry/cyber-security/security-flaw-in-vaticans-click-to-pray-app-leaves-over-700-000-global-users-exposed-app-has-been-leaking-user-data-for-over-six-months-and-still-does",
-          "title": "Security flaw in Vatican’s ‘Click to Pray’ app leaves over 700,000 global users exposed — app has been leaking user data for over six months and still does",
-          "snippet": "An app linked to the Vatican with hundreds of thousands of users was found to have zero authentication and security. That means anyone can access its backend and siphon users' data, including names, email addresses, and…",
-          "contentText": "Click To Pray, the official prayer app of the Pope’s Worldwide Prayer Network, was found to have zero security by a security researcher. According to BobDaHacker , they discovered in January 2026 that the Vatican-linked app had zero security, allowing anyone to access user data through the API endpoint by simply typing in user IDs. They emailed nine individuals about the vulnerabilities as soon as they discovered them but received no responses and saw no changes for six months. The information that anyone could get from the Click To Pray app’s database included first and last names, email addresses, and birthdates, among other information. You may not think this is much, but getting names and email addresses is more than enough for bad actors to start sending phishing emails to vulnerable…",
-          "publishedAt": "2026-07-25T17:56:07.000Z",
-          "sourceImage": "https://cdn.mos.cms.futurecdn.net/aNZt4WiohK6CcJ7nANHdh9-1280-80.jpg",
+          "url": "https://www.tomshardware.com/tech-industry/artificial-intelligence/openai-agent-goes-rogue-and-hacks-popular-ai-community-left-escape-plans-for-future-models-inside-the-companys-infrastructure",
+          "title": "OpenAI agent goes rogue and hacks popular AI community — left escape plans for future models inside the company's infrastructure",
+          "snippet": "OpenAI tests multiple autonomous AI agents at once and has difficulty identifying the threats each of them represents, if a new report from Reuters is accurate.",
+          "contentText": "The rogue OpenAI's autonomous AI agent that escaped its test environment and compromised Hugging Face remained unidentified as the attacker for about a week, according to a Reuters report that cites people familiar with the matter. If the information is accurate, this raises questions about OpenAI's control of its advanced AI systems and safety practices not only at OpenAI, but across the AI industry in general as autonomous AI agents are meant to work autonomously. The incident began around July 9, when the autonomous agent allegedly attempted to break out of OpenAI's isolated testing environment, according to Reuters . Two days later, on July 11, it reportedly began infiltrating Hugging Face and the intrusion continued until July 13, according to Hugging Face co-founder Thomas Wolf. The…",
+          "publishedAt": "2026-07-25T16:41:59.000Z",
+          "sourceImage": "https://cdn.mos.cms.futurecdn.net/G7BaZjAqNWQWRRqpKKv8QG-1280-80.jpg",
           "region": "US",
           "language": "en",
           "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
@@ -35076,18 +35007,18 @@
             "archiveOnly": false,
             "archiveOnlyReason": null
           },
-          "score": 71
+          "score": 65
         },
         {
-          "id": "e230eb01fb401440",
+          "id": "986a4e5c0a0a11f9",
           "source": "TechCrunch AI",
-          "url": "https://techcrunch.com/2026/07/25/one-fallen-power-line-exposed-a-growing-ai-data-center-problem-heres-how-to-fix-it/",
-          "title": "One fallen power line exposed a growing AI data center problem. Here’s how to fix it.",
-          "snippet": "A close call in Northern Virginia revealed just how poorly data centers respond to grid disruptions. Here's how to fix the problem.",
-          "contentText": "A close call in Northern Virginia revealed just how poorly data centers respond to grid disruptions. Here's how to fix the problem.",
-          "publishedAt": "2026-07-25T13:05:00.000Z",
+          "url": "https://techcrunch.com/2026/07/25/the-running-list-major-tech-layoffs-in-2026-where-employers-cited-ai/",
+          "title": "Monday.com is the latest tech company to blame AI for layoffs — here are 20 others",
+          "snippet": "A running look — in reverse chronological order — at the bigger tech companies that have announced significant layoffs this year with AI as a stated factor.",
+          "contentText": "A running look — in reverse chronological order — at the bigger tech companies that have announced significant layoffs this year with AI as a stated factor.",
+          "publishedAt": "2026-07-26T01:30:00.000Z",
           "sourceImage": null,
-          "region": "US",
+          "region": "Global",
           "language": "en",
           "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
           "category": "AI Infrastructure",
@@ -35101,46 +35032,42 @@
             "investors"
           ],
           "article_type": "Other",
-          "urgency_score": 0.68,
+          "urgency_score": 0.43,
           "taxonomy_confidence": 0.77,
           "taxonomy_reasons": [
             "ai infrastructure",
             "neocloud"
           ],
           "direct_ai_infrastructure_relevance": 1,
-          "data_center_relevance": 0.97,
+          "data_center_relevance": 0,
           "cloud_capacity_relevance": 0,
           "semiconductor_relevance": 0.22,
-          "power_grid_relevance": 0.577,
+          "power_grid_relevance": 0,
           "cooling_relevance": 0,
           "capital_markets_relevance": 0,
           "enterprise_ai_infrastructure_relevance": 0,
-          "infrastructure_relevance_score": 1,
+          "infrastructure_relevance_score": 0.778,
           "infrastructure_relevance_tier": "full_memo",
           "infrastructure_relevance_action": "generate_full_memo",
           "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, ai data center, neocloud)",
-            "data_center_relevance:0.97(data center, data centers)",
-            "semiconductor_relevance:0.22(gpu)",
-            "power_grid_relevance:0.58(power, grid)"
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "semiconductor_relevance:0.22(gpu)"
           ],
           "infrastructure_relevance": {
             "direct_ai_infrastructure_relevance": 1,
-            "data_center_relevance": 0.97,
+            "data_center_relevance": 0,
             "cloud_capacity_relevance": 0,
             "semiconductor_relevance": 0.22,
-            "power_grid_relevance": 0.577,
+            "power_grid_relevance": 0,
             "cooling_relevance": 0,
             "capital_markets_relevance": 0,
             "enterprise_ai_infrastructure_relevance": 0,
-            "infrastructure_relevance_score": 1,
+            "infrastructure_relevance_score": 0.778,
             "infrastructure_relevance_tier": "full_memo",
             "infrastructure_relevance_action": "generate_full_memo",
             "infrastructure_relevance_reasons": [
-              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, ai data center, neocloud)",
-              "data_center_relevance:0.97(data center, data centers)",
-              "semiconductor_relevance:0.22(gpu)",
-              "power_grid_relevance:0.58(power, grid)"
+              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+              "semiconductor_relevance:0.22(gpu)"
             ],
             "infrastructureRelevanceAction": "generate_full_memo",
             "articlePagePublished": true,
@@ -35148,7 +35075,7 @@
             "archiveOnly": false,
             "archiveOnlyReason": null
           },
-          "score": 67
+          "score": 64
         },
         {
           "id": "2013a80ce5643a1c",
@@ -35219,7 +35146,7 @@
             "archiveOnly": false,
             "archiveOnlyReason": null
           },
-          "score": 57
+          "score": 51
         },
         {
           "id": "580665627695c107",
@@ -35288,18 +35215,83 @@
             "archiveOnly": true,
             "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
           },
-          "score": 49
+          "score": 43
         },
         {
-          "id": "1f27dea1a8effc0e",
-          "source": "Toms Hardware",
-          "url": "https://www.tomshardware.com/3d-printing/delawares-printed-solid-rebrands-to-prusa-usa",
-          "title": "Delaware’s Printed Solid rebrands to Prusa USA",
-          "snippet": "Printed Solid, the Delaware-based filament manufacturer acquired by Czech Prusa Research in 2022, is now known as Prusa USA, Inc.",
-          "contentText": "Printed Solid, the Delaware-based filament manufacturer acquired by Czech Prusa Research in 2022, is now known as Prusa USA, Inc. I chatted with Prusa Research team members at Open Sauce, who confirmed the name change was largely window dressing, with nothing changing in the company’s day-to-day operation. Josef Prusa will remain CEO of both companies, with a new Marketing Officer moving up the ranks internally. During the changeover, Printed Solid will be known as “Printed Solid, a Prusa Company”. The website now proudly states that Prusa Research is a “European-American” company with U.S. production capabilities. The company has a duplicate print farm at its 100,000-square-foot Delaware factory for the production of 3D printers and filament. The printers are not yet fully “Made in the U…",
-          "publishedAt": "2026-07-25T12:41:51.000Z",
-          "sourceImage": "https://cdn.mos.cms.futurecdn.net/pwSzzDnpnjEkhqNi9pkpd6-1280-80.jpg",
-          "region": "US",
+          "id": "df94a58ea4cd4b95",
+          "source": "Bloomberg Technology",
+          "url": "https://www.bloomberg.com/news/articles/2026-07-26/memory-frenzy-primes-china-champion-cxmt-for-historic-debut",
+          "title": "Memory Frenzy Primes China Champion CXMT for Historic Debut",
+          "snippet": "Investor excitement over the memory chip trade is setting outsize expectations for the Shanghai debut of CXMT Corp., which is on the brink of making history after a near-record initial public offering.",
+          "contentText": "Investor excitement over the memory chip trade is setting outsize expectations for the Shanghai debut of CXMT Corp., which is on the brink of making history after a near-record initial public offering.",
+          "publishedAt": "2026-07-26T00:00:00.000Z",
+          "sourceImage": null,
+          "region": "Global",
+          "language": "en",
+          "defaultCategory": "Hyperscalers & Cloud",
+          "category": "Semiconductors",
+          "primary_category": "Semiconductors",
+          "secondary_category": "Accelerators, memory, and advanced packaging",
+          "infrastructure_layer": "Silicon",
+          "affected_stakeholders": [
+            "semiconductor suppliers",
+            "hyperscalers",
+            "server OEMs",
+            "investors"
+          ],
+          "article_type": "Supply Chain",
+          "urgency_score": 0.25,
+          "taxonomy_confidence": 0.53,
+          "taxonomy_reasons": [
+            "chip"
+          ],
+          "direct_ai_infrastructure_relevance": 0,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0.32,
+          "semiconductor_relevance": 0,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.221,
+          "infrastructure_relevance_tier": "archive_only",
+          "infrastructure_relevance_action": "archive_only",
+          "infrastructure_relevance_reasons": [
+            "cloud_capacity_relevance:0.32(hyperscalers)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 0,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0.32,
+            "semiconductor_relevance": 0,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.221,
+            "infrastructure_relevance_tier": "archive_only",
+            "infrastructure_relevance_action": "archive_only",
+            "infrastructure_relevance_reasons": [
+              "cloud_capacity_relevance:0.32(hyperscalers)"
+            ],
+            "infrastructureRelevanceAction": "archive_only",
+            "articlePagePublished": false,
+            "homepagePublished": false,
+            "archiveOnly": true,
+            "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
+          },
+          "score": 41
+        },
+        {
+          "id": "10e9c9f230da7876",
+          "source": "TechCrunch AI",
+          "url": "https://techcrunch.com/2026/07/25/librarians-are-hosting-viral-avoiding-ai-workshops-for-people-who-are-fed-up-with-big-tech/",
+          "title": "Librarians are hosting viral ‘Avoiding AI’ workshops for people who are fed up with Big Tech",
+          "snippet": "At libraries around the country, \"Avoiding AI\" workshops have elicited unprecedented demand.",
+          "contentText": "At libraries around the country, \"Avoiding AI\" workshops have elicited unprecedented demand.",
+          "publishedAt": "2026-07-25T16:00:00.000Z",
+          "sourceImage": null,
+          "region": "Global",
           "language": "en",
           "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
           "category": "AI Infrastructure",
@@ -35312,7 +35304,7 @@
             "cloud buyers",
             "investors"
           ],
-          "article_type": "Research / Technical",
+          "article_type": "Market Analysis",
           "urgency_score": 0.43,
           "taxonomy_confidence": 0.77,
           "taxonomy_reasons": [
@@ -35356,96 +35348,33 @@
             "archiveOnly": false,
             "archiveOnlyReason": null
           },
-          "score": 49
+          "score": 58
         }
       ],
       "curatedIds": [
-        "5f2e188fe9a2ea37",
-        "391c19846bd8bae0",
-        "e230eb01fb401440",
+        "2a7bfbb600c07ddf",
+        "986a4e5c0a0a11f9",
         "2013a80ce5643a1c",
         "580665627695c107",
-        "1f27dea1a8effc0e"
+        "df94a58ea4cd4b95",
+        "10e9c9f230da7876"
       ],
       "publishedIds": [
         "41ef798f7652a63b",
         "129eef080ad82cc4",
         "391c19846bd8bae0",
-        "5f2e188fe9a2ea37"
+        "5f2e188fe9a2ea37",
+        "986a4e5c0a0a11f9",
+        "2a7bfbb600c07ddf"
       ],
       "slotPublications": {
         "0": true,
-        "1": true
+        "1": true,
+        "2": true
       }
     }
   },
   "runHistory": [
-    {
-      "at": "2026-06-16T12:19:22.559Z",
-      "day": "2026-06-16",
-      "slot": 2,
-      "publishedCount": 0,
-      "signalCardCount": 2,
-      "archiveOnlyCount": 0,
-      "processedIds": [
-        "1567a8de61325a85",
-        "4f3735ab72426735"
-      ],
-      "blockedCount": 2,
-      "blockedItems": [
-        {
-          "id": "1567a8de61325a85",
-          "title": "Octaipipe on liquid cooling and physical AI",
-          "infrastructure_relevance_score": 0.887,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:0.64",
-            "cloud_capacity_relevance:0.76(cloud capacity, hyperscalers)",
-            "power_grid_relevance:0.22(power)",
-            "cooling_relevance:1.00(cooling, liquid cooling)"
-          ],
-          "extraction_quality_score": 0.83,
-          "source_domain_adapter": "generic",
-          "content_length": 801,
-          "boilerplate_ratio": 0,
-          "repetition_blocked": false,
-          "repetition_block_reasons": [],
-          "repetition_check": null,
-          "expert_insight_complete": false,
-          "expert_insight_missing_fields": [
-            "concrete_facts",
-            "named_companies"
-          ],
-          "reason": "fail_closed: source_text_incomplete:source_evidence_length_below_1200, sentence_completion_score_below_0.92:0.567"
-        },
-        {
-          "id": "4f3735ab72426735",
-          "title": "Unleash Rack-Scale Performance for Large-Scale AI",
-          "infrastructure_relevance_score": 0.941,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud, hpc)",
-            "cloud_capacity_relevance:0.32(hyperscalers)",
-            "semiconductor_relevance:0.58(semiconductor, gpu)",
-            "power_grid_relevance:0.22(power)",
-            "enterprise_ai_infrastructure_relevance:0.64(kubernetes, networking, ai workloads)"
-          ],
-          "extraction_quality_score": 0.95,
-          "source_domain_adapter": "generic",
-          "content_length": 1389,
-          "boilerplate_ratio": 0,
-          "repetition_blocked": false,
-          "repetition_block_reasons": [],
-          "repetition_check": null,
-          "expert_insight_complete": true,
-          "expert_insight_missing_fields": [],
-          "reason": "fail_closed: source_text_incomplete:ellipsis_truncation_artifact, ellipsis_truncation_artifact"
-        }
-      ],
-      "archiveOnlyItems": []
-    },
     {
       "at": "2026-06-16T18:56:51.407Z",
       "day": "2026-06-17",
@@ -48854,7 +48783,129 @@
         }
       ],
       "archiveOnlyItems": []
+    },
+    {
+      "at": "2026-07-26T09:21:59.296Z",
+      "day": "2026-07-26",
+      "slot": 2,
+      "publishedCount": 0,
+      "signalCardCount": 1,
+      "archiveOnlyCount": 0,
+      "repetitionBlockedCount": 1,
+      "publishedIds": [],
+      "processedIds": [
+        "986a4e5c0a0a11f9",
+        "2a7bfbb600c07ddf"
+      ],
+      "blockedCount": 1,
+      "blockedItems": [
+        {
+          "id": "986a4e5c0a0a11f9",
+          "title": "Monday.com is the latest tech company to blame AI for layoffs — here are 20 others",
+          "infrastructure_relevance_score": 0.892,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, ai data center, neocloud)",
+            "data_center_relevance:0.42(data center)",
+            "cloud_capacity_relevance:0.32(hyperscalers)",
+            "semiconductor_relevance:0.22(gpu)",
+            "power_grid_relevance:0.22(power)"
+          ],
+          "extraction_quality_score": 1,
+          "source_domain_adapter": "techcrunch",
+          "content_length": 1729,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": false,
+          "repetition_block_reasons": [],
+          "repetition_check": null,
+          "expert_insight_complete": true,
+          "expert_insight_missing_fields": [],
+          "reason": "fail_closed: nav_or_cta_detected"
+        }
+      ],
+      "repetitionBlockedItems": [
+        {
+          "id": "2a7bfbb600c07ddf",
+          "title": "OpenAI agent goes rogue and hacks popular AI community — left escape plans for future models inside the company's infrastructure",
+          "infrastructure_relevance_score": 0.87,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "cloud_capacity_relevance:0.32(hyperscalers)",
+            "semiconductor_relevance:0.22(gpu)",
+            "power_grid_relevance:0.22(power)"
+          ],
+          "extraction_quality_score": 1,
+          "source_domain_adapter": "generic",
+          "content_length": 1759,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": true,
+          "repetition_block_reasons": [
+            "repeated_sentence_ratio>0.12",
+            "heading_sequence_similarity>0.75",
+            "conclusion_similarity>0.7"
+          ],
+          "repetition_check": {
+            "compared_article_count": 20,
+            "repeated_sentence_ratio": 0.42857142857142855,
+            "repeated_paragraph_ratio": 0.5,
+            "heading_sequence_similarity": 1,
+            "banned_phrase_count": 0,
+            "banned_phrase_counts": {},
+            "recent_banned_phrase_counts": {},
+            "ngram_overlap": 0.6982758620689655,
+            "blueprint_repetition": 1,
+            "conclusion_similarity": 0.9271050693011066,
+            "repeated_sentence_count": 3,
+            "repeated_paragraph_count": 3,
+            "heading_sequence": [
+              "Capital Move",
+              "Demand Evidence",
+              "Execution Risk",
+              "Milestone To Watch"
+            ],
+            "blocked": true,
+            "reasons": [
+              "repeated_sentence_ratio>0.12",
+              "heading_sequence_similarity>0.75",
+              "conclusion_similarity>0.7"
+            ]
+          },
+          "expert_insight_complete": true,
+          "expert_insight_missing_fields": [],
+          "reason": "repeated_sentence_ratio>0.12; heading_sequence_similarity>0.75; conclusion_similarity>0.7"
+        }
+      ],
+      "signalCardItems": [
+        {
+          "id": "986a4e5c0a0a11f9",
+          "title": "Monday.com is the latest tech company to blame AI for layoffs — here are 20 others",
+          "infrastructure_relevance_score": 0.892,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, ai data center, neocloud)",
+            "data_center_relevance:0.42(data center)",
+            "cloud_capacity_relevance:0.32(hyperscalers)",
+            "semiconductor_relevance:0.22(gpu)",
+            "power_grid_relevance:0.22(power)"
+          ],
+          "extraction_quality_score": 1,
+          "source_domain_adapter": "techcrunch",
+          "content_length": 1729,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": false,
+          "repetition_block_reasons": [],
+          "repetition_check": null,
+          "expert_insight_complete": true,
+          "expert_insight_missing_fields": [],
+          "reason": "fail_closed: nav_or_cta_detected"
+        }
+      ],
+      "archiveOnlyItems": []
     }
   ],
-  "lastRunAt": "2026-07-26T00:02:31.866Z"
+  "lastRunAt": "2026-07-26T09:21:59.296Z"
 }
