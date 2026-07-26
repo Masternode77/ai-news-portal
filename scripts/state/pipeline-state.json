@@ -691,7 +691,9 @@
     "0e5d33405c5e0cd8",
     "675db573d0cfe51e",
     "41ef798f7652a63b",
-    "129eef080ad82cc4"
+    "129eef080ad82cc4",
+    "391c19846bd8bae0",
+    "5f2e188fe9a2ea37"
   ],
   "dayPlans": {
     "2026-03-24": {
@@ -34934,18 +34936,18 @@
     "2026-07-26": {
       "date": "2026-07-26",
       "createdAt": "2026-07-25T16:09:44.764Z",
-      "refreshedAt": "2026-07-25T16:09:44.764Z",
+      "refreshedAt": "2026-07-26T00:02:31.866Z",
       "candidateWindowHours": 24,
       "curatedItems": [
         {
-          "id": "41ef798f7652a63b",
-          "source": "Toms Hardware",
-          "url": "https://www.tomshardware.com/desktops/gaming-pcs/ram-machine-case-probably-costs-more-than-the-entire-build-nvidia-rtx-5060-core-ultra-5-cpu-and-32gb-ddr5-8200-ram-are-hiding-inside",
-          "title": "'RAM Machine' case probably costs more than the entire build — Nvidia RTX 5060, Core Ultra 5 CPU, and 32GB DDR5-8200 RAM are hiding inside",
-          "snippet": "A Redditor is giving away an RTX 5060 gaming PC that's covered by RAM on the outside and has 32GB of RAM on the inside. You can join the sweepstakes simply by leaving a comment on the post.",
-          "contentText": "u/DaKrazyKid went on Reddit to exhibit their mini-ITX gaming PC build dubbed \"RAM Machine,\" which features 36 RAM sticks. The OP said the Steam Machine , with its paltry 16GB of RAM , inspired the build, which has 16 RGB RAM sticks controlled through SignalRGB to give you all that RGB goodness, and they’re giving it away to one lucky commenter in the r/PcBuild subreddit . It’s unclear if the Redditor is affiliated with SignalRGB, although the giveaway seems to be sponsored by the company because of the disclaimer that excludes employees, affiliates, and subsidiaries of SignalRGB, their immediate family members, and persons living in the same household from the sweepstakes. Although the PC itself isn’t a top-of-the-line unit, it’s a decent build that offers better specifications than the S…",
-          "publishedAt": "2026-07-25T15:34:57.000Z",
-          "sourceImage": "https://cdn.mos.cms.futurecdn.net/6HnMBrG6vPR3EXQ7mBZWy6-1280-80.png",
+          "id": "5f2e188fe9a2ea37",
+          "source": "StorageReview",
+          "url": "https://www.storagereview.com/news/supermicro-h15-servers-pair-6th-gen-epyc-with-mi350p-gpu-systems-and-the-helios-rack",
+          "title": "Supermicro H15 Servers Pair 6th Gen EPYC With MI350P GPU Systems and the Helios Rack",
+          "snippet": "Supermicro introduced its new H15 server portfolio, built around 6th Gen AMD EPYC 9006 Series CPUs. These servers are designed to work with AMD Instinct GPUs and AMD Pensando networking solutions. In addition, Supermicr…",
+          "contentText": "Supermicro introduced its new H15 server portfolio, built around 6th Gen AMD EPYC 9006 Series CPUs. These servers are designed to work with AMD Instinct GPUs and AMD Pensando networking solutions. In addition, Supermicro is expanding its AMD GPU offerings with new PCIe GPU servers built for AMD Instinct MI350P GPUs and the previously announced Supermicro AMD Helios rack-scale platform, which incorporates AMD Instinct MI455X GPUs. This announcement includes details about the CPU platform, GPU and networking hardware, and the rack-scale system that integrates these components, targeting agentic AI, cloud, enterprise, and HPC workloads. H15 Architecture and CPU Platform The H15 architecture is based on Supermicro&#8217;s Data Center Building Block Solutions (DCBBS), which standardizes modula…",
+          "publishedAt": "2026-07-25T18:08:19.000Z",
+          "sourceImage": "https://www.storagereview.com/wp-content/uploads/2026/07/StorageReview-AMD-Advancing-AI-2026-4.jpg",
           "region": "US",
           "language": "en",
           "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
@@ -34959,43 +34961,46 @@
             "cloud buyers",
             "investors"
           ],
-          "article_type": "Other",
-          "urgency_score": 0.46,
-          "taxonomy_confidence": 0.77,
+          "article_type": "Product / Platform Update",
+          "urgency_score": 0.62,
+          "taxonomy_confidence": 0.85,
           "taxonomy_reasons": [
             "ai infrastructure",
-            "neocloud"
+            "neocloud",
+            "hpc"
           ],
           "direct_ai_infrastructure_relevance": 1,
-          "data_center_relevance": 0,
+          "data_center_relevance": 0.42,
           "cloud_capacity_relevance": 0,
-          "semiconductor_relevance": 0.598,
+          "semiconductor_relevance": 0.517,
           "power_grid_relevance": 0,
           "cooling_relevance": 0,
           "capital_markets_relevance": 0,
-          "enterprise_ai_infrastructure_relevance": 0,
-          "infrastructure_relevance_score": 0.862,
+          "enterprise_ai_infrastructure_relevance": 0.18,
+          "infrastructure_relevance_score": 0.879,
           "infrastructure_relevance_tier": "full_memo",
           "infrastructure_relevance_action": "generate_full_memo",
           "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "semiconductor_relevance:0.60(nvidia, gpu)"
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud, hpc)",
+            "data_center_relevance:0.42(data center)",
+            "semiconductor_relevance:0.52(amd, gpu)"
           ],
           "infrastructure_relevance": {
             "direct_ai_infrastructure_relevance": 1,
-            "data_center_relevance": 0,
+            "data_center_relevance": 0.42,
             "cloud_capacity_relevance": 0,
-            "semiconductor_relevance": 0.598,
+            "semiconductor_relevance": 0.517,
             "power_grid_relevance": 0,
             "cooling_relevance": 0,
             "capital_markets_relevance": 0,
-            "enterprise_ai_infrastructure_relevance": 0,
-            "infrastructure_relevance_score": 0.862,
+            "enterprise_ai_infrastructure_relevance": 0.18,
+            "infrastructure_relevance_score": 0.879,
             "infrastructure_relevance_tier": "full_memo",
             "infrastructure_relevance_action": "generate_full_memo",
             "infrastructure_relevance_reasons": [
-              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-              "semiconductor_relevance:0.60(nvidia, gpu)"
+              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud, hpc)",
+              "data_center_relevance:0.42(data center)",
+              "semiconductor_relevance:0.52(amd, gpu)"
             ],
             "infrastructureRelevanceAction": "generate_full_memo",
             "articlePagePublished": true,
@@ -35003,18 +35008,18 @@
             "archiveOnly": false,
             "archiveOnlyReason": null
           },
-          "score": 82
+          "score": 75
         },
         {
-          "id": "129eef080ad82cc4",
-          "source": "ServeTheHome",
-          "url": "https://www.servethehome.com/geekbench-7-is-out-with-a-major-overhaul/",
-          "title": "Geekbench 7 is Out with a Major Overhaul",
-          "snippet": "Geekbench 7 is out with major overhauls to scoring, CPU and GPU benchmarks. We have already been testing with it The post Geekbench 7 is Out with a Major Overhaul appeared first on ServeTheHome.",
-          "contentText": "Geekbench 7 is out with major overhauls to scoring, CPU and GPU benchmarks. We have already been testing with it The post Geekbench 7 is Out with a Major Overhaul appeared first on ServeTheHome .",
-          "publishedAt": "2026-07-25T15:06:47.000Z",
-          "sourceImage": null,
-          "region": "Global",
+          "id": "391c19846bd8bae0",
+          "source": "Toms Hardware",
+          "url": "https://www.tomshardware.com/tech-industry/cyber-security/security-flaw-in-vaticans-click-to-pray-app-leaves-over-700-000-global-users-exposed-app-has-been-leaking-user-data-for-over-six-months-and-still-does",
+          "title": "Security flaw in Vatican’s ‘Click to Pray’ app leaves over 700,000 global users exposed — app has been leaking user data for over six months and still does",
+          "snippet": "An app linked to the Vatican with hundreds of thousands of users was found to have zero authentication and security. That means anyone can access its backend and siphon users' data, including names, email addresses, and…",
+          "contentText": "Click To Pray, the official prayer app of the Pope’s Worldwide Prayer Network, was found to have zero security by a security researcher. According to BobDaHacker , they discovered in January 2026 that the Vatican-linked app had zero security, allowing anyone to access user data through the API endpoint by simply typing in user IDs. They emailed nine individuals about the vulnerabilities as soon as they discovered them but received no responses and saw no changes for six months. The information that anyone could get from the Click To Pray app’s database included first and last names, email addresses, and birthdates, among other information. You may not think this is much, but getting names and email addresses is more than enough for bad actors to start sending phishing emails to vulnerable…",
+          "publishedAt": "2026-07-25T17:56:07.000Z",
+          "sourceImage": "https://cdn.mos.cms.futurecdn.net/aNZt4WiohK6CcJ7nANHdh9-1280-80.jpg",
+          "region": "US",
           "language": "en",
           "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
           "category": "AI Infrastructure",
@@ -35071,7 +35076,7 @@
             "archiveOnly": false,
             "archiveOnlyReason": null
           },
-          "score": 79
+          "score": 71
         },
         {
           "id": "e230eb01fb401440",
@@ -35143,7 +35148,7 @@
             "archiveOnly": false,
             "archiveOnlyReason": null
           },
-          "score": 73
+          "score": 67
         },
         {
           "id": "2013a80ce5643a1c",
@@ -35214,7 +35219,7 @@
             "archiveOnly": false,
             "archiveOnlyReason": null
           },
-          "score": 71
+          "score": 57
         },
         {
           "id": "580665627695c107",
@@ -35283,7 +35288,7 @@
             "archiveOnly": true,
             "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
           },
-          "score": 63
+          "score": 49
         },
         {
           "id": "1f27dea1a8effc0e",
@@ -35351,12 +35356,12 @@
             "archiveOnly": false,
             "archiveOnlyReason": null
           },
-          "score": 63
+          "score": 49
         }
       ],
       "curatedIds": [
-        "41ef798f7652a63b",
-        "129eef080ad82cc4",
+        "5f2e188fe9a2ea37",
+        "391c19846bd8bae0",
         "e230eb01fb401440",
         "2013a80ce5643a1c",
         "580665627695c107",
@@ -35364,141 +35369,17 @@
       ],
       "publishedIds": [
         "41ef798f7652a63b",
-        "129eef080ad82cc4"
+        "129eef080ad82cc4",
+        "391c19846bd8bae0",
+        "5f2e188fe9a2ea37"
       ],
       "slotPublications": {
-        "0": true
+        "0": true,
+        "1": true
       }
     }
   },
   "runHistory": [
-    {
-      "at": "2026-06-16T01:41:57.019Z",
-      "day": "2026-06-16",
-      "slot": 1,
-      "publishedCount": 0,
-      "signalCardCount": 1,
-      "archiveOnlyCount": 0,
-      "repetitionBlockedCount": 1,
-      "publishedIds": [],
-      "processedIds": [
-        "a2cf95f0d1c7563d",
-        "6803634b659b2057"
-      ],
-      "blockedCount": 1,
-      "blockedItems": [
-        {
-          "id": "a2cf95f0d1c7563d",
-          "title": "Tensordyne Napier AI Processor Announced with Logarithmic Math",
-          "infrastructure_relevance_score": 0.914,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "cloud_capacity_relevance:0.32(hyperscalers)",
-            "semiconductor_relevance:0.44(accelerator, gpu)",
-            "power_grid_relevance:0.52(power, megawatt)",
-            "cooling_relevance:0.34(cooling)"
-          ],
-          "extraction_quality_score": 1,
-          "source_domain_adapter": "servethehome",
-          "content_length": 1648,
-          "boilerplate_ratio": 0,
-          "repetition_blocked": false,
-          "repetition_block_reasons": [],
-          "repetition_check": null,
-          "expert_insight_complete": false,
-          "expert_insight_missing_fields": [
-            "named_companies"
-          ],
-          "reason": "expert_insight_missing_fields named_companies"
-        }
-      ],
-      "repetitionBlockedItems": [
-        {
-          "id": "6803634b659b2057",
-          "title": "Modeling Multi-GPU Traffic For Distributed AI Workloads (UW Madison, AMD)",
-          "infrastructure_relevance_score": 1,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "cloud_capacity_relevance:0.32(hyperscalers)",
-            "semiconductor_relevance:0.95(semiconductor, amd, gpu)",
-            "power_grid_relevance:0.22(power)",
-            "enterprise_ai_infrastructure_relevance:0.32(ai workloads)"
-          ],
-          "extraction_quality_score": 1,
-          "source_domain_adapter": "semiengineering",
-          "content_length": 1607,
-          "boilerplate_ratio": 0,
-          "repetition_blocked": true,
-          "repetition_block_reasons": [
-            "repeated_sentence_ratio>0.12",
-            "heading_sequence_similarity>0.75",
-            "conclusion_similarity>0.7"
-          ],
-          "repetition_check": {
-            "compared_article_count": 20,
-            "repeated_sentence_ratio": 0.3333333333333333,
-            "repeated_paragraph_ratio": 0.3333333333333333,
-            "heading_sequence_similarity": 1,
-            "banned_phrase_count": 0,
-            "banned_phrase_counts": {},
-            "recent_banned_phrase_counts": {},
-            "ngram_overlap": 0.7019230769230769,
-            "blueprint_repetition": 1,
-            "conclusion_similarity": 0.9511897312113418,
-            "repeated_sentence_count": 2,
-            "repeated_paragraph_count": 2,
-            "heading_sequence": [
-              "System Change",
-              "Bottleneck",
-              "Engineering Tradeoff",
-              "Validation Metric"
-            ],
-            "blocked": true,
-            "reasons": [
-              "repeated_sentence_ratio>0.12",
-              "heading_sequence_similarity>0.75",
-              "conclusion_similarity>0.7"
-            ]
-          },
-          "expert_insight_complete": true,
-          "expert_insight_missing_fields": [],
-          "reason": "repeated_sentence_ratio>0.12; heading_sequence_similarity>0.75; conclusion_similarity>0.7"
-        }
-      ],
-      "signalCardItems": [
-        {
-          "id": "a2cf95f0d1c7563d",
-          "title": "Tensordyne Napier AI Processor Announced with Logarithmic Math",
-          "infrastructure_relevance_score": 0.914,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "cloud_capacity_relevance:0.32(hyperscalers)",
-            "semiconductor_relevance:0.44(accelerator, gpu)",
-            "power_grid_relevance:0.52(power, megawatt)",
-            "cooling_relevance:0.34(cooling)"
-          ],
-          "extraction_quality_score": 1,
-          "source_domain_adapter": "servethehome",
-          "content_length": 1648,
-          "boilerplate_ratio": 0,
-          "repetition_blocked": false,
-          "repetition_block_reasons": [],
-          "repetition_check": null,
-          "expert_insight_complete": false,
-          "expert_insight_missing_fields": [
-            "named_companies"
-          ],
-          "reason": "expert_insight_missing_fields named_companies"
-        }
-      ],
-      "archiveOnlyItems": []
-    },
     {
       "at": "2026-06-16T12:19:22.559Z",
       "day": "2026-06-16",
@@ -48846,7 +48727,134 @@
       ],
       "signalCardItems": [],
       "archiveOnlyItems": []
+    },
+    {
+      "at": "2026-07-26T00:02:31.866Z",
+      "day": "2026-07-26",
+      "slot": 1,
+      "publishedCount": 0,
+      "signalCardCount": 1,
+      "archiveOnlyCount": 0,
+      "repetitionBlockedCount": 1,
+      "publishedIds": [],
+      "processedIds": [
+        "391c19846bd8bae0",
+        "5f2e188fe9a2ea37"
+      ],
+      "blockedCount": 1,
+      "blockedItems": [
+        {
+          "id": "391c19846bd8bae0",
+          "title": "Security flaw in Vatican’s ‘Click to Pray’ app leaves over 700,000 global users exposed — app has been leaking user data for over six months and still does",
+          "infrastructure_relevance_score": 0.87,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "cloud_capacity_relevance:0.32(hyperscalers)",
+            "semiconductor_relevance:0.22(gpu)",
+            "power_grid_relevance:0.22(power)"
+          ],
+          "extraction_quality_score": 1,
+          "source_domain_adapter": "generic",
+          "content_length": 1786,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": false,
+          "repetition_block_reasons": [],
+          "repetition_check": null,
+          "expert_insight_complete": false,
+          "expert_insight_missing_fields": [
+            "named_companies"
+          ],
+          "reason": "expert_insight_missing_fields named_companies"
+        }
+      ],
+      "repetitionBlockedItems": [
+        {
+          "id": "5f2e188fe9a2ea37",
+          "title": "Supermicro H15 Servers Pair 6th Gen EPYC With MI350P GPU Systems and the Helios Rack",
+          "infrastructure_relevance_score": 0.914,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud, hpc)",
+            "data_center_relevance:0.42(data center)",
+            "cloud_capacity_relevance:0.32(hyperscalers)",
+            "semiconductor_relevance:0.52(amd, gpu)",
+            "power_grid_relevance:0.22(power)",
+            "cooling_relevance:0.30(thermal)",
+            "enterprise_ai_infrastructure_relevance:0.38(virtualization, networking)"
+          ],
+          "extraction_quality_score": 1,
+          "source_domain_adapter": "storagereview",
+          "content_length": 1742,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": true,
+          "repetition_block_reasons": [
+            "repeated_sentence_ratio>0.12",
+            "heading_sequence_similarity>0.75",
+            "conclusion_similarity>0.7"
+          ],
+          "repetition_check": {
+            "compared_article_count": 20,
+            "repeated_sentence_ratio": 0.2857142857142857,
+            "repeated_paragraph_ratio": 0.3333333333333333,
+            "heading_sequence_similarity": 1,
+            "banned_phrase_count": 0,
+            "banned_phrase_counts": {},
+            "recent_banned_phrase_counts": {},
+            "ngram_overlap": 0.376,
+            "blueprint_repetition": 1,
+            "conclusion_similarity": 0.9511897312113418,
+            "repeated_sentence_count": 2,
+            "repeated_paragraph_count": 2,
+            "heading_sequence": [
+              "Cost Signal",
+              "Below The Accelerator Layer",
+              "Buyer Exposure",
+              "Planning Metric"
+            ],
+            "blocked": true,
+            "reasons": [
+              "repeated_sentence_ratio>0.12",
+              "heading_sequence_similarity>0.75",
+              "conclusion_similarity>0.7"
+            ]
+          },
+          "expert_insight_complete": true,
+          "expert_insight_missing_fields": [],
+          "reason": "repeated_sentence_ratio>0.12; heading_sequence_similarity>0.75; conclusion_similarity>0.7"
+        }
+      ],
+      "signalCardItems": [
+        {
+          "id": "391c19846bd8bae0",
+          "title": "Security flaw in Vatican’s ‘Click to Pray’ app leaves over 700,000 global users exposed — app has been leaking user data for over six months and still does",
+          "infrastructure_relevance_score": 0.87,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "cloud_capacity_relevance:0.32(hyperscalers)",
+            "semiconductor_relevance:0.22(gpu)",
+            "power_grid_relevance:0.22(power)"
+          ],
+          "extraction_quality_score": 1,
+          "source_domain_adapter": "generic",
+          "content_length": 1786,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": false,
+          "repetition_block_reasons": [],
+          "repetition_check": null,
+          "expert_insight_complete": false,
+          "expert_insight_missing_fields": [
+            "named_companies"
+          ],
+          "reason": "expert_insight_missing_fields named_companies"
+        }
+      ],
+      "archiveOnlyItems": []
     }
   ],
-  "lastRunAt": "2026-07-25T16:09:44.764Z"
+  "lastRunAt": "2026-07-26T00:02:31.866Z"
 }
