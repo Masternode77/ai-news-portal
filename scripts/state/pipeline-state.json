@@ -697,7 +697,9 @@
     "986a4e5c0a0a11f9",
     "2a7bfbb600c07ddf",
     "36b771ab3b457db0",
-    "152ef34b28d89ce2"
+    "152ef34b28d89ce2",
+    "bc3553770936a53b",
+    "d84b7c5ac20d8eeb"
   ],
   "dayPlans": {
     "2026-03-24": {
@@ -35378,18 +35380,86 @@
     "2026-07-27": {
       "date": "2026-07-27",
       "createdAt": "2026-07-26T16:09:21.774Z",
-      "refreshedAt": "2026-07-26T16:09:21.774Z",
+      "refreshedAt": "2026-07-27T00:03:06.168Z",
       "candidateWindowHours": 24,
       "curatedItems": [
         {
-          "id": "36b771ab3b457db0",
-          "source": "Toms Hardware",
-          "url": "https://www.tomshardware.com/tech-industry/physicists-build-a-computer-from-400-particles-orbiting-in-liquid-with-10-times-the-error-of-memristor-rivals",
-          "title": "Physicists turn particles in chaotic orbits into liquid computers — but this fluid hardware still trails memristor rivals",
-          "snippet": "Each oscillator is a silica sphere of 3μm radius, capped on one side with 80nm of carbon and suspended in a water-lutidine mixture held at 28°C.",
-          "contentText": "Physicists at the Universities of Konstanz and Stuttgart have run chaotic-signal forecasting and anomaly detection on 400 microscopic particles orbiting in a drop of liquid, in work published in Communications AI & Computing. The array predicted a chaotic Mackey-Glass series and picked out anomalies that leave a signal's mean, variance, and short-time autocorrelation untouched, scoring an F1 of 0.90 on that harder task. It also came in roughly 10 times less accurate than memristor-based reservoirs , a gap the paper admits candidly. Each oscillator is a silica sphere of 3μm radius, capped on one side with 80nm of carbon and suspended in a water-lutidine mixture held at 28°C. A 532nm laser heats the cap and drives the particle toward an assigned target point, but the delay between imaging a…",
-          "publishedAt": "2026-07-26T15:05:00.000Z",
-          "sourceImage": "https://cdn.mos.cms.futurecdn.net/Zr9dQ4i4FpNLAqyWzhyAqW-1280-80.jpg",
+          "id": "bc3553770936a53b",
+          "source": "StorageReview",
+          "url": "https://www.storagereview.com/news/wistrons-700m-fort-worth-plant-becomes-the-first-u-s-site-building-nvidia-gb300-superchips",
+          "title": "Wistron’s $700M Fort Worth Plant Becomes the First U.S. Site Building NVIDIA GB300 Superchips",
+          "snippet": "Wistron has opened its D1 AI smart facility in Fort Worth, Texas, marking the company’s first manufacturing site in the United States and the first U.S. production and assembly location for the NVIDIA GB300 Grace Blackw…",
+          "contentText": "Wistron has opened its D1 AI smart facility in Fort Worth, Texas, marking the company&#8217;s first manufacturing site in the United States and the first U.S. production and assembly location for the NVIDIA GB300 Grace Blackwell Ultra Superchip. The new site represents a $700 million investment, spans roughly 324,000 square feet, and has created more than 500 jobs so far, a figure Wistron expects to reach 1,000 by the end of the year. It expands Wistron&#8217;s footprint in AI infrastructure manufacturing and adds domestic capacity for NVIDIA-based systems. The facility opening was led by Wistron Chairman Simon Lin and NVIDIA CEO Jensen Huang, with local and Taiwanese government representatives also in attendance. For Wistron, the Fort Worth plant serves as a strategic extension of its gl…",
+          "publishedAt": "2026-07-26T17:18:32.000Z",
+          "sourceImage": "https://www.storagereview.com/wp-content/uploads/2026/07/Storagereview-wistron-ftw-manufacturing.jpeg",
+          "region": "APAC",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "category": "AI Infrastructure",
+          "primary_category": "AI Infrastructure",
+          "secondary_category": "GPU clusters and deployment readiness",
+          "infrastructure_layer": "Compute",
+          "affected_stakeholders": [
+            "operators",
+            "hyperscalers",
+            "cloud buyers",
+            "investors"
+          ],
+          "article_type": "Capacity Expansion",
+          "urgency_score": 0.6,
+          "taxonomy_confidence": 0.77,
+          "taxonomy_reasons": [
+            "ai infrastructure",
+            "neocloud"
+          ],
+          "direct_ai_infrastructure_relevance": 1,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0.598,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.862,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "semiconductor_relevance:0.60(nvidia, gpu)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 1,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0.598,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.862,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+              "semiconductor_relevance:0.60(nvidia, gpu)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 74
+        },
+        {
+          "id": "d84b7c5ac20d8eeb",
+          "source": "ServeTheHome",
+          "url": "https://www.servethehome.com/computex-2026-senao-sa9832v2-an-intel-amston-lake-powered-cloud-sase-gateway/",
+          "title": "This Senao SA9832v2 is an Intel Amston Lake-Powered Cloud SASE Gateway",
+          "snippet": "At Computex 2026 Senao was showing off its latest wired SASE gateway, the SA9832v2, which is powered by Intel's elusive Atom X7 \"Amston Lake\" SoC The post This Senao SA9832v2 is an Intel Amston Lake-Powered Cloud SASE G…",
+          "contentText": "At Computex 2026 Senao was showing off its latest wired SASE gateway, the SA9832v2, which is powered by Intel's elusive Atom X7 \"Amston Lake\" SoC The post This Senao SA9832v2 is an Intel Amston Lake-Powered Cloud SASE Gateway appeared first on ServeTheHome .",
+          "publishedAt": "2026-07-26T17:00:01.000Z",
+          "sourceImage": null,
           "region": "US",
           "language": "en",
           "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
@@ -35404,7 +35474,75 @@
             "investors"
           ],
           "article_type": "Other",
-          "urgency_score": 0.57,
+          "urgency_score": 0.45,
+          "taxonomy_confidence": 0.77,
+          "taxonomy_reasons": [
+            "ai infrastructure",
+            "neocloud"
+          ],
+          "direct_ai_infrastructure_relevance": 1,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0.49,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.838,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "semiconductor_relevance:0.49(intel, gpu)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 1,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0.49,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.838,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+              "semiconductor_relevance:0.49(intel, gpu)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 73
+        },
+        {
+          "id": "7a183a623363fd8c",
+          "source": "TechCrunch AI",
+          "url": "https://techcrunch.com/2026/07/26/making-sense-of-the-panic-over-chinese-ai/",
+          "title": "Making sense of the panic over Chinese AI",
+          "snippet": "On the latest episode of Equity, we discussed why Moonshot AI's Kimi seemed to panic Silicon Valley and Wall Street.",
+          "contentText": "On the latest episode of Equity, we discussed why Moonshot AI's Kimi seemed to panic Silicon Valley and Wall Street.",
+          "publishedAt": "2026-07-26T19:40:57.000Z",
+          "sourceImage": null,
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "category": "AI Infrastructure",
+          "primary_category": "AI Infrastructure",
+          "secondary_category": "GPU clusters and deployment readiness",
+          "infrastructure_layer": "Compute",
+          "affected_stakeholders": [
+            "operators",
+            "hyperscalers",
+            "cloud buyers",
+            "investors"
+          ],
+          "article_type": "Financing / M&A",
+          "urgency_score": 0.44,
           "taxonomy_confidence": 0.77,
           "taxonomy_reasons": [
             "ai infrastructure",
@@ -35416,14 +35554,15 @@
           "semiconductor_relevance": 0.22,
           "power_grid_relevance": 0,
           "cooling_relevance": 0,
-          "capital_markets_relevance": 0,
+          "capital_markets_relevance": 0.26,
           "enterprise_ai_infrastructure_relevance": 0,
-          "infrastructure_relevance_score": 0.778,
+          "infrastructure_relevance_score": 0.822,
           "infrastructure_relevance_tier": "full_memo",
           "infrastructure_relevance_action": "generate_full_memo",
           "infrastructure_relevance_reasons": [
             "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "semiconductor_relevance:0.22(gpu)"
+            "semiconductor_relevance:0.22(gpu)",
+            "capital_markets_relevance:0.26(equity)"
           ],
           "infrastructure_relevance": {
             "direct_ai_infrastructure_relevance": 1,
@@ -35432,14 +35571,15 @@
             "semiconductor_relevance": 0.22,
             "power_grid_relevance": 0,
             "cooling_relevance": 0,
-            "capital_markets_relevance": 0,
+            "capital_markets_relevance": 0.26,
             "enterprise_ai_infrastructure_relevance": 0,
-            "infrastructure_relevance_score": 0.778,
+            "infrastructure_relevance_score": 0.822,
             "infrastructure_relevance_tier": "full_memo",
             "infrastructure_relevance_action": "generate_full_memo",
             "infrastructure_relevance_reasons": [
               "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-              "semiconductor_relevance:0.22(gpu)"
+              "semiconductor_relevance:0.22(gpu)",
+              "capital_markets_relevance:0.26(equity)"
             ],
             "infrastructureRelevanceAction": "generate_full_memo",
             "articlePagePublished": true,
@@ -35447,145 +35587,7 @@
             "archiveOnly": false,
             "archiveOnlyReason": null
           },
-          "score": 79
-        },
-        {
-          "id": "152ef34b28d89ce2",
-          "source": "Data Center Dynamics",
-          "url": "https://www.datacenterdynamics.com/en/opinions/rethinking-redundancy-smarter-strategies-for-the-ai-driven-data-center/",
-          "title": "Rethinking redundancy: smarter strategies for the AI-driven data center",
-          "snippet": "Thinking harder about cooling, power, and server-level redundancy",
-          "contentText": "Thinking harder about cooling, power, and server-level redundancy",
-          "publishedAt": "2026-07-26T13:00:28.000Z",
-          "sourceImage": "https://media.datacenterdynamics.com/media/images/Solomon_Obadimu_Profile.cf086db9.fill-750x500.png",
-          "region": "Global",
-          "language": "en",
-          "defaultCategory": "Colocation & Wholesale",
-          "category": "Data Centers",
-          "primary_category": "Data Centers",
-          "secondary_category": "Campus development and colocation capacity",
-          "infrastructure_layer": "Facility",
-          "affected_stakeholders": [
-            "data center operators",
-            "developers",
-            "site selectors",
-            "investors"
-          ],
-          "article_type": "Other",
-          "urgency_score": 0.55,
-          "taxonomy_confidence": 0.86,
-          "taxonomy_reasons": [
-            "data center",
-            "colocation",
-            "wholesale"
-          ],
-          "direct_ai_infrastructure_relevance": 0.78,
-          "data_center_relevance": 0.89,
-          "cloud_capacity_relevance": 0,
-          "semiconductor_relevance": 0,
-          "power_grid_relevance": 0.22,
-          "cooling_relevance": 0.34,
-          "capital_markets_relevance": 0,
-          "enterprise_ai_infrastructure_relevance": 0,
-          "infrastructure_relevance_score": 0.908,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:0.78",
-            "data_center_relevance:0.89(data center, colocation)",
-            "power_grid_relevance:0.22(power)",
-            "cooling_relevance:0.34(cooling)"
-          ],
-          "infrastructure_relevance": {
-            "direct_ai_infrastructure_relevance": 0.78,
-            "data_center_relevance": 0.89,
-            "cloud_capacity_relevance": 0,
-            "semiconductor_relevance": 0,
-            "power_grid_relevance": 0.22,
-            "cooling_relevance": 0.34,
-            "capital_markets_relevance": 0,
-            "enterprise_ai_infrastructure_relevance": 0,
-            "infrastructure_relevance_score": 0.908,
-            "infrastructure_relevance_tier": "full_memo",
-            "infrastructure_relevance_action": "generate_full_memo",
-            "infrastructure_relevance_reasons": [
-              "direct_ai_infrastructure_relevance:0.78",
-              "data_center_relevance:0.89(data center, colocation)",
-              "power_grid_relevance:0.22(power)",
-              "cooling_relevance:0.34(cooling)"
-            ],
-            "infrastructureRelevanceAction": "generate_full_memo",
-            "articlePagePublished": true,
-            "homepagePublished": true,
-            "archiveOnly": false,
-            "archiveOnlyReason": null
-          },
-          "score": 64
-        },
-        {
-          "id": "494de199ed851145",
-          "source": "Bloomberg Technology",
-          "url": "https://www.bloomberg.com/news/newsletters/2026-07-26/apple-glasses-may-debut-at-wwdc-2027-privacy-camera-features-versus-meta-ms1v7lta",
-          "title": "Apple Glasses May Debut at WWDC 2027: Privacy, Camera Features Versus Meta",
-          "snippet": "Company debated whether glasses will be able to record video.",
-          "contentText": "Company debated whether glasses will be able to record video.",
-          "publishedAt": "2026-07-26T14:00:02.000Z",
-          "sourceImage": null,
-          "region": "US",
-          "language": "en",
-          "defaultCategory": "Hyperscalers & Cloud",
-          "category": "Cloud Capacity",
-          "primary_category": "Cloud Capacity",
-          "secondary_category": "Hyperscale regions and accelerator availability",
-          "infrastructure_layer": "Cloud Platform",
-          "affected_stakeholders": [
-            "hyperscalers",
-            "cloud buyers",
-            "enterprise IT",
-            "operators"
-          ],
-          "article_type": "Other",
-          "urgency_score": 0.25,
-          "taxonomy_confidence": 0.5,
-          "taxonomy_reasons": [
-            "fallback_taxonomy"
-          ],
-          "direct_ai_infrastructure_relevance": 0,
-          "data_center_relevance": 0,
-          "cloud_capacity_relevance": 0.32,
-          "semiconductor_relevance": 0,
-          "power_grid_relevance": 0,
-          "cooling_relevance": 0,
-          "capital_markets_relevance": 0,
-          "enterprise_ai_infrastructure_relevance": 0,
-          "infrastructure_relevance_score": 0.221,
-          "infrastructure_relevance_tier": "archive_only",
-          "infrastructure_relevance_action": "archive_only",
-          "infrastructure_relevance_reasons": [
-            "cloud_capacity_relevance:0.32(hyperscalers)"
-          ],
-          "infrastructure_relevance": {
-            "direct_ai_infrastructure_relevance": 0,
-            "data_center_relevance": 0,
-            "cloud_capacity_relevance": 0.32,
-            "semiconductor_relevance": 0,
-            "power_grid_relevance": 0,
-            "cooling_relevance": 0,
-            "capital_markets_relevance": 0,
-            "enterprise_ai_infrastructure_relevance": 0,
-            "infrastructure_relevance_score": 0.221,
-            "infrastructure_relevance_tier": "archive_only",
-            "infrastructure_relevance_action": "archive_only",
-            "infrastructure_relevance_reasons": [
-              "cloud_capacity_relevance:0.32(hyperscalers)"
-            ],
-            "infrastructureRelevanceAction": "archive_only",
-            "articlePagePublished": false,
-            "homepagePublished": false,
-            "archiveOnly": true,
-            "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
-          },
-          "score": 43
+          "score": 66
         },
         {
           "id": "0594af26494b4846",
@@ -35653,18 +35655,88 @@
             "archiveOnly": false,
             "archiveOnlyReason": null
           },
-          "score": 79
+          "score": 65
         },
         {
-          "id": "55dd7987b6406b67",
-          "source": "Toms Hardware",
-          "url": "https://www.tomshardware.com/pc-components/dram/chinese-cxmt-dram-doesnt-look-like-the-budget-savior-many-were-expecting-new-modules-enter-the-market-but-prices-still-track-the-big-three",
-          "title": "Chinese CXMT DRAM doesn't look like the budget savior many were expecting — new modules enter the market, but prices still track the big three",
-          "snippet": "Chinese retail listings indicate that CXMT-based memory modules are priced similarly to those featuring chips from the big three, despite expectations that they must be cheaper.",
-          "contentText": "One of the common misconceptions in today's memory market is that once memory modules based on chips from CXMT enter the consumer market, there will be cheaper alternatives to memory sticks running DRAM from the Big Three. While availability of CXMT-powered modules certainly impacts average selling prices, these products are not cheaper than those based on ICs from Micron, Samsung, and SK hynix even in China, as noticed by @harukaze5719 . A 64GB DDR5-5600 RDIMM based on memory from Samsung or SK hynix costs 18,595 CNY ($2,745) at JD.com, whereas a module featuring the same capacity and specification, but using DRAMs from CXMT is priced at 18,999 CNY ($2,805), according to observations by @harukaze5719 . It is noteworthy that a Samsung 64GB DDR5-5600 RDIMM made by Samsung and sold by Samsu…",
-          "publishedAt": "2026-07-26T13:25:30.000Z",
-          "sourceImage": "https://cdn.mos.cms.futurecdn.net/Y6RXNGdt5atPtqKHjD7EUW-1280-80.jpg",
-          "region": "APAC",
+          "id": "a0deb4bc291d1b04",
+          "source": "Bloomberg Technology",
+          "url": "https://www.bloomberg.com/news/articles/2026-07-26/nvidia-in-talks-on-250-billion-backing-for-openai-hub-wsj-says",
+          "title": "Nvidia in Talks on $250 Billion Backing for OpenAI Hub, WSJ Says",
+          "snippet": "Nvidia Corp.’s in discussions to provide a guarantee of about $250 billion to help OpenAI lease computing from a giant data center project, the Wall Street Journal reported, citing people familiar with the matter.",
+          "contentText": "Nvidia Corp.’s in discussions to provide a guarantee of about $250 billion to help OpenAI lease computing from a giant data center project, the Wall Street Journal reported, citing people familiar with the matter.",
+          "publishedAt": "2026-07-26T23:31:04.000Z",
+          "sourceImage": null,
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "Hyperscalers & Cloud",
+          "category": "Data Centers",
+          "primary_category": "Data Centers",
+          "secondary_category": "Campus development and colocation capacity",
+          "infrastructure_layer": "Facility",
+          "affected_stakeholders": [
+            "data center operators",
+            "developers",
+            "site selectors",
+            "investors"
+          ],
+          "article_type": "Other",
+          "urgency_score": 0.32,
+          "taxonomy_confidence": 0.68,
+          "taxonomy_reasons": [
+            "data center",
+            "lease"
+          ],
+          "direct_ai_infrastructure_relevance": 0,
+          "data_center_relevance": 0.42,
+          "cloud_capacity_relevance": 0.32,
+          "semiconductor_relevance": 0.378,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0.18,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.432,
+          "infrastructure_relevance_tier": "archive_only",
+          "infrastructure_relevance_action": "archive_only",
+          "infrastructure_relevance_reasons": [
+            "data_center_relevance:0.42(data center)",
+            "cloud_capacity_relevance:0.32(hyperscalers)",
+            "semiconductor_relevance:0.38(nvidia)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 0,
+            "data_center_relevance": 0.42,
+            "cloud_capacity_relevance": 0.32,
+            "semiconductor_relevance": 0.378,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0.18,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.432,
+            "infrastructure_relevance_tier": "archive_only",
+            "infrastructure_relevance_action": "archive_only",
+            "infrastructure_relevance_reasons": [
+              "data_center_relevance:0.42(data center)",
+              "cloud_capacity_relevance:0.32(hyperscalers)",
+              "semiconductor_relevance:0.38(nvidia)"
+            ],
+            "infrastructureRelevanceAction": "archive_only",
+            "articlePagePublished": false,
+            "homepagePublished": false,
+            "archiveOnly": true,
+            "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
+          },
+          "score": 64
+        },
+        {
+          "id": "74482192a3ca59fd",
+          "source": "TechCrunch AI",
+          "url": "https://techcrunch.com/2026/07/26/hugging-face-ceo-calls-for-radical-transparency-after-unprecedented-openai-hack/",
+          "title": "Hugging Face CEO calls for ‘radical transparency’ after ‘unprecedented’ OpenAI hack",
+          "snippet": "\"The first autonomous agent cyberattack is an unprecedented event. It deserves an unprecedented response!\"",
+          "contentText": "\"The first autonomous agent cyberattack is an unprecedented event. It deserves an unprecedented response!\"",
+          "publishedAt": "2026-07-26T16:33:13.000Z",
+          "sourceImage": null,
+          "region": "US",
           "language": "en",
           "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
           "category": "AI Infrastructure",
@@ -35677,8 +35749,8 @@
             "cloud buyers",
             "investors"
           ],
-          "article_type": "Capacity Expansion",
-          "urgency_score": 0.51,
+          "article_type": "Other",
+          "urgency_score": 0.43,
           "taxonomy_confidence": 0.77,
           "taxonomy_reasons": [
             "ai infrastructure",
@@ -35721,220 +35793,30 @@
             "archiveOnly": false,
             "archiveOnlyReason": null
           },
-          "score": 75
-        },
-        {
-          "id": "438353d040e3ad20",
-          "source": "Toms Hardware",
-          "url": "https://www.tomshardware.com/pc-components/xfx-radeon-rx-9070-xt-drops-to-its-lowest-price-of-the-summer-save-usd90-on-amds-flagship-rdna-4-graphics-card",
-          "title": "XFX Radeon RX 9070 XT drops to its lowest price of the summer — save $90 on AMD's flagship RDNA 4 graphics card",
-          "snippet": "If you've been waiting for RX 9070 XT prices to fall, this $90 discount on XFX's triple-fan Quicksilver model is one of the best deals currently available.",
-          "contentText": "In addition to memory and storage, graphics cards continue to command a premium in the PC components market. While discounts are hard to come by, the XFX Quicksilver AMD Radeon RX 9070XT Gaming Edition is currently available at Newegg for $699.99, down from its regular listed price of $789.99. At $90 off, this is one of the better prices we've seen for an RX 9070 XT in recent months. Check out this deal on Newegg The XFX Quicksilver RX 9070XT OC Gaming Edition features a minimalist all-black design which makes it perfect for black-themed PC builds. The cooling system on this GPU includes a nickel-plated copper cold plate, 3x double ball bearing fans, and 6mm heatpipes to offer the best thermal dissipation. Overall, it is quite beefy with its 3.5-slot design and includes a backplate for bo…",
-          "publishedAt": "2026-07-26T12:31:14.000Z",
-          "sourceImage": "https://cdn.mos.cms.futurecdn.net/T3hZEr8Lck9NLHroGWyYTZ-1280-80.jpg",
-          "region": "Global",
-          "language": "en",
-          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
-          "category": "AI Infrastructure",
-          "primary_category": "AI Infrastructure",
-          "secondary_category": "GPU clusters and deployment readiness",
-          "infrastructure_layer": "Compute",
-          "affected_stakeholders": [
-            "operators",
-            "hyperscalers",
-            "cloud buyers",
-            "investors"
-          ],
-          "article_type": "Supply Chain",
-          "urgency_score": 0.47,
-          "taxonomy_confidence": 0.77,
-          "taxonomy_reasons": [
-            "ai infrastructure",
-            "neocloud"
-          ],
-          "direct_ai_infrastructure_relevance": 1,
-          "data_center_relevance": 0,
-          "cloud_capacity_relevance": 0,
-          "semiconductor_relevance": 0.517,
-          "power_grid_relevance": 0,
-          "cooling_relevance": 0.64,
-          "capital_markets_relevance": 0,
-          "enterprise_ai_infrastructure_relevance": 0.18,
-          "infrastructure_relevance_score": 0.906,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "semiconductor_relevance:0.52(amd, gpu)",
-            "cooling_relevance:0.64(cooling, thermal)"
-          ],
-          "infrastructure_relevance": {
-            "direct_ai_infrastructure_relevance": 1,
-            "data_center_relevance": 0,
-            "cloud_capacity_relevance": 0,
-            "semiconductor_relevance": 0.517,
-            "power_grid_relevance": 0,
-            "cooling_relevance": 0.64,
-            "capital_markets_relevance": 0,
-            "enterprise_ai_infrastructure_relevance": 0.18,
-            "infrastructure_relevance_score": 0.906,
-            "infrastructure_relevance_tier": "full_memo",
-            "infrastructure_relevance_action": "generate_full_memo",
-            "infrastructure_relevance_reasons": [
-              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-              "semiconductor_relevance:0.52(amd, gpu)",
-              "cooling_relevance:0.64(cooling, thermal)"
-            ],
-            "infrastructureRelevanceAction": "generate_full_memo",
-            "articlePagePublished": true,
-            "homepagePublished": true,
-            "archiveOnly": false,
-            "archiveOnlyReason": null
-          },
-          "score": 68
+          "score": 64
         }
       ],
       "curatedIds": [
-        "36b771ab3b457db0",
-        "152ef34b28d89ce2",
-        "494de199ed851145",
+        "bc3553770936a53b",
+        "d84b7c5ac20d8eeb",
+        "7a183a623363fd8c",
         "0594af26494b4846",
-        "55dd7987b6406b67",
-        "438353d040e3ad20"
+        "a0deb4bc291d1b04",
+        "74482192a3ca59fd"
       ],
       "publishedIds": [
         "36b771ab3b457db0",
-        "152ef34b28d89ce2"
+        "152ef34b28d89ce2",
+        "bc3553770936a53b",
+        "d84b7c5ac20d8eeb"
       ],
       "slotPublications": {
-        "0": true
+        "0": true,
+        "1": true
       }
     }
   },
   "runHistory": [
-    {
-      "at": "2026-06-17T00:19:40.851Z",
-      "day": "2026-06-17",
-      "slot": 1,
-      "publishedCount": 0,
-      "signalCardCount": 0,
-      "archiveOnlyCount": 0,
-      "repetitionBlockedCount": 2,
-      "publishedIds": [],
-      "processedIds": [
-        "844edfa8cf0a411c",
-        "0efe1aad206964dd"
-      ],
-      "blockedCount": 0,
-      "blockedItems": [],
-      "repetitionBlockedItems": [
-        {
-          "id": "844edfa8cf0a411c",
-          "title": "Google Details Five Generations Of TPU Training Supercomputers",
-          "infrastructure_relevance_score": 1,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "cloud_capacity_relevance:0.32(hyperscalers)",
-            "semiconductor_relevance:0.94(semiconductor, hbm, gpu)",
-            "power_grid_relevance:0.22(power)"
-          ],
-          "extraction_quality_score": 1,
-          "source_domain_adapter": "semiengineering",
-          "content_length": 1416,
-          "boilerplate_ratio": 0,
-          "repetition_blocked": true,
-          "repetition_block_reasons": [
-            "repeated_sentence_ratio>0.12",
-            "conclusion_similarity>0.7"
-          ],
-          "repetition_check": {
-            "compared_article_count": 20,
-            "repeated_sentence_ratio": 0.4,
-            "repeated_paragraph_ratio": 0.4,
-            "heading_sequence_similarity": 0,
-            "banned_phrase_count": 0,
-            "banned_phrase_counts": {},
-            "recent_banned_phrase_counts": {},
-            "ngram_overlap": 0.3533834586466165,
-            "blueprint_repetition": 1,
-            "conclusion_similarity": 0.9271050693011066,
-            "repeated_sentence_count": 2,
-            "repeated_paragraph_count": 2,
-            "heading_sequence": [
-              "Market Pieces",
-              "Land Power Capital Chips",
-              "Demand Test",
-              "What To Split Out"
-            ],
-            "blocked": true,
-            "reasons": [
-              "repeated_sentence_ratio>0.12",
-              "conclusion_similarity>0.7"
-            ]
-          },
-          "expert_insight_complete": true,
-          "expert_insight_missing_fields": [],
-          "reason": "repeated_sentence_ratio>0.12; conclusion_similarity>0.7"
-        },
-        {
-          "id": "0efe1aad206964dd",
-          "title": "Coherent Breaks Ground on Expanded Texas Facility, Scaling AI’s Optical Backbone",
-          "infrastructure_relevance_score": 1,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "data_center_relevance:0.42(data centers)",
-            "cloud_capacity_relevance:0.32(hyperscalers)",
-            "semiconductor_relevance:1.00(semiconductor, semiconductors, nvidia)",
-            "power_grid_relevance:0.22(power)"
-          ],
-          "extraction_quality_score": 1,
-          "source_domain_adapter": "generic",
-          "content_length": 1756,
-          "boilerplate_ratio": 0,
-          "repetition_blocked": true,
-          "repetition_block_reasons": [
-            "repeated_sentence_ratio>0.12",
-            "heading_sequence_similarity>0.75",
-            "conclusion_similarity>0.7"
-          ],
-          "repetition_check": {
-            "compared_article_count": 20,
-            "repeated_sentence_ratio": 0.25,
-            "repeated_paragraph_ratio": 0.3333333333333333,
-            "heading_sequence_similarity": 1,
-            "banned_phrase_count": 0,
-            "banned_phrase_counts": {},
-            "recent_banned_phrase_counts": {},
-            "ngram_overlap": 0.46153846153846156,
-            "blueprint_repetition": 1,
-            "conclusion_similarity": 0.9511897312113418,
-            "repeated_sentence_count": 2,
-            "repeated_paragraph_count": 2,
-            "heading_sequence": [
-              "Technical Signal",
-              "Failure Domain",
-              "Operator Exposure",
-              "Benchmark To Watch"
-            ],
-            "blocked": true,
-            "reasons": [
-              "repeated_sentence_ratio>0.12",
-              "heading_sequence_similarity>0.75",
-              "conclusion_similarity>0.7"
-            ]
-          },
-          "expert_insight_complete": true,
-          "expert_insight_missing_fields": [],
-          "reason": "repeated_sentence_ratio>0.12; heading_sequence_similarity>0.75; conclusion_similarity>0.7"
-        }
-      ],
-      "signalCardItems": [],
-      "archiveOnlyItems": []
-    },
     {
       "at": "2026-06-17T11:56:37.065Z",
       "day": "2026-06-17",
@@ -49343,7 +49225,131 @@
         }
       ],
       "archiveOnlyItems": []
+    },
+    {
+      "at": "2026-07-27T00:03:06.168Z",
+      "day": "2026-07-27",
+      "slot": 1,
+      "publishedCount": 0,
+      "signalCardCount": 0,
+      "archiveOnlyCount": 0,
+      "repetitionBlockedCount": 2,
+      "publishedIds": [],
+      "processedIds": [
+        "bc3553770936a53b",
+        "d84b7c5ac20d8eeb"
+      ],
+      "blockedCount": 0,
+      "blockedItems": [],
+      "repetitionBlockedItems": [
+        {
+          "id": "bc3553770936a53b",
+          "title": "Wistron’s $700M Fort Worth Plant Becomes the First U.S. Site Building NVIDIA GB300 Superchips",
+          "infrastructure_relevance_score": 0.932,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "cloud_capacity_relevance:0.32(hyperscalers)",
+            "semiconductor_relevance:0.60(nvidia, gpu)",
+            "power_grid_relevance:0.22(power)"
+          ],
+          "extraction_quality_score": 1,
+          "source_domain_adapter": "storagereview",
+          "content_length": 1789,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": true,
+          "repetition_block_reasons": [
+            "repeated_sentence_ratio>0.12",
+            "heading_sequence_similarity>0.75",
+            "conclusion_similarity>0.7"
+          ],
+          "repetition_check": {
+            "compared_article_count": 20,
+            "repeated_sentence_ratio": 0.42857142857142855,
+            "repeated_paragraph_ratio": 0.5,
+            "heading_sequence_similarity": 1,
+            "banned_phrase_count": 0,
+            "banned_phrase_counts": {},
+            "recent_banned_phrase_counts": {},
+            "ngram_overlap": 0.635593220338983,
+            "blueprint_repetition": 1,
+            "conclusion_similarity": 0.9271050693011066,
+            "repeated_sentence_count": 3,
+            "repeated_paragraph_count": 3,
+            "heading_sequence": [
+              "Capital Move",
+              "Demand Evidence",
+              "Execution Risk",
+              "Milestone To Watch"
+            ],
+            "blocked": true,
+            "reasons": [
+              "repeated_sentence_ratio>0.12",
+              "heading_sequence_similarity>0.75",
+              "conclusion_similarity>0.7"
+            ]
+          },
+          "expert_insight_complete": true,
+          "expert_insight_missing_fields": [],
+          "reason": "repeated_sentence_ratio>0.12; heading_sequence_similarity>0.75; conclusion_similarity>0.7"
+        },
+        {
+          "id": "d84b7c5ac20d8eeb",
+          "title": "This Senao SA9832v2 is an Intel Amston Lake-Powered Cloud SASE Gateway",
+          "infrastructure_relevance_score": 0.908,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "cloud_capacity_relevance:0.32(hyperscalers)",
+            "semiconductor_relevance:0.49(intel, gpu)",
+            "power_grid_relevance:0.22(power)"
+          ],
+          "extraction_quality_score": 1,
+          "source_domain_adapter": "servethehome",
+          "content_length": 1751,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": true,
+          "repetition_block_reasons": [
+            "repeated_sentence_ratio>0.12",
+            "heading_sequence_similarity>0.75",
+            "conclusion_similarity>0.7"
+          ],
+          "repetition_check": {
+            "compared_article_count": 20,
+            "repeated_sentence_ratio": 0.2857142857142857,
+            "repeated_paragraph_ratio": 0.3333333333333333,
+            "heading_sequence_similarity": 1,
+            "banned_phrase_count": 0,
+            "banned_phrase_counts": {},
+            "recent_banned_phrase_counts": {},
+            "ngram_overlap": 0.6386554621848739,
+            "blueprint_repetition": 1,
+            "conclusion_similarity": 0.9511897312113418,
+            "repeated_sentence_count": 2,
+            "repeated_paragraph_count": 2,
+            "heading_sequence": [
+              "Technical Signal",
+              "Failure Domain",
+              "Operator Exposure",
+              "Benchmark To Watch"
+            ],
+            "blocked": true,
+            "reasons": [
+              "repeated_sentence_ratio>0.12",
+              "heading_sequence_similarity>0.75",
+              "conclusion_similarity>0.7"
+            ]
+          },
+          "expert_insight_complete": true,
+          "expert_insight_missing_fields": [],
+          "reason": "repeated_sentence_ratio>0.12; heading_sequence_similarity>0.75; conclusion_similarity>0.7"
+        }
+      ],
+      "signalCardItems": [],
+      "archiveOnlyItems": []
     }
   ],
-  "lastRunAt": "2026-07-26T16:09:21.774Z"
+  "lastRunAt": "2026-07-27T00:03:06.168Z"
 }
