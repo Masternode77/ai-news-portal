@@ -705,7 +705,9 @@
     "9e07e4e22ca40bff",
     "da3af2d8da97c0c4",
     "a98afca969b96208",
-    "aadf7b1d49b24755"
+    "aadf7b1d49b24755",
+    "ff73bc223d96ee13",
+    "104ab5a2e7ba0d12"
   ],
   "dayPlans": {
     "2026-03-24": {
@@ -35845,136 +35847,69 @@
     "2026-07-28": {
       "date": "2026-07-28",
       "createdAt": "2026-07-27T17:04:22.919Z",
-      "refreshedAt": "2026-07-28T00:04:51.743Z",
+      "refreshedAt": "2026-07-28T09:43:14.608Z",
       "candidateWindowHours": 24,
       "curatedItems": [
         {
-          "id": "a98afca969b96208",
-          "source": "HPCwire",
-          "url": "https://www.hpcwire.com/2026/07/27/why-memory-pool-architectures-will-redefine-kv-cache-for-ai-inference/",
-          "title": "Why Memory Pool Architectures Will Redefine KV Cache for AI Inference",
-          "snippet": "The conversation surrounding AI infrastructure has correctly identified the key value (KV) cache as a critical bottleneck in scaling AI inference. As models push toward longer context windows and higher concurrency, the…",
-          "contentText": "The conversation surrounding AI infrastructure has correctly identified the key value (KV) cache as a critical bottleneck in scaling AI inference. As models push toward longer context windows and higher concurrency, the memory footprint of the KV cache grows rapidly, often becoming larger than the model itself. Recent industry discussions have focused heavily on extending KV cache capacity using external storage systems, typically connected via RDMA over high-speed Ethernet. While storage centric approach provides a practical way to scale capacity beyond GPU memory limits, representing an important first step forward, it leaves a more fundamental issue completely unresolved: performance. AI inference is not just constrained by how much KV cache can be stored, it is strictly gated by how f…",
-          "publishedAt": "2026-07-27T22:08:26.000Z",
-          "sourceImage": "https://www.hpcwire.com/wp-content/uploads/2026/07/HBM_shutterstock_Taylor-nero-300x169.jpg",
+          "id": "ff73bc223d96ee13",
+          "source": "Semiconductor Engineering",
+          "url": "https://semiengineering.com/chip-industry-technical-paper-roundup-july-28/",
+          "title": "Chip Industry Technical Paper Roundup: July 28",
+          "snippet": "HW methods to throttle AI; M3D DRAM; interconnect signal-integrity analysis; 3D mask effects in high/hyper-NA EUV litho; compute-in-interconnect and memory; NbAs nanowire interconnects; and 3D conformal thin-film patter…",
+          "contentText": "New technical papers recently added to Semiconductor Engineering’s library: Technical Paper Research Organizations Hardware Mechanisms to Dynamically Throttle AI Performance Princeton University Optimization of 3D-DRAM Architecture with Oxide-Semiconductor Channel through Process and Device Simulation imec, KU Leuven, Samsung Electronics, Lam Research Fast Interconnect Signal Integrity Analysis For Integrated Circuit Design Via Graph Transformers University at Buffalo, University of Stuttgart, IBM Research Benefits of 3D mask effects in high-NA and hyper-NA EUV lithography Fraunhofer IISB, ASML Compute-in-Interconnect and Memory with Reconfigurable Precision for LLM Inference National University of Singapore Surface-dominant transport in Weyl semimetal NbAs nanowires for next-generation i…",
+          "publishedAt": "2026-07-28T07:01:45.000Z",
+          "sourceImage": null,
           "region": "APAC",
           "language": "en",
           "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
-          "category": "AI Infrastructure",
-          "primary_category": "AI Infrastructure",
-          "secondary_category": "GPU clusters and deployment readiness",
-          "infrastructure_layer": "Compute",
+          "category": "Semiconductors",
+          "primary_category": "Semiconductors",
+          "secondary_category": "Accelerators, memory, and advanced packaging",
+          "infrastructure_layer": "Silicon",
           "affected_stakeholders": [
-            "operators",
+            "semiconductor suppliers",
             "hyperscalers",
-            "cloud buyers",
+            "server OEMs",
             "investors"
           ],
-          "article_type": "Capacity Expansion",
-          "urgency_score": 0.51,
-          "taxonomy_confidence": 0.77,
+          "article_type": "Supply Chain",
+          "urgency_score": 0.45,
+          "taxonomy_confidence": 0.81,
           "taxonomy_reasons": [
-            "ai infrastructure",
-            "neocloud"
+            "semiconductor",
+            "chip",
+            "gpu"
           ],
           "direct_ai_infrastructure_relevance": 1,
           "data_center_relevance": 0,
           "cloud_capacity_relevance": 0,
-          "semiconductor_relevance": 0.22,
-          "power_grid_relevance": 0,
-          "cooling_relevance": 0,
-          "capital_markets_relevance": 0,
-          "enterprise_ai_infrastructure_relevance": 0.18,
-          "infrastructure_relevance_score": 0.778,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "semiconductor_relevance:0.22(gpu)"
-          ],
-          "infrastructure_relevance": {
-            "direct_ai_infrastructure_relevance": 1,
-            "data_center_relevance": 0,
-            "cloud_capacity_relevance": 0,
-            "semiconductor_relevance": 0.22,
-            "power_grid_relevance": 0,
-            "cooling_relevance": 0,
-            "capital_markets_relevance": 0,
-            "enterprise_ai_infrastructure_relevance": 0.18,
-            "infrastructure_relevance_score": 0.778,
-            "infrastructure_relevance_tier": "full_memo",
-            "infrastructure_relevance_action": "generate_full_memo",
-            "infrastructure_relevance_reasons": [
-              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-              "semiconductor_relevance:0.22(gpu)"
-            ],
-            "infrastructureRelevanceAction": "generate_full_memo",
-            "articlePagePublished": true,
-            "homepagePublished": true,
-            "archiveOnly": false,
-            "archiveOnlyReason": null
-          },
-          "score": 79
-        },
-        {
-          "id": "aadf7b1d49b24755",
-          "source": "TechCrunch AI",
-          "url": "https://techcrunch.com/2026/07/27/satya-nadella-says-companies-that-trust-one-ai-for-everything-may-not-survive/",
-          "title": "Satya Nadella says companies that trust one AI for everything may not survive",
-          "snippet": "Companies without their own models — or without a layer of AI infrastructure known as AI gateways to separate their prompts from the model itself — will be in trouble, Nadella says.",
-          "contentText": "Companies without their own models — or without a layer of AI infrastructure known as AI gateways to separate their prompts from the model itself — will be in trouble, Nadella says.",
-          "publishedAt": "2026-07-27T21:17:11.000Z",
-          "sourceImage": null,
-          "region": "US",
-          "language": "en",
-          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
-          "category": "AI Infrastructure",
-          "primary_category": "AI Infrastructure",
-          "secondary_category": "GPU clusters and deployment readiness",
-          "infrastructure_layer": "Compute",
-          "affected_stakeholders": [
-            "operators",
-            "hyperscalers",
-            "cloud buyers",
-            "investors"
-          ],
-          "article_type": "Other",
-          "urgency_score": 0.43,
-          "taxonomy_confidence": 0.77,
-          "taxonomy_reasons": [
-            "ai infrastructure",
-            "neocloud"
-          ],
-          "direct_ai_infrastructure_relevance": 1,
-          "data_center_relevance": 0,
-          "cloud_capacity_relevance": 0,
-          "semiconductor_relevance": 0.22,
+          "semiconductor_relevance": 0.58,
           "power_grid_relevance": 0,
           "cooling_relevance": 0,
           "capital_markets_relevance": 0,
           "enterprise_ai_infrastructure_relevance": 0,
-          "infrastructure_relevance_score": 0.778,
+          "infrastructure_relevance_score": 0.858,
           "infrastructure_relevance_tier": "full_memo",
           "infrastructure_relevance_action": "generate_full_memo",
           "infrastructure_relevance_reasons": [
             "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "semiconductor_relevance:0.22(gpu)"
+            "semiconductor_relevance:0.58(semiconductor, gpu)"
           ],
           "infrastructure_relevance": {
             "direct_ai_infrastructure_relevance": 1,
             "data_center_relevance": 0,
             "cloud_capacity_relevance": 0,
-            "semiconductor_relevance": 0.22,
+            "semiconductor_relevance": 0.58,
             "power_grid_relevance": 0,
             "cooling_relevance": 0,
             "capital_markets_relevance": 0,
             "enterprise_ai_infrastructure_relevance": 0,
-            "infrastructure_relevance_score": 0.778,
+            "infrastructure_relevance_score": 0.858,
             "infrastructure_relevance_tier": "full_memo",
             "infrastructure_relevance_action": "generate_full_memo",
             "infrastructure_relevance_reasons": [
               "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-              "semiconductor_relevance:0.22(gpu)"
+              "semiconductor_relevance:0.58(semiconductor, gpu)"
             ],
             "infrastructureRelevanceAction": "generate_full_memo",
             "articlePagePublished": true,
@@ -35982,7 +35917,77 @@
             "archiveOnly": false,
             "archiveOnlyReason": null
           },
-          "score": 79
+          "score": 82
+        },
+        {
+          "id": "104ab5a2e7ba0d12",
+          "source": "Capacity Media",
+          "url": "https://capacityglobal.com/news/new-york-data-centre-moratorium-who-will-get-off-unscathed/",
+          "title": "New York data centre moratorium: Who will get off unscathed?",
+          "snippet": "New York halted new hyperscale data centres, but the 50MW threshold leaves colocation, interconnection and enterprise operators largely untouched. The post New York data centre moratorium: Who will get off unscathed? ap…",
+          "contentText": "New York&#8217;s moratorium arrived in two pieces, and most of the coverage since has treated it as one. On 14 July, Governor Kathy Hochul signed an executive order pausing state environmental permits for new data centres drawing 50 megawatts or more , for up to a year. Weeks earlier, the state legislature had passed a separate bill, the Responsible Data Center Development Act, setting a lower 20MW threshold and adding prevailing wage and community benefit obligations. At the time of writing, Hochul has yet to sign the bill. The distinction matters more than the headlines suggest. At 50MW, the executive order captures hyperscale campuses and little else. Most colocation facilities, enterprise data halls and the carrier-neutral interconnection sites that anchor New York and New Jersey&#821…",
+          "publishedAt": "2026-07-28T08:01:02.000Z",
+          "sourceImage": "https://capacityglobal.com/wp-content/uploads/2026/06/mcf.png",
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "Hyperscalers & Cloud",
+          "category": "Data Centers",
+          "primary_category": "Data Centers",
+          "secondary_category": "Campus development and colocation capacity",
+          "infrastructure_layer": "Facility",
+          "affected_stakeholders": [
+            "data center operators",
+            "developers",
+            "site selectors",
+            "investors"
+          ],
+          "article_type": "Policy / Regulation",
+          "urgency_score": 0.73,
+          "taxonomy_confidence": 0.73,
+          "taxonomy_reasons": [
+            "data center",
+            "colocation"
+          ],
+          "direct_ai_infrastructure_relevance": 0,
+          "data_center_relevance": 0.76,
+          "cloud_capacity_relevance": 0.76,
+          "semiconductor_relevance": 0,
+          "power_grid_relevance": 0.66,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.713,
+          "infrastructure_relevance_tier": "signal_card",
+          "infrastructure_relevance_action": "publish_signal_card_only",
+          "infrastructure_relevance_reasons": [
+            "data_center_relevance:0.76(data center, colocation)",
+            "cloud_capacity_relevance:0.76(cloud capacity, hyperscalers)",
+            "power_grid_relevance:0.66(interconnection, megawatts)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 0,
+            "data_center_relevance": 0.76,
+            "cloud_capacity_relevance": 0.76,
+            "semiconductor_relevance": 0,
+            "power_grid_relevance": 0.66,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.713,
+            "infrastructure_relevance_tier": "signal_card",
+            "infrastructure_relevance_action": "publish_signal_card_only",
+            "infrastructure_relevance_reasons": [
+              "data_center_relevance:0.76(data center, colocation)",
+              "cloud_capacity_relevance:0.76(cloud capacity, hyperscalers)",
+              "power_grid_relevance:0.66(interconnection, megawatts)"
+            ],
+            "infrastructureRelevanceAction": "publish_signal_card_only",
+            "articlePagePublished": false,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 76
         },
         {
           "id": "3c16fcfbaa78c874",
@@ -36052,76 +36057,7 @@
             "archiveOnly": false,
             "archiveOnlyReason": null
           },
-          "score": 78
-        },
-        {
-          "id": "e10b67c009f4c2c1",
-          "source": "StorageReview",
-          "url": "https://www.storagereview.com/review/dell-pro-7-14-intel-review-26-hours-of-battery-in-dells-thinnest-pro-laptop",
-          "title": "Dell Pro 7 14 Intel Review: 26 Hours of Battery in Dell’s Thinnest Pro Laptop",
-          "snippet": "At 2.80 pounds and 16.45 millimeters at its thickest point, the Dell Pro 7 14 Intel is one of the thinnest laptops Dell has put in its commercial Pro line, up to 17 percent slimmer than the 14-inch clamshell generation…",
-          "contentText": "At 2.80 pounds and 16.45 millimeters at its thickest point, the Dell Pro 7 14 Intel is one of the thinnest laptops Dell has put in its commercial Pro line, up to 17 percent slimmer than the 14-inch clamshell generation it replaces. The shell pairs an aluminum top cover and palm rest with a magnesium bottom door, and inside Dell fits a Series 3 Intel Core Ultra 7 366H with Intel vPro, a 16-core chip with a 50 TOPS NPU, alongside 64GB of LPDDR5x-8533 memory and a 1 TB PCIe Gen5 SSD. It is also the most expensive machine in this four-laptop test group at $5,600 as configured, a Dell.com single-unit price that fleet buyers will typically negotiate down. This laptop posted the best overall PCMark 10 score in the group at 8,438, took the top Digital Content Creation subscore, ran for 26 hours a…",
-          "publishedAt": "2026-07-27T18:25:10.000Z",
-          "sourceImage": "https://www.storagereview.com/wp-content/uploads/2026/07/StorageReview-Dell-Pro-7-14-Intel-03.jpg",
-          "region": "Global",
-          "language": "en",
-          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
-          "category": "Semiconductors",
-          "primary_category": "Semiconductors",
-          "secondary_category": "Accelerators, memory, and advanced packaging",
-          "infrastructure_layer": "Silicon",
-          "affected_stakeholders": [
-            "semiconductor suppliers",
-            "hyperscalers",
-            "server OEMs",
-            "investors"
-          ],
-          "article_type": "Supply Chain",
-          "urgency_score": 0.45,
-          "taxonomy_confidence": 0.8,
-          "taxonomy_reasons": [
-            "chip",
-            "gpu",
-            "intel"
-          ],
-          "direct_ai_infrastructure_relevance": 1,
-          "data_center_relevance": 0,
-          "cloud_capacity_relevance": 0,
-          "semiconductor_relevance": 0.49,
-          "power_grid_relevance": 0,
-          "cooling_relevance": 0,
-          "capital_markets_relevance": 0,
-          "enterprise_ai_infrastructure_relevance": 0,
-          "infrastructure_relevance_score": 0.838,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "semiconductor_relevance:0.49(intel, gpu)"
-          ],
-          "infrastructure_relevance": {
-            "direct_ai_infrastructure_relevance": 1,
-            "data_center_relevance": 0,
-            "cloud_capacity_relevance": 0,
-            "semiconductor_relevance": 0.49,
-            "power_grid_relevance": 0,
-            "cooling_relevance": 0,
-            "capital_markets_relevance": 0,
-            "enterprise_ai_infrastructure_relevance": 0,
-            "infrastructure_relevance_score": 0.838,
-            "infrastructure_relevance_tier": "full_memo",
-            "infrastructure_relevance_action": "generate_full_memo",
-            "infrastructure_relevance_reasons": [
-              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-              "semiconductor_relevance:0.49(intel, gpu)"
-            ],
-            "infrastructureRelevanceAction": "generate_full_memo",
-            "articlePagePublished": true,
-            "homepagePublished": true,
-            "archiveOnly": false,
-            "archiveOnlyReason": null
-          },
-          "score": 73
+          "score": 72
         },
         {
           "id": "21b67308c152ccf3",
@@ -36194,217 +36130,165 @@
           "score": 72
         },
         {
-          "id": "ec7937c3ae9481f5",
-          "source": "Semiconductor Engineering",
-          "url": "https://semiengineering.com/ai-agent-orchestration-for-asic-autonomy/",
-          "title": "AI Agent Orchestration For ASIC Autonomy",
-          "snippet": "How to achieve a 10X productivity improvement using AI agents. The post AI Agent Orchestration For ASIC Autonomy appeared first on Semiconductor Engineering.",
-          "contentText": "The use of AI agents in chip design has been limited to small portions of the design flow. Engineers have been proceeding cautiously to understand how agents work, how to ensure they are delivering consistent results, and how different agents work together. The next step is to extend their role beyond just gluing together coding and tooling functions. Mehir Arora, head of engineering at ChipAgents, explains what happens when the role of AI agents is expanded to include semantics and physics, what&#8217;s happens when agents work in parallel on different engineering problems, and what&#8217;s needed to achieve a 10X or greater improvement in productivity. &lt;/ifram The post AI Agent Orchestration For ASIC Autonomy appeared first on Semiconductor Engineering .",
-          "publishedAt": "2026-07-27T07:01:53.000Z",
-          "sourceImage": null,
-          "region": "US",
+          "id": "94b23c927d1cae1e",
+          "source": "Capacity Media",
+          "url": "https://capacityglobal.com/news/deutsche-telekom-interview-wholesale-ai-connectivity/",
+          "title": "Deutsche Telekom promises ‘AI evolution’ in wholesale telecoms",
+          "snippet": "Kerstin Baumgart on AI-driven demand for connectivity and her vision for wholesale telecoms by 2030. The post Deutsche Telekom promises ‘AI evolution’ in wholesale telecoms appeared first on Capacity.",
+          "contentText": "Since Deutsche Telekom consolidated its national and international wholesale activities into a single entity, T Wholesale , the conversation with its customers has shifted from products to solutions. That’s according to Dr. Kerstin Baumgart, director wholesale and member of the board at Deutsche Telekom, who described the change as straightforward, but one that makes a real difference to the business. “Decisions are faster, collaboration is easier, and we can look at customer needs much more holistically,” she explained to Capacity. “Bringing our teams together has changed the conversation – instead of discussing individual products, we’re increasingly talking with customers about complete solutions.” She shares her thoughts on open-access wholesale fibre in Europe, the AI hype in telecom…",
+          "publishedAt": "2026-07-28T07:30:00.000Z",
+          "sourceImage": "https://capacityglobal.com/wp-content/uploads/2026/06/cap-europe.png",
+          "region": "APAC",
           "language": "en",
-          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
-          "category": "Semiconductors",
-          "primary_category": "Semiconductors",
-          "secondary_category": "Accelerators, memory, and advanced packaging",
-          "infrastructure_layer": "Silicon",
+          "defaultCategory": "Hyperscalers & Cloud",
+          "category": "Cloud Capacity",
+          "primary_category": "Cloud Capacity",
+          "secondary_category": "Hyperscale regions and accelerator availability",
+          "infrastructure_layer": "Cloud Platform",
           "affected_stakeholders": [
-            "semiconductor suppliers",
             "hyperscalers",
-            "server OEMs",
-            "investors"
+            "cloud buyers",
+            "enterprise IT",
+            "operators"
           ],
-          "article_type": "Research / Technical",
+          "article_type": "Capacity Expansion",
           "urgency_score": 0.47,
-          "taxonomy_confidence": 0.93,
+          "taxonomy_confidence": 0.57,
           "taxonomy_reasons": [
-            "semiconductor",
-            "chip",
-            "gpu",
-            "asic"
+            "fallback_taxonomy"
           ],
-          "direct_ai_infrastructure_relevance": 1,
+          "direct_ai_infrastructure_relevance": 0.64,
           "data_center_relevance": 0,
-          "cloud_capacity_relevance": 0,
-          "semiconductor_relevance": 0.85,
+          "cloud_capacity_relevance": 0.76,
+          "semiconductor_relevance": 0,
           "power_grid_relevance": 0,
           "cooling_relevance": 0,
           "capital_markets_relevance": 0,
           "enterprise_ai_infrastructure_relevance": 0,
-          "infrastructure_relevance_score": 0.917,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_score": 0.652,
+          "infrastructure_relevance_tier": "signal_card",
+          "infrastructure_relevance_action": "publish_signal_card_only",
           "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "semiconductor_relevance:0.85(semiconductor, gpu, asic)"
+            "direct_ai_infrastructure_relevance:0.64",
+            "cloud_capacity_relevance:0.76(cloud capacity, hyperscalers)"
           ],
           "infrastructure_relevance": {
-            "direct_ai_infrastructure_relevance": 1,
+            "direct_ai_infrastructure_relevance": 0.64,
             "data_center_relevance": 0,
-            "cloud_capacity_relevance": 0,
-            "semiconductor_relevance": 0.85,
+            "cloud_capacity_relevance": 0.76,
+            "semiconductor_relevance": 0,
             "power_grid_relevance": 0,
             "cooling_relevance": 0,
             "capital_markets_relevance": 0,
             "enterprise_ai_infrastructure_relevance": 0,
-            "infrastructure_relevance_score": 0.917,
-            "infrastructure_relevance_tier": "full_memo",
-            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_score": 0.652,
+            "infrastructure_relevance_tier": "signal_card",
+            "infrastructure_relevance_action": "publish_signal_card_only",
             "infrastructure_relevance_reasons": [
-              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-              "semiconductor_relevance:0.85(semiconductor, gpu, asic)"
+              "direct_ai_infrastructure_relevance:0.64",
+              "cloud_capacity_relevance:0.76(cloud capacity, hyperscalers)"
             ],
-            "infrastructureRelevanceAction": "generate_full_memo",
-            "articlePagePublished": true,
+            "infrastructureRelevanceAction": "publish_signal_card_only",
+            "articlePagePublished": false,
             "homepagePublished": true,
             "archiveOnly": false,
             "archiveOnlyReason": null
           },
-          "score": 71
+          "score": 69
+        },
+        {
+          "id": "fed66b885bc14dc1",
+          "source": "Data Center Knowledge",
+          "url": "https://www.datacenterknowledge.com/energy-power-supply/what-is-phased-energization-and-when-should-data-centers-adopt-it-",
+          "title": "What Is Phased Energization, and When Should Data Centers Adopt It?",
+          "snippet": "Phased energization helps data centers navigate power constraints by energizing facilities in stages, but it’s not without limitations.",
+          "contentText": "Phased energization helps data centers navigate power constraints by energizing facilities in stages, but it’s not without limitations.",
+          "publishedAt": "2026-07-28T09:05:00.000Z",
+          "sourceImage": "https://eu-images.contentstack.com/v3/assets/blt8eb3cdfc1fce5194/blt744f8520f6fc9949/6a67cf1ffd134136cd592182/Data-Center-Phased-Energization.jpg?width=720&quality=80&disable=upscale",
+          "region": "Global",
+          "language": "en",
+          "defaultCategory": "Colocation & Wholesale",
+          "category": "Data Centers",
+          "primary_category": "Data Centers",
+          "secondary_category": "Campus development and colocation capacity",
+          "infrastructure_layer": "Facility",
+          "affected_stakeholders": [
+            "data center operators",
+            "developers",
+            "site selectors",
+            "investors"
+          ],
+          "article_type": "Other",
+          "urgency_score": 0.48,
+          "taxonomy_confidence": 0.77,
+          "taxonomy_reasons": [
+            "colocation",
+            "wholesale"
+          ],
+          "direct_ai_infrastructure_relevance": 0,
+          "data_center_relevance": 1,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0,
+          "power_grid_relevance": 0.22,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.698,
+          "infrastructure_relevance_tier": "signal_card",
+          "infrastructure_relevance_action": "publish_signal_card_only",
+          "infrastructure_relevance_reasons": [
+            "data_center_relevance:1.00(data center, data centers, colocation)",
+            "power_grid_relevance:0.22(power)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 0,
+            "data_center_relevance": 1,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0,
+            "power_grid_relevance": 0.22,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.698,
+            "infrastructure_relevance_tier": "signal_card",
+            "infrastructure_relevance_action": "publish_signal_card_only",
+            "infrastructure_relevance_reasons": [
+              "data_center_relevance:1.00(data center, data centers, colocation)",
+              "power_grid_relevance:0.22(power)"
+            ],
+            "infrastructureRelevanceAction": "publish_signal_card_only",
+            "articlePagePublished": false,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 68
         }
       ],
       "curatedIds": [
-        "a98afca969b96208",
-        "aadf7b1d49b24755",
+        "ff73bc223d96ee13",
+        "104ab5a2e7ba0d12",
         "3c16fcfbaa78c874",
-        "e10b67c009f4c2c1",
         "21b67308c152ccf3",
-        "ec7937c3ae9481f5"
+        "94b23c927d1cae1e",
+        "fed66b885bc14dc1"
       ],
       "publishedIds": [
         "9e07e4e22ca40bff",
         "da3af2d8da97c0c4",
         "a98afca969b96208",
-        "aadf7b1d49b24755"
+        "aadf7b1d49b24755",
+        "ff73bc223d96ee13",
+        "104ab5a2e7ba0d12"
       ],
       "slotPublications": {
         "0": true,
-        "1": true
+        "1": true,
+        "2": true
       }
     }
   },
   "runHistory": [
-    {
-      "at": "2026-06-18T11:15:15.264Z",
-      "day": "2026-06-18",
-      "slot": 2,
-      "publishedCount": 0,
-      "signalCardCount": 1,
-      "archiveOnlyCount": 0,
-      "repetitionBlockedCount": 1,
-      "publishedIds": [],
-      "processedIds": [
-        "54d778c6fd8e51a1",
-        "f60e623978463071"
-      ],
-      "blockedCount": 1,
-      "blockedItems": [
-        {
-          "id": "54d778c6fd8e51a1",
-          "title": "Europe Scales Down AI Ambitions With Smaller Data Center Tender",
-          "infrastructure_relevance_score": 0.954,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:0.78(ai infrastructure)",
-            "data_center_relevance:0.97(data center, data centers)",
-            "cloud_capacity_relevance:0.32(hyperscalers)",
-            "power_grid_relevance:0.22(power)"
-          ],
-          "extraction_quality_score": 0,
-          "source_domain_adapter": "bloomberg",
-          "content_length": 183,
-          "boilerplate_ratio": 0,
-          "repetition_blocked": false,
-          "repetition_block_reasons": [],
-          "repetition_check": null,
-          "expert_insight_complete": true,
-          "expert_insight_missing_fields": [],
-          "reason": "fail_closed: source_text_incomplete:source_evidence_length_below_500, source_evidence_length_below_1200"
-        }
-      ],
-      "repetitionBlockedItems": [
-        {
-          "id": "f60e623978463071",
-          "title": "Trump says Apple to partner with Intel on US chip design, production",
-          "infrastructure_relevance_score": 0.887,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:0.64",
-            "cloud_capacity_relevance:0.76(cloud capacity, hyperscalers)",
-            "semiconductor_relevance:1.00(nvidia, amd, intel)",
-            "power_grid_relevance:0.22(power)"
-          ],
-          "extraction_quality_score": 1,
-          "source_domain_adapter": "generic",
-          "content_length": 1751,
-          "boilerplate_ratio": 0,
-          "repetition_blocked": true,
-          "repetition_block_reasons": [
-            "repeated_sentence_ratio>0.12",
-            "heading_sequence_similarity>0.75",
-            "conclusion_similarity>0.7"
-          ],
-          "repetition_check": {
-            "compared_article_count": 20,
-            "repeated_sentence_ratio": 0.2857142857142857,
-            "repeated_paragraph_ratio": 0.3333333333333333,
-            "heading_sequence_similarity": 1,
-            "banned_phrase_count": 0,
-            "banned_phrase_counts": {},
-            "recent_banned_phrase_counts": {},
-            "ngram_overlap": 0.6728971962616822,
-            "blueprint_repetition": 1,
-            "conclusion_similarity": 0.9511897312113418,
-            "repeated_sentence_count": 2,
-            "repeated_paragraph_count": 2,
-            "heading_sequence": [
-              "System Change",
-              "Bottleneck",
-              "Engineering Tradeoff",
-              "Validation Metric"
-            ],
-            "blocked": true,
-            "reasons": [
-              "repeated_sentence_ratio>0.12",
-              "heading_sequence_similarity>0.75",
-              "conclusion_similarity>0.7"
-            ]
-          },
-          "expert_insight_complete": true,
-          "expert_insight_missing_fields": [],
-          "reason": "repeated_sentence_ratio>0.12; heading_sequence_similarity>0.75; conclusion_similarity>0.7"
-        }
-      ],
-      "signalCardItems": [
-        {
-          "id": "54d778c6fd8e51a1",
-          "title": "Europe Scales Down AI Ambitions With Smaller Data Center Tender",
-          "infrastructure_relevance_score": 0.954,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:0.78(ai infrastructure)",
-            "data_center_relevance:0.97(data center, data centers)",
-            "cloud_capacity_relevance:0.32(hyperscalers)",
-            "power_grid_relevance:0.22(power)"
-          ],
-          "extraction_quality_score": 0,
-          "source_domain_adapter": "bloomberg",
-          "content_length": 183,
-          "boilerplate_ratio": 0,
-          "repetition_blocked": false,
-          "repetition_block_reasons": [],
-          "repetition_check": null,
-          "expert_insight_complete": true,
-          "expert_insight_missing_fields": [],
-          "reason": "fail_closed: source_text_incomplete:source_evidence_length_below_500, source_evidence_length_below_1200"
-        }
-      ],
-      "archiveOnlyItems": []
-    },
     {
       "at": "2026-06-18T18:09:13.238Z",
       "day": "2026-06-19",
@@ -49877,7 +49761,130 @@
         }
       ],
       "archiveOnlyItems": []
+    },
+    {
+      "at": "2026-07-28T09:43:14.608Z",
+      "day": "2026-07-28",
+      "slot": 2,
+      "publishedCount": 0,
+      "signalCardCount": 1,
+      "archiveOnlyCount": 0,
+      "repetitionBlockedCount": 1,
+      "publishedIds": [],
+      "processedIds": [
+        "ff73bc223d96ee13",
+        "104ab5a2e7ba0d12"
+      ],
+      "blockedCount": 1,
+      "blockedItems": [
+        {
+          "id": "ff73bc223d96ee13",
+          "title": "Chip Industry Technical Paper Roundup: July 28",
+          "infrastructure_relevance_score": 0.928,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "cloud_capacity_relevance:0.32(hyperscalers)",
+            "semiconductor_relevance:0.58(semiconductor, gpu)",
+            "power_grid_relevance:0.22(power)"
+          ],
+          "extraction_quality_score": 0.17,
+          "source_domain_adapter": "semiengineering",
+          "content_length": 300,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": false,
+          "repetition_block_reasons": [],
+          "repetition_check": null,
+          "expert_insight_complete": false,
+          "expert_insight_missing_fields": [
+            "concrete_facts"
+          ],
+          "reason": "fail_closed: source_text_incomplete:source_evidence_length_below_500, source_evidence_length_below_1200, sentence_completion_score_below_0.92:0.425"
+        }
+      ],
+      "repetitionBlockedItems": [
+        {
+          "id": "104ab5a2e7ba0d12",
+          "title": "New York data centre moratorium: Who will get off unscathed?",
+          "infrastructure_relevance_score": 0.879,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "data_center_relevance:0.76(data center, colocation)",
+            "cloud_capacity_relevance:1.00(cloud capacity, hyperscalers, reserved capacity)",
+            "power_grid_relevance:0.88(power, interconnection, megawatts)"
+          ],
+          "extraction_quality_score": 1,
+          "source_domain_adapter": "generic",
+          "content_length": 1677,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": true,
+          "repetition_block_reasons": [
+            "repeated_sentence_ratio>0.12",
+            "heading_sequence_similarity>0.75",
+            "conclusion_similarity>0.7"
+          ],
+          "repetition_check": {
+            "compared_article_count": 20,
+            "repeated_sentence_ratio": 0.14285714285714285,
+            "repeated_paragraph_ratio": 0.16666666666666666,
+            "heading_sequence_similarity": 1,
+            "banned_phrase_count": 0,
+            "banned_phrase_counts": {},
+            "recent_banned_phrase_counts": {},
+            "ngram_overlap": 0.3333333333333333,
+            "blueprint_repetition": 1,
+            "conclusion_similarity": 0.9511897312113418,
+            "repeated_sentence_count": 1,
+            "repeated_paragraph_count": 1,
+            "heading_sequence": [
+              "What Changed",
+              "Energy Procurement Read",
+              "Volatility Risk",
+              "Next Market Test"
+            ],
+            "blocked": true,
+            "reasons": [
+              "repeated_sentence_ratio>0.12",
+              "heading_sequence_similarity>0.75",
+              "conclusion_similarity>0.7"
+            ]
+          },
+          "expert_insight_complete": true,
+          "expert_insight_missing_fields": [],
+          "reason": "repeated_sentence_ratio>0.12; heading_sequence_similarity>0.75; conclusion_similarity>0.7"
+        }
+      ],
+      "signalCardItems": [
+        {
+          "id": "ff73bc223d96ee13",
+          "title": "Chip Industry Technical Paper Roundup: July 28",
+          "infrastructure_relevance_score": 0.928,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "cloud_capacity_relevance:0.32(hyperscalers)",
+            "semiconductor_relevance:0.58(semiconductor, gpu)",
+            "power_grid_relevance:0.22(power)"
+          ],
+          "extraction_quality_score": 0.17,
+          "source_domain_adapter": "semiengineering",
+          "content_length": 300,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": false,
+          "repetition_block_reasons": [],
+          "repetition_check": null,
+          "expert_insight_complete": false,
+          "expert_insight_missing_fields": [
+            "concrete_facts"
+          ],
+          "reason": "fail_closed: source_text_incomplete:source_evidence_length_below_500, source_evidence_length_below_1200, sentence_completion_score_below_0.92:0.425"
+        }
+      ],
+      "archiveOnlyItems": []
     }
   ],
-  "lastRunAt": "2026-07-28T00:04:51.743Z"
+  "lastRunAt": "2026-07-28T09:43:14.608Z"
 }
