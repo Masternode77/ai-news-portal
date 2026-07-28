@@ -1,5 +1,192 @@
 [
   {
+    "id": "51191e097865c42b",
+    "source": "Semiconductor Engineering",
+    "url": "https://semiengineering.com/blog-review-july-15-3/",
+    "title": "Blog Review: July 15",
+    "snippet": "PCIe ATS verification; physical AI; adopting AI EDA; custom AMBA Viz plugins; V2G; fab construction workforce. The post Blog Review: July 15 appeared first on Semiconductor Engineering.",
+    "contentText": "Cadence&#8217;s Anupriya K explains how Address Translation Services (ATS) acts as the fast lane for PCIe memory access by caching address translations directly on the device and what makes it one of the toughest verification problems to solve. Synopsys&#8217; Greg Sorber considers the economic potential of physical AI and the impact that embedding intelligence into robots, vehicles, and equipment will have on future factories, hospitals, and city streets. Siemens&#8217; Emma-Jane Crozier provides some tips for getting started with using AI in EDA , including identifying the biggest pain points for your team, adopting it with a specific flow or goal in mind first, working closely with the vendor, and measuring the impact to share with other teams. Arm&#8217;s Tony Nip shares how to create…",
+    "publishedAt": "2026-07-15T07:01:04.000Z",
+    "sourceImage": null,
+    "region": "US",
+    "language": "en",
+    "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+    "category": "Semiconductors",
+    "primary_category": "Semiconductors",
+    "secondary_category": "Accelerators, memory, and advanced packaging",
+    "infrastructure_layer": "Silicon",
+    "affected_stakeholders": [
+      "semiconductor suppliers",
+      "hyperscalers",
+      "server OEMs",
+      "investors"
+    ],
+    "article_type": "Supply Chain",
+    "urgency_score": 0.83,
+    "taxonomy_confidence": 0.9,
+    "taxonomy_reasons": [
+      "semiconductor",
+      "gpu",
+      "advanced packaging",
+      "fab"
+    ],
+    "direct_ai_infrastructure_relevance": 1,
+    "data_center_relevance": 0.16,
+    "cloud_capacity_relevance": 0.32,
+    "semiconductor_relevance": 0.8,
+    "power_grid_relevance": 0.76,
+    "cooling_relevance": 0,
+    "capital_markets_relevance": 0.28,
+    "enterprise_ai_infrastructure_relevance": 0,
+    "infrastructure_relevance_score": 0.976,
+    "infrastructure_relevance_tier": "full_memo",
+    "infrastructure_relevance_action": "generate_full_memo",
+    "infrastructure_relevance_reasons": [
+      "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+      "cloud_capacity_relevance:0.32(hyperscalers)",
+      "semiconductor_relevance:0.80(semiconductor, fab, gpu)",
+      "power_grid_relevance:0.76(power, grid, utilities)",
+      "capital_markets_relevance:0.28(capex)"
+    ],
+    "infrastructure_relevance": {
+      "direct_ai_infrastructure_relevance": 1,
+      "data_center_relevance": 0.16,
+      "cloud_capacity_relevance": 0.32,
+      "semiconductor_relevance": 0.8,
+      "power_grid_relevance": 0.76,
+      "cooling_relevance": 0,
+      "capital_markets_relevance": 0.28,
+      "enterprise_ai_infrastructure_relevance": 0,
+      "infrastructure_relevance_score": 0.976,
+      "infrastructure_relevance_tier": "full_memo",
+      "infrastructure_relevance_action": "generate_full_memo",
+      "infrastructure_relevance_reasons": [
+        "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+        "cloud_capacity_relevance:0.32(hyperscalers)",
+        "semiconductor_relevance:0.80(semiconductor, fab, gpu)",
+        "power_grid_relevance:0.76(power, grid, utilities)",
+        "capital_markets_relevance:0.28(capex)"
+      ],
+      "infrastructureRelevanceAction": "generate_full_memo",
+      "articlePagePublished": true,
+      "homepagePublished": true,
+      "archiveOnly": false,
+      "archiveOnlyReason": null
+    },
+    "score": 84,
+    "slug": "blog-review-july-15",
+    "summary": "PCIe ATS verification; physical AI; adopting AI EDA; custom AMBA Viz plugins; V2G; fab construction workforce. Cadence&#8217;s Anupriya K explains how Address Translation Services…",
+    "insight": "The practical effect is on time-to-power, campus sequencing, and capex timing. The advantage goes to teams that line up power, facility design, network topology, and silicon timing instead of optimizing one layer in isolation.",
+    "expert_insight": {
+      "concrete_facts": [
+        "Keysight&#8217;s Andrew Cifala finds that achieving the promise of vehicle-to-grid technology will require end-to-end interoperability and a shared test environment across utilities, EV OEMs, charging providers, and other stakeholders.",
+        "Plus, don&#8217;t miss the blogs featured in the latest Low Power-High Performance newsletter: Siemens EDA’s Emma-Jane Crozier illustrates the challenges facing AI agents in solving specific problems in the context of generic frameworks.",
+        "Synopsys&#8217; Greg Sorber considers the economic potential of physical AI and the impact that embedding intelligence into robots, vehicles, and equipment will have on future factories, hospitals, and city streets.",
+        "Arm&#8217;s Tony Nip shares how to create AMBA Viz plugins with custom hardware signal, bus, and event analysis for more flexible RTL debug and performance analysis."
+      ],
+      "named_companies": [
+        "Arm",
+        "Low Power"
+      ],
+      "infrastructure_layer": "Silicon",
+      "bottleneck_type": "power_grid",
+      "who_gains_leverage": "utilities, power-secured developers, and operators with firm interconnection positions",
+      "who_takes_execution_risk": "developers and cloud buyers whose delivery dates depend on utility upgrades or energization schedules",
+      "timing_dependency": "utility interconnection, equipment procurement, and energization milestones",
+      "counterargument": "The source may still describe intent rather than delivered capacity, so the operating impact depends on follow-through.",
+      "next_observable_signal": "interconnection approvals, substation equipment dates, power purchase agreements, or disclosed energization windows",
+      "expert_insight_complete": true,
+      "expert_insight_missing_fields": []
+    },
+    "expertInsight": {
+      "concrete_facts": [
+        "Keysight&#8217;s Andrew Cifala finds that achieving the promise of vehicle-to-grid technology will require end-to-end interoperability and a shared test environment across utilities, EV OEMs, charging providers, and other stakeholders.",
+        "Plus, don&#8217;t miss the blogs featured in the latest Low Power-High Performance newsletter: Siemens EDA’s Emma-Jane Crozier illustrates the challenges facing AI agents in solving specific problems in the context of generic frameworks.",
+        "Synopsys&#8217; Greg Sorber considers the economic potential of physical AI and the impact that embedding intelligence into robots, vehicles, and equipment will have on future factories, hospitals, and city streets.",
+        "Arm&#8217;s Tony Nip shares how to create AMBA Viz plugins with custom hardware signal, bus, and event analysis for more flexible RTL debug and performance analysis."
+      ],
+      "named_companies": [
+        "Arm",
+        "Low Power"
+      ],
+      "infrastructure_layer": "Silicon",
+      "bottleneck_type": "power_grid",
+      "who_gains_leverage": "utilities, power-secured developers, and operators with firm interconnection positions",
+      "who_takes_execution_risk": "developers and cloud buyers whose delivery dates depend on utility upgrades or energization schedules",
+      "timing_dependency": "utility interconnection, equipment procurement, and energization milestones",
+      "counterargument": "The source may still describe intent rather than delivered capacity, so the operating impact depends on follow-through.",
+      "next_observable_signal": "interconnection approvals, substation equipment dates, power purchase agreements, or disclosed energization windows",
+      "expert_insight_complete": true,
+      "expert_insight_missing_fields": []
+    },
+    "concrete_facts": [
+      "Keysight&#8217;s Andrew Cifala finds that achieving the promise of vehicle-to-grid technology will require end-to-end interoperability and a shared test environment across utilities, EV OEMs, charging providers, and other stakeholders.",
+      "Plus, don&#8217;t miss the blogs featured in the latest Low Power-High Performance newsletter: Siemens EDA’s Emma-Jane Crozier illustrates the challenges facing AI agents in solving specific problems in the context of generic frameworks.",
+      "Synopsys&#8217; Greg Sorber considers the economic potential of physical AI and the impact that embedding intelligence into robots, vehicles, and equipment will have on future factories, hospitals, and city streets.",
+      "Arm&#8217;s Tony Nip shares how to create AMBA Viz plugins with custom hardware signal, bus, and event analysis for more flexible RTL debug and performance analysis."
+    ],
+    "named_companies": [
+      "Arm",
+      "Low Power"
+    ],
+    "bottleneck_type": "power_grid",
+    "who_gains_leverage": "utilities, power-secured developers, and operators with firm interconnection positions",
+    "who_takes_execution_risk": "developers and cloud buyers whose delivery dates depend on utility upgrades or energization schedules",
+    "timing_dependency": "utility interconnection, equipment procurement, and energization milestones",
+    "counterargument": "The source may still describe intent rather than delivered capacity, so the operating impact depends on follow-through.",
+    "next_observable_signal": "interconnection approvals, substation equipment dates, power purchase agreements, or disclosed energization windows",
+    "expert_insight_complete": true,
+    "expert_insight_missing_fields": [],
+    "tags": [
+      "power",
+      "semiconductor"
+    ],
+    "imagePrompt": "Editorial hero image for enterprise technology news. No logos, no text, no watermark, no brand marks. Topic: Blog Review: July 15. Category: Hyperscalers & Cloud. Mood: premium, cinematic, monochrome glass dashboard aesthetic. Context: PCIe ATS verification; physical AI; adopting AI EDA; custom AMBA Viz plugins; V2G; fab construction workforce. Cadence&#8217;s Anupriya K explains how Address Translation Services…. Include modern data center, network, semiconductor, cloud, or grid motifs only when relevant. 16:9 composition.",
+    "lang": "en",
+    "articleText": "PCIe ATS verification; physical AI; adopting AI EDA; custom AMBA Viz plugins; V2G; fab construction workforce. Cadence&#8217;s Anupriya K explains how Address Translation Services (ATS) acts as the fast lane for PCIe memory access by caching address translations directly on the device and what makes it one of the toughest verification problems to solve. Synopsys&#8217; Greg Sorber considers the economic potential of physical AI and the impact that embedding intelligence into robots, vehicles, and equipment will have on future factories, hospitals, and city streets. Siemens&#8217; Emma-Jane Crozier provides some tips for getting started with using AI in EDA , including identifying the biggest pain points for your team, adopting it with a specific flow or goal in mind first, working closely with the vendor, and measuring the impact to share with other teams. Arm&#8217;s Tony Nip shares how to create AMBA Viz plugins with custom hardware signal, bus, and event analysis for more flexible RTL debug and performance analysis. Keysight&#8217;s Andrew Cifala finds that achieving the promise of vehicle-to-grid technology will require end-to-end interoperability and a shared test environment across utilities, EV OEMs, charging providers, and other stakeholders. Skanska&#8217;s Joycelyn Yue cautions that semiconductor fab buildout could be hampered by a shortage of qualified construction tradespeople , particularly in critical disciplines like electrical and mechanical work, where there&#8217;s a generational gap in the workforce. Plus, don&#8217;t miss the blogs featured in the latest Low Power-High Performance newsletter : Siemens EDA’s Emma-Jane Crozier illustrates the challenges facing AI agents in solving specific problems in the context of generic frameworks.",
+    "content_length": 1783,
+    "boilerplate_ratio": 0,
+    "title_body_similarity": 0,
+    "copyright_footer_detected": false,
+    "nav_or_cta_detected": false,
+    "sentence_completion_score": 1,
+    "source_domain_adapter": "semiengineering",
+    "extraction_quality_score": 1,
+    "extraction_qa": {
+      "content_length": 1783,
+      "boilerplate_ratio": 0,
+      "title_body_similarity": 0,
+      "copyright_footer_detected": false,
+      "legal_boilerplate_detected": false,
+      "nav_or_cta_detected": false,
+      "sentence_completion_score": 1,
+      "source_domain_adapter": "semiengineering",
+      "extraction_quality_score": 1,
+      "extraction_failure_reason": null,
+      "extraction_quality_reasons": [
+        "title_body_similarity 0.00 low"
+      ]
+    },
+    "sourceUrl": "https://semiengineering.com/blog-review-july-15-3/",
+    "generatedImage": "/generated/articles/51191e097865c42b-blog-review-july-15/hero.webp",
+    "infrastructureRelevanceAction": "generate_full_memo",
+    "articlePagePublished": false,
+    "homepagePublished": true,
+    "archiveOnly": false,
+    "archiveOnlyReason": null,
+    "qualityGateBlocked": true,
+    "qualityGateReason": "fail_closed: source_text_incomplete:source_boilerplate_detected",
+    "qualityGateBlockedAt": "2026-07-15T09:19:34.376Z",
+    "signalCardOnly": true,
+    "signalCardReason": "fail_closed: source_text_incomplete:source_boilerplate_detected",
+    "article_blueprint": null,
+    "articleBlueprint": null,
+    "expertLensShort": null,
+    "expertLensFull": null,
+    "expertLens": null,
+    "searchText": "Blog Review: July 15 Semiconductor Engineering Semiconductors Accelerators, memory, and advanced packaging Silicon Supply Chain power_grid utilities, power-secured developers, and operators with firm interconnection positions developers and cloud buyers whose delivery dates depend on utility upgrades or energization schedules utility interconnection, equipment procurement, and energization milestones The source may still describe intent rather than delivered capacity, so the operating impact depends on follow-through. interconnection approvals, substation equipment dates, power purchase agreements, or disclosed energization windows US PCIe ATS verification; physical AI; adopting AI EDA; custom AMBA Viz plugins; V2G; fab construction workforce. Cadence&#8217;s Anupriya K explains how Address Translation Services… PCIe ATS verification; physical AI; adopting AI EDA; custom AMBA Viz plugins; V2G; fab construction workforce. Cadence&#8217;s Anupriya K explains how Address Translation Services (ATS) acts as the fast lane for PCIe memory access by caching address translations directly on the device and what makes it one of the toughest verification problems to solve. Synopsys&#8217; Greg Sorber considers the economic potential of physical AI and the impact that embedding intelligence into robots, vehicles, and equipment will have on future factories, hospitals, and city streets. Siemens&#8217; Emma-Jane Crozier provides some tips for getting started with using AI in EDA , including identifying the biggest pain points for your team, adopting it with a specific flow or goal in mind first, working closely with the vendor, and measuring the impact to share with other teams. Arm&#8217;s Tony Nip shares how to create AMBA Viz plugins with custom hardware signal, bus, and event analysis for more flexible RTL debug and performance analysis. Keysight&#8217;s Andrew Cifala finds that achieving the promise of vehicle-to-grid technology will require end-to-end interoperability and a shared test environment across utilities, EV OEMs, charging providers, and other stakeholders. Skanska&#8217;s Joycelyn Yue cautions that semiconductor fab buildout could be hampered by a shortage of qualified construction tradespeople , particularly in critical disciplines like electrical and mechanical work, where there&#8217;s a generational gap in the workforce. Plus, don&#8217;t miss the blogs featured in the latest Low Power-High Performance newsletter : Siemens EDA’s Emma-Jane Crozier illustrates the challenges facing AI agents in solving specific problems in the context of generic frameworks. semiconductor suppliers hyperscalers server OEMs investors Keysight&#8217;s Andrew Cifala finds that achieving the promise of vehicle-to-grid technology will require end-to-end interoperability and a shared test environment across utilities, EV OEMs, charging providers, and other stakeholders. Plus, don&#8217;t miss the blogs featured in the latest Low Power-High Performance newsletter: Siemens EDA’s Emma-Jane Crozier illustrates the challenges facing AI agents in solving specific problems in the context of generic frameworks. Synopsys&#8217; Greg Sorber considers the economic potential of physical AI and the impact that embedding intelligence into robots, vehicles, and equipment will have on future factories, hospitals, and city streets. Arm&#8217;s Tony Nip shares how to create AMBA Viz plugins with custom hardware signal, bus, and event analysis for more flexible RTL debug and performance analysis. Arm Low Power power semiconductor"
+  },
+  {
     "id": "c7ae25d85f99454d",
     "source": "Semiconductor Engineering",
     "url": "https://semiengineering.com/research-bits-july-14/",
@@ -20943,7 +21130,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:05:55.555Z",
+      "generatedAt": "2026-07-28T00:06:18.921Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "SoftBank",
@@ -21567,7 +21754,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:05:55.754Z",
+      "generatedAt": "2026-07-28T00:06:19.132Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "NVIDIA",
@@ -22158,7 +22345,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:05:55.949Z",
+      "generatedAt": "2026-07-28T00:06:19.337Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Moving Defect Detection And Classification To The Edge",
@@ -22929,7 +23116,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:05:56.138Z",
+      "generatedAt": "2026-07-28T00:06:19.540Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Supermicro",
@@ -23378,7 +23565,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:05:56.336Z",
+      "generatedAt": "2026-07-28T00:06:19.748Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Samsung",
@@ -24144,7 +24331,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:05:56.526Z",
+      "generatedAt": "2026-07-28T00:06:19.954Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "NVIDIA",
@@ -24744,7 +24931,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:05:56.710Z",
+      "generatedAt": "2026-07-28T00:06:20.151Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Broadcom",
@@ -25174,7 +25361,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:05:56.896Z",
+      "generatedAt": "2026-07-28T00:06:20.349Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Google",
@@ -27756,8 +27943,8 @@
     "articleText": "NetApp Expands OpenShift Data Management With Faster VM Backup, DR, and Cloud Scale Support gives enterprise infrastructure teams another read on how AI workloads are changing platform, storage, and cloud capacity decisions. NetApp Expands OpenShift Data Management With Faster VM Backup, DR, and Cloud Scale Support gives enterprise infrastructure teams another read on how AI workloads are changing platform, storage, and cloud capacity decisions. NetApp Expands OpenShift Data Management With Faster VM Backup, DR, and Cloud Scale Support gives enterprise infrastructure teams another read on how AI workloads are changing platform, storage, and cloud capacity decisions. NetApp Expands OpenShift Data Management With Faster VM Backup, DR, and Cloud Scale Support gives enterprise infrastructure teams another read on how AI workloads are changing platform, storage, and cloud capacity decisions. NetApp Expands OpenShift Data Management With Faster VM Backup, DR, and Cloud Scale Support gives enterprise infrastructure teams another read on how AI workloads are changing platform, storage, and cloud capacity decisions. NetApp Expands OpenShift Data Management With Faster VM Backup, DR, and Cloud Scale Support gives enterprise infrastructure teams another read on how AI workloads are changing platform, storage, and cloud capacity decisions. NetApp Expands OpenShift Data Management With Fast StorageReview reported: NetApp Expands OpenShift Data Management With Faster VM Backup, DR, and Cloud Scale Support.",
     "sourceUrl": "https://www.storagereview.com/news/netapp-expands-openshift-data-management-with-faster-vm-backup-dr-and-cloud-scale-support",
     "generatedImage": "/generated/articles/af45a6f9a7a983f9-netapp-expands-openshift-data-management-with-faster-vm-backup-dr-and-cloud-scale-support/hero.webp",
-    "expertLensShort": "NetApp’s OpenShift update turns backup and DR into a platform-readiness issue for enterprise AI workloads.",
-    "expertLens": "NetApp’s OpenShift update turns backup and DR into a platform-readiness issue for enterprise AI workloads.",
+    "expertLensShort": "Platform Resilience is the sharper read on NetApp because the source names a decision point rather than a generic AI trend.",
+    "expertLens": "Platform Resilience is the sharper read on NetApp because the source names a decision point rather than a generic AI trend.",
     "primary_category": "Enterprise AI Infrastructure",
     "secondary_category": "Enterprise deployment operations",
     "infrastructure_layer": "storage",
@@ -27953,7 +28140,7 @@
       "classification": "quarantine",
       "cleaned_at": "2026-05-19T23:51:06.309Z"
     },
-    "searchText": "NetApp Expands OpenShift Data Management With Faster VM Backup, DR, and Cloud Scale Support StorageReview Enterprise AI Infrastructure Enterprise deployment operations storage Capacity Expansion US StorageReview reported: NetApp Expands OpenShift Data Management With Faster VM Backup, DR, and Cloud Scale Support. NetApp’s OpenShift update turns backup and DR into a platform-readiness issue for enterprise AI workloads. NetApp expanded OpenShift data management with faster VM backup, DR, and cloud-scale support. Platform teams running OpenShift need restore speed, disaster recovery, and cross-environment management before AI workloads move from pilots into production. NetApp expanded OpenShift data management with faster VM backup, DR, and cloud-scale support only changes decisions if the storage evidence is specific enough to affect timing, procurement, or operating plans. Enterprise IT and cloud buyers can use the item to test platform resilience before changing procurement, deployment, or risk assumptions. Storage teams should track restore-time evidence, DR failover validation, and cross-environment OpenShift adoption. Cloud and platform buyers should separate source evidence from generic AI demand before changing deployment plans. Restore-time evidence, DR failover validation, and cross-environment OpenShift adoption. NetApp Expands OpenShift Data Management With Faster VM Backup, DR, and Cloud Scale Support gives enterprise infrastructure teams another read on how AI workloads are changing platform, storage, and cloud capacity decisions. NetApp Expands OpenShift Data Management With Faster VM Backup, DR, and Cloud Scale Support gives enterprise infrastructure teams another read on how AI workloads are changing platform, storage, and cloud capacity decisions. NetApp Expands OpenShift Data Management With Faster VM Backup, DR, and Cloud Scale Support gives enterprise infrastructure teams another read on how AI workloads are changing platform, storage, and cloud capacity decisions. NetApp Expands OpenShift Data Management With Faster VM Backup, DR, and Cloud Scale Support gives enterprise infrastructure teams another read on how AI workloads are changing platform, storage, and cloud capacity decisions. NetApp Expands OpenShift Data Management With Faster VM Backup, DR, and Cloud Scale Support gives enterprise infrastructure teams another read on how AI workloads are changing platform, storage, and cloud capacity decisions. NetApp Expands OpenShift Data Management With Faster VM Backup, DR, and Cloud Scale Support gives enterprise infrastructure teams another read on how AI workloads are changing platform, storage, and cloud capacity decisions. NetApp Expands OpenShift Data Management With Fast StorageReview reported: NetApp Expands OpenShift Data Management With Faster VM Backup, DR, and Cloud Scale Support. enterprise IT cloud buyers platform teams software vendors cloud",
+    "searchText": "NetApp Expands OpenShift Data Management With Faster VM Backup, DR, and Cloud Scale Support StorageReview Enterprise AI Infrastructure Enterprise deployment operations storage Capacity Expansion US StorageReview reported: NetApp Expands OpenShift Data Management With Faster VM Backup, DR, and Cloud Scale Support. Platform Resilience is the sharper read on NetApp because the source names a decision point rather than a generic AI trend. NetApp expanded OpenShift data management with faster VM backup, DR, and cloud-scale support. Platform teams running OpenShift need restore speed, disaster recovery, and cross-environment management before AI workloads move from pilots into production. NetApp expanded OpenShift data management with faster VM backup, DR, and cloud-scale support only changes decisions if the storage evidence is specific enough to affect timing, procurement, or operating plans. Enterprise IT and cloud buyers can use the item to test platform resilience before changing procurement, deployment, or risk assumptions. Storage teams should track restore-time evidence, DR failover validation, and cross-environment OpenShift adoption. Cloud and platform buyers should separate source evidence from generic AI demand before changing deployment plans. Restore-time evidence, DR failover validation, and cross-environment OpenShift adoption. NetApp Expands OpenShift Data Management With Faster VM Backup, DR, and Cloud Scale Support gives enterprise infrastructure teams another read on how AI workloads are changing platform, storage, and cloud capacity decisions. NetApp Expands OpenShift Data Management With Faster VM Backup, DR, and Cloud Scale Support gives enterprise infrastructure teams another read on how AI workloads are changing platform, storage, and cloud capacity decisions. NetApp Expands OpenShift Data Management With Faster VM Backup, DR, and Cloud Scale Support gives enterprise infrastructure teams another read on how AI workloads are changing platform, storage, and cloud capacity decisions. NetApp Expands OpenShift Data Management With Faster VM Backup, DR, and Cloud Scale Support gives enterprise infrastructure teams another read on how AI workloads are changing platform, storage, and cloud capacity decisions. NetApp Expands OpenShift Data Management With Faster VM Backup, DR, and Cloud Scale Support gives enterprise infrastructure teams another read on how AI workloads are changing platform, storage, and cloud capacity decisions. NetApp Expands OpenShift Data Management With Faster VM Backup, DR, and Cloud Scale Support gives enterprise infrastructure teams another read on how AI workloads are changing platform, storage, and cloud capacity decisions. NetApp Expands OpenShift Data Management With Fast StorageReview reported: NetApp Expands OpenShift Data Management With Faster VM Backup, DR, and Cloud Scale Support. enterprise IT cloud buyers platform teams software vendors cloud",
     "blog_route": "standard_blog",
     "publishing_route": "Standard Blog",
     "stale_generation": true,
@@ -28075,7 +28262,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:05:58.243Z",
+      "generatedAt": "2026-07-28T00:06:21.812Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "NetApp",
@@ -28127,7 +28314,7 @@
         "minChars": 900,
         "maxChars": 1500
       },
-      "thesis": "NetApp’s OpenShift update turns backup and DR into a platform-readiness issue for enterprise AI workloads.",
+      "thesis": "Platform Resilience is the sharper read on NetApp because the source names a decision point rather than a generic AI trend.",
       "whatHappened": "NetApp expanded OpenShift data management with faster VM backup, DR, and cloud-scale support.",
       "whyThisMatters": "Platform teams running OpenShift need restore speed, disaster recovery, and cross-environment management before AI workloads move from pilots into production.",
       "marketMissing": "NetApp expanded OpenShift data management with faster VM backup, DR, and cloud-scale support only changes decisions if the storage evidence is specific enough to affect timing, procurement, or operating plans.",
@@ -28148,8 +28335,8 @@
         "What to watch after NetApp Expands OpenShift Data Management With Faster VM Backup, DR, and Cloud Scale Suppo"
       ],
       "finalHeadline": "NetApp Expands OpenShift Data Management With Faster VM Backup, DR, and Cloud Scale Support",
-      "metaDescription": "NetApp’s OpenShift update turns backup and DR into a platform-readiness issue for enterprise AI workloads.",
-      "finalArticleBody": "NetApp’s OpenShift update turns backup and DR into a platform-readiness issue for enterprise AI workloads.\n\nWhat Changed\n\nNetApp expanded OpenShift data management with faster VM backup, DR, and cloud-scale support is the evidence anchor, with NetApp as the actor readers can track.\n\nWhy Platform Teams Care\n\nEnterprise IT and cloud buyers can use the item to test platform resilience before changing procurement, deployment, or risk assumptions.\n\nOperating Risk\n\nNetApp expanded OpenShift data management with faster VM backup, DR, and cloud-scale support only changes decisions if the storage evidence is specific enough to affect timing, procurement, or operating plans; that keeps the public read tied to evidence instead of treating the announcement as finished capacity.\n\nMetric To Watch\n\nThe next useful checkpoint is restore-time evidence, DR failover validation, and cross-environment OpenShift adoption over the next few quarters window.\n\nReaders should track restore-time evidence, DR failover validation, and cross-environment OpenShift adoption before treating the item as a planning assumption for storage.",
+      "metaDescription": "Platform Resilience is the sharper read on NetApp because the source names a decision point rather than a generic AI trend.",
+      "finalArticleBody": "Platform Resilience is the sharper read on NetApp because the source names a decision point rather than a generic AI trend.\n\nWhat Changed\n\nNetApp expanded OpenShift data management with faster VM backup, DR, and cloud-scale support is the evidence anchor, with NetApp as the actor readers can track.\n\nWhy Platform Teams Care\n\nEnterprise IT and cloud buyers can use the item to test platform resilience before changing procurement, deployment, or risk assumptions.\n\nOperating Risk\n\nNetApp expanded OpenShift data management with faster VM backup, DR, and cloud-scale support only changes decisions if the storage evidence is specific enough to affect timing, procurement, or operating plans; that keeps the public read tied to evidence instead of treating the announcement as finished capacity.\n\nMetric To Watch\n\nThe next useful checkpoint is restore-time evidence, DR failover validation, and cross-environment OpenShift adoption over the next few quarters window.\n\nReaders should track restore-time evidence, DR failover validation, and cross-environment OpenShift adoption before treating the item as a planning assumption for storage.",
       "sourceLink": "https://www.storagereview.com/news/netapp-expands-openshift-data-management-with-faster-vm-backup-dr-and-cloud-scale-support"
     },
     "narrative_dna": {
@@ -28334,7 +28521,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:05:58.426Z",
+      "generatedAt": "2026-07-28T00:06:22.006Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Supermicro",
@@ -29810,7 +29997,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:05:58.906Z",
+      "generatedAt": "2026-07-28T00:06:22.513Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Chip-to-Grid Thinking Is Reshaping AI Data",
@@ -31093,7 +31280,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:05:59.315Z",
+      "generatedAt": "2026-07-28T00:06:22.943Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "AMD",
@@ -31647,7 +31834,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:05:59.501Z",
+      "generatedAt": "2026-07-28T00:06:23.137Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "MW AI Data",
@@ -32608,7 +32795,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:05:59.686Z",
+      "generatedAt": "2026-07-28T00:06:23.332Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "MW AI Data",
@@ -32836,7 +33023,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:05:59.868Z",
+      "generatedAt": "2026-07-28T00:06:23.523Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Toms Hardware",
@@ -33862,7 +34049,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:06:00.205Z",
+      "generatedAt": "2026-07-28T00:06:23.874Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Peterson Co",
@@ -34417,7 +34604,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:06:00.387Z",
+      "generatedAt": "2026-07-28T00:06:24.065Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Data Center Dynamics Data",
@@ -34977,7 +35164,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:06:00.571Z",
+      "generatedAt": "2026-07-28T00:06:24.254Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "AWS",
@@ -36661,7 +36848,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:06:01.126Z",
+      "generatedAt": "2026-07-28T00:06:24.839Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Toms Hardware",
@@ -37436,7 +37623,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:06:01.381Z",
+      "generatedAt": "2026-07-28T00:06:25.107Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Data Center Dynamics Data",
@@ -46548,6 +46735,356 @@
     "sourceImage": null
   },
   {
+    "id": "aadf7b1d49b24755",
+    "source": "TechCrunch AI",
+    "url": "https://techcrunch.com/2026/07/27/satya-nadella-says-companies-that-trust-one-ai-for-everything-may-not-survive/",
+    "title": "Satya Nadella says companies that trust one AI for everything may not survive",
+    "snippet": "Companies without their own models — or without a layer of AI infrastructure known as AI gateways to separate their prompts from the model itself — will be in trouble, Nadella says.",
+    "contentText": "Companies without their own models — or without a layer of AI infrastructure known as AI gateways to separate their prompts from the model itself — will be in trouble, Nadella says.",
+    "publishedAt": "2026-07-27T21:17:11.000Z",
+    "sourceImage": null,
+    "region": "US",
+    "language": "en",
+    "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+    "category": "AI Infrastructure",
+    "primary_category": "AI Infrastructure",
+    "secondary_category": "GPU clusters and deployment readiness",
+    "infrastructure_layer": "Compute",
+    "affected_stakeholders": [
+      "operators",
+      "hyperscalers",
+      "cloud buyers",
+      "investors"
+    ],
+    "article_type": "Supply Chain",
+    "urgency_score": 0.54,
+    "taxonomy_confidence": 0.85,
+    "taxonomy_reasons": [
+      "ai infrastructure",
+      "neocloud",
+      "deployment readiness"
+    ],
+    "direct_ai_infrastructure_relevance": 1,
+    "data_center_relevance": 0,
+    "cloud_capacity_relevance": 0.32,
+    "semiconductor_relevance": 0.22,
+    "power_grid_relevance": 0.22,
+    "cooling_relevance": 0,
+    "capital_markets_relevance": 0,
+    "enterprise_ai_infrastructure_relevance": 0,
+    "infrastructure_relevance_score": 0.87,
+    "infrastructure_relevance_tier": "full_memo",
+    "infrastructure_relevance_action": "generate_full_memo",
+    "infrastructure_relevance_reasons": [
+      "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+      "cloud_capacity_relevance:0.32(hyperscalers)",
+      "semiconductor_relevance:0.22(gpu)",
+      "power_grid_relevance:0.22(power)"
+    ],
+    "infrastructure_relevance": {
+      "direct_ai_infrastructure_relevance": 1,
+      "data_center_relevance": 0,
+      "cloud_capacity_relevance": 0.32,
+      "semiconductor_relevance": 0.22,
+      "power_grid_relevance": 0.22,
+      "cooling_relevance": 0,
+      "capital_markets_relevance": 0,
+      "enterprise_ai_infrastructure_relevance": 0,
+      "infrastructure_relevance_score": 0.87,
+      "infrastructure_relevance_tier": "full_memo",
+      "infrastructure_relevance_action": "generate_full_memo",
+      "infrastructure_relevance_reasons": [
+        "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+        "cloud_capacity_relevance:0.32(hyperscalers)",
+        "semiconductor_relevance:0.22(gpu)",
+        "power_grid_relevance:0.22(power)"
+      ],
+      "infrastructureRelevanceAction": "generate_full_memo",
+      "articlePagePublished": true,
+      "homepagePublished": true,
+      "archiveOnly": false,
+      "archiveOnlyReason": null
+    },
+    "score": 79,
+    "slug": "satya-nadella-says-companies-that-trust-one-ai-for-everything-may-not-survive",
+    "summary": "On Sunday, Microsoft CEO Satya Nadella doubled down on the shocking warning he issued earlier this month to businesses that use AI, taking it a step further this time. Companies t…",
+    "insight": "The practical effect is on AI infrastructure execution risk. The advantage goes to teams that line up power, facility design, network topology, and silicon timing instead of optimizing one layer in isolation.",
+    "expert_insight": {
+      "concrete_facts": [
+        "Satya Nadella says companies that trust one AI for everything may not survive On Sunday, Microsoft CEO Satya Nadella doubled down on the shocking warning he issued earlier this month to businesses that use AI, taking it a step further this time.",
+        "Companies t… Companies without their own models — or without a layer of AI infrastructure known as AI gateways to separate their prompts from the model itself — will be in trouble, Nadella says.",
+        "On Sunday, Microsoft CEO Satya Nadella doubled down on the shocking warning he issued earlier this month to businesses that use AI, taking it a step further this time.",
+        "That&#8217;s what he said on CNN&#8217;s &#8220;Fareed Zakaria GPS.&#8221; When Zakaria asked Nadella to explain what constitutes a company sharing too much with an AI model provider, Nadella said businesses need to be wary of everything they hand over, from their data to their prompts.",
+        "Nadella&#8217;s point: Companies should hold on to their own usage data so they can eventually build a model of their own.) &#8220;Any firm that doesn&#8217;t have this control, I will claim will not remain a firm because you&#8217;ve essentially outsourced your thinking,&#8221; he added."
+      ],
+      "named_companies": [
+        "Microsoft",
+        "Anthropic",
+        "OpenAI"
+      ],
+      "infrastructure_layer": "Compute",
+      "bottleneck_type": "power_grid",
+      "who_gains_leverage": "utilities, power-secured developers, and operators with firm interconnection positions",
+      "who_takes_execution_risk": "developers and cloud buyers whose delivery dates depend on utility upgrades or energization schedules",
+      "timing_dependency": "utility interconnection, equipment procurement, and energization milestones",
+      "counterargument": "The source may still describe intent rather than delivered capacity, so the operating impact depends on follow-through.",
+      "next_observable_signal": "interconnection approvals, substation equipment dates, power purchase agreements, or disclosed energization windows",
+      "expert_insight_complete": true,
+      "expert_insight_missing_fields": []
+    },
+    "expertInsight": {
+      "concrete_facts": [
+        "Satya Nadella says companies that trust one AI for everything may not survive On Sunday, Microsoft CEO Satya Nadella doubled down on the shocking warning he issued earlier this month to businesses that use AI, taking it a step further this time.",
+        "Companies t… Companies without their own models — or without a layer of AI infrastructure known as AI gateways to separate their prompts from the model itself — will be in trouble, Nadella says.",
+        "On Sunday, Microsoft CEO Satya Nadella doubled down on the shocking warning he issued earlier this month to businesses that use AI, taking it a step further this time.",
+        "That&#8217;s what he said on CNN&#8217;s &#8220;Fareed Zakaria GPS.&#8221; When Zakaria asked Nadella to explain what constitutes a company sharing too much with an AI model provider, Nadella said businesses need to be wary of everything they hand over, from their data to their prompts.",
+        "Nadella&#8217;s point: Companies should hold on to their own usage data so they can eventually build a model of their own.) &#8220;Any firm that doesn&#8217;t have this control, I will claim will not remain a firm because you&#8217;ve essentially outsourced your thinking,&#8221; he added."
+      ],
+      "named_companies": [
+        "Microsoft",
+        "Anthropic",
+        "OpenAI"
+      ],
+      "infrastructure_layer": "Compute",
+      "bottleneck_type": "power_grid",
+      "who_gains_leverage": "utilities, power-secured developers, and operators with firm interconnection positions",
+      "who_takes_execution_risk": "developers and cloud buyers whose delivery dates depend on utility upgrades or energization schedules",
+      "timing_dependency": "utility interconnection, equipment procurement, and energization milestones",
+      "counterargument": "The source may still describe intent rather than delivered capacity, so the operating impact depends on follow-through.",
+      "next_observable_signal": "interconnection approvals, substation equipment dates, power purchase agreements, or disclosed energization windows",
+      "expert_insight_complete": true,
+      "expert_insight_missing_fields": []
+    },
+    "concrete_facts": [
+      "Satya Nadella says companies that trust one AI for everything may not survive On Sunday, Microsoft CEO Satya Nadella doubled down on the shocking warning he issued earlier this month to businesses that use AI, taking it a step further this time.",
+      "Companies t… Companies without their own models — or without a layer of AI infrastructure known as AI gateways to separate their prompts from the model itself — will be in trouble, Nadella says.",
+      "On Sunday, Microsoft CEO Satya Nadella doubled down on the shocking warning he issued earlier this month to businesses that use AI, taking it a step further this time.",
+      "That&#8217;s what he said on CNN&#8217;s &#8220;Fareed Zakaria GPS.&#8221; When Zakaria asked Nadella to explain what constitutes a company sharing too much with an AI model provider, Nadella said businesses need to be wary of everything they hand over, from their data to their prompts.",
+      "Nadella&#8217;s point: Companies should hold on to their own usage data so they can eventually build a model of their own.) &#8220;Any firm that doesn&#8217;t have this control, I will claim will not remain a firm because you&#8217;ve essentially outsourced your thinking,&#8221; he added."
+    ],
+    "named_companies": [
+      "Microsoft",
+      "Anthropic",
+      "OpenAI"
+    ],
+    "bottleneck_type": "power_grid",
+    "who_gains_leverage": "utilities, power-secured developers, and operators with firm interconnection positions",
+    "who_takes_execution_risk": "developers and cloud buyers whose delivery dates depend on utility upgrades or energization schedules",
+    "timing_dependency": "utility interconnection, equipment procurement, and energization milestones",
+    "counterargument": "The source may still describe intent rather than delivered capacity, so the operating impact depends on follow-through.",
+    "next_observable_signal": "interconnection approvals, substation equipment dates, power purchase agreements, or disclosed energization windows",
+    "expert_insight_complete": true,
+    "expert_insight_missing_fields": [],
+    "tags": [],
+    "imagePrompt": "Editorial hero image for enterprise technology news. No logos, no text, no watermark, no brand marks. Topic: Satya Nadella says companies that trust one AI for everything may not survive. Category: Hyperscalers & Cloud. Mood: premium, cinematic, monochrome glass dashboard aesthetic. Context: On Sunday, Microsoft CEO Satya Nadella doubled down on the shocking warning he issued earlier this month to businesses that use AI, taking it a step further this time. Companies t…. Include modern data center, network, semiconductor, cloud, or grid motifs only when relevant. 16:9 composition.",
+    "lang": "en",
+    "articleText": "On Sunday, Microsoft CEO Satya Nadella doubled down on the shocking warning he issued earlier this month to businesses that use AI, taking it a step further this time. Companies that rely wholly on the proprietary AI labs for their AI needs ultimately won&#8217;t survive, he predicts. That&#8217;s what he said on CNN&#8217;s &#8220;Fareed Zakaria GPS.&#8221; When Zakaria asked Nadella to explain what constitutes a company sharing too much with an AI model provider, Nadella said businesses need to be wary of everything they hand over, from their data to their prompts. Nadella called for a setup where &#8220;every time you use the model, all of the metadata around it is retained by you, so that you could use all of that to train perhaps your own weights or your own open model.&#8221; (Weights are a model&#8217;s trained parameters — essentially its brain. Nadella&#8217;s point: Companies should hold on to their own usage data so they can eventually build a model of their own.) &#8220;Any firm that doesn&#8217;t have this control, I will claim will not remain a firm because you&#8217;ve essentially outsourced your thinking,&#8221; he added. In short: Companies without their own models — or without a layer of AI infrastructure known as AI gateways to separate their prompts from the model itself — will be in trouble, Nadella says. He specifically wants companies to stop relying on AI labs&#8217; built-in coding tools, known as harnesses.(Anthropic&#8217;s Claude Code and OpenAI&#8217;s ChatGPT Codex are examples of these.) &#8220;By keeping the harness separate from the model and the context and memory separate from the model, you absolutely can use multiple models for what they&#8217;re great at.",
+    "content_length": 1721,
+    "boilerplate_ratio": 0,
+    "title_body_similarity": 0.7,
+    "copyright_footer_detected": false,
+    "nav_or_cta_detected": false,
+    "sentence_completion_score": 1,
+    "source_domain_adapter": "techcrunch",
+    "extraction_quality_score": 1,
+    "extraction_qa": {
+      "content_length": 1721,
+      "boilerplate_ratio": 0,
+      "title_body_similarity": 0.7,
+      "copyright_footer_detected": false,
+      "legal_boilerplate_detected": false,
+      "nav_or_cta_detected": false,
+      "sentence_completion_score": 1,
+      "source_domain_adapter": "techcrunch",
+      "extraction_quality_score": 1,
+      "extraction_failure_reason": null,
+      "extraction_quality_reasons": []
+    },
+    "sourceUrl": "https://techcrunch.com/2026/07/27/satya-nadella-says-companies-that-trust-one-ai-for-everything-may-not-survive/",
+    "generatedImage": "/generated/articles/aadf7b1d49b24755-satya-nadella-says-companies-that-trust-one-ai-for-everything-may-not-survive/hero.webp",
+    "infrastructureRelevanceAction": "generate_full_memo",
+    "articlePagePublished": false,
+    "homepagePublished": false,
+    "archiveOnly": true,
+    "archiveOnlyReason": "repeated_sentence_ratio>0.12; heading_sequence_similarity>0.75; conclusion_similarity>0.7",
+    "article_blueprint": "capacity-chain",
+    "articleBlueprint": {
+      "id": "capacity-chain",
+      "name": "Capacity Chain",
+      "sectionHeadings": [
+        "Signal",
+        "Capacity Chain",
+        "Commercial Stakes",
+        "Next Constraint"
+      ],
+      "paragraphRhythm": [
+        1,
+        3,
+        1,
+        2
+      ],
+      "targetParagraphs": 7,
+      "minChars": 1400,
+      "maxChars": 2200
+    },
+    "expertLensShort": "Microsoft is a memory economics item for stack shifts readers, with the infrastructure read limited to source-backed facts.",
+    "expertLensFull": {
+      "version": 2,
+      "mode": "narrative-dna-editorial-v1",
+      "generatedAt": "2026-07-28T00:06:05.881Z",
+      "generation_version": "editorial_surface_v2",
+      "narrative_dna": {
+        "protagonist": "Microsoft",
+        "concrete_event": "On Sunday, Microsoft CEO Satya Nadella doubled down on the shocking warning he issued earlier this month to businesses that use AI, taking it a step further this time. Companies t…",
+        "core_tension": "Microsoft has to translate on sunday, microsoft ceo satya nadella doubled down on the shocking warning he issued earlier this month to businesses that use ai, taking it a step further this time. companies t… into a technical bottleneck decision that survives cost, timing, or operating constraints",
+        "infrastructure_layer": "Technical Bottleneck",
+        "reader_role": [
+          "operators",
+          "hyperscalers",
+          "cloud buyers",
+          "investors"
+        ],
+        "decision_relevance": "operators and hyperscalers can use the item to test memory economics before changing procurement, deployment, or risk assumptions",
+        "evidence_anchor": "Satya Nadella says companies that trust one AI for everything may not survive On Sunday, Microsoft CEO Satya Nadella doubled down on the shocking warning he issued earlier this month to businesses that use AI, taking it a step further this time.",
+        "counterpoint": "The source may still describe intent rather than delivered capacity, so the operating impact depends on follow-through.",
+        "watch_metric": "interconnection approvals, substation equipment dates, power purchase agreements, or disclosed energization windows",
+        "time_horizon": "near term",
+        "public_signal_label": "Stack Shift",
+        "editorial_lens": "Memory Economics",
+        "story_archetype": "Technical Teardown",
+        "story_archetype_id": "technical-teardown",
+        "routing_decision": "core_lane",
+        "valid_for_full_article": false,
+        "missing_fields": [
+          "concrete_event",
+          "core_tension"
+        ],
+        "truncation": {
+          "ok": false,
+          "artifacts": [
+            "ellipsis_truncation_artifact"
+          ]
+        }
+      },
+      "dynamicBriefLabel": "Stack Shift",
+      "blueprintId": "capacity-chain",
+      "blueprintName": "Capacity Chain",
+      "blueprint": {
+        "id": "capacity-chain",
+        "name": "Capacity Chain",
+        "sectionHeadings": [
+          "Signal",
+          "Capacity Chain",
+          "Commercial Stakes",
+          "Next Constraint"
+        ],
+        "paragraphRhythm": [
+          1,
+          3,
+          1,
+          2
+        ],
+        "targetParagraphs": 7,
+        "minChars": 1400,
+        "maxChars": 2200
+      },
+      "thesis": "Microsoft is a memory economics item for stack shifts readers, with the infrastructure read limited to source-backed facts.",
+      "whatHappened": "On Sunday, Microsoft CEO Satya Nadella doubled down on the shocking warning he issued earlier this month to businesses that use AI, taking it a step further this time. Companies t",
+      "whyThisMatters": "The public card stays short because the available evidence supports a watchlist signal more than a full infrastructure memo.",
+      "marketMissing": "The source may still describe intent rather than delivered capacity, so the operating impact depends on follow-through.",
+      "investors": "Operators and hyperscalers can use the item to test memory economics before changing procurement, deployment, or risk assumptions.",
+      "operators": "Technical Bottleneck teams should track interconnection approvals, substation equipment dates, power purchase agreements, or disclosed energization windows.",
+      "hyperscalers": "Cloud and platform buyers should separate source evidence from generic AI demand before changing deployment plans.",
+      "watchNext": "Interconnection approvals, substation equipment dates, power purchase agreements, or disclosed energization windows.",
+      "executiveSummary": [
+        "On Sunday, Microsoft CEO Satya Nadella doubled down on the shocking warning he issued earlier this month to businesses that use AI, taking it a step further this time. Companies t",
+        "Operators and hyperscalers can use the item to test memory economics before changing procurement, deployment, or risk assumptions.",
+        "Watch interconnection approvals, substation equipment dates, power purchase agreements, or disclosed energization windows."
+      ],
+      "headlineOptions": [
+        "Satya Nadella says companies that trust one AI for everything may not survive",
+        "TechCrunch AI: the execution test behind the latest AI infrastructure move",
+        "The bottleneck behind Satya Nadella says companies that trust one AI for everything may not survive",
+        "Satya Nadella says companies that trust one AI for everything may not survive puts execution back in focus",
+        "What to watch after Satya Nadella says companies that trust one AI for everything may not survive"
+      ],
+      "finalHeadline": "Satya Nadella says companies that trust one AI for everything may not survive",
+      "metaDescription": "Microsoft is a memory economics item for stack shifts readers, with the infrastructure read limited to source-backed facts.",
+      "finalArticleBody": "Microsoft is a memory economics item for stack shifts readers, with the infrastructure read limited to source-backed facts.\n\nTechnical Signal\n\nOn Sunday, Microsoft CEO Satya Nadella doubled down on the shocking warning he issued earlier this month to businesses that use AI, taking it a step further this time. Companies t… is the evidence anchor, with Microsoft as the actor readers can track.\n\nFailure Domain\n\nTechnical Bottleneck is the operating layer that turns the update into memory economics, especially for operators, hyperscalers, cloud buyers.\n\nOperator Exposure\n\nThe source may still describe intent rather than delivered capacity, so the operating impact depends on follow-through.; that keeps the public read tied to evidence instead of treating the announcement as finished capacity.\n\nBenchmark To Watch\n\nThe next useful checkpoint is interconnection approvals, substation equipment dates, power purchase agreements, or disclosed energization windows over the near term window.\n\nReaders should track interconnection approvals, substation equipment dates, power purchase agreements, or disclosed energization windows before treating the item as a planning assumption for technical bottleneck.",
+      "sourceLink": "https://techcrunch.com/2026/07/27/satya-nadella-says-companies-that-trust-one-ai-for-everything-may-not-survive/"
+    },
+    "expertLens": "Microsoft is a memory economics item for stack shifts readers, with the infrastructure read limited to source-backed facts.",
+    "generation_version": "editorial_surface_v2",
+    "narrative_dna": {
+      "protagonist": "Microsoft",
+      "concrete_event": "On Sunday, Microsoft CEO Satya Nadella doubled down on the shocking warning he issued earlier this month to businesses that use AI, taking it a step further this time. Companies t…",
+      "core_tension": "Microsoft has to translate on sunday, microsoft ceo satya nadella doubled down on the shocking warning he issued earlier this month to businesses that use ai, taking it a step further this time. companies t… into a technical bottleneck decision that survives cost, timing, or operating constraints",
+      "infrastructure_layer": "Technical Bottleneck",
+      "reader_role": [
+        "operators",
+        "hyperscalers",
+        "cloud buyers",
+        "investors"
+      ],
+      "decision_relevance": "operators and hyperscalers can use the item to test memory economics before changing procurement, deployment, or risk assumptions",
+      "evidence_anchor": "Satya Nadella says companies that trust one AI for everything may not survive On Sunday, Microsoft CEO Satya Nadella doubled down on the shocking warning he issued earlier this month to businesses that use AI, taking it a step further this time.",
+      "counterpoint": "The source may still describe intent rather than delivered capacity, so the operating impact depends on follow-through.",
+      "watch_metric": "interconnection approvals, substation equipment dates, power purchase agreements, or disclosed energization windows",
+      "time_horizon": "near term",
+      "public_signal_label": "Stack Shift",
+      "editorial_lens": "Memory Economics",
+      "story_archetype": "Technical Teardown",
+      "story_archetype_id": "technical-teardown",
+      "routing_decision": "core_lane",
+      "valid_for_full_article": false,
+      "missing_fields": [
+        "concrete_event",
+        "core_tension"
+      ],
+      "truncation": {
+        "ok": false,
+        "artifacts": [
+          "ellipsis_truncation_artifact"
+        ]
+      }
+    },
+    "dynamic_brief_label": "Stack Shift",
+    "anti_template_rewrite": true,
+    "repetition_check": {
+      "compared_article_count": 20,
+      "repeated_sentence_ratio": 0.2857142857142857,
+      "repeated_paragraph_ratio": 0.3333333333333333,
+      "heading_sequence_similarity": 1,
+      "banned_phrase_count": 0,
+      "banned_phrase_counts": {},
+      "recent_banned_phrase_counts": {},
+      "ngram_overlap": 0.6293103448275862,
+      "blueprint_repetition": 1,
+      "conclusion_similarity": 0.9271050693011066,
+      "repeated_sentence_count": 2,
+      "repeated_paragraph_count": 2,
+      "heading_sequence": [
+        "Technical Signal",
+        "Failure Domain",
+        "Operator Exposure",
+        "Benchmark To Watch"
+      ],
+      "blocked": true,
+      "reasons": [
+        "repeated_sentence_ratio>0.12",
+        "heading_sequence_similarity>0.75",
+        "conclusion_similarity>0.7"
+      ]
+    },
+    "repetition_blocked": true,
+    "repetition_block_reasons": [
+      "repeated_sentence_ratio>0.12",
+      "heading_sequence_similarity>0.75",
+      "conclusion_similarity>0.7"
+    ],
+    "searchText": "Satya Nadella says companies that trust one AI for everything may not survive TechCrunch AI AI Infrastructure GPU clusters and deployment readiness Compute Supply Chain power_grid utilities, power-secured developers, and operators with firm interconnection positions developers and cloud buyers whose delivery dates depend on utility upgrades or energization schedules utility interconnection, equipment procurement, and energization milestones The source may still describe intent rather than delivered capacity, so the operating impact depends on follow-through. interconnection approvals, substation equipment dates, power purchase agreements, or disclosed energization windows US On Sunday, Microsoft CEO Satya Nadella doubled down on the shocking warning he issued earlier this month to businesses that use AI, taking it a step further this time. Companies t… Microsoft is a memory economics item for stack shifts readers, with the infrastructure read limited to source-backed facts. On Sunday, Microsoft CEO Satya Nadella doubled down on the shocking warning he issued earlier this month to businesses that use AI, taking it a step further this time. Companies t The public card stays short because the available evidence supports a watchlist signal more than a full infrastructure memo. Operators and hyperscalers can use the item to test memory economics before changing procurement, deployment, or risk assumptions. Technical Bottleneck teams should track interconnection approvals, substation equipment dates, power purchase agreements, or disclosed energization windows. Cloud and platform buyers should separate source evidence from generic AI demand before changing deployment plans. Interconnection approvals, substation equipment dates, power purchase agreements, or disclosed energization windows. On Sunday, Microsoft CEO Satya Nadella doubled down on the shocking warning he issued earlier this month to businesses that use AI, taking it a step further this time. Companies that rely wholly on the proprietary AI labs for their AI needs ultimately won&#8217;t survive, he predicts. That&#8217;s what he said on CNN&#8217;s &#8220;Fareed Zakaria GPS.&#8221; When Zakaria asked Nadella to explain what constitutes a company sharing too much with an AI model provider, Nadella said businesses need to be wary of everything they hand over, from their data to their prompts. Nadella called for a setup where &#8220;every time you use the model, all of the metadata around it is retained by you, so that you could use all of that to train perhaps your own weights or your own open model.&#8221; (Weights are a model&#8217;s trained parameters — essentially its brain. Nadella&#8217;s point: Companies should hold on to their own usage data so they can eventually build a model of their own.) &#8220;Any firm that doesn&#8217;t have this control, I will claim will not remain a firm because you&#8217;ve essentially outsourced your thinking,&#8221; he added. In short: Companies without their own models — or without a layer of AI infrastructure known as AI gateways to separate their prompts from the model itself — will be in trouble, Nadella says. He specifically wants companies to stop relying on AI labs&#8217; built-in coding tools, known as harnesses.(Anthropic&#8217;s Claude Code and OpenAI&#8217;s ChatGPT Codex are examples of these.) &#8220;By keeping the harness separate from the model and the context and memory separate from the model, you absolutely can use multiple models for what they&#8217;re great at. operators hyperscalers cloud buyers investors Satya Nadella says companies that trust one AI for everything may not survive On Sunday, Microsoft CEO Satya Nadella doubled down on the shocking warning he issued earlier this month to businesses that use AI, taking it a step further this time. Companies t… Companies without their own models — or without a layer of AI infrastructure known as AI gateways to separate their prompts from the model itself — will be in trouble, Nadella says. On Sunday, Microsoft CEO Satya Nadella doubled down on the shocking warning he issued earlier this month to businesses that use AI, taking it a step further this time. That&#8217;s what he said on CNN&#8217;s &#8220;Fareed Zakaria GPS.&#8221; When Zakaria asked Nadella to explain what constitutes a company sharing too much with an AI model provider, Nadella said businesses need to be wary of everything they hand over, from their data to their prompts. Nadella&#8217;s point: Companies should hold on to their own usage data so they can eventually build a model of their own.) &#8220;Any firm that doesn&#8217;t have this control, I will claim will not remain a firm because you&#8217;ve essentially outsourced your thinking,&#8221; he added. Microsoft Anthropic OpenAI"
+  },
+  {
     "id": "9e07e4e22ca40bff",
     "source": "Toms Hardware",
     "url": "https://www.tomshardware.com/tech-industry/semiconductors/china-begins-mass-production-of-domestic-immersion-duv-lithography-machines",
@@ -46746,7 +47283,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:05:41.998Z",
+      "generatedAt": "2026-07-28T00:06:28.349Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "tsmc",
@@ -47125,7 +47662,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:05:42.378Z",
+      "generatedAt": "2026-07-28T00:06:28.542Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "NVIDIA",
@@ -47502,7 +48039,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:06:04.455Z",
+      "generatedAt": "2026-07-28T00:06:28.734Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "NVIDIA",
@@ -47856,7 +48393,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:06:04.634Z",
+      "generatedAt": "2026-07-28T00:06:28.921Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Microsoft",
@@ -48212,7 +48749,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:06:04.821Z",
+      "generatedAt": "2026-07-28T00:06:29.110Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "NVIDIA",
@@ -48569,7 +49106,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:06:05.000Z",
+      "generatedAt": "2026-07-28T00:06:29.298Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Intel",
@@ -48910,7 +49447,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:06:05.177Z",
+      "generatedAt": "2026-07-28T00:06:29.483Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Digital Realty",
@@ -49279,7 +49816,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:06:05.358Z",
+      "generatedAt": "2026-07-28T00:06:29.673Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Supermicro",
@@ -49630,7 +50167,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:06:05.539Z",
+      "generatedAt": "2026-07-28T00:06:29.863Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "OpenAI",
@@ -49993,7 +50530,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:06:05.719Z",
+      "generatedAt": "2026-07-28T00:06:30.052Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "NVIDIA",
@@ -50346,7 +50883,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:06:05.899Z",
+      "generatedAt": "2026-07-28T00:06:30.241Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "AMD",
@@ -50687,7 +51224,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:06:06.078Z",
+      "generatedAt": "2026-07-28T00:06:30.428Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Google",
@@ -51068,7 +51605,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:06:06.267Z",
+      "generatedAt": "2026-07-28T00:06:30.620Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "NVIDIA",
@@ -51427,7 +51964,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:06:06.449Z",
+      "generatedAt": "2026-07-28T00:06:30.811Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "AMD",
@@ -51784,7 +52321,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:06:06.626Z",
+      "generatedAt": "2026-07-28T00:06:30.998Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "AMD",
@@ -52144,7 +52681,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:06:06.807Z",
+      "generatedAt": "2026-07-28T00:06:31.186Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Meta",
@@ -52511,7 +53048,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:06:06.991Z",
+      "generatedAt": "2026-07-28T00:06:31.378Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "AMD",
@@ -52876,7 +53413,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:06:07.171Z",
+      "generatedAt": "2026-07-28T00:06:31.567Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "For Sabey Data",
@@ -53236,7 +53773,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:06:07.350Z",
+      "generatedAt": "2026-07-28T00:06:31.754Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "AMD",
@@ -53587,7 +54124,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:06:07.532Z",
+      "generatedAt": "2026-07-28T00:06:31.945Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "AMD",
@@ -53945,7 +54482,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:06:07.711Z",
+      "generatedAt": "2026-07-28T00:06:32.135Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Intel",
@@ -54306,7 +54843,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:06:07.893Z",
+      "generatedAt": "2026-07-28T00:06:32.325Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "OpenAI",
@@ -54652,7 +55189,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:06:08.071Z",
+      "generatedAt": "2026-07-28T00:06:32.511Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Bringing Design Data",
@@ -55002,7 +55539,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:06:08.253Z",
+      "generatedAt": "2026-07-28T00:06:32.703Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "NVIDIA",
@@ -55371,7 +55908,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:06:08.436Z",
+      "generatedAt": "2026-07-28T00:06:32.894Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "TSMC",
@@ -55743,7 +56280,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:06:08.620Z",
+      "generatedAt": "2026-07-28T00:06:33.086Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Amazon",
@@ -56098,7 +56635,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:06:08.796Z",
+      "generatedAt": "2026-07-28T00:06:33.272Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "The International Energy",
@@ -56443,7 +56980,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:06:08.978Z",
+      "generatedAt": "2026-07-28T00:06:33.461Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "NVIDIA",
@@ -56806,7 +57343,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:06:09.157Z",
+      "generatedAt": "2026-07-28T00:06:33.648Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "AMD",
@@ -57149,7 +57686,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:06:09.337Z",
+      "generatedAt": "2026-07-28T00:06:33.839Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Amazon",
@@ -57510,7 +58047,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:06:09.519Z",
+      "generatedAt": "2026-07-28T00:06:34.028Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "AMD",
@@ -57870,7 +58407,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:06:09.698Z",
+      "generatedAt": "2026-07-28T00:06:34.216Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "AMD",
@@ -58234,7 +58771,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:06:09.879Z",
+      "generatedAt": "2026-07-28T00:06:34.404Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Broadcom",
@@ -58586,7 +59123,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:06:10.058Z",
+      "generatedAt": "2026-07-28T00:06:34.593Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "AMD",
@@ -58942,7 +59479,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:06:10.234Z",
+      "generatedAt": "2026-07-28T00:06:34.777Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Bloomberg",
@@ -59293,7 +59830,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:06:10.410Z",
+      "generatedAt": "2026-07-28T00:06:34.961Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Google",
@@ -59644,7 +60181,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:06:10.590Z",
+      "generatedAt": "2026-07-28T00:06:35.150Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "AMD",
@@ -59997,7 +60534,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:06:10.769Z",
+      "generatedAt": "2026-07-28T00:06:35.338Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Microsoft",
@@ -60351,7 +60888,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:06:10.949Z",
+      "generatedAt": "2026-07-28T00:06:35.527Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "TSMC",
@@ -60692,7 +61229,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:06:11.131Z",
+      "generatedAt": "2026-07-28T00:06:35.717Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "NVIDIA",
@@ -61049,7 +61586,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:06:11.311Z",
+      "generatedAt": "2026-07-28T00:06:35.906Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Nuvoton Technology Corporation",
@@ -61407,7 +61944,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:06:11.490Z",
+      "generatedAt": "2026-07-28T00:06:36.093Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "NVIDIA",
@@ -61756,7 +62293,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:06:11.669Z",
+      "generatedAt": "2026-07-28T00:06:36.280Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Helping Process Engineers Tackle Growing Co",
@@ -62113,7 +62650,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:06:11.849Z",
+      "generatedAt": "2026-07-28T00:06:36.469Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "NVIDIA",
@@ -62462,7 +62999,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:06:12.028Z",
+      "generatedAt": "2026-07-28T00:06:36.657Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "AMD",
@@ -62817,7 +63354,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:06:12.207Z",
+      "generatedAt": "2026-07-28T00:06:36.844Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Edge Data",
@@ -63172,7 +63709,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:06:12.385Z",
+      "generatedAt": "2026-07-28T00:06:37.031Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "OpenAI",
@@ -63526,7 +64063,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:06:12.565Z",
+      "generatedAt": "2026-07-28T00:06:37.218Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Supermicro",
@@ -63883,7 +64420,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:06:12.744Z",
+      "generatedAt": "2026-07-28T00:06:37.406Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "How Modular Data",
@@ -64242,7 +64779,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:06:12.924Z",
+      "generatedAt": "2026-07-28T00:06:37.593Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "xAI",
@@ -64592,7 +65129,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:06:13.105Z",
+      "generatedAt": "2026-07-28T00:06:37.783Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Samsung",
@@ -64940,7 +65477,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:06:13.285Z",
+      "generatedAt": "2026-07-28T00:06:37.971Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "OpenAI",
@@ -65287,7 +65824,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:06:13.465Z",
+      "generatedAt": "2026-07-28T00:06:38.160Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Super-Grid Transformer Revolution Powering AI Data",
@@ -65648,7 +66185,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:06:13.644Z",
+      "generatedAt": "2026-07-28T00:06:38.347Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "NVIDIA",
@@ -65996,7 +66533,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:06:13.823Z",
+      "generatedAt": "2026-07-28T00:06:38.534Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Scality Autonomous Data",
@@ -66352,7 +66889,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:06:14.000Z",
+      "generatedAt": "2026-07-28T00:06:38.721Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "NVIDIA",
@@ -66707,7 +67244,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:06:14.182Z",
+      "generatedAt": "2026-07-28T00:06:38.912Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Microsoft",
@@ -67079,7 +67616,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:06:14.361Z",
+      "generatedAt": "2026-07-28T00:06:39.098Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "OpenAI",
@@ -67425,7 +67962,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:06:14.540Z",
+      "generatedAt": "2026-07-28T00:06:39.285Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "NVIDIA",
@@ -67771,7 +68308,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:06:14.719Z",
+      "generatedAt": "2026-07-28T00:06:39.472Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "NVIDIA",
@@ -68128,7 +68665,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:06:14.896Z",
+      "generatedAt": "2026-07-28T00:06:39.669Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "AMD",
@@ -68479,7 +69016,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:06:15.074Z",
+      "generatedAt": "2026-07-28T00:06:39.856Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Meta",
@@ -68831,7 +69368,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:06:15.255Z",
+      "generatedAt": "2026-07-28T00:06:40.046Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Apple",
@@ -69187,7 +69724,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:06:15.431Z",
+      "generatedAt": "2026-07-28T00:06:40.229Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "BRUSH Power",
@@ -69542,7 +70079,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:06:15.610Z",
+      "generatedAt": "2026-07-28T00:06:40.415Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "NVIDIA",
@@ -69900,7 +70437,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:06:15.791Z",
+      "generatedAt": "2026-07-28T00:06:40.605Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Samsung",
@@ -70255,7 +70792,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:06:15.970Z",
+      "generatedAt": "2026-07-28T00:06:40.791Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "NVIDIA",
@@ -70612,7 +71149,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:06:16.147Z",
+      "generatedAt": "2026-07-28T00:06:40.976Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "AI Data",
@@ -70978,7 +71515,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:06:16.328Z",
+      "generatedAt": "2026-07-28T00:06:41.165Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "NVIDIA",
@@ -71344,7 +71881,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:06:16.506Z",
+      "generatedAt": "2026-07-28T00:06:41.351Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Microsoft",
@@ -71707,7 +72244,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:06:16.688Z",
+      "generatedAt": "2026-07-28T00:06:41.542Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "NVIDIA",
@@ -72060,7 +72597,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:06:16.867Z",
+      "generatedAt": "2026-07-28T00:06:41.728Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "NVIDIA",
@@ -72415,7 +72952,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:06:17.048Z",
+      "generatedAt": "2026-07-28T00:06:41.916Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "NVIDIA",
@@ -72780,7 +73317,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:06:17.229Z",
+      "generatedAt": "2026-07-28T00:06:42.104Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "AMD",
@@ -73128,7 +73665,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:06:17.411Z",
+      "generatedAt": "2026-07-28T00:06:42.293Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "NVIDIA",
@@ -73485,7 +74022,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:06:17.591Z",
+      "generatedAt": "2026-07-28T00:06:42.481Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Intel",
@@ -73859,7 +74396,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:06:17.775Z",
+      "generatedAt": "2026-07-28T00:06:42.673Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "AMD",
@@ -74217,7 +74754,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:06:17.956Z",
+      "generatedAt": "2026-07-28T00:06:42.862Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Microsoft",
@@ -74571,7 +75108,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:06:18.137Z",
+      "generatedAt": "2026-07-28T00:06:43.050Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "NVIDIA",
@@ -74929,7 +75466,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:06:18.314Z",
+      "generatedAt": "2026-07-28T00:06:43.235Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "First PCIe Gen6 Data",
@@ -75284,7 +75821,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:06:18.494Z",
+      "generatedAt": "2026-07-28T00:06:43.423Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "AMD",
@@ -75826,7 +76363,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:06:18.744Z",
+      "generatedAt": "2026-07-28T00:06:43.687Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Google",
@@ -76166,7 +76703,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:06:18.922Z",
+      "generatedAt": "2026-07-28T00:06:43.874Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "AMD",
@@ -76522,7 +77059,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:06:19.100Z",
+      "generatedAt": "2026-07-28T00:06:44.070Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "OpenAI",
@@ -76869,7 +77406,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:06:19.279Z",
+      "generatedAt": "2026-07-28T00:06:44.268Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Arm",
@@ -77222,7 +77759,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:06:19.460Z",
+      "generatedAt": "2026-07-28T00:06:44.457Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "NVIDIA",
@@ -77573,7 +78110,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:06:19.642Z",
+      "generatedAt": "2026-07-28T00:06:44.645Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "SK hynix",
@@ -77932,7 +78469,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:06:19.825Z",
+      "generatedAt": "2026-07-28T00:06:44.832Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Intel",
@@ -78296,7 +78833,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:06:20.007Z",
+      "generatedAt": "2026-07-28T00:06:45.022Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Couchbase AI Data",
@@ -78674,7 +79211,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:06:20.192Z",
+      "generatedAt": "2026-07-28T00:06:45.214Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "SoftBank",
@@ -79032,7 +79569,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:06:20.370Z",
+      "generatedAt": "2026-07-28T00:06:45.400Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "NERC Flags AI Data",
@@ -79389,7 +79926,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:06:20.550Z",
+      "generatedAt": "2026-07-28T00:06:45.587Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "SK hynix",
@@ -79763,7 +80300,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:06:20.734Z",
+      "generatedAt": "2026-07-28T00:06:45.778Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "What Technologies",
@@ -80113,7 +80650,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:06:20.913Z",
+      "generatedAt": "2026-07-28T00:06:45.965Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "AI Data",
@@ -80461,7 +80998,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:06:21.095Z",
+      "generatedAt": "2026-07-28T00:06:46.156Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Inference Systems",
@@ -80812,7 +81349,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:06:21.274Z",
+      "generatedAt": "2026-07-28T00:06:46.343Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Dominion Energy",
@@ -81185,7 +81722,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:06:21.453Z",
+      "generatedAt": "2026-07-28T00:06:46.531Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Apple",
@@ -81548,7 +82085,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:06:21.632Z",
+      "generatedAt": "2026-07-28T00:06:46.718Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "AMD",
@@ -81903,7 +82440,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:06:21.811Z",
+      "generatedAt": "2026-07-28T00:06:46.905Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Structure Research Forecasts AI Data",
@@ -82492,7 +83029,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:06:22.065Z",
+      "generatedAt": "2026-07-28T00:06:47.173Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "AMD",
@@ -82848,7 +83385,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:06:22.246Z",
+      "generatedAt": "2026-07-28T00:06:47.360Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "AMD",
@@ -83209,7 +83746,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:06:22.426Z",
+      "generatedAt": "2026-07-28T00:06:47.548Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Anthropic",
@@ -83563,7 +84100,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:06:22.603Z",
+      "generatedAt": "2026-07-28T00:06:47.734Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "AMD",
@@ -83916,7 +84453,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:06:22.784Z",
+      "generatedAt": "2026-07-28T00:06:47.923Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "NVIDIA",
@@ -84260,7 +84797,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:06:22.961Z",
+      "generatedAt": "2026-07-28T00:06:48.109Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Amazon",
@@ -84620,7 +85157,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:06:23.139Z",
+      "generatedAt": "2026-07-28T00:06:48.301Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "SoftBank",
@@ -84967,7 +85504,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:06:23.317Z",
+      "generatedAt": "2026-07-28T00:06:48.487Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "AMD",
@@ -85329,7 +85866,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:06:23.496Z",
+      "generatedAt": "2026-07-28T00:06:48.676Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Supermicro",
@@ -85686,7 +86223,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:06:23.677Z",
+      "generatedAt": "2026-07-28T00:06:48.889Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Apple",
@@ -86034,7 +86571,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:06:23.853Z",
+      "generatedAt": "2026-07-28T00:06:49.074Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "AMD",
@@ -86391,7 +86928,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:06:24.032Z",
+      "generatedAt": "2026-07-28T00:06:49.261Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Intel",
@@ -86757,7 +87294,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:06:24.212Z",
+      "generatedAt": "2026-07-28T00:06:49.448Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Supermicro",
@@ -87105,7 +87642,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:06:24.390Z",
+      "generatedAt": "2026-07-28T00:06:49.634Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Amazon",
@@ -87471,7 +88008,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:06:24.569Z",
+      "generatedAt": "2026-07-28T00:06:49.820Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "AI Data",
@@ -87819,7 +88356,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:06:24.743Z",
+      "generatedAt": "2026-07-28T00:06:50.003Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "AMD",
@@ -88178,7 +88715,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:06:24.923Z",
+      "generatedAt": "2026-07-28T00:06:50.191Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "AMD",
@@ -88541,7 +89078,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:06:25.105Z",
+      "generatedAt": "2026-07-28T00:06:50.381Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "NVIDIA",
@@ -88887,7 +89424,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:06:25.282Z",
+      "generatedAt": "2026-07-28T00:06:50.566Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Bloomberg",
@@ -89249,7 +89786,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:06:25.464Z",
+      "generatedAt": "2026-07-28T00:06:50.755Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Meta",
@@ -89607,7 +90144,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:06:25.669Z",
+      "generatedAt": "2026-07-28T00:06:50.942Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "NVIDIA",
@@ -89963,7 +90500,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:06:25.849Z",
+      "generatedAt": "2026-07-28T00:06:51.131Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Google",
@@ -90323,7 +90860,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:06:26.032Z",
+      "generatedAt": "2026-07-28T00:06:51.323Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Intel",
@@ -90693,7 +91230,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:06:26.215Z",
+      "generatedAt": "2026-07-28T00:06:51.513Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "SK hynix",
@@ -91047,7 +91584,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:06:26.410Z",
+      "generatedAt": "2026-07-28T00:06:51.724Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "NVIDIA",
@@ -91406,7 +91943,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:06:26.587Z",
+      "generatedAt": "2026-07-28T00:06:51.912Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "NetApp",
@@ -91762,7 +92299,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:06:26.766Z",
+      "generatedAt": "2026-07-28T00:06:52.097Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "SoftBank",
@@ -92120,7 +92657,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:06:26.941Z",
+      "generatedAt": "2026-07-28T00:06:52.280Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Intel",
@@ -92476,7 +93013,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:06:27.118Z",
+      "generatedAt": "2026-07-28T00:06:52.469Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Anthropic",
@@ -92826,7 +93363,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:06:27.294Z",
+      "generatedAt": "2026-07-28T00:06:52.652Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Apple",
@@ -93169,7 +93706,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:06:27.471Z",
+      "generatedAt": "2026-07-28T00:06:52.836Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Bloomberg",
@@ -93515,7 +94052,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:06:27.649Z",
+      "generatedAt": "2026-07-28T00:06:53.021Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Intel",
@@ -93857,7 +94394,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:06:27.828Z",
+      "generatedAt": "2026-07-28T00:06:53.207Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Red Hat",
@@ -94211,7 +94748,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:06:28.003Z",
+      "generatedAt": "2026-07-28T00:06:53.391Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Orbital Data",
@@ -94553,7 +95090,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:06:28.180Z",
+      "generatedAt": "2026-07-28T00:06:53.574Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Shoals Technologies Group",
@@ -94910,7 +95447,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:06:28.358Z",
+      "generatedAt": "2026-07-28T00:06:53.760Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "AMD",
@@ -95258,7 +95795,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:06:28.536Z",
+      "generatedAt": "2026-07-28T00:06:53.945Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Samsung",
@@ -95620,7 +96157,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:06:28.715Z",
+      "generatedAt": "2026-07-28T00:06:54.132Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Anthropic",
@@ -95971,7 +96508,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:06:28.894Z",
+      "generatedAt": "2026-07-28T00:06:54.319Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "NVIDIA",
@@ -96341,7 +96878,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:06:29.075Z",
+      "generatedAt": "2026-07-28T00:06:54.508Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Gemini. The Federal Energy",
@@ -96688,7 +97225,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:06:29.255Z",
+      "generatedAt": "2026-07-28T00:06:54.694Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "arm",
@@ -97060,7 +97597,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:06:29.439Z",
+      "generatedAt": "2026-07-28T00:06:54.883Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Apple",
@@ -97421,7 +97958,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:06:29.616Z",
+      "generatedAt": "2026-07-28T00:06:55.067Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Intel",
@@ -97774,7 +98311,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:06:29.794Z",
+      "generatedAt": "2026-07-28T00:06:55.253Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Private Cloud",
@@ -98117,7 +98654,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:06:29.969Z",
+      "generatedAt": "2026-07-28T00:06:55.436Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Google",
@@ -98477,7 +99014,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:06:30.151Z",
+      "generatedAt": "2026-07-28T00:06:55.624Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "NVIDIA",
@@ -98839,7 +99376,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:06:30.334Z",
+      "generatedAt": "2026-07-28T00:06:55.813Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "NVIDIA",
@@ -99182,7 +99719,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:06:30.513Z",
+      "generatedAt": "2026-07-28T00:06:56.000Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "AMD",
@@ -99543,7 +100080,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:06:30.689Z",
+      "generatedAt": "2026-07-28T00:06:56.184Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Amazon",
@@ -99896,7 +100433,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:06:30.866Z",
+      "generatedAt": "2026-07-28T00:06:56.368Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Anthropic",
@@ -100249,7 +100786,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:06:31.043Z",
+      "generatedAt": "2026-07-28T00:06:56.553Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Anthropic",
@@ -100605,7 +101142,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:06:31.220Z",
+      "generatedAt": "2026-07-28T00:06:56.737Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Meta",
@@ -100962,7 +101499,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:06:31.398Z",
+      "generatedAt": "2026-07-28T00:06:56.921Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Microsoft",
@@ -101315,7 +101852,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:06:31.576Z",
+      "generatedAt": "2026-07-28T00:06:57.107Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Microsoft",
@@ -101677,7 +102214,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:06:31.754Z",
+      "generatedAt": "2026-07-28T00:06:57.293Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "AMD",
@@ -102045,7 +102582,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:06:31.935Z",
+      "generatedAt": "2026-07-28T00:06:57.482Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Anthropic",
@@ -102390,7 +102927,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:06:32.111Z",
+      "generatedAt": "2026-07-28T00:06:57.663Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "AMD",
@@ -102758,7 +103295,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:06:32.290Z",
+      "generatedAt": "2026-07-28T00:06:57.849Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "OpenAI",
@@ -103115,7 +103652,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:06:32.469Z",
+      "generatedAt": "2026-07-28T00:06:58.034Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Intel",
@@ -103481,7 +104018,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:06:32.651Z",
+      "generatedAt": "2026-07-28T00:06:58.221Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Host Hereford Edge Data",
@@ -103828,7 +104365,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:06:32.829Z",
+      "generatedAt": "2026-07-28T00:06:58.405Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Microsoft",
@@ -104190,7 +104727,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:06:33.009Z",
+      "generatedAt": "2026-07-28T00:06:58.594Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Arm",
@@ -104541,7 +105078,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:06:33.189Z",
+      "generatedAt": "2026-07-28T00:06:58.781Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "NVIDIA",
@@ -104912,7 +105449,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:06:33.372Z",
+      "generatedAt": "2026-07-28T00:06:58.970Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "NVIDIA",
@@ -105272,7 +105809,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:06:33.555Z",
+      "generatedAt": "2026-07-28T00:06:59.159Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Digital Realty",
@@ -105635,7 +106172,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:06:33.737Z",
+      "generatedAt": "2026-07-28T00:06:59.348Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Google",
@@ -105996,7 +106533,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:06:33.916Z",
+      "generatedAt": "2026-07-28T00:06:59.535Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "OpenAI",
@@ -106354,7 +106891,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:06:34.093Z",
+      "generatedAt": "2026-07-28T00:06:59.719Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Microsoft",
@@ -106711,7 +107248,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:06:34.269Z",
+      "generatedAt": "2026-07-28T00:06:59.903Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Apple",
@@ -107067,7 +107604,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:06:34.448Z",
+      "generatedAt": "2026-07-28T00:07:00.088Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Apple",
@@ -107413,7 +107950,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:06:34.627Z",
+      "generatedAt": "2026-07-28T00:07:00.275Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Meta",
@@ -107776,7 +108313,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:06:34.805Z",
+      "generatedAt": "2026-07-28T00:07:00.462Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "NVIDIA",
@@ -108146,7 +108683,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:06:34.988Z",
+      "generatedAt": "2026-07-28T00:07:00.651Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "NVIDIA",
@@ -108505,7 +109042,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:06:35.167Z",
+      "generatedAt": "2026-07-28T00:07:00.840Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Intel",
@@ -108860,7 +109397,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:06:35.346Z",
+      "generatedAt": "2026-07-28T00:07:01.025Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "NVIDIA",
@@ -109211,7 +109748,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:06:35.522Z",
+      "generatedAt": "2026-07-28T00:07:01.207Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "OpenAI",
@@ -109573,7 +110110,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:06:35.699Z",
+      "generatedAt": "2026-07-28T00:07:01.393Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "AMD",
@@ -109918,7 +110455,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:06:35.877Z",
+      "generatedAt": "2026-07-28T00:07:01.578Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Intel",
@@ -110281,7 +110818,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:06:36.059Z",
+      "generatedAt": "2026-07-28T00:07:01.767Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Microsoft",
@@ -110638,7 +111175,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:06:36.239Z",
+      "generatedAt": "2026-07-28T00:07:01.953Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Intel",
@@ -110995,7 +111532,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:06:36.423Z",
+      "generatedAt": "2026-07-28T00:07:02.142Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "NetApp",
@@ -111361,7 +111898,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:06:36.604Z",
+      "generatedAt": "2026-07-28T00:07:02.332Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Host Dumas Edge Data",
@@ -111712,7 +112249,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:06:36.779Z",
+      "generatedAt": "2026-07-28T00:07:02.514Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "NVIDIA",
@@ -112076,7 +112613,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:06:36.951Z",
+      "generatedAt": "2026-07-28T00:07:02.693Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Anthropic",
@@ -112441,7 +112978,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:06:37.130Z",
+      "generatedAt": "2026-07-28T00:07:02.879Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Samsung",
@@ -112799,7 +113336,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:06:37.310Z",
+      "generatedAt": "2026-07-28T00:07:03.065Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "CoolIT Systems",
@@ -113155,7 +113692,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:06:37.488Z",
+      "generatedAt": "2026-07-28T00:07:03.248Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Microsoft",
@@ -120072,7 +120609,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-26T16:11:38.394Z",
+      "generatedAt": "2026-07-28T00:07:05.299Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Semiconductor Engineering",
@@ -131711,7 +132248,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:06:42.705Z",
+      "generatedAt": "2026-07-28T00:07:08.879Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "NetApp",
@@ -135870,7 +136407,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:06:43.906Z",
+      "generatedAt": "2026-07-28T00:07:10.147Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Google",
@@ -141847,7 +142384,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:06:45.629Z",
+      "generatedAt": "2026-07-28T00:07:11.961Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "NVIDIA",
@@ -146276,7 +146813,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:06:46.977Z",
+      "generatedAt": "2026-07-28T00:07:13.384Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Bloomberg",
@@ -146941,7 +147478,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:06:47.213Z",
+      "generatedAt": "2026-07-28T00:07:13.631Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Apple",
@@ -151808,7 +152345,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:06:48.634Z",
+      "generatedAt": "2026-07-28T00:07:15.129Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Bloomberg",
@@ -152193,7 +152730,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:06:48.799Z",
+      "generatedAt": "2026-07-28T00:07:15.302Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Meta",
@@ -158088,7 +158625,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:06:50.589Z",
+      "generatedAt": "2026-07-28T00:07:17.194Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "OpenAI",
@@ -159508,7 +160045,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:06:51.051Z",
+      "generatedAt": "2026-07-28T00:07:17.682Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Google",
@@ -182779,7 +183316,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-07-27T17:06:58.394Z",
+      "generatedAt": "2026-07-28T00:07:25.444Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Toms Hardware",
