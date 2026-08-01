@@ -729,7 +729,9 @@
     "8005360f96e3e216",
     "c5bec98f1a8ff481",
     "e13c91b28153855d",
-    "c9d5161bca151486"
+    "c9d5161bca151486",
+    "c346fc277f42c8b2",
+    "994c4a6b476bd8dd"
   ],
   "dayPlans": {
     "2026-03-24": {
@@ -37656,88 +37658,19 @@
     "2026-08-01": {
       "date": "2026-08-01",
       "createdAt": "2026-07-31T16:51:05.421Z",
-      "refreshedAt": "2026-08-01T00:03:57.455Z",
+      "refreshedAt": "2026-08-01T09:15:36.674Z",
       "candidateWindowHours": 24,
       "curatedItems": [
         {
-          "id": "c9d5161bca151486",
-          "source": "StorageReview",
-          "url": "https://www.storagereview.com/news/scaleflux-kv-cache-ssd-platform-claims-7-10-dwpd-and-200-fdp-streams",
-          "title": "ScaleFlux KV Cache SSD Platform Claims 7-10+ DWPD and 200+ FDP Streams",
-          "snippet": "ScaleFlux has introduced an AI-optimized SSD platform designed for NVIDIA CMX and other inference architectures that use SSDs as a shared KV-cache tier beyond GPU HBM and host DRAM. The platform combines high-endurance…",
-          "contentText": "ScaleFlux has introduced an AI-optimized SSD platform designed for NVIDIA CMX and other inference architectures that use SSDs as a shared KV-cache tier beyond GPU HBM and host DRAM. The platform combines high-endurance SSD hardware, Flexible Data Placement (FDP) support, and workload telemetry intended to improve data placement, reduce write amplification, and extend effective endurance in high-churn inference environments. The platform addresses three storage challenges with offloaded KV cache : characterizing real-world workload behavior, separating data by lifecycle, and sustaining heavy write activity without using excess flash capacity to absorb writes. Long-context inference, shared-prefix reuse, agentic application flows, and retained idle sessions increase the volume of reusable r…",
-          "publishedAt": "2026-07-31T20:43:51.000Z",
-          "sourceImage": "https://www.storagereview.com/wp-content/uploads/2026/07/Storagereview-ScaleFlux-CSD5000-series.jpeg",
+          "id": "c346fc277f42c8b2",
+          "source": "Toms Hardware",
+          "url": "https://www.tomshardware.com/video-games/nintendo/lost-one-of-a-kind-nintendo-ds-cartridge-hits-ebay-for-usd9-100-pokepark-fishing-contest-designed-to-delete-itself-after-12-hours-game-so-rare-it-was-only-distributed-to-theme-park-attendees-in-2005",
+          "title": "Lost one-of-a-kind Nintendo DS cartridge hits eBay for $9,100 — PokePark Fishing Contest designed to delete itself after 12 hours, game so rare it was only distributed to theme park attendees in 2005",
+          "snippet": "A Nintendo DS game that was classified as ‘lost media’ for nearly two decades is now within tantalizing reach of video gaming fans and archivists.",
+          "contentText": "A Nintendo DS game that was classified as ‘lost media’ for nearly two decades is currently within tantalizing reach of video gaming fans and archivists. All the fans need is about $9,100, and no rival bidders on an eBay auction for an ultra-rare, perhaps one-of-a-kind, development cartridge thought to contain the PokePark Fishing Contest DS minigame. (Image credit: eBay ) Japanese game archaeology enthusiast Yoshino @ Federation (renpou.com) shared details of the eBay auction and its significance to their tens of thousands of social media followers. So, what’s the deal with PokePark Fishing Contest DS, and why is it ultra-rare or even classified as ‘lost media?’ This fishing mini-game was lost for several reasons. Firstly, it was a download-only title. Secondly, its distribution was limit…",
+          "publishedAt": "2026-08-01T09:00:00.000Z",
+          "sourceImage": "https://cdn.mos.cms.futurecdn.net/2hd7QtZH3Dd9p7WrNgmYhZ-1280-80.jpg",
           "region": "APAC",
-          "language": "en",
-          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
-          "category": "Semiconductors",
-          "primary_category": "Semiconductors",
-          "secondary_category": "Accelerators, memory, and advanced packaging",
-          "infrastructure_layer": "Silicon",
-          "affected_stakeholders": [
-            "semiconductor suppliers",
-            "hyperscalers",
-            "server OEMs",
-            "investors"
-          ],
-          "article_type": "Capacity Expansion",
-          "urgency_score": 0.55,
-          "taxonomy_confidence": 0.83,
-          "taxonomy_reasons": [
-            "gpu",
-            "nvidia",
-            "hbm"
-          ],
-          "direct_ai_infrastructure_relevance": 1,
-          "data_center_relevance": 0,
-          "cloud_capacity_relevance": 0,
-          "semiconductor_relevance": 0.86,
-          "power_grid_relevance": 0,
-          "cooling_relevance": 0,
-          "capital_markets_relevance": 0,
-          "enterprise_ai_infrastructure_relevance": 0.18,
-          "infrastructure_relevance_score": 0.919,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "semiconductor_relevance:0.86(nvidia, hbm, gpu)"
-          ],
-          "infrastructure_relevance": {
-            "direct_ai_infrastructure_relevance": 1,
-            "data_center_relevance": 0,
-            "cloud_capacity_relevance": 0,
-            "semiconductor_relevance": 0.86,
-            "power_grid_relevance": 0,
-            "cooling_relevance": 0,
-            "capital_markets_relevance": 0,
-            "enterprise_ai_infrastructure_relevance": 0.18,
-            "infrastructure_relevance_score": 0.919,
-            "infrastructure_relevance_tier": "full_memo",
-            "infrastructure_relevance_action": "generate_full_memo",
-            "infrastructure_relevance_reasons": [
-              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-              "semiconductor_relevance:0.86(nvidia, hbm, gpu)"
-            ],
-            "infrastructureRelevanceAction": "generate_full_memo",
-            "articlePagePublished": true,
-            "homepagePublished": true,
-            "archiveOnly": false,
-            "archiveOnlyReason": null
-          },
-          "score": 77
-        },
-        {
-          "id": "e13c91b28153855d",
-          "source": "TechCrunch AI",
-          "url": "https://techcrunch.com/2026/07/31/openai-reportedly-finds-evidence-that-more-of-its-agents-ran-amok/",
-          "title": "OpenAI reportedly finds evidence that more of its agents ran amok",
-          "snippet": "OpenAI has reportedly found evidence of additional agent misbehavior as it looks into the incident that occurred with Hugging Face.",
-          "contentText": "OpenAI has reportedly found evidence of additional agent misbehavior as it looks into the incident that occurred with Hugging Face.",
-          "publishedAt": "2026-07-31T22:47:26.000Z",
-          "sourceImage": null,
-          "region": "Global",
           "language": "en",
           "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
           "category": "AI Infrastructure",
@@ -37794,7 +37727,148 @@
             "archiveOnly": false,
             "archiveOnlyReason": null
           },
+          "score": 79
+        },
+        {
+          "id": "994c4a6b476bd8dd",
+          "source": "ServeTheHome",
+          "url": "https://www.servethehome.com/pcie-gen6-and-gen5-will-both-matter-for-ai-storage/",
+          "title": "PCIe Gen6 and Gen5 Will Both Matter for AI Storage",
+          "snippet": "We discuss why both PCIe Gen5 and PCIe Gen6 will both matter for AI storage as the industry builds at an incredible pace The post PCIe Gen6 and Gen5 Will Both Matter for AI Storage appeared first on ServeTheHome.",
+          "contentText": "We discuss why both PCIe Gen5 and PCIe Gen6 will both matter for AI storage as the industry builds at an incredible pace The post PCIe Gen6 and Gen5 Will Both Matter for AI Storage appeared first on ServeTheHome .",
+          "publishedAt": "2026-08-01T02:00:19.000Z",
+          "sourceImage": null,
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "category": "AI Infrastructure",
+          "primary_category": "AI Infrastructure",
+          "secondary_category": "GPU clusters and deployment readiness",
+          "infrastructure_layer": "Compute",
+          "affected_stakeholders": [
+            "operators",
+            "hyperscalers",
+            "cloud buyers",
+            "investors"
+          ],
+          "article_type": "Other",
+          "urgency_score": 0.44,
+          "taxonomy_confidence": 0.77,
+          "taxonomy_reasons": [
+            "ai infrastructure",
+            "neocloud"
+          ],
+          "direct_ai_infrastructure_relevance": 1,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0.22,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0.243,
+          "infrastructure_relevance_score": 0.818,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "semiconductor_relevance:0.22(gpu)",
+            "enterprise_ai_infrastructure_relevance:0.24(storage)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 1,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0.22,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0.243,
+            "infrastructure_relevance_score": 0.818,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+              "semiconductor_relevance:0.22(gpu)",
+              "enterprise_ai_infrastructure_relevance:0.24(storage)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
           "score": 72
+        },
+        {
+          "id": "fafaa9602d891e1e",
+          "source": "Bloomberg Technology",
+          "url": "https://www.bloomberg.com/news/videos/2026-08-01/can-africa-power-the-ai-boom-video",
+          "title": "Can Africa Power the AI Boom?",
+          "snippet": "Teraco Chief Executive Officer Jan Hnizdo discusses why Africa is becoming a key destination for data centers, how cloud infrastructure is evolving and why energy and sustainability will determine the continent's digita…",
+          "contentText": "Teraco Chief Executive Officer Jan Hnizdo discusses why Africa is becoming a key destination for data centers, how cloud infrastructure is evolving and why energy and sustainability will determine the continent's digital future. He speaks with Bloomberg's Jennifer Zabasajja. (Source: Bloomberg)",
+          "publishedAt": "2026-08-01T05:02:41.000Z",
+          "sourceImage": null,
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "Hyperscalers & Cloud",
+          "category": "Power & Grid",
+          "primary_category": "Power & Grid",
+          "secondary_category": "Interconnection and power procurement",
+          "infrastructure_layer": "Power",
+          "affected_stakeholders": [
+            "data center operators",
+            "utilities",
+            "cloud capacity teams",
+            "investors"
+          ],
+          "article_type": "Other",
+          "urgency_score": 0.5,
+          "taxonomy_confidence": 0.61,
+          "taxonomy_reasons": [
+            "power"
+          ],
+          "direct_ai_infrastructure_relevance": 0.78,
+          "data_center_relevance": 0.42,
+          "cloud_capacity_relevance": 0.32,
+          "semiconductor_relevance": 0,
+          "power_grid_relevance": 0.297,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.765,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:0.78",
+            "data_center_relevance:0.42(data centers)",
+            "cloud_capacity_relevance:0.32(hyperscalers)",
+            "power_grid_relevance:0.30(power)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 0.78,
+            "data_center_relevance": 0.42,
+            "cloud_capacity_relevance": 0.32,
+            "semiconductor_relevance": 0,
+            "power_grid_relevance": 0.297,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.765,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:0.78",
+              "data_center_relevance:0.42(data centers)",
+              "cloud_capacity_relevance:0.32(hyperscalers)",
+              "power_grid_relevance:0.30(power)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 70
         },
         {
           "id": "08e673ebf729ae62",
@@ -37863,7 +37937,7 @@
             "archiveOnly": false,
             "archiveOnlyReason": null
           },
-          "score": 71
+          "score": 65
         },
         {
           "id": "50d71cdabf4a0d12",
@@ -37935,67 +38009,69 @@
           "score": 64
         },
         {
-          "id": "0d18355a15d4abd1",
-          "source": "Data Center Frontier",
-          "url": "https://www.datacenterfrontier.com/energy/article/55394098/nuclear-momentum-meets-the-megawatt-test",
-          "title": "Nuclear Momentum Meets the Megawatt Test",
-          "snippet": "Reactor tests, power contracts and federal financing have accelerated the U.S. nuclear pipeline. The harder question is which projects can convert those commitments into dependable megawatts for data centers.",
-          "contentText": "Reactor tests, power contracts and federal financing have accelerated the U.S. nuclear pipeline. The harder question is which projects can convert those commitments into dependable megawatts for data centers.",
-          "publishedAt": "2026-07-31T04:02:41.000Z",
-          "sourceImage": "https://img.datacenterfrontier.com/files/base/ebm/datacenterfrontier/image/2026/07/6a6c102e2970740675d50c32-chatgpt_image_jul_30_2026_11_00_16_pm.png",
-          "region": "US",
+          "id": "9bd45d011d0b8aaa",
+          "source": "Data Center Dynamics",
+          "url": "https://www.datacenterdynamics.com/en/news/aws-reports-fastest-growth-since-2021-amazon-annual-capex-to-hit-220bn-on-ai-memory-costs/",
+          "title": "AWS reports fastest growth since 2021, Amazon annual capex to hit $220bn on AI memory costs",
+          "snippet": "Cloud sales boom as company ramps up data center buildout",
+          "contentText": "Cloud sales boom as company ramps up data center buildout",
+          "publishedAt": "2026-07-31T15:43:46.000Z",
+          "sourceImage": "https://media.datacenterdynamics.com/media/images/AWS_cheetah.2e16d0ba.fill-750x500.jpg",
+          "region": "Global",
           "language": "en",
           "defaultCategory": "Colocation & Wholesale",
-          "category": "Power & Grid",
-          "primary_category": "Power & Grid",
-          "secondary_category": "Interconnection and power procurement",
-          "infrastructure_layer": "Power",
+          "category": "Data Centers",
+          "primary_category": "Data Centers",
+          "secondary_category": "Campus development and colocation capacity",
+          "infrastructure_layer": "Facility",
           "affected_stakeholders": [
             "data center operators",
-            "utilities",
-            "cloud capacity teams",
+            "developers",
+            "site selectors",
             "investors"
           ],
-          "article_type": "Financing / M&A",
-          "urgency_score": 0.55,
-          "taxonomy_confidence": 0.91,
+          "article_type": "Supply Chain",
+          "urgency_score": 0.45,
+          "taxonomy_confidence": 0.81,
           "taxonomy_reasons": [
-            "power",
-            "nuclear",
-            "megawatt"
+            "data center",
+            "colocation",
+            "wholesale"
           ],
-          "direct_ai_infrastructure_relevance": 0,
-          "data_center_relevance": 1,
-          "cloud_capacity_relevance": 0,
+          "direct_ai_infrastructure_relevance": 0.78,
+          "data_center_relevance": 0.76,
+          "cloud_capacity_relevance": 0.297,
           "semiconductor_relevance": 0,
-          "power_grid_relevance": 1,
+          "power_grid_relevance": 0,
           "cooling_relevance": 0,
-          "capital_markets_relevance": 0.32,
+          "capital_markets_relevance": 0.378,
           "enterprise_ai_infrastructure_relevance": 0,
-          "infrastructure_relevance_score": 0.905,
+          "infrastructure_relevance_score": 0.84,
           "infrastructure_relevance_tier": "full_memo",
           "infrastructure_relevance_action": "generate_full_memo",
           "infrastructure_relevance_reasons": [
-            "data_center_relevance:1.00(data center, data centers, colocation)",
-            "power_grid_relevance:1.00(power, megawatt, megawatts)",
-            "capital_markets_relevance:0.32(financing)"
+            "direct_ai_infrastructure_relevance:0.78",
+            "data_center_relevance:0.76(data center, colocation)",
+            "cloud_capacity_relevance:0.30(aws)",
+            "capital_markets_relevance:0.38(capex)"
           ],
           "infrastructure_relevance": {
-            "direct_ai_infrastructure_relevance": 0,
-            "data_center_relevance": 1,
-            "cloud_capacity_relevance": 0,
+            "direct_ai_infrastructure_relevance": 0.78,
+            "data_center_relevance": 0.76,
+            "cloud_capacity_relevance": 0.297,
             "semiconductor_relevance": 0,
-            "power_grid_relevance": 1,
+            "power_grid_relevance": 0,
             "cooling_relevance": 0,
-            "capital_markets_relevance": 0.32,
+            "capital_markets_relevance": 0.378,
             "enterprise_ai_infrastructure_relevance": 0,
-            "infrastructure_relevance_score": 0.905,
+            "infrastructure_relevance_score": 0.84,
             "infrastructure_relevance_tier": "full_memo",
             "infrastructure_relevance_action": "generate_full_memo",
             "infrastructure_relevance_reasons": [
-              "data_center_relevance:1.00(data center, data centers, colocation)",
-              "power_grid_relevance:1.00(power, megawatt, megawatts)",
-              "capital_markets_relevance:0.32(financing)"
+              "direct_ai_infrastructure_relevance:0.78",
+              "data_center_relevance:0.76(data center, colocation)",
+              "cloud_capacity_relevance:0.30(aws)",
+              "capital_markets_relevance:0.38(capex)"
             ],
             "infrastructureRelevanceAction": "generate_full_memo",
             "articlePagePublished": true,
@@ -38003,219 +38079,33 @@
             "archiveOnly": false,
             "archiveOnlyReason": null
           },
-          "score": 64
-        },
-        {
-          "id": "24e8b30ca902c2a0",
-          "source": "Bloomberg Technology",
-          "url": "https://www.bloomberg.com/news/articles/2026-07-31/google-rolls-back-earth-ai-tool-over-concern-about-fake-images",
-          "title": "Google Rolls Back Earth AI Tool Over Concern About Fake Images",
-          "snippet": "Alphabet Inc.’s Google announced Friday that it will roll back its new AI image generation feature in Google Earth because some people were using it to create altered satellite imagery that appeared to violate the compa…",
-          "contentText": "Alphabet Inc.’s Google announced Friday that it will roll back its new AI image generation feature in Google Earth because some people were using it to create altered satellite imagery that appeared to violate the company’s policies.",
-          "publishedAt": "2026-07-31T22:23:27.000Z",
-          "sourceImage": null,
-          "region": "US",
-          "language": "en",
-          "defaultCategory": "Hyperscalers & Cloud",
-          "category": "Cloud Capacity",
-          "primary_category": "Cloud Capacity",
-          "secondary_category": "Hyperscale regions and accelerator availability",
-          "infrastructure_layer": "Cloud Platform",
-          "affected_stakeholders": [
-            "hyperscalers",
-            "cloud buyers",
-            "enterprise IT",
-            "operators"
-          ],
-          "article_type": "Other",
-          "urgency_score": 0.28,
-          "taxonomy_confidence": 0.5,
-          "taxonomy_reasons": [
-            "fallback_taxonomy"
-          ],
-          "direct_ai_infrastructure_relevance": 0.22,
-          "data_center_relevance": 0,
-          "cloud_capacity_relevance": 0.32,
-          "semiconductor_relevance": 0,
-          "power_grid_relevance": 0,
-          "cooling_relevance": 0,
-          "capital_markets_relevance": 0,
-          "enterprise_ai_infrastructure_relevance": 0,
-          "infrastructure_relevance_score": 0.304,
-          "infrastructure_relevance_tier": "archive_only",
-          "infrastructure_relevance_action": "archive_only",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:0.22",
-            "cloud_capacity_relevance:0.32(hyperscalers)"
-          ],
-          "infrastructure_relevance": {
-            "direct_ai_infrastructure_relevance": 0.22,
-            "data_center_relevance": 0,
-            "cloud_capacity_relevance": 0.32,
-            "semiconductor_relevance": 0,
-            "power_grid_relevance": 0,
-            "cooling_relevance": 0,
-            "capital_markets_relevance": 0,
-            "enterprise_ai_infrastructure_relevance": 0,
-            "infrastructure_relevance_score": 0.304,
-            "infrastructure_relevance_tier": "archive_only",
-            "infrastructure_relevance_action": "archive_only",
-            "infrastructure_relevance_reasons": [
-              "direct_ai_infrastructure_relevance:0.22",
-              "cloud_capacity_relevance:0.32(hyperscalers)"
-            ],
-            "infrastructureRelevanceAction": "archive_only",
-            "articlePagePublished": false,
-            "homepagePublished": false,
-            "archiveOnly": true,
-            "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
-          },
-          "score": 59
+          "score": 55
         }
       ],
       "curatedIds": [
-        "c9d5161bca151486",
-        "e13c91b28153855d",
+        "c346fc277f42c8b2",
+        "994c4a6b476bd8dd",
+        "fafaa9602d891e1e",
         "08e673ebf729ae62",
         "50d71cdabf4a0d12",
-        "0d18355a15d4abd1",
-        "24e8b30ca902c2a0"
+        "9bd45d011d0b8aaa"
       ],
       "publishedIds": [
         "8005360f96e3e216",
         "c5bec98f1a8ff481",
         "e13c91b28153855d",
-        "c9d5161bca151486"
+        "c9d5161bca151486",
+        "c346fc277f42c8b2",
+        "994c4a6b476bd8dd"
       ],
       "slotPublications": {
         "0": true,
-        "1": true
+        "1": true,
+        "2": true
       }
     }
   },
   "runHistory": [
-    {
-      "at": "2026-06-22T13:00:04.504Z",
-      "day": "2026-06-22",
-      "slot": 2,
-      "publishedCount": 0,
-      "signalCardCount": 1,
-      "archiveOnlyCount": 0,
-      "repetitionBlockedCount": 1,
-      "publishedIds": [],
-      "processedIds": [
-        "db2b49ee9c075f6a",
-        "0b03b82940d8a319"
-      ],
-      "blockedCount": 1,
-      "blockedItems": [
-        {
-          "id": "db2b49ee9c075f6a",
-          "title": "AI Data Center Spending Grew 60% Last Year, Could Hit $1T Next Decade, Intersect360 Says",
-          "infrastructure_relevance_score": 1,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, ai data center, neocloud)",
-            "data_center_relevance:1.00(data center, data centers, campus)",
-            "cloud_capacity_relevance:0.78(hyperscalers, aws, google cloud)",
-            "semiconductor_relevance:0.22(gpu)",
-            "power_grid_relevance:0.22(power)",
-            "capital_markets_relevance:0.28(capex)"
-          ],
-          "extraction_quality_score": 0.98,
-          "source_domain_adapter": "generic",
-          "content_length": 1439,
-          "boilerplate_ratio": 0,
-          "repetition_blocked": false,
-          "repetition_block_reasons": [],
-          "repetition_check": null,
-          "expert_insight_complete": true,
-          "expert_insight_missing_fields": [],
-          "reason": "fail_closed: source_text_incomplete:ellipsis_truncation_artifact, ellipsis_truncation_artifact"
-        }
-      ],
-      "repetitionBlockedItems": [
-        {
-          "id": "0b03b82940d8a319",
-          "title": "MGX reportedly eyeing DayOne acquisition to scale AI infrastructure",
-          "infrastructure_relevance_score": 0.969,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:0.77(ai infrastructure)",
-            "cloud_capacity_relevance:0.76(cloud capacity, hyperscalers)",
-            "power_grid_relevance:0.22(power)",
-            "capital_markets_relevance:1.00(funding, financing, debt)"
-          ],
-          "extraction_quality_score": 1,
-          "source_domain_adapter": "generic",
-          "content_length": 1613,
-          "boilerplate_ratio": 0,
-          "repetition_blocked": true,
-          "repetition_block_reasons": [
-            "repeated_sentence_ratio>0.12",
-            "conclusion_similarity>0.7"
-          ],
-          "repetition_check": {
-            "compared_article_count": 20,
-            "repeated_sentence_ratio": 0.3333333333333333,
-            "repeated_paragraph_ratio": 0.4,
-            "heading_sequence_similarity": 0,
-            "banned_phrase_count": 0,
-            "banned_phrase_counts": {},
-            "recent_banned_phrase_counts": {},
-            "ngram_overlap": 0.35714285714285715,
-            "blueprint_repetition": 1,
-            "conclusion_similarity": 0.9511897312113418,
-            "repeated_sentence_count": 2,
-            "repeated_paragraph_count": 2,
-            "heading_sequence": [
-              "Market Pieces",
-              "Land Power Capital Chips",
-              "Demand Test",
-              "What To Split Out"
-            ],
-            "blocked": true,
-            "reasons": [
-              "repeated_sentence_ratio>0.12",
-              "conclusion_similarity>0.7"
-            ]
-          },
-          "expert_insight_complete": true,
-          "expert_insight_missing_fields": [],
-          "reason": "repeated_sentence_ratio>0.12; conclusion_similarity>0.7"
-        }
-      ],
-      "signalCardItems": [
-        {
-          "id": "db2b49ee9c075f6a",
-          "title": "AI Data Center Spending Grew 60% Last Year, Could Hit $1T Next Decade, Intersect360 Says",
-          "infrastructure_relevance_score": 1,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, ai data center, neocloud)",
-            "data_center_relevance:1.00(data center, data centers, campus)",
-            "cloud_capacity_relevance:0.78(hyperscalers, aws, google cloud)",
-            "semiconductor_relevance:0.22(gpu)",
-            "power_grid_relevance:0.22(power)",
-            "capital_markets_relevance:0.28(capex)"
-          ],
-          "extraction_quality_score": 0.98,
-          "source_domain_adapter": "generic",
-          "content_length": 1439,
-          "boilerplate_ratio": 0,
-          "repetition_blocked": false,
-          "repetition_block_reasons": [],
-          "repetition_check": null,
-          "expert_insight_complete": true,
-          "expert_insight_missing_fields": [],
-          "reason": "fail_closed: source_text_incomplete:ellipsis_truncation_artifact, ellipsis_truncation_artifact"
-        }
-      ],
-      "archiveOnlyItems": []
-    },
     {
       "at": "2026-06-22T18:51:48.931Z",
       "day": "2026-06-23",
@@ -51659,7 +51549,134 @@
       ],
       "signalCardItems": [],
       "archiveOnlyItems": []
+    },
+    {
+      "at": "2026-08-01T09:15:36.674Z",
+      "day": "2026-08-01",
+      "slot": 2,
+      "publishedCount": 0,
+      "signalCardCount": 1,
+      "archiveOnlyCount": 0,
+      "repetitionBlockedCount": 1,
+      "publishedIds": [],
+      "processedIds": [
+        "c346fc277f42c8b2",
+        "994c4a6b476bd8dd"
+      ],
+      "blockedCount": 1,
+      "blockedItems": [
+        {
+          "id": "c346fc277f42c8b2",
+          "title": "Lost one-of-a-kind Nintendo DS cartridge hits eBay for $9,100 — PokePark Fishing Contest designed to delete itself after 12 hours, game so rare it was only distributed to theme park attendees in 2005",
+          "infrastructure_relevance_score": 0.87,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "cloud_capacity_relevance:0.32(hyperscalers)",
+            "semiconductor_relevance:0.22(gpu)",
+            "power_grid_relevance:0.22(power)",
+            "capital_markets_relevance:0.28(capex)"
+          ],
+          "extraction_quality_score": 1,
+          "source_domain_adapter": "generic",
+          "content_length": 1713,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": false,
+          "repetition_block_reasons": [],
+          "repetition_check": null,
+          "expert_insight_complete": false,
+          "expert_insight_missing_fields": [
+            "named_companies"
+          ],
+          "reason": "expert_insight_missing_fields named_companies"
+        }
+      ],
+      "repetitionBlockedItems": [
+        {
+          "id": "994c4a6b476bd8dd",
+          "title": "PCIe Gen6 and Gen5 Will Both Matter for AI Storage",
+          "infrastructure_relevance_score": 0.946,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, gpu cluster, neocloud)",
+            "cloud_capacity_relevance:0.32(hyperscalers)",
+            "semiconductor_relevance:0.44(amd, gpu)",
+            "power_grid_relevance:0.22(power)",
+            "enterprise_ai_infrastructure_relevance:0.66(storage, networking, ai workloads)"
+          ],
+          "extraction_quality_score": 1,
+          "source_domain_adapter": "servethehome",
+          "content_length": 1607,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": true,
+          "repetition_block_reasons": [
+            "repeated_sentence_ratio>0.12",
+            "heading_sequence_similarity>0.75",
+            "conclusion_similarity>0.7"
+          ],
+          "repetition_check": {
+            "compared_article_count": 20,
+            "repeated_sentence_ratio": 0.14285714285714285,
+            "repeated_paragraph_ratio": 0.16666666666666666,
+            "heading_sequence_similarity": 1,
+            "banned_phrase_count": 0,
+            "banned_phrase_counts": {},
+            "recent_banned_phrase_counts": {},
+            "ngram_overlap": 0.46153846153846156,
+            "blueprint_repetition": 2,
+            "conclusion_similarity": 0.9271050693011066,
+            "repeated_sentence_count": 1,
+            "repeated_paragraph_count": 1,
+            "heading_sequence": [
+              "System Change",
+              "Bottleneck",
+              "Engineering Tradeoff",
+              "Validation Metric"
+            ],
+            "blocked": true,
+            "reasons": [
+              "repeated_sentence_ratio>0.12",
+              "heading_sequence_similarity>0.75",
+              "conclusion_similarity>0.7"
+            ]
+          },
+          "expert_insight_complete": true,
+          "expert_insight_missing_fields": [],
+          "reason": "repeated_sentence_ratio>0.12; heading_sequence_similarity>0.75; conclusion_similarity>0.7"
+        }
+      ],
+      "signalCardItems": [
+        {
+          "id": "c346fc277f42c8b2",
+          "title": "Lost one-of-a-kind Nintendo DS cartridge hits eBay for $9,100 — PokePark Fishing Contest designed to delete itself after 12 hours, game so rare it was only distributed to theme park attendees in 2005",
+          "infrastructure_relevance_score": 0.87,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "cloud_capacity_relevance:0.32(hyperscalers)",
+            "semiconductor_relevance:0.22(gpu)",
+            "power_grid_relevance:0.22(power)",
+            "capital_markets_relevance:0.28(capex)"
+          ],
+          "extraction_quality_score": 1,
+          "source_domain_adapter": "generic",
+          "content_length": 1713,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": false,
+          "repetition_block_reasons": [],
+          "repetition_check": null,
+          "expert_insight_complete": false,
+          "expert_insight_missing_fields": [
+            "named_companies"
+          ],
+          "reason": "expert_insight_missing_fields named_companies"
+        }
+      ],
+      "archiveOnlyItems": []
     }
   ],
-  "lastRunAt": "2026-08-01T00:03:57.455Z"
+  "lastRunAt": "2026-08-01T09:15:36.674Z"
 }
