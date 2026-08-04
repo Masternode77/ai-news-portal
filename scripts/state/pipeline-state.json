@@ -745,7 +745,9 @@
     "01f53af419a55a0b",
     "336736c8b9f9dd0d",
     "732768f72a590692",
-    "8b6a760a300b1653"
+    "8b6a760a300b1653",
+    "4fb1767785166da5",
+    "a3f4fdeb0d551726"
   ],
   "dayPlans": {
     "2026-03-24": {
@@ -39003,19 +39005,231 @@
     "2026-08-04": {
       "date": "2026-08-04",
       "createdAt": "2026-08-03T17:14:47.780Z",
-      "refreshedAt": "2026-08-03T17:14:47.780Z",
+      "refreshedAt": "2026-08-04T00:11:27.969Z",
       "candidateWindowHours": 24,
       "curatedItems": [
         {
-          "id": "8b6a760a300b1653",
+          "id": "4fb1767785166da5",
+          "source": "HPCwire",
+          "url": "https://www.hpcwire.com/2026/08/03/amds-fp64-boost-with-mi430x-is-even-bigger-than-expected/",
+          "title": "AMD’s FP64 Boost with MI430X Is Even Bigger Than Expected",
+          "snippet": "Computer scientists who can’t get enough FP64 performance for their modeling and simulation workloads, and who aren’t interested yet in trying out emulation methods such as the Ozaki scheme, may be interested in AMD’s u…",
+          "contentText": "Computer scientists who can’t get enough FP64 performance for their modeling and simulation workloads, and who aren’t interested yet in trying out emulation methods such as the Ozaki scheme, may be interested in AMD’s upcoming Instinct MI430X GPU, which is expected to deliver a whopping 288 teraflops of native double-precision performance when it ships in early 2027. That&#8217;s nearly 9x more than Nvidia can muster with its Rubin GPU, and nearly 40% more than we expected. The performance numbers that AMD shared during its Accelerating AI 2026 launch event two weeks ago are gaudy. The highlight of the show arguably was the AI-oriented MI455X GPU, which was built on AMD’s new CDNA 5 architecture and features 40 petaflops of FP4, 432 GB of HBM4 capacity, and up to 23.3 TB per second of mem…",
+          "publishedAt": "2026-08-03T23:18:26.000Z",
+          "sourceImage": "https://www.hpcwire.com/wp-content/uploads/2026/08/AMD-GPU-comparison-300x134.png",
+          "region": "APAC",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "category": "Semiconductors",
+          "primary_category": "Semiconductors",
+          "secondary_category": "Accelerators, memory, and advanced packaging",
+          "infrastructure_layer": "Silicon",
+          "affected_stakeholders": [
+            "semiconductor suppliers",
+            "hyperscalers",
+            "server OEMs",
+            "investors"
+          ],
+          "article_type": "Capacity Expansion",
+          "urgency_score": 0.59,
+          "taxonomy_confidence": 0.85,
+          "taxonomy_reasons": [
+            "gpu",
+            "nvidia",
+            "amd"
+          ],
+          "direct_ai_infrastructure_relevance": 1,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0.797,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.905,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "semiconductor_relevance:0.80(nvidia, amd, gpu)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 1,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0.797,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.905,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+              "semiconductor_relevance:0.80(nvidia, amd, gpu)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 84
+        },
+        {
+          "id": "a3f4fdeb0d551726",
+          "source": "Data Center Knowledge",
+          "url": "https://www.datacenterknowledge.com/energy-power-supply/texas-orders-statewide-audit-of-ai-data-center-projects-in-ercot-queue",
+          "title": "Texas Orders Statewide Audit of AI Data Center Projects",
+          "snippet": "The new directive signals tougher scrutiny of large-load interconnection as AI power demand accelerates.",
+          "contentText": "The new directive signals tougher scrutiny of large-load interconnection as AI power demand accelerates.",
+          "publishedAt": "2026-08-03T22:42:10.000Z",
+          "sourceImage": "https://eu-images.contentstack.com/v3/assets/blt8eb3cdfc1fce5194/bltdb8577c3c1edf691/6a711c785c63706888106dea/GettyImages-2228321165.jpg?width=720&quality=80&disable=upscale",
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "Colocation & Wholesale",
+          "category": "Data Centers",
+          "primary_category": "Data Centers",
+          "secondary_category": "Campus development and colocation capacity",
+          "infrastructure_layer": "Facility",
+          "affected_stakeholders": [
+            "data center operators",
+            "developers",
+            "site selectors",
+            "investors"
+          ],
+          "article_type": "Market Analysis",
+          "urgency_score": 0.68,
+          "taxonomy_confidence": 0.86,
+          "taxonomy_reasons": [
+            "data center",
+            "colocation",
+            "wholesale"
+          ],
+          "direct_ai_infrastructure_relevance": 0.82,
+          "data_center_relevance": 0.89,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0,
+          "power_grid_relevance": 0.58,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.882,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:0.82(ai data center)",
+            "data_center_relevance:0.89(data center, colocation)",
+            "power_grid_relevance:0.58(power, interconnection)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 0.82,
+            "data_center_relevance": 0.89,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0,
+            "power_grid_relevance": 0.58,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.882,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:0.82(ai data center)",
+              "data_center_relevance:0.89(data center, colocation)",
+              "power_grid_relevance:0.58(power, interconnection)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 76
+        },
+        {
+          "id": "bcebe975b5feb568",
+          "source": "ServeTheHome",
+          "url": "https://www.servethehome.com/amd-helios-architecture-deep-dive-amd-broadcom-hardware-combined/",
+          "title": "AMD Helios Architecture Deep Dive: The Power of AMD’s Hardware Combined",
+          "snippet": "The Helios rackscale system is the culmination of AMD's server hardware, as well as their AI datacenter ambitions. For Advancing AI 2026, the company dove into the architecture of their first rackscale systems, outlinin…",
+          "contentText": "The Helios rackscale system is the culmination of AMD's server hardware, as well as their AI datacenter ambitions. For Advancing AI 2026, the company dove into the architecture of their first rackscale systems, outlining how they have scaled up 72 Instinct MI455X accelerators to act as a single system The post AMD Helios Architecture Deep Dive: The Power of AMD&#8217;s Hardware Combined appeared first on ServeTheHome .",
+          "publishedAt": "2026-08-03T19:00:32.000Z",
+          "sourceImage": null,
+          "region": "Global",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "category": "AI Infrastructure",
+          "primary_category": "AI Infrastructure",
+          "secondary_category": "GPU clusters and deployment readiness",
+          "infrastructure_layer": "Compute",
+          "affected_stakeholders": [
+            "operators",
+            "hyperscalers",
+            "cloud buyers",
+            "investors"
+          ],
+          "article_type": "Research / Technical",
+          "urgency_score": 0.55,
+          "taxonomy_confidence": 0.77,
+          "taxonomy_reasons": [
+            "ai infrastructure",
+            "neocloud"
+          ],
+          "direct_ai_infrastructure_relevance": 1,
+          "data_center_relevance": 0.42,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0.517,
+          "power_grid_relevance": 0.297,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.914,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, ai datacenter, neocloud)",
+            "data_center_relevance:0.42(datacenter)",
+            "semiconductor_relevance:0.52(amd, gpu)",
+            "power_grid_relevance:0.30(power)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 1,
+            "data_center_relevance": 0.42,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0.517,
+            "power_grid_relevance": 0.297,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.914,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, ai datacenter, neocloud)",
+              "data_center_relevance:0.42(datacenter)",
+              "semiconductor_relevance:0.52(amd, gpu)",
+              "power_grid_relevance:0.30(power)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 76
+        },
+        {
+          "id": "2bc9776b311b3a69",
           "source": "Toms Hardware",
-          "url": "https://www.tomshardware.com/pc-components/gpus/in-a-troubling-sign-nvidia-rtx-50-series-prices-jump-up-to-30-percent-in-south-korea-tsmc-wafer-hikes-and-usd20-gddr7-modules-push-rtx-5090-past-usd5-100",
-          "title": "In a troubling sign, Nvidia RTX 50 series prices jump up to 30% in South Korea — TSMC wafer hikes and $20 GDDR7 modules push RTX 5090 past $5,100",
-          "snippet": "The latest round of price increases affects the entire RTX 50 lineup, with premium models bearing the brunt of rising production costs.",
-          "contentText": "GPU prices are set to increase in South Korea starting this month, specifically Nvidia’s desktop GeForce RTX 50 series. According to a recent report , the price increase is primarily due to the recent increase in price for advanced process wafers from TSMC (Taiwan Semiconductor Manufacturing Company), along with the rising price for GDDR7 memory. Perhaps most troubling is that, due to global market dynamics, pricing doesn't exist in a vacuum for any single region, suggesting that price hikes could be in store for other areas in the future. For context, TSMC recently asked its customers to prepare for price increases across its advanced chipmaking portfolio. This hike was extended beyond the newer 3nm process to include 7nm and other legacy products. ZDnet Korea’s report additionally cites…",
-          "publishedAt": "2026-08-03T16:39:36.000Z",
-          "sourceImage": "https://cdn.mos.cms.futurecdn.net/95hyk8NXATWWYsvt6eGvvk-1280-80.jpg",
-          "region": "Korea",
+          "url": "https://www.tomshardware.com/pc-components/dram/new-micron-lawsuit-reignites-fight-over-new-york-fab-complaint-alleges-forever-chemicals-will-flow-into-oneida-river",
+          "title": "New Micron lawsuit reignites fight over New York fab — complaint alleges 'forever chemicals' will flow into Oneida River",
+          "snippet": "Micron's New York manufacturing facility is back in the crosshairs of another environmental lawsuit, claiming its wastewater and air permits should be nullified.",
+          "contentText": "Pushback against Micron's planned manufacturing complex in Clay, New York, which comprises four separate fabs, is once again at the center of an environmental lawsuit . Filed by Neighbors for a Better Micron and Jobs to Move America — the same groups that filed a separate lawsuit against Micron in January — filed a new complaint Friday, claiming that approved wastewater and air permits aren't valid and will allow Micron to leak \"forever chemicals\" into the Oneida River. Go deeper with TH Premium: Chipmaking (Image credit: tsmc) A deeper look at the chipmaking supply chain TSMC's $165 billion U.S. investments examined China reportedly reverse-engineers EUV tool China bets on DUV, as EUV blockade reshapes chipmaking \"The Permits were issued against eh backdrop of the significant environment…",
+          "publishedAt": "2026-08-03T18:04:36.000Z",
+          "sourceImage": "https://cdn.mos.cms.futurecdn.net/v42xzh4iKMzqQEivJjq7Ge-1280-80.jpg",
+          "region": "US",
           "language": "en",
           "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
           "category": "Semiconductors",
@@ -39029,45 +39243,43 @@
             "investors"
           ],
           "article_type": "Supply Chain",
-          "urgency_score": 0.48,
-          "taxonomy_confidence": 0.95,
+          "urgency_score": 0.47,
+          "taxonomy_confidence": 0.85,
           "taxonomy_reasons": [
-            "semiconductor",
             "gpu",
-            "nvidia",
             "tsmc",
-            "wafer"
+            "fab"
           ],
           "direct_ai_infrastructure_relevance": 1,
           "data_center_relevance": 0,
           "cloud_capacity_relevance": 0,
-          "semiconductor_relevance": 1,
+          "semiconductor_relevance": 0.797,
           "power_grid_relevance": 0,
           "cooling_relevance": 0,
           "capital_markets_relevance": 0,
           "enterprise_ai_infrastructure_relevance": 0,
-          "infrastructure_relevance_score": 0.95,
+          "infrastructure_relevance_score": 0.905,
           "infrastructure_relevance_tier": "full_memo",
           "infrastructure_relevance_action": "generate_full_memo",
           "infrastructure_relevance_reasons": [
             "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "semiconductor_relevance:1.00(semiconductor, nvidia, tsmc)"
+            "semiconductor_relevance:0.80(tsmc, fab, gpu)"
           ],
           "infrastructure_relevance": {
             "direct_ai_infrastructure_relevance": 1,
             "data_center_relevance": 0,
             "cloud_capacity_relevance": 0,
-            "semiconductor_relevance": 1,
+            "semiconductor_relevance": 0.797,
             "power_grid_relevance": 0,
             "cooling_relevance": 0,
             "capital_markets_relevance": 0,
             "enterprise_ai_infrastructure_relevance": 0,
-            "infrastructure_relevance_score": 0.95,
+            "infrastructure_relevance_score": 0.905,
             "infrastructure_relevance_tier": "full_memo",
             "infrastructure_relevance_action": "generate_full_memo",
             "infrastructure_relevance_reasons": [
               "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-              "semiconductor_relevance:1.00(semiconductor, nvidia, tsmc)"
+              "semiconductor_relevance:0.80(tsmc, fab, gpu)"
             ],
             "infrastructureRelevanceAction": "generate_full_memo",
             "articlePagePublished": true,
@@ -39075,152 +39287,16 @@
             "archiveOnly": false,
             "archiveOnlyReason": null
           },
-          "score": 86
+          "score": 76
         },
         {
-          "id": "732768f72a590692",
-          "source": "StorageReview",
-          "url": "https://www.storagereview.com/news/kioxia-gp1-series-hits-10-million-random-read-iops-on-xl-flash-gen-2",
-          "title": "KIOXIA GP1 Series Hits 10 Million Random Read IOPS on XL-FLASH Gen 2",
-          "snippet": "KIOXIA has introduced the GP1 Series PCIe 6.0 NVMe SSD, the first product in its GP Series of Super High IOPS drives optimized for GPU direct access. KIOXIA describes it as building on the GP Series technology it introd…",
-          "contentText": "KIOXIA has introduced the GP1 Series PCIe 6.0 NVMe SSD, the first product in its GP Series of Super High IOPS drives optimized for GPU direct access. KIOXIA describes it as building on the GP Series technology it introduced in March , now realized in shipping silicon. Built around second-generation KIOXIA XL-FLASH memory, the drive is meant to serve as a flash-based memory extension tier for AI systems that need lower latency and faster access to large datasets. The GP1 Series extends High Bandwidth Memory (HBM) with a high-speed flash storage layer. Instead of relying only on adding more HBM, AI platforms can use flash memory to expand capacity and improve GPU utilization. KIOXIA says this approach reduces the cost of scaling AI memory compared to expanding HBM alone. KIOXIA GP1 Specific…",
-          "publishedAt": "2026-08-03T17:10:51.000Z",
-          "sourceImage": "https://www.storagereview.com/wp-content/uploads/2026/08/StorageReview-KIOXIA_GP1.png",
-          "region": "APAC",
-          "language": "en",
-          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
-          "category": "AI Infrastructure",
-          "primary_category": "AI Infrastructure",
-          "secondary_category": "GPU clusters and deployment readiness",
-          "infrastructure_layer": "Compute",
-          "affected_stakeholders": [
-            "operators",
-            "hyperscalers",
-            "cloud buyers",
-            "investors"
-          ],
-          "article_type": "Capacity Expansion",
-          "urgency_score": 0.53,
-          "taxonomy_confidence": 0.77,
-          "taxonomy_reasons": [
-            "ai infrastructure",
-            "neocloud"
-          ],
-          "direct_ai_infrastructure_relevance": 1,
-          "data_center_relevance": 0,
-          "cloud_capacity_relevance": 0,
-          "semiconductor_relevance": 0.58,
-          "power_grid_relevance": 0,
-          "cooling_relevance": 0,
-          "capital_markets_relevance": 0,
-          "enterprise_ai_infrastructure_relevance": 0.18,
-          "infrastructure_relevance_score": 0.858,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "semiconductor_relevance:0.58(hbm, gpu)"
-          ],
-          "infrastructure_relevance": {
-            "direct_ai_infrastructure_relevance": 1,
-            "data_center_relevance": 0,
-            "cloud_capacity_relevance": 0,
-            "semiconductor_relevance": 0.58,
-            "power_grid_relevance": 0,
-            "cooling_relevance": 0,
-            "capital_markets_relevance": 0,
-            "enterprise_ai_infrastructure_relevance": 0.18,
-            "infrastructure_relevance_score": 0.858,
-            "infrastructure_relevance_tier": "full_memo",
-            "infrastructure_relevance_action": "generate_full_memo",
-            "infrastructure_relevance_reasons": [
-              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-              "semiconductor_relevance:0.58(hbm, gpu)"
-            ],
-            "infrastructureRelevanceAction": "generate_full_memo",
-            "articlePagePublished": true,
-            "homepagePublished": true,
-            "archiveOnly": false,
-            "archiveOnlyReason": null
-          },
-          "score": 82
-        },
-        {
-          "id": "4d9289bee9a83a90",
-          "source": "Semiconductor Engineering",
-          "url": "https://semiengineering.com/chip-bridges-neuromorphic-and-deep-network-computing-tu-dresden/",
-          "title": "Chip Bridges Neuromorphic And Deep-Network Computing (TU Dresden)",
-          "snippet": "Researchers from Technische Universität Dresden and University of Manchester published a technical paper titled “The SpiNNaker2 Chip: A Many-Core Platform for Flexible and Scalable Brain-Inspired Computing.” Abstract Ex…",
-          "contentText": "Researchers from Technische Universität Dresden and University of Manchester published a technical paper titled “The SpiNNaker2 Chip: A Many-Core Platform for Flexible and Scalable Brain-Inspired Computing.” Abstract Excerpt: The paper presents SpiNNaker2 as a chip that “bridges the gap between deep networks and neuromorphic computing” and reports “ up to 4.5 TOPS in high performance mode and up to 2.7 TOPS/W efficiency in high efficiency mode for INT8 workloads.&#8221; Find the technical paper here . July 2026. See comments from Christian Mayer here . S. Scholze et al., &#8220;The SpiNNaker2 chip: a many-core platform for flexible and scalable brain-inspired computing,&#8221; in IEEE Open Journal of Circuits and Systems, doi: 10.1109/OJCAS.2026.3714974. The post Chip Bridges Neuromorphic…",
-          "publishedAt": "2026-08-03T15:51:42.000Z",
-          "sourceImage": null,
-          "region": "EU",
-          "language": "en",
-          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
-          "category": "AI Infrastructure",
-          "primary_category": "AI Infrastructure",
-          "secondary_category": "GPU clusters and deployment readiness",
-          "infrastructure_layer": "Compute",
-          "affected_stakeholders": [
-            "operators",
-            "hyperscalers",
-            "cloud buyers",
-            "investors"
-          ],
-          "article_type": "Product / Platform Update",
-          "urgency_score": 0.45,
-          "taxonomy_confidence": 0.77,
-          "taxonomy_reasons": [
-            "ai infrastructure",
-            "neocloud"
-          ],
-          "direct_ai_infrastructure_relevance": 1,
-          "data_center_relevance": 0,
-          "cloud_capacity_relevance": 0,
-          "semiconductor_relevance": 0.58,
-          "power_grid_relevance": 0,
-          "cooling_relevance": 0,
-          "capital_markets_relevance": 0,
-          "enterprise_ai_infrastructure_relevance": 0,
-          "infrastructure_relevance_score": 0.858,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "semiconductor_relevance:0.58(semiconductor, gpu)"
-          ],
-          "infrastructure_relevance": {
-            "direct_ai_infrastructure_relevance": 1,
-            "data_center_relevance": 0,
-            "cloud_capacity_relevance": 0,
-            "semiconductor_relevance": 0.58,
-            "power_grid_relevance": 0,
-            "cooling_relevance": 0,
-            "capital_markets_relevance": 0,
-            "enterprise_ai_infrastructure_relevance": 0,
-            "infrastructure_relevance_score": 0.858,
-            "infrastructure_relevance_tier": "full_memo",
-            "infrastructure_relevance_action": "generate_full_memo",
-            "infrastructure_relevance_reasons": [
-              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-              "semiconductor_relevance:0.58(semiconductor, gpu)"
-            ],
-            "infrastructureRelevanceAction": "generate_full_memo",
-            "articlePagePublished": true,
-            "homepagePublished": true,
-            "archiveOnly": false,
-            "archiveOnlyReason": null
-          },
-          "score": 82
-        },
-        {
-          "id": "288588ebaa66c47f",
+          "id": "72e1d1f3482be4b9",
           "source": "TechCrunch AI",
-          "url": "https://techcrunch.com/2026/08/03/congresss-favorite-ai-tool-chatgpt/",
-          "title": "Congress’s favorite AI tool? ChatGPT",
-          "snippet": "House spending records show OpenAI's ChatGPT dominates paid AI use on Capitol Hill, with congressional offices relying on the chatbot to draft memos, summarize legislation, and assist constituent communications.",
-          "contentText": "House spending records show OpenAI's ChatGPT dominates paid AI use on Capitol Hill, with congressional offices relying on the chatbot to draft memos, summarize legislation, and assist constituent communications.",
-          "publishedAt": "2026-08-03T16:40:55.000Z",
+          "url": "https://techcrunch.com/2026/08/03/after-killer-quarter-palantir-ceo-alex-karp-calls-ai-industry-marxist/",
+          "title": "After killer quarter, Palantir CEO Alex Karp calls AI industry ‘Marxist’",
+          "snippet": "After a quarter that delivered $1 billion in profit, Palantir CEO Alex Karp on Monday once again warned that AI frontier labs are too untrustworthy for enterprises.",
+          "contentText": "After a quarter that delivered $1 billion in profit, Palantir CEO Alex Karp on Monday once again warned that AI frontier labs are too untrustworthy for enterprises.",
+          "publishedAt": "2026-08-03T23:19:50.000Z",
           "sourceImage": null,
           "region": "US",
           "language": "en",
@@ -39279,17 +39355,17 @@
             "archiveOnly": false,
             "archiveOnlyReason": null
           },
-          "score": 79
+          "score": 72
         },
         {
-          "id": "71fb4f4ab4de71ef",
-          "source": "Toms Hardware",
-          "url": "https://www.tomshardware.com/tech-industry/artificial-intelligence/ai-companies-are-now-racing-to-the-bottom-crashing-token-prices-and-competitive-models-push-companies-to-cut-costs",
-          "title": "AI companies are now racing to the bottom — crashing token prices and competitive models push companies to cut costs",
-          "snippet": "All major AI developers are cutting prices to compete with impressive new releases from China. But as they shave margins to remain competitive, the profits they'll need to fulfil investment confidence may end up further…",
-          "contentText": "We've entered a new phase of the AI industry's development, with all the major players heavily cutting costs and boosting the capabilities of their entry-level models in order to compete with new models from China, like Moonshot's Kimi K3 and DeepSeek's V4 Flash. OpenAI did so most recently, cutting the price of its base frontier model, ChatGPT 5.6 Luna, by 80% per million tokens, and its mid-range 5.6 Terra by 20%. This comes just over a week after Google introduced its more-affordable Gemini 3.6 Flash and 3.5 Flash-Lite models. Anthropic hasn't cut prices, but replaced its most-affordable Opus 4.8 model with a more capable Claude 5.0 at the same price point. Intelligence is getting more affordable thanks to increased global competition, but this can come at the cost of margin for these…",
-          "publishedAt": "2026-08-03T16:26:15.000Z",
-          "sourceImage": "https://cdn.mos.cms.futurecdn.net/J2wWatAfnDuoPnnDWPhgX4-1280-80.jpg",
+          "id": "23db99e4d23f9e36",
+          "source": "StorageReview",
+          "url": "https://www.storagereview.com/news/ibm-quantum-advantage-70-logical-qubits-74-qubit-floquet-dynamics-and-a-trust-framework",
+          "title": "IBM Quantum Advantage: 70 Logical Qubits, 74-Qubit Floquet Dynamics, and a Trust Framework",
+          "snippet": "IBM and three research partners, the University of Chicago, Algorithmiq, and Qedma, have published separate quantum-computing studies focused on a common barrier to quantum advantage claims: establishing confidence in r…",
+          "contentText": "IBM and three research partners, the University of Chicago, Algorithmiq, and Qedma, have published separate quantum-computing studies focused on a common barrier to quantum advantage claims: establishing confidence in results that classical systems cannot directly reproduce. The work spans encoded logical circuits, quantum-material simulations, and error-mitigated many-body physics. In each case, IBM Quantum Heron processors were used to run workloads that the participating teams reported exceeded the practical capabilities of leading classical simulation approaches. The studies and underlying results have been released through IBM&#8217;s Quantum Advantage Tracker for continued benchmarking. The University of Chicago collaboration demonstrated a structured alternative to random circuit s…",
+          "publishedAt": "2026-08-03T18:10:33.000Z",
+          "sourceImage": "https://www.storagereview.com/wp-content/uploads/2026/07/Storagereview-IBM-Quantum.jpeg",
           "region": "US",
           "language": "en",
           "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
@@ -39303,7 +39379,7 @@
             "cloud buyers",
             "investors"
           ],
-          "article_type": "Earnings / Guidance",
+          "article_type": "Partnership",
           "urgency_score": 0.43,
           "taxonomy_confidence": 0.77,
           "taxonomy_reasons": [
@@ -39347,221 +39423,30 @@
             "archiveOnly": false,
             "archiveOnlyReason": null
           },
-          "score": 79
-        },
-        {
-          "id": "612943f29ec56d1e",
-          "source": "HPCwire",
-          "url": "https://www.hpcwire.com/2026/08/03/juniq-europes-quantum-buffet/",
-          "title": "JUNIQ: Europe’s Quantum Buffet",
-          "snippet": "Prior to the June International Supercomputing Conference, ISC High Performance 2026, in Hamburg, Germany, Sean Feeney (Texas A&M University PhD Student/Computer Science/Quantum) and I visited the Jülich Supercomputing…",
-          "contentText": "Prior to the June International Supercomputing Conference, ISC High Performance 2026 , in Hamburg, Germany, Sean Feeney (Texas A&M University PhD Student/Computer Science/Quantum) and I visited the Jülich Supercomputing Centre (JSC) and their JUNIQ (pronounced unique) testlab ( J ülich UN ified I nfrastructure for Q uantum Computing). The ISC’26 theme was, “Connecting the Dots,” which is what Feeney and I were also doing in Jülich. JUNIQ was developed by Jülich Supercomputing Center Directors Kristel Michielsen , PhD. (seen above with Jupiter at JSC) and Thomas Lippert , and is led by Dr. Michielsen. Academically trained as a physicist, her philosophy and experience are highlighted in a July 27, 2026 podcast hosted by D-Wave’s Murray Thom who also presented at ISC26. Jülich Division Head…",
-          "publishedAt": "2026-08-03T16:21:44.000Z",
-          "sourceImage": "https://www.hpcwire.com/wp-content/uploads/2026/08/Julich_EL-226x300.png",
-          "region": "US",
-          "language": "en",
-          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
-          "category": "AI Infrastructure",
-          "primary_category": "AI Infrastructure",
-          "secondary_category": "GPU clusters and deployment readiness",
-          "infrastructure_layer": "Compute",
-          "affected_stakeholders": [
-            "operators",
-            "hyperscalers",
-            "cloud buyers",
-            "investors"
-          ],
-          "article_type": "Other",
-          "urgency_score": 0.43,
-          "taxonomy_confidence": 0.77,
-          "taxonomy_reasons": [
-            "ai infrastructure",
-            "neocloud"
-          ],
-          "direct_ai_infrastructure_relevance": 1,
-          "data_center_relevance": 0,
-          "cloud_capacity_relevance": 0,
-          "semiconductor_relevance": 0.22,
-          "power_grid_relevance": 0,
-          "cooling_relevance": 0,
-          "capital_markets_relevance": 0,
-          "enterprise_ai_infrastructure_relevance": 0,
-          "infrastructure_relevance_score": 0.778,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "semiconductor_relevance:0.22(gpu)"
-          ],
-          "infrastructure_relevance": {
-            "direct_ai_infrastructure_relevance": 1,
-            "data_center_relevance": 0,
-            "cloud_capacity_relevance": 0,
-            "semiconductor_relevance": 0.22,
-            "power_grid_relevance": 0,
-            "cooling_relevance": 0,
-            "capital_markets_relevance": 0,
-            "enterprise_ai_infrastructure_relevance": 0,
-            "infrastructure_relevance_score": 0.778,
-            "infrastructure_relevance_tier": "full_memo",
-            "infrastructure_relevance_action": "generate_full_memo",
-            "infrastructure_relevance_reasons": [
-              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-              "semiconductor_relevance:0.22(gpu)"
-            ],
-            "infrastructureRelevanceAction": "generate_full_memo",
-            "articlePagePublished": true,
-            "homepagePublished": true,
-            "archiveOnly": false,
-            "archiveOnlyReason": null
-          },
-          "score": 79
+          "score": 71
         }
       ],
       "curatedIds": [
-        "8b6a760a300b1653",
-        "732768f72a590692",
-        "4d9289bee9a83a90",
-        "288588ebaa66c47f",
-        "71fb4f4ab4de71ef",
-        "612943f29ec56d1e"
+        "4fb1767785166da5",
+        "a3f4fdeb0d551726",
+        "bcebe975b5feb568",
+        "2bc9776b311b3a69",
+        "72e1d1f3482be4b9",
+        "23db99e4d23f9e36"
       ],
       "publishedIds": [
         "732768f72a590692",
-        "8b6a760a300b1653"
+        "8b6a760a300b1653",
+        "4fb1767785166da5",
+        "a3f4fdeb0d551726"
       ],
       "slotPublications": {
-        "0": true
+        "0": true,
+        "1": true
       }
     }
   },
   "runHistory": [
-    {
-      "at": "2026-06-25T00:15:55.064Z",
-      "day": "2026-06-25",
-      "slot": 1,
-      "publishedCount": 0,
-      "signalCardCount": 0,
-      "archiveOnlyCount": 0,
-      "repetitionBlockedCount": 2,
-      "publishedIds": [],
-      "processedIds": [
-        "4e06aca9dffe5bd0",
-        "1289a48e806eb4bb"
-      ],
-      "blockedCount": 0,
-      "blockedItems": [],
-      "repetitionBlockedItems": [
-        {
-          "id": "4e06aca9dffe5bd0",
-          "title": "Europe is pushing back on Washington’s chip war",
-          "infrastructure_relevance_score": 0.928,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "cloud_capacity_relevance:0.32(hyperscalers)",
-            "semiconductor_relevance:0.58(semiconductor, gpu)",
-            "power_grid_relevance:0.22(power)",
-            "cooling_relevance:0.32(immersion)"
-          ],
-          "extraction_quality_score": 1,
-          "source_domain_adapter": "techcrunch",
-          "content_length": 1597,
-          "boilerplate_ratio": 0,
-          "repetition_blocked": true,
-          "repetition_block_reasons": [
-            "repeated_sentence_ratio>0.12",
-            "heading_sequence_similarity>0.75",
-            "conclusion_similarity>0.7"
-          ],
-          "repetition_check": {
-            "compared_article_count": 20,
-            "repeated_sentence_ratio": 0.3333333333333333,
-            "repeated_paragraph_ratio": 0.3333333333333333,
-            "heading_sequence_similarity": 1,
-            "banned_phrase_count": 0,
-            "banned_phrase_counts": {},
-            "recent_banned_phrase_counts": {},
-            "ngram_overlap": 0.6134453781512605,
-            "blueprint_repetition": 2,
-            "conclusion_similarity": 0.9271050693011066,
-            "repeated_sentence_count": 2,
-            "repeated_paragraph_count": 2,
-            "heading_sequence": [
-              "Technical Signal",
-              "Failure Domain",
-              "Operator Exposure",
-              "Benchmark To Watch"
-            ],
-            "blocked": true,
-            "reasons": [
-              "repeated_sentence_ratio>0.12",
-              "heading_sequence_similarity>0.75",
-              "conclusion_similarity>0.7"
-            ]
-          },
-          "expert_insight_complete": true,
-          "expert_insight_missing_fields": [],
-          "reason": "repeated_sentence_ratio>0.12; heading_sequence_similarity>0.75; conclusion_similarity>0.7"
-        },
-        {
-          "id": "1289a48e806eb4bb",
-          "title": "Qualcomm Investor Day 2026 Data Center Announcements CPUs, AI Accelerators, and More",
-          "infrastructure_relevance_score": 1,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "data_center_relevance:0.55(data center)",
-            "cloud_capacity_relevance:0.32(hyperscalers)",
-            "semiconductor_relevance:1.00(amd, intel, hbm)",
-            "power_grid_relevance:0.22(power)"
-          ],
-          "extraction_quality_score": 1,
-          "source_domain_adapter": "servethehome",
-          "content_length": 1754,
-          "boilerplate_ratio": 0,
-          "repetition_blocked": true,
-          "repetition_block_reasons": [
-            "repeated_sentence_ratio>0.12",
-            "heading_sequence_similarity>0.75",
-            "conclusion_similarity>0.7"
-          ],
-          "repetition_check": {
-            "compared_article_count": 20,
-            "repeated_sentence_ratio": 0.125,
-            "repeated_paragraph_ratio": 0.16666666666666666,
-            "heading_sequence_similarity": 1,
-            "banned_phrase_count": 0,
-            "banned_phrase_counts": {},
-            "recent_banned_phrase_counts": {},
-            "ngram_overlap": 0.42016806722689076,
-            "blueprint_repetition": 1,
-            "conclusion_similarity": 0.9511897312113418,
-            "repeated_sentence_count": 1,
-            "repeated_paragraph_count": 1,
-            "heading_sequence": [
-              "Memory Move",
-              "Virtualization Impact",
-              "Procurement Risk",
-              "Watch Metric"
-            ],
-            "blocked": true,
-            "reasons": [
-              "repeated_sentence_ratio>0.12",
-              "heading_sequence_similarity>0.75",
-              "conclusion_similarity>0.7"
-            ]
-          },
-          "expert_insight_complete": true,
-          "expert_insight_missing_fields": [],
-          "reason": "repeated_sentence_ratio>0.12; heading_sequence_similarity>0.75; conclusion_similarity>0.7"
-        }
-      ],
-      "signalCardItems": [],
-      "archiveOnlyItems": []
-    },
     {
       "at": "2026-06-25T10:20:15.297Z",
       "day": "2026-06-25",
@@ -53166,7 +53051,128 @@
         }
       ],
       "archiveOnlyItems": []
+    },
+    {
+      "at": "2026-08-04T00:11:27.969Z",
+      "day": "2026-08-04",
+      "slot": 1,
+      "publishedCount": 0,
+      "signalCardCount": 1,
+      "archiveOnlyCount": 0,
+      "repetitionBlockedCount": 1,
+      "publishedIds": [],
+      "processedIds": [
+        "4fb1767785166da5",
+        "a3f4fdeb0d551726"
+      ],
+      "blockedCount": 1,
+      "blockedItems": [
+        {
+          "id": "4fb1767785166da5",
+          "title": "AMD’s FP64 Boost with MI430X Is Even Bigger Than Expected",
+          "infrastructure_relevance_score": 1,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud, high-performance computing)",
+            "cloud_capacity_relevance:0.32(hyperscalers)",
+            "semiconductor_relevance:1.00(semiconductor, nvidia, amd)",
+            "power_grid_relevance:0.22(power)"
+          ],
+          "extraction_quality_score": 0.95,
+          "source_domain_adapter": "generic",
+          "content_length": 1415,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": false,
+          "repetition_block_reasons": [],
+          "repetition_check": null,
+          "expert_insight_complete": true,
+          "expert_insight_missing_fields": [],
+          "reason": "fail_closed: source_text_incomplete:ellipsis_truncation_artifact, ellipsis_truncation_artifact"
+        }
+      ],
+      "repetitionBlockedItems": [
+        {
+          "id": "a3f4fdeb0d551726",
+          "title": "Texas Orders Statewide Audit of AI Data Center Projects",
+          "infrastructure_relevance_score": 1,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:0.82(ai data center)",
+            "data_center_relevance:1.00(data center, data centers, colocation)",
+            "cloud_capacity_relevance:0.32(hyperscalers)",
+            "power_grid_relevance:1.00(power, grid, interconnection)",
+            "capital_markets_relevance:0.28(capex)"
+          ],
+          "extraction_quality_score": 1,
+          "source_domain_adapter": "datacenterknowledge",
+          "content_length": 1681,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": true,
+          "repetition_block_reasons": [
+            "repeated_sentence_ratio>0.12",
+            "heading_sequence_similarity>0.75",
+            "conclusion_similarity>0.7"
+          ],
+          "repetition_check": {
+            "compared_article_count": 20,
+            "repeated_sentence_ratio": 0.5,
+            "repeated_paragraph_ratio": 0.5,
+            "heading_sequence_similarity": 1,
+            "banned_phrase_count": 0,
+            "banned_phrase_counts": {},
+            "recent_banned_phrase_counts": {},
+            "ngram_overlap": 0.4596774193548387,
+            "blueprint_repetition": 1,
+            "conclusion_similarity": 1,
+            "repeated_sentence_count": 3,
+            "repeated_paragraph_count": 3,
+            "heading_sequence": [
+              "What Changed",
+              "Energy Procurement Read",
+              "Volatility Risk",
+              "Next Market Test"
+            ],
+            "blocked": true,
+            "reasons": [
+              "repeated_sentence_ratio>0.12",
+              "heading_sequence_similarity>0.75",
+              "conclusion_similarity>0.7"
+            ]
+          },
+          "expert_insight_complete": true,
+          "expert_insight_missing_fields": [],
+          "reason": "repeated_sentence_ratio>0.12; heading_sequence_similarity>0.75; conclusion_similarity>0.7"
+        }
+      ],
+      "signalCardItems": [
+        {
+          "id": "4fb1767785166da5",
+          "title": "AMD’s FP64 Boost with MI430X Is Even Bigger Than Expected",
+          "infrastructure_relevance_score": 1,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud, high-performance computing)",
+            "cloud_capacity_relevance:0.32(hyperscalers)",
+            "semiconductor_relevance:1.00(semiconductor, nvidia, amd)",
+            "power_grid_relevance:0.22(power)"
+          ],
+          "extraction_quality_score": 0.95,
+          "source_domain_adapter": "generic",
+          "content_length": 1415,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": false,
+          "repetition_block_reasons": [],
+          "repetition_check": null,
+          "expert_insight_complete": true,
+          "expert_insight_missing_fields": [],
+          "reason": "fail_closed: source_text_incomplete:ellipsis_truncation_artifact, ellipsis_truncation_artifact"
+        }
+      ],
+      "archiveOnlyItems": []
     }
   ],
-  "lastRunAt": "2026-08-03T17:14:47.780Z"
+  "lastRunAt": "2026-08-04T00:11:27.969Z"
 }
