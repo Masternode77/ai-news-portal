@@ -1,5 +1,173 @@
 [
   {
+    "id": "d642310f637a72af",
+    "source": "Semiconductor Engineering",
+    "url": "https://semiengineering.com/silicon-photonics-mems-based-optical-switch-using-a-zero-change-foundry-compatible-process-uc-berkeley/",
+    "title": "Silicon Photonics MEMS-based Optical Switch Using a Zero-Change Foundry–Compatible Process (UC Berkeley)",
+    "snippet": "Researchers from UC Berkeley published a technical paper titled “Zero-change foundry compatible silicon photonics MEMS optical switch.” Abstract Excerpt: The paper demonstrates a broadband silicon photonics MEMS switch…",
+    "contentText": "Researchers from UC Berkeley published a technical paper titled “Zero-change foundry compatible silicon photonics MEMS optical switch.” Abstract Excerpt: The paper demonstrates a broadband silicon photonics MEMS switch with “more than 30 dB extinction ratio” using a “zero-change foundry compatible process and Back-end-of-Line (BEOL) post-processing.” It also reports insertion loss of “less than 1.5 dB” and static power consumption of “~20 nW at maximum actuation voltage.” Find the technical paper here . August 2026. Roy, Arkadev, Daniel Klawson, Jianheng Luo, Yiyang Zhi, Sirui Tang, and Ming Wu. “Zero-Change Foundry Compatible Silicon Photonics MEMS Optical Switch.” arXiv, August 2026. https://doi.org/10.48550/arXiv.2608.03146. The post Silicon Photonics MEMS-based Optical Switch Using a…",
+    "publishedAt": "2026-08-05T16:27:01.000Z",
+    "sourceImage": null,
+    "region": "US",
+    "language": "en",
+    "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+    "category": "AI Infrastructure",
+    "primary_category": "AI Infrastructure",
+    "secondary_category": "GPU clusters and deployment readiness",
+    "infrastructure_layer": "Compute",
+    "affected_stakeholders": [
+      "operators",
+      "hyperscalers",
+      "cloud buyers",
+      "investors"
+    ],
+    "article_type": "Operations Update",
+    "urgency_score": 0.56,
+    "taxonomy_confidence": 0.85,
+    "taxonomy_reasons": [
+      "ai infrastructure",
+      "neocloud",
+      "deployment readiness"
+    ],
+    "direct_ai_infrastructure_relevance": 1,
+    "data_center_relevance": 0.16,
+    "cloud_capacity_relevance": 0.32,
+    "semiconductor_relevance": 0.58,
+    "power_grid_relevance": 0.22,
+    "cooling_relevance": 0,
+    "capital_markets_relevance": 0.28,
+    "enterprise_ai_infrastructure_relevance": 0,
+    "infrastructure_relevance_score": 0.928,
+    "infrastructure_relevance_tier": "full_memo",
+    "infrastructure_relevance_action": "generate_full_memo",
+    "infrastructure_relevance_reasons": [
+      "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+      "cloud_capacity_relevance:0.32(hyperscalers)",
+      "semiconductor_relevance:0.58(semiconductor, gpu)",
+      "power_grid_relevance:0.22(power)",
+      "capital_markets_relevance:0.28(capex)"
+    ],
+    "infrastructure_relevance": {
+      "direct_ai_infrastructure_relevance": 1,
+      "data_center_relevance": 0.16,
+      "cloud_capacity_relevance": 0.32,
+      "semiconductor_relevance": 0.58,
+      "power_grid_relevance": 0.22,
+      "cooling_relevance": 0,
+      "capital_markets_relevance": 0.28,
+      "enterprise_ai_infrastructure_relevance": 0,
+      "infrastructure_relevance_score": 0.928,
+      "infrastructure_relevance_tier": "full_memo",
+      "infrastructure_relevance_action": "generate_full_memo",
+      "infrastructure_relevance_reasons": [
+        "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+        "cloud_capacity_relevance:0.32(hyperscalers)",
+        "semiconductor_relevance:0.58(semiconductor, gpu)",
+        "power_grid_relevance:0.22(power)",
+        "capital_markets_relevance:0.28(capex)"
+      ],
+      "infrastructureRelevanceAction": "generate_full_memo",
+      "articlePagePublished": true,
+      "homepagePublished": true,
+      "archiveOnly": false,
+      "archiveOnlyReason": null
+    },
+    "score": 84,
+    "slug": "silicon-photonics-mems-based-optical-switch-using-a-zero-change-foundry-compatible-process-uc-berkeley",
+    "summary": "Researchers from UC Berkeley published a technical paper titled “Zero-change foundry compatible silicon photonics MEMS optical switch.” Abstract Excerpt: The paper demonstrates a…",
+    "insight": "The practical effect is on time-to-power, campus sequencing, and capex timing. The advantage goes to teams that line up power, facility design, network topology, and silicon timing instead of optimizing one layer in isolation.",
+    "expert_insight": {
+      "concrete_facts": [],
+      "named_companies": [],
+      "infrastructure_layer": "Compute",
+      "bottleneck_type": "power_grid",
+      "who_gains_leverage": "utilities, power-secured developers, and operators with firm interconnection positions",
+      "who_takes_execution_risk": "developers and cloud buyers whose delivery dates depend on utility upgrades or energization schedules",
+      "timing_dependency": "utility interconnection, equipment procurement, and energization milestones",
+      "counterargument": "A power-side development can still be too narrow to change the broader delivery curve unless it scales across sites.",
+      "next_observable_signal": "interconnection approvals, substation equipment dates, power purchase agreements, or disclosed energization windows",
+      "expert_insight_complete": false,
+      "expert_insight_missing_fields": [
+        "concrete_facts",
+        "named_companies"
+      ]
+    },
+    "expertInsight": {
+      "concrete_facts": [],
+      "named_companies": [],
+      "infrastructure_layer": "Compute",
+      "bottleneck_type": "power_grid",
+      "who_gains_leverage": "utilities, power-secured developers, and operators with firm interconnection positions",
+      "who_takes_execution_risk": "developers and cloud buyers whose delivery dates depend on utility upgrades or energization schedules",
+      "timing_dependency": "utility interconnection, equipment procurement, and energization milestones",
+      "counterargument": "A power-side development can still be too narrow to change the broader delivery curve unless it scales across sites.",
+      "next_observable_signal": "interconnection approvals, substation equipment dates, power purchase agreements, or disclosed energization windows",
+      "expert_insight_complete": false,
+      "expert_insight_missing_fields": [
+        "concrete_facts",
+        "named_companies"
+      ]
+    },
+    "concrete_facts": [],
+    "named_companies": [],
+    "bottleneck_type": "power_grid",
+    "who_gains_leverage": "utilities, power-secured developers, and operators with firm interconnection positions",
+    "who_takes_execution_risk": "developers and cloud buyers whose delivery dates depend on utility upgrades or energization schedules",
+    "timing_dependency": "utility interconnection, equipment procurement, and energization milestones",
+    "counterargument": "A power-side development can still be too narrow to change the broader delivery curve unless it scales across sites.",
+    "next_observable_signal": "interconnection approvals, substation equipment dates, power purchase agreements, or disclosed energization windows",
+    "expert_insight_complete": false,
+    "expert_insight_missing_fields": [
+      "concrete_facts",
+      "named_companies"
+    ],
+    "tags": [
+      "power"
+    ],
+    "imagePrompt": "Editorial hero image for enterprise technology news. No logos, no text, no watermark, no brand marks. Topic: Silicon Photonics MEMS-based Optical Switch Using a Zero-Change Foundry–Compatible Process (UC Berkeley). Category: Hyperscalers & Cloud. Mood: premium, cinematic, monochrome glass dashboard aesthetic. Context: Researchers from UC Berkeley published a technical paper titled “Zero-change foundry compatible silicon photonics MEMS optical switch.” Abstract Excerpt: The paper demonstrates a…. Include modern data center, network, semiconductor, cloud, or grid motifs only when relevant. 16:9 composition.",
+    "lang": "en",
+    "articleText": "Researchers from UC Berkeley published a technical paper titled “Zero-change foundry compatible silicon photonics MEMS optical switch.” Abstract Excerpt: The paper demonstrates a broadband silicon photonics MEMS switch with “more than 30 dB extinction ratio” using a “zero-change foundry compatible process and Back-end-of-Line (BEOL) post-processing.” It also reports insertion loss of “less than 1.5 dB” and static power consumption of “~20 nW at maximum actuation voltage.” Roy, Arkadev, Daniel Klawson, Jianheng Luo, Yiyang Zhi, Sirui Tang, and Ming Wu. “Zero-Change Foundry Compatible Silicon Photonics MEMS Optical Switch.” arXiv, August 2026. https://doi.org/10.48550/arXiv.2608.03146.",
+    "content_length": 692,
+    "boilerplate_ratio": 0,
+    "title_body_similarity": 0.92,
+    "copyright_footer_detected": false,
+    "nav_or_cta_detected": false,
+    "sentence_completion_score": 1,
+    "source_domain_adapter": "semiengineering",
+    "extraction_quality_score": 0.84,
+    "extraction_qa": {
+      "content_length": 692,
+      "boilerplate_ratio": 0,
+      "title_body_similarity": 0.92,
+      "copyright_footer_detected": false,
+      "legal_boilerplate_detected": false,
+      "nav_or_cta_detected": false,
+      "sentence_completion_score": 1,
+      "source_domain_adapter": "semiengineering",
+      "extraction_quality_score": 0.84,
+      "extraction_failure_reason": null,
+      "extraction_quality_reasons": []
+    },
+    "sourceUrl": "https://semiengineering.com/silicon-photonics-mems-based-optical-switch-using-a-zero-change-foundry-compatible-process-uc-berkeley/",
+    "generatedImage": "/generated/articles/d642310f637a72af-silicon-photonics-mems-based-optical-switch-using-a-zero-change-foundry-compatible-process/hero.webp",
+    "infrastructureRelevanceAction": "generate_full_memo",
+    "articlePagePublished": false,
+    "homepagePublished": true,
+    "archiveOnly": false,
+    "archiveOnlyReason": null,
+    "qualityGateBlocked": true,
+    "qualityGateReason": "fail_closed: source_text_incomplete:source_evidence_length_below_1200",
+    "qualityGateBlockedAt": "2026-08-05T16:47:45.122Z",
+    "signalCardOnly": true,
+    "signalCardReason": "fail_closed: source_text_incomplete:source_evidence_length_below_1200",
+    "article_blueprint": null,
+    "articleBlueprint": null,
+    "expertLensShort": null,
+    "expertLensFull": null,
+    "expertLens": null,
+    "searchText": "Silicon Photonics MEMS-based Optical Switch Using a Zero-Change Foundry–Compatible Process (UC Berkeley) Semiconductor Engineering AI Infrastructure GPU clusters and deployment readiness Compute Operations Update power_grid utilities, power-secured developers, and operators with firm interconnection positions developers and cloud buyers whose delivery dates depend on utility upgrades or energization schedules utility interconnection, equipment procurement, and energization milestones A power-side development can still be too narrow to change the broader delivery curve unless it scales across sites. interconnection approvals, substation equipment dates, power purchase agreements, or disclosed energization windows US Researchers from UC Berkeley published a technical paper titled “Zero-change foundry compatible silicon photonics MEMS optical switch.” Abstract Excerpt: The paper demonstrates a… Researchers from UC Berkeley published a technical paper titled “Zero-change foundry compatible silicon photonics MEMS optical switch.” Abstract Excerpt: The paper demonstrates a broadband silicon photonics MEMS switch with “more than 30 dB extinction ratio” using a “zero-change foundry compatible process and Back-end-of-Line (BEOL) post-processing.” It also reports insertion loss of “less than 1.5 dB” and static power consumption of “~20 nW at maximum actuation voltage.” Roy, Arkadev, Daniel Klawson, Jianheng Luo, Yiyang Zhi, Sirui Tang, and Ming Wu. “Zero-Change Foundry Compatible Silicon Photonics MEMS Optical Switch.” arXiv, August 2026. https://doi.org/10.48550/arXiv.2608.03146. operators hyperscalers cloud buyers investors power"
+  },
+  {
     "id": "c74fe35808004734",
     "source": "Semiconductor Engineering",
     "url": "https://semiengineering.com/building-ai-factories-with-ip-solutions/",
@@ -30846,7 +31014,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:45:32.746Z",
+      "generatedAt": "2026-08-05T16:49:09.620Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "SoftBank",
@@ -31470,7 +31638,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:45:32.892Z",
+      "generatedAt": "2026-08-05T16:49:09.835Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "NVIDIA",
@@ -32061,7 +32229,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:45:33.035Z",
+      "generatedAt": "2026-08-05T16:49:10.045Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Moving Defect Detection And Classification To The Edge",
@@ -32832,7 +33000,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:45:33.175Z",
+      "generatedAt": "2026-08-05T16:49:10.251Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Supermicro",
@@ -33281,7 +33449,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:45:33.319Z",
+      "generatedAt": "2026-08-05T16:49:10.463Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Samsung",
@@ -34047,7 +34215,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:45:33.459Z",
+      "generatedAt": "2026-08-05T16:49:10.667Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "NVIDIA",
@@ -34647,7 +34815,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:45:33.595Z",
+      "generatedAt": "2026-08-05T16:49:10.870Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Broadcom",
@@ -35077,7 +35245,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:45:33.735Z",
+      "generatedAt": "2026-08-05T16:49:11.071Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Google",
@@ -37659,8 +37827,8 @@
     "articleText": "NetApp Expands OpenShift Data Management With Faster VM Backup, DR, and Cloud Scale Support gives enterprise infrastructure teams another read on how AI workloads are changing platform, storage, and cloud capacity decisions. NetApp Expands OpenShift Data Management With Faster VM Backup, DR, and Cloud Scale Support gives enterprise infrastructure teams another read on how AI workloads are changing platform, storage, and cloud capacity decisions. NetApp Expands OpenShift Data Management With Faster VM Backup, DR, and Cloud Scale Support gives enterprise infrastructure teams another read on how AI workloads are changing platform, storage, and cloud capacity decisions. NetApp Expands OpenShift Data Management With Faster VM Backup, DR, and Cloud Scale Support gives enterprise infrastructure teams another read on how AI workloads are changing platform, storage, and cloud capacity decisions. NetApp Expands OpenShift Data Management With Faster VM Backup, DR, and Cloud Scale Support gives enterprise infrastructure teams another read on how AI workloads are changing platform, storage, and cloud capacity decisions. NetApp Expands OpenShift Data Management With Faster VM Backup, DR, and Cloud Scale Support gives enterprise infrastructure teams another read on how AI workloads are changing platform, storage, and cloud capacity decisions. NetApp Expands OpenShift Data Management With Fast StorageReview reported: NetApp Expands OpenShift Data Management With Faster VM Backup, DR, and Cloud Scale Support.",
     "sourceUrl": "https://www.storagereview.com/news/netapp-expands-openshift-data-management-with-faster-vm-backup-dr-and-cloud-scale-support",
     "generatedImage": "/generated/articles/af45a6f9a7a983f9-netapp-expands-openshift-data-management-with-faster-vm-backup-dr-and-cloud-scale-support/hero.webp",
-    "expertLensShort": "NetApp’s OpenShift update turns backup and DR into a platform-readiness issue for enterprise AI workloads.",
-    "expertLens": "NetApp’s OpenShift update turns backup and DR into a platform-readiness issue for enterprise AI workloads.",
+    "expertLensShort": "Platform Resilience is the sharper read on NetApp because the source names a decision point rather than a generic AI trend.",
+    "expertLens": "Platform Resilience is the sharper read on NetApp because the source names a decision point rather than a generic AI trend.",
     "primary_category": "Enterprise AI Infrastructure",
     "secondary_category": "Enterprise deployment operations",
     "infrastructure_layer": "storage",
@@ -37856,7 +38024,7 @@
       "classification": "quarantine",
       "cleaned_at": "2026-05-19T23:51:06.309Z"
     },
-    "searchText": "NetApp Expands OpenShift Data Management With Faster VM Backup, DR, and Cloud Scale Support StorageReview Enterprise AI Infrastructure Enterprise deployment operations storage Capacity Expansion US StorageReview reported: NetApp Expands OpenShift Data Management With Faster VM Backup, DR, and Cloud Scale Support. NetApp’s OpenShift update turns backup and DR into a platform-readiness issue for enterprise AI workloads. NetApp expanded OpenShift data management with faster VM backup, DR, and cloud-scale support. Platform teams running OpenShift need restore speed, disaster recovery, and cross-environment management before AI workloads move from pilots into production. NetApp expanded OpenShift data management with faster VM backup, DR, and cloud-scale support only changes decisions if the storage evidence is specific enough to affect timing, procurement, or operating plans. Enterprise IT and cloud buyers can use the item to test platform resilience before changing procurement, deployment, or risk assumptions. Storage teams should track restore-time evidence, DR failover validation, and cross-environment OpenShift adoption. Cloud and platform buyers should separate source evidence from generic AI demand before changing deployment plans. Restore-time evidence, DR failover validation, and cross-environment OpenShift adoption. NetApp Expands OpenShift Data Management With Faster VM Backup, DR, and Cloud Scale Support gives enterprise infrastructure teams another read on how AI workloads are changing platform, storage, and cloud capacity decisions. NetApp Expands OpenShift Data Management With Faster VM Backup, DR, and Cloud Scale Support gives enterprise infrastructure teams another read on how AI workloads are changing platform, storage, and cloud capacity decisions. NetApp Expands OpenShift Data Management With Faster VM Backup, DR, and Cloud Scale Support gives enterprise infrastructure teams another read on how AI workloads are changing platform, storage, and cloud capacity decisions. NetApp Expands OpenShift Data Management With Faster VM Backup, DR, and Cloud Scale Support gives enterprise infrastructure teams another read on how AI workloads are changing platform, storage, and cloud capacity decisions. NetApp Expands OpenShift Data Management With Faster VM Backup, DR, and Cloud Scale Support gives enterprise infrastructure teams another read on how AI workloads are changing platform, storage, and cloud capacity decisions. NetApp Expands OpenShift Data Management With Faster VM Backup, DR, and Cloud Scale Support gives enterprise infrastructure teams another read on how AI workloads are changing platform, storage, and cloud capacity decisions. NetApp Expands OpenShift Data Management With Fast StorageReview reported: NetApp Expands OpenShift Data Management With Faster VM Backup, DR, and Cloud Scale Support. enterprise IT cloud buyers platform teams software vendors cloud",
+    "searchText": "NetApp Expands OpenShift Data Management With Faster VM Backup, DR, and Cloud Scale Support StorageReview Enterprise AI Infrastructure Enterprise deployment operations storage Capacity Expansion US StorageReview reported: NetApp Expands OpenShift Data Management With Faster VM Backup, DR, and Cloud Scale Support. Platform Resilience is the sharper read on NetApp because the source names a decision point rather than a generic AI trend. NetApp expanded OpenShift data management with faster VM backup, DR, and cloud-scale support. Platform teams running OpenShift need restore speed, disaster recovery, and cross-environment management before AI workloads move from pilots into production. NetApp expanded OpenShift data management with faster VM backup, DR, and cloud-scale support only changes decisions if the storage evidence is specific enough to affect timing, procurement, or operating plans. Enterprise IT and cloud buyers can use the item to test platform resilience before changing procurement, deployment, or risk assumptions. Storage teams should track restore-time evidence, DR failover validation, and cross-environment OpenShift adoption. Cloud and platform buyers should separate source evidence from generic AI demand before changing deployment plans. Restore-time evidence, DR failover validation, and cross-environment OpenShift adoption. NetApp Expands OpenShift Data Management With Faster VM Backup, DR, and Cloud Scale Support gives enterprise infrastructure teams another read on how AI workloads are changing platform, storage, and cloud capacity decisions. NetApp Expands OpenShift Data Management With Faster VM Backup, DR, and Cloud Scale Support gives enterprise infrastructure teams another read on how AI workloads are changing platform, storage, and cloud capacity decisions. NetApp Expands OpenShift Data Management With Faster VM Backup, DR, and Cloud Scale Support gives enterprise infrastructure teams another read on how AI workloads are changing platform, storage, and cloud capacity decisions. NetApp Expands OpenShift Data Management With Faster VM Backup, DR, and Cloud Scale Support gives enterprise infrastructure teams another read on how AI workloads are changing platform, storage, and cloud capacity decisions. NetApp Expands OpenShift Data Management With Faster VM Backup, DR, and Cloud Scale Support gives enterprise infrastructure teams another read on how AI workloads are changing platform, storage, and cloud capacity decisions. NetApp Expands OpenShift Data Management With Faster VM Backup, DR, and Cloud Scale Support gives enterprise infrastructure teams another read on how AI workloads are changing platform, storage, and cloud capacity decisions. NetApp Expands OpenShift Data Management With Fast StorageReview reported: NetApp Expands OpenShift Data Management With Faster VM Backup, DR, and Cloud Scale Support. enterprise IT cloud buyers platform teams software vendors cloud",
     "blog_route": "standard_blog",
     "publishing_route": "Standard Blog",
     "stale_generation": true,
@@ -37978,7 +38146,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:45:34.733Z",
+      "generatedAt": "2026-08-05T16:49:12.553Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "NetApp",
@@ -38030,7 +38198,7 @@
         "minChars": 900,
         "maxChars": 1500
       },
-      "thesis": "NetApp’s OpenShift update turns backup and DR into a platform-readiness issue for enterprise AI workloads.",
+      "thesis": "Platform Resilience is the sharper read on NetApp because the source names a decision point rather than a generic AI trend.",
       "whatHappened": "NetApp expanded OpenShift data management with faster VM backup, DR, and cloud-scale support.",
       "whyThisMatters": "Platform teams running OpenShift need restore speed, disaster recovery, and cross-environment management before AI workloads move from pilots into production.",
       "marketMissing": "NetApp expanded OpenShift data management with faster VM backup, DR, and cloud-scale support only changes decisions if the storage evidence is specific enough to affect timing, procurement, or operating plans.",
@@ -38051,8 +38219,8 @@
         "What to watch after NetApp Expands OpenShift Data Management With Faster VM Backup, DR, and Cloud Scale Suppo"
       ],
       "finalHeadline": "NetApp Expands OpenShift Data Management With Faster VM Backup, DR, and Cloud Scale Support",
-      "metaDescription": "NetApp’s OpenShift update turns backup and DR into a platform-readiness issue for enterprise AI workloads.",
-      "finalArticleBody": "NetApp’s OpenShift update turns backup and DR into a platform-readiness issue for enterprise AI workloads.\n\nWhat Changed\n\nNetApp expanded OpenShift data management with faster VM backup, DR, and cloud-scale support is the evidence anchor, with NetApp as the actor readers can track.\n\nWhy Platform Teams Care\n\nEnterprise IT and cloud buyers can use the item to test platform resilience before changing procurement, deployment, or risk assumptions.\n\nOperating Risk\n\nNetApp expanded OpenShift data management with faster VM backup, DR, and cloud-scale support only changes decisions if the storage evidence is specific enough to affect timing, procurement, or operating plans; that keeps the public read tied to evidence instead of treating the announcement as finished capacity.\n\nMetric To Watch\n\nThe next useful checkpoint is restore-time evidence, DR failover validation, and cross-environment OpenShift adoption over the next few quarters window.\n\nReaders should track restore-time evidence, DR failover validation, and cross-environment OpenShift adoption before treating the item as a planning assumption for storage.",
+      "metaDescription": "Platform Resilience is the sharper read on NetApp because the source names a decision point rather than a generic AI trend.",
+      "finalArticleBody": "Platform Resilience is the sharper read on NetApp because the source names a decision point rather than a generic AI trend.\n\nWhat Changed\n\nNetApp expanded OpenShift data management with faster VM backup, DR, and cloud-scale support is the evidence anchor, with NetApp as the actor readers can track.\n\nWhy Platform Teams Care\n\nEnterprise IT and cloud buyers can use the item to test platform resilience before changing procurement, deployment, or risk assumptions.\n\nOperating Risk\n\nNetApp expanded OpenShift data management with faster VM backup, DR, and cloud-scale support only changes decisions if the storage evidence is specific enough to affect timing, procurement, or operating plans; that keeps the public read tied to evidence instead of treating the announcement as finished capacity.\n\nMetric To Watch\n\nThe next useful checkpoint is restore-time evidence, DR failover validation, and cross-environment OpenShift adoption over the next few quarters window.\n\nReaders should track restore-time evidence, DR failover validation, and cross-environment OpenShift adoption before treating the item as a planning assumption for storage.",
       "sourceLink": "https://www.storagereview.com/news/netapp-expands-openshift-data-management-with-faster-vm-backup-dr-and-cloud-scale-support"
     },
     "narrative_dna": {
@@ -38237,7 +38405,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:45:34.875Z",
+      "generatedAt": "2026-08-05T16:49:12.748Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Supermicro",
@@ -39713,7 +39881,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:45:35.233Z",
+      "generatedAt": "2026-08-05T16:49:13.260Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Chip-to-Grid Thinking Is Reshaping AI Data",
@@ -40996,7 +41164,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:45:35.525Z",
+      "generatedAt": "2026-08-05T16:49:13.698Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "AMD",
@@ -41550,7 +41718,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:45:35.643Z",
+      "generatedAt": "2026-08-05T16:49:13.896Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "MW AI Data",
@@ -42511,7 +42679,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:45:35.761Z",
+      "generatedAt": "2026-08-05T16:49:14.093Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "MW AI Data",
@@ -42739,7 +42907,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:45:35.879Z",
+      "generatedAt": "2026-08-05T16:49:14.286Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Toms Hardware",
@@ -43765,7 +43933,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:45:36.089Z",
+      "generatedAt": "2026-08-05T16:49:14.642Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Peterson Co",
@@ -44320,7 +44488,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:45:36.203Z",
+      "generatedAt": "2026-08-05T16:49:14.840Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Data Center Dynamics Data",
@@ -44880,7 +45048,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:45:36.325Z",
+      "generatedAt": "2026-08-05T16:49:15.032Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "AWS",
@@ -46564,7 +46732,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:45:36.679Z",
+      "generatedAt": "2026-08-05T16:49:15.629Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Toms Hardware",
@@ -47339,7 +47507,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:45:36.840Z",
+      "generatedAt": "2026-08-05T16:49:15.900Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Data Center Dynamics Data",
@@ -56457,6 +56625,364 @@
     "sourceImage": null
   },
   {
+    "id": "0c2cf9292cb67bb9",
+    "source": "StorageReview",
+    "url": "https://www.storagereview.com/news/ibm-genesis-mission-award-pairs-50m-in-quantum-access-with-algorithm-first-ai-research",
+    "title": "IBM Genesis Mission Award Pairs $50M in Quantum Access With Algorithm-First AI Research",
+    "snippet": "The U.S. Department of Energy has selected IBM for a Phase I Genesis Mission project focused on AI-assisted quantum application development. The company also plans to provide up to $50 million in access to IBM quantum s…",
+    "contentText": "The U.S. Department of Energy has selected IBM for a Phase I Genesis Mission project focused on AI-assisted quantum application development. The company also plans to provide up to $50 million in access to IBM quantum systems for DOE national laboratories and their partners over the next five years. The Genesis Mission is building a national scientific-computing framework that brings together AI, classical high-performance computing, quantum computing, scientific instruments, and research data. IBM&#8217;s selection adds a quantum component to the first set of projects under the Genesis Mission Request for Applications process. This work complements the DOE&#8217;s planned computing infrastructure at Oak Ridge National Laboratory. As previously reported, AMD&#8217;s Lux system is expected…",
+    "publishedAt": "2026-08-05T15:52:49.000Z",
+    "sourceImage": "https://www.storagereview.com/wp-content/uploads/2026/06/Storagereview-ibm-quantum-system-two.jpg",
+    "region": "APAC",
+    "language": "en",
+    "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+    "category": "AI Infrastructure",
+    "primary_category": "AI Infrastructure",
+    "secondary_category": "GPU clusters and deployment readiness",
+    "infrastructure_layer": "Compute",
+    "affected_stakeholders": [
+      "operators",
+      "hyperscalers",
+      "cloud buyers",
+      "investors"
+    ],
+    "article_type": "Capacity Expansion",
+    "urgency_score": 0.63,
+    "taxonomy_confidence": 0.95,
+    "taxonomy_reasons": [
+      "ai infrastructure",
+      "compute capacity",
+      "neocloud",
+      "hpc",
+      "deployment readiness"
+    ],
+    "direct_ai_infrastructure_relevance": 1,
+    "data_center_relevance": 0,
+    "cloud_capacity_relevance": 0.32,
+    "semiconductor_relevance": 0.44,
+    "power_grid_relevance": 0.22,
+    "cooling_relevance": 0,
+    "capital_markets_relevance": 0,
+    "enterprise_ai_infrastructure_relevance": 0.18,
+    "infrastructure_relevance_score": 0.897,
+    "infrastructure_relevance_tier": "full_memo",
+    "infrastructure_relevance_action": "generate_full_memo",
+    "infrastructure_relevance_reasons": [
+      "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud, high-performance computing)",
+      "cloud_capacity_relevance:0.32(hyperscalers)",
+      "semiconductor_relevance:0.44(amd, gpu)",
+      "power_grid_relevance:0.22(power)"
+    ],
+    "infrastructure_relevance": {
+      "direct_ai_infrastructure_relevance": 1,
+      "data_center_relevance": 0,
+      "cloud_capacity_relevance": 0.32,
+      "semiconductor_relevance": 0.44,
+      "power_grid_relevance": 0.22,
+      "cooling_relevance": 0,
+      "capital_markets_relevance": 0,
+      "enterprise_ai_infrastructure_relevance": 0.18,
+      "infrastructure_relevance_score": 0.897,
+      "infrastructure_relevance_tier": "full_memo",
+      "infrastructure_relevance_action": "generate_full_memo",
+      "infrastructure_relevance_reasons": [
+        "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud, high-performance computing)",
+        "cloud_capacity_relevance:0.32(hyperscalers)",
+        "semiconductor_relevance:0.44(amd, gpu)",
+        "power_grid_relevance:0.22(power)"
+      ],
+      "infrastructureRelevanceAction": "generate_full_memo",
+      "articlePagePublished": true,
+      "homepagePublished": true,
+      "archiveOnly": false,
+      "archiveOnlyReason": null
+    },
+    "score": 81,
+    "slug": "ibm-genesis-mission-award-pairs-50m-in-quantum-access-with-algorithm-first-ai-research",
+    "summary": "The U.S. Department of Energy has selected IBM for a Phase I Genesis Mission project focused on AI-assisted quantum application development. The company also plans to provide up t…",
+    "insight": "The practical effect is on compute supply, deployment speed, and network orchestration. The advantage goes to teams that line up power, facility design, network topology, and silicon timing instead of optimizing one layer in isolation.",
+    "expert_insight": {
+      "concrete_facts": [
+        "The company also plans to provide up to $50 million in access to IBM quantum s… The practical effect is on compute supply, deployment speed, and network orchestration.",
+        "The company also plans to provide up to $50 million in access to IBM quantum systems for DOE national laboratories and their partners over the next five years.",
+        "As previously reported, AMD&#8217;s Lux system is expected to become the first fully operational Genesis Mission platform, with funded projects slated to begin using it in October 2026.",
+        "As previously reported, AMD&#8217;s Lux system is expected…",
+        "IBM Genesis Mission Award Pairs $50M in Quantum Access With Algorithm-First AI Research The U.S."
+      ],
+      "named_companies": [
+        "AMD"
+      ],
+      "infrastructure_layer": "Compute",
+      "bottleneck_type": "power_grid",
+      "who_gains_leverage": "utilities, power-secured developers, and operators with firm interconnection positions",
+      "who_takes_execution_risk": "developers and cloud buyers whose delivery dates depend on utility upgrades or energization schedules",
+      "timing_dependency": "utility interconnection, equipment procurement, and energization milestones",
+      "counterargument": "The source may still describe intent rather than delivered capacity, so the operating impact depends on follow-through.",
+      "next_observable_signal": "interconnection approvals, substation equipment dates, power purchase agreements, or disclosed energization windows",
+      "expert_insight_complete": true,
+      "expert_insight_missing_fields": []
+    },
+    "expertInsight": {
+      "concrete_facts": [
+        "The company also plans to provide up to $50 million in access to IBM quantum s… The practical effect is on compute supply, deployment speed, and network orchestration.",
+        "The company also plans to provide up to $50 million in access to IBM quantum systems for DOE national laboratories and their partners over the next five years.",
+        "As previously reported, AMD&#8217;s Lux system is expected to become the first fully operational Genesis Mission platform, with funded projects slated to begin using it in October 2026.",
+        "As previously reported, AMD&#8217;s Lux system is expected…",
+        "IBM Genesis Mission Award Pairs $50M in Quantum Access With Algorithm-First AI Research The U.S."
+      ],
+      "named_companies": [
+        "AMD"
+      ],
+      "infrastructure_layer": "Compute",
+      "bottleneck_type": "power_grid",
+      "who_gains_leverage": "utilities, power-secured developers, and operators with firm interconnection positions",
+      "who_takes_execution_risk": "developers and cloud buyers whose delivery dates depend on utility upgrades or energization schedules",
+      "timing_dependency": "utility interconnection, equipment procurement, and energization milestones",
+      "counterargument": "The source may still describe intent rather than delivered capacity, so the operating impact depends on follow-through.",
+      "next_observable_signal": "interconnection approvals, substation equipment dates, power purchase agreements, or disclosed energization windows",
+      "expert_insight_complete": true,
+      "expert_insight_missing_fields": []
+    },
+    "concrete_facts": [
+      "The company also plans to provide up to $50 million in access to IBM quantum s… The practical effect is on compute supply, deployment speed, and network orchestration.",
+      "The company also plans to provide up to $50 million in access to IBM quantum systems for DOE national laboratories and their partners over the next five years.",
+      "As previously reported, AMD&#8217;s Lux system is expected to become the first fully operational Genesis Mission platform, with funded projects slated to begin using it in October 2026.",
+      "As previously reported, AMD&#8217;s Lux system is expected…",
+      "IBM Genesis Mission Award Pairs $50M in Quantum Access With Algorithm-First AI Research The U.S."
+    ],
+    "named_companies": [
+      "AMD"
+    ],
+    "bottleneck_type": "power_grid",
+    "who_gains_leverage": "utilities, power-secured developers, and operators with firm interconnection positions",
+    "who_takes_execution_risk": "developers and cloud buyers whose delivery dates depend on utility upgrades or energization schedules",
+    "timing_dependency": "utility interconnection, equipment procurement, and energization milestones",
+    "counterargument": "The source may still describe intent rather than delivered capacity, so the operating impact depends on follow-through.",
+    "next_observable_signal": "interconnection approvals, substation equipment dates, power purchase agreements, or disclosed energization windows",
+    "expert_insight_complete": true,
+    "expert_insight_missing_fields": [],
+    "tags": [
+      "gpu",
+      "power"
+    ],
+    "imagePrompt": "Editorial hero image for enterprise technology news. No logos, no text, no watermark, no brand marks. Topic: IBM Genesis Mission Award Pairs $50M in Quantum Access With Algorithm-First AI Research. Category: Hyperscalers & Cloud. Mood: premium, cinematic, monochrome glass dashboard aesthetic. Context: The U.S. Department of Energy has selected IBM for a Phase I Genesis Mission project focused on AI-assisted quantum application development. The company also plans to provide up t…. Include modern data center, network, semiconductor, cloud, or grid motifs only when relevant. 16:9 composition.",
+    "lang": "en",
+    "articleText": "The U.S. Department of Energy has selected IBM for a Phase I Genesis Mission project focused on AI-assisted quantum application development. The company also plans to provide up to $50 million in access to IBM quantum systems for DOE national laboratories and their partners over the next five years. The Genesis Mission is building a national scientific-computing framework that brings together AI, classical high-performance computing, quantum computing, scientific instruments, and research data. IBM&#8217;s selection adds a quantum component to the first set of projects under the Genesis Mission Request for Applications process. This work complements the DOE&#8217;s planned computing infrastructure at Oak Ridge National Laboratory. As previously reported, AMD&#8217;s Lux system is expected to become the first fully operational Genesis Mission platform, with funded projects slated to begin using it in October 2026. Lux combines AMD Instinct MI355X GPUs, EPYC CPUs, and Pensando networking to support AI services, conventional HPC workloads, simulation, and data-intensive research workflows. IBM&#8217;s contribution is directed at extending that model to include quantum resources for workloads where classical systems and AI alone are insufficient. IBM&#8217;s Phase I project will examine a reversed workflow for identifying quantum computing applications. Rather than beginning with a scientific problem and searching for a quantum algorithm, IBM plans to start with known quantum algorithms and use an agentic AI research assistant to locate scientific problems in published literature that meet the algorithms&#8217; requirements.",
+    "content_length": 1648,
+    "boilerplate_ratio": 0,
+    "title_body_similarity": 0.73,
+    "copyright_footer_detected": false,
+    "nav_or_cta_detected": false,
+    "sentence_completion_score": 1,
+    "source_domain_adapter": "storagereview",
+    "extraction_quality_score": 1,
+    "extraction_qa": {
+      "content_length": 1648,
+      "boilerplate_ratio": 0,
+      "title_body_similarity": 0.73,
+      "copyright_footer_detected": false,
+      "legal_boilerplate_detected": false,
+      "nav_or_cta_detected": false,
+      "sentence_completion_score": 1,
+      "source_domain_adapter": "storagereview",
+      "extraction_quality_score": 1,
+      "extraction_failure_reason": null,
+      "extraction_quality_reasons": []
+    },
+    "sourceUrl": "https://www.storagereview.com/news/ibm-genesis-mission-award-pairs-50m-in-quantum-access-with-algorithm-first-ai-research",
+    "generatedImage": "/generated/articles/0c2cf9292cb67bb9-ibm-genesis-mission-award-pairs-50m-in-quantum-access-with-algorithm-first-ai-research/hero.webp",
+    "infrastructureRelevanceAction": "generate_full_memo",
+    "articlePagePublished": false,
+    "homepagePublished": false,
+    "archiveOnly": true,
+    "archiveOnlyReason": "repeated_sentence_ratio>0.12; heading_sequence_similarity>0.75; conclusion_similarity>0.7",
+    "article_blueprint": "stakeholder-map",
+    "articleBlueprint": {
+      "id": "stakeholder-map",
+      "name": "Stakeholder Map",
+      "sectionHeadings": [
+        "The Move",
+        "Who Benefits",
+        "Who Is Exposed",
+        "Bottleneck to Watch"
+      ],
+      "paragraphRhythm": [
+        2,
+        1,
+        1,
+        2
+      ],
+      "targetParagraphs": 6,
+      "minChars": 1000,
+      "maxChars": 1650
+    },
+    "expertLensShort": "AMD is a technical bottleneck item for operator alerts readers, with the infrastructure read limited to source-backed facts.",
+    "expertLensFull": {
+      "version": 2,
+      "mode": "narrative-dna-editorial-v1",
+      "generatedAt": "2026-08-05T16:48:54.222Z",
+      "generation_version": "editorial_surface_v2",
+      "narrative_dna": {
+        "protagonist": "AMD",
+        "concrete_event": "The U.S. Department of Energy has selected IBM for a Phase I Genesis Mission project focused on AI-assisted quantum application development. The company also plans to provide up t…",
+        "core_tension": "AMD has to translate the u.s. department of energy has selected ibm for a phase i genesis mission project focused on ai-assisted quantum application development. the company also plans to provide up t… into a technical bottleneck decision that survives cost, timing, or operating constraints",
+        "infrastructure_layer": "Technical Bottleneck",
+        "reader_role": [
+          "operators",
+          "hyperscalers",
+          "cloud buyers",
+          "investors"
+        ],
+        "decision_relevance": "operators and hyperscalers can use the item to test technical bottleneck before changing procurement, deployment, or risk assumptions",
+        "evidence_anchor": "The company also plans to provide up to $50 million in access to IBM quantum s",
+        "counterpoint": "The source may still describe intent rather than delivered capacity, so the operating impact depends on follow-through.",
+        "watch_metric": "interconnection approvals, substation equipment dates, power purchase agreements, or disclosed energization windows",
+        "time_horizon": "near term",
+        "public_signal_label": "Core Signal",
+        "editorial_lens": "Technical Bottleneck",
+        "story_archetype": "Technical Teardown",
+        "story_archetype_id": "technical-teardown",
+        "routing_decision": "core_lane",
+        "valid_for_full_article": false,
+        "missing_fields": [
+          "concrete_event",
+          "core_tension",
+          "evidence_anchor"
+        ],
+        "truncation": {
+          "ok": false,
+          "artifacts": [
+            "ellipsis_truncation_artifact"
+          ]
+        }
+      },
+      "dynamicBriefLabel": "Core Signal",
+      "blueprintId": "stakeholder-map",
+      "blueprintName": "Stakeholder Map",
+      "blueprint": {
+        "id": "stakeholder-map",
+        "name": "Stakeholder Map",
+        "sectionHeadings": [
+          "The Move",
+          "Who Benefits",
+          "Who Is Exposed",
+          "Bottleneck to Watch"
+        ],
+        "paragraphRhythm": [
+          2,
+          1,
+          1,
+          2
+        ],
+        "targetParagraphs": 6,
+        "minChars": 1000,
+        "maxChars": 1650
+      },
+      "thesis": "AMD is a technical bottleneck item for operator alerts readers, with the infrastructure read limited to source-backed facts.",
+      "whatHappened": "The U.S. Department of Energy has selected IBM for a Phase I Genesis Mission project focused on AI-assisted quantum application development. The company also plans to provide up t",
+      "whyThisMatters": "The public card stays short because the available evidence supports a watchlist signal more than a full infrastructure memo.",
+      "marketMissing": "The source may still describe intent rather than delivered capacity, so the operating impact depends on follow-through.",
+      "investors": "Operators and hyperscalers can use the item to test technical bottleneck before changing procurement, deployment, or risk assumptions.",
+      "operators": "Technical Bottleneck teams should track interconnection approvals, substation equipment dates, power purchase agreements, or disclosed energization windows.",
+      "hyperscalers": "Cloud and platform buyers should separate source evidence from generic AI demand before changing deployment plans.",
+      "watchNext": "Interconnection approvals, substation equipment dates, power purchase agreements, or disclosed energization windows.",
+      "executiveSummary": [
+        "The U.S. Department of Energy has selected IBM for a Phase I Genesis Mission project focused on AI-assisted quantum application development. The company also plans to provide up t",
+        "Operators and hyperscalers can use the item to test technical bottleneck before changing procurement, deployment, or risk assumptions.",
+        "Watch interconnection approvals, substation equipment dates, power purchase agreements, or disclosed energization windows."
+      ],
+      "headlineOptions": [
+        "IBM Genesis Mission Award Pairs $50M in Quantum Access With Algorithm-First AI Research",
+        "StorageReview: the execution test behind the latest AI infrastructure move",
+        "The bottleneck behind IBM Genesis Mission Award Pairs $50M in Quantum Access With Algorithm-First AI Research",
+        "IBM Genesis Mission Award Pairs $50M in Quantum Access With Algorithm-First AI Research puts execution back i",
+        "What to watch after IBM Genesis Mission Award Pairs $50M in Quantum Access With Algorithm-First AI Research"
+      ],
+      "finalHeadline": "IBM Genesis Mission Award Pairs $50M in Quantum Access With Algorithm-First AI Research",
+      "metaDescription": "AMD is a technical bottleneck item for operator alerts readers, with the infrastructure read limited to source-backed facts.",
+      "finalArticleBody": "AMD is a technical bottleneck item for operator alerts readers, with the infrastructure read limited to source-backed facts.\n\nSystem Change\n\nThe U.S. Department of Energy has selected IBM for a Phase I Genesis Mission project focused on AI-assisted quantum application development. The company also plans to provide up t… is the evidence anchor, with AMD as the actor readers can track.\n\nBottleneck\n\nTechnical Bottleneck is the operating layer that turns the update into technical bottleneck, especially for operators, hyperscalers, cloud buyers.\n\nEngineering Tradeoff\n\nOperators and hyperscalers can use the item to test technical bottleneck before changing procurement, deployment, or risk assumptions.\n\nValidation Metric\n\nThe next useful checkpoint is interconnection approvals, substation equipment dates, power purchase agreements, or disclosed energization windows over the near term window.\n\nReaders should track interconnection approvals, substation equipment dates, power purchase agreements, or disclosed energization windows before treating the item as a planning assumption for technical bottleneck.",
+      "sourceLink": "https://www.storagereview.com/news/ibm-genesis-mission-award-pairs-50m-in-quantum-access-with-algorithm-first-ai-research"
+    },
+    "expertLens": "AMD is a technical bottleneck item for operator alerts readers, with the infrastructure read limited to source-backed facts.",
+    "generation_version": "editorial_surface_v2",
+    "narrative_dna": {
+      "protagonist": "AMD",
+      "concrete_event": "The U.S. Department of Energy has selected IBM for a Phase I Genesis Mission project focused on AI-assisted quantum application development. The company also plans to provide up t…",
+      "core_tension": "AMD has to translate the u.s. department of energy has selected ibm for a phase i genesis mission project focused on ai-assisted quantum application development. the company also plans to provide up t… into a technical bottleneck decision that survives cost, timing, or operating constraints",
+      "infrastructure_layer": "Technical Bottleneck",
+      "reader_role": [
+        "operators",
+        "hyperscalers",
+        "cloud buyers",
+        "investors"
+      ],
+      "decision_relevance": "operators and hyperscalers can use the item to test technical bottleneck before changing procurement, deployment, or risk assumptions",
+      "evidence_anchor": "The company also plans to provide up to $50 million in access to IBM quantum s",
+      "counterpoint": "The source may still describe intent rather than delivered capacity, so the operating impact depends on follow-through.",
+      "watch_metric": "interconnection approvals, substation equipment dates, power purchase agreements, or disclosed energization windows",
+      "time_horizon": "near term",
+      "public_signal_label": "Core Signal",
+      "editorial_lens": "Technical Bottleneck",
+      "story_archetype": "Technical Teardown",
+      "story_archetype_id": "technical-teardown",
+      "routing_decision": "core_lane",
+      "valid_for_full_article": false,
+      "missing_fields": [
+        "concrete_event",
+        "core_tension",
+        "evidence_anchor"
+      ],
+      "truncation": {
+        "ok": false,
+        "artifacts": [
+          "ellipsis_truncation_artifact"
+        ]
+      }
+    },
+    "dynamic_brief_label": "Core Signal",
+    "anti_template_rewrite": true,
+    "repetition_check": {
+      "compared_article_count": 20,
+      "repeated_sentence_ratio": 0.14285714285714285,
+      "repeated_paragraph_ratio": 0.16666666666666666,
+      "heading_sequence_similarity": 1,
+      "banned_phrase_count": 0,
+      "banned_phrase_counts": {},
+      "recent_banned_phrase_counts": {},
+      "ngram_overlap": 0.45714285714285713,
+      "blueprint_repetition": 2,
+      "conclusion_similarity": 0.9271050693011066,
+      "repeated_sentence_count": 1,
+      "repeated_paragraph_count": 1,
+      "heading_sequence": [
+        "System Change",
+        "Bottleneck",
+        "Engineering Tradeoff",
+        "Validation Metric"
+      ],
+      "blocked": true,
+      "reasons": [
+        "repeated_sentence_ratio>0.12",
+        "heading_sequence_similarity>0.75",
+        "conclusion_similarity>0.7"
+      ]
+    },
+    "repetition_blocked": true,
+    "repetition_block_reasons": [
+      "repeated_sentence_ratio>0.12",
+      "heading_sequence_similarity>0.75",
+      "conclusion_similarity>0.7"
+    ],
+    "searchText": "IBM Genesis Mission Award Pairs $50M in Quantum Access With Algorithm-First AI Research StorageReview AI Infrastructure GPU clusters and deployment readiness Compute Capacity Expansion power_grid utilities, power-secured developers, and operators with firm interconnection positions developers and cloud buyers whose delivery dates depend on utility upgrades or energization schedules utility interconnection, equipment procurement, and energization milestones The source may still describe intent rather than delivered capacity, so the operating impact depends on follow-through. interconnection approvals, substation equipment dates, power purchase agreements, or disclosed energization windows APAC The U.S. Department of Energy has selected IBM for a Phase I Genesis Mission project focused on AI-assisted quantum application development. The company also plans to provide up t… AMD is a technical bottleneck item for operator alerts readers, with the infrastructure read limited to source-backed facts. The U.S. Department of Energy has selected IBM for a Phase I Genesis Mission project focused on AI-assisted quantum application development. The company also plans to provide up t The public card stays short because the available evidence supports a watchlist signal more than a full infrastructure memo. Operators and hyperscalers can use the item to test technical bottleneck before changing procurement, deployment, or risk assumptions. Technical Bottleneck teams should track interconnection approvals, substation equipment dates, power purchase agreements, or disclosed energization windows. Cloud and platform buyers should separate source evidence from generic AI demand before changing deployment plans. Interconnection approvals, substation equipment dates, power purchase agreements, or disclosed energization windows. The U.S. Department of Energy has selected IBM for a Phase I Genesis Mission project focused on AI-assisted quantum application development. The company also plans to provide up to $50 million in access to IBM quantum systems for DOE national laboratories and their partners over the next five years. The Genesis Mission is building a national scientific-computing framework that brings together AI, classical high-performance computing, quantum computing, scientific instruments, and research data. IBM&#8217;s selection adds a quantum component to the first set of projects under the Genesis Mission Request for Applications process. This work complements the DOE&#8217;s planned computing infrastructure at Oak Ridge National Laboratory. As previously reported, AMD&#8217;s Lux system is expected to become the first fully operational Genesis Mission platform, with funded projects slated to begin using it in October 2026. Lux combines AMD Instinct MI355X GPUs, EPYC CPUs, and Pensando networking to support AI services, conventional HPC workloads, simulation, and data-intensive research workflows. IBM&#8217;s contribution is directed at extending that model to include quantum resources for workloads where classical systems and AI alone are insufficient. IBM&#8217;s Phase I project will examine a reversed workflow for identifying quantum computing applications. Rather than beginning with a scientific problem and searching for a quantum algorithm, IBM plans to start with known quantum algorithms and use an agentic AI research assistant to locate scientific problems in published literature that meet the algorithms&#8217; requirements. operators hyperscalers cloud buyers investors The company also plans to provide up to $50 million in access to IBM quantum s… The practical effect is on compute supply, deployment speed, and network orchestration. The company also plans to provide up to $50 million in access to IBM quantum systems for DOE national laboratories and their partners over the next five years. As previously reported, AMD&#8217;s Lux system is expected to become the first fully operational Genesis Mission platform, with funded projects slated to begin using it in October 2026. As previously reported, AMD&#8217;s Lux system is expected… IBM Genesis Mission Award Pairs $50M in Quantum Access With Algorithm-First AI Research The U.S. AMD gpu power",
+    "heroImage": "/generated/articles/0c2cf9292cb67bb9-ibm-genesis-mission-award-pairs-50m-in-quantum-access-with-algorithm-first-ai-research/hero.webp",
+    "thumbnailImage": "/generated/articles/0c2cf9292cb67bb9-ibm-genesis-mission-award-pairs-50m-in-quantum-access-with-algorithm-first-ai-research/thumbnail.webp",
+    "ogImage": "/generated/articles/0c2cf9292cb67bb9-ibm-genesis-mission-award-pairs-50m-in-quantum-access-with-algorithm-first-ai-research/og.webp",
+    "legacyImage": "/generated/0c2cf9292cb67bb9.webp",
+    "imageStatus": "source-canonical",
+    "generatedImageProvider": "source-image",
+    "generatedImageModel": "origin-canonical"
+  },
+  {
     "id": "03cadd2d686e34e6",
     "source": "Toms Hardware",
     "url": "https://www.tomshardware.com/desktops/gaming-pcs/humble-nas-gets-transformed-into-a-gaming-pc-with-and-rtx-5060-hanging-from-its-side-frankenstein-rig-hides-dedicated-psu-in-drive-bay-to-achieve-vast-performance-increase-over-igpu",
@@ -56653,7 +57179,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:45:23.872Z",
+      "generatedAt": "2026-08-05T16:49:19.180Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Intel",
@@ -56809,9 +57335,9 @@
     "thumbnailImage": "/generated/articles/03cadd2d686e34e6-crazed-modder-turns-nas-into-a-gaming-pc-with-rtx-5060-hanging-from-the-side-boosts-frame-/thumbnail.webp",
     "ogImage": "/generated/articles/03cadd2d686e34e6-crazed-modder-turns-nas-into-a-gaming-pc-with-rtx-5060-hanging-from-the-side-boosts-frame-/og.webp",
     "legacyImage": "/generated/03cadd2d686e34e6.webp",
-    "imageStatus": "source-canonical",
     "generatedImageProvider": "source-image",
-    "generatedImageModel": "origin-canonical"
+    "generatedImageModel": "origin-canonical",
+    "imageStatus": "source-canonical"
   },
   {
     "id": "a41fb6f84a14567e",
@@ -57012,7 +57538,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:45:38.775Z",
+      "generatedAt": "2026-08-05T16:49:19.371Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "AMD",
@@ -57379,7 +57905,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:45:38.890Z",
+      "generatedAt": "2026-08-05T16:49:19.565Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Apple",
@@ -57739,7 +58265,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:45:39.005Z",
+      "generatedAt": "2026-08-05T16:49:19.757Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Microsoft",
@@ -58097,7 +58623,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:45:39.118Z",
+      "generatedAt": "2026-08-05T16:49:19.944Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "AI Data",
@@ -58461,7 +58987,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:45:39.234Z",
+      "generatedAt": "2026-08-05T16:49:20.137Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "NVIDIA",
@@ -58810,7 +59336,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:45:39.347Z",
+      "generatedAt": "2026-08-05T16:49:20.327Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "AMD",
@@ -59165,7 +59691,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:45:39.461Z",
+      "generatedAt": "2026-08-05T16:49:20.517Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Intel",
@@ -59512,7 +60038,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:45:39.575Z",
+      "generatedAt": "2026-08-05T16:49:20.709Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Microsoft",
@@ -59876,7 +60402,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:45:39.690Z",
+      "generatedAt": "2026-08-05T16:49:20.900Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Microsoft",
@@ -60217,7 +60743,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:45:39.803Z",
+      "generatedAt": "2026-08-05T16:49:21.090Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "AMD",
@@ -60580,7 +61106,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:45:39.918Z",
+      "generatedAt": "2026-08-05T16:49:21.281Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Supermicro",
@@ -60933,7 +61459,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:45:40.031Z",
+      "generatedAt": "2026-08-05T16:49:21.468Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "NVIDIA",
@@ -61295,7 +61821,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:45:40.148Z",
+      "generatedAt": "2026-08-05T16:49:21.664Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Microsoft",
@@ -61651,7 +62177,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:45:40.260Z",
+      "generatedAt": "2026-08-05T16:49:21.852Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "AMD",
@@ -62003,7 +62529,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:45:40.371Z",
+      "generatedAt": "2026-08-05T16:49:22.037Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "OpenAI",
@@ -62344,7 +62870,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:45:40.486Z",
+      "generatedAt": "2026-08-05T16:49:22.227Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "NVIDIA",
@@ -62718,7 +63244,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:45:40.601Z",
+      "generatedAt": "2026-08-05T16:49:22.423Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Amazon",
@@ -63094,7 +63620,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:45:40.717Z",
+      "generatedAt": "2026-08-05T16:49:22.617Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "OpenAI",
@@ -63451,7 +63977,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:45:40.831Z",
+      "generatedAt": "2026-08-05T16:49:22.807Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "AMD",
@@ -63803,7 +64329,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:45:40.946Z",
+      "generatedAt": "2026-08-05T16:49:22.999Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "ChangXin Memory Technologies",
@@ -64149,7 +64675,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:45:41.061Z",
+      "generatedAt": "2026-08-05T16:49:23.190Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Arm",
@@ -64494,7 +65020,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:45:41.174Z",
+      "generatedAt": "2026-08-05T16:49:23.378Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Uptime Institute Global Data",
@@ -64852,7 +65378,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:45:41.290Z",
+      "generatedAt": "2026-08-05T16:49:23.570Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "NVIDIA",
@@ -65196,7 +65722,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:45:41.402Z",
+      "generatedAt": "2026-08-05T16:49:23.758Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Amazon",
@@ -65554,7 +66080,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:45:41.516Z",
+      "generatedAt": "2026-08-05T16:49:23.948Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "NVIDIA",
@@ -65910,7 +66436,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:45:41.629Z",
+      "generatedAt": "2026-08-05T16:49:24.138Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "AMD",
@@ -66261,7 +66787,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:45:41.743Z",
+      "generatedAt": "2026-08-05T16:49:24.328Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Responsible Data",
@@ -66618,7 +67144,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:45:41.857Z",
+      "generatedAt": "2026-08-05T16:49:24.518Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Microsoft",
@@ -66970,7 +67496,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:45:41.973Z",
+      "generatedAt": "2026-08-05T16:49:24.712Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "tsmc",
@@ -67349,7 +67875,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:45:42.092Z",
+      "generatedAt": "2026-08-05T16:49:24.909Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "NVIDIA",
@@ -67726,7 +68252,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:45:42.208Z",
+      "generatedAt": "2026-08-05T16:49:25.104Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "NVIDIA",
@@ -68080,7 +68606,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:45:42.322Z",
+      "generatedAt": "2026-08-05T16:49:25.293Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Microsoft",
@@ -68436,7 +68962,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:45:42.438Z",
+      "generatedAt": "2026-08-05T16:49:25.484Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "NVIDIA",
@@ -68793,7 +69319,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:45:42.551Z",
+      "generatedAt": "2026-08-05T16:49:25.674Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Intel",
@@ -69134,7 +69660,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:45:42.663Z",
+      "generatedAt": "2026-08-05T16:49:25.863Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Digital Realty",
@@ -69503,7 +70029,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:45:42.778Z",
+      "generatedAt": "2026-08-05T16:49:26.054Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Supermicro",
@@ -69854,7 +70380,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:45:42.894Z",
+      "generatedAt": "2026-08-05T16:49:26.247Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "OpenAI",
@@ -70217,7 +70743,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:45:43.008Z",
+      "generatedAt": "2026-08-05T16:49:26.439Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "NVIDIA",
@@ -70570,7 +71096,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:45:43.122Z",
+      "generatedAt": "2026-08-05T16:49:26.631Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "AMD",
@@ -70911,7 +71437,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:45:43.235Z",
+      "generatedAt": "2026-08-05T16:49:26.820Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Google",
@@ -71292,7 +71818,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:45:43.351Z",
+      "generatedAt": "2026-08-05T16:49:27.014Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "NVIDIA",
@@ -71651,7 +72177,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:45:43.467Z",
+      "generatedAt": "2026-08-05T16:49:27.207Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "AMD",
@@ -72008,7 +72534,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:45:43.580Z",
+      "generatedAt": "2026-08-05T16:49:27.398Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "AMD",
@@ -72368,7 +72894,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:45:43.695Z",
+      "generatedAt": "2026-08-05T16:49:27.589Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Meta",
@@ -72735,7 +73261,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:45:43.811Z",
+      "generatedAt": "2026-08-05T16:49:27.784Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "AMD",
@@ -73100,7 +73626,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:45:43.925Z",
+      "generatedAt": "2026-08-05T16:49:27.975Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "For Sabey Data",
@@ -73460,7 +73986,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:45:44.039Z",
+      "generatedAt": "2026-08-05T16:49:28.166Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "AMD",
@@ -73811,7 +74337,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:45:44.154Z",
+      "generatedAt": "2026-08-05T16:49:28.359Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "AMD",
@@ -74169,7 +74695,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:45:44.269Z",
+      "generatedAt": "2026-08-05T16:49:28.552Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Intel",
@@ -74530,7 +75056,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:45:44.384Z",
+      "generatedAt": "2026-08-05T16:49:28.745Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "OpenAI",
@@ -74876,7 +75402,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:45:44.497Z",
+      "generatedAt": "2026-08-05T16:49:28.933Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Bringing Design Data",
@@ -75226,7 +75752,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:45:44.614Z",
+      "generatedAt": "2026-08-05T16:49:29.127Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "NVIDIA",
@@ -75595,7 +76121,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:45:44.730Z",
+      "generatedAt": "2026-08-05T16:49:29.321Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "TSMC",
@@ -75967,7 +76493,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:45:44.847Z",
+      "generatedAt": "2026-08-05T16:49:29.516Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Amazon",
@@ -76322,7 +76848,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:45:44.963Z",
+      "generatedAt": "2026-08-05T16:49:29.705Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "The International Energy",
@@ -76667,7 +77193,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:45:45.082Z",
+      "generatedAt": "2026-08-05T16:49:29.895Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "NVIDIA",
@@ -77030,7 +77556,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:45:45.196Z",
+      "generatedAt": "2026-08-05T16:49:30.084Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "AMD",
@@ -77373,7 +77899,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:45:45.311Z",
+      "generatedAt": "2026-08-05T16:49:30.276Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Amazon",
@@ -77734,7 +78260,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:45:45.427Z",
+      "generatedAt": "2026-08-05T16:49:30.468Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "AMD",
@@ -78094,7 +78620,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:45:45.540Z",
+      "generatedAt": "2026-08-05T16:49:30.659Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "AMD",
@@ -78458,7 +78984,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:45:45.655Z",
+      "generatedAt": "2026-08-05T16:49:30.850Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Broadcom",
@@ -78810,7 +79336,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:45:45.769Z",
+      "generatedAt": "2026-08-05T16:49:31.040Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "AMD",
@@ -79166,7 +79692,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:45:45.881Z",
+      "generatedAt": "2026-08-05T16:49:31.227Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Bloomberg",
@@ -79517,7 +80043,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:45:45.993Z",
+      "generatedAt": "2026-08-05T16:49:31.415Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Google",
@@ -79868,7 +80394,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:45:46.107Z",
+      "generatedAt": "2026-08-05T16:49:31.606Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "AMD",
@@ -80221,7 +80747,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:45:46.222Z",
+      "generatedAt": "2026-08-05T16:49:31.797Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Microsoft",
@@ -80575,7 +81101,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:45:46.337Z",
+      "generatedAt": "2026-08-05T16:49:31.988Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "TSMC",
@@ -80916,7 +81442,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:45:46.452Z",
+      "generatedAt": "2026-08-05T16:49:32.180Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "NVIDIA",
@@ -81273,7 +81799,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:45:46.567Z",
+      "generatedAt": "2026-08-05T16:49:32.371Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Nuvoton Technology Corporation",
@@ -81631,7 +82157,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:45:46.681Z",
+      "generatedAt": "2026-08-05T16:49:32.560Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "NVIDIA",
@@ -81980,7 +82506,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:45:46.796Z",
+      "generatedAt": "2026-08-05T16:49:32.751Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Helping Process Engineers Tackle Growing Co",
@@ -82337,7 +82863,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:45:46.912Z",
+      "generatedAt": "2026-08-05T16:49:32.943Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "NVIDIA",
@@ -82686,7 +83212,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:45:47.025Z",
+      "generatedAt": "2026-08-05T16:49:33.133Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "AMD",
@@ -83041,7 +83567,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:45:47.139Z",
+      "generatedAt": "2026-08-05T16:49:33.322Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Edge Data",
@@ -83396,7 +83922,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:45:47.255Z",
+      "generatedAt": "2026-08-05T16:49:33.512Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "OpenAI",
@@ -83750,7 +84276,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:45:47.370Z",
+      "generatedAt": "2026-08-05T16:49:33.703Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Supermicro",
@@ -84107,7 +84633,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:45:47.485Z",
+      "generatedAt": "2026-08-05T16:49:33.894Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "How Modular Data",
@@ -84466,7 +84992,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:45:47.599Z",
+      "generatedAt": "2026-08-05T16:49:34.083Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "xAI",
@@ -84816,7 +85342,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:45:47.714Z",
+      "generatedAt": "2026-08-05T16:49:34.274Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Samsung",
@@ -85164,7 +85690,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:45:47.828Z",
+      "generatedAt": "2026-08-05T16:49:34.465Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "OpenAI",
@@ -85511,7 +86037,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:45:47.943Z",
+      "generatedAt": "2026-08-05T16:49:34.656Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Super-Grid Transformer Revolution Powering AI Data",
@@ -85872,7 +86398,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:45:48.057Z",
+      "generatedAt": "2026-08-05T16:49:34.845Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "NVIDIA",
@@ -86220,7 +86746,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:45:48.175Z",
+      "generatedAt": "2026-08-05T16:49:35.035Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Scality Autonomous Data",
@@ -86576,7 +87102,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:45:48.290Z",
+      "generatedAt": "2026-08-05T16:49:35.223Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "NVIDIA",
@@ -86931,7 +87457,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:45:48.408Z",
+      "generatedAt": "2026-08-05T16:49:35.415Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Microsoft",
@@ -87303,7 +87829,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:45:48.523Z",
+      "generatedAt": "2026-08-05T16:49:35.605Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "OpenAI",
@@ -87649,7 +88175,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:45:48.639Z",
+      "generatedAt": "2026-08-05T16:49:35.794Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "NVIDIA",
@@ -87995,7 +88521,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:45:48.755Z",
+      "generatedAt": "2026-08-05T16:49:35.984Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "NVIDIA",
@@ -88352,7 +88878,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:45:48.871Z",
+      "generatedAt": "2026-08-05T16:49:36.173Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "AMD",
@@ -88703,7 +89229,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:45:48.986Z",
+      "generatedAt": "2026-08-05T16:49:36.362Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Meta",
@@ -89055,7 +89581,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:45:49.104Z",
+      "generatedAt": "2026-08-05T16:49:36.553Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Apple",
@@ -89411,7 +89937,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:45:49.217Z",
+      "generatedAt": "2026-08-05T16:49:36.740Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "BRUSH Power",
@@ -89766,7 +90292,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:45:49.330Z",
+      "generatedAt": "2026-08-05T16:49:36.928Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "NVIDIA",
@@ -90124,7 +90650,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:45:49.446Z",
+      "generatedAt": "2026-08-05T16:49:37.120Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Samsung",
@@ -90479,7 +91005,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:45:49.564Z",
+      "generatedAt": "2026-08-05T16:49:37.310Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "NVIDIA",
@@ -90836,7 +91362,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:45:49.677Z",
+      "generatedAt": "2026-08-05T16:49:37.497Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "AI Data",
@@ -91202,7 +91728,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:45:49.795Z",
+      "generatedAt": "2026-08-05T16:49:37.689Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "NVIDIA",
@@ -91568,7 +92094,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:45:49.910Z",
+      "generatedAt": "2026-08-05T16:49:37.881Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Microsoft",
@@ -91931,7 +92457,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:45:50.026Z",
+      "generatedAt": "2026-08-05T16:49:38.072Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "NVIDIA",
@@ -92284,7 +92810,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:45:50.141Z",
+      "generatedAt": "2026-08-05T16:49:38.260Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "NVIDIA",
@@ -92639,7 +93165,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:45:50.258Z",
+      "generatedAt": "2026-08-05T16:49:38.453Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "NVIDIA",
@@ -93004,7 +93530,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:45:50.376Z",
+      "generatedAt": "2026-08-05T16:49:38.644Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "AMD",
@@ -93352,7 +93878,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:45:50.493Z",
+      "generatedAt": "2026-08-05T16:49:38.836Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "NVIDIA",
@@ -93709,7 +94235,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:45:50.609Z",
+      "generatedAt": "2026-08-05T16:49:39.026Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Intel",
@@ -94083,7 +94609,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:45:50.728Z",
+      "generatedAt": "2026-08-05T16:49:39.222Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "AMD",
@@ -94441,7 +94967,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:45:50.846Z",
+      "generatedAt": "2026-08-05T16:49:39.412Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Microsoft",
@@ -94795,7 +95321,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:45:50.964Z",
+      "generatedAt": "2026-08-05T16:49:39.605Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "NVIDIA",
@@ -95153,7 +95679,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:45:51.078Z",
+      "generatedAt": "2026-08-05T16:49:39.793Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "First PCIe Gen6 Data",
@@ -95508,7 +96034,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:45:51.212Z",
+      "generatedAt": "2026-08-05T16:49:39.985Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "AMD",
@@ -96050,7 +96576,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:45:51.380Z",
+      "generatedAt": "2026-08-05T16:49:40.251Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Google",
@@ -96390,7 +96916,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:45:51.495Z",
+      "generatedAt": "2026-08-05T16:49:40.441Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "AMD",
@@ -96746,7 +97272,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:45:51.611Z",
+      "generatedAt": "2026-08-05T16:49:40.631Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "OpenAI",
@@ -97093,7 +97619,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:45:51.726Z",
+      "generatedAt": "2026-08-05T16:49:40.821Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Arm",
@@ -97446,7 +97972,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:45:51.842Z",
+      "generatedAt": "2026-08-05T16:49:41.012Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "NVIDIA",
@@ -97797,7 +98323,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:45:51.958Z",
+      "generatedAt": "2026-08-05T16:49:41.203Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "SK hynix",
@@ -98156,7 +98682,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:45:52.076Z",
+      "generatedAt": "2026-08-05T16:49:41.394Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Intel",
@@ -98520,7 +99046,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:45:52.193Z",
+      "generatedAt": "2026-08-05T16:49:41.587Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Couchbase AI Data",
@@ -98898,7 +99424,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:45:52.313Z",
+      "generatedAt": "2026-08-05T16:49:41.783Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "SoftBank",
@@ -99256,7 +99782,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:45:52.428Z",
+      "generatedAt": "2026-08-05T16:49:41.973Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "NERC Flags AI Data",
@@ -99613,7 +100139,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:45:52.543Z",
+      "generatedAt": "2026-08-05T16:49:42.163Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "SK hynix",
@@ -99987,7 +100513,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:45:52.665Z",
+      "generatedAt": "2026-08-05T16:49:42.357Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "What Technologies",
@@ -100337,7 +100863,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:45:52.781Z",
+      "generatedAt": "2026-08-05T16:49:42.572Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "AI Data",
@@ -100685,7 +101211,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:45:52.899Z",
+      "generatedAt": "2026-08-05T16:49:42.766Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Inference Systems",
@@ -101036,7 +101562,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:45:53.015Z",
+      "generatedAt": "2026-08-05T16:49:42.956Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Dominion Energy",
@@ -101409,7 +101935,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:45:53.131Z",
+      "generatedAt": "2026-08-05T16:49:43.147Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Apple",
@@ -101772,7 +102298,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:45:53.246Z",
+      "generatedAt": "2026-08-05T16:49:43.339Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "AMD",
@@ -102127,7 +102653,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:45:53.364Z",
+      "generatedAt": "2026-08-05T16:49:43.528Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Structure Research Forecasts AI Data",
@@ -102716,7 +103242,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:45:53.529Z",
+      "generatedAt": "2026-08-05T16:49:43.801Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "AMD",
@@ -103072,7 +103598,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:45:53.645Z",
+      "generatedAt": "2026-08-05T16:49:43.993Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "AMD",
@@ -103433,7 +103959,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:45:53.762Z",
+      "generatedAt": "2026-08-05T16:49:44.185Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Anthropic",
@@ -103787,7 +104313,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:45:53.878Z",
+      "generatedAt": "2026-08-05T16:49:44.374Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "AMD",
@@ -104140,7 +104666,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:45:53.995Z",
+      "generatedAt": "2026-08-05T16:49:44.566Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "NVIDIA",
@@ -104484,7 +105010,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:45:54.109Z",
+      "generatedAt": "2026-08-05T16:49:44.755Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Amazon",
@@ -104844,7 +105370,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:45:54.224Z",
+      "generatedAt": "2026-08-05T16:49:44.945Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "SoftBank",
@@ -105191,7 +105717,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:45:54.337Z",
+      "generatedAt": "2026-08-05T16:49:45.135Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "AMD",
@@ -105553,7 +106079,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:45:54.451Z",
+      "generatedAt": "2026-08-05T16:49:45.325Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Supermicro",
@@ -105910,7 +106436,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:45:54.567Z",
+      "generatedAt": "2026-08-05T16:49:45.517Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Apple",
@@ -106258,7 +106784,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:45:54.679Z",
+      "generatedAt": "2026-08-05T16:49:45.705Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "AMD",
@@ -106615,7 +107141,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:45:54.792Z",
+      "generatedAt": "2026-08-05T16:49:45.894Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Intel",
@@ -106981,7 +107507,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:45:54.906Z",
+      "generatedAt": "2026-08-05T16:49:46.084Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Supermicro",
@@ -107329,7 +107855,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:45:55.020Z",
+      "generatedAt": "2026-08-05T16:49:46.273Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Amazon",
@@ -107695,7 +108221,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:45:55.138Z",
+      "generatedAt": "2026-08-05T16:49:46.462Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "AI Data",
@@ -108043,7 +108569,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:45:55.249Z",
+      "generatedAt": "2026-08-05T16:49:46.649Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "AMD",
@@ -108402,7 +108928,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:45:55.364Z",
+      "generatedAt": "2026-08-05T16:49:46.840Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "AMD",
@@ -108765,7 +109291,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:45:55.480Z",
+      "generatedAt": "2026-08-05T16:49:47.033Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "NVIDIA",
@@ -109111,7 +109637,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:45:55.593Z",
+      "generatedAt": "2026-08-05T16:49:47.222Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Bloomberg",
@@ -109473,7 +109999,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:45:55.713Z",
+      "generatedAt": "2026-08-05T16:49:47.415Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Meta",
@@ -109831,7 +110357,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:45:55.827Z",
+      "generatedAt": "2026-08-05T16:49:47.606Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "NVIDIA",
@@ -110187,7 +110713,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:45:55.942Z",
+      "generatedAt": "2026-08-05T16:49:47.798Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Google",
@@ -110547,7 +111073,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:45:56.059Z",
+      "generatedAt": "2026-08-05T16:49:47.993Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Intel",
@@ -110917,7 +111443,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:45:56.175Z",
+      "generatedAt": "2026-08-05T16:49:48.185Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "SK hynix",
@@ -111271,7 +111797,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:45:56.291Z",
+      "generatedAt": "2026-08-05T16:49:48.378Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "NVIDIA",
@@ -111630,7 +112156,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:45:56.404Z",
+      "generatedAt": "2026-08-05T16:49:48.566Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "NetApp",
@@ -111986,7 +112512,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:45:56.518Z",
+      "generatedAt": "2026-08-05T16:49:48.756Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "SoftBank",
@@ -112344,7 +112870,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:45:56.630Z",
+      "generatedAt": "2026-08-05T16:49:48.942Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Intel",
@@ -112700,7 +113226,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:45:56.742Z",
+      "generatedAt": "2026-08-05T16:49:49.130Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Anthropic",
@@ -113050,7 +113576,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:45:56.853Z",
+      "generatedAt": "2026-08-05T16:49:49.317Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Apple",
@@ -113393,7 +113919,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:45:56.967Z",
+      "generatedAt": "2026-08-05T16:49:49.505Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Bloomberg",
@@ -113739,7 +114265,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:45:57.080Z",
+      "generatedAt": "2026-08-05T16:49:49.694Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Intel",
@@ -114081,7 +114607,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:45:57.194Z",
+      "generatedAt": "2026-08-05T16:49:49.884Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Red Hat",
@@ -114435,7 +114961,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:45:57.309Z",
+      "generatedAt": "2026-08-05T16:49:50.071Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Orbital Data",
@@ -114777,7 +115303,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:45:57.422Z",
+      "generatedAt": "2026-08-05T16:49:50.259Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Shoals Technologies Group",
@@ -115134,7 +115660,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:45:57.535Z",
+      "generatedAt": "2026-08-05T16:49:50.449Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "AMD",
@@ -115482,7 +116008,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:45:57.649Z",
+      "generatedAt": "2026-08-05T16:49:50.638Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Samsung",
@@ -115844,7 +116370,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:45:57.763Z",
+      "generatedAt": "2026-08-05T16:49:50.828Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Anthropic",
@@ -116195,7 +116721,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:45:57.878Z",
+      "generatedAt": "2026-08-05T16:49:51.019Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "NVIDIA",
@@ -116565,7 +117091,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:45:57.994Z",
+      "generatedAt": "2026-08-05T16:49:51.210Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Gemini. The Federal Energy",
@@ -116912,7 +117438,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:45:58.108Z",
+      "generatedAt": "2026-08-05T16:49:51.399Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "arm",
@@ -117284,7 +117810,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:45:58.225Z",
+      "generatedAt": "2026-08-05T16:49:51.594Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Apple",
@@ -117645,7 +118171,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:45:58.338Z",
+      "generatedAt": "2026-08-05T16:49:51.781Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Intel",
@@ -117998,7 +118524,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:45:58.451Z",
+      "generatedAt": "2026-08-05T16:49:51.971Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Private Cloud",
@@ -118341,7 +118867,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:45:58.563Z",
+      "generatedAt": "2026-08-05T16:49:52.157Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Google",
@@ -118701,7 +119227,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:45:58.680Z",
+      "generatedAt": "2026-08-05T16:49:52.350Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "NVIDIA",
@@ -119063,7 +119589,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:45:58.797Z",
+      "generatedAt": "2026-08-05T16:49:52.544Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "NVIDIA",
@@ -119406,7 +119932,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:45:58.911Z",
+      "generatedAt": "2026-08-05T16:49:52.733Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "AMD",
@@ -119767,7 +120293,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:45:59.024Z",
+      "generatedAt": "2026-08-05T16:49:52.922Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Amazon",
@@ -120120,7 +120646,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:45:59.136Z",
+      "generatedAt": "2026-08-05T16:49:53.111Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Anthropic",
@@ -120473,7 +120999,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:45:59.249Z",
+      "generatedAt": "2026-08-05T16:49:53.299Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Anthropic",
@@ -120829,7 +121355,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:45:59.361Z",
+      "generatedAt": "2026-08-05T16:49:53.486Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Meta",
@@ -121186,7 +121712,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:45:59.475Z",
+      "generatedAt": "2026-08-05T16:49:53.675Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Microsoft",
@@ -121539,7 +122065,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:45:59.589Z",
+      "generatedAt": "2026-08-05T16:49:53.865Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Microsoft",
@@ -121901,7 +122427,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:45:59.702Z",
+      "generatedAt": "2026-08-05T16:49:54.053Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "AMD",
@@ -122269,7 +122795,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:45:59.817Z",
+      "generatedAt": "2026-08-05T16:49:54.247Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Anthropic",
@@ -122614,7 +123140,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:45:59.928Z",
+      "generatedAt": "2026-08-05T16:49:54.431Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "AMD",
@@ -122982,7 +123508,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:46:00.041Z",
+      "generatedAt": "2026-08-05T16:49:54.622Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "OpenAI",
@@ -123339,7 +123865,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:46:00.154Z",
+      "generatedAt": "2026-08-05T16:49:54.809Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Intel",
@@ -123705,7 +124231,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:46:00.269Z",
+      "generatedAt": "2026-08-05T16:49:55.000Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Host Hereford Edge Data",
@@ -124052,7 +124578,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:46:00.381Z",
+      "generatedAt": "2026-08-05T16:49:55.189Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Microsoft",
@@ -124414,7 +124940,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:46:00.497Z",
+      "generatedAt": "2026-08-05T16:49:55.380Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Arm",
@@ -124765,7 +125291,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:46:00.611Z",
+      "generatedAt": "2026-08-05T16:49:55.571Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "NVIDIA",
@@ -125136,7 +125662,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:46:00.728Z",
+      "generatedAt": "2026-08-05T16:49:55.765Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "NVIDIA",
@@ -125496,7 +126022,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:46:00.842Z",
+      "generatedAt": "2026-08-05T16:49:55.958Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Digital Realty",
@@ -125859,7 +126385,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:46:00.958Z",
+      "generatedAt": "2026-08-05T16:49:56.151Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Google",
@@ -126220,7 +126746,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:46:01.073Z",
+      "generatedAt": "2026-08-05T16:49:56.340Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "OpenAI",
@@ -126578,7 +127104,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:46:01.186Z",
+      "generatedAt": "2026-08-05T16:49:56.529Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Microsoft",
@@ -126935,7 +127461,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:46:01.297Z",
+      "generatedAt": "2026-08-05T16:49:56.715Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Apple",
@@ -127291,7 +127817,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:46:01.411Z",
+      "generatedAt": "2026-08-05T16:49:56.904Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Apple",
@@ -127637,7 +128163,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:46:01.525Z",
+      "generatedAt": "2026-08-05T16:49:57.095Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Meta",
@@ -128000,7 +128526,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:46:01.639Z",
+      "generatedAt": "2026-08-05T16:49:57.284Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "NVIDIA",
@@ -128370,7 +128896,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:46:01.756Z",
+      "generatedAt": "2026-08-05T16:49:57.477Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "NVIDIA",
@@ -128729,7 +129255,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:46:01.870Z",
+      "generatedAt": "2026-08-05T16:49:57.668Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Intel",
@@ -129084,7 +129610,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:46:01.983Z",
+      "generatedAt": "2026-08-05T16:49:57.858Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "NVIDIA",
@@ -129435,7 +129961,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:46:02.095Z",
+      "generatedAt": "2026-08-05T16:49:58.043Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "OpenAI",
@@ -129797,7 +130323,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:46:02.208Z",
+      "generatedAt": "2026-08-05T16:49:58.239Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "AMD",
@@ -130142,7 +130668,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:46:02.322Z",
+      "generatedAt": "2026-08-05T16:49:58.428Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Intel",
@@ -130505,7 +131031,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:46:02.437Z",
+      "generatedAt": "2026-08-05T16:49:58.621Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Microsoft",
@@ -130862,7 +131388,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:46:02.551Z",
+      "generatedAt": "2026-08-05T16:49:58.810Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Intel",
@@ -131219,7 +131745,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:46:02.666Z",
+      "generatedAt": "2026-08-05T16:49:59.002Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "NetApp",
@@ -131585,7 +132111,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:46:02.781Z",
+      "generatedAt": "2026-08-05T16:49:59.194Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Host Dumas Edge Data",
@@ -131936,7 +132462,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:46:02.893Z",
+      "generatedAt": "2026-08-05T16:49:59.380Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "NVIDIA",
@@ -132300,7 +132826,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:46:03.003Z",
+      "generatedAt": "2026-08-05T16:49:59.564Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Anthropic",
@@ -132665,7 +133191,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:46:03.117Z",
+      "generatedAt": "2026-08-05T16:49:59.755Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Samsung",
@@ -133023,7 +133549,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:46:03.231Z",
+      "generatedAt": "2026-08-05T16:49:59.945Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "CoolIT Systems",
@@ -133379,7 +133905,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:46:03.344Z",
+      "generatedAt": "2026-08-05T16:50:00.132Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Microsoft",
@@ -140296,7 +140822,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:46:04.575Z",
+      "generatedAt": "2026-08-05T16:50:02.228Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Semiconductor Engineering",
@@ -148335,7 +148861,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-01T16:09:51.355Z",
+      "generatedAt": "2026-08-05T16:50:04.487Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Ferrari is using IBM’s AI to create F1 superfans",
@@ -151935,7 +152461,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:46:06.714Z",
+      "generatedAt": "2026-08-05T16:50:05.938Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "NetApp",
@@ -156094,7 +156620,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:46:07.475Z",
+      "generatedAt": "2026-08-05T16:50:07.228Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Google",
@@ -162071,7 +162597,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:46:08.564Z",
+      "generatedAt": "2026-08-05T16:50:09.074Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "NVIDIA",
@@ -166500,7 +167026,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:46:09.418Z",
+      "generatedAt": "2026-08-05T16:50:10.524Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Bloomberg",
@@ -167165,7 +167691,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:46:09.567Z",
+      "generatedAt": "2026-08-05T16:50:10.778Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Apple",
@@ -172032,7 +172558,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:46:10.466Z",
+      "generatedAt": "2026-08-05T16:50:12.306Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Bloomberg",
@@ -172417,7 +172943,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:46:10.571Z",
+      "generatedAt": "2026-08-05T16:50:12.484Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Meta",
@@ -178312,7 +178838,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:46:11.704Z",
+      "generatedAt": "2026-08-05T16:50:14.409Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "OpenAI",
@@ -179732,7 +180258,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:46:11.996Z",
+      "generatedAt": "2026-08-05T16:50:14.904Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Google",
@@ -203003,7 +203529,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-05T09:46:16.650Z",
+      "generatedAt": "2026-08-05T16:50:22.812Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Toms Hardware",
