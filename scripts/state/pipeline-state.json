@@ -753,7 +753,9 @@
     "5c89fb4e91b8bf91",
     "5c9b0cf413ba1d25",
     "cd0168485ccd25c9",
-    "a41fb6f84a14567e"
+    "a41fb6f84a14567e",
+    "c74fe35808004734",
+    "03cadd2d686e34e6"
   ],
   "dayPlans": {
     "2026-03-24": {
@@ -39452,18 +39454,18 @@
     "2026-08-05": {
       "date": "2026-08-05",
       "createdAt": "2026-08-04T16:58:25.900Z",
-      "refreshedAt": "2026-08-05T00:05:59.126Z",
+      "refreshedAt": "2026-08-05T09:44:13.671Z",
       "candidateWindowHours": 24,
       "curatedItems": [
         {
-          "id": "cd0168485ccd25c9",
-          "source": "HPCwire",
-          "url": "https://www.hpcwire.com/off-the-wire/runware-debuts-containerized-ai-inference-pods-for-faster-gpu-deployment/",
-          "title": "Runware Debuts Containerized AI Inference Pods for Faster GPU Deployment",
-          "snippet": "SAN FRANCISCO, Aug. 4, 2026 — Runware, an AI inference and AI-native compute company, today unveiled the Sonic Inference Pod, a modular data center designed and built to rapidly increase access to AI inference infrastru…",
-          "contentText": "SAN FRANCISCO, Aug. 4, 2026 &#8212; Runware , an AI inference and AI-native compute company, today unveiled the Sonic Inference Pod, a modular data center designed and built to rapidly increase access to AI inference infrastructure for model providers. Unlike traditional data centers, which take years to build and cost $9-19 billion per gigawatt, Runware’s Sonic Inference Pod delivers 1 megawatt of compute in a 20-foot shipping container, with custom servers, PCBs, and a closed-loop cooling system engineered for inference performance. The result is facilities costs that are up to 100x lower than a traditional gigawatt-scale data center build, a saving Runware passes directly to clients through its GPU compute pricing. Credit: Runware Runware is deploying a network of dozens of pods and te…",
-          "publishedAt": "2026-08-04T23:31:28.000Z",
-          "sourceImage": "https://www.hpcwire.com/wp-content/uploads/2026/08/Runware-Image-300x170.jpg",
+          "id": "c74fe35808004734",
+          "source": "Semiconductor Engineering",
+          "url": "https://semiengineering.com/building-ai-factories-with-ip-solutions/",
+          "title": "Building AI Factories With IP Solutions",
+          "snippet": "AI factories demand bandwidth-first design, latency-deterministic fabrics, energy-aware memory tiers, and scalable multi‑die integration. The post Building AI Factories With IP Solutions appeared first on Semiconductor…",
+          "contentText": "Data centers have evolved—fast. We’ve moved from traditional high-performance computing (HPC) virtualization to powering AI at scale, with GPUs and XPUs driving massive training and inference workloads. AI factories are a different beast running huge, dedicated nodes for extended training tasks—far beyond what conventional data centers can handle. Compute and communication paradigms have shifted, and the protocols have advanced accordingly to keep up. But here’s the challenge: AI accelerators generate and consume data in ways that are nothing like HPC or general cloud workloads. To break through bottlenecks, the industry has been introducing next-gen protocols—newer versions of memory standards, as well as interface standards such as Ultra Accelerator Link (UALink), Scale-Up Ethernet (SUE…",
+          "publishedAt": "2026-08-05T07:02:30.000Z",
+          "sourceImage": null,
           "region": "US",
           "language": "en",
           "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
@@ -39477,49 +39479,48 @@
             "cloud buyers",
             "investors"
           ],
-          "article_type": "Operations Update",
-          "urgency_score": 0.5,
-          "taxonomy_confidence": 0.77,
+          "article_type": "Supply Chain",
+          "urgency_score": 0.49,
+          "taxonomy_confidence": 0.85,
           "taxonomy_reasons": [
             "ai infrastructure",
-            "neocloud"
+            "neocloud",
+            "hpc"
           ],
           "direct_ai_infrastructure_relevance": 1,
-          "data_center_relevance": 0.84,
+          "data_center_relevance": 0.42,
           "cloud_capacity_relevance": 0,
-          "semiconductor_relevance": 0.297,
-          "power_grid_relevance": 0.64,
-          "cooling_relevance": 0.34,
+          "semiconductor_relevance": 0.8,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
           "capital_markets_relevance": 0,
-          "enterprise_ai_infrastructure_relevance": 0,
-          "infrastructure_relevance_score": 0.985,
+          "enterprise_ai_infrastructure_relevance": 0.5,
+          "infrastructure_relevance_score": 0.976,
           "infrastructure_relevance_tier": "full_memo",
           "infrastructure_relevance_action": "generate_full_memo",
           "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "data_center_relevance:0.84(data center, data centers)",
-            "semiconductor_relevance:0.30(gpu)",
-            "power_grid_relevance:0.64(megawatt, gigawatt)",
-            "cooling_relevance:0.34(cooling)"
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud, high-performance computing)",
+            "data_center_relevance:0.42(data centers)",
+            "semiconductor_relevance:0.80(semiconductor, accelerator, gpu)",
+            "enterprise_ai_infrastructure_relevance:0.50(virtualization, inference workloads)"
           ],
           "infrastructure_relevance": {
             "direct_ai_infrastructure_relevance": 1,
-            "data_center_relevance": 0.84,
+            "data_center_relevance": 0.42,
             "cloud_capacity_relevance": 0,
-            "semiconductor_relevance": 0.297,
-            "power_grid_relevance": 0.64,
-            "cooling_relevance": 0.34,
+            "semiconductor_relevance": 0.8,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
             "capital_markets_relevance": 0,
-            "enterprise_ai_infrastructure_relevance": 0,
-            "infrastructure_relevance_score": 0.985,
+            "enterprise_ai_infrastructure_relevance": 0.5,
+            "infrastructure_relevance_score": 0.976,
             "infrastructure_relevance_tier": "full_memo",
             "infrastructure_relevance_action": "generate_full_memo",
             "infrastructure_relevance_reasons": [
-              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-              "data_center_relevance:0.84(data center, data centers)",
-              "semiconductor_relevance:0.30(gpu)",
-              "power_grid_relevance:0.64(megawatt, gigawatt)",
-              "cooling_relevance:0.34(cooling)"
+              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud, high-performance computing)",
+              "data_center_relevance:0.42(data centers)",
+              "semiconductor_relevance:0.80(semiconductor, accelerator, gpu)",
+              "enterprise_ai_infrastructure_relevance:0.50(virtualization, inference workloads)"
             ],
             "infrastructureRelevanceAction": "generate_full_memo",
             "articlePagePublished": true,
@@ -39530,14 +39531,14 @@
           "score": 87
         },
         {
-          "id": "a41fb6f84a14567e",
+          "id": "03cadd2d686e34e6",
           "source": "Toms Hardware",
-          "url": "https://www.tomshardware.com/tech-industry/amd-doubles-data-center-revenue-year-over-year-but-gaming-revenue-plunged-by-31-percent-ceo-lisa-su-says-prices-have-weighed-on-consumer-demand-but-is-optimistic-about-client-market",
-          "title": "AMD doubles data center revenue year over year, but gaming revenue plunged by 31% — CEO Lisa Su says prices have 'weighed on' consumer demand but is 'optimistic' about client market",
-          "snippet": "AMD reported record revenue in Q2 2026, including doubling its data center business year-over-year, but gaming revenue dived 31%.",
-          "contentText": "AMD’s Q2 2026 financial results show record revenue across the business, but gaming is contributing less and less to that overall pie. Overall, AMD’s Q2 revenue was $11.5 billion, up 50% year-over-year and up 13% quarter-over-quarter. In AMD’s gaming segment, however, it saw $779 million in revenue, down 31% YoY due to “lower semi-custom revenue,” according to AMD’s press release. Go deeper with TH Premium: CPU (Image credit: Tom's Hardware) CPU scaling with DLSS Ryzen to the top: How AMD innovated in the gaming CPU market How ARM is working its way into PCs AMD CES 2026 gaming trends press Q&A roundtable transcript That’s not a new story, as AMD has continually pointed to the late stage of the console lifecycle as the driving force behind declining gaming revenue. CEO Lisa Su, however, a…",
-          "publishedAt": "2026-08-04T22:03:07.000Z",
-          "sourceImage": "https://cdn.mos.cms.futurecdn.net/pAi4uHF9wB3xhB6vcJpS9i-1280-80.jpg",
+          "url": "https://www.tomshardware.com/desktops/gaming-pcs/humble-nas-gets-transformed-into-a-gaming-pc-with-and-rtx-5060-hanging-from-its-side-frankenstein-rig-hides-dedicated-psu-in-drive-bay-to-achieve-vast-performance-increase-over-igpu",
+          "title": "Crazed modder turns NAS into a gaming PC with RTX 5060 hanging from the side, boosts frame rate by 828% — Frankenstein rig hides dedicated PSU in drive bay, breaks Time Spy world record for the onboard CPU",
+          "snippet": "A modder has attached a full-sized RTX 5060 graphics card to a ZimaCube 2 NAS server and achieved up to 8x faster performance in games. The jerry-rigged setup doesn't look the most polished, and the CPU is heavily bottl…",
+          "contentText": "It seems the global component crisis has skyrocketed the prices of storage to the point where some alternative ways of utilizing a NAS have popped up. YouTube PC enthusiast TrashBench recently took a ZimaCube 2 NAS and modded it into a gaming PC, driven by an RTX 5060 graphics card. Despite the low-power laptop CPU inside the server, the results still showed an astronomical improvement in gaming performance across the board, improving frame rates by 828% in some tests and breaking the Time Spy world record for the Intel Core i5-1235U CPU. For context, the ZimaCube 2 is powered by an Intel Core i5-1235U CPU, which is an Alder Lake chip featuring just two P-cores and eight E-cores, alongside Iris Xe integrated graphics. The iGPU is weak because that's all that's needed for a server (if it's…",
+          "publishedAt": "2026-08-05T09:21:13.000Z",
+          "sourceImage": "https://cdn.mos.cms.futurecdn.net/3NEvmPuLpnMaWGtcqSAa56-1280-80.png",
           "region": "US",
           "language": "en",
           "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
@@ -39551,45 +39552,45 @@
             "cloud buyers",
             "investors"
           ],
-          "article_type": "Product / Platform Update",
-          "urgency_score": 0.46,
+          "article_type": "Other",
+          "urgency_score": 0.53,
           "taxonomy_confidence": 0.77,
           "taxonomy_reasons": [
             "ai infrastructure",
             "neocloud"
           ],
           "direct_ai_infrastructure_relevance": 1,
-          "data_center_relevance": 0.55,
+          "data_center_relevance": 0,
           "cloud_capacity_relevance": 0,
-          "semiconductor_relevance": 0.517,
-          "power_grid_relevance": 0,
+          "semiconductor_relevance": 0.42,
+          "power_grid_relevance": 0.22,
           "cooling_relevance": 0,
           "capital_markets_relevance": 0,
-          "enterprise_ai_infrastructure_relevance": 0,
-          "infrastructure_relevance_score": 0.886,
+          "enterprise_ai_infrastructure_relevance": 0.18,
+          "infrastructure_relevance_score": 0.857,
           "infrastructure_relevance_tier": "full_memo",
           "infrastructure_relevance_action": "generate_full_memo",
           "infrastructure_relevance_reasons": [
             "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "data_center_relevance:0.55(data center)",
-            "semiconductor_relevance:0.52(amd, gpu)"
+            "semiconductor_relevance:0.42(intel, gpu)",
+            "power_grid_relevance:0.22(power)"
           ],
           "infrastructure_relevance": {
             "direct_ai_infrastructure_relevance": 1,
-            "data_center_relevance": 0.55,
+            "data_center_relevance": 0,
             "cloud_capacity_relevance": 0,
-            "semiconductor_relevance": 0.517,
-            "power_grid_relevance": 0,
+            "semiconductor_relevance": 0.42,
+            "power_grid_relevance": 0.22,
             "cooling_relevance": 0,
             "capital_markets_relevance": 0,
-            "enterprise_ai_infrastructure_relevance": 0,
-            "infrastructure_relevance_score": 0.886,
+            "enterprise_ai_infrastructure_relevance": 0.18,
+            "infrastructure_relevance_score": 0.857,
             "infrastructure_relevance_tier": "full_memo",
             "infrastructure_relevance_action": "generate_full_memo",
             "infrastructure_relevance_reasons": [
               "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-              "data_center_relevance:0.55(data center)",
-              "semiconductor_relevance:0.52(amd, gpu)"
+              "semiconductor_relevance:0.42(intel, gpu)",
+              "power_grid_relevance:0.22(power)"
             ],
             "infrastructureRelevanceAction": "generate_full_memo",
             "articlePagePublished": true,
@@ -39597,7 +39598,151 @@
             "archiveOnly": false,
             "archiveOnlyReason": null
           },
-          "score": 83
+          "score": 82
+        },
+        {
+          "id": "74fbdd7b0f256072",
+          "source": "Data Center Knowledge",
+          "url": "https://www.datacenterknowledge.com/data-center-chips/gpus-suck-former-intel-ceo-slams-data-center-hardware-limitations",
+          "title": "‘GPUs Suck’: Former Intel CEO Slams Data Center Hardware Limitations",
+          "snippet": "At Ai4, Pat Gelsinger says AI’s future hinges on boosting power efficiency, infrastructure, and economics – not simply deploying more GPUs.",
+          "contentText": "At Ai4, Pat Gelsinger says AI’s future hinges on boosting power efficiency, infrastructure, and economics – not simply deploying more GPUs.",
+          "publishedAt": "2026-08-05T09:05:00.000Z",
+          "sourceImage": "https://eu-images.contentstack.com/v3/assets/blt8eb3cdfc1fce5194/blt610302d97c3508e2/6a7269ee9aeba23069b547fa/Pat-Gelsinger-Shane-Snider.jpg?width=720&quality=80&disable=upscale",
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "Colocation & Wholesale",
+          "category": "Data Centers",
+          "primary_category": "Data Centers",
+          "secondary_category": "Campus development and colocation capacity",
+          "infrastructure_layer": "Facility",
+          "affected_stakeholders": [
+            "data center operators",
+            "developers",
+            "site selectors",
+            "investors"
+          ],
+          "article_type": "Other",
+          "urgency_score": 0.55,
+          "taxonomy_confidence": 0.86,
+          "taxonomy_reasons": [
+            "data center",
+            "colocation",
+            "wholesale"
+          ],
+          "direct_ai_infrastructure_relevance": 0.78,
+          "data_center_relevance": 0.89,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0.27,
+          "power_grid_relevance": 0.22,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.908,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:0.78",
+            "data_center_relevance:0.89(data center, colocation)",
+            "semiconductor_relevance:0.27(intel)",
+            "power_grid_relevance:0.22(power)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 0.78,
+            "data_center_relevance": 0.89,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0.27,
+            "power_grid_relevance": 0.22,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.908,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:0.78",
+              "data_center_relevance:0.89(data center, colocation)",
+              "semiconductor_relevance:0.27(intel)",
+              "power_grid_relevance:0.22(power)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 77
+        },
+        {
+          "id": "382961c8de50bc9b",
+          "source": "Bloomberg Technology",
+          "url": "https://www.bloomberg.com/news/articles/2026-08-05/taiyo-yuden-raises-earnings-forecast-capex-plans-on-ai-demand",
+          "title": "Taiyo Yuden Raises Earnings Forecast, Capex Plans on AI Demand",
+          "snippet": "Taiyo Yuden Co., a maker of a key component used in AI data centers, boosted its full-year earnings outlook by 50% to above estimates and said it’s speeding up production capacity expansion plans to meet accelerating de…",
+          "contentText": "Taiyo Yuden Co., a maker of a key component used in AI data centers, boosted its full-year earnings outlook by 50% to above estimates and said it’s speeding up production capacity expansion plans to meet accelerating demand.",
+          "publishedAt": "2026-08-05T08:17:48.000Z",
+          "sourceImage": null,
+          "region": "APAC",
+          "language": "en",
+          "defaultCategory": "Hyperscalers & Cloud",
+          "category": "Capital Markets",
+          "primary_category": "Capital Markets",
+          "secondary_category": "Financing, valuation, and capital structure",
+          "infrastructure_layer": "Capital",
+          "affected_stakeholders": [
+            "investors",
+            "lenders",
+            "developers",
+            "operators"
+          ],
+          "article_type": "Capacity Expansion",
+          "urgency_score": 0.52,
+          "taxonomy_confidence": 0.62,
+          "taxonomy_reasons": [
+            "capex"
+          ],
+          "direct_ai_infrastructure_relevance": 0.78,
+          "data_center_relevance": 0.42,
+          "cloud_capacity_relevance": 0.6,
+          "semiconductor_relevance": 0,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0.378,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.804,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:0.78",
+            "data_center_relevance:0.42(data centers)",
+            "cloud_capacity_relevance:0.60(capacity expansion, hyperscalers)",
+            "capital_markets_relevance:0.38(capex)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 0.78,
+            "data_center_relevance": 0.42,
+            "cloud_capacity_relevance": 0.6,
+            "semiconductor_relevance": 0,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0.378,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.804,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:0.78",
+              "data_center_relevance:0.42(data centers)",
+              "cloud_capacity_relevance:0.60(capacity expansion, hyperscalers)",
+              "capital_markets_relevance:0.38(capex)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 76
         },
         {
           "id": "6f02cfd4e09f8704",
@@ -39665,7 +39810,7 @@
             "archiveOnly": false,
             "archiveOnlyReason": null
           },
-          "score": 77
+          "score": 71
         },
         {
           "id": "d86cc8bd4b60bb0c",
@@ -39738,292 +39883,33 @@
             "archiveOnly": false,
             "archiveOnlyReason": null
           },
-          "score": 75
-        },
-        {
-          "id": "a4440c09424838e0",
-          "source": "ServeTheHome",
-          "url": "https://www.servethehome.com/lenovo-thinkpad-x1-carbon-gen-14-review/",
-          "title": "Lenovo ThinkPad X1 Carbon Gen 14 Review",
-          "snippet": "The Lenovo ThinkPad X1 Carbon Gen 14 takes the long-running business notebook line into a new Intel Core Ultra generation. Our model 21V7006EUS pairs an Intel Core Ultra 7 355 with 32GB-class memory and integrated Intel…",
-          "contentText": "The Lenovo ThinkPad X1 Carbon Gen 14 takes the long-running business notebook line into a new Intel Core Ultra generation. Our model 21V7006EUS pairs an Intel Core Ultra 7 355 with 32GB-class memory and integrated Intel graphics in a system The post Lenovo ThinkPad X1 Carbon Gen 14 Review appeared first on ServeTheHome .",
-          "publishedAt": "2026-08-04T20:00:56.000Z",
-          "sourceImage": null,
-          "region": "US",
-          "language": "en",
-          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
-          "category": "AI Infrastructure",
-          "primary_category": "AI Infrastructure",
-          "secondary_category": "GPU clusters and deployment readiness",
-          "infrastructure_layer": "Compute",
-          "affected_stakeholders": [
-            "operators",
-            "hyperscalers",
-            "cloud buyers",
-            "investors"
-          ],
-          "article_type": "Supply Chain",
-          "urgency_score": 0.44,
-          "taxonomy_confidence": 0.77,
-          "taxonomy_reasons": [
-            "ai infrastructure",
-            "neocloud"
-          ],
-          "direct_ai_infrastructure_relevance": 1,
-          "data_center_relevance": 0,
-          "cloud_capacity_relevance": 0,
-          "semiconductor_relevance": 0.42,
-          "power_grid_relevance": 0,
-          "cooling_relevance": 0,
-          "capital_markets_relevance": 0,
-          "enterprise_ai_infrastructure_relevance": 0,
-          "infrastructure_relevance_score": 0.822,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "semiconductor_relevance:0.42(intel, gpu)"
-          ],
-          "infrastructure_relevance": {
-            "direct_ai_infrastructure_relevance": 1,
-            "data_center_relevance": 0,
-            "cloud_capacity_relevance": 0,
-            "semiconductor_relevance": 0.42,
-            "power_grid_relevance": 0,
-            "cooling_relevance": 0,
-            "capital_markets_relevance": 0,
-            "enterprise_ai_infrastructure_relevance": 0,
-            "infrastructure_relevance_score": 0.822,
-            "infrastructure_relevance_tier": "full_memo",
-            "infrastructure_relevance_action": "generate_full_memo",
-            "infrastructure_relevance_reasons": [
-              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-              "semiconductor_relevance:0.42(intel, gpu)"
-            ],
-            "infrastructureRelevanceAction": "generate_full_memo",
-            "articlePagePublished": true,
-            "homepagePublished": true,
-            "archiveOnly": false,
-            "archiveOnlyReason": null
-          },
-          "score": 73
-        },
-        {
-          "id": "7920792da456ebcd",
-          "source": "TechCrunch AI",
-          "url": "https://techcrunch.com/2026/08/04/spacex-has-bought-329m-worth-of-tesla-megapacks-so-far-this-year/",
-          "title": "SpaceX has bought $329M worth of Tesla Megapacks so far this year",
-          "snippet": "The purchase illustrates just how interconnected Elon Musk's universe of companies are.",
-          "contentText": "The purchase illustrates just how interconnected Elon Musk's universe of companies are.",
-          "publishedAt": "2026-08-04T21:07:26.000Z",
-          "sourceImage": null,
-          "region": "APAC",
-          "language": "en",
-          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
-          "category": "AI Infrastructure",
-          "primary_category": "AI Infrastructure",
-          "secondary_category": "GPU clusters and deployment readiness",
-          "infrastructure_layer": "Compute",
-          "affected_stakeholders": [
-            "operators",
-            "hyperscalers",
-            "cloud buyers",
-            "investors"
-          ],
-          "article_type": "Other",
-          "urgency_score": 0.43,
-          "taxonomy_confidence": 0.77,
-          "taxonomy_reasons": [
-            "ai infrastructure",
-            "neocloud"
-          ],
-          "direct_ai_infrastructure_relevance": 1,
-          "data_center_relevance": 0,
-          "cloud_capacity_relevance": 0,
-          "semiconductor_relevance": 0.22,
-          "power_grid_relevance": 0,
-          "cooling_relevance": 0,
-          "capital_markets_relevance": 0,
-          "enterprise_ai_infrastructure_relevance": 0,
-          "infrastructure_relevance_score": 0.778,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "semiconductor_relevance:0.22(gpu)"
-          ],
-          "infrastructure_relevance": {
-            "direct_ai_infrastructure_relevance": 1,
-            "data_center_relevance": 0,
-            "cloud_capacity_relevance": 0,
-            "semiconductor_relevance": 0.22,
-            "power_grid_relevance": 0,
-            "cooling_relevance": 0,
-            "capital_markets_relevance": 0,
-            "enterprise_ai_infrastructure_relevance": 0,
-            "infrastructure_relevance_score": 0.778,
-            "infrastructure_relevance_tier": "full_memo",
-            "infrastructure_relevance_action": "generate_full_memo",
-            "infrastructure_relevance_reasons": [
-              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-              "semiconductor_relevance:0.22(gpu)"
-            ],
-            "infrastructureRelevanceAction": "generate_full_memo",
-            "articlePagePublished": true,
-            "homepagePublished": true,
-            "archiveOnly": false,
-            "archiveOnlyReason": null
-          },
-          "score": 72
+          "score": 69
         }
       ],
       "curatedIds": [
-        "cd0168485ccd25c9",
-        "a41fb6f84a14567e",
+        "c74fe35808004734",
+        "03cadd2d686e34e6",
+        "74fbdd7b0f256072",
+        "382961c8de50bc9b",
         "6f02cfd4e09f8704",
-        "d86cc8bd4b60bb0c",
-        "a4440c09424838e0",
-        "7920792da456ebcd"
+        "d86cc8bd4b60bb0c"
       ],
       "publishedIds": [
         "5c89fb4e91b8bf91",
         "5c9b0cf413ba1d25",
         "cd0168485ccd25c9",
-        "a41fb6f84a14567e"
+        "a41fb6f84a14567e",
+        "c74fe35808004734",
+        "03cadd2d686e34e6"
       ],
       "slotPublications": {
         "0": true,
-        "1": true
+        "1": true,
+        "2": true
       }
     }
   },
   "runHistory": [
-    {
-      "at": "2026-06-26T10:27:39.795Z",
-      "day": "2026-06-26",
-      "slot": 2,
-      "publishedCount": 0,
-      "signalCardCount": 0,
-      "archiveOnlyCount": 0,
-      "repetitionBlockedCount": 2,
-      "publishedIds": [],
-      "processedIds": [
-        "341ced2482574c94",
-        "cfeafdcff761fe4c"
-      ],
-      "blockedCount": 0,
-      "blockedItems": [],
-      "repetitionBlockedItems": [
-        {
-          "id": "341ced2482574c94",
-          "title": "Keep your gaming keyboard and PC fans clean with these electric air blower deals, starting from $17 — high-RPM cordless air dusters are great replacements for canned air to blast away the dust and dirt",
-          "infrastructure_relevance_score": 0.87,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "cloud_capacity_relevance:0.32(hyperscalers)",
-            "semiconductor_relevance:0.22(gpu)",
-            "power_grid_relevance:0.22(power)"
-          ],
-          "extraction_quality_score": 1,
-          "source_domain_adapter": "generic",
-          "content_length": 1705,
-          "boilerplate_ratio": 0,
-          "repetition_blocked": true,
-          "repetition_block_reasons": [
-            "repeated_sentence_ratio>0.12",
-            "heading_sequence_similarity>0.75",
-            "conclusion_similarity>0.7"
-          ],
-          "repetition_check": {
-            "compared_article_count": 20,
-            "repeated_sentence_ratio": 0.14285714285714285,
-            "repeated_paragraph_ratio": 0.16666666666666666,
-            "heading_sequence_similarity": 1,
-            "banned_phrase_count": 0,
-            "banned_phrase_counts": {},
-            "recent_banned_phrase_counts": {},
-            "ngram_overlap": 0.4144144144144144,
-            "blueprint_repetition": 2,
-            "conclusion_similarity": 0.9271050693011066,
-            "repeated_sentence_count": 1,
-            "repeated_paragraph_count": 1,
-            "heading_sequence": [
-              "System Change",
-              "Bottleneck",
-              "Engineering Tradeoff",
-              "Validation Metric"
-            ],
-            "blocked": true,
-            "reasons": [
-              "repeated_sentence_ratio>0.12",
-              "heading_sequence_similarity>0.75",
-              "conclusion_similarity>0.7"
-            ]
-          },
-          "expert_insight_complete": true,
-          "expert_insight_missing_fields": [],
-          "reason": "repeated_sentence_ratio>0.12; heading_sequence_similarity>0.75; conclusion_similarity>0.7"
-        },
-        {
-          "id": "cfeafdcff761fe4c",
-          "title": "The Carolinas May Hold a Critical Resource for AI Data Centers",
-          "infrastructure_relevance_score": 1,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:0.82",
-            "data_center_relevance:1.00(data center, data centers, colocation)",
-            "cloud_capacity_relevance:0.32(hyperscalers)",
-            "power_grid_relevance:1.00(power, grid, interconnection)",
-            "cooling_relevance:0.32(immersion)",
-            "capital_markets_relevance:0.28(capex)"
-          ],
-          "extraction_quality_score": 1,
-          "source_domain_adapter": "datacenterknowledge",
-          "content_length": 1788,
-          "boilerplate_ratio": 0,
-          "repetition_blocked": true,
-          "repetition_block_reasons": [
-            "repeated_sentence_ratio>0.12",
-            "heading_sequence_similarity>0.75",
-            "conclusion_similarity>0.7"
-          ],
-          "repetition_check": {
-            "compared_article_count": 20,
-            "repeated_sentence_ratio": 0.375,
-            "repeated_paragraph_ratio": 0.5,
-            "heading_sequence_similarity": 1,
-            "banned_phrase_count": 0,
-            "banned_phrase_counts": {},
-            "recent_banned_phrase_counts": {},
-            "ngram_overlap": 0.475,
-            "blueprint_repetition": 2,
-            "conclusion_similarity": 1,
-            "repeated_sentence_count": 3,
-            "repeated_paragraph_count": 3,
-            "heading_sequence": [
-              "What Changed",
-              "Energy Procurement Read",
-              "Volatility Risk",
-              "Next Market Test"
-            ],
-            "blocked": true,
-            "reasons": [
-              "repeated_sentence_ratio>0.12",
-              "heading_sequence_similarity>0.75",
-              "conclusion_similarity>0.7"
-            ]
-          },
-          "expert_insight_complete": true,
-          "expert_insight_missing_fields": [],
-          "reason": "repeated_sentence_ratio>0.12; heading_sequence_similarity>0.75; conclusion_similarity>0.7"
-        }
-      ],
-      "signalCardItems": [],
-      "archiveOnlyItems": []
-    },
     {
       "at": "2026-06-26T17:05:02.468Z",
       "day": "2026-06-27",
@@ -53631,7 +53517,137 @@
         }
       ],
       "archiveOnlyItems": []
+    },
+    {
+      "at": "2026-08-05T09:44:13.671Z",
+      "day": "2026-08-05",
+      "slot": 2,
+      "publishedCount": 0,
+      "signalCardCount": 1,
+      "archiveOnlyCount": 0,
+      "repetitionBlockedCount": 1,
+      "publishedIds": [],
+      "processedIds": [
+        "c74fe35808004734",
+        "03cadd2d686e34e6"
+      ],
+      "blockedCount": 1,
+      "blockedItems": [
+        {
+          "id": "c74fe35808004734",
+          "title": "Building AI Factories With IP Solutions",
+          "infrastructure_relevance_score": 0.976,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud, high-performance computing)",
+            "data_center_relevance:0.42(data centers)",
+            "cloud_capacity_relevance:0.32(hyperscalers)",
+            "semiconductor_relevance:0.80(semiconductor, accelerator, gpu)",
+            "power_grid_relevance:0.22(power)",
+            "enterprise_ai_infrastructure_relevance:0.68(virtualization, networking, inference workloads)"
+          ],
+          "extraction_quality_score": 0.93,
+          "source_domain_adapter": "semiengineering",
+          "content_length": 1057,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": false,
+          "repetition_block_reasons": [],
+          "repetition_check": null,
+          "expert_insight_complete": false,
+          "expert_insight_missing_fields": [
+            "concrete_facts",
+            "named_companies"
+          ],
+          "reason": "fail_closed: source_text_incomplete:source_evidence_length_below_1200"
+        }
+      ],
+      "repetitionBlockedItems": [
+        {
+          "id": "03cadd2d686e34e6",
+          "title": "Crazed modder turns NAS into a gaming PC with RTX 5060 hanging from the side, boosts frame rate by 828% — Frankenstein rig hides dedicated PSU in drive bay, breaks Time Spy world record for the onboard CPU",
+          "infrastructure_relevance_score": 0.941,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "cloud_capacity_relevance:0.32(hyperscalers)",
+            "semiconductor_relevance:0.64(amd, intel, gpu)",
+            "power_grid_relevance:0.22(power)"
+          ],
+          "extraction_quality_score": 1,
+          "source_domain_adapter": "generic",
+          "content_length": 1701,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": true,
+          "repetition_block_reasons": [
+            "repeated_sentence_ratio>0.12",
+            "heading_sequence_similarity>0.75",
+            "conclusion_similarity>0.7"
+          ],
+          "repetition_check": {
+            "compared_article_count": 20,
+            "repeated_sentence_ratio": 0.16666666666666666,
+            "repeated_paragraph_ratio": 0.16666666666666666,
+            "heading_sequence_similarity": 1,
+            "banned_phrase_count": 0,
+            "banned_phrase_counts": {},
+            "recent_banned_phrase_counts": {},
+            "ngram_overlap": 0.4583333333333333,
+            "blueprint_repetition": 2,
+            "conclusion_similarity": 0.9511897312113418,
+            "repeated_sentence_count": 1,
+            "repeated_paragraph_count": 1,
+            "heading_sequence": [
+              "Technical Signal",
+              "Failure Domain",
+              "Operator Exposure",
+              "Benchmark To Watch"
+            ],
+            "blocked": true,
+            "reasons": [
+              "repeated_sentence_ratio>0.12",
+              "heading_sequence_similarity>0.75",
+              "conclusion_similarity>0.7"
+            ]
+          },
+          "expert_insight_complete": true,
+          "expert_insight_missing_fields": [],
+          "reason": "repeated_sentence_ratio>0.12; heading_sequence_similarity>0.75; conclusion_similarity>0.7"
+        }
+      ],
+      "signalCardItems": [
+        {
+          "id": "c74fe35808004734",
+          "title": "Building AI Factories With IP Solutions",
+          "infrastructure_relevance_score": 0.976,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud, high-performance computing)",
+            "data_center_relevance:0.42(data centers)",
+            "cloud_capacity_relevance:0.32(hyperscalers)",
+            "semiconductor_relevance:0.80(semiconductor, accelerator, gpu)",
+            "power_grid_relevance:0.22(power)",
+            "enterprise_ai_infrastructure_relevance:0.68(virtualization, networking, inference workloads)"
+          ],
+          "extraction_quality_score": 0.93,
+          "source_domain_adapter": "semiengineering",
+          "content_length": 1057,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": false,
+          "repetition_block_reasons": [],
+          "repetition_check": null,
+          "expert_insight_complete": false,
+          "expert_insight_missing_fields": [
+            "concrete_facts",
+            "named_companies"
+          ],
+          "reason": "fail_closed: source_text_incomplete:source_evidence_length_below_1200"
+        }
+      ],
+      "archiveOnlyItems": []
     }
   ],
-  "lastRunAt": "2026-08-05T00:05:59.126Z"
+  "lastRunAt": "2026-08-05T09:44:13.671Z"
 }
