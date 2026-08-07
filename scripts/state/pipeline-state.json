@@ -763,7 +763,9 @@
     "24a7d495d6d84b10",
     "152fbef0c1ef295c",
     "891c807c77269760",
-    "df95de90a3a33eee"
+    "df95de90a3a33eee",
+    "0fc19ee68c013531",
+    "44873231f494acbe"
   ],
   "dayPlans": {
     "2026-03-24": {
@@ -40370,227 +40372,21 @@
     "2026-08-07": {
       "date": "2026-08-07",
       "createdAt": "2026-08-07T01:42:37.868Z",
-      "refreshedAt": "2026-08-07T01:42:37.868Z",
+      "refreshedAt": "2026-08-07T08:20:21.749Z",
       "candidateWindowHours": 24,
       "curatedItems": [
         {
-          "id": "df95de90a3a33eee",
-          "source": "ServeTheHome",
-          "url": "https://www.servethehome.com/amd-to-acquire-taalas-for-model-specific-ai-inference-chips/",
-          "title": "AMD to Acquire Taalas for Model Specific AI Inference Chips",
-          "snippet": "AMD announced that it will acquire Taalas to build future model-specific AI inference chips that are purpose built to accelerate single models The post AMD to Acquire Taalas for Model Specific AI Inference Chips appeare…",
-          "contentText": "AMD announced that it will acquire Taalas to build future model-specific AI inference chips that are purpose built to accelerate single models The post AMD to Acquire Taalas for Model Specific AI Inference Chips appeared first on ServeTheHome .",
-          "publishedAt": "2026-08-06T23:20:01.000Z",
-          "sourceImage": null,
-          "region": "Global",
-          "language": "en",
-          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
-          "category": "AI Infrastructure",
-          "primary_category": "AI Infrastructure",
-          "secondary_category": "GPU clusters and deployment readiness",
-          "infrastructure_layer": "Compute",
-          "affected_stakeholders": [
-            "operators",
-            "hyperscalers",
-            "cloud buyers",
-            "investors"
-          ],
-          "article_type": "Other",
-          "urgency_score": 0.45,
-          "taxonomy_confidence": 0.77,
-          "taxonomy_reasons": [
-            "ai infrastructure",
-            "neocloud"
-          ],
-          "direct_ai_infrastructure_relevance": 1,
-          "data_center_relevance": 0,
-          "cloud_capacity_relevance": 0,
-          "semiconductor_relevance": 0.517,
-          "power_grid_relevance": 0,
-          "cooling_relevance": 0,
-          "capital_markets_relevance": 0,
-          "enterprise_ai_infrastructure_relevance": 0,
-          "infrastructure_relevance_score": 0.844,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "semiconductor_relevance:0.52(amd, gpu)"
-          ],
-          "infrastructure_relevance": {
-            "direct_ai_infrastructure_relevance": 1,
-            "data_center_relevance": 0,
-            "cloud_capacity_relevance": 0,
-            "semiconductor_relevance": 0.517,
-            "power_grid_relevance": 0,
-            "cooling_relevance": 0,
-            "capital_markets_relevance": 0,
-            "enterprise_ai_infrastructure_relevance": 0,
-            "infrastructure_relevance_score": 0.844,
-            "infrastructure_relevance_tier": "full_memo",
-            "infrastructure_relevance_action": "generate_full_memo",
-            "infrastructure_relevance_reasons": [
-              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-              "semiconductor_relevance:0.52(amd, gpu)"
-            ],
-            "infrastructureRelevanceAction": "generate_full_memo",
-            "articlePagePublished": true,
-            "homepagePublished": true,
-            "archiveOnly": false,
-            "archiveOnlyReason": null
-          },
-          "score": 81
-        },
-        {
-          "id": "891c807c77269760",
-          "source": "HPCwire",
-          "url": "https://www.hpcwire.com/2026/08/06/samsung-attacks-the-ai-memory-wall-with-3d-packaging/",
-          "title": "Samsung Attacks the AI Memory Wall with 3D Packaging",
-          "snippet": "The AI memory wall has emerged as the biggest bottleneck in executing AI inference workloads. This week at the Future of Memory and Storage Summit, Samsung threw the kitchen sink at the problem, unveiling not only a new…",
-          "contentText": "The AI memory wall has emerged as the biggest bottleneck in executing AI inference workloads. This week at the Future of Memory and Storage Summit, Samsung threw the kitchen sink at the problem, unveiling not only a new type of high-bandwidth memory called zHBM but two new NAND offerings for solid state disks (SSDs), including a speedy new type of NAND dubbed zNAND and the 10th generation of its BV-NAND technology. As the focus of the AI boom evolved from training foundation models to actually running them, the core underlying infrastructure requirements also changed. AI training workloads are largely compute bound and benefit from having large number of powerful processors (i.e. GPUs) that can crunch through huge amounts of data in parallel. Hence the huge run on GPUs and other AI accele…",
-          "publishedAt": "2026-08-06T18:51:13.000Z",
-          "sourceImage": "https://www.hpcwire.com/wp-content/uploads/2026/08/Samsung_-Jin-Yub-Lee-300x200.png",
+          "id": "0fc19ee68c013531",
+          "source": "Semiconductor Engineering",
+          "url": "https://semiengineering.com/chip-industry-week-in-review-150/",
+          "title": "Chip Industry Week in Review",
+          "snippet": "Memory density increases; 2026 chip industry revenue to hit $1.65T; imec metrology roadmap; MIT's self-assembled contacts; new U.S. restrictions; IC training; NXP to buy Ambarella?;AI sandbox leaks; memory-centric accel…",
+          "contentText": "Memory/FMS Denser, faster, and more distributed memory architectures for AI was the big news at the Future of Memory and Storage conference this week: Sandisk and SK Hynix released the High Bandwidth Flash (HBF) spec, outlining basic performance expectations, the xPU-HBF host interface, and reliability and packaging guidance for an HBF die stack. Samsung showed concept models of zHBM , which vertically stacks HBM directly above AI accelerators, and zNAND-O, which vertically stacks multiple V-NAND chips through TSVs, as well as a 400+ layer BV-NAND using wafer bonding. Kioxia and Sandisk unveiled 10th-gen QLC 3D flash memory technology, with bit density surpassing 37 Gb/mm² and a 4.8 Gb/s interface. NEO Semiconductor introduced a unified AI memory platform that combines SRAM with higher on…",
+          "publishedAt": "2026-08-07T07:01:09.000Z",
+          "sourceImage": "https://i0.wp.com/semiengineering.com/wp-content/uploads/2026/08/Revised-Metrology-and-inspection-roadmap-copy-2.jpeg?resize=1200%2C640&#038;ssl=1",
           "region": "US",
           "language": "en",
           "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
-          "category": "AI Infrastructure",
-          "primary_category": "AI Infrastructure",
-          "secondary_category": "GPU clusters and deployment readiness",
-          "infrastructure_layer": "Compute",
-          "affected_stakeholders": [
-            "operators",
-            "hyperscalers",
-            "cloud buyers",
-            "investors"
-          ],
-          "article_type": "Supply Chain",
-          "urgency_score": 0.47,
-          "taxonomy_confidence": 0.77,
-          "taxonomy_reasons": [
-            "ai infrastructure",
-            "neocloud"
-          ],
-          "direct_ai_infrastructure_relevance": 1,
-          "data_center_relevance": 0,
-          "cloud_capacity_relevance": 0,
-          "semiconductor_relevance": 0.58,
-          "power_grid_relevance": 0,
-          "cooling_relevance": 0,
-          "capital_markets_relevance": 0,
-          "enterprise_ai_infrastructure_relevance": 0.48,
-          "infrastructure_relevance_score": 0.893,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "semiconductor_relevance:0.58(high-bandwidth memory, gpu)",
-            "enterprise_ai_infrastructure_relevance:0.48(storage, inference workloads)"
-          ],
-          "infrastructure_relevance": {
-            "direct_ai_infrastructure_relevance": 1,
-            "data_center_relevance": 0,
-            "cloud_capacity_relevance": 0,
-            "semiconductor_relevance": 0.58,
-            "power_grid_relevance": 0,
-            "cooling_relevance": 0,
-            "capital_markets_relevance": 0,
-            "enterprise_ai_infrastructure_relevance": 0.48,
-            "infrastructure_relevance_score": 0.893,
-            "infrastructure_relevance_tier": "full_memo",
-            "infrastructure_relevance_action": "generate_full_memo",
-            "infrastructure_relevance_reasons": [
-              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-              "semiconductor_relevance:0.58(high-bandwidth memory, gpu)",
-              "enterprise_ai_infrastructure_relevance:0.48(storage, inference workloads)"
-            ],
-            "infrastructureRelevanceAction": "generate_full_memo",
-            "articlePagePublished": true,
-            "homepagePublished": true,
-            "archiveOnly": false,
-            "archiveOnlyReason": null
-          },
-          "score": 76
-        },
-        {
-          "id": "eaa49343a327a65a",
-          "source": "TechCrunch AI",
-          "url": "https://techcrunch.com/2026/08/06/openais-new-ai-smart-speaker-will-reportedly-sell-for-between-300-and-400/",
-          "title": "OpenAI’s new AI smart speaker will reportedly sell for between $300 and $400",
-          "snippet": "Additional details about OpenAI's mysterious new AI device make it sound like a pricey smart speaker.",
-          "contentText": "Additional details about OpenAI's mysterious new AI device make it sound like a pricey smart speaker.",
-          "publishedAt": "2026-08-06T22:43:53.000Z",
-          "sourceImage": null,
-          "region": "US",
-          "language": "en",
-          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
-          "category": "AI Infrastructure",
-          "primary_category": "AI Infrastructure",
-          "secondary_category": "GPU clusters and deployment readiness",
-          "infrastructure_layer": "Compute",
-          "affected_stakeholders": [
-            "operators",
-            "hyperscalers",
-            "cloud buyers",
-            "investors"
-          ],
-          "article_type": "Other",
-          "urgency_score": 0.43,
-          "taxonomy_confidence": 0.77,
-          "taxonomy_reasons": [
-            "ai infrastructure",
-            "neocloud"
-          ],
-          "direct_ai_infrastructure_relevance": 1,
-          "data_center_relevance": 0,
-          "cloud_capacity_relevance": 0,
-          "semiconductor_relevance": 0.22,
-          "power_grid_relevance": 0,
-          "cooling_relevance": 0,
-          "capital_markets_relevance": 0,
-          "enterprise_ai_infrastructure_relevance": 0,
-          "infrastructure_relevance_score": 0.778,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "semiconductor_relevance:0.22(gpu)"
-          ],
-          "infrastructure_relevance": {
-            "direct_ai_infrastructure_relevance": 1,
-            "data_center_relevance": 0,
-            "cloud_capacity_relevance": 0,
-            "semiconductor_relevance": 0.22,
-            "power_grid_relevance": 0,
-            "cooling_relevance": 0,
-            "capital_markets_relevance": 0,
-            "enterprise_ai_infrastructure_relevance": 0,
-            "infrastructure_relevance_score": 0.778,
-            "infrastructure_relevance_tier": "full_memo",
-            "infrastructure_relevance_action": "generate_full_memo",
-            "infrastructure_relevance_reasons": [
-              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-              "semiconductor_relevance:0.22(gpu)"
-            ],
-            "infrastructureRelevanceAction": "generate_full_memo",
-            "articlePagePublished": true,
-            "homepagePublished": true,
-            "archiveOnly": false,
-            "archiveOnlyReason": null
-          },
-          "score": 72
-        },
-        {
-          "id": "07e38e2ea9125653",
-          "source": "AWS News Blog",
-          "url": "https://aws.amazon.com/blogs/aws/runtime-instances-persistent-compute-for-production-ai-agents-on-amazon-bedrock-agentcore/",
-          "title": "Runtime instances: persistent compute for production AI agents on Amazon Bedrock AgentCore",
-          "snippet": "Announcing runtime instances in Amazon Bedrock AgentCore—persistent, managed EC2 infrastructure for production AI agents with multi-agent collaboration, GPU support, and sessions lasting up to 14 days.",
-          "contentText": "When you move AI agents from prototype to production, the infrastructure challenges multiply. Your agents need to persist state across multi-step workflows that run for hours or days. They need to coordinate with other agents, share context, and sometimes access GPUs for specialized tasks. Amazon Bedrock AgentCore runtime microVMs provide a fully managed environment for invocations that can run for up to 8 hours and support stateful workflows through managed session storage. Some workloads also benefit from dedicated, larger-capacity environments — for example, when agents need to run continuously for multiple days, access GPUs or the underlying OS, or run multiple collaborating agents on the same host. Today, I’m happy to announce runtime instances, a new complementary compute option in…",
-          "publishedAt": "2026-08-06T22:58:00.000Z",
-          "sourceImage": "https://d2908q01vomqb2.cloudfront.net/da4b9237bacccdf19c0760cab7aec4a8359010b0/2026/06/19/2026-06-18_12-25-58-1024x769.png",
-          "region": "APAC",
-          "language": "en",
-          "defaultCategory": "Hyperscalers & Cloud",
           "category": "Semiconductors",
           "primary_category": "Semiconductors",
           "secondary_category": "Accelerators, memory, and advanced packaging",
@@ -40601,112 +40397,46 @@
             "server OEMs",
             "investors"
           ],
-          "article_type": "Capacity Expansion",
-          "urgency_score": 0.45,
-          "taxonomy_confidence": 0.57,
+          "article_type": "Product / Platform Update",
+          "urgency_score": 0.48,
+          "taxonomy_confidence": 0.95,
           "taxonomy_reasons": [
-            "gpu"
-          ],
-          "direct_ai_infrastructure_relevance": 0.64,
-          "data_center_relevance": 0,
-          "cloud_capacity_relevance": 0.54,
-          "semiconductor_relevance": 0.22,
-          "power_grid_relevance": 0,
-          "cooling_relevance": 0,
-          "capital_markets_relevance": 0,
-          "enterprise_ai_infrastructure_relevance": 0.18,
-          "infrastructure_relevance_score": 0.595,
-          "infrastructure_relevance_tier": "signal_card",
-          "infrastructure_relevance_action": "publish_signal_card_only",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:0.64",
-            "cloud_capacity_relevance:0.54(hyperscalers, aws)",
-            "semiconductor_relevance:0.22(gpu)"
-          ],
-          "infrastructure_relevance": {
-            "direct_ai_infrastructure_relevance": 0.64,
-            "data_center_relevance": 0,
-            "cloud_capacity_relevance": 0.54,
-            "semiconductor_relevance": 0.22,
-            "power_grid_relevance": 0,
-            "cooling_relevance": 0,
-            "capital_markets_relevance": 0,
-            "enterprise_ai_infrastructure_relevance": 0.18,
-            "infrastructure_relevance_score": 0.595,
-            "infrastructure_relevance_tier": "signal_card",
-            "infrastructure_relevance_action": "publish_signal_card_only",
-            "infrastructure_relevance_reasons": [
-              "direct_ai_infrastructure_relevance:0.64",
-              "cloud_capacity_relevance:0.54(hyperscalers, aws)",
-              "semiconductor_relevance:0.22(gpu)"
-            ],
-            "infrastructureRelevanceAction": "publish_signal_card_only",
-            "articlePagePublished": false,
-            "homepagePublished": true,
-            "archiveOnly": false,
-            "archiveOnlyReason": null
-          },
-          "score": 71
-        },
-        {
-          "id": "fa7ffd920e105e15",
-          "source": "StorageReview",
-          "url": "https://www.storagereview.com/news/wd-bets-8x-bandwidth-beats-more-terabytes-as-40tb-ultrasmr-starts-shipping",
-          "title": "WD Bets 8x Bandwidth Beats More Terabytes as 40TB UltraSMR Starts Shipping",
-          "snippet": "Western Digital started shipping its next-generation ePMR nearline platform at up to 40TB per drive during the quarter that ended July 3, and told investors on August 5 that its 44TB HAMR drive remains on track for the…",
-          "contentText": "Western Digital started shipping its next-generation ePMR nearline platform at up to 40TB per drive during the quarter that ended July 3, and told investors on August 5 that its 44TB HAMR drive remains on track for the first half of calendar 2027. The company shipped 231 exabytes in the quarter, 209 of which were nearline, and expects the 40TB platform to account for more than half of nearline exabytes by the third quarter of calendar 2027. That is a lot of roadmap for a single earnings call, and it comes against Seagate, which is already shipping the capacity point that WD is still qualifying. 40TB ePMR and UltraSMR, Shipping Now The 40TB drive is not a HAMR product. It combines ePMR with UltraSMR, WD&#8217;s shingled implementation, and it is the drive the company previewed at its Innov…",
-          "publishedAt": "2026-08-06T21:01:09.000Z",
-          "sourceImage": "https://www.storagereview.com/wp-content/uploads/2026/08/StorageReview-WD-HAMR-Drive-Anatomy-44TB.png",
-          "region": "APAC",
-          "language": "en",
-          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
-          "category": "AI Infrastructure",
-          "primary_category": "AI Infrastructure",
-          "secondary_category": "GPU clusters and deployment readiness",
-          "infrastructure_layer": "Compute",
-          "affected_stakeholders": [
-            "operators",
-            "hyperscalers",
-            "cloud buyers",
-            "investors"
-          ],
-          "article_type": "Capacity Expansion",
-          "urgency_score": 0.51,
-          "taxonomy_confidence": 0.77,
-          "taxonomy_reasons": [
-            "ai infrastructure",
-            "neocloud"
+            "semiconductor",
+            "chip",
+            "gpu",
+            "hbm",
+            "wafer"
           ],
           "direct_ai_infrastructure_relevance": 1,
           "data_center_relevance": 0,
           "cloud_capacity_relevance": 0,
-          "semiconductor_relevance": 0.22,
+          "semiconductor_relevance": 1,
           "power_grid_relevance": 0,
           "cooling_relevance": 0,
           "capital_markets_relevance": 0,
-          "enterprise_ai_infrastructure_relevance": 0,
-          "infrastructure_relevance_score": 0.778,
+          "enterprise_ai_infrastructure_relevance": 0.18,
+          "infrastructure_relevance_score": 0.95,
           "infrastructure_relevance_tier": "full_memo",
           "infrastructure_relevance_action": "generate_full_memo",
           "infrastructure_relevance_reasons": [
             "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "semiconductor_relevance:0.22(gpu)"
+            "semiconductor_relevance:1.00(semiconductor, hbm, wafer)"
           ],
           "infrastructure_relevance": {
             "direct_ai_infrastructure_relevance": 1,
             "data_center_relevance": 0,
             "cloud_capacity_relevance": 0,
-            "semiconductor_relevance": 0.22,
+            "semiconductor_relevance": 1,
             "power_grid_relevance": 0,
             "cooling_relevance": 0,
             "capital_markets_relevance": 0,
-            "enterprise_ai_infrastructure_relevance": 0,
-            "infrastructure_relevance_score": 0.778,
+            "enterprise_ai_infrastructure_relevance": 0.18,
+            "infrastructure_relevance_score": 0.95,
             "infrastructure_relevance_tier": "full_memo",
             "infrastructure_relevance_action": "generate_full_memo",
             "infrastructure_relevance_reasons": [
               "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-              "semiconductor_relevance:0.22(gpu)"
+              "semiconductor_relevance:1.00(semiconductor, hbm, wafer)"
             ],
             "infrastructureRelevanceAction": "generate_full_memo",
             "articlePagePublished": true,
@@ -40714,7 +40444,7 @@
             "archiveOnly": false,
             "archiveOnlyReason": null
           },
-          "score": 71
+          "score": 86
         },
         {
           "id": "44873231f494acbe",
@@ -40783,148 +40513,300 @@
             "archiveOnlyReason": null
           },
           "score": 67
+        },
+        {
+          "id": "db6896760aacae18",
+          "source": "Data Center Dynamics",
+          "url": "https://www.datacenterdynamics.com/en/marketwatch/build-in-predictability-design-out-uncertainty/",
+          "title": "Sponsored: Build-in predictability, design-out uncertainty",
+          "snippet": "In an increasingly volatile global landscape, meeting demand for data centers will take more than simply building faster, says Hilti’s Daniel Mendez Quintero",
+          "contentText": "In an increasingly volatile global landscape, meeting demand for data centers will take more than simply building faster, says Hilti’s Daniel Mendez Quintero",
+          "publishedAt": "2026-08-07T07:00:00.000Z",
+          "sourceImage": "https://media.datacenterdynamics.com/media/images/GettyImages-2223043330_2.2e16d0ba.fill-750x500.jpg",
+          "region": "Global",
+          "language": "en",
+          "defaultCategory": "Colocation & Wholesale",
+          "category": "Data Centers",
+          "primary_category": "Data Centers",
+          "secondary_category": "Campus development and colocation capacity",
+          "infrastructure_layer": "Facility",
+          "affected_stakeholders": [
+            "data center operators",
+            "developers",
+            "site selectors",
+            "investors"
+          ],
+          "article_type": "Market Analysis",
+          "urgency_score": 0.38,
+          "taxonomy_confidence": 0.77,
+          "taxonomy_reasons": [
+            "colocation",
+            "wholesale"
+          ],
+          "direct_ai_infrastructure_relevance": 0,
+          "data_center_relevance": 1,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.615,
+          "infrastructure_relevance_tier": "signal_card",
+          "infrastructure_relevance_action": "publish_signal_card_only",
+          "infrastructure_relevance_reasons": [
+            "data_center_relevance:1.00(data center, data centers, colocation)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 0,
+            "data_center_relevance": 1,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.615,
+            "infrastructure_relevance_tier": "signal_card",
+            "infrastructure_relevance_action": "publish_signal_card_only",
+            "infrastructure_relevance_reasons": [
+              "data_center_relevance:1.00(data center, data centers, colocation)"
+            ],
+            "infrastructureRelevanceAction": "publish_signal_card_only",
+            "articlePagePublished": false,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 65
+        },
+        {
+          "id": "fa7ffd920e105e15",
+          "source": "StorageReview",
+          "url": "https://www.storagereview.com/news/wd-bets-8x-bandwidth-beats-more-terabytes-as-40tb-ultrasmr-starts-shipping",
+          "title": "WD Bets 8x Bandwidth Beats More Terabytes as 40TB UltraSMR Starts Shipping",
+          "snippet": "Western Digital started shipping its next-generation ePMR nearline platform at up to 40TB per drive during the quarter that ended July 3, and told investors on August 5 that its 44TB HAMR drive remains on track for the…",
+          "contentText": "Western Digital started shipping its next-generation ePMR nearline platform at up to 40TB per drive during the quarter that ended July 3, and told investors on August 5 that its 44TB HAMR drive remains on track for the first half of calendar 2027. The company shipped 231 exabytes in the quarter, 209 of which were nearline, and expects the 40TB platform to account for more than half of nearline exabytes by the third quarter of calendar 2027. That is a lot of roadmap for a single earnings call, and it comes against Seagate, which is already shipping the capacity point that WD is still qualifying. 40TB ePMR and UltraSMR, Shipping Now The 40TB drive is not a HAMR product. It combines ePMR with UltraSMR, WD&#8217;s shingled implementation, and it is the drive the company previewed at its Innov…",
+          "publishedAt": "2026-08-06T21:01:09.000Z",
+          "sourceImage": "https://www.storagereview.com/wp-content/uploads/2026/08/StorageReview-WD-HAMR-Drive-Anatomy-44TB.png",
+          "region": "APAC",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "category": "AI Infrastructure",
+          "primary_category": "AI Infrastructure",
+          "secondary_category": "GPU clusters and deployment readiness",
+          "infrastructure_layer": "Compute",
+          "affected_stakeholders": [
+            "operators",
+            "hyperscalers",
+            "cloud buyers",
+            "investors"
+          ],
+          "article_type": "Capacity Expansion",
+          "urgency_score": 0.51,
+          "taxonomy_confidence": 0.77,
+          "taxonomy_reasons": [
+            "ai infrastructure",
+            "neocloud"
+          ],
+          "direct_ai_infrastructure_relevance": 1,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0.22,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.778,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "semiconductor_relevance:0.22(gpu)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 1,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0.22,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.778,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+              "semiconductor_relevance:0.22(gpu)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 65
+        },
+        {
+          "id": "d7e8ea6aa7a89d76",
+          "source": "Utility Dive",
+          "url": "https://www.utilitydive.com/news/video-gamers-give-110-mw-texas-solar-project-a-financing-boost/827228/",
+          "title": "Video gamers give 110-MW Texas solar project a financing boost",
+          "snippet": "“Fractionalized” virtual power purchase agreements and renewable energy certificate transactions can help underwrite clean energy projects, particularly in volatile energy markets, an executive involved in the transacti…",
+          "contentText": "&ldquo;Fractionalized&rdquo; virtual power purchase agreements and renewable energy certificate transactions can help underwrite clean energy projects, particularly in volatile energy markets, an executive involved in the transaction told Utility Dive.",
+          "publishedAt": "2026-08-06T15:58:30.000Z",
+          "sourceImage": "https://imgproxy.divecdn.com/GqiDUA9KYE69tlCxPhgbqD112b_FMSKxbCi3udXlFpY/g:ce/rs:fill:1600:900:1/Z3M6Ly9kaXZlc2l0ZS1zdG9yYWdlL2RpdmVpbWFnZS9nYW1lci5qcGc=.webp",
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "Power / Grid / Energy",
+          "category": "Power & Grid",
+          "primary_category": "Power & Grid",
+          "secondary_category": "Interconnection and power procurement",
+          "infrastructure_layer": "Power",
+          "affected_stakeholders": [
+            "data center operators",
+            "utilities",
+            "cloud capacity teams",
+            "investors"
+          ],
+          "article_type": "Financing / M&A",
+          "urgency_score": 0.6,
+          "taxonomy_confidence": 0.85,
+          "taxonomy_reasons": [
+            "power",
+            "grid",
+            "utility"
+          ],
+          "direct_ai_infrastructure_relevance": 0,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0,
+          "power_grid_relevance": 1,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0.432,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.745,
+          "infrastructure_relevance_tier": "signal_card",
+          "infrastructure_relevance_action": "publish_signal_card_only",
+          "infrastructure_relevance_reasons": [
+            "power_grid_relevance:1.00(power, grid, utility)",
+            "capital_markets_relevance:0.43(financing)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 0,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0,
+            "power_grid_relevance": 1,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0.432,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.745,
+            "infrastructure_relevance_tier": "signal_card",
+            "infrastructure_relevance_action": "publish_signal_card_only",
+            "infrastructure_relevance_reasons": [
+              "power_grid_relevance:1.00(power, grid, utility)",
+              "capital_markets_relevance:0.43(financing)"
+            ],
+            "infrastructureRelevanceAction": "publish_signal_card_only",
+            "articlePagePublished": false,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 63
+        },
+        {
+          "id": "693fea8302b31aba",
+          "source": "NVIDIA Blog",
+          "url": "https://blogs.nvidia.com/blog/geforce-now-thursday-august-2026-games-list/",
+          "title": "GeForce NOW Shakes Up August With 26 New Games",
+          "snippet": "August is here, bringing 26 new games for GeForce NOW members. Command the seas in World of Warships: Legends and discover what’s next in the GeForce NOW library, starting with the eight newly added games this week. In…",
+          "contentText": "August is here, bringing 26 new games for GeForce NOW members. Command the seas in World of Warships: Legends and discover what’s next in the GeForce NOW library , starting with the eight newly added games this week. In addition, GeForce NOW is at the QuakeCon gaming conference this week in Grapevine, Texas, with hands-on experiences awaiting attendees. Return to QuakeCon Visit the NVIDIA booth at QuakeCon to experience GeForce RTX 5080-powered Ultimate cloud gaming in action, with demos showcasing stunning visuals at up to 5K 120 frames per second on an ultrawide display, as well as seamless gameplay on the Lenovo Legion Go S handheld device. Conference attendees can see how thousands of PC games, including fan-favorite Bethesda titles, can move effortlessly across laptops, Macs, handhel…",
+          "publishedAt": "2026-08-06T13:00:11.000Z",
+          "sourceImage": "https://blogs.nvidia.com/wp-content/uploads/2026/08/gfn-thursday-8-6-nv-blog-1280x680-logo.jpg",
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "category": "AI Infrastructure",
+          "primary_category": "AI Infrastructure",
+          "secondary_category": "GPU clusters and deployment readiness",
+          "infrastructure_layer": "Compute",
+          "affected_stakeholders": [
+            "operators",
+            "hyperscalers",
+            "cloud buyers",
+            "investors"
+          ],
+          "article_type": "Other",
+          "urgency_score": 0.45,
+          "taxonomy_confidence": 0.77,
+          "taxonomy_reasons": [
+            "ai infrastructure",
+            "neocloud"
+          ],
+          "direct_ai_infrastructure_relevance": 1,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0.5,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.84,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "semiconductor_relevance:0.50(nvidia, gpu)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 1,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0.5,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.84,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+              "semiconductor_relevance:0.50(nvidia, gpu)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 61
         }
       ],
       "curatedIds": [
-        "df95de90a3a33eee",
-        "891c807c77269760",
-        "eaa49343a327a65a",
-        "07e38e2ea9125653",
+        "0fc19ee68c013531",
+        "44873231f494acbe",
+        "db6896760aacae18",
         "fa7ffd920e105e15",
-        "44873231f494acbe"
+        "d7e8ea6aa7a89d76",
+        "693fea8302b31aba"
       ],
       "publishedIds": [
         "891c807c77269760",
-        "df95de90a3a33eee"
+        "df95de90a3a33eee",
+        "0fc19ee68c013531",
+        "44873231f494acbe"
       ],
       "slotPublications": {
-        "1": true
+        "1": true,
+        "2": true
       }
     }
   },
   "runHistory": [
-    {
-      "at": "2026-06-28T00:05:26.960Z",
-      "day": "2026-06-28",
-      "slot": 1,
-      "publishedCount": 0,
-      "signalCardCount": 1,
-      "archiveOnlyCount": 0,
-      "repetitionBlockedCount": 1,
-      "publishedIds": [],
-      "processedIds": [
-        "e46fa785170ef49d",
-        "5eb3f98c21f2893d"
-      ],
-      "blockedCount": 1,
-      "blockedItems": [
-        {
-          "id": "e46fa785170ef49d",
-          "title": "Supermicro’s New Intel Edge AI Systems: Core Ultra Series 3, Arc Pro B-Series, Up to 367 TOPS",
-          "infrastructure_relevance_score": 0.956,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "cloud_capacity_relevance:0.32(hyperscalers)",
-            "semiconductor_relevance:0.71(intel, accelerator, gpu)",
-            "power_grid_relevance:0.22(power)",
-            "enterprise_ai_infrastructure_relevance:0.24(ai workloads)"
-          ],
-          "extraction_quality_score": 1,
-          "source_domain_adapter": "storagereview",
-          "content_length": 1658,
-          "boilerplate_ratio": 0,
-          "repetition_blocked": false,
-          "repetition_block_reasons": [],
-          "repetition_check": null,
-          "expert_insight_complete": true,
-          "expert_insight_missing_fields": [],
-          "reason": "fail_closed: source_text_incomplete:single_lowercase_letter_sentence_fragment, single_lowercase_letter_sentence_fragment, sentence_completion_score_below_0.92:0.82"
-        }
-      ],
-      "repetitionBlockedItems": [
-        {
-          "id": "5eb3f98c21f2893d",
-          "title": "Get an RTX 5060 gaming laptop loaded with Ryzen 7 CPU and 32GB RAM for $1,099 — mobile gaming upgrade just got $300 cheaper",
-          "infrastructure_relevance_score": 0.958,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "cloud_capacity_relevance:0.32(hyperscalers)",
-            "semiconductor_relevance:0.72(nvidia, amd, gpu)",
-            "power_grid_relevance:0.22(power)"
-          ],
-          "extraction_quality_score": 1,
-          "source_domain_adapter": "generic",
-          "content_length": 1615,
-          "boilerplate_ratio": 0,
-          "repetition_blocked": true,
-          "repetition_block_reasons": [
-            "repeated_sentence_ratio>0.12",
-            "heading_sequence_similarity>0.75",
-            "conclusion_similarity>0.7"
-          ],
-          "repetition_check": {
-            "compared_article_count": 20,
-            "repeated_sentence_ratio": 0.16666666666666666,
-            "repeated_paragraph_ratio": 0.16666666666666666,
-            "heading_sequence_similarity": 1,
-            "banned_phrase_count": 0,
-            "banned_phrase_counts": {},
-            "recent_banned_phrase_counts": {},
-            "ngram_overlap": 0.4166666666666667,
-            "blueprint_repetition": 1,
-            "conclusion_similarity": 0.9271050693011066,
-            "repeated_sentence_count": 1,
-            "repeated_paragraph_count": 1,
-            "heading_sequence": [
-              "System Change",
-              "Bottleneck",
-              "Engineering Tradeoff",
-              "Validation Metric"
-            ],
-            "blocked": true,
-            "reasons": [
-              "repeated_sentence_ratio>0.12",
-              "heading_sequence_similarity>0.75",
-              "conclusion_similarity>0.7"
-            ]
-          },
-          "expert_insight_complete": true,
-          "expert_insight_missing_fields": [],
-          "reason": "repeated_sentence_ratio>0.12; heading_sequence_similarity>0.75; conclusion_similarity>0.7"
-        }
-      ],
-      "signalCardItems": [
-        {
-          "id": "e46fa785170ef49d",
-          "title": "Supermicro’s New Intel Edge AI Systems: Core Ultra Series 3, Arc Pro B-Series, Up to 367 TOPS",
-          "infrastructure_relevance_score": 0.956,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "cloud_capacity_relevance:0.32(hyperscalers)",
-            "semiconductor_relevance:0.71(intel, accelerator, gpu)",
-            "power_grid_relevance:0.22(power)",
-            "enterprise_ai_infrastructure_relevance:0.24(ai workloads)"
-          ],
-          "extraction_quality_score": 1,
-          "source_domain_adapter": "storagereview",
-          "content_length": 1658,
-          "boilerplate_ratio": 0,
-          "repetition_blocked": false,
-          "repetition_block_reasons": [],
-          "repetition_check": null,
-          "expert_insight_complete": true,
-          "expert_insight_missing_fields": [],
-          "reason": "fail_closed: source_text_incomplete:single_lowercase_letter_sentence_fragment, single_lowercase_letter_sentence_fragment, sentence_completion_score_below_0.92:0.82"
-        }
-      ],
-      "archiveOnlyItems": []
-    },
     {
       "at": "2026-06-28T10:08:01.290Z",
       "day": "2026-06-28",
@@ -54546,7 +54428,129 @@
         }
       ],
       "archiveOnlyItems": []
+    },
+    {
+      "at": "2026-08-07T08:20:21.749Z",
+      "day": "2026-08-07",
+      "slot": 2,
+      "publishedCount": 0,
+      "signalCardCount": 1,
+      "archiveOnlyCount": 0,
+      "repetitionBlockedCount": 1,
+      "publishedIds": [],
+      "processedIds": [
+        "0fc19ee68c013531",
+        "44873231f494acbe"
+      ],
+      "blockedCount": 1,
+      "blockedItems": [
+        {
+          "id": "0fc19ee68c013531",
+          "title": "Chip Industry Week in Review",
+          "infrastructure_relevance_score": 1,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "data_center_relevance:0.42(data centers)",
+            "cloud_capacity_relevance:0.32(hyperscalers)",
+            "semiconductor_relevance:1.00(semiconductor, hbm, wafer)",
+            "power_grid_relevance:0.22(power)"
+          ],
+          "extraction_quality_score": 1,
+          "source_domain_adapter": "semiengineering",
+          "content_length": 1761,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": false,
+          "repetition_block_reasons": [],
+          "repetition_check": null,
+          "expert_insight_complete": true,
+          "expert_insight_missing_fields": [],
+          "reason": "fail_closed: source_text_incomplete:source_boilerplate_detected"
+        }
+      ],
+      "repetitionBlockedItems": [
+        {
+          "id": "44873231f494acbe",
+          "title": "Pre-modded 22GB RTX 2080 Ti cards surface on eBay for $500 as VRAM-hungry local AI fans chase down every spare FLOP — Hong Kong-based seller offers AI-friendly memory mod for a reasonable price",
+          "infrastructure_relevance_score": 0.91,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, compute capacity, neocloud)",
+            "cloud_capacity_relevance:0.32(hyperscalers)",
+            "semiconductor_relevance:0.50(nvidia, gpu)",
+            "power_grid_relevance:0.22(power)"
+          ],
+          "extraction_quality_score": 1,
+          "source_domain_adapter": "generic",
+          "content_length": 1624,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": true,
+          "repetition_block_reasons": [
+            "repeated_sentence_ratio>0.12",
+            "heading_sequence_similarity>0.75",
+            "conclusion_similarity>0.7"
+          ],
+          "repetition_check": {
+            "compared_article_count": 20,
+            "repeated_sentence_ratio": 0.2857142857142857,
+            "repeated_paragraph_ratio": 0.3333333333333333,
+            "heading_sequence_similarity": 1,
+            "banned_phrase_count": 0,
+            "banned_phrase_counts": {},
+            "recent_banned_phrase_counts": {},
+            "ngram_overlap": 0.5412844036697247,
+            "blueprint_repetition": 2,
+            "conclusion_similarity": 0.9271050693011066,
+            "repeated_sentence_count": 2,
+            "repeated_paragraph_count": 2,
+            "heading_sequence": [
+              "System Change",
+              "Bottleneck",
+              "Engineering Tradeoff",
+              "Validation Metric"
+            ],
+            "blocked": true,
+            "reasons": [
+              "repeated_sentence_ratio>0.12",
+              "heading_sequence_similarity>0.75",
+              "conclusion_similarity>0.7"
+            ]
+          },
+          "expert_insight_complete": true,
+          "expert_insight_missing_fields": [],
+          "reason": "repeated_sentence_ratio>0.12; heading_sequence_similarity>0.75; conclusion_similarity>0.7"
+        }
+      ],
+      "signalCardItems": [
+        {
+          "id": "0fc19ee68c013531",
+          "title": "Chip Industry Week in Review",
+          "infrastructure_relevance_score": 1,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "data_center_relevance:0.42(data centers)",
+            "cloud_capacity_relevance:0.32(hyperscalers)",
+            "semiconductor_relevance:1.00(semiconductor, hbm, wafer)",
+            "power_grid_relevance:0.22(power)"
+          ],
+          "extraction_quality_score": 1,
+          "source_domain_adapter": "semiengineering",
+          "content_length": 1761,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": false,
+          "repetition_block_reasons": [],
+          "repetition_check": null,
+          "expert_insight_complete": true,
+          "expert_insight_missing_fields": [],
+          "reason": "fail_closed: source_text_incomplete:source_boilerplate_detected"
+        }
+      ],
+      "archiveOnlyItems": []
     }
   ],
-  "lastRunAt": "2026-08-07T01:42:37.868Z"
+  "lastRunAt": "2026-08-07T08:20:21.749Z"
 }
