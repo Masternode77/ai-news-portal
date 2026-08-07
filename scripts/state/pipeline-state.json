@@ -767,7 +767,9 @@
     "0fc19ee68c013531",
     "44873231f494acbe",
     "f23546adfd80b651",
-    "9d82cbcb8dbb7dfd"
+    "9d82cbcb8dbb7dfd",
+    "666164aa1acf4d1c",
+    "afb38d125df0c4c6"
   ],
   "dayPlans": {
     "2026-03-24": {
@@ -40810,19 +40812,19 @@
     "2026-08-08": {
       "date": "2026-08-08",
       "createdAt": "2026-08-07T16:02:03.313Z",
-      "refreshedAt": "2026-08-07T16:02:03.313Z",
+      "refreshedAt": "2026-08-07T23:36:12.839Z",
       "candidateWindowHours": 24,
       "curatedItems": [
         {
-          "id": "9d82cbcb8dbb7dfd",
-          "source": "Toms Hardware",
-          "url": "https://www.tomshardware.com/pc-components/cpus/amazon-cracks-down-on-cpu-waste-among-engineers-as-agentic-ai-crunch-intensifies-cpu-demand-makes-low-utilization-ec2-instances-a-hot-commodity",
-          "title": "Amazon cracks down on 'CPU waste' among engineers as agentic AI crunch intensifies — CPU demand makes low-utilization EC2 instances a hot commodity",
-          "snippet": "Amazon Web Services is telling engineers to slow down on EC2 usage as it struggles to meet CPU capacity demand for external customers.",
-          "contentText": "Amazon Web Services is cracking down on internal use of EC2 instances among its engineers. In May, the company reportedly met with engineers and told them to reduce CPU waste to ensure AWS has enough CPU capacity to meet customer demand, The Information reports . The message comes as demand for CPUs in the data center has hit a fever pitch, with the traditional eight-to-one or four-to-one ratio of GPUs to CPUs moving closer to parity. Go deeper with TH Premium: CPU (Image credit: Tom's Hardware) CPU scaling with DLSS Ryzen to the top: How AMD innovated in the gaming CPU market How ARM is working its way into PCs AMD CES 2026 gaming trends press Q&A roundtable transcript EC2 instances make up a large chunk of the modern internet, and they're used in private deployments, as well. Traditiona…",
-          "publishedAt": "2026-08-07T15:49:52.000Z",
-          "sourceImage": "https://cdn.mos.cms.futurecdn.net/NQC73QYBQQXmqRgadqnzt6-1280-80.png",
-          "region": "APAC",
+          "id": "afb38d125df0c4c6",
+          "source": "StorageReview",
+          "url": "https://www.storagereview.com/review/dell-pro-precision-5-14s-intel-review-certified-workstation-graphics-without-a-discrete-gpu",
+          "title": "Dell Pro Precision 5 14s Intel Review: Certified Workstation Graphics Without a Discrete GPU",
+          "snippet": "The Dell Pro Precision 5 14s is a compact mobile workstation built around Intel’s latest professional laptop platform. Our review unit combines a Series 3 Intel Core Ultra X9 388H, a 16-core Panther Lake processor with…",
+          "contentText": "The Dell Pro Precision 5 14s is a compact mobile workstation built around Intel&#8217;s latest professional laptop platform. Our review unit combines a Series 3 Intel Core Ultra X9 388H, a 16-core Panther Lake processor with a 50 TOPS NPU, with Intel Arc Pro B390 graphics, 64GB of LPCAMM2 memory running at 8533 MT/s, and a 1TB Gen5 SED-ready SSD. During testing, this configuration produced the strongest productivity results we have recorded from a 14-inch laptop while lasting nearly a full day on battery. Within Dell&#8217;s lineup, the Pro Precision 5 14s adds workstation-focused graphics drivers and enterprise features without moving to a heavier discrete GPU design. It is designed for engineers, developers, analysts, and creators who need certified application support, strong CPU perfo…",
+          "publishedAt": "2026-08-07T21:22:58.000Z",
+          "sourceImage": "https://www.storagereview.com/wp-content/uploads/2026/08/StorageReview-Dell-Pro-Precision-5-14S-Intel-7.jpg",
+          "region": "US",
           "language": "en",
           "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
           "category": "AI Infrastructure",
@@ -40836,46 +40838,42 @@
             "investors"
           ],
           "article_type": "Capacity Expansion",
-          "urgency_score": 0.55,
+          "urgency_score": 0.45,
           "taxonomy_confidence": 0.77,
           "taxonomy_reasons": [
             "ai infrastructure",
             "neocloud"
           ],
           "direct_ai_infrastructure_relevance": 1,
-          "data_center_relevance": 0.42,
-          "cloud_capacity_relevance": 0.22,
-          "semiconductor_relevance": 0.44,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0.567,
           "power_grid_relevance": 0,
           "cooling_relevance": 0,
           "capital_markets_relevance": 0,
           "enterprise_ai_infrastructure_relevance": 0,
-          "infrastructure_relevance_score": 0.897,
+          "infrastructure_relevance_score": 0.855,
           "infrastructure_relevance_tier": "full_memo",
           "infrastructure_relevance_action": "generate_full_memo",
           "infrastructure_relevance_reasons": [
             "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "data_center_relevance:0.42(data center)",
-            "cloud_capacity_relevance:0.22(aws)",
-            "semiconductor_relevance:0.44(amd, gpu)"
+            "semiconductor_relevance:0.57(intel, gpu)"
           ],
           "infrastructure_relevance": {
             "direct_ai_infrastructure_relevance": 1,
-            "data_center_relevance": 0.42,
-            "cloud_capacity_relevance": 0.22,
-            "semiconductor_relevance": 0.44,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0.567,
             "power_grid_relevance": 0,
             "cooling_relevance": 0,
             "capital_markets_relevance": 0,
             "enterprise_ai_infrastructure_relevance": 0,
-            "infrastructure_relevance_score": 0.897,
+            "infrastructure_relevance_score": 0.855,
             "infrastructure_relevance_tier": "full_memo",
             "infrastructure_relevance_action": "generate_full_memo",
             "infrastructure_relevance_reasons": [
               "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-              "data_center_relevance:0.42(data center)",
-              "cloud_capacity_relevance:0.22(aws)",
-              "semiconductor_relevance:0.44(amd, gpu)"
+              "semiconductor_relevance:0.57(intel, gpu)"
             ],
             "infrastructureRelevanceAction": "generate_full_memo",
             "articlePagePublished": true,
@@ -40883,17 +40881,160 @@
             "archiveOnly": false,
             "archiveOnlyReason": null
           },
-          "score": 84
+          "score": 82
         },
         {
-          "id": "f23546adfd80b651",
-          "source": "HPCwire",
-          "url": "https://www.hpcwire.com/off-the-wire/intersect360-research-launches-studies-on-enterprise-ai-adoption-eu-sovereignty/",
-          "title": "Intersect360 Research Launches Studies on Enterprise AI Adoption, EU Sovereignty",
-          "snippet": "Two Multi-Client Studies Launched to Track Enterprise AI Barriers and Europe’s Digital Autonomy Push SUNNYVALE, Calif., Aug. 7, 2026 — Intersect360 Research has announced two new multi-client research studies. The first…",
-          "contentText": "Two Multi-Client Studies Launched to Track Enterprise AI Barriers and Europe’s Digital Autonomy Push SUNNYVALE, Calif., Aug. 7, 2026 &#8212; Intersect360 Research has announced two new multi-client research studies. The first, “Enterprise AI Adoption,” examines the drivers, barriers, and satisfaction gaps shaping enterprise AI investment. The second, “AI in the EU,” analyzes Europe’s push for digital sovereignty and autonomy in artificial intelligence. The Enterprise AI Adoption study will explore the true state of AI use inside organizations, including testing, production, training, and inference. Intersect360 Research’s ongoing survey work has already reached 458 medium to large enterprises with more than $10 million in annual revenue. That work found that 84% of AI and HPC budgets are…",
-          "publishedAt": "2026-08-07T15:00:42.000Z",
-          "sourceImage": "https://www.hpcwire.com/wp-content/uploads/2026/06/Intersect360-Research-300x187.png",
+          "id": "666164aa1acf4d1c",
+          "source": "Bloomberg Technology",
+          "url": "https://www.bloomberg.com/news/articles/2026-08-07/data-center-firm-switch-is-said-to-file-confidentially-for-ipo",
+          "title": "Data Center Firm Switch to File Confidentially for IPO",
+          "snippet": "Switch Inc. filed confidentially for a US IPO, according to people familiar with the matter, joining its data center peers in tapping demand for exposure to the artificial intelligence theme.",
+          "contentText": "Switch Inc. filed confidentially for a US IPO, according to people familiar with the matter, joining its data center peers in tapping demand for exposure to the artificial intelligence theme.",
+          "publishedAt": "2026-08-07T21:23:00.000Z",
+          "sourceImage": null,
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "Hyperscalers & Cloud",
+          "category": "Data Centers",
+          "primary_category": "Data Centers",
+          "secondary_category": "Campus development and colocation capacity",
+          "infrastructure_layer": "Facility",
+          "affected_stakeholders": [
+            "data center operators",
+            "developers",
+            "site selectors",
+            "investors"
+          ],
+          "article_type": "Financing / M&A",
+          "urgency_score": 0.43,
+          "taxonomy_confidence": 0.65,
+          "taxonomy_reasons": [
+            "data center"
+          ],
+          "direct_ai_infrastructure_relevance": 0.78,
+          "data_center_relevance": 0.55,
+          "cloud_capacity_relevance": 0.32,
+          "semiconductor_relevance": 0,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0.324,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.793,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:0.78",
+            "data_center_relevance:0.55(data center)",
+            "cloud_capacity_relevance:0.32(hyperscalers)",
+            "capital_markets_relevance:0.32(ipo)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 0.78,
+            "data_center_relevance": 0.55,
+            "cloud_capacity_relevance": 0.32,
+            "semiconductor_relevance": 0,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0.324,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.793,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:0.78",
+              "data_center_relevance:0.55(data center)",
+              "cloud_capacity_relevance:0.32(hyperscalers)",
+              "capital_markets_relevance:0.32(ipo)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 79
+        },
+        {
+          "id": "27f6892fa789df40",
+          "source": "Semiconductor Engineering",
+          "url": "https://semiengineering.com/model-tracks-bond-front-velocity-for-wafer-and-die-bonding-imec/",
+          "title": "Model Tracks Bond Front Velocity in Lubrication-Mediated Bonding of Flexible Substrates (imec)",
+          "snippet": "An imec researcher published a technical paper titled “Bond Front Velocity in Lubrication-Mediated Bonding of Flexible Substrates.” Abstract: “Bonding and assembly processes have started to take the centre-stage in semi…",
+          "contentText": "An imec researcher published a technical paper titled “Bond Front Velocity in Lubrication-Mediated Bonding of Flexible Substrates.” Abstract: &#8220;Bonding and assembly processes have started to take the centre-stage in semiconductor manufacturing as they enable three-dimensional (3D) stacking and heterogeneous integration for novel interconnect architectures of integrated circuits. The progression of a bond front hinges on balance of adhesion and dissipation forces. Here, a lubrication–elasticity model is reported, to elucidate near-field dynamics of the process while staying within continuum limits, excluding adhesion mechanisms. When governed by lubrication flow in the gap, and linear elasticity in the substrates, the unbonded part of the substrates assumes a power-law shape as a func…",
+          "publishedAt": "2026-08-07T19:48:39.000Z",
+          "sourceImage": null,
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "category": "AI Infrastructure",
+          "primary_category": "AI Infrastructure",
+          "secondary_category": "GPU clusters and deployment readiness",
+          "infrastructure_layer": "Compute",
+          "affected_stakeholders": [
+            "operators",
+            "hyperscalers",
+            "cloud buyers",
+            "investors"
+          ],
+          "article_type": "Financing / M&A",
+          "urgency_score": 0.57,
+          "taxonomy_confidence": 0.77,
+          "taxonomy_reasons": [
+            "ai infrastructure",
+            "neocloud"
+          ],
+          "direct_ai_infrastructure_relevance": 1,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0.82,
+          "power_grid_relevance": 0.22,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0.324,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.98,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "semiconductor_relevance:0.82(semiconductor, wafer, gpu)",
+            "power_grid_relevance:0.22(power)",
+            "capital_markets_relevance:0.32(bond)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 1,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0.82,
+            "power_grid_relevance": 0.22,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0.324,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.98,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+              "semiconductor_relevance:0.82(semiconductor, wafer, gpu)",
+              "power_grid_relevance:0.22(power)",
+              "capital_markets_relevance:0.32(bond)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 79
+        },
+        {
+          "id": "4098f949e5a2f579",
+          "source": "Toms Hardware",
+          "url": "https://www.tomshardware.com/pc-components/ram/scientist-says-ram-pricing-has-reverted-to-normalized-2007-levels-memory-prices-have-been-falling-exponentially-for-decades-but-the-ai-shortage-undid-20-years-of-progress-in-a-matter-of-months",
+          "title": "Scientist says RAM pricing has reverted to normalized 2007 levels — memory prices have been falling exponentially for decades, but the AI shortage undid 20 years of progress in a matter of months",
+          "snippet": "The per GB price of memory modules have gone back to 2007 levels because of AI demand. This is the first time that prices have shot up in the realm of tech, Lemire says.",
+          "contentText": "Software performance expert, scientist, and GitHub developer Daniel Lemire compared historical computer memory prices and showed that decades of falling prices were undone in just a matter of months because of the massive demand for HBM. According to his X post, this event is a historical anomaly, and he cannot think of an instance where technology hardware prices reverted to levels from decades before. On a historical basis, computer memory has been falling at an exponential rate for decades. But we just undid about 20 years of progress. RAM on a per unit basis is about as expensive as it was in 2007.To my knowledge, it is an historical anomaly. I cannot recall a similar… pic.twitter.com/UH6LgZ1fc4 August 5, 2026 “RAM on a per unit basis is about as expensive as it was in 2007,” Lemire s…",
+          "publishedAt": "2026-08-07T16:58:22.000Z",
+          "sourceImage": "https://cdn.mos.cms.futurecdn.net/DzxQr2k2MxmxSptJ9wViJi-1280-80.jpg",
           "region": "US",
           "language": "en",
           "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
@@ -40908,149 +41049,7 @@
             "investors"
           ],
           "article_type": "Product / Platform Update",
-          "urgency_score": 0.46,
-          "taxonomy_confidence": 0.85,
-          "taxonomy_reasons": [
-            "ai infrastructure",
-            "neocloud",
-            "hpc"
-          ],
-          "direct_ai_infrastructure_relevance": 1,
-          "data_center_relevance": 0,
-          "cloud_capacity_relevance": 0,
-          "semiconductor_relevance": 0.22,
-          "power_grid_relevance": 0,
-          "cooling_relevance": 0,
-          "capital_markets_relevance": 0,
-          "enterprise_ai_infrastructure_relevance": 0.432,
-          "infrastructure_relevance_score": 0.86,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud, hpc)",
-            "semiconductor_relevance:0.22(gpu)",
-            "enterprise_ai_infrastructure_relevance:0.43(enterprise ai)"
-          ],
-          "infrastructure_relevance": {
-            "direct_ai_infrastructure_relevance": 1,
-            "data_center_relevance": 0,
-            "cloud_capacity_relevance": 0,
-            "semiconductor_relevance": 0.22,
-            "power_grid_relevance": 0,
-            "cooling_relevance": 0,
-            "capital_markets_relevance": 0,
-            "enterprise_ai_infrastructure_relevance": 0.432,
-            "infrastructure_relevance_score": 0.86,
-            "infrastructure_relevance_tier": "full_memo",
-            "infrastructure_relevance_action": "generate_full_memo",
-            "infrastructure_relevance_reasons": [
-              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud, hpc)",
-              "semiconductor_relevance:0.22(gpu)",
-              "enterprise_ai_infrastructure_relevance:0.43(enterprise ai)"
-            ],
-            "infrastructureRelevanceAction": "generate_full_memo",
-            "articlePagePublished": true,
-            "homepagePublished": true,
-            "archiveOnly": false,
-            "archiveOnlyReason": null
-          },
-          "score": 82
-        },
-        {
-          "id": "1056c46192fedb9b",
-          "source": "Data Center Frontier",
-          "url": "https://www.datacenterfrontier.com/press-releases/article/55396442/dcf-trends-summit-2026-execution-took-the-stage-in-reston",
-          "title": "DCF Trends Summit 2026: Execution Took the Stage in Reston",
-          "snippet": "The public conversation surrounding the 2026 Data Center Frontier Trends Summit showed an industry moving beyond AI ambition to the power, engineering, capital and community work required to deliver operating capacity.",
-          "contentText": "The public conversation surrounding the 2026 Data Center Frontier Trends Summit showed an industry moving beyond AI ambition to the power, engineering, capital and community work required to deliver operating capacity.",
-          "publishedAt": "2026-08-07T13:18:05.000Z",
-          "sourceImage": "https://img.datacenterfrontier.com/files/base/ebm/datacenterfrontier/image/2026/08/6a75d5ea36f4b0650750cb22-dcfts_opening__hero.png",
-          "region": "APAC",
-          "language": "en",
-          "defaultCategory": "Colocation & Wholesale",
-          "category": "Data Centers",
-          "primary_category": "Data Centers",
-          "secondary_category": "Campus development and colocation capacity",
-          "infrastructure_layer": "Facility",
-          "affected_stakeholders": [
-            "data center operators",
-            "developers",
-            "site selectors",
-            "investors"
-          ],
-          "article_type": "Capacity Expansion",
-          "urgency_score": 0.6,
-          "taxonomy_confidence": 0.81,
-          "taxonomy_reasons": [
-            "data center",
-            "colocation",
-            "wholesale"
-          ],
-          "direct_ai_infrastructure_relevance": 0.78,
-          "data_center_relevance": 0.76,
-          "cloud_capacity_relevance": 0,
-          "semiconductor_relevance": 0,
-          "power_grid_relevance": 0.22,
-          "cooling_relevance": 0,
-          "capital_markets_relevance": 0,
-          "enterprise_ai_infrastructure_relevance": 0,
-          "infrastructure_relevance_score": 0.805,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:0.78",
-            "data_center_relevance:0.76(data center, colocation)",
-            "power_grid_relevance:0.22(power)"
-          ],
-          "infrastructure_relevance": {
-            "direct_ai_infrastructure_relevance": 0.78,
-            "data_center_relevance": 0.76,
-            "cloud_capacity_relevance": 0,
-            "semiconductor_relevance": 0,
-            "power_grid_relevance": 0.22,
-            "cooling_relevance": 0,
-            "capital_markets_relevance": 0,
-            "enterprise_ai_infrastructure_relevance": 0,
-            "infrastructure_relevance_score": 0.805,
-            "infrastructure_relevance_tier": "full_memo",
-            "infrastructure_relevance_action": "generate_full_memo",
-            "infrastructure_relevance_reasons": [
-              "direct_ai_infrastructure_relevance:0.78",
-              "data_center_relevance:0.76(data center, colocation)",
-              "power_grid_relevance:0.22(power)"
-            ],
-            "infrastructureRelevanceAction": "generate_full_memo",
-            "articlePagePublished": true,
-            "homepagePublished": true,
-            "archiveOnly": false,
-            "archiveOnlyReason": null
-          },
-          "score": 80
-        },
-        {
-          "id": "7cc18fcc38be714c",
-          "source": "StorageReview",
-          "url": "https://www.storagereview.com/news/coreweave-locks-in-solidigm-ssd-supply-as-flash-allocation-becomes-an-ai-cloud-problem",
-          "title": "CoreWeave Locks In Solidigm SSD Supply as Flash Allocation Becomes an AI Cloud Problem",
-          "snippet": "CoreWeave said on August 5 that it has signed a multi-year agreement with Solidigm for priority access to enterprise SSD capacity. Storage has become the second component after GPUs that an AI cloud has to contract for…",
-          "contentText": "CoreWeave said on August 5 that it has signed a multi-year agreement with Solidigm for priority access to enterprise SSD capacity. Storage has become the second component after GPUs that an AI cloud has to contract for years in advance, and CoreWeave has now done for flash what cloud providers spent the first half of 2026 doing for DRAM. What the Agreement Says, and What It Does Not The disclosed terms amount to three things: the agreement is multi-year, it covers priority access to enterprise SSD capacity, and it is meant to keep storage scaling with customer demand on CoreWeave&#8217;s integrated AI cloud platform. What both executives chose to talk about is telling. Sachin Jain, chief operating officer at CoreWeave, framed it entirely around supply certainty: the agreement &#8220;gives…",
-          "publishedAt": "2026-08-07T15:51:34.000Z",
-          "sourceImage": "https://www.storagereview.com/wp-content/uploads/2024/11/StorageReview-Solidigm-P5336-122TB-5.jpg",
-          "region": "APAC",
-          "language": "en",
-          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
-          "category": "AI Infrastructure",
-          "primary_category": "AI Infrastructure",
-          "secondary_category": "GPU clusters and deployment readiness",
-          "infrastructure_layer": "Compute",
-          "affected_stakeholders": [
-            "operators",
-            "hyperscalers",
-            "cloud buyers",
-            "investors"
-          ],
-          "article_type": "Capacity Expansion",
-          "urgency_score": 0.51,
+          "urgency_score": 0.61,
           "taxonomy_confidence": 0.77,
           "taxonomy_reasons": [
             "ai infrastructure",
@@ -41059,101 +41058,33 @@
           "direct_ai_infrastructure_relevance": 1,
           "data_center_relevance": 0,
           "cloud_capacity_relevance": 0,
-          "semiconductor_relevance": 0.22,
-          "power_grid_relevance": 0,
-          "cooling_relevance": 0,
-          "capital_markets_relevance": 0,
-          "enterprise_ai_infrastructure_relevance": 0.18,
-          "infrastructure_relevance_score": 0.778,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "semiconductor_relevance:0.22(gpu)"
-          ],
-          "infrastructure_relevance": {
-            "direct_ai_infrastructure_relevance": 1,
-            "data_center_relevance": 0,
-            "cloud_capacity_relevance": 0,
-            "semiconductor_relevance": 0.22,
-            "power_grid_relevance": 0,
-            "cooling_relevance": 0,
-            "capital_markets_relevance": 0,
-            "enterprise_ai_infrastructure_relevance": 0.18,
-            "infrastructure_relevance_score": 0.778,
-            "infrastructure_relevance_tier": "full_memo",
-            "infrastructure_relevance_action": "generate_full_memo",
-            "infrastructure_relevance_reasons": [
-              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-              "semiconductor_relevance:0.22(gpu)"
-            ],
-            "infrastructureRelevanceAction": "generate_full_memo",
-            "articlePagePublished": true,
-            "homepagePublished": true,
-            "archiveOnly": false,
-            "archiveOnlyReason": null
-          },
-          "score": 79
-        },
-        {
-          "id": "84485e2d1b3b9163",
-          "source": "HPCwire",
-          "url": "https://www.hpcwire.com/off-the-wire/university-of-north-dakota-joins-doe-genesis-mission-with-ai-battery-security-project/",
-          "title": "University of North Dakota Joins DOE Genesis Mission with AI Battery Security Project",
-          "snippet": "Aug. 7, 2026 — The University of North Dakota has been selected for the inaugural cohort of projects supported by the U.S. Department of Energy’s Genesis Mission, making UND the only institution in North Dakota chosen t…",
-          "contentText": "Aug. 7, 2026 &#8212; The University of North Dakota has been selected for the inaugural cohort of projects supported by the U.S. Department of Energy’s Genesis Mission, making UND the only institution in North Dakota chosen to participate in the national initiative. The project, led by Jielun Zhang, assistant professor in the College of Engineering & Mines’ School of Electrical Engineering and Computer Science, will develop new methods to improve the security and reliability of artificial intelligence models used in battery management systems and other energy science applications. Jueming Hu, assistant professor of mechanical engineering at UND, serves as co-principal investigator. The Genesis Mission is a historic national initiative led by the U.S. Department of Energy that is building…",
-          "publishedAt": "2026-08-07T14:37:43.000Z",
-          "sourceImage": "https://www.hpcwire.com/wp-content/uploads/2026/07/Genesis-Mission-16x9-1-300x169.jpg",
-          "region": "US",
-          "language": "en",
-          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
-          "category": "AI Infrastructure",
-          "primary_category": "AI Infrastructure",
-          "secondary_category": "GPU clusters and deployment readiness",
-          "infrastructure_layer": "Compute",
-          "affected_stakeholders": [
-            "operators",
-            "hyperscalers",
-            "cloud buyers",
-            "investors"
-          ],
-          "article_type": "Research / Technical",
-          "urgency_score": 0.43,
-          "taxonomy_confidence": 0.77,
-          "taxonomy_reasons": [
-            "ai infrastructure",
-            "neocloud"
-          ],
-          "direct_ai_infrastructure_relevance": 1,
-          "data_center_relevance": 0,
-          "cloud_capacity_relevance": 0,
-          "semiconductor_relevance": 0.22,
+          "semiconductor_relevance": 0.58,
           "power_grid_relevance": 0,
           "cooling_relevance": 0,
           "capital_markets_relevance": 0,
           "enterprise_ai_infrastructure_relevance": 0,
-          "infrastructure_relevance_score": 0.778,
+          "infrastructure_relevance_score": 0.858,
           "infrastructure_relevance_tier": "full_memo",
           "infrastructure_relevance_action": "generate_full_memo",
           "infrastructure_relevance_reasons": [
             "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "semiconductor_relevance:0.22(gpu)"
+            "semiconductor_relevance:0.58(hbm, gpu)"
           ],
           "infrastructure_relevance": {
             "direct_ai_infrastructure_relevance": 1,
             "data_center_relevance": 0,
             "cloud_capacity_relevance": 0,
-            "semiconductor_relevance": 0.22,
+            "semiconductor_relevance": 0.58,
             "power_grid_relevance": 0,
             "cooling_relevance": 0,
             "capital_markets_relevance": 0,
             "enterprise_ai_infrastructure_relevance": 0,
-            "infrastructure_relevance_score": 0.778,
+            "infrastructure_relevance_score": 0.858,
             "infrastructure_relevance_tier": "full_memo",
             "infrastructure_relevance_action": "generate_full_memo",
             "infrastructure_relevance_reasons": [
               "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-              "semiconductor_relevance:0.22(gpu)"
+              "semiconductor_relevance:0.58(hbm, gpu)"
             ],
             "infrastructureRelevanceAction": "generate_full_memo",
             "articlePagePublished": true,
@@ -41161,18 +41092,18 @@
             "archiveOnly": false,
             "archiveOnlyReason": null
           },
-          "score": 75
+          "score": 74
         },
         {
-          "id": "6fc4de63dd6e07dc",
+          "id": "35de6186c3788e36",
           "source": "TechCrunch AI",
-          "url": "https://techcrunch.com/2026/08/07/airbnb-says-ai-is-helping-it-ship-features-faster-as-it-tests-a-new-search-function/",
-          "title": "Airbnb says AI is helping it ship features faster as it tests a new search function",
-          "snippet": "Airbnb will debut a new AI-powered search experience with a toggle.",
-          "contentText": "Airbnb will debut a new AI-powered search experience with a toggle.",
-          "publishedAt": "2026-08-07T14:22:49.000Z",
+          "url": "https://techcrunch.com/2026/08/07/openai-says-it-slowed-astra-model-development-over-security-concerns/",
+          "title": "OpenAI says it slowed Astra model development over security concerns",
+          "snippet": "OpenAI said it has suspended work on some aspects of its upcoming model Astra over concerns about its cybersecurity prowess.",
+          "contentText": "OpenAI said it has suspended work on some aspects of its upcoming model Astra over concerns about its cybersecurity prowess.",
+          "publishedAt": "2026-08-07T22:48:24.000Z",
           "sourceImage": null,
-          "region": "Global",
+          "region": "US",
           "language": "en",
           "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
           "category": "AI Infrastructure",
@@ -41229,149 +41160,98 @@
             "archiveOnly": false,
             "archiveOnlyReason": null
           },
-          "score": 67
-        }
-      ],
-      "curatedIds": [
-        "9d82cbcb8dbb7dfd",
-        "f23546adfd80b651",
-        "1056c46192fedb9b",
-        "7cc18fcc38be714c",
-        "84485e2d1b3b9163",
-        "6fc4de63dd6e07dc"
-      ],
-      "publishedIds": [
-        "f23546adfd80b651",
-        "9d82cbcb8dbb7dfd"
-      ],
-      "slotPublications": {
-        "0": true
-      }
-    }
-  },
-  "runHistory": [
-    {
-      "at": "2026-06-28T16:19:54.945Z",
-      "day": "2026-06-29",
-      "slot": 0,
-      "publishedCount": 0,
-      "signalCardCount": 1,
-      "archiveOnlyCount": 0,
-      "repetitionBlockedCount": 1,
-      "publishedIds": [],
-      "processedIds": [
-        "5b2eb493afacc696",
-        "68e53992ccc4ae28"
-      ],
-      "blockedCount": 1,
-      "blockedItems": [
+          "score": 72
+        },
         {
-          "id": "5b2eb493afacc696",
-          "title": "AI Startup Firmus to Build Indonesia Data Center With Nvidia",
-          "infrastructure_relevance_score": 0.852,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:0.82",
-            "data_center_relevance:0.71(data center, campus)",
-            "cloud_capacity_relevance:0.32(hyperscalers)",
-            "semiconductor_relevance:0.38(nvidia)",
-            "power_grid_relevance:0.52(power, megawatt)"
+          "id": "44ecdd4f4db749eb",
+          "source": "TechCrunch AI",
+          "url": "https://techcrunch.com/2026/08/07/after-rippling-blew-millions-on-ai-in-months-it-built-an-employee-roi-tool/",
+          "title": "After Rippling blew millions on AI in months, it built an employee ROI tool",
+          "snippet": "After its own AI usage wake-up call, Rippling this week unveiled AI Spend Console, a product that tracks individual and team employee AI spending.",
+          "contentText": "After its own AI usage wake-up call, Rippling this week unveiled AI Spend Console, a product that tracks individual and team employee AI spending.",
+          "publishedAt": "2026-08-07T21:30:11.000Z",
+          "sourceImage": null,
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "category": "AI Infrastructure",
+          "primary_category": "AI Infrastructure",
+          "secondary_category": "GPU clusters and deployment readiness",
+          "infrastructure_layer": "Compute",
+          "affected_stakeholders": [
+            "operators",
+            "hyperscalers",
+            "cloud buyers",
+            "investors"
           ],
-          "extraction_quality_score": 0.78,
-          "source_domain_adapter": "bloomberg",
-          "content_length": 604,
-          "boilerplate_ratio": 0.03,
-          "repetition_blocked": false,
-          "repetition_block_reasons": [],
-          "repetition_check": null,
-          "expert_insight_complete": true,
-          "expert_insight_missing_fields": [],
-          "reason": "fail_closed: nav_or_cta_detected"
-        }
-      ],
-      "repetitionBlockedItems": [
-        {
-          "id": "68e53992ccc4ae28",
-          "title": "PNY's Performance 32GB DDR5-5600 RAM becomes the cheapest 2x16GB kit— DDR5 kit gets a $70 discount",
-          "infrastructure_relevance_score": 0.87,
+          "article_type": "Other",
+          "urgency_score": 0.43,
+          "taxonomy_confidence": 0.77,
+          "taxonomy_reasons": [
+            "ai infrastructure",
+            "neocloud"
+          ],
+          "direct_ai_infrastructure_relevance": 1,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0.22,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.778,
           "infrastructure_relevance_tier": "full_memo",
           "infrastructure_relevance_action": "generate_full_memo",
           "infrastructure_relevance_reasons": [
             "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "cloud_capacity_relevance:0.32(hyperscalers)",
-            "semiconductor_relevance:0.22(gpu)",
-            "power_grid_relevance:0.22(power)"
+            "semiconductor_relevance:0.22(gpu)"
           ],
-          "extraction_quality_score": 1,
-          "source_domain_adapter": "generic",
-          "content_length": 1714,
-          "boilerplate_ratio": 0,
-          "repetition_blocked": true,
-          "repetition_block_reasons": [
-            "repeated_sentence_ratio>0.12",
-            "heading_sequence_similarity>0.75",
-            "conclusion_similarity>0.7"
-          ],
-          "repetition_check": {
-            "compared_article_count": 20,
-            "repeated_sentence_ratio": 0.2857142857142857,
-            "repeated_paragraph_ratio": 0.3333333333333333,
-            "heading_sequence_similarity": 1,
-            "banned_phrase_count": 0,
-            "banned_phrase_counts": {},
-            "recent_banned_phrase_counts": {},
-            "ngram_overlap": 0.47863247863247865,
-            "blueprint_repetition": 1,
-            "conclusion_similarity": 0.9511897312113418,
-            "repeated_sentence_count": 2,
-            "repeated_paragraph_count": 2,
-            "heading_sequence": [
-              "Cost Signal",
-              "Below The Accelerator Layer",
-              "Buyer Exposure",
-              "Planning Metric"
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 1,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0.22,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.778,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+              "semiconductor_relevance:0.22(gpu)"
             ],
-            "blocked": true,
-            "reasons": [
-              "repeated_sentence_ratio>0.12",
-              "heading_sequence_similarity>0.75",
-              "conclusion_similarity>0.7"
-            ]
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
           },
-          "expert_insight_complete": true,
-          "expert_insight_missing_fields": [],
-          "reason": "repeated_sentence_ratio>0.12; heading_sequence_similarity>0.75; conclusion_similarity>0.7"
+          "score": 72
         }
       ],
-      "signalCardItems": [
-        {
-          "id": "5b2eb493afacc696",
-          "title": "AI Startup Firmus to Build Indonesia Data Center With Nvidia",
-          "infrastructure_relevance_score": 0.852,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:0.82",
-            "data_center_relevance:0.71(data center, campus)",
-            "cloud_capacity_relevance:0.32(hyperscalers)",
-            "semiconductor_relevance:0.38(nvidia)",
-            "power_grid_relevance:0.52(power, megawatt)"
-          ],
-          "extraction_quality_score": 0.78,
-          "source_domain_adapter": "bloomberg",
-          "content_length": 604,
-          "boilerplate_ratio": 0.03,
-          "repetition_blocked": false,
-          "repetition_block_reasons": [],
-          "repetition_check": null,
-          "expert_insight_complete": true,
-          "expert_insight_missing_fields": [],
-          "reason": "fail_closed: nav_or_cta_detected"
-        }
+      "curatedIds": [
+        "afb38d125df0c4c6",
+        "666164aa1acf4d1c",
+        "27f6892fa789df40",
+        "4098f949e5a2f579",
+        "35de6186c3788e36",
+        "44ecdd4f4db749eb"
       ],
-      "archiveOnlyItems": []
-    },
+      "publishedIds": [
+        "f23546adfd80b651",
+        "9d82cbcb8dbb7dfd",
+        "666164aa1acf4d1c",
+        "afb38d125df0c4c6"
+      ],
+      "slotPublications": {
+        "0": true,
+        "1": true
+      }
+    }
+  },
+  "runHistory": [
     {
       "at": "2026-06-29T00:12:10.112Z",
       "day": "2026-06-29",
@@ -55017,7 +54897,129 @@
         }
       ],
       "archiveOnlyItems": []
+    },
+    {
+      "at": "2026-08-07T23:36:12.839Z",
+      "day": "2026-08-08",
+      "slot": 1,
+      "publishedCount": 0,
+      "signalCardCount": 1,
+      "archiveOnlyCount": 0,
+      "repetitionBlockedCount": 1,
+      "publishedIds": [],
+      "processedIds": [
+        "666164aa1acf4d1c",
+        "afb38d125df0c4c6"
+      ],
+      "blockedCount": 1,
+      "blockedItems": [
+        {
+          "id": "666164aa1acf4d1c",
+          "title": "Data Center Firm Switch to File Confidentially for IPO",
+          "infrastructure_relevance_score": 0.793,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:0.78(ai infrastructure)",
+            "data_center_relevance:0.55(data center)",
+            "cloud_capacity_relevance:0.32(hyperscalers)",
+            "power_grid_relevance:0.22(power)",
+            "capital_markets_relevance:0.32(ipo)"
+          ],
+          "extraction_quality_score": 0,
+          "source_domain_adapter": "bloomberg",
+          "content_length": 191,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": false,
+          "repetition_block_reasons": [],
+          "repetition_check": null,
+          "expert_insight_complete": true,
+          "expert_insight_missing_fields": [],
+          "reason": "fail_closed: source_text_incomplete:source_evidence_length_below_500, source_evidence_length_below_1200"
+        }
+      ],
+      "repetitionBlockedItems": [
+        {
+          "id": "afb38d125df0c4c6",
+          "title": "Dell Pro Precision 5 14s Intel Review: Certified Workstation Graphics Without a Discrete GPU",
+          "infrastructure_relevance_score": 1,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "cloud_capacity_relevance:0.32(hyperscalers)",
+            "semiconductor_relevance:1.00(nvidia, amd, intel)",
+            "power_grid_relevance:0.22(power)"
+          ],
+          "extraction_quality_score": 1,
+          "source_domain_adapter": "storagereview",
+          "content_length": 1765,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": true,
+          "repetition_block_reasons": [
+            "repeated_sentence_ratio>0.12",
+            "heading_sequence_similarity>0.75",
+            "conclusion_similarity>0.7"
+          ],
+          "repetition_check": {
+            "compared_article_count": 20,
+            "repeated_sentence_ratio": 0.3333333333333333,
+            "repeated_paragraph_ratio": 0.3333333333333333,
+            "heading_sequence_similarity": 1,
+            "banned_phrase_count": 0,
+            "banned_phrase_counts": {},
+            "recent_banned_phrase_counts": {},
+            "ngram_overlap": 0.6697247706422018,
+            "blueprint_repetition": 1,
+            "conclusion_similarity": 0.9511897312113418,
+            "repeated_sentence_count": 2,
+            "repeated_paragraph_count": 2,
+            "heading_sequence": [
+              "System Change",
+              "Bottleneck",
+              "Engineering Tradeoff",
+              "Validation Metric"
+            ],
+            "blocked": true,
+            "reasons": [
+              "repeated_sentence_ratio>0.12",
+              "heading_sequence_similarity>0.75",
+              "conclusion_similarity>0.7"
+            ]
+          },
+          "expert_insight_complete": true,
+          "expert_insight_missing_fields": [],
+          "reason": "repeated_sentence_ratio>0.12; heading_sequence_similarity>0.75; conclusion_similarity>0.7"
+        }
+      ],
+      "signalCardItems": [
+        {
+          "id": "666164aa1acf4d1c",
+          "title": "Data Center Firm Switch to File Confidentially for IPO",
+          "infrastructure_relevance_score": 0.793,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:0.78(ai infrastructure)",
+            "data_center_relevance:0.55(data center)",
+            "cloud_capacity_relevance:0.32(hyperscalers)",
+            "power_grid_relevance:0.22(power)",
+            "capital_markets_relevance:0.32(ipo)"
+          ],
+          "extraction_quality_score": 0,
+          "source_domain_adapter": "bloomberg",
+          "content_length": 191,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": false,
+          "repetition_block_reasons": [],
+          "repetition_check": null,
+          "expert_insight_complete": true,
+          "expert_insight_missing_fields": [],
+          "reason": "fail_closed: source_text_incomplete:source_evidence_length_below_500, source_evidence_length_below_1200"
+        }
+      ],
+      "archiveOnlyItems": []
     }
   ],
-  "lastRunAt": "2026-08-07T16:02:03.313Z"
+  "lastRunAt": "2026-08-07T23:36:12.839Z"
 }
