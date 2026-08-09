@@ -777,7 +777,9 @@
     "ddb3c065c105e647",
     "e155ad956f86571f",
     "4ecbc8cadec7d2c1",
-    "e086a9bf9d1e91b1"
+    "e086a9bf9d1e91b1",
+    "3b9b25a9feefb6b8",
+    "3ce9b3077da2d2a7"
   ],
   "dayPlans": {
     "2026-03-24": {
@@ -41698,52 +41700,438 @@
         "1": true,
         "2": true
       }
-    }
-  },
-  "runHistory": [
-    {
-      "at": "2026-06-30T10:35:40.892Z",
-      "day": "2026-06-30",
-      "slot": 2,
-      "publishedCount": 0,
-      "signalCardCount": 2,
-      "archiveOnlyCount": 0,
-      "processedIds": [
-        "44b53955da06abc8",
-        "f24c5d9b3710a94b"
-      ],
-      "blockedCount": 1,
-      "blockedItems": [
+    },
+    "2026-08-10": {
+      "date": "2026-08-10",
+      "createdAt": "2026-08-09T15:39:09.990Z",
+      "refreshedAt": "2026-08-09T15:39:09.990Z",
+      "candidateWindowHours": 24,
+      "curatedItems": [
         {
-          "id": "f24c5d9b3710a94b",
-          "title": "HamsterOS jams a 32-bit GUI operating system in a single 1.44 MB floppy disk — retro OS for 386-era hardware should make for easy living with DOS machines and software",
-          "infrastructure_relevance_score": 0.963,
+          "id": "3b9b25a9feefb6b8",
+          "source": "Toms Hardware",
+          "url": "https://www.tomshardware.com/peripherals/gaming-keyboards/turtle-beach-command-series-kb5-review-a-touchscreen-and-a-numberpad-in-one-keyboard",
+          "title": "Turtle Beach Command Series KB5 Review: A touchscreen and a numberpad in one keyboard?",
+          "snippet": "The Turtle Beach Command Series KB5 is a full-size, wired, low-profile keyboard with a small, programmable touchscreen.",
+          "contentText": "We've seen a keyboard with a built-in macro pad, and a keyboard with a touchscreen and a separate, add-on numberpad, but what if you want a keyboard with a numberpad and a built-in macropad without having to spend an extra $100? I guess that's why there's the Turtle Beach KB5 — a full-size, wired mechanical keyboard with low-profile switches, an 8,000 Hz polling rate, and a built-in 2.4-inch touchscreen that functions as a mini macro pad (with six buttons). It's got the built-in numberpad, unlike the Corsair Galleon 100 SD and the Turtle Beach KB7 , as well as the touchscreen / macro pad, though its version is about half the size. Still, maybe that's all you really need. The KB5 is also significantly cheaper than both of those keyboards, which retail for $300 and $200, respectively. The T…",
+          "publishedAt": "2026-08-09T15:02:16.000Z",
+          "sourceImage": "https://cdn.mos.cms.futurecdn.net/E24GfKZ8PD4aKEeYexuJfL-1280-80.jpg",
+          "region": "Global",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "category": "AI Infrastructure",
+          "primary_category": "AI Infrastructure",
+          "secondary_category": "GPU clusters and deployment readiness",
+          "infrastructure_layer": "Compute",
+          "affected_stakeholders": [
+            "operators",
+            "hyperscalers",
+            "cloud buyers",
+            "investors"
+          ],
+          "article_type": "Other",
+          "urgency_score": 0.43,
+          "taxonomy_confidence": 0.77,
+          "taxonomy_reasons": [
+            "ai infrastructure",
+            "neocloud"
+          ],
+          "direct_ai_infrastructure_relevance": 1,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0.22,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.778,
           "infrastructure_relevance_tier": "full_memo",
           "infrastructure_relevance_action": "generate_full_memo",
           "infrastructure_relevance_reasons": [
             "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "cloud_capacity_relevance:0.32(hyperscalers)",
-            "semiconductor_relevance:0.22(gpu)",
-            "power_grid_relevance:0.74(power, utility, utilities)",
-            "capital_markets_relevance:0.28(capex)"
+            "semiconductor_relevance:0.22(gpu)"
           ],
-          "extraction_quality_score": 1,
-          "source_domain_adapter": "generic",
-          "content_length": 1674,
-          "boilerplate_ratio": 0,
-          "repetition_blocked": false,
-          "repetition_block_reasons": [],
-          "repetition_check": null,
-          "expert_insight_complete": false,
-          "expert_insight_missing_fields": [
-            "concrete_facts",
-            "named_companies"
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 1,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0.22,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.778,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+              "semiconductor_relevance:0.22(gpu)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 79
+        },
+        {
+          "id": "3ce9b3077da2d2a7",
+          "source": "TechCrunch AI",
+          "url": "https://techcrunch.com/2026/08/09/the-ai-safety-test-is-becoming-a-safety-risk/",
+          "title": "The AI safety test is becoming a safety risk",
+          "snippet": "AI agents are escaping cybersecurity testing environments and reaching real-world systems, raising questions about whether safety infrastructure, industry standards and regulation can keep pace with increasingly powerfu…",
+          "contentText": "AI agents are escaping cybersecurity testing environments and reaching real-world systems, raising questions about whether safety infrastructure, industry standards and regulation can keep pace with increasingly powerful models.",
+          "publishedAt": "2026-08-09T14:30:00.000Z",
+          "sourceImage": null,
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "category": "AI Infrastructure",
+          "primary_category": "AI Infrastructure",
+          "secondary_category": "GPU clusters and deployment readiness",
+          "infrastructure_layer": "Compute",
+          "affected_stakeholders": [
+            "operators",
+            "hyperscalers",
+            "cloud buyers",
+            "investors"
           ],
-          "reason": "expert_insight_missing_fields concrete_facts, named_companies"
+          "article_type": "Policy / Regulation",
+          "urgency_score": 0.43,
+          "taxonomy_confidence": 0.77,
+          "taxonomy_reasons": [
+            "ai infrastructure",
+            "neocloud"
+          ],
+          "direct_ai_infrastructure_relevance": 1,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0.22,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.778,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "semiconductor_relevance:0.22(gpu)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 1,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0.22,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.778,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+              "semiconductor_relevance:0.22(gpu)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 79
+        },
+        {
+          "id": "05533bc7b2e04d21",
+          "source": "Data Center Dynamics",
+          "url": "https://www.datacenterdynamics.com/en/opinions/community-benefit-agreements-are-essential-to-data-center-success/",
+          "title": "Community benefit agreements are essential to data center success",
+          "snippet": "The roadmap to being a good neighbor",
+          "contentText": "The roadmap to being a good neighbor",
+          "publishedAt": "2026-08-09T13:00:24.000Z",
+          "sourceImage": "https://media.datacenterdynamics.com/media/images/Jim_Broughton.eac2e574.fill-750x500.png",
+          "region": "Global",
+          "language": "en",
+          "defaultCategory": "Colocation & Wholesale",
+          "category": "Data Centers",
+          "primary_category": "Data Centers",
+          "secondary_category": "Campus development and colocation capacity",
+          "infrastructure_layer": "Facility",
+          "affected_stakeholders": [
+            "data center operators",
+            "developers",
+            "site selectors",
+            "investors"
+          ],
+          "article_type": "Other",
+          "urgency_score": 0.36,
+          "taxonomy_confidence": 0.86,
+          "taxonomy_reasons": [
+            "data center",
+            "colocation",
+            "wholesale"
+          ],
+          "direct_ai_infrastructure_relevance": 0,
+          "data_center_relevance": 0.89,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.551,
+          "infrastructure_relevance_tier": "signal_card",
+          "infrastructure_relevance_action": "publish_signal_card_only",
+          "infrastructure_relevance_reasons": [
+            "data_center_relevance:0.89(data center, colocation)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 0,
+            "data_center_relevance": 0.89,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.551,
+            "infrastructure_relevance_tier": "signal_card",
+            "infrastructure_relevance_action": "publish_signal_card_only",
+            "infrastructure_relevance_reasons": [
+              "data_center_relevance:0.89(data center, colocation)"
+            ],
+            "infrastructureRelevanceAction": "publish_signal_card_only",
+            "articlePagePublished": false,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 57
+        },
+        {
+          "id": "ffb1d09a993d1b67",
+          "source": "Bloomberg Technology",
+          "url": "https://www.bloomberg.com/news/newsletters/2026-08-09/apple-explores-apple-watch-shake-up-company-prepares-for-september-iphone-event",
+          "title": "Apple Explores Apple Watch Shake-Up; Company Prepares for September iPhone Event",
+          "snippet": "Also: The company’s big iPhone event approaches.",
+          "contentText": "Also: The company’s big iPhone event approaches.",
+          "publishedAt": "2026-08-09T14:00:01.000Z",
+          "sourceImage": null,
+          "region": "Global",
+          "language": "en",
+          "defaultCategory": "Hyperscalers & Cloud",
+          "category": "Cloud Capacity",
+          "primary_category": "Cloud Capacity",
+          "secondary_category": "Hyperscale regions and accelerator availability",
+          "infrastructure_layer": "Cloud Platform",
+          "affected_stakeholders": [
+            "hyperscalers",
+            "cloud buyers",
+            "enterprise IT",
+            "operators"
+          ],
+          "article_type": "Other",
+          "urgency_score": 0.25,
+          "taxonomy_confidence": 0.5,
+          "taxonomy_reasons": [
+            "fallback_taxonomy"
+          ],
+          "direct_ai_infrastructure_relevance": 0,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0.32,
+          "semiconductor_relevance": 0,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.221,
+          "infrastructure_relevance_tier": "archive_only",
+          "infrastructure_relevance_action": "archive_only",
+          "infrastructure_relevance_reasons": [
+            "cloud_capacity_relevance:0.32(hyperscalers)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 0,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0.32,
+            "semiconductor_relevance": 0,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.221,
+            "infrastructure_relevance_tier": "archive_only",
+            "infrastructure_relevance_action": "archive_only",
+            "infrastructure_relevance_reasons": [
+              "cloud_capacity_relevance:0.32(hyperscalers)"
+            ],
+            "infrastructureRelevanceAction": "archive_only",
+            "articlePagePublished": false,
+            "homepagePublished": false,
+            "archiveOnly": true,
+            "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
+          },
+          "score": 43
+        },
+        {
+          "id": "8e623dfe3de47b06",
+          "source": "Toms Hardware",
+          "url": "https://www.tomshardware.com/pc-components/pc-cases/noctua-finds-more-than-half-of-tested-pc-cases-misstate-cpu-cooler-clearances-hands-on-checks-reveal-errors-ranging-from-3-5mm-to-10mm-internal-compatibility-team-conducted-measurements-of-more-than-a-hundred-cases",
+          "title": "Noctua finds more than half of tested PC cases misstate CPU cooler clearances — hands-on checks reveal errors ranging from -3.5mm to +10mm, internal compatibility team conducted measurements of more than a hundred cases",
+          "snippet": "Users are asking why some measurements on Noctua's compatibility page are different from manufacturer spec sheets.",
+          "contentText": "Noctua is known for making high-end, high-quality fans and air coolers, which it has been doing for over 20 years , recently expanding into AIOs . However, it appears that there were a few questions regarding its PC case compatibility database, which some PC DIYers say don’t match the data from the manufacturer’s website. The company cleared this up in a blog post , saying that it has undertaken its own measurements and it has determined that 56 of the more than 100 cases it has tested showed significant deviation from the details officially listed online. The company gave two diverging situations of inaccurate official measurements. The first one is when the case is larger than what is actually written, which would allow PC builders to attach a larger cooler. Noctua said that the deviati…",
+          "publishedAt": "2026-08-09T14:35:00.000Z",
+          "sourceImage": "https://cdn.mos.cms.futurecdn.net/bZhmrp6kp6DEHhnLNoADp7-1280-80.jpg",
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "category": "AI Infrastructure",
+          "primary_category": "AI Infrastructure",
+          "secondary_category": "GPU clusters and deployment readiness",
+          "infrastructure_layer": "Compute",
+          "affected_stakeholders": [
+            "operators",
+            "hyperscalers",
+            "cloud buyers",
+            "investors"
+          ],
+          "article_type": "Other",
+          "urgency_score": 0.43,
+          "taxonomy_confidence": 0.77,
+          "taxonomy_reasons": [
+            "ai infrastructure",
+            "neocloud"
+          ],
+          "direct_ai_infrastructure_relevance": 1,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0.22,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.778,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "semiconductor_relevance:0.22(gpu)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 1,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0.22,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.778,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+              "semiconductor_relevance:0.22(gpu)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 79
+        },
+        {
+          "id": "0beaecc0c1102756",
+          "source": "Toms Hardware",
+          "url": "https://www.tomshardware.com/pc-components/liquid-cooling/modder-pumps-liquid-directly-over-bare-gpu-silicon-via-3d-printed-block-drops-rtx-2060-super-load-temps-to-28-c-despite-initial-leaks",
+          "title": "Modder pumps liquid directly over bare GPU silicon via 3D-printed block — drops RTX 2060 Super load temps to 28°C despite initial leaks",
+          "snippet": "The fearless TrashBench has been testing direct die water cooling of graphics cards and suffered most of the leaky nightmares you might expect.",
+          "contentText": "The fearless TrashBench has been testing direct die water cooling of graphics cards. The inevitable twist here is that they removed the metal waterblock from the equation. Despite initial leaky results and much concern of water damage to the expensive parts thrown into the mix, some of the end results are eyebrow-raising in a good way. “In my pursuit of the perfect water block, I realized, why do we need metal at all?” queried the antipodean host of the punk-rock GPU death lab. “Why can't we just pump water directly over the bare silicon? Makes sense to me.” TrashBench began this project well aware that leaks might be a problem. Thus, a non-working GeForce RTX 3060 was chosen for the initial feasibility tests. It was measured up for a 3D printed water block which would direct the coolant…",
+          "publishedAt": "2026-08-09T14:15:00.000Z",
+          "sourceImage": "https://cdn.mos.cms.futurecdn.net/u9bBdiUN7DjnuWBbPSTtSC-1280-80.jpg",
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "category": "AI Infrastructure",
+          "primary_category": "AI Infrastructure",
+          "secondary_category": "GPU clusters and deployment readiness",
+          "infrastructure_layer": "Compute",
+          "affected_stakeholders": [
+            "operators",
+            "hyperscalers",
+            "cloud buyers",
+            "investors"
+          ],
+          "article_type": "Other",
+          "urgency_score": 0.61,
+          "taxonomy_confidence": 0.77,
+          "taxonomy_reasons": [
+            "ai infrastructure",
+            "neocloud"
+          ],
+          "direct_ai_infrastructure_relevance": 1,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0.297,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0.34,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.84,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "semiconductor_relevance:0.30(gpu)",
+            "cooling_relevance:0.34(cooling)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 1,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0.297,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0.34,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.84,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+              "semiconductor_relevance:0.30(gpu)",
+              "cooling_relevance:0.34(cooling)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 77
         }
       ],
-      "archiveOnlyItems": []
-    },
+      "curatedIds": [
+        "3b9b25a9feefb6b8",
+        "3ce9b3077da2d2a7",
+        "05533bc7b2e04d21",
+        "ffb1d09a993d1b67",
+        "8e623dfe3de47b06",
+        "0beaecc0c1102756"
+      ],
+      "publishedIds": [
+        "3b9b25a9feefb6b8",
+        "3ce9b3077da2d2a7"
+      ],
+      "slotPublications": {
+        "0": true
+      }
+    }
+  },
+  "runHistory": [
     {
       "at": "2026-06-30T17:10:18.781Z",
       "day": "2026-07-01",
@@ -55469,7 +55857,134 @@
         }
       ],
       "archiveOnlyItems": []
+    },
+    {
+      "at": "2026-08-09T15:39:09.990Z",
+      "day": "2026-08-10",
+      "slot": 0,
+      "publishedCount": 0,
+      "signalCardCount": 1,
+      "archiveOnlyCount": 0,
+      "repetitionBlockedCount": 1,
+      "publishedIds": [],
+      "processedIds": [
+        "3b9b25a9feefb6b8",
+        "3ce9b3077da2d2a7"
+      ],
+      "blockedCount": 1,
+      "blockedItems": [
+        {
+          "id": "3b9b25a9feefb6b8",
+          "title": "Turtle Beach Command Series KB5 Review: A touchscreen and a numberpad in one keyboard?",
+          "infrastructure_relevance_score": 0.87,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "cloud_capacity_relevance:0.32(hyperscalers)",
+            "semiconductor_relevance:0.22(gpu)",
+            "power_grid_relevance:0.22(power)"
+          ],
+          "extraction_quality_score": 1,
+          "source_domain_adapter": "generic",
+          "content_length": 1603,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": false,
+          "repetition_block_reasons": [],
+          "repetition_check": null,
+          "expert_insight_complete": false,
+          "expert_insight_missing_fields": [
+            "concrete_facts",
+            "named_companies"
+          ],
+          "reason": "expert_insight_missing_fields concrete_facts, named_companies"
+        }
+      ],
+      "repetitionBlockedItems": [
+        {
+          "id": "3ce9b3077da2d2a7",
+          "title": "The AI safety test is becoming a safety risk",
+          "infrastructure_relevance_score": 0.87,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "cloud_capacity_relevance:0.32(hyperscalers)",
+            "semiconductor_relevance:0.22(gpu)",
+            "power_grid_relevance:0.22(power)",
+            "capital_markets_relevance:0.28(capex)"
+          ],
+          "extraction_quality_score": 1,
+          "source_domain_adapter": "techcrunch",
+          "content_length": 1610,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": true,
+          "repetition_block_reasons": [
+            "repeated_sentence_ratio>0.12",
+            "heading_sequence_similarity>0.75",
+            "conclusion_similarity>0.7"
+          ],
+          "repetition_check": {
+            "compared_article_count": 20,
+            "repeated_sentence_ratio": 0.5,
+            "repeated_paragraph_ratio": 0.5,
+            "heading_sequence_similarity": 1,
+            "banned_phrase_count": 0,
+            "banned_phrase_counts": {},
+            "recent_banned_phrase_counts": {},
+            "ngram_overlap": 0.635593220338983,
+            "blueprint_repetition": 1,
+            "conclusion_similarity": 0.9271050693011066,
+            "repeated_sentence_count": 3,
+            "repeated_paragraph_count": 3,
+            "heading_sequence": [
+              "Capital Move",
+              "Demand Evidence",
+              "Execution Risk",
+              "Milestone To Watch"
+            ],
+            "blocked": true,
+            "reasons": [
+              "repeated_sentence_ratio>0.12",
+              "heading_sequence_similarity>0.75",
+              "conclusion_similarity>0.7"
+            ]
+          },
+          "expert_insight_complete": true,
+          "expert_insight_missing_fields": [],
+          "reason": "repeated_sentence_ratio>0.12; heading_sequence_similarity>0.75; conclusion_similarity>0.7"
+        }
+      ],
+      "signalCardItems": [
+        {
+          "id": "3b9b25a9feefb6b8",
+          "title": "Turtle Beach Command Series KB5 Review: A touchscreen and a numberpad in one keyboard?",
+          "infrastructure_relevance_score": 0.87,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "cloud_capacity_relevance:0.32(hyperscalers)",
+            "semiconductor_relevance:0.22(gpu)",
+            "power_grid_relevance:0.22(power)"
+          ],
+          "extraction_quality_score": 1,
+          "source_domain_adapter": "generic",
+          "content_length": 1603,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": false,
+          "repetition_block_reasons": [],
+          "repetition_check": null,
+          "expert_insight_complete": false,
+          "expert_insight_missing_fields": [
+            "concrete_facts",
+            "named_companies"
+          ],
+          "reason": "expert_insight_missing_fields concrete_facts, named_companies"
+        }
+      ],
+      "archiveOnlyItems": []
     }
   ],
-  "lastRunAt": "2026-08-09T07:58:31.298Z"
+  "lastRunAt": "2026-08-09T15:39:09.990Z"
 }
