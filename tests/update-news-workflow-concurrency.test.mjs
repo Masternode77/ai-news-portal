@@ -41,17 +41,12 @@ test('update-news workflow uses one non-canceling writer queue without a dashboa
 test('update-news workflow uses the repository Node runtime', () => {
   // Given: the repository pins the supported Node 22 runtime in .nvmrc.
   const configuredNodeVersion = workflow.match(/^\s+node-version:\s*['"](?<version>[^'"]+)['"]\s*$/m);
-  const minimumNodeVersion = packageNodeEngine.match(/^>=(?<version>\d+\.\d+\.\d+)$/);
 
   // When: the scheduled workflow runtime is inspected.
-  // Then: setup-node uses the same explicit runtime as local and package policy.
+  // Then: setup-node uses the same explicit runtime as local and the package policy stays on Node 22.
   assert.equal(configuredNodeVersion?.groups?.version, repositoryNodeVersion);
   assert.match(repositoryNodeVersion, /^22\./);
-  assert.ok(minimumNodeVersion?.groups?.version, 'expected a minimum Node engine version');
-  assert.ok(
-    repositoryNodeVersion.localeCompare(minimumNodeVersion.groups.version, undefined, { numeric: true }) >= 0,
-    'workflow Node version must satisfy the package engine',
-  );
+  assert.equal(packageNodeEngine, '22.x');
 });
 
 test('update-news workflow fails closed when candidate staging fails', () => {
