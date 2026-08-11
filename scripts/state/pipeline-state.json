@@ -787,7 +787,9 @@
     "2cc01594647686aa",
     "8dee57372b8b0eeb",
     "8ac31f7d3c0b991f",
-    "0a214f44a3ae4610"
+    "0a214f44a3ae4610",
+    "60f9284e6af535fa",
+    "c345faa13e1c1463"
   ],
   "dayPlans": {
     "2026-03-24": {
@@ -42162,19 +42164,87 @@
     "2026-08-11": {
       "date": "2026-08-11",
       "createdAt": "2026-08-10T16:05:04.447Z",
-      "refreshedAt": "2026-08-10T23:37:44.845Z",
+      "refreshedAt": "2026-08-11T08:14:48.075Z",
       "candidateWindowHours": 24,
       "curatedItems": [
         {
-          "id": "8ac31f7d3c0b991f",
+          "id": "60f9284e6af535fa",
           "source": "Semiconductor Engineering",
-          "url": "https://semiengineering.com/failure-analysis-hw-enables-system-level-debug-for-3d-ics-google-tu-delft/",
-          "title": "Failure Analysis HW Enables System-Level Debug For 3D ICs (Google, TU Delft)",
-          "snippet": "Researchers from Google and Delft University of Technology published a technical paper titled “Innovative FA Hardware Solution to Enable System-Level Debug of 3D ICs.” Abstract Excerpt: “This paper presents a novel Fail…",
-          "contentText": "Researchers from Google and Delft University of Technology published a technical paper titled “Innovative FA Hardware Solution to Enable System-Level Debug of 3D ICs.” Abstract Excerpt: &#8220;This paper presents a novel Failure Analysis (FA) hardware and sample preparation solution that enables System-Level FA on mobile System-on-a-Chip (SoC) PoP devices, where the DRAM is stacked atop the logic controller device. The primary challenge in performing EFI on the bottom die is providing direct line-of-sight (LoS) access while preserving the top DRAM functionality through extremely small interconnects called Through Interposer Vias (TIVs). For the first time, this groundbreaking hardware solution overcomes the challenge of connecting a DRAM atop the SoC silicon, utilizing the smallest possib…",
-          "publishedAt": "2026-08-10T21:55:24.000Z",
-          "sourceImage": null,
-          "region": "Global",
+          "url": "https://semiengineering.com/from-hype-to-implementation-building-the-core-pillars-for-ai-in-semiconductors/",
+          "title": "From Hype To Implementation: Building The Core Pillars For AI In Semiconductors",
+          "snippet": "The most sophisticated AI algorithm in the world cannot compensate for fragmented data, absent governance, or siloed infrastructure. The post From Hype To Implementation: Building The Core Pillars For AI In Semiconducto…",
+          "contentText": "AI has captured the attention of every boardroom and engineering team in the semiconductor industry. The promise is real: smarter fabs, fewer defects, faster time-to-market, and a meaningful edge in one of the most capital-intensive and competitively unforgiving industries on earth. But promise and execution are two very different things. And right now, the gap between them is costing companies dearly. This post distills the core argument from our ASMC 2026 tutorial: AI success in semiconductors is structural, not algorithmic . The right model matters far less than the right foundation. And building that foundation demands a clear-eyed view of where most organizations stand today, and a deliberate, phased path forward. Why do most AI initiatives stall? More than 70% of AI initiatives in s…",
+          "publishedAt": "2026-08-11T07:06:54.000Z",
+          "sourceImage": "https://i0.wp.com/semiengineering.com/wp-content/uploads/2026/08/PDF_From-Hype-to-Implementation-fig1.webp?resize=780%2C380&#038;ssl=1",
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "category": "Semiconductors",
+          "primary_category": "Semiconductors",
+          "secondary_category": "Accelerators, memory, and advanced packaging",
+          "infrastructure_layer": "Silicon",
+          "affected_stakeholders": [
+            "semiconductor suppliers",
+            "hyperscalers",
+            "server OEMs",
+            "investors"
+          ],
+          "article_type": "Research / Technical",
+          "urgency_score": 0.48,
+          "taxonomy_confidence": 0.77,
+          "taxonomy_reasons": [
+            "semiconductor",
+            "gpu"
+          ],
+          "direct_ai_infrastructure_relevance": 1,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 1,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.95,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "semiconductor_relevance:1.00(semiconductor, semiconductors, gpu)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 1,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 1,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.95,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+              "semiconductor_relevance:1.00(semiconductor, semiconductors, gpu)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 86
+        },
+        {
+          "id": "c345faa13e1c1463",
+          "source": "Semiconductor Engineering",
+          "url": "https://semiengineering.com/measuring-what-matters-using-picosecond-ultrasonic-technology-for-sicr-film-thickness-control-in-bcd-devices/",
+          "title": "Measuring What Matters: Using Picosecond Ultrasonic Technology For SiCr Film Thickness Control In BCD Devices",
+          "snippet": "Monitoring critical process parameters and identifying variations before they impact device accuracy and long-term reliability. The post Measuring What Matters: Using Picosecond Ultrasonic Technology For SiCr Film Thick…",
+          "contentText": "By Huayuan Li, Alex Hong, Johnny Mu, Timothy Kryman, and Priya Mukundhan Bipolar, CMOS, and DMOS (BCD) devices are among the most widely used semiconductor technologies today. Capable of handling increasingly complex electrical demands, BCD devices play a vital role in powering automotive, consumer, and medical systems. Automotive systems must simultaneously manage power, control signals, and safety-critical functions like braking and airbag deployment. Consumer devices demand high performance with minimal power consumption. Medical platforms require both precision and reliability. Delivering across all these dimensions requires a level of integration that few semiconductor technologies can achieve. So what makes BCD uniquely suited to this task? The answer lies in its architecture. BCD d…",
+          "publishedAt": "2026-08-11T07:05:38.000Z",
+          "sourceImage": "https://i0.wp.com/semiengineering.com/wp-content/uploads/2026/08/Onto_Picosecond-Ultrasonic-SiCr-Film-fig1a.webp?resize=1430%2C495&#038;ssl=1",
+          "region": "US",
           "language": "en",
           "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
           "category": "AI Infrastructure",
@@ -42187,8 +42257,8 @@
             "cloud buyers",
             "investors"
           ],
-          "article_type": "Research / Technical",
-          "urgency_score": 0.45,
+          "article_type": "Operations Update",
+          "urgency_score": 0.55,
           "taxonomy_confidence": 0.77,
           "taxonomy_reasons": [
             "ai infrastructure",
@@ -42198,32 +42268,176 @@
           "data_center_relevance": 0,
           "cloud_capacity_relevance": 0,
           "semiconductor_relevance": 0.58,
-          "power_grid_relevance": 0,
+          "power_grid_relevance": 0.22,
           "cooling_relevance": 0,
           "capital_markets_relevance": 0,
           "enterprise_ai_infrastructure_relevance": 0,
-          "infrastructure_relevance_score": 0.858,
+          "infrastructure_relevance_score": 0.893,
           "infrastructure_relevance_tier": "full_memo",
           "infrastructure_relevance_action": "generate_full_memo",
           "infrastructure_relevance_reasons": [
             "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "semiconductor_relevance:0.58(semiconductor, gpu)"
+            "semiconductor_relevance:0.58(semiconductor, gpu)",
+            "power_grid_relevance:0.22(power)"
           ],
           "infrastructure_relevance": {
             "direct_ai_infrastructure_relevance": 1,
             "data_center_relevance": 0,
             "cloud_capacity_relevance": 0,
             "semiconductor_relevance": 0.58,
+            "power_grid_relevance": 0.22,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.893,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+              "semiconductor_relevance:0.58(semiconductor, gpu)",
+              "power_grid_relevance:0.22(power)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 84
+        },
+        {
+          "id": "ad98aa760036f592",
+          "source": "Capacity Media",
+          "url": "https://capacityglobal.com/news/nvidias-500bn-wall-street-pact-turns-ai-chips-into-assets/",
+          "title": "Nvidia’s $500bn Wall Street pact turns AI chips into assets",
+          "snippet": "Nvidia will invest up to $3 billion in Lancium, the Texas developer behind the Stargate campus in Abilene, according to reporting from The Information. The post Nvidia’s $500bn Wall Street pact turns AI chips into asset…",
+          "contentText": "Nvidia confirmed it had signed memoranda of understanding with six of the largest names in global finance (Apollo Global Management, BlackRock, Blackstone, Brookfield Asset Management, Goldman Sachs and KKR) to mobilise more than $500 billion in third-party capital for AI infrastructure. The announcement followed a Financial Times report that leaked the talks earlier in the day and briefly knocked Nvidia&#8217;s share price. By the close of trading, the rumour had become a formal pact, and one of the more consequential financing structures the data centre sector has seen. Rather than customers paying upfront for the GPUs, power and facilities that go into an AI data centre, the new platforms will let Nvidia&#8217;s hyperscaler, cloud and AI lab customers borrow against that hardware, with…",
+          "publishedAt": "2026-08-11T07:57:30.000Z",
+          "sourceImage": "https://capacityglobal.com/wp-content/uploads/2026/06/dc-usa.png",
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "Hyperscalers & Cloud",
+          "category": "Cloud Capacity",
+          "primary_category": "Cloud Capacity",
+          "secondary_category": "Hyperscale regions and accelerator availability",
+          "infrastructure_layer": "Cloud Platform",
+          "affected_stakeholders": [
+            "hyperscalers",
+            "cloud buyers",
+            "enterprise IT",
+            "operators"
+          ],
+          "article_type": "Financing / M&A",
+          "urgency_score": 0.54,
+          "taxonomy_confidence": 0.69,
+          "taxonomy_reasons": [
+            "hyperscaler"
+          ],
+          "direct_ai_infrastructure_relevance": 0.7,
+          "data_center_relevance": 0.16,
+          "cloud_capacity_relevance": 1,
+          "semiconductor_relevance": 0.378,
+          "power_grid_relevance": 0.22,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0.32,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.874,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:0.70(ai infrastructure)",
+            "cloud_capacity_relevance:1.00(cloud capacity, hyperscaler, hyperscalers)",
+            "semiconductor_relevance:0.38(nvidia)",
+            "power_grid_relevance:0.22(power)",
+            "capital_markets_relevance:0.32(financing)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 0.7,
+            "data_center_relevance": 0.16,
+            "cloud_capacity_relevance": 1,
+            "semiconductor_relevance": 0.378,
+            "power_grid_relevance": 0.22,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0.32,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.874,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:0.70(ai infrastructure)",
+              "cloud_capacity_relevance:1.00(cloud capacity, hyperscaler, hyperscalers)",
+              "semiconductor_relevance:0.38(nvidia)",
+              "power_grid_relevance:0.22(power)",
+              "capital_markets_relevance:0.32(financing)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 83
+        },
+        {
+          "id": "40a37b85b8478eca",
+          "source": "Data Center Dynamics",
+          "url": "https://www.datacenterdynamics.com/en/marketwatch/dont-bring-yesterdays-optics-to-tomorrows-ai-fabric/",
+          "title": "Sponsored: Don’t bring yesterday’s optics to tomorrow’s AI fabric",
+          "snippet": "Overcoming multifiber test challenges inside the modern data center",
+          "contentText": "Overcoming multifiber test challenges inside the modern data center",
+          "publishedAt": "2026-08-11T07:00:00.000Z",
+          "sourceImage": "https://media.datacenterdynamics.com/media/images/GettyImages-2211075909.2e16d0ba.fill-750x500.jpg",
+          "region": "Global",
+          "language": "en",
+          "defaultCategory": "Colocation & Wholesale",
+          "category": "Data Centers",
+          "primary_category": "Data Centers",
+          "secondary_category": "Campus development and colocation capacity",
+          "infrastructure_layer": "Facility",
+          "affected_stakeholders": [
+            "data center operators",
+            "developers",
+            "site selectors",
+            "investors"
+          ],
+          "article_type": "Other",
+          "urgency_score": 0.43,
+          "taxonomy_confidence": 0.81,
+          "taxonomy_reasons": [
+            "data center",
+            "colocation",
+            "wholesale"
+          ],
+          "direct_ai_infrastructure_relevance": 0.78,
+          "data_center_relevance": 0.76,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.77,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:0.78",
+            "data_center_relevance:0.76(data center, colocation)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 0.78,
+            "data_center_relevance": 0.76,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0,
             "power_grid_relevance": 0,
             "cooling_relevance": 0,
             "capital_markets_relevance": 0,
             "enterprise_ai_infrastructure_relevance": 0,
-            "infrastructure_relevance_score": 0.858,
+            "infrastructure_relevance_score": 0.77,
             "infrastructure_relevance_tier": "full_memo",
             "infrastructure_relevance_action": "generate_full_memo",
             "infrastructure_relevance_reasons": [
-              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-              "semiconductor_relevance:0.58(semiconductor, gpu)"
+              "direct_ai_infrastructure_relevance:0.78",
+              "data_center_relevance:0.76(data center, colocation)"
             ],
             "infrastructureRelevanceAction": "generate_full_memo",
             "articlePagePublished": true,
@@ -42231,77 +42445,7 @@
             "archiveOnly": false,
             "archiveOnlyReason": null
           },
-          "score": 82
-        },
-        {
-          "id": "0a214f44a3ae4610",
-          "source": "HPCwire",
-          "url": "https://www.hpcwire.com/off-the-wire/qunnect-and-monarch-quantum-partner-on-deployable-quantum-networking-hardware/",
-          "title": "Qunnect and Monarch Quantum Partner on Deployable Quantum Networking Hardware",
-          "snippet": "NEW YORK and SAN DIEGO, Aug. 10, 2026 — Qunnect, a leader in quantum networking infrastructure, and Monarch Quantum, a quantum photonics company developing photonic engines for scalable quantum technologies, today annou…",
-          "contentText": "NEW YORK and SAN DIEGO, Aug. 10, 2026 &#8212; Qunnect , a leader in quantum networking infrastructure, and Monarch Quantum , a quantum photonics company developing photonic engines for scalable quantum technologies, today announced a strategic partnership to accelerate the commercialization of deployable quantum networking infrastructure. Quantum networking distributes quantum entanglement across existing fiber-optic infrastructure, enabling fundamentally new capabilities including quantum-secure communications, distributed quantum computing, precision timing and synchronization, authenticated networking, and advanced sensing. As governments, defense organizations, and commercial enterprises accelerate investment in quantum technologies, demand is growing for deployable and manufacturable…",
-          "publishedAt": "2026-08-10T22:52:07.000Z",
-          "sourceImage": "https://www.hpcwire.com/wp-content/uploads/2026/03/Monarch_Quantum_Logo-300x158.jpg",
-          "region": "Global",
-          "language": "en",
-          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
-          "category": "AI Infrastructure",
-          "primary_category": "AI Infrastructure",
-          "secondary_category": "GPU clusters and deployment readiness",
-          "infrastructure_layer": "Compute",
-          "affected_stakeholders": [
-            "operators",
-            "hyperscalers",
-            "cloud buyers",
-            "investors"
-          ],
-          "article_type": "Partnership",
-          "urgency_score": 0.44,
-          "taxonomy_confidence": 0.77,
-          "taxonomy_reasons": [
-            "ai infrastructure",
-            "neocloud"
-          ],
-          "direct_ai_infrastructure_relevance": 1,
-          "data_center_relevance": 0,
-          "cloud_capacity_relevance": 0,
-          "semiconductor_relevance": 0.22,
-          "power_grid_relevance": 0,
-          "cooling_relevance": 0,
-          "capital_markets_relevance": 0,
-          "enterprise_ai_infrastructure_relevance": 0.243,
-          "infrastructure_relevance_score": 0.818,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "semiconductor_relevance:0.22(gpu)",
-            "enterprise_ai_infrastructure_relevance:0.24(networking)"
-          ],
-          "infrastructure_relevance": {
-            "direct_ai_infrastructure_relevance": 1,
-            "data_center_relevance": 0,
-            "cloud_capacity_relevance": 0,
-            "semiconductor_relevance": 0.22,
-            "power_grid_relevance": 0,
-            "cooling_relevance": 0,
-            "capital_markets_relevance": 0,
-            "enterprise_ai_infrastructure_relevance": 0.243,
-            "infrastructure_relevance_score": 0.818,
-            "infrastructure_relevance_tier": "full_memo",
-            "infrastructure_relevance_action": "generate_full_memo",
-            "infrastructure_relevance_reasons": [
-              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-              "semiconductor_relevance:0.22(gpu)",
-              "enterprise_ai_infrastructure_relevance:0.24(networking)"
-            ],
-            "infrastructureRelevanceAction": "generate_full_memo",
-            "articlePagePublished": true,
-            "homepagePublished": true,
-            "archiveOnly": false,
-            "archiveOnlyReason": null
-          },
-          "score": 80
+          "score": 66
         },
         {
           "id": "1b6031231a1cfd30",
@@ -42371,85 +42515,17 @@
             "archiveOnly": false,
             "archiveOnlyReason": null
           },
-          "score": 80
+          "score": 66
         },
         {
-          "id": "5f3610859cbb3a71",
-          "source": "TechCrunch AI",
-          "url": "https://techcrunch.com/2026/08/10/mark-zuckerbergs-ai-manifesto-is-exactly-why-people-dont-like-ai/",
-          "title": "Mark Zuckerberg’s AI manifesto is exactly why people don’t like AI",
-          "snippet": "On Monday, Mark Zuckerberg published a 6,500-word manifesto about personal AI, largely about the possibilities for the \"personal superintelligence\" systems Meta AI is building.",
-          "contentText": "On Monday, Mark Zuckerberg published a 6,500-word manifesto about personal AI, largely about the possibilities for the \"personal superintelligence\" systems Meta AI is building.",
-          "publishedAt": "2026-08-10T20:53:02.000Z",
+          "id": "18bdf8c3b18f20ec",
+          "source": "Semiconductor Engineering",
+          "url": "https://semiengineering.com/from-silicon-to-systems-redefining-competitive-advantage-part-1/",
+          "title": "From Silicon To Systems: Redefining Competitive Advantage, Part 1",
+          "snippet": "Semiconductors are evolving from a product industry into an ecosystem industry. The post From Silicon To Systems: Redefining Competitive Advantage, Part 1 appeared first on Semiconductor Engineering.",
+          "contentText": "For decades, the semiconductor industry was driven by a very simple idea: make transistors smaller, faster, and cheaper. And for a long time, that was enough. But today, something fundamental is changing. The industry is no longer competing only at the level of silicon. Increasingly, competition is happening at the level of systems, ecosystems, and integration. Winners are no longer defined solely by who has the best chips, but by those who can orchestrate design, manufacturing, packaging, software, supply chains, and partnerships all into a coherent system of value creation. Advantest&#8217;s Dong Ong sits down with Salah Nasri, CEO & co-founder of ISIG (International Semiconductor Industry Group), to discuss how the definition of competitive advantage itself is changing and what that me…",
+          "publishedAt": "2026-08-11T07:01:47.000Z",
           "sourceImage": null,
-          "region": "Global",
-          "language": "en",
-          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
-          "category": "AI Infrastructure",
-          "primary_category": "AI Infrastructure",
-          "secondary_category": "GPU clusters and deployment readiness",
-          "infrastructure_layer": "Compute",
-          "affected_stakeholders": [
-            "operators",
-            "hyperscalers",
-            "cloud buyers",
-            "investors"
-          ],
-          "article_type": "Other",
-          "urgency_score": 0.43,
-          "taxonomy_confidence": 0.77,
-          "taxonomy_reasons": [
-            "ai infrastructure",
-            "neocloud"
-          ],
-          "direct_ai_infrastructure_relevance": 1,
-          "data_center_relevance": 0,
-          "cloud_capacity_relevance": 0,
-          "semiconductor_relevance": 0.22,
-          "power_grid_relevance": 0,
-          "cooling_relevance": 0,
-          "capital_markets_relevance": 0,
-          "enterprise_ai_infrastructure_relevance": 0,
-          "infrastructure_relevance_score": 0.778,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "semiconductor_relevance:0.22(gpu)"
-          ],
-          "infrastructure_relevance": {
-            "direct_ai_infrastructure_relevance": 1,
-            "data_center_relevance": 0,
-            "cloud_capacity_relevance": 0,
-            "semiconductor_relevance": 0.22,
-            "power_grid_relevance": 0,
-            "cooling_relevance": 0,
-            "capital_markets_relevance": 0,
-            "enterprise_ai_infrastructure_relevance": 0,
-            "infrastructure_relevance_score": 0.778,
-            "infrastructure_relevance_tier": "full_memo",
-            "infrastructure_relevance_action": "generate_full_memo",
-            "infrastructure_relevance_reasons": [
-              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-              "semiconductor_relevance:0.22(gpu)"
-            ],
-            "infrastructureRelevanceAction": "generate_full_memo",
-            "articlePagePublished": true,
-            "homepagePublished": true,
-            "archiveOnly": false,
-            "archiveOnlyReason": null
-          },
-          "score": 72
-        },
-        {
-          "id": "5c613c5f8ba7bbf6",
-          "source": "Toms Hardware",
-          "url": "https://www.tomshardware.com/software/linux/xbox-pc-and-game-pass-titles-are-coming-to-linux-through-xodus-heroic-launcher-devs-embark-on-new-open-source-reverse-engineering-project",
-          "title": "Xbox PC and Game Pass titles are coming to Linux through 'Xodus' — Heroic Launcher devs embark on new open-source reverse-engineering project",
-          "snippet": "You might be able to enjoy Xbox PC and PC Game Pass titles on Linux very soon thanks to the efforts of the Xodus team, who're emulating the entire Xbox PC stack through open-source implementations of Microsoft's proprie…",
-          "contentText": "Xbox PC games, distributed through the Xbox app, fail to run on Linux because of Microsoft's proprietary GDK runtime environment. This also breaks Game Pass even though the company supports cloud streaming Game Pass titles. A new open-source project from the developers of Heroic Launcher, called \" Xodus ,\" is aiming to fix this by reverse engineering and emulating the necessary components required for Xbox PC games on Linux. (Image credit: Tom's Hardware) Xodus primarily targets modern, GDK-based Xbox PC titles and their MSIXVC packages; not older, UWP-based releases like Gears of War 4 and early Forza Horizon games. The problem with those isn't the DirectX API or x86 instructions; Proton and DXVK/VKD3D can already translate those. That's also the reason why you can still run Xbox PC game…",
-          "publishedAt": "2026-08-10T18:11:48.000Z",
-          "sourceImage": "https://cdn.mos.cms.futurecdn.net/BmB2jRGrsjFpT5E5T2nwJD-1280-80.jpg",
           "region": "US",
           "language": "en",
           "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
@@ -42463,8 +42539,8 @@
             "cloud buyers",
             "investors"
           ],
-          "article_type": "Research / Technical",
-          "urgency_score": 0.43,
+          "article_type": "Product / Platform Update",
+          "urgency_score": 0.48,
           "taxonomy_confidence": 0.77,
           "taxonomy_reasons": [
             "ai infrastructure",
@@ -42473,33 +42549,33 @@
           "direct_ai_infrastructure_relevance": 1,
           "data_center_relevance": 0,
           "cloud_capacity_relevance": 0,
-          "semiconductor_relevance": 0.22,
+          "semiconductor_relevance": 0.94,
           "power_grid_relevance": 0,
           "cooling_relevance": 0,
           "capital_markets_relevance": 0,
           "enterprise_ai_infrastructure_relevance": 0,
-          "infrastructure_relevance_score": 0.778,
+          "infrastructure_relevance_score": 0.937,
           "infrastructure_relevance_tier": "full_memo",
           "infrastructure_relevance_action": "generate_full_memo",
           "infrastructure_relevance_reasons": [
             "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "semiconductor_relevance:0.22(gpu)"
+            "semiconductor_relevance:0.94(semiconductor, semiconductors, gpu)"
           ],
           "infrastructure_relevance": {
             "direct_ai_infrastructure_relevance": 1,
             "data_center_relevance": 0,
             "cloud_capacity_relevance": 0,
-            "semiconductor_relevance": 0.22,
+            "semiconductor_relevance": 0.94,
             "power_grid_relevance": 0,
             "cooling_relevance": 0,
             "capital_markets_relevance": 0,
             "enterprise_ai_infrastructure_relevance": 0,
-            "infrastructure_relevance_score": 0.778,
+            "infrastructure_relevance_score": 0.937,
             "infrastructure_relevance_tier": "full_memo",
             "infrastructure_relevance_action": "generate_full_memo",
             "infrastructure_relevance_reasons": [
               "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-              "semiconductor_relevance:0.22(gpu)"
+              "semiconductor_relevance:0.94(semiconductor, semiconductors, gpu)"
             ],
             "infrastructureRelevanceAction": "generate_full_memo",
             "articlePagePublished": true,
@@ -42507,165 +42583,33 @@
             "archiveOnly": false,
             "archiveOnlyReason": null
           },
-          "score": 71
-        },
-        {
-          "id": "6502df98e246f126",
-          "source": "ServeTheHome",
-          "url": "https://www.servethehome.com/panduit-e36g18l-pdu-review-a-sweet-managed-and-switched-by-outlet-pdu/",
-          "title": "Panduit E36G18L PDU Review A Sweet Managed and Switched by Outlet PDU",
-          "snippet": "We test the Panduit E36G18L PDU and see what this metered and switched by outlet zero U PDU offers including its combination outlets The post Panduit E36G18L PDU Review A Sweet Managed and Switched by Outlet PDU appeare…",
-          "contentText": "We test the Panduit E36G18L PDU and see what this metered and switched by outlet zero U PDU offers including its combination outlets The post Panduit E36G18L PDU Review A Sweet Managed and Switched by Outlet PDU appeared first on ServeTheHome .",
-          "publishedAt": "2026-08-10T16:00:34.000Z",
-          "sourceImage": null,
-          "region": "Global",
-          "language": "en",
-          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
-          "category": "AI Infrastructure",
-          "primary_category": "AI Infrastructure",
-          "secondary_category": "GPU clusters and deployment readiness",
-          "infrastructure_layer": "Compute",
-          "affected_stakeholders": [
-            "operators",
-            "hyperscalers",
-            "cloud buyers",
-            "investors"
-          ],
-          "article_type": "Other",
-          "urgency_score": 0.43,
-          "taxonomy_confidence": 0.77,
-          "taxonomy_reasons": [
-            "ai infrastructure",
-            "neocloud"
-          ],
-          "direct_ai_infrastructure_relevance": 1,
-          "data_center_relevance": 0,
-          "cloud_capacity_relevance": 0,
-          "semiconductor_relevance": 0.22,
-          "power_grid_relevance": 0,
-          "cooling_relevance": 0,
-          "capital_markets_relevance": 0,
-          "enterprise_ai_infrastructure_relevance": 0,
-          "infrastructure_relevance_score": 0.778,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "semiconductor_relevance:0.22(gpu)"
-          ],
-          "infrastructure_relevance": {
-            "direct_ai_infrastructure_relevance": 1,
-            "data_center_relevance": 0,
-            "cloud_capacity_relevance": 0,
-            "semiconductor_relevance": 0.22,
-            "power_grid_relevance": 0,
-            "cooling_relevance": 0,
-            "capital_markets_relevance": 0,
-            "enterprise_ai_infrastructure_relevance": 0,
-            "infrastructure_relevance_score": 0.778,
-            "infrastructure_relevance_tier": "full_memo",
-            "infrastructure_relevance_action": "generate_full_memo",
-            "infrastructure_relevance_reasons": [
-              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-              "semiconductor_relevance:0.22(gpu)"
-            ],
-            "infrastructureRelevanceAction": "generate_full_memo",
-            "articlePagePublished": true,
-            "homepagePublished": true,
-            "archiveOnly": false,
-            "archiveOnlyReason": null
-          },
-          "score": 71
+          "score": 65
         }
       ],
       "curatedIds": [
-        "8ac31f7d3c0b991f",
-        "0a214f44a3ae4610",
+        "60f9284e6af535fa",
+        "c345faa13e1c1463",
+        "ad98aa760036f592",
+        "40a37b85b8478eca",
         "1b6031231a1cfd30",
-        "5f3610859cbb3a71",
-        "5c613c5f8ba7bbf6",
-        "6502df98e246f126"
+        "18bdf8c3b18f20ec"
       ],
       "publishedIds": [
         "2cc01594647686aa",
         "8dee57372b8b0eeb",
         "8ac31f7d3c0b991f",
-        "0a214f44a3ae4610"
+        "0a214f44a3ae4610",
+        "60f9284e6af535fa",
+        "c345faa13e1c1463"
       ],
       "slotPublications": {
         "0": true,
-        "1": true
+        "1": true,
+        "2": true
       }
     }
   },
   "runHistory": [
-    {
-      "at": "2026-07-02T00:11:36.329Z",
-      "day": "2026-07-02",
-      "slot": 1,
-      "publishedCount": 0,
-      "signalCardCount": 2,
-      "archiveOnlyCount": 0,
-      "processedIds": [
-        "928af59a4843a631",
-        "3cfeaad8775dba04"
-      ],
-      "blockedCount": 2,
-      "blockedItems": [
-        {
-          "id": "928af59a4843a631",
-          "title": "CIQ Simplifies HPC Admin on Containerized Infra with Fuzzball Update",
-          "infrastructure_relevance_score": 0.87,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud, high-performance computing)",
-            "cloud_capacity_relevance:0.32(hyperscalers)",
-            "semiconductor_relevance:0.22(gpu)",
-            "power_grid_relevance:0.22(power)",
-            "capital_markets_relevance:0.28(capex)"
-          ],
-          "extraction_quality_score": 0.95,
-          "source_domain_adapter": "generic",
-          "content_length": 1405,
-          "boilerplate_ratio": 0,
-          "repetition_blocked": false,
-          "repetition_block_reasons": [],
-          "repetition_check": null,
-          "expert_insight_complete": false,
-          "expert_insight_missing_fields": [
-            "named_companies"
-          ],
-          "reason": "fail_closed: source_text_incomplete:ellipsis_truncation_artifact, ellipsis_truncation_artifact"
-        },
-        {
-          "id": "3cfeaad8775dba04",
-          "title": "Investments back two-phase cooling as water cold plate successor",
-          "infrastructure_relevance_score": 0.972,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:0.78",
-            "data_center_relevance:0.76(data center, colocation)",
-            "power_grid_relevance:0.22(power)",
-            "cooling_relevance:1.00(cooling, liquid cooling, immersion)"
-          ],
-          "extraction_quality_score": 1,
-          "source_domain_adapter": "generic",
-          "content_length": 1714,
-          "boilerplate_ratio": 0,
-          "repetition_blocked": false,
-          "repetition_block_reasons": [],
-          "repetition_check": null,
-          "expert_insight_complete": false,
-          "expert_insight_missing_fields": [
-            "named_companies"
-          ],
-          "reason": "expert_insight_missing_fields named_companies"
-        }
-      ],
-      "archiveOnlyItems": []
-    },
     {
       "at": "2026-07-02T10:14:27.277Z",
       "day": "2026-07-02",
@@ -56456,7 +56400,75 @@
         }
       ],
       "archiveOnlyItems": []
+    },
+    {
+      "at": "2026-08-11T08:14:48.075Z",
+      "day": "2026-08-11",
+      "slot": 2,
+      "publishedCount": 0,
+      "signalCardCount": 2,
+      "archiveOnlyCount": 0,
+      "processedIds": [
+        "60f9284e6af535fa",
+        "c345faa13e1c1463"
+      ],
+      "blockedCount": 2,
+      "blockedItems": [
+        {
+          "id": "60f9284e6af535fa",
+          "title": "From Hype To Implementation: Building The Core Pillars For AI In Semiconductors",
+          "infrastructure_relevance_score": 1,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "cloud_capacity_relevance:0.32(hyperscalers)",
+            "semiconductor_relevance:1.00(semiconductor, semiconductors, gpu)",
+            "power_grid_relevance:0.22(power)"
+          ],
+          "extraction_quality_score": 1,
+          "source_domain_adapter": "semiengineering",
+          "content_length": 1791,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": false,
+          "repetition_block_reasons": [],
+          "repetition_check": null,
+          "expert_insight_complete": false,
+          "expert_insight_missing_fields": [
+            "named_companies"
+          ],
+          "reason": "expert_insight_missing_fields named_companies"
+        },
+        {
+          "id": "c345faa13e1c1463",
+          "title": "Measuring What Matters: Using Picosecond Ultrasonic Technology For SiCr Film Thickness Control In BCD Devices",
+          "infrastructure_relevance_score": 0.928,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "cloud_capacity_relevance:0.32(hyperscalers)",
+            "semiconductor_relevance:0.58(semiconductor, gpu)",
+            "power_grid_relevance:0.22(power)",
+            "capital_markets_relevance:0.28(capex)"
+          ],
+          "extraction_quality_score": 1,
+          "source_domain_adapter": "semiengineering",
+          "content_length": 1747,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": false,
+          "repetition_block_reasons": [],
+          "repetition_check": null,
+          "expert_insight_complete": false,
+          "expert_insight_missing_fields": [
+            "concrete_facts",
+            "named_companies"
+          ],
+          "reason": "expert_insight_missing_fields concrete_facts, named_companies"
+        }
+      ],
+      "archiveOnlyItems": []
     }
   ],
-  "lastRunAt": "2026-08-10T23:37:44.845Z"
+  "lastRunAt": "2026-08-11T08:14:48.075Z"
 }
