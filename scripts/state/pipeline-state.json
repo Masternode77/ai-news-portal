@@ -789,7 +789,9 @@
     "8ac31f7d3c0b991f",
     "0a214f44a3ae4610",
     "60f9284e6af535fa",
-    "c345faa13e1c1463"
+    "c345faa13e1c1463",
+    "9ccadbbb854d8c11",
+    "e55d48792519c872"
   ],
   "dayPlans": {
     "2026-03-24": {
@@ -42607,133 +42609,460 @@
         "1": true,
         "2": true
       }
+    },
+    "2026-08-12": {
+      "date": "2026-08-12",
+      "createdAt": "2026-08-11T16:05:09.558Z",
+      "refreshedAt": "2026-08-11T16:05:09.558Z",
+      "candidateWindowHours": 24,
+      "curatedItems": [
+        {
+          "id": "e55d48792519c872",
+          "source": "NVIDIA Blog",
+          "url": "https://blogs.nvidia.com/blog/800-vdc-power-architecture-ai-factory/",
+          "title": "Why Scaling AI Compute Performance Requires a New Power Architecture",
+          "snippet": "Every new generation of accelerated computing demands more from the infrastructure underneath it — more compute performance, higher rack density and more efficient, scalable power distribution. The bottleneck isn’t just…",
+          "contentText": "Every new generation of accelerated computing demands more from the infrastructure underneath it — more compute performance, higher rack density and more efficient, scalable power distribution. The bottleneck isn’t just wattage. It’s how power gets from the grid to the GPU. In traditional power delivery, electricity travels from the grid as an alternating current (AC) and gets converted multiple times, each time adding overhead and complexity as racks become denser. At the power levels that next-generation AI compute demands, even small inefficiencies compound quickly. 800 VDC simplifies that path. By distributing power at higher voltage through a direct current (DC), fewer conversion stages stand between the grid and the accelerator — which means more of the available power reaches the c…",
+          "publishedAt": "2026-08-11T15:00:06.000Z",
+          "sourceImage": "https://blogs.nvidia.com/wp-content/uploads/2026/08/800vdc.jpg",
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "category": "Power & Grid",
+          "primary_category": "Power & Grid",
+          "secondary_category": "Interconnection and power procurement",
+          "infrastructure_layer": "Power",
+          "affected_stakeholders": [
+            "data center operators",
+            "utilities",
+            "cloud capacity teams",
+            "investors"
+          ],
+          "article_type": "Research / Technical",
+          "urgency_score": 0.67,
+          "taxonomy_confidence": 0.85,
+          "taxonomy_reasons": [
+            "power",
+            "grid",
+            "electricity"
+          ],
+          "direct_ai_infrastructure_relevance": 1,
+          "data_center_relevance": 0.28,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0.72,
+          "power_grid_relevance": 0.817,
+          "cooling_relevance": 0.24,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.98,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud, rack density)",
+            "data_center_relevance:0.28(rack density)",
+            "semiconductor_relevance:0.72(nvidia, accelerator, gpu)",
+            "power_grid_relevance:0.82(power, grid, electricity)",
+            "cooling_relevance:0.24(rack density)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 1,
+            "data_center_relevance": 0.28,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0.72,
+            "power_grid_relevance": 0.817,
+            "cooling_relevance": 0.24,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.98,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud, rack density)",
+              "data_center_relevance:0.28(rack density)",
+              "semiconductor_relevance:0.72(nvidia, accelerator, gpu)",
+              "power_grid_relevance:0.82(power, grid, electricity)",
+              "cooling_relevance:0.24(rack density)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 87
+        },
+        {
+          "id": "9ccadbbb854d8c11",
+          "source": "HPCwire",
+          "url": "https://www.hpcwire.com/2026/08/11/nvidias-500-billion-ai-bet-jensen-huang-brings-wall-street-into-the-race/",
+          "title": "NVIDIA’s $500 Billion AI Bet: Jensen Huang Brings Wall Street Into the Race",
+          "snippet": "Jensen Huang believes NVIDIA’s chips are becoming much more than expensive pieces of hardware. As AI demand grows, the NVIDIA CEO sees compute becoming a revenue-generating asset that Wall Street can finance in much the…",
+          "contentText": "Jensen Huang believes NVIDIA&#8217;s chips are becoming much more than expensive pieces of hardware. As AI demand grows, the NVIDIA CEO sees compute becoming a revenue-generating asset that Wall Street can finance in much the same way it finances other critical infrastructure. Now NVIDIA is putting that idea behind a massive new initiative. The company is working with Apollo, BlackRock, Blackstone, Brookfield Asset Management, Goldman Sachs and KKR on financing platforms aimed at mobilizing more than $500 billion. The capital would go toward the data centers and NVIDIA systems needed by hyperscalers, frontier AI labs and enterprises as they continue to expand their AI infrastructure. “NVIDIA has reached an important milestone. We began by building chips; today, we are helping create a new…",
+          "publishedAt": "2026-08-11T15:43:09.000Z",
+          "sourceImage": "https://www.hpcwire.com/bigdatawire/wp-content/uploads/sites/2/2026/08/Jensen_Shutterstock_jamesonwu1972-300x200.jpg",
+          "region": "Global",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "category": "AI Infrastructure",
+          "primary_category": "AI Infrastructure",
+          "secondary_category": "GPU clusters and deployment readiness",
+          "infrastructure_layer": "Compute",
+          "affected_stakeholders": [
+            "operators",
+            "hyperscalers",
+            "cloud buyers",
+            "investors"
+          ],
+          "article_type": "Financing / M&A",
+          "urgency_score": 0.48,
+          "taxonomy_confidence": 0.77,
+          "taxonomy_reasons": [
+            "ai infrastructure",
+            "neocloud"
+          ],
+          "direct_ai_infrastructure_relevance": 1,
+          "data_center_relevance": 0.42,
+          "cloud_capacity_relevance": 0.32,
+          "semiconductor_relevance": 0.598,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0.32,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.932,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "data_center_relevance:0.42(data centers)",
+            "cloud_capacity_relevance:0.32(hyperscalers)",
+            "semiconductor_relevance:0.60(nvidia, gpu)",
+            "capital_markets_relevance:0.32(financing)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 1,
+            "data_center_relevance": 0.42,
+            "cloud_capacity_relevance": 0.32,
+            "semiconductor_relevance": 0.598,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0.32,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.932,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+              "data_center_relevance:0.42(data centers)",
+              "cloud_capacity_relevance:0.32(hyperscalers)",
+              "semiconductor_relevance:0.60(nvidia, gpu)",
+              "capital_markets_relevance:0.32(financing)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 85
+        },
+        {
+          "id": "da3e22ae1be859dc",
+          "source": "StorageReview",
+          "url": "https://www.storagereview.com/news/volta-comes-out-of-stealth-with-a-10b-ai-lab-partnership-and-a-133mw-vera-rubin-factory-in-norway",
+          "title": "Volta Comes Out of Stealth With a $10B AI Lab Partnership and a 133MW Vera Rubin Factory in Norway",
+          "snippet": "Volta has emerged from stealth with a vertically integrated AI infrastructure platform designed to combine capital formation, powered land, data center development, GPU compute, software, and operations under one organi…",
+          "contentText": "Volta has emerged from stealth with a vertically integrated AI infrastructure platform designed to combine capital formation, powered land, data center development, GPU compute, software, and operations under one organization. The company is targeting a financing gap in the AI infrastructure market. While the largest technology companies can fund large GPU deployments directly from their balance sheets, AI labs, AI-native companies, and enterprises often rely on constrained public-cloud capacity. Volta’s premise is that compute should be financed as an infrastructure asset , using long-term contracted cash flows and institutional capital rather than relying solely on corporate balance sheets or venture financing. Founded by CEO Ricard Boada and Chief Corporate Development Officer Sofia Gu…",
+          "publishedAt": "2026-08-11T15:21:34.000Z",
+          "sourceImage": "https://www.storagereview.com/wp-content/uploads/2026/08/storagereview-volta-home-hero-scaled.png",
+          "region": "APAC",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "category": "AI Infrastructure",
+          "primary_category": "AI Infrastructure",
+          "secondary_category": "GPU clusters and deployment readiness",
+          "infrastructure_layer": "Compute",
+          "affected_stakeholders": [
+            "operators",
+            "hyperscalers",
+            "cloud buyers",
+            "investors"
+          ],
+          "article_type": "Capacity Expansion",
+          "urgency_score": 0.55,
+          "taxonomy_confidence": 0.77,
+          "taxonomy_reasons": [
+            "ai infrastructure",
+            "neocloud"
+          ],
+          "direct_ai_infrastructure_relevance": 1,
+          "data_center_relevance": 0.42,
+          "cloud_capacity_relevance": 0.44,
+          "semiconductor_relevance": 0.22,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0.32,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.897,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "data_center_relevance:0.42(data center)",
+            "cloud_capacity_relevance:0.44(cloud capacity)",
+            "semiconductor_relevance:0.22(gpu)",
+            "capital_markets_relevance:0.32(financing)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 1,
+            "data_center_relevance": 0.42,
+            "cloud_capacity_relevance": 0.44,
+            "semiconductor_relevance": 0.22,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0.32,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.897,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+              "data_center_relevance:0.42(data center)",
+              "cloud_capacity_relevance:0.44(cloud capacity)",
+              "semiconductor_relevance:0.22(gpu)",
+              "capital_markets_relevance:0.32(financing)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 84
+        },
+        {
+          "id": "7e5e5a56b3c4eec2",
+          "source": "Toms Hardware",
+          "url": "https://www.tomshardware.com/pc-components/cpus/amd-highlights-ryzen-5-5500-briefly-topping-amazon-cpu-best-sellers-beating-9800x3d-usd80-ddr4-cpu-remains-a-top-seller-during-memory-crunch",
+          "title": "AMD highlights Ryzen 5 5500 briefly topping Amazon CPU best sellers, beating 9800X3D — $80 DDR4 CPU remains a top seller during memory crunch",
+          "snippet": "AMD's marketing director shared a screenshot of the Amazon CPU best sellers list, but the four-year-old, $80 Ryzen 5 5500 was at the top of the charts.",
+          "contentText": "If you've ever stumbled upon the Amazon CPU best sellers list over the past few years, you've been greeted by a wall of red boxes. This list isn't a good source of data, without hard sales figures and heavily skewed toward what's available on Amazon at any given time. But AMD senior marketing director Saša Marinković recently shared a screenshot of the Amazon CPU best-sellers list, bragging on AMD's representation. The interesting bit is that the screenshot Marinković shared shows the $80, DDR4-based Ryzen 5 5500 at the top of the charts. Go deeper with TH Premium: CPU (Image credit: Tom's Hardware) CPU scaling with DLSS Ryzen to the top: How AMD innovated in the gaming CPU market How ARM is working its way into PCs AMD CES 2026 gaming trends press Q&A roundtable transcript The Ryzen 7 98…",
+          "publishedAt": "2026-08-11T15:06:35.000Z",
+          "sourceImage": "https://cdn.mos.cms.futurecdn.net/KFqm9bvGjLCwaDNADCidee-1280-80.jpg",
+          "region": "Global",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "category": "AI Infrastructure",
+          "primary_category": "AI Infrastructure",
+          "secondary_category": "GPU clusters and deployment readiness",
+          "infrastructure_layer": "Compute",
+          "affected_stakeholders": [
+            "operators",
+            "hyperscalers",
+            "cloud buyers",
+            "investors"
+          ],
+          "article_type": "Supply Chain",
+          "urgency_score": 0.45,
+          "taxonomy_confidence": 0.77,
+          "taxonomy_reasons": [
+            "ai infrastructure",
+            "neocloud"
+          ],
+          "direct_ai_infrastructure_relevance": 1,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0.517,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.844,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "semiconductor_relevance:0.52(amd, gpu)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 1,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0.517,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.844,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+              "semiconductor_relevance:0.52(amd, gpu)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 81
+        },
+        {
+          "id": "f43760be0d327d3c",
+          "source": "Data Center POST",
+          "url": "https://datacenterpost.com/the-digital-race-and-the-economics-of-delay-a-conversation-with-dr-atif-ansar/",
+          "title": "The Digital Race and the Economics of Delay: A Conversation with Dr. Atif Ansar",
+          "snippet": "TL;DR How Dr. Ansar’s 15-year research at Oxford led to partnering with Igor Schifrin to co-found Foresight.works and introduce the concept of “time accounting” to match the rigor of financial CFOs. A step-by-step break…",
+          "contentText": "TL;DR How Dr. Ansar’s 15-year research at Oxford led to partnering with Igor Schifrin to co-found Foresight.works and introduce the concept of &#8220;time accounting&#8221; to match the rigor of financial CFOs. A step-by-step breakdown of how a six-month delay on a typical 100MW data center ($1 billion physical build) leads to a $100 million (10%) cost increase in lost revenue, labor, and SLA penalties. The platform’s ability to map design geometry to historical project databases, integrate with tools like Procore and Autodesk Construction Cloud, and utilize computer vision to verify progress and surface &#8220;bad news&#8221; early. Dr. Ansar&#8217;s outlook on de-biasing project communication, forging professional standards, and implementing AI and robotics to deliver infrastructure wor…",
+          "publishedAt": "2026-08-11T14:30:45.000Z",
+          "sourceImage": "https://d3qut6qyo6tw2j.cloudfront.net/bin/uploads/2026/08/04154254/NEDAS-Live-E69_Blog_8.3.2026-1024x512.png",
+          "region": "Global",
+          "language": "en",
+          "defaultCategory": "Colocation & Wholesale",
+          "category": "Data Centers",
+          "primary_category": "Data Centers",
+          "secondary_category": "Campus development and colocation capacity",
+          "infrastructure_layer": "Facility",
+          "affected_stakeholders": [
+            "data center operators",
+            "developers",
+            "site selectors",
+            "investors"
+          ],
+          "article_type": "Product / Platform Update",
+          "urgency_score": 0.57,
+          "taxonomy_confidence": 0.81,
+          "taxonomy_reasons": [
+            "data center",
+            "colocation",
+            "wholesale"
+          ],
+          "direct_ai_infrastructure_relevance": 0.78,
+          "data_center_relevance": 0.76,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.77,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:0.78",
+            "data_center_relevance:0.76(data center, colocation)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 0.78,
+            "data_center_relevance": 0.76,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.77,
+            "infrastructure_relevance_tier": "full_memo",
+            "infrastructure_relevance_action": "generate_full_memo",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:0.78",
+              "data_center_relevance:0.76(data center, colocation)"
+            ],
+            "infrastructureRelevanceAction": "generate_full_memo",
+            "articlePagePublished": true,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 78
+        },
+        {
+          "id": "092a1a3536e5f6dc",
+          "source": "Utility Dive",
+          "url": "https://www.utilitydive.com/news/caterpillar-sales-surpass-20b-growing-data-center-demand-q2-2026/827569/",
+          "title": "Caterpillar sales surpass $20B as generators for data centers take off",
+          "snippet": "Power generation retail sales grew 72% year over year. To meet demand, the company is resuming production of a 10-MW medium-speed gas reciprocating engine platform it stopped manufacturing in 2022, said CEO and Chairman…",
+          "contentText": "Power generation retail sales grew 72% year over year. To meet demand, the company is resuming production of a 10-MW medium-speed gas reciprocating engine platform it stopped manufacturing in 2022, said CEO and Chairman Joseph Creed.",
+          "publishedAt": "2026-08-11T15:36:00.000Z",
+          "sourceImage": "https://imgproxy.divecdn.com/PfcQp4x1pfy3Ik6XOFi_8OQgKpAUnA2rGvg0Mo3pn30/g:ce/rs:fill:1600:900:1/Z3M6Ly9kaXZlc2l0ZS1zdG9yYWdlL2RpdmVpbWFnZS9HZXR0eUltYWdlcy04NDQ4MTE3OC5qcGc=.webp",
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "Power / Grid / Energy",
+          "category": "Power & Grid",
+          "primary_category": "Power & Grid",
+          "secondary_category": "Interconnection and power procurement",
+          "infrastructure_layer": "Power",
+          "affected_stakeholders": [
+            "data center operators",
+            "utilities",
+            "cloud capacity teams",
+            "investors"
+          ],
+          "article_type": "Product / Platform Update",
+          "urgency_score": 0.6,
+          "taxonomy_confidence": 0.76,
+          "taxonomy_reasons": [
+            "power",
+            "grid"
+          ],
+          "direct_ai_infrastructure_relevance": 0,
+          "data_center_relevance": 0.55,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0,
+          "power_grid_relevance": 0.96,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.748,
+          "infrastructure_relevance_tier": "signal_card",
+          "infrastructure_relevance_action": "publish_signal_card_only",
+          "infrastructure_relevance_reasons": [
+            "data_center_relevance:0.55(data centers)",
+            "power_grid_relevance:0.96(power, grid, utility)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 0,
+            "data_center_relevance": 0.55,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0,
+            "power_grid_relevance": 0.96,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.748,
+            "infrastructure_relevance_tier": "signal_card",
+            "infrastructure_relevance_action": "publish_signal_card_only",
+            "infrastructure_relevance_reasons": [
+              "data_center_relevance:0.55(data centers)",
+              "power_grid_relevance:0.96(power, grid, utility)"
+            ],
+            "infrastructureRelevanceAction": "publish_signal_card_only",
+            "articlePagePublished": false,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 77
+        }
+      ],
+      "curatedIds": [
+        "e55d48792519c872",
+        "9ccadbbb854d8c11",
+        "da3e22ae1be859dc",
+        "7e5e5a56b3c4eec2",
+        "f43760be0d327d3c",
+        "092a1a3536e5f6dc"
+      ],
+      "publishedIds": [
+        "9ccadbbb854d8c11",
+        "e55d48792519c872"
+      ],
+      "slotPublications": {
+        "0": true
+      }
     }
   },
   "runHistory": [
-    {
-      "at": "2026-07-02T10:14:27.277Z",
-      "day": "2026-07-02",
-      "slot": 2,
-      "publishedCount": 0,
-      "signalCardCount": 1,
-      "archiveOnlyCount": 0,
-      "repetitionBlockedCount": 1,
-      "publishedIds": [],
-      "processedIds": [
-        "e3281f2ca0189b2d",
-        "ad60a3188c60024a"
-      ],
-      "blockedCount": 1,
-      "blockedItems": [
-        {
-          "id": "e3281f2ca0189b2d",
-          "title": "Google testing controversial webcam-based reCAPTCHA that asks for a hand scan to prove you're human — testers beat it with a stock photo",
-          "infrastructure_relevance_score": 0.923,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "cloud_capacity_relevance:0.56(hyperscalers, google cloud)",
-            "semiconductor_relevance:0.22(gpu)",
-            "power_grid_relevance:0.22(power)",
-            "capital_markets_relevance:0.28(capex)"
-          ],
-          "extraction_quality_score": 0.86,
-          "source_domain_adapter": "generic",
-          "content_length": 1713,
-          "boilerplate_ratio": 0,
-          "repetition_blocked": false,
-          "repetition_block_reasons": [],
-          "repetition_check": null,
-          "expert_insight_complete": true,
-          "expert_insight_missing_fields": [],
-          "reason": "fail_closed: legal_boilerplate_detected"
-        }
-      ],
-      "repetitionBlockedItems": [
-        {
-          "id": "ad60a3188c60024a",
-          "title": "AI Data Centers And Auto Industry Converge On Same Issues",
-          "infrastructure_relevance_score": 1,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "data_center_relevance:1.00(data center, data centers, campus)",
-            "cloud_capacity_relevance:0.32(hyperscalers)",
-            "semiconductor_relevance:0.58(semiconductor, gpu)",
-            "power_grid_relevance:0.76(power, grid, utility)",
-            "capital_markets_relevance:0.28(capex)"
-          ],
-          "extraction_quality_score": 1,
-          "source_domain_adapter": "semiengineering",
-          "content_length": 1635,
-          "boilerplate_ratio": 0,
-          "repetition_blocked": true,
-          "repetition_block_reasons": [
-            "repeated_sentence_ratio>0.12",
-            "heading_sequence_similarity>0.75",
-            "conclusion_similarity>0.7"
-          ],
-          "repetition_check": {
-            "compared_article_count": 20,
-            "repeated_sentence_ratio": 0.42857142857142855,
-            "repeated_paragraph_ratio": 0.5,
-            "heading_sequence_similarity": 1,
-            "banned_phrase_count": 0,
-            "banned_phrase_counts": {},
-            "recent_banned_phrase_counts": {},
-            "ngram_overlap": 0.4793388429752066,
-            "blueprint_repetition": 2,
-            "conclusion_similarity": 1,
-            "repeated_sentence_count": 3,
-            "repeated_paragraph_count": 3,
-            "heading_sequence": [
-              "What Changed",
-              "Energy Procurement Read",
-              "Volatility Risk",
-              "Next Market Test"
-            ],
-            "blocked": true,
-            "reasons": [
-              "repeated_sentence_ratio>0.12",
-              "heading_sequence_similarity>0.75",
-              "conclusion_similarity>0.7"
-            ]
-          },
-          "expert_insight_complete": true,
-          "expert_insight_missing_fields": [],
-          "reason": "repeated_sentence_ratio>0.12; heading_sequence_similarity>0.75; conclusion_similarity>0.7"
-        }
-      ],
-      "signalCardItems": [
-        {
-          "id": "e3281f2ca0189b2d",
-          "title": "Google testing controversial webcam-based reCAPTCHA that asks for a hand scan to prove you're human — testers beat it with a stock photo",
-          "infrastructure_relevance_score": 0.923,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "cloud_capacity_relevance:0.56(hyperscalers, google cloud)",
-            "semiconductor_relevance:0.22(gpu)",
-            "power_grid_relevance:0.22(power)",
-            "capital_markets_relevance:0.28(capex)"
-          ],
-          "extraction_quality_score": 0.86,
-          "source_domain_adapter": "generic",
-          "content_length": 1713,
-          "boilerplate_ratio": 0,
-          "repetition_blocked": false,
-          "repetition_block_reasons": [],
-          "repetition_check": null,
-          "expert_insight_complete": true,
-          "expert_insight_missing_fields": [],
-          "reason": "fail_closed: legal_boilerplate_detected"
-        }
-      ],
-      "archiveOnlyItems": []
-    },
     {
       "at": "2026-07-02T16:56:40.045Z",
       "day": "2026-07-03",
@@ -56468,7 +56797,135 @@
         }
       ],
       "archiveOnlyItems": []
+    },
+    {
+      "at": "2026-08-11T16:05:09.558Z",
+      "day": "2026-08-12",
+      "slot": 0,
+      "publishedCount": 0,
+      "signalCardCount": 1,
+      "archiveOnlyCount": 0,
+      "repetitionBlockedCount": 1,
+      "publishedIds": [],
+      "processedIds": [
+        "9ccadbbb854d8c11",
+        "e55d48792519c872"
+      ],
+      "blockedCount": 1,
+      "blockedItems": [
+        {
+          "id": "9ccadbbb854d8c11",
+          "title": "NVIDIA’s $500 Billion AI Bet: Jensen Huang Brings Wall Street Into the Race",
+          "infrastructure_relevance_score": 0.932,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud, high-performance computing)",
+            "data_center_relevance:0.42(data centers)",
+            "cloud_capacity_relevance:0.32(hyperscalers)",
+            "semiconductor_relevance:0.60(nvidia, gpu)",
+            "power_grid_relevance:0.22(power)",
+            "capital_markets_relevance:0.32(financing)",
+            "enterprise_ai_infrastructure_relevance:0.30(inference workloads)"
+          ],
+          "extraction_quality_score": 0.98,
+          "source_domain_adapter": "generic",
+          "content_length": 1413,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": false,
+          "repetition_block_reasons": [],
+          "repetition_check": null,
+          "expert_insight_complete": true,
+          "expert_insight_missing_fields": [],
+          "reason": "fail_closed: source_text_incomplete:ellipsis_truncation_artifact, ellipsis_truncation_artifact"
+        }
+      ],
+      "repetitionBlockedItems": [
+        {
+          "id": "e55d48792519c872",
+          "title": "Why Scaling AI Compute Performance Requires a New Power Architecture",
+          "infrastructure_relevance_score": 1,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud, rack density)",
+            "data_center_relevance:0.28(rack density)",
+            "cloud_capacity_relevance:0.32(hyperscalers)",
+            "semiconductor_relevance:0.72(nvidia, accelerator, gpu)",
+            "power_grid_relevance:1.00(power, grid, electricity)",
+            "cooling_relevance:0.24(rack density)"
+          ],
+          "extraction_quality_score": 1,
+          "source_domain_adapter": "generic",
+          "content_length": 1640,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": true,
+          "repetition_block_reasons": [
+            "repeated_sentence_ratio>0.12",
+            "heading_sequence_similarity>0.75",
+            "conclusion_similarity>0.7"
+          ],
+          "repetition_check": {
+            "compared_article_count": 20,
+            "repeated_sentence_ratio": 0.5,
+            "repeated_paragraph_ratio": 0.5,
+            "heading_sequence_similarity": 1,
+            "banned_phrase_count": 0,
+            "banned_phrase_counts": {},
+            "recent_banned_phrase_counts": {},
+            "ngram_overlap": 0.3770491803278688,
+            "blueprint_repetition": 2,
+            "conclusion_similarity": 1,
+            "repeated_sentence_count": 3,
+            "repeated_paragraph_count": 3,
+            "heading_sequence": [
+              "Power-Market Move",
+              "Operating Lever",
+              "Grid Exposure",
+              "Metric To Watch"
+            ],
+            "blocked": true,
+            "reasons": [
+              "repeated_sentence_ratio>0.12",
+              "heading_sequence_similarity>0.75",
+              "conclusion_similarity>0.7"
+            ]
+          },
+          "expert_insight_complete": true,
+          "expert_insight_missing_fields": [],
+          "reason": "repeated_sentence_ratio>0.12; heading_sequence_similarity>0.75; conclusion_similarity>0.7"
+        }
+      ],
+      "signalCardItems": [
+        {
+          "id": "9ccadbbb854d8c11",
+          "title": "NVIDIA’s $500 Billion AI Bet: Jensen Huang Brings Wall Street Into the Race",
+          "infrastructure_relevance_score": 0.932,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud, high-performance computing)",
+            "data_center_relevance:0.42(data centers)",
+            "cloud_capacity_relevance:0.32(hyperscalers)",
+            "semiconductor_relevance:0.60(nvidia, gpu)",
+            "power_grid_relevance:0.22(power)",
+            "capital_markets_relevance:0.32(financing)",
+            "enterprise_ai_infrastructure_relevance:0.30(inference workloads)"
+          ],
+          "extraction_quality_score": 0.98,
+          "source_domain_adapter": "generic",
+          "content_length": 1413,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": false,
+          "repetition_block_reasons": [],
+          "repetition_check": null,
+          "expert_insight_complete": true,
+          "expert_insight_missing_fields": [],
+          "reason": "fail_closed: source_text_incomplete:ellipsis_truncation_artifact, ellipsis_truncation_artifact"
+        }
+      ],
+      "archiveOnlyItems": []
     }
   ],
-  "lastRunAt": "2026-08-11T08:14:48.075Z"
+  "lastRunAt": "2026-08-11T16:05:09.558Z"
 }
