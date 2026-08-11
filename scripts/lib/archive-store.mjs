@@ -10,6 +10,7 @@ import { hydrateExpertLens, mergeArticleRecords } from './expert-lens.mjs';
 import { readJsonFile, writeJsonFile } from './state-store.mjs';
 import { slugify, unique } from './normalize.mjs';
 import { taxonomySearchFields } from './taxonomy.mjs';
+import { enforceFinalPublicationIntegrity } from './final-publication-integrity.mjs';
 
 function mergeUniqueArticles(articles) {
   const merged = new Map();
@@ -153,8 +154,10 @@ export function splitLatestAndArchive(articles) {
 }
 
 export async function syncArchiveArtifacts(latestArticles, priorArchive = []) {
-  const { latest, overflow } = splitLatestAndArchive(latestArticles);
-  const archive = mergeUniqueArticles([...overflow, ...priorArchive]).map(toSearchableArticle);
+  const merged = mergeUniqueArticles([...latestArticles, ...priorArchive]);
+  const integrity = enforceFinalPublicationIntegrity(merged);
+  const { latest, overflow } = splitLatestAndArchive(integrity.articles);
+  const archive = overflow.map(toSearchableArticle);
   const latestSearchable = latest.map(toSearchableArticle);
 
   let supabaseStatus = { pushed: false, reason: 'not_attempted' };
@@ -176,5 +179,6 @@ export async function syncArchiveArtifacts(latestArticles, priorArchive = []) {
     latest,
     archive,
     supabaseStatus,
+    publicationIntegrityBlocked: integrity.blocked,
   };
 }

@@ -3,10 +3,40 @@ import Layout from '../../layouts/Layout.astro';
 import LatestAnalysisFeed from '../../components/LatestAnalysisFeed.astro';
 import latestNews from '../../data/latest-news.json';
 import archivedNews from '../../data/archived-news.json';
+import editorialCycles from '../../data/editorial-cycles.json';
+import pipelineHeartbeat from '../../data/pipeline-heartbeat.json';
 import { SITE } from '../../config/site';
 import { buildArchiveFeed } from '../../../scripts/lib/archive-feed-builder.mjs';
+import { buildFreshnessPublicModel } from '../../../scripts/lib/freshness-public-model.mjs';
 
 const feed = buildArchiveFeed([...latestNews, ...archivedNews], { page: 1, pageSize: 50 });
+const dateFormatter = new Intl.DateTimeFormat('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+const sourceRecordDate = (article: { analysisPublishedAt?: string; publishedAt?: string; updatedAt?: string }) =>
+  new Date(String(article.analysisPublishedAt || article.publishedAt || article.updatedAt || 0)).getTime();
+const latestSourceRecordMs = [...latestNews, ...archivedNews].reduce((latest, article) => {
+  const stamp = sourceRecordDate(article);
+  return Number.isFinite(stamp) ? Math.max(latest, stamp) : latest;
+}, 0);
+const freshness = buildFreshnessPublicModel({
+  cycles: editorialCycles,
+  rssItems: feed.items,
+  heartbeat: pipelineHeartbeat,
+});
+const lastSourceRecord = latestSourceRecordMs
+  ? dateFormatter.format(new Date(latestSourceRecordMs))
+  : 'not recorded';
+const lastSuccessfulUpdate = freshness.last_successful_pipeline_at
+  ? dateFormatter.format(new Date(freshness.last_successful_pipeline_at))
+  : 'not recorded';
+const sourceRecordStatus = `Source-linked records current through ${lastSourceRecord}`;
+const longFormStatus = freshness.latest_published_analysis_at
+  ? `Long-form publishing last authorized ${dateFormatter.format(new Date(freshness.latest_published_analysis_at))}`
+  : 'Long-form publishing paused (0 authorized)';
+const pipelineStatus = freshness.state === 'failed_pipeline'
+  ? `Pipeline update failed; last successful update ${lastSuccessfulUpdate}`
+  : freshness.state === 'stale_pipeline'
+    ? `Pipeline update overdue since ${lastSuccessfulUpdate}`
+    : `Pipeline last successful update ${lastSuccessfulUpdate}`;
 ---
 <Layout title={`Publication archive | ${SITE.name}`} description="Browse the Compute Current publication archive." canonicalPath="/archive/">
   <main class="policy-shell taxonomy-page publication-archive">
@@ -14,7 +44,7 @@ const feed = buildArchiveFeed([...latestNews, ...archivedNews], { page: 1, pageS
     <section class="policy-page">
       <p class="eyebrow">Publication archive</p>
       <h1>Publication archive</h1>
-      <p class="policy-lede">Browse recent AI infrastructure intelligence, briefs, and source-linked analysis.</p>
+      <p class="policy-lede">Browse recent AI infrastructure intelligence, briefs, and source-linked analysis. {sourceRecordStatus}. {longFormStatus}. {pipelineStatus}.</p>
     </section>
     <LatestAnalysisFeed feed={feed} title="Recent intelligence" eyebrow="Publication archive" dek="" />
   </main>

@@ -2,6 +2,8 @@
 
 Generated at: 2026-05-31T08:00:00.000Z
 
+> **Historical snapshot — non-operational.** This report preserves the 2026-05-31 admin QA result. It is not current admin-authentication or rate-limit guidance; use [`admin-setup.md`](admin-setup.md), [`admin-auth-production-gate.md`](admin-auth-production-gate.md), and [`DEPLOY_CHECKLIST_DASHBOARD.md`](../DEPLOY_CHECKLIST_DASHBOARD.md).
+
 The admin surface now has private routes, login/session protection, article edit/publish/hide/noindex flows, dashboard/review-queue views, audit logs, and generated-output exclusion from public discovery surfaces.
 
 ## Commands Run

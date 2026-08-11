@@ -1,6 +1,7 @@
 import { detectBoilerplate } from './boilerplate-detector.mjs';
 import { analyzeSourceTextCompleteness } from './source-text-completeness.mjs';
 import { detectTruncationArtifacts, sentenceCompletionScore } from './truncation-detector.mjs';
+import { createExtractionArtifact } from './extraction-artifact.mjs';
 
 export const PUBLIC_ARTICLE_MIN_CLEAN_CHARS = 500;
 export const LONGFORM_MIN_CLEAN_CHARS = 1200;
@@ -45,6 +46,17 @@ export function analyzeSourceExtractionFailClosed(article = {}) {
     && completion >= 0.92;
   const canGenerateLongform = canPublishLocalArticle && cleaned_source_text.length >= LONGFORM_MIN_CLEAN_CHARS;
 
+  const extraction_qa = {
+    public_publishable: canPublishLocalArticle,
+    can_generate_longform: canGenerateLongform,
+    cleaned_source_length: cleaned_source_text.length,
+    boilerplate_ratio: boilerplate.boilerplate_ratio,
+    copyright_footer_detected: boilerplate.copyright_footer_detected,
+    nav_or_cta_detected: boilerplate.nav_or_cta_detected,
+    sentence_completion_score: completion,
+    block_reasons: uniqueReasons,
+  };
+
   return {
     ok: canGenerateLongform,
     can_publish_local_article: canPublishLocalArticle,
@@ -56,6 +68,12 @@ export function analyzeSourceExtractionFailClosed(article = {}) {
     sentence_completion_score: completion,
     source_completeness: sourceCompleteness,
     reasons: uniqueReasons,
+    extraction_qa,
+    extraction_artifact: createExtractionArtifact({
+      sourceUrl: article.sourceUrl || article.url,
+      cleanedExtractedText: cleaned_source_text,
+      extractionQa: extraction_qa,
+    }),
   };
 }
 

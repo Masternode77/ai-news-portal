@@ -5,52 +5,50 @@ This document maps the current content generation pipeline.
 ## High-Level Flow
 
 1. `.github/workflows/update-news.yml` runs `npm run pipeline` on the 00:05, 08:05, and 16:05 KST schedules, or by manual dispatch.
-2. `scripts/pipeline.mjs` loads existing state and article JSON, fetches or reuses the RSS candidate pool, plans the daily curation set, enriches the current slot, relevance-gates items, quality-gates extracted article pages, merges fresh and existing records, and writes JSON artifacts.
-3. `npm run build` runs `sync:dashboard-data`, `prepare:static-images`, then `astro build`.
-4. The workflow commits refreshed JSON/assets back to `main`; Vercel builds from the pushed repository state.
+2. `scripts/pipeline.mjs` reads the rights-gated registry, fetches or reuses only authorized RSS candidates, plans eligible items, applies relevance/extraction/repetition gates, and writes artifacts only when a valid path produces changes.
+3. The workflow rebuilds taxonomy, runs `npm test`, then runs `npm run content:gate` (including the production build) before recording its heartbeat.
+4. It commits only changed tracked artifacts back to `main`; Vercel builds from the pushed repository state.
 
 ## 1. Crawler Sources
 
-Primary source list: `scripts/lib/constants.mjs` `FEEDS`.
+The authoritative source inventory is `config/sourceRegistry.yml`. The retired
+`scripts/lib/constants.mjs` `FEEDS` export is not the production registry.
 
-The crawler is RSS/Atom based through `rss-parser` in `scripts/lib/fetch-feeds.mjs`. Current sources are:
+`scripts/lib/source-registry.mjs` loads the registry and `activeRegistryFeeds()`
+returns only feeds that have a safe URL, are not blocked/paywalled/extraction
+failed, and pass the text-rights decision. Each source needs a non-placeholder
+`text_use_basis`, HTTPS `terms_url`, current `reviewed_at`, and
+`allow_text_use: true`; authorization is re-reviewed within 365 days.
+`allow_image_reuse` and its image basis are separate requirements for source
+image reuse.
 
-- SiliconANGLE AI: `https://siliconangle.com/category/ai/feed/`
-- Bloomberg Technology: `https://feeds.bloomberg.com/technology/news.rss`
-- NVIDIA Blog: `https://blogs.nvidia.com/feed/`
-- Google Cloud Blog: `https://cloudblog.withgoogle.com/rss/`
-- AWS News Blog: `https://aws.amazon.com/blogs/aws/feed/`
-- Microsoft Azure Blog: `https://azure.microsoft.com/en-us/blog/feed/`
-- TechCrunch AI: `https://techcrunch.com/category/artificial-intelligence/feed/`
-- VentureBeat AI: `https://venturebeat.com/category/ai/feed/`
-- The Register Data Centre: `https://www.theregister.com/data_centre/headlines.atom`
-- Data Center Dynamics: `https://www.datacenterdynamics.com/en/rss/`
-- Data Center Knowledge: `https://www.datacenterknowledge.com/rss.xml`
-- ServeTheHome: `https://www.servethehome.com/feed/`
-- Toms Hardware: `https://www.tomshardware.com/feeds/all`
-- StorageReview: `https://www.storagereview.com/feed`
-- Semiconductor Engineering: `https://semiengineering.com/feed/`
-- Data Center Frontier: `https://www.datacenterfrontier.com/__rss/website-scheduled-content.xml?input=%7B%22sectionAlias%22%3A%22home%22%7D`
-- Data Center POST: `https://datacenterpost.com/feed/`
-- Cloudflare Blog: `https://blog.cloudflare.com/rss`
-- Engineering at Meta: `https://engineering.fb.com/feed/`
-- Hugging Face Blog: `https://huggingface.co/blog/feed.xml`
+All present registry entries remain unreviewed or disabled until an authorized
+operator verifies them. In that state `activeRegistryFeeds()` returns no feeds,
+`fetchNewsPoolResult()` reports `no_authorized_sources`, and the pipeline exits
+without publication. Use `config/sourceRightsAttestation.template.yml` to
+record an authorized review before changing registry fields; RSS availability or
+public accessibility does not grant text or image rights.
 
-Each feed entry includes source, URL, region, language, and default category. `fetchNewsPool()` deduplicates by stable article ID and normalized title, preserves minimum per-source representation when configured, and caps the pool at `MAX_ITEMS_FETCHED`.
+The crawler is RSS/Atom based through `rss-parser` in
+`scripts/lib/fetch-feeds.mjs`. `parseFeedItem()` reads title, link/guid URL, RSS
+body/snippet fields, publish date, source image, region, language, and default
+category. `fetchNewsPool()` deduplicates by stable article ID and normalized
+title, preserves minimum per-source representation when configured, and caps
+the pool at `MAX_ITEMS_FETCHED`.
 
 ## 2. Source Article Extraction Logic
 
 Feed item extraction happens in `scripts/lib/fetch-feeds.mjs`:
 
-- `parseItem()` reads title, link/guid URL, RSS body/snippet fields, publish date, source image, region, language, and default category.
+- `parseFeedItem()` reads title, link/guid URL, RSS body/snippet fields, publish date, source image, region, language, and default category.
 - `stableArticleId()` hashes normalized URL plus canonicalized title.
 - `firstImage()` checks enclosure images, `media:content`, then the first `<img>` in feed content.
 - RSS content is stripped and truncated into `snippet` and `contentText`.
-- `parseItem()` also attaches a preliminary infrastructure relevance score from `scripts/lib/relevance-classifier.mjs` using RSS title/snippet/body fields.
+- `parseFeedItem()` also attaches a preliminary infrastructure relevance score from `scripts/lib/relevance-classifier.mjs` using RSS title/snippet/body fields.
 
 Full article excerpt extraction happens in `scripts/lib/source-fetch.mjs`:
 
-- `fetchArticleExtraction({ url, title, fallbackSnippet, timeoutMs = 12000 })` fetches HTML with an `AINewsPortalBot/1.0` user agent.
+- `fetchArticleExtraction({ url, title, fallbackSnippet, sourceRegistryId, sources, networkOptions, timeoutMs = 12000 })` delegates to `fetchAuthorizedSourceText()` after source-registry authorization. Its text, feed, and source-image requests identify as `ComputeCurrentBot/1.0` and use the configured source-host boundary.
 - In offline mode, failed HTTP, failed fetch, or non-OK response, it falls back to the provided snippet and records extraction QA against that fallback.
 - Source-specific adapters handle extraction/cleanup for `datacenterknowledge.com`, `bloomberg.com`, `storagereview.com`, `datacenterfrontier.com`, `semiengineering.com`, `cloud.google.com`, `techcrunch.com`, `servethehome.com`, and `datacenterpost.com`.
 - It prefers adapter selectors, then `<article>`, `<main>`, and body fallbacks; strips HTML; removes common navigation, CTA, newsletter, cookie, and copyright boilerplate; truncates to a sentence boundary; and returns article text plus QA metadata.
@@ -180,7 +178,7 @@ Infrastructure relevance classification:
 - RSS items receive a preliminary score in `fetch-feeds.mjs`; enriched items are rescored in `content.mjs` after full source extraction and editorial summary fields are available.
 - `infrastructure_relevance_score >= 0.75` routes an item to the full Compute Current memo path, subject to extraction QA.
 - `0.45 <= infrastructure_relevance_score < 0.75` routes an item to a short signal card only.
-- `infrastructure_relevance_score < 0.45` marks an item `archiveOnly: true`, `homepagePublished: false`, and blocks homepage surfacing unless manually approved.
+- `infrastructure_relevance_score < 0.45` marks an item `archiveOnly: true` and `homepagePublished: false`. The final public product-fit gate and current source-text authorization are universal public-output requirements; there is no manual approval bypass.
 
 Expert insight extraction:
 
@@ -199,22 +197,17 @@ Inputs:
 
 - `src/data/latest-news.json`
 - `src/data/archived-news.json`
-- `src/data/search-index.json`
 
 Homepage layout logic:
 
-- `latestNews` is mapped into display records with cleaned summary text, display headline, image fallback, detail URL, source URL, time-ago label, and expert lens teaser.
-- `hero = latest[0]`
-- `briefing = latest.slice(1, 5)`
-- `feed = latest.slice(5)`
-- Categories for the nav strip come from the current latest set.
-- Archive count comes from `archivedNews.length`.
-- Client-side search payload is the first 400 records from `search-index.json`.
-- Archive-only records are excluded from `latest-news.json` by `splitLatestAndArchive()` unless explicitly marked with `homepageApproved` or `manualHomepageApproved`.
+- `index.astro` combines latest and archived records and calls `buildHomepageFeed(..., { limit: 50, minimumVisible: 30 })`. The limit is an upper bound: a zero or undersized authorized inventory does not manufacture cards.
+- `buildHomepageFeed()` admits only an identified record that passes public product fit and current source-text authorization, is not explicitly hidden, archive-only, quarantined, or `archive_only_noindex`, and has not been marked `homepagePublished: false`.
+- The builder deduplicates and sorts eligible records, then decorates them with public card copy and source/detail links. A detail link is emitted only when `isPublicLongformArticle()` passes; otherwise the eligible signal links to its safe source URL.
+- Featured, visual lead, ticker, and feed sections derive from that one gated feed. Retained JSON, `src/data/search-index.json`, and the `LATEST_NEWS_LIMIT` store split are not independent homepage-publication paths.
 
-Article detail pages are generated by `src/pages/news/[id].astro` from `latest-news.json` plus `archived-news.json`, excluding records with `articlePagePublished === false`.
+Article detail pages are generated by `src/pages/news/[id].astro` from the same combined stores only when `isPublicLongformArticle()` passes: an ID, explicit `articlePagePublished: true`, no signal/brief/archive/quarantine/noindex exclusion, public product fit, detail-quality eligibility, and current source-text authorization are all required.
 
-RSS generation is in `src/pages/rss.xml.ts`, combining latest and archived records, sorting by `publishedAt`, taking the latest 100, and using `expertLensShort`, `summary`, or `snippet` as the description.
+RSS generation is in `src/pages/rss.xml.ts`. `buildRssItems()` combines latest and archived records, then requires an ID, publication date, `rssItemEligible()` (core or adjacent public route with no noindex/archive exclusion), and current source-text authorization before sorting by analysis/publish time and retaining at most 100 items. Public longform receives its canonical detail URL; an eligible non-longform item uses its safe source URL.
 
 ## 7. Archive Storage
 
@@ -238,22 +231,23 @@ Archive management is in `scripts/lib/archive-store.mjs`.
 Scheduled publish path:
 
 - `.github/workflows/update-news.yml` schedules the full news pipeline at 00:05, 08:05, and 16:05 KST.
-- It runs `npm run check`, `npm run pipeline`, `npm run sync:dashboard-data`, and `npm run build`.
+- It runs `npm run check`, `npm run pipeline`, taxonomy regeneration, `npm test`, and `npm run content:gate`; the content gate performs the production build.
 - It commits and pushes changes to `main` for:
   - `src/data/latest-news.json`
   - `src/data/archived-news.json`
   - `src/data/search-index.json`
   - `src/data/news-pool.json`
+  - `src/data/taxonomy-pages.json`
+  - `src/data/pipeline-heartbeat.json`
   - `scripts/state/pipeline-state.json`
-  - `public/dashboard-data.json`
   - `public/generated`
-- Commit message: `chore: refresh news surface, archive, and dashboard [skip ci]`.
+- Commit message: `chore: refresh news surface and archive [skip ci]`.
 
 Build/deploy path:
 
 - `vercel.json` declares Astro, `npm run build`, and output directory `dist`.
 - Vercel deploys from repository pushes.
-- `package.json` build script runs `sync:dashboard-data`, `prepare:static-images`, and `astro build`.
+- `package.json` build script runs `prepare:static-images` and `astro build`.
 - `prepare-static-images` may refresh missing local generated images in latest/archive JSON before the Astro build.
 
 Admin edit publish path:
@@ -261,11 +255,6 @@ Admin edit publish path:
 - `api/admin/article.js` exposes authenticated GET/POST article editing.
 - `api/admin/_github.js` reads/writes `src/data/latest-news.json`, `src/data/archived-news.json`, and `src/data/search-index.json` through the GitHub Contents/Git API.
 - Saving an edit commits to the configured branch (`GITHUB_BRANCH`, default `main`), which lets Vercel rebuild after GitHub receives the commit.
-
-Dashboard-only path:
-
-- `.github/workflows/update-news.yml` also runs a separate dashboard sync every 15 minutes, committing only `public/dashboard-data.json`.
-- This is adjacent to the content pipeline but does not generate article content.
 
 ## 9. Article Tables and JSON Stores
 
@@ -276,8 +265,6 @@ JSON stores:
 - `src/data/archived-news.json`: overflow, archive-only, and prior articles enriched for archive/search.
 - `src/data/search-index.json`: merged latest + archive records with `searchText` for client-side search.
 - `scripts/state/pipeline-state.json`: pipeline state containing published IDs, day plans, slot publication markers, run history, last run time, extraction gate details, and infrastructure relevance routing details.
-- `public/dashboard-data.json`: dashboard runtime data generated by `scripts/sync-dashboard-data.cjs`; not an article store.
-- `src/data/cron-registry-snapshot-latest.json`: dashboard input snapshot; not an article store.
 
 Database table:
 
@@ -290,6 +277,6 @@ Database table:
 - The pipeline is mostly file-backed. Supabase is an optional archive sink, not the primary read path for the Astro site.
 - Article detail pages are generated from checked-in JSON, not from Supabase.
 - Low-quality extraction does not remove an item from the signal surface; it blocks the local article detail page and points the item to the original source URL.
-- Low infrastructure relevance does remove an item from the homepage surface; it is archived unless a manual approval flag overrides homepage suppression.
+- Low infrastructure relevance removes an item from the public homepage. The final public product-fit gate and current source-text authorization have no manual override; retained records are not evidence of reader-visible output.
 - `scripts/update-news.js` is only a compatibility alias that imports `scripts/pipeline.mjs`.
-- The README still mentions an older "Latest-3 Korean Expert Lens" description, but current code attaches Expert Lens to focused newly publishable visible articles during pipeline runs and hydrates existing visible articles when needed.
+- Expert Lens enrichment applies to focused publishable and visible records; it is not a fixed “Latest-3” contract.

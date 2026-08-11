@@ -121,6 +121,7 @@ test('admin dashboard model produces fixture-backed counts and review queues', (
   assert.deepEqual(model.reviewQueues.lowRelevance.items.map((item) => item.id), ['hidden-low-relevance']);
   assert.deepEqual(model.reviewQueues.missingImage.items.map((item) => item.id), ['draft-missing-image', 'hidden-low-relevance']);
   assert.deepEqual(model.reviewQueues.regenerationNeeded.items.map((item) => item.id), ['regen-needed', 'hidden-low-relevance']);
+  assert.equal(model.articles.find((item) => item.id === 'published-good')?.editHref, '/admin/edit/?id=published-good');
 });
 
 test('admin article filters are deterministic and URL-addressable', () => {

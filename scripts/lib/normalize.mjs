@@ -1,9 +1,22 @@
 import crypto from 'node:crypto';
 import { CATEGORIES, CATEGORY_KEYWORDS, REGION_HINTS } from './constants.mjs';
 
-export function normalizeUrl(url = '') {
+const CONTROL_CHARACTERS = /[\u0000-\u001F\u007F]/;
+
+const urlInput = (value) => (typeof value === 'string' ? value.trim() : '');
+
+export function safeHttpUrl(value = '') {
+  const rawUrl = typeof value === 'string' ? value : '';
+  const url = rawUrl.trim();
+  if (!url || CONTROL_CHARACTERS.test(rawUrl)) return '';
+
   try {
     const parsed = new URL(url);
+    if (
+      (parsed.protocol !== 'http:' && parsed.protocol !== 'https:')
+      || parsed.username
+      || parsed.password
+    ) return '';
     parsed.hash = '';
     const dropParams = [
       'utm_source',
@@ -20,8 +33,35 @@ export function normalizeUrl(url = '') {
     dropParams.forEach((param) => parsed.searchParams.delete(param));
     return parsed.toString();
   } catch {
-    return url.trim();
+    return '';
   }
+}
+
+export function safeInternalPath(value = '') {
+  const rawPath = typeof value === 'string' ? value : '';
+  const path = rawPath.trim();
+  return path.startsWith('/') && !path.startsWith('//') && !CONTROL_CHARACTERS.test(rawPath) ? path : '';
+}
+
+export function canonicalArticlePath(value = '') {
+  const rawId = typeof value === 'string' ? value : '';
+  const id = rawId.trim();
+  return /^[A-Za-z0-9][A-Za-z0-9_-]{0,127}$/.test(id) && !CONTROL_CHARACTERS.test(rawId)
+    ? `/news/${id}/`
+    : '';
+}
+
+export function serializeJsonForScript(value) {
+  return JSON.stringify(value)
+    .replace(/</g, '\\u003C')
+    .replace(/>/g, '\\u003E')
+    .replace(/&/g, '\\u0026')
+    .replace(/\u2028/g, '\\u2028')
+    .replace(/\u2029/g, '\\u2029');
+}
+
+export function normalizeUrl(url = '') {
+  return safeHttpUrl(url) || urlInput(url);
 }
 
 export function canonicalTitle(title = '') {

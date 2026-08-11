@@ -1,6 +1,7 @@
 import { PIPELINE_OFFLINE } from './constants.mjs';
 import { stripHtml, truncate } from './normalize.mjs';
 import { analyzeExtractionQuality } from './quality-gate.mjs';
+import { fetchAuthorizedSourceText } from './source-text-fetcher.mjs';
 
 const GENERIC_ADAPTER = 'generic';
 
@@ -220,6 +221,10 @@ export async function fetchArticleExtraction({
   url,
   title = '',
   fallbackSnippet = '',
+  sourceRegistryId = '',
+  sources,
+  now,
+  networkOptions = {},
   timeoutMs = 12000,
 } = {}) {
   if (PIPELINE_OFFLINE) {
@@ -227,24 +232,15 @@ export async function fetchArticleExtraction({
   }
 
   const adapter = adapterForUrl(url);
-  const controller = new AbortController();
-  const timeout = setTimeout(() => controller.abort(), timeoutMs);
 
   try {
-    const response = await fetch(url, {
-      signal: controller.signal,
-      headers: {
-        'user-agent': 'Mozilla/5.0 (compatible; AINewsPortalBot/1.0)',
-        accept: 'text/html,application/xhtml+xml',
-      },
-      redirect: 'follow',
+    const fetched = await fetchAuthorizedSourceText({ url, sourceRegistryId }, {
+      ...networkOptions,
+      now,
+      sources,
+      timeoutMs,
     });
-
-    if (!response.ok) {
-      return fallbackExtraction(url, fallbackSnippet, `http_${response.status}`);
-    }
-
-    const html = await response.text();
+    const html = fetched.text;
     const articleSection = extractSection(html, adapter);
     const { rawText, cleanedText } = paragraphTextFromSection(articleSection, adapter);
     const articleText = truncateAtSentence(cleanedText || fallbackSnippet, 1800);
@@ -259,8 +255,6 @@ export async function fetchArticleExtraction({
 
     return { articleText, extractionQa };
   } catch (error) {
-    return fallbackExtraction(url, fallbackSnippet, error?.name === 'AbortError' ? 'timeout' : 'fetch_failed');
-  } finally {
-    clearTimeout(timeout);
+    return fallbackExtraction(url, fallbackSnippet, error?.code || 'fetch_failed');
   }
 }

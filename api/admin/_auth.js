@@ -1,10 +1,15 @@
 import crypto from 'node:crypto';
+import net from 'node:net';
 
 const COOKIE_NAME = 'cc_admin';
 const SESSION_TTL_SECONDS = 60 * 60 * 8;
 const PASSWORD_KEY_LENGTH = 64;
 const LOGIN_WINDOW_MS = 15 * 60 * 1000;
 const MAX_FAILED_LOGIN_ATTEMPTS = 5;
+const MIN_SESSION_SECRET_BYTES = 32;
+const MIN_SESSION_SECRET_DISTINCT_CHARACTERS = 8;
+const SCRYPT_HASH = /^scrypt\$([A-Za-z0-9_-]{16,256})\$([A-Za-z0-9_-]{86})$/;
+const UNSAFE_SESSION_SECRETS = new Set(['replace-with-64-plus-random-characters', 'change-me', 'changeme', 'password', 'secret', 'admin', 'test']);
 const failedLoginState = new Map();
 const failedLoginAudit = [];
 
@@ -44,8 +49,25 @@ function safeEqual(a = '', b = '') {
   return left.length === right.length && crypto.timingSafeEqual(left, right);
 }
 
-function configured() {
-  return Boolean(process.env.ADMIN_USERNAME && process.env.ADMIN_PASSWORD_HASH && getSessionSecret());
+function validSessionSecret(value) {
+  const secret = String(value || '');
+  if (secret !== secret.trim() || Buffer.byteLength(secret, 'utf8') < MIN_SESSION_SECRET_BYTES) return false;
+  if (UNSAFE_SESSION_SECRETS.has(secret.toLowerCase())) return false;
+  return new Set(secret).size >= MIN_SESSION_SECRET_DISTINCT_CHARACTERS;
+}
+
+function validPasswordHash(value) {
+  const match = String(value || '').match(SCRYPT_HASH);
+  if (!match) return false;
+  return Buffer.from(match[1], 'base64url').length >= 16 && Buffer.from(match[2], 'base64url').length === PASSWORD_KEY_LENGTH;
+}
+
+export function adminAuthConfigured() {
+  return Boolean(process.env.ADMIN_USERNAME && validPasswordHash(process.env.ADMIN_PASSWORD_HASH) && validSessionSecret(getSessionSecret()));
+}
+
+export function adminRateLimitControlReady() {
+  return process.env.NODE_ENV !== 'production' || process.env.ADMIN_VERCEL_RATE_LIMIT_READY === 'true';
 }
 
 export function json(res, statusCode, payload, headers = {}) {
@@ -54,6 +76,8 @@ export function json(res, statusCode, payload, headers = {}) {
     res.setHeader(key, value);
   }
   res.setHeader('Content-Type', 'application/json; charset=utf-8');
+  res.setHeader('Cache-Control', 'no-store, private');
+  res.setHeader('Pragma', 'no-cache');
   res.end(JSON.stringify(payload));
 }
 
@@ -75,6 +99,7 @@ function sessionPayload(username = 'admin', now = Date.now()) {
 }
 
 export function createSession(username = 'admin', options = {}) {
+  if (!adminAuthConfigured()) throw new Error('Admin auth is not configured.');
   const session = sessionPayload(username, options.now || Date.now());
   const payload = base64url(
     JSON.stringify(session),
@@ -102,8 +127,12 @@ function headerValue(req, name) {
 }
 
 export function requireAdmin(req, res, options = {}) {
-  if (!configured()) {
+  if (!adminAuthConfigured()) {
     json(res, 500, { error: 'Admin auth is not configured. Set ADMIN_USERNAME, ADMIN_PASSWORD_HASH, and ADMIN_SESSION_SECRET.' });
+    return null;
+  }
+  if (!adminRateLimitControlReady()) {
+    json(res, 503, { error: 'Admin authentication is unavailable until its production rate-limit control is attested.' });
     return null;
   }
 
@@ -145,8 +174,8 @@ export function hashAdminPassword(password = '', salt = crypto.randomBytes(16).t
 }
 
 function verifyAdminPassword(password = '', encoded = '') {
-  const [algorithm, salt, expected] = String(encoded || '').split('$');
-  if (algorithm !== 'scrypt' || !salt || !expected) return false;
+  if (!validPasswordHash(encoded)) return false;
+  const [, salt, expected] = String(encoded).split('$');
   const actual = crypto.scryptSync(String(password), salt, PASSWORD_KEY_LENGTH).toString('base64url');
   return safeEqual(actual, expected);
 }
@@ -154,14 +183,19 @@ function verifyAdminPassword(password = '', encoded = '') {
 export function credentialsMatch({ username = '', password = '' } = {}) {
   const expectedPasswordHash = process.env.ADMIN_PASSWORD_HASH || '';
   const expectedUsername = process.env.ADMIN_USERNAME || '';
-  if (!expectedUsername || !expectedPasswordHash) return false;
+  if (!expectedUsername || !validPasswordHash(expectedPasswordHash)) return false;
   if (!safeEqual(username, expectedUsername)) return false;
   return verifyAdminPassword(password, expectedPasswordHash);
 }
 
 function clientIp(req) {
-  const forwarded = headerValue(req, 'x-forwarded-for').split(',')[0].trim();
-  return forwarded || req.socket?.remoteAddress || 'unknown';
+  const remoteAddress = String(req.socket?.remoteAddress || '').trim();
+  const mappedIpv4 = remoteAddress.match(/^::ffff:(.+)$/i)?.[1] || '';
+  if (mappedIpv4 && net.isIP(mappedIpv4) === 4) return mappedIpv4;
+  const family = net.isIP(remoteAddress);
+  if (family === 4) return remoteAddress;
+  if (family === 6) return remoteAddress.toLowerCase();
+  return 'unknown';
 }
 
 function throttleEntry(req, now = Date.now()) {
@@ -197,11 +231,11 @@ export function recordFailedLogin(req, username = '', reason = 'invalid_credenti
   const audit = {
     timestamp: new Date(now).toISOString(),
     ip: entry.ip,
-    username: String(username || ''),
+    principalId: crypto.createHmac('sha256', getSessionSecret()).update(String(username || '')).digest('base64url').slice(0, 16),
     reason,
   };
   failedLoginAudit.push(audit);
-  console.warn(`[admin-auth] failed login username=${audit.username || '(blank)'} ip=${audit.ip} reason=${reason}`);
+  console.warn(JSON.stringify({ event: 'admin.login_failed', clientIp: audit.ip, principalId: audit.principalId, reason }));
   return audit;
 }
 

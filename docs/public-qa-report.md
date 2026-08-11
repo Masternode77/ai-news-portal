@@ -2,6 +2,8 @@
 
 Generated at: 2026-05-31T08:00:00.000Z
 
+> **Historical snapshot — non-operational.** This report preserves QA evidence from 2026-05-31; it is not current deployment or public-dashboard guidance. Use [`DEPLOY_CHECKLIST_DASHBOARD.md`](../DEPLOY_CHECKLIST_DASHBOARD.md) for the current candidate verification scope.
+
 Public QA covers rendered pages, public copy, article quality, homepage volume, feed output, image output, and admin exclusion. The current gate is intentionally build-backed so stale source-only assertions do not hide rendered failures.
 
 ## Commands Run

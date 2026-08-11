@@ -69,6 +69,8 @@ export async function runContentCycleForArticle(article = {}) {
   const extractedArticle = {
     ...article,
     cleaned_source_text: extraction.cleaned_source_text,
+    extraction_qa: extraction.extraction_qa,
+    extraction_artifact: extraction.extraction_artifact,
     extraction_quality_score: article.extraction_quality_score ?? (
       publicExtraction.ok ? 0.85 : 0
     ),
@@ -110,6 +112,7 @@ export async function runContentCycleForArticle(article = {}) {
       briefWordCount: 0,
       wordCount: 0,
       sourceEvidenceCharacters: extraction.cleaned_source_length,
+      extraction_artifact: extraction.extraction_artifact,
       reasons: failureReasons,
     };
   }
@@ -164,6 +167,7 @@ export async function runContentCycleForArticle(article = {}) {
     wordCount: wordCount(brief || longformBody),
     evidenceFactCount: evidencePack.facts.length,
     sourceEvidenceCharacters: extraction.cleaned_source_length,
+    extraction_artifact: extraction.extraction_artifact,
     reasons,
   };
 }

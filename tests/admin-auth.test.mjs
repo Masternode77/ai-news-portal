@@ -43,7 +43,7 @@ test('admin credentials require ADMIN_PASSWORD_HASH and configured username', ()
   resetEnv();
   process.env.ADMIN_USERNAME = 'owner';
   process.env.ADMIN_PASSWORD = 'plaintext-legacy-password';
-  process.env.ADMIN_PASSWORD_HASH = hashAdminPassword('correct horse battery staple', 'fixed-test-salt');
+  process.env.ADMIN_PASSWORD_HASH = hashAdminPassword('correct horse battery staple', 'MDEyMzQ1Njc4OWFiY2RlZg');
 
   assert.equal(credentialsMatch({ username: 'owner', password: 'correct horse battery staple' }), true);
   assert.equal(credentialsMatch({ username: 'owner', password: 'wrong' }), false);
@@ -56,7 +56,7 @@ test('admin credentials require ADMIN_PASSWORD_HASH and configured username', ()
 test('admin session cookie is signed, httponly, strict, expiring, and carries csrf metadata', () => {
   resetEnv();
   process.env.ADMIN_USERNAME = 'owner';
-  process.env.ADMIN_PASSWORD_HASH = hashAdminPassword('not-used-for-session-test', 'session-test-salt');
+  process.env.ADMIN_PASSWORD_HASH = hashAdminPassword('not-used-for-session-test', 'MDEyMzQ1Njc4OWFiY2RlZg');
   process.env.ADMIN_SESSION_SECRET = 'test-session-secret-with-enough-entropy';
 
   const cookie = createSessionCookie('owner');

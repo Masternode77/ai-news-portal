@@ -1,5 +1,6 @@
 import assert from 'node:assert/strict';
 import { execFile } from 'node:child_process';
+import { createHash } from 'node:crypto';
 import fs from 'node:fs/promises';
 import http from 'node:http';
 import os from 'node:os';
@@ -8,7 +9,10 @@ import test from 'node:test';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { promisify } from 'node:util';
 import sharp from 'sharp';
-import { ensureCanonicalArticleImageSet } from '../scripts/prepare-static-images.mjs';
+import {
+  ensureCanonicalArticleImageSet,
+  refreshCollection,
+} from '../scripts/prepare-static-images.mjs';
 
 const execFileAsync = promisify(execFile);
 const repoRoot = path.dirname(fileURLToPath(new URL('../package.json', import.meta.url)));
@@ -45,19 +49,53 @@ async function createFixturePng(filePath) {
     .toFile(filePath);
 }
 
-async function createRemotePngServer() {
-  const fixture = await sharp({
+async function fixturePngBuffer() {
+  return sharp({
     create: {
       width: 64,
       height: 36,
       channels: 4,
       background: { r: 14, g: 114, b: 96, alpha: 1 },
     },
-  })
-    .png()
-    .toBuffer();
+  }).png().toBuffer();
+}
 
+function injectedPublicImageFetch(bytes, onRequest = () => {}) {
+  return {
+    resolveHost: async () => [{ address: '93.184.216.34', family: 4 }],
+    request: async ({ target, address }) => {
+      onRequest({ target, address });
+      return {
+        status: 200,
+        headers: {
+          'content-type': 'image/png',
+          'content-length': String(bytes.length),
+        },
+        body: (async function* body() { yield bytes; }()),
+      };
+    },
+  };
+}
+
+async function imageHashes(publicDir, article) {
+  const entries = await Promise.all([
+    article.heroImage,
+    article.thumbnailImage,
+    article.ogImage,
+    article.legacyImage,
+  ].map(async (publicPath) => {
+    const bytes = await fs.readFile(path.join(publicDir, publicPath.replace(/^\//, '')));
+    return [publicPath, createHash('sha256').update(bytes).digest('hex')];
+  }));
+  return Object.fromEntries(entries);
+}
+
+async function createRemotePngServer() {
+  const fixture = await fixturePngBuffer();
+
+  let requests = 0;
   const server = http.createServer((req, res) => {
+    requests += 1;
     if (req.url === '/source.png') {
       res.writeHead(200, {
         'content-type': 'image/png',
@@ -77,6 +115,7 @@ async function createRemotePngServer() {
   return {
     server,
     url: `http://127.0.0.1:${port}/source.png`,
+    requests: () => requests,
     close: () => new Promise((resolve, reject) => {
       server.close((error) => {
         if (error) {
@@ -113,6 +152,7 @@ test('article origin canonicalization', async (t) => {
 
         assert.equal(result.changed, 4);
         assert.equal(result.skipped, false);
+        assert.equal(result.authorizedSource, false);
         assert.ok(result.paths.heroImage.endsWith('/hero.webp'));
         assert.ok(result.paths.thumbnailImage.endsWith('/thumbnail.webp'));
         assert.ok(result.paths.ogImage.endsWith('/og.webp'));
@@ -126,21 +166,168 @@ test('article origin canonicalization', async (t) => {
     }
   });
 
-  await t.test('remote source image should canonicalize locally when no generated image exists', async () => {
+  await t.test('unapproved local source-canonical image is refused', async () => {
+    // Given: a local file explicitly identified as publisher-derived without authorization.
     const { root, publicDir } = await makeTempProject();
-    const remote = await createRemotePngServer();
     const article = {
-      id: 'origin-remote-fixture',
-      title: 'Remote origin artwork should be canonicalized locally',
-      sourceImage: remote.url,
+      id: 'origin-local-source-fixture',
+      title: 'Local publisher artwork must remain quarantined',
+      source: 'Unapproved Fixture',
+      sourceUrl: 'https://unapproved.example/story',
+      generatedImage: '/generated/origin-local-source-fixture/source.png',
+      generatedImageProvider: 'source-image',
+      imageStatus: 'source-canonical',
     };
+    const sourceFile = path.join(publicDir, article.generatedImage.replace(/^\//, ''));
 
     try {
       await withCwd(root, async () => {
-        const result = await ensureCanonicalArticleImageSet(article, { publicDir });
+        await createFixturePng(sourceFile);
+
+        // When: canonical variants are requested without a registry approval.
+        const result = await ensureCanonicalArticleImageSet(article, {
+          publicDir,
+          sources: [],
+          now: new Date('2026-08-09T00:00:00Z'),
+        });
+
+        // Then: canonicalization fails closed before creating derived files.
+        assert.equal(result.changed, 0);
+        assert.equal(result.skipped, true);
+        assert.equal(result.reason, 'image_reuse_not_authorized');
+        assert.equal(result.authorizationDetail, 'source_not_registered');
+      });
+    } finally {
+      await fs.rm(root, { recursive: true, force: true });
+    }
+  });
+
+  await t.test('existing canonical targets do not bypass source authorization', async () => {
+    // Given: canonical files whose record is later tagged as unapproved publisher artwork.
+    const { root, publicDir } = await makeTempProject();
+    const article = {
+      id: 'origin-existing-source-fixture',
+      title: 'Existing targets are not provenance evidence',
+      source: 'Unapproved Fixture',
+      sourceUrl: 'https://unapproved.example/story',
+      generatedImage: '/generated/origin-existing-source-fixture/source.png',
+    };
+    const sourceFile = path.join(publicDir, article.generatedImage.replace(/^\//, ''));
+
+    try {
+      await withCwd(root, async () => {
+        await createFixturePng(sourceFile);
+        const initial = await ensureCanonicalArticleImageSet(article, { publicDir });
+        assert.equal(initial.changed, 4);
+
+        // When: the same existing targets are requested with source-derived metadata but no rights.
+        const result = await ensureCanonicalArticleImageSet({
+          ...article,
+          generatedImage: initial.paths.heroImage,
+          generatedImageProvider: 'source-image',
+          generatedImageModel: 'origin-canonical',
+          imageStatus: 'source-canonical',
+        }, {
+          publicDir,
+          sources: [],
+          now: new Date('2026-08-09T00:00:00Z'),
+        });
+
+        // Then: authorization fails closed even though every target already exists.
+        assert.equal(result.changed, 0);
+        assert.equal(result.skipped, true);
+        assert.equal(result.authorizedSource, false);
+        assert.equal(result.reason, 'image_reuse_not_authorized');
+        assert.equal(result.authorizationDetail, 'source_not_registered');
+      });
+    } finally {
+      await fs.rm(root, { recursive: true, force: true });
+    }
+  });
+
+  await t.test('repeated refresh preserves local-generated provenance when canonical assets already exist', async () => {
+    // Given: an unapproved publisher image and a local placeholder that requires safe generation.
+    const { root, publicDir } = await makeTempProject();
+    const remote = await createRemotePngServer();
+    const collectionPath = path.join(root, 'repeated-images.json');
+    const article = {
+      id: 'origin-repeated-local-fixture',
+      title: 'Repeated builds preserve deterministic editorial artwork',
+      source: 'Unapproved Fixture',
+      sourceUrl: 'https://unapproved.example/story',
+      sourceImage: remote.url,
+      generatedImage: '/generated/fallbacks/ai-infrastructure.svg',
+      generatedImageProvider: 'local-placeholder',
+      generatedImageModel: 'local-svg',
+      imageStatus: 'fallback',
+      primary_category: 'Data Centers',
+    };
+
+    try {
+      await fs.writeFile(collectionPath, `${JSON.stringify([article], null, 2)}\n`, 'utf8');
+      await withCwd(root, async () => {
+        const first = await refreshCollection('first', collectionPath);
+        const firstArticle = first.items[0];
+        const firstHashes = await imageHashes(publicDir, firstArticle);
+
+        // When: static image preparation refreshes the persisted record a second time.
+        const second = await refreshCollection('second', collectionPath);
+        const secondArticle = second.items[0];
+        const secondHashes = await imageHashes(publicDir, secondArticle);
+
+        // Then: metadata and all four assets are idempotent without publisher-image access.
+        assert.equal(firstArticle.generatedImageProvider, 'local-generated');
+        assert.equal(second.changed, 0);
+        assert.deepEqual(secondArticle, firstArticle);
+        assert.deepEqual(secondHashes, firstHashes);
+        assert.equal(remote.requests(), 0);
+      });
+    } finally {
+      await remote.close();
+      await fs.rm(root, { recursive: true, force: true });
+    }
+  });
+
+  await t.test('remote source image canonicalizes only with current explicit authorization', async () => {
+    const { root, publicDir } = await makeTempProject();
+    const bytes = await fixturePngBuffer();
+    const requests = [];
+    const article = {
+      id: 'origin-remote-fixture',
+      title: 'Remote origin artwork should be canonicalized locally',
+      source: 'Authorized Fixture',
+      sourceUrl: 'https://authorized.example/story',
+      sourceImage: 'https://cdn.authorized.example/source.png',
+    };
+    const sources = [{
+      id: 'authorized-fixture',
+      name: 'Authorized Fixture',
+      domain: 'authorized.example',
+      image_hosts: 'cdn.authorized.example',
+      text_use_basis: 'licensed',
+      image_use_basis: 'licensed',
+      terms_url: 'https://authorized.example/terms',
+      reviewed_at: '2026-08-01',
+      allow_text_use: true,
+      allow_image_reuse: true,
+    }];
+
+    try {
+      await withCwd(root, async () => {
+        const result = await ensureCanonicalArticleImageSet(article, {
+          publicDir,
+          sources,
+          now: new Date('2026-08-09T00:00:00Z'),
+          sourceImageFetchOptions: injectedPublicImageFetch(bytes, (request) => requests.push(request)),
+        });
 
         assert.equal(result.changed, 4);
         assert.equal(result.skipped, false);
+        assert.equal(result.authorizedSource, true);
+        assert.deepEqual(requests, [{
+          target: new URL('https://cdn.authorized.example/source.png'),
+          address: '93.184.216.34',
+        }]);
         for (const publicPath of [
           result.paths.heroImage,
           result.paths.thumbnailImage,
@@ -149,6 +336,97 @@ test('article origin canonicalization', async (t) => {
         ]) {
           await fs.access(path.join(publicDir, publicPath.replace(/^\//, '')));
         }
+      });
+    } finally {
+      await fs.rm(root, { recursive: true, force: true });
+    }
+  });
+
+  await t.test('existing targets are not provenance evidence even when source reuse is authorized', async () => {
+    // Given: publisher artwork previously canonicalized under current image-reuse rights.
+    const { root, publicDir } = await makeTempProject();
+    const bytes = await fixturePngBuffer();
+    let requests = 0;
+    const article = {
+      id: 'origin-authorized-reuse-fixture',
+      title: 'Authorized source targets may be reused',
+      source: 'Authorized Fixture',
+      sourceUrl: 'https://authorized.example/story',
+      sourceImage: 'https://cdn.authorized.example/source.png',
+    };
+    const sources = [{
+      id: 'authorized-fixture',
+      name: 'Authorized Fixture',
+      domain: 'authorized.example',
+      image_hosts: 'cdn.authorized.example',
+      text_use_basis: 'licensed',
+      image_use_basis: 'licensed',
+      terms_url: 'https://authorized.example/terms',
+      reviewed_at: '2026-08-01',
+      allow_text_use: true,
+      allow_image_reuse: true,
+    }];
+
+    try {
+      await withCwd(root, async () => {
+        const initial = await ensureCanonicalArticleImageSet(article, {
+          publicDir,
+          sources,
+          now: new Date('2026-08-09T00:00:00Z'),
+          sourceImageFetchOptions: injectedPublicImageFetch(bytes, () => { requests += 1; }),
+        });
+
+        // When: the explicitly source-derived record is checked against those existing targets.
+        const reused = await ensureCanonicalArticleImageSet({
+          ...article,
+          generatedImage: initial.paths.heroImage,
+          generatedImageProvider: 'source-image',
+          generatedImageModel: 'origin-canonical',
+          imageStatus: 'source-canonical',
+        }, {
+          publicDir,
+          sources,
+          now: new Date('2026-08-09T00:00:00Z'),
+        });
+
+        // Then: rights remain fail-closed from proving the provenance of pre-existing bytes.
+        assert.equal(reused.changed, 0);
+        assert.equal(reused.skipped, false);
+        assert.equal(reused.authorizedSource, false);
+        assert.equal(requests, 1);
+      });
+    } finally {
+      await fs.rm(root, { recursive: true, force: true });
+    }
+  });
+
+  await t.test('unapproved remote source image is refused before network access', async () => {
+    // Given: a reachable publisher image without a registry authorization.
+    const { root, publicDir } = await makeTempProject();
+    const remote = await createRemotePngServer();
+    const article = {
+      id: 'origin-unapproved-fixture',
+      title: 'Unapproved publisher artwork must not be fetched',
+      source: 'Unapproved Fixture',
+      sourceUrl: 'https://unapproved.example/story',
+      sourceImage: remote.url,
+    };
+
+    try {
+      await withCwd(root, async () => {
+        // When: canonicalization is attempted with no authorization record.
+        const result = await ensureCanonicalArticleImageSet(article, {
+          publicDir,
+          sources: [],
+          now: new Date('2026-08-09T00:00:00Z'),
+        });
+
+        // Then: the refusal is observable and the server receives no request.
+        assert.equal(result.changed, 0);
+        assert.equal(result.skipped, true);
+        assert.equal(result.reason, 'image_reuse_not_authorized');
+        assert.equal(result.authorizationDetail, 'source_not_registered');
+        assert.equal(remote.requests(), 0);
       });
     } finally {
       await remote.close();

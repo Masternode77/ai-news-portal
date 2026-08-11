@@ -1,29 +1,23 @@
 import fs from 'node:fs';
-import path from 'node:path';
-import { fileURLToPath } from 'node:url';
+import { resolveRepositoryFile } from './repository-file-resolver.mjs';
 
-const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
-const CONFIG_PATH = path.join(ROOT, 'config/properNouns.yml');
+const CONFIG_PATH = resolveRepositoryFile('config/properNouns.yml');
 
 function parseProperNounsConfig() {
-  try {
-    const lines = fs.readFileSync(CONFIG_PATH, 'utf8').split(/\r?\n/);
-    const pairs = [];
-    let inBlock = false;
-    for (const line of lines) {
-      const trimmed = line.trim();
-      if (trimmed === 'proper_nouns:') {
-        inBlock = true;
-        continue;
-      }
-      if (!inBlock || !trimmed || trimmed.startsWith('#')) continue;
-      const match = line.match(/^\s*([^:]+):\s*["']?(.+?)["']?\s*$/);
-      if (match?.[1] && match?.[2]) pairs.push([match[1].trim(), match[2].trim()]);
+  const lines = fs.readFileSync(CONFIG_PATH, 'utf8').split(/\r?\n/);
+  const pairs = [];
+  let inBlock = false;
+  for (const line of lines) {
+    const trimmed = line.trim();
+    if (trimmed === 'proper_nouns:') {
+      inBlock = true;
+      continue;
     }
-    return pairs;
-  } catch {
-    return [];
+    if (!inBlock || !trimmed || trimmed.startsWith('#')) continue;
+    const match = line.match(/^\s*([^:]+):\s*["']?(.+?)["']?\s*$/);
+    if (match?.[1] && match?.[2]) pairs.push([match[1].trim(), match[2].trim()]);
   }
+  return pairs;
 }
 
 const DEFAULT_PROPER_NOUN_REPLACEMENTS = [

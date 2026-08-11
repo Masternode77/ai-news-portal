@@ -2,6 +2,8 @@
 
 Generated at: 2026-05-31T08:00:00.000Z
 
+> **Historical snapshot — non-operational.** This checklist records 2026-05-31 deployment evidence and must not be used as the current activation procedure. Use [`DEPLOY_CHECKLIST_DASHBOARD.md`](../DEPLOY_CHECKLIST_DASHBOARD.md), [`admin-setup.md`](admin-setup.md), [`admin-auth-production-gate.md`](admin-auth-production-gate.md), and [`commercialization-deploy-checklist.md`](commercialization-deploy-checklist.md) for current operator requirements.
+
 This checklist separates local, staging, and production actions so credentialed steps are not confused with local proof. Do not claim live freshness until a deployment run records live URL checks and a cache purge result.
 
 ## Commands Run

@@ -2,143 +2,95 @@
 
 ## 1. Atmosphere & Identity
 
-Compute Current feels like a sober infrastructure intelligence desk: dark, source-linked, and operational rather than promotional. The signature is a command-center surface where copper, teal, and restrained linework separate power, capacity, capital, supply-chain, and risk signals without making the product look like a generic AI blog.
+Compute Current is a light, source-linked editorial product for AI-infrastructure readers. The public surface is calm and legible: a white canvas, neutral type, hairline dividers, soft elevation, and a restrained blue action color. It should feel like a considered publication, not a trading terminal, a dark command center, or a generic AI landing page.
 
-## 2. Color
+## 2. Color & Surface
 
-### Palette
+### Core tokens
 
-| Role | Token | Light | Dark | Usage |
-|------|-------|-------|------|-------|
-| Surface/site | `--bg` | `#f5f5f7` | `#040607` | Global page background |
-| Surface/panel | `--surface` | `#ffffff` | `rgba(7, 10, 12, 0.88)` | Cards, intelligence panels |
-| Surface/soft | `--surface-soft` | `#f2f2f4` | `rgba(255, 255, 255, 0.05)` | Secondary panels and pills |
-| Text/primary | `--text` | `#1d1d1f` | `#fff7e8` | Headlines and primary body |
-| Text/secondary | `--muted` | `#6e6e73` | `#b8c2c8` | Decks, captions, metadata |
-| Text/dim | `--public-dim` | `#77828c` | `#77828c` | Low-emphasis market context |
-| Border/default | `--line` | `rgba(29, 29, 31, 0.1)` | `rgba(255, 247, 232, 0.14)` | Dividers and card outlines |
-| Accent/copper | `--public-copper` | `#e2a34d` | `#e2a34d` | Primary public CTA and active signal |
-| Accent/copper-strong | `--public-copper-strong` | `#ffd083` | `#ffd083` | High-emphasis links |
-| Accent/teal | `--public-teal` | `#64e0c7` | `#64e0c7` | Secondary links and source trail |
-| Status/risk | `--public-red` | `#ff624d` | `#ff624d` | Risk marker and alert line |
+| Role | Token | Value | Usage |
+| --- | --- | --- | --- |
+| Page canvas | `--al-bg` | `#ffffff` | Main public background |
+| Soft surface | `--al-soft` | `#f5f5f7` | Cards, house promotions, secondary actions |
+| Primary text | `--al-text` | `#1d1d1f` | Headlines and primary copy |
+| Muted text | `--al-muted` | `#6e6e73` | Decks, metadata, supporting copy |
+| Faint text | `--al-faint` | `#a1a1a6` | Low-emphasis labels |
+| Divider | `--al-hairline` | `rgba(0, 0, 0, 0.08)` | Borders and separators |
+| Strong divider | `--al-hairline-strong` | `rgba(0, 0, 0, 0.14)` | Hover and active borders |
+| Primary action | `--al-blue` | `#0071e3` | Primary buttons and action links |
+| Primary action/hover | `--al-blue-deep` | `#0066cc` | Strong action emphasis |
+| Fresh status only | `--al-green` | `#34c759` | Verified-current status dot only |
 
 ### Rules
 
-- Copper is the primary action color; teal is for reference/source navigation.
-- Purple, violet, and blue-purple AI gradients are not part of the public brand.
-- Public pages should stay dark and operational; policy pages may keep the lighter legacy shell.
+- Public and policy pages use the same light, neutral foundation; policy pages are not a separate legacy theme.
+- Blue is reserved for actions and clear interactive affordances. Decorative background gradients are prohibited; the small, aria-hidden masthead mark is the sole blue-gradient exception and serves as the product identifier, not a page or surface treatment.
+- Category colors may distinguish coverage lanes, but must not replace the neutral reading surface.
+- Status color is semantic: a stale or failed update must not retain a green live indicator.
 
 ## 3. Typography
 
-### Scale
+| Level | Size | Weight | Line height | Usage |
+| --- | --- | --- | --- | --- |
+| Display | `clamp(3.1rem, 6.4vw, 5.6rem)` | 800 | 0.92 | Homepage wordmark |
+| H1 | `clamp(2.4rem, 5vw, 4.6rem)` | 760–780 | 0.98–1.0 | Page titles |
+| H2 | `clamp(1.6rem, 3vw, 2.6rem)` | 700–760 | 1.0–1.1 | Section titles |
+| Body | `1rem` | 400–560 | 1.6+ | Reading copy |
+| Label | `0.64rem`–`0.86rem` | 600–750 | 1.3 | Eyebrows, provenance, status |
 
-| Level | Size | Weight | Line Height | Tracking | Usage |
-|-------|------|--------|-------------|----------|-------|
-| Display | `clamp(3.1rem, 6.4vw, 5.6rem)` | 800 | 0.92 | 0 | Masthead brand |
-| H1 | `clamp(2.4rem, 5vw, 4.6rem)` | 780 | 1.0 | 0 | Page titles |
-| H2 | `clamp(1.8rem, 3vw, 2.6rem)` | 760 | 1.1 | 0 | Section titles |
-| H3 | `1.05rem` to `1.35rem` | 750 | 1.2 | 0 | Card headlines |
-| Body | `1rem` | 400 | 1.62 | 0 | Default copy |
-| Body/sm | `0.9rem` | 500 | 1.45 | 0 | Card decks and metadata |
-| Caption | `0.72rem` to `0.86rem` | 750 | 1.3 | 0.1em | Labels and provenance |
+- Use the existing system stack: `-apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", Arial, sans-serif`.
+- Keep prose at 14px or larger and avoid tight tracking in paragraphs.
+- Uppercase labels may use modest positive tracking; do not uppercase body copy.
 
-### Font Stack
+## 4. Layout & Spacing
 
-- Primary: `-apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", Arial, sans-serif`
-- Display: `-apple-system, BlinkMacSystemFont, "SF Pro Display", "Helvetica Neue", Arial, sans-serif`
-- Mono: system monospace only where operational numbers require it.
-
-### Rules
-
-- Letter spacing remains `0` for normal prose and headlines; uppercase labels may use positive tracking.
-- Body text must not drop below `14px`.
-
-## 4. Spacing & Layout
-
-### Base Unit
-
-All spacing derives from a base of `4px`.
-
-| Token | Value | Usage |
-|-------|-------|-------|
-| `--space-1` | `4px` | Tight inline gaps |
-| `--space-2` | `8px` | Pills and compact grid gaps |
-| `--space-3` | `12px` | Card inner groups |
-| `--space-4` | `16px` | Standard card padding |
-| `--space-5` | `20px` | Header and grid gaps |
-| `--space-6` | `24px` | Large card padding |
-| `--space-7` | `28px` | Command header padding |
-| `--space-8` | `32px` | Page shell gutters |
-| `--space-12` | `48px` | Section rhythm |
-| `--space-18` | `72px` | Page bottom padding |
-
-### Grid
-
-- Max content width: `1360px`.
-- Primary public card grid: three columns on desktop, one column on mobile.
-- First viewport masthead: asymmetric two-column layout that collapses to one column below `720px`.
-
-### Rules
-
-- Fixed-format media uses stable aspect ratios or explicit minimum heights.
-- No text should rely on viewport-width font scaling inside compact cards.
+- Spacing follows a 4px rhythm, with common steps of 8, 12, 16, 20, 24, 32, 48, and 72px.
+- The primary public shell is at most 1360px wide. Policy content narrows to a readable 980px shell.
+- The homepage masthead is a lightly elevated, rounded white bar. Its desktop composition may be asymmetric; it collapses cleanly below 720px.
+- Content cards use explicit media ratios or minimum heights. Do not use clipping to hide reserved ad space or reading content.
+- Interactive controls retain a minimum target size of 40px, with 44px preferred for primary actions.
 
 ## 5. Components
 
-### Public Article Card
+### Editorial masthead and status line
 
-- **Structure**: image/provenance block, metadata row, headline, deck, why-it-matters, impact pills, actions.
-- **Variants**: feed card, lead card, related card.
-- **Spacing**: `--space-3` to `--space-5`.
-- **States**: image link hover, CTA hover, focus-visible outline.
-- **Accessibility**: meaningful alt text for content images; decorative only when no destination exists.
-- **Motion**: hover translates by `-1px` using transform only.
+- The masthead is sticky, light, rounded, and separated by a hairline border with a soft shadow.
+- Compact masthead actions retain a 40px minimum target; primary actions outside that compact context prefer 44px.
+- The status line communicates operational state precisely. It may show a green dot only for a verified fresh state.
+- When source scanning, scheduled updates, and authorized long-form publishing differ, name each state plainly. Never imply a fresh original article from a source-linked record.
 
-### Intelligence Desk
+### Article and feed cards
 
-- **Structure**: market read, three context cells, lead visual card.
-- **Variants**: homepage first viewport only.
-- **Spacing**: `--space-4` to `--space-7`.
-- **States**: lead link hover and focus.
-- **Accessibility**: stable heading and labelled context group.
-- **Motion**: subtle transform hover only.
+- Cards combine image/provenance, metadata, headline, deck, and source-oriented actions.
+- Use meaningful image alt text when an image links to editorial content.
+- Hover motion is limited to a small transform and shadow change; focus-visible must remain obvious.
 
-### Category Navigation
+### House promotions and advertising
 
-- **Structure**: horizontal or wrapping link row.
-- **Variants**: homepage header, taxonomy page back links.
-- **Spacing**: `--space-2` and `--space-3`.
-- **States**: hover border shift and focus-visible outline.
-- **Accessibility**: nav landmark labels.
+- A no-inventory route may show a clearly identified Compute Current house promotion rather than a blank paid-ad shell.
+- Paid advertising, when active, is labeled exactly `Advertisements` and uses stable, variant-specific reserved dimensions.
+- Promotion CTAs are keyboard reachable and retain a visible focus outline.
 
-## 6. Motion & Interaction
+### Policy pages
 
-| Type | Duration | Easing | Usage |
-|------|----------|--------|-------|
-| Micro | `160ms` | `ease` | Link and card hover |
-| Standard | `240ms` | `ease-in-out` | Panel transitions |
-| Emphasis | `400ms` | `cubic-bezier(0.16, 1, 0.3, 1)` | Reserved for future page transitions |
+- Policy pages inherit the public light system, with an eyebrow, a prominent H1, a readable lead, and ruled sections.
+- Inline text adjacent to links, dates, or dynamic values must render with deliberate spaces; source formatting alone is not sufficient.
 
-### Rules
+## 6. Interaction & Accessibility
 
-- Animate only `transform`, `opacity`, or color/border-color.
-- All links and controls need hover and focus-visible states.
-- No scroll-driven motion is required for the current public surface.
+- All links and controls need hover and `:focus-visible` states.
+- Use semantic landmarks and explicit accessible names for navigation, promotional asides, and status groups where appropriate.
+- Respect reduced motion. Animate only transform, opacity, color, background-color, border-color, and box-shadow; micro-interactions should remain around 160ms.
+- Do not rely on color alone for a material status or disclosure.
 
-## 7. Depth & Surface
-
-### Strategy
-
-Mixed: dark tonal surfaces with thin borders and rare deep shadows for the command-center masthead.
+## 7. Depth & Restraint
 
 | Level | Value | Usage |
-|-------|-------|-------|
-| Border/default | `1px solid var(--public-line)` | Public cards and panels |
-| Border/strong | `1px solid var(--public-line-strong)` | Lead intelligence desk |
-| Shadow/deep | `0 28px 80px rgba(0, 0, 0, 0.42)` | First viewport command header |
-| Shadow/card | `0 18px 42px rgba(0, 0, 0, 0.08)` | Legacy light panels |
+| --- | --- | --- |
+| Card shadow | `0 4px 22px rgba(0, 0, 0, 0.05)` | Resting masthead and elevated cards |
+| Hover shadow | `0 14px 36px rgba(0, 0, 0, 0.1)` | Interactive card emphasis |
+| Radius | `18px` | Primary cards and house promotions |
 
-### Rules
-
-- Avoid nested cards inside cards except for the homepage intelligence desk, where inner cells are market context controls.
-- Do not introduce decorative orbs, purple gradients, or stock-looking abstract backgrounds.
+- Favor open canvas and single-level cards over nested panels.
+- Avoid dark visual identity, copper or teal primary controls, decorative orbs, and purple-gradient AI motifs.
+- Preserve the existing light/neutral/blue editorial language; this system governs refinements, not a redesign.

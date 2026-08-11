@@ -1,0 +1,67 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { SITE } from '../config/site';
+---
+<Layout
+  title={`Advertising Policy | ${SITE.name}`}
+  description="How Compute Current separates advertising, sponsorship, affiliate links, and editorial reporting."
+  canonicalPath="/advertising-policy/"
+>
+  <main class="policy-shell">
+    <a class="back-link" href="/">Latest analysis</a>
+    <article class="policy-page">
+      <p class="eyebrow">Advertising Policy</p>
+      <h1>Commercial messages stay separate from the infrastructure record.</h1>
+      <p class="policy-lede">
+        Compute Current may earn revenue through advertisements, sponsorships, and affiliate links. Those commercial
+        relationships do not buy coverage, conclusions, or placement in editorial reporting.
+      </p>
+
+      <section>
+        <h2>Advertisements</h2>
+        <p>
+          Paid advertising is visually labeled and kept separate from editorial articles, analysis, and source links.
+          Advertising partners do not receive access to reader data beyond what is disclosed in our privacy policy.
+        </p>
+      </section>
+
+      <section>
+        <h2>Sponsorships and affiliate links</h2>
+        <p>
+          Sponsored material is clearly identified. When a link may earn Compute Current a commission, we disclose the
+          affiliate relationship near the link and mark the link with <code>rel="sponsored"</code> where applicable.
+        </p>
+      </section>
+
+      <section>
+        <h2>Editorial control</h2>
+        <p>
+          The editorial team retains editorial control over what we cover, how we assess evidence, and what we conclude.
+          Sponsors and advertisers cannot require positive coverage, suppress unfavorable reporting, or approve analysis.
+        </p>
+      </section>
+
+      <section>
+        <h2>Invalid activity</h2>
+        <p>
+          Do not click advertisements to support Compute Current, ask others to click them, or use automated or deceptive
+          methods to create ad activity. Invalid clicks harm advertisers and violate our advertising agreements.
+        </p>
+      </section>
+
+      <section>
+        <h2>Questions or disclosures</h2>
+        <p>
+          To ask about an advertising placement, sponsorship disclosure, or an affiliate relationship, contact{' '}
+          <a href={`mailto:${SITE.contactEmail}`}>{SITE.contactEmail}</a>.
+        </p>
+      </section>
+
+      <nav class="policy-link-row" aria-label="Related pages">
+        <a href="/editorial-policy/">Editorial policy</a>
+        <a href="/privacy/">Privacy policy</a>
+        <a href="/contact/">Contact</a>
+      </nav>
+    </article>
+  </main>
+</Layout>

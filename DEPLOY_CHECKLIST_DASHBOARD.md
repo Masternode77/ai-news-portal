@@ -1,68 +1,70 @@
-# AI News Portal — Dashboard 배포 검증 체크리스트
+# Compute Current — 후보 배포 및 인증 관리자 검증 체크리스트
 
 ## 목적
-GitHub Actions 기반 뉴스+대시보드 자동 갱신 파이프라인이 실배포 브랜치에서 정상 동작하는지 재현 가능한 형태로 점검한다.
 
-## 0) 사전 준비
-- [ ] 배포 대상 브랜치 확인 (`main` 또는 운영 브랜치)
-- [ ] 변경 반영 대상 커밋이 브랜치에 이미 푸시되었는지 확인
-- [ ] Vercel(또는 배포 타깃)에 같은 브랜치가 연결되어 있는지 확인
+현재 후보는 정적 Astro 7.2 사이트와 인증된 관리자 API를 사용한다. 이 문서는
+폐기된 공개 대시보드, 대시보드 데이터 파일, 또는 별도 대시보드 cron 스냅샷을
+배포 대상으로 간주하지 않는다. 외부 서비스의 승인·법률 상태를 선언하는 문서가
+아니며, 각 운영자가 실제 증거를 기록할 수 있도록 하는 점검표다.
 
-## 1) 코드/워크플로우 무결성 확인
-- [ ] `ai-news-portal/.github/workflows/update-news.yml`
-  - [ ] `node scripts/sync-dashboard-data.cjs` 존재
-  - [ ] 6시간 뉴스 갱신 + 15분 대시보드 갱신 cron 설정 존재
-  - [ ] 변경 감지 단계(`git diff --quiet`)로 불필요 커밋 차단 설정 존재
-- [ ] `package.json`
-  - [ ] `sync:dashboard-data: node ./scripts/sync-dashboard-data.cjs`
-  - [ ] `build: npm run sync:dashboard-data && astro build`
-- [ ] `scripts/sync-dashboard-data.cjs`
-  - [ ] `src/data/cron-registry-snapshot-latest.json` 기준 우선 참조
-  - [ ] 결과 파일 `public/dashboard-data.json` 생성
-- [ ] `src/pages/dashboard.astro`
-  - [ ] `/dashboard-data.json` fetch 후 렌더링 동작
-  - [ ] 실패 시 fallback 처리
+## 1) 후보 범위와 정적 빌드
 
-## 2) 로컬 빌드/유닛 체크
-- [ ] 로컬에서 실행
-  - `npm install`
-  - `npm run build`
-- [ ] 체크 항목
-  - [ ] `/` 빌드 성공
-  - [ ] `/dashboard` 빌드 성공
-  - [ ] `public/dashboard-data.json` 파일 생성/갱신 확인
+- [ ] `npm run check`와 대상 테스트를 실행해 현재 후보를 확인한다.
+- [ ] `npm run build`가 정적 Astro 7.2 출력물을 생성하는지 확인한다.
+- [ ] 공개 `/dashboard` 경로, `dashboard-data.json`, 대시보드 cron 스냅샷, 그리고
+  `sync-dashboard-data` 작업을 새 배포 절차나 공개 검증 대상으로 추가하지 않는다.
+- [ ] 공개 사이트 검증은 `/`, 공개 기사 경로, `/privacy/`, `/terms/`, `/robots.txt`,
+  `/sitemap.xml`, 그리고 필요할 때 `/ads.txt`에 한정해 기록한다.
 
-## 3) 워크플로우 동작 검증 (실제 배포 브랜치)
-- [ ] GitHub Actions에서 `Update News & Dashboard` 워크플로우 수동 실행
-  - `Run workflow` → `workflow_dispatch` 실행
-- [ ] 실행 로그 확인
-  - [ ] `Run dashboard data sync` 성공
-  - [ ] `Check for changes` 스텝이 변화 유무 출력
-  - [ ] (변경 존재 시) `Commit and Push` 스텝 성공
-- [ ] 커밋 기록 확인
-  - [ ] 커밋 메시지 형식: `chore: auto-update news + dashboard data [skip ci]`
-  - [ ] `src/data/latest-news.json` 또는 `public/dashboard-data.json` 변경만 포함되었는지 확인
+## 2) 인증된 관리자 점검
 
-## 4) 배포 반영/최종 노출 확인
-- [ ] Vercel 최신 배포 상태 확인(또는 타겟 배포 대상)
-- [ ] `https://<production-domain>/` 접근 및 뉴스 갱신 반영 확인
-- [ ] `https://<production-domain>/dashboard` 접근 및 핵심 카드 렌더링 확인
-  - [ ] Top Gun
-  - [ ] 진행률
-  - [ ] 알림
-  - [ ] 대기열/타임라인
-- [ ] 대시보드에서 `Updated` 타임스탬프가 최근 동기화 시간과 일치하는지 확인
+- [ ] [`docs/admin-setup.md`](docs/admin-setup.md)에 따라
+  `ADMIN_USERNAME`, `ADMIN_PASSWORD_HASH` (`scrypt$...`),
+  `ADMIN_SESSION_SECRET`을 실제 배포 환경에 구성한다.
+- [ ] `scripts/admin-password-hash.mjs`로 비밀번호 해시를 생성한다. 평문
+  `ADMIN_PASSWORD` 또는 이전 `ADMIN_AUTH_SECRET`을 구성하거나 기록하지 않는다.
+- [ ] 생산 환경에서는 Vercel Firewall의 IP 기반 `POST /api/admin/login` 제한을
+  게시하고, 여섯 번째 제어 테스트가 HTTP 429인지 확인한 뒤에만
+  `ADMIN_VERCEL_RATE_LIMIT_READY=true`을 설정한다. 이 값은 외부 제한의 증명이
+  아니라 그 검증 완료에 대한 운영자 attestation이다.
+- [ ] `/admin.html`에서 로그인하고, 인증 후 `/admin/dashboard/`가
+  `/api/admin/dashboard`를 통해 로드되는지 확인한다.
+- [ ] 인증되지 않은 요청이 `/api/admin/login` 외 관리자 API를 통과하지 않는지
+  확인한다. 변경 요청은 세션과 CSRF 토큰을 포함하는 현재 API 계약을 따른다.
 
-## 5) 주기성 검증(24h 샘플)
-- [ ] 24시간 내 최소 1회 (`*/15`) 스케줄 실행 흔적 확인
-- [ ] 1회 이상 `public/dashboard-data.json` 변경 및 커밋 생성 유무 확인
-- [ ] 스냅샷 타임라인이 과거 데이터 대비 최신 시각으로 갱신되는지 확인
+## 3) 광고·분석 활성화 전 외부 handoff
 
-## 6) 이상 징후 시 즉시 조치
-- [ ] `sync-dashboard-data.cjs` 실행 실패 시: 로그 스택에서 스냅샷 경로/권한 이슈 확인
-- [ ] `src/data/cron-registry-snapshot-latest.json` 비어있음/삭제 시: 워크플로우에서 대체 경로 동작 여부 확인
-- [ ] 15분 스케줄이 무반응인 경우: GitHub Actions 스케줄이 비활성화/리미트 상태인지 확인
+- [ ] 실제 AdSense 계정 ID가 준비되었을 때만 `PUBLIC_ADSENSE_CLIENT`를 설정하고,
+  review 중에도 `/ads.txt`가 해당 ID의 소유권 레코드를 제공하는지 확인한다.
+- [ ] 계정/사이트 승인, Google 인증 CMP 게시, EEA/UK/CH에서 accept·reject·revoke
+  테스트, 법률 검토, 실제 ads.txt ID 검증을 증거와 함께 완료하기 전에는
+  `PUBLIC_GOOGLE_CMP_READY=false`를 유지한다. 이 프로젝트는 custom ConsentBanner를
+  제공하지 않으며, CMP는 외부 Google-certified handoff다.
+- [ ] 의미 있고 수동 검토한 독창적 기사 인벤토리와 canonical
+  `publication_integrity.ok=true`인 공개 detail article이 최소 하나인지 확인한다.
+  이 코드 수준의 0개/무효 인벤토리 차단은
+  `PUBLIC_ADSENSE_CONTENT_READY=true`만으로 우회할 수 없다.
+- [ ] 초기에는 수동 광고 unit만 사용하고 Auto ads는 비활성화한다. 승인 이후에도
+  production DOM·배치·접근성 QA를 문서화하기 전에는 Auto ads를 켜지 않는다.
+- [ ] CMP 준비, 콘텐츠 준비, route gate, 그리고 정책 페이지의 무태그 상태는
+  [`docs/monetization-setup.md`](docs/monetization-setup.md)와
+  [`docs/adsense-operations-runbook.md`](docs/adsense-operations-runbook.md)를
+  기준으로 함께 검증한다.
 
-## 7) 결과 기록
-- [ ] `SESSION-STATE.md`에 최종 점검 결과 1줄 기록
-- [ ] 실패/이슈는 `MEMORY.md` 또는 해당 작업 문서에 원인·조치·결과 남김
+## 4) 정적 보안 헤더와 CSP 위험 수용
+
+- [ ] `vercel.json`의 정적 호환 헤더와 `/ads.txt` Content-Type을 확인한다.
+- [ ] 정적 Astro 7.2 출력은 검증된 호환 정책을 CSP로 전달할 수 있지만, 이 후보에는
+  enforced CSP가 없다는 위험 수용을 배포 기록에 남긴다. 선택한 AdSense/CMP 조합에서
+  per-request nonce를 발급할 수 없고 호환 정책도 아직 검증하지 않았기 때문이다.
+- [ ] 수집기 없는 report-only CSP를 추가하지 않는다. 이후 report-only 또는 enforced
+  CSP는 per-request nonce-capable 아키텍처로 이전하거나, 정적 출력·AdSense·선택 CMP와
+  호환되는 정책 및 report collector를 검증한 경우에만 검토한다.
+
+## 5) 결과 기록
+
+- [ ] 실행한 명령, 대상 배포 URL, 인증/차단 결과, 외부 제어 검증 시각, 담당자를
+  배포 변경 기록에 남긴다.
+- [ ] 외부 승인·법률 검토·CMP 인증을 추정하거나 완료된 것으로 표시하지 않는다.
+- [ ] 실패 시 attestation을 true로 두지 말고, 원인을 해결하고 다시 증거를 수집한 뒤
+  재검증한다.

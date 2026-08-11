@@ -915,6 +915,18 @@ time {
   font: inherit;
   font-weight: 900;
   cursor: pointer;
+  transition: background-color 160ms ease, border-color 160ms ease, color 160ms ease;
+}
+
+.admin-form button:hover {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: var(--surface);
+}
+
+.admin-shell :is(a, button):focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 3px;
 }
 
 .admin-secondary {

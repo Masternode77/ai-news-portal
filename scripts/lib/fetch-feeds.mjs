@@ -1,8 +1,19 @@
 import Parser from 'rss-parser';
-import { FEEDS, MAX_ITEMS_FETCHED, MIN_ITEMS_PER_SOURCE_IN_POOL } from './constants.mjs';
-import { guessLanguage, normalizeUrl, stableArticleId, stripHtml, truncate } from './normalize.mjs';
+import { MAX_ITEMS_FETCHED, MIN_ITEMS_PER_SOURCE_IN_POOL } from './constants.mjs';
+import { guessLanguage, safeHttpUrl, stableArticleId, stripHtml, truncate } from './normalize.mjs';
 import { classifyInfrastructureRelevance } from './relevance-classifier.mjs';
 import { classifyTaxonomy } from './taxonomy.mjs';
+import { fetchPublicResource } from './public-network-fetcher.mjs';
+import { activeRegistryFeeds, loadSourceRegistry } from './source-registry.mjs';
+import { sourceTextTargetDecision } from './source-text-fetcher.mjs';
+
+const FEED_CONTENT_TYPES = [
+  'application/atom+xml',
+  'application/rss+xml',
+  'application/xml',
+  'text/html',
+  'text/xml',
+];
 
 const parser = new Parser({
   timeout: 20000,
@@ -15,17 +26,17 @@ const parser = new Parser({
 });
 
 function firstImage(item) {
-  if (item.enclosure?.url && item.enclosure?.type?.startsWith('image')) return item.enclosure.url;
+  if (item.enclosure?.url && item.enclosure?.type?.startsWith('image')) return safeHttpUrl(item.enclosure.url) || null;
   const media = item.mediaContent?.[0]?.$?.url;
-  if (media) return media;
+  if (media) return safeHttpUrl(media) || null;
   const html = item.contentEncoded || item.content || item.summary || '';
   const match = html.match(/<img[^>]+src=["']([^"']+)["']/i);
-  return match?.[1] ?? null;
+  return safeHttpUrl(match?.[1]) || null;
 }
 
-function parseItem(feed, item) {
+export function parseFeedItem(feed, item) {
   const title = (item.title || '').trim();
-  const url = normalizeUrl(item.link || item.guid || '');
+  const url = safeHttpUrl(item.link || item.guid || '');
   if (!title || !url) return null;
 
   const rawBody = stripHtml(item.contentEncoded || item.content || item.summary || item.contentSnippet || '');
@@ -34,6 +45,7 @@ function parseItem(feed, item) {
 
   const baseItem = {
     id: stableArticleId(url, title),
+    sourceRegistryId: feed.sourceRegistryId,
     source: feed.source,
     url,
     title,
@@ -76,21 +88,27 @@ function parseItem(feed, item) {
   };
 }
 
-async function fetchFeedItems(feed) {
-  try {
-    const parsed = await parser.parseURL(feed.url);
-    return (parsed.items || [])
-      .map((item) => parseItem(feed, item))
-      .filter(Boolean);
-  } catch (error) {
-    console.error(`[pipeline] feed failed: ${feed.source} -> ${error.message}`);
-    return [];
-  }
+async function fetchFeedItems(feed, networkOptions = {}) {
+  const feedUrl = new URL(feed.url);
+  const response = await fetchPublicResource(feed.url, {
+    allowedHosts: [feedUrl.hostname],
+    contentTypes: FEED_CONTENT_TYPES,
+    headers: {
+      accept: 'application/rss+xml,application/atom+xml,application/xml,text/xml',
+      'user-agent': 'Mozilla/5.0 (compatible; ComputeCurrentBot/1.0)',
+    },
+    maxBytes: networkOptions.maxBytes || 2 * 1024 * 1024,
+    request: networkOptions.request,
+    resolveHost: networkOptions.resolveHost,
+    timeoutMs: networkOptions.timeoutMs || 20_000,
+  });
+  const parsed = await parser.parseString(response.bytes.toString('utf8'));
+  return (parsed.items || [])
+    .map((item) => parseFeedItem(feed, item))
+    .filter(Boolean);
 }
 
-export async function fetchNewsPool() {
-  const fetched = (await Promise.all(FEEDS.map(fetchFeedItems))).flat();
-
+function selectPoolItems(fetched = []) {
   fetched.sort((a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime());
 
   const dedupedByRecency = [];
@@ -132,4 +150,37 @@ export async function fetchNewsPool() {
   }
 
   return selected;
+}
+
+export async function fetchNewsPoolResult(options = {}) {
+  const sources = options.sources || await loadSourceRegistry(options.registryPath);
+  const now = options.now || new Date();
+  const feeds = activeRegistryFeeds(sources, now);
+  const fetchFeed = options.fetchFeed || ((feed) => fetchFeedItems(feed, options.feedNetworkOptions));
+  if (!feeds.length) {
+    return { status: 'no_authorized_sources', items: [], authorizedSourceCount: 0, failedSourceCount: 0 };
+  }
+
+  const attempts = await Promise.all(feeds.map(async (feed) => {
+    try {
+      const fetched = await fetchFeed(feed);
+      const items = fetched.filter((item) => sourceTextTargetDecision(item, sources, now).authorized);
+      return { ok: true, items };
+    } catch (error) {
+      console.error(`[pipeline] feed failed: ${feed.source} -> ${error.message}`);
+      return { ok: false, items: [] };
+    }
+  }));
+  const failedSourceCount = attempts.filter((attempt) => !attempt.ok).length;
+  const items = selectPoolItems(attempts.flatMap((attempt) => attempt.items));
+  const status = items.length
+    ? 'fetched'
+    : failedSourceCount > 0
+      ? 'transient_fetch_failure'
+      : 'authorized_sources_empty';
+  return { status, items, authorizedSourceCount: feeds.length, failedSourceCount };
+}
+
+export async function fetchNewsPool(options = {}) {
+  return (await fetchNewsPoolResult(options)).items;
 }

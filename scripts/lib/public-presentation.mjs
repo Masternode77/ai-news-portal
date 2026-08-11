@@ -41,10 +41,12 @@ function safeImageAlt(value = '', fallbackTitle = '') {
 }
 
 function safePresentationText(value = '', fallback = '') {
-  const guarded = guardPublicCopy(value).text;
-  if (guarded && !hasInternalPublicLanguage(guarded) && !UNSAFE_PRESENTATION_TERMS.test(guarded)) return guarded;
-  const fallbackGuarded = guardPublicCopy(fallback).text;
-  if (fallbackGuarded && !hasInternalPublicLanguage(fallbackGuarded) && !UNSAFE_PRESENTATION_TERMS.test(fallbackGuarded)) return fallbackGuarded;
+  const result = guardPublicCopy(value);
+  const guarded = result.text;
+  if (result.ok && guarded && !hasInternalPublicLanguage(guarded) && !UNSAFE_PRESENTATION_TERMS.test(guarded)) return guarded;
+  const fallbackResult = guardPublicCopy(fallback);
+  const fallbackGuarded = fallbackResult.text;
+  if (fallbackResult.ok && fallbackGuarded && !hasInternalPublicLanguage(fallbackGuarded) && !UNSAFE_PRESENTATION_TERMS.test(fallbackGuarded)) return fallbackGuarded;
   return '';
 }
 

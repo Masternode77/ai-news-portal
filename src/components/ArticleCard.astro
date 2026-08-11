@@ -1,11 +1,12 @@
 ---
 import ArticleCardImage from './ArticleCardImage.astro';
 import { categoryKey } from '../lib/category-visuals';
+import { safeHttpUrl, safeInternalPath } from '../../scripts/lib/normalize.mjs';
 
 const { signal = {} } = Astro.props;
 const catKey = categoryKey(signal.category || signal.editorial_lens || '');
-const detailHref = signal.view_detail || '';
-const sourceHref = signal.read_source || '';
+const detailHref = safeInternalPath(signal.view_detail);
+const sourceHref = safeHttpUrl(signal.read_source);
 const href = detailHref || sourceHref || '';
 const isExternal = href && !href.startsWith('/');
 const sourceIsExternal = sourceHref && !sourceHref.startsWith('/');
@@ -13,7 +14,7 @@ const date = signal.date || signal.publishedAt || '';
 const formattedDate = date
   ? new Date(date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
   : '';
-const cta = signal.cta || (signal.view_detail ? 'Read analysis' : 'Source');
+const cta = signal.cta || (detailHref ? 'Read analysis' : 'Source');
 const image = signal.image || '/generated/fallbacks/ai-infrastructure.svg';
 const imageAlt = signal.image_alt || (signal.title ? `${signal.title} editorial visual` : 'Compute Current editorial visual');
 const provenanceLabel = signal.image_provenance_label || 'Editorial visual';

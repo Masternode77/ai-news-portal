@@ -1,7 +1,7 @@
 import { hasInternalPublicLanguage, sanitizePublicCopy } from './internal-language-guard.mjs';
 import { angleFor, deckForAngle, whyForFallback } from './card-copy-fallbacks.mjs';
-import { hasSourceBackedCardProductFit } from './card-copy-product-fit.mjs';
 import { normalizeProperNouns } from './proper-noun-normalizer.mjs';
+import { publicProductFitResult } from './public-product-fit.mjs';
 
 const INTERNAL_CARD_PATTERNS = [
   /^Compute Current is keeping/i,
@@ -183,7 +183,10 @@ export function cardCopyQualityResult(copy = {}, article = undefined) {
   if (!/\b(power|grid|utility|data center|campus|cloud|capacity|cooling|rack|chip|gpu|hbm|memory|capital|deal|policy|siting|interconnection|operator|buyer|supplier|platform)\b/i.test(text)) {
     reasons.push('missing_concrete_infrastructure_noun');
   }
-  if (article && !hasSourceBackedCardProductFit(article)) reasons.push('unsupported_product_fit');
+  if (article) {
+    const productFit = publicProductFitResult(article, copy);
+    if (!productFit.ok) reasons.push('unsupported_product_fit', ...productFit.reasons);
+  }
   return {
     ok: reasons.length === 0,
     reasons,

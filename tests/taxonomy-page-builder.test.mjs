@@ -6,6 +6,7 @@ test('taxonomy builder exposes only public indexable analyses', () => {
   const articleText = 'Power and grid infrastructure analysis connects verified source evidence to capacity and delivery milestones. '.repeat(16);
   const publicArticle = {
     id: 'a',
+    title: 'Utility grid interconnection changes data center capacity',
     articlePagePublished: true,
     homepagePublished: true,
     archiveOnly: false,

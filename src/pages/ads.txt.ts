@@ -1,14 +1,13 @@
-import { adsEnabled, adsensePubId } from '../lib/monetization';
+import { adsConfigured, adsensePubId } from '../lib/monetization';
 
 export function GET() {
-  const body = adsEnabled
+  const body = adsConfigured
     ? `google.com, ${adsensePubId}, DIRECT, f08c47fec0942fa0\n`
     : [
         '# ads.txt — computecurrent.com',
-        '# No ad system is active yet. Once the AdSense account is approved,',
-        '# set PUBLIC_ADSENSE_CLIENT=ca-pub-XXXXXXXXXXXXXXXX in the deployment',
-        '# environment and rebuild; the authorized seller line is then',
-        '# published here automatically.',
+        '# No valid AdSense publisher ID is configured for this deployment.',
+        '# Set PUBLIC_ADSENSE_CLIENT to the account-issued ca-pub identifier and rebuild',
+        '# to publish the corresponding authorized-seller record.',
         '',
       ].join('\n');
 

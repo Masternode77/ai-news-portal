@@ -10,7 +10,11 @@ import {
   canonicalArticleImagePaths,
 } from './image-store.mjs';
 import { PIPELINE_OFFLINE } from './constants.mjs';
-import { fetchWithTimeout } from './image-providers/shared.mjs';
+import { loadSourceRegistry, sourceUsageDecision } from './source-registry.mjs';
+import {
+  fetchSourceImage,
+  sourceImageHostsFor,
+} from './source-image-fetcher.mjs';
 
 const LOCAL_SOURCE_FIELDS = [
   'heroImage',
@@ -29,6 +33,7 @@ const REMOTE_SOURCE_FIELDS = [
 ];
 
 const PLACEHOLDER_PROVIDER_RE = /\b(?:local-placeholder|local-svg|category-fallback)\b/i;
+const SOURCE_DERIVED_PROVIDER_RE = /\b(?:source-image|source-canonical|origin-canonical)\b/i;
 
 async function fileExists(filePath = '') {
   if (!filePath) return false;
@@ -62,6 +67,20 @@ function imageProviderText(item = {}) {
 
 function itemLooksPlaceholder(item = {}) {
   return PLACEHOLDER_PROVIDER_RE.test(imageProviderText(item));
+}
+
+function itemLooksSourceDerived(item = {}) {
+  return SOURCE_DERIVED_PROVIDER_RE.test(imageProviderText(item))
+    || localArticleImageExists(item.sourceImage);
+}
+
+async function imageReuseAuthorization(item = {}, options = {}) {
+  const sources = Object.hasOwn(options, 'sources') ? options.sources : await loadSourceRegistry();
+  const decision = sourceUsageDecision(item, sources, 'image', options.now || new Date());
+  return {
+    ...decision,
+    imageHosts: sourceImageHostsFor(sources, decision.sourceId),
+  };
 }
 
 function localSourceImageFileFor(item = {}) {
@@ -118,23 +137,15 @@ async function writeMissingVariants(missing = [], source) {
   }));
 }
 
-async function fetchRemoteSourceImage(url = '') {
-  const response = await fetchWithTimeout(url, {
-    headers: {
-      'user-agent': 'Mozilla/5.0 (compatible; ComputeCurrentBot/1.0)',
-    },
-  }, 20000);
-
-  if (!response.ok) {
-    return { error: 'source_image_fetch_failed' };
+async function fetchRemoteSourceImage(url = '', authorization = {}, options = {}) {
+  try {
+    return await fetchSourceImage(url, {
+      ...options.sourceImageFetchOptions,
+      allowedHosts: authorization.imageHosts,
+    });
+  } catch (error) {
+    return { error: error?.code || 'source_image_fetch_failed' };
   }
-
-  const contentType = response.headers.get('content-type') || '';
-  if (contentType && !/^image\//i.test(contentType)) {
-    return { error: 'source_image_not_image' };
-  }
-
-  return { bytes: Buffer.from(await response.arrayBuffer()) };
 }
 
 export async function ensureCanonicalArticleImageSet(item = {}, options = {}) {
@@ -151,36 +162,75 @@ export async function ensureCanonicalArticleImageSet(item = {}, options = {}) {
     }
   }
 
+  let sourceAuthorization;
+  if (itemLooksSourceDerived(item)) {
+    sourceAuthorization = await imageReuseAuthorization(item, options);
+    if (!sourceAuthorization.authorized) {
+      return {
+        changed: 0,
+        skipped: true,
+        authorizedSource: false,
+        reason: sourceAuthorization.reason,
+        authorizationDetail: sourceAuthorization.detail,
+        sourceId: sourceAuthorization.sourceId,
+        paths,
+      };
+    }
+  }
+
   if (!missing.length) {
-    return { changed: 0, skipped: false, paths };
+    return {
+      changed: 0,
+      skipped: false,
+      authorizedSource: false,
+      paths,
+    };
   }
 
   const sourceFile = localSourceImageFileFor(item);
   if (await fileExists(sourceFile)) {
     await writeMissingVariants(missing, sourceFile);
-    return { changed: missing.length, skipped: false, paths };
+    return {
+      changed: missing.length,
+      skipped: false,
+      authorizedSource: sourceAuthorization?.authorized === true,
+      paths,
+    };
   }
 
   const remote = remoteSourceImageFor(item);
   if (remote.invalid) {
-    return { changed: 0, skipped: true, reason: 'invalid_source_image_url', paths };
+    return { changed: 0, skipped: true, authorizedSource: false, reason: 'invalid_source_image_url', paths };
   }
   if (!remote.url) {
-    return { changed: 0, skipped: true, reason: 'missing_local_source_image', paths };
+    return { changed: 0, skipped: true, authorizedSource: false, reason: 'missing_local_source_image', paths };
   }
   if (PIPELINE_OFFLINE) {
-    return { changed: 0, skipped: true, reason: 'pipeline_offline', paths };
+    return { changed: 0, skipped: true, authorizedSource: false, reason: 'pipeline_offline', paths };
   }
 
-  const fetched = await fetchRemoteSourceImage(remote.url).catch(() => ({ error: 'source_image_fetch_failed' }));
+  const authorization = sourceAuthorization || await imageReuseAuthorization(item, options);
+  if (!authorization.authorized) {
+    return {
+      changed: 0,
+      skipped: true,
+      authorizedSource: false,
+      reason: authorization.reason,
+      authorizationDetail: authorization.detail,
+      sourceId: authorization.sourceId,
+      paths,
+    };
+  }
+
+  const fetched = await fetchRemoteSourceImage(remote.url, authorization, options);
   if (fetched.error) {
-    return { changed: 0, skipped: true, reason: fetched.error, paths };
+    return { changed: 0, skipped: true, authorizedSource: false, reason: fetched.error, paths };
   }
 
   try {
     await writeMissingVariants(missing, fetched.bytes);
-    return { changed: missing.length, skipped: false, paths };
+    return { changed: missing.length, skipped: false, authorizedSource: true, paths };
   } catch {
-    return { changed: 0, skipped: true, reason: 'invalid_source_image', paths };
+    return { changed: 0, skipped: true, authorizedSource: false, reason: 'invalid_source_image', paths };
   }
 }

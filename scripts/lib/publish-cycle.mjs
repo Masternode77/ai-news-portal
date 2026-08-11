@@ -4,6 +4,15 @@ import { buildRssItems } from './rss-builder.mjs';
 import { buildSitemapEntries } from './sitemap-builder.mjs';
 import { buildCategoryPages, archivePages } from './taxonomy-page-builder.mjs';
 import { buildAdminReviewQueueEntry, mergeAdminReviewQueue } from './admin-review-queue.mjs';
+import {
+  finalPublicationIntegrityResult,
+  publicationIntegritySnapshot,
+} from './final-publication-integrity.mjs';
+import { quarantineArticle } from './content-quarantine.mjs';
+import {
+  currentSourceTextAuthorization,
+  sourceTextAuthorizationSnapshot,
+} from './source-text-publication-authorization.mjs';
 
 function clean(value = '') {
   return String(value || '').replace(/\s+/g, ' ').trim();
@@ -46,7 +55,7 @@ function publicRoutingFor(result = {}) {
 
 function materializeArticle(source = {}, result = {}, now = new Date().toISOString()) {
   const images = imagePaths(source);
-  const body = clean(result.finalArticleBody || result.longformBody || result.brief || source.articleText || source.summary);
+  const body = String(result.finalArticleBody || result.longformBody || result.brief || source.articleText || source.summary || '').trim();
   const deck = clean(source.summary || result.brief || result.reasons?.[0]);
   const articlePagePublished = result.detailPage === true;
   return {
@@ -55,6 +64,7 @@ function materializeArticle(source = {}, result = {}, now = new Date().toISOStri
     deck,
     summary: deck,
     source: clean(source.source),
+    sourceRegistryId: clean(source.sourceRegistryId || source.source_id),
     sourceUrl: clean(source.sourceUrl || source.url),
     publishedAt: source.publishedAt || now,
     analysisPublishedAt: now,
@@ -69,6 +79,8 @@ function materializeArticle(source = {}, result = {}, now = new Date().toISOStri
     public_content_tier: result.tier,
     articleText: clean(source.articleText || source.cleaned_source_text),
     cleaned_source_text: clean(source.cleaned_source_text || source.articleText),
+    extraction_qa: source.extraction_qa || result.extraction_artifact?.extraction_qa,
+    extraction_artifact: source.extraction_artifact || result.extraction_artifact,
     articlePagePublished,
     homepagePublished: true,
     archiveOnly: false,
@@ -113,7 +125,25 @@ function buildImageManifest(items = []) {
   }));
 }
 
-export async function runPublishCycle({ articles = [], routeArticle, now = new Date().toISOString(), existing = {} } = {}) {
+function reauthorizePersistedArticle(article = {}, options = {}) {
+  if (article.archiveOnly === true || article.public_status === 'quarantined' || article.public_status === 'archive_only_noindex') return article;
+  const isPublic = article.homepagePublished === true || article.articlePagePublished === true || article.public_status === 'published';
+  if (!isPublic) return article;
+  const decision = currentSourceTextAuthorization(article, article.extraction_artifact, options);
+  if (decision.ok) {
+    return {
+      ...article,
+      publication_integrity: {
+        ...(article.publication_integrity || {}),
+        ...sourceTextAuthorizationSnapshot(decision),
+      },
+    };
+  }
+  const snapshot = sourceTextAuthorizationSnapshot(decision);
+  return quarantineArticle({ ...article, publication_integrity: snapshot }, snapshot.reasons, { force: true });
+}
+
+export async function runPublishCycle({ articles = [], routeArticle, now = new Date().toISOString(), existing = {}, sourceRegistry } = {}) {
   if (typeof routeArticle !== 'function') throw new TypeError('runPublishCycle requires routeArticle');
   const published = [];
   const reviewEntries = [];
@@ -123,22 +153,52 @@ export async function runPublishCycle({ articles = [], routeArticle, now = new D
     const result = await routeArticle(article);
     results.push(result);
     if (result.coreFeedEligible && result.tier !== 'hidden' && result.tier !== 'source_only') {
-      published.push(materializeArticle(article, result, now));
+      const candidate = materializeArticle(article, result, now);
+      const integrity = finalPublicationIntegrityResult(candidate, [
+        ...(existing.latestNews || []),
+        ...(existing.searchIndex || []),
+        ...published,
+      ], { sourceRegistry, now });
+      if (integrity.ok) {
+        published.push({ ...candidate, publication_integrity: publicationIntegritySnapshot(integrity) });
+      } else {
+        const entry = buildAdminReviewQueueEntry(article, {
+          ...result,
+          coreFeedEligible: false,
+          detailPage: false,
+          longformGenerated: false,
+          reasons: integrity.reasons,
+        }, now);
+        if (entry) reviewEntries.push(entry);
+      }
     } else {
       const entry = buildAdminReviewQueueEntry(article, result, now);
       if (entry) reviewEntries.push(entry);
     }
   }
 
-  const latestNews = uniqueById([...published, ...(existing.latestNews || [])]).slice(0, 50);
+  const rightsOptions = { sourceRegistry, now };
+  const reauthorized = new Map(uniqueById([
+    ...published,
+    ...(existing.latestNews || []),
+    ...(existing.searchIndex || []),
+  ]).map((article) => [article.id, reauthorizePersistedArticle(article, rightsOptions)]));
+  const latestNews = uniqueById([...published, ...(existing.latestNews || [])])
+    .map((article) => reauthorized.get(article.id))
+    .filter((article) => article.public_status !== 'quarantined')
+    .slice(0, 50);
   const searchIndex = uniqueById([...latestNews, ...(existing.searchIndex || [])])
+    .map((article) => reauthorized.get(article.id))
+    .filter((article) => article.public_status !== 'quarantined')
     .map((article) => ({ ...article, searchText: searchText(article) }));
+  const publicLatest = latestNews.filter((article) => article.public_status !== 'quarantined'
+    && currentSourceTextAuthorization(article, article.extraction_artifact, rightsOptions).ok);
   const taxonomyPages = {
-    categories: buildCategoryPages(latestNews),
-    archive: archivePages(latestNews),
+    categories: buildCategoryPages(publicLatest),
+    archive: archivePages(publicLatest),
   };
-  const rssItems = buildRssItems(latestNews);
-  const sitemapEntries = buildSitemapEntries(latestNews);
+  const rssItems = buildRssItems(publicLatest, rightsOptions);
+  const sitemapEntries = buildSitemapEntries(publicLatest, rightsOptions);
   const imageManifest = buildImageManifest(published);
   const adminReviewQueue = mergeAdminReviewQueue(existing.adminReviewQueue || [], reviewEntries);
   const cacheReport = {

@@ -75,7 +75,7 @@ export async function refreshCollection(label, filePath) {
       const canonical = await ensureCanonicalArticleImageSet(canonicalInput, {
         overwrite: imageRecordLooksDefault(nextItem),
       });
-      if (!canonical.skipped) {
+      if (canonical.authorizedSource === true) {
         nextItem = withGeneratedArticleImage(item, canonical.paths.heroImage, {
           heroImage: canonical.paths.heroImage,
           thumbnailImage: canonical.paths.thumbnailImage,

@@ -4,10 +4,13 @@ import { fileURLToPath } from 'node:url';
 import latestNews from '../src/data/latest-news.json' with { type: 'json' };
 import archivedNews from '../src/data/archived-news.json' with { type: 'json' };
 import { homepageBlogSurfaceResult, isLocalHomepageBlog } from './lib/homepage-blog-surface-policy.mjs';
+import { buildHomepageFeed } from './lib/homepage-feed-builder.mjs';
 import { blogLengthResult } from './lib/blog-length-policy.mjs';
 import { forbiddenPublicPhraseMatches } from './lib/copy-quality-guard.mjs';
 import { detectBoilerplate } from './lib/boilerplate-detector.mjs';
 import { detectTruncationArtifacts } from './lib/truncation-detector.mjs';
+import { isPublicLongformArticle } from './lib/public-surface-eligibility.mjs';
+import { activeRegistryFeeds, loadSourceRegistrySync } from './lib/source-registry.mjs';
 import { headingSequence, visibleBodyText } from './lib/visible-body-length.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
@@ -96,13 +99,29 @@ function auditArticle(article = {}) {
   };
 }
 
-export async function auditBlogSurfaceV4({ latest = latestNews, archived = archivedNews, requireBuiltPages = false } = {}) {
-  const homepage = homepageBlogSurfaceResult(latest);
-  const blogs = latest.filter(isLocalHomepageBlog).slice(0, 20);
+export async function auditBlogSurfaceV4({
+  latest = latestNews,
+  archived = archivedNews,
+  eligibilityOptions = {},
+  requireBuiltPages = false,
+  distDir = DIST_DIR,
+  reportPath = REPORT_PATH,
+} = {}) {
+  const all = [...latest, ...archived];
+  const publicHomepageCards = buildHomepageFeed(all, { ...eligibilityOptions, limit: 50, minimumVisible: 30 }).items;
+  const publicDetails = publicHomepageCards.filter((article) => isPublicLongformArticle(article, eligibilityOptions));
+  const blogs = publicDetails.filter(isLocalHomepageBlog).slice(0, 20);
+  const homepage = homepageBlogSurfaceResult(publicHomepageCards);
+  const sourceRegistry = eligibilityOptions.sourceRegistry !== undefined
+    ? eligibilityOptions.sourceRegistry
+    : loadSourceRegistrySync(eligibilityOptions.sourceRegistryPath);
+  const authorizedSourceCount = activeRegistryFeeds(Array.isArray(sourceRegistry) ? sourceRegistry : [], eligibilityOptions.now || new Date()).length;
+  const rightsReviewSafeMode = authorizedSourceCount === 0 && publicHomepageCards.length === 0 && publicDetails.length === 0;
   const articleResults = blogs.map((article) => ({ article, result: auditArticle(article) }));
   const reasons = [];
 
   if (!homepage.ok) reasons.push(...homepage.reasons);
+  if (rightsReviewSafeMode) reasons.push('rights_review_safe_mode_zero_authorized_sources');
   for (const { article, result } of articleResults) {
     if (!result.ok) reasons.push(`${article.id}:${result.reasons.join(',')}`);
   }
@@ -111,7 +130,7 @@ export async function auditBlogSurfaceV4({ latest = latestNews, archived = archi
   const builtDetailForbidden = [];
   if (requireBuiltPages) {
     for (const { article } of articleResults) {
-      const detailHtml = await fileText(path.join(DIST_DIR, 'news', article.id, 'index.html'));
+      const detailHtml = await fileText(path.join(distDir, 'news', article.id, 'index.html'));
       if (!detailHtml) {
         missingBuiltDetailPages.push(article.id);
         continue;
@@ -126,8 +145,8 @@ export async function auditBlogSurfaceV4({ latest = latestNews, archived = archi
 
   const tones = new Set(blogs.map((article) => article.blog_metadata?.tone).filter(Boolean));
   const archetypes = new Set(blogs.map((article) => article.blog_metadata?.archetype).filter(Boolean));
-  if (tones.size < 5) reasons.push(`latest_20_tones_below_5:${tones.size}`);
-  if (archetypes.size < 5) reasons.push(`latest_20_archetypes_below_5:${archetypes.size}`);
+  if (!rightsReviewSafeMode && tones.size < 5) reasons.push(`latest_20_tones_below_5:${tones.size}`);
+  if (!rightsReviewSafeMode && archetypes.size < 5) reasons.push(`latest_20_archetypes_below_5:${archetypes.size}`);
 
   const openings = new Map();
   for (const { result } of articleResults) openings.set(result.opening, (openings.get(result.opening) || 0) + 1);
@@ -140,30 +159,38 @@ export async function auditBlogSurfaceV4({ latest = latestNews, archived = archi
   if (repeatedHeadingSequences.length) reasons.push('heading_sequence_repeated_more_than_twice');
 
   const archiveIds = new Set(archived.filter((article) => article.archiveOnly === true || article.public_status === 'archive_only_noindex').map((article) => article.id));
-  const sitemapText = await fileText(path.join(DIST_DIR, 'sitemap-0.xml')) || await fileText(path.join(DIST_DIR, 'sitemap-index.xml'));
-  const rssText = await fileText(path.join(DIST_DIR, 'rss.xml'));
-  const archiveIdsInSitemap = [...archiveIds].filter((id) => sitemapText.includes(`/news/${id}/`));
-  const archiveIdsInRss = [...archiveIds].filter((id) => rssText.includes(`/news/${id}/`));
-  if (archiveIdsInSitemap.length) reasons.push('archive_only_ids_in_sitemap');
-  if (archiveIdsInRss.length) reasons.push('archive_only_ids_in_rss');
+  let archiveIdsInSitemap = [];
+  let archiveIdsInRss = [];
+  if (requireBuiltPages) {
+    const sitemapText = await fileText(path.join(distDir, 'sitemap-0.xml')) || await fileText(path.join(distDir, 'sitemap-index.xml'));
+    const rssText = await fileText(path.join(distDir, 'rss.xml'));
+    archiveIdsInSitemap = [...archiveIds].filter((id) => sitemapText.includes(`/news/${id}/`));
+    archiveIdsInRss = [...archiveIds].filter((id) => rssText.includes(`/news/${id}/`));
+    if (archiveIdsInSitemap.length) reasons.push('archive_only_ids_in_sitemap');
+    if (archiveIdsInRss.length) reasons.push('archive_only_ids_in_rss');
+  }
 
-  const sourceOnlyOnHomepage = latest.filter((article) => article.homepagePublished !== false && !isLocalHomepageBlog(article));
+  const localBlogIds = new Set(blogs.map((article) => article.id));
+  const sourceOnlyOnHomepage = publicHomepageCards.filter((article) => !localBlogIds.has(article.id));
   const reportLines = [
     '# Blog Surface v4 Audit Report',
     '',
     `Generated at: ${new Date().toISOString()}`,
     '',
     `Status: ${reasons.length ? 'failed' : 'passed'}`,
+    `Authorized text sources: ${authorizedSourceCount}`,
+    `Public homepage cards: ${publicHomepageCards.length}`,
+    `Public local detail pages: ${publicDetails.length}`,
     `Homepage local blog count: ${homepage.localBlogCount}`,
     `Source-only/short cards on homepage: ${sourceOnlyOnHomepage.length}`,
     `Tone count in latest 20: ${tones.size}`,
     `Archetype count in latest 20: ${archetypes.size}`,
     `Duplicate first-10-word openings: ${duplicateOpenings.length}`,
     `Repeated heading sequences >2: ${repeatedHeadingSequences.length}`,
-    `Archive IDs in sitemap: ${archiveIdsInSitemap.length}`,
-    `Archive IDs in RSS: ${archiveIdsInRss.length}`,
-    `Missing built local detail pages: ${missingBuiltDetailPages.length}`,
-    `Built detail pages with forbidden phrases: ${builtDetailForbidden.length}`,
+    `Archive IDs in sitemap: ${requireBuiltPages ? archiveIdsInSitemap.length : 'not checked (source-only audit)'}`,
+    `Archive IDs in RSS: ${requireBuiltPages ? archiveIdsInRss.length : 'not checked (source-only audit)'}`,
+    `Missing built local detail pages: ${requireBuiltPages ? missingBuiltDetailPages.length : 'not checked (source-only audit)'}`,
+    `Built detail pages with forbidden phrases: ${requireBuiltPages ? builtDetailForbidden.length : 'not checked (source-only audit)'}`,
     '',
     '## Latest 20 Local Blogs',
     '',
@@ -176,8 +203,8 @@ export async function auditBlogSurfaceV4({ latest = latestNews, archived = archi
     ...(reasons.length ? reasons.map((reason) => `- ${reason}`) : ['- none']),
   ];
 
-  await fs.mkdir(path.dirname(REPORT_PATH), { recursive: true });
-  await fs.writeFile(REPORT_PATH, `${reportLines.join('\n')}\n`, 'utf8');
+  await fs.mkdir(path.dirname(reportPath), { recursive: true });
+  await fs.writeFile(reportPath, `${reportLines.join('\n')}\n`, 'utf8');
 
   return {
     ok: reasons.length === 0,
@@ -188,7 +215,13 @@ export async function auditBlogSurfaceV4({ latest = latestNews, archived = archi
     archetypes,
     missingBuiltDetailPages,
     builtDetailForbidden,
-    reportPath: REPORT_PATH,
+    builtOutputChecked: requireBuiltPages,
+    publicHomepageCardCount: publicHomepageCards.length,
+    publicDetailCount: publicDetails.length,
+    sourceOnlyCardCount: sourceOnlyOnHomepage.length,
+    authorizedSourceCount,
+    rightsReviewSafeMode,
+    reportPath,
   };
 }
 

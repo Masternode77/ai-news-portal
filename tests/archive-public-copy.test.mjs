@@ -1,9 +1,10 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import { buildArchiveFeed } from '../scripts/lib/archive-feed-builder.mjs';
+import { authorizePublicTestRecords } from './fixtures/admin-publication-integrity.mjs';
 
 test('archive feed excludes hidden/noindex items and uses publication copy', () => {
-  const feed = buildArchiveFeed([
+  const authorized = authorizePublicTestRecords([
     {
       id: 'a',
       title: 'Power queue reshapes data center timing',
@@ -12,6 +13,7 @@ test('archive feed excludes hidden/noindex items and uses publication copy', () 
       public_content_tier: 'editorial_brief',
       homepagePublished: true,
       archiveOnly: false,
+      summary: 'A utility interconnection queue changes power delivery timing for AI data center capacity.',
       deck: 'A utility queue update changes timing for AI infrastructure capacity.',
     },
     {
@@ -22,6 +24,7 @@ test('archive feed excludes hidden/noindex items and uses publication copy', () 
       seo_noindex: true,
     },
   ]);
+  const feed = buildArchiveFeed(authorized.records, authorized.options);
 
   assert.equal(feed.items.length, 1);
   assert.equal(feed.searchLabel, 'Search the archive');

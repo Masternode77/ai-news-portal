@@ -35,7 +35,7 @@ export function detectTruncationArtifacts(text = '', options = {}) {
     return { ok: true, artifacts };
   }
 
-  if (/(?:^|\s)(?:clo|[b-d])\.(?:\s|$)/i.test(normalized)) {
+  if (/(?:^|\s)clo\.(?:\s|$)/i.test(normalized) || /(?:^|\s)[b-d]\.(?:\s|$)/.test(normalized)) {
     artifacts.push('single_letter_or_clo_sentence_fragment');
   }
 
@@ -65,9 +65,11 @@ export function detectTruncationArtifacts(text = '', options = {}) {
     }
   }
 
-  const lastToken = normalized.match(/\b([A-Za-z]{1,16})\.?$/)?.[1]?.toLowerCase();
+  const lastTokenRaw = normalized.match(/\b([A-Za-z]{1,16})\.?$/)?.[1];
+  const lastToken = lastTokenRaw?.toLowerCase();
   if (
     lastToken &&
+    !(lastTokenRaw.length === 1 && lastTokenRaw === lastTokenRaw.toUpperCase()) &&
     INCOMPLETE_TERMINALS.has(lastToken) &&
     !SAFE_ABBREVIATIONS.has(lastToken)
   ) {

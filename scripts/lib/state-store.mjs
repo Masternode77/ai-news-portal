@@ -1,5 +1,8 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
+import { enforceFinalPublicationIntegrity } from './final-publication-integrity.mjs';
+
+const PUBLIC_ARTIFACT_NAMES = new Set(['latest-news.json', 'archived-news.json', 'search-index.json']);
 
 const DEFAULT_STATE = {
   publishedIds: [],
@@ -24,7 +27,10 @@ export async function readJsonFile(filePath, defaultValue) {
 export async function writeJsonFile(filePath, value) {
   await ensureDir(filePath);
   const tmpPath = `${filePath}.${process.pid}.${Date.now()}.tmp`;
-  await fs.writeFile(tmpPath, `${JSON.stringify(value, null, 2)}\n`, 'utf8');
+  const persistedValue = Array.isArray(value) && PUBLIC_ARTIFACT_NAMES.has(path.basename(filePath))
+    ? enforceFinalPublicationIntegrity(value).articles
+    : value;
+  await fs.writeFile(tmpPath, `${JSON.stringify(persistedValue, null, 2)}\n`, 'utf8');
   await fs.rename(tmpPath, filePath);
 }
 

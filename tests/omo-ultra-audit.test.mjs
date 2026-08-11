@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import fs from 'node:fs/promises';
 import test from 'node:test';
 import {
   REQUIRED_AUDIT_SECTIONS,
@@ -24,14 +25,9 @@ test('Given the current repository When building the OMO Ultra audit Then every 
   }
 });
 
-test('Given the current repository When building the OMO Ultra audit Then explicit failure causes are answered', async () => {
+test('Given the generated current-state audit When reading the checked-in report Then they are byte-identical', async () => {
   const audit = await buildOmoUltraAudit();
+  const checkedInAudit = await fs.readFile(new URL('../docs/omo-ultra-audit.md', import.meta.url), 'utf8');
 
-  assert.match(audit.markdown, /Why old Editor's Brief templates are still live/i);
-  assert.match(audit.markdown, /Why banned phrases still appear/i);
-  assert.match(audit.markdown, /Why low-relevance items still appear in the homepage feed/i);
-  assert.match(audit.markdown, /Why images are not reliably visible per article/i);
-  assert.match(audit.markdown, /Whether generated article pages are stale and need regeneration/i);
-  assert.match(audit.markdown, /Where admin should be implemented safely/i);
-  assert.match(audit.markdown, /Dirty Worktree Warning/i);
+  assert.equal(checkedInAudit, audit.markdown);
 });

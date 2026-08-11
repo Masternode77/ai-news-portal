@@ -37,3 +37,15 @@ test('homepage source uses publication vocabulary for reader-facing actions', ()
   const missing = required.filter((phrase) => !new RegExp(phrase, 'i').test(source));
   assert.deepEqual(missing, [], `homepage source is missing publication vocabulary: ${missing.join(', ')}`);
 });
+
+test('homepage freshness copy reports the scheduled run and heartbeat state without promising publication', () => {
+  // Given: the public homepage source.
+  const source = fs.readFileSync('src/pages/index.astro', 'utf8');
+
+  // When: reader-facing update copy is inspected.
+  // Then: it reports operational state rather than an unconditional publishing promise.
+  assert.doesNotMatch(source, /publishing every 8 hours|publishes every 8 hours/i);
+  assert.match(source, /Update schedule: every 8 hours/i);
+  assert.match(source, /last successful update/i);
+  assert.match(source, /freshness\.state/i);
+});

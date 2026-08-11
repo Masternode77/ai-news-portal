@@ -2,8 +2,10 @@
   "name": "compute-current",
   "type": "module",
   "version": "0.0.1",
+  "engines": {
+    "node": ">=22.12.0"
+  },
   "scripts": {
-    "sync:dashboard-data": "node ./scripts/sync-dashboard-data.cjs",
     "dev": "astro dev",
     "pipeline": "node ./scripts/pipeline.mjs",
     "test:curation": "PIPELINE_OFFLINE=1 OPENROUTER_API_KEY= node ./scripts/test-curation.mjs",
@@ -14,7 +16,7 @@
     "prepare:static-images": "node ./scripts/prepare-static-images.mjs",
     "regenerate:stock-card-images": "node ./scripts/regenerate-stock-card-images.mjs",
     "backfill:article-metadata": "node ./scripts/backfill-article-metadata.mjs",
-    "build": "npm run sync:dashboard-data && npm run prepare:static-images && astro build",
+    "build": "npm run prepare:static-images && astro build",
     "check": "astro check",
     "preview": "astro preview",
     "astro": "astro",
@@ -22,7 +24,6 @@
     "qa:visual:smoke": "node ./scripts/qa-visual-smoke.mjs",
     "qa:visual:status": "node ./scripts/qa-visual-status.mjs",
     "qa:visual:commercial": "node ./scripts/qa-commercial-visual.mjs",
-    "qa:visual:percy": "node ./scripts/qa-visual-percy.mjs",
     "qa:qc": "node ./scripts/run-qa-qc.mjs",
     "test:relevance": "node ./scripts/test-relevance-classifier.mjs",
     "test:taxonomy": "node ./scripts/test-taxonomy.mjs",
@@ -30,7 +31,9 @@
     "test:repetition": "node ./scripts/test-repetition-detector.mjs",
     "test:expert-insight": "PIPELINE_OFFLINE=1 OPENROUTER_API_KEY= node ./scripts/test-expert-insight-engine.mjs",
     "test:public-content": "node ./scripts/test-public-content-regression.mjs",
-    "test": "node --test tests/*.test.mjs && npm run test:quality-gate && npm run test:relevance && npm run test:taxonomy && npm run test:repetition",
+    "test": "npm run test:node:source && npm run build && npm run test:node:built && npm run test:quality-gate && npm run test:relevance && npm run test:taxonomy && npm run test:repetition",
+    "test:node:source": "node ./tests/helpers/run-node-test-phase.mjs source",
+    "test:node:built": "node ./tests/helpers/run-node-test-phase.mjs built",
     "test:quality-gates": "node --test tests/article-detail-quality-gate.test.mjs tests/boilerplate-detector.test.mjs tests/homepage-quality-filter.test.mjs tests/public-template-phrase-guard.test.mjs tests/seo-quality-policy.test.mjs tests/source-extraction-fail-closed.test.mjs tests/source-text-completeness.test.mjs tests/strict-infrastructure-relevance-router.test.mjs tests/truncation-detector.test.mjs tests/proper-noun-normalizer.test.mjs",
     "test:source-expansion": "node --test tests/source-registry.test.mjs tests/source-feed-discovery.test.mjs",
     "test:blog-engine-v4": "node --test tests/graded-publishing-router.test.mjs tests/blog-eligibility-policy.test.mjs tests/blog-engine-v4.test.mjs tests/blog-length-policy.test.mjs tests/blog-tone-selector.test.mjs tests/blog-archetype-selector.test.mjs tests/human-blog-quality-score.test.mjs tests/multi-source-corroboration.test.mjs tests/source-fidelity-claim-check.test.mjs tests/homepage-blog-surface-policy.test.mjs tests/homepage-backfill.test.mjs tests/article-page-template.test.mjs tests/blog-surface-v4-regression.test.mjs",
@@ -71,13 +74,14 @@
     "eval:articles": "node ./scripts/eval-article-generation.mjs"
   },
   "dependencies": {
-    "@astrojs/rss": "^4.0.12",
-    "@astrojs/sitemap": "^3.6.0",
-    "astro": "^5.17.1",
-    "sharp": "^0.34.5"
+    "@astrojs/rss": "^4.0.19",
+    "@astrojs/sitemap": "^3.7.3",
+    "astro": "^7.2.0",
+    "sharp": "^0.35.3"
   },
   "devDependencies": {
-    "@astrojs/check": "^0.9.6",
+    "@astrojs/check": "^0.9.10",
+    "playwright": "1.62.1",
     "rss-parser": "^3.13.0",
     "typescript": "^5.9.3"
   }

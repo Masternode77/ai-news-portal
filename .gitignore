@@ -14,6 +14,11 @@ evidence/
 # Local platform state
 .vercel/
 
+# Operational snapshots must never be tracked or deployed
+**/cron-registry-snapshot*.json
+**/dashboard-data*.json
+**/dashboard-snapshot*.json
+
 # Logs and local env
 *.log
 .env

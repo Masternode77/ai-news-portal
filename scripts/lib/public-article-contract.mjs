@@ -3,6 +3,7 @@ import {
   articleImageVariants,
 } from './article-image-surface.mjs';
 import { sourceAttributionFor, sourceUrlFor } from '../../src/lib/seo-safeguards.js';
+import { hasPublishedArticlePage } from './article-publication-state.mjs';
 
 export const PUBLIC_ARTICLE_STATUSES = {
   DRAFT: 'draft',
@@ -223,7 +224,7 @@ function visibilityFor(article = {}, status, tier) {
   const detailPage = !hidden
     && !draft
     && tier === PUBLIC_ARTICLE_TIERS.LONGFORM_ANALYSIS
-    && article.articlePagePublished !== false;
+    && hasPublishedArticlePage(article);
   const homepage = !hidden
     && !draft
     && status === PUBLIC_ARTICLE_STATUSES.PUBLISHED

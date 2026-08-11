@@ -1,11 +1,17 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import { getRssString } from '@astrojs/rss';
-import { buildRssItems, rssMetadata } from '../scripts/lib/rss-builder.mjs';
+import { buildRssItems as buildRssItemsRaw, rssMetadata } from '../scripts/lib/rss-builder.mjs';
 import { findInternalLanguageHits } from '../scripts/lib/internal-language-guard.mjs';
+import { authorizePublicTestRecords, CANONICAL_ADMIN_BODY, CANONICAL_ADMIN_SOURCE } from './fixtures/admin-publication-integrity.mjs';
+
+function buildRssItems(items = []) {
+  const authorized = authorizePublicTestRecords(items);
+  return buildRssItemsRaw(authorized.records, authorized.options);
+}
 
 test('rss builder excludes archived internal items', () => {
-  const articleText = 'Published data center infrastructure analysis connects verified source evidence to power, storage, and capacity milestones. '.repeat(16);
+  const articleText = CANONICAL_ADMIN_SOURCE;
   const items = buildRssItems([
     {
       id: 'a',
@@ -18,12 +24,13 @@ test('rss builder excludes archived internal items', () => {
       seo_noindex: false,
       public_status: 'published',
       publishing_route: 'Featured Analysis',
+      public_content_tier: 'longform_analysis',
       public_routing: { visibility: 'core' },
       extraction_quality_score: 0.95,
       infrastructure_relevance_score: 0.9,
       category: 'Power & Grid',
       articleText,
-      expertLensFull: { finalArticleBody: articleText },
+      expertLensFull: { finalArticleBody: CANONICAL_ADMIN_BODY },
       deck: 'Clean public deck.',
     },
     { id: 'b', title: 'Archived', publishedAt: '2026-05-20T00:00:00Z', articlePagePublished: false, archiveOnly: true, public_status: 'archive_only_noindex', deck: 'Hidden.' },
@@ -204,7 +211,7 @@ test('rss builder omits eligible items when generated card copy cannot pass the 
 });
 
 test('rss metadata binds media namespace when feed items include media content', async () => {
-  const articleText = 'Published data center infrastructure analysis connects verified source evidence to power, storage, and capacity milestones. '.repeat(16);
+  const articleText = CANONICAL_ADMIN_SOURCE;
   const items = buildRssItems([
     {
       id: 'a',
@@ -217,12 +224,13 @@ test('rss metadata binds media namespace when feed items include media content',
       seo_noindex: false,
       public_status: 'published',
       publishing_route: 'Featured Analysis',
+      public_content_tier: 'longform_analysis',
       public_routing: { visibility: 'core' },
       extraction_quality_score: 0.95,
       infrastructure_relevance_score: 0.9,
       category: 'Power & Grid',
       articleText,
-      expertLensFull: { finalArticleBody: articleText },
+      expertLensFull: { finalArticleBody: CANONICAL_ADMIN_BODY },
       deck: 'Clean public deck.',
     },
   ]);

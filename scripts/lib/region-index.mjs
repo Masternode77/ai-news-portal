@@ -1,4 +1,4 @@
-import { publicTaxonomyItems, taxonomySlugify } from './taxonomy-page-builder.mjs';
+import { sourceTaxonomyItems, taxonomySlugify } from './taxonomy-page-builder.mjs';
 
 export const DEFAULT_REGIONS = ['US', 'Europe', 'APAC', 'Middle East', 'Global'];
 
@@ -7,11 +7,11 @@ export function regionForArticle(article = {}) {
 }
 
 export function buildRegionIndex(items = []) {
-  const publicItems = publicTaxonomyItems(items);
-  const names = [...new Set([...DEFAULT_REGIONS, ...publicItems.map(regionForArticle)])];
+  const sourceItems = sourceTaxonomyItems(items);
+  const names = [...new Set([...DEFAULT_REGIONS, ...sourceItems.map(regionForArticle)])];
   return names.map((name) => ({
     slug: taxonomySlugify(name),
     name,
-    items: publicItems.filter((article) => regionForArticle(article).toLowerCase() === name.toLowerCase()),
+    items: sourceItems.filter((article) => regionForArticle(article).toLowerCase() === name.toLowerCase()),
   }));
 }

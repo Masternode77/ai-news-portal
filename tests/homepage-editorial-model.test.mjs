@@ -4,16 +4,11 @@ import { buildHomepageEditorialModel } from '../scripts/lib/homepage-editorial-m
 
 test('homepage editorial model separates latest cycle from backfilled analysis', () => {
   const section = 'Grid operators are weighing a verified 300 MW data center power request against interconnection timing, equipment availability, and local permitting risk. The source identifies the operator, the capacity figure, the affected region, and the procurement decision facing infrastructure buyers.';
-  const body = [
-    'Grid Capacity Signal',
-    section,
-    'Interconnection Timing',
-    section,
-    'Equipment Constraint',
-    section,
-    'Buyer Decision',
-    section,
-  ].join('\n\n');
+  const headings = ['Grid Capacity Signal', 'Interconnection Timing', 'Equipment Constraint', 'Buyer Decision', 'Exposure Map', 'Watch Point'];
+  const body = headings.flatMap((heading, headingIndex) => [
+    heading,
+    ...Array.from({ length: 3 }, (_, paragraphIndex) => `${section} Evidence lane ${headingIndex + 1}-${paragraphIndex + 1} records the distinct operating implication for this fixture.`),
+  ]).join('\n\n');
   const article = {
     id: 'a',
     title: 'Verified grid capacity signal for data center operators',
@@ -24,6 +19,11 @@ test('homepage editorial model separates latest cycle from backfilled analysis',
     noindex: false,
     public_status: 'published',
     generation_version: 'autonomous_editorial_desk_v1',
+    publication_integrity: {
+      ok: true,
+      reasons: [],
+      checked_gates: ['extraction_qa', 'article_detail_quality', 'source_fidelity', 'unsupported_claims', 'repetition', 'copyright_safe_copy'],
+    },
     backfilledAnalysis: true,
     analysisPublishedAt: '2026-05-20T00:00:00Z',
     publishedAt: '2026-05-20T00:00:00Z',

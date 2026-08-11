@@ -1,4 +1,4 @@
-import { publicTaxonomyItems, taxonomySlugify } from './taxonomy-page-builder.mjs';
+import { sourceTaxonomyItems, taxonomySlugify } from './taxonomy-page-builder.mjs';
 import { compact } from './autonomous-desk-utils.mjs';
 
 export const DEFAULT_COMPANIES = ['OpenAI', 'AWS', 'Microsoft', 'Oracle', 'NVIDIA', 'AMD', 'Blackstone', 'Applied Digital', 'Anthropic', 'CoreWeave', 'Meta', 'Google', 'Tesla', 'xAI', 'Digital Realty', 'Equinix'];
@@ -92,11 +92,11 @@ export function companyEntitiesForArticle(article = {}) {
 }
 
 export function buildCompanyIndex(items = []) {
-  const publicItems = publicTaxonomyItems(items);
-  const names = [...new Set([...DEFAULT_COMPANIES, ...publicItems.flatMap(companyEntitiesForArticle)])];
+  const sourceItems = sourceTaxonomyItems(items);
+  const names = [...new Set([...DEFAULT_COMPANIES, ...sourceItems.flatMap(companyEntitiesForArticle)])];
   return names.map((name) => ({
     slug: taxonomySlugify(name),
     name,
-    items: publicItems.filter((article) => companyEntitiesForArticle(article).some((entity) => entity.toLowerCase() === name.toLowerCase())),
+    items: sourceItems.filter((article) => companyEntitiesForArticle(article).some((entity) => entity.toLowerCase() === name.toLowerCase())),
   }));
 }

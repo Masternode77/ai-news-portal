@@ -3,19 +3,20 @@ import fs from 'node:fs';
 import test from 'node:test';
 import { runContentCycleForFixture } from '../scripts/run-content-cycle.mjs';
 import { runPublishCycle } from '../scripts/lib/publish-cycle.mjs';
+import { authorizePublicTestRecords } from './fixtures/admin-publication-integrity.mjs';
 
 const fixture = new URL('./fixtures/content-cycle-mixed.json', import.meta.url);
 
-test('full offline content cycle updates article, image, RSS, sitemap, cache, and review artifacts together', async () => {
+test('full offline content cycle with unledgered copied claims fails closed into review artifacts', async () => {
   const result = await runContentCycleForFixture(fixture);
 
   assert.equal(result.mode, 'full-cycle');
-  assert.ok(result.summary.published >= 1);
-  assert.ok(result.artifacts.latestNews.some((article) => article.public_status === 'published'));
-  assert.ok(result.artifacts.searchIndex.some((article) => article.searchText?.includes('Utility schedule now controls')));
+  assert.equal(result.summary.published, 0);
+  assert.equal(result.artifacts.latestNews.some((article) => article.id === 'fact-rich-ai-campus'), false);
+  assert.equal(result.artifacts.searchIndex.some((article) => article.id === 'fact-rich-ai-campus'), false);
   assert.ok(result.artifacts.imageManifest.every((image) => image.heroImage && image.thumbnailImage && image.ogImage));
-  assert.ok(result.artifacts.rssItems.length >= 1);
-  assert.ok(result.artifacts.sitemapEntries.some((entry) => entry.loc?.startsWith('/news/')));
+  assert.equal(result.artifacts.rssItems.length, 0);
+  assert.equal(result.artifacts.sitemapEntries.some((entry) => entry.loc === '/news/fact-rich-ai-campus/'), false);
   assert.deepEqual(result.artifacts.cacheReport.updatedArtifacts.sort(), [
     'adminReviewQueue',
     'imageManifest',
@@ -27,6 +28,7 @@ test('full offline content cycle updates article, image, RSS, sitemap, cache, an
   ]);
   assert.ok(result.artifacts.adminReviewQueue.some((entry) => entry.queue === 'low-relevance'));
   assert.ok(result.artifacts.adminReviewQueue.some((entry) => entry.queue === 'failed-extraction'));
+  assert.ok(result.artifacts.adminReviewQueue.some((entry) => entry.articleId === 'fact-rich-ai-campus' && entry.queue === 'regeneration-needed'));
 });
 
 test('publish cycle keeps internal cycle status out of public artifacts', async () => {
@@ -60,26 +62,28 @@ test('publish cycle keeps internal cycle status out of public artifacts', async 
 
 test('publish cycle keeps source-link briefs off local detail pages', async () => {
   const sourceUrl = 'https://example.com/utility-campus-grid-queue';
+  const authorized = authorizePublicTestRecords([{
+    id: 'utility-campus-grid-queue',
+    title: 'Utility queue blocks campus energization',
+    source: 'Example Grid Dispatch',
+    sourceUrl,
+    publishedAt: '2026-05-30T10:00:00.000Z',
+    summary: 'A utility interconnect queue shifted the energization date for a compute campus.',
+    articleText: [
+      'The utility now expects interconnect studies to set the campus energization path.',
+      'Project filings say the first phase depends on a signed service agreement, transformer delivery, and a final substation construction schedule.',
+      'The developer told county officials that AI training demand is still reserved, but the campus cannot ramp racks until the utility completes feeder work.',
+      'Local planners identified grid studies, road access, and backup generation permits as the decision points that could shift the opening date.',
+      'Power equipment suppliers and interconnection engineering are named as the limiting factors for the first two halls.',
+    ].join(' '),
+    primary_category: 'Power & Grid',
+    infrastructure_layer: 'Power',
+    extraction_quality_score: 0.88,
+    infrastructure_relevance_score: 0.81,
+  }]);
   const result = await runPublishCycle({
-    articles: [{
-      id: 'utility-campus-grid-queue',
-      title: 'Utility queue blocks campus energization',
-      source: 'Example Grid Dispatch',
-      sourceUrl,
-      publishedAt: '2026-05-30T10:00:00.000Z',
-      summary: 'A utility interconnect queue shifted the energization date for a compute campus.',
-      articleText: [
-        'The utility now expects interconnect studies to set the campus energization path.',
-        'Project filings say the first phase depends on a signed service agreement, transformer delivery, and a final substation construction schedule.',
-        'The developer told county officials that AI training demand is still reserved, but the campus cannot ramp racks until the utility completes feeder work.',
-        'Local planners identified grid studies, road access, and backup generation permits as the decision points that could shift the opening date.',
-        'Power equipment suppliers and interconnection engineering are named as the limiting factors for the first two halls.',
-      ].join(' '),
-      primary_category: 'Power & Grid',
-      infrastructure_layer: 'Power',
-      extraction_quality_score: 0.88,
-      infrastructure_relevance_score: 0.81,
-    }],
+    articles: authorized.records,
+    ...authorized.options,
     routeArticle: async (article) => ({
       id: article.id,
       title: article.title,
@@ -103,26 +107,28 @@ test('publish cycle keeps source-link briefs off local detail pages', async () =
 
 test('publish cycle detailPage false edge keeps thin briefs source-linked', async () => {
   const sourceUrl = 'https://example.com/thin-grid-brief';
+  const authorized = authorizePublicTestRecords([{
+    id: 'thin-grid-brief',
+    title: 'Interconnect queue still controls campus timing',
+    source: 'Example Grid Dispatch',
+    sourceUrl,
+    publishedAt: '2026-05-30T10:00:00.000Z',
+    summary: 'A short grid update keeps operators watching interconnect milestones.',
+    articleText: [
+      'A short grid update identified interconnect milestones as the active timing constraint for a planned compute campus.',
+      'The source said the developer still has customer reservations, but energization depends on utility studies, transformer delivery, and a signed service agreement.',
+      'County filings list substation construction, road access, and backup generation permits as the open decision points.',
+      'Operators are watching whether the utility can align feeder work with the first building handoff.',
+      'Power equipment suppliers and interconnection engineering remain the limiting factors for the initial halls.',
+    ].join(' '),
+    primary_category: 'Power & Grid',
+    infrastructure_layer: 'Power',
+    extraction_quality_score: 0.82,
+    infrastructure_relevance_score: 0.74,
+  }]);
   const result = await runPublishCycle({
-    articles: [{
-      id: 'thin-grid-brief',
-      title: 'Interconnect queue still controls campus timing',
-      source: 'Example Grid Dispatch',
-      sourceUrl,
-      publishedAt: '2026-05-30T10:00:00.000Z',
-      summary: 'A short grid update keeps operators watching interconnect milestones.',
-      articleText: [
-        'A short grid update identified interconnect milestones as the active timing constraint for a planned compute campus.',
-        'The source said the developer still has customer reservations, but energization depends on utility studies, transformer delivery, and a signed service agreement.',
-        'County filings list substation construction, road access, and backup generation permits as the open decision points.',
-        'Operators are watching whether the utility can align feeder work with the first building handoff.',
-        'Power equipment suppliers and interconnection engineering remain the limiting factors for the initial halls.',
-      ].join(' '),
-      primary_category: 'Power & Grid',
-      infrastructure_layer: 'Power',
-      extraction_quality_score: 0.82,
-      infrastructure_relevance_score: 0.74,
-    }],
+    articles: authorized.records,
+    ...authorized.options,
     routeArticle: async (article) => ({
       id: article.id,
       title: article.title,

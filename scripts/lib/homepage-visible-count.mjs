@@ -1,9 +1,11 @@
+import { hasPublishedArticlePage } from './article-publication-state.mjs';
+
 export function isLocalHomepageBlog(article = {}) {
   const route = String(article.blog_route || article.publishing_route || article.route || '').toLowerCase();
   return Boolean(
     article.id
       && article.homepagePublished !== false
-      && article.articlePagePublished !== false
+      && hasPublishedArticlePage(article)
       && article.archiveOnly !== true
       && article.noindex !== true
       && !article.signalCardOnly

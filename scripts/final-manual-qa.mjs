@@ -5,6 +5,11 @@ import { createRequire } from 'node:module';
 import { fileURLToPath } from 'node:url';
 import loginHandler from '../api/admin/login.js';
 import { hashAdminPassword } from '../api/admin/_auth.js';
+import {
+  collectRightsReviewSafeModeEvidence,
+  RIGHTS_REVIEW_PAUSE_STATE,
+  rightsReviewSafeModeResult,
+} from './lib/rights-review-safe-mode.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const DEFAULT_OUT = path.join(ROOT, 'evidence/compute-current-omo-ultra-rebuild/f3-manual-qa/result.json');
@@ -34,6 +39,136 @@ async function firstChild(dir, predicate = () => true) {
   const entries = await fs.readdir(dir, { withFileTypes: true }).catch(() => []);
   const match = entries.find((entry) => predicate(entry));
   return match?.name || '';
+}
+
+export async function buildManualQaArticlePlan(distDir, { sourceRegistry, now } = {}) {
+  const newsDir = path.join(distDir, 'news');
+  const newsEntries = await fs.readdir(newsDir, { withFileTypes: true }).catch((error) => {
+    if (error?.code === 'ENOENT') return [];
+    throw error;
+  });
+  const malformed = [];
+  const detailIds = [];
+  for (const entry of newsEntries) {
+    const hasIndex = entry.isDirectory() && await exists(path.join(newsDir, entry.name, 'index.html'));
+    if (!hasIndex) malformed.push(entry.name);
+    else detailIds.push(entry.name);
+  }
+  detailIds.sort((left, right) => left.localeCompare(right));
+
+  const safeModeEvidence = collectRightsReviewSafeModeEvidence({ distDir, sourceRegistry, now });
+  const safeMode = rightsReviewSafeModeResult(safeModeEvidence);
+  const homepage = await fs.readFile(path.join(distDir, 'index.html'), 'utf8').catch(() => '');
+  const homepageClaimsSafeMode = homepage.includes(`data-rights-review-state="${RIGHTS_REVIEW_PAUSE_STATE}"`);
+  if (malformed.length > 0) {
+    return {
+      ok: false,
+      reasons: malformed.map((name) => `malformed_public_detail_inventory:${name}`),
+      articleRoute: '',
+      adminEditRoute: '/admin/edit/',
+      articleCheck: {
+        label: 'article',
+        route: '',
+        status: 0,
+        ok: false,
+        skipped: false,
+        mode: 'normal',
+        reason: 'malformed_public_detail_inventory',
+        verifiedPublicDetailCount: detailIds.length,
+      },
+      safeModeEvidence,
+    };
+  }
+
+  if (safeModeEvidence.publicDetailCount !== detailIds.length) {
+    return {
+      ok: false,
+      reasons: [`public_detail_inventory_count_mismatch:${detailIds.length}/${safeModeEvidence.publicDetailCount}`],
+      articleRoute: '',
+      adminEditRoute: '/admin/edit/',
+      articleCheck: {
+        label: 'article',
+        route: '',
+        status: 0,
+        ok: false,
+        skipped: false,
+        mode: 'normal',
+        reason: 'public_detail_inventory_count_mismatch',
+        verifiedPublicDetailCount: safeModeEvidence.publicDetailCount,
+      },
+      safeModeEvidence,
+    };
+  }
+
+  if (detailIds.length === 0) {
+    if (!safeMode.ok) {
+      return {
+        ok: false,
+        reasons: ['zero_detail_inventory_without_verified_rights_review_safe_mode', ...safeMode.reasons],
+        articleRoute: '',
+        adminEditRoute: '/admin/edit/',
+        articleCheck: {
+          label: 'article',
+          route: '',
+          status: 0,
+          ok: false,
+          skipped: false,
+          mode: 'normal',
+          reason: 'zero_detail_inventory_without_verified_rights_review_safe_mode',
+          verifiedPublicDetailCount: 0,
+        },
+        safeModeEvidence,
+      };
+    }
+    return {
+      ok: true,
+      reasons: [],
+      articleRoute: '',
+      adminEditRoute: '/admin/edit/',
+      articleCheck: {
+        label: 'article',
+        route: '',
+        status: 0,
+        ok: true,
+        skipped: true,
+        mode: 'rights_review_safe_mode',
+        reason: 'verified_zero_public_detail_inventory',
+        verifiedPublicDetailCount: 0,
+      },
+      safeModeEvidence,
+    };
+  }
+
+  if (homepageClaimsSafeMode) {
+    return {
+      ok: false,
+      reasons: ['rights_review_safe_mode_conflicts_with_public_details'],
+      articleRoute: '',
+      adminEditRoute: '/admin/edit/',
+      articleCheck: {
+        label: 'article',
+        route: '',
+        status: 0,
+        ok: false,
+        skipped: false,
+        mode: 'normal',
+        reason: 'rights_review_safe_mode_conflicts_with_public_details',
+        verifiedPublicDetailCount: detailIds.length,
+      },
+      safeModeEvidence,
+    };
+  }
+
+  const newsId = detailIds[0];
+  const encodedNewsId = encodeURIComponent(newsId);
+  return {
+    ok: true,
+    reasons: [],
+    articleRoute: `/news/${encodedNewsId}/`,
+    adminEditRoute: `/admin/edit/?id=${encodedNewsId}`,
+    articleCheck: null,
+    safeModeEvidence,
+  };
 }
 
 function contentType(filePath) {
@@ -98,22 +233,22 @@ async function closeServer(server) {
 }
 
 async function browserQa(baseUrl, distDir, screenshotDir) {
+  const articlePlan = await buildManualQaArticlePlan(distDir);
+  if (!articlePlan.ok) return [articlePlan.articleCheck];
   const { chromium } = await loadPlaywright();
-  const newsId = await firstChild(path.join(distDir, 'news'), (entry) => entry.isDirectory());
   const category = await firstChild(path.join(distDir, 'category'), (entry) => entry.isDirectory());
-  const adminId = await firstChild(path.join(distDir, 'admin/edit'), (entry) => entry.isDirectory());
   const routes = [
     ['home', '/'],
-    ['article', `/news/${newsId}/`],
+    ...(articlePlan.articleRoute ? [['article', articlePlan.articleRoute]] : []),
     ['archive', '/archive/'],
     ['category', `/category/${category}/`],
     ['admin-html', '/admin.html'],
-    ['admin-edit', `/admin/edit/${adminId}/`],
+    ['admin-edit', articlePlan.adminEditRoute],
   ];
   await fs.mkdir(screenshotDir, { recursive: true });
   const browser = await chromium.launch({ headless: true });
   const page = await browser.newPage({ viewport: { width: 1366, height: 900 } });
-  const checks = [];
+  const checks = articlePlan.articleCheck ? [articlePlan.articleCheck] : [];
   try {
     for (const [label, route] of routes) {
       const response = await page.goto(`${baseUrl}${route}`, { waitUntil: 'networkidle' });

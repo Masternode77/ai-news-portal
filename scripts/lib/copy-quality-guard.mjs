@@ -1,11 +1,9 @@
 import fs from 'node:fs';
-import path from 'node:path';
-import { fileURLToPath } from 'node:url';
 import { hasMalformedProperNouns, malformedProperNouns, normalizeProperNouns } from './proper-noun-normalizer.mjs';
 import { detectTruncationArtifacts } from './truncation-detector.mjs';
+import { resolveRepositoryFile } from './repository-file-resolver.mjs';
 
-const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
-const FORBIDDEN_PUBLIC_PHRASES_PATH = path.join(ROOT, 'config/forbiddenPublicPhrases.yml');
+const FORBIDDEN_PUBLIC_PHRASES_PATH = resolveRepositoryFile('config/forbiddenPublicPhrases.yml');
 
 function parseSimpleYamlList(raw = '', key = '') {
   const lines = String(raw || '').split(/\r?\n/);
@@ -24,14 +22,10 @@ function parseSimpleYamlList(raw = '', key = '') {
 }
 
 export function loadForbiddenPublicPhrases() {
-  try {
-    return parseSimpleYamlList(
-      fs.readFileSync(FORBIDDEN_PUBLIC_PHRASES_PATH, 'utf8'),
-      'forbidden_public_phrases'
-    );
-  } catch {
-    return [];
-  }
+  return parseSimpleYamlList(
+    fs.readFileSync(FORBIDDEN_PUBLIC_PHRASES_PATH, 'utf8'),
+    'forbidden_public_phrases'
+  );
 }
 
 export const FORBIDDEN_PUBLIC_PHRASES = loadForbiddenPublicPhrases();

@@ -1,9 +1,28 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import { SITE } from '../config/site';
-import { adsEnabled, analyticsEnabled } from '../lib/monetization';
+import {
+  adsConfigured,
+  adsEnabled,
+  analyticsConfigured,
+  analyticsEnabled,
+  googleCmpReady,
+} from '../lib/monetization';
 
-const effectiveDate = 'July 24, 2026';
+const effectiveDate = 'August 9, 2026';
+const advertisingStatus = adsEnabled
+  ? 'Advertising is active only on eligible public content pages. This privacy page does not load advertising, analytics, or consent-management tags.'
+  : adsConfigured
+    ? 'A Google AdSense publisher ID is configured for ownership verification and ads.txt, but advertising is not active until the operator has completed and tested the certified Google CMP handoff.'
+    : 'Google advertising is not configured for this deployment.';
+const analyticsStatus = analyticsEnabled
+  ? 'Google Analytics 4 is active only on eligible public content pages to measure aggregated readership.'
+  : analyticsConfigured
+    ? 'A Google Analytics 4 measurement ID is configured, but Analytics is not active until the operator has completed and tested the certified Google CMP handoff.'
+    : 'Google Analytics 4 is not configured for this deployment.';
+const cmpStatus = googleCmpReady
+  ? 'The operator has marked the certified Google CMP handoff as ready. That setting is reviewed separately from this privacy notice.'
+  : 'The certified Google CMP handoff is not marked ready, so consent-requiring Google advertising and analytics tags remain disabled.';
 ---
 <Layout
   title={`Privacy Policy | ${SITE.name}`}
@@ -16,9 +35,8 @@ const effectiveDate = 'July 24, 2026';
       <p class="eyebrow">Privacy Policy</p>
       <h1>Your data, kept boring on purpose.</h1>
       <p class="policy-lede">
-        Compute Current is a publicly readable publication. We collect as little as possible, we ask before
-        measurement or advertising cookies are used where consent applies, and we never sell personal data.
-        Effective date: {effectiveDate}.
+        Compute Current is a publicly readable publication. This notice describes the data practices that may apply
+        when the operator enables measurement or advertising on eligible content pages. Effective date: {effectiveDate}.
       </p>
 
       <section>
@@ -32,30 +50,29 @@ const effectiveDate = 'July 24, 2026';
       <section>
         <h2>What we collect automatically</h2>
         <p>
-          Our hosting provider processes standard server logs (IP address, user agent, requested URL, timestamp)
-          to serve pages, protect the service from abuse, and diagnose failures. Logs are retained only as long as
-          the hosting platform needs them for those purposes.
+          Our hosting provider may process standard server logs, such as IP address, user agent, requested URL, and
+          timestamp, to serve pages, protect the service from abuse, and diagnose failures. The operator sets and
+          reviews applicable retention periods with the hosting provider and professional advisers.
         </p>
       </section>
 
       <section>
         <h2>Analytics</h2>
         <p>
-          {analyticsEnabled
-            ? 'This site uses Google Analytics 4 to understand aggregate readership: which pages are read, roughly where readers come from, and which sources send traffic. Analytics cookies are only set according to your consent choice. Reports are aggregated and are not used to identify individual readers.'
-            : 'When analytics are enabled, this site uses Google Analytics 4 to understand aggregate readership. Analytics cookies are only set according to your consent choice, and reports are aggregated, never used to identify individual readers.'}
+          {analyticsStatus} When active, Analytics is used to understand aggregate readership, including pages read,
+          approximate referral sources, and traffic patterns. Its use and the applicable notice depend on the
+          certified CMP configuration and the visitor&rsquo;s location.
         </p>
       </section>
 
       <section>
         <h2>Advertising</h2>
         <p>
-          {adsEnabled
-            ? 'This site shows advertising served by Google AdSense. Google and its partners may use cookies or device identifiers to serve and measure ads, including, where you consent, personalized ads.'
-            : 'This site is prepared to show advertising served by Google AdSense. Once active, Google and its partners may use cookies or device identifiers to serve and measure ads, including, where you consent, personalized ads.'}
-          You can control ad personalization in your Google account at
+          {advertisingStatus} When advertising is active, Google and its partners may use cookies, IP addresses, or
+          other identifiers to serve and measure ads, including personalized advertising where applicable. You can
+          control ad personalization in your Google account at{' '}
           <a href="https://adssettings.google.com" target="_blank" rel="noopener noreferrer">adssettings.google.com</a>,
-          and read how Google uses data from partner sites at
+          and read how Google uses data from partner sites at{' '}
           <a href="https://policies.google.com/technologies/partner-sites" target="_blank" rel="noopener noreferrer">policies.google.com/technologies/partner-sites</a>.
         </p>
       </section>
@@ -63,30 +80,31 @@ const effectiveDate = 'July 24, 2026';
       <section>
         <h2>Cookies and your choices</h2>
         <p>
-          Where measurement or advertising services are active, a consent notice lets you choose between
-          &ldquo;Allow all&rdquo; and &ldquo;Essential only.&rdquo; Your choice is stored in your browser
-          (local storage key <code>ccConsentV1</code>) and applied through Google Consent Mode. To change your
-          decision later, clear this site&rsquo;s browsing data and reload; the notice will appear again.
-          Declining never blocks access to any content.
+          Where a certified Google consent message is active, it records choices and supports the applicable Google
+          consent flow. Visitors in the EU/EEA, UK, or Switzerland can revisit a recorded choice by using the{' '}
+          <strong>Privacy choices</strong> control in the footer of another public content page. This privacy page
+          intentionally does not load the Google consent runtime. If that control is unavailable, the consent message
+          may not apply to the visitor&rsquo;s location or may not be active; Google account controls remain available at
+          the link above.
         </p>
+        <p>{cmpStatus}</p>
       </section>
 
       <section>
         <h2>Legal bases</h2>
         <p>
-          Where the GDPR or similar laws apply, we rely on legitimate interest for serving pages and security
-          logging, and on your consent for analytics and advertising storage. You may withdraw consent at any
-          time as described above.
+          Legal bases, consent wording, vendor disclosures, and retention periods require operator and legal review
+          for the jurisdictions in which the site is offered. This notice does not determine the legal basis for a
+          particular visitor or location.
         </p>
       </section>
 
       <section>
         <h2>Your rights</h2>
         <p>
-          Depending on your jurisdiction (including the EU/EEA, UK, and California), you may have rights to
-          access, correct, delete, or restrict processing of personal data, and to opt out of the sale or sharing
-          of personal information. We do not sell personal information. To exercise any right, email
-          <a href={`mailto:${SITE.contactEmail}`}>{SITE.contactEmail}</a> and we will respond within 30 days.
+          Depending on your jurisdiction, you may have rights concerning personal data. To submit a privacy request,
+          email <a href={`mailto:${SITE.contactEmail}`}>{SITE.contactEmail}</a>. The operator will assess requests
+          under the applicable law and the services involved.
         </p>
       </section>
 

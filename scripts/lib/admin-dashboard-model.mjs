@@ -138,8 +138,8 @@ function articleRow(article = {}, sourceBucket = 'archive') {
     reviewFlags,
     sourceUrl: text(article.sourceUrl || article.url),
     publicHref: id ? '/news/' + id + '/' : '',
-    editHref: id ? '/admin/edit/' + id + '/' : '',
-    qualityHref: id ? '/admin/content-quality/' + id + '/' : '',
+    editHref: id ? '/admin/edit/?id=' + encodeURIComponent(id) : '',
+    qualityHref: id ? '/admin/edit/?id=' + encodeURIComponent(id) : '',
     imageProvider: text(article.generatedImageProvider || article.generatedImageModel),
     imageError: text(article.imageError),
   };

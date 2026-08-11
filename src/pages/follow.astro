@@ -12,22 +12,24 @@ const readers = [
 ---
 <Layout
   title={`Follow | ${SITE.name}`}
-  description="Get every new Compute Current analysis automatically — follow by feed reader or check the archive."
+  description="Follow currently available source-linked coverage by feed reader or check the archive when rights-approved analysis is published."
   canonicalPath="/follow/"
 >
   <main class="policy-shell follow-page">
     <a class="back-link" href="/">Latest analysis</a>
     <article class="policy-page">
       <p class="eyebrow">Follow</p>
-      <h1>Never miss a new analysis.</h1>
+      <h1>Follow source-linked coverage.</h1>
       <p class="policy-lede">
-        Compute Current publishes new source-linked coverage several times a day.
-        The easiest way to follow along is a feed reader — no account with us, no email required.
+        Use the public feed to follow source-linked coverage that is currently available. Long-form analysis is
+        published only after source rights and the required editorial and publication checks are satisfied; when
+        no sources are authorized for text use, the pipeline pauses instead of publishing.
+        A feed reader needs no account with us or email address.
       </p>
 
       <section>
         <h2>1. Copy the feed address</h2>
-        <p>This address is the machine-readable version of the site. It always contains the latest coverage.</p>
+        <p>This is the machine-readable public feed. Its contents reflect currently eligible public items, not a fixed publishing schedule.</p>
         <div class="feed-copy-row">
           <code class="feed-url" id="feed-url">{feedUrl}</code>
           <button type="button" class="feed-copy-btn" data-copy-feed>Copy</button>
@@ -37,7 +39,7 @@ const readers = [
       <section>
         <h2>2. Paste it into any feed reader</h2>
         <p>
-          Feed readers check the address for you and show new articles the moment they publish.
+          Feed readers check the address for you and show eligible articles when they publish.
           If you already use one, paste the address above. Otherwise these are solid free options:
         </p>
         <div class="reader-row">
@@ -56,8 +58,8 @@ const readers = [
       <section>
         <h2>Prefer the site itself?</h2>
         <p>
-          Everything also lands in the <a href="/archive/">publication archive</a>, newest first.
-          Bookmark the <a href="/">homepage</a> — it refreshes several times a day.
+          Eligible public items also appear in the <a href="/archive/">publication archive</a>, newest first.
+          Bookmark the <a href="/">homepage</a> to check current availability; neither page promises a fixed cadence.
         </p>
       </section>
 

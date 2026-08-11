@@ -7,6 +7,7 @@ import { writeClaimLedger } from './lib/claim-ledger.mjs';
 import { readJsonFile, writeJsonFile } from './lib/state-store.mjs';
 import { LATEST_NEWS_PATH, ARCHIVE_NEWS_PATH, SEARCH_INDEX_PATH } from './lib/constants.mjs';
 import { AUTONOMOUS_VERSION } from './lib/autonomous-desk-utils.mjs';
+import { enforceFinalPublicationIntegrity } from './lib/final-publication-integrity.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 
@@ -40,10 +41,19 @@ export async function runAndPersistEditorialCycle(options = {}) {
     recent: latest.filter((article) => article.generation_version === AUTONOMOUS_VERSION).slice(0, 20),
     ...options,
   });
+  const integrity = enforceFinalPublicationIntegrity(result.publishedAnalyses, [...latest, ...archived]);
+  result.publishedAnalyses = integrity.articles.filter((article) => article.articlePagePublished === true);
+  result.quarantinedAnalyses = integrity.blocked;
+  result.cycle.published_analyses = result.publishedAnalyses.map((article) => article.id);
+  result.cycle.errors.push(...integrity.blocked.map((article) => `${article.id}: final_publication_integrity_blocked`));
 
   const publishedIds = new Set(result.publishedAnalyses.map((article) => article.id));
   const latestOut = uniqueById([...result.publishedAnalyses, ...latest]).slice(0, 30);
-  const archiveOut = uniqueById([...archived, ...latest.filter((article) => !publishedIds.has(article.id))]);
+  const archiveOut = uniqueById([
+    ...integrity.blocked,
+    ...archived,
+    ...latest.filter((article) => !publishedIds.has(article.id)),
+  ]);
   const searchIndex = uniqueById([...latestOut, ...archiveOut].filter(publicSearchEligible)).map((article) => ({
     ...article,
     searchText: [

@@ -1,0 +1,212 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { SITE } from '../../config/site';
+
+Astro.response.headers.set('Cache-Control', 'no-store, private');
+Astro.response.headers.set('Pragma', 'no-cache');
+---
+<Layout
+  title={`Article editor | ${SITE.name}`}
+  description="Private Compute Current article editor"
+  canonicalPath="/admin/edit/"
+  noindex={true}
+>
+  <main class="admin-shell">
+    <header class="admin-header">
+      <a id="article-context-link" class="back-link admin-back" href="/admin/dashboard/">Back to dashboard</a>
+      <div>
+        <p class="eyebrow">Private Editor</p>
+        <h1>Compute Current article edit</h1>
+      </div>
+      <p class="admin-deck">Sign in to edit the article copy stored in GitHub. Saving creates a commit on the configured branch and lets Vercel rebuild the public page.</p>
+    </header>
+
+    <section id="admin-login" class="admin-panel">
+      <div>
+        <p class="eyebrow">Admin Login</p>
+        <h2>Restricted access</h2>
+      </div>
+      <form class="admin-form" id="login-form">
+        <label>
+          <span>Username</span>
+          <input name="username" autocomplete="username" />
+        </label>
+        <label>
+          <span>Password</span>
+          <input name="password" type="password" autocomplete="current-password" required />
+        </label>
+        <button type="submit">Sign in</button>
+      </form>
+    </section>
+
+    <section id="admin-editor" class="admin-panel admin-editor" hidden>
+      <div class="admin-editor-top">
+        <div>
+          <p class="eyebrow">Article</p>
+          <h2 id="editor-title">Article editor</h2>
+        </div>
+        <button id="logout-button" class="admin-secondary" type="button">Sign out</button>
+      </div>
+
+      <form class="admin-form admin-edit-form" id="article-form">
+        <label>
+          <span>Headline</span>
+          <input name="title" required />
+        </label>
+
+        <input id="editor-action" name="action" type="hidden" value="save-draft" />
+
+        <label>
+          <span>Deck summary</span>
+          <textarea name="dek" rows="3"></textarea>
+        </label>
+
+        <label>
+          <span>Editor's read</span>
+          <textarea name="expertLensShort" rows="3"></textarea>
+        </label>
+
+        <label>
+          <span>Article body</span>
+          <textarea name="bodyMarkdown" rows="18" required></textarea>
+        </label>
+
+        <div class="admin-field-grid">
+          <label>
+            <span>Category</span>
+            <input name="category" />
+          </label>
+          <label>
+            <span>Region</span>
+            <input name="region" />
+          </label>
+          <label>
+            <span>Source</span>
+            <input name="source" />
+          </label>
+          <label>
+            <span>Source URL</span>
+            <input name="sourceUrl" type="url" />
+          </label>
+          <label>
+            <span>Published at</span>
+            <input name="publishedAt" />
+          </label>
+          <label>
+            <span>Public status</span>
+            <select name="public_status">
+              <option value="draft">Draft</option>
+              <option value="published">Published</option>
+              <option value="hidden">Hidden</option>
+              <option value="noindex">Noindex</option>
+            </select>
+          </label>
+        </div>
+
+        <label>
+          <span>Tags</span>
+          <input name="tags" placeholder="power, chips, cloud" />
+        </label>
+
+        <label>
+          <span>Meta description</span>
+          <textarea name="metaDescription" rows="2"></textarea>
+        </label>
+
+        <label>
+          <span>Canonical URL</span>
+          <input name="canonicalUrl" type="url" />
+        </label>
+
+        <label>
+          <span>Source image URL</span>
+          <input name="sourceImage" />
+        </label>
+
+        <label>
+          <span>Generated image path</span>
+          <input name="generatedImage" placeholder="/generated/example.jpg" />
+        </label>
+
+        <div class="admin-field-grid">
+          <label>
+            <span>Hero image</span>
+            <input name="heroImage" placeholder="/generated/articles/example/hero.webp" />
+          </label>
+          <label>
+            <span>Thumbnail image</span>
+            <input name="thumbnailImage" placeholder="/generated/articles/example/thumb.webp" />
+          </label>
+        </div>
+
+        <label>
+          <span>Image alt text</span>
+          <input name="imageAlt" />
+        </label>
+
+        <label>
+          <span>Image prompt</span>
+          <textarea name="imagePrompt" rows="3"></textarea>
+        </label>
+
+        <label>
+          <span>Replacement image path</span>
+          <input name="replacementImage" placeholder="/uploads/replacement.webp" />
+        </label>
+
+        <div class="admin-save-row">
+          <div id="article-meta" class="admin-meta"></div>
+          <button type="submit" data-action="save-draft">Save draft</button>
+        </div>
+
+        <div class="admin-action-row" aria-label="Article actions">
+          <button type="submit" data-action="publish">Publish</button>
+          <button type="submit" data-action="hide">Hide</button>
+          <button type="submit" data-action="noindex">Noindex</button>
+          <button type="submit" data-action="upload-image">Use replacement image</button>
+          <button type="button" data-action="preview">Preview</button>
+        </div>
+      </form>
+
+      <section id="admin-preview" class="admin-preview" aria-live="polite"></section>
+    </section>
+
+    <p id="admin-status" class="admin-status" role="status" aria-live="polite"></p>
+  </main>
+
+  <style>
+    .admin-form button:hover,
+    .admin-secondary:hover {
+      border-color: var(--accent);
+      background: var(--accent);
+      color: #fff;
+    }
+
+    .admin-editor-top .admin-secondary {
+      flex-shrink: 0;
+      white-space: nowrap;
+    }
+
+    .admin-editor :global(#editor-title),
+    .admin-editor :global(.admin-preview-article h3),
+    .admin-editor :global(.admin-preview-article p) {
+      overflow-wrap: anywhere;
+    }
+
+    .admin-editor :global(#editor-title[lang='ko']),
+    .admin-editor :global(.admin-preview-article [lang='ko']) {
+      word-break: keep-all;
+    }
+
+    .admin-shell :is(a, button):focus-visible {
+      outline: 3px solid var(--accent);
+      outline-offset: 3px;
+    }
+  </style>
+
+  <script>
+    import { startAdminEditor } from '../../lib/admin-editor/client';
+
+    startAdminEditor(document);
+  </script>
+</Layout>

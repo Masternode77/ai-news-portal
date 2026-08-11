@@ -2,6 +2,7 @@ import fs from 'node:fs/promises';
 import path from 'node:path';
 import { duplicateFirstWordPrefixes, firstWords, forbiddenPublicPhraseMatches } from './copy-quality-guard.mjs';
 import { detectTruncationArtifacts } from './truncation-detector.mjs';
+import { isPublicProductFit } from './public-product-fit.mjs';
 
 const DEFAULT_REPORT_PATH = 'docs/rendered-public-output-report.md';
 const BOILERPLATE = /want more .* stories|copyright ©|all rights reserved|sign up for.+newsletter/i;
@@ -133,6 +134,26 @@ function pageTextFailures(page = {}) {
   return failures;
 }
 
+function pageForbiddenMatches(page = {}) {
+  const checkedText = page.path.startsWith('/news/') ? page.body : page.text;
+  return forbiddenPublicPhraseMatches(checkedText)
+    .filter((phrase) => !RENDERED_FALSE_POSITIVE_PHRASES.has(phrase));
+}
+
+async function canonicalArticles(dataDir = 'src/data') {
+  const values = await Promise.all([
+    readIfExists(path.join(dataDir, 'latest-news.json')),
+    readIfExists(path.join(dataDir, 'archived-news.json')),
+  ]);
+  return values.flatMap((value) => {
+    try {
+      return JSON.parse(value || '[]');
+    } catch {
+      return [];
+    }
+  });
+}
+
 async function imageFailures(distDir, pages = []) {
   const failures = [];
   for (const page of pages) {
@@ -154,6 +175,8 @@ async function writeReport(reportPath, result) {
     `Article pages checked: ${result.counts.articlePages}`,
     `Cards checked: ${result.counts.cards}`,
     `Broken images: ${result.counts.brokenImages}`,
+    `Low-relevance public cards: ${result.counts.lowRelevanceCards}`,
+    `Banned synthetic phrase matches: ${result.counts.bannedSyntheticMatches}`,
     '',
     '## Failures',
     '',
@@ -176,6 +199,13 @@ export async function auditRenderedPublicOutput(options = {}) {
 
   for (const page of pages) failures.push(...pageTextFailures(page));
   const cards = cardRecords(home?.html || '');
+  const articles = options.articles || await canonicalArticles(options.dataDir);
+  const articlesById = new Map(articles.map((article) => [String(article.id), article]));
+  const lowRelevanceCards = cards.filter((card) => {
+    const article = articlesById.get(String(card.id));
+    return article && !isPublicProductFit(article);
+  });
+  for (const card of lowRelevanceCards) failures.push(`card ${card.id}: public product fit failed`);
   for (const card of cards.filter((item) => !item.hasImage)) failures.push(`card ${card.id}: missing image`);
   for (const duplicate of duplicateFirstWordPrefixes(cards.map((card) => card.deck).filter(Boolean), 8)) {
     failures.push(`duplicate deck prefix ${duplicate.prefix}`);
@@ -186,6 +216,7 @@ export async function auditRenderedPublicOutput(options = {}) {
   }
   const brokenImages = await imageFailures(distDir, pages);
   failures.push(...brokenImages);
+  const bannedSyntheticMatches = pages.flatMap(pageForbiddenMatches);
 
   const result = {
     ok: failures.length === 0,
@@ -195,6 +226,8 @@ export async function auditRenderedPublicOutput(options = {}) {
       articlePages: pages.filter((page) => page.path.startsWith('/news/')).length,
       cards: cards.length,
       brokenImages: brokenImages.length,
+      lowRelevanceCards: lowRelevanceCards.length,
+      bannedSyntheticMatches: bannedSyntheticMatches.length,
     },
   };
   await writeReport(options.reportPath, result);

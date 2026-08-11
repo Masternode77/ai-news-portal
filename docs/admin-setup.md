@@ -20,7 +20,7 @@ Copy the `ADMIN_PASSWORD_HASH=scrypt$...` value into the deployment environment.
 
 For secret rotation, generate a new password hash, replace `ADMIN_PASSWORD_HASH`, and rotate `ADMIN_SESSION_SECRET` at the same time. Rotating `ADMIN_SESSION_SECRET` invalidates existing cookies because the `cc_admin` session signature changes.
 
-Use a 64+ character random value for `ADMIN_SESSION_SECRET`. In production, also verify the cookie includes `HttpOnly`, `SameSite=Strict`, and `Secure`.
+Use a cryptographically random `ADMIN_SESSION_SECRET` of at least 32 bytes. In production, also verify the cookie includes `HttpOnly`, `SameSite=Strict`, and `Secure`.
 
 ## GitHub Save Access
 

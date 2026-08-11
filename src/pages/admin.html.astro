@@ -1,6 +1,9 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import { SITE } from '../config/site';
+
+Astro.response.headers.set('Cache-Control', 'no-store, private');
+Astro.response.headers.set('Pragma', 'no-cache');
 ---
 <Layout
   title={`Admin Login | ${SITE.name}`}

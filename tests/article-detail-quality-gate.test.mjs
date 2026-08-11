@@ -18,13 +18,12 @@ test('rejects detail pages with fixed Editor Brief template', () => {
 });
 
 test('accepts clean longform infrastructure article body', () => {
-  const body = [
-    'China’s spot power trading pilot gives large data centers a different operating lever because load flexibility can change how operators manage procurement exposure.',
-    'The infrastructure question is whether that market mechanism lowers volatility for large facilities or simply shifts risk from fixed contracts into shorter price windows.',
-    'Operators benefit if virtual power plant participation creates dispatch value, while buyers remain exposed if volatility erodes predictable energy cost.',
-    'Power teams should watch participation volumes, price dispersion, and whether large data centers can translate flexible load into repeatable procurement advantage.',
-    'The bottom line is that power-market design is becoming part of data center operating strategy, not a separate utility-policy footnote.',
-  ].join('\n\n');
+  const paragraph = 'China’s spot power trading pilot gives large data centers a different operating lever because load flexibility can change how operators manage procurement exposure, while power teams watch participation volumes, price dispersion, utility milestones, and repeatable procurement advantage.';
+  const body = Array.from({ length: 5 }, (_, section) => [
+    `Operating Decision ${section + 1}`,
+    `${paragraph} ${paragraph}`,
+    `${paragraph} ${paragraph}`,
+  ].join('\n\n')).join('\n\n');
   const article = {
     id: 'good-detail',
     title: 'China data centers tap spot power trading',
@@ -49,5 +48,32 @@ test('rejects detail pages without enough visible article sections', () => {
   const result = articleDetailQualityResult(article);
 
   assert.equal(result.ok, false);
-  assert.ok(result.reasons.includes('article_body_too_few_sections'));
+  assert.ok(result.reasons.includes('sections_below_5'));
+});
+
+test('rejects a structured local detail article below the shared 4500-character longform contract', () => {
+  // Given: source extraction passes, but the generated detail body is only about 1,000 characters.
+  const source = `${'Utility filings document transformer delivery, interconnection timing, customer commitments, and campus commissioning milestones. '.repeat(20)}Final source sentence complete.`;
+  const body = [
+    'What changed',
+    'Utility timing now controls the campus schedule and capacity procurement plan for operators.',
+    'Who benefits',
+    'Buyers benefit from firm milestones while developers retain delay exposure across equipment delivery.',
+    'What to watch',
+    'Teams should watch transformer delivery, service agreements, and commissioning evidence before revising plans.',
+  ].join('\n\n').repeat(3);
+
+  // When: the article-detail quality gate evaluates the candidate.
+  const result = articleDetailQualityResult({
+    id: 'short-structured-detail',
+    title: 'Utility timing controls campus commissioning',
+    infrastructure_relevance_score: 0.9,
+    articleText: source,
+    blog_route: 'standard_blog',
+    expertLensFull: { finalArticleBody: body },
+  });
+
+  // Then: no implicit intermediate detail tier is accepted.
+  assert.equal(result.ok, false);
+  assert.ok(result.reasons.includes('visible_body_below_4500'));
 });

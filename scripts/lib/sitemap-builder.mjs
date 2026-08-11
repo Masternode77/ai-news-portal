@@ -3,13 +3,13 @@ import { CATEGORY_PAGES } from './taxonomy-page-builder.mjs';
 import { DEFAULT_COMPANIES } from './company-entity-index.mjs';
 import { DEFAULT_REGIONS } from './region-index.mjs';
 import { articleOpenGraphImage, isTrustedPublicImage } from './article-image-surface.mjs';
+import { isPublicLongformArticle } from './public-surface-eligibility.mjs';
 
 function slugify(value = '') {
   return String(value).toLowerCase().replace(/&/g, 'and').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
 }
 
-export function buildSitemapEntries(items = []) {
-  const now = new Date().toISOString();
+export function buildSitemapEntries(items = [], options = {}) {
   const staticPages = [
     '/',
     '/about/',
@@ -20,12 +20,18 @@ export function buildSitemapEntries(items = []) {
     '/contact/',
   ];
   const articlePages = items
-    .filter((item) => item?.id && item.articlePagePublished !== false && item.archiveOnly !== true && item.public_status !== 'archive_only_noindex' && item.public_status !== 'quarantined' && !shouldNoindexArticle(item))
+    .filter((item) => item?.id
+      && item.archiveOnly !== true
+      && item.public_status !== 'archive_only_noindex'
+      && item.public_status !== 'quarantined'
+      && !shouldNoindexArticle(item)
+      && isPublicLongformArticle(item, options))
     .map((item) => {
       const image = articleOpenGraphImage(item);
+      const lastmod = item.updatedAt || item.analysisPublishedAt || item.publishedAt;
       return {
         loc: `/news/${item.id}/`,
-        lastmod: item.updatedAt || item.analysisPublishedAt || item.publishedAt || now,
+        ...(lastmod ? { lastmod } : {}),
         image: isTrustedPublicImage(image) ? image : '',
       };
     });
@@ -33,9 +39,9 @@ export function buildSitemapEntries(items = []) {
     ...CATEGORY_PAGES.map(([slug]) => `/category/${slug}/`),
     ...DEFAULT_REGIONS.map((name) => `/region/${slugify(name)}/`),
     ...DEFAULT_COMPANIES.map((name) => `/company/${slugify(name)}/`),
-  ].map((loc) => ({ loc, lastmod: now }));
+  ].map((loc) => ({ loc }));
   return [
-    ...staticPages.map((loc) => ({ loc, lastmod: now })),
+    ...staticPages.map((loc) => ({ loc })),
     ...taxonomy,
     ...articlePages,
   ];
@@ -61,7 +67,7 @@ export function sitemapXml(entries = [], site = 'https://www.computecurrent.com'
   const body = entries.map((entry) => [
     '  <url>',
     `    <loc>${escapeXml(absoluteSiteUrl(entry.loc, site))}</loc>`,
-    `    <lastmod>${new Date(entry.lastmod).toISOString()}</lastmod>`,
+    entry.lastmod ? `    <lastmod>${new Date(entry.lastmod).toISOString()}</lastmod>` : '',
     entry.image
       ? [
           '    <image:image>',

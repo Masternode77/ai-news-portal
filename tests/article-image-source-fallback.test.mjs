@@ -64,23 +64,46 @@ test('article image surface keeps image2 artwork ahead of source artwork', () =>
 
 test('article image surface uses canonical article variants ahead of source artwork', () => {
   const article = {
-    id: '94f36086ed1f0aa2',
-    title: 'Intel swipes Qualcomm veteran of 25 years to lead client computing Alex Katouzian jumps ship',
+    id: '27fe86b238ed616a',
+    title: 'When the Trump administration cracks down on Anthropic who benefits',
     sourceImage: 'https://example.com/source-should-not-win-over-canonical.jpg',
   };
 
   assert.equal(
     articleHeroImage(article),
-    '/generated/articles/94f36086ed1f0aa2-intel-swipes-qualcomm-veteran-of-25-years-to-lead-client-computing-alex-katouzian-jumps-sh/hero.webp',
+    '/generated/articles/27fe86b238ed616a-when-the-trump-administration-cracks-down-on-anthropic-who-benefits/hero.webp',
   );
   assert.equal(
     articleCardImage(article),
-    '/generated/articles/94f36086ed1f0aa2-intel-swipes-qualcomm-veteran-of-25-years-to-lead-client-computing-alex-katouzian-jumps-sh/thumbnail.webp',
+    '/generated/articles/27fe86b238ed616a-when-the-trump-administration-cracks-down-on-anthropic-who-benefits/thumbnail.webp',
   );
   assert.equal(
     articleOpenGraphImage(article),
-    '/generated/articles/94f36086ed1f0aa2-intel-swipes-qualcomm-veteran-of-25-years-to-lead-client-computing-alex-katouzian-jumps-sh/og.webp',
+    '/generated/articles/27fe86b238ed616a-when-the-trump-administration-cracks-down-on-anthropic-who-benefits/og.webp',
   );
+});
+
+test('article image surface refuses unapproved source-canonical local variants', () => {
+  // Given: a tracked canonical image explicitly marked as publisher-derived.
+  const article = {
+    id: '94f36086ed1f0aa2',
+    title: 'Intel swipes Qualcomm veteran of 25 years to lead client computing Alex Katouzian jumps ship',
+    category: 'Semiconductors',
+    source: "Tom's Hardware",
+    sourceUrl: 'https://www.tomshardware.com/pc-components/cpus/example',
+    generatedImageProvider: 'source-image',
+    imageStatus: 'source-canonical',
+  };
+
+  // When: all public variants are resolved.
+  const variants = articleImageVariants(article);
+
+  // Then: no publisher-derived canonical path reaches the public surface.
+  assert.equal(variants.hero.url, '/generated/fallbacks/semiconductors.svg');
+  assert.equal(variants.thumbnail.url, '/generated/fallbacks/semiconductors.svg');
+  assert.equal(variants.og.url, '/generated/fallbacks/semiconductors.svg');
+  assert.equal(variants.hero.provider, 'category-fallback');
+  assert.equal(variants.hero.status, 'fallback');
 });
 
 test('article image surface treats explicit fallback SVGs as placeholders even with AI metadata', () => {

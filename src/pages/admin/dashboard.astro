@@ -1,6 +1,9 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import { SITE } from '../../config/site';
+
+Astro.response.headers.set('Cache-Control', 'no-store, private');
+Astro.response.headers.set('Pragma', 'no-cache');
 ---
 <Layout
   title={'Admin Dashboard | ' + SITE.name}
@@ -97,6 +100,7 @@ import { SITE } from '../../config/site';
 
   <script>
     // @ts-nocheck
+    import { clearDashboardPrivateDom } from '../../lib/admin-private-state.mjs';
     const loginPanel = document.getElementById('admin-login');
     const dashboardPanel = document.getElementById('admin-dashboard-panel');
     const logsPanel = document.getElementById('admin-logs-panel');
@@ -146,21 +150,28 @@ import { SITE } from '../../config/site';
       .replaceAll('"', '&quot;')
       .replaceAll("'", '&#39;');
 
+    const clearPrivateState = () => {
+      csrfToken = '';
+      clearDashboardPrivateDom(document);
+    };
+
+    const showLogin = (message = 'Sign in to view dashboard.') => {
+      clearPrivateState();
+      loginPanel.hidden = false;
+      dashboardPanel.hidden = true;
+      logsPanel.hidden = true;
+      setStatus(message);
+    };
+
     const requestJson = async (url, options = {}) => {
       const method = String(options.method || 'GET').toUpperCase();
       const headers = { 'Content-Type': 'application/json', ...(options.headers || {}) };
       if (!['GET', 'HEAD', 'OPTIONS'].includes(method) && csrfToken) headers['X-CSRF-Token'] = csrfToken;
       const response = await fetch(url, { ...options, headers });
       const payload = await response.json().catch(() => ({}));
+      if (response.status === 401 || response.status === 403) showLogin('Your session is no longer available. Sign in again.');
       if (!response.ok) throw new Error(payload.error || 'Request failed.');
       return payload;
-    };
-
-    const showLogin = () => {
-      loginPanel.hidden = false;
-      dashboardPanel.hidden = true;
-      logsPanel.hidden = true;
-      setStatus('Sign in to view dashboard.');
     };
 
     const showDashboard = () => {
@@ -269,8 +280,7 @@ import { SITE } from '../../config/site';
 
     logoutButton?.addEventListener('click', async () => {
       await requestJson('/api/admin/login', { method: 'DELETE' }).catch(() => ({}));
-      csrfToken = '';
-      showLogin();
+      showLogin('Signed out.');
     });
 
     checkSession();

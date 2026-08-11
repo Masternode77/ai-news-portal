@@ -16,6 +16,7 @@ import { taxonomyDisplay } from '../../lib/taxonomy-display.js';
 import {
   articleCanonicalPath,
   buildArticleStructuredData,
+  serializeJsonForScript,
   sourceAttributionFor,
 } from '../../lib/seo-safeguards.js';
 import { forbiddenPublicPhraseMatches, guardPublicCopy } from '../../../scripts/lib/copy-quality-guard.mjs';
@@ -109,7 +110,7 @@ const structuredData = buildArticleStructuredData({
   canonicalPath={canonicalPath}
   image={openGraphImage}
 >
-  <script is:inline type="application/ld+json" set:html={JSON.stringify(structuredData)}></script>
+  <script is:inline type="application/ld+json" set:html={serializeJsonForScript(structuredData)}></script>
   <main class="detail-shell publication-article">
     <article class="detail-card publication-article-card">
       <div class="detail-body">

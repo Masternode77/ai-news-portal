@@ -3,6 +3,8 @@ import { sourceExtractionPassesPublicGate, sourceExtractionPassesLongformGate } 
 import { guardPublicTemplatePhrases } from './public-template-phrase-guard.mjs';
 import { detectBoilerplate } from './boilerplate-detector.mjs';
 import { detectTruncationArtifacts } from './truncation-detector.mjs';
+import { hasPublishedArticlePage } from './article-publication-state.mjs';
+import { isPublicProductFit } from './public-product-fit.mjs';
 
 function unique(values = []) {
   return [...new Set(values.filter(Boolean).map((value) => String(value)))];
@@ -45,6 +47,7 @@ export function seoNoindexReasons(article = {}, options = {}) {
     }
   }
   if (article.archiveOnly === true || article.infrastructure_relevance_action === 'archive_only') reasons.push('archive_only_relevance_action');
+  if (!isPublicProductFit(article)) reasons.push('public_product_fit_failed');
   if (route.visibility === 'archive') reasons.push(...(route.blocked_reasons || ['archive_route']));
   if (route.visibility === 'adjacent' && !publicExtraction.ok) reasons.push(...publicExtraction.block_reasons.map((reason) => `source_extraction:${reason}`));
   if (route.visibility === 'core' && !longformExtraction.ok) reasons.push(...longformExtraction.block_reasons.map((reason) => `source_extraction:${reason}`));
@@ -63,7 +66,7 @@ export function shouldNoindexPublicArticle(article = {}, options = {}) {
 export function sitemapArticleEligible(article = {}, options = {}) {
   const route = options.route || article.public_routing || routePublicLane(article);
   return route.visibility === 'core'
-    && article.articlePagePublished !== false
+    && hasPublishedArticlePage(article)
     && !shouldNoindexPublicArticle(article, { route });
 }
 

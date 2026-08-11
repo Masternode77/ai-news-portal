@@ -12,6 +12,7 @@ import { fetchArticleExtraction } from './source-fetch.mjs';
 import { normalizeEditorialVoice } from './editorial-humanizer.mjs';
 import { extractExpertInsight } from './expert-insight-engine.mjs';
 import { classifyInfrastructureRelevance } from './relevance-classifier.mjs';
+import { createExtractionArtifact } from './extraction-artifact.mjs';
 import {
   ARTICLE_TYPES,
   INFRASTRUCTURE_LAYERS,
@@ -99,6 +100,12 @@ export async function enrichContent(item) {
     url: item.url,
     title: item.title,
     fallbackSnippet: item.snippet,
+    sourceRegistryId: item.sourceRegistryId,
+  });
+  const extractionArtifact = createExtractionArtifact({
+    sourceUrl: item.url,
+    cleanedExtractedText: articleText,
+    extractionQa,
   });
   const category = inferCategory(`${item.title} ${item.snippet} ${articleText}`, item.defaultCategory || item.categoryHint);
   const region = inferRegion(`${item.title} ${item.snippet} ${articleText}`, item.region || 'Global');
@@ -220,6 +227,7 @@ export async function enrichContent(item) {
     source_domain_adapter: extractionQa.source_domain_adapter,
     extraction_quality_score: extractionQa.extraction_quality_score,
     extraction_qa: extractionQa,
+    extraction_artifact: extractionArtifact,
     direct_ai_infrastructure_relevance: infrastructureRelevance.direct_ai_infrastructure_relevance,
     data_center_relevance: infrastructureRelevance.data_center_relevance,
     cloud_capacity_relevance: infrastructureRelevance.cloud_capacity_relevance,

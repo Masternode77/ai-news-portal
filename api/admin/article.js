@@ -1,5 +1,9 @@
-import { getEditableArticle, saveEditableArticle } from './_github.js';
-import { json, readJson, requireAdmin } from './_auth.js';
+import { AdminVersionRequiredError, AdminWriteConflictError, getEditableArticle, saveEditableArticle } from './_github.js';
+import { json, requireAdmin } from './_auth.js';
+import { RequestBodyError, readAdminArticleJson } from './_login-request.js';
+import { isSupportedAdminArticleAction } from '../../scripts/lib/admin-article-store.mjs';
+import { isPublicLongformArticle } from '../../scripts/lib/public-surface-eligibility.mjs';
+import { articleCanonicalPath } from '../../src/lib/seo-safeguards.js';
 
 function articleIdFromRequest(req) {
   const url = new URL(req.url || '/', 'https://admin.local');
@@ -35,6 +39,11 @@ function publicArticle(article) {
   };
 }
 
+export function adminPublicDetailEligibility(article, options = {}) {
+  const eligible = isPublicLongformArticle(article, options);
+  return { eligible, href: eligible ? articleCanonicalPath(article) : '' };
+}
+
 export default async function handler(req, res) {
   const mutating = ['POST', 'PUT', 'PATCH', 'DELETE'].includes(req.method || '');
   const session = requireAdmin(req, res, { csrf: mutating });
@@ -46,7 +55,7 @@ export default async function handler(req, res) {
     try {
       const result = await getEditableArticle(id);
       if (!result) return json(res, 404, { error: 'Article not found.' });
-      json(res, 200, { article: publicArticle(result.article), sourceFile: result.sourceFile });
+      json(res, 200, { article: publicArticle(result.article), publicDetail: adminPublicDetailEligibility(result.article), sourceFile: result.sourceFile, sourceSha: result.sourceSha });
     } catch (error) {
       json(res, 500, { error: error.message || 'Unable to load article.' });
     }
@@ -55,13 +64,19 @@ export default async function handler(req, res) {
 
   if (req.method === 'POST') {
     try {
-      const body = await readJson(req);
+      const body = await readAdminArticleJson(req);
       if (!body.id) return json(res, 400, { error: 'Missing article id.' });
-      const result = await saveEditableArticle(body.id, body, { actor: session.sub, action: body.action || 'save-draft' });
+      const action = String(body.action || 'save-draft');
+      if (!isSupportedAdminArticleAction(action)) return json(res, 400, { error: 'Unsupported admin article action.' });
+      const result = await saveEditableArticle(body.id, { ...body, action }, { actor: session.sub, action, expectedSourceSha: body.expectedSourceSha });
       if (!result) return json(res, 404, { error: 'Article not found.' });
       if (result.blocked) return json(res, result.statusCode || 422, { error: 'Publish quality gate failed.', qualityErrors: result.qualityErrors, reviewQueue: result.reviewQueue, article: publicArticle(result.article) });
-      json(res, 200, { ok: true, article: publicArticle(result.article), auditEntry: result.auditEntry, preview: result.preview, sourceFile: result.sourceFile, commitSha: result.commitSha, commitUrl: result.commitUrl });
+      json(res, 200, { ok: true, article: publicArticle(result.article), publicDetail: adminPublicDetailEligibility(result.article), auditEntry: result.auditEntry, preview: result.preview, sourceFile: result.sourceFile, sourceSha: result.sourceSha, commitSha: result.commitSha, commitUrl: result.commitUrl });
     } catch (error) {
+      if (error instanceof RequestBodyError) return json(res, error.statusCode, { error: error.message });
+      if (error instanceof AdminWriteConflictError || error instanceof AdminVersionRequiredError) {
+        return json(res, error.statusCode, { error: error.message });
+      }
       json(res, 500, { error: error.message || 'Unable to save article.' });
     }
     return;

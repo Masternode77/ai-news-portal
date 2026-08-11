@@ -8,9 +8,11 @@ import {
   hasGeneratedRasterImage,
   selectHomepageVisualLead,
 } from '../scripts/lib/homepage-visual-lead.mjs';
+import { authorizePublicTestRecords } from './fixtures/admin-publication-integrity.mjs';
 
 test('homepage visual lead prefers real generated raster imagery over placeholder SVG cards', () => {
-  const feed = buildHomepageFeed([...latestNews, ...archivedNews], { limit: 50, minimumVisible: 30 });
+  const authorized = authorizePublicTestRecords([...latestNews, ...archivedNews]);
+  const feed = buildHomepageFeed(authorized.records, { ...authorized.options, limit: 50, minimumVisible: 30 });
   const lead = selectHomepageVisualLead(feed);
 
   assert.ok(lead, 'expected a homepage visual lead');

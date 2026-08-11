@@ -14,3 +14,10 @@ test('allows normal complete copy', () => {
   const result = detectTruncationArtifacts('NetApp connects backup and DR to OpenShift platform readiness.');
   assert.equal(result.ok, true);
 });
+
+test('allows uppercase financing round labels while rejecting lowercase clipped fragments', () => {
+  assert.equal(hasTruncationArtifacts('Etched closed a $300 million Series C.'), false);
+  assert.equal(hasTruncationArtifacts('Memory pressure ended at c.'), true);
+  assert.equal(hasTruncationArtifacts('Capacity planning ended at d.'), true);
+  assert.equal(hasTruncationArtifacts('The platform spans on-premises and clo.'), true);
+});

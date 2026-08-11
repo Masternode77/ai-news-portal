@@ -1,4 +1,7 @@
 import { seoNoindexReasons as qualityNoindexReasons } from '../../scripts/lib/seo-quality-policy.mjs';
+import { safeHttpUrl, serializeJsonForScript } from '../../scripts/lib/normalize.mjs';
+
+export { serializeJsonForScript };
 
 export const ARTICLE_INDEXING_THRESHOLDS = {
   extractionQuality: 0.8,
@@ -13,17 +16,21 @@ const numberOrNull = (value) => {
 export const absoluteUrl = (base, path = '') =>
   `${String(base || '').replace(/\/$/, '')}/${String(path || '').replace(/^\//, '')}`;
 
-export const sourceUrlFor = (article = {}) =>
-  article.expertLensFull?.sourceLink
-  || article.sourceCanonicalUrl
-  || article.canonicalSourceUrl
-  || article.originalSourceUrl
-  || article.sourceUrl
-  || article.url
-  || '';
+const sourceUrlCandidates = (article = {}) => [
+  article.expertLensFull?.sourceLink,
+  article.sourceCanonicalUrl,
+  article.canonicalSourceUrl,
+  article.originalSourceUrl,
+  article.sourceUrl,
+  article.url,
+];
+
+export const sourceUrlFor = (article = {}) => sourceUrlCandidates(article).find(Boolean) || '';
+
+const safeSourceUrlFor = (article = {}) => sourceUrlCandidates(article).map(safeHttpUrl).find(Boolean) || '';
 
 export const sourceDomainFor = (article = {}) => {
-  const sourceUrl = sourceUrlFor(article);
+  const sourceUrl = safeSourceUrlFor(article);
   if (!sourceUrl) return '';
   try {
     return new URL(sourceUrl).hostname.replace(/^www\./, '');
@@ -33,7 +40,7 @@ export const sourceDomainFor = (article = {}) => {
 };
 
 export const sourceAttributionFor = (article = {}) => {
-  const sourceUrl = sourceUrlFor(article);
+  const sourceUrl = safeSourceUrlFor(article);
   return {
     name: article.source || sourceDomainFor(article) || 'Original source',
     url: sourceUrl,
@@ -124,7 +131,7 @@ export const buildArticleStructuredData = ({
   articleBody = [],
 }) => {
   const source = sourceAttributionFor(article);
-  const imageUrl = image?.startsWith('http') ? image : absoluteUrl(site.url, image || site.defaultOgImage);
+  const imageUrl = safeHttpUrl(image) || absoluteUrl(site.url, image || site.defaultOgImage);
   const keywords = [
     taxonomy?.primary,
     taxonomy?.secondary,

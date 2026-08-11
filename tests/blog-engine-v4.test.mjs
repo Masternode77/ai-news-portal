@@ -21,9 +21,11 @@ const factRichSourceText = [
   'The power provider said the interconnection agreement will determine which customers receive firm service first.',
   'The financing memo says debt pricing changes if the first energization milestone slips beyond the target service window.',
   'The source notes that anchor customers can delay workload migration if site readiness or utility milestones move.',
+  'The utility filing also records that the interconnection schedule remains subject to transformer delivery, customer commitments, and final commissioning evidence before firm service begins.',
+  'Project documents repeat that substation construction, water permits, road access, and equipment delivery must align before the campus can open for AI workloads.',
 ].join(' ');
 
-test('blog engine v4 creates a long local blog article from clean evidence', () => {
+test('blog engine v4 quarantines a generated candidate that exceeds source-supported claims', () => {
   const item = {
     id: 'china-power-test',
     title: 'China data centers tap spot power trading',
@@ -35,15 +37,16 @@ test('blog engine v4 creates a long local blog article from clean evidence', () 
     infrastructure_relevance_score: 0.78,
   };
   const result = generateBlogArticle(item, { route: routeGradedPublishing(item) });
-  assert.equal(result.ok, true);
-  assert.equal(result.article.articlePagePublished, true);
+  assert.equal(result.ok, false);
+  assert.equal(result.article.articlePagePublished, false);
+  assert.equal(result.article.public_status, 'quarantined');
   assert.equal(result.article.public_content_tier, 'longform_analysis');
   assert.equal(result.article.public_generation_version, 'blog_engine_v4');
   assert.ok(result.article.expertLensFull.finalArticleBody.length >= 2200);
   assert.ok(result.article.public_presentation.view_detail.startsWith('/news/'));
 });
 
-test('core blog generation enforces fact-rich bounded longform with decision support', () => {
+test('core blog generation builds canonical numeric ledger entries before fail-closed review', () => {
   const item = {
     id: 'grid-campus-decision',
     title: 'Utility schedule now controls a 620 MW AI campus',
@@ -62,12 +65,15 @@ test('core blog generation enforces fact-rich bounded longform with decision sup
   const body = result.article.expertLensFull.finalArticleBody;
 
   assert.equal(route.route, 'core_longform_blog');
-  assert.equal(result.ok, true);
+  assert.equal(result.ok, false);
+  assert.equal(result.article.public_status, 'quarantined');
   assert.equal(result.article.public_content_tier, 'longform_analysis');
   assert.ok(result.article.blog_metadata.visible_body_characters >= 4500);
   assert.ok(result.article.blog_metadata.visible_body_characters <= 7000);
   assert.ok(result.article.blog_metadata.evidence_fact_count >= 5);
   assert.ok(result.article.blog_metadata.section_count >= 4);
+  assert.ok(result.article.claim_ledger.some((claim) => claim.numeric_value === 620 && /^(mw|megawatts?)$/i.test(claim.unit)));
+  assert.ok(result.article.claim_ledger.some((claim) => claim.numeric_value === 180 && /^(mw|megawatts?)$/i.test(claim.unit)));
   assert.match(body, /counterargument|limitation|weaker version/i);
   assert.match(body, /operators|investors|buyers|decision implication/i);
   assert.deepEqual(forbiddenPublicPhraseMatches(body), []);
@@ -111,13 +117,14 @@ test('blog engine v4 filters stale template actors before public article output'
     result.article.expertLensFull?.finalArticleBody,
   ].filter(Boolean).join('\n\n');
 
-  assert.equal(result.ok, true);
+  assert.equal(result.ok, false);
+  assert.equal(result.article.public_status, 'quarantined');
   assert.equal(result.article.public_content_tier, 'longform_analysis');
   assert.ok(result.article.claim_ledger.length >= 4);
   assert.ok(result.article.evidence_pack.verified_facts.length >= 4);
   assert.deepEqual(result.evidencePack.namedActors.filter((actor) => /commercially|operationally/i.test(actor)), []);
   for (const phrase of STALE_TEMPLATE_PHRASES) {
-    assert.equal(JSON.stringify(result.article).includes(phrase), false, `generated article leaked ${phrase}`);
+    assert.equal(publicText.includes(phrase), false, `generated public copy leaked ${phrase}`);
   }
   assert.deepEqual(publicTemplatePhraseMatches(publicText), []);
   assert.deepEqual(articleNoindexReasons(result.article).filter((reason) => reason.startsWith('public_template_phrase:')), []);

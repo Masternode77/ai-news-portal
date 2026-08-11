@@ -2,6 +2,7 @@ import { ARTICLE_BLUEPRINTS } from './article-blueprints.mjs';
 import { hasBannedPhrase } from './banned-phrases.mjs';
 import { buildNarrativeLensFields, extractNarrativeDNA, GENERATION_VERSION } from './narrative-dna.mjs';
 import { normalizeEditorialParagraphs } from './editorial-humanizer.mjs';
+import { hasPublishedArticlePage } from './article-publication-state.mjs';
 
 const RECENT_TEMPLATE_LIMIT = 20;
 const KNOWN_HEADINGS = new Set(ARTICLE_BLUEPRINTS.flatMap((blueprint) => blueprint.sectionHeadings));
@@ -54,7 +55,7 @@ function ngrams(text = '', size = 6) {
 
 function recentInventory(recentRecords = []) {
   const recent = [...recentRecords]
-    .filter((record) => record?.id && record.articlePagePublished !== false && record.archiveOnly !== true)
+    .filter((record) => record?.id && hasPublishedArticlePage(record) && record.archiveOnly !== true)
     .sort((a, b) => new Date(b.publishedAt || 0).getTime() - new Date(a.publishedAt || 0).getTime())
     .slice(0, RECENT_TEMPLATE_LIMIT);
 
@@ -118,7 +119,7 @@ export function applyAntiTemplateRewrite(articles = [], recentRecords = []) {
       ? rewriteArticle(article, recentInventory(rollingRecent))
       : article;
     output.push(next);
-    if (next.articlePagePublished !== false && next.archiveOnly !== true) {
+    if (hasPublishedArticlePage(next) && next.archiveOnly !== true) {
       rollingRecent.unshift(next);
     }
   }

@@ -70,11 +70,6 @@ function sourceBackedProductFitText(article = {}) {
     article.title,
     article.summary,
     article.snippet,
-    article.deck,
-    article.why_it_matters,
-    article.primary_category,
-    article.category,
-    article.infrastructure_layer,
     article.articleText,
     article.contentText,
     article.fullArticleText,
@@ -82,9 +77,6 @@ function sourceBackedProductFitText(article = {}) {
     article.source_evidence_text,
     article.rawText,
     ...(Array.isArray(article.extracted_facts) ? article.extracted_facts : []),
-    ...(Array.isArray(article.evidence_pack?.facts) ? article.evidence_pack.facts : []),
-    ...(Array.isArray(article.evidence_pack?.verified_facts) ? article.evidence_pack.verified_facts : []),
-    article.evidence_pack?.operatingImplication,
   ].filter(Boolean).map(stripGenericFallbackText).join(' ');
 }
 

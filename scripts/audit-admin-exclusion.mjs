@@ -5,6 +5,7 @@ import { fileURLToPath } from 'node:url';
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const DEFAULT_DIST_DIR = path.join(ROOT, 'dist');
 const DEFAULT_REPORT_PATH = path.join(ROOT, 'docs/admin-exclusion-report.md');
+const ALLOWED_ADMIN_PAGES = new Set(['/admin/', '/admin.html/', '/admin/dashboard/', '/admin/edit/']);
 
 async function exists(filePath) {
   try {
@@ -46,6 +47,27 @@ function publicPath(filePath, distDir) {
   return `/${relative.replace(/\/index\.html$/, '/').replace(/\.html$/, '/')}`;
 }
 
+function isForbiddenPrivateArtifact(filePath, distDir) {
+  const publicName = publicPath(filePath, distDir);
+  return publicName === '/dashboard-data.json'
+    || publicName.startsWith('/dashboard/')
+    || (/\.html$/.test(filePath) && /^\/admin(?:\/|\.html\/)/.test(publicName) && !ALLOWED_ADMIN_PAGES.has(publicName));
+}
+
+async function loadPrivateArticleMarkers() {
+  const records = [];
+  for (const filename of ['latest-news.json', 'archived-news.json']) {
+    const text = await readIfExists(path.join(ROOT, 'src/data', filename));
+    const value = JSON.parse(text);
+    if (Array.isArray(value)) records.push(...value);
+  }
+  return [...new Set(records.flatMap((article) => [
+    article?.id,
+    article?.title,
+    article?.expertLensFull?.finalHeadline,
+  ]).filter((value) => typeof value === 'string' && value.length >= 8))];
+}
+
 async function writeReport(reportPath, result) {
   if (!reportPath) return;
   await fs.mkdir(path.dirname(reportPath), { recursive: true });
@@ -55,6 +77,8 @@ async function writeReport(reportPath, result) {
     `Generated at: ${new Date().toISOString()}`,
     `Admin pages checked: ${result.counts.adminPages}`,
     `Index files checked: ${result.counts.indexFiles}`,
+    `Forbidden private artifacts found: ${result.counts.privateArtifacts}`,
+    `Private record marker leaks found: ${result.counts.privateMarkerLeaks}`,
     '',
     '## Failures',
     '',
@@ -68,6 +92,9 @@ export async function auditAdminExclusion(options = {}) {
   const distDir = options.distDir || DEFAULT_DIST_DIR;
   const files = await walk(distDir);
   const failures = [];
+  const privateMarkers = Array.isArray(options.privateMarkers)
+    ? options.privateMarkers.filter((value) => typeof value === 'string' && value.length > 0)
+    : await loadPrivateArticleMarkers();
   const indexFiles = files.filter((file) => /(?:sitemap(?:-\d+|-index)?\.xml|rss\.xml)$/i.test(path.basename(file)));
 
   for (const file of indexFiles) {
@@ -81,19 +108,34 @@ export async function auditAdminExclusion(options = {}) {
   if (!/Disallow:\s*\/admin\b/i.test(robots)) failures.push('robots.txt missing Disallow: /admin');
   if (!/Disallow:\s*\/api\/admin\b/i.test(robots)) failures.push('robots.txt missing Disallow: /api/admin');
 
+  const privateArtifacts = files.filter((file) => isForbiddenPrivateArtifact(file, distDir));
+  for (const file of privateArtifacts) {
+    failures.push(`${publicPath(file, distDir)}: forbidden private artifact in public output`);
+  }
+
   const adminPages = files.filter((file) => {
     const publicName = publicPath(file, distDir);
     return /\.html$/.test(file) && (/^\/admin(?:\/|\.html)/.test(publicName) || /^\/admin\.html/.test(publicName));
   });
+  let privateMarkerLeaks = 0;
   for (const file of adminPages) {
     const html = await readIfExists(file);
     if (!hasNoindex(html)) failures.push(`${publicPath(file, distDir)}: missing noindex,nofollow`);
+    if (privateMarkers.some((marker) => html.includes(marker))) {
+      privateMarkerLeaks += 1;
+      failures.push(`${publicPath(file, distDir)}: private record marker in static admin html`);
+    }
   }
 
   const result = {
     ok: failures.length === 0,
     failures,
-    counts: { adminPages: adminPages.length, indexFiles: indexFiles.length },
+    counts: {
+      adminPages: adminPages.length,
+      indexFiles: indexFiles.length,
+      privateArtifacts: privateArtifacts.length,
+      privateMarkerLeaks,
+    },
   };
   await writeReport(options.reportPath, result);
   return result;
@@ -105,6 +147,6 @@ if (fileURLToPath(import.meta.url) === process.argv[1]) {
     console.error(`admin exclusion audit failed:\n${result.failures.slice(0, 80).join('\n')}`);
     process.exitCode = 1;
   } else {
-    console.log(`admin exclusion audit passed: adminPages=${result.counts.adminPages}, indexFiles=${result.counts.indexFiles}`);
+    console.log(`admin exclusion audit passed: adminPages=${result.counts.adminPages}, indexFiles=${result.counts.indexFiles}, privateArtifacts=${result.counts.privateArtifacts}, privateMarkerLeaks=${result.counts.privateMarkerLeaks}`);
   }
 }

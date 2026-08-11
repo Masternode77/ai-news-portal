@@ -1,11 +1,9 @@
 import fs from 'node:fs';
-import path from 'node:path';
-import { fileURLToPath } from 'node:url';
 import { BANNED_PHRASES } from './banned-phrases.mjs';
 import { nearDuplicatePhraseMatches } from './near-duplicate-phrase-detector.mjs';
+import { resolveRepositoryFile } from './repository-file-resolver.mjs';
 
-const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
-const FORBIDDEN_PUBLIC_PHRASES_PATH = path.join(ROOT, 'config/forbiddenPublicPhrases.yml');
+const FORBIDDEN_PUBLIC_PHRASES_PATH = resolveRepositoryFile('config/forbiddenPublicPhrases.yml');
 
 function parseSimpleYamlList(raw = '', key = '') {
   const lines = String(raw || '').split(/\r?\n/);
@@ -26,15 +24,10 @@ function parseSimpleYamlList(raw = '', key = '') {
 }
 
 export function loadForbiddenPublicTemplatePhrases() {
-  let publicPhrases = [];
-  try {
-    publicPhrases = parseSimpleYamlList(
-      fs.readFileSync(FORBIDDEN_PUBLIC_PHRASES_PATH, 'utf8'),
-      'forbidden_public_phrases'
-    );
-  } catch {
-    publicPhrases = [];
-  }
+  const publicPhrases = parseSimpleYamlList(
+    fs.readFileSync(FORBIDDEN_PUBLIC_PHRASES_PATH, 'utf8'),
+    'forbidden_public_phrases'
+  );
   return [...new Set([...BANNED_PHRASES, ...publicPhrases])].filter(Boolean);
 }
 

@@ -15,6 +15,11 @@ import { normalizeProperNouns } from './proper-noun-normalizer.mjs';
 import { forbiddenPublicPhraseMatches, guardPublicCopy } from './copy-quality-guard.mjs';
 import { publicTemplatePhraseMatches } from './public-template-phrase-guard.mjs';
 import { seoMetadataClaimsSupported } from './source-fidelity-claim-check.mjs';
+import { analyzeSourceExtractionFailClosed } from './source-extraction-fail-closed.mjs';
+import { validateExtractionArtifact } from './extraction-artifact.mjs';
+import { buildBlogClaimLedger, buildClaimLedgerSummary } from './blog-claim-ledger.mjs';
+import { finalPublicationIntegrityResult, publicationIntegritySnapshot } from './final-publication-integrity.mjs';
+import { quarantineArticle } from './content-quarantine.mjs';
 
 const GENERATION_VERSION = 'blog_engine_v4';
 
@@ -110,40 +115,6 @@ function extensionParagraphs(article = {}, evidencePack = {}, route = {}, angle 
   ];
 }
 
-function cleanEvidenceCorpus(evidencePack = {}) {
-  const base = [
-    String(evidencePack.evidenceText || '').slice(0, 1400),
-    ...(evidencePack.facts || []),
-    evidencePack.commercialImplication,
-    evidencePack.operatingImplication,
-    evidencePack.counterargument,
-    `Track ${(evidencePack.watchMetrics || []).join('; ') || evidencePack.whatWouldChangeOurView}.`,
-  ].filter(Boolean).join(' ');
-  const sentences = base
-    .split(/(?<=[.!?])\s+/)
-    .filter(isPublishableEvidenceLine)
-    .join(' ')
-    .replace(/\s+/g, ' ')
-    .trim();
-  if (!sentences) {
-    return sentence([
-      evidencePack.title,
-      evidencePack.commercialImplication,
-      evidencePack.operatingImplication,
-    ].filter(isPublishableEvidenceLine).join(' '));
-  }
-  if (sentences.length >= 1400) {
-    const clipped = sentences.slice(0, 1700);
-    const terminal = Math.max(clipped.lastIndexOf('. '), clipped.lastIndexOf('! '), clipped.lastIndexOf('? '));
-    return terminal > 800 ? clipped.slice(0, terminal + 1) : sentence(clipped.replace(/\s+\S*$/, ''));
-  }
-  const corpus = [];
-  while (corpus.join(' ').length < 1400 && corpus.length < 8) {
-    corpus.push(sentences);
-  }
-  return sentence(corpus.join(' '));
-}
-
 function uniquePublishableLines(values = []) {
   const seen = new Set();
   const out = [];
@@ -177,37 +148,6 @@ function buildVerifiedFacts(article = {}, evidencePack = {}, angle = {}) {
     `Investors should track whether the reported event changes cash conversion, utilization, or delivery risk`,
   ]);
   return uniquePublishableLines([...candidates, ...fallback]).slice(0, 6);
-}
-
-function buildBlogClaimLedger(article = {}, evidencePack = {}, verifiedFacts = []) {
-  const sourceName = evidencePack.source || article.source || 'Original source';
-  const sourceUrl = article.sourceUrl || article.url || '';
-  return verifiedFacts.slice(0, 5).map((fact, index) => ({
-    claim_id: `clm_${article.id || 'blog'}_${index + 1}`,
-    article_id: article.id || '',
-    claim_text: fact,
-    source_quote_or_summary: fact,
-    source_url: sourceUrl,
-    source_name: sourceName,
-    secondary_source_url: '',
-    secondary_source_name: '',
-    numeric_value: null,
-    unit: '',
-    verification_status: 'verified_primary',
-    used_in_article: true,
-    article_sentence: fact,
-    inference_basis: '',
-    notes: '',
-  }));
-}
-
-function buildClaimLedgerSummary(claimLedger = []) {
-  return {
-    total_claim_count: claimLedger.length,
-    numeric_claim_count: claimLedger.filter((claim) => claim.numeric_value !== null && claim.numeric_value !== undefined).length,
-    unsupported_claim_count: claimLedger.filter((claim) => claim.verification_status === 'unsupported').length,
-    verified_fact_count: claimLedger.filter((claim) => claim.verification_status !== 'unsupported').length,
-  };
 }
 
 function buildEditorialThesis(article = {}, evidencePack = {}, angle = {}, verifiedFacts = [], bottomLine = '') {
@@ -257,7 +197,18 @@ function ensureLength(body = '', article = {}, evidencePack = {}, route = {}, an
 }
 
 export function generateBlogArticle(article = {}, options = {}) {
-  const initialRoute = options.route || routeGradedPublishing(article);
+  const suppliedArtifact = validateExtractionArtifact(article.extraction_artifact);
+  const extractionArtifact = suppliedArtifact.ok
+    ? article.extraction_artifact
+    : analyzeSourceExtractionFailClosed(article).extraction_artifact;
+  const sourceArticle = {
+    ...article,
+    extraction_artifact: extractionArtifact,
+    extraction_qa: extractionArtifact.extraction_qa,
+    articleText: extractionArtifact.cleaned_extracted_text,
+    cleaned_source_text: extractionArtifact.cleaned_extracted_text,
+  };
+  const initialRoute = options.route || routeGradedPublishing(sourceArticle);
   if (![GRADED_ROUTES.CORE_LONGFORM_BLOG, GRADED_ROUTES.STANDARD_BLOG].includes(initialRoute.route)) {
     return {
       ok: false,
@@ -268,7 +219,7 @@ export function generateBlogArticle(article = {}, options = {}) {
   }
 
   const route = initialRoute;
-  const evidencePack = options.evidencePack || route.evidencePack || buildEvidencePack(article, {
+  const evidencePack = options.evidencePack || route.evidencePack || buildEvidencePack(sourceArticle, {
     factTarget: route.route === GRADED_ROUTES.CORE_LONGFORM_BLOG ? 5 : 3,
   });
   const recent = options.recent || [];
@@ -286,13 +237,18 @@ export function generateBlogArticle(article = {}, options = {}) {
   const length = blogLengthResult(finalBody, route.route);
   const quality = humanBlogQualityScore({ ...article, blog_route: route.route }, evidencePack, finalBody);
   const lane = laneFromLayer(evidencePack.affectedInfrastructureLayer, route.strict);
-  const deck = deckFor(article, evidencePack, angle);
-  const why = whyFor(article, evidencePack);
-  const cleanCorpus = cleanEvidenceCorpus(evidencePack);
+  const cleanCorpus = extractionArtifact.cleaned_extracted_text;
   const primaryCategory = article.primary_category || article.category || route.strict?.laneTitle || 'AI Infrastructure';
   const bottomLine = `Compute Current treats this as ${labelForRoute(route.route).toLowerCase()} because the evidence ties ${article.source || 'the source'} to ${evidencePack.affectedInfrastructureLayer} decisions.`;
   const verifiedFacts = buildVerifiedFacts(article, evidencePack, angle);
-  const claimLedger = buildBlogClaimLedger(article, evidencePack, verifiedFacts);
+  const deck = verifiedFacts[0] || deckFor(article, evidencePack, angle);
+  const why = verifiedFacts[1] || whyFor(article, evidencePack);
+  const claimLedger = buildBlogClaimLedger({
+    article,
+    extractionArtifact,
+    verifiedFacts,
+    sourceName: evidencePack.source || article.source,
+  });
   const claimLedgerSummary = buildClaimLedgerSummary(claimLedger);
   const editorialThesis = buildEditorialThesis(article, evidencePack, angle, verifiedFacts, bottomLine);
   const narrativeDna = cleanNarrativeDna(article, evidencePack, angle, verifiedFacts);
@@ -347,6 +303,8 @@ export function generateBlogArticle(article = {}, options = {}) {
     infrastructure_layer: evidencePack.affectedInfrastructureLayer,
     infrastructure_relevance_score: publicRouting.score,
     extraction_quality_score: Math.max(Number(article.extraction_quality_score || 0), 0.92),
+    extraction_qa: extractionArtifact.extraction_qa,
+    extraction_artifact: extractionArtifact,
     cleaned_source_text: cleanCorpus,
     source_evidence_text: cleanCorpus,
     rawText: cleanCorpus,
@@ -428,9 +386,24 @@ export function generateBlogArticle(article = {}, options = {}) {
 
   const diversity = antiTemplateDiversityResult(updated, recent);
   const seoFidelity = seoMetadataClaimsSupported(updated, evidencePack);
+  const generationOk = length.ok && quality.ok && diversity.ok && seoFidelity.ok;
+  const integrity = finalPublicationIntegrityResult(updated, recent);
+  const reasons = [
+    ...length.reasons,
+    ...quality.reasons,
+    ...diversity.reasons,
+    ...seoFidelity.unsupportedClaims.map((claim) => `seo_unsupported_claim:${claim}`),
+    ...integrity.reasons.map((reason) => `publication_integrity:${reason}`),
+  ];
+  const publicArticle = generationOk && integrity.ok
+    ? { ...updated, publication_integrity: publicationIntegritySnapshot(integrity) }
+    : quarantineArticle({
+      ...updated,
+      publication_integrity: publicationIntegritySnapshot(integrity),
+    }, reasons, { force: true });
   return {
-    ok: length.ok && quality.ok && diversity.ok && seoFidelity.ok,
-    article: updated,
+    ok: generationOk && integrity.ok,
+    article: publicArticle,
     route,
     evidencePack: updatedEvidencePack,
     researchBrief,
@@ -441,12 +414,8 @@ export function generateBlogArticle(article = {}, options = {}) {
     quality,
     diversity,
     seoFidelity,
-    reasons: [
-      ...length.reasons,
-      ...quality.reasons,
-      ...diversity.reasons,
-      ...seoFidelity.unsupportedClaims.map((claim) => `seo_unsupported_claim:${claim}`),
-    ],
+    integrity,
+    reasons,
   };
 }
 

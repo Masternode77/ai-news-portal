@@ -10,7 +10,7 @@ The preferred provider is `IMAGE_PROVIDER=image2`. It uses the OpenAI image API 
 - `IMAGE_PROVIDER=local`: no remote generation; local/category fallback only.
 - `IMAGE_PROVIDER=legacy-gemini`: deprecated Gemini path.
 
-`OPENAI_API_KEY` is required for remote image generation. Without it, or when `PIPELINE_OFFLINE=1`, image2 writes category fallback metadata instead of publishing broken images.
+`OPENAI_API_KEY` is required for remote image generation. Without it, when `PIPELINE_OFFLINE=1`, or after an image-request failure, image2 writes its deterministic local WebP fallback variant set (hero, thumbnail, OpenGraph, and legacy paths) instead of publishing broken images. This is not category-fallback metadata.
 
 ## Cost Controls
 
@@ -30,9 +30,9 @@ IMAGE_PROVIDER=image2 PIPELINE_OFFLINE=1 node scripts/generate-article-image.mjs
 
 ## Fallback Behavior
 
-Every public card should have either generated art or a category fallback. The fallback assets live under `public/generated/fallbacks/`, while generated article images live under `public/generated/articles/`.
+Image2 fallback variants are article-local WebP files under `public/generated/articles/`. Reader-side category fallback SVGs live under `public/generated/fallbacks/` and are selected only when the article image surface has no trusted variant. The `local`/no-provider path may attempt a source-authorized poster only while online; failed or unauthorized poster attempts fall back to the deterministic local variant set.
 
-The editor exposes regenerate controls for article, brief, and image work. Regenerated image metadata includes provider, model, prompt, alt text, status, error, `heroImage`, `thumbnailImage`, and `ogImage`.
+The generic editor does not expose article, brief, or image-regeneration controls. It can save existing article metadata and use an operator-supplied replacement image path; generation or reprocessing remains outside that editor and must pass the normal rights and publication gates. Image metadata written by the image pipeline includes provider, model, prompt, alt text, status, error, `heroImage`, `thumbnailImage`, and `ogImage`.
 
 ## Verification
 

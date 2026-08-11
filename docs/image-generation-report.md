@@ -1,39 +1,64 @@
-# Image Generation Report
+# Image Generation Report (Historical Snapshot)
 
-Generated at: 2026-05-31T08:00:00.000Z
+> **Historical snapshot — non-operational.** This report records an older
+> image-QA run dated 2026-05-31. It does not attest that its commands, counts,
+> generated assets, browser observations, or external evidence paths are
+> current or available.
 
-Image handling now separates provider configuration, prompt construction, local fallback assignment, public card rendering, article hero rendering, and missing-image audits. The default production path is credential-gated, while local QA can pass with deterministic fallback assets.
+## Historical context
+
+The earlier run reported provider configuration, prompt construction, fallback
+assignment, rendered-card checks, and missing-image audits. Those observations
+are retained as historical context only; they are not current release evidence
+and must not be used to infer a current image inventory or production pass.
+
+## Current tracked and runtime sources
+
+- `docs/image-generation-setup.md` is the current operator setup guide.
+- `tests/image-generation.test.mjs` verifies the image2 provider default and
+  deterministic fallback variants.
+- `scripts/lib/image2-provider.mjs` defines image2 generation and its missing
+  key, offline, and request-failure fallback behavior.
+- `scripts/lib/image-generator.mjs` contains the separate online,
+  source-authorized poster path for the local/no-provider branch.
+- `npm run audit:images` and `npm run content:gate` are the current repository
+  validation surfaces; run results must be captured separately when needed.
+
+No legacy evidence path is treated as current proof in this document.
 
 ## Commands Run
 
-- `node --test tests/image-generation.test.mjs tests/image-output.test.mjs tests/public-image-display.test.mjs`
-- `node scripts/generate-missing-images.mjs`
-- `npm run audit:images`
-- `npm run build`
-- `node scripts/verify-production-surface.mjs --local-dist dist --live https://www.computecurrent.com --out docs/production-verification-report.md --json evidence/compute-current-omo-ultra-rebuild/task-16-production.json`
+- Historical run commands and their outputs are not reproduced here because
+  they are unavailable legacy evidence, not a current verification record.
+- Current verification must use the commands named in
+  `docs/image-generation-setup.md`, including `npm run audit:images` and the
+  applicable focused image-generation tests.
 
 ## Artifacts
 
-- Missing images report: `docs/missing-images-report.md`
-- Public image audit log: `evidence/compute-current-omo-ultra-rebuild/task-7-public-images-audit.log`
-- Image browser screenshot: `evidence/compute-current-omo-ultra-rebuild/task-8-images-home.png`
-- Generated assets: `public/generated/articles/` and `public/generated/fallbacks/`
-- Provider modules: `scripts/lib/image2-provider.mjs`, `scripts/lib/image-providers/openai-image-api.mjs`
+- The historical artifact set is unavailable and is not asserted to exist.
+- Current tracked contracts are `scripts/lib/image2-provider.mjs`,
+  `scripts/lib/image-generator.mjs`, and `tests/image-generation.test.mjs`;
+  fresh command output belongs with the release or incident being verified.
 
 ## Pass/Fail
 
-- Passed: latest 100 migration reported 54 image-ready eligible records and 0 missing images after fallback assignment.
-- Passed: public rendered audit found 0 broken images in the sampled build.
-- Passed: local image provider dry run recorded expected missing-key behavior without leaking credentials.
+- Historical status: **not a current pass/fail result**. This snapshot cannot
+  establish the status of the present image inventory, provider, or rendered
+  output.
+- Current status must be determined by a fresh, captured validation run.
 
 ## Remaining Risks
 
-- Paid provider generation requires `OPENAI_API_KEY` and should be tested in staging before production automation is enabled.
-- Fallback images are acceptable for readiness but should be replaced with generated article-specific imagery as budget allows.
-- CDN cache state can delay new image visibility until a credentialed purge or deployment invalidation completes.
+- The historical observations can diverge from the current `image2` provider,
+  deterministic fallback variants, and source-authorized local poster branch.
+- Do not treat unavailable legacy artifacts as evidence that current images,
+  credentials, network behavior, or browser rendering passed review.
 
 ## Cleanup Receipts
 
-- Image QA retained generated public assets intentionally because they are part of the site output.
-- No provider credential was written to docs, evidence, or `.env.example`.
-- Browser and build processes used for image QA were closed after evidence capture.
+- This document retains only historical context and removes any claim that
+  unavailable legacy evidence paths are current proof.
+- The current setup guide and runtime/test paths above are the replacement
+  operator references; no deployment, external account action, or image asset
+  cleanup is recorded by this historical snapshot.

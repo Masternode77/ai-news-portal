@@ -10,6 +10,9 @@ function article(id, body, overrides = {}) {
     id,
     title: `Article ${id}`,
     publishedAt: overrides.publishedAt || '2026-05-17T00:00:00.000Z',
+    articlePagePublished: true,
+    archiveOnly: false,
+    public_status: 'published',
     article_blueprint: overrides.article_blueprint || 'constraint-ledger',
     articleBlueprint: overrides.articleBlueprint || {
       id: overrides.article_blueprint || 'constraint-ledger',
@@ -54,6 +57,8 @@ const recent = article(
 );
 
 const sentenceMetrics = analyzeArticleRepetition(article('draft-1', uniqueDraft), [recent]);
+assert.equal(sentenceMetrics.compared_article_count, 1);
+assert.equal(sentenceMetrics.repeated_sentence_count, 1);
 assert.ok(sentenceMetrics.repeated_sentence_ratio > 0.12);
 assert.ok(sentenceMetrics.blocked);
 assert.ok(sentenceMetrics.reasons.some((reason) => reason.startsWith('repeated_sentence_ratio')));

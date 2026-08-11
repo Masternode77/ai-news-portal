@@ -3,7 +3,9 @@ import fs from 'node:fs';
 import test from 'node:test';
 import latestNews from '../src/data/latest-news.json' with { type: 'json' };
 import archivedNews from '../src/data/archived-news.json' with { type: 'json' };
-import { buildHomepageFeed } from '../scripts/lib/homepage-feed-builder.mjs';
+import { publicFeedVolumeResult } from '../scripts/audit-public-feed-volume.mjs';
+import { buildHomepageFeed, publicHomepageFeedEligible } from '../scripts/lib/homepage-feed-builder.mjs';
+import { authorizePublicTestRecords } from './fixtures/admin-publication-integrity.mjs';
 
 function readText(url) {
   return fs.readFileSync(new URL(url, import.meta.url), 'utf8');
@@ -139,9 +141,13 @@ test('homepage premium surface preserves article feed and avoids generic AI-blog
   const feedSource = readText('../src/components/LatestAnalysisFeed.astro');
   const styles = readStyles();
   const combined = [homepageSource, feedSource, styles].join('\n');
-  const feed = buildHomepageFeed([...latestNews, ...archivedNews], { limit: 50, minimumVisible: 30 });
+  const allArticles = [...latestNews, ...archivedNews];
+  const authorized = authorizePublicTestRecords(allArticles);
+  const feed = buildHomepageFeed(authorized.records, { ...authorized.options, limit: 50, minimumVisible: 30 });
+  const volume = publicFeedVolumeResult(authorized.records, authorized.options);
 
-  assert.ok(feed.items.length >= 30);
+  assert.equal(volume.ok, true, volume.reasons.join(', '));
+  assert.equal(feed.items.length, volume.homepageCount);
   for (const item of feed.items.slice(0, 6)) {
     assert.ok(item.publicSignal?.title, item.id);
     assert.ok(item.publicSignal?.view_detail || item.publicSignal?.read_source, item.id);
@@ -154,4 +160,24 @@ test('homepage premium surface preserves article feed and avoids generic AI-blog
   assert.equal(/AI revolution|unlock the future|transform your business|cutting-edge AI|game-changing/i.test(combined), false);
   assert.match(combined, /data-homepage-premium-surface="intelligence-desk"/);
   assert.equal(/data-homepage-premium-surface="intelligence-desk"[\s\S]*(purple|violet|indigo|#7c3aed|#6d28d9|#2563eb)/i.test(combined), false);
+});
+
+test('canonical feed volume fails closed when eligible cards collapse below policy', () => {
+  // Given: twenty eligible records that collapse to one canonical feed key.
+  const authorized = authorizePublicTestRecords([...latestNews, ...archivedNews]);
+  const eligibleArticle = authorized.records.find((article) => publicHomepageFeedEligible(article, authorized.options));
+  assert.ok(eligibleArticle, 'expected an eligible article fixture');
+  const duplicatedCandidates = Array.from({ length: 20 }, (_, index) => ({
+    ...eligibleArticle,
+    id: `duplicate-feed-candidate-${index}`,
+  }));
+
+  // When: the canonical volume policy evaluates the lossy feed.
+  const result = publicFeedVolumeResult(duplicatedCandidates, authorized.options);
+
+  // Then: eligible inventory cannot silently collapse below the public-card floor.
+  assert.equal(result.eligibleCount, 20);
+  assert.ok(result.homepageCount < 20);
+  assert.ok(result.reasons.includes('public_card_count_below_20'));
+  assert.equal(result.ok, false);
 });

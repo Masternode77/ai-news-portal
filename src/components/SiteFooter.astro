@@ -21,11 +21,13 @@ const publication = [
 const reference = [
   ['Archive', '/archive/'],
   ['Follow / RSS', '/follow/'],
+  ['Advertising policy', '/advertising-policy/'],
   ['Raw feed', '/rss.xml'],
   ['Sitemap', '/sitemap.xml'],
   ['Privacy policy', '/privacy/'],
   ['Terms of use', '/terms/'],
 ];
+const showPrivacyChoices = Astro.url.pathname.replace(/\/$/, '') !== '/privacy';
 ---
 <footer class="site-footer" aria-label="Site footer">
   <div class="site-footer-grid">
@@ -35,7 +37,7 @@ const reference = [
       </a>
       <p>
         Source-linked intelligence on the AI buildout: power, data centers, silicon, cloud capacity,
-        cooling, policy, and capital. Refreshed every 8 hours.
+        cooling, policy, and capital. Coverage status follows the most recent successful update.
       </p>
       <a class="site-footer-rss" href="/follow/">
         <i aria-hidden="true"></i>
@@ -59,4 +61,35 @@ const reference = [
     <span>© {year} {SITE.name}. Every analysis links its original source.</span>
     <span class="site-footer-domain">{SITE.domain}</span>
   </div>
+  {showPrivacyChoices ? (
+    <>
+      <button id="cc-privacy-choices" class="privacy-choices-control" type="button" hidden>
+        Privacy choices
+      </button>
+      <script is:inline>
+        (function () {
+          var button = document.getElementById('cc-privacy-choices');
+          if (!button) return;
+
+          function showForGdprVisitors() {
+            if (typeof window.__tcfapi !== 'function') return;
+            window.__tcfapi('getTCData', 2, function (tcData, success) {
+              if (success && tcData && tcData.gdprApplies === true) button.hidden = false;
+            });
+          }
+
+          function showRevocationMessage() {
+            var googleFc = window.googlefc;
+            if (!googleFc || !googleFc.callbackQueue || typeof googleFc.callbackQueue.push !== 'function' || typeof googleFc.showRevocationMessage !== 'function') return;
+            googleFc.callbackQueue.push(googleFc.showRevocationMessage);
+          }
+
+          window.googlefc = window.googlefc || {};
+          window.googlefc.callbackQueue = window.googlefc.callbackQueue || [];
+          window.googlefc.callbackQueue.push({ CONSENT_API_READY: showForGdprVisitors });
+          button.addEventListener('click', showRevocationMessage);
+        })();
+      </script>
+    </>
+  ) : null}
 </footer>

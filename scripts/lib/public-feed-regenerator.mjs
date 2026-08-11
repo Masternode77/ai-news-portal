@@ -15,6 +15,10 @@ import { buildCompanyIndex } from './company-entity-index.mjs';
 import { buildRegionIndex } from './region-index.mjs';
 import { buildHomepageFeed } from './homepage-feed-builder.mjs';
 import { buildArchiveFeed } from './archive-feed-builder.mjs';
+import { enforceFinalPublicationIntegrity } from './final-publication-integrity.mjs';
+import { isPublicProductFit } from './public-product-fit.mjs';
+import { activeRegistryFeeds, loadSourceRegistrySync } from './source-registry.mjs';
+import { RIGHTS_REVIEW_SAFE_MODE } from './rights-review-safe-mode.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
 const TAXONOMY_PATH = path.join(ROOT, 'src/data/taxonomy-pages.json');
@@ -134,37 +138,51 @@ function asHidden(article = {}, tierResult = {}) {
   };
 }
 
-async function writeTaxonomy(all = []) {
-  const taxonomy = {
-    generatedAt: new Date().toISOString(),
+function buildTaxonomy(all = [], now = new Date().toISOString()) {
+  return {
+    generatedAt: now,
     categories: buildCategoryPages(all),
     companies: buildCompanyIndex(all),
     regions: buildRegionIndex(all),
     archive: archivePages(all, 50),
   };
+}
+
+async function writeTaxonomy(all = [], now) {
+  const taxonomy = buildTaxonomy(all, now);
   await fs.writeFile(TAXONOMY_PATH, `${JSON.stringify(taxonomy, null, 2)}\n`, 'utf8');
   return taxonomy;
 }
 
 export async function regeneratePublicFeed(options = {}) {
-  const [latest, archived] = await Promise.all([
-    readJsonFile(LATEST_NEWS_PATH, []),
-    readJsonFile(ARCHIVE_NEWS_PATH, []),
-  ]);
+  const suppliedRecords = Array.isArray(options.records) ? options.records : null;
+  const [latest, archived] = suppliedRecords
+    ? [suppliedRecords, []]
+    : await Promise.all([
+        readJsonFile(LATEST_NEWS_PATH, []),
+        readJsonFile(ARCHIVE_NEWS_PATH, []),
+      ]);
+  const routeArticle = options.routeArticle || routePublicContentTier;
+  const generateLongform = options.generateLongform || generateLongformAnalysis;
+  const now = options.now || new Date().toISOString();
+  const rightsOptions = { sourceRegistry: options.sourceRegistry, now };
   const all = uniqueById([...latest, ...archived]).sort((a, b) => dateMs(b) - dateMs(a));
-  const candidates = all.slice(0, options.limit || 200);
-  const routed = candidates.map((article) => ({ article, tier: routePublicContentTier(article) }));
+  const candidates = all
+    .filter(isPublicProductFit)
+    .slice(0, options.limit ?? 200);
+  const routed = candidates
+    .map((article) => ({ article, tier: routeArticle(article) }));
   const longformRows = routed
     .filter((row) => row.tier.tier === PUBLIC_CONTENT_TIERS.LONGFORM_ANALYSIS)
-    .slice(0, options.longformTarget || 15);
+    .slice(0, options.longformTarget ?? 15);
   const longformIds = new Set(longformRows.map((row) => row.article.id));
   const briefRows = routed
     .filter((row) => !longformIds.has(row.article.id))
     .filter((row) => [PUBLIC_CONTENT_TIERS.EDITORIAL_BRIEF, PUBLIC_CONTENT_TIERS.SIGNAL_CARD].includes(row.tier.tier))
-    .slice(0, options.briefTarget || 35);
+    .slice(0, options.briefTarget ?? 35);
   const publicIds = new Set([...longformRows.map((row) => row.article.id), ...briefRows.map((row) => row.article.id)]);
 
-  const longforms = longformRows.map((row, index) => generateLongformAnalysis(row.article, {
+  const longforms = longformRows.map((row, index) => generateLongform(row.article, {
     evidencePack: row.tier.evidencePack,
     index,
   }));
@@ -172,35 +190,67 @@ export async function regeneratePublicFeed(options = {}) {
   const hidden = all
     .filter((article) => !publicIds.has(article.id))
     .map((article) => asHidden(article, routePublicContentTier(article)));
-  const regenerated = uniqueById([...longforms, ...briefs, ...hidden]).sort((a, b) => dateMs(b) - dateMs(a));
+  const candidatesForPersistence = uniqueById([...longforms, ...briefs, ...hidden]).sort((a, b) => dateMs(b) - dateMs(a));
+  const integrity = enforceFinalPublicationIntegrity(candidatesForPersistence, [], rightsOptions);
+  const regenerated = integrity.articles;
   const latestOut = regenerated.slice(0, 50).map(searchable);
   const archiveOut = regenerated.slice(50).map(searchable);
   const searchIndex = regenerated.map(searchable);
 
-  await writeJsonFile(LATEST_NEWS_PATH, latestOut);
-  await writeJsonFile(ARCHIVE_NEWS_PATH, archiveOut);
-  await writeJsonFile(SEARCH_INDEX_PATH, searchIndex);
-  const taxonomy = await writeTaxonomy([...latestOut, ...archiveOut]);
+  let taxonomy;
+  if (options.writeOutputs === false) {
+    taxonomy = buildTaxonomy([...latestOut, ...archiveOut], now);
+  } else {
+    await writeJsonFile(LATEST_NEWS_PATH, latestOut);
+    await writeJsonFile(ARCHIVE_NEWS_PATH, archiveOut);
+    await writeJsonFile(SEARCH_INDEX_PATH, searchIndex);
+    taxonomy = await writeTaxonomy([...latestOut, ...archiveOut], now);
+  }
   const publicSurface = [...latestOut, ...archiveOut];
-  const homepageFeed = buildHomepageFeed(publicSurface, { limit: 50, minimumVisible: 30 });
-  const archiveFeed = buildArchiveFeed(publicSurface, { pageSize: 50 });
+  const homepageFeed = buildHomepageFeed(publicSurface, { ...rightsOptions, limit: 50, minimumVisible: 30 });
+  const archiveFeed = buildArchiveFeed(publicSurface, { ...rightsOptions, pageSize: Math.max(1, publicSurface.length) });
+  const approvedLongform = archiveFeed.items.filter((article) => article.articlePagePublished === true).length;
+  const approvedBriefs = archiveFeed.items.filter((article) => article.public_content_tier === PUBLIC_CONTENT_TIERS.EDITORIAL_BRIEF).length;
+  const approvedSignals = archiveFeed.items.filter((article) => article.public_content_tier === PUBLIC_CONTENT_TIERS.SIGNAL_CARD).length;
+  const registry = options.sourceRegistry === undefined ? loadSourceRegistrySync() : options.sourceRegistry;
+  const authorizedSourceCount = Array.isArray(registry) ? activeRegistryFeeds(registry, new Date(now)).length : 0;
 
   const counts = {
     candidates: candidates.length,
-    longform: longforms.length,
-    brief: briefs.filter((article) => article.public_content_tier === PUBLIC_CONTENT_TIERS.EDITORIAL_BRIEF).length,
-    signal: briefs.filter((article) => article.public_content_tier === PUBLIC_CONTENT_TIERS.SIGNAL_CARD).length,
+    attemptedLongform: longforms.length,
+    attemptedBrief: briefs.filter((article) => article.public_content_tier === PUBLIC_CONTENT_TIERS.EDITORIAL_BRIEF).length,
+    attemptedSignal: briefs.filter((article) => article.public_content_tier === PUBLIC_CONTENT_TIERS.SIGNAL_CARD).length,
+    approvedLongform,
+    approvedBrief: approvedBriefs,
+    approvedSignal: approvedSignals,
+    longform: approvedLongform,
+    brief: approvedBriefs,
+    signal: approvedSignals,
     hidden: hidden.length,
+    publicationIntegrityBlocked: integrity.blocked.length,
     noindexed: regenerated.filter((article) => article.seo_noindex === true || article.noindex === true).length,
     homepagePublic: homepageFeed.items.length,
     archivePublic: archiveFeed.total,
+    authorizedSourceCount,
   };
 
+  const safeMode = authorizedSourceCount === 0 && counts.homepagePublic === 0 && counts.archivePublic === 0;
+  const mode = safeMode ? RIGHTS_REVIEW_SAFE_MODE : 'normal';
+  const ready = mode === 'normal'
+    && counts.homepagePublic >= (options.minimumHomepagePublic ?? 30)
+    && counts.approvedLongform >= (options.minimumApprovedLongform ?? 10);
+
   return {
-    ok: counts.homepagePublic >= 30 && counts.longform >= 10,
+    ok: safeMode || ready,
+    ready,
+    mode,
     counts,
     latestOut,
     archiveOut,
     taxonomy,
   };
+}
+
+export function publicFeedRegenerationExitCode(result = {}) {
+  return result.ok === true ? 0 : 1;
 }

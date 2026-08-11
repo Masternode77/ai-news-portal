@@ -83,3 +83,23 @@ test('rendered public output audit reads article-deck without fallback deck attr
   assert.equal(result.ok, true);
   assert.equal(result.counts.cards, 2);
 });
+
+test('rendered public output audit counts source-irrelevant cards separately from banned synthetic copy', async () => {
+  const distDir = await fixtureDist({
+    'index.html': '<main><article data-public-card data-article-id="01f53af419a55a0b"><img src="/generated/fallbacks/ai-infrastructure.svg"><p class="signal-deck">A limited-edition wireless CD player includes game-themed controls.</p></article></main>',
+    'archive/index.html': '<main>Archive</main>',
+    'generated/fallbacks/ai-infrastructure.svg': '<svg xmlns="http://www.w3.org/2000/svg"></svg>',
+  });
+  const articles = [{
+    id: '01f53af419a55a0b',
+    title: 'Hideo Kojima unveils a Death Stranding 2-themed wireless CD player',
+    summary: 'The limited-edition device plays CDs and includes game-themed controls.',
+  }];
+
+  const result = await auditRenderedPublicOutput({ distDir, articles });
+
+  assert.equal(result.ok, false);
+  assert.equal(result.counts.lowRelevanceCards, 1);
+  assert.equal(result.counts.bannedSyntheticMatches, 0);
+  assert.ok(result.failures.includes('card 01f53af419a55a0b: public product fit failed'));
+});

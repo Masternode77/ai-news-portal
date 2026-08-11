@@ -61,7 +61,7 @@ const svg = `<svg width="1200" height="630" viewBox="0 0 1200 630" xmlns="http:/
 
   <line x1="96" y1="562" x2="1104" y2="562" stroke="rgba(0,0,0,0.1)" stroke-width="1"/>
   <text x="96" y="598" font-family="DejaVu Sans, Arial, sans-serif" font-size="21" font-weight="600" letter-spacing="1" fill="#6e6e73">computecurrent.com</text>
-  <text x="1104" y="598" text-anchor="end" font-family="DejaVu Sans, Arial, sans-serif" font-size="21" letter-spacing="1" fill="#a1a1a6">Updated several times a day</text>
+  <text x="1104" y="598" text-anchor="end" font-family="DejaVu Sans, Arial, sans-serif" font-size="21" letter-spacing="1" fill="#a1a1a6">Eligible analysis when published</text>
 </svg>`;
 
 await sharp(Buffer.from(svg)).png({ compressionLevel: 9 }).toFile(OUT);

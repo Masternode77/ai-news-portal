@@ -1,6 +1,9 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { canonicalArticleImagePaths } from './image-store.mjs';
+import { loadSourceRegistrySync, sourceUsageDecision } from './source-registry.mjs';
+
+// allow: SIZE_OK — image selection, fallbacks, provenance, and synchronization form one cohesive surface contract.
 
 export const ARTICLE_IMAGE_FIELDS = [
   'heroImage',
@@ -51,6 +54,14 @@ const IMAGE_METADATA_FIELDS = [
 
 const AI_IMAGE_PROVIDER_RE = /\b(?:chatgpt|image2|openai|gpt-image|nano|nanobanana|gemini|legacy-gemini)\b/i;
 const PLACEHOLDER_IMAGE_PROVIDER_RE = /\b(?:local-placeholder|local-svg|category-fallback)\b/i;
+const SOURCE_DERIVED_IMAGE_RE = /\b(?:source-image|source-canonical|origin-canonical)\b/i;
+const SOURCE_REGISTRY = (() => {
+  try {
+    return loadSourceRegistrySync();
+  } catch {
+    return [];
+  }
+})();
 
 function clean(value = '') {
   return String(value || '').trim();
@@ -147,6 +158,10 @@ function imageProviderLooksPlaceholder(article = {}) {
   return PLACEHOLDER_IMAGE_PROVIDER_RE.test(imageProviderText(article));
 }
 
+function imageLooksSourceDerived(article = {}) {
+  return SOURCE_DERIVED_IMAGE_RE.test(imageProviderText(article));
+}
+
 function isPlaceholderGeneratedCandidate(article = {}, image = '') {
   const value = clean(image);
   if (!/^\/generated\//i.test(value)) return false;
@@ -157,6 +172,19 @@ function isPlaceholderGeneratedCandidate(article = {}, image = '') {
 }
 
 function imageVariantObject(article = {}, variant = 'hero') {
+  if (imageLooksSourceDerived(article)
+    && !sourceUsageDecision(article, SOURCE_REGISTRY, 'image').authorized) {
+    const fallback = fallbackCategoryImagePath(article);
+    return {
+      url: isTrustedPublicImage(fallback) ? fallback : '/generated/fallbacks/ai-infrastructure.svg',
+      alt: articleImageAlt(article),
+      status: 'fallback',
+      provider: 'category-fallback',
+      variant,
+      fallback: true,
+    };
+  }
+
   const generatedCandidates = variantCandidates(article, variant);
   for (const candidate of generatedCandidates) {
     if (isTrustedPublicImage(candidate) && !isPlaceholderGeneratedCandidate(article, candidate)) {

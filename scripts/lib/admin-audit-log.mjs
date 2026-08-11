@@ -6,7 +6,7 @@ function text(value) {
   return String(value ?? '').trim();
 }
 
-export function summarizeAdminAuditChange({ before = {}, after = {}, actor = 'admin', action = 'save-draft', articleId = '', timestamp = new Date().toISOString(), commitSha = '' } = {}) {
+export function summarizeAdminAuditChange({ before = {}, after = {}, actor = 'admin', action = 'save-draft', articleId = '', timestamp = new Date().toISOString(), baseCommitSha = '' } = {}) {
   const keys = [...new Set([...Object.keys(before), ...Object.keys(after)])].sort();
   const changedFields = keys.filter((key) => stable(before[key]) !== stable(after[key]));
   const beforeStatus = text(before.public_status || 'unset');
@@ -18,7 +18,7 @@ export function summarizeAdminAuditChange({ before = {}, after = {}, actor = 'ad
     actor: text(actor || 'admin'),
     action: text(action || 'save-draft'),
     timestamp,
-    commitSha: text(commitSha),
+    baseCommitSha: text(baseCommitSha),
     changedFields,
     before: Object.fromEntries(changedFields.map((field) => [field, before[field]])),
     after: Object.fromEntries(changedFields.map((field) => [field, after[field]])),

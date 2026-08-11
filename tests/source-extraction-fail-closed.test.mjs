@@ -18,3 +18,17 @@ test('allows local card but blocks longform when clean source evidence is short'
   assert.equal(publicGate.ok, true);
   assert.equal(longformGate.ok, false);
 });
+
+test('creates a hash-verified exact extraction artifact before editorial generation', () => {
+  const cleaned = `${'Utility records document transformer delivery and interconnection milestones for the campus. '.repeat(20)}Final source sentence complete.`;
+  const result = sourceExtractionPassesLongformGate({
+    sourceUrl: 'https://example.com/utility-record',
+    articleText: cleaned,
+  });
+
+  assert.equal(result.ok, true);
+  assert.equal(result.extraction_artifact.source_url, 'https://example.com/utility-record');
+  assert.equal(result.extraction_artifact.cleaned_extracted_text, result.cleaned_source_text);
+  assert.match(result.extraction_artifact.extracted_text_sha256, /^[a-f0-9]{64}$/);
+  assert.equal(result.extraction_artifact.extraction_qa.can_generate_longform, true);
+});

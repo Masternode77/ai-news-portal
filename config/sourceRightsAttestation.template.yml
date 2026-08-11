@@ -1,0 +1,20 @@
+attestation_date: 2026-08-09
+approved: false
+approved_by:
+approval_role: legal_or_authorized_operator
+scope:
+  source_id:
+  text_use_basis:
+  image_use_basis:
+  terms_url:
+  reviewed_at:
+  allow_text_use: false
+  allow_image_reuse: false
+evidence:
+  authorization_reference:
+  restrictions:
+  notes:
+instructions:
+  - Keep approved false until legal counsel or an authorized operator verifies the rights basis.
+  - Copy verified fields into config/sourceRegistry.yml; do not infer permission from public accessibility, RSS availability, attribution, or hotlinkability.
+  - Re-review every authorization within 365 days; stale or incomplete records fail closed.

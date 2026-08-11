@@ -19,15 +19,15 @@ const renderAd = adsEnabled && Boolean(slotId);
 const HOUSE: Record<string, { kicker: string; title: string; copy: string; cta: string; href: string; external?: boolean }> = {
   leaderboard: {
     kicker: 'From Compute Current',
-    title: 'Follow the buildout as it happens.',
-    copy: 'Source-linked AI infrastructure analysis, refreshed several times a day. Follow with any feed reader and never miss a shift in power, silicon, or capacity.',
+    title: 'Follow the infrastructure record.',
+    copy: 'Follow source-linked AI infrastructure coverage and any future authorized analysis with your preferred feed reader.',
     cta: 'How to follow',
     href: '/follow/',
   },
   infeed: {
     kicker: 'From Compute Current',
     title: 'Reading this often? Follow along.',
-    copy: 'Every analysis reaches followers the moment it publishes — no account needed.',
+    copy: 'Follow the source-linked record and future authorized analysis — no account needed.',
     cta: 'Follow Compute Current',
     href: '/follow/',
   },
@@ -52,7 +52,7 @@ const isFluid = variant === 'article';
 ---
 {renderAd ? (
   <div class:list={['ad-slot', `ad-slot-${variant}`, className]} data-ad-shell>
-    <span class="ad-slot-label">Advertisement</span>
+    <span class="ad-slot-label">Advertisements</span>
     {isFluid ? (
       <ins
         class="adsbygoogle"

@@ -1,9 +1,7 @@
 import fs from 'node:fs';
-import path from 'node:path';
-import { fileURLToPath } from 'node:url';
+import { resolveRepositoryFile } from './repository-file-resolver.mjs';
 
-const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
-const CONFIG_PATH = path.join(ROOT, 'config/boilerplatePatterns.yml');
+const CONFIG_PATH = resolveRepositoryFile('config/boilerplatePatterns.yml');
 
 function parseSimpleYamlList(raw = '', key = '') {
   const lines = String(raw || '').split(/\r?\n/);
@@ -32,20 +30,12 @@ function phraseRegex(phrase = '') {
 }
 
 export function loadBoilerplatePatternConfig() {
-  try {
-    const raw = fs.readFileSync(CONFIG_PATH, 'utf8');
-    return {
-      boilerplate: parseSimpleYamlList(raw, 'boilerplate_patterns'),
-      copyright: parseSimpleYamlList(raw, 'copyright_footer_patterns'),
-      navOrCta: parseSimpleYamlList(raw, 'nav_or_cta_patterns'),
-    };
-  } catch {
-    return {
-      boilerplate: [],
-      copyright: [],
-      navOrCta: [],
-    };
-  }
+  const raw = fs.readFileSync(CONFIG_PATH, 'utf8');
+  return {
+    boilerplate: parseSimpleYamlList(raw, 'boilerplate_patterns'),
+    copyright: parseSimpleYamlList(raw, 'copyright_footer_patterns'),
+    navOrCta: parseSimpleYamlList(raw, 'nav_or_cta_patterns'),
+  };
 }
 
 export const BOILERPLATE_PATTERN_CONFIG = loadBoilerplatePatternConfig();

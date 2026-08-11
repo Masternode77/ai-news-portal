@@ -3,6 +3,7 @@ import fs from 'node:fs';
 import test from 'node:test';
 import latestNews from '../src/data/latest-news.json' with { type: 'json' };
 import archivedNews from '../src/data/archived-news.json' with { type: 'json' };
+import { publicFeedVolumeResult } from '../scripts/audit-public-feed-volume.mjs';
 import { buildHomepageFeed } from '../scripts/lib/homepage-feed-builder.mjs';
 import { isStockDerivedCardImage } from '../scripts/lib/stock-card-image-detector.mjs';
 import {
@@ -18,6 +19,7 @@ import {
 } from '../scripts/lib/article-image-surface.mjs';
 import { buildPublicPresentation } from '../scripts/lib/public-presentation.mjs';
 import { registerPublicImageAuditContractTests } from './public-image-audit-contracts.mjs';
+import { authorizePublicTestRecords } from './fixtures/admin-publication-integrity.mjs';
 
 const HPCWIRE_REMOTE_IMAGE_REGRESSION_IDS = [
   '0ccf1e3f69f2b513',
@@ -38,8 +40,12 @@ function assertPublicImage2Provenance(provenance, expected) {
 }
 
 test('public feed cards carry displayable editorial images', () => {
-  const feed = buildHomepageFeed([...latestNews, ...archivedNews], { limit: 50, minimumVisible: 30 });
-  assert.ok(feed.items.length >= 30);
+  const allArticles = [...latestNews, ...archivedNews];
+  const authorized = authorizePublicTestRecords(allArticles);
+  const feed = buildHomepageFeed(authorized.records, { ...authorized.options, limit: 50, minimumVisible: 30 });
+  const volume = publicFeedVolumeResult(authorized.records, authorized.options);
+  assert.equal(volume.ok, true, volume.reasons.join(', '));
+  assert.equal(feed.items.length, volume.homepageCount);
   assert.equal(feed.items.filter((item) => !item.publicSignal?.image).length, 0);
   assert.equal(feed.items.filter((item) => !item.publicSignal?.image_alt).length, 0);
   assert.equal(feed.items.filter((item) => isStockDerivedCardImage(item.publicSignal)).length, 0);
@@ -49,22 +55,21 @@ test('public feed cards carry displayable editorial images', () => {
   }).length, 0);
 });
 
-test('remote source artwork is normalized to local generated cards', () => {
+test('public data contains no residual unapproved source-canonical artwork', () => {
   const allArticles = [...latestNews, ...archivedNews];
   const affected = allArticles.filter((article) => {
     return isRemoteImage(article.sourceImage)
       && localArticleImageExists(article.generatedImage)
-      && localArticleImageExists(article.thumbnailImage);
+      && localArticleImageExists(article.thumbnailImage)
+      && (article.generatedImageProvider === 'source-image' || article.imageStatus === 'source-canonical');
   });
 
-  assert.ok(affected.length >= 5);
-
-  for (const article of affected) {
-    assert.equal(localArticleImageExists(article.generatedImage), true, article.id);
-    assert.equal(isRemoteImage(articleCardImage(article)), false, article.id);
-    assert.equal(articleCardImage(article), article.thumbnailImage, article.id);
-    assert.equal(articleDisplayImage(article), article.generatedImage, article.id);
-  }
+  assert.equal(affected.length, 0);
+  assert.equal(allArticles.some((article) => {
+    return /\b(?:source-image|source-canonical|origin-canonical)\b/i.test(
+      `${article.generatedImageProvider || ''} ${article.imageStatus || ''}`,
+    );
+  }), false);
 
   const feed = buildHomepageFeed(allArticles, { limit: 50, minimumVisible: 30 });
 
@@ -115,7 +120,10 @@ test('article hero image keeps provenance metadata non-visible', () => {
 });
 
 test('public feed carries non-visible publication image provenance metadata', () => {
-  const feed = buildHomepageFeed([...latestNews, ...archivedNews], { limit: 50, minimumVisible: 30 });
+  const allArticles = [...latestNews, ...archivedNews];
+  const authorized = authorizePublicTestRecords(allArticles);
+  const feed = buildHomepageFeed(authorized.records, { ...authorized.options, limit: 50, minimumVisible: 30 });
+  const volume = publicFeedVolumeResult(authorized.records, authorized.options);
   const publicSignals = feed.items.map((item) => item.publicSignal);
   const visibleSignalCopy = publicSignals.map((signal) => ({
     title: signal.title,
@@ -126,7 +134,8 @@ test('public feed carries non-visible publication image provenance metadata', ()
     cta: signal.cta,
   }));
 
-  assert.ok(publicSignals.length >= 30);
+  assert.equal(volume.ok, true, volume.reasons.join(', '));
+  assert.equal(publicSignals.length, volume.homepageCount);
   assert.equal(publicSignals.every((signal) => signal.image_provenance_label), true);
   assert.equal(publicSignals.every((signal) => signal.image_provenance_kind), true);
   assert.equal(publicSignals.some((signal) => signal.image_provenance_kind === 'image2'), true);

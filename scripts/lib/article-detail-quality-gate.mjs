@@ -5,6 +5,7 @@ import { guardPublicCopy } from './copy-quality-guard.mjs';
 import { detectBoilerplate } from './boilerplate-detector.mjs';
 import { detectTruncationArtifacts } from './truncation-detector.mjs';
 import { cleanArticleBodyBlocks } from './article-body-cleaner.mjs';
+import { blogLengthResult } from './blog-length-policy.mjs';
 
 function publicDetailText(article = {}) {
   const finalBody = article.expertLensFull?.finalArticleBody || '';
@@ -26,16 +27,6 @@ function unique(values = []) {
   return [...new Set(values.filter(Boolean).map((value) => String(value)))];
 }
 
-function isBodyHeading(block = '') {
-  return block.length <= 86 && !/[.!?]$/.test(block) && /^[A-Z0-9][A-Za-z0-9 &:/+-]+$/.test(block);
-}
-
-function visibleSectionCount(blocks = []) {
-  const headings = blocks.filter(isBodyHeading);
-  if (headings.length) return headings.length;
-  return blocks.filter((block) => String(block).trim().length >= 80).length;
-}
-
 export function articleDetailQualityResult(article = {}, options = {}) {
   const route = options.route || article.public_routing || routePublicLane(article);
   const extraction = sourceExtractionPassesLongformGate(article);
@@ -45,6 +36,7 @@ export function articleDetailQualityResult(article = {}, options = {}) {
   const boilerplate = detectBoilerplate(text);
   const truncation = detectTruncationArtifacts(text);
   const bodyBlocks = cleanArticleBodyBlocks(article.expertLensFull?.finalArticleBody || article.articleText || '');
+  const length = blogLengthResult(bodyBlocks.join('\n\n'), article.blog_route || article.publishing_route || 'standard_blog');
   const reasons = [];
 
   if (article.public_status === 'quarantined') reasons.push('quarantined');
@@ -56,8 +48,7 @@ export function articleDetailQualityResult(article = {}, options = {}) {
   if (boilerplate.boilerplate_ratio > 0 || boilerplate.copyright_footer_detected || boilerplate.nav_or_cta_detected) reasons.push('source_boilerplate_leakage');
   if (!truncation.ok) reasons.push(...truncation.artifacts);
   if (/editor'?s brief/i.test(text)) reasons.push('fixed_editors_brief_template');
-  if (bodyBlocks.join(' ').length < 500) reasons.push('article_body_too_short_after_cleaning');
-  if (visibleSectionCount(bodyBlocks) < 4) reasons.push('article_body_too_few_sections');
+  reasons.push(...length.reasons);
 
   return {
     ok: reasons.length === 0,
@@ -69,6 +60,7 @@ export function articleDetailQualityResult(article = {}, options = {}) {
     boilerplate,
     truncation,
     bodyBlocks,
+    length,
   };
 }
 

@@ -5,6 +5,7 @@ import {
   generateCardCopy,
 } from '../scripts/lib/card-copy-quality-gate.mjs';
 import { buildHomepageFeed } from '../scripts/lib/homepage-feed-builder.mjs';
+import { authorizePublicTestRecords } from './fixtures/admin-publication-integrity.mjs';
 
 function maxDuplicateCount(values = []) {
   const counts = new Map();
@@ -256,7 +257,8 @@ test('generated homepage copy avoids repeated fallback text across same-angle ba
     archiveOnly: false,
     generatedImage: '/generated/fallbacks/semiconductors.svg',
   }));
-  const feed = buildHomepageFeed(sameAngleItems, { limit: 36, minimumVisible: 0 });
+  const authorized = authorizePublicTestRecords(sameAngleItems);
+  const feed = buildHomepageFeed(authorized.records, { ...authorized.options, limit: 36, minimumVisible: 0 });
   const decks = feed.items.map((entry) => entry.publicSignal.deck);
   const whys = feed.items.map((entry) => entry.publicSignal.why_it_matters);
   const deckTails = decks.map(terminalTailFamily);
@@ -268,4 +270,44 @@ test('generated homepage copy avoids repeated fallback text across same-angle ba
   assert.ok(maxDuplicateCount(deckTails) <= 2);
   assert.ok(maxDuplicateCount(whyTails) <= 2);
   assert.equal(feed.items.every((entry) => cardCopyQualityResult(entry.publicSignal).ok), true);
+});
+
+test('homepage preserves source-specific presentation decks and varies duplicate title prefixes', () => {
+  const articles = [
+    {
+      id: 'chip-roundup-newer',
+      title: 'Chip Industry Week in Review',
+      source: 'Semiconductor Engineering',
+      sourceUrl: 'https://example.com/chip-roundup-newer',
+      publishedAt: '2026-08-07T07:01:09.000Z',
+      primary_category: 'Semiconductors',
+      infrastructure_layer: 'semiconductor',
+      summary: 'H200 export controls, IC funding, equipment supply, and packaging pressure changed the chip supply outlook.',
+      public_content_tier: 'signal_card',
+      homepagePublished: true,
+      generatedImage: '/generated/fallbacks/semiconductors.svg',
+    },
+    {
+      id: 'chip-roundup-older',
+      title: 'Chip Industry Week In Review',
+      source: 'Semiconductor Engineering',
+      sourceUrl: 'https://example.com/chip-roundup-older',
+      publishedAt: '2026-07-24T07:01:00.000Z',
+      primary_category: 'Semiconductors',
+      infrastructure_layer: 'semiconductor',
+      summary: 'Packaging constraints, equipment lead times, IC funding, and H200 policy shaped a separate weekly chip roundup.',
+      public_content_tier: 'signal_card',
+      homepagePublished: true,
+      generatedImage: '/generated/fallbacks/semiconductors.svg',
+    },
+  ];
+
+  const authorized = authorizePublicTestRecords(articles);
+  const feed = buildHomepageFeed(authorized.records, { ...authorized.options, limit: 2, minimumVisible: 0 });
+  const decks = feed.items.map((entry) => entry.publicSignal.deck);
+  const prefixes = decks.map((deck) => deck.toLowerCase().split(/\s+/).slice(0, 8).join(' '));
+
+  assert.equal(feed.items.length, 2);
+  assert.match(decks[0], /H200 controls, IC funding, and packaging pressure/i);
+  assert.equal(new Set(prefixes).size, 2);
 });

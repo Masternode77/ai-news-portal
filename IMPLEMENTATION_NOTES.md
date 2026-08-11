@@ -1,63 +1,27 @@
-# Implementation notes
+# Implementation Notes (Historical Snapshot)
 
-## What was changed
+> **Historical snapshot — non-operational.** This pre-current-runtime note is
+> retained only as historical context. It is not an operator guide, deployment
+> checklist, provider-default statement, or live credential instruction.
 
-1. **Homepage redesign**
-   - Kept the same hero + masonry board format
-   - Rebuilt the visual system into a premium glass / monochrome dashboard
-   - Added stat cards, category badges, source + region pills, stronger card hierarchy
+## Historical context
 
-2. **Pipeline stability fix**
-   - The original repo stored only curated IDs for the day.
-   - On later 8-hour runs, those IDs could disappear from fresh RSS pulls and lead to empty publish slots.
-   - The updated pipeline stores `curatedItems` directly inside the day plan state so the 2nd and 3rd runs still publish the same daily selections reliably.
+An earlier iteration described a different visual treatment, a ChatGPT OAuth
+image-provider default, and related live-environment steps. Those details no
+longer describe the candidate and must not be used to configure it.
 
-3. **Optional OpenRouter intelligence**
-   - Added `scripts/lib/openrouter.mjs`
-   - Optional daily curation with `openai/gpt-5.3-codex`
-   - Optional article summary / expert insight / tags / category / image prompt generation
+## Current sources of truth
 
-4. **ChatGPT/OpenAI-first image provider flow**
-   - Added a provider layer under `scripts/lib/image-providers/`
-   - Defaults to `IMAGE_PROVIDER=chatgpt` for an OAuth-backed ChatGPT/OpenAI runtime adapter
-   - Keeps `IMAGE_PROVIDER=openai-api` as an explicit API-key fallback path, not the default
-   - Moves Gemini / Nano Banana behind `IMAGE_PROVIDER=legacy-gemini`
-   - Avoids publishing external source images as the main card art
-   - Preserves the fallback chain: configured provider, local source-image poster, SVG placeholder
+- `DESIGN.md` defines the current light, neutral, source-linked editorial
+  system; it is not a glass or monochrome dashboard.
+- `README.md` and `docs/image-generation-setup.md` describe the current
+  `IMAGE_PROVIDER=image2` default and provider-specific fallback behavior.
+- `scripts/lib/constants.mjs`, `scripts/lib/image2-provider.mjs`, and
+  `scripts/lib/image-generator.mjs` are the executable image-provider and
+  fallback contract.
+- `docs/deployment-checklist.md` and
+  `docs/commercialization-deploy-checklist.md` are the current operator
+  preflight surfaces.
 
-5. **KST scheduling**
-   - GitHub Actions now runs at 00:05 / 08:05 / 16:05 KST using UTC cron entries
-
-6. **Telegram preview hook**
-   - Added homepage capture script with Playwright
-   - Added Telegram `sendPhoto` script
-   - Requires `TELEGRAM_BOT_TOKEN` and `TELEGRAM_CHAT_ID`
-
-## What still requires your live credentials / environment
-
-- GitHub push from this environment
-- Vercel import/deploy from your account
-- Telegram photo send from your bot token
-- Live ChatGPT/OpenAI image runtime or explicit OpenAI API-key fallback execution
-- Live OpenRouter API execution
-
-## Suggested first live test
-
-```bash
-npm install
-npm run pipeline
-npm run build
-npm run dev
-```
-
-Then set GitHub Secrets:
-
-- `OPENROUTER_API_KEY`
-- `OPENROUTER_MODEL` (optional)
-- `IMAGE_PROVIDER=chatgpt`
-- `CHATGPT_IMAGE_OAUTH_ENDPOINT`
-- `CHATGPT_IMAGE_OAUTH_ACCESS_TOKEN`
-- `IMAGE_PROVIDER=openai-api` and `OPENAI_API_KEY` only if API-key auth / billing is acceptable
-- `IMAGE_PROVIDER=legacy-gemini`, `GEMINI_API_KEY`, and `GEMINI_IMAGE_MODEL` only for deprecated Gemini fallback testing
-- `TELEGRAM_BOT_TOKEN` (optional)
-- `TELEGRAM_CHAT_ID` (optional)
+Historical notes do not establish that an external provider, credential,
+workflow, deployment, or publication state is currently available.

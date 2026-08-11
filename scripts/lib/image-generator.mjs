@@ -4,8 +4,11 @@ import sharp from 'sharp';
 import { IMAGE_PROVIDER, PIPELINE_OFFLINE } from './constants.mjs';
 import { ARTICLE_IMAGE_VARIANTS, canonicalArticleImagePaths } from './image-store.mjs';
 import { createImageProvider } from './image-providers/index.mjs';
-import { fetchWithTimeout } from './image-providers/shared.mjs';
 import { isStockDerivedCardImage } from './stock-card-image-detector.mjs';
+import { loadSourceRegistry, sourceUsageDecision } from './source-registry.mjs';
+import { fetchSourceImage, sourceImageHostsFor } from './source-image-fetcher.mjs';
+
+// allow: SIZE_OK — generation and its fail-closed publisher-image fallback share one orchestration boundary.
 
 const OUT_DIR = path.join(process.cwd(), 'public/generated');
 
@@ -143,17 +146,16 @@ async function generateLocalPoster(item) {
     return null;
   }
 
-  const response = await fetchWithTimeout(sourceImage, {
-    headers: {
-      'user-agent': 'Mozilla/5.0 (compatible; AINewsPortalBot/1.0)',
-    },
-  }, 20000);
-
-  if (!response.ok) {
-    throw new Error(`Source image fetch failed: ${response.status}`);
+  const sources = await loadSourceRegistry();
+  const authorization = sourceUsageDecision(item, sources, 'image');
+  if (!authorization.authorized) {
+    console.warn(`[pipeline] ${authorization.reason} for ${item.id}: ${authorization.detail}`);
+    return null;
   }
 
-  const arrayBuffer = await response.arrayBuffer();
+  const fetched = await fetchSourceImage(sourceImage, {
+    allowedHosts: sourceImageHostsFor(sources, authorization.sourceId),
+  });
   const palette = colorFromId(item.id);
   const titleLines = wrapText(item.title, 34, 3);
   const category = safeText(item.category || 'AI Infrastructure Brief', 32);
@@ -180,7 +182,7 @@ async function generateLocalPoster(item) {
     </svg>
   `);
 
-  await sharp(Buffer.from(arrayBuffer))
+  await sharp(fetched.bytes)
     .resize(1344, 768, {
       fit: 'cover',
       position: 'attention',

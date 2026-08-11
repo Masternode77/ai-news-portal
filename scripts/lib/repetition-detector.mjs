@@ -2,6 +2,7 @@ import { ARTICLE_BLUEPRINTS, normalizeBlueprintId } from './article-blueprints.m
 import { BANNED_PHRASES, bannedPhraseMatches } from './banned-phrases.mjs';
 import { normalizeEditorialParagraphs } from './editorial-humanizer.mjs';
 import { sanitizeGeneratedText } from './normalize.mjs';
+import { hasPublishedArticlePage } from './article-publication-state.mjs';
 
 export const REPETITION_SENTENCE_RATIO_THRESHOLD = 0.12;
 export const HEADING_SEQUENCE_SIMILARITY_THRESHOLD = 0.75;
@@ -172,7 +173,7 @@ function bannedPhraseCounts(article = {}, recentWindow = []) {
 function publishedRecentArticles(records = [], currentId = '') {
   return records
     .filter((record) => record?.id && record.id !== currentId)
-    .filter((record) => record.articlePagePublished !== false)
+    .filter(hasPublishedArticlePage)
     .filter((record) => record.archiveOnly !== true)
     .filter((record) => articleBody(record))
     .sort((a, b) => new Date(b.publishedAt || 0).getTime() - new Date(a.publishedAt || 0).getTime())

@@ -3,9 +3,13 @@ import { rssItemEligible } from './seo-quality-policy.mjs';
 import { sanitizePublicCopy } from './internal-language-guard.mjs';
 import { cardCopyQualityResult, generateCardCopy } from './card-copy-quality-gate.mjs';
 import { articleOpenGraphImage, isTrustedPublicImage } from './article-image-surface.mjs';
+import { canonicalArticlePath, safeHttpUrl } from './normalize.mjs';
+import { isPublicLongformArticle } from './public-surface-eligibility.mjs';
+import { currentSourceTextAuthorization } from './source-text-publication-authorization.mjs';
 
-function rssLinkFor(item = {}) {
-  return item.articlePagePublished === false ? item.sourceUrl || item.url || '/' : `/news/${item.id}/`;
+function rssLinkFor(item = {}, options = {}) {
+  if (isPublicLongformArticle(item, options)) return canonicalArticlePath(item.id);
+  return [item.sourceUrl, item.url].map(safeHttpUrl).find(Boolean) || '';
 }
 
 function absoluteSiteUrl(pathOrUrl = '', site = 'https://www.computecurrent.com') {
@@ -35,14 +39,22 @@ function rssImageFor(item = {}) {
   return isTrustedPublicImage(image) ? image : '';
 }
 
-export function buildRssItems(items = []) {
+export function buildRssItems(items = [], options = {}) {
   const seenLinks = new Set();
   const out = [];
 
   for (const item of items
-    .filter((item) => item?.id && item?.publishedAt && rssItemEligible(item) && item.archiveOnly !== true && item.public_status !== 'archive_only_noindex')
+    .filter((item) => item?.id
+      && item?.publishedAt
+      && rssItemEligible(item)
+      && item.archiveOnly !== true
+      && item.public_status !== 'archive_only_noindex'
+      && currentSourceTextAuthorization(item, item.extraction_artifact, options).ok)
     .sort((a, b) => new Date(b.analysisPublishedAt || b.publishedAt).getTime() - new Date(a.analysisPublishedAt || a.publishedAt).getTime())) {
-    const link = rssLinkFor(item);
+    const link = rssLinkFor(item, options);
+    if (!link) {
+      continue;
+    }
     if (seenLinks.has(link)) {
       continue;
     }

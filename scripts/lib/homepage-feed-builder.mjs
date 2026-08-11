@@ -3,6 +3,9 @@ import { routePublicLane } from './public-lane-router.mjs';
 import { cardCopyQualityResult, generateCardCopy } from './card-copy-quality-gate.mjs';
 import { publicEmptyStateText } from './public-empty-state-copy.mjs';
 import { isPublicLongformArticle } from './public-surface-eligibility.mjs';
+import { canonicalArticlePath, safeHttpUrl } from './normalize.mjs';
+import { isPublicProductFit } from './public-product-fit.mjs';
+import { currentSourceTextAuthorization } from './source-text-publication-authorization.mjs';
 import {
   inferBottleneckAxis,
   orderByFirstViewportAxisDiversity,
@@ -13,13 +16,14 @@ function dateMs(article = {}) {
   return Number.isFinite(ms) ? ms : 0;
 }
 
-function publicEligible(article = {}) {
+function publicEligible(article = {}, options = {}) {
   if (!article?.id) return false;
+  if (!isPublicProductFit(article)) return false;
   if (article.homepagePublished === false) return false;
   if (article.archiveOnly === true) return false;
   if (article.public_content_tier === 'hidden') return false;
   if (article.public_status === 'quarantined' || article.public_status === 'archive_only_noindex') return false;
-  return true;
+  return currentSourceTextAuthorization(article, article.extraction_artifact, options).ok;
 }
 
 function canonicalFeedKey(article = {}) {
@@ -62,27 +66,26 @@ function decorate(article = {}, options = {}) {
   const presentation = buildPublicPresentation(article, { route, recentDecks: options.recentDecks || [] });
   const copy = generateCardCopy(article);
   const bottleneckAxis = inferBottleneckAxis(article);
-  const copyQuality = cardCopyQualityResult(copy, article);
+  const publicSignal = {
+    ...presentation,
+    ...copy,
+    deck: presentation.deck,
+    bottleneck_axis: bottleneckAxis,
+  };
+  const copyQuality = cardCopyQualityResult(publicSignal, article);
   if (!copyQuality.ok) {
     return null;
   }
-  const detailHref = isPublicLongformArticle(article) ? `/news/${article.id}/` : '';
+  const detailHref = isPublicLongformArticle(article, options) ? canonicalArticlePath(article.id) : '';
+  const sourceCandidates = [article.sourceUrl, article.url, presentation.read_source];
+  const sourceHref = sourceCandidates.map(safeHttpUrl).find(Boolean) || '';
+  if (!detailHref && sourceCandidates.some(Boolean) && !sourceHref) return null;
   return {
     ...article,
     publicSignal: {
-      ...presentation,
-      signal_label: copy.signal_label,
-      label: copy.label,
-      title: copy.title,
-      deck: copy.deck,
-      why_it_matters: copy.why_it_matters,
-      source: copy.source,
-      date: copy.date,
-      category: copy.category,
-      cta: copy.cta,
-      bottleneck_axis: bottleneckAxis,
+      ...publicSignal,
       view_detail: detailHref,
-      read_source: article.sourceUrl || article.url || presentation.read_source || '',
+      read_source: sourceHref,
     },
   };
 }
@@ -91,18 +94,21 @@ export function buildHomepageFeed(items = [], options = {}) {
   const limit = options.limit || 50;
   const minimumVisible = options.minimumVisible || 30;
   const sorted = dedupeFeedItems(items
-    .filter(publicEligible)
+    .filter((article) => publicEligible(article, options))
     .sort((a, b) => dateMs(b) - dateMs(a)));
-  const visible = orderByFirstViewportAxisDiversity(
-    sorted.slice(0, Math.max(Math.min(limit, sorted.length), Math.min(minimumVisible, sorted.length))),
+  const targetCount = Math.max(Math.min(limit, sorted.length), Math.min(minimumVisible, sorted.length));
+  const ordered = orderByFirstViewportAxisDiversity(
+    sorted,
     { firstViewportCount: options.firstViewportCount || 5 },
   );
   const recentDecks = [];
-  const decorated = visible.map((article) => {
-    const entry = decorate(article, { recentDecks });
+  const decorated = [];
+  for (const article of ordered) {
+    const entry = decorate(article, { ...options, recentDecks });
     if (entry?.publicSignal?.deck) recentDecks.push(entry.publicSignal.deck);
-    return entry;
-  }).filter(Boolean);
+    if (entry) decorated.push(entry);
+    if (decorated.length >= targetCount) break;
+  }
   const featured = decorated[0] || null;
   return {
     items: decorated,

@@ -11,10 +11,22 @@ import {
   articleCardImage,
   articleDisplayImage,
   articleImageAlt,
+  articleImageVariants,
   isRemoteImage,
   localArticleImageExists,
 } from './lib/article-image-surface.mjs';
 import { isStockDerivedCardImage } from './lib/stock-card-image-detector.mjs';
+import { loadSourceRegistrySync, sourceUsageDecision } from './lib/source-registry.mjs';
+import { auditStaticImageRights } from './lib/static-image-rights-audit.mjs';
+
+const SOURCE_DERIVED_IMAGE_RE = /\b(?:source-image|source-canonical|origin-canonical)\b/i;
+const SOURCE_REGISTRY = (() => {
+  try {
+    return loadSourceRegistrySync();
+  } catch {
+    return [];
+  }
+})();
 
 function uniqueById(items = []) {
   const seen = new Set();
@@ -102,9 +114,20 @@ function attrValue(tag = '', name = '') {
   return match?.[1] || match?.[2] || match?.[3] || '';
 }
 
+function renderedElementTags(html = '') {
+  const markup = String(html || '')
+    .replace(/<!--[\s\S]*?-->/g, '')
+    .replace(/<(script|style|template)\b[^>]*>[\s\S]*?<\/\1\s*>/gi, '');
+  return [...markup.matchAll(/<[a-z][^>]*>/gi)].map((match) => match[0]);
+}
+
 export function renderedImageFailures(publicPath = '/', html = '') {
   const failures = [];
-  const tags = [...String(html || '').matchAll(/<img\b[^>]*>/gi)].map((match) => match[0]);
+  const elementTags = renderedElementTags(html);
+  if (elementTags.some((tag) => attrValue(tag, 'data-provenance-kind').trim().toLowerCase() === 'source')) {
+    failures.push(`${publicPath}:unapproved_source_image_provenance`);
+  }
+  const tags = elementTags.filter((tag) => /^<img\b/i.test(tag));
   tags.forEach((tag, index) => {
     const label = `${publicPath}:img[${index}]`;
     const src = attrValue(tag, 'src').trim();
@@ -134,19 +157,23 @@ function renderedPublicImageFailures(files = discoverRenderedPublicImageFiles())
   });
 }
 
-export function publicImageSurfaceFailures(surface = 'public', items = []) {
+export function publicImageSurfaceFailures(surface = 'public', items = [], options = {}) {
   return items.flatMap((item) => {
     const id = item?.id || 'unknown';
-    const image = item?.publicSignal?.image || item?.public_presentation?.image || articleCardImage(item);
-    const alt = item?.publicSignal?.image_alt || item?.public_presentation?.image_alt || articleImageAlt(item);
+    const selected = articleImageVariants(item).thumbnail;
+    const persistedImage = item?.publicSignal?.image || item?.public_presentation?.image;
+    const image = localArticleImageExists(persistedImage)
+      ? persistedImage
+      : selected.url || articleCardImage(item) || persistedImage;
+    const alt = selected.alt || item?.publicSignal?.image_alt || item?.public_presentation?.image_alt || articleImageAlt(item);
     const failures = [];
     if (!image) {
       failures.push(`${surface}:${id}:missing_public_image`);
       return failures;
     }
     if (!alt) failures.push(`${surface}:${id}:missing_public_image_alt:${image}`);
-    if (isRemoteImage(image)) {
-      failures.push(`${surface}:${id}:remote_public_image:${image}`);
+    if (isRemoteImage(persistedImage)) {
+      failures.push(`${surface}:${id}:remote_public_image:${persistedImage}`);
       return failures;
     }
     if (!localArticleImageExists(image)) failures.push(`${surface}:${id}:missing_local_asset:${image}`);
@@ -155,6 +182,19 @@ export function publicImageSurfaceFailures(surface = 'public', items = []) {
       || item?.generatedImageProvider
       || item?.imageProvider
       || item?.image_source_provider;
+    const publicImageStatus = item?.publicSignal?.image_status
+      || item?.public_presentation?.image_status
+      || item?.imageStatus
+      || item?.image_status;
+    const auditImageProvider = image === persistedImage ? publicImageProvider : selected.provider;
+    const sourceDerived = SOURCE_DERIVED_IMAGE_RE.test(`${publicImageProvider || ''} ${publicImageStatus || ''}`);
+    if (sourceDerived) {
+      const sources = Object.hasOwn(options, 'sources') ? options.sources : SOURCE_REGISTRY;
+      const authorization = sourceUsageDecision(item, sources, 'image', options.now || new Date());
+      if (!authorization.authorized) {
+        failures.push(`${surface}:${id}:${authorization.reason}:${persistedImage || image}`);
+      }
+    }
     const publicImageSurface = {
       ...(item?.public_presentation || {}),
       ...(item?.publicSignal || {}),
@@ -163,31 +203,76 @@ export function publicImageSurfaceFailures(surface = 'public', items = []) {
       image_url: item?.image_url || item?.publicSignal?.image_url || item?.public_presentation?.image_url,
       thumbnail: item?.thumbnail || item?.publicSignal?.thumbnail || item?.public_presentation?.thumbnail,
       image,
-      generatedImageProvider: publicImageProvider,
-      imageProvider: publicImageProvider,
-      image_source_provider: publicImageProvider,
+      generatedImageProvider: auditImageProvider,
+      imageProvider: auditImageProvider,
+      image_source_provider: auditImageProvider,
     };
-    if (String(publicImageProvider || '').trim().toLowerCase() !== 'source-image' && isStockDerivedCardImage(publicImageSurface)) {
+    if (!sourceDerived && String(auditImageProvider || '').trim().toLowerCase() !== 'local-generated' && isStockDerivedCardImage(publicImageSurface)) {
       failures.push(`${surface}:${id}:stock_derived_public_image:${image}`);
     }
     return failures;
   });
 }
 
-export function auditPublicImages({ distRoot = path.join(process.cwd(), 'dist') } = {}) {
-  const allArticles = [...latestNews, ...archivedNews];
+export function publicDataSourceImageFailure(item = {}, selected = articleImageVariants(item), options = {}) {
+  const persistedProvider = item?.publicSignal?.image_provider
+    || item?.public_presentation?.image_provider
+    || item?.generatedImageProvider
+    || item?.imageProvider
+    || item?.image_source_provider;
+  const persistedStatus = item?.publicSignal?.image_status
+    || item?.public_presentation?.image_status
+    || item?.imageStatus
+    || item?.image_status;
+  const sourceDerived = SOURCE_DERIVED_IMAGE_RE.test(`${persistedProvider || ''} ${persistedStatus || ''}`)
+    || [selected.hero, selected.thumbnail, selected.og]
+      .some((variant) => SOURCE_DERIVED_IMAGE_RE.test(`${variant.provider} ${variant.status}`));
+  if (!sourceDerived) return '';
+  const sources = Object.hasOwn(options, 'sources') ? options.sources : SOURCE_REGISTRY;
+  const authorization = sourceUsageDecision(item, sources, 'image', options.now || new Date());
+  return authorization.authorized ? '' : `public-data:${item.id}:unapproved_source_image_surface`;
+}
+
+export function auditPublicImages({
+  distRoot = path.join(process.cwd(), 'dist'),
+  publicRoot = path.join(process.cwd(), 'public'),
+  articles = [...latestNews, ...archivedNews],
+  sources = SOURCE_REGISTRY,
+  now = new Date(),
+} = {}) {
+  const allArticles = articles;
   const homepage = buildHomepageFeed(allArticles, { limit: 50, minimumVisible: 30 });
   const archive = buildArchiveFeed(allArticles, { page: 1, pageSize: 1000 });
   const longform = allArticles.filter(isPublicLongformArticle);
   const taxonomy = taxonomyItems();
   const renderedFiles = discoverRenderedPublicImageFiles(distRoot);
+  const staticPublic = auditStaticImageRights({
+    root: publicRoot,
+    rootLabel: 'public',
+    articles: allArticles,
+    sources,
+    now,
+  });
+  const staticDist = auditStaticImageRights({
+    root: distRoot,
+    rootLabel: 'dist',
+    articles: allArticles,
+    sources,
+    now,
+  });
+  const authorizationOptions = { sources, now };
   const failures = [
     ...renderedPublicCoverageFailures({ renderedFiles, longform }),
     ...renderedPublicImageFailures(renderedFiles),
-    ...publicImageSurfaceFailures('homepage', homepage.items),
-    ...publicImageSurfaceFailures('archive-feed', archive.items),
-    ...publicImageSurfaceFailures('search-index', searchIndex),
-    ...publicImageSurfaceFailures('taxonomy', taxonomy),
+    ...publicImageSurfaceFailures('homepage', homepage.items, authorizationOptions),
+    ...publicImageSurfaceFailures('archive-feed', archive.items, authorizationOptions),
+    ...publicImageSurfaceFailures('search-index', searchIndex, authorizationOptions),
+    ...publicImageSurfaceFailures('taxonomy', taxonomy, authorizationOptions),
+    ...uniqueById(allArticles)
+      .map((item) => publicDataSourceImageFailure(item, articleImageVariants(item), authorizationOptions))
+      .filter(Boolean),
+    ...staticPublic.failures,
+    ...staticDist.failures,
     ...longform
       .filter((item) => !articleDisplayImage(item))
       .map((item) => `longform:${item.id}:missing_article_image`),
@@ -205,6 +290,9 @@ export function auditPublicImages({ distRoot = path.join(process.cwd(), 'dist') 
       homepage: homepage.items.length,
       archiveFeed: archive.items.length,
       longform: longform.length,
+      staticPublicImages: staticPublic.imageCount,
+      staticDistImages: staticDist.imageCount,
+      legacySourcePosters: staticPublic.legacySourcePosters,
     },
   };
 }
@@ -216,7 +304,7 @@ if (process.argv[1] && import.meta.url === new URL(`file://${path.resolve(proces
     process.exitCode = 1;
   } else {
     console.log(
-      `public image audit passed: renderedPages=${result.counts.renderedPages}, latest=${result.counts.latest}, archive=${result.counts.archive}, search=${result.counts.search}, taxonomy=${result.counts.taxonomy}, homepage=${result.counts.homepage}, archiveFeed=${result.counts.archiveFeed}, longform=${result.counts.longform}`
+      `public image audit passed: renderedPages=${result.counts.renderedPages}, staticPublicImages=${result.counts.staticPublicImages}, staticDistImages=${result.counts.staticDistImages}, legacySourcePosters=${result.counts.legacySourcePosters}, latest=${result.counts.latest}, archive=${result.counts.archive}, search=${result.counts.search}, taxonomy=${result.counts.taxonomy}, homepage=${result.counts.homepage}, archiveFeed=${result.counts.archiveFeed}, longform=${result.counts.longform}`
     );
   }
 }

@@ -3,10 +3,11 @@ import { buildFreshnessPublicModel } from './freshness-public-model.mjs';
 import { routePublicLane } from './public-lane-router.mjs';
 import { buildPublicPresentation } from './public-presentation.mjs';
 import { articleDetailQualityEligible } from './article-detail-quality-gate.mjs';
+import { hasPublishedArticlePage } from './article-publication-state.mjs';
 
 function publicArticle(article = {}) {
   return article?.id
-    && article.articlePagePublished !== false
+    && hasPublishedArticlePage(article)
     && article.archiveOnly !== true
     && article.public_status !== 'quarantined'
     && article.public_status !== 'archive_only_noindex'

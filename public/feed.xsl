@@ -33,11 +33,15 @@
           .desc { margin: 0 0 18px; color: #6e6e73; font-size: 15px; line-height: 1.5; }
           .actions { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 36px; }
           .btn {
-            display: inline-flex; align-items: center; min-height: 36px; padding: 0 16px;
+            display: inline-flex; align-items: center; min-height: 40px; padding: 0 16px;
             border-radius: 999px; text-decoration: none; font-size: 14px; font-weight: 600;
             background: #0071e3; color: #ffffff;
+            transition: background-color 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease;
           }
           .btn.quiet { background: #f5f5f7; color: #1d1d1f; }
+          .btn:hover { background: #0066cc; transform: translateY(-1px); box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1); }
+          .btn.quiet:hover { background: #ebebef; }
+          .btn:focus-visible { outline: 3px solid #0071e3; outline-offset: 3px; }
           .item { padding: 18px 0; border-top: 1px solid rgba(0, 0, 0, 0.08); }
           .item a { color: #1d1d1f; text-decoration: none; font-size: 17px; font-weight: 600; letter-spacing: -0.01em; line-height: 1.35; }
           .item a:hover { color: #0071e3; }
@@ -51,7 +55,8 @@
             <div>
               <strong>This is the Compute Current news feed.</strong>
               Copy this page&#8217;s address into any feed reader (Feedly, Inoreader, NetNewsWire&#8230;)
-              to get every new analysis automatically. It updates several times a day.
+              to see currently eligible public items when they are published. Availability depends on source
+              rights and publication checks, not a fixed schedule.
             </div>
           </div>
           <h1><xsl:value-of select="/rss/channel/title"/></h1>

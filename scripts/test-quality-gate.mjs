@@ -55,8 +55,34 @@ assert.ok(qa.boilerplate_ratio > 0);
 assert.ok(qa.extraction_quality_score < ARTICLE_PAGE_QUALITY_THRESHOLD);
 assert.ok(qa.extraction_quality_reasons.some((reason) => reason.includes('copyright_footer_detected')));
 
-const originalFetch = globalThis.fetch;
-globalThis.fetch = async () => new Response(`
+const NOW = new Date('2026-08-10T00:00:00.000Z');
+function source(id, name, domain) {
+  return {
+    id,
+    name,
+    domain,
+    article_hosts: `www.${domain}`,
+    feed: `https://${domain}/feed`,
+    status: 'active_feed',
+    text_use_basis: 'licensed',
+    terms_url: `https://${domain}/terms`,
+    reviewed_at: '2026-08-01',
+    allow_text_use: true,
+  };
+}
+
+function injectedHtml(html) {
+  return {
+    resolveHost: async () => [{ address: '93.184.216.34', family: 4 }],
+    request: async () => ({
+      status: 200,
+      headers: { 'content-type': 'text/html' },
+      body: (async function* body() { yield Buffer.from(html); }()),
+    }),
+  };
+}
+
+const techcrunchHtml = `
   <html>
     <body>
       <article>
@@ -68,20 +94,23 @@ globalThis.fetch = async () => new Response(`
       </article>
     </body>
   </html>
-`, { status: 200, headers: { 'content-type': 'text/html' } });
+`;
 
 const adaptedExtraction = await fetchArticleExtraction({
   url: 'https://techcrunch.com/2026/05/17/cloud-capacity-report/',
   title: 'Cloud infrastructure company expands accelerator capacity',
   fallbackSnippet: 'Cloud capacity report.',
+  sourceRegistryId: 'techcrunch-test',
+  sources: [source('techcrunch-test', 'TechCrunch Test', 'techcrunch.com')],
+  now: NOW,
+  networkOptions: injectedHtml(techcrunchHtml),
 });
-globalThis.fetch = originalFetch;
 
 assert.equal(adaptedExtraction.extractionQa.source_domain_adapter, 'techcrunch');
 assert.ok(adaptedExtraction.extractionQa.content_length > 300);
 assert.ok(adaptedExtraction.extractionQa.extraction_quality_score >= ARTICLE_PAGE_QUALITY_THRESHOLD);
 
-globalThis.fetch = async () => new Response(`
+const datacenterKnowledgeHtml = `
   <html>
     <body>
       <article>
@@ -91,14 +120,17 @@ globalThis.fetch = async () => new Response(`
       </article>
     </body>
   </html>
-`, { status: 200, headers: { 'content-type': 'text/html' } });
+`;
 
 const footerExtraction = await fetchArticleExtraction({
   url: 'https://www.datacenterknowledge.com/regulations/compliance-report',
   title: 'Data Center Compliance in 2026: What Changed',
   fallbackSnippet: 'Data center compliance update.',
+  sourceRegistryId: 'datacenterknowledge-test',
+  sources: [source('datacenterknowledge-test', 'Data Center Knowledge Test', 'datacenterknowledge.com')],
+  now: NOW,
+  networkOptions: injectedHtml(datacenterKnowledgeHtml),
 });
-globalThis.fetch = originalFetch;
 
 assert.equal(footerExtraction.extractionQa.source_domain_adapter, 'datacenterknowledge');
 assert.equal(footerExtraction.extractionQa.copyright_footer_detected, true);

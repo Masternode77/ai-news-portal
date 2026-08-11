@@ -1,9 +1,20 @@
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import test from 'node:test';
-import { buildArchiveFeed } from '../scripts/lib/archive-feed-builder.mjs';
-import { buildHomepageFeed } from '../scripts/lib/homepage-feed-builder.mjs';
+import { buildArchiveFeed as buildArchiveFeedRaw } from '../scripts/lib/archive-feed-builder.mjs';
+import { buildHomepageFeed as buildHomepageFeedRaw } from '../scripts/lib/homepage-feed-builder.mjs';
 import { findInternalLanguageHits } from '../scripts/lib/internal-language-guard.mjs';
+import { authorizePublicTestRecords } from './fixtures/admin-publication-integrity.mjs';
+
+function buildHomepageFeed(items = [], options = {}) {
+  const authorized = authorizePublicTestRecords(items);
+  return buildHomepageFeedRaw(authorized.records, { ...options, ...authorized.options });
+}
+
+function buildArchiveFeed(items = [], options = {}) {
+  const authorized = authorizePublicTestRecords(items);
+  return buildArchiveFeedRaw(authorized.records, { ...options, ...authorized.options });
+}
 
 function item(index, tier = 'editorial_brief') {
   return {
@@ -228,8 +239,10 @@ test('homepage feed only links to article detail pages that pass public longform
   const feed = buildHomepageFeed([
     {
       ...item(7, 'longform_analysis'),
+      title: 'Utility interconnection changes AI data center timing',
       articlePagePublished: true,
       sourceUrl: 'https://example.com/source-story',
+      articleText: 'The utility interconnection milestone changes grid capacity and AI data center commissioning timing. '.repeat(12),
       expertLensFull: { finalArticleBody: 'Too short for a public article page.' },
     },
   ]);

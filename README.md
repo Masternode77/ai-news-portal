@@ -2,35 +2,51 @@
 
 Production-ready Astro portal for curated AI, data center, semiconductor, power, and cloud infrastructure intelligence.
 
-## Monetization & analytics (env-gated)
+## Monetization & analytics (attested and route-gated)
 
-Ads and analytics ship fully wired but disabled until real IDs exist. No external
-requests are made while the variables are blank; ad placements render first-party
-house promos instead.
+Configured publisher or analytics IDs do not by themselves enable third-party
+loaders, slots, or analytics. The candidate is intentionally off by default.
 
-- `PUBLIC_ADSENSE_CLIENT` (`ca-pub-…`) enables the AdSense loader, the
-  `google-adsense-account` meta tag, and the live `/ads.txt` entry.
-- `PUBLIC_ADSENSE_SLOT_LEADERBOARD` / `_INFEED` / `_ARTICLE` / `_BOX` bind the
-  homepage leaderboard, feed-embedded, in-article, and article-footer units.
-- `PUBLIC_GA4_ID` (`G-…`) enables Google Analytics 4 with Consent Mode v2
-  (denied-by-default in EEA/UK/CH plus an on-site consent banner).
-- Compliance surfaces: `/privacy/`, `/terms/`, consent banner, and a dynamic
-  `/ads.txt` generated from the publisher ID.
+- A valid `PUBLIC_ADSENSE_CLIENT` (`ca-pub-…`) supplies the account record for
+  `/ads.txt`, including while advertising remains disabled for review. AdSense
+  requires that ID, `PUBLIC_GOOGLE_CMP_READY=true`,
+  `PUBLIC_ADSENSE_CONTENT_READY=true`, and at least one canonical public detail
+  article with `publication_integrity.ok=true` before code can activate it.
+- `PUBLIC_ADSENSE_CONTENT_READY` is an operator attestation for a meaningful,
+  manually reviewed original-article inventory; it cannot override zero or
+  invalid verified detail inventory. Initial activation uses manually placed
+  units only. Keep Auto ads disabled until post-approval production
+  DOM/placement/accessibility QA is recorded.
+- `PUBLIC_GA4_ID` (`G-…`) is also gated by `PUBLIC_GOOGLE_CMP_READY`. Set that
+  flag only after the Google-certified CMP is published and its EEA/UK/CH
+  accept, reject, and revocation flows have been tested. This repository does
+  not provide a custom consent banner.
+- `/privacy/` is intentionally free of Google advertising, Analytics, and CMP
+  runtime. The policy page directs applicable visitors to the footer privacy
+  choices control on a public content page and to Google Ads Settings.
+- `PUBLIC_ADSENSE_SLOT_LEADERBOARD` / `_INFEED` / `_ARTICLE` / `_BOX` describe
+  the manually placed eligible units; route gating remains an additional check.
 
 Full setup walkthrough (Korean): [`docs/monetization-setup.md`](docs/monetization-setup.md).
+Operational preflight and incident procedures: [`docs/adsense-operations-runbook.md`](docs/adsense-operations-runbook.md).
+Comparator evidence, current implementation crosswalk, and operator boundaries: [`docs/commercialization-benchmarks.md`](docs/commercialization-benchmarks.md).
 
 ## What changed in this update
 
 - **Homepage refresh without changing the core format**
-  - Keeps the same hero + masonry/news board structure
-  - Upgrades the UI to a more premium glass / monochrome editorial dashboard
-  - Stronger hierarchy for title, summary, expert lens, category, region, and source
+  - Keeps a source-linked editorial feed rather than a dashboard or terminal surface
+  - Uses the light, neutral reading system with restrained blue actions defined in `DESIGN.md`
+  - Preserves clear hierarchy for title, summary, category, region, source, and eligible analysis links
 
-- **State-aware 8-hour publishing pipeline**
-  - Pulls up to **30 RSS candidates per run**
-  - Creates a **daily plan of 6 curated stories**
-  - Publishes exactly **2 stories every 8 hours**
-  - Stores the day plan in state so later runs do not lose the curated set
+- **Rights-gated scheduled publishing pipeline**
+  - Uses `config/sourceRegistry.yml`, not the retired hardcoded feed list, as its
+    authoritative source inventory.
+  - Fetches only feeds returned by the registry&rsquo;s text-rights gate. While every
+    registered source remains unreviewed or disabled, there are no authorized
+    sources and a scheduled run exits without publication.
+  - When sources are authorized, it plans and quality-gates available candidates;
+    publication count is conditional on the resulting eligible inventory, not a
+    fixed per-run promise.
 
 - **Optional LLM curation and expert insight generation**
   - If `OPENROUTER_API_KEY` is present, the pipeline uses OpenRouter with `openai/gpt-5.3-codex`
@@ -41,28 +57,27 @@ Full setup walkthrough (Korean): [`docs/monetization-setup.md`](docs/monetizatio
     - produce tags, region, category, and an image prompt
   - If no key is set, the pipeline falls back to deterministic ranking and heuristic enrichment
 
-- **Latest-3 Korean Expert Lens**
-  - Only the most recent **3 live articles** get an `Expert Lens` section
-  - The section is generated in natural Korean
-  - Primary model wiring is exposed via `EXPERT_LENS_MODEL` so a GPT-5.4-class model can be used at the integration point
-  - If the model is unavailable, the repo falls back to a deterministic Korean expert-summary path
+- **Conditional Expert Lens enrichment**
+  - The pipeline hydrates visible records and enriches focused publishable
+    articles; it does not guarantee a fixed “Latest-3” window.
+  - Primary model wiring is exposed via `EXPERT_LENS_MODEL`; unavailable model
+    calls fall back through the repository&rsquo;s deterministic path.
 
-- **ChatGPT/OpenAI-first image provider flow**
-  - Default provider is `IMAGE_PROVIDER=chatgpt`, which expects a callable OAuth-backed ChatGPT/OpenAI image runtime
-  - `IMAGE_PROVIDER=openai-api` is available only as an explicit OpenAI API-key fallback path
+- **Image2-first image provider flow**
+  - Default provider is `IMAGE_PROVIDER=image2`, which uses the OpenAI image API path and `OPENAI_IMAGE_MODEL=gpt-image-2`
+  - `IMAGE_PROVIDER=openai-api` remains an explicit OpenAI API fallback path
+  - `IMAGE_PROVIDER=chatgpt` is a legacy OAuth runtime adapter, not the default
   - `IMAGE_PROVIDER=legacy-gemini` keeps the old Gemini / Nano Banana path available but deprecated
-  - If the configured provider is unavailable or image generation fails, the pipeline first attempts to build a local poster from the crawled source image and then falls back to a premium SVG placeholder
+  - For the default `image2` provider, a missing `OPENAI_API_KEY`, `PIPELINE_OFFLINE=1`, or image-request failure writes a deterministic local WebP fallback variant set; those cases do not invoke a source-image poster
+  - The `local`/no-provider path can attempt a source-authorized poster only while online and only after the source-image rights check; otherwise it writes the same local fallback variant set
+  - Reader-side selection uses a category fallback SVG only when no trusted article variant is available; that category fallback is not an image2 request result
   - External image hotlinking is avoided for published cards
 
-- **30-item live surface + archive search**
-  - The homepage keeps only the latest **30** articles on the live surface
-  - Older articles are moved into `src/data/archived-news.json`
+- **Authorized 50-card homepage + archive search**
+  - The homepage builds up to **50** cards from `src/data/latest-news.json` and `src/data/archived-news.json`, after public product-fit and current source-text authorization gates
+  - `LATEST_NEWS_LIMIT=30` controls the primary-store split; it is not the homepage’s visible-card maximum
   - If Supabase credentials are configured, older articles are also upserted into a Supabase archive table
   - `src/data/search-index.json` merges live + archived content for client-side search
-
-- **Optional Telegram preview notification**
-  - After build, GitHub Actions can render `index.html` with Playwright
-  - The generated homepage screenshot can be sent to Telegram when bot credentials are configured
 
 ## Project structure
 
@@ -112,34 +127,34 @@ npm run dev
 - `OPENROUTER_MODEL` *(optional)*: defaults to `openai/gpt-5.3-codex`
 - `OPENROUTER_SITE_URL` *(optional)*: app attribution header
 - `OPENROUTER_APP_TITLE` *(optional)*: app attribution header
-- `EXPERT_LENS_MODEL` *(optional)*: preferred GPT-5.4-class model id for latest-3 Korean Expert Lens generation
+- `EXPERT_LENS_MODEL` *(optional)*: preferred model id for focused Expert Lens enrichment
 - `EXPERT_LENS_FALLBACK_MODEL` *(optional)*: backup model id if the preferred lens model is unavailable
 
 ### Image generation
-- `IMAGE_PROVIDER` *(optional)*: defaults to `chatgpt`
-  - `chatgpt`: preferred ChatGPT/OpenAI OAuth-backed runtime adapter
-  - `openai-api`: explicit OpenAI API-key fallback
+- `IMAGE_PROVIDER` *(optional)*: defaults to `image2`
+  - `image2`: canonical OpenAI image API provider for hero, thumbnail, and OpenGraph variants
+  - `openai-api`: explicit OpenAI API fallback
+  - `chatgpt`: legacy ChatGPT/OpenAI OAuth-backed runtime adapter
   - `local`: skip remote generation and build local source-image posters when possible
   - `legacy-gemini`: deprecated Gemini / Nano Banana provider
 - `CHATGPT_IMAGE_OAUTH_ENDPOINT` *(for `IMAGE_PROVIDER=chatgpt`)*: callable image runtime endpoint
 - `CHATGPT_IMAGE_OAUTH_ACCESS_TOKEN` *(for `IMAGE_PROVIDER=chatgpt`)*: OAuth access token for the runtime endpoint
-- `OPENAI_API_KEY` *(for `IMAGE_PROVIDER=openai-api`)*: OpenAI API-key auth and API billing; this is not the default path
-- `OPENAI_IMAGE_MODEL` *(optional, API fallback)*: defaults to `gpt-image-1`
-- `OPENAI_IMAGE_SIZE` *(optional, API fallback)*: defaults to `1536x1024`
-- `OPENAI_IMAGE_QUALITY` *(optional, API fallback)*: defaults to `medium`
+- `OPENAI_API_KEY` *(for `IMAGE_PROVIDER=image2` or `openai-api`)*: OpenAI API-key auth and API billing
+- `OPENAI_IMAGE_MODEL` *(optional)*: defaults to `gpt-image-2`
+- `OPENAI_IMAGE_SIZE` *(optional)*: defaults to `1536x1024`
+- `OPENAI_IMAGE_QUALITY` *(optional)*: defaults to `medium`
 - `GEMINI_API_KEY` *(legacy only)*: used only with `IMAGE_PROVIDER=legacy-gemini`
 - `GEMINI_IMAGE_MODEL` *(legacy only)*: defaults to `gemini-2.5-flash-image`
 
-The published image contract is unchanged: generated assets are written under `public/generated/`, article data receives `/generated/<filename>`, and external source images are not hotlinked as published card art. If the configured provider is unavailable or fails, the pipeline falls back to a locally composed poster from the source image, then to an SVG placeholder.
+The published image contract is unchanged: generated assets are written under `public/generated/`, article data receives `/generated/<filename>`, and external source images are not hotlinked as published card art. Image2 writes either generated WebP variants or its deterministic local WebP fallback variant set. A source-authorized poster is limited to the online local/no-provider path; reader-side category fallback SVGs cover missing or untrusted article variants.
 
-`IMAGE_PROVIDER=chatgpt` is adapter-ready. GitHub Actions and Vercel do not automatically expose ChatGPT OAuth-backed image generation, so production needs a callable OAuth runtime endpoint and token. Use `IMAGE_PROVIDER=openai-api` only when API-key auth and billing are explicitly acceptable.
+`IMAGE_PROVIDER=image2` is the current default. Environments that perform remote image generation need `OPENAI_API_KEY`; without it, or in offline mode, image2 writes the local fallback set. `IMAGE_PROVIDER=chatgpt` remains available only for an operator-provided OAuth runtime endpoint and token.
 
 ### Pipeline controls
 - `MAX_ITEMS_FETCHED` *(optional)*: defaults to `30`
 - `DAILY_CURATION_TARGET` *(optional)*: defaults to `6`
 - `ITEMS_PER_RUN` *(optional)*: defaults to `2`
 - `LATEST_NEWS_LIMIT` *(optional)*: defaults to `30`
-- `LATEST_EXPERT_LENS_COUNT` *(optional)*: defaults to `3`
 - `REFRESH_INTERVAL_HOURS` *(optional)*: defaults to `8`
 - `PIPELINE_USE_EXISTING_POOL=1` *(optional)*: validate locally from checked-in data when network access is unavailable
 
@@ -148,26 +163,27 @@ The published image contract is unchanged: generated assets are written under `p
 - `SUPABASE_SERVICE_ROLE_KEY` *(optional)*: service role key for archive upserts
 - `SUPABASE_ARCHIVE_TABLE` *(optional)*: defaults to `archived_articles`
 
-### Private article editor
-- `ADMIN_USERNAME` *(optional)*: username required by the private editor. If omitted, any username is accepted as long as the password is correct.
-- `ADMIN_PASSWORD` *(required for editor)*: password for `/admin/edit/<article-id>/`.
-- `ADMIN_AUTH_SECRET` *(recommended)*: long random string used to sign the admin session cookie. If omitted, `ADMIN_PASSWORD` is used as the signing secret.
-- `GITHUB_TOKEN` *(required for editor saves)*: GitHub token with contents write access to this repository.
-- `GITHUB_REPO` *(optional)*: defaults to `Masternode77/ai-news-portal`.
-- `GITHUB_BRANCH` *(optional)*: defaults to `main`.
+### Authenticated admin APIs
 
-The private editor is not linked from the public site and is marked `noindex`. Open an article editor directly at:
+The private, noindex admin entry point is `/admin.html`; a successful session
+opens `/admin/dashboard/`. These views use the authenticated `/api/admin/login`,
+`/api/admin/dashboard`, and `/api/admin/article` APIs. Configure all of the
+following before using them:
 
-```text
-https://www.computecurrent.com/admin/edit/<article-id>/
-```
+- `ADMIN_USERNAME`
+- `ADMIN_PASSWORD_HASH`, generated as `scrypt$<salt>$<derived-key>` with
+  `scripts/admin-password-hash.mjs`
+- `ADMIN_SESSION_SECRET`, a cryptographically random value of at least 32 bytes
+  used to sign sessions
+- `ADMIN_VERCEL_RATE_LIMIT_READY=true` only after the production Vercel Firewall
+  IP rate-limit rule for `POST /api/admin/login` is published and tested
 
-Saving creates a Git commit that updates the matching item in `src/data/latest-news.json` or `src/data/archived-news.json`, plus `src/data/search-index.json`. The public article changes after the connected Vercel deployment rebuilds.
-
-### Telegram preview
-- `TELEGRAM_BOT_TOKEN` *(optional)*: Telegram bot token
-- `TELEGRAM_CHAT_ID` *(optional)*: chat/channel id
-- `PREVIEW_BASE_URL` *(optional)*: screenshot target URL; defaults to local preview server
+The runtime fails closed in production until the rate-limit attestation is true.
+Do not set legacy plaintext `ADMIN_PASSWORD` or `ADMIN_AUTH_SECRET`; they are
+not the current authentication contract. See
+[`docs/admin-setup.md`](docs/admin-setup.md) and
+[`docs/admin-auth-production-gate.md`](docs/admin-auth-production-gate.md) for
+the hash, rotation, and external-control verification procedure.
 
 ## GitHub Actions automation
 
@@ -180,22 +196,30 @@ GitHub Actions uses UTC cron expressions, so the workflow defines the UTC equiva
 
 Workflow steps:
 1. install dependencies
-2. run the unified news pipeline
-3. build the Astro site
-4. commit refreshed JSON/assets to `main`
-5. optionally capture homepage screenshot
-6. optionally send the screenshot to Telegram
+2. validate the project and run the rights-gated pipeline; an empty authorized
+   source set exits without publication
+3. rebuild public taxonomy pages
+4. run `npm test`
+5. run `npm run content:gate`, which includes the production build gate
+6. record a successful scheduled-update heartbeat
+7. commit only tracked changed artifacts to `main`
 
 ## Deploy to Vercel
 
 1. Import the repository into Vercel
-2. Astro is auto-detected via `vercel.json`
-3. Set environment variables in Vercel if you want runtime image generation or future server features
+2. Astro 7.2 is auto-detected via `vercel.json` and builds as a static site
+3. Set the documented deployment environment variables only after their external prerequisites are evidenced
 4. Deploy
 
 ## Notes
 
-- The repo intentionally remains **Astro-based** to avoid a risky framework rewrite
+- The candidate remains a static Astro 7.2 site. Static output can carry a
+  validated compatible CSP, but this deployment cannot issue a per-request nonce
+  for the selected AdSense/CMP model and has not validated such a policy. Its
+  deliberate no-enforced-CSP posture is therefore a documented risk acceptance.
+  Do not add a report-only CSP without a collector; introduce report-only or
+  enforced CSP only after a nonce-capable architecture or a validated compatible
+  policy is available.
 - The daily plan is stored in state so curated stories survive across all three daily runs
 - The homepage keeps the original board format while upgrading the visual quality substantially
 - `scripts/update-news.js` is now just a compatibility alias to `scripts/pipeline.mjs`

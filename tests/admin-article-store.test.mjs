@@ -6,24 +6,30 @@ import {
   syncAdminSearchIndex,
   validateAdminPublishQuality,
 } from '../scripts/lib/admin-article-store.mjs';
+import {
+  authorizedAdminSourceRegistry,
+  CANONICAL_ADMIN_BODY,
+  CANONICAL_ADMIN_SOURCE,
+  canonicalAdminArticle,
+  canonicalAdminExtractionArtifact,
+} from './fixtures/admin-publication-integrity.mjs';
 
 function baseArticle() {
   return {
+    ...canonicalAdminArticle(),
     id: 'article-1',
-    title: 'Original headline',
-    summary: 'Original dek',
+    summary: 'Utility interconnection schedules shape campus commissioning and operating milestones.',
     category: 'Power Grid',
     source: 'GridWire',
     sourceUrl: 'https://example.com/source',
+    extraction_artifact: canonicalAdminExtractionArtifact({ sourceUrl: 'https://example.com/source' }),
     publishedAt: '2026-05-20T00:00:00.000Z',
     public_status: 'draft',
-    extraction_quality_score: 0.91,
-    articleText: 'Utility planners said a 300 MW data center campus is waiting on substation delivery and a signed interconnection agreement. The developer identified phased capacity, expected service dates, and local permitting work. Power equipment suppliers are named as the limiting factor for the first two halls. The source links the capacity plan to AI training demand and cloud customer reservations. County filings describe water, grid, and road upgrades that must land before the campus opens. Operators are watching transformer delivery windows and interconnection studies before treating the campus timeline as firm.',
     unknownFutureField: { keep: true },
     expertLensFull: {
-      finalHeadline: 'Original headline',
-      finalArticleBody: 'Original body with enough substance for a private draft.',
-      metaDescription: 'Original meta',
+      finalHeadline: 'Utility milestones shape campus commissioning',
+      finalArticleBody: CANONICAL_ADMIN_BODY,
+      metaDescription: 'Utility interconnection schedules shape campus commissioning and operating milestones.',
     },
     tags: ['grid'],
   };
@@ -89,11 +95,8 @@ test('admin publish runs quality gate and records review queue failure without m
     action: 'publish',
     actor: 'owner',
     now: '2026-05-31T06:06:00.000Z',
-    patch: {
-      title: 'Transformer interconnect queue tightens',
-      dek: 'Grid interconnection timing is becoming the binding constraint for a planned accelerator campus.',
-      bodyMarkdown: 'A utility queue change gives operators a concrete signal to watch: transformer delivery windows and interconnection studies now decide whether the accelerator campus can energize on schedule.',
-    },
+    sourceRegistry: authorizedAdminSourceRegistry({ reviewed_at: '2026-05-01T00:00:00.000Z' }),
+    patch: {},
   });
 
   assert.equal(publishable.ok, true);
@@ -107,26 +110,45 @@ test('admin publish blocks extraction and source gate failures without mutating 
   const cases = [
     {
       name: 'explicit extraction failure',
-      article: { ...baseArticle(), extraction_failed: true },
-      reason: 'extraction_failed',
+      article: {
+        ...baseArticle(),
+        extraction_artifact: canonicalAdminExtractionArtifact({
+          extractionQa: { public_publishable: false, can_generate_longform: true, sentence_completion_score: 1 },
+        }),
+      },
+      reason: 'extraction_qa:public_publishable_false',
     },
     {
       name: 'low extraction score',
-      article: { ...baseArticle(), extraction_quality_score: 0.49 },
-      reason: 'extraction_quality_score_below_0.5',
+      article: {
+        ...baseArticle(),
+        extraction_artifact: canonicalAdminExtractionArtifact({
+          extractionQa: { public_publishable: true, can_generate_longform: true, sentence_completion_score: 0.5 },
+        }),
+      },
+      reason: 'extraction_qa:sentence_completion_score_below_0.92',
     },
     {
       name: 'failed public extraction result',
-      article: { ...baseArticle(), public_extraction_passed: false },
-      reason: 'public_extraction_failed',
+      article: {
+        ...baseArticle(),
+        extraction_artifact: canonicalAdminExtractionArtifact({
+          extractionQa: { public_publishable: true, can_generate_longform: false, sentence_completion_score: 1 },
+        }),
+      },
+      reason: 'extraction_qa:can_generate_longform_not_true',
     },
     {
       name: 'public source gate failure',
       article: {
         ...baseArticle(),
+        source_evidence_text: 'Want more Data Center Knowledge stories? Sign up for our newsletter. Copyright 2026 TechTarget, Inc. Registered in England and Wales.',
         articleText: 'Want more Data Center Knowledge stories? Sign up for our newsletter. Copyright 2026 TechTarget, Inc. Registered in England and Wales.',
+        extraction_artifact: canonicalAdminExtractionArtifact({
+          cleanedExtractedText: 'Want more Data Center Knowledge stories? Sign up for our newsletter. Copyright 2026 TechTarget, Inc. Registered in England and Wales.',
+        }),
       },
-      reason: 'public_source_gate_failed',
+      reason: 'article_detail:source_extraction:',
     },
   ];
 
@@ -139,7 +161,7 @@ test('admin publish blocks extraction and source gate failures without mutating 
       patch: {
         title: `${item.name} should not publish`,
         dek: 'A concrete infrastructure source gate failure keeps this draft out of the public surface.',
-        bodyMarkdown: 'A concrete infrastructure source gate failure keeps this draft out of the public surface until extraction evidence is clean enough for operators, investors, and cloud capacity teams to rely on the article.',
+        bodyMarkdown: CANONICAL_ADMIN_BODY,
       },
     });
 
@@ -167,7 +189,7 @@ test('admin extraction publish gates do not block non-publish actions', () => {
   assert.equal(result.article.title, 'Draft can keep failed source metadata');
 });
 
-test('admin actions cover hide, noindex, regenerate, image replacement, and preview', () => {
+test('admin actions cover hide, noindex, image replacement, and preview', () => {
   const hidden = applyAdminArticleAction({ article: baseArticle(), action: 'hide', actor: 'owner' });
   assert.equal(hidden.article.public_status, 'hidden');
   assert.equal(hidden.article.noindex, true);
@@ -175,15 +197,6 @@ test('admin actions cover hide, noindex, regenerate, image replacement, and prev
   const noindex = applyAdminArticleAction({ article: baseArticle(), action: 'noindex', actor: 'owner' });
   assert.equal(noindex.article.public_status, 'noindex');
   assert.equal(noindex.article.seo_noindex, true);
-
-  const regenerate = applyAdminArticleAction({
-    article: baseArticle(),
-    action: 'regenerate-image',
-    actor: 'owner',
-    patch: { imagePrompt: 'New image direction' },
-  });
-  assert.equal(regenerate.article.admin_regeneration_request.type, 'image');
-  assert.equal(regenerate.article.imagePrompt, 'New image direction');
 
   const upload = applyAdminArticleAction({
     article: baseArticle(),
@@ -196,8 +209,91 @@ test('admin actions cover hide, noindex, regenerate, image replacement, and prev
   assert.equal(upload.article.imageAlt, 'Manual replacement');
 
   const preview = buildAdminArticlePreview(upload.article);
-  assert.match(preview.html, /Original headline/);
+  assert.match(preview.html, /Utility milestones shape campus commissioning/);
   assert.match(preview.html, /Manual replacement/);
+});
+
+test('admin upload action whitelists fields and keeps publication status action-owned', () => {
+  // Given: a draft and a payload containing fields that belong to another action.
+  const article = baseArticle();
+
+  // When: an image replacement is requested with copy and status fields mixed in.
+  const uploaded = applyAdminArticleAction({
+    article,
+    action: 'upload-image',
+    actor: 'owner',
+    patch: {
+      title: 'Injected headline',
+      bodyMarkdown: 'Injected body',
+      public_status: 'published',
+      status: 'published',
+      replacementImage: '/uploads/replacement.webp',
+    },
+  });
+
+  // Then: only fields owned by upload-image change.
+  assert.equal(uploaded.ok, true);
+  assert.equal(uploaded.article.title, article.title);
+  assert.equal(uploaded.article.expertLensFull.finalArticleBody, article.expertLensFull.finalArticleBody);
+  assert.equal(uploaded.article.public_status, 'draft');
+  assert.equal(uploaded.article.heroImage, '/uploads/replacement.webp');
+});
+
+test('admin store rejects regeneration actions that have no runtime consumer', () => {
+  // Given: the shipped editor action boundary.
+  const article = baseArticle();
+
+  // When/Then: every unconsumed regeneration variant is rejected without mutation.
+  for (const action of ['regenerate-article', 'regenerate-brief', 'regenerate-image', 'edit-prompt']) {
+    const result = applyAdminArticleAction({ article, action, patch: { imagePrompt: 'Unused request' } });
+    assert.equal(result.ok, false, action);
+    assert.equal(result.statusCode, 400, action);
+    assert.deepEqual(result.qualityErrors, ['unsupported_action'], action);
+    assert.deepEqual(result.article, article, action);
+  }
+});
+
+test('public articles run the complete copy gate for alternate image actions', () => {
+  // Given: an already-public article whose copy is no longer publishable.
+  const article = {
+    ...baseArticle(),
+    public_status: 'published',
+    articlePagePublished: true,
+    homepagePublished: true,
+    title: 'Bad',
+    articleText: 'Too short',
+    expertLensFull: { ...baseArticle().expertLensFull, finalHeadline: 'Bad', finalArticleBody: 'Too short' },
+  };
+
+  // When: alternate image actions would leave it public.
+  const noindex = applyAdminArticleAction({ article, action: 'noindex' });
+  const replace = applyAdminArticleAction({ article, action: 'upload-image', patch: { replacementImage: '/uploads/new.webp' } });
+
+  // Then: both writes fail closed through the public-copy gate.
+  assert.equal(noindex.ok, false);
+  assert.equal(replace.ok, false);
+  assert.ok(noindex.qualityErrors.includes('article_detail:visible_body_below_4500'));
+  assert.ok(replace.qualityErrors.includes('article_detail:visible_body_below_4500'));
+  assert.equal(noindex.article.public_status, article.public_status);
+  assert.equal(replace.article.heroImage, article.heroImage);
+});
+
+test('preview is non-mutating and cannot change status', () => {
+  // Given: a draft source object.
+  const article = baseArticle();
+  const before = structuredClone(article);
+
+  // When: preview receives edited copy and a forged status.
+  const result = applyAdminArticleAction({
+    article,
+    action: 'preview',
+    patch: { title: 'Preview headline', public_status: 'published' },
+  });
+
+  // Then: the source stays byte-for-byte equivalent and preview status remains draft.
+  assert.deepEqual(article, before);
+  assert.equal(result.article.public_status, 'draft');
+  assert.match(result.preview.html, /Preview headline/);
 });
 
 test('admin save updates search index deterministically', () => {
@@ -216,11 +312,15 @@ test('admin save updates search index deterministically', () => {
 });
 
 test('publish quality validator allows draft bypass but blocks public banned copy', () => {
-  assert.deepEqual(validateAdminPublishQuality({ public_status: 'draft' }, { action: 'save-draft' }), []);
+  assert.deepEqual(validateAdminPublishQuality({ public_status: 'draft' }), []);
   const errors = validateAdminPublishQuality({
     title: 'Bad',
     summary: 'This signal matters',
+    public_status: 'published',
+    articlePagePublished: true,
+    articleText: CANONICAL_ADMIN_SOURCE,
+    source_evidence_text: CANONICAL_ADMIN_SOURCE,
     expertLensFull: { finalArticleBody: 'This signal matters' },
-  }, { action: 'publish' });
+  });
   assert.ok(errors.length > 0);
 });

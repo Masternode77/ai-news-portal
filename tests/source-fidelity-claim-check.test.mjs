@@ -60,3 +60,41 @@ test('SEO metadata accepts supported short claims', () => {
   assert.equal(result.ok, true);
   assert.equal(result.unsupportedClaims.length, 0);
 });
+
+test('claim checker rejects fabricated lunar and Mars claims despite one shared infrastructure word', () => {
+  // Given: source evidence about terrestrial grid interconnection.
+  const evidence = {
+    evidenceText: 'Northstar Utility approved a 200 MW interconnection for the Virginia campus after transformer delivery was confirmed.',
+    facts: ['Northstar Utility approved a 200 MW interconnection for the Virginia campus.'],
+    namedActors: ['Northstar Utility'],
+  };
+
+  // When: generated claims reuse one evidence word while fabricating unrelated projects.
+  const result = checkClaimsAgainstEvidence([
+    'Interconnection capacity guarantees a lunar refinery will export fuel to sovereign buyers next quarter.',
+    'Northstar Utility will build a Mars data center with 900 MW of reactor capacity.',
+  ].join(' '), evidence);
+
+  // Then: both fabricated claims are unsupported.
+  assert.equal(result.ok, false);
+  assert.equal(result.unsupportedClaims.length, 2);
+});
+
+test('claim checker accepts exact and conservative paraphrased facts with actor and numeric support', () => {
+  // Given: source evidence with a named actor, quantity, unit, location, and milestone.
+  const evidence = {
+    evidenceText: 'Northstar Utility approved a 200 MW interconnection for the Virginia campus after transformer delivery was confirmed.',
+    facts: ['Northstar Utility approved a 200 MW interconnection for the Virginia campus.'],
+    namedActors: ['Northstar Utility'],
+  };
+
+  // When: claims repeat or conservatively reorder those source facts.
+  const result = checkClaimsAgainstEvidence([
+    'Northstar Utility approved a 200 MW interconnection for the Virginia campus.',
+    'The Virginia campus received Northstar Utility approval for its 200 MW interconnection after transformer delivery.',
+  ].join(' '), evidence);
+
+  // Then: the claim-level matcher accepts both supported statements.
+  assert.equal(result.ok, true);
+  assert.equal(result.unsupportedClaims.length, 0);
+});

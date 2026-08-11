@@ -5,6 +5,8 @@ Mode: dry-run
 Audit limit: 200
 Regeneration limit: 100
 
+> **Historical snapshot — non-operational.** This dry-run migration record is retained for its 2026-05-31 evidence only. It is not current deployment, dashboard-data, or cache-purge guidance; use [`DEPLOY_CHECKLIST_DASHBOARD.md`](../DEPLOY_CHECKLIST_DASHBOARD.md) for the current candidate scope.
+
 ## Classification Counts
 
 - regenerate_longform: 42

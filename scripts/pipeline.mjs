@@ -5,6 +5,7 @@ import {
   PIPELINE_USE_EXISTING_POOL,
   LATEST_NEWS_LIMIT,
 } from './lib/constants.mjs';
+import { fileURLToPath } from 'node:url';
 import { readArchiveSnapshot, syncArchiveArtifacts } from './lib/archive-store.mjs';
 import { applyAntiTemplateRewrite } from './lib/anti-template-rewrite.mjs';
 import { enrichContent } from './lib/content.mjs';
@@ -15,7 +16,7 @@ import {
   hydrateExpertLens,
   mergeArticleRecords,
 } from './lib/expert-lens.mjs';
-import { fetchNewsPool } from './lib/fetch-feeds.mjs';
+import { fetchNewsPoolResult } from './lib/fetch-feeds.mjs';
 import { ensureArticleImage, needsImageRefresh } from './lib/image-generator.mjs';
 import { splitByExpertInsightGate } from './lib/expert-insight-engine.mjs';
 import {
@@ -32,6 +33,7 @@ import {
   writePipelineState,
 } from './lib/state-store.mjs';
 import { stableArticleId, truncate } from './lib/normalize.mjs';
+import { loadSourceRegistry, textAuthorizedRecords } from './lib/source-registry.mjs';
 
 const RETRY_DELAY_MS = Number(process.env.PIPELINE_RETRY_DELAY_MS || 15_000);
 
@@ -119,24 +121,40 @@ function sortForPipelineVisibility(articles = []) {
   });
 }
 
+export function authorizedTextFallbackPool(records = [], sources = [], now = new Date()) {
+  return textAuthorizedRecords(records, sources, now);
+}
+
 async function loadPoolWithFallback(existingLatest) {
+  const sources = await loadSourceRegistry();
+  const now = new Date();
   if (PIPELINE_USE_EXISTING_POOL) {
     const existingPool = await readJsonFile(NEWS_POOL_PATH, []);
-    return existingPool.length ? existingPool : legacyPoolFromLatest(existingLatest);
+    const cached = authorizedTextFallbackPool(existingPool, sources, now);
+    return cached.length ? cached : authorizedTextFallbackPool(legacyPoolFromLatest(existingLatest), sources, now);
   }
 
   try {
-    const pool = await withSingleRetry('fetch pool', () => fetchNewsPool());
-    if (pool.length) {
-      await writeJsonFile(NEWS_POOL_PATH, pool);
-      return pool;
+    const acquisition = await withSingleRetry('fetch pool', async () => {
+      const result = await fetchNewsPoolResult({ sources, now });
+      if (result.status === 'transient_fetch_failure') throw new Error('authorized feed acquisition failed');
+      return result;
+    });
+    console.log(`[pipeline] feed acquisition status=${acquisition.status} authorizedSources=${acquisition.authorizedSourceCount} failedSources=${acquisition.failedSourceCount}`);
+    if (acquisition.status === 'no_authorized_sources') return [];
+    if (acquisition.items.length) {
+      await writeJsonFile(NEWS_POOL_PATH, acquisition.items);
+      return acquisition.items;
     }
   } catch (error) {
     console.warn(`[pipeline] live pool unavailable, falling back to existing pool -> ${error.message}`);
   }
 
   const fallbackPool = await readJsonFile(NEWS_POOL_PATH, []);
-  return fallbackPool.length ? fallbackPool : legacyPoolFromLatest(existingLatest);
+  const authorizedCached = authorizedTextFallbackPool(fallbackPool, sources, now);
+  return authorizedCached.length
+    ? authorizedCached
+    : authorizedTextFallbackPool(legacyPoolFromLatest(existingLatest), sources, now);
 }
 
 async function backfillLocalImages(articles) {
@@ -522,11 +540,13 @@ async function main() {
   );
 }
 
-main()
-  .then(() => {
-    process.exit(0);
-  })
-  .catch((error) => {
-    console.error('[pipeline] fatal error:', error);
-    process.exit(1);
-  });
+if (process.argv[1] === fileURLToPath(import.meta.url)) {
+  main()
+    .then(() => {
+      process.exit(0);
+    })
+    .catch((error) => {
+      console.error('[pipeline] fatal error:', error);
+      process.exit(1);
+    });
+}

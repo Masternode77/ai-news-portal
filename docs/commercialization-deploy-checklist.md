@@ -16,6 +16,12 @@ No payment, login, gated content, newsletter-provider form, CRM backend, or outr
 
 - [ ] Confirm the backup tag exists: `git tag --list 'hermes-update-*'`
 - [ ] Confirm dirty unrelated files are understood and not reverted.
+- [ ] Record whether valid `PUBLIC_ADSENSE_CLIENT` and `PUBLIC_GA4_ID` values are configured. Valid IDs alone do not activate Google tags.
+- [ ] Keep `PUBLIC_GOOGLE_CMP_READY=false` until account/site approval, real account-issued ads.txt IDs, certified CMP publication, EEA/UK/CH accept/reject/revoke tests, and legal review are all evidenced.
+- [ ] Keep `PUBLIC_ADSENSE_CONTENT_READY=false` until a meaningful manually reviewed original article inventory includes at least one canonical detail article with `publication_integrity.ok=true`. This environment attestation cannot override zero or invalid inventory because the code-level nonzero verified-detail floor remains active.
+- [ ] Initial launch uses configured manual units only. Keep Auto ads disabled until post-approval production DOM, placement, and accessibility QA explicitly attests that automated placements do not bypass the verified advertising surface.
+- [ ] Complete the external-account checklist: AdSense account/site ownership, legal entity and payment/tax details, CMP vendor configuration, jurisdiction-specific legal review, and documented data-retention decisions.
+- [ ] Before enabling production admin access, complete [the admin authentication production gate](admin-auth-production-gate.md); leave `ADMIN_VERCEL_RATE_LIMIT_READY=false` until the blocking Vercel Firewall rule is published and tested.
 - [ ] Run `npm run check`
 - [ ] Run `npm run build`
 - [ ] Run focused gate:
@@ -57,11 +63,15 @@ Required local checks:
 - [ ] `/archive/` exists
 - [ ] `/rss.xml` exists
 - [ ] Every local RSS `/news/<id>/` link maps to a built article page
-- [ ] `/sitemap.xml` includes the five commercial routes
+- [ ] `/sitemap.xml` includes `/contact/` and excludes the noindex conversion routes `/subscribe/`, `/pricing/`, `/sample/`, and `/briefing/`
 - [ ] `/sitemap-index.xml` exists and references the Astro child sitemap
-- [ ] Astro child sitemap includes the five commercial routes
+- [ ] Astro child sitemap includes `/contact/` and excludes the noindex conversion routes `/subscribe/`, `/pricing/`, `/sample/`, and `/briefing/`
 - [ ] `/robots.txt` exists
 - [ ] Admin/dashboard pages do not leak into public sitemap checks
+- [ ] `/ads.txt` contains the exact account-issued `google.com, pub-…, DIRECT, f08c47fec0942fa0` line when `PUBLIC_ADSENSE_CLIENT` is valid, even while `PUBLIC_GOOGLE_CMP_READY=false`
+- [ ] Before enabling AdSense, record the meaningful manually reviewed original article inventory and verify the code-level nonzero canonical `publication_integrity.ok=true` detail-article floor. `PUBLIC_ADSENSE_CONTENT_READY=true` alone must leave ads disabled for zero or invalid inventory.
+- [ ] `/privacy/` has no Google advertising, Analytics, or consent-message runtime
+- [ ] `vercel.json` has `X-Content-Type-Options: nosniff`, `Referrer-Policy: strict-origin-when-cross-origin`, `X-Frame-Options: SAMEORIGIN`, and the declared `Permissions-Policy`; the documented risk acceptance is no enforced CSP for this static AdSense/CMP architecture. Do not add report-only CSP without a collector, and do not add report-only or enforced CSP until a per-request nonce-capable architecture or validated compatible policy exists.
 
 ## 3. Deploy
 
@@ -100,6 +110,11 @@ Required live checks:
 - [ ] Every local RSS `/news/` link returns 200
 - [ ] `https://computecurrent.com/` redirects to `https://www.computecurrent.com/`
 - [ ] `computrcurrent.com` still does not resolve unless a separate domain migration is approved
+- [ ] `https://www.computecurrent.com/ads.txt` returns `Content-Type: text/plain; charset=utf-8`
+- [ ] Relevant public content pages show at most one configured Google loader; `/privacy/` shows none
+- [ ] For applicable EEA/UK/Swiss testing, the footer **Privacy choices** control can reopen the Google revocation flow; if it is absent, record whether the visitor is outside the applicable region or the CMP handoff is not active
+- [ ] Follow the invalid-traffic and no-self-click procedure in `docs/adsense-operations-runbook.md`; do not treat review or revenue as guaranteed outcomes
+- [ ] Keep Auto ads disabled for this initial manual-unit release. A later change requires the recorded post-approval production DOM, placement, and accessibility QA named in the operations runbook.
 
 ## 6. Rollback
 

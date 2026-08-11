@@ -9,14 +9,20 @@ import SiteFooter from '../components/SiteFooter.astro';
 import AdSlot from '../components/monetize/AdSlot.astro';
 import latestNews from '../data/latest-news.json';
 import archivedNews from '../data/archived-news.json';
+import editorialCycles from '../data/editorial-cycles.json';
+import pipelineHeartbeat from '../data/pipeline-heartbeat.json';
 import { SITE } from '../config/site';
 import { buildHomepageFeed, publicHomepageFeedEligible } from '../../scripts/lib/homepage-feed-builder.mjs';
+import { buildFreshnessPublicModel } from '../../scripts/lib/freshness-public-model.mjs';
 import { selectHomepageVisualLead } from '../../scripts/lib/homepage-visual-lead.mjs';
+import { activeRegistryFeeds, loadSourceRegistrySync } from '../../scripts/lib/source-registry.mjs';
 import { categoryKey, categoryShortLabel } from '../lib/category-visuals';
 
 const boardTitle = SITE.name;
 const homepageArticles = process.env.HOMEPAGE_FIXTURE === 'empty' ? [] : [...latestNews, ...archivedNews];
 const feed = buildHomepageFeed(homepageArticles, { limit: 50, minimumVisible: 30 });
+const authorizedSourceCount = activeRegistryFeeds(loadSourceRegistrySync(), new Date()).length;
+const rightsReviewSafeMode = authorizedSourceCount === 0 && feed.items.length === 0;
 const featuredSignal = feed.featured?.publicSignal || null;
 const dateFormatter = new Intl.DateTimeFormat('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
 const longDateFormatter = new Intl.DateTimeFormat('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' });
@@ -42,6 +48,29 @@ const uniqueRegions = new Set(eligibleAll.map((article) => article.region).filte
 const latestStampMs = eligibleAll.reduce((max, article) => Math.max(max, articleDateMs(article)), 0);
 const editionDate = longDateFormatter.format(latestStampMs ? new Date(latestStampMs) : new Date());
 const updatedLabel = latestStampMs ? `Latest publish · ${dateFormatter.format(new Date(latestStampMs))}` : '';
+const freshness = buildFreshnessPublicModel({
+  cycles: editorialCycles,
+  rssItems: eligibleAll,
+  heartbeat: pipelineHeartbeat,
+});
+const lastSuccessfulUpdate = freshness.last_successful_pipeline_at
+  ? dateFormatter.format(new Date(freshness.last_successful_pipeline_at))
+  : 'not yet recorded';
+const lastSourceRecord = latestStampMs
+  ? dateFormatter.format(new Date(latestStampMs))
+  : 'not recorded';
+const sourceRecordStatus = `Source-linked feed current through ${lastSourceRecord}`;
+const longFormStatus = rightsReviewSafeMode
+  ? 'Source-linked and long-form publication paused: 0 authorized sources'
+  : freshness.latest_published_analysis_at
+    ? `Long-form publishing last authorized ${dateFormatter.format(new Date(freshness.latest_published_analysis_at))}`
+    : 'Long-form publishing paused pending a current authorized source review';
+const pipelineStatus = freshness.state === 'failed_pipeline'
+  ? `Pipeline update failed; last successful update ${lastSuccessfulUpdate}`
+  : freshness.state === 'stale_pipeline'
+    ? `Pipeline update overdue since ${lastSuccessfulUpdate}`
+    : `Pipeline last successful update ${lastSuccessfulUpdate}`;
+const freshnessSummary = `Update schedule: every 8 hours · ${sourceRecordStatus} · ${longFormStatus} · ${pipelineStatus}`;
 
 const pulseMetrics = [
   { label: 'Analyses this week', value: publishedThisWeek, hint: 'published in the last 7 days' },
@@ -122,11 +151,17 @@ const structuredData = {
 
   <main class="page-shell terminal-home">
     <div class="terminal-topline">
-      <span class="topline-live"><i aria-hidden="true"></i>Publishing every 8 hours</span>
+      <span class="topline-live" data-freshness-state={freshness.state} style={freshness.state === 'fresh' ? undefined : 'color: var(--al-muted)'}>{freshness.state === 'fresh' ? <i aria-hidden="true"></i> : null}{freshnessSummary}</span>
       <span class="topline-edition">{editionDate}</span>
       <span class="topline-clock"><span data-utc-clock></span></span>
       <a class="topline-rss" href="/rss.xml">RSS</a>
     </div>
+
+    {rightsReviewSafeMode ? (
+      <p data-rights-review-state="zero-authorized-sources">
+        Source-linked and long-form publication paused: 0 authorized sources are currently approved for text publication.
+      </p>
+    ) : null}
 
     <header class="terminal-masthead">
       <a class="masthead-brand" href="/" aria-label={`${boardTitle} home`}>
@@ -239,7 +274,7 @@ const structuredData = {
       <div class="current-band-copy">
         <p class="eyebrow">Stay with the story</p>
         <h2>The buildout does not wait. Neither does the desk.</h2>
-        <p>New source-linked analysis publishes every 8 hours. Follow along wherever you read.</p>
+        <p>{freshnessSummary}. Follow along wherever you read.</p>
       </div>
       <div class="current-band-actions">
         <a class="btn-primary" href="/follow/">Follow Compute Current</a>

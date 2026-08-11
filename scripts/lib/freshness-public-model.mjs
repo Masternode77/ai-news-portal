@@ -6,6 +6,7 @@ export function buildFreshnessPublicModel(inputs = {}) {
     label: status.label,
     state: status.freshness_state,
     last_pipeline_run_at: status.last_pipeline_run_at,
+    last_successful_pipeline_at: status.last_successful_pipeline_at,
     latest_source_scanned_at: status.last_source_item_seen_at,
     latest_qualifying_signal_at: status.last_qualifying_signal_at,
     latest_published_analysis_at: status.last_analysis_published_at,
