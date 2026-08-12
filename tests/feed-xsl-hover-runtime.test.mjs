@@ -29,6 +29,7 @@ test('built human-readable RSS renders each feed media image as an accessible lo
 
   assert.equal(images.length, 15, 'every feed item must render its media image');
   assert.equal(new Set(images.map(([, source]) => source)).size, 15, 'feed media must retain per-article paths');
-  assert.equal(images.every(([, source, alt]) => /^(?:\/|https:\/\/www\.computecurrent\.com\/)generated\/articles\//.test(source) && alt.endsWith('editorial visual')), true);
+  assert.equal(images.every(([, source, alt]) => /^\/generated\/articles\//.test(source) && alt.endsWith('editorial visual')), true);
+  assert.equal(images.some(([, source]) => /^https?:\/\//.test(source)), false, 'browser-rendered feed images must stay on the current origin');
   assert.equal((renderedFeed.match(/class="item-media" href="https:\/\//g) || []).length, 15);
 });

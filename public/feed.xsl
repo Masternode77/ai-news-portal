@@ -76,12 +76,13 @@
             <a class="btn quiet" href="/">Back to the site</a>
           </div>
           <xsl:for-each select="/rss/channel/item">
+            <xsl:variable name="media-url" select="media:content[@url][1]/@url"/>
             <div class="item">
-              <xsl:if test="media:content[@url][1]">
+              <xsl:if test="starts-with($media-url, 'https://www.computecurrent.com/')">
                 <a class="item-media">
                   <xsl:attribute name="href"><xsl:value-of select="link"/></xsl:attribute>
                   <img loading="lazy">
-                    <xsl:attribute name="src"><xsl:value-of select="media:content[@url][1]/@url"/></xsl:attribute>
+                    <xsl:attribute name="src"><xsl:value-of select="substring-after($media-url, 'https://www.computecurrent.com')"/></xsl:attribute>
                     <xsl:attribute name="alt"><xsl:value-of select="concat(title, ' editorial visual')"/></xsl:attribute>
                   </img>
                 </a>
