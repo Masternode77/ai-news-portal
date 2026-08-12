@@ -58,6 +58,11 @@ async function fileText(filePath) {
   }
 }
 
+function longformArticleBodyHtml(detailHtml = '') {
+  const section = String(detailHtml).match(/<section\b(?=[^>]*\bclass\s*=\s*(?:"[^"]*\blongform-article-body\b[^"]*"|'[^']*\blongform-article-body\b[^']*'))[^>]*>([\s\S]*?)<\/section\s*>/i);
+  return section?.[1] || '';
+}
+
 function primaryHrefFor(article = {}) {
   return article.primaryHref || article.public_presentation?.view_detail || (article.articlePagePublished !== false ? `/news/${article.id}/` : article.sourceUrl || article.url || '');
 }
@@ -135,7 +140,8 @@ export async function auditBlogSurfaceV4({
         missingBuiltDetailPages.push(article.id);
         continue;
       }
-      if (forbiddenPublicPhraseMatches(detailHtml).length || BANNED_GENERIC.some((pattern) => pattern.test(detailHtml))) {
+      const articleBodyHtml = longformArticleBodyHtml(detailHtml);
+      if (!articleBodyHtml || forbiddenPublicPhraseMatches(articleBodyHtml).length || BANNED_GENERIC.some((pattern) => pattern.test(articleBodyHtml))) {
         builtDetailForbidden.push(article.id);
       }
     }
