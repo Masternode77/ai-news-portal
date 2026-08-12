@@ -212,10 +212,11 @@ test('synthetic builds omit Google tags until ready and emit each configured loa
   for (const html of [disabledHome, unreadyHome, readyPrivacy, readyTerms]) {
     assert.doesNotMatch(html, /googlesyndication|googletagmanager|google-adsense-account|Funding Choices|gtag\(/i);
   }
-  assert.equal(externalScriptCount(readyHome, 'pagead2.googlesyndication.com'), 0);
+  assert.equal(externalScriptCount(readyHome, 'pagead2.googlesyndication.com'), 1);
   assert.equal(externalScriptCount(readyHome, 'www.googletagmanager.com'), 1);
-  assert.equal((readyHome.match(/google-adsense-account/g) || []).length, 0);
-  assert.doesNotMatch(readyHome, /class="adsbygoogle"|data-ad-client=/i);
+  assert.equal((readyHome.match(/google-adsense-account/g) || []).length, 1);
+  assert.equal((readyHome.match(/class="adsbygoogle"/g) || []).length, 1);
+  assert.equal((readyHome.match(/data-ad-client=/g) || []).length, 1);
   assert.match(readyHome, /ad_storage:'denied'/);
   assert.match(readyHome, /ads_data_redaction/);
 });

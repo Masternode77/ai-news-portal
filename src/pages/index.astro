@@ -60,10 +60,16 @@ const lastSourceRecord = latestStampMs
   ? dateFormatter.format(new Date(latestStampMs))
   : 'not recorded';
 const sourceRecordStatus = `Source-linked feed current through ${lastSourceRecord}`;
+const currentLongFormStampMs = feed.items
+  .filter((item) => Boolean(item.publicSignal?.view_detail))
+  .reduce((max, article) => Math.max(max, articleDateMs(article)), 0);
+const latestAuthorizedLongFormAt = freshness.latest_published_analysis_at || (currentLongFormStampMs
+  ? new Date(currentLongFormStampMs).toISOString()
+  : '');
 const longFormStatus = rightsReviewSafeMode
   ? 'Source-linked and long-form publication paused: 0 authorized sources'
-  : freshness.latest_published_analysis_at
-    ? `Long-form publishing last authorized ${dateFormatter.format(new Date(freshness.latest_published_analysis_at))}`
+  : latestAuthorizedLongFormAt
+    ? `Long-form publishing last authorized ${dateFormatter.format(new Date(latestAuthorizedLongFormAt))}`
     : 'Long-form publishing paused pending a current authorized source review';
 const pipelineStatus = freshness.state === 'failed_pipeline'
   ? `Pipeline update failed; last successful update ${lastSuccessfulUpdate}`

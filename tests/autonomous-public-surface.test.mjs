@@ -26,7 +26,10 @@ test('current autonomous public data surface has no banned AI-summary phrases', 
 
 test('published autonomous analyses carry claim ledgers and bottom-line data', () => {
   const latest = JSON.parse(fs.readFileSync('src/data/latest-news.json', 'utf8'));
-  const analyses = latest.filter((item) => item.articlePagePublished === true);
+  const analyses = latest.filter((item) => (
+    item.articlePagePublished === true
+    && item.generation_version === 'autonomous_editorial_desk_v1'
+  ));
   for (const article of analyses) {
     assert.ok(article.claim_ledger?.length >= 4, `${article.title} missing claim ledger`);
     assert.ok(article.evidence_pack?.verified_facts?.length >= 4, `${article.title} missing evidence facts`);

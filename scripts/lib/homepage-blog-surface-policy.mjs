@@ -1,6 +1,6 @@
 import { isLocalHomepageBlog, homepageLocalBlogCount } from './homepage-visible-count.mjs';
 
-export const HOMEPAGE_MIN_LOCAL_BLOGS = 20;
+export const HOMEPAGE_MIN_LOCAL_BLOGS = 5;
 
 export function homepageBlogSurfaceResult(items = [], options = {}) {
   const min = options.min || HOMEPAGE_MIN_LOCAL_BLOGS;

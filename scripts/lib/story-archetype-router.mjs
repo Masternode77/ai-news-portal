@@ -234,8 +234,12 @@ function textBundle(article = {}) {
 
 export function routeStoryArchetype(article = {}) {
   const text = textBundle(article);
+  const archiveBoundaryText = text.replace(
+    /\bfossil(?:s)?\s+(?:fuel|generation|power|energy)\b/gi,
+    'power generation',
+  );
 
-  if (/(dinosaur|fossil|stegosaurus|skeleton)/i.test(text)) return archetypeById('archive-only');
+  if (/(dinosaur|fossil|stegosaurus|skeleton)/i.test(archiveBoundaryText)) return archetypeById('archive-only');
   if (/(sports ai|football|sūmersports|sumersports|paul tudor jones)/i.test(text)) return archetypeById('adjacent-signal');
   if (/(legal industry|legal professionals|law firm|lawyer|claude chatbot)/i.test(text) && !/(cloud|platform|infrastructure|deployment|data center|storage|network|compute)/i.test(text)) {
     return archetypeById('adjacent-signal');

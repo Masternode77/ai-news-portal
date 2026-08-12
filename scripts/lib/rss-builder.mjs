@@ -4,6 +4,7 @@ import { sanitizePublicCopy } from './internal-language-guard.mjs';
 import { cardCopyQualityResult, generateCardCopy } from './card-copy-quality-gate.mjs';
 import { articleOpenGraphImage, isTrustedPublicImage } from './article-image-surface.mjs';
 import { canonicalArticlePath, safeHttpUrl } from './normalize.mjs';
+import { buildPublicPresentation } from './public-presentation.mjs';
 import { isPublicLongformArticle } from './public-surface-eligibility.mjs';
 import { currentSourceTextAuthorization } from './source-text-publication-authorization.mjs';
 
@@ -65,11 +66,19 @@ export function buildRssItems(items = [], options = {}) {
     }
     seenLinks.add(link);
 
+    const presentation = buildPublicPresentation(item);
     const image = rssImageFor(item);
     out.push({
       title: copy.title,
       pubDate: new Date(item.analysisPublishedAt || item.publishedAt),
-      description: sanitizePublicCopy(cleanEditorialText(copy.deck || item.deck || item.expertLensShort || item.summary || item.snippet || '')),
+      description: sanitizePublicCopy(cleanEditorialText(
+        presentation.deck
+          || copy.deck
+          || item.expertLensShort
+          || item.summary
+          || item.snippet
+          || '',
+      )),
       link,
       image,
       customData: image

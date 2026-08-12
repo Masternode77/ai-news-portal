@@ -29,8 +29,17 @@ const lastSuccessfulUpdate = freshness.last_successful_pipeline_at
   ? dateFormatter.format(new Date(freshness.last_successful_pipeline_at))
   : 'not recorded';
 const sourceRecordStatus = `Source-linked records current through ${lastSourceRecord}`;
-const longFormStatus = freshness.latest_published_analysis_at
-  ? `Long-form publishing last authorized ${dateFormatter.format(new Date(freshness.latest_published_analysis_at))}`
+const currentLongFormStampMs = feed.items
+  .filter((item) => Boolean(item.publicSignal?.view_detail))
+  .reduce((max, article) => {
+    const stamp = new Date(String(article.publicSignal?.date || 0)).getTime();
+    return Number.isFinite(stamp) ? Math.max(max, stamp) : max;
+  }, 0);
+const latestAuthorizedLongFormAt = freshness.latest_published_analysis_at || (currentLongFormStampMs
+  ? new Date(currentLongFormStampMs).toISOString()
+  : '');
+const longFormStatus = latestAuthorizedLongFormAt
+  ? `Long-form publishing last authorized ${dateFormatter.format(new Date(latestAuthorizedLongFormAt))}`
   : 'Long-form publishing paused (0 authorized)';
 const pipelineStatus = freshness.state === 'failed_pipeline'
   ? `Pipeline update failed; last successful update ${lastSuccessfulUpdate}`

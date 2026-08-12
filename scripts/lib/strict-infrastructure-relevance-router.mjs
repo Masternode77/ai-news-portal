@@ -193,7 +193,11 @@ export function namesConcreteInfrastructureLayer(article = {}) {
 }
 
 function isHardArchive(text = '') {
-  return ALWAYS_ARCHIVE_PATTERNS.some((pattern) => pattern.test(text));
+  const infrastructureQualified = String(text).replace(
+    /\bfossil(?:s)?\s+(?:fuel|generation|power|energy)\b/gi,
+    'power generation',
+  );
+  return ALWAYS_ARCHIVE_PATTERNS.some((pattern) => pattern.test(infrastructureQualified));
 }
 
 function isAdjacentBoundary(text = '') {

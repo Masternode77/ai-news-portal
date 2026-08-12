@@ -294,6 +294,14 @@ function hasAny(text, terms) {
   return terms.some((term) => includesTerm(text, term));
 }
 
+function hasHardArchiveTopic(text = '') {
+  const infrastructureQualified = String(text).replace(
+    /\bfossil(?:s)?\s+(?:fuel|generation|power|energy)\b/g,
+    'power generation',
+  );
+  return hasAny(infrastructureQualified, HARD_ARCHIVE_TOPICS);
+}
+
 function buildArticleText(article = {}) {
   return [
     article.title,
@@ -369,7 +377,7 @@ export function classifyInfrastructureRelevance(article = {}) {
     !hasInfra &&
     hasAny(text, CONSUMER_AI_TERMS);
   const hasWeakAiAdjacent = hasAi && hasAny(text, WEAK_AI_ADJACENT_TERMS);
-  const hasHardArchiveTopic = hasAny(text, HARD_ARCHIVE_TOPICS);
+  const hardArchiveTopic = hasHardArchiveTopic(text);
   const hasAdjacentOnlyTopic = hasAny(text, ADJACENT_ONLY_TOPICS);
 
   if (hasAi && hasInfra) {
@@ -443,7 +451,7 @@ export function classifyInfrastructureRelevance(article = {}) {
     overall = Math.min(overall, hasAi ? 0.38 : 0.28);
   }
 
-  if (hasHardArchiveTopic) {
+  if (hardArchiveTopic) {
     overall = Math.min(overall, 0.2);
   } else if (hasAdjacentOnlyTopic) {
     overall = Math.min(overall, 0.62);
@@ -457,7 +465,7 @@ export function classifyInfrastructureRelevance(article = {}) {
     .map((key) => `${key}:${dimensionResults[key].toFixed(2)}${matchedByDimension[key]?.length ? `(${matchedByDimension[key].slice(0, 3).join(', ')})` : ''}`);
 
   if (!reasons.length) reasons.push('no_strong_compute_current_infrastructure_match');
-  if (hasHardArchiveTopic) reasons.push('hard_archive_topic_outside_compute_current_boundary');
+  if (hardArchiveTopic) reasons.push('hard_archive_topic_outside_compute_current_boundary');
   if (hasAdjacentOnlyTopic) reasons.push('adjacent_only_topic_requires_infrastructure_evidence');
   if (hasConsumerAiOnly) reasons.push('consumer_ai_without_infrastructure_surface');
   if (hasWeakAiAdjacent && overall < FULL_MEMO_RELEVANCE_THRESHOLD) {

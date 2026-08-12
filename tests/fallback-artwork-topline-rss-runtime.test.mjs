@@ -10,7 +10,7 @@ const read = (relativePath) => fs.readFileSync(relativePath, 'utf8');
 const fallbackDirectory = 'public/generated/fallbacks';
 const forbiddenArtworkCopy = /Fallback editorial image/i;
 
-test('finished fallback artwork never exposes placeholder copy in the generator, committed assets, or rendered homepage asset', async () => {
+test('finished fallback artwork never exposes placeholder copy and the rendered homepage keeps a local editorial asset', async () => {
   const generator = read('scripts/lib/static-image-prep-helpers.mjs');
   const committedFallbacks = fs.readdirSync(fallbackDirectory)
     .filter((fileName) => fileName.endsWith('.svg'))
@@ -22,7 +22,8 @@ test('finished fallback artwork never exposes placeholder copy in the generator,
     await ensurePublicFallbackImages({ publicDir: temporaryPublicDirectory });
     assert.doesNotMatch(generator, forbiddenArtworkCopy);
     assert.match(generator, /Compute Current editorial briefing/);
-    assert.match(builtHome, /\/generated\/fallbacks\/ai-infrastructure\.svg/);
+    assert.doesNotMatch(builtHome, forbiddenArtworkCopy);
+    assert.match(builtHome, /\/generated\/(?:articles\/eia-data-center-load-timing[^"']*\/(?:hero|thumbnail)\.webp|fallbacks\/ai-infrastructure\.svg)/);
 
     for (const fileName of committedFallbacks) {
       const source = read(path.join(fallbackDirectory, fileName));

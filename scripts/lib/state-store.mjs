@@ -24,11 +24,11 @@ export async function readJsonFile(filePath, defaultValue) {
   }
 }
 
-export async function writeJsonFile(filePath, value) {
+export async function writeJsonFile(filePath, value, { integrityOptions = {} } = {}) {
   await ensureDir(filePath);
   const tmpPath = `${filePath}.${process.pid}.${Date.now()}.tmp`;
   const persistedValue = Array.isArray(value) && PUBLIC_ARTIFACT_NAMES.has(path.basename(filePath))
-    ? enforceFinalPublicationIntegrity(value).articles
+    ? enforceFinalPublicationIntegrity(value, [], integrityOptions).articles
     : value;
   await fs.writeFile(tmpPath, `${JSON.stringify(persistedValue, null, 2)}\n`, 'utf8');
   await fs.rename(tmpPath, filePath);

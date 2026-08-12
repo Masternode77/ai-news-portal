@@ -1,4 +1,21 @@
 sources:
+  - id: eia-today-in-energy
+    name: U.S. Energy Information Administration
+    domain: eia.gov
+    article_hosts: eia.gov,www.eia.gov
+    coverage: data center electricity demand, grid capacity, generation, cooling, and energy infrastructure
+    priority: P0
+    feed: https://www.eia.gov/rss/todayinenergy.xml
+    defaultCategory: Power & Grid
+    region: US
+    language: en
+    status: active_feed
+    text_use_basis: us_federal_public_domain
+    image_use_basis: unreviewed
+    terms_url: https://www.eia.gov/about/copyrights_reuse.php
+    reviewed_at: 2026-08-12T00:00:00.000Z
+    allow_text_use: true
+    allow_image_reuse: false
   - id: siliconangle-ai
     name: SiliconANGLE
     domain: siliconangle.com

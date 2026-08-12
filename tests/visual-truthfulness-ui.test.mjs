@@ -4,7 +4,7 @@ import test from 'node:test';
 
 const readSource = (relativePath) => fs.readFileSync(relativePath, 'utf8');
 
-test('homepage and archive distinguish source-record coverage, an overdue pipeline, and paused long-form publishing', () => {
+test('homepage and archive distinguish source-record coverage, current long-form inventory, and an overdue pipeline', () => {
   const homepage = readSource('src/pages/index.astro');
   const archive = readSource('src/pages/archive/index.astro');
 
@@ -16,7 +16,10 @@ test('homepage and archive distinguish source-record coverage, an overdue pipeli
   assert.match(homepage, /data-rights-review-state="zero-authorized-sources"/);
   assert.match(homepage, /Source-linked and long-form publication paused: 0 authorized sources/);
   assert.match(homepage, /authorizedSourceCount === 0 && feed\.items\.length === 0/);
-  assert.match(archive, /Long-form publishing paused \(0 authorized\)/);
+  for (const source of [homepage, archive]) {
+    assert.match(source, /currentLongFormStampMs/);
+    assert.match(source, /Long-form publishing last authorized/);
+  }
   assert.doesNotMatch(homepage, /update overdue · last successful update/i);
 });
 

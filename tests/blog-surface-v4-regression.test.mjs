@@ -4,6 +4,7 @@ import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import { auditBlogSurfaceV4 } from '../scripts/audit-blog-surface-v4.mjs';
+import { HOMEPAGE_MIN_LOCAL_BLOGS } from '../scripts/lib/homepage-blog-surface-policy.mjs';
 import { authorizePublicTestRecords } from './fixtures/admin-publication-integrity.mjs';
 
 const analysisParagraph = [
@@ -98,7 +99,7 @@ test('source-only audit excludes retained records that fail current public eligi
   assert.equal(result.sourceOnlyCardCount, 0);
   assert.equal(result.rightsReviewSafeMode, true);
   assert.deepEqual(result.reasons, [
-    'homepage_local_blog_count_below_20',
+    `homepage_local_blog_count_below_${HOMEPAGE_MIN_LOCAL_BLOGS}`,
     'rights_review_safe_mode_zero_authorized_sources',
   ]);
 });
@@ -123,7 +124,7 @@ test('built audit uses current public eligibility before checking rendered detai
   assert.equal(result.sourceOnlyCardCount, 0);
   assert.equal(result.builtOutputChecked, true);
   assert.deepEqual(result.reasons, [
-    'homepage_local_blog_count_below_20',
+    `homepage_local_blog_count_below_${HOMEPAGE_MIN_LOCAL_BLOGS}`,
     'rights_review_safe_mode_zero_authorized_sources',
   ]);
 });

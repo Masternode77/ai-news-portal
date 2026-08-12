@@ -27,8 +27,17 @@ function publicEligible(article = {}, options = {}) {
 }
 
 function canonicalFeedKey(article = {}) {
-  const url = String(article.sourceUrl || article.url || article.link || '').trim().toLowerCase();
-  if (url) return `url:${url.replace(/[?#].*$/, '')}`;
+  const rawUrl = String(article.sourceUrl || article.url || article.link || '').trim();
+  const url = safeHttpUrl(rawUrl);
+  if (url) {
+    const parsed = new URL(url);
+    parsed.hash = '';
+    for (const key of [...parsed.searchParams.keys()]) {
+      if (/^(?:utm_.+|fbclid|gclid|mc_cid|mc_eid)$/i.test(key)) parsed.searchParams.delete(key);
+    }
+    parsed.searchParams.sort();
+    return `url:${parsed.href.toLowerCase()}`;
+  }
   const title = String(article.title || article.expertLensFull?.finalHeadline || '').trim().toLowerCase();
   const source = String(article.source || article.source_name || '').trim().toLowerCase();
   return `title:${source}:${title}`;
@@ -70,6 +79,7 @@ function decorate(article = {}, options = {}) {
     ...presentation,
     ...copy,
     deck: presentation.deck,
+    why_it_matters: presentation.why_it_matters,
     bottleneck_axis: bottleneckAxis,
   };
   const copyQuality = cardCopyQualityResult(publicSignal, article);
