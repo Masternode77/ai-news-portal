@@ -78,7 +78,7 @@
           <xsl:for-each select="/rss/channel/item">
             <xsl:variable name="media-url" select="media:content[@url][1]/@url"/>
             <div class="item">
-              <xsl:if test="starts-with($media-url, 'https://www.computecurrent.com/')">
+              <xsl:if test="starts-with($media-url, 'https://www.computecurrent.com/generated/articles/')">
                 <a class="item-media">
                   <xsl:attribute name="href"><xsl:value-of select="link"/></xsl:attribute>
                   <img loading="lazy">
