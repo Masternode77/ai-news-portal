@@ -45,7 +45,7 @@
           .item { display: grid; grid-template-columns: 152px minmax(0, 1fr); gap: 16px; padding: 18px 0; border-top: 1px solid rgba(0, 0, 0, 0.08); }
           .item-copy { min-width: 0; }
           .item .item-media { display: block; align-self: start; border-radius: 12px; overflow: hidden; background: #f5f5f7; }
-          .item .item-media img { display: block; width: 100%; aspect-ratio: 4 / 3; object-fit: cover; }
+          .item .item-media img { display: block; width: 100%; aspect-ratio: 1200 / 630; object-fit: cover; }
           .item .item-title { color: #1d1d1f; text-decoration: none; font-size: 17px; font-weight: 600; letter-spacing: -0.01em; line-height: 1.35; }
           .item .item-title:hover { color: #0071e3; }
           .item .item-media:hover { box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1); }

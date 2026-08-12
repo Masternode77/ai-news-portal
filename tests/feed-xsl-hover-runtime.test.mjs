@@ -22,6 +22,7 @@ test('built human-readable RSS actions retain 40px focusable controls and visibl
   assert.match(stylesheet, /\.btn:focus-visible\s*\{[\s\S]*outline:\s*3px solid #0071e3;[\s\S]*outline-offset:\s*3px;/);
   assert.match(stylesheet, /\.btn:hover\s*\{[\s\S]*background:\s*#0066cc;[\s\S]*transform:\s*translateY\(-1px\);/);
   assert.match(stylesheet, /\.btn\.quiet:hover\s*\{[\s\S]*background:\s*#ebebef;/);
+  assert.match(stylesheet, /\.item \.item-media img\s*\{[\s\S]*aspect-ratio:\s*1200 \/ 630;/);
 });
 
 test('built human-readable RSS renders each feed media image as an accessible local article link', () => {
