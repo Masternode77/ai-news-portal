@@ -3,7 +3,7 @@
   Human-readable rendering for /rss.xml when opened in a browser.
   Feed readers never see this; browsers without XSLT support simply show XML.
 -->
-<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:atom="http://www.w3.org/2005/Atom">
+<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:media="http://search.yahoo.com/mrss/" exclude-result-prefixes="atom media">
   <xsl:output method="html" encoding="UTF-8" indent="yes"/>
   <xsl:template match="/">
     <html lang="en">
@@ -42,11 +42,21 @@
           .btn:hover { background: #0066cc; transform: translateY(-1px); box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1); }
           .btn.quiet:hover { background: #ebebef; }
           .btn:focus-visible { outline: 3px solid #0071e3; outline-offset: 3px; }
-          .item { padding: 18px 0; border-top: 1px solid rgba(0, 0, 0, 0.08); }
-          .item a { color: #1d1d1f; text-decoration: none; font-size: 17px; font-weight: 600; letter-spacing: -0.01em; line-height: 1.35; }
-          .item a:hover { color: #0071e3; }
+          .item { display: grid; grid-template-columns: 152px minmax(0, 1fr); gap: 16px; padding: 18px 0; border-top: 1px solid rgba(0, 0, 0, 0.08); }
+          .item-copy { min-width: 0; }
+          .item .item-media { display: block; align-self: start; border-radius: 12px; overflow: hidden; background: #f5f5f7; }
+          .item .item-media img { display: block; width: 100%; aspect-ratio: 4 / 3; object-fit: cover; }
+          .item .item-title { color: #1d1d1f; text-decoration: none; font-size: 17px; font-weight: 600; letter-spacing: -0.01em; line-height: 1.35; }
+          .item .item-title:hover { color: #0071e3; }
+          .item .item-media:hover { box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1); }
+          .item a:focus-visible { outline: 3px solid #0071e3; outline-offset: 3px; }
           .item p { margin: 6px 0 0; color: #6e6e73; font-size: 14px; line-height: 1.55; }
           .item .date { display: block; margin-top: 8px; color: #a1a1a6; font-size: 12px; }
+          @media (max-width: 560px) {
+            .wrap { padding: 32px 16px 56px; }
+            .item { grid-template-columns: minmax(0, 1fr); gap: 12px; }
+            .item .item-media { max-width: 100%; }
+          }
         </style>
       </head>
       <body>
@@ -67,12 +77,23 @@
           </div>
           <xsl:for-each select="/rss/channel/item">
             <div class="item">
-              <a>
-                <xsl:attribute name="href"><xsl:value-of select="link"/></xsl:attribute>
-                <xsl:value-of select="title"/>
-              </a>
-              <p><xsl:value-of select="description"/></p>
-              <span class="date"><xsl:value-of select="pubDate"/></span>
+              <xsl:if test="media:content[@url][1]">
+                <a class="item-media">
+                  <xsl:attribute name="href"><xsl:value-of select="link"/></xsl:attribute>
+                  <img loading="lazy">
+                    <xsl:attribute name="src"><xsl:value-of select="media:content[@url][1]/@url"/></xsl:attribute>
+                    <xsl:attribute name="alt"><xsl:value-of select="concat(title, ' editorial visual')"/></xsl:attribute>
+                  </img>
+                </a>
+              </xsl:if>
+              <div class="item-copy">
+                <a class="item-title">
+                  <xsl:attribute name="href"><xsl:value-of select="link"/></xsl:attribute>
+                  <xsl:value-of select="title"/>
+                </a>
+                <p><xsl:value-of select="description"/></p>
+                <span class="date"><xsl:value-of select="pubDate"/></span>
+              </div>
             </div>
           </xsl:for-each>
         </div>

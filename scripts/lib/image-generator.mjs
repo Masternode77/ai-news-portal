@@ -2,7 +2,7 @@ import fs from 'node:fs/promises';
 import path from 'node:path';
 import sharp from 'sharp';
 import { IMAGE_PROVIDER, PIPELINE_OFFLINE } from './constants.mjs';
-import { ARTICLE_IMAGE_VARIANTS, canonicalArticleImagePaths } from './image-store.mjs';
+import { writeFallbackArticleImageSet } from './image-store.mjs';
 import { createImageProvider } from './image-providers/index.mjs';
 import { isStockDerivedCardImage } from './stock-card-image-detector.mjs';
 import { loadSourceRegistry, sourceUsageDecision } from './source-registry.mjs';
@@ -73,66 +73,8 @@ function svgTextLines(lines = [], { x, y, size, lineHeight, fill, weight = 700, 
   return `<text x="${x}" y="${y}" fill="${fill}" font-family="${family}" font-size="${size}" font-weight="${weight}" letter-spacing="${letterSpacing}">${tspans}</text>`;
 }
 
-function localEditorialSvg(item = {}, variant = ARTICLE_IMAGE_VARIANTS.hero) {
-  const palette = colorFromId(item.id || 'abcdef1234567890');
-  const width = variant.width;
-  const height = variant.height;
-  const pad = Math.round(width * 0.055);
-  const midY = Math.round(height * 0.58);
-  return `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" role="img" aria-label="Compute Current editorial visual">
-  <defs>
-    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
-      <stop stop-color="${palette.one}"/>
-      <stop offset="0.46" stop-color="#111820"/>
-      <stop offset="1" stop-color="#05080d"/>
-    </linearGradient>
-    <radialGradient id="pulse" cx="50%" cy="50%" r="50%">
-      <stop stop-color="${palette.three}" stop-opacity="0.72"/>
-      <stop offset="1" stop-color="${palette.three}" stop-opacity="0"/>
-    </radialGradient>
-    <filter id="soft"><feGaussianBlur stdDeviation="${Math.max(12, Math.round(width / 80))}"/></filter>
-  </defs>
-  <rect width="${width}" height="${height}" fill="url(#bg)"/>
-  <circle cx="${Math.round(width * 0.18)}" cy="${Math.round(height * 0.18)}" r="${Math.round(width * 0.16)}" fill="${palette.two}" opacity="0.24" filter="url(#soft)"/>
-  <circle cx="${Math.round(width * 0.84)}" cy="${Math.round(height * 0.24)}" r="${Math.round(width * 0.13)}" fill="url(#pulse)" filter="url(#soft)"/>
-  <g stroke="rgba(240,248,255,0.12)" stroke-width="${Math.max(1, Math.round(width / 900))}">
-    <path d="M${pad} ${Math.round(height * 0.74)}H${width - pad}"/>
-    <path d="M${pad} ${Math.round(height * 0.62)}H${width - pad}"/>
-    <path d="M${Math.round(width * 0.22)} ${pad}V${height - pad}"/>
-    <path d="M${Math.round(width * 0.48)} ${pad}V${height - pad}"/>
-    <path d="M${Math.round(width * 0.74)} ${pad}V${height - pad}"/>
-  </g>
-  <path d="M${pad} ${midY}C${Math.round(width * 0.23)} ${Math.round(height * 0.42)}, ${Math.round(width * 0.36)} ${Math.round(height * 0.74)}, ${Math.round(width * 0.5)} ${Math.round(height * 0.56)}S${Math.round(width * 0.74)} ${Math.round(height * 0.36)}, ${width - pad} ${Math.round(height * 0.24)}" fill="none" stroke="#f6f8ff" stroke-opacity="0.52" stroke-width="${Math.max(3, Math.round(width / 260))}"/>
-  <g fill="none" stroke="${palette.three}" stroke-opacity="0.74" stroke-width="${Math.max(2, Math.round(width / 420))}">
-    <path d="M${Math.round(width * 0.1)} ${Math.round(height * 0.28)}H${Math.round(width * 0.38)}V${Math.round(height * 0.44)}H${Math.round(width * 0.7)}"/>
-    <path d="M${Math.round(width * 0.24)} ${Math.round(height * 0.84)}V${Math.round(height * 0.68)}H${Math.round(width * 0.88)}"/>
-  </g>
-  <rect x="${pad}" y="${pad}" width="${width - pad * 2}" height="${height - pad * 2}" rx="${Math.round(width * 0.022)}" fill="rgba(255,255,255,0.025)" stroke="rgba(255,255,255,0.13)"/>
-</svg>`;
-}
-
-async function writeLocalEditorialRasterSet(item = {}) {
-  const paths = canonicalArticleImagePaths(item, { extension: 'webp', legacyExtension: 'webp' });
-  for (const [key, variant] of Object.entries(ARTICLE_IMAGE_VARIANTS)) {
-    const publicPath = paths[`${key}Image`];
-    const outPath = path.join(process.cwd(), 'public', publicPath.replace(/^\//, ''));
-    await fs.mkdir(path.dirname(outPath), { recursive: true });
-    await sharp(Buffer.from(localEditorialSvg(item, variant)))
-      .webp({ quality: 88 })
-      .toFile(outPath);
-  }
-
-  const legacyPath = path.join(process.cwd(), 'public', paths.legacyImage.replace(/^\//, ''));
-  await fs.mkdir(path.dirname(legacyPath), { recursive: true });
-  await sharp(Buffer.from(localEditorialSvg(item, ARTICLE_IMAGE_VARIANTS.hero)))
-    .webp({ quality: 88 })
-    .toFile(legacyPath);
-
-  return paths;
-}
-
 async function writeLocalEditorialImageSet(item) {
-  const paths = await writeLocalEditorialRasterSet(item);
+  const paths = await writeFallbackArticleImageSet(item);
   return paths.heroImage;
 }
 
