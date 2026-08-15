@@ -25,6 +25,7 @@ import { buildRssItems } from '../scripts/lib/rss-builder.mjs';
 import { buildSitemapEntries } from '../scripts/lib/sitemap-builder.mjs';
 import { publicProductFitResult } from '../scripts/lib/public-product-fit.mjs';
 import { editorialArtworkDescriptor } from '../scripts/lib/image-store.mjs';
+import { reconcileEiaPublicInventory } from '../scripts/restore-eia-public-inventory.mjs';
 
 const imageGeneratorUrl = pathToFileURL(path.resolve('scripts/lib/image-generator.mjs')).href;
 
@@ -137,6 +138,26 @@ test('EIA restoration inventory exposes fifteen source-backed cards and five loc
   assert.equal(signalRssItem.description, signalSpec.deck);
   assert.equal(buildSitemapEntries(records, options)
     .filter((entry) => entry.loc.startsWith('/news/')).length, 5);
+});
+
+test('EIA restoration moves pipeline-archived restoration records back to their approved public surfaces', () => {
+  const restored = eiaRecords();
+  const restorationId = restored[0].id;
+  const current = { id: 'current-signal' };
+  const archived = { id: 'archived-signal' };
+
+  const reconciled = reconcileEiaPublicInventory({
+    records: restored,
+    latest: [current],
+    archived: [{ id: restorationId, archiveOnly: true }, archived],
+    search: [{ id: restorationId, archiveOnly: true }, current, archived],
+  });
+
+  assert.deepEqual(reconciled.latest.slice(0, restored.length), restored);
+  assert.equal(reconciled.latest.filter((record) => record.id === restorationId).length, 1);
+  assert.equal(reconciled.archived.some((record) => record.id === restorationId), false);
+  assert.equal(reconciled.search.filter((record) => record.id === restorationId).length, 1);
+  assert.deepEqual(reconciled.archived, [archived]);
 });
 
 test('EIA local artwork is deterministic and article-specific without reusing source images', async () => {

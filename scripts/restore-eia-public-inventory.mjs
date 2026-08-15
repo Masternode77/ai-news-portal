@@ -1,6 +1,6 @@
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { buildEiaRestorationInventory, EIA_RESTORATION_IDS, eiaRestorationSpecs } from './lib/eia-restoration-inventory.mjs';
+import { buildEiaRestorationInventory, eiaRestorationSpecs } from './lib/eia-restoration-inventory.mjs';
 import { extractEiaSourceText } from './lib/eia-source-text.mjs';
 import { fetchAuthorizedSourceText } from './lib/source-text-fetcher.mjs';
 import { loadSourceRegistry } from './lib/source-registry.mjs';
@@ -64,24 +64,33 @@ function verifyAndStamp(records, sources) {
   return { records: stamped, homepage, rss, detailRoutes };
 }
 
+export function reconcileEiaPublicInventory({ records = [], latest = [], archived = [], search = [] } = {}) {
+  const restorationIds = new Set(records.map((record) => record.id));
+  const withoutRestorationRecords = (items) => items.filter((record) => !restorationIds.has(record.id));
+
+  return {
+    latest: [...records, ...withoutRestorationRecords(latest)],
+    archived: withoutRestorationRecords(archived),
+    search: [...records, ...withoutRestorationRecords(search)],
+  };
+}
+
 export async function restoreEiaPublicInventory() {
   const specs = eiaRestorationSpecs();
   const sources = await loadSourceRegistry();
   const sourceTexts = await fetchSourceTexts(specs, sources);
   const verified = verifyAndStamp(buildEiaRestorationInventory(sourceTexts), sources);
-  const restorationIds = new Set(EIA_RESTORATION_IDS);
   const [latest, archived, search] = await Promise.all([
     readJsonFile(LATEST_NEWS_PATH, []),
     readJsonFile(ARCHIVE_NEWS_PATH, []),
     readJsonFile(SEARCH_INDEX_PATH, []),
   ]);
-  assert(!archived.some((record) => restorationIds.has(record.id)), 'restoration ID already exists in archive');
-  const nextLatest = [...verified.records, ...latest.filter((record) => !restorationIds.has(record.id))];
-  const nextSearch = [...verified.records, ...search.filter((record) => !restorationIds.has(record.id))];
+  const reconciled = reconcileEiaPublicInventory({ records: verified.records, latest, archived, search });
 
   await Promise.all([
-    writeJsonFile(LATEST_NEWS_PATH, nextLatest, { integrityOptions: { sourceRegistry: sources, now: NOW } }),
-    writeJsonFile(SEARCH_INDEX_PATH, nextSearch, { integrityOptions: { sourceRegistry: sources, now: NOW } }),
+    writeJsonFile(LATEST_NEWS_PATH, reconciled.latest, { integrityOptions: { sourceRegistry: sources, now: NOW } }),
+    writeJsonFile(ARCHIVE_NEWS_PATH, reconciled.archived),
+    writeJsonFile(SEARCH_INDEX_PATH, reconciled.search, { integrityOptions: { sourceRegistry: sources, now: NOW } }),
   ]);
   await rebuildTaxonomyPages();
 
@@ -91,8 +100,9 @@ export async function restoreEiaPublicInventory() {
     signals: verified.records.length - verified.detailRoutes.length,
     homepage: verified.homepage.length,
     rss: verified.rss.length,
-    latestTotal: nextLatest.length,
-    searchTotal: nextSearch.length,
+    latestTotal: reconciled.latest.length,
+    archiveTotal: reconciled.archived.length,
+    searchTotal: reconciled.search.length,
   };
 }
 
