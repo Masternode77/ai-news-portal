@@ -55,14 +55,25 @@ jobs:
           SUPABASE_ARCHIVE_TABLE: ${{ secrets.SUPABASE_ARCHIVE_TABLE }}
         run: npm run pipeline
 
+      - name: Restore approved public inventory
+        run: node ./scripts/restore-eia-public-inventory.mjs
+
       - name: Rebuild public taxonomy pages
         run: npm run rebuild:taxonomy-pages
+
+      - name: Synchronize current-state audit
+        run: node ./scripts/audit-omo-ultra-current-state.mjs
 
       - name: Run full test suite
         run: npm test
 
       - name: Run production content gate
         run: npm run content:gate
+
+      - name: Synchronize final current-state audit
+        run: |
+          node ./scripts/audit-omo-ultra-current-state.mjs
+          node --test tests/omo-ultra-audit.test.mjs
 
       - name: Record successful scheduled update
         run: node ./scripts/record-pipeline-heartbeat.mjs ok
@@ -80,6 +91,7 @@ jobs:
             src/data/taxonomy-pages.json \
             src/data/pipeline-heartbeat.json \
             scripts/state/pipeline-state.json \
+            docs/omo-ultra-audit.md \
             public/generated
 
           if git diff --cached --quiet; then

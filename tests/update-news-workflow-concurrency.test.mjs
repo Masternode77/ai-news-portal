@@ -60,6 +60,25 @@ test('update-news workflow installs the RSS transform runtime before tests', () 
   assert.ok(testsIndex > packageIndex, 'xsltproc must be installed before the full test suite');
 });
 
+test('update-news workflow restores approved public inventory and keeps its current-state audit synchronized', () => {
+  // Given: the live pipeline rebuilds rolling source data before the approved EIA inventory is overlaid.
+  const pipelineIndex = workflow.indexOf('npm run pipeline');
+  const restoreIndex = workflow.indexOf('node ./scripts/restore-eia-public-inventory.mjs');
+  const testsIndex = workflow.indexOf('npm test');
+  const contentGateIndex = workflow.indexOf('npm run content:gate');
+  const auditIndexes = [...workflow.matchAll(/node \.\/scripts\/audit-omo-ultra-current-state\.mjs/g)]
+    .map((match) => match.index);
+
+  // When: the scheduled publication order and committed artifacts are inspected.
+  // Then: restoration and a pre-test audit follow the pipeline, and the final built state is audited and committed.
+  assert.ok(restoreIndex > pipelineIndex, 'approved public inventory must be restored after the rolling pipeline');
+  assert.equal(auditIndexes.length, 2, 'expected pre-test and post-build current-state audits');
+  assert.ok(auditIndexes[0] > restoreIndex, 'the pre-test audit must observe the restored inventory');
+  assert.ok(testsIndex > auditIndexes[0], 'source tests must observe the synchronized audit');
+  assert.ok(auditIndexes[1] > contentGateIndex, 'the committed audit must observe the final built state');
+  assert.match(publicationScript, /docs\/omo-ultra-audit\.md/);
+});
+
 test('update-news workflow fails closed when candidate staging fails', () => {
   // Given: the publication script stages the generated candidate tree.
   assert.match(publicationScript, /\bgit add\b/);
