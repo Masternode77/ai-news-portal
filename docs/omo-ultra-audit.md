@@ -31,8 +31,8 @@ Audit output omits `git status` so running this writer cannot make its own repor
 
 ## Article Data Store
 
-- Primary public data: `src/data/latest-news.json` (45 records).
-- Archive data: `src/data/archived-news.json` (891 records).
+- Primary public data: `src/data/latest-news.json` (35 records).
+- Archive data: `src/data/archived-news.json` (903 records).
 - Adjacent stores: `src/data/search-index.json`, `src/data/taxonomy-pages.json`, `src/data/editorial-cycles.json`, `src/data/claim-ledger.json`, `src/data/source-health.json`.
 - The data model is still legacy-compatible JSON rather than one explicit public article contract.
 
@@ -56,7 +56,7 @@ Audit output omits `git status` so running this writer cannot make its own repor
 - Provider registry files: `chatgpt-oauth-runtime 2.mjs`, `chatgpt-oauth-runtime.mjs`, `gemini 2.mjs`, `gemini.mjs`, `index 2.mjs`, `index.mjs`, `openai-image-api 2.mjs`, `openai-image-api.mjs`, `shared 2.mjs`, `shared.mjs`.
 - Duplicate provider files needing cleanup decision: `chatgpt-oauth-runtime 2.mjs`, `gemini 2.mjs`, `index 2.mjs`, `openai-image-api 2.mjs`, `shared 2.mjs`.
 - Public generated assets directory: `public/generated/`.
-- Current public homepage cards missing a reachable display image or fallback: 15; examples: `eia-data-center-load-timing`, `eia-server-cooling-forecast`, `eia-virginia-peak-load`, `eia-nuclear-data-center-contracts`, `eia-texas-large-loads`.
+- Current public homepage cards missing a reachable display image or fallback: 0; examples: none found.
 
 ## Publish Cron and Build Scripts
 
@@ -93,7 +93,7 @@ Audit output omits `git status` so running this writer cannot make its own repor
 ## Stale Generated Article Pages
 
 - Retained records marked article-page-published with non-blog_engine_v4 generation version: 5; examples: `eia-data-center-load-timing`, `eia-server-cooling-forecast`, `eia-virginia-peak-load`, `eia-nuclear-data-center-contracts`, `eia-texas-large-loads`. Current public detail eligibility separately requires product fit, source rights, and final publication integrity.
-- Retained source-only/direct-link items: 931.
+- Retained source-only/direct-link items: 933.
 - Whether generated article pages are stale is a review question, not an editor regeneration command. The generic editor exposes `save-draft`, `publish`, `hide`, `noindex`, `upload-image`, `preview`; regeneration controls detected: none.
 
 ## Legacy Templates and Public Output Failures
@@ -101,7 +101,7 @@ Audit output omits `git status` so running this writer cannot make its own repor
 - Retained JSON records with old Editor's Brief template text: 0; examples: none found. Current public homepage-card matches: 0; retained records are not current public output without product fit and source rights.
 - Retained JSON records with configured/brief phrase matches: 58; examples: `watch_sig_45532061ab02cd06`, `watch_sig_280ee67ee0e4b1f5`, `watch_sig_3aafa5f53fed9710`, `ea7c824f9474271e`, `01b8b1d203605f0e`. Current public homepage-card matches: 0.
 - Current public homepage cards failing the product-fit boundary: 0. `buildHomepageFeed()` applies product fit and current source-text authorization before decoration, so retained low-relevance records are not treated as live homepage output.
-- Current public homepage cards missing a display image or fallback: 15; examples: `eia-data-center-load-timing`, `eia-server-cooling-forecast`, `eia-virginia-peak-load`, `eia-nuclear-data-center-contracts`, `eia-texas-large-loads`.
+- Current public homepage cards missing a display image or fallback: 0; examples: none found.
 - Retained JSON clipped-extraction markers: 0; current public homepage-card matches: 0.
 
 ## Safe Admin Implementation Location
