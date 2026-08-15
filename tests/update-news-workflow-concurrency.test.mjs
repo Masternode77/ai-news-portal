@@ -49,6 +49,17 @@ test('update-news workflow uses the repository Node runtime', () => {
   assert.equal(packageNodeEngine, '22.x');
 });
 
+test('update-news workflow installs the RSS transform runtime before tests', () => {
+  // Given: the built RSS contract executes /usr/bin/xsltproc on the Ubuntu runner.
+  const packageIndex = workflow.indexOf('sudo apt-get install --no-install-recommends -y xsltproc');
+  const testsIndex = workflow.indexOf('npm test');
+
+  // When: system dependency and test ordering are inspected.
+  // Then: the runner installs xsltproc before any built RSS test can execute.
+  assert.ok(packageIndex > -1, 'expected the Ubuntu runner to install xsltproc');
+  assert.ok(testsIndex > packageIndex, 'xsltproc must be installed before the full test suite');
+});
+
 test('update-news workflow fails closed when candidate staging fails', () => {
   // Given: the publication script stages the generated candidate tree.
   assert.match(publicationScript, /\bgit add\b/);
