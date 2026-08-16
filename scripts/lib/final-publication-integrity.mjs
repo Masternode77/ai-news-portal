@@ -58,8 +58,7 @@ export function marksFinalBodyPublic(article = {}) {
 }
 
 function requiresFinalBodyReview(article = {}) {
-  const body = bodyFor(article);
-  if (!body || article.archiveOnly === true || article.public_status === 'quarantined') return false;
+  if (article.archiveOnly === true || article.public_status === 'quarantined') return false;
   if (article.articlePagePublished === false) return false;
   return hasPublishedArticlePage(article) || article.public_status === 'published';
 }

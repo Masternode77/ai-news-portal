@@ -83,6 +83,29 @@ test('canonical public artifact persistence quarantines a final body that bypass
   assert.equal(persisted.archiveOnly, true);
 });
 
+test('canonical public artifact persistence quarantines an explicitly public record without a final body', async () => {
+  // Given: a scheduled candidate retains public flags after longform generation is skipped.
+  const directory = await fs.mkdtemp(path.join(os.tmpdir(), 'compute-current-bodyless-publication-'));
+  const artifactPath = path.join(directory, 'latest-news.json');
+  const article = {
+    id: 'bodyless-scheduled-candidate',
+    title: 'Bodyless scheduled candidate',
+    public_status: 'published',
+    articlePagePublished: true,
+    homepagePublished: true,
+  };
+
+  // When: the shared persistence adapter writes the public collection.
+  await writeJsonFile(artifactPath, [article]);
+  const [persisted] = JSON.parse(await fs.readFile(artifactPath, 'utf8'));
+
+  // Then: the contradictory public state is quarantined before downstream audits run.
+  assert.equal(persisted.public_status, 'quarantined');
+  assert.equal(persisted.articlePagePublished, false);
+  assert.equal(persisted.homepagePublished, false);
+  assert.equal(persisted.archiveOnly, true);
+});
+
 test('final publication boundary rejects generated text masquerading as extracted source evidence', () => {
   // Given: generated article text and rawText are populated, but no immutable extraction artifact exists.
   const generated = {
