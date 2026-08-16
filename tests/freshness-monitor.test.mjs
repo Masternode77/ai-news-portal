@@ -34,3 +34,22 @@ test('freshness monitor exposes a failed heartbeat ahead of an older successful 
   assert.equal(status.freshness_state, 'failed_pipeline');
   assert.equal(status.last_successful_pipeline_at, '2026-05-20T04:00:00Z');
 });
+
+test('fresh successful heartbeat prevents an older editorial cycle from reporting the pipeline overdue', () => {
+  const status = buildFreshnessStatus({
+    cycles: [{
+      cycle_completed_at: '2026-05-19T20:00:00Z',
+      status: 'completed',
+      published_analyses: ['analysis-1'],
+      latest_analysis_published_at: '2026-05-19T20:00:00Z',
+    }],
+    heartbeat: {
+      status: 'ok',
+      last_pipeline_run_at: '2026-05-20T05:00:00Z',
+      last_successful_pipeline_at: '2026-05-20T05:00:00Z',
+    },
+  }, new Date('2026-05-20T05:05:00Z'));
+
+  assert.equal(status.freshness_state, 'pipeline_current');
+  assert.equal(status.last_successful_pipeline_at, '2026-05-20T05:00:00Z');
+});

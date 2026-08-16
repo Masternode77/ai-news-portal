@@ -18,7 +18,11 @@ function heartbeatPublicStatus(heartbeat = {}, now = new Date()) {
       latest_analysis_published_at: null,
     };
   }
-  return null;
+  return {
+    freshness_state: 'pipeline_current',
+    label: 'The latest scheduled update completed successfully.',
+    latest_analysis_published_at: null,
+  };
 }
 
 export function buildFreshnessStatus({ cycles = [], rssItems = [], sitemapLastmod = null, sourceHealth = [], heartbeat = {} } = {}, now = new Date()) {
