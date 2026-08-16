@@ -797,7 +797,9 @@
     "9521be5b1c7c4316",
     "f812fe0236a666ab",
     "3da1bb519d086075",
-    "746a7ec31db41f14"
+    "746a7ec31db41f14",
+    "433b6291c085c015",
+    "e3ca7ce34440e2f2"
   ],
   "dayPlans": {
     "2026-03-24": {
@@ -43501,134 +43503,436 @@
         "1": true,
         "2": true
       }
+    },
+    "2026-08-17": {
+      "date": "2026-08-17",
+      "createdAt": "2026-08-16T15:26:31.555Z",
+      "refreshedAt": "2026-08-16T15:26:31.555Z",
+      "candidateWindowHours": 24,
+      "curatedItems": [
+        {
+          "id": "433b6291c085c015",
+          "sourceRegistryId": "eia-today-in-energy",
+          "source": "U.S. Energy Information Administration",
+          "url": "https://www.eia.gov/todayinenergy/detail.php?id=67904",
+          "title": "Lower crude oil prices reduced U.S.-Canada energy trade value in 2025",
+          "snippet": "The value of energy trade between the United States and Canada fell by 11% in 2025 to an estimated $137 billion, according to data from the U.S. Census Bureau. Energy trade value is the total value of energy imports and…",
+          "contentText": "The value of energy trade between the United States and Canada fell by 11% in 2025 to an estimated $137 billion, according to data from the U.S. Census Bureau. Energy trade value is the total value of energy imports and exports between two countries and is driven by commodity volumes and prices. Most of the U.S.-Canada trade value is U.S. energy imports from Canada—$111 billion in 2025—rather than from U.S. energy exports to Canada, which totaled $26 billion last year. Crude oil accounts for the largest component of U.S.-Canada energy trade, making up 69% of the total value traded in 2025.",
+          "publishedAt": "2026-07-29T14:00:00.000Z",
+          "sourceImage": null,
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "Power & Grid",
+          "category": "Power & Grid",
+          "primary_category": "Power & Grid",
+          "secondary_category": "Interconnection and power procurement",
+          "infrastructure_layer": "Power",
+          "affected_stakeholders": [
+            "data center operators",
+            "utilities",
+            "cloud capacity teams",
+            "investors"
+          ],
+          "article_type": "Other",
+          "urgency_score": 0.46,
+          "taxonomy_confidence": 0.69,
+          "taxonomy_reasons": [
+            "power",
+            "grid"
+          ],
+          "direct_ai_infrastructure_relevance": 0,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0,
+          "power_grid_relevance": 0.5,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.325,
+          "infrastructure_relevance_tier": "archive_only",
+          "infrastructure_relevance_action": "archive_only",
+          "infrastructure_relevance_reasons": [
+            "power_grid_relevance:0.50(power, grid)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 0,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0,
+            "power_grid_relevance": 0.5,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.325,
+            "infrastructure_relevance_tier": "archive_only",
+            "infrastructure_relevance_action": "archive_only",
+            "infrastructure_relevance_reasons": [
+              "power_grid_relevance:0.50(power, grid)"
+            ],
+            "infrastructureRelevanceAction": "archive_only",
+            "articlePagePublished": false,
+            "homepagePublished": false,
+            "archiveOnly": true,
+            "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
+          },
+          "score": 10
+        },
+        {
+          "id": "e3ca7ce34440e2f2",
+          "sourceRegistryId": "eia-today-in-energy",
+          "source": "U.S. Energy Information Administration",
+          "url": "https://www.eia.gov/todayinenergy/detail.php?id=67885",
+          "title": "Hybrid sales rise while battery electric sales remain lower after tax credit expiration",
+          "snippet": "In the second quarter of 2026 (2Q26), 24% of new light-duty vehicles sold in the United States were hybrid electric, battery electric, or plug-in hybrid electric vehicles, up from 22% in 2Q25. Between 2Q25 and 2Q26, hyb…",
+          "contentText": "In the second quarter of 2026 (2Q26), 24% of new light-duty vehicles sold in the United States were hybrid electric, battery electric, or plug-in hybrid electric vehicles, up from 22% in 2Q25. Between 2Q25 and 2Q26, hybrid electric vehicles continued to gain market share, reaching a record 16% of light-duty vehicle sales. The market shares of battery electric and plug-in hybrid electric vehicles decreased, according to estimates from Omdia. In 2Q26, battery electric vehicle sales were 6% of new light-duty vehicles sold, down from 7% in 2Q25; plug-in hybrid electric vehicle sales fell from 1.9% to 1.4% over the same period.",
+          "publishedAt": "2026-07-27T14:00:00.000Z",
+          "sourceImage": null,
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "Power & Grid",
+          "category": "Power & Grid",
+          "primary_category": "Power & Grid",
+          "secondary_category": "Interconnection and power procurement",
+          "infrastructure_layer": "Power",
+          "affected_stakeholders": [
+            "data center operators",
+            "utilities",
+            "cloud capacity teams",
+            "investors"
+          ],
+          "article_type": "Market Analysis",
+          "urgency_score": 0.46,
+          "taxonomy_confidence": 0.69,
+          "taxonomy_reasons": [
+            "power",
+            "grid"
+          ],
+          "direct_ai_infrastructure_relevance": 0,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0,
+          "power_grid_relevance": 0.5,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.325,
+          "infrastructure_relevance_tier": "archive_only",
+          "infrastructure_relevance_action": "archive_only",
+          "infrastructure_relevance_reasons": [
+            "power_grid_relevance:0.50(power, grid)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 0,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0,
+            "power_grid_relevance": 0.5,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.325,
+            "infrastructure_relevance_tier": "archive_only",
+            "infrastructure_relevance_action": "archive_only",
+            "infrastructure_relevance_reasons": [
+              "power_grid_relevance:0.50(power, grid)"
+            ],
+            "infrastructureRelevanceAction": "archive_only",
+            "articlePagePublished": false,
+            "homepagePublished": false,
+            "archiveOnly": true,
+            "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
+          },
+          "score": 6
+        },
+        {
+          "id": "9a641af25826b599",
+          "sourceRegistryId": "eia-today-in-energy",
+          "source": "U.S. Energy Information Administration",
+          "url": "https://www.eia.gov/todayinenergy/detail.php?id=67867",
+          "title": "New York imports more electricity from Canada after high-voltage transmission line opens",
+          "snippet": "On July 3, 2026, the New York Independent System Operator (NYISO) imported 52 gigawatthours (GWh) of electricity from Canada, the most traded between the two areas since January 2025. Some of the imported electricity fl…",
+          "contentText": "On July 3, 2026, the New York Independent System Operator (NYISO) imported 52 gigawatthours (GWh) of electricity from Canada, the most traded between the two areas since January 2025. Some of the imported electricity flowed along the new Champlain Hudson Power Express (CHPE) transmission line between Quebec, Canada, and New York City, which officially reached commercial operations in May after three years of construction.",
+          "publishedAt": "2026-07-20T14:00:00.000Z",
+          "sourceImage": null,
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "Power & Grid",
+          "category": "Power & Grid",
+          "primary_category": "Power & Grid",
+          "secondary_category": "Interconnection and power procurement",
+          "infrastructure_layer": "Power",
+          "affected_stakeholders": [
+            "data center operators",
+            "utilities",
+            "cloud capacity teams",
+            "investors"
+          ],
+          "article_type": "Capacity Expansion",
+          "urgency_score": 0.56,
+          "taxonomy_confidence": 0.95,
+          "taxonomy_reasons": [
+            "power",
+            "grid",
+            "electricity",
+            "transmission"
+          ],
+          "direct_ai_infrastructure_relevance": 0,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0,
+          "power_grid_relevance": 1,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.615,
+          "infrastructure_relevance_tier": "signal_card",
+          "infrastructure_relevance_action": "publish_signal_card_only",
+          "infrastructure_relevance_reasons": [
+            "power_grid_relevance:1.00(power, grid, electricity)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 0,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0,
+            "power_grid_relevance": 1,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.615,
+            "infrastructure_relevance_tier": "signal_card",
+            "infrastructure_relevance_action": "publish_signal_card_only",
+            "infrastructure_relevance_reasons": [
+              "power_grid_relevance:1.00(power, grid, electricity)"
+            ],
+            "infrastructureRelevanceAction": "publish_signal_card_only",
+            "articlePagePublished": false,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 6
+        },
+        {
+          "id": "4384477c43d6f76b",
+          "sourceRegistryId": "eia-today-in-energy",
+          "source": "U.S. Energy Information Administration",
+          "url": "https://www.eia.gov/todayinenergy/detail.php?id=67884",
+          "title": "Energia Costa Azul, Mexico's second LNG terminal, shipped first cargo",
+          "snippet": "Energia Costa Azul, the second liquefied natural gas (LNG) export facility in Mexico, shipped its initial cargo from Phase 1 of the terminal on July 8, according to the project developer. The completion of the project a…",
+          "contentText": "Energia Costa Azul, the second liquefied natural gas (LNG) export facility in Mexico, shipped its initial cargo from Phase 1 of the terminal on July 8, according to the project developer. The completion of the project adds 0.4 billion cubic feet per day (Bcf/d) of nominal export capacity from a single train, tripling Mexico's LNG export capacity. The facility is the first terminal in Mexico and the second in North America, following LNG Canada, to be located on the Pacific Coast, boosting North American export capacity there to 2.2 Bcf/d. The Pacific Coast location allows for shorter shipping routes to importers in Asia.",
+          "publishedAt": "2026-07-24T14:00:00.000Z",
+          "sourceImage": null,
+          "region": "APAC",
+          "language": "en",
+          "defaultCategory": "Power & Grid",
+          "category": "Power & Grid",
+          "primary_category": "Power & Grid",
+          "secondary_category": "Interconnection and power procurement",
+          "infrastructure_layer": "Power",
+          "affected_stakeholders": [
+            "data center operators",
+            "utilities",
+            "cloud capacity teams",
+            "investors"
+          ],
+          "article_type": "Capacity Expansion",
+          "urgency_score": 0.54,
+          "taxonomy_confidence": 0.69,
+          "taxonomy_reasons": [
+            "power",
+            "grid"
+          ],
+          "direct_ai_infrastructure_relevance": 0,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0,
+          "power_grid_relevance": 0.5,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.325,
+          "infrastructure_relevance_tier": "archive_only",
+          "infrastructure_relevance_action": "archive_only",
+          "infrastructure_relevance_reasons": [
+            "power_grid_relevance:0.50(power, grid)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 0,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0,
+            "power_grid_relevance": 0.5,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.325,
+            "infrastructure_relevance_tier": "archive_only",
+            "infrastructure_relevance_action": "archive_only",
+            "infrastructure_relevance_reasons": [
+              "power_grid_relevance:0.50(power, grid)"
+            ],
+            "infrastructureRelevanceAction": "archive_only",
+            "articlePagePublished": false,
+            "homepagePublished": false,
+            "archiveOnly": true,
+            "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
+          },
+          "score": 2
+        },
+        {
+          "id": "d166f8bf6e034342",
+          "sourceRegistryId": "eia-today-in-energy",
+          "source": "U.S. Energy Information Administration",
+          "url": "https://www.eia.gov/todayinenergy/detail.php?id=67868",
+          "title": "Commercial crude oil inventories increased by 2.0 million barrels",
+          "snippet": "For the week ending July 17, 2026, commercial crude oil inventories (excluding the Strategic Petroleum Reserve) increased 2.0 million barrels to 411.7 million barrels, 6% below the previous five-year (2021–2025) average…",
+          "contentText": "For the week ending July 17, 2026, commercial crude oil inventories (excluding the Strategic Petroleum Reserve) increased 2.0 million barrels to 411.7 million barrels, 6% below the previous five-year (2021–2025) average. Gasoline inventories increased 0.8 million barrels, 7% below the five-year average. Distillate inventories increased 1.4 million barrels, 10% below the five-year average. Propane/propylene inventories increased 6.3 million barrels, 34% above the five-year average. Total commercial petroleum inventories increased by 11.6 million barrels for the week.",
+          "publishedAt": "2026-07-22T14:00:00.000Z",
+          "sourceImage": null,
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "Power & Grid",
+          "category": "Power & Grid",
+          "primary_category": "Power & Grid",
+          "secondary_category": "Interconnection and power procurement",
+          "infrastructure_layer": "Power",
+          "affected_stakeholders": [
+            "data center operators",
+            "utilities",
+            "cloud capacity teams",
+            "investors"
+          ],
+          "article_type": "Other",
+          "urgency_score": 0.46,
+          "taxonomy_confidence": 0.69,
+          "taxonomy_reasons": [
+            "power",
+            "grid"
+          ],
+          "direct_ai_infrastructure_relevance": 0,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0,
+          "power_grid_relevance": 0.5,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.325,
+          "infrastructure_relevance_tier": "archive_only",
+          "infrastructure_relevance_action": "archive_only",
+          "infrastructure_relevance_reasons": [
+            "power_grid_relevance:0.50(power, grid)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 0,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0,
+            "power_grid_relevance": 0.5,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.325,
+            "infrastructure_relevance_tier": "archive_only",
+            "infrastructure_relevance_action": "archive_only",
+            "infrastructure_relevance_reasons": [
+              "power_grid_relevance:0.50(power, grid)"
+            ],
+            "infrastructureRelevanceAction": "archive_only",
+            "articlePagePublished": false,
+            "homepagePublished": false,
+            "archiveOnly": true,
+            "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
+          },
+          "score": -2
+        },
+        {
+          "id": "a5cffae052179217",
+          "sourceRegistryId": "eia-today-in-energy",
+          "source": "U.S. Energy Information Administration",
+          "url": "https://www.eia.gov/todayinenergy/detail.php?id=67866",
+          "title": "What are tank bottoms?",
+          "snippet": "Crude oil inventories held at storage facilities in Cushing, Oklahoma, fell below 20 million barrels during the week ending June 19 until the week ending July 10, according to our Weekly Petroleum Status Report.",
+          "contentText": "Crude oil inventories held at storage facilities in Cushing, Oklahoma, fell below 20 million barrels during the week ending June 19 until the week ending July 10, according to our Weekly Petroleum Status Report.",
+          "publishedAt": "2026-07-16T14:00:00.000Z",
+          "sourceImage": null,
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "Power & Grid",
+          "category": "Power & Grid",
+          "primary_category": "Power & Grid",
+          "secondary_category": "Interconnection and power procurement",
+          "infrastructure_layer": "Power",
+          "affected_stakeholders": [
+            "data center operators",
+            "utilities",
+            "cloud capacity teams",
+            "investors"
+          ],
+          "article_type": "Other",
+          "urgency_score": 0.48,
+          "taxonomy_confidence": 0.69,
+          "taxonomy_reasons": [
+            "power",
+            "grid"
+          ],
+          "direct_ai_infrastructure_relevance": 0,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0,
+          "power_grid_relevance": 0.5,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0.18,
+          "infrastructure_relevance_score": 0.365,
+          "infrastructure_relevance_tier": "archive_only",
+          "infrastructure_relevance_action": "archive_only",
+          "infrastructure_relevance_reasons": [
+            "power_grid_relevance:0.50(power, grid)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 0,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0,
+            "power_grid_relevance": 0.5,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0.18,
+            "infrastructure_relevance_score": 0.365,
+            "infrastructure_relevance_tier": "archive_only",
+            "infrastructure_relevance_action": "archive_only",
+            "infrastructure_relevance_reasons": [
+              "power_grid_relevance:0.50(power, grid)"
+            ],
+            "infrastructureRelevanceAction": "archive_only",
+            "articlePagePublished": false,
+            "homepagePublished": false,
+            "archiveOnly": true,
+            "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
+          },
+          "score": -9
+        }
+      ],
+      "curatedIds": [
+        "433b6291c085c015",
+        "e3ca7ce34440e2f2",
+        "9a641af25826b599",
+        "4384477c43d6f76b",
+        "d166f8bf6e034342",
+        "a5cffae052179217"
+      ],
+      "publishedIds": [
+        "433b6291c085c015",
+        "e3ca7ce34440e2f2"
+      ],
+      "slotPublications": {
+        "0": true
+      }
     }
   },
   "runHistory": [
-    {
-      "at": "2026-07-03T16:41:30.628Z",
-      "day": "2026-07-04",
-      "slot": 0,
-      "publishedCount": 0,
-      "signalCardCount": 0,
-      "archiveOnlyCount": 0,
-      "repetitionBlockedCount": 2,
-      "publishedIds": [],
-      "processedIds": [
-        "aad1517f8354d118",
-        "38b2be9a58185420"
-      ],
-      "blockedCount": 0,
-      "blockedItems": [],
-      "repetitionBlockedItems": [
-        {
-          "id": "aad1517f8354d118",
-          "title": "Intel reportedly adding two new 22-core SKUs with game-boosting cache to Nova Lake-S lineup — 125W unlocked and 65W locked part rumored to be part of single-tile Core Ultra 5 tier",
-          "infrastructure_relevance_score": 0.956,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "cloud_capacity_relevance:0.32(hyperscalers)",
-            "semiconductor_relevance:0.71(amd, intel, gpu)",
-            "power_grid_relevance:0.22(power)"
-          ],
-          "extraction_quality_score": 1,
-          "source_domain_adapter": "generic",
-          "content_length": 1746,
-          "boilerplate_ratio": 0,
-          "repetition_blocked": true,
-          "repetition_block_reasons": [
-            "repeated_sentence_ratio>0.12",
-            "heading_sequence_similarity>0.75",
-            "conclusion_similarity>0.7"
-          ],
-          "repetition_check": {
-            "compared_article_count": 20,
-            "repeated_sentence_ratio": 0.2857142857142857,
-            "repeated_paragraph_ratio": 0.3333333333333333,
-            "heading_sequence_similarity": 1,
-            "banned_phrase_count": 0,
-            "banned_phrase_counts": {},
-            "recent_banned_phrase_counts": {},
-            "ngram_overlap": 0.48695652173913045,
-            "blueprint_repetition": 2,
-            "conclusion_similarity": 0.9511897312113418,
-            "repeated_sentence_count": 2,
-            "repeated_paragraph_count": 2,
-            "heading_sequence": [
-              "Power-Market Move",
-              "Operating Lever",
-              "Grid Exposure",
-              "Metric To Watch"
-            ],
-            "blocked": true,
-            "reasons": [
-              "repeated_sentence_ratio>0.12",
-              "heading_sequence_similarity>0.75",
-              "conclusion_similarity>0.7"
-            ]
-          },
-          "expert_insight_complete": true,
-          "expert_insight_missing_fields": [],
-          "reason": "repeated_sentence_ratio>0.12; heading_sequence_similarity>0.75; conclusion_similarity>0.7"
-        },
-        {
-          "id": "38b2be9a58185420",
-          "title": "Couchbase AI Data Plane Hits GA, With Enterprise Analytics 2.2 and Iceberg Federation",
-          "infrastructure_relevance_score": 0.91,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "cloud_capacity_relevance:0.32(hyperscalers)",
-            "semiconductor_relevance:0.22(gpu)",
-            "power_grid_relevance:0.22(power)",
-            "enterprise_ai_infrastructure_relevance:0.50(enterprise ai, storage)"
-          ],
-          "extraction_quality_score": 1,
-          "source_domain_adapter": "storagereview",
-          "content_length": 1712,
-          "boilerplate_ratio": 0,
-          "repetition_blocked": true,
-          "repetition_block_reasons": [
-            "repeated_sentence_ratio>0.12",
-            "heading_sequence_similarity>0.75",
-            "conclusion_similarity>0.7"
-          ],
-          "repetition_check": {
-            "compared_article_count": 20,
-            "repeated_sentence_ratio": 0.14285714285714285,
-            "repeated_paragraph_ratio": 0.16666666666666666,
-            "heading_sequence_similarity": 1,
-            "banned_phrase_count": 0,
-            "banned_phrase_counts": {},
-            "recent_banned_phrase_counts": {},
-            "ngram_overlap": 0.5607476635514018,
-            "blueprint_repetition": 1,
-            "conclusion_similarity": 0.9271050693011066,
-            "repeated_sentence_count": 1,
-            "repeated_paragraph_count": 1,
-            "heading_sequence": [
-              "System Change",
-              "Bottleneck",
-              "Engineering Tradeoff",
-              "Validation Metric"
-            ],
-            "blocked": true,
-            "reasons": [
-              "repeated_sentence_ratio>0.12",
-              "heading_sequence_similarity>0.75",
-              "conclusion_similarity>0.7"
-            ]
-          },
-          "expert_insight_complete": true,
-          "expert_insight_missing_fields": [],
-          "reason": "repeated_sentence_ratio>0.12; heading_sequence_similarity>0.75; conclusion_similarity>0.7"
-        }
-      ],
-      "signalCardItems": [],
-      "archiveOnlyItems": []
-    },
     {
       "at": "2026-07-04T00:07:15.987Z",
       "day": "2026-07-04",
@@ -57214,7 +57518,82 @@
         }
       ],
       "archiveOnlyItems": []
+    },
+    {
+      "at": "2026-08-16T15:26:31.555Z",
+      "day": "2026-08-17",
+      "slot": 0,
+      "publishedCount": 1,
+      "signalCardCount": 1,
+      "archiveOnlyCount": 0,
+      "repetitionBlockedCount": 0,
+      "publishedIds": [
+        "433b6291c085c015"
+      ],
+      "processedIds": [
+        "433b6291c085c015",
+        "e3ca7ce34440e2f2"
+      ],
+      "blockedCount": 1,
+      "blockedItems": [
+        {
+          "id": "e3ca7ce34440e2f2",
+          "title": "Hybrid sales rise while battery electric sales remain lower after tax credit expiration",
+          "infrastructure_relevance_score": 0.963,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "semiconductor_relevance:0.22(gpu)",
+            "power_grid_relevance:0.74(power, grid, electricity)",
+            "capital_markets_relevance:0.28(capex)"
+          ],
+          "extraction_quality_score": 1,
+          "source_domain_adapter": "generic",
+          "content_length": 1785,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": false,
+          "repetition_block_reasons": [],
+          "repetition_check": null,
+          "expert_insight_complete": false,
+          "expert_insight_missing_fields": [
+            "concrete_facts",
+            "named_companies"
+          ],
+          "reason": "expert_insight_missing_fields concrete_facts, named_companies"
+        }
+      ],
+      "repetitionBlockedItems": [],
+      "signalCardItems": [
+        {
+          "id": "e3ca7ce34440e2f2",
+          "title": "Hybrid sales rise while battery electric sales remain lower after tax credit expiration",
+          "infrastructure_relevance_score": 0.963,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "semiconductor_relevance:0.22(gpu)",
+            "power_grid_relevance:0.74(power, grid, electricity)",
+            "capital_markets_relevance:0.28(capex)"
+          ],
+          "extraction_quality_score": 1,
+          "source_domain_adapter": "generic",
+          "content_length": 1785,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": false,
+          "repetition_block_reasons": [],
+          "repetition_check": null,
+          "expert_insight_complete": false,
+          "expert_insight_missing_fields": [
+            "concrete_facts",
+            "named_companies"
+          ],
+          "reason": "expert_insight_missing_fields concrete_facts, named_companies"
+        }
+      ],
+      "archiveOnlyItems": []
     }
   ],
-  "lastRunAt": "2026-08-16T07:41:09.424Z"
+  "lastRunAt": "2026-08-16T15:26:31.555Z"
 }
