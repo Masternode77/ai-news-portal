@@ -204,6 +204,18 @@ Workflow steps:
 6. record a successful scheduled-update heartbeat
 7. commit only tracked changed artifacts to `main`
 
+## Release versioning
+
+Human-authored changes merged into `main` automatically create the next semantic
+patch version, synchronize `package.json` and `package-lock.json`, add an annotated
+`vX.Y.Z` tag, and publish a GitHub Release. A manual Release workflow run can select
+`patch`, `minor`, or `major` when the change requires a larger version increment.
+
+Automated news refresh commits do not create releases. They update the deployed
+content snapshot without changing the product version. For an exact production
+review, record both the semantic version and the exact Git commit SHA because a
+newer content-only commit can legitimately follow the most recent release tag.
+
 ## Deploy to Vercel
 
 1. Import the repository into Vercel
