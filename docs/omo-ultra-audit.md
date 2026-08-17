@@ -32,7 +32,7 @@ Audit output omits `git status` so running this writer cannot make its own repor
 ## Article Data Store
 
 - Primary public data: `src/data/latest-news.json` (35 records).
-- Archive data: `src/data/archived-news.json` (913 records).
+- Archive data: `src/data/archived-news.json` (915 records).
 - Adjacent stores: `src/data/search-index.json`, `src/data/taxonomy-pages.json`, `src/data/editorial-cycles.json`, `src/data/claim-ledger.json`, `src/data/source-health.json`.
 - The data model is still legacy-compatible JSON rather than one explicit public article contract.
 
@@ -93,13 +93,13 @@ Audit output omits `git status` so running this writer cannot make its own repor
 ## Stale Generated Article Pages
 
 - Retained records marked article-page-published with non-blog_engine_v4 generation version: 5; examples: `eia-data-center-load-timing`, `eia-server-cooling-forecast`, `eia-virginia-peak-load`, `eia-nuclear-data-center-contracts`, `eia-texas-large-loads`. Current public detail eligibility separately requires product fit, source rights, and final publication integrity.
-- Retained source-only/direct-link items: 943.
+- Retained source-only/direct-link items: 945.
 - Whether generated article pages are stale is a review question, not an editor regeneration command. The generic editor exposes `save-draft`, `publish`, `hide`, `noindex`, `upload-image`, `preview`; regeneration controls detected: none.
 
 ## Legacy Templates and Public Output Failures
 
 - Retained JSON records with old Editor's Brief template text: 0; examples: none found. Current public homepage-card matches: 0; retained records are not current public output without product fit and source rights.
-- Retained JSON records with configured/brief phrase matches: 58; examples: `watch_sig_45532061ab02cd06`, `watch_sig_280ee67ee0e4b1f5`, `watch_sig_3aafa5f53fed9710`, `ea7c824f9474271e`, `01b8b1d203605f0e`. Current public homepage-card matches: 0.
+- Retained JSON records with configured/brief phrase matches: 58; examples: `01b8b1d203605f0e`, `028858f9156b3255`, `watch_sig_280ee67ee0e4b1f5`, `watch_sig_3aafa5f53fed9710`, `ea7c824f9474271e`. Current public homepage-card matches: 0.
 - Current public homepage cards failing the product-fit boundary: 0. `buildHomepageFeed()` applies product fit and current source-text authorization before decoration, so retained low-relevance records are not treated as live homepage output.
 - Current public homepage cards missing a display image or fallback: 0; examples: none found.
 - Retained JSON clipped-extraction markers: 0; current public homepage-card matches: 0.
