@@ -801,7 +801,9 @@
     "433b6291c085c015",
     "e3ca7ce34440e2f2",
     "9a641af25826b599",
-    "4384477c43d6f76b"
+    "4384477c43d6f76b",
+    "a5cffae052179217",
+    "d166f8bf6e034342"
   ],
   "dayPlans": {
     "2026-03-24": {
@@ -43509,145 +43511,9 @@
     "2026-08-17": {
       "date": "2026-08-17",
       "createdAt": "2026-08-16T15:26:31.555Z",
-      "refreshedAt": "2026-08-16T23:30:21.113Z",
+      "refreshedAt": "2026-08-17T07:59:45.042Z",
       "candidateWindowHours": 24,
       "curatedItems": [
-        {
-          "id": "9a641af25826b599",
-          "sourceRegistryId": "eia-today-in-energy",
-          "source": "U.S. Energy Information Administration",
-          "url": "https://www.eia.gov/todayinenergy/detail.php?id=67867",
-          "title": "New York imports more electricity from Canada after high-voltage transmission line opens",
-          "snippet": "On July 3, 2026, the New York Independent System Operator (NYISO) imported 52 gigawatthours (GWh) of electricity from Canada, the most traded between the two areas since January 2025. Some of the imported electricity fl…",
-          "contentText": "On July 3, 2026, the New York Independent System Operator (NYISO) imported 52 gigawatthours (GWh) of electricity from Canada, the most traded between the two areas since January 2025. Some of the imported electricity flowed along the new Champlain Hudson Power Express (CHPE) transmission line between Quebec, Canada, and New York City, which officially reached commercial operations in May after three years of construction.",
-          "publishedAt": "2026-07-20T14:00:00.000Z",
-          "sourceImage": null,
-          "region": "US",
-          "language": "en",
-          "defaultCategory": "Power & Grid",
-          "category": "Power & Grid",
-          "primary_category": "Power & Grid",
-          "secondary_category": "Interconnection and power procurement",
-          "infrastructure_layer": "Power",
-          "affected_stakeholders": [
-            "data center operators",
-            "utilities",
-            "cloud capacity teams",
-            "investors"
-          ],
-          "article_type": "Capacity Expansion",
-          "urgency_score": 0.56,
-          "taxonomy_confidence": 0.95,
-          "taxonomy_reasons": [
-            "power",
-            "grid",
-            "electricity",
-            "transmission"
-          ],
-          "direct_ai_infrastructure_relevance": 0,
-          "data_center_relevance": 0,
-          "cloud_capacity_relevance": 0,
-          "semiconductor_relevance": 0,
-          "power_grid_relevance": 1,
-          "cooling_relevance": 0,
-          "capital_markets_relevance": 0,
-          "enterprise_ai_infrastructure_relevance": 0,
-          "infrastructure_relevance_score": 0.615,
-          "infrastructure_relevance_tier": "signal_card",
-          "infrastructure_relevance_action": "publish_signal_card_only",
-          "infrastructure_relevance_reasons": [
-            "power_grid_relevance:1.00(power, grid, electricity)"
-          ],
-          "infrastructure_relevance": {
-            "direct_ai_infrastructure_relevance": 0,
-            "data_center_relevance": 0,
-            "cloud_capacity_relevance": 0,
-            "semiconductor_relevance": 0,
-            "power_grid_relevance": 1,
-            "cooling_relevance": 0,
-            "capital_markets_relevance": 0,
-            "enterprise_ai_infrastructure_relevance": 0,
-            "infrastructure_relevance_score": 0.615,
-            "infrastructure_relevance_tier": "signal_card",
-            "infrastructure_relevance_action": "publish_signal_card_only",
-            "infrastructure_relevance_reasons": [
-              "power_grid_relevance:1.00(power, grid, electricity)"
-            ],
-            "infrastructureRelevanceAction": "publish_signal_card_only",
-            "articlePagePublished": false,
-            "homepagePublished": true,
-            "archiveOnly": false,
-            "archiveOnlyReason": null
-          },
-          "score": 6
-        },
-        {
-          "id": "4384477c43d6f76b",
-          "sourceRegistryId": "eia-today-in-energy",
-          "source": "U.S. Energy Information Administration",
-          "url": "https://www.eia.gov/todayinenergy/detail.php?id=67884",
-          "title": "Energia Costa Azul, Mexico's second LNG terminal, shipped first cargo",
-          "snippet": "Energia Costa Azul, the second liquefied natural gas (LNG) export facility in Mexico, shipped its initial cargo from Phase 1 of the terminal on July 8, according to the project developer. The completion of the project a…",
-          "contentText": "Energia Costa Azul, the second liquefied natural gas (LNG) export facility in Mexico, shipped its initial cargo from Phase 1 of the terminal on July 8, according to the project developer. The completion of the project adds 0.4 billion cubic feet per day (Bcf/d) of nominal export capacity from a single train, tripling Mexico's LNG export capacity. The facility is the first terminal in Mexico and the second in North America, following LNG Canada, to be located on the Pacific Coast, boosting North American export capacity there to 2.2 Bcf/d. The Pacific Coast location allows for shorter shipping routes to importers in Asia.",
-          "publishedAt": "2026-07-24T14:00:00.000Z",
-          "sourceImage": null,
-          "region": "APAC",
-          "language": "en",
-          "defaultCategory": "Power & Grid",
-          "category": "Power & Grid",
-          "primary_category": "Power & Grid",
-          "secondary_category": "Interconnection and power procurement",
-          "infrastructure_layer": "Power",
-          "affected_stakeholders": [
-            "data center operators",
-            "utilities",
-            "cloud capacity teams",
-            "investors"
-          ],
-          "article_type": "Capacity Expansion",
-          "urgency_score": 0.54,
-          "taxonomy_confidence": 0.69,
-          "taxonomy_reasons": [
-            "power",
-            "grid"
-          ],
-          "direct_ai_infrastructure_relevance": 0,
-          "data_center_relevance": 0,
-          "cloud_capacity_relevance": 0,
-          "semiconductor_relevance": 0,
-          "power_grid_relevance": 0.5,
-          "cooling_relevance": 0,
-          "capital_markets_relevance": 0,
-          "enterprise_ai_infrastructure_relevance": 0,
-          "infrastructure_relevance_score": 0.325,
-          "infrastructure_relevance_tier": "archive_only",
-          "infrastructure_relevance_action": "archive_only",
-          "infrastructure_relevance_reasons": [
-            "power_grid_relevance:0.50(power, grid)"
-          ],
-          "infrastructure_relevance": {
-            "direct_ai_infrastructure_relevance": 0,
-            "data_center_relevance": 0,
-            "cloud_capacity_relevance": 0,
-            "semiconductor_relevance": 0,
-            "power_grid_relevance": 0.5,
-            "cooling_relevance": 0,
-            "capital_markets_relevance": 0,
-            "enterprise_ai_infrastructure_relevance": 0,
-            "infrastructure_relevance_score": 0.325,
-            "infrastructure_relevance_tier": "archive_only",
-            "infrastructure_relevance_action": "archive_only",
-            "infrastructure_relevance_reasons": [
-              "power_grid_relevance:0.50(power, grid)"
-            ],
-            "infrastructureRelevanceAction": "archive_only",
-            "articlePagePublished": false,
-            "homepagePublished": false,
-            "archiveOnly": true,
-            "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
-          },
-          "score": 2
-        },
         {
           "id": "d166f8bf6e034342",
           "sourceRegistryId": "eia-today-in-energy",
@@ -43915,155 +43781,166 @@
             "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
           },
           "score": -18
+        },
+        {
+          "id": "b91f4ec4c41d4ba8",
+          "sourceRegistryId": "eia-today-in-energy",
+          "source": "U.S. Energy Information Administration",
+          "url": "https://www.eia.gov/todayinenergy/detail.php?id=67844",
+          "title": "The United States produced more crude oil than any other country in 2025",
+          "snippet": "The United States remained the world's largest crude oil producer in 2025, according to our International Energy Statistics database, extending a streak that began in 2018 when the United States overtook Russia to becom…",
+          "contentText": "The United States remained the world's largest crude oil producer in 2025, according to our International Energy Statistics database, extending a streak that began in 2018 when the United States overtook Russia to become the world's leading producer.",
+          "publishedAt": "2026-07-09T14:00:00.000Z",
+          "sourceImage": null,
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "Power & Grid",
+          "category": "Power & Grid",
+          "primary_category": "Power & Grid",
+          "secondary_category": "Interconnection and power procurement",
+          "infrastructure_layer": "Power",
+          "affected_stakeholders": [
+            "data center operators",
+            "utilities",
+            "cloud capacity teams",
+            "investors"
+          ],
+          "article_type": "Other",
+          "urgency_score": 0.46,
+          "taxonomy_confidence": 0.69,
+          "taxonomy_reasons": [
+            "power",
+            "grid"
+          ],
+          "direct_ai_infrastructure_relevance": 0,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0,
+          "power_grid_relevance": 0.5,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.325,
+          "infrastructure_relevance_tier": "archive_only",
+          "infrastructure_relevance_action": "archive_only",
+          "infrastructure_relevance_reasons": [
+            "power_grid_relevance:0.50(power, grid)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 0,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0,
+            "power_grid_relevance": 0.5,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.325,
+            "infrastructure_relevance_tier": "archive_only",
+            "infrastructure_relevance_action": "archive_only",
+            "infrastructure_relevance_reasons": [
+              "power_grid_relevance:0.50(power, grid)"
+            ],
+            "infrastructureRelevanceAction": "archive_only",
+            "articlePagePublished": false,
+            "homepagePublished": false,
+            "archiveOnly": true,
+            "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
+          },
+          "score": -22
+        },
+        {
+          "id": "d33ab02c8a9e75c4",
+          "sourceRegistryId": "eia-today-in-energy",
+          "source": "U.S. Energy Information Administration",
+          "url": "https://www.eia.gov/todayinenergy/detail.php?id=67825",
+          "title": "U.S. exports of crude oil and petroleum products reached record in April",
+          "snippet": "U.S. petroleum exports reached a record in April as disruptions to international crude oil and refined product flows through the Strait of Hormuz increased global demand for U.S. exports. Exports increased to 13.6 milli…",
+          "contentText": "U.S. petroleum exports reached a record in April as disruptions to international crude oil and refined product flows through the Strait of Hormuz increased global demand for U.S. exports. Exports increased to 13.6 million barrels per day (b/d) in April, 15% more than the previous record set in March.",
+          "publishedAt": "2026-07-08T14:00:00.000Z",
+          "sourceImage": null,
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "Power & Grid",
+          "category": "Power & Grid",
+          "primary_category": "Power & Grid",
+          "secondary_category": "Interconnection and power procurement",
+          "infrastructure_layer": "Power",
+          "affected_stakeholders": [
+            "data center operators",
+            "utilities",
+            "cloud capacity teams",
+            "investors"
+          ],
+          "article_type": "Market Analysis",
+          "urgency_score": 0.46,
+          "taxonomy_confidence": 0.69,
+          "taxonomy_reasons": [
+            "power",
+            "grid"
+          ],
+          "direct_ai_infrastructure_relevance": 0,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0,
+          "power_grid_relevance": 0.5,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.325,
+          "infrastructure_relevance_tier": "archive_only",
+          "infrastructure_relevance_action": "archive_only",
+          "infrastructure_relevance_reasons": [
+            "power_grid_relevance:0.50(power, grid)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 0,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0,
+            "power_grid_relevance": 0.5,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.325,
+            "infrastructure_relevance_tier": "archive_only",
+            "infrastructure_relevance_action": "archive_only",
+            "infrastructure_relevance_reasons": [
+              "power_grid_relevance:0.50(power, grid)"
+            ],
+            "infrastructureRelevanceAction": "archive_only",
+            "articlePagePublished": false,
+            "homepagePublished": false,
+            "archiveOnly": true,
+            "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
+          },
+          "score": -26
         }
       ],
       "curatedIds": [
-        "9a641af25826b599",
-        "4384477c43d6f76b",
         "d166f8bf6e034342",
         "a5cffae052179217",
         "18bc4705e44a352f",
-        "f0101c9478981251"
+        "f0101c9478981251",
+        "b91f4ec4c41d4ba8",
+        "d33ab02c8a9e75c4"
       ],
       "publishedIds": [
         "433b6291c085c015",
         "e3ca7ce34440e2f2",
         "9a641af25826b599",
-        "4384477c43d6f76b"
+        "4384477c43d6f76b",
+        "a5cffae052179217",
+        "d166f8bf6e034342"
       ],
       "slotPublications": {
         "0": true,
-        "1": true
+        "1": true,
+        "2": true
       }
     }
   },
   "runHistory": [
-    {
-      "at": "2026-07-04T09:29:53.272Z",
-      "day": "2026-07-04",
-      "slot": 2,
-      "publishedCount": 0,
-      "signalCardCount": 1,
-      "archiveOnlyCount": 0,
-      "repetitionBlockedCount": 1,
-      "publishedIds": [],
-      "processedIds": [
-        "1b0f0d98bb4b5055",
-        "6239ce68e48c6a05"
-      ],
-      "blockedCount": 1,
-      "blockedItems": [
-        {
-          "id": "1b0f0d98bb4b5055",
-          "title": "LLM Agents To Refactor Software For High Level Synthesis (Carnegie Mellon, UCLA)",
-          "infrastructure_relevance_score": 0.928,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "cloud_capacity_relevance:0.32(hyperscalers)",
-            "semiconductor_relevance:0.58(semiconductor, gpu)",
-            "power_grid_relevance:0.22(power)"
-          ],
-          "extraction_quality_score": 0.66,
-          "source_domain_adapter": "semiengineering",
-          "content_length": 572,
-          "boilerplate_ratio": 0,
-          "repetition_blocked": false,
-          "repetition_block_reasons": [],
-          "repetition_check": null,
-          "expert_insight_complete": false,
-          "expert_insight_missing_fields": [
-            "concrete_facts",
-            "named_companies"
-          ],
-          "reason": "fail_closed: source_text_incomplete:source_evidence_length_below_1200"
-        }
-      ],
-      "repetitionBlockedItems": [
-        {
-          "id": "6239ce68e48c6a05",
-          "title": "NVIDIA Quietly Makes Omniverse Free for Production Use",
-          "infrastructure_relevance_score": 0.932,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "cloud_capacity_relevance:0.32(hyperscalers)",
-            "semiconductor_relevance:0.60(nvidia, gpu)",
-            "power_grid_relevance:0.22(power)"
-          ],
-          "extraction_quality_score": 1,
-          "source_domain_adapter": "storagereview",
-          "content_length": 1697,
-          "boilerplate_ratio": 0,
-          "repetition_blocked": true,
-          "repetition_block_reasons": [
-            "repeated_sentence_ratio>0.12",
-            "heading_sequence_similarity>0.75",
-            "conclusion_similarity>0.7"
-          ],
-          "repetition_check": {
-            "compared_article_count": 20,
-            "repeated_sentence_ratio": 0.14285714285714285,
-            "repeated_paragraph_ratio": 0.16666666666666666,
-            "heading_sequence_similarity": 1,
-            "banned_phrase_count": 0,
-            "banned_phrase_counts": {},
-            "recent_banned_phrase_counts": {},
-            "ngram_overlap": 0.4752475247524752,
-            "blueprint_repetition": 2,
-            "conclusion_similarity": 0.9271050693011066,
-            "repeated_sentence_count": 1,
-            "repeated_paragraph_count": 1,
-            "heading_sequence": [
-              "System Change",
-              "Bottleneck",
-              "Engineering Tradeoff",
-              "Validation Metric"
-            ],
-            "blocked": true,
-            "reasons": [
-              "repeated_sentence_ratio>0.12",
-              "heading_sequence_similarity>0.75",
-              "conclusion_similarity>0.7"
-            ]
-          },
-          "expert_insight_complete": true,
-          "expert_insight_missing_fields": [],
-          "reason": "repeated_sentence_ratio>0.12; heading_sequence_similarity>0.75; conclusion_similarity>0.7"
-        }
-      ],
-      "signalCardItems": [
-        {
-          "id": "1b0f0d98bb4b5055",
-          "title": "LLM Agents To Refactor Software For High Level Synthesis (Carnegie Mellon, UCLA)",
-          "infrastructure_relevance_score": 0.928,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "cloud_capacity_relevance:0.32(hyperscalers)",
-            "semiconductor_relevance:0.58(semiconductor, gpu)",
-            "power_grid_relevance:0.22(power)"
-          ],
-          "extraction_quality_score": 0.66,
-          "source_domain_adapter": "semiengineering",
-          "content_length": 572,
-          "boilerplate_ratio": 0,
-          "repetition_blocked": false,
-          "repetition_block_reasons": [],
-          "repetition_check": null,
-          "expert_insight_complete": false,
-          "expert_insight_missing_fields": [
-            "concrete_facts",
-            "named_companies"
-          ],
-          "reason": "fail_closed: source_text_incomplete:source_evidence_length_below_1200"
-        }
-      ],
-      "archiveOnlyItems": []
-    },
     {
       "at": "2026-07-04T16:10:21.738Z",
       "day": "2026-07-05",
@@ -57543,7 +57420,82 @@
         }
       ],
       "archiveOnlyItems": []
+    },
+    {
+      "at": "2026-08-17T07:59:45.042Z",
+      "day": "2026-08-17",
+      "slot": 2,
+      "publishedCount": 0,
+      "signalCardCount": 1,
+      "archiveOnlyCount": 1,
+      "processedIds": [
+        "a5cffae052179217",
+        "d166f8bf6e034342"
+      ],
+      "blockedCount": 1,
+      "blockedItems": [
+        {
+          "id": "a5cffae052179217",
+          "title": "What are tank bottoms?",
+          "infrastructure_relevance_score": 0.875,
+          "infrastructure_relevance_tier": "full_memo",
+          "infrastructure_relevance_action": "generate_full_memo",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
+            "semiconductor_relevance:0.22(gpu)",
+            "power_grid_relevance:0.50(power, grid)"
+          ],
+          "extraction_quality_score": 1,
+          "source_domain_adapter": "generic",
+          "content_length": 1765,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": false,
+          "repetition_block_reasons": [],
+          "repetition_check": null,
+          "expert_insight_complete": false,
+          "expert_insight_missing_fields": [
+            "named_companies"
+          ],
+          "reason": "expert_insight_missing_fields named_companies"
+        }
+      ],
+      "archiveOnlyItems": [
+        {
+          "id": "d166f8bf6e034342",
+          "title": "Commercial crude oil inventories increased by 2.0 million barrels",
+          "infrastructure_relevance_score": 0.422,
+          "infrastructure_relevance_tier": "archive_only",
+          "infrastructure_relevance_action": "archive_only",
+          "infrastructure_relevance_reasons": [
+            "power_grid_relevance:0.50(power, grid)",
+            "capital_markets_relevance:0.28(capex)"
+          ],
+          "extraction_quality_score": 1,
+          "source_domain_adapter": "generic",
+          "content_length": 1668,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": false,
+          "repetition_block_reasons": [],
+          "repetition_check": null,
+          "expert_insight_complete": true,
+          "expert_insight_missing_fields": [],
+          "reason": "infrastructure_relevance_below_signal_threshold"
+        }
+      ],
+      "authoredColumn": {
+        "published": false,
+        "reason": "llm_disabled"
+      },
+      "llmUsage": {
+        "calls": 0,
+        "failures": 0,
+        "prompt_tokens": 0,
+        "completion_tokens": 0,
+        "total_tokens": 0,
+        "token_budget": 60000,
+        "call_budget": 40
+      }
     }
   ],
-  "lastRunAt": "2026-08-16T23:30:21.113Z"
+  "lastRunAt": "2026-08-17T07:59:45.042Z"
 }
