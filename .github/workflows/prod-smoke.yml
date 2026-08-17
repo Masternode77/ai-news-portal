@@ -1,0 +1,43 @@
+name: Prod Smoke
+
+# Manual production probe. The site is only observable from environments with
+# open egress, so this runs a few read-only checks against the live domain
+# from a GitHub-hosted runner and prints the results into the job log.
+on:
+  workflow_dispatch:
+    inputs:
+      path:
+        description: Extra path to probe (e.g. /column/<slug>/)
+        required: false
+        default: ''
+
+permissions:
+  contents: read
+
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Probe production
+        env:
+          EXTRA_PATH: ${{ inputs.path }}
+        run: |
+          set -uo pipefail
+          base="https://www.computecurrent.com"
+          for p in "/" "/column/" "/author/rowan-hale/" "/rss.xml" "/sitemap.xml"; do
+            code=$(curl -sS -o /dev/null -w '%{http_code}' -L --max-time 20 "$base$p" || echo "000")
+            echo "status $p -> $code"
+          done
+          if [ -n "$EXTRA_PATH" ]; then
+            code=$(curl -sS -o /dev/null -w '%{http_code}' -L --max-time 20 "$base$EXTRA_PATH" || echo "000")
+            echo "status $EXTRA_PATH -> $code"
+          fi
+          home="$(curl -sSL --max-time 20 "$base/" || true)"
+          echo "home column nav: $(printf '%s' "$home" | grep -c 'href="/column/"' || true)"
+          echo "home column hero: $(printf '%s' "$home" | grep -c 'column-hero' || true)"
+          column_index="$(curl -sSL --max-time 20 "$base/column/" || true)"
+          echo "column index persona: $(printf '%s' "$column_index" | grep -c 'Rowan Hale' || true)"
+          echo "column index cards: $(printf '%s' "$column_index" | grep -c 'column-list-card' || true)"
+          rss="$(curl -sSL --max-time 20 "$base/rss.xml" || true)"
+          echo "rss column items: $(printf '%s' "$rss" | grep -c '/column/' || true)"
