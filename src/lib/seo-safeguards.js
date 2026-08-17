@@ -120,6 +120,41 @@ export const shouldNoindexArticle = (article = {}) => articleNoindexReasons(arti
 
 export const articleCanonicalPath = (article = {}) => `/news/${article.id}/`;
 
+// Structured data for The Current — authored columns carry a Person author
+// (the pen name, linked to its author page) and cite their source articles.
+export const buildColumnStructuredData = ({ column, site, canonicalUrl }) => {
+  const imageUrl = safeHttpUrl(column.heroImage) || absoluteUrl(site.url, column.heroImage || site.defaultOgImage);
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'NewsArticle',
+    headline: column.title,
+    description: column.summary || column.deck,
+    image: [imageUrl],
+    datePublished: column.publishedAt,
+    dateModified: column.updatedAt || column.publishedAt,
+    articleSection: column.primary_category || column.category || 'AI infrastructure',
+    keywords: (column.tags || []).filter(Boolean),
+    isAccessibleForFree: true,
+    inLanguage: 'en',
+    mainEntityOfPage: { '@type': 'WebPage', '@id': canonicalUrl },
+    author: {
+      '@type': 'Person',
+      name: column.author?.name || 'The Current',
+      url: column.author?.slug ? `${site.url}/author/${column.author.slug}/` : site.url,
+      description: 'Pen name for the AI-assisted analysis column of Compute Current.',
+    },
+    publisher: {
+      '@type': 'Organization',
+      name: site.name,
+      url: site.url,
+      logo: { '@type': 'ImageObject', url: absoluteUrl(site.url, site.defaultOgImage) },
+    },
+    citation: (column.sources || [])
+      .map((source) => safeHttpUrl(source.url))
+      .filter(Boolean),
+  };
+};
+
 export const buildArticleStructuredData = ({
   article,
   site,

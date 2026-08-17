@@ -7,6 +7,11 @@ on:
     - cron: '5 23 * * *'
     - cron: '5 7 * * *'
   workflow_dispatch:
+    inputs:
+      force_column:
+        description: 'Force an authored column this run (bypasses daily cap and minimum gap)'
+        type: boolean
+        default: false
 
 jobs:
   update-news:
@@ -48,6 +53,9 @@ jobs:
           OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
           OPENROUTER_MODEL: ${{ secrets.OPENROUTER_MODEL }}
           EXPERT_LENS_MODEL: ${{ secrets.EXPERT_LENS_MODEL }}
+          EXPERT_LENS_FALLBACK_MODEL: ${{ secrets.EXPERT_LENS_FALLBACK_MODEL }}
+          AUTHORED_COLUMN_MODEL: ${{ secrets.AUTHORED_COLUMN_MODEL }}
+          AUTHORED_COLUMN_FORCE: ${{ inputs.force_column == true && '1' || '' }}
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           GEMINI_IMAGE_MODEL: ${{ secrets.GEMINI_IMAGE_MODEL }}
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
@@ -86,6 +94,7 @@ jobs:
           git add \
             src/data/latest-news.json \
             src/data/archived-news.json \
+            src/data/authored-columns.json \
             src/data/search-index.json \
             src/data/news-pool.json \
             src/data/taxonomy-pages.json \

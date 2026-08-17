@@ -1,0 +1,97 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import ArticleHeader from '../../components/ArticleHeader.astro';
+import ArticleHeroImage from '../../components/ArticleHeroImage.astro';
+import LongformArticleBody from '../../components/LongformArticleBody.astro';
+import AIDisclosureFooter from '../../components/AIDisclosureFooter.astro';
+import AdSlot from '../../components/monetize/AdSlot.astro';
+import authoredColumns from '../../data/authored-columns.json';
+import { SITE } from '../../config/site';
+import { buildColumnStructuredData, serializeJsonForScript } from '../../lib/seo-safeguards.js';
+import { publishedColumns, columnPath } from '../../../scripts/lib/column-surface.mjs';
+import { cleanArticleBodyBlocks } from '../../../scripts/lib/article-body-cleaner.mjs';
+import charter from '../../../config/editorial/persona-charter.json';
+import { safeHttpUrl } from '../../../scripts/lib/normalize.mjs';
+
+export function getStaticPaths() {
+  return publishedColumns(authoredColumns).map((column) => ({
+    params: { slug: column.slug },
+    props: { column },
+  }));
+}
+
+const { column } = Astro.props;
+const columnRecord = column as any;
+const canonicalPath = columnPath(columnRecord);
+const canonicalUrl = `${SITE.url}${canonicalPath}`;
+const bodyBlocks = cleanArticleBodyBlocks(columnRecord.expertLensFull?.finalArticleBody || '');
+const structuredData = buildColumnStructuredData({ column: columnRecord, site: SITE, canonicalUrl });
+const sources = (columnRecord.sources || [])
+  .map((source: any) => ({ ...source, url: safeHttpUrl(source.url) }))
+  .filter((source: any) => source.url && source.name);
+---
+<Layout
+  title={`${columnRecord.title} | ${charter.column.name} | ${SITE.name}`}
+  description={columnRecord.summary || columnRecord.deck}
+  type="article"
+  canonicalPath={canonicalPath}
+  image={columnRecord.heroImage}
+>
+  <script is:inline type="application/ld+json" set:html={serializeJsonForScript(structuredData)}></script>
+  <main class="detail-shell publication-article column-detail">
+    <article class="detail-card publication-article-card">
+      <div class="detail-body">
+        <p class="column-kicker">{charter.column.kicker}</p>
+        <ArticleHeader
+          category={columnRecord.primary_category}
+          date={columnRecord.publishedAt}
+          title={columnRecord.title}
+          deck={columnRecord.deck}
+          author={columnRecord.author}
+          breadcrumb={{ label: charter.column.name, href: '/column/' }}
+        />
+
+        <ArticleHeroImage
+          image={columnRecord.heroImage}
+          imageAlt={columnRecord.imageAlt}
+          provenanceLabel="Editorial visual"
+          provenanceKind="image2"
+          caption=""
+        />
+
+        {bodyBlocks.length ? <LongformArticleBody blocks={bodyBlocks} /> : null}
+
+        <AdSlot variant="article" />
+
+        {sources.length ? (
+          <section class="detail-section column-sources" aria-label="Sources for this column">
+            <h2>Sources</h2>
+            <p>This column argues from the following reporting. The facts belong to the sources; the opinions are the column's.</p>
+            <ul>
+              {sources.map((source: any) => (
+                <li>
+                  <a href={source.url} target="_blank" rel="noopener noreferrer">{source.title || source.name}</a>
+                  <span> — {source.name}</span>
+                </li>
+              ))}
+            </ul>
+          </section>
+        ) : null}
+
+        <aside class="column-persona-note" aria-label="About the author">
+          <strong>{columnRecord.author?.name}</strong>
+          <p>{charter.persona.bio_public}</p>
+          <nav class="policy-link-row" aria-label="Author links">
+            <a href={`/author/${columnRecord.author?.slug || charter.persona.slug}/`}>About the column</a>
+            <a href="/ai-disclosure/">AI-assisted disclosure</a>
+            <a href="/column/">More columns</a>
+          </nav>
+        </aside>
+
+        <AIDisclosureFooter canonicalUrl={canonicalUrl} />
+
+        <AdSlot variant="box" />
+      </div>
+    </article>
+  </main>
+</Layout>

@@ -48,6 +48,19 @@ function buildHeadlineOptions(article) {
   ].map((headline) => truncate(headline, 110));
 }
 
+// Blueprint headings are guidance for the model, not an acceptance contract:
+// a structurally sound essay (enough distinct section headings) is kept even
+// when the model rephrases the suggested headings. Safety gates (insight
+// usage, template language, banned phrases, length windows) still apply.
+function bodyHasStructuralSections(body = '', minimumSections = 3) {
+  const headingLike = normalizeEditorialParagraphs(body).filter((line) => (
+    line.length <= 86
+    && !/[.!?:]$/.test(line)
+    && /^[A-Z0-9][A-Za-z0-9 &:/'+-]+$/.test(line)
+  ));
+  return new Set(headingLike).size >= minimumSections;
+}
+
 function finalArticleBody(article, sections, candidate = '', blueprint, enforceBlueprint = false) {
   const body = normalizeEditorialParagraphs(candidate)
     .filter((paragraph) => !/^(why it matters|pressure points|market implications|what to watch)$/i.test(paragraph))
@@ -57,7 +70,7 @@ function finalArticleBody(article, sections, candidate = '', blueprint, enforceB
   if (
     body.length >= minChars &&
     (!enforceBlueprint || body.length <= maxChars) &&
-    (!enforceBlueprint || bodyUsesBlueprint(body, blueprint)) &&
+    (!enforceBlueprint || bodyUsesBlueprint(body, blueprint) || bodyHasStructuralSections(body)) &&
     (!enforceBlueprint || !articleHasExpertInsight(article) || expertInsightUsageScore(body, article.expert_insight || article.expertInsight) >= 0.55) &&
     !containsTemplateLanguage(body) &&
     !hasBannedPhrase(body)

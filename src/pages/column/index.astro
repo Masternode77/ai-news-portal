@@ -1,0 +1,66 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import AdSlot from '../../components/monetize/AdSlot.astro';
+import authoredColumns from '../../data/authored-columns.json';
+import { SITE } from '../../config/site';
+import { buildColumnCards } from '../../../scripts/lib/column-surface.mjs';
+import charter from '../../../config/editorial/persona-charter.json';
+
+const cards = buildColumnCards(authoredColumns);
+const dateFormatter = new Intl.DateTimeFormat('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+---
+<Layout
+  title={`${charter.column.name} | ${SITE.name}`}
+  description={`${charter.column.name}: ${charter.column.mission}`}
+  canonicalPath="/column/"
+>
+  <main class="policy-shell column-index">
+    <a class="back-link" href="/">Latest analysis</a>
+    <section class="policy-page column-index-head">
+      <p class="eyebrow">{charter.column.kicker}</p>
+      <h1>{charter.column.name}</h1>
+      <p class="policy-lede">{charter.column.mission}</p>
+      <p class="column-index-byline">
+        Written by <a href={`/author/${charter.persona.slug}/`}>{charter.persona.pen_name}</a> · {charter.column.cadence}
+      </p>
+    </section>
+
+    {cards.length ? (
+      <div class="column-list">
+        {cards.map((card) => (
+          <article class="column-list-card">
+            <a class="column-card-media" href={card.href} aria-label={card.title}>
+              <img src={card.image} alt={card.imageAlt} loading="lazy" decoding="async" />
+            </a>
+            <div class="column-card-copy">
+              <div class="column-card-meta">
+                <span class="column-card-label">{card.label}</span>
+                {card.category ? <span>{card.category}</span> : null}
+                {card.date ? <time datetime={card.date}>{dateFormatter.format(new Date(card.date))}</time> : null}
+              </div>
+              <h2><a href={card.href}>{card.title}</a></h2>
+              <p>{card.deck}</p>
+              <a class="detail-link" href={card.href}>Read the column</a>
+            </div>
+          </article>
+        ))}
+      </div>
+    ) : (
+      <div class="public-empty-state column-empty-state">
+        <p>The first column is on its way. New essays publish here most days; the wire feed on the homepage stays live in the meantime.</p>
+      </div>
+    )}
+
+    <AdSlot variant="box" />
+
+    <aside class="column-persona-note" aria-label="About the column">
+      <strong>{charter.persona.pen_name}</strong>
+      <p>{charter.persona.bio_public}</p>
+      <nav class="policy-link-row" aria-label="Column reference links">
+        <a href={`/author/${charter.persona.slug}/`}>About the author</a>
+        <a href="/ai-disclosure/">AI-assisted disclosure</a>
+        <a href="/editorial-policy/">Editorial policy</a>
+      </nav>
+    </aside>
+  </main>
+</Layout>

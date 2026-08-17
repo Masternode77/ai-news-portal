@@ -1,0 +1,29 @@
+---
+// Homepage lead slot for The Current. Renders nothing until a column exists,
+// so the homepage stays stable before launch and whenever a run publishes no
+// column.
+const { column = null, columnName = 'The Current' } = Astro.props;
+const dateFormatter = new Intl.DateTimeFormat('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+---
+{column ? (
+  <section class="column-hero" aria-label={`${columnName} lead column`}>
+    <div class="column-hero-copy">
+      <p class="eyebrow column-hero-eyebrow">{columnName}</p>
+      <div class="column-hero-meta">
+        <span class="column-card-label">Column</span>
+        {column.category ? <span>{column.category}</span> : null}
+        {column.date ? <time datetime={column.date}>{dateFormatter.format(new Date(column.date))}</time> : null}
+      </div>
+      <h2><a href={column.href}>{column.title}</a></h2>
+      <p class="column-hero-deck">{column.deck}</p>
+      <p class="column-hero-byline">By {column.byline}{column.role ? ` · ${column.role}` : ''}</p>
+      <div class="column-hero-actions">
+        <a class="btn-primary" href={column.href}>Read the column</a>
+        <a class="btn-ghost" href="/column/">All columns</a>
+      </div>
+    </div>
+    <a class="column-hero-media" href={column.href} aria-label={column.title}>
+      <img src={column.image} alt={column.imageAlt} loading="eager" decoding="async" />
+    </a>
+  </section>
+) : null}

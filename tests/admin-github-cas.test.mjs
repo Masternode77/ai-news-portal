@@ -3,6 +3,7 @@ import test from 'node:test';
 import { saveEditableArticle } from '../api/admin/_github.js';
 import { canonicalAdminArticle } from './fixtures/admin-publication-integrity.mjs';
 
+const COLUMNS_PATH = 'src/data/authored-columns.json';
 const ARTICLE_PATH = 'src/data/latest-news.json';
 const ARCHIVE_PATH = 'src/data/archived-news.json';
 const SEARCH_PATH = 'src/data/search-index.json';
@@ -32,6 +33,7 @@ function article() {
 function githubFixture({ sourceSha = 'source-v1', auditStatus = 200, auditText, refUpdateStatus = 200, storedArticle = article(), registryStatus = 200, registryText = registryYaml() } = {}) {
   const calls = [];
   const files = new Map([
+    [COLUMNS_PATH, { sha: 'columns-v1', data: [] }],
     [ARTICLE_PATH, { sha: sourceSha, data: [storedArticle] }],
     [ARCHIVE_PATH, { sha: 'archive-v1', data: [] }],
     [SEARCH_PATH, { sha: 'search-v1', data: [] }],

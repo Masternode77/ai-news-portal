@@ -1,4 +1,5 @@
 import { summarizeAdminAuditChange } from './admin-audit-log.mjs';
+import { bannedPhraseMatches } from './banned-phrases.mjs';
 import { finalPublicationIntegrityResult, publicationIntegritySnapshot } from './final-publication-integrity.mjs';
 
 function clone(value) {
@@ -102,6 +103,18 @@ function applyPatch(article = {}, patch = {}, fields = new Set()) {
 }
 
 export function validateAdminPublishQuality(article = {}, { recentRecords = [], sourceRegistry, sourceRegistrySha, now } = {}) {
+  // Authored columns are original essays with no source extraction of their
+  // own; they publish against the authored quality contract instead of the
+  // source-derived integrity gates.
+  if (article.content_origin === 'authored' || article.generation_version === 'authored_column_v1') {
+    const reasons = [];
+    const body = String(article.expertLensFull?.finalArticleBody || '');
+    if (!String(article.title || '').trim()) reasons.push('missing_title');
+    if (body.replace(/\s+/g, ' ').trim().length < 4500) reasons.push('authored_body_below_minimum');
+    const bannedHits = bannedPhraseMatches([article.title, article.dek || article.deck, body].filter(Boolean).join('\n'));
+    if (bannedHits.length) reasons.push(`banned_phrases:${bannedHits.slice(0, 3).join('|')}`);
+    return reasons;
+  }
   return finalPublicationIntegrityResult(article, recentRecords, { sourceRegistry, sourceRegistrySha, now }).reasons;
 }
 

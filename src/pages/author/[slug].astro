@@ -1,0 +1,78 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import authoredColumns from '../../data/authored-columns.json';
+import { SITE } from '../../config/site';
+import { serializeJsonForScript } from '../../lib/seo-safeguards.js';
+import { buildColumnCards } from '../../../scripts/lib/column-surface.mjs';
+import charter from '../../../config/editorial/persona-charter.json';
+
+export function getStaticPaths() {
+  return [{ params: { slug: charter.persona.slug }, props: {} }];
+}
+
+const cards = buildColumnCards(authoredColumns).slice(0, 8);
+const dateFormatter = new Intl.DateTimeFormat('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+const structuredData = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: charter.persona.pen_name,
+  url: `${SITE.url}/author/${charter.persona.slug}/`,
+  jobTitle: charter.persona.role,
+  description: charter.persona.disclosure_line,
+  worksFor: { '@type': 'Organization', name: SITE.name, url: SITE.url },
+};
+---
+<Layout
+  title={`${charter.persona.pen_name} | ${SITE.name}`}
+  description={charter.persona.bio_public}
+  canonicalPath={`/author/${charter.persona.slug}/`}
+>
+  <script is:inline type="application/ld+json" set:html={serializeJsonForScript(structuredData)}></script>
+  <main class="policy-shell author-page">
+    <a class="back-link" href="/column/">{charter.column.name}</a>
+    <article class="policy-page">
+      <p class="eyebrow">{charter.persona.role}</p>
+      <h1>{charter.persona.pen_name}</h1>
+      <p class="policy-lede">{charter.persona.bio_public}</p>
+
+      <section>
+        <h2>How this column works</h2>
+        <p>{charter.persona.disclosure_line}</p>
+        <p>
+          Essays are drafted with AI assistance from source-linked evidence, must pass the site&rsquo;s
+          quality gates before publication, and can be corrected after the fact by the operator.
+          Full detail lives in the <a href="/ai-disclosure/">AI-assisted disclosure</a> and
+          <a href="/editorial-policy/">editorial policy</a>.
+        </p>
+      </section>
+
+      <section>
+        <h2>Standing positions</h2>
+        <p>The column argues from a consistent worldview rather than reacting headline by headline. The core positions:</p>
+        <ul class="author-positions">
+          {charter.standing_positions.map((entry) => <li>{entry.position}</li>)}
+        </ul>
+      </section>
+
+      {cards.length ? (
+        <section>
+          <h2>Recent columns</h2>
+          <ul class="author-recent-columns">
+            {cards.map((card) => (
+              <li>
+                <a href={card.href}>{card.title}</a>
+                {card.date ? <span> · {dateFormatter.format(new Date(card.date))}</span> : null}
+              </li>
+            ))}
+          </ul>
+        </section>
+      ) : null}
+
+      <nav class="policy-link-row" aria-label="Related pages">
+        <a href="/column/">All columns</a>
+        <a href="/ai-disclosure/">AI-assisted Disclosure</a>
+        <a href="/contact/">Contact the desk</a>
+      </nav>
+    </article>
+  </main>
+</Layout>
