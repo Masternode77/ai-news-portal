@@ -68,3 +68,7 @@ This checklist separates local, staging, and production actions so credentialed 
 Never paste real API keys, bearer tokens, or admin passwords into docs, screenshots, tickets, or commits.
 
 `VERCEL_DEPLOY_HOOK_URL` is a deployment trigger, not a cache-purge endpoint; do not use it for purge runs.
+
+Pipeline commits to `main` must NOT carry `[skip ci]` in the message: Vercel honors that marker and skips the production deployment, which leaves refreshed articles and authored columns committed to the repository but never published to the live site. GitHub Actions noise is prevented by triggers instead (visual-qa runs on pull requests only; the release job skips bot actors).
+
+For live production checks from restricted environments, dispatch the `Prod Smoke` workflow (`prod-smoke.yml`) — it probes the homepage, column surfaces, RSS, and sitemap from a GitHub-hosted runner and prints status codes plus content markers into the job log.

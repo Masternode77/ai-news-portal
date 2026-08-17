@@ -108,5 +108,9 @@ jobs:
             exit 0
           fi
 
-          git commit -m "chore: refresh news surface and archive [skip ci]"
+          # No [skip ci]: Vercel honors it and would skip the production
+          # deploy, leaving fresh articles and columns committed but never
+          # published. Actions stay quiet anyway — visual-qa only runs on
+          # pull requests and the release job skips bot actors.
+          git commit -m "chore: refresh news surface and archive"
           git push origin HEAD:main
