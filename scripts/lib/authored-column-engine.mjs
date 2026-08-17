@@ -29,6 +29,7 @@ import {
   WATCHLIST_HEADING,
   authoredColumnQualityResult,
 } from './authored-column-policy.mjs';
+import { isHeading } from './visible-body-length.mjs';
 
 const CHARTER_RELATIVE_PATH = 'config/editorial/persona-charter.json';
 const STORY_KEY_WINDOW_HOURS = 72;
@@ -51,6 +52,74 @@ export function loadPersonaCharter() {
 function parseModelJson(content) {
   const trimmed = String(content || '').trim().replace(/^```(?:json)?\s*/i, '').replace(/\s*```$/, '');
   return safeJsonParse(trimmed, null);
+}
+
+function stripInlineMarkdown(line) {
+  return line
+    .replace(/\*\*([^*]+)\*\*/g, '$1')
+    .replace(/__([^_]+)__/g, '$1')
+    .replace(/(^|[\s(])\*([^*\n]+)\*(?=$|[\s).,;:!?])/g, '$1$2')
+    .replace(/`([^`]+)`/g, '$1');
+}
+
+// The site's heading detector only recognizes plain standalone lines, so a
+// model that answers in markdown (## headings, **bold** lines, headings glued
+// to their paragraph by a single newline) fails the structure gates even when
+// the sections exist. This deterministic cleanup converts those formatting
+// habits into the expected shape without touching the wording itself.
+export function normalizeAuthoredBody(body = '') {
+  const lines = String(body || '').replace(/\r\n?/g, '\n').split('\n');
+  const out = [];
+  for (const rawLine of lines) {
+    if (/^\s*```/.test(rawLine)) continue;
+    let line = rawLine;
+    const markedHeading = line.match(/^\s*#{1,6}\s+(.*)$/);
+    if (markedHeading) line = markedHeading[1];
+    line = stripInlineMarkdown(line);
+    const trimmed = line.trim();
+    const candidate = trimmed.replace(/:$/, '');
+    if (trimmed && (markedHeading || isHeading(candidate)) && candidate.length <= 86) {
+      while (out.length && out[out.length - 1].trim() === '') out.pop();
+      if (out.length) out.push('');
+      out.push(candidate);
+      out.push('');
+    } else {
+      out.push(line);
+    }
+  }
+  return out.join('\n').replace(/\n{3,}/g, '\n\n').trim();
+}
+
+// Verification reason codes are compact for state records but cryptic as
+// revision instructions. Translate the common ones into directives the voice
+// pass can actually act on; unknown codes pass through verbatim.
+const FEEDBACK_HINTS = [
+  [/^fewer_than_4_sections$|^more_than_7_sections$/, () =>
+    'Structure the essay into 4 to 6 sections. Every section heading must be a standalone plain-text line of 2-6 words (letters, digits and spaces only — no markdown symbols, no punctuation) with a blank line before and after it.'],
+  [/^missing_watchlist_section$/, () =>
+    `Close with a final section whose heading line is exactly "${WATCHLIST_HEADING}" — nothing else on that line.`],
+  [/^missing_counterargument_section$/, () =>
+    'Include one section that argues honestly against the thesis; its heading must contain a word such as "wrong", "counter", "pushback" or "bear case".'],
+  [/^unsupported_numeric_claims(?::(.+))?$/, (match) =>
+    `Remove or rewrite around these numbers, which are not in the verified claims${match[1] ? `: ${match[1]}` : ''}. Cite only numbers from verified_claims, keeping the exact value and unit as given — never convert units or aggregate figures.`],
+  [/^words_below_(\d+)$/, (match) =>
+    `Lengthen the essay to at least ${match[1]} words by deepening the analysis — no padding or repetition.`],
+  [/^words_above_(\d+)$|^body_above_(\d+)_chars$/, () =>
+    'Tighten the essay by cutting repetition and hedging, not substance.'],
+  [/^human_style_below_/, () =>
+    'Vary sentence rhythm and vocabulary; remove formulaic transitions and symmetrical sentence patterns.'],
+  [/^insight_density_below_/, () =>
+    'Add more specific, falsifiable analytical claims; cut generic observations.'],
+];
+
+export function verificationFeedback(reasons = []) {
+  return reasons.map((reason) => {
+    for (const [pattern, hint] of FEEDBACK_HINTS) {
+      const match = String(reason).match(pattern);
+      if (match) return hint(match);
+    }
+    return String(reason);
+  });
 }
 
 function articleDateMs(article = {}) {
@@ -179,8 +248,10 @@ function evidencePayload(selection, ledger) {
     })),
     facts: selection.evidencePack.facts,
     expert_insight: selection.article.expert_insight || selection.article.expertInsight || {},
+    // Only verified_primary claims: the unsupported-claim gate accepts
+    // exactly this set, so the model must never see numbers it cannot cite.
     verified_claims: ledger.claims
-      .filter((claim) => claim.verification_status?.startsWith('verified') || claim.verification_status === 'inference_supported')
+      .filter((claim) => claim.verification_status === 'verified_primary')
       .map((claim) => ({ text: claim.claim_text, value: claim.numeric_value, unit: claim.unit, source: claim.source_name })),
   };
 }
@@ -222,10 +293,12 @@ async function draftPass({ charter, selection, ledger, stance, callModel }) {
       '{ "headline": string (40-105 chars), "deck": string (one standfirst sentence, 80-240 chars), "body": string }',
       'Body contract:',
       '- 1200 to 1800 words, written in the first person, committed to the thesis by the third paragraph.',
-      '- Plain paragraphs separated by blank lines. Section headings are single short lines (2-6 words, no punctuation at the end), 4 to 6 of them, phrased in my own words — never generic labels.',
+      '- Plain text only — no markdown of any kind (no #, ##, **, *, _, backticks, or bullet markers anywhere in the body).',
+      '- Plain paragraphs separated by blank lines; each paragraph is a single unwrapped line.',
+      '- Section headings: 4 to 6 of them, phrased in my own words — never generic labels. Each heading is a standalone line of 2-6 words with a blank line before and after it, containing only letters, digits and spaces (no apostrophes, quotes, commas, colons, dashes, or trailing punctuation).',
       '- One section must present the counterargument honestly (heading should signal it, e.g. "Where I could be wrong").',
       `- The final section heading must be exactly: ${WATCHLIST_HEADING}`,
-      '- Attribute every number inline to its source publication by name. Use only numbers present in the verified claims.',
+      '- Attribute every number inline to its source publication by name. Cite only numbers present in verified_claims, copied exactly — same value, same unit; never convert units (do not turn 2,500 MW into 2.5 GW) and never derive new figures.',
       '- No ellipsis characters. No bullet lists; write prose.',
     ].join('\n'),
     userPrompt: JSON.stringify({
@@ -247,8 +320,10 @@ async function voicePass({ charter, draft, feedback = [], callModel }) {
       'Task: revise the column below. Preserve every fact, number, and attribution exactly. Keep the same JSON shape:',
       '{ "headline": string, "deck": string, "body": string }',
       'Tighten the prose toward the persona voice: varied sentence rhythm, concrete verbs, no throat-clearing, no corporate filler.',
+      'Formatting contract (must hold after revision): plain text only with no markdown symbols; paragraphs separated by blank lines; 4-6 standalone plain-text section headings (2-6 words, letters/digits/spaces only) each surrounded by blank lines; one counterargument section; the final heading exactly '
+        + `"${WATCHLIST_HEADING}"; numbers unchanged from the draft.`,
       feedback.length
-        ? `The previous version failed these checks — fix every one without weakening the argument: ${feedback.join('; ')}`
+        ? `The previous version failed these checks — fix every one without weakening the argument: ${feedback.join(' | ')}`
         : 'Polish only; keep structure and headings.',
     ].join('\n'),
     userPrompt: JSON.stringify(draft),
@@ -384,13 +459,14 @@ export async function generateAuthoredColumn({
       voiced = await voicePass({
         charter,
         draft: essay,
-        feedback: quality?.reasons || [],
+        feedback: verificationFeedback(quality?.reasons || []),
         callModel,
       });
     } catch (error) {
       return failWith('voice', error.message);
     }
     if (voiced?.body && voiced?.headline) essay = voiced;
+    essay = { ...essay, body: normalizeAuthoredBody(essay.body) };
     quality = authoredColumnQualityResult({
       body: essay.body,
       title: essay.headline,

@@ -1,7 +1,13 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
-import { generateAuthoredColumn, selectColumnStory } from '../scripts/lib/authored-column-engine.mjs';
+import {
+  generateAuthoredColumn,
+  normalizeAuthoredBody,
+  selectColumnStory,
+  verificationFeedback,
+} from '../scripts/lib/authored-column-engine.mjs';
 import { authoredColumnQualityResult } from '../scripts/lib/authored-column-policy.mjs';
+import { headingSequence } from '../scripts/lib/visible-body-length.mjs';
 import { resetLlmUsageForTests } from '../scripts/lib/llm-budget.mjs';
 import { SOURCE_TEXT, WATCHLIST, STANCE_JSON, essayBody, essayJson, fixtureArticle } from './fixtures/authored-column-fixture.mjs';
 
@@ -140,6 +146,63 @@ test('daily cap and minimum gap are enforced', async () => {
   } finally {
     delete process.env.OPENROUTER_API_KEY;
   }
+});
+
+test('normalizeAuthoredBody converts markdown habits into gate-visible structure', () => {
+  const markdownBody = essayBody()
+    .split('\n\n')
+    .map((block) => (headingSequence(block).length ? `## ${block}` : block))
+    .join('\n\n');
+  const normalized = normalizeAuthoredBody(markdownBody);
+  assert.ok(headingSequence(normalized).length >= 4, 'markdown headings should be recognized after normalization');
+  assert.ok(normalized.includes(WATCHLIST));
+  assert.ok(!normalized.includes('##'));
+
+  const glued = 'The Grid Answers First\nA paragraph glued to its heading by a single newline, which hides the heading from the block splitter entirely.';
+  const isolated = normalizeAuthoredBody(glued);
+  assert.deepEqual(headingSequence(isolated), ['The Grid Answers First']);
+
+  const decorated = normalizeAuthoredBody('**Where I Could Be Wrong**\n\nPlain paragraph with **bold** and `code` markers that must not survive.');
+  assert.deepEqual(headingSequence(decorated), ['Where I Could Be Wrong']);
+  assert.ok(!decorated.includes('**') && !decorated.includes('`'));
+
+  const fenced = normalizeAuthoredBody('```\nOn My Watchlist\n```\n\nBody text.');
+  assert.ok(!fenced.includes('```'));
+});
+
+test('normalizeAuthoredBody leaves a compliant body unchanged', () => {
+  const body = essayBody();
+  assert.equal(normalizeAuthoredBody(body), body.trim());
+});
+
+test('verificationFeedback translates reason codes into actionable directives', () => {
+  const feedback = verificationFeedback([
+    'fewer_than_4_sections',
+    'missing_watchlist_section',
+    'unsupported_numeric_claims:2.5 GW,40 percent',
+    'some_unknown_code',
+  ]);
+  assert.equal(feedback.length, 4);
+  assert.match(feedback[0], /standalone plain-text line/);
+  assert.match(feedback[1], new RegExp(WATCHLIST));
+  assert.match(feedback[2], /2\.5 GW,40 percent/);
+  assert.equal(feedback[3], 'some_unknown_code');
+});
+
+test('quality policy names the offending unsupported numbers', () => {
+  // Empty ledger: every unit-bearing figure in the essay is unsupported, and
+  // the reason must carry the concrete offenders for the retry feedback loop.
+  const result = authoredColumnQualityResult({
+    body: essayBody(),
+    title: 'The Dakota Grid Deal Is A Utility Execution Story Now',
+    deck: 'Northline Power secured 200 MW for its Dakota AI campus, and the anchor tenant just bought schedule risk priced as energy risk.',
+    ledgerClaims: [],
+    sourceText: SOURCE_TEXT,
+  });
+  assert.equal(result.ok, false);
+  const claimReason = result.reasons.find((reason) => reason.startsWith('unsupported_numeric_claims'));
+  assert.ok(claimReason, 'expected an unsupported numeric claims reason');
+  assert.match(claimReason, /unsupported_numeric_claims:.*200 MW/);
 });
 
 test('quality policy rejects missing counterargument and watchlist sections', () => {
