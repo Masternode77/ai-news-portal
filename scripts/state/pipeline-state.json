@@ -805,7 +805,9 @@
     "a5cffae052179217",
     "d166f8bf6e034342",
     "104c58bb6eae234e",
-    "f0101c9478981251"
+    "f0101c9478981251",
+    "18bc4705e44a352f",
+    "b91f4ec4c41d4ba8"
   ],
   "dayPlans": {
     "2026-03-24": {
@@ -43740,18 +43742,18 @@
     "2026-08-18": {
       "date": "2026-08-18",
       "createdAt": "2026-08-17T15:30:35.670Z",
-      "refreshedAt": "2026-08-17T15:30:35.670Z",
+      "refreshedAt": "2026-08-17T23:32:53.896Z",
       "candidateWindowHours": 24,
       "curatedItems": [
         {
-          "id": "104c58bb6eae234e",
+          "id": "18bc4705e44a352f",
           "sourceRegistryId": "eia-today-in-energy",
           "source": "U.S. Energy Information Administration",
-          "url": "https://www.eia.gov/todayinenergy/detail.php?id=67964",
-          "title": "Waterborne shipments from the U.S. Gulf Coast increased in April and May",
-          "snippet": "Waterborne shipments of crude oil and petroleum products from the U.S. Gulf Coast (PADD 3) to the West Coast (PADD 5) more than quadrupled year-on-year in April and May following a waiver that permitted a broader group…",
-          "contentText": "Waterborne shipments of crude oil and petroleum products from the U.S. Gulf Coast (PADD 3) to the West Coast (PADD 5) more than quadrupled year-on-year in April and May following a waiver that permitted a broader group of ships to travel between U.S. ports. Shipments from the U.S. Gulf Coast to the East Coast (PADD 1) also increased.",
-          "publishedAt": "2026-08-17T14:00:00.000Z",
+          "url": "https://www.eia.gov/todayinenergy/detail.php?id=67865",
+          "title": "Petroleum markets responded to disruptions in the Middle East in the second quarter",
+          "snippet": "Petroleum markets in the second quarter of 2026 (2Q26) were characterized by continued disruptions to international crude oil and petroleum product flows through the Strait of Hormuz, contributing to higher and more vol…",
+          "contentText": "Petroleum markets in the second quarter of 2026 (2Q26) were characterized by continued disruptions to international crude oil and petroleum product flows through the Strait of Hormuz, contributing to higher and more volatile crude oil prices through most of the quarter. The disruptions also resulted in international buyers seeking alternative supply sources for petroleum products, driving up U.S. refinery margins, production, and exports.",
+          "publishedAt": "2026-07-15T14:00:00.000Z",
           "sourceImage": null,
           "region": "US",
           "language": "en",
@@ -43766,7 +43768,7 @@
             "cloud capacity teams",
             "investors"
           ],
-          "article_type": "Other",
+          "article_type": "Supply Chain",
           "urgency_score": 0.46,
           "taxonomy_confidence": 0.69,
           "taxonomy_reasons": [
@@ -43808,74 +43810,7 @@
             "archiveOnly": true,
             "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
           },
-          "score": 60
-        },
-        {
-          "id": "f0101c9478981251",
-          "sourceRegistryId": "eia-today-in-energy",
-          "source": "U.S. Energy Information Administration",
-          "url": "https://www.eia.gov/todayinenergy/detail.php?id=67864",
-          "title": "Global liquefied natural gas trade volumes reached record high in 2025",
-          "snippet": "Global liquefied natural gas (LNG) trade volumes increased 5.4% to a record 56.3 billion cubic feet per day last year (Bcf/d), driven largely by U.S. LNG export capacity expanding to meet growing demand, according to a…",
-          "contentText": "Global liquefied natural gas (LNG) trade volumes increased 5.4% to a record 56.3 billion cubic feet per day last year (Bcf/d), driven largely by U.S. LNG export capacity expanding to meet growing demand, according to a recent report from the International Group of Liquefied Natural Gas Importers (GIIGNL). Global LNG trade has slowed this year following the closure of the key export route for Qatar, the world's second-largest LNG exporter.",
-          "publishedAt": "2026-07-14T14:00:00.000Z",
-          "sourceImage": null,
-          "region": "APAC",
-          "language": "en",
-          "defaultCategory": "Power & Grid",
-          "category": "Power & Grid",
-          "primary_category": "Power & Grid",
-          "secondary_category": "Interconnection and power procurement",
-          "infrastructure_layer": "Power",
-          "affected_stakeholders": [
-            "data center operators",
-            "utilities",
-            "cloud capacity teams",
-            "investors"
-          ],
-          "article_type": "Capacity Expansion",
-          "urgency_score": 0.54,
-          "taxonomy_confidence": 0.69,
-          "taxonomy_reasons": [
-            "power",
-            "grid"
-          ],
-          "direct_ai_infrastructure_relevance": 0,
-          "data_center_relevance": 0,
-          "cloud_capacity_relevance": 0,
-          "semiconductor_relevance": 0,
-          "power_grid_relevance": 0.5,
-          "cooling_relevance": 0,
-          "capital_markets_relevance": 0,
-          "enterprise_ai_infrastructure_relevance": 0,
-          "infrastructure_relevance_score": 0.325,
-          "infrastructure_relevance_tier": "archive_only",
-          "infrastructure_relevance_action": "archive_only",
-          "infrastructure_relevance_reasons": [
-            "power_grid_relevance:0.50(power, grid)"
-          ],
-          "infrastructure_relevance": {
-            "direct_ai_infrastructure_relevance": 0,
-            "data_center_relevance": 0,
-            "cloud_capacity_relevance": 0,
-            "semiconductor_relevance": 0,
-            "power_grid_relevance": 0.5,
-            "cooling_relevance": 0,
-            "capital_markets_relevance": 0,
-            "enterprise_ai_infrastructure_relevance": 0,
-            "infrastructure_relevance_score": 0.325,
-            "infrastructure_relevance_tier": "archive_only",
-            "infrastructure_relevance_action": "archive_only",
-            "infrastructure_relevance_reasons": [
-              "power_grid_relevance:0.50(power, grid)"
-            ],
-            "infrastructureRelevanceAction": "archive_only",
-            "articlePagePublished": false,
-            "homepagePublished": false,
-            "archiveOnly": true,
-            "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
-          },
-          "score": -22
+          "score": -18
         },
         {
           "id": "b91f4ec4c41d4ba8",
@@ -44013,147 +43948,23 @@
         }
       ],
       "curatedIds": [
-        "104c58bb6eae234e",
-        "f0101c9478981251",
+        "18bc4705e44a352f",
         "b91f4ec4c41d4ba8",
         "d33ab02c8a9e75c4"
       ],
       "publishedIds": [
         "104c58bb6eae234e",
-        "f0101c9478981251"
+        "f0101c9478981251",
+        "18bc4705e44a352f",
+        "b91f4ec4c41d4ba8"
       ],
       "slotPublications": {
-        "0": true
+        "0": true,
+        "1": true
       }
     }
   },
   "runHistory": [
-    {
-      "at": "2026-07-05T16:15:24.081Z",
-      "day": "2026-07-06",
-      "slot": 0,
-      "publishedCount": 0,
-      "signalCardCount": 1,
-      "archiveOnlyCount": 0,
-      "repetitionBlockedCount": 1,
-      "publishedIds": [],
-      "processedIds": [
-        "51788ad4054a6b4e",
-        "ec5820bde3bf274e"
-      ],
-      "blockedCount": 1,
-      "blockedItems": [
-        {
-          "id": "51788ad4054a6b4e",
-          "title": "SpaceX vaporizes 260 Starlink satellites in six months using Earth's atmosphere — new environmental concerns emerge over burning 2,700-pound orbital data centers, FCC seeks to exempt satellites from regulations",
-          "infrastructure_relevance_score": 0.921,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "data_center_relevance:0.55(data centers)",
-            "cloud_capacity_relevance:0.32(hyperscalers)",
-            "semiconductor_relevance:0.22(gpu)",
-            "power_grid_relevance:0.22(power)"
-          ],
-          "extraction_quality_score": 1,
-          "source_domain_adapter": "generic",
-          "content_length": 1631,
-          "boilerplate_ratio": 0,
-          "repetition_blocked": false,
-          "repetition_block_reasons": [],
-          "repetition_check": null,
-          "expert_insight_complete": false,
-          "expert_insight_missing_fields": [
-            "named_companies"
-          ],
-          "reason": "expert_insight_missing_fields named_companies"
-        }
-      ],
-      "repetitionBlockedItems": [
-        {
-          "id": "ec5820bde3bf274e",
-          "title": "Reviewer tests 'RTX 4080M' desktop graphics card powered by salvaged laptop silicon — performs worse than slightly more expensive RX 9070 GRE but draws only 100W in games",
-          "infrastructure_relevance_score": 1,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "cloud_capacity_relevance:0.32(hyperscalers)",
-            "semiconductor_relevance:0.92(nvidia, amd, intel)",
-            "power_grid_relevance:0.22(power)"
-          ],
-          "extraction_quality_score": 1,
-          "source_domain_adapter": "generic",
-          "content_length": 1685,
-          "boilerplate_ratio": 0,
-          "repetition_blocked": true,
-          "repetition_block_reasons": [
-            "repeated_sentence_ratio>0.12",
-            "heading_sequence_similarity>0.75",
-            "conclusion_similarity>0.7"
-          ],
-          "repetition_check": {
-            "compared_article_count": 20,
-            "repeated_sentence_ratio": 0.2857142857142857,
-            "repeated_paragraph_ratio": 0.3333333333333333,
-            "heading_sequence_similarity": 1,
-            "banned_phrase_count": 0,
-            "banned_phrase_counts": {},
-            "recent_banned_phrase_counts": {},
-            "ngram_overlap": 0.5555555555555556,
-            "blueprint_repetition": 2,
-            "conclusion_similarity": 0.9511897312113418,
-            "repeated_sentence_count": 2,
-            "repeated_paragraph_count": 2,
-            "heading_sequence": [
-              "Technical Signal",
-              "Failure Domain",
-              "Operator Exposure",
-              "Benchmark To Watch"
-            ],
-            "blocked": true,
-            "reasons": [
-              "repeated_sentence_ratio>0.12",
-              "heading_sequence_similarity>0.75",
-              "conclusion_similarity>0.7"
-            ]
-          },
-          "expert_insight_complete": true,
-          "expert_insight_missing_fields": [],
-          "reason": "repeated_sentence_ratio>0.12; heading_sequence_similarity>0.75; conclusion_similarity>0.7"
-        }
-      ],
-      "signalCardItems": [
-        {
-          "id": "51788ad4054a6b4e",
-          "title": "SpaceX vaporizes 260 Starlink satellites in six months using Earth's atmosphere — new environmental concerns emerge over burning 2,700-pound orbital data centers, FCC seeks to exempt satellites from regulations",
-          "infrastructure_relevance_score": 0.921,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "data_center_relevance:0.55(data centers)",
-            "cloud_capacity_relevance:0.32(hyperscalers)",
-            "semiconductor_relevance:0.22(gpu)",
-            "power_grid_relevance:0.22(power)"
-          ],
-          "extraction_quality_score": 1,
-          "source_domain_adapter": "generic",
-          "content_length": 1631,
-          "boilerplate_ratio": 0,
-          "repetition_blocked": false,
-          "repetition_block_reasons": [],
-          "repetition_check": null,
-          "expert_insight_complete": false,
-          "expert_insight_missing_fields": [
-            "named_companies"
-          ],
-          "reason": "expert_insight_missing_fields named_companies"
-        }
-      ],
-      "archiveOnlyItems": []
-    },
     {
       "at": "2026-07-06T00:09:58.985Z",
       "day": "2026-07-06",
@@ -57312,18 +57123,78 @@
         "token_budget": 60000,
         "call_budget": 40
       }
+    },
+    {
+      "at": "2026-08-17T23:32:53.896Z",
+      "day": "2026-08-18",
+      "slot": 1,
+      "publishedCount": 1,
+      "signalCardCount": 0,
+      "archiveOnlyCount": 1,
+      "repetitionBlockedCount": 0,
+      "publishedIds": [
+        "18bc4705e44a352f"
+      ],
+      "processedIds": [
+        "18bc4705e44a352f",
+        "b91f4ec4c41d4ba8"
+      ],
+      "blockedCount": 0,
+      "blockedItems": [],
+      "repetitionBlockedItems": [],
+      "signalCardItems": [],
+      "archiveOnlyItems": [
+        {
+          "id": "b91f4ec4c41d4ba8",
+          "title": "The United States produced more crude oil than any other country in 2025",
+          "infrastructure_relevance_score": 0.435,
+          "infrastructure_relevance_tier": "archive_only",
+          "infrastructure_relevance_action": "archive_only",
+          "infrastructure_relevance_reasons": [
+            "data_center_relevance:0.34(colocation)",
+            "power_grid_relevance:0.50(power, grid)"
+          ],
+          "extraction_quality_score": 1,
+          "source_domain_adapter": "generic",
+          "content_length": 1676,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": false,
+          "repetition_block_reasons": [],
+          "repetition_check": null,
+          "expert_insight_complete": true,
+          "expert_insight_missing_fields": [],
+          "reason": "infrastructure_relevance_below_signal_threshold"
+        }
+      ],
+      "authoredColumn": {
+        "published": true,
+        "slug": "hormuz-volatility-exposed-diesel-backup-as-an-unhedged-margin-li-2026-08-17"
+      },
+      "llmUsage": {
+        "calls": 6,
+        "failures": 0,
+        "prompt_tokens": 12828,
+        "completion_tokens": 5469,
+        "total_tokens": 18297,
+        "token_budget": 60000,
+        "call_budget": 40
+      }
     }
   ],
-  "lastRunAt": "2026-08-17T15:30:35.670Z",
+  "lastRunAt": "2026-08-17T23:32:53.896Z",
   "authored": {
-    "lastColumnAt": "2026-08-17T13:45:22.853Z",
+    "lastColumnAt": "2026-08-17T23:32:53.896Z",
     "columnsByDay": {
-      "2026-08-17": 1
+      "2026-08-17": 2
     },
     "recentStoryKeys": [
       {
         "key": "https://semiengineering.com/chip-industry-week-in-review-150/",
         "at": "2026-08-17T13:45:22.853Z"
+      },
+      {
+        "key": "https://www.eia.gov/todayinenergy/detail.php",
+        "at": "2026-08-17T23:32:53.896Z"
       }
     ],
     "lastFailure": null
