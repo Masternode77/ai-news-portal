@@ -124,6 +124,34 @@ test('admin dashboard model produces fixture-backed counts and review queues', (
   assert.equal(model.articles.find((item) => item.id === 'published-good')?.editHref, '/admin/edit/?id=published-good');
 });
 
+test('authored columns surface in the dashboard with column routes and edit links', () => {
+  const model = buildAdminDashboardModel({
+    latestNews: fixtureArticles,
+    authoredColumns: [{
+      id: 'col_abc123',
+      content_origin: 'authored',
+      slug: 'the-grid-answers-first-2026-08-17',
+      title: 'The Grid Answers First',
+      expertLensFull: { finalHeadline: 'The Grid Answers First', finalArticleBody: 'Body.' },
+      primary_category: 'Power Grid',
+      public_status: 'published',
+      publishedAt: '2026-08-17T14:00:00.000Z',
+      author: { name: 'Rowan Hale' },
+    }],
+  });
+  const row = model.articles.find((entry) => entry.id === 'col_abc123');
+  assert.ok(row, 'expected the column row in the dashboard model');
+  assert.equal(row.origin, 'column');
+  assert.equal(row.sourceBucket, 'column');
+  assert.equal(row.source, 'The Current');
+  assert.equal(row.publicHref, '/column/the-grid-answers-first-2026-08-17/');
+  assert.equal(row.editHref, '/admin/edit/?id=col_abc123');
+  assert.equal(row.status, 'published');
+  const wireRow = model.articles.find((entry) => entry.id === 'published-good');
+  assert.equal(wireRow.origin, 'wire');
+  assert.equal(wireRow.publicHref, '/news/published-good/');
+});
+
 test('admin article filters are deterministic and URL-addressable', () => {
   const model = buildAdminDashboardModel({ latestNews: fixtureArticles, archivedNews: [] });
   const filtered = filterAdminArticleRows(model.articles, {

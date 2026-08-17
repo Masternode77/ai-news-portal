@@ -115,13 +115,15 @@ function flagsFor(article = {}) {
 
 function articleRow(article = {}, sourceBucket = 'archive') {
   const id = text(article.id || article.slug || article.url);
+  const isColumn = article.content_origin === 'authored';
   const status = articleStatus(article);
   const publishedAt = firstDate(article.publishedAt, article.analysisPublishedAt, article.createdAt);
   const updatedAt = firstDate(article.updatedAt, article.editedAt, article.lastEditedAt);
   const generatedAt = firstDate(article.generatedAt, article.analysisPublishedAt, article.publishedAt);
-  const reviewFlags = flagsFor(article);
+  const reviewFlags = isColumn ? [] : flagsFor(article);
   const category = text(article.category || article.primary_category || article.defaultCategory || 'Uncategorized');
-  const source = text(article.source || article.sourceName || 'Unknown source');
+  const source = text(article.source || article.sourceName || (isColumn ? 'The Current' : 'Unknown source'));
+  const slug = text(article.slug);
   return {
     id,
     title: text(article.expertLensFull?.finalHeadline || article.title || id),
@@ -132,12 +134,13 @@ function articleRow(article = {}, sourceBucket = 'archive') {
     updatedAt,
     generatedAt,
     sourceBucket,
+    origin: isColumn ? 'column' : 'wire',
     relevanceScore: relevanceScore(article),
     extractionQualityScore: extractionScore(article),
     qualityStatus: reviewFlags.length ? reviewFlags.join(', ') : 'ready',
     reviewFlags,
     sourceUrl: text(article.sourceUrl || article.url),
-    publicHref: id ? '/news/' + id + '/' : '',
+    publicHref: isColumn ? (slug ? '/column/' + slug + '/' : '') : (id ? '/news/' + id + '/' : ''),
     editHref: id ? '/admin/edit/?id=' + encodeURIComponent(id) : '',
     qualityHref: id ? '/admin/edit/?id=' + encodeURIComponent(id) : '',
     imageProvider: text(article.generatedImageProvider || article.generatedImageModel),
@@ -195,8 +198,9 @@ export function filterAdminArticleRows(rows = [], filters = {}) {
   }).sort(sortRows);
 }
 
-export function buildAdminDashboardModel({ latestNews = [], archivedNews = [], editorialCycles = [], claimLedger = [], sourceHealth = [] } = {}) {
+export function buildAdminDashboardModel({ latestNews = [], archivedNews = [], authoredColumns = [], editorialCycles = [], claimLedger = [], sourceHealth = [] } = {}) {
   const articles = [
+    ...authoredColumns.map((article) => articleRow(article, 'column')),
     ...latestNews.map((article) => articleRow(article, 'latest')),
     ...archivedNews.map((article) => articleRow(article, 'archive')),
   ].filter((row) => row.id).sort(sortRows);

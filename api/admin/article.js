@@ -3,6 +3,8 @@ import { json, requireAdmin } from './_auth.js';
 import { RequestBodyError, readAdminArticleJson } from './_login-request.js';
 import { isSupportedAdminArticleAction } from '../../scripts/lib/admin-article-store.mjs';
 import { isPublicLongformArticle } from '../../scripts/lib/public-surface-eligibility.mjs';
+import { authoredColumnPublicEligible, isAuthoredColumn } from '../../scripts/lib/authored-column-policy.mjs';
+import { columnPath } from '../../scripts/lib/column-surface.mjs';
 import { articleCanonicalPath } from '../../src/lib/seo-safeguards.js';
 
 function articleIdFromRequest(req) {
@@ -40,6 +42,10 @@ function publicArticle(article) {
 }
 
 export function adminPublicDetailEligibility(article, options = {}) {
+  if (isAuthoredColumn(article)) {
+    const eligible = authoredColumnPublicEligible(article);
+    return { eligible, href: eligible ? columnPath(article) : '' };
+  }
   const eligible = isPublicLongformArticle(article, options);
   return { eligible, href: eligible ? articleCanonicalPath(article) : '' };
 }
