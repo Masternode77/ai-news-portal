@@ -5,6 +5,8 @@ import FeaturedArticle from '../components/FeaturedArticle.astro';
 import LatestAnalysisFeed from '../components/LatestAnalysisFeed.astro';
 import TickerTape from '../components/home/TickerTape.astro';
 import PulseBoard from '../components/home/PulseBoard.astro';
+import ColumnHero from '../components/home/ColumnHero.astro';
+import authoredColumns from '../data/authored-columns.json';
 import SiteFooter from '../components/SiteFooter.astro';
 import AdSlot from '../components/monetize/AdSlot.astro';
 import latestNews from '../data/latest-news.json';
@@ -17,6 +19,9 @@ import { buildFreshnessPublicModel } from '../../scripts/lib/freshness-public-mo
 import { selectHomepageVisualLead } from '../../scripts/lib/homepage-visual-lead.mjs';
 import { activeRegistryFeeds, loadSourceRegistrySync } from '../../scripts/lib/source-registry.mjs';
 import { categoryKey, categoryShortLabel } from '../lib/category-visuals';
+import { buildColumnCards } from '../../scripts/lib/column-surface.mjs';
+
+const leadColumn = buildColumnCards(authoredColumns)[0] || null;
 
 const boardTitle = SITE.name;
 const homepageArticles = process.env.HOMEPAGE_FIXTURE === 'empty' ? [] : [...latestNews, ...archivedNews];
@@ -175,6 +180,7 @@ const structuredData = {
         <span class="masthead-name"><b>Compute</b><b>Current</b></span>
       </a>
       <nav class="masthead-nav" aria-label="Primary coverage navigation">
+        <a href="/column/">The Current</a>
         <a href="/category/power-grid/">Power</a>
         <a href="/category/data-centers/">Data Centers</a>
         <a href="/category/cloud-capacity/">Cloud</a>
@@ -253,6 +259,8 @@ const structuredData = {
     </section>
 
     <PulseBoard metrics={pulseMetrics} mix={coverageMix} updatedLabel={updatedLabel} />
+
+    <ColumnHero column={leadColumn} />
 
     <FeaturedArticle signal={featuredSignal} />
 

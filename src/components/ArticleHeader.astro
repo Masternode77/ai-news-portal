@@ -1,14 +1,15 @@
 ---
-const { category, date, source, title, deck } = Astro.props;
+const { category, date, source, title, deck, author = null, breadcrumb = null } = Astro.props;
 const formattedDate = date
   ? new Date(date).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })
   : '';
+const crumb = breadcrumb || { label: 'Latest analysis', href: '/' };
 ---
 <header class="article-header">
   <nav class="article-breadcrumb" aria-label="Breadcrumb">
     <a href="/">Compute Current</a>
     <span aria-hidden="true">/</span>
-    <a href="/">Latest analysis</a>
+    <a href={crumb.href}>{crumb.label}</a>
   </nav>
   <div class="meta-strip article-meta-strip">
     {category ? <span class="category-badge">{category}</span> : null}
@@ -17,5 +18,11 @@ const formattedDate = date
   </div>
   <h1>{title}</h1>
   {deck ? <p class="detail-summary">{deck}</p> : null}
-  <p class="byline">By Compute Current Editorial Desk</p>
+  {author?.name ? (
+    <p class="byline">
+      By <a href={author.slug ? `/author/${author.slug}/` : '/about/'}>{author.name}</a>{author.role ? ` · ${author.role}` : ''}
+    </p>
+  ) : (
+    <p class="byline">By Compute Current Editorial Desk</p>
+  )}
 </header>

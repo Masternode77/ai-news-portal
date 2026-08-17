@@ -28,6 +28,16 @@ function normalizeText(text = '') {
   return String(text || '').replace(/\s+/g, ' ').trim();
 }
 
+// RSS snippets and feed summaries legitimately end with an ellipsis (or a
+// WordPress-style "[…]"). Stripping that trailing marker lets truncation
+// checks focus on genuine mid-text clipping instead of flagging every feed
+// excerpt as broken.
+export function stripTrailingEllipsis(text = '') {
+  return String(text || '')
+    .replace(/\s*(?:\[…\]|\[\.{3,}\]|…|\.{3,})\s*$/u, '')
+    .trim();
+}
+
 export function detectTruncationArtifacts(text = '', options = {}) {
   const normalized = normalizeText(text);
   const artifacts = [];

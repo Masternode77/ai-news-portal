@@ -2,7 +2,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { detectBoilerplate } from './boilerplate-detector.mjs';
-import { detectTruncationArtifacts } from './truncation-detector.mjs';
+import { detectTruncationArtifacts, stripTrailingEllipsis } from './truncation-detector.mjs';
 import { buildEvidencePack } from './evidence-pack-builder.mjs';
 import { namesConcreteInfrastructureLayer, routePublicLane } from './public-lane-router.mjs';
 import {
@@ -14,6 +14,7 @@ const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..')
 const POLICY_PATH = path.join(ROOT, 'config/editorial/content-tier-policy.json');
 
 export const PUBLIC_CONTENT_TIERS = {
+  AUTHORED_COLUMN: 'authored_column',
   LONGFORM_ANALYSIS: 'longform_analysis',
   EDITORIAL_BRIEF: 'editorial_brief',
   SIGNAL_CARD: 'signal_card',
@@ -41,9 +42,26 @@ function evidenceText(article = {}) {
     article.fullArticleText,
     article.articleText,
     article.contentText,
-    article.summary,
-    article.snippet,
+    stripTrailingEllipsis(article.summary),
+    stripTrailingEllipsis(article.snippet),
   ].filter(Boolean).join(' ');
+}
+
+// Truncation is judged against the extracted body when one exists; feed
+// summaries/snippets (which end in "…" by design) only stand in when there
+// is no body at all, and then with their trailing ellipsis removed.
+function truncationFor(article = {}) {
+  const body = [
+    article.cleaned_source_text,
+    article.source_evidence_text,
+    article.fullArticleText,
+    article.articleText,
+    article.contentText,
+  ].find((value) => String(value || '').trim().length > 0) || '';
+  if (body) return detectTruncationArtifacts(body);
+  return detectTruncationArtifacts(
+    [stripTrailingEllipsis(article.summary), stripTrailingEllipsis(article.snippet)].filter(Boolean).join(' ')
+  );
 }
 
 function isLowValueConsumer(article = {}) {
@@ -76,7 +94,7 @@ export function routePublicContentTier(article = {}, options = {}) {
   const extractionQuality = extractionFor(article);
   const text = evidenceText(article);
   const boilerplate = detectBoilerplate(text);
-  const truncation = detectTruncationArtifacts(text);
+  const truncation = truncationFor(article);
   const evidencePack = options.evidencePack || buildEvidencePack(article);
   const strict = article.public_routing || routePublicLane(article);
   const publicExtraction = sourceExtractionPassesPublicGate(article);

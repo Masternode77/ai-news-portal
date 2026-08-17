@@ -2,7 +2,7 @@ import { routePublicLane } from './public-lane-router.mjs';
 import { sourceExtractionPassesPublicGate, sourceExtractionPassesLongformGate } from './source-extraction-fail-closed.mjs';
 import { guardPublicTemplatePhrases } from './public-template-phrase-guard.mjs';
 import { detectBoilerplate } from './boilerplate-detector.mjs';
-import { detectTruncationArtifacts } from './truncation-detector.mjs';
+import { detectTruncationArtifacts, stripTrailingEllipsis } from './truncation-detector.mjs';
 import { hasPublishedArticlePage } from './article-publication-state.mjs';
 import { isPublicProductFit } from './public-product-fit.mjs';
 
@@ -14,8 +14,8 @@ function publicSeoText(article = {}) {
   const finalBody = article.expertLensFull?.finalArticleBody || '';
   return [
     article.title,
-    article.summary,
-    article.snippet,
+    stripTrailingEllipsis(article.summary),
+    stripTrailingEllipsis(article.snippet),
     article.deck,
     article.why_it_matters,
     article.public_presentation?.deck,

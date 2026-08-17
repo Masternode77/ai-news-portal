@@ -2,6 +2,7 @@ import { hasInternalPublicLanguage, sanitizePublicCopy } from './internal-langua
 import { angleFor, deckForAngle, whyForFallback } from './card-copy-fallbacks.mjs';
 import { normalizeProperNouns } from './proper-noun-normalizer.mjs';
 import { publicProductFitResult } from './public-product-fit.mjs';
+import { stripTrailingEllipsis } from './truncation-detector.mjs';
 
 const INTERNAL_CARD_PATTERNS = [
   /^Compute Current is keeping/i,
@@ -17,6 +18,7 @@ const INTERNAL_CARD_PATTERNS = [
 const WHY_IT_MATTERS_LABEL = /^Why it\s+matters:\s*/i;
 
 const LABEL_BY_TIER = {
+  authored_column: 'Column',
   longform_analysis: 'Analysis',
   editorial_brief: 'Brief',
   signal_card: 'Signal',
@@ -115,11 +117,14 @@ function whySubjectFor(article = {}) {
 }
 
 function deckFor(article = {}) {
-  const persisted = article.public_presentation?.deck || article.deck || article.expertLensFull?.metaDescription || article.summary || article.snippet;
-  const cleanPersisted = sanitizePublicCopy(persisted || '');
+  // Editorially generated decks are trusted for every tier; raw feed
+  // summaries/snippets are only trusted on longform records, where they have
+  // passed the longform gates.
+  const editorialPersisted = article.public_presentation?.deck || article.deck || article.expertLensFull?.metaDescription;
+  const persisted = editorialPersisted || (isLongformAnalysis(article) ? article.summary || article.snippet : '');
+  const cleanPersisted = sanitizePublicCopy(stripTrailingEllipsis(persisted || ''));
   if (
-    isLongformAnalysis(article)
-    && cleanPersisted
+    cleanPersisted
     && cleanPersisted.length >= 60
     && !INTERNAL_CARD_PATTERNS.some((pattern) => pattern.test(cleanPersisted))
     && !hasInternalPublicLanguage(cleanPersisted)
@@ -135,10 +140,9 @@ function deckFor(article = {}) {
 
 function whyFor(article = {}) {
   const persisted = article.public_presentation?.why_it_matters || article.publicSignal?.why_it_matters || article.why_it_matters || article.evidence_pack?.operatingImplication;
-  const cleanPersisted = cleanWhyItMatters(persisted || '');
+  const cleanPersisted = cleanWhyItMatters(stripTrailingEllipsis(persisted || ''));
   if (
-    isLongformAnalysis(article)
-    && cleanPersisted
+    cleanPersisted
     && cleanPersisted.length >= 30
     && !INTERNAL_CARD_PATTERNS.some((pattern) => pattern.test(cleanPersisted))
     && !hasInternalPublicLanguage(cleanPersisted)

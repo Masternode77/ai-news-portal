@@ -3,7 +3,7 @@ import { applyAdminArticleAction, syncAdminSearchIndex } from '../../scripts/lib
 import { parseSourceRegistryYaml } from '../../scripts/lib/source-registry.mjs';
 
 const DEFAULT_REPO = 'Masternode77/ai-news-portal';
-const DATA_FILES = ['src/data/latest-news.json', 'src/data/archived-news.json'];
+const DATA_FILES = ['src/data/authored-columns.json', 'src/data/latest-news.json', 'src/data/archived-news.json'];
 const SEARCH_FILE = 'src/data/search-index.json';
 const AUDIT_FILE = 'src/data/admin-audit-log.json';
 const SOURCE_REGISTRY_FILE = 'config/sourceRegistry.yml';
@@ -182,7 +182,7 @@ export async function saveEditableArticle(id, patch, options = {}) {
   };
   updates.push({ path: AUDIT_FILE, text: JSON.stringify(appendAdminAuditEntry(auditFile.data, auditEntry), null, 2) + '\n' });
 
-  const commit = await commitFiles(updates, 'Persist admin article action ' + action + ' for ' + id + '\n\nUpdated through the private admin editor.\n\nConfidence: high\nScope-risk: moderate\nTested: Admin article store and quality gates', headSha);
+  const commit = await commitFiles(updates, 'Persist admin article action ' + action + ' for ' + id + ' [skip release]\n\nUpdated through the private admin editor.\n\nConfidence: high\nScope-risk: moderate\nTested: Admin article store and quality gates', headSha);
   return {
     article: actionResult.article,
     auditEntry,

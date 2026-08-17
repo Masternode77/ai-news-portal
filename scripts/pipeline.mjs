@@ -1,10 +1,14 @@
 import {
+  EXPERT_LENS_MODEL,
   LATEST_NEWS_PATH,
   NEWS_POOL_PATH,
+  OPENROUTER_MODEL,
+  PIPELINE_OFFLINE,
   PIPELINE_STATE_PATH,
   PIPELINE_USE_EXISTING_POOL,
   LATEST_NEWS_LIMIT,
 } from './lib/constants.mjs';
+import { applyPublicContentTier } from './lib/public-content-tier-router.mjs';
 import { fileURLToPath } from 'node:url';
 import { readArchiveSnapshot, syncArchiveArtifacts } from './lib/archive-store.mjs';
 import { applyAntiTemplateRewrite } from './lib/anti-template-rewrite.mjs';
@@ -34,6 +38,9 @@ import {
 } from './lib/state-store.mjs';
 import { stableArticleId, truncate } from './lib/normalize.mjs';
 import { loadSourceRegistry, textAuthorizedRecords } from './lib/source-registry.mjs';
+import { generateAuthoredColumn } from './lib/authored-column-engine.mjs';
+import { appendAuthoredColumn, readAuthoredColumns } from './lib/authored-column-store.mjs';
+import { llmUsageSummary } from './lib/llm-budget.mjs';
 
 const RETRY_DELAY_MS = Number(process.env.PIPELINE_RETRY_DELAY_MS || 15_000);
 
@@ -306,6 +313,76 @@ function asSignalCard(article, reason) {
   };
 }
 
+// Runs The Current column stage after the wire surface is written. Column
+// failures never break the wire run: every outcome is logged and recorded in
+// pipeline state, and a failed or skipped column simply publishes nothing.
+async function runAuthoredColumnStage({ state, candidates, pool, recentRecords, now }) {
+  try {
+    const existingColumns = await readAuthoredColumns();
+    const result = await withTimeout('authored column', () => generateAuthoredColumn({
+      candidates,
+      pool,
+      recentRecords,
+      existingColumns,
+      state,
+      now,
+      force: process.env.AUTHORED_COLUMN_FORCE === '1',
+    }), 360_000);
+    if (result.column) {
+      await appendAuthoredColumn(result.column);
+      console.log(`[pipeline] authored column published: ${result.column.slug} (${result.column.authored_quality.metrics.words} words, attempts=${result.column.authored_quality.attempts})`);
+      return { published: true, slug: result.column.slug };
+    }
+    const reason = result.skipReason || result.failure || 'unknown';
+    console.log(`[pipeline] authored column: none this run (${reason})`);
+    return { published: false, reason };
+  } catch (error) {
+    console.warn(`[pipeline] authored column stage failed: ${error.message}`);
+    return { published: false, reason: `stage_error:${error.message}` };
+  }
+}
+
+const ADMIN_TOUCHED_STATUSES = new Set(['published', 'draft', 'hidden', 'noindex', 'quarantined']);
+
+function hasAdminState(article = {}) {
+  return ADMIN_TOUCHED_STATUSES.has(article.public_status)
+    || article.manualHomepageApproved === true
+    || article.homepageApproved === true;
+}
+
+// Stamps every pipeline-managed record with a public content tier so the
+// public surfaces can distinguish analysis, briefs, and signal cards.
+// Conservative by design: admin-curated records are left untouched, authored
+// columns are never re-routed, and the router may normalize labels and
+// homepage visibility but never grants an article detail page to a record
+// the generation gates did not approve for one.
+function applyTiersForPublication(records = []) {
+  let applied = 0;
+  const tiered = records.map((article) => {
+    if (!article?.id) return article;
+    if (article.content_origin === 'authored') return article;
+    if (hasAdminState(article)) return article;
+    try {
+      const next = applyPublicContentTier(article);
+      if (article.articlePagePublished !== true && next.articlePagePublished === true) {
+        next.articlePagePublished = false;
+        if (next.public_content_tier === 'longform_analysis') {
+          next.public_content_tier = 'editorial_brief';
+          next.signalCardOnly = true;
+          next.public_tier_reasons = [...(next.public_tier_reasons || []), 'detail_page_requires_generation_gates'];
+        }
+      }
+      applied += 1;
+      return next;
+    } catch (error) {
+      console.warn(`[pipeline] tier routing failed for ${article.id}: ${error.message}`);
+      return article;
+    }
+  });
+  console.log(`[pipeline] public content tiers applied to ${applied}/${records.length} records`);
+  return tiered;
+}
+
 function toRunHistoryItem(article) {
   return {
     id: article.id,
@@ -339,13 +416,14 @@ async function publishExistingOnly({
   slot,
   now,
   blocked = [],
+  pool = [],
 }) {
   const recentBlueprintIds = blueprintHistoryFromRecords([...(existingLatest || []), ...(existingArchive || [])]);
   const normalizedExisting = dedupeById((existingLatest || []).map((item) => normalizeExistingArticle(item)));
   const signalMerged = sortForPipelineVisibility(dedupeById([...signalOnly, ...archiveOnly, ...normalizedExisting]));
   const imageBackfilled = await backfillLocalImages(signalMerged);
   const withExpertLens = await attachExpertLensToVisibleWindow(imageBackfilled, [], recentBlueprintIds);
-  const templateChecked = applyAntiTemplateRewrite(withExpertLens, [...existingLatest, ...existingArchive]);
+  const templateChecked = applyTiersForPublication(applyAntiTemplateRewrite(withExpertLens, [...existingLatest, ...existingArchive]));
   const { latest, supabaseStatus } = await syncArchiveArtifacts(templateChecked, existingArchive);
   await writeJsonFile(LATEST_NEWS_PATH, latest);
 
@@ -364,6 +442,15 @@ async function publishExistingOnly({
     blockedItems: blocked.map(toRunHistoryItem),
     archiveOnlyItems: archiveOnly.map(toRunHistoryItem),
   });
+  const authoredOutcome = await runAuthoredColumnStage({
+    state,
+    candidates: dedupeById(latest),
+    pool,
+    recentRecords: [...latest, ...(existingArchive || [])],
+    now,
+  });
+  state.runHistory[state.runHistory.length - 1].authoredColumn = authoredOutcome;
+  state.runHistory[state.runHistory.length - 1].llmUsage = llmUsageSummary();
   state.runHistory = state.runHistory.slice(-120);
   await writePipelineState(PIPELINE_STATE_PATH, state);
 
@@ -373,6 +460,12 @@ async function publishExistingOnly({
 async function main() {
   const now = new Date();
   console.log(`[pipeline] run started at ${now.toISOString()}`);
+  const llmEnabled = Boolean(process.env.OPENROUTER_API_KEY) && !PIPELINE_OFFLINE;
+  console.log(
+    llmEnabled
+      ? `[pipeline] llm: ENABLED model=${OPENROUTER_MODEL} lens=${process.env.EXPERT_LENS_MODEL || EXPERT_LENS_MODEL}`
+      : '[pipeline] llm: DISABLED (no OPENROUTER_API_KEY or offline mode); deterministic fallbacks in use'
+  );
 
   const [state, existingLatest, existingArchive] = await Promise.all([
     readPipelineState(PIPELINE_STATE_PATH),
@@ -398,7 +491,7 @@ async function main() {
     const normalizedExisting = dedupeById((existingLatest || []).map((item) => normalizeExistingArticle(item)));
     const imageBackfilled = await backfillLocalImages(normalizedExisting);
     const withExpertLens = await attachExpertLensToVisibleWindow(imageBackfilled, [], recentBlueprintIds);
-    const templateChecked = applyAntiTemplateRewrite(withExpertLens, [...existingLatest, ...existingArchive]);
+    const templateChecked = applyTiersForPublication(applyAntiTemplateRewrite(withExpertLens, [...existingLatest, ...existingArchive]));
     const { latest, supabaseStatus } = await syncArchiveArtifacts(templateChecked, existingArchive);
     await writeJsonFile(LATEST_NEWS_PATH, latest);
 
@@ -416,6 +509,15 @@ async function main() {
       slot,
       publishedCount: 0,
     });
+    const authoredOutcome = await runAuthoredColumnStage({
+      state,
+      candidates: dedupeById(latest),
+      pool,
+      recentRecords: [...latest, ...(existingArchive || [])],
+      now,
+    });
+    state.runHistory[state.runHistory.length - 1].authoredColumn = authoredOutcome;
+    state.runHistory[state.runHistory.length - 1].llmUsage = llmUsageSummary();
     state.runHistory = state.runHistory.slice(-120);
     await writePipelineState(PIPELINE_STATE_PATH, state);
     console.log(`[pipeline] normalization-only pass complete. archive push: ${JSON.stringify(supabaseStatus)}`);
@@ -469,6 +571,7 @@ async function main() {
       slot,
       now,
       blocked,
+      pool,
     });
     console.log(
       `[pipeline] completed with no new article pages published; quality gate blocked ${blocked.length}. archive push: ${JSON.stringify(supabaseStatus)}`
@@ -502,7 +605,9 @@ async function main() {
   const repetitionById = new Map(
     [...repetitionPassed, ...repetitionBlocked].map((article) => [article.id, article])
   );
-  const repetitionChecked = templateChecked.map((article) => repetitionById.get(article.id) || article);
+  const repetitionChecked = applyTiersForPublication(
+    templateChecked.map((article) => repetitionById.get(article.id) || article)
+  );
   const finalProcessedItems = [...repetitionPassed, ...signalCards, ...archiveOnly, ...repetitionBlocked];
 
   logRepetitionBlockedArticles(repetitionBlocked);
@@ -531,6 +636,15 @@ async function main() {
     signalCardItems: signalCards.map(toRunHistoryItem),
     archiveOnlyItems: archiveOnly.map(toRunHistoryItem),
   });
+  const authoredOutcome = await runAuthoredColumnStage({
+    state,
+    candidates: dedupeById([...repetitionPassed, ...latest]),
+    pool,
+    recentRecords: [...latest, ...(existingArchive || [])],
+    now,
+  });
+  state.runHistory[state.runHistory.length - 1].authoredColumn = authoredOutcome;
+  state.runHistory[state.runHistory.length - 1].llmUsage = llmUsageSummary();
   state.runHistory = state.runHistory.slice(-120);
 
   await writePipelineState(PIPELINE_STATE_PATH, state);

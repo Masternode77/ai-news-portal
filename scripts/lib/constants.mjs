@@ -21,11 +21,15 @@ export const OPENAI_IMAGE_SIZE = process.env.OPENAI_IMAGE_SIZE || '1536x1024';
 export const OPENAI_IMAGE_QUALITY = process.env.OPENAI_IMAGE_QUALITY || 'medium';
 
 export const OPENROUTER_API_URL = 'https://openrouter.ai/api/v1/chat/completions';
-export const OPENROUTER_MODEL = process.env.OPENROUTER_MODEL || 'openai/gpt-5.3-codex';
+// Defaults are deliberately long-lived catalog ids; production should pin the
+// preferred models via env/secrets. Unknown-model errors surface loudly in
+// logs and trigger the fallback chain instead of silently degrading.
+export const OPENROUTER_MODEL = process.env.OPENROUTER_MODEL || 'openai/gpt-4o-mini';
 export const OPENROUTER_SITE_URL = process.env.OPENROUTER_SITE_URL || '';
 export const OPENROUTER_APP_TITLE = process.env.OPENROUTER_APP_TITLE || 'Compute Current';
-export const EXPERT_LENS_MODEL = process.env.EXPERT_LENS_MODEL || 'openai/gpt-5.4';
-export const EXPERT_LENS_FALLBACK_MODEL = process.env.EXPERT_LENS_FALLBACK_MODEL || OPENROUTER_MODEL;
+export const EXPERT_LENS_MODEL = process.env.EXPERT_LENS_MODEL || 'anthropic/claude-sonnet-4.5';
+export const EXPERT_LENS_FALLBACK_MODEL = process.env.EXPERT_LENS_FALLBACK_MODEL || 'openai/gpt-4o';
+export const AUTHORED_COLUMN_MODEL = process.env.AUTHORED_COLUMN_MODEL || EXPERT_LENS_MODEL;
 
 export const GEMINI_API_URL = process.env.GEMINI_API_URL || 'https://generativelanguage.googleapis.com/v1beta/models';
 export const GEMINI_IMAGE_MODEL = process.env.GEMINI_IMAGE_MODEL || 'gemini-2.5-flash-image';
@@ -36,6 +40,11 @@ export const NEWS_POOL_PATH = 'src/data/news-pool.json';
 export const ARCHIVE_NEWS_PATH = 'src/data/archived-news.json';
 export const SEARCH_INDEX_PATH = 'src/data/search-index.json';
 export const TAXONOMY_PAGES_PATH = 'src/data/taxonomy-pages.json';
+export const AUTHORED_COLUMNS_PATH = 'src/data/authored-columns.json';
+
+export const AUTHORED_COLUMN_ENABLED = (process.env.AUTHORED_COLUMN_ENABLED ?? '1') !== '0';
+export const AUTHORED_COLUMNS_PER_DAY = Number(process.env.AUTHORED_COLUMNS_PER_DAY || 3);
+export const AUTHORED_COLUMN_MIN_GAP_HOURS = Number(process.env.AUTHORED_COLUMN_MIN_GAP_HOURS || 4);
 
 export const SUPABASE_URL = process.env.SUPABASE_URL || '';
 export const SUPABASE_SERVICE_ROLE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY || '';

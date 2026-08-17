@@ -3,7 +3,7 @@ import { sourceExtractionPassesLongformGate } from './source-extraction-fail-clo
 import { guardPublicTemplatePhrases } from './public-template-phrase-guard.mjs';
 import { guardPublicCopy } from './copy-quality-guard.mjs';
 import { detectBoilerplate } from './boilerplate-detector.mjs';
-import { detectTruncationArtifacts } from './truncation-detector.mjs';
+import { detectTruncationArtifacts, stripTrailingEllipsis } from './truncation-detector.mjs';
 import { cleanArticleBodyBlocks } from './article-body-cleaner.mjs';
 import { blogLengthResult } from './blog-length-policy.mjs';
 
@@ -11,8 +11,8 @@ function publicDetailText(article = {}) {
   const finalBody = article.expertLensFull?.finalArticleBody || '';
   return [
     article.title,
-    article.summary,
-    article.snippet,
+    stripTrailingEllipsis(article.summary),
+    stripTrailingEllipsis(article.snippet),
     article.deck,
     article.why_it_matters,
     article.expertLensShort,
