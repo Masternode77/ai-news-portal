@@ -10,7 +10,7 @@ import { SITE } from '../../config/site';
 import { buildColumnStructuredData, serializeJsonForScript } from '../../lib/seo-safeguards.js';
 import { publishedColumns, columnPath } from '../../../scripts/lib/column-surface.mjs';
 import { cleanArticleBodyBlocks } from '../../../scripts/lib/article-body-cleaner.mjs';
-import { loadPersonaCharter } from '../../../scripts/lib/authored-column-engine.mjs';
+import charter from '../../../config/editorial/persona-charter.json';
 import { safeHttpUrl } from '../../../scripts/lib/normalize.mjs';
 
 export function getStaticPaths() {
@@ -22,7 +22,6 @@ export function getStaticPaths() {
 
 const { column } = Astro.props;
 const columnRecord = column as any;
-const charter = loadPersonaCharter();
 const canonicalPath = columnPath(columnRecord);
 const canonicalUrl = `${SITE.url}${canonicalPath}`;
 const bodyBlocks = cleanArticleBodyBlocks(columnRecord.expertLensFull?.finalArticleBody || '');

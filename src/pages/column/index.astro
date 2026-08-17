@@ -4,9 +4,8 @@ import AdSlot from '../../components/monetize/AdSlot.astro';
 import authoredColumns from '../../data/authored-columns.json';
 import { SITE } from '../../config/site';
 import { buildColumnCards } from '../../../scripts/lib/column-surface.mjs';
-import { loadPersonaCharter } from '../../../scripts/lib/authored-column-engine.mjs';
+import charter from '../../../config/editorial/persona-charter.json';
 
-const charter = loadPersonaCharter();
 const cards = buildColumnCards(authoredColumns);
 const dateFormatter = new Intl.DateTimeFormat('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
 ---

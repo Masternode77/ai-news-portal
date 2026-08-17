@@ -4,14 +4,12 @@ import authoredColumns from '../../data/authored-columns.json';
 import { SITE } from '../../config/site';
 import { serializeJsonForScript } from '../../lib/seo-safeguards.js';
 import { buildColumnCards } from '../../../scripts/lib/column-surface.mjs';
-import { loadPersonaCharter } from '../../../scripts/lib/authored-column-engine.mjs';
+import charter from '../../../config/editorial/persona-charter.json';
 
 export function getStaticPaths() {
-  const charter = loadPersonaCharter();
   return [{ params: { slug: charter.persona.slug }, props: {} }];
 }
 
-const charter = loadPersonaCharter();
 const cards = buildColumnCards(authoredColumns).slice(0, 8);
 const dateFormatter = new Intl.DateTimeFormat('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
 const structuredData = {

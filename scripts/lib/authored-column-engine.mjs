@@ -30,14 +30,22 @@ import {
   authoredColumnQualityResult,
 } from './authored-column-policy.mjs';
 
-const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
-const CHARTER_PATH = path.join(ROOT, 'config/editorial/persona-charter.json');
+const CHARTER_RELATIVE_PATH = 'config/editorial/persona-charter.json';
 const STORY_KEY_WINDOW_HOURS = 72;
 const MIN_STORY_RELEVANCE = 0.75;
 const MIN_STORY_FACTS = 4;
 
+// Resolves from the working directory first (the pipeline, Astro build, and
+// CI all run from the repo root); the module-relative path only backs up
+// direct Node invocations from elsewhere. Bundled page code must NOT call
+// this — pages import the charter JSON statically instead.
 export function loadPersonaCharter() {
-  return JSON.parse(fs.readFileSync(CHARTER_PATH, 'utf8'));
+  const cwdPath = path.join(process.cwd(), CHARTER_RELATIVE_PATH);
+  if (fs.existsSync(cwdPath)) {
+    return JSON.parse(fs.readFileSync(cwdPath, 'utf8'));
+  }
+  const modulePath = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..', CHARTER_RELATIVE_PATH);
+  return JSON.parse(fs.readFileSync(modulePath, 'utf8'));
 }
 
 function parseModelJson(content) {
