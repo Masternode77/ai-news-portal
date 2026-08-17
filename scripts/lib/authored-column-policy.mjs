@@ -127,9 +127,14 @@ export function authoredColumnQualityResult({
   const truncation = detectTruncationArtifacts(body);
   if (!truncation.ok) reasons.push(...truncation.artifacts.slice(0, 3));
 
-  // 7. Numeric claims must be backed by the source-derived ledger.
+  // 7. Numeric claims must be backed by the source-derived ledger. The
+  // offending figures ride along in the reason so the retry pass knows
+  // exactly which numbers to remove.
   const claims = unsupportedClaimGuard(body, ledgerClaims);
-  if (!claims.ok) reasons.push('unsupported_numeric_claims');
+  if (!claims.ok) {
+    const offenders = (claims.unsupportedNumbers || []).slice(0, 5).map((claim) => claim.raw).join(',');
+    reasons.push(offenders ? `unsupported_numeric_claims:${offenders}` : 'unsupported_numeric_claims');
+  }
 
   // 8-9. Copyright shingle overlap + summary ratio against source texts.
   const copyright = copyrightSafeCopyGuard({ generatedText: body, sourceText });
