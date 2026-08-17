@@ -23,6 +23,7 @@ function loadDashboardModel() {
   return buildAdminDashboardModel({
     latestNews: readData('latest-news.json'),
     archivedNews: readData('archived-news.json'),
+    authoredColumns: readData('authored-columns.json'),
     editorialCycles: readData('editorial-cycles.json'),
     claimLedger: readData('claim-ledger.json'),
     sourceHealth: readData('source-health.json'),

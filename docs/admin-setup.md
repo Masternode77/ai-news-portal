@@ -32,6 +32,10 @@ Publishing and editor saves use:
 
 The token needs repository contents write access. Preview actions do not create commits; save and publish actions update the source JSON, search index, and admin audit log.
 
+## Editing The Current Columns
+
+Authored columns (`src/data/authored-columns.json`) appear in the admin dashboard alongside wire articles, labeled with source `The Current` and linked to their `/column/<slug>/` page. They open in the same editor (`/admin/edit/?id=col_...`). Saves go through the authored publish validation branch (minimum essay length, banned-phrase scan; source-extraction gates do not apply) and commit with `[skip release]` so editor saves never cut a release tag.
+
 ## Reset Procedure
 
 1. Rotate `ADMIN_SESSION_SECRET`.
