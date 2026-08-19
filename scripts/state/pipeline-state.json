@@ -43833,84 +43833,19 @@
     "2026-08-19": {
       "date": "2026-08-19",
       "createdAt": "2026-08-18T15:37:19.132Z",
-      "refreshedAt": "2026-08-18T23:32:11.876Z",
+      "refreshedAt": "2026-08-19T07:50:59.930Z",
       "candidateWindowHours": 24,
       "curatedItems": [],
       "curatedIds": [],
       "publishedIds": [],
       "slotPublications": {
         "0": true,
-        "1": true
+        "1": true,
+        "2": true
       }
     }
   },
   "runHistory": [
-    {
-      "at": "2026-07-07T00:10:04.782Z",
-      "day": "2026-07-07",
-      "slot": 1,
-      "publishedCount": 0,
-      "signalCardCount": 2,
-      "archiveOnlyCount": 0,
-      "processedIds": [
-        "ccd30150ca710eeb",
-        "2e4313a92998ca3e"
-      ],
-      "blockedCount": 2,
-      "blockedItems": [
-        {
-          "id": "ccd30150ca710eeb",
-          "title": "IQM Acquires Quantistry Assets to Expand Industrial Quantum Software Platform",
-          "infrastructure_relevance_score": 0.967,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud, high-performance computing)",
-            "cloud_capacity_relevance:0.54(hyperscalers, aws)",
-            "semiconductor_relevance:0.50(nvidia, gpu)",
-            "power_grid_relevance:0.76(power, grid, utility)",
-            "capital_markets_relevance:0.30(acquisition)"
-          ],
-          "extraction_quality_score": 1,
-          "source_domain_adapter": "generic",
-          "content_length": 1774,
-          "boilerplate_ratio": 0,
-          "repetition_blocked": false,
-          "repetition_block_reasons": [],
-          "repetition_check": null,
-          "expert_insight_complete": true,
-          "expert_insight_missing_fields": [],
-          "reason": "fail_closed: source_text_incomplete:ellipsis_truncation_artifact, ellipsis_truncation_artifact"
-        },
-        {
-          "id": "2e4313a92998ca3e",
-          "title": "The ‘first’ AI-run ransomware attack still needed a human",
-          "infrastructure_relevance_score": 0.87,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "cloud_capacity_relevance:0.32(hyperscalers)",
-            "semiconductor_relevance:0.22(gpu)",
-            "power_grid_relevance:0.22(power)",
-            "capital_markets_relevance:0.28(funding)"
-          ],
-          "extraction_quality_score": 1,
-          "source_domain_adapter": "techcrunch",
-          "content_length": 1690,
-          "boilerplate_ratio": 0,
-          "repetition_blocked": false,
-          "repetition_block_reasons": [],
-          "repetition_check": null,
-          "expert_insight_complete": false,
-          "expert_insight_missing_fields": [
-            "named_companies"
-          ],
-          "reason": "expert_insight_missing_fields named_companies"
-        }
-      ],
-      "archiveOnlyItems": []
-    },
     {
       "at": "2026-07-07T10:31:20.406Z",
       "day": "2026-07-07",
@@ -56753,9 +56688,28 @@
         "token_budget": 60000,
         "call_budget": 40
       }
+    },
+    {
+      "at": "2026-08-19T07:50:59.930Z",
+      "day": "2026-08-19",
+      "slot": 2,
+      "publishedCount": 0,
+      "authoredColumn": {
+        "published": false,
+        "reason": "verify:forbidden_phrase:the development|public_template_phrase:the development"
+      },
+      "llmUsage": {
+        "calls": 5,
+        "failures": 0,
+        "prompt_tokens": 12706,
+        "completion_tokens": 6685,
+        "total_tokens": 19391,
+        "token_budget": 60000,
+        "call_budget": 40
+      }
     }
   ],
-  "lastRunAt": "2026-08-18T23:32:11.876Z",
+  "lastRunAt": "2026-08-19T07:50:59.930Z",
   "authored": {
     "lastColumnAt": "2026-08-18T07:50:14.866Z",
     "columnsByDay": {
@@ -56777,9 +56731,9 @@
       }
     ],
     "lastFailure": {
-      "at": "2026-08-18T23:32:11.876Z",
+      "at": "2026-08-19T07:50:59.930Z",
       "stage": "verify",
-      "detail": "unsupported_numeric_claims:33 million,000 megawatts,33 million,000 megawatts,24 months"
+      "detail": "forbidden_phrase:the development|public_template_phrase:the development"
     }
   }
 }
