@@ -43860,78 +43860,21 @@
         "1": true,
         "2": true
       }
+    },
+    "2026-08-21": {
+      "date": "2026-08-21",
+      "createdAt": "2026-08-20T15:38:42.623Z",
+      "refreshedAt": "2026-08-20T15:38:42.623Z",
+      "candidateWindowHours": 24,
+      "curatedItems": [],
+      "curatedIds": [],
+      "publishedIds": [],
+      "slotPublications": {
+        "0": true
+      }
     }
   },
   "runHistory": [
-    {
-      "at": "2026-07-08T09:32:01.190Z",
-      "day": "2026-07-08",
-      "slot": 2,
-      "publishedCount": 0,
-      "signalCardCount": 2,
-      "archiveOnlyCount": 0,
-      "processedIds": [
-        "4627427763dc9320",
-        "d52452aa34a12965"
-      ],
-      "blockedCount": 2,
-      "blockedItems": [
-        {
-          "id": "4627427763dc9320",
-          "title": "Field Guide to DDR Signal Integrity Analysis",
-          "infrastructure_relevance_score": 0.928,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "cloud_capacity_relevance:0.32(hyperscalers)",
-            "semiconductor_relevance:0.58(semiconductor, gpu)",
-            "power_grid_relevance:0.22(power)",
-            "capital_markets_relevance:0.28(capex)"
-          ],
-          "extraction_quality_score": 0.62,
-          "source_domain_adapter": "semiengineering",
-          "content_length": 370,
-          "boilerplate_ratio": 0,
-          "repetition_blocked": false,
-          "repetition_block_reasons": [],
-          "repetition_check": null,
-          "expert_insight_complete": false,
-          "expert_insight_missing_fields": [
-            "concrete_facts",
-            "named_companies"
-          ],
-          "reason": "fail_closed: source_text_incomplete:source_evidence_length_below_500, source_evidence_length_below_1200"
-        },
-        {
-          "id": "d52452aa34a12965",
-          "title": "Could Scotland freeze data centre projects and stall UK AI ambitions?",
-          "infrastructure_relevance_score": 0.863,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:0.82",
-            "data_center_relevance:0.50(colocation, campus)",
-            "cloud_capacity_relevance:0.76(cloud capacity, hyperscalers)",
-            "power_grid_relevance:0.50(power, grid)",
-            "capital_markets_relevance:0.28(capex)"
-          ],
-          "extraction_quality_score": 1,
-          "source_domain_adapter": "generic",
-          "content_length": 1783,
-          "boilerplate_ratio": 0,
-          "repetition_blocked": false,
-          "repetition_block_reasons": [],
-          "repetition_check": null,
-          "expert_insight_complete": false,
-          "expert_insight_missing_fields": [
-            "named_companies"
-          ],
-          "reason": "expert_insight_missing_fields named_companies"
-        }
-      ],
-      "archiveOnlyItems": []
-    },
     {
       "at": "2026-07-08T16:44:58.760Z",
       "day": "2026-07-09",
@@ -56441,21 +56384,36 @@
         "token_budget": 60000,
         "call_budget": 40
       }
+    },
+    {
+      "at": "2026-08-20T15:38:42.623Z",
+      "day": "2026-08-21",
+      "slot": 0,
+      "publishedCount": 0,
+      "authoredColumn": {
+        "published": true,
+        "slug": "amazon-s-gilroy-site-proves-zoning-lead-time-beats-community-con-2026-08-20"
+      },
+      "llmUsage": {
+        "calls": 5,
+        "failures": 0,
+        "prompt_tokens": 14386,
+        "completion_tokens": 8388,
+        "total_tokens": 22774,
+        "token_budget": 60000,
+        "call_budget": 40
+      }
     }
   ],
-  "lastRunAt": "2026-08-20T07:53:24.056Z",
+  "lastRunAt": "2026-08-20T15:38:42.623Z",
   "authored": {
-    "lastColumnAt": "2026-08-20T07:53:24.056Z",
+    "lastColumnAt": "2026-08-20T15:38:42.623Z",
     "columnsByDay": {
       "2026-08-17": 2,
       "2026-08-18": 1,
-      "2026-08-20": 1
+      "2026-08-20": 2
     },
     "recentStoryKeys": [
-      {
-        "key": "https://semiengineering.com/chip-industry-week-in-review-150/",
-        "at": "2026-08-17T13:45:22.853Z"
-      },
       {
         "key": "https://www.eia.gov/todayinenergy/detail.php",
         "at": "2026-08-17T23:32:53.896Z"
@@ -56467,6 +56425,10 @@
       {
         "key": "https://techcrunch.com/2026/08/08/planned-amazon-data-center-could-become-the-biggest-climate-polluter-in-the-u-s/",
         "at": "2026-08-20T07:53:24.056Z"
+      },
+      {
+        "key": "https://www.tomshardware.com/tech-industry/data-centers/amazon-secretly-circumvents-community-vote-for-massive-ai-data-center-45-year-old-rules-lock-gilroy-residents-out-of-public-comment-window",
+        "at": "2026-08-20T15:38:42.623Z"
       }
     ],
     "lastFailure": null
