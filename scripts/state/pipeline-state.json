@@ -43878,143 +43878,18 @@
     "2026-08-22": {
       "date": "2026-08-22",
       "createdAt": "2026-08-21T15:38:39.430Z",
-      "refreshedAt": "2026-08-21T15:38:39.430Z",
+      "refreshedAt": "2026-08-21T23:34:29.192Z",
       "candidateWindowHours": 24,
       "curatedItems": [],
       "curatedIds": [],
       "publishedIds": [],
       "slotPublications": {
-        "0": true
+        "0": true,
+        "1": true
       }
     }
   },
   "runHistory": [
-    {
-      "at": "2026-07-09T17:25:00.285Z",
-      "day": "2026-07-10",
-      "slot": 0,
-      "publishedCount": 0,
-      "signalCardCount": 0,
-      "archiveOnlyCount": 0,
-      "repetitionBlockedCount": 2,
-      "publishedIds": [],
-      "processedIds": [
-        "ab2422a259d8f4dc",
-        "2718004370758867"
-      ],
-      "blockedCount": 0,
-      "blockedItems": [],
-      "repetitionBlockedItems": [
-        {
-          "id": "ab2422a259d8f4dc",
-          "title": "Can Growing Community Backlash Quiet the AI Data Center Boom?",
-          "infrastructure_relevance_score": 1,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, ai data center)",
-            "data_center_relevance:1.00(data center, colocation, campus)",
-            "power_grid_relevance:0.72(power, utility, electricity)",
-            "capital_markets_relevance:0.28(capex)"
-          ],
-          "extraction_quality_score": 1,
-          "source_domain_adapter": "datacenterknowledge",
-          "content_length": 1667,
-          "boilerplate_ratio": 0,
-          "repetition_blocked": true,
-          "repetition_block_reasons": [
-            "repeated_sentence_ratio>0.12",
-            "heading_sequence_similarity>0.75",
-            "conclusion_similarity>0.7"
-          ],
-          "repetition_check": {
-            "compared_article_count": 20,
-            "repeated_sentence_ratio": 0.3333333333333333,
-            "repeated_paragraph_ratio": 0.3333333333333333,
-            "heading_sequence_similarity": 1,
-            "banned_phrase_count": 0,
-            "banned_phrase_counts": {},
-            "recent_banned_phrase_counts": {},
-            "ngram_overlap": 0.3865546218487395,
-            "blueprint_repetition": 2,
-            "conclusion_similarity": 0.9511897312113418,
-            "repeated_sentence_count": 2,
-            "repeated_paragraph_count": 2,
-            "heading_sequence": [
-              "What Changed",
-              "Energy Procurement Read",
-              "Volatility Risk",
-              "Next Market Test"
-            ],
-            "blocked": true,
-            "reasons": [
-              "repeated_sentence_ratio>0.12",
-              "heading_sequence_similarity>0.75",
-              "conclusion_similarity>0.7"
-            ]
-          },
-          "expert_insight_complete": true,
-          "expert_insight_missing_fields": [],
-          "reason": "repeated_sentence_ratio>0.12; heading_sequence_similarity>0.75; conclusion_similarity>0.7"
-        },
-        {
-          "id": "2718004370758867",
-          "title": "NVIDIA Pairs Revenue Sharing With Credit Support to Finance AI Cloud Buildouts",
-          "infrastructure_relevance_score": 0.932,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, compute capacity, neocloud)",
-            "cloud_capacity_relevance:0.32(hyperscalers)",
-            "semiconductor_relevance:0.60(nvidia, gpu)",
-            "power_grid_relevance:0.22(power)",
-            "capital_markets_relevance:0.60(funding, financing)",
-            "enterprise_ai_infrastructure_relevance:0.30(inference workloads)"
-          ],
-          "extraction_quality_score": 1,
-          "source_domain_adapter": "storagereview",
-          "content_length": 1633,
-          "boilerplate_ratio": 0,
-          "repetition_blocked": true,
-          "repetition_block_reasons": [
-            "repeated_sentence_ratio>0.12",
-            "heading_sequence_similarity>0.75",
-            "conclusion_similarity>0.7"
-          ],
-          "repetition_check": {
-            "compared_article_count": 20,
-            "repeated_sentence_ratio": 0.14285714285714285,
-            "repeated_paragraph_ratio": 0.16666666666666666,
-            "heading_sequence_similarity": 1,
-            "banned_phrase_count": 0,
-            "banned_phrase_counts": {},
-            "recent_banned_phrase_counts": {},
-            "ngram_overlap": 0.3076923076923077,
-            "blueprint_repetition": 1,
-            "conclusion_similarity": 0.9271050693011066,
-            "repeated_sentence_count": 1,
-            "repeated_paragraph_count": 1,
-            "heading_sequence": [
-              "Deal Signal",
-              "Contract Quality",
-              "Operating Dependency",
-              "Investor Test"
-            ],
-            "blocked": true,
-            "reasons": [
-              "repeated_sentence_ratio>0.12",
-              "heading_sequence_similarity>0.75",
-              "conclusion_similarity>0.7"
-            ]
-          },
-          "expert_insight_complete": true,
-          "expert_insight_missing_fields": [],
-          "reason": "repeated_sentence_ratio>0.12; heading_sequence_similarity>0.75; conclusion_similarity>0.7"
-        }
-      ],
-      "signalCardItems": [],
-      "archiveOnlyItems": []
-    },
     {
       "at": "2026-07-10T00:07:07.482Z",
       "day": "2026-07-10",
@@ -56099,9 +55974,28 @@
         "token_budget": 60000,
         "call_budget": 40
       }
+    },
+    {
+      "at": "2026-08-21T23:34:29.192Z",
+      "day": "2026-08-22",
+      "slot": 1,
+      "publishedCount": 0,
+      "authoredColumn": {
+        "published": false,
+        "reason": "verify:missing_counterargument_section|template_language_detected"
+      },
+      "llmUsage": {
+        "calls": 5,
+        "failures": 0,
+        "prompt_tokens": 13589,
+        "completion_tokens": 6854,
+        "total_tokens": 20443,
+        "token_budget": 60000,
+        "call_budget": 40
+      }
     }
   ],
-  "lastRunAt": "2026-08-21T15:38:39.430Z",
+  "lastRunAt": "2026-08-21T23:34:29.192Z",
   "authored": {
     "lastColumnAt": "2026-08-21T15:38:39.430Z",
     "columnsByDay": {
@@ -56128,6 +56022,10 @@
         "at": "2026-08-21T15:38:39.430Z"
       }
     ],
-    "lastFailure": null
+    "lastFailure": {
+      "at": "2026-08-21T23:34:29.192Z",
+      "stage": "verify",
+      "detail": "missing_counterargument_section|template_language_detected"
+    }
   }
 }
