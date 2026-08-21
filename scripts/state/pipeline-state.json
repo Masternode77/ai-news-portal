@@ -43864,139 +43864,19 @@
     "2026-08-21": {
       "date": "2026-08-21",
       "createdAt": "2026-08-20T15:38:42.623Z",
-      "refreshedAt": "2026-08-20T23:35:42.557Z",
+      "refreshedAt": "2026-08-21T07:53:51.554Z",
       "candidateWindowHours": 24,
       "curatedItems": [],
       "curatedIds": [],
       "publishedIds": [],
       "slotPublications": {
         "0": true,
-        "1": true
+        "1": true,
+        "2": true
       }
     }
   },
   "runHistory": [
-    {
-      "at": "2026-07-09T00:13:32.275Z",
-      "day": "2026-07-09",
-      "slot": 1,
-      "publishedCount": 0,
-      "signalCardCount": 1,
-      "archiveOnlyCount": 0,
-      "repetitionBlockedCount": 1,
-      "publishedIds": [],
-      "processedIds": [
-        "8bec059c036a3e9d",
-        "961088cbf4a06cde"
-      ],
-      "blockedCount": 1,
-      "blockedItems": [
-        {
-          "id": "8bec059c036a3e9d",
-          "title": "SiPearl, 2CRSi and Partners Launch ÆTHER AI Gigafactory Initiative",
-          "infrastructure_relevance_score": 0.989,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud, high-performance computing)",
-            "cloud_capacity_relevance:0.32(hyperscalers)",
-            "semiconductor_relevance:0.86(semiconductors, nvidia, gpu)",
-            "power_grid_relevance:0.50(power, grid)"
-          ],
-          "extraction_quality_score": 1,
-          "source_domain_adapter": "generic",
-          "content_length": 1640,
-          "boilerplate_ratio": 0,
-          "repetition_blocked": false,
-          "repetition_block_reasons": [],
-          "repetition_check": null,
-          "expert_insight_complete": true,
-          "expert_insight_missing_fields": [],
-          "reason": "fail_closed: source_text_incomplete:ellipsis_truncation_artifact, ellipsis_truncation_artifact"
-        }
-      ],
-      "repetitionBlockedItems": [
-        {
-          "id": "961088cbf4a06cde",
-          "title": "Duos Edge AI Signs Agreement for an Additional 2 MW Deployment",
-          "infrastructure_relevance_score": 0.952,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:0.90(ai infrastructure, hpc)",
-            "data_center_relevance:0.92(data center, colocation, campus)",
-            "semiconductor_relevance:0.28(nvidia)",
-            "power_grid_relevance:0.75(power, utility, mw)",
-            "cooling_relevance:0.34(cooling)"
-          ],
-          "extraction_quality_score": 1,
-          "source_domain_adapter": "datacenterpost",
-          "content_length": 1570,
-          "boilerplate_ratio": 0,
-          "repetition_blocked": true,
-          "repetition_block_reasons": [
-            "repeated_sentence_ratio>0.12",
-            "heading_sequence_similarity>0.75",
-            "conclusion_similarity>0.7"
-          ],
-          "repetition_check": {
-            "compared_article_count": 20,
-            "repeated_sentence_ratio": 0.3333333333333333,
-            "repeated_paragraph_ratio": 0.3333333333333333,
-            "heading_sequence_similarity": 1,
-            "banned_phrase_count": 0,
-            "banned_phrase_counts": {},
-            "recent_banned_phrase_counts": {},
-            "ngram_overlap": 0.352,
-            "blueprint_repetition": 1,
-            "conclusion_similarity": 0.9511897312113418,
-            "repeated_sentence_count": 2,
-            "repeated_paragraph_count": 2,
-            "heading_sequence": [
-              "What Changed",
-              "Energy Procurement Read",
-              "Volatility Risk",
-              "Next Market Test"
-            ],
-            "blocked": true,
-            "reasons": [
-              "repeated_sentence_ratio>0.12",
-              "heading_sequence_similarity>0.75",
-              "conclusion_similarity>0.7"
-            ]
-          },
-          "expert_insight_complete": true,
-          "expert_insight_missing_fields": [],
-          "reason": "repeated_sentence_ratio>0.12; heading_sequence_similarity>0.75; conclusion_similarity>0.7"
-        }
-      ],
-      "signalCardItems": [
-        {
-          "id": "8bec059c036a3e9d",
-          "title": "SiPearl, 2CRSi and Partners Launch ÆTHER AI Gigafactory Initiative",
-          "infrastructure_relevance_score": 0.989,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud, high-performance computing)",
-            "cloud_capacity_relevance:0.32(hyperscalers)",
-            "semiconductor_relevance:0.86(semiconductors, nvidia, gpu)",
-            "power_grid_relevance:0.50(power, grid)"
-          ],
-          "extraction_quality_score": 1,
-          "source_domain_adapter": "generic",
-          "content_length": 1640,
-          "boilerplate_ratio": 0,
-          "repetition_blocked": false,
-          "repetition_block_reasons": [],
-          "repetition_check": null,
-          "expert_insight_complete": true,
-          "expert_insight_missing_fields": [],
-          "reason": "fail_closed: source_text_incomplete:ellipsis_truncation_artifact, ellipsis_truncation_artifact"
-        }
-      ],
-      "archiveOnlyItems": []
-    },
     {
       "at": "2026-07-09T10:40:25.329Z",
       "day": "2026-07-09",
@@ -56297,9 +56177,28 @@
         "token_budget": 60000,
         "call_budget": 40
       }
+    },
+    {
+      "at": "2026-08-21T07:53:51.554Z",
+      "day": "2026-08-21",
+      "slot": 2,
+      "publishedCount": 0,
+      "authoredColumn": {
+        "published": false,
+        "reason": "verify:copied_source_sentence"
+      },
+      "llmUsage": {
+        "calls": 5,
+        "failures": 0,
+        "prompt_tokens": 14467,
+        "completion_tokens": 8057,
+        "total_tokens": 22524,
+        "token_budget": 60000,
+        "call_budget": 40
+      }
     }
   ],
-  "lastRunAt": "2026-08-20T23:35:42.557Z",
+  "lastRunAt": "2026-08-21T07:53:51.554Z",
   "authored": {
     "lastColumnAt": "2026-08-20T23:35:42.557Z",
     "columnsByDay": {
@@ -56308,10 +56207,6 @@
       "2026-08-20": 3
     },
     "recentStoryKeys": [
-      {
-        "key": "https://blogs.nvidia.com/blog/800-vdc-power-architecture-ai-factory/",
-        "at": "2026-08-18T07:50:14.866Z"
-      },
       {
         "key": "https://techcrunch.com/2026/08/08/planned-amazon-data-center-could-become-the-biggest-climate-polluter-in-the-u-s/",
         "at": "2026-08-20T07:53:24.056Z"
@@ -56325,6 +56220,10 @@
         "at": "2026-08-20T23:35:42.557Z"
       }
     ],
-    "lastFailure": null
+    "lastFailure": {
+      "at": "2026-08-21T07:53:51.554Z",
+      "stage": "verify",
+      "detail": "copied_source_sentence"
+    }
   }
 }
