@@ -43888,136 +43888,21 @@
         "1": true,
         "2": true
       }
+    },
+    "2026-08-23": {
+      "date": "2026-08-23",
+      "createdAt": "2026-08-22T15:26:17.330Z",
+      "refreshedAt": "2026-08-22T15:26:17.330Z",
+      "candidateWindowHours": 24,
+      "curatedItems": [],
+      "curatedIds": [],
+      "publishedIds": [],
+      "slotPublications": {
+        "0": true
+      }
     }
   },
   "runHistory": [
-    {
-      "at": "2026-07-10T10:29:14.431Z",
-      "day": "2026-07-10",
-      "slot": 2,
-      "publishedCount": 0,
-      "signalCardCount": 0,
-      "archiveOnlyCount": 0,
-      "repetitionBlockedCount": 2,
-      "publishedIds": [],
-      "processedIds": [
-        "e8bf73b95e91a1bc",
-        "fca1293647b8c0e8"
-      ],
-      "blockedCount": 0,
-      "blockedItems": [],
-      "repetitionBlockedItems": [
-        {
-          "id": "e8bf73b95e91a1bc",
-          "title": "Samsung readies Gaia AI accelerator for PCs — HP and Lenovo are reportedly validating the NPU",
-          "infrastructure_relevance_score": 1,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud, hpc)",
-            "cloud_capacity_relevance:0.32(hyperscalers)",
-            "semiconductor_relevance:1.00(amd, intel, hbm)",
-            "power_grid_relevance:0.22(power)",
-            "enterprise_ai_infrastructure_relevance:0.24(ai workloads)"
-          ],
-          "extraction_quality_score": 1,
-          "source_domain_adapter": "generic",
-          "content_length": 1619,
-          "boilerplate_ratio": 0,
-          "repetition_blocked": true,
-          "repetition_block_reasons": [
-            "repeated_sentence_ratio>0.12",
-            "heading_sequence_similarity>0.75",
-            "conclusion_similarity>0.7"
-          ],
-          "repetition_check": {
-            "compared_article_count": 20,
-            "repeated_sentence_ratio": 0.2857142857142857,
-            "repeated_paragraph_ratio": 0.3333333333333333,
-            "heading_sequence_similarity": 1,
-            "banned_phrase_count": 0,
-            "banned_phrase_counts": {},
-            "recent_banned_phrase_counts": {},
-            "ngram_overlap": 0.4956521739130435,
-            "blueprint_repetition": 2,
-            "conclusion_similarity": 0.9511897312113418,
-            "repeated_sentence_count": 2,
-            "repeated_paragraph_count": 2,
-            "heading_sequence": [
-              "Cost Signal",
-              "Below The Accelerator Layer",
-              "Buyer Exposure",
-              "Planning Metric"
-            ],
-            "blocked": true,
-            "reasons": [
-              "repeated_sentence_ratio>0.12",
-              "heading_sequence_similarity>0.75",
-              "conclusion_similarity>0.7"
-            ]
-          },
-          "expert_insight_complete": true,
-          "expert_insight_missing_fields": [],
-          "reason": "repeated_sentence_ratio>0.12; heading_sequence_similarity>0.75; conclusion_similarity>0.7"
-        },
-        {
-          "id": "fca1293647b8c0e8",
-          "title": "‘Grid capacity is the biggest constraint’: Schneider Electric on the UK’s AI infrastructure squeeze",
-          "infrastructure_relevance_score": 0.967,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, gpu cluster, rack density)",
-            "data_center_relevance:0.28(rack density)",
-            "cloud_capacity_relevance:0.76(cloud capacity, hyperscalers)",
-            "semiconductor_relevance:0.50(nvidia, gpu)",
-            "power_grid_relevance:0.60(power, grid)",
-            "cooling_relevance:0.24(rack density)"
-          ],
-          "extraction_quality_score": 1,
-          "source_domain_adapter": "generic",
-          "content_length": 1773,
-          "boilerplate_ratio": 0,
-          "repetition_blocked": true,
-          "repetition_block_reasons": [
-            "repeated_sentence_ratio>0.12",
-            "heading_sequence_similarity>0.75",
-            "conclusion_similarity>0.7"
-          ],
-          "repetition_check": {
-            "compared_article_count": 20,
-            "repeated_sentence_ratio": 0.42857142857142855,
-            "repeated_paragraph_ratio": 0.5,
-            "heading_sequence_similarity": 1,
-            "banned_phrase_count": 0,
-            "banned_phrase_counts": {},
-            "recent_banned_phrase_counts": {},
-            "ngram_overlap": 0.475,
-            "blueprint_repetition": 1,
-            "conclusion_similarity": 1,
-            "repeated_sentence_count": 3,
-            "repeated_paragraph_count": 3,
-            "heading_sequence": [
-              "Power-Market Move",
-              "Operating Lever",
-              "Grid Exposure",
-              "Metric To Watch"
-            ],
-            "blocked": true,
-            "reasons": [
-              "repeated_sentence_ratio>0.12",
-              "heading_sequence_similarity>0.75",
-              "conclusion_similarity>0.7"
-            ]
-          },
-          "expert_insight_complete": true,
-          "expert_insight_missing_fields": [],
-          "reason": "repeated_sentence_ratio>0.12; heading_sequence_similarity>0.75; conclusion_similarity>0.7"
-        }
-      ],
-      "signalCardItems": [],
-      "archiveOnlyItems": []
-    },
     {
       "at": "2026-07-10T17:03:15.903Z",
       "day": "2026-07-11",
@@ -55948,16 +55833,36 @@
         "token_budget": 60000,
         "call_budget": 40
       }
+    },
+    {
+      "at": "2026-08-22T15:26:17.330Z",
+      "day": "2026-08-23",
+      "slot": 0,
+      "publishedCount": 0,
+      "authoredColumn": {
+        "published": true,
+        "slug": "eaton-s-quantum-contract-is-a-grid-planning-bet-not-a-quantum-be-2026-08-22"
+      },
+      "llmUsage": {
+        "calls": 5,
+        "failures": 0,
+        "prompt_tokens": 13453,
+        "completion_tokens": 6562,
+        "total_tokens": 20015,
+        "token_budget": 60000,
+        "call_budget": 40
+      }
     }
   ],
-  "lastRunAt": "2026-08-22T07:41:03.876Z",
+  "lastRunAt": "2026-08-22T15:26:17.330Z",
   "authored": {
-    "lastColumnAt": "2026-08-21T15:38:39.430Z",
+    "lastColumnAt": "2026-08-22T15:26:17.330Z",
     "columnsByDay": {
       "2026-08-17": 2,
       "2026-08-18": 1,
       "2026-08-20": 3,
-      "2026-08-21": 1
+      "2026-08-21": 1,
+      "2026-08-22": 1
     },
     "recentStoryKeys": [
       {
@@ -55975,12 +55880,12 @@
       {
         "key": "https://www.storagereview.com/news/sk-hynix-at-fms-2026-16-high-hbm4-wafer-bonded-375-layer-nand-and-a-tiered-memory-pitch",
         "at": "2026-08-21T15:38:39.430Z"
+      },
+      {
+        "key": "https://www.hpcwire.com/off-the-wire/infleqtion-selected-by-eaton-to-support-research-advancing-quantum-computing-for-us-grid-resilience/",
+        "at": "2026-08-22T15:26:17.330Z"
       }
     ],
-    "lastFailure": {
-      "at": "2026-08-22T07:41:03.876Z",
-      "stage": "verify",
-      "detail": "public_template_phrase:Operationally,"
-    }
+    "lastFailure": null
   }
 }
