@@ -6,9 +6,10 @@ const SOURCE_TEXT = [
   'Northline also said liquid cooling will be required for the second phase because rack densities keep climbing.',
 ].join(' ');
 
-const WATCHLIST = 'On My Watchlist';
+const CLOSING_HEADING = 'Signals That Settle the Dakota Bet';
+const COUNTER_HEADING = 'The Case for the Utility Delivering';
 
-export { SOURCE_TEXT, WATCHLIST };
+export { SOURCE_TEXT, CLOSING_HEADING, COUNTER_HEADING };
 
 export function fixtureArticle(overrides = {}) {
   return {
@@ -62,7 +63,7 @@ export function essayBody() {
       'Investors reading this as a straightforward capacity expansion are underpricing the dependency chain. Budget overruns on grid work land in lease escalators eventually. The leverage sits with whoever controls the interconnection, and here that is the utility, full stop.',
       'The capital stack tells the same story from another direction. A developer that needed anchor economics before breaking ground is a developer whose financing costs move with tenant credit, not with power prices. If the tenant wobbles, the project cost of capital reprices overnight, and the utility keeps its schedule either way. That asymmetry is the trade every anchor tenant in this market is quietly accepting, and most of them are not pricing the exposure into their capacity planning.',
     ]],
-    ['Where I Could Be Wrong', [
+    [COUNTER_HEADING, [
       'The honest case against my read: queue positions granted after long waits tend to be durable, and a contracted 40 MW first phase suggests the utility has already done the engineering study work that usually causes slippage. If the substation hits its milestones, the developer looks prescient and the anchor tenant gets cheap, early capacity while rivals are still negotiating.',
       'There is also a scenario where regional load growth stalls and the utility accelerates the work to lock in a rate-base project. In that world my caution costs readers a good entry, not a bad one.',
     ]],
@@ -71,7 +72,7 @@ export function essayBody() {
       'Watch whether the developer discloses a separate cooling budget. Silence on that line item usually means the allocation fight is still happening internally.',
       'There is a procurement angle here too. Liquid cooling shifts spend from the utility side of the ledger to the facility side, and it moves delivery risk onto supplier lead times for cold plates, manifolds, and coolant distribution units. Operators who locked supplier allocation early will treat the density transition as a milestone; everyone else will treat it as an exposure. The cost difference between those two positions compounds with every rack the campus lands, and it shows up in the operating budget long before it shows up in any press release.',
     ]],
-    [WATCHLIST, [
+    [CLOSING_HEADING, [
       'Substation construction milestones over the next two quarters, because the energization date lives or dies there. Any utility rate filing that references the campus load, because that is where the true cost allocation shows up. And the identity of the second-phase tenant, because a named commitment would confirm the demand side of my thesis while an unnamed one keeps it a supply-side story.',
     ]],
   ];

@@ -71,3 +71,26 @@ OPENROUTER_API_KEY=sk-... node scripts/generate-authored-column.mjs --dry-run
 # 검증까지 통과하면 실제로 저장
 OPENROUTER_API_KEY=sk-... node scripts/generate-authored-column.mjs --force
 ```
+
+## 7. 구조 다양성 계약 (v2)
+
+칼럼이 템플릿처럼 읽히지 않도록 고정 섹션 제목은 폐지되었습니다.
+
+- 'On My Watchlist' / 'Where I Could Be Wrong'은 **영구 금지 제목**입니다(게이트가 차단).
+- 모든 섹션 제목은 그 칼럼의 논증에서 새로 발명해야 하며, 최근 15편에서 쓴 제목(유사 표현 포함)을
+  재사용하면 검증에서 탈락합니다. 리드 문장이 최근 칼럼과 겹쳐도 탈락합니다.
+- 반론 섹션과 전방 관측(마무리) 섹션은 여전히 필수지만, 제목은 매번 다릅니다.
+
+## 8. 증거 피규어 (표·스탯·바 차트)
+
+모든 칼럼은 본문 사이에 **1~3개의 증거 피규어**를 싣습니다. 수치·팩트는 해당 스토리의
+클레임 렛저(verified_primary)에서만 가져오며, 관련성 필터가 주간 라운드업형 소스의 무관한
+항목을 걸러냅니다. 수치가 풍부하면 바 차트/수치 표, 부족하면 출처 표기가 붙은 팩트 표가
+자동 구성됩니다. 편집은 admin에서 칼럼 레코드의 `figures` 배열을 수정하면 됩니다.
+
+## 9. 칼럼 히어로 이미지 (image2)
+
+`OPENAI_API_KEY` 시크릿을 GitHub Actions에 등록하면 칼럼 히어로 이미지가 wire 기사와 동일한
+image2(OpenAI 이미지) 경로로 **칼럼 내용 기반** 생성됩니다(hero/og/thumbnail 세트,
+`public/generated/col_.../`). 키가 없으면 원천 기사 이미지를 재사용하는 기존 동작이 유지되며
+발행은 막히지 않습니다.

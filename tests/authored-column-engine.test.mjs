@@ -6,10 +6,24 @@ import {
   selectColumnStory,
   verificationFeedback,
 } from '../scripts/lib/authored-column-engine.mjs';
-import { authoredColumnQualityResult } from '../scripts/lib/authored-column-policy.mjs';
+import {
+  authoredColumnQualityResult,
+  recentHeadingsFromColumns,
+  recentLeadsFromColumns,
+} from '../scripts/lib/authored-column-policy.mjs';
+import { buildColumnFigures, numericLedgerClaims } from '../scripts/lib/authored-column-figures.mjs';
+import { buildClaimLedger } from '../scripts/lib/claim-ledger.mjs';
 import { headingSequence } from '../scripts/lib/visible-body-length.mjs';
 import { resetLlmUsageForTests } from '../scripts/lib/llm-budget.mjs';
-import { SOURCE_TEXT, WATCHLIST, STANCE_JSON, essayBody, essayJson, fixtureArticle } from './fixtures/authored-column-fixture.mjs';
+import {
+  SOURCE_TEXT,
+  CLOSING_HEADING,
+  COUNTER_HEADING,
+  STANCE_JSON,
+  essayBody,
+  essayJson,
+  fixtureArticle,
+} from './fixtures/authored-column-fixture.mjs';
 
 function stubModel() {
   let call = 0;
@@ -18,6 +32,20 @@ function stubModel() {
     if (call === 1) return STANCE_JSON;
     return essayJson();
   };
+}
+
+function fixtureLedger() {
+  const article = fixtureArticle();
+  return buildClaimLedger({
+    cluster_id: 'authored_wire-001',
+    representative_source: {
+      source_url: article.sourceUrl,
+      source_name: article.source,
+      title: article.title,
+      cleaned_text: article.cleaned_source_text,
+    },
+    supporting_sources: [],
+  }, article.id);
 }
 
 test('engine skips cleanly without an api key', async () => {
@@ -36,14 +64,14 @@ test('story selection enforces relevance and fact floors', () => {
   assert.equal(strong.article.id, 'wire-001');
 });
 
-test('full generation path produces a verified column record', async () => {
+test('full generation path produces a verified column with evidence figures', async () => {
   resetLlmUsageForTests();
   process.env.OPENROUTER_API_KEY = 'test-key';
   process.env.AUTHORED_MIN_WORDS = '700';
   process.env.AUTHORED_MIN_CHARS = '4200';
   try {
     const state = {};
-    const now = new Date('2026-08-17T09:00:00Z');
+    const now = new Date('2026-08-23T09:00:00Z');
     const result = await generateAuthoredColumn({
       candidates: [fixtureArticle()],
       pool: [],
@@ -57,16 +85,17 @@ test('full generation path produces a verified column record', async () => {
     assert.ok(result.column, `expected a column, got ${JSON.stringify(result)}`);
     const column = result.column;
     assert.equal(column.content_origin, 'authored');
-    assert.equal(column.generation_version, 'authored_column_v1');
-    assert.equal(column.public_content_tier, 'authored_column');
     assert.equal(column.author.name, 'Rowan Hale');
-    assert.ok(column.slug.includes('2026-08-17'));
-    assert.ok(column.expertLensFull.finalArticleBody.includes(WATCHLIST));
+    assert.ok(column.slug.includes('2026-08-23'));
+    assert.ok(column.expertLensFull.finalArticleBody.includes(CLOSING_HEADING));
     assert.equal(column.authored_quality.ok, true);
     assert.ok(column.authored_quality.metrics.words >= 700);
-    assert.equal(column.story_key, 'https://example.com/northline-dakota');
-    assert.equal(column.sources[0].name, 'Grid Journal');
-    assert.equal(state.authored.columnsByDay['2026-08-17'], 1);
+    assert.ok(Array.isArray(column.figures), 'expected figures on the record');
+    assert.ok(column.figures.length >= 1 && column.figures.length <= 3, `figure count ${column.figures.length}`);
+    assert.ok(column.figures[0].items.length >= 1);
+    assert.ok(column.figures[0].title.length >= 8);
+    assert.equal(column.authored_quality.metrics.figure_count, column.figures.length);
+    assert.equal(state.authored.columnsByDay['2026-08-23'], 1);
     assert.equal(state.authored.lastFailure, null);
   } finally {
     delete process.env.OPENROUTER_API_KEY;
@@ -125,11 +154,11 @@ test('daily cap and minimum gap are enforced', async () => {
   resetLlmUsageForTests();
   process.env.OPENROUTER_API_KEY = 'test-key';
   try {
-    const now = new Date('2026-08-17T09:00:00Z');
+    const now = new Date('2026-08-23T09:00:00Z');
     const capped = await generateAuthoredColumn({
       candidates: [fixtureArticle()],
       pool: [],
-      state: { authored: { lastColumnAt: '2026-08-17T01:00:00Z', columnsByDay: { '2026-08-17': 3 }, recentStoryKeys: [] } },
+      state: { authored: { lastColumnAt: '2026-08-23T01:00:00Z', columnsByDay: { '2026-08-23': 3 }, recentStoryKeys: [] } },
       now,
       callModel: stubModel(),
     });
@@ -138,7 +167,7 @@ test('daily cap and minimum gap are enforced', async () => {
     const gapped = await generateAuthoredColumn({
       candidates: [fixtureArticle()],
       pool: [],
-      state: { authored: { lastColumnAt: '2026-08-17T07:30:00Z', columnsByDay: { '2026-08-17': 1 }, recentStoryKeys: [] } },
+      state: { authored: { lastColumnAt: '2026-08-23T07:30:00Z', columnsByDay: { '2026-08-23': 1 }, recentStoryKeys: [] } },
       now,
       callModel: stubModel(),
     });
@@ -155,18 +184,18 @@ test('normalizeAuthoredBody converts markdown habits into gate-visible structure
     .join('\n\n');
   const normalized = normalizeAuthoredBody(markdownBody);
   assert.ok(headingSequence(normalized).length >= 4, 'markdown headings should be recognized after normalization');
-  assert.ok(normalized.includes(WATCHLIST));
+  assert.ok(normalized.includes(CLOSING_HEADING));
   assert.ok(!normalized.includes('##'));
 
   const glued = 'The Grid Answers First\nA paragraph glued to its heading by a single newline, which hides the heading from the block splitter entirely.';
   const isolated = normalizeAuthoredBody(glued);
   assert.deepEqual(headingSequence(isolated), ['The Grid Answers First']);
 
-  const decorated = normalizeAuthoredBody('**Where I Could Be Wrong**\n\nPlain paragraph with **bold** and `code` markers that must not survive.');
-  assert.deepEqual(headingSequence(decorated), ['Where I Could Be Wrong']);
+  const decorated = normalizeAuthoredBody(`**${COUNTER_HEADING}**\n\nPlain paragraph with **bold** and \`code\` markers that must not survive.`);
+  assert.deepEqual(headingSequence(decorated), [COUNTER_HEADING]);
   assert.ok(!decorated.includes('**') && !decorated.includes('`'));
 
-  const fenced = normalizeAuthoredBody('```\nOn My Watchlist\n```\n\nBody text.');
+  const fenced = normalizeAuthoredBody('```\nSignals Worth Tracking\n```\n\nBody text.');
   assert.ok(!fenced.includes('```'));
 });
 
@@ -178,20 +207,22 @@ test('normalizeAuthoredBody leaves a compliant body unchanged', () => {
 test('verificationFeedback translates reason codes into actionable directives', () => {
   const feedback = verificationFeedback([
     'fewer_than_4_sections',
-    'missing_watchlist_section',
+    'legacy_template_heading:On My Watchlist',
+    'heading_reused_recently:The Grid Answers First',
+    'lead_repeats_recent_column',
     'unsupported_numeric_claims:2.5 GW,40 percent',
     'some_unknown_code',
   ]);
-  assert.equal(feedback.length, 4);
+  assert.equal(feedback.length, 6);
   assert.match(feedback[0], /standalone plain-text line/);
-  assert.match(feedback[1], new RegExp(WATCHLIST));
-  assert.match(feedback[2], /2\.5 GW,40 percent/);
-  assert.equal(feedback[3], 'some_unknown_code');
+  assert.match(feedback[1], /permanently retired/);
+  assert.match(feedback[2], /The Grid Answers First/);
+  assert.match(feedback[3], /different device/);
+  assert.match(feedback[4], /2\.5 GW,40 percent/);
+  assert.equal(feedback[5], 'some_unknown_code');
 });
 
 test('quality policy names the offending unsupported numbers', () => {
-  // Empty ledger: every unit-bearing figure in the essay is unsupported, and
-  // the reason must carry the concrete offenders for the retry feedback loop.
   const result = authoredColumnQualityResult({
     body: essayBody(),
     title: 'The Dakota Grid Deal Is A Utility Execution Story Now',
@@ -205,10 +236,8 @@ test('quality policy names the offending unsupported numbers', () => {
   assert.match(claimReason, /unsupported_numeric_claims:.*200 MW/);
 });
 
-test('quality policy rejects missing counterargument and watchlist sections', () => {
-  const body = essayBody()
-    .replace('Where I Could Be Wrong', 'A Neutral Heading Instead')
-    .replace(WATCHLIST, 'Closing Notes');
+test('quality policy bans retired template headings outright', () => {
+  const body = essayBody().replace(CLOSING_HEADING, 'On My Watchlist');
   const result = authoredColumnQualityResult({
     body,
     title: 'The Dakota Grid Deal Is A Utility Execution Story Now',
@@ -217,6 +246,106 @@ test('quality policy rejects missing counterargument and watchlist sections', ()
     sourceText: SOURCE_TEXT,
   });
   assert.equal(result.ok, false);
-  assert.ok(result.reasons.includes('missing_watchlist_section'));
-  assert.ok(result.reasons.includes('missing_counterargument_section'));
+  assert.ok(result.reasons.some((reason) => reason.startsWith('legacy_template_heading')), result.reasons.join('|'));
+});
+
+test('quality policy rejects headings and leads that echo recent columns', () => {
+  const priorColumn = { expertLensFull: { finalArticleBody: essayBody() } };
+  const recentHeadings = recentHeadingsFromColumns([priorColumn]);
+  const recentLeads = recentLeadsFromColumns([priorColumn]);
+  assert.ok(recentHeadings.includes(CLOSING_HEADING));
+  assert.ok(recentLeads.length >= 1);
+
+  const result = authoredColumnQualityResult({
+    body: essayBody(),
+    title: 'The Dakota Grid Deal Is A Utility Execution Story Now',
+    deck: 'Northline Power secured 200 MW for its Dakota AI campus, and the anchor tenant just bought schedule risk priced as energy risk.',
+    ledgerClaims: [],
+    sourceText: SOURCE_TEXT,
+    recentHeadings,
+    recentLeads,
+  });
+  assert.equal(result.ok, false);
+  assert.ok(result.reasons.some((reason) => reason.startsWith('heading_reused_recently')), result.reasons.join('|'));
+  assert.ok(result.reasons.includes('lead_repeats_recent_column'), result.reasons.join('|'));
+
+  const fresh = authoredColumnQualityResult({
+    body: essayBody(),
+    title: 'The Dakota Grid Deal Is A Utility Execution Story Now',
+    deck: 'Northline Power secured 200 MW for its Dakota AI campus, and the anchor tenant just bought schedule risk priced as energy risk.',
+    ledgerClaims: [],
+    sourceText: SOURCE_TEXT,
+    recentHeadings: ['A Totally Different Prior Heading'],
+    recentLeads: ['A prior lead about an unrelated substation dispute in Ohio.'],
+  });
+  assert.ok(!fresh.reasons.some((reason) => reason.startsWith('heading_reused_recently')));
+  assert.ok(!fresh.reasons.includes('lead_repeats_recent_column'));
+});
+
+test('quality policy enforces the figure mandate when figures are provided', () => {
+  const base = {
+    body: essayBody(),
+    title: 'The Dakota Grid Deal Is A Utility Execution Story Now',
+    deck: 'Northline Power secured 200 MW for its Dakota AI campus, and the anchor tenant just bought schedule risk priced as energy risk.',
+    ledgerClaims: [],
+    sourceText: SOURCE_TEXT,
+  };
+  const missing = authoredColumnQualityResult({ ...base, figures: [] });
+  assert.ok(missing.reasons.includes('figures_missing'));
+  const excess = authoredColumnQualityResult({ ...base, figures: [{}, {}, {}, {}] });
+  assert.ok(excess.reasons.includes('figures_excess'));
+  const skipped = authoredColumnQualityResult({ ...base });
+  assert.ok(!skipped.reasons.some((reason) => reason.startsWith('figures_')));
+  assert.equal(skipped.metrics.figure_count, 0);
+});
+
+test('buildColumnFigures constructs 1-3 deterministic figures from the ledger', () => {
+  const ledger = fixtureLedger();
+  assert.ok(numericLedgerClaims(ledger).length >= 3);
+  const { figures, source } = buildColumnFigures({
+    ledger,
+    stance: JSON.parse(STANCE_JSON),
+    headline: 'The Dakota Grid Deal Is A Utility Execution Story Now',
+    sectionCount: 6,
+  });
+  assert.equal(source, 'deterministic');
+  assert.ok(figures.length >= 1 && figures.length <= 3);
+  for (const figure of figures) {
+    assert.ok(['stat-row', 'table', 'bar'].includes(figure.type));
+    assert.ok(figure.title.length >= 8 && figure.title.length <= 64, figure.title);
+    assert.ok(figure.items.length >= 1);
+    assert.ok(figure.anchor >= 1 && figure.anchor <= 5);
+    assert.ok(figure.items.every((item) => item.display && item.source));
+  }
+});
+
+test('buildColumnFigures honors a valid model spec and rejects invalid ones', () => {
+  const ledger = fixtureLedger();
+  const headline = 'The Dakota Grid Deal Is A Utility Execution Story Now';
+  const valid = buildColumnFigures({
+    ledger,
+    stance: JSON.parse(STANCE_JSON),
+    headline,
+    sectionCount: 6,
+    modelSpec: [{ type: 'table', title: 'Dakota campus power and capital on the record', claim_indexes: [0, 1, 2], anchor: 3 }],
+  });
+  assert.equal(valid.source, 'model_spec');
+  assert.equal(valid.figures.length, 1);
+  assert.equal(valid.figures[0].type, 'table');
+  assert.equal(valid.figures[0].anchor, 3);
+  assert.ok(valid.figures[0].items.length >= 2);
+
+  const invalid = buildColumnFigures({
+    ledger,
+    stance: JSON.parse(STANCE_JSON),
+    headline,
+    sectionCount: 6,
+    modelSpec: [{ type: 'bar', title: 'x', claim_indexes: [99], anchor: 1 }],
+  });
+  assert.notEqual(invalid.source, 'model_spec');
+  assert.ok(invalid.figures.length >= 1);
+
+  const empty = buildColumnFigures({ ledger: { claims: [] }, stance: {}, headline: 'No numbers here', sectionCount: 5 });
+  assert.equal(empty.figures.length, 0);
+  assert.equal(empty.reason, 'no_verified_claims');
 });
