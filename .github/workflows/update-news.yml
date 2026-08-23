@@ -56,6 +56,7 @@ jobs:
           EXPERT_LENS_FALLBACK_MODEL: ${{ secrets.EXPERT_LENS_FALLBACK_MODEL }}
           AUTHORED_COLUMN_MODEL: ${{ secrets.AUTHORED_COLUMN_MODEL }}
           AUTHORED_COLUMN_FORCE: ${{ inputs.force_column == true && '1' || '' }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           GEMINI_IMAGE_MODEL: ${{ secrets.GEMINI_IMAGE_MODEL }}
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}

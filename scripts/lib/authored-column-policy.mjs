@@ -26,11 +26,49 @@ import {
 
 export const AUTHORED_GENERATION_VERSION = 'authored_column_v1';
 export const AUTHORED_COLUMN_TIER = 'authored_column';
-// Note: the site-wide heading heuristic (visible-body-length isHeading) does
-// not admit apostrophes, so the closing heading must stay apostrophe-free.
-export const WATCHLIST_HEADING = 'On My Watchlist';
+// Headings that earlier engine versions mandated verbatim. They read as an
+// AI template when repeated across columns, so they are now banned outright;
+// every column must invent its own section headings.
+export const LEGACY_TEMPLATE_HEADINGS = [
+  'on my watchlist',
+  'where i could be wrong',
+  "what i'm watching",
+  'what im watching',
+];
+const HEADING_REUSE_JACCARD = 0.75;
+const LEAD_REUSE_JACCARD = 0.7;
+export const RECENT_HEADING_WINDOW = 15;
 
-const COUNTERARGUMENT_HEADING_PATTERN = /(wrong|bear case|against|other side|pushback|counter)/i;
+function normalizedHeading(heading = '') {
+  return String(heading || '')
+    .toLowerCase()
+    .replace(/[^a-z0-9\s]/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+export function recentHeadingsFromColumns(columns = [], limit = RECENT_HEADING_WINDOW) {
+  return columns
+    .slice(0, limit)
+    .flatMap((column) => headingSequence(column?.expertLensFull?.finalArticleBody || ''));
+}
+
+export function recentLeadsFromColumns(columns = [], limit = RECENT_HEADING_WINDOW) {
+  return columns
+    .slice(0, limit)
+    .map((column) => firstSentenceOf(column?.expertLensFull?.finalArticleBody || ''))
+    .filter(Boolean);
+}
+
+function firstSentenceOf(body = '') {
+  const headings = new Set(headingSequence(body));
+  const firstParagraph = String(body || '')
+    .split(/\n{2,}/)
+    .map((block) => block.trim())
+    .find((block) => block && !headings.has(block));
+  if (!firstParagraph) return '';
+  return (firstParagraph.split(/(?<=[.!?])\s+/)[0] || '').trim();
+}
 
 function envNumber(name, fallback) {
   const value = Number(process.env[name]);
@@ -83,6 +121,9 @@ export function authoredColumnQualityResult({
   sourceText = '',
   recentRecords = [],
   recentTheses = [],
+  recentHeadings = [],
+  recentLeads = [],
+  figures = null,
 } = {}) {
   const reasons = [];
   const visible = visibleBodyText(body);
@@ -107,10 +148,43 @@ export function authoredColumnQualityResult({
   if (paragraphs < 6) reasons.push('fewer_than_6_paragraphs');
   if (headings.length < 4) reasons.push('fewer_than_4_sections');
   if (headings.length > 7) reasons.push('more_than_7_sections');
-  const hasWatchlist = headings.some((heading) => heading.toLowerCase() === WATCHLIST_HEADING.toLowerCase());
-  if (!hasWatchlist) reasons.push('missing_watchlist_section');
-  const hasCounterargument = headings.some((heading) => COUNTERARGUMENT_HEADING_PATTERN.test(heading));
-  if (!hasCounterargument) reasons.push('missing_counterargument_section');
+
+  // 2b. Structural freshness — headings and the lead must not echo recent
+  // columns. Repeated scaffolding is what makes a column read machine-made.
+  const legacyHits = headings.filter((heading) => LEGACY_TEMPLATE_HEADINGS.includes(normalizedHeading(heading)));
+  if (legacyHits.length) reasons.push(`legacy_template_heading:${legacyHits.slice(0, 2).join('|')}`);
+  const priorHeadings = recentHeadings.map((heading) => ({
+    normalized: normalizedHeading(heading),
+    tokens: tokensOf(heading),
+  }));
+  let headingReuseMax = 0;
+  const reusedHeadings = headings.filter((heading) => {
+    const normalized = normalizedHeading(heading);
+    const tokens = tokensOf(heading);
+    return priorHeadings.some((prior) => {
+      const overlap = prior.normalized === normalized ? 1 : jaccard(tokens, prior.tokens);
+      headingReuseMax = Math.max(headingReuseMax, overlap);
+      return overlap >= HEADING_REUSE_JACCARD;
+    });
+  });
+  if (reusedHeadings.length) reasons.push(`heading_reused_recently:${reusedHeadings.slice(0, 2).join('|')}`);
+  const lead = firstSentenceOf(body);
+  const leadTokens = tokensOf(lead);
+  const leadReuseMax = recentLeads.reduce(
+    (max, prior) => Math.max(max, jaccard(leadTokens, tokensOf(prior))),
+    0
+  );
+  if (lead && leadReuseMax >= LEAD_REUSE_JACCARD) reasons.push('lead_repeats_recent_column');
+
+  // 2c. Figures — every column ships 1-3 evidence-backed visual elements.
+  // `null` means the caller manages figures elsewhere (legacy call sites).
+  if (Array.isArray(figures)) {
+    if (figures.length < 1) reasons.push('figures_missing');
+    if (figures.length > 3) reasons.push('figures_excess');
+    const figureTitleText = figures.map((figure) => figure?.title || '').join('\n');
+    const figureBanned = bannedPhraseMatches(figureTitleText);
+    if (figureBanned.length) reasons.push(`figure_title_banned_phrase:${figureBanned[0]}`);
+  }
 
   // 3-5. Language guards (banned phrases, public copy, template language)
   const fullText = [title, deck, summary, body].filter(Boolean).join('\n\n');
@@ -186,6 +260,9 @@ export function authoredColumnQualityResult({
       heading_sequence_similarity: Number((repetition.heading_sequence_similarity ?? 0).toFixed(3)),
       conclusion_similarity: Number((repetition.conclusion_similarity ?? 0).toFixed(3)),
       thesis_overlap: Number(maxThesisOverlap.toFixed(3)),
+      heading_reuse_max: Number(headingReuseMax.toFixed(3)),
+      lead_reuse_max: Number(leadReuseMax.toFixed(3)),
+      figure_count: Array.isArray(figures) ? figures.length : 0,
     },
   };
 }

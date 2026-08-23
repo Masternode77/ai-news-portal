@@ -39,6 +39,7 @@ import {
 import { stableArticleId, truncate } from './lib/normalize.mjs';
 import { loadSourceRegistry, textAuthorizedRecords } from './lib/source-registry.mjs';
 import { generateAuthoredColumn } from './lib/authored-column-engine.mjs';
+import { generateArticleImageSet, metadataPatchFromImageSet } from './lib/image2-provider.mjs';
 import { appendAuthoredColumn, readAuthoredColumns } from './lib/authored-column-store.mjs';
 import { llmUsageSummary } from './lib/llm-budget.mjs';
 
@@ -329,6 +330,21 @@ async function runAuthoredColumnStage({ state, candidates, pool, recentRecords, 
       force: process.env.AUTHORED_COLUMN_FORCE === '1',
     }), 360_000);
     if (result.column) {
+      // Column hero via the same image2 (OpenAI image) path wire articles
+      // use. The generator falls back internally when the key is missing or
+      // the request fails; the wire-article image the engine already picked
+      // is only replaced by a genuinely generated set.
+      try {
+        const imageResult = await generateArticleImageSet(result.column);
+        if (imageResult?.status === 'generated') {
+          Object.assign(result.column, metadataPatchFromImageSet(imageResult));
+          console.log(`[pipeline] authored column hero generated via image2 (${imageResult.heroImage})`);
+        } else if (imageResult?.error) {
+          console.log(`[pipeline] authored column hero kept source image (${imageResult.error})`);
+        }
+      } catch (error) {
+        console.warn(`[pipeline] authored column hero generation failed: ${error.message}`);
+      }
       await appendAuthoredColumn(result.column);
       console.log(`[pipeline] authored column published: ${result.column.slug} (${result.column.authored_quality.metrics.words} words, attempts=${result.column.authored_quality.attempts})`);
       return { published: true, slug: result.column.slug };

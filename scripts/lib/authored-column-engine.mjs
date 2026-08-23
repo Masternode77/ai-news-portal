@@ -26,10 +26,12 @@ import { BANNED_PHRASES, BLOCKED_HOOK_STARTS } from './banned-phrases.mjs';
 import {
   AUTHORED_COLUMN_TIER,
   AUTHORED_GENERATION_VERSION,
-  WATCHLIST_HEADING,
   authoredColumnQualityResult,
+  recentHeadingsFromColumns,
+  recentLeadsFromColumns,
 } from './authored-column-policy.mjs';
-import { isHeading } from './visible-body-length.mjs';
+import { isHeading, headingSequence } from './visible-body-length.mjs';
+import { buildColumnFigures } from './authored-column-figures.mjs';
 
 const CHARTER_RELATIVE_PATH = 'config/editorial/persona-charter.json';
 const STORY_KEY_WINDOW_HOURS = 72;
@@ -96,10 +98,14 @@ export function normalizeAuthoredBody(body = '') {
 const FEEDBACK_HINTS = [
   [/^fewer_than_4_sections$|^more_than_7_sections$/, () =>
     'Structure the essay into 4 to 6 sections. Every section heading must be a standalone plain-text line of 2-6 words (letters, digits and spaces only — no markdown symbols, no punctuation) with a blank line before and after it.'],
-  [/^missing_watchlist_section$/, () =>
-    `Close with a final section whose heading line is exactly "${WATCHLIST_HEADING}" — nothing else on that line.`],
-  [/^missing_counterargument_section$/, () =>
-    'Include one section that argues honestly against the thesis; its heading must contain a word such as "wrong", "counter", "pushback" or "bear case".'],
+  [/^legacy_template_heading(?::(.+))?$/, (match) =>
+    `Replace ${match[1] ? `the heading(s) ${match[1]}` : 'the retired template headings'} with headings invented for this specific argument — the phrases "On My Watchlist" and "Where I Could Be Wrong" are permanently retired.`],
+  [/^heading_reused_recently(?::(.+))?$/, (match) =>
+    `Rewrite ${match[1] ? `these headings: ${match[1]}` : 'the flagged headings'} — they repeat headings from recent columns. Invent fresh phrasings drawn from this column's own argument and evidence.`],
+  [/^lead_repeats_recent_column$/, () =>
+    'Rewrite the opening sentence with a different device than recent columns used — open on a scene, a specific number, a contradiction, a filing detail, or a deadline instead.'],
+  [/^figures_missing$/, () =>
+    'The column must carry 1-3 evidence figures; keep the prose intact.'],
   [/^unsupported_numeric_claims(?::(.+))?$/, (match) =>
     `Remove or rewrite around these numbers, which are not in the verified claims${match[1] ? `: ${match[1]}` : ''}. Cite only numbers from verified_claims, keeping the exact value and unit as given — never convert units or aggregate figures.`],
   [/^words_below_(\d+)$/, (match) =>
@@ -281,7 +287,7 @@ async function thesisPass({ charter, selection, ledger, recentTheses, callModel 
   return parseModelJson(content);
 }
 
-async function draftPass({ charter, selection, ledger, stance, callModel }) {
+async function draftPass({ charter, selection, ledger, stance, recentHeadings = [], recentLeads = [], callModel }) {
   const content = await callModel({
     model: AUTHORED_COLUMN_MODEL,
     temperature: 0.7,
@@ -290,20 +296,24 @@ async function draftPass({ charter, selection, ledger, stance, callModel }) {
     systemPrompt: [
       personaSystemPrompt(charter),
       'Task: write the full column as strict JSON only:',
-      '{ "headline": string (40-105 chars), "deck": string (one standfirst sentence, 80-240 chars), "body": string }',
+      '{ "headline": string (40-105 chars), "deck": string (one standfirst sentence, 80-240 chars), "body": string, "figures": FigureSpec[] }',
+      'FigureSpec (1 to 3 of them, drawn ONLY from the verified_claims array): { "type": "stat-row"|"table"|"bar", "title": string (8-60 chars, specific to this argument — never a generic label like "By the numbers"), "claim_indexes": int[] (0-based indexes into verified_claims; a bar needs 3+ claims sharing one unit), "anchor": int (the figure renders after this section, 1-based) }',
       'Body contract:',
       '- 1200 to 1800 words, written in the first person, committed to the thesis by the third paragraph.',
       '- Plain text only — no markdown of any kind (no #, ##, **, *, _, backticks, or bullet markers anywhere in the body).',
       '- Plain paragraphs separated by blank lines; each paragraph is a single unwrapped line.',
-      '- Section headings: 4 to 6 of them, phrased in my own words — never generic labels. Each heading is a standalone line of 2-6 words with a blank line before and after it, containing only letters, digits and spaces (no apostrophes, quotes, commas, colons, dashes, or trailing punctuation).',
-      '- One section must present the counterargument honestly (heading should signal it, e.g. "Where I could be wrong").',
-      `- The final section heading must be exactly: ${WATCHLIST_HEADING}`,
+      '- Section headings: 4 to 6 of them, invented for THIS argument — never generic labels, never headings any recent column used (the avoid list is in the payload). Each heading is a standalone line of 2-6 words with a blank line before and after it, containing only letters, digits and spaces (no apostrophes, quotes, commas, colons, dashes, or trailing punctuation).',
+      '- One section must present the honest case against the thesis, under a heading phrased from this column\'s specifics (the words "wrong", "watchlist" and other retired template phrasings are forbidden).',
+      '- The final section looks forward: name two or three concrete observables with rough timeframes, under a fresh heading of your own invention.',
+      '- Open with a different device than the recent leads shown in the payload: a scene, a specific number, a contradiction, a filing detail, or a deadline.',
       '- Attribute every number inline to its source publication by name. Cite only numbers present in verified_claims, copied exactly — same value, same unit; never convert units (do not turn 2,500 MW into 2.5 GW) and never derive new figures.',
       '- No ellipsis characters. No bullet lists; write prose.',
     ].join('\n'),
     userPrompt: JSON.stringify({
       stance,
       evidence: evidencePayload(selection, ledger),
+      headings_to_avoid: recentHeadings,
+      recent_leads_to_avoid: recentLeads,
     }),
   });
   return parseModelJson(content);
@@ -320,8 +330,7 @@ async function voicePass({ charter, draft, feedback = [], callModel }) {
       'Task: revise the column below. Preserve every fact, number, and attribution exactly. Keep the same JSON shape:',
       '{ "headline": string, "deck": string, "body": string }',
       'Tighten the prose toward the persona voice: varied sentence rhythm, concrete verbs, no throat-clearing, no corporate filler.',
-      'Formatting contract (must hold after revision): plain text only with no markdown symbols; paragraphs separated by blank lines; 4-6 standalone plain-text section headings (2-6 words, letters/digits/spaces only) each surrounded by blank lines; one counterargument section; the final heading exactly '
-        + `"${WATCHLIST_HEADING}"; numbers unchanged from the draft.`,
+      'Formatting contract (must hold after revision): plain text only with no markdown symbols; paragraphs separated by blank lines; 4-6 standalone plain-text section headings (2-6 words, letters/digits/spaces only) each surrounded by blank lines; keep the draft\'s own section headings (or sharpen them) — never substitute template headings like "On My Watchlist" or "Where I Could Be Wrong"; numbers unchanged from the draft.',
       feedback.length
         ? `The previous version failed these checks — fix every one without weakening the argument: ${feedback.join(' | ')}`
         : 'Polish only; keep structure and headings.',
@@ -331,7 +340,7 @@ async function voicePass({ charter, draft, feedback = [], callModel }) {
   return parseModelJson(content);
 }
 
-function columnRecord({ charter, selection, stance, essay, quality, now }) {
+function columnRecord({ charter, selection, stance, essay, quality, figures = [], now }) {
   const publishedAt = now.toISOString();
   const dateSlug = publishedAt.slice(0, 10);
   const slug = `${slugify(essay.headline).slice(0, 64).replace(/-+$/, '')}-${dateSlug}`;
@@ -365,6 +374,7 @@ function columnRecord({ charter, selection, stance, essay, quality, now }) {
     category: selection.article.primary_category || selection.article.category || 'AI Infrastructure',
     primary_category: selection.article.primary_category || selection.article.category || 'AI Infrastructure',
     tags: Array.isArray(selection.article.tags) ? selection.article.tags.slice(0, 6) : [],
+    figures,
     sources: sourcesFor(selection),
     based_on_article_ids: [selection.article.id, ...selection.corroborating.map((article) => article.id)],
     story_key: storyKeyFor(selection.article),
@@ -426,6 +436,8 @@ export async function generateAuthoredColumn({
   const ledger = buildClaimLedger(clusterFor(selection), selection.article.id);
   const sourceText = sourceTextFor(selection);
   const recentTheses = existingColumns.slice(0, 10).map((column) => column.stance?.thesis).filter(Boolean);
+  const recentHeadings = recentHeadingsFromColumns(existingColumns);
+  const recentLeads = recentLeadsFromColumns(existingColumns);
   const repetitionCorpus = [...existingColumns.slice(0, 20), ...recentRecords.slice(0, 50)];
 
   const failWith = (stage, detail) => {
@@ -443,7 +455,7 @@ export async function generateAuthoredColumn({
 
   let draft;
   try {
-    draft = await draftPass({ charter, selection, ledger, stance, callModel });
+    draft = await draftPass({ charter, selection, ledger, stance, recentHeadings, recentLeads, callModel });
   } catch (error) {
     return failWith('draft', error.message);
   }
@@ -452,6 +464,7 @@ export async function generateAuthoredColumn({
   let attempts = 0;
   let essay = draft;
   let quality;
+  let figures = [];
   while (attempts < 2) {
     attempts += 1;
     let voiced;
@@ -467,6 +480,13 @@ export async function generateAuthoredColumn({
     }
     if (voiced?.body && voiced?.headline) essay = voiced;
     essay = { ...essay, body: normalizeAuthoredBody(essay.body) };
+    figures = buildColumnFigures({
+      ledger,
+      stance,
+      headline: essay.headline,
+      sectionCount: headingSequence(essay.body).length,
+      modelSpec: essay.figures ?? draft.figures ?? null,
+    }).figures;
     quality = authoredColumnQualityResult({
       body: essay.body,
       title: essay.headline,
@@ -477,6 +497,9 @@ export async function generateAuthoredColumn({
       sourceText,
       recentRecords: repetitionCorpus,
       recentTheses,
+      recentHeadings,
+      recentLeads,
+      figures,
     });
     if (quality.ok) break;
   }
@@ -491,6 +514,7 @@ export async function generateAuthoredColumn({
     stance,
     essay,
     quality: { attempts, metrics: quality.metrics },
+    figures,
     now,
   });
 

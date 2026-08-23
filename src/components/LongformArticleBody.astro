@@ -1,5 +1,5 @@
 ---
-const { blocks = [] } = Astro.props;
+const { blocks = [], ledeParagraph = true } = Astro.props;
 const isHeading = (paragraph: string) =>
   paragraph.length <= 86 &&
   !/[.!?]$/.test(paragraph) &&
@@ -12,6 +12,6 @@ let paragraphIndex = 0;
       return <h2>{paragraph}</h2>;
     }
     paragraphIndex += 1;
-    return <p class={paragraphIndex === 1 ? 'article-lede-paragraph' : undefined}>{paragraph}</p>;
+    return <p class={ledeParagraph && paragraphIndex === 1 ? 'article-lede-paragraph' : undefined}>{paragraph}</p>;
   })}
 </section>

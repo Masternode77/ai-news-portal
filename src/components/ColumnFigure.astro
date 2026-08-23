@@ -1,0 +1,70 @@
+---
+// Evidence figure inside a column: stat row, table, or bar comparison.
+// Data is prepared by the column engine from verified source claims; this
+// component only renders. Wide tables scroll inside their own wrapper so the
+// page never overflows horizontally.
+const { figure } = Astro.props;
+const items = Array.isArray(figure?.items) ? figure.items : [];
+const hasNumbers = items.some((item) => item.display);
+const maxValue = items.reduce((max, item) => Math.max(max, Number(item.value) || 0), 0);
+const barWidth = (value) => {
+  if (!maxValue) return 0;
+  return Math.max(4, Math.round((Number(value) || 0) / maxValue * 100));
+};
+---
+{items.length ? (
+  <figure class={`column-figure column-figure-${figure.type}`}>
+    <figcaption>
+      <strong>{figure.title}</strong>
+      {figure.source_note ? <span class="column-figure-source">Source: {figure.source_note}</span> : null}
+    </figcaption>
+
+    {figure.type === 'stat-row' ? (
+      <div class="column-figure-stats">
+        {items.map((item) => (
+          <div class="column-figure-stat">
+            <span class="column-figure-stat-value">{item.display}</span>
+            <span class="column-figure-stat-label">{item.label}</span>
+          </div>
+        ))}
+      </div>
+    ) : null}
+
+    {figure.type === 'table' ? (
+      <div class="column-figure-scroll">
+        <table>
+          <thead>
+            <tr>
+              <th scope="col">On the record</th>
+              {hasNumbers ? <th scope="col">Figure</th> : null}
+              <th scope="col">Source</th>
+            </tr>
+          </thead>
+          <tbody>
+            {items.map((item) => (
+              <tr>
+                <td>{item.label}</td>
+                {hasNumbers ? <td class="column-figure-number">{item.display}</td> : null}
+                <td>{item.source}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    ) : null}
+
+    {figure.type === 'bar' ? (
+      <div class="column-figure-bars">
+        {items.map((item) => (
+          <div class="column-figure-bar-row">
+            <span class="column-figure-bar-label">{item.label}</span>
+            <span class="column-figure-bar-track">
+              <span class="column-figure-bar-fill" style={`width:${barWidth(item.value)}%`}></span>
+            </span>
+            <span class="column-figure-bar-value">{item.display}</span>
+          </div>
+        ))}
+      </div>
+    ) : null}
+  </figure>
+) : null}

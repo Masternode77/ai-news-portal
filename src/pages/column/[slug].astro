@@ -5,11 +5,13 @@ import ArticleHeroImage from '../../components/ArticleHeroImage.astro';
 import LongformArticleBody from '../../components/LongformArticleBody.astro';
 import AIDisclosureFooter from '../../components/AIDisclosureFooter.astro';
 import AdSlot from '../../components/monetize/AdSlot.astro';
+import ColumnFigure from '../../components/ColumnFigure.astro';
 import authoredColumns from '../../data/authored-columns.json';
 import { SITE } from '../../config/site';
 import { buildColumnStructuredData, serializeJsonForScript } from '../../lib/seo-safeguards.js';
 import { publishedColumns, columnPath } from '../../../scripts/lib/column-surface.mjs';
 import { cleanArticleBodyBlocks } from '../../../scripts/lib/article-body-cleaner.mjs';
+import { isHeading } from '../../../scripts/lib/visible-body-length.mjs';
 import charter from '../../../config/editorial/persona-charter.json';
 import { safeHttpUrl } from '../../../scripts/lib/normalize.mjs';
 
@@ -25,6 +27,45 @@ const columnRecord = column as any;
 const canonicalPath = columnPath(columnRecord);
 const canonicalUrl = `${SITE.url}${canonicalPath}`;
 const bodyBlocks = cleanArticleBodyBlocks(columnRecord.expertLensFull?.finalArticleBody || '');
+
+// Interleave evidence figures with the prose: a figure with anchor N renders
+// after the content of section N (before the next section heading). Figures
+// anchored past the last section land after the closing paragraphs.
+const columnFigures = Array.isArray(columnRecord.figures) ? columnRecord.figures : [];
+const figuresByAnchor = new Map();
+for (const figure of columnFigures) {
+  const anchor = Number(figure?.anchor) || 0;
+  const list = figuresByAnchor.get(anchor) || [];
+  list.push(figure);
+  figuresByAnchor.set(anchor, list);
+}
+const renderPlan: Array<{ kind: 'blocks'; blocks: string[] } | { kind: 'figure'; figure: any }> = [];
+let figureBuffer: string[] = [];
+let sectionCounter = 0;
+const flushBlocks = () => {
+  if (figureBuffer.length) {
+    renderPlan.push({ kind: 'blocks', blocks: figureBuffer });
+    figureBuffer = [];
+  }
+};
+for (const block of bodyBlocks) {
+  if (isHeading(block)) {
+    if (sectionCounter > 0 && figuresByAnchor.has(sectionCounter)) {
+      flushBlocks();
+      for (const figure of figuresByAnchor.get(sectionCounter) || []) {
+        renderPlan.push({ kind: 'figure', figure });
+      }
+      figuresByAnchor.delete(sectionCounter);
+    }
+    sectionCounter += 1;
+  }
+  figureBuffer.push(block);
+}
+flushBlocks();
+for (const [, remaining] of [...figuresByAnchor.entries()].sort((a, b) => a[0] - b[0])) {
+  for (const figure of remaining) renderPlan.push({ kind: 'figure', figure });
+}
+
 const structuredData = buildColumnStructuredData({ column: columnRecord, site: SITE, canonicalUrl });
 const sources = (columnRecord.sources || [])
   .map((source: any) => ({ ...source, url: safeHttpUrl(source.url) }))
@@ -59,7 +100,11 @@ const sources = (columnRecord.sources || [])
           caption=""
         />
 
-        {bodyBlocks.length ? <LongformArticleBody blocks={bodyBlocks} /> : null}
+        {renderPlan.map((entry, index) =>
+          entry.kind === 'blocks'
+            ? <LongformArticleBody blocks={entry.blocks} ledeParagraph={index === 0} />
+            : <ColumnFigure figure={entry.figure} />
+        )}
 
         <AdSlot variant="article" />
 

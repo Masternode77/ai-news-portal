@@ -2054,3 +2054,137 @@ body:has(.commercial-page-contact) {
     grid-template-columns: minmax(0, 1fr);
   }
 }
+
+/* Column evidence figures */
+.column-figure {
+  margin: 28px 0;
+  padding: 18px 20px;
+  border: 1px solid var(--al-hairline);
+  border-radius: 12px;
+  background: var(--al-soft);
+}
+
+.column-figure figcaption {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 6px 14px;
+  margin-bottom: 14px;
+}
+
+.column-figure figcaption strong {
+  font-size: 0.95rem;
+  letter-spacing: 0.01em;
+}
+
+.column-figure-source {
+  font-size: 0.78rem;
+  color: var(--al-muted);
+}
+
+.column-figure-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 14px;
+}
+
+.column-figure-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
+
+.column-figure-stat-value {
+  font-size: 1.35rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.column-figure-stat-label {
+  font-size: 0.8rem;
+  line-height: 1.45;
+  color: var(--al-muted);
+}
+
+.column-figure-scroll {
+  overflow-x: auto;
+}
+
+.column-figure table {
+  width: 100%;
+  min-width: 480px;
+  border-collapse: collapse;
+  font-size: 0.85rem;
+}
+
+.column-figure th,
+.column-figure td {
+  text-align: left;
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--al-hairline);
+  vertical-align: top;
+}
+
+.column-figure th {
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--al-muted);
+}
+
+.column-figure-number {
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+}
+
+.column-figure-bars {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.column-figure-bar-row {
+  display: grid;
+  grid-template-columns: minmax(120px, 2fr) minmax(80px, 3fr) auto;
+  gap: 10px;
+  align-items: center;
+}
+
+.column-figure-bar-label {
+  font-size: 0.8rem;
+  line-height: 1.4;
+  color: var(--al-muted);
+}
+
+.column-figure-bar-track {
+  display: block;
+  height: 12px;
+  border-radius: 6px;
+  background: color-mix(in srgb, var(--al-blue-deep) 12%, transparent);
+}
+
+.column-figure-bar-fill {
+  display: block;
+  height: 100%;
+  border-radius: 6px;
+  background: var(--al-blue-deep);
+}
+
+.column-figure-bar-value {
+  font-size: 0.82rem;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+@media (max-width: 640px) {
+  .column-figure-bar-row {
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+
+  .column-figure-bar-label {
+    grid-column: 1 / -1;
+  }
+}
