@@ -32,6 +32,7 @@ export function decodeEntities(text = '') {
 function condense(text = '', limit = TITLE_MAX) {
   const cleaned = decodeEntities(String(text || ''))
     .replace(/<[^>]+>/g, ' ')
+    .replace(/…|\.{3}/g, ' ')
     .replace(/\s+/g, ' ')
     .replace(/[.!?,;:]+$/g, '')
     .trim();
