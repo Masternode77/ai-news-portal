@@ -353,3 +353,20 @@ test('buildColumnFigures honors a valid model spec and rejects invalid ones', ()
   assert.equal(empty.figures.length, 0);
   assert.equal(empty.reason, 'no_verified_claims');
 });
+
+test('buildColumnFigures falls back to evidence-pack facts when the ledger yields nothing', () => {
+  const facts = fixtureArticle().expert_insight.concrete_facts;
+  const result = buildColumnFigures({
+    ledger: { claims: [] },
+    stance: JSON.parse(STANCE_JSON),
+    headline: 'The Dakota Grid Deal Is A Utility Execution Story Now',
+    sectionCount: 6,
+    facts,
+    factSource: 'Grid Journal',
+  });
+  assert.equal(result.source, 'evidence_pack');
+  assert.equal(result.figures.length, 1);
+  assert.equal(result.figures[0].type, 'table');
+  assert.ok(result.figures[0].items.length >= 2);
+  assert.ok(result.figures[0].items.every((item) => item.source === 'Grid Journal'));
+});

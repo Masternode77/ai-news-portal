@@ -319,7 +319,34 @@ function factTableFigure({ ledger, stance, headline, sectionCount }) {
   };
 }
 
-export function buildColumnFigures({ ledger = {}, stance = {}, headline = '', sectionCount = 5, modelSpec = null } = {}) {
+// Last-resort figure: the story's own evidence-pack facts. These are the
+// curated per-article statements story selection already required (>=4), so
+// they are always on-story and always present — the figure mandate can never
+// sink an essay that earned selection.
+function evidencePackFigure({ facts = [], factSource = '', stance, headline, sectionCount }) {
+  const usable = facts
+    .map((fact) => decodeEntities(String(fact || '')).trim())
+    .filter((fact) => fact.length >= 25 && looksLikeProse(fact));
+  if (usable.length < 2) return null;
+  const title = condense(stance?.angle || headline || usable[0]);
+  if (!titleOk(title)) return null;
+  const items = usable.slice(0, MAX_ITEMS_PER_FIGURE).map((fact) => ({
+    label: condense(fact, 96),
+    value: null,
+    unit: '',
+    display: '',
+    source: factSource || 'Source',
+  }));
+  return {
+    type: 'table',
+    title,
+    anchor: clampAnchor(2, sectionCount),
+    items,
+    source_note: sourceNote(items),
+  };
+}
+
+export function buildColumnFigures({ ledger = {}, stance = {}, headline = '', sectionCount = 5, modelSpec = null, facts = [], factSource = '' } = {}) {
   const baseClaims = verifiedPrimaryClaims(ledger);
   const relevantIds = new Set(relevantClaims(baseClaims, { headline, stance }).map((claim) => claim.claim_id));
   const claims = relevantClaims(numericLedgerClaims(ledger), { headline, stance });
@@ -345,6 +372,11 @@ export function buildColumnFigures({ ledger = {}, stance = {}, headline = '', se
       }
     }
     return { figures, source: 'fact_table' };
+  }
+
+  const evidenceTable = evidencePackFigure({ facts, factSource, stance, headline, sectionCount });
+  if (evidenceTable) {
+    return { figures: [evidenceTable], source: 'evidence_pack' };
   }
 
   return { figures: [], reason: 'no_verified_claims' };
