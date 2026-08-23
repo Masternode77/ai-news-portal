@@ -43906,144 +43906,18 @@
     "2026-08-24": {
       "date": "2026-08-24",
       "createdAt": "2026-08-23T15:28:08.721Z",
-      "refreshedAt": "2026-08-23T15:28:08.721Z",
+      "refreshedAt": "2026-08-23T23:31:04.873Z",
       "candidateWindowHours": 24,
       "curatedItems": [],
       "curatedIds": [],
       "publishedIds": [],
       "slotPublications": {
-        "0": true
+        "0": true,
+        "1": true
       }
     }
   },
   "runHistory": [
-    {
-      "at": "2026-07-12T09:12:09.935Z",
-      "day": "2026-07-12",
-      "slot": 2,
-      "publishedCount": 0,
-      "signalCardCount": 1,
-      "archiveOnlyCount": 0,
-      "repetitionBlockedCount": 1,
-      "publishedIds": [],
-      "processedIds": [
-        "f156ccb0c41a22ee",
-        "1d8b48c1241dd7e3"
-      ],
-      "blockedCount": 1,
-      "blockedItems": [
-        {
-          "id": "f156ccb0c41a22ee",
-          "title": "This 3D-printed electric motorbike folds into your luggage — creator warns it is 'super fast... way too fast'",
-          "infrastructure_relevance_score": 0.87,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "cloud_capacity_relevance:0.32(hyperscalers)",
-            "semiconductor_relevance:0.22(gpu)",
-            "power_grid_relevance:0.22(power)",
-            "capital_markets_relevance:0.28(capex)"
-          ],
-          "extraction_quality_score": 1,
-          "source_domain_adapter": "generic",
-          "content_length": 1780,
-          "boilerplate_ratio": 0,
-          "repetition_blocked": false,
-          "repetition_block_reasons": [],
-          "repetition_check": null,
-          "expert_insight_complete": false,
-          "expert_insight_missing_fields": [
-            "named_companies"
-          ],
-          "reason": "expert_insight_missing_fields named_companies"
-        }
-      ],
-      "repetitionBlockedItems": [
-        {
-          "id": "1d8b48c1241dd7e3",
-          "title": "OpenAI's Sam Altman accuses Musk of selling public market investors \"on short-term space data centers\"",
-          "infrastructure_relevance_score": 0.972,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:0.78",
-            "data_center_relevance:1.00(data center, data centers, colocation)",
-            "cloud_capacity_relevance:0.32(hyperscalers)",
-            "power_grid_relevance:0.22(power)",
-            "capital_markets_relevance:0.28(capex)"
-          ],
-          "extraction_quality_score": 1,
-          "source_domain_adapter": "generic",
-          "content_length": 1433,
-          "boilerplate_ratio": 0,
-          "repetition_blocked": true,
-          "repetition_block_reasons": [
-            "repeated_sentence_ratio>0.12",
-            "heading_sequence_similarity>0.75",
-            "conclusion_similarity>0.7"
-          ],
-          "repetition_check": {
-            "compared_article_count": 20,
-            "repeated_sentence_ratio": 0.14285714285714285,
-            "repeated_paragraph_ratio": 0.16666666666666666,
-            "heading_sequence_similarity": 1,
-            "banned_phrase_count": 0,
-            "banned_phrase_counts": {},
-            "recent_banned_phrase_counts": {},
-            "ngram_overlap": 0.6115702479338843,
-            "blueprint_repetition": 1,
-            "conclusion_similarity": 0.9511897312113418,
-            "repeated_sentence_count": 1,
-            "repeated_paragraph_count": 1,
-            "heading_sequence": [
-              "Capital Move",
-              "Demand Evidence",
-              "Execution Risk",
-              "Milestone To Watch"
-            ],
-            "blocked": true,
-            "reasons": [
-              "repeated_sentence_ratio>0.12",
-              "heading_sequence_similarity>0.75",
-              "conclusion_similarity>0.7"
-            ]
-          },
-          "expert_insight_complete": true,
-          "expert_insight_missing_fields": [],
-          "reason": "repeated_sentence_ratio>0.12; heading_sequence_similarity>0.75; conclusion_similarity>0.7"
-        }
-      ],
-      "signalCardItems": [
-        {
-          "id": "f156ccb0c41a22ee",
-          "title": "This 3D-printed electric motorbike folds into your luggage — creator warns it is 'super fast... way too fast'",
-          "infrastructure_relevance_score": 0.87,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "cloud_capacity_relevance:0.32(hyperscalers)",
-            "semiconductor_relevance:0.22(gpu)",
-            "power_grid_relevance:0.22(power)",
-            "capital_markets_relevance:0.28(capex)"
-          ],
-          "extraction_quality_score": 1,
-          "source_domain_adapter": "generic",
-          "content_length": 1780,
-          "boilerplate_ratio": 0,
-          "repetition_blocked": false,
-          "repetition_block_reasons": [],
-          "repetition_check": null,
-          "expert_insight_complete": false,
-          "expert_insight_missing_fields": [
-            "named_companies"
-          ],
-          "reason": "expert_insight_missing_fields named_companies"
-        }
-      ],
-      "archiveOnlyItems": []
-    },
     {
       "at": "2026-07-12T16:04:26.669Z",
       "day": "2026-07-13",
@@ -55348,24 +55222,39 @@
         "token_budget": 60000,
         "call_budget": 40
       }
+    },
+    {
+      "at": "2026-08-23T23:31:04.873Z",
+      "day": "2026-08-24",
+      "slot": 1,
+      "publishedCount": 0,
+      "authoredColumn": {
+        "published": true,
+        "slug": "amd-s-taalas-bet-only-pays-if-inference-models-stop-changing-2026-08-23"
+      },
+      "llmUsage": {
+        "calls": 4,
+        "failures": 0,
+        "prompt_tokens": 12063,
+        "completion_tokens": 6353,
+        "total_tokens": 18416,
+        "token_budget": 60000,
+        "call_budget": 40
+      }
     }
   ],
-  "lastRunAt": "2026-08-23T15:28:08.721Z",
+  "lastRunAt": "2026-08-23T23:31:04.873Z",
   "authored": {
-    "lastColumnAt": "2026-08-23T15:28:08.721Z",
+    "lastColumnAt": "2026-08-23T23:31:04.873Z",
     "columnsByDay": {
       "2026-08-17": 2,
       "2026-08-18": 1,
       "2026-08-20": 3,
       "2026-08-21": 1,
       "2026-08-22": 2,
-      "2026-08-23": 2
+      "2026-08-23": 3
     },
     "recentStoryKeys": [
-      {
-        "key": "https://www.tomshardware.com/tech-industry/data-centers/amazon-secretly-circumvents-community-vote-for-massive-ai-data-center-45-year-old-rules-lock-gilroy-residents-out-of-public-comment-window",
-        "at": "2026-08-20T15:38:42.623Z"
-      },
       {
         "key": "https://www.storagereview.com/review/dell-pro-precision-5-14s-intel-review-certified-workstation-graphics-without-a-discrete-gpu",
         "at": "2026-08-20T23:35:42.557Z"
@@ -55389,6 +55278,10 @@
       {
         "key": "https://www.servethehome.com/deltas-gocool-150-goes-big-to-enable-150kw-liquid-to-air-cooling-for-asrock-racks-vr-nvl72/",
         "at": "2026-08-23T15:28:08.721Z"
+      },
+      {
+        "key": "https://www.storagereview.com/news/amd-to-acquire-taalas-the-toronto-startup-building-silicon-around-one-model",
+        "at": "2026-08-23T23:31:04.873Z"
       }
     ],
     "lastFailure": null
