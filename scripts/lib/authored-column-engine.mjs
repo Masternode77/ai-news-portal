@@ -497,6 +497,8 @@ export async function generateAuthoredColumn({
       headline: essay.headline,
       sectionCount: headingSequence(essay.body).length,
       modelSpec: essay.figures ?? draft.figures ?? null,
+      facts: selection.evidencePack.facts || [],
+      factSource: selection.article.source || '',
     }).figures;
     quality = authoredColumnQualityResult({
       body: essay.body,
