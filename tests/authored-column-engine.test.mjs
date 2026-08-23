@@ -211,15 +211,19 @@ test('verificationFeedback translates reason codes into actionable directives', 
     'heading_reused_recently:The Grid Answers First',
     'lead_repeats_recent_column',
     'unsupported_numeric_claims:2.5 GW,40 percent',
+    'copied_source_sentence',
+    'deck_length_out_of_range',
     'some_unknown_code',
   ]);
-  assert.equal(feedback.length, 6);
+  assert.equal(feedback.length, 8);
   assert.match(feedback[0], /standalone plain-text line/);
   assert.match(feedback[1], /permanently retired/);
   assert.match(feedback[2], /The Grid Answers First/);
   assert.match(feedback[3], /different device/);
   assert.match(feedback[4], /2\.5 GW,40 percent/);
-  assert.equal(feedback[5], 'some_unknown_code');
+  assert.match(feedback[5], /own words/);
+  assert.match(feedback[6], /80 and 240 characters/);
+  assert.equal(feedback[7], 'some_unknown_code');
 });
 
 test('quality policy names the offending unsupported numbers', () => {

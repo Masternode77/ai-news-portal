@@ -108,6 +108,16 @@ const FEEDBACK_HINTS = [
     'The column must carry 1-3 evidence figures; keep the prose intact.'],
   [/^unsupported_numeric_claims(?::(.+))?$/, (match) =>
     `Remove or rewrite around these numbers, which are not in the verified claims${match[1] ? `: ${match[1]}` : ''}. Cite only numbers from verified_claims, keeping the exact value and unit as given — never convert units or aggregate figures.`],
+  [/^copied_source_sentence$/, () =>
+    'At least one sentence reproduces the source coverage nearly verbatim. Rewrite every sentence in your own words and structure; only short quoted fragments inside quotation marks may repeat source wording.'],
+  [/^source_overlap_above_threshold$/, () =>
+    'The essay tracks the source text too closely. Restructure the argument and rephrase in your own words so the wording diverges from the coverage.'],
+  [/^deck_length_out_of_range$/, () =>
+    'Rewrite the deck as a single standfirst sentence between 80 and 240 characters.'],
+  [/^title_length_out_of_range$/, () =>
+    'Rewrite the headline to between 40 and 105 characters, specific and first-person friendly.'],
+  [/^summary_above_170_chars$/, () =>
+    'Shorten the deck so its first 170 characters stand alone as a summary.'],
   [/^words_below_(\d+)$/, (match) =>
     `Lengthen the essay to at least ${match[1]} words by deepening the analysis — no padding or repetition.`],
   [/^words_above_(\d+)$|^body_above_(\d+)_chars$/, () =>
@@ -307,6 +317,7 @@ async function draftPass({ charter, selection, ledger, stance, recentHeadings = 
       '- The final section looks forward: name two or three concrete observables with rough timeframes, under a fresh heading of your own invention.',
       '- Open with a different device than the recent leads shown in the payload: a scene, a specific number, a contradiction, a filing detail, or a deadline.',
       '- Attribute every number inline to its source publication by name. Cite only numbers present in verified_claims, copied exactly — same value, same unit; never convert units (do not turn 2,500 MW into 2.5 GW) and never derive new figures.',
+      '- Write every sentence in your own words: never reproduce a sentence or long phrase from the source coverage. Short quoted fragments inside quotation marks are the only exception.',
       '- No ellipsis characters. No bullet lists; write prose.',
     ].join('\n'),
     userPrompt: JSON.stringify({
