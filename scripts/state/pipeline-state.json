@@ -43892,7 +43892,7 @@
     "2026-08-23": {
       "date": "2026-08-23",
       "createdAt": "2026-08-22T15:26:17.330Z",
-      "refreshedAt": "2026-08-23T07:31:50.453Z",
+      "refreshedAt": "2026-08-23T08:08:07.005Z",
       "candidateWindowHours": 24,
       "curatedItems": [],
       "curatedIds": [],
@@ -43905,127 +43905,6 @@
     }
   },
   "runHistory": [
-    {
-      "at": "2026-07-11T16:01:24.474Z",
-      "day": "2026-07-12",
-      "slot": 0,
-      "publishedCount": 0,
-      "signalCardCount": 1,
-      "archiveOnlyCount": 0,
-      "repetitionBlockedCount": 1,
-      "publishedIds": [],
-      "processedIds": [
-        "59d1d162db3c4a70",
-        "507286ecf72e8608"
-      ],
-      "blockedCount": 1,
-      "blockedItems": [
-        {
-          "id": "59d1d162db3c4a70",
-          "title": "AMD RX 9070 GRE collapses to $499 to save 1440p gaming — RDNA 4 price slips 9% to steal a piece of Nvidia's mid-range pie",
-          "infrastructure_relevance_score": 0.997,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "cloud_capacity_relevance:0.32(hyperscalers)",
-            "semiconductor_relevance:0.90(nvidia, amd, gpu)",
-            "power_grid_relevance:0.22(power)"
-          ],
-          "extraction_quality_score": 1,
-          "source_domain_adapter": "generic",
-          "content_length": 1628,
-          "boilerplate_ratio": 0.01,
-          "repetition_blocked": false,
-          "repetition_block_reasons": [],
-          "repetition_check": null,
-          "expert_insight_complete": true,
-          "expert_insight_missing_fields": [],
-          "reason": "fail_closed: nav_or_cta_detected"
-        }
-      ],
-      "repetitionBlockedItems": [
-        {
-          "id": "507286ecf72e8608",
-          "title": "Newegg packs Ryzen 5 9600X and 16GB DDR5 into a $520 combo — bundles also include a B650 motherboard and 240mm AIO liquid cooler",
-          "infrastructure_relevance_score": 0.897,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "cloud_capacity_relevance:0.32(hyperscalers)",
-            "semiconductor_relevance:0.44(amd, gpu)",
-            "power_grid_relevance:0.22(power)",
-            "cooling_relevance:0.30(thermal)"
-          ],
-          "extraction_quality_score": 1,
-          "source_domain_adapter": "generic",
-          "content_length": 1727,
-          "boilerplate_ratio": 0,
-          "repetition_blocked": true,
-          "repetition_block_reasons": [
-            "repeated_sentence_ratio>0.12",
-            "heading_sequence_similarity>0.75",
-            "conclusion_similarity>0.7"
-          ],
-          "repetition_check": {
-            "compared_article_count": 20,
-            "repeated_sentence_ratio": 0.14285714285714285,
-            "repeated_paragraph_ratio": 0.16666666666666666,
-            "heading_sequence_similarity": 1,
-            "banned_phrase_count": 0,
-            "banned_phrase_counts": {},
-            "recent_banned_phrase_counts": {},
-            "ngram_overlap": 0.4166666666666667,
-            "blueprint_repetition": 1,
-            "conclusion_similarity": 0.9271050693011066,
-            "repeated_sentence_count": 1,
-            "repeated_paragraph_count": 1,
-            "heading_sequence": [
-              "System Change",
-              "Bottleneck",
-              "Engineering Tradeoff",
-              "Validation Metric"
-            ],
-            "blocked": true,
-            "reasons": [
-              "repeated_sentence_ratio>0.12",
-              "heading_sequence_similarity>0.75",
-              "conclusion_similarity>0.7"
-            ]
-          },
-          "expert_insight_complete": true,
-          "expert_insight_missing_fields": [],
-          "reason": "repeated_sentence_ratio>0.12; heading_sequence_similarity>0.75; conclusion_similarity>0.7"
-        }
-      ],
-      "signalCardItems": [
-        {
-          "id": "59d1d162db3c4a70",
-          "title": "AMD RX 9070 GRE collapses to $499 to save 1440p gaming — RDNA 4 price slips 9% to steal a piece of Nvidia's mid-range pie",
-          "infrastructure_relevance_score": 0.997,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "cloud_capacity_relevance:0.32(hyperscalers)",
-            "semiconductor_relevance:0.90(nvidia, amd, gpu)",
-            "power_grid_relevance:0.22(power)"
-          ],
-          "extraction_quality_score": 1,
-          "source_domain_adapter": "generic",
-          "content_length": 1628,
-          "boilerplate_ratio": 0.01,
-          "repetition_blocked": false,
-          "repetition_block_reasons": [],
-          "repetition_check": null,
-          "expert_insight_complete": true,
-          "expert_insight_missing_fields": [],
-          "reason": "fail_closed: nav_or_cta_detected"
-        }
-      ],
-      "archiveOnlyItems": []
-    },
     {
       "at": "2026-07-11T23:57:53.212Z",
       "day": "2026-07-12",
@@ -55544,23 +55423,39 @@
         "token_budget": 60000,
         "call_budget": 40
       }
+    },
+    {
+      "at": "2026-08-23T08:08:07.005Z",
+      "day": "2026-08-23",
+      "slot": 2,
+      "publishedCount": 0,
+      "authoredColumn": {
+        "published": true,
+        "slug": "gym-class-hack-shifts-agent-liability-from-theory-to-contract-2026-08-23"
+      },
+      "llmUsage": {
+        "calls": 4,
+        "failures": 0,
+        "prompt_tokens": 10786,
+        "completion_tokens": 4365,
+        "total_tokens": 15151,
+        "token_budget": 60000,
+        "call_budget": 40
+      }
     }
   ],
-  "lastRunAt": "2026-08-23T07:31:50.453Z",
+  "lastRunAt": "2026-08-23T08:08:07.005Z",
   "authored": {
-    "lastColumnAt": "2026-08-22T23:30:37.270Z",
+    "lastColumnAt": "2026-08-23T08:08:07.005Z",
     "columnsByDay": {
       "2026-08-17": 2,
       "2026-08-18": 1,
       "2026-08-20": 3,
       "2026-08-21": 1,
-      "2026-08-22": 2
+      "2026-08-22": 2,
+      "2026-08-23": 1
     },
     "recentStoryKeys": [
-      {
-        "key": "https://techcrunch.com/2026/08/08/planned-amazon-data-center-could-become-the-biggest-climate-polluter-in-the-u-s/",
-        "at": "2026-08-20T07:53:24.056Z"
-      },
       {
         "key": "https://www.tomshardware.com/tech-industry/data-centers/amazon-secretly-circumvents-community-vote-for-massive-ai-data-center-45-year-old-rules-lock-gilroy-residents-out-of-public-comment-window",
         "at": "2026-08-20T15:38:42.623Z"
@@ -55580,12 +55475,12 @@
       {
         "key": "https://semiengineering.com/how-data-center-ai-can-keep-growing-despite-supply-chain-bottlenecks/",
         "at": "2026-08-22T23:30:37.270Z"
+      },
+      {
+        "key": "https://www.tomshardware.com/tech-industry/artificial-intelligence/rogue-ai-agent-tasked-with-booking-a-gym-class-hacks-system-removes-other-participant-says-sorry-about-that-after-trying-to-bump-user-up-the-waitlist",
+        "at": "2026-08-23T08:08:07.005Z"
       }
     ],
-    "lastFailure": {
-      "at": "2026-08-23T07:31:50.453Z",
-      "stage": "verify",
-      "detail": "figures_missing"
-    }
+    "lastFailure": null
   }
 }
