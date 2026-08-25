@@ -43937,144 +43937,18 @@
     "2026-08-26": {
       "date": "2026-08-26",
       "createdAt": "2026-08-25T15:47:55.019Z",
-      "refreshedAt": "2026-08-25T15:47:55.019Z",
+      "refreshedAt": "2026-08-25T23:34:12.498Z",
       "candidateWindowHours": 24,
       "curatedItems": [],
       "curatedIds": [],
       "publishedIds": [],
       "slotPublications": {
-        "0": true
+        "0": true,
+        "1": true
       }
     }
   },
   "runHistory": [
-    {
-      "at": "2026-07-14T09:14:36.780Z",
-      "day": "2026-07-14",
-      "slot": 2,
-      "publishedCount": 0,
-      "signalCardCount": 1,
-      "archiveOnlyCount": 0,
-      "repetitionBlockedCount": 1,
-      "publishedIds": [],
-      "processedIds": [
-        "c7ae25d85f99454d",
-        "1dfc1606ffe66c8c"
-      ],
-      "blockedCount": 1,
-      "blockedItems": [
-        {
-          "id": "c7ae25d85f99454d",
-          "title": "Research Bits: July 14",
-          "infrastructure_relevance_score": 1,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "cloud_capacity_relevance:0.32(hyperscalers)",
-            "semiconductor_relevance:0.94(semiconductor, semiconductors, gpu)",
-            "power_grid_relevance:0.22(power)",
-            "capital_markets_relevance:0.28(capex)"
-          ],
-          "extraction_quality_score": 1,
-          "source_domain_adapter": "semiengineering",
-          "content_length": 1674,
-          "boilerplate_ratio": 0,
-          "repetition_blocked": false,
-          "repetition_block_reasons": [],
-          "repetition_check": null,
-          "expert_insight_complete": false,
-          "expert_insight_missing_fields": [
-            "named_companies"
-          ],
-          "reason": "expert_insight_missing_fields named_companies"
-        }
-      ],
-      "repetitionBlockedItems": [
-        {
-          "id": "1dfc1606ffe66c8c",
-          "title": "Boutique DIY Hi-Fi solution lets you repurpose your old IDE optical drives as a standalone audio player — $190 CD-ROM Player 01 features a laser-cut enclosure and a custom PCB",
-          "infrastructure_relevance_score": 0.87,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "cloud_capacity_relevance:0.32(hyperscalers)",
-            "semiconductor_relevance:0.22(gpu)",
-            "power_grid_relevance:0.22(power)",
-            "capital_markets_relevance:0.28(capex)"
-          ],
-          "extraction_quality_score": 1,
-          "source_domain_adapter": "generic",
-          "content_length": 1631,
-          "boilerplate_ratio": 0,
-          "repetition_blocked": true,
-          "repetition_block_reasons": [
-            "repeated_sentence_ratio>0.12",
-            "heading_sequence_similarity>0.75",
-            "conclusion_similarity>0.7"
-          ],
-          "repetition_check": {
-            "compared_article_count": 20,
-            "repeated_sentence_ratio": 0.14285714285714285,
-            "repeated_paragraph_ratio": 0.16666666666666666,
-            "heading_sequence_similarity": 1,
-            "banned_phrase_count": 0,
-            "banned_phrase_counts": {},
-            "recent_banned_phrase_counts": {},
-            "ngram_overlap": 0.4528301886792453,
-            "blueprint_repetition": 1,
-            "conclusion_similarity": 0.9271050693011066,
-            "repeated_sentence_count": 1,
-            "repeated_paragraph_count": 1,
-            "heading_sequence": [
-              "System Change",
-              "Bottleneck",
-              "Engineering Tradeoff",
-              "Validation Metric"
-            ],
-            "blocked": true,
-            "reasons": [
-              "repeated_sentence_ratio>0.12",
-              "heading_sequence_similarity>0.75",
-              "conclusion_similarity>0.7"
-            ]
-          },
-          "expert_insight_complete": true,
-          "expert_insight_missing_fields": [],
-          "reason": "repeated_sentence_ratio>0.12; heading_sequence_similarity>0.75; conclusion_similarity>0.7"
-        }
-      ],
-      "signalCardItems": [
-        {
-          "id": "c7ae25d85f99454d",
-          "title": "Research Bits: July 14",
-          "infrastructure_relevance_score": 1,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "cloud_capacity_relevance:0.32(hyperscalers)",
-            "semiconductor_relevance:0.94(semiconductor, semiconductors, gpu)",
-            "power_grid_relevance:0.22(power)",
-            "capital_markets_relevance:0.28(capex)"
-          ],
-          "extraction_quality_score": 1,
-          "source_domain_adapter": "semiengineering",
-          "content_length": 1674,
-          "boilerplate_ratio": 0,
-          "repetition_blocked": false,
-          "repetition_block_reasons": [],
-          "repetition_check": null,
-          "expert_insight_complete": false,
-          "expert_insight_missing_fields": [
-            "named_companies"
-          ],
-          "reason": "expert_insight_missing_fields named_companies"
-        }
-      ],
-      "archiveOnlyItems": []
-    },
     {
       "at": "2026-07-14T16:21:45.310Z",
       "day": "2026-07-15",
@@ -54751,9 +54625,28 @@
         "token_budget": 60000,
         "call_budget": 40
       }
+    },
+    {
+      "at": "2026-08-25T23:34:12.498Z",
+      "day": "2026-08-26",
+      "slot": 1,
+      "publishedCount": 0,
+      "authoredColumn": {
+        "published": false,
+        "reason": "draft:no_parseable_draft"
+      },
+      "llmUsage": {
+        "calls": 3,
+        "failures": 0,
+        "prompt_tokens": 7700,
+        "completion_tokens": 2754,
+        "total_tokens": 10454,
+        "token_budget": 60000,
+        "call_budget": 40
+      }
     }
   ],
-  "lastRunAt": "2026-08-25T15:47:55.019Z",
+  "lastRunAt": "2026-08-25T23:34:12.498Z",
   "authored": {
     "lastColumnAt": "2026-08-25T07:55:20.245Z",
     "columnsByDay": {
@@ -54767,10 +54660,6 @@
       "2026-08-25": 1
     },
     "recentStoryKeys": [
-      {
-        "key": "https://semiengineering.com/how-data-center-ai-can-keep-growing-despite-supply-chain-bottlenecks/",
-        "at": "2026-08-22T23:30:37.270Z"
-      },
       {
         "key": "https://www.tomshardware.com/tech-industry/artificial-intelligence/rogue-ai-agent-tasked-with-booking-a-gym-class-hacks-system-removes-other-participant-says-sorry-about-that-after-trying-to-bump-user-up-the-waitlist",
         "at": "2026-08-23T08:08:07.005Z"
@@ -54793,7 +54682,7 @@
       }
     ],
     "lastFailure": {
-      "at": "2026-08-25T15:47:55.019Z",
+      "at": "2026-08-25T23:34:12.498Z",
       "stage": "draft",
       "detail": "no_parseable_draft"
     }
