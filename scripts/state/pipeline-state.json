@@ -43933,135 +43933,21 @@
         "1": true,
         "2": true
       }
+    },
+    "2026-08-26": {
+      "date": "2026-08-26",
+      "createdAt": "2026-08-25T15:47:55.019Z",
+      "refreshedAt": "2026-08-25T15:47:55.019Z",
+      "candidateWindowHours": 24,
+      "curatedItems": [],
+      "curatedIds": [],
+      "publishedIds": [],
+      "slotPublications": {
+        "0": true
+      }
     }
   },
   "runHistory": [
-    {
-      "at": "2026-07-13T23:56:18.121Z",
-      "day": "2026-07-14",
-      "slot": 1,
-      "publishedCount": 0,
-      "signalCardCount": 1,
-      "archiveOnlyCount": 0,
-      "repetitionBlockedCount": 1,
-      "publishedIds": [],
-      "processedIds": [
-        "4e456603e60e8083",
-        "f4c1da58ae1cf44b"
-      ],
-      "blockedCount": 1,
-      "blockedItems": [
-        {
-          "id": "4e456603e60e8083",
-          "title": "Hermes agent maker Nous Research in talks for new funding at $1.5B valuation",
-          "infrastructure_relevance_score": 0.96,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "cloud_capacity_relevance:0.32(hyperscalers)",
-            "semiconductor_relevance:0.22(gpu)",
-            "power_grid_relevance:0.22(power)",
-            "capital_markets_relevance:0.73(funding, valuation)"
-          ],
-          "extraction_quality_score": 1,
-          "source_domain_adapter": "techcrunch",
-          "content_length": 1688,
-          "boilerplate_ratio": 0,
-          "repetition_blocked": false,
-          "repetition_block_reasons": [],
-          "repetition_check": null,
-          "expert_insight_complete": false,
-          "expert_insight_missing_fields": [
-            "named_companies"
-          ],
-          "reason": "expert_insight_missing_fields named_companies"
-        }
-      ],
-      "repetitionBlockedItems": [
-        {
-          "id": "f4c1da58ae1cf44b",
-          "title": "Satya Nadella has issued a shocking warning to companies using AI",
-          "infrastructure_relevance_score": 0.87,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "cloud_capacity_relevance:0.32(hyperscalers)",
-            "semiconductor_relevance:0.22(gpu)",
-            "power_grid_relevance:0.22(power)"
-          ],
-          "extraction_quality_score": 1,
-          "source_domain_adapter": "techcrunch",
-          "content_length": 1734,
-          "boilerplate_ratio": 0,
-          "repetition_blocked": true,
-          "repetition_block_reasons": [
-            "repeated_sentence_ratio>0.12",
-            "heading_sequence_similarity>0.75",
-            "conclusion_similarity>0.7"
-          ],
-          "repetition_check": {
-            "compared_article_count": 20,
-            "repeated_sentence_ratio": 0.2857142857142857,
-            "repeated_paragraph_ratio": 0.3333333333333333,
-            "heading_sequence_similarity": 1,
-            "banned_phrase_count": 0,
-            "banned_phrase_counts": {},
-            "recent_banned_phrase_counts": {},
-            "ngram_overlap": 0.6982758620689655,
-            "blueprint_repetition": 1,
-            "conclusion_similarity": 0.9271050693011066,
-            "repeated_sentence_count": 2,
-            "repeated_paragraph_count": 2,
-            "heading_sequence": [
-              "Technical Signal",
-              "Failure Domain",
-              "Operator Exposure",
-              "Benchmark To Watch"
-            ],
-            "blocked": true,
-            "reasons": [
-              "repeated_sentence_ratio>0.12",
-              "heading_sequence_similarity>0.75",
-              "conclusion_similarity>0.7"
-            ]
-          },
-          "expert_insight_complete": true,
-          "expert_insight_missing_fields": [],
-          "reason": "repeated_sentence_ratio>0.12; heading_sequence_similarity>0.75; conclusion_similarity>0.7"
-        }
-      ],
-      "signalCardItems": [
-        {
-          "id": "4e456603e60e8083",
-          "title": "Hermes agent maker Nous Research in talks for new funding at $1.5B valuation",
-          "infrastructure_relevance_score": 0.96,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "cloud_capacity_relevance:0.32(hyperscalers)",
-            "semiconductor_relevance:0.22(gpu)",
-            "power_grid_relevance:0.22(power)",
-            "capital_markets_relevance:0.73(funding, valuation)"
-          ],
-          "extraction_quality_score": 1,
-          "source_domain_adapter": "techcrunch",
-          "content_length": 1688,
-          "boilerplate_ratio": 0,
-          "repetition_blocked": false,
-          "repetition_block_reasons": [],
-          "repetition_check": null,
-          "expert_insight_complete": false,
-          "expert_insight_missing_fields": [
-            "named_companies"
-          ],
-          "reason": "expert_insight_missing_fields named_companies"
-        }
-      ],
-      "archiveOnlyItems": []
-    },
     {
       "at": "2026-07-14T09:14:36.780Z",
       "day": "2026-07-14",
@@ -54846,9 +54732,28 @@
         "token_budget": 60000,
         "call_budget": 40
       }
+    },
+    {
+      "at": "2026-08-25T15:47:55.019Z",
+      "day": "2026-08-26",
+      "slot": 0,
+      "publishedCount": 0,
+      "authoredColumn": {
+        "published": false,
+        "reason": "draft:no_parseable_draft"
+      },
+      "llmUsage": {
+        "calls": 3,
+        "failures": 0,
+        "prompt_tokens": 7694,
+        "completion_tokens": 2529,
+        "total_tokens": 10223,
+        "token_budget": 60000,
+        "call_budget": 40
+      }
     }
   ],
-  "lastRunAt": "2026-08-25T07:55:20.245Z",
+  "lastRunAt": "2026-08-25T15:47:55.019Z",
   "authored": {
     "lastColumnAt": "2026-08-25T07:55:20.245Z",
     "columnsByDay": {
@@ -54862,10 +54767,6 @@
       "2026-08-25": 1
     },
     "recentStoryKeys": [
-      {
-        "key": "https://www.hpcwire.com/off-the-wire/infleqtion-selected-by-eaton-to-support-research-advancing-quantum-computing-for-us-grid-resilience/",
-        "at": "2026-08-22T15:26:17.330Z"
-      },
       {
         "key": "https://semiengineering.com/how-data-center-ai-can-keep-growing-despite-supply-chain-bottlenecks/",
         "at": "2026-08-22T23:30:37.270Z"
@@ -54891,6 +54792,10 @@
         "at": "2026-08-25T07:55:20.245Z"
       }
     ],
-    "lastFailure": null
+    "lastFailure": {
+      "at": "2026-08-25T15:47:55.019Z",
+      "stage": "draft",
+      "detail": "no_parseable_draft"
+    }
   }
 }
