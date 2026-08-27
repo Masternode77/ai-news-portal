@@ -43952,155 +43952,20 @@
     "2026-08-27": {
       "date": "2026-08-27",
       "createdAt": "2026-08-26T16:22:46.524Z",
-      "refreshedAt": "2026-08-26T16:22:46.524Z",
+      "refreshedAt": "2026-08-27T04:30:30.301Z",
       "candidateWindowHours": 24,
-      "curatedItems": [
-        {
-          "id": "7269bbc815aa24d0",
-          "sourceRegistryId": "eia-today-in-energy",
-          "source": "U.S. Energy Information Administration",
-          "url": "https://www.eia.gov/todayinenergy/detail.php?id=68024",
-          "title": "Eight petroleum liquids pipeline projects have been completed since the start of 2025",
-          "snippet": "In the 2026 release of our Liquids Pipeline Projects Database, we tracked the completion of 8 liquid fuels pipeline projects since the start of 2025, and an additional 14 new projects have been announced.",
-          "contentText": "In the 2026 release of our Liquids Pipeline Projects Database, we tracked the completion of 8 liquid fuels pipeline projects since the start of 2025, and an additional 14 new projects have been announced.",
-          "publishedAt": "2026-08-26T14:00:00.000Z",
-          "sourceImage": null,
-          "region": "EU",
-          "language": "en",
-          "defaultCategory": "Power & Grid",
-          "category": "Power & Grid",
-          "primary_category": "Power & Grid",
-          "secondary_category": "Interconnection and power procurement",
-          "infrastructure_layer": "Power",
-          "affected_stakeholders": [
-            "data center operators",
-            "utilities",
-            "cloud capacity teams",
-            "investors"
-          ],
-          "article_type": "Product / Platform Update",
-          "urgency_score": 0.46,
-          "taxonomy_confidence": 0.69,
-          "taxonomy_reasons": [
-            "power",
-            "grid"
-          ],
-          "direct_ai_infrastructure_relevance": 0,
-          "data_center_relevance": 0,
-          "cloud_capacity_relevance": 0,
-          "semiconductor_relevance": 0,
-          "power_grid_relevance": 0.5,
-          "cooling_relevance": 0,
-          "capital_markets_relevance": 0,
-          "enterprise_ai_infrastructure_relevance": 0,
-          "infrastructure_relevance_score": 0.325,
-          "infrastructure_relevance_tier": "archive_only",
-          "infrastructure_relevance_action": "archive_only",
-          "infrastructure_relevance_reasons": [
-            "power_grid_relevance:0.50(power, grid)"
-          ],
-          "infrastructure_relevance": {
-            "direct_ai_infrastructure_relevance": 0,
-            "data_center_relevance": 0,
-            "cloud_capacity_relevance": 0,
-            "semiconductor_relevance": 0,
-            "power_grid_relevance": 0.5,
-            "cooling_relevance": 0,
-            "capital_markets_relevance": 0,
-            "enterprise_ai_infrastructure_relevance": 0,
-            "infrastructure_relevance_score": 0.325,
-            "infrastructure_relevance_tier": "archive_only",
-            "infrastructure_relevance_action": "archive_only",
-            "infrastructure_relevance_reasons": [
-              "power_grid_relevance:0.50(power, grid)"
-            ],
-            "infrastructureRelevanceAction": "archive_only",
-            "articlePagePublished": false,
-            "homepagePublished": false,
-            "archiveOnly": true,
-            "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
-          },
-          "score": 60
-        }
-      ],
-      "curatedIds": [
-        "7269bbc815aa24d0"
-      ],
+      "curatedItems": [],
+      "curatedIds": [],
       "publishedIds": [
         "7269bbc815aa24d0"
       ],
       "slotPublications": {
-        "0": true
+        "0": true,
+        "1": true
       }
     }
   },
   "runHistory": [
-    {
-      "at": "2026-07-15T09:19:21.338Z",
-      "day": "2026-07-15",
-      "slot": 2,
-      "publishedCount": 0,
-      "signalCardCount": 2,
-      "archiveOnlyCount": 0,
-      "processedIds": [
-        "51191e097865c42b",
-        "e1912c9cd69c0da2"
-      ],
-      "blockedCount": 2,
-      "blockedItems": [
-        {
-          "id": "51191e097865c42b",
-          "title": "Blog Review: July 15",
-          "infrastructure_relevance_score": 0.976,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "cloud_capacity_relevance:0.32(hyperscalers)",
-            "semiconductor_relevance:0.80(semiconductor, fab, gpu)",
-            "power_grid_relevance:0.76(power, grid, utilities)",
-            "capital_markets_relevance:0.28(capex)"
-          ],
-          "extraction_quality_score": 1,
-          "source_domain_adapter": "semiengineering",
-          "content_length": 1783,
-          "boilerplate_ratio": 0,
-          "repetition_blocked": false,
-          "repetition_block_reasons": [],
-          "repetition_check": null,
-          "expert_insight_complete": true,
-          "expert_insight_missing_fields": [],
-          "reason": "fail_closed: source_text_incomplete:source_boilerplate_detected"
-        },
-        {
-          "id": "e1912c9cd69c0da2",
-          "title": "PS5 emulation ramps up in response to Sony killing physical games — PS5 titles now booting across different emulators with rapid community development for both 2D and 3D games",
-          "infrastructure_relevance_score": 0.87,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "cloud_capacity_relevance:0.32(hyperscalers)",
-            "semiconductor_relevance:0.22(gpu)",
-            "power_grid_relevance:0.22(power)"
-          ],
-          "extraction_quality_score": 0.83,
-          "source_domain_adapter": "generic",
-          "content_length": 835,
-          "boilerplate_ratio": 0,
-          "repetition_blocked": false,
-          "repetition_block_reasons": [],
-          "repetition_check": null,
-          "expert_insight_complete": false,
-          "expert_insight_missing_fields": [
-            "concrete_facts",
-            "named_companies"
-          ],
-          "reason": "fail_closed: source_text_incomplete:source_evidence_length_below_1200"
-        }
-      ],
-      "archiveOnlyItems": []
-    },
     {
       "at": "2026-07-15T16:39:23.739Z",
       "day": "2026-07-16",
@@ -54546,9 +54411,28 @@
         "token_budget": 60000,
         "call_budget": 40
       }
+    },
+    {
+      "at": "2026-08-27T04:30:30.301Z",
+      "day": "2026-08-27",
+      "slot": 1,
+      "publishedCount": 0,
+      "authoredColumn": {
+        "published": false,
+        "reason": "draft:no_parseable_draft"
+      },
+      "llmUsage": {
+        "calls": 3,
+        "failures": 0,
+        "prompt_tokens": 7699,
+        "completion_tokens": 2478,
+        "total_tokens": 10177,
+        "token_budget": 60000,
+        "call_budget": 40
+      }
     }
   ],
-  "lastRunAt": "2026-08-26T16:22:46.524Z",
+  "lastRunAt": "2026-08-27T04:30:30.301Z",
   "authored": {
     "lastColumnAt": "2026-08-25T07:55:20.245Z",
     "columnsByDay": {
@@ -54563,10 +54447,6 @@
     },
     "recentStoryKeys": [
       {
-        "key": "https://www.storagereview.com/news/amd-to-acquire-taalas-the-toronto-startup-building-silicon-around-one-model",
-        "at": "2026-08-23T23:31:04.873Z"
-      },
-      {
         "key": "https://www.hpcwire.com/2026/08/11/nvidias-500-billion-ai-bet-jensen-huang-brings-wall-street-into-the-race/",
         "at": "2026-08-24T08:03:32.167Z"
       },
@@ -54576,7 +54456,7 @@
       }
     ],
     "lastFailure": {
-      "at": "2026-08-26T16:22:46.524Z",
+      "at": "2026-08-27T04:30:30.301Z",
       "stage": "draft",
       "detail": "no_parseable_draft"
     }
