@@ -43967,141 +43967,18 @@
     "2026-08-28": {
       "date": "2026-08-28",
       "createdAt": "2026-08-27T18:16:44.842Z",
-      "refreshedAt": "2026-08-27T18:16:44.842Z",
+      "refreshedAt": "2026-08-28T00:19:57.747Z",
       "candidateWindowHours": 24,
       "curatedItems": [],
       "curatedIds": [],
       "publishedIds": [],
       "slotPublications": {
-        "0": true
+        "0": true,
+        "1": true
       }
     }
   },
   "runHistory": [
-    {
-      "at": "2026-07-16T00:00:35.075Z",
-      "day": "2026-07-16",
-      "slot": 1,
-      "publishedCount": 0,
-      "signalCardCount": 1,
-      "archiveOnlyCount": 0,
-      "repetitionBlockedCount": 1,
-      "publishedIds": [],
-      "processedIds": [
-        "d7b07a9a9546b27c",
-        "f88081e9101dffa7"
-      ],
-      "blockedCount": 1,
-      "blockedItems": [
-        {
-          "id": "d7b07a9a9546b27c",
-          "title": "GigaIO’s Gryf and Manticore Earn Nutanix Validation for Enterprise AI and Kubernetes Workloads",
-          "infrastructure_relevance_score": 1,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, ai data center, neocloud)",
-            "data_center_relevance:1.00(data center, data centers, datacenter)",
-            "cloud_capacity_relevance:0.32(hyperscalers)",
-            "semiconductor_relevance:0.50(nvidia, gpu)",
-            "power_grid_relevance:0.76(power, grid, utility)",
-            "enterprise_ai_infrastructure_relevance:0.91(enterprise ai, kubernetes, storage)"
-          ],
-          "extraction_quality_score": 1,
-          "source_domain_adapter": "generic",
-          "content_length": 1797,
-          "boilerplate_ratio": 0,
-          "repetition_blocked": false,
-          "repetition_block_reasons": [],
-          "repetition_check": null,
-          "expert_insight_complete": true,
-          "expert_insight_missing_fields": [],
-          "reason": "fail_closed: source_text_incomplete:ellipsis_truncation_artifact, ellipsis_truncation_artifact"
-        }
-      ],
-      "repetitionBlockedItems": [
-        {
-          "id": "f88081e9101dffa7",
-          "title": "NVIDIA Introduces New Jetson Thor Computers to Advance Mainstream Robotics and Edge AI",
-          "infrastructure_relevance_score": 0.932,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "cloud_capacity_relevance:0.32(hyperscalers)",
-            "semiconductor_relevance:0.60(nvidia, gpu)",
-            "power_grid_relevance:0.22(power)"
-          ],
-          "extraction_quality_score": 1,
-          "source_domain_adapter": "generic",
-          "content_length": 1632,
-          "boilerplate_ratio": 0,
-          "repetition_blocked": true,
-          "repetition_block_reasons": [
-            "repeated_sentence_ratio>0.12",
-            "heading_sequence_similarity>0.75",
-            "conclusion_similarity>0.7"
-          ],
-          "repetition_check": {
-            "compared_article_count": 20,
-            "repeated_sentence_ratio": 0.3333333333333333,
-            "repeated_paragraph_ratio": 0.3333333333333333,
-            "heading_sequence_similarity": 1,
-            "banned_phrase_count": 0,
-            "banned_phrase_counts": {},
-            "recent_banned_phrase_counts": {},
-            "ngram_overlap": 0.4649122807017544,
-            "blueprint_repetition": 1,
-            "conclusion_similarity": 0.9271050693011066,
-            "repeated_sentence_count": 2,
-            "repeated_paragraph_count": 2,
-            "heading_sequence": [
-              "Technical Signal",
-              "Failure Domain",
-              "Operator Exposure",
-              "Benchmark To Watch"
-            ],
-            "blocked": true,
-            "reasons": [
-              "repeated_sentence_ratio>0.12",
-              "heading_sequence_similarity>0.75",
-              "conclusion_similarity>0.7"
-            ]
-          },
-          "expert_insight_complete": true,
-          "expert_insight_missing_fields": [],
-          "reason": "repeated_sentence_ratio>0.12; heading_sequence_similarity>0.75; conclusion_similarity>0.7"
-        }
-      ],
-      "signalCardItems": [
-        {
-          "id": "d7b07a9a9546b27c",
-          "title": "GigaIO’s Gryf and Manticore Earn Nutanix Validation for Enterprise AI and Kubernetes Workloads",
-          "infrastructure_relevance_score": 1,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, ai data center, neocloud)",
-            "data_center_relevance:1.00(data center, data centers, datacenter)",
-            "cloud_capacity_relevance:0.32(hyperscalers)",
-            "semiconductor_relevance:0.50(nvidia, gpu)",
-            "power_grid_relevance:0.76(power, grid, utility)",
-            "enterprise_ai_infrastructure_relevance:0.91(enterprise ai, kubernetes, storage)"
-          ],
-          "extraction_quality_score": 1,
-          "source_domain_adapter": "generic",
-          "content_length": 1797,
-          "boilerplate_ratio": 0,
-          "repetition_blocked": false,
-          "repetition_block_reasons": [],
-          "repetition_check": null,
-          "expert_insight_complete": true,
-          "expert_insight_missing_fields": [],
-          "reason": "fail_closed: source_text_incomplete:ellipsis_truncation_artifact, ellipsis_truncation_artifact"
-        }
-      ],
-      "archiveOnlyItems": []
-    },
     {
       "at": "2026-07-16T09:23:18.578Z",
       "day": "2026-07-16",
@@ -54338,9 +54215,28 @@
         "token_budget": 60000,
         "call_budget": 40
       }
+    },
+    {
+      "at": "2026-08-28T00:19:57.747Z",
+      "day": "2026-08-28",
+      "slot": 1,
+      "publishedCount": 0,
+      "authoredColumn": {
+        "published": false,
+        "reason": "draft:no_parseable_draft"
+      },
+      "llmUsage": {
+        "calls": 3,
+        "failures": 0,
+        "prompt_tokens": 7704,
+        "completion_tokens": 2587,
+        "total_tokens": 10291,
+        "token_budget": 60000,
+        "call_budget": 40
+      }
     }
   ],
-  "lastRunAt": "2026-08-27T18:16:44.842Z",
+  "lastRunAt": "2026-08-28T00:19:57.747Z",
   "authored": {
     "lastColumnAt": "2026-08-25T07:55:20.245Z",
     "columnsByDay": {
@@ -54360,9 +54256,9 @@
       }
     ],
     "lastFailure": {
-      "at": "2026-08-27T18:16:44.842Z",
-      "stage": "verify",
-      "detail": "heading_reused_recently:Three Falsifiable Checkpoints|insight_density_below_0.78"
+      "at": "2026-08-28T00:19:57.747Z",
+      "stage": "draft",
+      "detail": "no_parseable_draft"
     }
   }
 }
