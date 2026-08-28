@@ -140,7 +140,7 @@
         "sourceId": "eia-today-in-energy",
         "reviewedAt": "2026-08-12T00:00:00.000Z",
         "termsUrl": "https://www.eia.gov/about/copyrights_reuse.php",
-        "checkedAt": "2026-08-28T07:04:32.350Z",
+        "checkedAt": "2026-08-28T19:35:42.341Z",
         "registryDigest": "85272c8764805102db6da08b1643d6cd4b2b7060e16fcd37061bc48715c6ae56",
         "registryBlobSha": "",
         "contentDigest": "beeeed148253b62b7ae888a3bc79c5979dbfa234b587e2f7b91bbaeafcf5acde"
@@ -296,7 +296,7 @@
         "sourceId": "eia-today-in-energy",
         "reviewedAt": "2026-08-12T00:00:00.000Z",
         "termsUrl": "https://www.eia.gov/about/copyrights_reuse.php",
-        "checkedAt": "2026-08-28T07:04:32.611Z",
+        "checkedAt": "2026-08-28T19:35:42.605Z",
         "registryDigest": "85272c8764805102db6da08b1643d6cd4b2b7060e16fcd37061bc48715c6ae56",
         "registryBlobSha": "",
         "contentDigest": "d15ccae9ee9ddf6214d8b39fbdf87ac41a1f82721e955148a1cd5e0a2de7b028"
@@ -452,7 +452,7 @@
         "sourceId": "eia-today-in-energy",
         "reviewedAt": "2026-08-12T00:00:00.000Z",
         "termsUrl": "https://www.eia.gov/about/copyrights_reuse.php",
-        "checkedAt": "2026-08-28T07:04:32.844Z",
+        "checkedAt": "2026-08-28T19:35:42.840Z",
         "registryDigest": "85272c8764805102db6da08b1643d6cd4b2b7060e16fcd37061bc48715c6ae56",
         "registryBlobSha": "",
         "contentDigest": "ade711e2b20996fa86c8248da2f499d76c8f2f8bdd82d9e630f5e080f97f58e2"
@@ -608,7 +608,7 @@
         "sourceId": "eia-today-in-energy",
         "reviewedAt": "2026-08-12T00:00:00.000Z",
         "termsUrl": "https://www.eia.gov/about/copyrights_reuse.php",
-        "checkedAt": "2026-08-28T07:04:33.094Z",
+        "checkedAt": "2026-08-28T19:35:43.088Z",
         "registryDigest": "85272c8764805102db6da08b1643d6cd4b2b7060e16fcd37061bc48715c6ae56",
         "registryBlobSha": "",
         "contentDigest": "8e6376116876948d8a9e27d52a0f3747ce46816914268a5bd0bf93fafd85c604"
@@ -764,7 +764,7 @@
         "sourceId": "eia-today-in-energy",
         "reviewedAt": "2026-08-12T00:00:00.000Z",
         "termsUrl": "https://www.eia.gov/about/copyrights_reuse.php",
-        "checkedAt": "2026-08-28T07:04:33.361Z",
+        "checkedAt": "2026-08-28T19:35:43.353Z",
         "registryDigest": "85272c8764805102db6da08b1643d6cd4b2b7060e16fcd37061bc48715c6ae56",
         "registryBlobSha": "",
         "contentDigest": "2c6d66c26ee5e8faea303eb6655f65da943f22d62f0b30f232281dfa85dca6d7"
@@ -1950,6 +1950,215 @@
     "legacyImage": "/generated/eia-on-premise-data-center-load.webp"
   },
   {
+    "id": "5fb4b1933e5d650e",
+    "sourceRegistryId": "eia-today-in-energy",
+    "source": "U.S. Energy Information Administration",
+    "url": "https://www.eia.gov/todayinenergy/detail.php?id=68044",
+    "title": "U.S. uranium production more than tripled in 2025 and was the highest since 2017",
+    "snippet": "In 2025, uranium concentrate production in the United States totaled 2.1 million pounds of triuranium octoxide (U3O8), the base component of nuclear reactor fuel. U.S. U3O8 production in 2025 was the most since 2017 and…",
+    "contentText": "In 2025, uranium concentrate production in the United States totaled 2.1 million pounds of triuranium octoxide (U3O8), the base component of nuclear reactor fuel. U.S. U3O8 production in 2025 was the most since 2017 and more than triple the volume produced in 2024.",
+    "publishedAt": "2026-08-28T14:00:00.000Z",
+    "sourceImage": null,
+    "region": "US",
+    "language": "en",
+    "defaultCategory": "Power & Grid",
+    "category": "Power & Grid",
+    "primary_category": "Power & Grid",
+    "secondary_category": "Nuclear Energy",
+    "infrastructure_layer": "Power",
+    "affected_stakeholders": [
+      "operators",
+      "investors",
+      "utilities",
+      "data center operators",
+      "cloud capacity teams"
+    ],
+    "article_type": "Market Analysis",
+    "urgency_score": 0.7,
+    "taxonomy_confidence": 0.89,
+    "taxonomy_reasons": [
+      "power",
+      "grid",
+      "interconnection",
+      "nuclear"
+    ],
+    "direct_ai_infrastructure_relevance": 0,
+    "data_center_relevance": 0.34,
+    "cloud_capacity_relevance": 0,
+    "semiconductor_relevance": 0,
+    "power_grid_relevance": 0.76,
+    "cooling_relevance": 0,
+    "capital_markets_relevance": 0,
+    "enterprise_ai_infrastructure_relevance": 0,
+    "infrastructure_relevance_score": 0.586,
+    "infrastructure_relevance_tier": "signal_card",
+    "infrastructure_relevance_action": "publish_signal_card_only",
+    "infrastructure_relevance_reasons": [
+      "data_center_relevance:0.34(colocation)",
+      "power_grid_relevance:0.76(power, grid, nuclear)"
+    ],
+    "infrastructure_relevance": {
+      "direct_ai_infrastructure_relevance": 0,
+      "data_center_relevance": 0.34,
+      "cloud_capacity_relevance": 0,
+      "semiconductor_relevance": 0,
+      "power_grid_relevance": 0.76,
+      "cooling_relevance": 0,
+      "capital_markets_relevance": 0,
+      "enterprise_ai_infrastructure_relevance": 0,
+      "infrastructure_relevance_score": 0.586,
+      "infrastructure_relevance_tier": "signal_card",
+      "infrastructure_relevance_action": "publish_signal_card_only",
+      "infrastructure_relevance_reasons": [
+        "data_center_relevance:0.34(colocation)",
+        "power_grid_relevance:0.76(power, grid, nuclear)"
+      ],
+      "infrastructureRelevanceAction": "publish_signal_card_only",
+      "articlePagePublished": false,
+      "homepagePublished": true,
+      "archiveOnly": false,
+      "archiveOnlyReason": null
+    },
+    "score": 58,
+    "slug": "u-s-uranium-production-more-than-tripled-in-2025-and-was-the-highest-since-2017",
+    "summary": "U.S. uranium production surged to 2.1 million pounds in 2025, the highest level since 2017, marking a threefold increase from 2024 levels.",
+    "insight": "This significant rise in uranium production could enhance fuel supply stability for nuclear operators, potentially impacting energy pricing and investment strategies. Investors may need to reassess their positions in the nuclear sector as domestic production…",
+    "expert_insight": {
+      "concrete_facts": [
+        "uranium production surged to 2.1 million pounds in 2025, the highest level since 2017, marking a threefold increase from 2024 levels.",
+        "In 2025, uranium concentrate production in the United States totaled 2.1 million pounds of triuranium octoxide (U3O8), the base component of nuclear reactor fuel.",
+        "In 2025, uranium concentrate production in the United States totaled 2.1 million pounds of triuranium octoxide (U 3 O 8 ), the base component of nuclear reactor fuel.",
+        "In 2025, exploration drilling to locate, map, and evaluate underground uranium deposits included 1,824 holes with total footage surpassing 1.0 million feet, up from the 1,324 holes with a total footage of 0.6 million feet drilled in 2024.",
+        "Development drilling to measure the size, shape, and grade of known uranium deposits totaled 3,708 holes with total footage of 1.30 million feet in 2025, up from 2,462 holes and 1.26 million feet in 2024."
+      ],
+      "named_companies": [
+        "U.S. Energy",
+        "Monthly Energy"
+      ],
+      "infrastructure_layer": "Power",
+      "bottleneck_type": "power_grid",
+      "who_gains_leverage": "utilities, power-secured developers, and operators with firm interconnection positions",
+      "who_takes_execution_risk": "developers and cloud buyers whose delivery dates depend on utility upgrades or energization schedules",
+      "timing_dependency": "utility interconnection, equipment procurement, and energization milestones",
+      "counterargument": "The source may still describe intent rather than delivered capacity, so the operating impact depends on follow-through.",
+      "next_observable_signal": "interconnection approvals, substation equipment dates, power purchase agreements, or disclosed energization windows",
+      "expert_insight_complete": true,
+      "expert_insight_missing_fields": []
+    },
+    "expertInsight": {
+      "concrete_facts": [
+        "uranium production surged to 2.1 million pounds in 2025, the highest level since 2017, marking a threefold increase from 2024 levels.",
+        "In 2025, uranium concentrate production in the United States totaled 2.1 million pounds of triuranium octoxide (U3O8), the base component of nuclear reactor fuel.",
+        "In 2025, uranium concentrate production in the United States totaled 2.1 million pounds of triuranium octoxide (U 3 O 8 ), the base component of nuclear reactor fuel.",
+        "In 2025, exploration drilling to locate, map, and evaluate underground uranium deposits included 1,824 holes with total footage surpassing 1.0 million feet, up from the 1,324 holes with a total footage of 0.6 million feet drilled in 2024.",
+        "Development drilling to measure the size, shape, and grade of known uranium deposits totaled 3,708 holes with total footage of 1.30 million feet in 2025, up from 2,462 holes and 1.26 million feet in 2024."
+      ],
+      "named_companies": [
+        "U.S. Energy",
+        "Monthly Energy"
+      ],
+      "infrastructure_layer": "Power",
+      "bottleneck_type": "power_grid",
+      "who_gains_leverage": "utilities, power-secured developers, and operators with firm interconnection positions",
+      "who_takes_execution_risk": "developers and cloud buyers whose delivery dates depend on utility upgrades or energization schedules",
+      "timing_dependency": "utility interconnection, equipment procurement, and energization milestones",
+      "counterargument": "The source may still describe intent rather than delivered capacity, so the operating impact depends on follow-through.",
+      "next_observable_signal": "interconnection approvals, substation equipment dates, power purchase agreements, or disclosed energization windows",
+      "expert_insight_complete": true,
+      "expert_insight_missing_fields": []
+    },
+    "concrete_facts": [
+      "uranium production surged to 2.1 million pounds in 2025, the highest level since 2017, marking a threefold increase from 2024 levels.",
+      "In 2025, uranium concentrate production in the United States totaled 2.1 million pounds of triuranium octoxide (U3O8), the base component of nuclear reactor fuel.",
+      "In 2025, uranium concentrate production in the United States totaled 2.1 million pounds of triuranium octoxide (U 3 O 8 ), the base component of nuclear reactor fuel.",
+      "In 2025, exploration drilling to locate, map, and evaluate underground uranium deposits included 1,824 holes with total footage surpassing 1.0 million feet, up from the 1,324 holes with a total footage of 0.6 million feet drilled in 2024.",
+      "Development drilling to measure the size, shape, and grade of known uranium deposits totaled 3,708 holes with total footage of 1.30 million feet in 2025, up from 2,462 holes and 1.26 million feet in 2024."
+    ],
+    "named_companies": [
+      "U.S. Energy",
+      "Monthly Energy"
+    ],
+    "bottleneck_type": "power_grid",
+    "who_gains_leverage": "utilities, power-secured developers, and operators with firm interconnection positions",
+    "who_takes_execution_risk": "developers and cloud buyers whose delivery dates depend on utility upgrades or energization schedules",
+    "timing_dependency": "utility interconnection, equipment procurement, and energization milestones",
+    "counterargument": "The source may still describe intent rather than delivered capacity, so the operating impact depends on follow-through.",
+    "next_observable_signal": "interconnection approvals, substation equipment dates, power purchase agreements, or disclosed energization windows",
+    "expert_insight_complete": true,
+    "expert_insight_missing_fields": [],
+    "tags": [
+      "uranium",
+      "nuclear",
+      "energy",
+      "production",
+      "US",
+      "market"
+    ],
+    "imagePrompt": "Aerial view of a uranium mining site with machinery and workers, showcasing the extraction process, in a natural landscape, 16:9.",
+    "lang": "en",
+    "articleText": "Data source: U.S. Energy Information Administration, Monthly Energy Review , and Domestic Uranium Production Report Note: W=Data withheld to avoid disclosure of individual company data. In 2025, uranium concentrate production in the United States totaled 2.1 million pounds of triuranium octoxide (U 3 O 8 ), the base component of nuclear reactor fuel. U.S. U 3 O 8 production in 2025 was the most since 2017 and more than triple the volume produced in 2024. Producing U 3 O 8 &mdash;often called yellowcake for its powdered, yellow appearance&mdash;is one of the first steps in making fuel for nuclear reactors . After uranium ore is mined, it goes through a milling process where uranium is extracted from the ore, producing U 3 O 8 , which is then processed at conversion and enrichment facilities. The enriched uranium is made into fuel pellets that are assembled into fuel rods for nuclear reactors. In 2025, exploration drilling to locate, map, and evaluate underground uranium deposits included 1,824 holes with total footage surpassing 1.0 million feet, up from the 1,324 holes with a total footage of 0.6 million feet drilled in 2024. Development drilling to measure the size, shape, and grade of known uranium deposits totaled 3,708 holes with total footage of 1.30 million feet in 2025, up from 2,462 holes and 1.26 million feet in 2024. In 2025, owners and operators of U.S. nuclear plants purchased a total of 46.9 million pounds of U 3 O 8 equivalent, down from 55.9 million pounds in 2024. Purchases were made from both domestic and foreign suppliers at a weighted-average price of $58.46 per pound, 11% higher than the 2024 weighted-average price of $52.71 per pound. Most of the U 3 O 8 delivered to U.S.",
+    "content_length": 1721,
+    "boilerplate_ratio": 0,
+    "title_body_similarity": 0.78,
+    "copyright_footer_detected": false,
+    "nav_or_cta_detected": false,
+    "sentence_completion_score": 1,
+    "source_domain_adapter": "generic",
+    "extraction_quality_score": 1,
+    "extraction_qa": {
+      "content_length": 1721,
+      "boilerplate_ratio": 0,
+      "title_body_similarity": 0.78,
+      "copyright_footer_detected": false,
+      "legal_boilerplate_detected": false,
+      "nav_or_cta_detected": false,
+      "sentence_completion_score": 1,
+      "source_domain_adapter": "generic",
+      "extraction_quality_score": 1,
+      "extraction_failure_reason": null,
+      "extraction_quality_reasons": []
+    },
+    "extraction_artifact": {
+      "artifact_version": "extraction_v1",
+      "source_url": "https://www.eia.gov/todayinenergy/detail.php?id=68044",
+      "extracted_text_sha256": "2b2de76c8650b0e16ae78f22f4b65ec869fcdf469b36b7850fdcd5726a9d831f",
+      "cleaned_extracted_text": "Data source: U.S. Energy Information Administration, Monthly Energy Review , and Domestic Uranium Production Report Note: W=Data withheld to avoid disclosure of individual company data. In 2025, uranium concentrate production in the United States totaled 2.1 million pounds of triuranium octoxide (U 3 O 8 ), the base component of nuclear reactor fuel. U.S. U 3 O 8 production in 2025 was the most since 2017 and more than triple the volume produced in 2024. Producing U 3 O 8 &mdash;often called yellowcake for its powdered, yellow appearance&mdash;is one of the first steps in making fuel for nuclear reactors . After uranium ore is mined, it goes through a milling process where uranium is extracted from the ore, producing U 3 O 8 , which is then processed at conversion and enrichment facilities. The enriched uranium is made into fuel pellets that are assembled into fuel rods for nuclear reactors. In 2025, exploration drilling to locate, map, and evaluate underground uranium deposits included 1,824 holes with total footage surpassing 1.0 million feet, up from the 1,324 holes with a total footage of 0.6 million feet drilled in 2024. Development drilling to measure the size, shape, and grade of known uranium deposits totaled 3,708 holes with total footage of 1.30 million feet in 2025, up from 2,462 holes and 1.26 million feet in 2024. In 2025, owners and operators of U.S. nuclear plants purchased a total of 46.9 million pounds of U 3 O 8 equivalent, down from 55.9 million pounds in 2024. Purchases were made from both domestic and foreign suppliers at a weighted-average price of $58.46 per pound, 11% higher than the 2024 weighted-average price of $52.71 per pound. Most of the U 3 O 8 delivered to U.S.",
+      "extraction_qa": {
+        "cleaned_source_length": 1721,
+        "block_reasons": [],
+        "content_length": 1721,
+        "boilerplate_ratio": 0,
+        "title_body_similarity": 0.78,
+        "copyright_footer_detected": false,
+        "legal_boilerplate_detected": false,
+        "nav_or_cta_detected": false,
+        "sentence_completion_score": 1,
+        "source_domain_adapter": "generic",
+        "extraction_quality_score": 1,
+        "extraction_failure_reason": null,
+        "extraction_quality_reasons": []
+      }
+    },
+    "sourceUrl": "https://www.eia.gov/todayinenergy/detail.php?id=68044",
+    "generatedImage": "/generated/articles/5fb4b1933e5d650e-u-s-uranium-production-more-than-tripled-in-2025-and-was-the-highest-since-2017/hero.webp",
+    "infrastructureRelevanceAction": "publish_signal_card_only",
+    "articlePagePublished": false,
+    "homepagePublished": true,
+    "archiveOnly": false,
+    "archiveOnlyReason": null,
+    "signalCardOnly": true,
+    "signalCardReason": "infrastructure_relevance_signal_card_threshold",
+    "article_blueprint": null,
+    "articleBlueprint": null,
+    "expertLensShort": null,
+    "expertLensFull": null,
+    "expertLens": null,
+    "public_content_tier": "editorial_brief",
+    "seo_noindex": false,
+    "noindex": false,
+    "public_tier_reasons": []
+  },
+  {
     "id": "9ccadbbb854d8c11",
     "source": "HPCwire",
     "url": "https://www.hpcwire.com/2026/08/11/nvidias-500-billion-ai-bet-jensen-huang-brings-wall-street-into-the-race/",
@@ -2364,7 +2573,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-28T06:54:10.228Z",
+      "generatedAt": "2026-08-28T19:25:19.670Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "NVIDIA",
@@ -3269,7 +3478,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-28T06:54:10.790Z",
+      "generatedAt": "2026-08-28T19:25:20.295Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Google",
@@ -3855,7 +4064,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-28T06:54:11.139Z",
+      "generatedAt": "2026-08-28T19:25:20.680Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Amazon",
@@ -4778,7 +4987,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-28T06:54:11.586Z",
+      "generatedAt": "2026-08-28T19:25:21.173Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "AMD",
@@ -5317,7 +5526,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-28T06:54:11.928Z",
+      "generatedAt": "2026-08-28T19:25:21.551Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "OpenAI",
@@ -5675,7 +5884,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-28T06:54:12.162Z",
+      "generatedAt": "2026-08-28T19:25:21.806Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Amazon",
@@ -6222,7 +6431,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-28T06:54:12.507Z",
+      "generatedAt": "2026-08-28T19:25:22.184Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "NVIDIA",
@@ -6580,7 +6789,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-28T06:54:12.744Z",
+      "generatedAt": "2026-08-28T19:25:22.444Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Amazon",
@@ -7114,373 +7323,6 @@
     "public_tier_reasons": [
       "dirty_extraction",
       "source_only_due_dirty_extraction"
-    ]
-  },
-  {
-    "id": "afb38d125df0c4c6",
-    "source": "StorageReview",
-    "url": "https://www.storagereview.com/review/dell-pro-precision-5-14s-intel-review-certified-workstation-graphics-without-a-discrete-gpu",
-    "title": "Dell Pro Precision 5 14s Intel Review: Certified Workstation Graphics Without a Discrete GPU",
-    "snippet": "The Dell Pro Precision 5 14s is a compact mobile workstation built around Intel’s latest professional laptop platform. Our review unit combines a Series 3 Intel Core Ultra X9 388H, a 16-core Panther Lake processor with…",
-    "contentText": "The Dell Pro Precision 5 14s is a compact mobile workstation built around Intel&#8217;s latest professional laptop platform. Our review unit combines a Series 3 Intel Core Ultra X9 388H, a 16-core Panther Lake processor with a 50 TOPS NPU, with Intel Arc Pro B390 graphics, 64GB of LPCAMM2 memory running at 8533 MT/s, and a 1TB Gen5 SED-ready SSD. During testing, this configuration produced the strongest productivity results we have recorded from a 14-inch laptop while lasting nearly a full day on battery. Within Dell&#8217;s lineup, the Pro Precision 5 14s adds workstation-focused graphics drivers and enterprise features without moving to a heavier discrete GPU design. It is designed for engineers, developers, analysts, and creators who need certified application support, strong CPU perfo…",
-    "publishedAt": "2026-08-07T21:22:58.000Z",
-    "sourceImage": "https://www.storagereview.com/wp-content/uploads/2026/08/StorageReview-Dell-Pro-Precision-5-14S-Intel-7.jpg",
-    "region": "APAC",
-    "language": "en",
-    "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
-    "category": "Semiconductors",
-    "primary_category": "Semiconductors",
-    "secondary_category": "Accelerators, memory, and advanced packaging",
-    "infrastructure_layer": "Silicon",
-    "affected_stakeholders": [
-      "semiconductor suppliers",
-      "hyperscalers",
-      "server OEMs",
-      "investors"
-    ],
-    "article_type": "Capacity Expansion",
-    "urgency_score": 0.66,
-    "taxonomy_confidence": 0.95,
-    "taxonomy_reasons": [
-      "gpu",
-      "nvidia",
-      "amd",
-      "intel"
-    ],
-    "direct_ai_infrastructure_relevance": 1,
-    "data_center_relevance": 0,
-    "cloud_capacity_relevance": 0.32,
-    "semiconductor_relevance": 1,
-    "power_grid_relevance": 0.22,
-    "cooling_relevance": 0,
-    "capital_markets_relevance": 0,
-    "enterprise_ai_infrastructure_relevance": 0,
-    "infrastructure_relevance_score": 1,
-    "infrastructure_relevance_tier": "full_memo",
-    "infrastructure_relevance_action": "generate_full_memo",
-    "infrastructure_relevance_reasons": [
-      "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-      "cloud_capacity_relevance:0.32(hyperscalers)",
-      "semiconductor_relevance:1.00(nvidia, amd, intel)",
-      "power_grid_relevance:0.22(power)"
-    ],
-    "infrastructure_relevance": {
-      "direct_ai_infrastructure_relevance": 1,
-      "data_center_relevance": 0,
-      "cloud_capacity_relevance": 0.32,
-      "semiconductor_relevance": 1,
-      "power_grid_relevance": 0.22,
-      "cooling_relevance": 0,
-      "capital_markets_relevance": 0,
-      "enterprise_ai_infrastructure_relevance": 0,
-      "infrastructure_relevance_score": 1,
-      "infrastructure_relevance_tier": "full_memo",
-      "infrastructure_relevance_action": "generate_full_memo",
-      "infrastructure_relevance_reasons": [
-        "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-        "cloud_capacity_relevance:0.32(hyperscalers)",
-        "semiconductor_relevance:1.00(nvidia, amd, intel)",
-        "power_grid_relevance:0.22(power)"
-      ],
-      "infrastructureRelevanceAction": "generate_full_memo",
-      "articlePagePublished": true,
-      "homepagePublished": true,
-      "archiveOnly": false,
-      "archiveOnlyReason": null
-    },
-    "score": 82,
-    "slug": "dell-pro-precision-5-14s-intel-review-certified-workstation-graphics-without-a-discrete-gpu",
-    "summary": "The Arc Pro B390 rendered Monster at 559.73 samples per minute in Blender 5.1, more than four times the Radeon 890M and 55 percent ahead of the Arc B390 in the Pro 5 14, and the 5…",
-    "insight": "The practical effect is on compute supply, deployment speed, and network orchestration. The advantage goes to teams that line up power, facility design, network topology, and silicon timing instead of optimizing one layer in isolation.",
-    "expert_insight": {
-      "concrete_facts": [
-        "On dedicated NVIDIA hardware, we also capture V-Ray&#8217;s RTX engine, which engages the card&#8217;s ray tracing cores and is reported separately.",
-        "The Arc Pro B390 rendered Monster at 559.73 samples per minute in Blender 5.1, more than four times the Radeon 890M and 55 percent ahead of the Arc B390 in the Pro 5 14, and the 5.2 results hold the same level.",
-        "The Arc Pro B390 led the integrated pack in both scenes, finishing 68% ahead of the Radeon 890M in Hall.",
-        "Our review unit combines a Series 3 Intel Core Ultra X9 388H, a 16-core Panther Lake processor with… The practical effect is on compute supply, deployment speed, and network orchestration.",
-        "On CPU rendering the Intel and AMD Precision twins trade scenes, with AMD&#8217;s extra threads winning Junkshop and Classroom, while the Pro 5 14 falls off sharply in the 5.x releases."
-      ],
-      "named_companies": [
-        "Intel",
-        "AMD",
-        "NVIDIA"
-      ],
-      "infrastructure_layer": "Silicon",
-      "bottleneck_type": "power_grid",
-      "who_gains_leverage": "utilities, power-secured developers, and operators with firm interconnection positions",
-      "who_takes_execution_risk": "developers and cloud buyers whose delivery dates depend on utility upgrades or energization schedules",
-      "timing_dependency": "utility interconnection, equipment procurement, and energization milestones",
-      "counterargument": "More compute supply does not automatically become useful capacity if facilities, power, networking, and software readiness lag.",
-      "next_observable_signal": "interconnection approvals, substation equipment dates, power purchase agreements, or disclosed energization windows",
-      "expert_insight_complete": true,
-      "expert_insight_missing_fields": []
-    },
-    "expertInsight": {
-      "concrete_facts": [
-        "On dedicated NVIDIA hardware, we also capture V-Ray&#8217;s RTX engine, which engages the card&#8217;s ray tracing cores and is reported separately.",
-        "The Arc Pro B390 rendered Monster at 559.73 samples per minute in Blender 5.1, more than four times the Radeon 890M and 55 percent ahead of the Arc B390 in the Pro 5 14, and the 5.2 results hold the same level.",
-        "The Arc Pro B390 led the integrated pack in both scenes, finishing 68% ahead of the Radeon 890M in Hall.",
-        "Our review unit combines a Series 3 Intel Core Ultra X9 388H, a 16-core Panther Lake processor with… The practical effect is on compute supply, deployment speed, and network orchestration.",
-        "On CPU rendering the Intel and AMD Precision twins trade scenes, with AMD&#8217;s extra threads winning Junkshop and Classroom, while the Pro 5 14 falls off sharply in the 5.x releases."
-      ],
-      "named_companies": [
-        "Intel",
-        "AMD",
-        "NVIDIA"
-      ],
-      "infrastructure_layer": "Silicon",
-      "bottleneck_type": "power_grid",
-      "who_gains_leverage": "utilities, power-secured developers, and operators with firm interconnection positions",
-      "who_takes_execution_risk": "developers and cloud buyers whose delivery dates depend on utility upgrades or energization schedules",
-      "timing_dependency": "utility interconnection, equipment procurement, and energization milestones",
-      "counterargument": "More compute supply does not automatically become useful capacity if facilities, power, networking, and software readiness lag.",
-      "next_observable_signal": "interconnection approvals, substation equipment dates, power purchase agreements, or disclosed energization windows",
-      "expert_insight_complete": true,
-      "expert_insight_missing_fields": []
-    },
-    "concrete_facts": [
-      "On dedicated NVIDIA hardware, we also capture V-Ray&#8217;s RTX engine, which engages the card&#8217;s ray tracing cores and is reported separately.",
-      "The Arc Pro B390 rendered Monster at 559.73 samples per minute in Blender 5.1, more than four times the Radeon 890M and 55 percent ahead of the Arc B390 in the Pro 5 14, and the 5.2 results hold the same level.",
-      "The Arc Pro B390 led the integrated pack in both scenes, finishing 68% ahead of the Radeon 890M in Hall.",
-      "Our review unit combines a Series 3 Intel Core Ultra X9 388H, a 16-core Panther Lake processor with… The practical effect is on compute supply, deployment speed, and network orchestration.",
-      "On CPU rendering the Intel and AMD Precision twins trade scenes, with AMD&#8217;s extra threads winning Junkshop and Classroom, while the Pro 5 14 falls off sharply in the 5.x releases."
-    ],
-    "named_companies": [
-      "Intel",
-      "AMD",
-      "NVIDIA"
-    ],
-    "bottleneck_type": "power_grid",
-    "who_gains_leverage": "utilities, power-secured developers, and operators with firm interconnection positions",
-    "who_takes_execution_risk": "developers and cloud buyers whose delivery dates depend on utility upgrades or energization schedules",
-    "timing_dependency": "utility interconnection, equipment procurement, and energization milestones",
-    "counterargument": "More compute supply does not automatically become useful capacity if facilities, power, networking, and software readiness lag.",
-    "next_observable_signal": "interconnection approvals, substation equipment dates, power purchase agreements, or disclosed energization windows",
-    "expert_insight_complete": true,
-    "expert_insight_missing_fields": [],
-    "tags": [
-      "gpu"
-    ],
-    "imagePrompt": "Editorial hero image for enterprise technology news. No logos, no text, no watermark, no brand marks. Topic: Dell Pro Precision 5 14s Intel Review: Certified Workstation Graphics Without a Discrete GPU. Category: Hyperscalers & Cloud. Mood: premium, cinematic, monochrome glass dashboard aesthetic. Context: The Arc Pro B390 rendered Monster at 559.73 samples per minute in Blender 5.1, more than four times the Radeon 890M and 55 percent ahead of the Arc B390 in the Pro 5 14, and the 5…. Include modern data center, network, semiconductor, cloud, or grid motifs only when relevant. 16:9 composition.",
-    "lang": "en",
-    "articleText": "The Arc Pro B390 rendered Monster at 559.73 samples per minute in Blender 5.1, more than four times the Radeon 890M and 55 percent ahead of the Arc B390 in the Pro 5 14, and the 5.2 results hold the same level. On CPU rendering the Intel and AMD Precision twins trade scenes, with AMD&#8217;s extra threads winning Junkshop and Classroom, while the Pro 5 14 falls off sharply in the 5.x releases. LuxMark measures GPU compute performance by rendering complex scenes through OpenCL, based on LuxCoreRender. We run the Food and Hall scenes on all available OpenCL devices in each system, so the GPU listed in each column header did the rendering. Higher scores are better. The Arc Pro B390 led the integrated pack in both scenes, finishing 68% ahead of the Radeon 890M in Hall. The gap to its non-Pro sibling is modest here, unlike the Geekbench compute results, suggesting LuxCoreRender is less sensitive to the clock and driver differences between the two B390 variants. Chaos V-Ray measures ray-traced rendering throughput, reported in vpaths, where higher is better. We run the CUDA-compatible engine on every system so results remain comparable to notebooks with only integrated graphics; on systems without a discrete GPU, that path executes on the integrated graphics, even though V-Ray reports the processor name in its device field. On dedicated NVIDIA hardware, we also capture V-Ray&#8217;s RTX engine, which engages the card&#8217;s ray tracing cores and is reported separately. The three integrated platforms cluster within about 3% of each other, an unusually tight grouping given how differently they behave elsewhere, which points to this compatibility path leaning on CPU and memory as much as the GPU. The ThinkPad pulls well clear on either engine.",
-    "content_length": 1765,
-    "boilerplate_ratio": 0,
-    "title_body_similarity": 0.58,
-    "copyright_footer_detected": false,
-    "nav_or_cta_detected": false,
-    "sentence_completion_score": 1,
-    "source_domain_adapter": "storagereview",
-    "extraction_quality_score": 1,
-    "extraction_qa": {
-      "content_length": 1765,
-      "boilerplate_ratio": 0,
-      "title_body_similarity": 0.58,
-      "copyright_footer_detected": false,
-      "legal_boilerplate_detected": false,
-      "nav_or_cta_detected": false,
-      "sentence_completion_score": 1,
-      "source_domain_adapter": "storagereview",
-      "extraction_quality_score": 1,
-      "extraction_failure_reason": null,
-      "extraction_quality_reasons": []
-    },
-    "sourceUrl": "https://www.storagereview.com/review/dell-pro-precision-5-14s-intel-review-certified-workstation-graphics-without-a-discrete-gpu",
-    "generatedImage": "/generated/articles/afb38d125df0c4c6-dell-pro-precision-5-14s-intel-review-certified-workstation-graphics-without-a-discrete-gp/hero.webp",
-    "infrastructureRelevanceAction": "generate_full_memo",
-    "articlePagePublished": false,
-    "homepagePublished": true,
-    "archiveOnly": false,
-    "archiveOnlyReason": "repeated_sentence_ratio>0.12; heading_sequence_similarity>0.75; conclusion_similarity>0.7",
-    "article_blueprint": "constraint-ledger",
-    "articleBlueprint": {
-      "id": "constraint-ledger",
-      "name": "Constraint Ledger",
-      "sectionHeadings": [
-        "Change",
-        "Infrastructure Read",
-        "Exposed Edges",
-        "Decision Point"
-      ],
-      "paragraphRhythm": [
-        1,
-        2,
-        2,
-        1
-      ],
-      "targetParagraphs": 6,
-      "minChars": 1200,
-      "maxChars": 1900
-    },
-    "expertLensShort": "Intel is a memory economics item for stack shifts readers, with the infrastructure read limited to source-backed facts.",
-    "expertLensFull": {
-      "version": 2,
-      "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-08-28T06:54:13.193Z",
-      "generation_version": "editorial_surface_v2",
-      "narrative_dna": {
-        "protagonist": "Intel",
-        "concrete_event": "The Arc Pro B390 rendered Monster at 559.73 samples per minute in Blender 5.1, more than four times the Radeon 890M and 55 percent ahead of the Arc B390 in the Pro 5 14, and the 5…",
-        "core_tension": "Intel has to translate the arc pro b390 rendered monster at 559.73 samples per minute in blender 5.1, more than four times the radeon 890m and 55 percent ahead of the arc b390 in the pro 5 14, and the 5… into a silicon decision that survives cost, timing, or operating constraints",
-        "infrastructure_layer": "Silicon",
-        "reader_role": [
-          "semiconductor suppliers",
-          "hyperscalers",
-          "server OEMs",
-          "investors"
-        ],
-        "decision_relevance": "semiconductor suppliers and hyperscalers can use the item to test memory economics before changing procurement, deployment, or risk assumptions",
-        "evidence_anchor": "On dedicated NVIDIA hardware, we also capture V-Ray&#8217;s RTX engine, which engages the card&#8217;s ray tracing cores and is reported separately.",
-        "counterpoint": "More compute supply does not automatically become useful capacity if facilities, power, networking, and software readiness lag.",
-        "watch_metric": "interconnection approvals, substation equipment dates, power purchase agreements, or disclosed energization windows",
-        "time_horizon": "next planning cycle",
-        "public_signal_label": "Stack Shift",
-        "editorial_lens": "Memory Economics",
-        "story_archetype": "Technical Teardown",
-        "story_archetype_id": "technical-teardown",
-        "routing_decision": "core_lane",
-        "valid_for_full_article": false,
-        "missing_fields": [
-          "concrete_event",
-          "core_tension"
-        ],
-        "truncation": {
-          "ok": false,
-          "artifacts": [
-            "ellipsis_truncation_artifact"
-          ]
-        }
-      },
-      "dynamicBriefLabel": "Stack Shift",
-      "blueprintId": "constraint-ledger",
-      "blueprintName": "Constraint Ledger",
-      "blueprint": {
-        "id": "constraint-ledger",
-        "name": "Constraint Ledger",
-        "sectionHeadings": [
-          "Change",
-          "Infrastructure Read",
-          "Exposed Edges",
-          "Decision Point"
-        ],
-        "paragraphRhythm": [
-          1,
-          2,
-          2,
-          1
-        ],
-        "targetParagraphs": 6,
-        "minChars": 1200,
-        "maxChars": 1900
-      },
-      "thesis": "Intel is a memory economics item for stack shifts readers, with the infrastructure read limited to source-backed facts.",
-      "whatHappened": "The Arc Pro B390 rendered Monster at 559.73 samples per minute in Blender 5.1, more than four times the Radeon 890M and 55 percent ahead of the Arc B390 in the Pro 5 14, and the 5",
-      "whyThisMatters": "The public card stays short because the available evidence supports a watchlist signal more than a full infrastructure memo.",
-      "marketMissing": "More compute supply does not automatically become useful capacity if facilities, power, networking, and software readiness lag.",
-      "investors": "Semiconductor suppliers and hyperscalers can use the item to test memory economics before changing procurement, deployment, or risk assumptions.",
-      "operators": "Silicon teams should track interconnection approvals, substation equipment dates, power purchase agreements, or disclosed energization windows.",
-      "hyperscalers": "Cloud and platform buyers should separate source evidence from generic AI demand before changing deployment plans.",
-      "watchNext": "Interconnection approvals, substation equipment dates, power purchase agreements, or disclosed energization windows.",
-      "executiveSummary": [
-        "The Arc Pro B390 rendered Monster at 559.73 samples per minute in Blender 5.1, more than four times the Radeon 890M and 55 percent ahead of the Arc B390 in the Pro 5 14, and the 5",
-        "Semiconductor suppliers and hyperscalers can use the item to test memory economics before changing procurement, deployment, or risk assumptions.",
-        "Watch interconnection approvals, substation equipment dates, power purchase agreements, or disclosed energization windows."
-      ],
-      "headlineOptions": [
-        "Dell Pro Precision 5 14s Intel Review: Certified Workstation Graphics Without a Discrete GPU",
-        "StorageReview: the execution test behind the latest semiconductors move",
-        "The bottleneck behind Dell Pro Precision 5 14s Intel Review: Certified Workstation Graphics Without a Discret",
-        "Dell Pro Precision 5 14s Intel Review: Certified Workstation Graphics Without a Discrete GPU puts execution b",
-        "What to watch after Dell Pro Precision 5 14s Intel Review: Certified Workstation Graphics Without a Discrete"
-      ],
-      "finalHeadline": "Dell Pro Precision 5 14s Intel Review: Certified Workstation Graphics Without a Discrete GPU",
-      "metaDescription": "Intel is a memory economics item for stack shifts readers, with the infrastructure read limited to source-backed facts.",
-      "finalArticleBody": "Intel is a memory economics item for stack shifts readers, with the infrastructure read limited to source-backed facts.\n\nSystem Change\n\nThe Arc Pro B390 rendered Monster at 559.73 samples per minute in Blender 5.1, more than four times the Radeon 890M and 55 percent ahead of the Arc B390 in the Pro 5 14, and the 5… is the evidence anchor, with Intel as the actor readers can track.\n\nBottleneck\n\nSilicon is the operating layer that turns the update into memory economics, especially for semiconductor suppliers, hyperscalers, server OEMs.\n\nEngineering Tradeoff\n\nSemiconductor suppliers and hyperscalers can use the item to test memory economics before changing procurement, deployment, or risk assumptions.\n\nValidation Metric\n\nThe next useful checkpoint is interconnection approvals, substation equipment dates, power purchase agreements, or disclosed energization windows over the next planning cycle window.\n\nReaders should track interconnection approvals, substation equipment dates, power purchase agreements, or disclosed energization windows before treating the item as a planning assumption for silicon.",
-      "sourceLink": "https://www.storagereview.com/review/dell-pro-precision-5-14s-intel-review-certified-workstation-graphics-without-a-discrete-gpu"
-    },
-    "expertLens": "Intel is a memory economics item for stack shifts readers, with the infrastructure read limited to source-backed facts.",
-    "generation_version": "editorial_surface_v2",
-    "narrative_dna": {
-      "protagonist": "Intel",
-      "concrete_event": "The Arc Pro B390 rendered Monster at 559.73 samples per minute in Blender 5.1, more than four times the Radeon 890M and 55 percent ahead of the Arc B390 in the Pro 5 14, and the 5…",
-      "core_tension": "Intel has to translate the arc pro b390 rendered monster at 559.73 samples per minute in blender 5.1, more than four times the radeon 890m and 55 percent ahead of the arc b390 in the pro 5 14, and the 5… into a silicon decision that survives cost, timing, or operating constraints",
-      "infrastructure_layer": "Silicon",
-      "reader_role": [
-        "semiconductor suppliers",
-        "hyperscalers",
-        "server OEMs",
-        "investors"
-      ],
-      "decision_relevance": "semiconductor suppliers and hyperscalers can use the item to test memory economics before changing procurement, deployment, or risk assumptions",
-      "evidence_anchor": "On dedicated NVIDIA hardware, we also capture V-Ray&#8217;s RTX engine, which engages the card&#8217;s ray tracing cores and is reported separately.",
-      "counterpoint": "More compute supply does not automatically become useful capacity if facilities, power, networking, and software readiness lag.",
-      "watch_metric": "interconnection approvals, substation equipment dates, power purchase agreements, or disclosed energization windows",
-      "time_horizon": "next planning cycle",
-      "public_signal_label": "Stack Shift",
-      "editorial_lens": "Memory Economics",
-      "story_archetype": "Technical Teardown",
-      "story_archetype_id": "technical-teardown",
-      "routing_decision": "core_lane",
-      "valid_for_full_article": false,
-      "missing_fields": [
-        "concrete_event",
-        "core_tension"
-      ],
-      "truncation": {
-        "ok": false,
-        "artifacts": [
-          "ellipsis_truncation_artifact"
-        ]
-      }
-    },
-    "dynamic_brief_label": "Stack Shift",
-    "anti_template_rewrite": true,
-    "repetition_check": {
-      "compared_article_count": 20,
-      "repeated_sentence_ratio": 0.3333333333333333,
-      "repeated_paragraph_ratio": 0.3333333333333333,
-      "heading_sequence_similarity": 1,
-      "banned_phrase_count": 0,
-      "banned_phrase_counts": {},
-      "recent_banned_phrase_counts": {},
-      "ngram_overlap": 0.6697247706422018,
-      "blueprint_repetition": 1,
-      "conclusion_similarity": 0.9511897312113418,
-      "repeated_sentence_count": 2,
-      "repeated_paragraph_count": 2,
-      "heading_sequence": [
-        "System Change",
-        "Bottleneck",
-        "Engineering Tradeoff",
-        "Validation Metric"
-      ],
-      "blocked": true,
-      "reasons": [
-        "repeated_sentence_ratio>0.12",
-        "heading_sequence_similarity>0.75",
-        "conclusion_similarity>0.7"
-      ]
-    },
-    "repetition_blocked": true,
-    "repetition_block_reasons": [
-      "repeated_sentence_ratio>0.12",
-      "heading_sequence_similarity>0.75",
-      "conclusion_similarity>0.7"
-    ],
-    "searchText": "Dell Pro Precision 5 14s Intel Review: Certified Workstation Graphics Without a Discrete GPU StorageReview Semiconductors Accelerators, memory, and advanced packaging Silicon Capacity Expansion power_grid utilities, power-secured developers, and operators with firm interconnection positions developers and cloud buyers whose delivery dates depend on utility upgrades or energization schedules utility interconnection, equipment procurement, and energization milestones More compute supply does not automatically become useful capacity if facilities, power, networking, and software readiness lag. interconnection approvals, substation equipment dates, power purchase agreements, or disclosed energization windows APAC The Arc Pro B390 rendered Monster at 559.73 samples per minute in Blender 5.1, more than four times the Radeon 890M and 55 percent ahead of the Arc B390 in the Pro 5 14, and the 5… Intel is a memory economics item for stack shifts readers, with the infrastructure read limited to source-backed facts. The Arc Pro B390 rendered Monster at 559.73 samples per minute in Blender 5.1, more than four times the Radeon 890M and 55 percent ahead of the Arc B390 in the Pro 5 14, and the 5 The public card stays short because the available evidence supports a watchlist signal more than a full infrastructure memo. Semiconductor suppliers and hyperscalers can use the item to test memory economics before changing procurement, deployment, or risk assumptions. Silicon teams should track interconnection approvals, substation equipment dates, power purchase agreements, or disclosed energization windows. Cloud and platform buyers should separate source evidence from generic AI demand before changing deployment plans. Interconnection approvals, substation equipment dates, power purchase agreements, or disclosed energization windows. The Arc Pro B390 rendered Monster at 559.73 samples per minute in Blender 5.1, more than four times the Radeon 890M and 55 percent ahead of the Arc B390 in the Pro 5 14, and the 5.2 results hold the same level. On CPU rendering the Intel and AMD Precision twins trade scenes, with AMD&#8217;s extra threads winning Junkshop and Classroom, while the Pro 5 14 falls off sharply in the 5.x releases. LuxMark measures GPU compute performance by rendering complex scenes through OpenCL, based on LuxCoreRender. We run the Food and Hall scenes on all available OpenCL devices in each system, so the GPU listed in each column header did the rendering. Higher scores are better. The Arc Pro B390 led the integrated pack in both scenes, finishing 68% ahead of the Radeon 890M in Hall. The gap to its non-Pro sibling is modest here, unlike the Geekbench compute results, suggesting LuxCoreRender is less sensitive to the clock and driver differences between the two B390 variants. Chaos V-Ray measures ray-traced rendering throughput, reported in vpaths, where higher is better. We run the CUDA-compatible engine on every system so results remain comparable to notebooks with only integrated graphics; on systems without a discrete GPU, that path executes on the integrated graphics, even though V-Ray reports the processor name in its device field. On dedicated NVIDIA hardware, we also capture V-Ray&#8217;s RTX engine, which engages the card&#8217;s ray tracing cores and is reported separately. The three integrated platforms cluster within about 3% of each other, an unusually tight grouping given how differently they behave elsewhere, which points to this compatibility path leaning on CPU and memory as much as the GPU. The ThinkPad pulls well clear on either engine. semiconductor suppliers hyperscalers server OEMs investors On dedicated NVIDIA hardware, we also capture V-Ray&#8217;s RTX engine, which engages the card&#8217;s ray tracing cores and is reported separately. The Arc Pro B390 rendered Monster at 559.73 samples per minute in Blender 5.1, more than four times the Radeon 890M and 55 percent ahead of the Arc B390 in the Pro 5 14, and the 5.2 results hold the same level. The Arc Pro B390 led the integrated pack in both scenes, finishing 68% ahead of the Radeon 890M in Hall. Our review unit combines a Series 3 Intel Core Ultra X9 388H, a 16-core Panther Lake processor with… The practical effect is on compute supply, deployment speed, and network orchestration. On CPU rendering the Intel and AMD Precision twins trade scenes, with AMD&#8217;s extra threads winning Junkshop and Classroom, while the Pro 5 14 falls off sharply in the 5.x releases. Intel AMD NVIDIA gpu",
-    "heroImage": "/generated/articles/afb38d125df0c4c6-dell-pro-precision-5-14s-intel-review-certified-workstation-graphics-without-a-discrete-gp/hero.webp",
-    "thumbnailImage": "/generated/articles/afb38d125df0c4c6-dell-pro-precision-5-14s-intel-review-certified-workstation-graphics-without-a-discrete-gp/thumbnail.webp",
-    "ogImage": "/generated/articles/afb38d125df0c4c6-dell-pro-precision-5-14s-intel-review-certified-workstation-graphics-without-a-discrete-gp/og.webp",
-    "legacyImage": "/generated/afb38d125df0c4c6.webp",
-    "generatedImageProvider": "local-generated",
-    "generatedImageModel": "deterministic-editorial-raster",
-    "imageStatus": "generated",
-    "public_content_tier": "editorial_brief",
-    "signalCardOnly": true,
-    "seo_noindex": false,
-    "noindex": false,
-    "public_tier_reasons": [
-      "detail_page_requires_generation_gates"
     ]
   }
 ]

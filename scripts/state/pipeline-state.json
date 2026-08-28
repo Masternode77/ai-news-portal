@@ -811,7 +811,8 @@
     "d33ab02c8a9e75c4",
     "41090ff9729a3644",
     "5299d5996b729233",
-    "7269bbc815aa24d0"
+    "7269bbc815aa24d0",
+    "5fb4b1933e5d650e"
   ],
   "dayPlans": {
     "2026-03-24": {
@@ -43976,135 +43977,94 @@
         "0": true,
         "1": true
       }
+    },
+    "2026-08-29": {
+      "date": "2026-08-29",
+      "createdAt": "2026-08-28T19:25:07.344Z",
+      "refreshedAt": "2026-08-28T19:25:07.344Z",
+      "candidateWindowHours": 24,
+      "curatedItems": [
+        {
+          "id": "5fb4b1933e5d650e",
+          "sourceRegistryId": "eia-today-in-energy",
+          "source": "U.S. Energy Information Administration",
+          "url": "https://www.eia.gov/todayinenergy/detail.php?id=68044",
+          "title": "U.S. uranium production more than tripled in 2025 and was the highest since 2017",
+          "snippet": "In 2025, uranium concentrate production in the United States totaled 2.1 million pounds of triuranium octoxide (U3O8), the base component of nuclear reactor fuel. U.S. U3O8 production in 2025 was the most since 2017 and…",
+          "contentText": "In 2025, uranium concentrate production in the United States totaled 2.1 million pounds of triuranium octoxide (U3O8), the base component of nuclear reactor fuel. U.S. U3O8 production in 2025 was the most since 2017 and more than triple the volume produced in 2024.",
+          "publishedAt": "2026-08-28T14:00:00.000Z",
+          "sourceImage": null,
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "Power & Grid",
+          "category": "Power & Grid",
+          "primary_category": "Power & Grid",
+          "secondary_category": "Interconnection and power procurement",
+          "infrastructure_layer": "Power",
+          "affected_stakeholders": [
+            "data center operators",
+            "utilities",
+            "cloud capacity teams",
+            "investors"
+          ],
+          "article_type": "Other",
+          "urgency_score": 0.51,
+          "taxonomy_confidence": 0.81,
+          "taxonomy_reasons": [
+            "power",
+            "grid",
+            "nuclear"
+          ],
+          "direct_ai_infrastructure_relevance": 0,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0,
+          "power_grid_relevance": 0.76,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.476,
+          "infrastructure_relevance_tier": "archive_only",
+          "infrastructure_relevance_action": "archive_only",
+          "infrastructure_relevance_reasons": [
+            "power_grid_relevance:0.76(power, grid, nuclear)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 0,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0,
+            "power_grid_relevance": 0.76,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.476,
+            "infrastructure_relevance_tier": "archive_only",
+            "infrastructure_relevance_action": "archive_only",
+            "infrastructure_relevance_reasons": [
+              "power_grid_relevance:0.76(power, grid, nuclear)"
+            ],
+            "infrastructureRelevanceAction": "archive_only",
+            "articlePagePublished": false,
+            "homepagePublished": false,
+            "archiveOnly": true,
+            "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
+          },
+          "score": 58
+        }
+      ],
+      "curatedIds": [
+        "5fb4b1933e5d650e"
+      ],
+      "publishedIds": [
+        "5fb4b1933e5d650e"
+      ],
+      "slotPublications": {
+        "0": true
+      }
     }
   },
   "runHistory": [
-    {
-      "at": "2026-07-16T16:23:57.467Z",
-      "day": "2026-07-17",
-      "slot": 0,
-      "publishedCount": 0,
-      "signalCardCount": 0,
-      "archiveOnlyCount": 0,
-      "repetitionBlockedCount": 2,
-      "publishedIds": [],
-      "processedIds": [
-        "0c7a7ad143f80287",
-        "02b4ab23cb14fb55"
-      ],
-      "blockedCount": 0,
-      "blockedItems": [],
-      "repetitionBlockedItems": [
-        {
-          "id": "0c7a7ad143f80287",
-          "title": "Tower Semiconductor revives shuttered Panasonic-era fab in $3 billion Japan photonics expansion — METI-backed plan targets $3.6 billion revenue by 2028",
-          "infrastructure_relevance_score": 1,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "cloud_capacity_relevance:0.32(hyperscalers)",
-            "semiconductor_relevance:1.00(semiconductor, semiconductors, advanced packaging)",
-            "power_grid_relevance:0.22(power)",
-            "capital_markets_relevance:0.30(joint venture)"
-          ],
-          "extraction_quality_score": 1,
-          "source_domain_adapter": "generic",
-          "content_length": 1785,
-          "boilerplate_ratio": 0,
-          "repetition_blocked": true,
-          "repetition_block_reasons": [
-            "repeated_sentence_ratio>0.12",
-            "heading_sequence_similarity>0.75",
-            "conclusion_similarity>0.7"
-          ],
-          "repetition_check": {
-            "compared_article_count": 20,
-            "repeated_sentence_ratio": 0.375,
-            "repeated_paragraph_ratio": 0.5,
-            "heading_sequence_similarity": 1,
-            "banned_phrase_count": 0,
-            "banned_phrase_counts": {},
-            "recent_banned_phrase_counts": {},
-            "ngram_overlap": 0.5203252032520326,
-            "blueprint_repetition": 1,
-            "conclusion_similarity": 0.9511897312113418,
-            "repeated_sentence_count": 3,
-            "repeated_paragraph_count": 3,
-            "heading_sequence": [
-              "Capital Move",
-              "Demand Evidence",
-              "Execution Risk",
-              "Milestone To Watch"
-            ],
-            "blocked": true,
-            "reasons": [
-              "repeated_sentence_ratio>0.12",
-              "heading_sequence_similarity>0.75",
-              "conclusion_similarity>0.7"
-            ]
-          },
-          "expert_insight_complete": true,
-          "expert_insight_missing_fields": [],
-          "reason": "repeated_sentence_ratio>0.12; heading_sequence_similarity>0.75; conclusion_similarity>0.7"
-        },
-        {
-          "id": "02b4ab23cb14fb55",
-          "title": "NVIDIA and Japan Launch 27,500-GPU Vera Rubin AI Factory as Physical AI Push Spans Every Industry",
-          "infrastructure_relevance_score": 0.948,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "data_center_relevance:0.42(data center)",
-            "cloud_capacity_relevance:0.32(hyperscalers)",
-            "semiconductor_relevance:0.68(nvidia, gpu)",
-            "power_grid_relevance:0.52(power, megawatt)"
-          ],
-          "extraction_quality_score": 1,
-          "source_domain_adapter": "storagereview",
-          "content_length": 1603,
-          "boilerplate_ratio": 0,
-          "repetition_blocked": true,
-          "repetition_block_reasons": [
-            "repeated_sentence_ratio>0.12",
-            "heading_sequence_similarity>0.75",
-            "conclusion_similarity>0.7"
-          ],
-          "repetition_check": {
-            "compared_article_count": 20,
-            "repeated_sentence_ratio": 0.3333333333333333,
-            "repeated_paragraph_ratio": 0.3333333333333333,
-            "heading_sequence_similarity": 1,
-            "banned_phrase_count": 0,
-            "banned_phrase_counts": {},
-            "recent_banned_phrase_counts": {},
-            "ngram_overlap": 0.5258620689655172,
-            "blueprint_repetition": 2,
-            "conclusion_similarity": 0.9511897312113418,
-            "repeated_sentence_count": 2,
-            "repeated_paragraph_count": 2,
-            "heading_sequence": [
-              "Technical Signal",
-              "Failure Domain",
-              "Operator Exposure",
-              "Benchmark To Watch"
-            ],
-            "blocked": true,
-            "reasons": [
-              "repeated_sentence_ratio>0.12",
-              "heading_sequence_similarity>0.75",
-              "conclusion_similarity>0.7"
-            ]
-          },
-          "expert_insight_complete": true,
-          "expert_insight_missing_fields": [],
-          "reason": "repeated_sentence_ratio>0.12; heading_sequence_similarity>0.75; conclusion_similarity>0.7"
-        }
-      ],
-      "signalCardItems": [],
-      "archiveOnlyItems": []
-    },
     {
       "at": "2026-07-17T00:01:42.639Z",
       "day": "2026-07-17",
@@ -54124,11 +54084,38 @@
         "token_budget": 60000,
         "call_budget": 40
       }
+    },
+    {
+      "at": "2026-08-28T19:25:07.344Z",
+      "day": "2026-08-29",
+      "slot": 0,
+      "publishedCount": 0,
+      "signalCardCount": 1,
+      "archiveOnlyCount": 0,
+      "processedIds": [
+        "5fb4b1933e5d650e"
+      ],
+      "blockedCount": 0,
+      "blockedItems": [],
+      "archiveOnlyItems": [],
+      "authoredColumn": {
+        "published": true,
+        "slug": "switch-s-ipo-is-a-grid-timing-disclosure-test-not-a-demand-story-2026-08-28"
+      },
+      "llmUsage": {
+        "calls": 6,
+        "failures": 0,
+        "prompt_tokens": 15500,
+        "completion_tokens": 6498,
+        "total_tokens": 21998,
+        "token_budget": 60000,
+        "call_budget": 40
+      }
     }
   ],
-  "lastRunAt": "2026-08-28T06:54:04.118Z",
+  "lastRunAt": "2026-08-28T19:25:07.344Z",
   "authored": {
-    "lastColumnAt": "2026-08-28T06:54:04.118Z",
+    "lastColumnAt": "2026-08-28T19:25:07.344Z",
     "columnsByDay": {
       "2026-08-17": 2,
       "2026-08-18": 1,
@@ -54138,16 +54125,16 @@
       "2026-08-23": 3,
       "2026-08-24": 1,
       "2026-08-25": 1,
-      "2026-08-28": 1
+      "2026-08-28": 2
     },
     "recentStoryKeys": [
       {
-        "key": "https://www.hpcwire.com/off-the-wire/qunnect-and-monarch-quantum-partner-on-deployable-quantum-networking-hardware/",
-        "at": "2026-08-25T07:55:20.245Z"
-      },
-      {
         "key": "https://techcrunch.com/2026/08/09/the-ai-safety-test-is-becoming-a-safety-risk/",
         "at": "2026-08-28T06:54:04.118Z"
+      },
+      {
+        "key": "https://www.bloomberg.com/news/articles/2026-08-07/data-center-firm-switch-is-said-to-file-confidentially-for-ipo",
+        "at": "2026-08-28T19:25:07.344Z"
       }
     ],
     "lastFailure": null
