@@ -43981,7 +43981,7 @@
     "2026-08-29": {
       "date": "2026-08-29",
       "createdAt": "2026-08-28T19:25:07.344Z",
-      "refreshedAt": "2026-08-28T23:57:32.701Z",
+      "refreshedAt": "2026-08-29T04:08:04.519Z",
       "candidateWindowHours": 24,
       "curatedItems": [],
       "curatedIds": [],
@@ -43995,73 +43995,6 @@
     }
   },
   "runHistory": [
-    {
-      "at": "2026-07-17T09:19:00.959Z",
-      "day": "2026-07-17",
-      "slot": 2,
-      "publishedCount": 0,
-      "signalCardCount": 2,
-      "archiveOnlyCount": 0,
-      "processedIds": [
-        "fcfe80f7900ed53a",
-        "83d7bb8952eb089c"
-      ],
-      "blockedCount": 2,
-      "blockedItems": [
-        {
-          "id": "fcfe80f7900ed53a",
-          "title": "Chip Industry Week In Review",
-          "infrastructure_relevance_score": 1,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "cloud_capacity_relevance:0.32(hyperscalers)",
-            "semiconductor_relevance:1.00(semiconductor, intel, tsmc)",
-            "power_grid_relevance:0.22(power)",
-            "capital_markets_relevance:0.58(funding, acquisition)"
-          ],
-          "extraction_quality_score": 0.76,
-          "source_domain_adapter": "semiengineering",
-          "content_length": 763,
-          "boilerplate_ratio": 0,
-          "repetition_blocked": false,
-          "repetition_block_reasons": [],
-          "repetition_check": null,
-          "expert_insight_complete": true,
-          "expert_insight_missing_fields": [],
-          "reason": "fail_closed: source_text_incomplete:source_evidence_length_below_1200, sentence_completion_score_below_0.92:0.708"
-        },
-        {
-          "id": "83d7bb8952eb089c",
-          "title": "800VDC protection in data centers",
-          "infrastructure_relevance_score": 0.972,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:0.78(ai infrastructure)",
-            "data_center_relevance:1.00(data center, data centers, colocation)",
-            "power_grid_relevance:0.22(power)",
-            "capital_markets_relevance:0.28(capex)",
-            "enterprise_ai_infrastructure_relevance:0.24(ai workloads)"
-          ],
-          "extraction_quality_score": 0.94,
-          "source_domain_adapter": "generic",
-          "content_length": 973,
-          "boilerplate_ratio": 0,
-          "repetition_blocked": false,
-          "repetition_block_reasons": [],
-          "repetition_check": null,
-          "expert_insight_complete": false,
-          "expert_insight_missing_fields": [
-            "concrete_facts",
-            "named_companies"
-          ],
-          "reason": "fail_closed: source_text_incomplete:source_evidence_length_below_1200"
-        }
-      ],
-      "archiveOnlyItems": []
-    },
     {
       "at": "2026-07-17T16:21:33.195Z",
       "day": "2026-07-18",
@@ -53996,9 +53929,28 @@
         "token_budget": 60000,
         "call_budget": 40
       }
+    },
+    {
+      "at": "2026-08-29T04:08:04.519Z",
+      "day": "2026-08-29",
+      "slot": 1,
+      "publishedCount": 0,
+      "authoredColumn": {
+        "published": false,
+        "reason": "no_qualifying_story"
+      },
+      "llmUsage": {
+        "calls": 1,
+        "failures": 0,
+        "prompt_tokens": 102,
+        "completion_tokens": 6,
+        "total_tokens": 108,
+        "token_budget": 60000,
+        "call_budget": 40
+      }
     }
   ],
-  "lastRunAt": "2026-08-28T23:57:32.701Z",
+  "lastRunAt": "2026-08-29T04:08:04.519Z",
   "authored": {
     "lastColumnAt": "2026-08-28T19:25:07.344Z",
     "columnsByDay": {
