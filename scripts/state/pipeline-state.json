@@ -44011,84 +44011,18 @@
     "2026-08-31": {
       "date": "2026-08-31",
       "createdAt": "2026-08-30T18:31:40.328Z",
-      "refreshedAt": "2026-08-30T18:31:40.328Z",
+      "refreshedAt": "2026-08-31T01:22:10.751Z",
       "candidateWindowHours": 24,
       "curatedItems": [],
       "curatedIds": [],
       "publishedIds": [],
       "slotPublications": {
-        "0": true
+        "0": true,
+        "1": true
       }
     }
   },
   "runHistory": [
-    {
-      "at": "2026-07-19T09:12:35.332Z",
-      "day": "2026-07-19",
-      "slot": 2,
-      "publishedCount": 0,
-      "signalCardCount": 2,
-      "archiveOnlyCount": 0,
-      "processedIds": [
-        "39eb0aae77d6b712",
-        "5779298b44f3d098"
-      ],
-      "blockedCount": 2,
-      "blockedItems": [
-        {
-          "id": "39eb0aae77d6b712",
-          "title": "Dell Outsells the Rest of IDC’s Top Five Combined in Q1 External Storage",
-          "infrastructure_relevance_score": 0.919,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "cloud_capacity_relevance:0.54(hyperscalers, azure)",
-            "semiconductor_relevance:0.22(gpu)",
-            "power_grid_relevance:0.22(power)",
-            "capital_markets_relevance:0.28(capex)",
-            "enterprise_ai_infrastructure_relevance:0.24(storage)"
-          ],
-          "extraction_quality_score": 1,
-          "source_domain_adapter": "storagereview",
-          "content_length": 1688,
-          "boilerplate_ratio": 0,
-          "repetition_blocked": false,
-          "repetition_block_reasons": [],
-          "repetition_check": null,
-          "expert_insight_complete": true,
-          "expert_insight_missing_fields": [],
-          "reason": "fail_closed: source_text_incomplete:source_boilerplate_detected"
-        },
-        {
-          "id": "5779298b44f3d098",
-          "title": "Strapping 11 fans and a 360mm AIO to an RTX 3080 sounds crazy until you see the 30°C temp drop — modded GPU delivered less than 5 FPS uplift at turbojet noise levels",
-          "infrastructure_relevance_score": 0.941,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "cloud_capacity_relevance:0.32(hyperscalers)",
-            "semiconductor_relevance:0.30(gpu)",
-            "power_grid_relevance:0.22(power)",
-            "cooling_relevance:0.64(cooling, thermal)"
-          ],
-          "extraction_quality_score": 1,
-          "source_domain_adapter": "generic",
-          "content_length": 1666,
-          "boilerplate_ratio": 0,
-          "repetition_blocked": false,
-          "repetition_block_reasons": [],
-          "repetition_check": null,
-          "expert_insight_complete": false,
-          "expert_insight_missing_fields": [
-            "named_companies"
-          ],
-          "reason": "expert_insight_missing_fields named_companies"
-        }
-      ],
-      "archiveOnlyItems": []
-    },
     {
       "at": "2026-07-19T16:02:45.312Z",
       "day": "2026-07-20",
@@ -53447,9 +53381,28 @@
         "token_budget": 60000,
         "call_budget": 40
       }
+    },
+    {
+      "at": "2026-08-31T01:22:10.751Z",
+      "day": "2026-08-31",
+      "slot": 1,
+      "publishedCount": 0,
+      "authoredColumn": {
+        "published": false,
+        "reason": "no_qualifying_story"
+      },
+      "llmUsage": {
+        "calls": 1,
+        "failures": 0,
+        "prompt_tokens": 102,
+        "completion_tokens": 6,
+        "total_tokens": 108,
+        "token_budget": 60000,
+        "call_budget": 40
+      }
     }
   ],
-  "lastRunAt": "2026-08-30T18:31:40.328Z",
+  "lastRunAt": "2026-08-31T01:22:10.751Z",
   "authored": {
     "lastColumnAt": "2026-08-28T19:25:07.344Z",
     "columnsByDay": {
