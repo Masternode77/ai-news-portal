@@ -140,7 +140,7 @@
         "sourceId": "eia-today-in-energy",
         "reviewedAt": "2026-08-12T00:00:00.000Z",
         "termsUrl": "https://www.eia.gov/about/copyrights_reuse.php",
-        "checkedAt": "2026-09-01T12:40:27.678Z",
+        "checkedAt": "2026-09-01T18:26:13.652Z",
         "registryDigest": "85272c8764805102db6da08b1643d6cd4b2b7060e16fcd37061bc48715c6ae56",
         "registryBlobSha": "",
         "contentDigest": "beeeed148253b62b7ae888a3bc79c5979dbfa234b587e2f7b91bbaeafcf5acde"
@@ -296,7 +296,7 @@
         "sourceId": "eia-today-in-energy",
         "reviewedAt": "2026-08-12T00:00:00.000Z",
         "termsUrl": "https://www.eia.gov/about/copyrights_reuse.php",
-        "checkedAt": "2026-09-01T12:40:27.901Z",
+        "checkedAt": "2026-09-01T18:26:13.924Z",
         "registryDigest": "85272c8764805102db6da08b1643d6cd4b2b7060e16fcd37061bc48715c6ae56",
         "registryBlobSha": "",
         "contentDigest": "d15ccae9ee9ddf6214d8b39fbdf87ac41a1f82721e955148a1cd5e0a2de7b028"
@@ -452,7 +452,7 @@
         "sourceId": "eia-today-in-energy",
         "reviewedAt": "2026-08-12T00:00:00.000Z",
         "termsUrl": "https://www.eia.gov/about/copyrights_reuse.php",
-        "checkedAt": "2026-09-01T12:40:28.100Z",
+        "checkedAt": "2026-09-01T18:26:14.162Z",
         "registryDigest": "85272c8764805102db6da08b1643d6cd4b2b7060e16fcd37061bc48715c6ae56",
         "registryBlobSha": "",
         "contentDigest": "ade711e2b20996fa86c8248da2f499d76c8f2f8bdd82d9e630f5e080f97f58e2"
@@ -608,7 +608,7 @@
         "sourceId": "eia-today-in-energy",
         "reviewedAt": "2026-08-12T00:00:00.000Z",
         "termsUrl": "https://www.eia.gov/about/copyrights_reuse.php",
-        "checkedAt": "2026-09-01T12:40:28.308Z",
+        "checkedAt": "2026-09-01T18:26:14.414Z",
         "registryDigest": "85272c8764805102db6da08b1643d6cd4b2b7060e16fcd37061bc48715c6ae56",
         "registryBlobSha": "",
         "contentDigest": "8e6376116876948d8a9e27d52a0f3747ce46816914268a5bd0bf93fafd85c604"
@@ -764,7 +764,7 @@
         "sourceId": "eia-today-in-energy",
         "reviewedAt": "2026-08-12T00:00:00.000Z",
         "termsUrl": "https://www.eia.gov/about/copyrights_reuse.php",
-        "checkedAt": "2026-09-01T12:40:28.529Z",
+        "checkedAt": "2026-09-01T18:26:14.680Z",
         "registryDigest": "85272c8764805102db6da08b1643d6cd4b2b7060e16fcd37061bc48715c6ae56",
         "registryBlobSha": "",
         "contentDigest": "2c6d66c26ee5e8faea303eb6655f65da943f22d62f0b30f232281dfa85dca6d7"
@@ -1950,6 +1950,218 @@
     "legacyImage": "/generated/eia-on-premise-data-center-load.webp"
   },
   {
+    "id": "7479357d607da0fa",
+    "sourceRegistryId": "eia-today-in-energy",
+    "source": "U.S. Energy Information Administration",
+    "url": "https://www.eia.gov/todayinenergy/detail.php?id=",
+    "title": "U.S. LNG exports rose 23% in the first half of 2026 because of higher capacity",
+    "snippet": "U.S. liquefied natural gas (LNG) exports averaged 17.4 billion cubic feet per day (Bcf/d) in the first six months of the year, 23% more than the same period in 2025, according to our Natural Gas Monthly. In our latest S…",
+    "contentText": "U.S. liquefied natural gas (LNG) exports averaged 17.4 billion cubic feet per day (Bcf/d) in the first six months of the year, 23% more than the same period in 2025, according to our Natural Gas Monthly. In our latest Short-Term Energy Outlook, we estimate U.S. LNG exports will average 17.3 Bcf/d in the second half of 2026 (2H26) before rising to 18.7 Bcf/d in 1H27.",
+    "publishedAt": "2026-09-01T14:00:00.000Z",
+    "sourceImage": null,
+    "region": "US",
+    "language": "en",
+    "defaultCategory": "Power & Grid",
+    "category": "Power & Grid",
+    "primary_category": "Power & Grid",
+    "secondary_category": "LNG Exports",
+    "infrastructure_layer": "Power",
+    "affected_stakeholders": [
+      "operators",
+      "investors",
+      "utilities",
+      "hyperscalers",
+      "data center operators"
+    ],
+    "article_type": "Market Analysis",
+    "urgency_score": 0.7,
+    "taxonomy_confidence": 0.89,
+    "taxonomy_reasons": [
+      "power",
+      "grid",
+      "interconnection",
+      "nuclear"
+    ],
+    "direct_ai_infrastructure_relevance": 0,
+    "data_center_relevance": 0.34,
+    "cloud_capacity_relevance": 0,
+    "semiconductor_relevance": 0,
+    "power_grid_relevance": 0.76,
+    "cooling_relevance": 0,
+    "capital_markets_relevance": 0,
+    "enterprise_ai_infrastructure_relevance": 0,
+    "infrastructure_relevance_score": 0.586,
+    "infrastructure_relevance_tier": "signal_card",
+    "infrastructure_relevance_action": "publish_signal_card_only",
+    "infrastructure_relevance_reasons": [
+      "data_center_relevance:0.34(colocation)",
+      "power_grid_relevance:0.76(power, grid, nuclear)"
+    ],
+    "infrastructure_relevance": {
+      "direct_ai_infrastructure_relevance": 0,
+      "data_center_relevance": 0.34,
+      "cloud_capacity_relevance": 0,
+      "semiconductor_relevance": 0,
+      "power_grid_relevance": 0.76,
+      "cooling_relevance": 0,
+      "capital_markets_relevance": 0,
+      "enterprise_ai_infrastructure_relevance": 0,
+      "infrastructure_relevance_score": 0.586,
+      "infrastructure_relevance_tier": "signal_card",
+      "infrastructure_relevance_action": "publish_signal_card_only",
+      "infrastructure_relevance_reasons": [
+        "data_center_relevance:0.34(colocation)",
+        "power_grid_relevance:0.76(power, grid, nuclear)"
+      ],
+      "infrastructureRelevanceAction": "publish_signal_card_only",
+      "articlePagePublished": false,
+      "homepagePublished": true,
+      "archiveOnly": false,
+      "archiveOnlyReason": null
+    },
+    "score": 52,
+    "slug": "u-s-lng-exports-rose-23-in-the-first-half-of-2026-because-of-higher-capacity",
+    "summary": "U.S. LNG exports surged 23% in the first half of 2026, averaging 17.4 Bcf/d, driven by increased capacity. Projections indicate further growth to 18.7 Bcf/d by mid-2027.",
+    "insight": "This increase in LNG exports highlights the growing demand for U.S. natural gas in global markets, which could impact pricing and investment strategies. Operators and investors should consider the implications of expanding capacity and infrastructure to meet…",
+    "expert_insight": {
+      "concrete_facts": [
+        "liquefied natural gas (LNG) exports averaged 17.4 billion cubic feet per day (Bcf/d) in the first six months of the year, 23% more than the same period in 2025, according to our Natural Gas Monthly.",
+        "In 2025, uranium concentrate production in the United States totaled 2.1 million pounds of triuranium octoxide (U 3 O 8 ), the base component of nuclear reactor fuel.",
+        "In our latest Short-Term Energy Outlook, we estimate U.S.",
+        "LNG exports will average 17.3 Bcf/d in the second half of 2026 (2H26) before rising to 18.7 Bcf/d in 1H27.",
+        "Energy Information Administration, Monthly Energy Review, and Domestic Uranium Production Report Note: W=Data withheld to avoid disclosure of individual company data."
+      ],
+      "named_companies": [
+        "U.S. Energy",
+        "Short-Term Energy",
+        "Monthly Energy"
+      ],
+      "infrastructure_layer": "Power",
+      "bottleneck_type": "power_grid",
+      "who_gains_leverage": "utilities, power-secured developers, and operators with firm interconnection positions",
+      "who_takes_execution_risk": "developers and cloud buyers whose delivery dates depend on utility upgrades or energization schedules",
+      "timing_dependency": "utility interconnection, equipment procurement, and energization milestones",
+      "counterargument": "The source may still describe intent rather than delivered capacity, so the operating impact depends on follow-through.",
+      "next_observable_signal": "interconnection approvals, substation equipment dates, power purchase agreements, or disclosed energization windows",
+      "expert_insight_complete": true,
+      "expert_insight_missing_fields": []
+    },
+    "expertInsight": {
+      "concrete_facts": [
+        "liquefied natural gas (LNG) exports averaged 17.4 billion cubic feet per day (Bcf/d) in the first six months of the year, 23% more than the same period in 2025, according to our Natural Gas Monthly.",
+        "In 2025, uranium concentrate production in the United States totaled 2.1 million pounds of triuranium octoxide (U 3 O 8 ), the base component of nuclear reactor fuel.",
+        "In our latest Short-Term Energy Outlook, we estimate U.S.",
+        "LNG exports will average 17.3 Bcf/d in the second half of 2026 (2H26) before rising to 18.7 Bcf/d in 1H27.",
+        "Energy Information Administration, Monthly Energy Review, and Domestic Uranium Production Report Note: W=Data withheld to avoid disclosure of individual company data."
+      ],
+      "named_companies": [
+        "U.S. Energy",
+        "Short-Term Energy",
+        "Monthly Energy"
+      ],
+      "infrastructure_layer": "Power",
+      "bottleneck_type": "power_grid",
+      "who_gains_leverage": "utilities, power-secured developers, and operators with firm interconnection positions",
+      "who_takes_execution_risk": "developers and cloud buyers whose delivery dates depend on utility upgrades or energization schedules",
+      "timing_dependency": "utility interconnection, equipment procurement, and energization milestones",
+      "counterargument": "The source may still describe intent rather than delivered capacity, so the operating impact depends on follow-through.",
+      "next_observable_signal": "interconnection approvals, substation equipment dates, power purchase agreements, or disclosed energization windows",
+      "expert_insight_complete": true,
+      "expert_insight_missing_fields": []
+    },
+    "concrete_facts": [
+      "liquefied natural gas (LNG) exports averaged 17.4 billion cubic feet per day (Bcf/d) in the first six months of the year, 23% more than the same period in 2025, according to our Natural Gas Monthly.",
+      "In 2025, uranium concentrate production in the United States totaled 2.1 million pounds of triuranium octoxide (U 3 O 8 ), the base component of nuclear reactor fuel.",
+      "In our latest Short-Term Energy Outlook, we estimate U.S.",
+      "LNG exports will average 17.3 Bcf/d in the second half of 2026 (2H26) before rising to 18.7 Bcf/d in 1H27.",
+      "Energy Information Administration, Monthly Energy Review, and Domestic Uranium Production Report Note: W=Data withheld to avoid disclosure of individual company data."
+    ],
+    "named_companies": [
+      "U.S. Energy",
+      "Short-Term Energy",
+      "Monthly Energy"
+    ],
+    "bottleneck_type": "power_grid",
+    "who_gains_leverage": "utilities, power-secured developers, and operators with firm interconnection positions",
+    "who_takes_execution_risk": "developers and cloud buyers whose delivery dates depend on utility upgrades or energization schedules",
+    "timing_dependency": "utility interconnection, equipment procurement, and energization milestones",
+    "counterargument": "The source may still describe intent rather than delivered capacity, so the operating impact depends on follow-through.",
+    "next_observable_signal": "interconnection approvals, substation equipment dates, power purchase agreements, or disclosed energization windows",
+    "expert_insight_complete": true,
+    "expert_insight_missing_fields": [],
+    "tags": [
+      "lng",
+      "natural gas",
+      "exports",
+      "capacity",
+      "energy market",
+      "power"
+    ],
+    "imagePrompt": "Aerial view of a liquefied natural gas export terminal with large storage tanks and loading facilities, set against a clear blue sky, showcasing industrial infrastructure.",
+    "lang": "en",
+    "articleText": "Data source: U.S. Energy Information Administration, Liquefaction Capacity File ; U.S. Department of Energy, Natural Gas Imports and Exports Monthly Note: Golden Pass LNG exported less than 0.2 Bcf/d of gas between April and June 2026; Corpus Christi totals include Stage 3 trains. U.S. liquefied natural gas (LNG) exports averaged 17.4 billion cubic feet per day (Bcf/d) in the first six months of the year, 23% more than the same period in 2025, according to our Natural Gas Monthly . In our latest Short-Term Energy Outlook , we estimate U.S. LNG exports will average 17.3 Bcf/d in the second half of 2026 (2H26) before rising to 18.7 Bcf/d in 1H27. Tags: LNG (liquefied natural gas) , natural gas , exports/imports Data source: U.S. Energy Information Administration, Monthly Energy Review , and Domestic Uranium Production Report Note: W=Data withheld to avoid disclosure of individual company data. In 2025, uranium concentrate production in the United States totaled 2.1 million pounds of triuranium octoxide (U 3 O 8 ), the base component of nuclear reactor fuel. U.S. U 3 O 8 production in 2025 was the most since 2017 and more than triple the volume produced in 2024. Data source: U.S. Energy Information Administration, Liquids Pipeline Projects Database In the 2026 release of our Liquids Pipeline Projects Database, we tracked the completion of 8 liquid fuels pipeline projects since the start of 2025, and an additional 14 new projects have been announced. Data source: Vortexa Analytics Note: Intra-Nigeria shipments are shipped between ports within Nigeria. Seaborne petroleum product exports from Nigeria have grown seven-fold since 2023, playing an increasing role in the international market for petroleum products at a time when supplies from other areas have been constrained .",
+    "content_length": 1798,
+    "boilerplate_ratio": 0,
+    "title_body_similarity": 0.67,
+    "copyright_footer_detected": false,
+    "nav_or_cta_detected": false,
+    "sentence_completion_score": 1,
+    "source_domain_adapter": "generic",
+    "extraction_quality_score": 1,
+    "extraction_qa": {
+      "content_length": 1798,
+      "boilerplate_ratio": 0,
+      "title_body_similarity": 0.67,
+      "copyright_footer_detected": false,
+      "legal_boilerplate_detected": false,
+      "nav_or_cta_detected": false,
+      "sentence_completion_score": 1,
+      "source_domain_adapter": "generic",
+      "extraction_quality_score": 1,
+      "extraction_failure_reason": null,
+      "extraction_quality_reasons": []
+    },
+    "extraction_artifact": {
+      "artifact_version": "extraction_v1",
+      "source_url": "https://www.eia.gov/todayinenergy/detail.php?id=",
+      "extracted_text_sha256": "62ead5f80041ce5ae6f58ab529a491026f7aab7256ca210a859fbbaa30e4b15b",
+      "cleaned_extracted_text": "Data source: U.S. Energy Information Administration, Liquefaction Capacity File ; U.S. Department of Energy, Natural Gas Imports and Exports Monthly Note: Golden Pass LNG exported less than 0.2 Bcf/d of gas between April and June 2026; Corpus Christi totals include Stage 3 trains. U.S. liquefied natural gas (LNG) exports averaged 17.4 billion cubic feet per day (Bcf/d) in the first six months of the year, 23% more than the same period in 2025, according to our Natural Gas Monthly . In our latest Short-Term Energy Outlook , we estimate U.S. LNG exports will average 17.3 Bcf/d in the second half of 2026 (2H26) before rising to 18.7 Bcf/d in 1H27. Tags: LNG (liquefied natural gas) , natural gas , exports/imports Data source: U.S. Energy Information Administration, Monthly Energy Review , and Domestic Uranium Production Report Note: W=Data withheld to avoid disclosure of individual company data. In 2025, uranium concentrate production in the United States totaled 2.1 million pounds of triuranium octoxide (U 3 O 8 ), the base component of nuclear reactor fuel. U.S. U 3 O 8 production in 2025 was the most since 2017 and more than triple the volume produced in 2024. Data source: U.S. Energy Information Administration, Liquids Pipeline Projects Database In the 2026 release of our Liquids Pipeline Projects Database, we tracked the completion of 8 liquid fuels pipeline projects since the start of 2025, and an additional 14 new projects have been announced. Data source: Vortexa Analytics Note: Intra-Nigeria shipments are shipped between ports within Nigeria. Seaborne petroleum product exports from Nigeria have grown seven-fold since 2023, playing an increasing role in the international market for petroleum products at a time when supplies from other areas have been constrained .",
+      "extraction_qa": {
+        "cleaned_source_length": 1798,
+        "block_reasons": [],
+        "content_length": 1798,
+        "boilerplate_ratio": 0,
+        "title_body_similarity": 0.67,
+        "copyright_footer_detected": false,
+        "legal_boilerplate_detected": false,
+        "nav_or_cta_detected": false,
+        "sentence_completion_score": 1,
+        "source_domain_adapter": "generic",
+        "extraction_quality_score": 1,
+        "extraction_failure_reason": null,
+        "extraction_quality_reasons": []
+      }
+    },
+    "sourceUrl": "https://www.eia.gov/todayinenergy/detail.php?id=",
+    "generatedImage": "/generated/articles/7479357d607da0fa-u-s-lng-exports-rose-23-in-the-first-half-of-2026-because-of-higher-capacity/hero.webp",
+    "infrastructureRelevanceAction": "publish_signal_card_only",
+    "articlePagePublished": false,
+    "homepagePublished": true,
+    "archiveOnly": false,
+    "archiveOnlyReason": null,
+    "signalCardOnly": true,
+    "signalCardReason": "infrastructure_relevance_signal_card_threshold",
+    "article_blueprint": null,
+    "articleBlueprint": null,
+    "expertLensShort": null,
+    "expertLensFull": null,
+    "expertLens": null,
+    "public_content_tier": "editorial_brief",
+    "seo_noindex": false,
+    "noindex": false,
+    "public_tier_reasons": []
+  },
+  {
     "id": "5fb4b1933e5d650e",
     "sourceRegistryId": "eia-today-in-energy",
     "source": "U.S. Energy Information Administration",
@@ -2573,7 +2785,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-09-01T12:33:09.132Z",
+      "generatedAt": "2026-09-01T18:17:28.190Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "NVIDIA",
@@ -3478,7 +3690,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-09-01T12:33:09.627Z",
+      "generatedAt": "2026-09-01T18:17:28.813Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Google",
@@ -4064,7 +4276,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-09-01T12:33:09.932Z",
+      "generatedAt": "2026-09-01T18:17:29.201Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Amazon",
@@ -4987,7 +5199,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-09-01T12:33:10.326Z",
+      "generatedAt": "2026-09-01T18:17:29.697Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "AMD",
@@ -5526,7 +5738,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-09-01T12:33:10.632Z",
+      "generatedAt": "2026-09-01T18:17:30.076Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "OpenAI",
@@ -5884,7 +6096,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-09-01T12:33:10.836Z",
+      "generatedAt": "2026-09-01T18:17:30.333Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Amazon",
@@ -6431,7 +6643,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-09-01T12:33:11.143Z",
+      "generatedAt": "2026-09-01T18:17:30.714Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "NVIDIA",
@@ -6789,7 +7001,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-09-01T12:33:11.358Z",
+      "generatedAt": "2026-09-01T18:17:30.974Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Amazon",
@@ -7134,195 +7346,6 @@
     "noindex": false,
     "public_tier_reasons": [
       "detail_page_requires_generation_gates"
-    ]
-  },
-  {
-    "id": "666164aa1acf4d1c",
-    "source": "Bloomberg Technology",
-    "url": "https://www.bloomberg.com/news/articles/2026-08-07/data-center-firm-switch-is-said-to-file-confidentially-for-ipo",
-    "title": "Data Center Firm Switch to File Confidentially for IPO",
-    "snippet": "Switch Inc. filed confidentially for a US IPO, according to people familiar with the matter, joining its data center peers in tapping demand for exposure to the artificial intelligence theme.",
-    "contentText": "Switch Inc. filed confidentially for a US IPO, according to people familiar with the matter, joining its data center peers in tapping demand for exposure to the artificial intelligence theme.",
-    "publishedAt": "2026-08-07T21:23:00.000Z",
-    "sourceImage": null,
-    "region": "APAC",
-    "language": "en",
-    "defaultCategory": "Hyperscalers & Cloud",
-    "category": "Data Centers",
-    "primary_category": "Data Centers",
-    "secondary_category": "Campus development and colocation capacity",
-    "infrastructure_layer": "Facility",
-    "affected_stakeholders": [
-      "data center operators",
-      "developers",
-      "site selectors",
-      "investors"
-    ],
-    "article_type": "Capacity Expansion",
-    "urgency_score": 0.59,
-    "taxonomy_confidence": 0.81,
-    "taxonomy_reasons": [
-      "data center",
-      "colocation",
-      "campus"
-    ],
-    "direct_ai_infrastructure_relevance": 0.78,
-    "data_center_relevance": 0.55,
-    "cloud_capacity_relevance": 0.32,
-    "semiconductor_relevance": 0,
-    "power_grid_relevance": 0.22,
-    "cooling_relevance": 0,
-    "capital_markets_relevance": 0.324,
-    "enterprise_ai_infrastructure_relevance": 0,
-    "infrastructure_relevance_score": 0.793,
-    "infrastructure_relevance_tier": "full_memo",
-    "infrastructure_relevance_action": "generate_full_memo",
-    "infrastructure_relevance_reasons": [
-      "direct_ai_infrastructure_relevance:0.78(ai infrastructure)",
-      "data_center_relevance:0.55(data center)",
-      "cloud_capacity_relevance:0.32(hyperscalers)",
-      "power_grid_relevance:0.22(power)",
-      "capital_markets_relevance:0.32(ipo)"
-    ],
-    "infrastructure_relevance": {
-      "direct_ai_infrastructure_relevance": 0.78,
-      "data_center_relevance": 0.55,
-      "cloud_capacity_relevance": 0.32,
-      "semiconductor_relevance": 0,
-      "power_grid_relevance": 0.22,
-      "cooling_relevance": 0,
-      "capital_markets_relevance": 0.324,
-      "enterprise_ai_infrastructure_relevance": 0,
-      "infrastructure_relevance_score": 0.793,
-      "infrastructure_relevance_tier": "full_memo",
-      "infrastructure_relevance_action": "generate_full_memo",
-      "infrastructure_relevance_reasons": [
-        "direct_ai_infrastructure_relevance:0.78(ai infrastructure)",
-        "data_center_relevance:0.55(data center)",
-        "cloud_capacity_relevance:0.32(hyperscalers)",
-        "power_grid_relevance:0.22(power)",
-        "capital_markets_relevance:0.32(ipo)"
-      ],
-      "infrastructureRelevanceAction": "generate_full_memo",
-      "articlePagePublished": true,
-      "homepagePublished": true,
-      "archiveOnly": false,
-      "archiveOnlyReason": null
-    },
-    "score": 79,
-    "slug": "data-center-firm-switch-to-file-confidentially-for-ipo",
-    "summary": "Switch Inc. filed confidentially for a US IPO, according to people familiar with the matter, joining its data center peers in tapping demand for exposure to the artificial intelli…",
-    "insight": "The practical effect is on AI infrastructure execution risk. The advantage goes to teams that line up power, facility design, network topology, and silicon timing instead of optimizing one layer in isolation.",
-    "expert_insight": {
-      "concrete_facts": [
-        "filed confidentially for a US IPO, according to people familiar with the matter, joining its data center peers in tapping demand for exposure to the artificial intelli… Switch Inc.",
-        "Data Center Firm Switch to File Confidentially for IPO Switch Inc.",
-        "filed confidentially for a US IPO, according to people familiar with the matter, joining its data center peers in tapping demand for exposure to the artificial intelligence theme."
-      ],
-      "named_companies": [
-        "IPO Switch Inc",
-        "Switch Inc"
-      ],
-      "infrastructure_layer": "Facility",
-      "bottleneck_type": "power_grid",
-      "who_gains_leverage": "utilities, power-secured developers, and operators with firm interconnection positions",
-      "who_takes_execution_risk": "developers and cloud buyers whose delivery dates depend on utility upgrades or energization schedules",
-      "timing_dependency": "utility interconnection, equipment procurement, and energization milestones",
-      "counterargument": "A power-side development can still be too narrow to change the broader delivery curve unless it scales across sites.",
-      "next_observable_signal": "interconnection approvals, substation equipment dates, power purchase agreements, or disclosed energization windows",
-      "expert_insight_complete": true,
-      "expert_insight_missing_fields": []
-    },
-    "expertInsight": {
-      "concrete_facts": [
-        "filed confidentially for a US IPO, according to people familiar with the matter, joining its data center peers in tapping demand for exposure to the artificial intelli… Switch Inc.",
-        "Data Center Firm Switch to File Confidentially for IPO Switch Inc.",
-        "filed confidentially for a US IPO, according to people familiar with the matter, joining its data center peers in tapping demand for exposure to the artificial intelligence theme."
-      ],
-      "named_companies": [
-        "IPO Switch Inc",
-        "Switch Inc"
-      ],
-      "infrastructure_layer": "Facility",
-      "bottleneck_type": "power_grid",
-      "who_gains_leverage": "utilities, power-secured developers, and operators with firm interconnection positions",
-      "who_takes_execution_risk": "developers and cloud buyers whose delivery dates depend on utility upgrades or energization schedules",
-      "timing_dependency": "utility interconnection, equipment procurement, and energization milestones",
-      "counterargument": "A power-side development can still be too narrow to change the broader delivery curve unless it scales across sites.",
-      "next_observable_signal": "interconnection approvals, substation equipment dates, power purchase agreements, or disclosed energization windows",
-      "expert_insight_complete": true,
-      "expert_insight_missing_fields": []
-    },
-    "concrete_facts": [
-      "filed confidentially for a US IPO, according to people familiar with the matter, joining its data center peers in tapping demand for exposure to the artificial intelli… Switch Inc.",
-      "Data Center Firm Switch to File Confidentially for IPO Switch Inc.",
-      "filed confidentially for a US IPO, according to people familiar with the matter, joining its data center peers in tapping demand for exposure to the artificial intelligence theme."
-    ],
-    "named_companies": [
-      "IPO Switch Inc",
-      "Switch Inc"
-    ],
-    "bottleneck_type": "power_grid",
-    "who_gains_leverage": "utilities, power-secured developers, and operators with firm interconnection positions",
-    "who_takes_execution_risk": "developers and cloud buyers whose delivery dates depend on utility upgrades or energization schedules",
-    "timing_dependency": "utility interconnection, equipment procurement, and energization milestones",
-    "counterargument": "A power-side development can still be too narrow to change the broader delivery curve unless it scales across sites.",
-    "next_observable_signal": "interconnection approvals, substation equipment dates, power purchase agreements, or disclosed energization windows",
-    "expert_insight_complete": true,
-    "expert_insight_missing_fields": [],
-    "tags": [],
-    "imagePrompt": "Editorial hero image for enterprise technology news. No logos, no text, no watermark, no brand marks. Topic: Data Center Firm Switch to File Confidentially for IPO. Category: Hyperscalers & Cloud. Mood: premium, cinematic, monochrome glass dashboard aesthetic. Context: Switch Inc. filed confidentially for a US IPO, according to people familiar with the matter, joining its data center peers in tapping demand for exposure to the artificial intelli…. Include modern data center, network, semiconductor, cloud, or grid motifs only when relevant. 16:9 composition.",
-    "lang": "en",
-    "articleText": "Switch Inc. filed confidentially for a US IPO, according to people familiar with the matter, joining its data center peers in tapping demand for exposure to the artificial intelligence theme.",
-    "content_length": 191,
-    "boilerplate_ratio": 0,
-    "title_body_similarity": 0,
-    "copyright_footer_detected": false,
-    "nav_or_cta_detected": false,
-    "sentence_completion_score": 0.9,
-    "source_domain_adapter": "bloomberg",
-    "extraction_quality_score": 0,
-    "extraction_qa": {
-      "content_length": 191,
-      "boilerplate_ratio": 0,
-      "title_body_similarity": 0,
-      "copyright_footer_detected": false,
-      "legal_boilerplate_detected": false,
-      "nav_or_cta_detected": false,
-      "sentence_completion_score": 0.9,
-      "source_domain_adapter": "bloomberg",
-      "extraction_quality_score": 0,
-      "extraction_failure_reason": "http_403",
-      "extraction_quality_reasons": [
-        "extraction_quality_score 0.00 below 0.80",
-        "content_length 191 below 650",
-        "title_body_similarity 0.00 low",
-        "extraction_failure_reason http_403"
-      ]
-    },
-    "sourceUrl": "https://www.bloomberg.com/news/articles/2026-08-07/data-center-firm-switch-is-said-to-file-confidentially-for-ipo",
-    "generatedImage": "/generated/articles/666164aa1acf4d1c-data-center-firm-switch-to-file-confidentially-for-ipo/hero.webp",
-    "infrastructureRelevanceAction": "generate_full_memo",
-    "articlePagePublished": false,
-    "homepagePublished": true,
-    "archiveOnly": false,
-    "archiveOnlyReason": null,
-    "qualityGateBlocked": true,
-    "qualityGateReason": "fail_closed: source_text_incomplete:source_evidence_length_below_500, source_evidence_length_below_1200",
-    "qualityGateBlockedAt": "2026-08-07T23:36:23.108Z",
-    "signalCardOnly": true,
-    "signalCardReason": "fail_closed: source_text_incomplete:source_evidence_length_below_500, source_evidence_length_below_1200",
-    "article_blueprint": null,
-    "articleBlueprint": null,
-    "expertLensShort": null,
-    "expertLensFull": null,
-    "expertLens": null,
-    "public_content_tier": "signal_card",
-    "seo_noindex": false,
-    "noindex": false,
-    "public_tier_reasons": [
-      "dirty_extraction",
-      "source_only_due_dirty_extraction"
     ]
   }
 ]
