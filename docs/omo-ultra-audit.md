@@ -32,7 +32,7 @@ Audit output omits `git status` so running this writer cannot make its own repor
 ## Article Data Store
 
 - Primary public data: `src/data/latest-news.json` (35 records).
-- Archive data: `src/data/archived-news.json` (923 records).
+- Archive data: `src/data/archived-news.json` (925 records).
 - Adjacent stores: `src/data/search-index.json`, `src/data/taxonomy-pages.json`, `src/data/editorial-cycles.json`, `src/data/claim-ledger.json`, `src/data/source-health.json`.
 - The data model is still legacy-compatible JSON rather than one explicit public article contract.
 
@@ -93,7 +93,7 @@ Audit output omits `git status` so running this writer cannot make its own repor
 ## Stale Generated Article Pages
 
 - Retained records marked article-page-published with non-blog_engine_v4 generation version: 5; examples: `eia-data-center-load-timing`, `eia-server-cooling-forecast`, `eia-virginia-peak-load`, `eia-nuclear-data-center-contracts`, `eia-texas-large-loads`. Current public detail eligibility separately requires product fit, source rights, and final publication integrity.
-- Retained source-only/direct-link items: 953.
+- Retained source-only/direct-link items: 955.
 - Whether generated article pages are stale is a review question, not an editor regeneration command. The generic editor exposes `save-draft`, `publish`, `hide`, `noindex`, `upload-image`, `preview`; regeneration controls detected: none.
 
 ## Legacy Templates and Public Output Failures
