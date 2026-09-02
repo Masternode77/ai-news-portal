@@ -44039,7 +44039,7 @@
     "2026-09-02": {
       "date": "2026-09-02",
       "createdAt": "2026-09-01T18:17:14.186Z",
-      "refreshedAt": "2026-09-02T01:00:43.263Z",
+      "refreshedAt": "2026-09-02T12:06:01.843Z",
       "candidateWindowHours": 24,
       "curatedItems": [],
       "curatedIds": [],
@@ -44048,140 +44048,12 @@
       ],
       "slotPublications": {
         "0": true,
-        "1": true
+        "1": true,
+        "2": true
       }
     }
   },
   "runHistory": [
-    {
-      "at": "2026-07-21T16:27:49.167Z",
-      "day": "2026-07-22",
-      "slot": 0,
-      "publishedCount": 0,
-      "signalCardCount": 0,
-      "archiveOnlyCount": 0,
-      "repetitionBlockedCount": 2,
-      "publishedIds": [],
-      "processedIds": [
-        "b626744f59a8c32a",
-        "bcb0a678fe60a9d8"
-      ],
-      "blockedCount": 0,
-      "blockedItems": [],
-      "repetitionBlockedItems": [
-        {
-          "id": "b626744f59a8c32a",
-          "title": "China is considering export controls on AI technologies, including banning local companies from using TSMC, report claims — restrictions would also cover advanced AI models, training data, and overseas acquisitions",
-          "infrastructure_relevance_score": 1,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, ai data center, neocloud)",
-            "data_center_relevance:0.84(data center, data centers)",
-            "cloud_capacity_relevance:0.32(hyperscalers)",
-            "semiconductor_relevance:0.96(semiconductor, tsmc, gpu)",
-            "power_grid_relevance:0.58(power, interconnection)",
-            "cooling_relevance:0.34(cooling)"
-          ],
-          "extraction_quality_score": 1,
-          "source_domain_adapter": "generic",
-          "content_length": 1705,
-          "boilerplate_ratio": 0,
-          "repetition_blocked": true,
-          "repetition_block_reasons": [
-            "repeated_sentence_ratio>0.12",
-            "heading_sequence_similarity>0.75",
-            "conclusion_similarity>0.7"
-          ],
-          "repetition_check": {
-            "compared_article_count": 20,
-            "repeated_sentence_ratio": 0.2857142857142857,
-            "repeated_paragraph_ratio": 0.3333333333333333,
-            "heading_sequence_similarity": 1,
-            "banned_phrase_count": 0,
-            "banned_phrase_counts": {},
-            "recent_banned_phrase_counts": {},
-            "ngram_overlap": 0.5752212389380531,
-            "blueprint_repetition": 1,
-            "conclusion_similarity": 0.9511897312113418,
-            "repeated_sentence_count": 2,
-            "repeated_paragraph_count": 2,
-            "heading_sequence": [
-              "Power-Market Move",
-              "Operating Lever",
-              "Grid Exposure",
-              "Metric To Watch"
-            ],
-            "blocked": true,
-            "reasons": [
-              "repeated_sentence_ratio>0.12",
-              "heading_sequence_similarity>0.75",
-              "conclusion_similarity>0.7"
-            ]
-          },
-          "expert_insight_complete": true,
-          "expert_insight_missing_fields": [],
-          "reason": "repeated_sentence_ratio>0.12; heading_sequence_similarity>0.75; conclusion_similarity>0.7"
-        },
-        {
-          "id": "bcb0a678fe60a9d8",
-          "title": "Amazon data center in Bahrain struck and destroyed by Iranian cruise missiles, state media claims — attacks launched against AWS site in response to alleged US strikes on an under-construction nuclear plant",
-          "infrastructure_relevance_score": 1,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, ai data center, neocloud)",
-            "data_center_relevance:1.00(data center, data centers, campus)",
-            "cloud_capacity_relevance:0.62(hyperscalers, aws)",
-            "semiconductor_relevance:0.22(gpu)",
-            "power_grid_relevance:0.93(power, interconnection, nuclear)",
-            "cooling_relevance:0.34(cooling)",
-            "capital_markets_relevance:0.28(capex)"
-          ],
-          "extraction_quality_score": 1,
-          "source_domain_adapter": "generic",
-          "content_length": 1714,
-          "boilerplate_ratio": 0,
-          "repetition_blocked": true,
-          "repetition_block_reasons": [
-            "repeated_sentence_ratio>0.12",
-            "heading_sequence_similarity>0.75",
-            "conclusion_similarity>0.7"
-          ],
-          "repetition_check": {
-            "compared_article_count": 20,
-            "repeated_sentence_ratio": 0.5714285714285714,
-            "repeated_paragraph_ratio": 0.6666666666666666,
-            "heading_sequence_similarity": 1,
-            "banned_phrase_count": 0,
-            "banned_phrase_counts": {},
-            "recent_banned_phrase_counts": {},
-            "ngram_overlap": 0.45161290322580644,
-            "blueprint_repetition": 2,
-            "conclusion_similarity": 1,
-            "repeated_sentence_count": 4,
-            "repeated_paragraph_count": 4,
-            "heading_sequence": [
-              "Power-Market Move",
-              "Operating Lever",
-              "Grid Exposure",
-              "Metric To Watch"
-            ],
-            "blocked": true,
-            "reasons": [
-              "repeated_sentence_ratio>0.12",
-              "heading_sequence_similarity>0.75",
-              "conclusion_similarity>0.7"
-            ]
-          },
-          "expert_insight_complete": true,
-          "expert_insight_missing_fields": [],
-          "reason": "repeated_sentence_ratio>0.12; heading_sequence_similarity>0.75; conclusion_similarity>0.7"
-        }
-      ],
-      "signalCardItems": [],
-      "archiveOnlyItems": []
-    },
     {
       "at": "2026-07-21T23:57:32.335Z",
       "day": "2026-07-22",
@@ -53009,9 +52881,28 @@
         "token_budget": 60000,
         "call_budget": 40
       }
+    },
+    {
+      "at": "2026-09-02T12:06:01.843Z",
+      "day": "2026-09-02",
+      "slot": 2,
+      "publishedCount": 0,
+      "authoredColumn": {
+        "published": false,
+        "reason": "no_qualifying_story"
+      },
+      "llmUsage": {
+        "calls": 1,
+        "failures": 0,
+        "prompt_tokens": 102,
+        "completion_tokens": 5,
+        "total_tokens": 107,
+        "token_budget": 60000,
+        "call_budget": 40
+      }
     }
   ],
-  "lastRunAt": "2026-09-02T01:00:43.263Z",
+  "lastRunAt": "2026-09-02T12:06:01.843Z",
   "authored": {
     "lastColumnAt": "2026-08-28T19:25:07.344Z",
     "columnsByDay": {
