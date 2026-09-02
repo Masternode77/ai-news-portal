@@ -85,7 +85,7 @@ test('full generation path produces a verified column with evidence figures', as
     assert.ok(result.column, `expected a column, got ${JSON.stringify(result)}`);
     const column = result.column;
     assert.equal(column.content_origin, 'authored');
-    assert.equal(column.author.name, 'Rowan Hale');
+    assert.equal(column.author.name, 'Josh Inn');
     assert.ok(column.slug.includes('2026-08-23'));
     assert.ok(column.expertLensFull.finalArticleBody.includes(CLOSING_HEADING));
     assert.equal(column.authored_quality.ok, true);
