@@ -310,9 +310,6 @@ function buildArticleText(article = {}) {
     article.insight,
     article.contentText,
     article.articleText,
-    article.category,
-    article.defaultCategory,
-    article.categoryHint,
     article.source,
     article.url,
   ].filter(Boolean).join(' ');
