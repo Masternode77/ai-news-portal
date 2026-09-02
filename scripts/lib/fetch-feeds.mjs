@@ -108,8 +108,18 @@ async function fetchFeedItems(feed, networkOptions = {}) {
     .filter(Boolean);
 }
 
+function relevanceThenRecency(a, b) {
+  const scoreGap = (Number(b.infrastructure_relevance_score) || 0) - (Number(a.infrastructure_relevance_score) || 0);
+  if (scoreGap !== 0) return scoreGap;
+  return new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime();
+}
+
+// The pool is capped, and several authorized sources publish far more
+// off-beat items than on-beat ones (audit reports, enforcement actions).
+// Order by fetch-time relevance first so those sources cannot crowd out the
+// grid and data-center stories on recency alone; recency breaks ties.
 function selectPoolItems(fetched = []) {
-  fetched.sort((a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime());
+  fetched.sort(relevanceThenRecency);
 
   const dedupedByRecency = [];
   const seenIds = new Set();

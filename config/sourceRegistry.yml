@@ -37,7 +37,7 @@ sources:
     coverage: technology markets, cloud, AI infrastructure, chips
     priority: P1
     feed: https://feeds.bloomberg.com/technology/news.rss
-    defaultCategory: Market / M&A / Financing
+    defaultCategory: Capital Markets
     region: Global
     status: active_feed
     text_use_basis: unreviewed
@@ -382,7 +382,7 @@ sources:
     coverage: grid, power, utilities, regulation, data center power demand
     priority: P0
     feed: https://www.utilitydive.com/feeds/news/
-    defaultCategory: Power / Grid / Energy
+    defaultCategory: Power & Grid
     region: US
     status: active_feed
     text_use_basis: unreviewed
@@ -397,7 +397,7 @@ sources:
     coverage: power generation, grid, energy infrastructure
     priority: P1
     feed: https://www.power-eng.com/feed/
-    defaultCategory: Power / Grid / Energy
+    defaultCategory: Power & Grid
     region: Global
     status: active_feed
     text_use_basis: unreviewed
@@ -448,7 +448,7 @@ sources:
     defaultCategory: Power & Grid
     region: US
     language: en
-    status: active_feed
+    status: blocked
     text_use_basis: us_federal_public_domain
     image_use_basis: unreviewed
     terms_url: https://www.ferc.gov/privacy-policy
@@ -462,7 +462,7 @@ sources:
     coverage: AI measurement and standards, CHIPS program, semiconductor metrology, cybersecurity frameworks
     priority: P1
     feed: https://www.nist.gov/news-events/news/rss.xml
-    defaultCategory: AI Infrastructure (GPU/Neocloud)
+    defaultCategory: AI Infrastructure
     region: US
     language: en
     status: active_feed
@@ -479,7 +479,7 @@ sources:
     coverage: AI competition and consumer protection actions, cloud and chip merger reviews
     priority: P1
     feed: https://www.ftc.gov/feeds/press-release.xml
-    defaultCategory: Market / M&A / Financing
+    defaultCategory: Capital Markets
     region: US
     language: en
     status: active_feed
@@ -496,30 +496,13 @@ sources:
     coverage: federal audits on energy infrastructure, AI adoption, and technology procurement
     priority: P2
     feed: https://www.gao.gov/rss/reports.xml
-    defaultCategory: Power / Grid / Energy
+    defaultCategory: Power & Grid
     region: US
     language: en
     status: active_feed
     text_use_basis: us_federal_public_domain
     image_use_basis: unreviewed
     terms_url: https://www.gao.gov/about/policies-and-notices
-    reviewed_at: 2026-09-02T00:00:00.000Z
-    allow_text_use: true
-    allow_image_reuse: false
-  - id: sec-press
-    name: U.S. Securities and Exchange Commission
-    domain: sec.gov
-    article_hosts: sec.gov,www.sec.gov
-    coverage: disclosure rules, enforcement, and filings guidance affecting data center and AI capital markets
-    priority: P1
-    feed: https://www.sec.gov/news/pressreleases.rss
-    defaultCategory: Market / M&A / Financing
-    region: US
-    language: en
-    status: active_feed
-    text_use_basis: us_federal_public_domain
-    image_use_basis: unreviewed
-    terms_url: https://www.sec.gov/privacy
     reviewed_at: 2026-09-02T00:00:00.000Z
     allow_text_use: true
     allow_image_reuse: false
@@ -537,6 +520,57 @@ sources:
     text_use_basis: us_federal_public_domain
     image_use_basis: unreviewed
     terms_url: https://www.eia.gov/about/copyrights_reuse.php
+    reviewed_at: 2026-09-02T00:00:00.000Z
+    allow_text_use: true
+    allow_image_reuse: false
+  - id: nrc-news
+    name: U.S. Nuclear Regulatory Commission
+    domain: nrc.gov
+    article_hosts: nrc.gov,www.nrc.gov
+    coverage: reactor licensing, restarts and uprates, SMR reviews, nuclear supply for large loads
+    priority: P0
+    feed: https://www.nrc.gov/public-involve/rss?feed=news
+    defaultCategory: Power & Grid
+    region: US
+    language: en
+    status: active_feed
+    text_use_basis: us_federal_public_domain
+    image_use_basis: unreviewed
+    terms_url: https://www.nrc.gov/site-help/privacy.html
+    reviewed_at: 2026-09-02T00:00:00.000Z
+    allow_text_use: true
+    allow_image_reuse: false
+  - id: uk-desnz
+    name: UK Department for Energy Security and Net Zero
+    domain: gov.uk
+    article_hosts: gov.uk,www.gov.uk
+    coverage: grid connections reform, generation and transmission policy, large-load electricity demand
+    priority: P1
+    feed: https://www.gov.uk/search/news-and-communications.atom?organisations%5B%5D=department-for-energy-security-and-net-zero
+    defaultCategory: Power & Grid
+    region: UK
+    language: en
+    status: active_feed
+    text_use_basis: uk_open_government_licence_v3
+    image_use_basis: unreviewed
+    terms_url: https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/
+    reviewed_at: 2026-09-02T00:00:00.000Z
+    allow_text_use: true
+    allow_image_reuse: false
+  - id: uk-dsit
+    name: UK Department for Science, Innovation and Technology
+    domain: gov.uk
+    article_hosts: gov.uk,www.gov.uk
+    coverage: AI growth zones, data centre planning and critical infrastructure designation, compute strategy
+    priority: P1
+    feed: https://www.gov.uk/search/news-and-communications.atom?organisations%5B%5D=department-for-science-innovation-and-technology
+    defaultCategory: AI Infrastructure
+    region: UK
+    language: en
+    status: active_feed
+    text_use_basis: uk_open_government_licence_v3
+    image_use_basis: unreviewed
+    terms_url: https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/
     reviewed_at: 2026-09-02T00:00:00.000Z
     allow_text_use: true
     allow_image_reuse: false
