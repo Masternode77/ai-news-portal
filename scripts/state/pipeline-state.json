@@ -44039,156 +44039,20 @@
     "2026-09-02": {
       "date": "2026-09-02",
       "createdAt": "2026-09-01T18:17:14.186Z",
-      "refreshedAt": "2026-09-01T18:17:14.186Z",
+      "refreshedAt": "2026-09-02T01:00:43.263Z",
       "candidateWindowHours": 24,
-      "curatedItems": [
-        {
-          "id": "7479357d607da0fa",
-          "sourceRegistryId": "eia-today-in-energy",
-          "source": "U.S. Energy Information Administration",
-          "url": "https://www.eia.gov/todayinenergy/detail.php?id=",
-          "title": "U.S. LNG exports rose 23% in the first half of 2026 because of higher capacity",
-          "snippet": "U.S. liquefied natural gas (LNG) exports averaged 17.4 billion cubic feet per day (Bcf/d) in the first six months of the year, 23% more than the same period in 2025, according to our Natural Gas Monthly. In our latest S…",
-          "contentText": "U.S. liquefied natural gas (LNG) exports averaged 17.4 billion cubic feet per day (Bcf/d) in the first six months of the year, 23% more than the same period in 2025, according to our Natural Gas Monthly. In our latest Short-Term Energy Outlook, we estimate U.S. LNG exports will average 17.3 Bcf/d in the second half of 2026 (2H26) before rising to 18.7 Bcf/d in 1H27.",
-          "publishedAt": "2026-09-01T14:00:00.000Z",
-          "sourceImage": null,
-          "region": "APAC",
-          "language": "en",
-          "defaultCategory": "Power & Grid",
-          "category": "Power & Grid",
-          "primary_category": "Power & Grid",
-          "secondary_category": "Interconnection and power procurement",
-          "infrastructure_layer": "Power",
-          "affected_stakeholders": [
-            "data center operators",
-            "utilities",
-            "cloud capacity teams",
-            "investors"
-          ],
-          "article_type": "Capacity Expansion",
-          "urgency_score": 0.54,
-          "taxonomy_confidence": 0.69,
-          "taxonomy_reasons": [
-            "power",
-            "grid"
-          ],
-          "direct_ai_infrastructure_relevance": 0,
-          "data_center_relevance": 0,
-          "cloud_capacity_relevance": 0,
-          "semiconductor_relevance": 0,
-          "power_grid_relevance": 0.5,
-          "cooling_relevance": 0,
-          "capital_markets_relevance": 0,
-          "enterprise_ai_infrastructure_relevance": 0,
-          "infrastructure_relevance_score": 0.325,
-          "infrastructure_relevance_tier": "archive_only",
-          "infrastructure_relevance_action": "archive_only",
-          "infrastructure_relevance_reasons": [
-            "power_grid_relevance:0.50(power, grid)"
-          ],
-          "infrastructure_relevance": {
-            "direct_ai_infrastructure_relevance": 0,
-            "data_center_relevance": 0,
-            "cloud_capacity_relevance": 0,
-            "semiconductor_relevance": 0,
-            "power_grid_relevance": 0.5,
-            "cooling_relevance": 0,
-            "capital_markets_relevance": 0,
-            "enterprise_ai_infrastructure_relevance": 0,
-            "infrastructure_relevance_score": 0.325,
-            "infrastructure_relevance_tier": "archive_only",
-            "infrastructure_relevance_action": "archive_only",
-            "infrastructure_relevance_reasons": [
-              "power_grid_relevance:0.50(power, grid)"
-            ],
-            "infrastructureRelevanceAction": "archive_only",
-            "articlePagePublished": false,
-            "homepagePublished": false,
-            "archiveOnly": true,
-            "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
-          },
-          "score": 52
-        }
-      ],
-      "curatedIds": [
-        "7479357d607da0fa"
-      ],
+      "curatedItems": [],
+      "curatedIds": [],
       "publishedIds": [
         "7479357d607da0fa"
       ],
       "slotPublications": {
-        "0": true
+        "0": true,
+        "1": true
       }
     }
   },
   "runHistory": [
-    {
-      "at": "2026-07-21T09:34:55.078Z",
-      "day": "2026-07-21",
-      "slot": 2,
-      "publishedCount": 0,
-      "signalCardCount": 2,
-      "archiveOnlyCount": 0,
-      "processedIds": [
-        "f7384b9eedd5993b",
-        "824893c06a400d86"
-      ],
-      "blockedCount": 2,
-      "blockedItems": [
-        {
-          "id": "f7384b9eedd5993b",
-          "title": "Chip Industry Technical Paper Roundup: July 21",
-          "infrastructure_relevance_score": 1,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "cloud_capacity_relevance:0.32(hyperscalers)",
-            "semiconductor_relevance:0.94(semiconductor, hbm, gpu)",
-            "power_grid_relevance:0.22(power)",
-            "cooling_relevance:0.30(thermal)"
-          ],
-          "extraction_quality_score": 0.49,
-          "source_domain_adapter": "semiengineering",
-          "content_length": 328,
-          "boilerplate_ratio": 0,
-          "repetition_blocked": false,
-          "repetition_block_reasons": [],
-          "repetition_check": null,
-          "expert_insight_complete": false,
-          "expert_insight_missing_fields": [
-            "concrete_facts"
-          ],
-          "reason": "fail_closed: source_text_incomplete:source_evidence_length_below_500, source_evidence_length_below_1200, sentence_completion_score_below_0.92:0.425"
-        },
-        {
-          "id": "824893c06a400d86",
-          "title": "Research Bits: July 21",
-          "infrastructure_relevance_score": 1,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "cloud_capacity_relevance:0.32(hyperscalers)",
-            "semiconductor_relevance:0.94(semiconductor, semiconductors, gpu)",
-            "power_grid_relevance:0.22(power)"
-          ],
-          "extraction_quality_score": 1,
-          "source_domain_adapter": "semiengineering",
-          "content_length": 1636,
-          "boilerplate_ratio": 0,
-          "repetition_blocked": false,
-          "repetition_block_reasons": [],
-          "repetition_check": null,
-          "expert_insight_complete": false,
-          "expert_insight_missing_fields": [
-            "named_companies"
-          ],
-          "reason": "expert_insight_missing_fields named_companies"
-        }
-      ],
-      "archiveOnlyItems": []
-    },
     {
       "at": "2026-07-21T16:27:49.167Z",
       "day": "2026-07-22",
@@ -53126,9 +52990,28 @@
         "token_budget": 60000,
         "call_budget": 40
       }
+    },
+    {
+      "at": "2026-09-02T01:00:43.263Z",
+      "day": "2026-09-02",
+      "slot": 1,
+      "publishedCount": 0,
+      "authoredColumn": {
+        "published": false,
+        "reason": "no_qualifying_story"
+      },
+      "llmUsage": {
+        "calls": 1,
+        "failures": 0,
+        "prompt_tokens": 102,
+        "completion_tokens": 5,
+        "total_tokens": 107,
+        "token_budget": 60000,
+        "call_budget": 40
+      }
     }
   ],
-  "lastRunAt": "2026-09-01T18:17:14.186Z",
+  "lastRunAt": "2026-09-02T01:00:43.263Z",
   "authored": {
     "lastColumnAt": "2026-08-28T19:25:07.344Z",
     "columnsByDay": {
