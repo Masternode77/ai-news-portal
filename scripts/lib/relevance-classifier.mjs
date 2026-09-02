@@ -398,6 +398,13 @@ export function classifyInfrastructureRelevance(article = {}) {
     );
   }
 
+  if (dimensionResults.data_center_relevance >= 0.35 && dimensionResults.power_grid_relevance >= 0.35) {
+    dimensionResults.direct_ai_infrastructure_relevance = Math.max(
+      dimensionResults.direct_ai_infrastructure_relevance,
+      0.7
+    );
+  }
+
   if (hasAi && dimensionResults.cloud_capacity_relevance >= 0.4) {
     dimensionResults.direct_ai_infrastructure_relevance = Math.max(
       dimensionResults.direct_ai_infrastructure_relevance,

@@ -1,4 +1,4 @@
-import { DAILY_CURATION_TARGET, FRESH_CANDIDATE_WINDOW_HOURS, ITEMS_PER_RUN } from './constants.mjs';
+import { DAILY_CURATION_TARGET, FRESH_CANDIDATE_WINDOW_HOURS, ITEMS_PER_RUN, PIPELINE_FORCE_SLOT } from './constants.mjs';
 import { kstDayKey, kstSlot } from './normalize.mjs';
 import { callOpenRouterJson } from './openrouter.mjs';
 import { rankWithDiversity } from './rank.mjs';
@@ -21,7 +21,8 @@ async function curateWithLlm(items) {
       'You are the curation editor for an AI and data center signal board.',
       'Select the most decision-useful stories for operators, investors, site selectors, and infrastructure strategists.',
       'Prioritize: direct relevance to AI infrastructure / cloud / power / cooling / semiconductor / colocation / APAC policy, source credibility, novelty, and source diversity.',
-      `Return JSON only with key selectedIds as an array of exactly ${DAILY_CURATION_TARGET} ids when possible.`,
+      'Select only stories with a concrete infrastructure angle: data center load, grid capacity, generation and interconnection, chips and accelerators, cloud capacity, or capital flowing into those. Skip enforcement actions, audits, grants, and announcements with no such angle even if that leaves fewer picks.',
+      `Return JSON only with key selectedIds as an array of up to ${DAILY_CURATION_TARGET} ids, best first.`,
     ].join(' '),
     userPrompt: JSON.stringify({ candidates: payload }),
     maxTokens: 500,
@@ -112,7 +113,7 @@ export async function planForToday(pool, state, now = new Date()) {
 export function pickItemsForRun(plan, now = new Date()) {
   const slot = kstSlot(now);
   const alreadySlotPublished = plan.slotPublications?.[slot];
-  if (alreadySlotPublished) return { slot, picked: [] };
+  if (alreadySlotPublished && !PIPELINE_FORCE_SLOT) return { slot, picked: [] };
 
   const publishedSet = new Set(plan.publishedIds || []);
   const available = (plan.curatedItems || [])
