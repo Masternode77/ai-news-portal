@@ -71,4 +71,6 @@ Never paste real API keys, bearer tokens, or admin passwords into docs, screensh
 
 Pipeline commits to `main` must NOT carry `[skip ci]` in the message: Vercel honors that marker and skips the production deployment, which leaves refreshed articles and authored columns committed to the repository but never published to the live site. GitHub Actions noise is prevented by triggers instead (visual-qa runs on pull requests only; the release job skips bot actors).
 
+Intake health: only sources whose registry entry carries an approved `text_use_basis` (plus a valid `terms_url` and a `reviewed_at` within the review window) are fetched at all — `activeRegistryFeeds()` in `scripts/lib/source-registry.mjs` is the gate. If columns start reporting `no_qualifying_story` run after run, check how many feeds that function returns before suspecting the engine: with a single authorized source the pool drains within days. Add rights-clean sources (US federal public domain, CC BY) to `config/sourceRegistry.yml` rather than weakening the gate.
+
 For live production checks from restricted environments, dispatch the `Prod Smoke` workflow (`prod-smoke.yml`) — it probes the homepage, column surfaces, RSS, and sitemap from a GitHub-hosted runner and prints status codes plus content markers into the job log.

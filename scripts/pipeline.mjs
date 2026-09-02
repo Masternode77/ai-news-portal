@@ -458,9 +458,17 @@ async function publishExistingOnly({
     blockedItems: blocked.map(toRunHistoryItem),
     archiveOnlyItems: archiveOnly.map(toRunHistoryItem),
   });
+  // Column candidates span the whole recent corpus, not just the 30-item
+  // public surface: the fetched pool plus anything archived in the last two
+  // weeks. The surface alone ran dry once every story on it had a column.
+  const archiveCutoff = now.getTime() - 14 * 86_400_000;
+  const recentArchive = (existingArchive || []).filter((article) => {
+    const stamp = new Date(article?.analysisPublishedAt || article?.publishedAt || 0).getTime();
+    return Number.isFinite(stamp) && stamp >= archiveCutoff;
+  });
   const authoredOutcome = await runAuthoredColumnStage({
     state,
-    candidates: dedupeById(latest),
+    candidates: dedupeById([...latest, ...(pool || []), ...recentArchive]),
     pool,
     recentRecords: [...latest, ...(existingArchive || [])],
     now,

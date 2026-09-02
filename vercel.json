@@ -15,29 +15,53 @@
     {
       "source": "/admin",
       "headers": [
-        { "key": "Cache-Control", "value": "no-store, private" },
-        { "key": "Pragma", "value": "no-cache" }
+        {
+          "key": "Cache-Control",
+          "value": "no-store, private"
+        },
+        {
+          "key": "Pragma",
+          "value": "no-cache"
+        }
       ]
     },
     {
       "source": "/admin.html",
       "headers": [
-        { "key": "Cache-Control", "value": "no-store, private" },
-        { "key": "Pragma", "value": "no-cache" }
+        {
+          "key": "Cache-Control",
+          "value": "no-store, private"
+        },
+        {
+          "key": "Pragma",
+          "value": "no-cache"
+        }
       ]
     },
     {
       "source": "/admin/(.*)",
       "headers": [
-        { "key": "Cache-Control", "value": "no-store, private" },
-        { "key": "Pragma", "value": "no-cache" }
+        {
+          "key": "Cache-Control",
+          "value": "no-store, private"
+        },
+        {
+          "key": "Pragma",
+          "value": "no-cache"
+        }
       ]
     },
     {
       "source": "/api/admin/(.*)",
       "headers": [
-        { "key": "Cache-Control", "value": "no-store, private" },
-        { "key": "Pragma", "value": "no-cache" }
+        {
+          "key": "Cache-Control",
+          "value": "no-store, private"
+        },
+        {
+          "key": "Pragma",
+          "value": "no-cache"
+        }
       ]
     },
     {
@@ -60,6 +84,18 @@
           "value": "camera=(), microphone=(), geolocation=(), payment=(), usb=()"
         }
       ]
+    }
+  ],
+  "redirects": [
+    {
+      "source": "/author/rowan-hale",
+      "destination": "/author/josh-inn/",
+      "permanent": true
+    },
+    {
+      "source": "/author/rowan-hale/",
+      "destination": "/author/josh-inn/",
+      "permanent": true
     }
   ]
 }

@@ -421,3 +421,122 @@ sources:
     reviewed_at:
     allow_text_use: false
     allow_image_reuse: false
+  - id: doe-newsroom
+    name: U.S. Department of Energy
+    domain: energy.gov
+    article_hosts: energy.gov,www.energy.gov
+    coverage: grid modernization, data center load growth, nuclear and generation policy, DOE funding
+    priority: P0
+    feed: https://www.energy.gov/rss/newsroom.xml
+    defaultCategory: Power & Grid
+    region: US
+    language: en
+    status: active_feed
+    text_use_basis: us_federal_public_domain
+    image_use_basis: unreviewed
+    terms_url: https://www.energy.gov/about-us/web-policies
+    reviewed_at: 2026-09-02T00:00:00.000Z
+    allow_text_use: true
+    allow_image_reuse: false
+  - id: ferc-news
+    name: Federal Energy Regulatory Commission
+    domain: ferc.gov
+    article_hosts: ferc.gov,www.ferc.gov
+    coverage: interconnection rules, transmission planning, large-load tariffs, wholesale market orders
+    priority: P0
+    feed: https://www.ferc.gov/news-events/news/rss.xml
+    defaultCategory: Power & Grid
+    region: US
+    language: en
+    status: active_feed
+    text_use_basis: us_federal_public_domain
+    image_use_basis: unreviewed
+    terms_url: https://www.ferc.gov/privacy-policy
+    reviewed_at: 2026-09-02T00:00:00.000Z
+    allow_text_use: true
+    allow_image_reuse: false
+  - id: nist-news
+    name: National Institute of Standards and Technology
+    domain: nist.gov
+    article_hosts: nist.gov,www.nist.gov
+    coverage: AI measurement and standards, CHIPS program, semiconductor metrology, cybersecurity frameworks
+    priority: P1
+    feed: https://www.nist.gov/news-events/news/rss.xml
+    defaultCategory: AI Infrastructure (GPU/Neocloud)
+    region: US
+    language: en
+    status: active_feed
+    text_use_basis: us_federal_public_domain
+    image_use_basis: unreviewed
+    terms_url: https://www.nist.gov/oism/copyrights
+    reviewed_at: 2026-09-02T00:00:00.000Z
+    allow_text_use: true
+    allow_image_reuse: false
+  - id: ftc-press
+    name: Federal Trade Commission
+    domain: ftc.gov
+    article_hosts: ftc.gov,www.ftc.gov
+    coverage: AI competition and consumer protection actions, cloud and chip merger reviews
+    priority: P1
+    feed: https://www.ftc.gov/feeds/press-release.xml
+    defaultCategory: AI Infrastructure (GPU/Neocloud)
+    region: US
+    language: en
+    status: active_feed
+    text_use_basis: us_federal_public_domain
+    image_use_basis: unreviewed
+    terms_url: https://www.ftc.gov/policy-notices/copyright
+    reviewed_at: 2026-09-02T00:00:00.000Z
+    allow_text_use: true
+    allow_image_reuse: false
+  - id: gao-reports
+    name: U.S. Government Accountability Office
+    domain: gao.gov
+    article_hosts: gao.gov,www.gao.gov
+    coverage: federal audits on energy infrastructure, AI adoption, and technology procurement
+    priority: P2
+    feed: https://www.gao.gov/rss/reports.xml
+    defaultCategory: AI Infrastructure (GPU/Neocloud)
+    region: US
+    language: en
+    status: active_feed
+    text_use_basis: us_federal_public_domain
+    image_use_basis: unreviewed
+    terms_url: https://www.gao.gov/about/policies-and-notices
+    reviewed_at: 2026-09-02T00:00:00.000Z
+    allow_text_use: true
+    allow_image_reuse: false
+  - id: sec-press
+    name: U.S. Securities and Exchange Commission
+    domain: sec.gov
+    article_hosts: sec.gov,www.sec.gov
+    coverage: disclosure rules, enforcement, and filings guidance affecting data center and AI capital markets
+    priority: P1
+    feed: https://www.sec.gov/news/pressreleases.rss
+    defaultCategory: AI Infrastructure (GPU/Neocloud)
+    region: US
+    language: en
+    status: active_feed
+    text_use_basis: us_federal_public_domain
+    image_use_basis: unreviewed
+    terms_url: https://www.sec.gov/privacy
+    reviewed_at: 2026-09-02T00:00:00.000Z
+    allow_text_use: true
+    allow_image_reuse: false
+  - id: eia-press
+    name: U.S. Energy Information Administration (Press)
+    domain: eia.gov
+    article_hosts: eia.gov,www.eia.gov
+    coverage: EIA outlooks, electricity demand forecasts, and energy market press releases
+    priority: P1
+    feed: https://www.eia.gov/rss/press_rss.xml
+    defaultCategory: Power & Grid
+    region: US
+    language: en
+    status: active_feed
+    text_use_basis: us_federal_public_domain
+    image_use_basis: unreviewed
+    terms_url: https://www.eia.gov/about/copyrights_reuse.php
+    reviewed_at: 2026-09-02T00:00:00.000Z
+    allow_text_use: true
+    allow_image_reuse: false
