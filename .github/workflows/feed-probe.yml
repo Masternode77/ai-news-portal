@@ -1,0 +1,39 @@
+name: Feed Probe
+
+# Manual feed reachability check. Candidate RSS/Atom URLs can only be tested
+# from environments with open egress, so this fetches each one from a
+# GitHub-hosted runner with the pipeline's user agent and prints the HTTP
+# status, content type, and item count into the job log.
+on:
+  workflow_dispatch:
+    inputs:
+      urls:
+        description: Space-separated feed URLs to probe
+        required: true
+
+permissions:
+  contents: read
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Probe feeds
+        env:
+          URLS: ${{ inputs.urls }}
+        run: |
+          set -uo pipefail
+          for u in $URLS; do
+            body="$(mktemp)"
+            meta=$(curl -sS -o "$body" -w '%{http_code} %{content_type} %{url_effective}' -L --max-time 25 \
+              -A 'Mozilla/5.0 (compatible; ComputeCurrentBot/1.0)' \
+              -H 'accept: application/rss+xml,application/atom+xml,application/xml,text/xml' \
+              "$u" || echo "000 - $u")
+            items=$(grep -o '<item[ >]' "$body" | wc -l)
+            entries=$(grep -o '<entry[ >]' "$body" | wc -l)
+            bytes=$(wc -c < "$body")
+            echo "probe $u -> $meta | bytes=$bytes items=$items entries=$entries"
+            grep -o '<title>[^<]*</title>' "$body" | head -4 | sed 's/^/    /'
+            rm -f "$body"
+          done

@@ -133,6 +133,18 @@ export function authorizedTextFallbackPool(records = [], sources = [], now = new
   return textAuthorizedRecords(records, sources, now);
 }
 
+// Column candidates span the whole recent corpus, not just the 30-item
+// public surface: the fetched pool plus anything archived in the last two
+// weeks. The surface alone ran dry once every story on it had a column.
+export function columnCandidateRecords({ latest = [], pool = [], existingArchive = [], now = new Date() } = {}) {
+  const archiveCutoff = now.getTime() - 14 * 86_400_000;
+  const recentArchive = (existingArchive || []).filter((article) => {
+    const stamp = new Date(article?.analysisPublishedAt || article?.publishedAt || 0).getTime();
+    return Number.isFinite(stamp) && stamp >= archiveCutoff;
+  });
+  return dedupeById([...(latest || []), ...(pool || []), ...recentArchive]);
+}
+
 async function loadPoolWithFallback(existingLatest) {
   const sources = await loadSourceRegistry();
   const now = new Date();
@@ -458,17 +470,9 @@ async function publishExistingOnly({
     blockedItems: blocked.map(toRunHistoryItem),
     archiveOnlyItems: archiveOnly.map(toRunHistoryItem),
   });
-  // Column candidates span the whole recent corpus, not just the 30-item
-  // public surface: the fetched pool plus anything archived in the last two
-  // weeks. The surface alone ran dry once every story on it had a column.
-  const archiveCutoff = now.getTime() - 14 * 86_400_000;
-  const recentArchive = (existingArchive || []).filter((article) => {
-    const stamp = new Date(article?.analysisPublishedAt || article?.publishedAt || 0).getTime();
-    return Number.isFinite(stamp) && stamp >= archiveCutoff;
-  });
   const authoredOutcome = await runAuthoredColumnStage({
     state,
-    candidates: dedupeById([...latest, ...(pool || []), ...recentArchive]),
+    candidates: columnCandidateRecords({ latest, pool, existingArchive, now }),
     pool,
     recentRecords: [...latest, ...(existingArchive || [])],
     now,
@@ -535,7 +539,7 @@ async function main() {
     });
     const authoredOutcome = await runAuthoredColumnStage({
       state,
-      candidates: dedupeById(latest),
+      candidates: columnCandidateRecords({ latest, pool, existingArchive, now }),
       pool,
       recentRecords: [...latest, ...(existingArchive || [])],
       now,
@@ -662,7 +666,7 @@ async function main() {
   });
   const authoredOutcome = await runAuthoredColumnStage({
     state,
-    candidates: dedupeById([...repetitionPassed, ...latest]),
+    candidates: columnCandidateRecords({ latest: [...repetitionPassed, ...latest], pool, existingArchive, now }),
     pool,
     recentRecords: [...latest, ...(existingArchive || [])],
     now,
