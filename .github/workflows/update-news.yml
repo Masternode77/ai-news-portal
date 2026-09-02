@@ -12,6 +12,10 @@ on:
         description: 'Force an authored column this run (bypasses daily cap and minimum gap)'
         type: boolean
         default: false
+      force_wire:
+        description: 'Pick wire items even if this KST slot already published (verification runs)'
+        type: boolean
+        default: false
 
 jobs:
   update-news:
@@ -56,6 +60,7 @@ jobs:
           EXPERT_LENS_FALLBACK_MODEL: ${{ secrets.EXPERT_LENS_FALLBACK_MODEL }}
           AUTHORED_COLUMN_MODEL: ${{ secrets.AUTHORED_COLUMN_MODEL }}
           AUTHORED_COLUMN_FORCE: ${{ inputs.force_column == true && '1' || '' }}
+          PIPELINE_FORCE_SLOT: ${{ inputs.force_wire == true && '1' || '' }}
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           GEMINI_IMAGE_MODEL: ${{ secrets.GEMINI_IMAGE_MODEL }}

@@ -1,5 +1,10 @@
 import Parser from 'rss-parser';
-import { MAX_ITEMS_FETCHED, MIN_ITEMS_PER_SOURCE_IN_POOL } from './constants.mjs';
+import {
+  MAX_ITEMS_FETCHED,
+  MAX_ITEMS_PER_SOURCE_IN_POOL,
+  MIN_ITEMS_PER_SOURCE_IN_POOL,
+  POOL_MAX_AGE_DAYS,
+} from './constants.mjs';
 import { guessLanguage, safeHttpUrl, stableArticleId, stripHtml, truncate } from './normalize.mjs';
 import { classifyInfrastructureRelevance } from './relevance-classifier.mjs';
 import { classifyTaxonomy } from './taxonomy.mjs';
@@ -114,25 +119,39 @@ function relevanceThenRecency(a, b) {
   return new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime();
 }
 
+function isFresh(item, now) {
+  const stamp = new Date(item.publishedAt).getTime();
+  return Number.isFinite(stamp) && now - stamp <= POOL_MAX_AGE_DAYS * 86_400_000;
+}
+
 // The pool is capped, and several authorized sources publish far more
-// off-beat items than on-beat ones (audit reports, enforcement actions).
-// Order by fetch-time relevance first so those sources cannot crowd out the
-// grid and data-center stories on recency alone; recency breaks ties.
-function selectPoolItems(fetched = []) {
-  fetched.sort(relevanceThenRecency);
+// off-beat items than on-beat ones (audit reports, enforcement actions,
+// months-deep archives). Three rules keep it a news pool: items older than
+// POOL_MAX_AGE_DAYS are dropped whenever anything fresh exists, no source
+// takes more than MAX_ITEMS_PER_SOURCE_IN_POOL slots, and ordering is by
+// fetch-time relevance first with recency breaking ties.
+export function selectPoolItems(fetched = [], now = Date.now()) {
+  const fresh = fetched.filter((item) => isFresh(item, now));
+  const candidates = fresh.length ? fresh : fetched;
+  candidates.sort(relevanceThenRecency);
 
   const dedupedByRecency = [];
   const seenIds = new Set();
   const seenTitles = new Set();
+  const perSource = new Map();
+  const maxPerSource = Math.max(1, MAX_ITEMS_PER_SOURCE_IN_POOL);
 
-  for (const item of fetched) {
+  for (const item of candidates) {
     if (seenIds.has(item.id)) continue;
+    const sourceTally = perSource.get(item.source) || 0;
+    if (sourceTally >= maxPerSource) continue;
 
     const titleKey = item.title.toLowerCase().replace(/[^a-z0-9가-힣]/g, '');
     if (seenTitles.has(titleKey)) continue;
 
     seenIds.add(item.id);
     seenTitles.add(titleKey);
+    perSource.set(item.source, sourceTally + 1);
     dedupedByRecency.push(item);
   }
 
@@ -182,7 +201,7 @@ export async function fetchNewsPoolResult(options = {}) {
     }
   }));
   const failedSourceCount = attempts.filter((attempt) => !attempt.ok).length;
-  const items = selectPoolItems(attempts.flatMap((attempt) => attempt.items));
+  const items = selectPoolItems(attempts.flatMap((attempt) => attempt.items), now.getTime());
   const status = items.length
     ? 'fetched'
     : failedSourceCount > 0

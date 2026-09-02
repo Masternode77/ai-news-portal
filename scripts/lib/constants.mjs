@@ -3,6 +3,9 @@ export const REFRESH_INTERVAL_HOURS = Number(process.env.REFRESH_INTERVAL_HOURS 
 
 export const MAX_ITEMS_FETCHED = Number(process.env.MAX_ITEMS_FETCHED || 30);
 export const MIN_ITEMS_PER_SOURCE_IN_POOL = Number(process.env.MIN_ITEMS_PER_SOURCE_IN_POOL || 1);
+export const MAX_ITEMS_PER_SOURCE_IN_POOL = Number(process.env.MAX_ITEMS_PER_SOURCE_IN_POOL || 6);
+export const POOL_MAX_AGE_DAYS = Number(process.env.POOL_MAX_AGE_DAYS || 10);
+export const PIPELINE_FORCE_SLOT = process.env.PIPELINE_FORCE_SLOT === '1';
 export const DAILY_CURATION_TARGET = Number(process.env.DAILY_CURATION_TARGET || 6);
 export const ITEMS_PER_RUN = Number(process.env.ITEMS_PER_RUN || 2);
 export const FRESH_CANDIDATE_WINDOW_HOURS = Number(process.env.FRESH_CANDIDATE_WINDOW_HOURS || 24);
