@@ -38,7 +38,7 @@ Audit output omits `git status` so running this writer cannot make its own repor
 
 ## Crawler and Feed Sources
 
-- Feed registry: `config/sourceRegistry.yml` contains 35 registered sources; `activeRegistryFeeds()` currently returns 8 authorized feeds.
+- Feed registry: `config/sourceRegistry.yml` contains 37 registered sources; `activeRegistryFeeds()` currently returns 9 authorized feeds.
 - Fetcher: `scripts/lib/fetch-feeds.mjs` parses RSS/Atom into `news-pool.json` through `parseFeedItem()`.
 - Source acquisition fails closed: a source requires approved text rights, HTTPS terms, and a review no older than 365 days. With zero authorized feeds, `fetchNewsPoolResult()` returns `no_authorized_sources` and the pipeline exits without publication.
 - Source selection and curation flow through `scripts/lib/curate.mjs`, `source-priority-policy.mjs`, and relevance routers.

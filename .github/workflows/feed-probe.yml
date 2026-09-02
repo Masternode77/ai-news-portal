@@ -23,17 +23,17 @@ jobs:
         env:
           URLS: ${{ inputs.urls }}
         run: |
-          set -uo pipefail
+          set -u
           for u in $URLS; do
             body="$(mktemp)"
             meta=$(curl -sS -o "$body" -w '%{http_code} %{content_type} %{url_effective}' -L --max-time 25 \
               -A 'Mozilla/5.0 (compatible; ComputeCurrentBot/1.0)' \
               -H 'accept: application/rss+xml,application/atom+xml,application/xml,text/xml' \
               "$u" || echo "000 - $u")
-            items=$(grep -o '<item[ >]' "$body" | wc -l)
-            entries=$(grep -o '<entry[ >]' "$body" | wc -l)
+            items=$(grep -c '<item[ >]' "$body" || true)
+            entries=$(grep -c '<entry[ >]' "$body" || true)
             bytes=$(wc -c < "$body")
             echo "probe $u -> $meta | bytes=$bytes items=$items entries=$entries"
-            grep -o '<title>[^<]*</title>' "$body" | head -4 | sed 's/^/    /'
+            (grep -o '<title>[^<]*</title>' "$body" || true) | head -4 | sed 's/^/    /'
             rm -f "$body"
           done
