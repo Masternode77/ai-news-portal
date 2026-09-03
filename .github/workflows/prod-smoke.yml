@@ -42,6 +42,6 @@ jobs:
           rss="$(curl -sSL --max-time 20 "$base/rss.xml" || true)"
           echo "rss column items: $(printf '%s' "$rss" | grep -c '/column/' || true)"
           echo "home headings (first 12):"
-          printf '%s' "$home" | grep -oE '<h[23][^>]*>[^<]{8,}' | sed -E 's/<h[23][^>]*>/    /' | head -12
+          printf '%s' "$home" | tr '\n' ' ' | grep -oE '<h[23][^>]*>.{0,400}?</h[23]>' | sed -E 's/<[^>]+>//g; s/[[:space:]]+/ /g; s/^ */    /' | head -12
           echo "rss newest items:"
           printf '%s' "$rss" | grep -oE '<title>[^<]{8,}</title>' | sed -E 's/<\/?title>//g; s/^/    /' | head -6
