@@ -12,7 +12,7 @@ import { fetchArticleExtraction } from './source-fetch.mjs';
 import { normalizeEditorialVoice } from './editorial-humanizer.mjs';
 import { extractExpertInsight } from './expert-insight-engine.mjs';
 import { classifyInfrastructureRelevance } from './relevance-classifier.mjs';
-import { createExtractionArtifact } from './extraction-artifact.mjs';
+import { analyzeSourceExtractionFailClosed } from './source-extraction-fail-closed.mjs';
 import {
   ARTICLE_TYPES,
   INFRASTRUCTURE_LAYERS,
@@ -102,11 +102,28 @@ export async function enrichContent(item) {
     fallbackSnippet: item.snippet,
     sourceRegistryId: item.sourceRegistryId,
   });
-  const extractionArtifact = createExtractionArtifact({
+  // The public gates (source-text authorization, product fit, detail routes)
+  // validate the artifact through the fail-closed policy: public_publishable,
+  // an empty block_reasons list, and a sentence-completion score of at least
+  // 0.92. Build the artifact with that analyzer so a clean extraction is
+  // actually publishable; a raw quality-metrics artifact never was.
+  const failClosed = analyzeSourceExtractionFailClosed({
+    title: item.title,
+    rawText: articleText,
+    articleText,
+    snippet: item.snippet,
+    url: item.url,
     sourceUrl: item.url,
-    cleanedExtractedText: articleText,
-    extractionQa,
+    sourceRegistryId: item.sourceRegistryId,
   });
+  const extractionArtifact = failClosed.extraction_artifact;
+  const publicExtractionQa = {
+    ...extractionQa,
+    public_publishable: failClosed.extraction_qa.public_publishable,
+    can_generate_longform: failClosed.extraction_qa.can_generate_longform,
+    cleaned_source_length: failClosed.extraction_qa.cleaned_source_length,
+    block_reasons: failClosed.extraction_qa.block_reasons,
+  };
   const category = inferCategory(`${item.title} ${item.snippet} ${articleText}`, item.defaultCategory || item.categoryHint);
   const region = inferRegion(`${item.title} ${item.snippet} ${articleText}`, item.region || 'Global');
   const summary = fallbackSummary(item, articleText);
@@ -226,8 +243,9 @@ export async function enrichContent(item) {
     sentence_completion_score: extractionQa.sentence_completion_score,
     source_domain_adapter: extractionQa.source_domain_adapter,
     extraction_quality_score: extractionQa.extraction_quality_score,
-    extraction_qa: extractionQa,
+    extraction_qa: publicExtractionQa,
     extraction_artifact: extractionArtifact,
+    cleaned_source_text: failClosed.cleaned_source_text,
     direct_ai_infrastructure_relevance: infrastructureRelevance.direct_ai_infrastructure_relevance,
     data_center_relevance: infrastructureRelevance.data_center_relevance,
     cloud_capacity_relevance: infrastructureRelevance.cloud_capacity_relevance,

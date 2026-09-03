@@ -28,6 +28,7 @@ import {
   splitByArticleQualityGate,
 } from './lib/quality-gate.mjs';
 import { splitByInfrastructureRelevance } from './lib/relevance-classifier.mjs';
+import { analyzeSourceExtractionFailClosed } from './lib/source-extraction-fail-closed.mjs';
 import { splitByRepetitionGate } from './lib/repetition-detector.mjs';
 import {
   readJsonFile,
@@ -75,7 +76,42 @@ function legacyPoolFromLatest(existingLatest = []) {
     .map((item) => normalizeExistingArticle(item));
 }
 
-function normalizeExistingArticle(item) {
+// Records enriched before the fail-closed artifact policy carry an
+// extraction artifact without public_publishable, which every public gate
+// rejects. Rebuild those artifacts from the stored source text so the record
+// is judged on its content rather than on the era it was extracted in.
+function repairExtractionArtifact(item = {}) {
+  const artifact = item.extraction_artifact;
+  const articleText = String(item.articleText || '').trim();
+  if (!artifact || typeof artifact !== 'object' || !articleText) return item;
+  if (artifact.extraction_qa?.public_publishable !== undefined) return item;
+  const sourceUrl = item.sourceUrl || item.url;
+  if (!sourceUrl || artifact.source_url !== sourceUrl) return item;
+  const failClosed = analyzeSourceExtractionFailClosed({
+    title: item.title,
+    rawText: articleText,
+    articleText,
+    snippet: item.snippet,
+    url: item.url,
+    sourceUrl,
+    sourceRegistryId: item.sourceRegistryId,
+  });
+  return {
+    ...item,
+    extraction_artifact: failClosed.extraction_artifact,
+    cleaned_source_text: item.cleaned_source_text || failClosed.cleaned_source_text,
+    extraction_qa: {
+      ...(item.extraction_qa || {}),
+      public_publishable: failClosed.extraction_qa.public_publishable,
+      can_generate_longform: failClosed.extraction_qa.can_generate_longform,
+      cleaned_source_length: failClosed.extraction_qa.cleaned_source_length,
+      block_reasons: failClosed.extraction_qa.block_reasons,
+    },
+  };
+}
+
+function normalizeExistingArticle(rawItem) {
+  const item = repairExtractionArtifact(rawItem);
   return hydrateExpertLens({
     ...item,
     id: item.id || stableArticleId(item.url, item.title),
