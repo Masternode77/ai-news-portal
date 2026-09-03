@@ -140,7 +140,7 @@
         "sourceId": "eia-today-in-energy",
         "reviewedAt": "2026-08-12T00:00:00.000Z",
         "termsUrl": "https://www.eia.gov/about/copyrights_reuse.php",
-        "checkedAt": "2026-09-03T00:02:40.743Z",
+        "checkedAt": "2026-09-03T01:08:40.739Z",
         "registryDigest": "784c5ef6959313ab79000ffb26d0c7b9e53846b0e666aae102d706baa74c844f",
         "registryBlobSha": "",
         "contentDigest": "beeeed148253b62b7ae888a3bc79c5979dbfa234b587e2f7b91bbaeafcf5acde"
@@ -296,7 +296,7 @@
         "sourceId": "eia-today-in-energy",
         "reviewedAt": "2026-08-12T00:00:00.000Z",
         "termsUrl": "https://www.eia.gov/about/copyrights_reuse.php",
-        "checkedAt": "2026-09-03T00:02:41.017Z",
+        "checkedAt": "2026-09-03T01:08:40.941Z",
         "registryDigest": "784c5ef6959313ab79000ffb26d0c7b9e53846b0e666aae102d706baa74c844f",
         "registryBlobSha": "",
         "contentDigest": "d15ccae9ee9ddf6214d8b39fbdf87ac41a1f82721e955148a1cd5e0a2de7b028"
@@ -452,7 +452,7 @@
         "sourceId": "eia-today-in-energy",
         "reviewedAt": "2026-08-12T00:00:00.000Z",
         "termsUrl": "https://www.eia.gov/about/copyrights_reuse.php",
-        "checkedAt": "2026-09-03T00:02:41.273Z",
+        "checkedAt": "2026-09-03T01:08:41.133Z",
         "registryDigest": "784c5ef6959313ab79000ffb26d0c7b9e53846b0e666aae102d706baa74c844f",
         "registryBlobSha": "",
         "contentDigest": "ade711e2b20996fa86c8248da2f499d76c8f2f8bdd82d9e630f5e080f97f58e2"
@@ -608,7 +608,7 @@
         "sourceId": "eia-today-in-energy",
         "reviewedAt": "2026-08-12T00:00:00.000Z",
         "termsUrl": "https://www.eia.gov/about/copyrights_reuse.php",
-        "checkedAt": "2026-09-03T00:02:41.543Z",
+        "checkedAt": "2026-09-03T01:08:41.337Z",
         "registryDigest": "784c5ef6959313ab79000ffb26d0c7b9e53846b0e666aae102d706baa74c844f",
         "registryBlobSha": "",
         "contentDigest": "8e6376116876948d8a9e27d52a0f3747ce46816914268a5bd0bf93fafd85c604"
@@ -764,7 +764,7 @@
         "sourceId": "eia-today-in-energy",
         "reviewedAt": "2026-08-12T00:00:00.000Z",
         "termsUrl": "https://www.eia.gov/about/copyrights_reuse.php",
-        "checkedAt": "2026-09-03T00:02:41.833Z",
+        "checkedAt": "2026-09-03T01:08:41.558Z",
         "registryDigest": "784c5ef6959313ab79000ffb26d0c7b9e53846b0e666aae102d706baa74c844f",
         "registryBlobSha": "",
         "contentDigest": "2c6d66c26ee5e8faea303eb6655f65da943f22d62f0b30f232281dfa85dca6d7"
@@ -2103,7 +2103,14 @@
       "source_domain_adapter": "generic",
       "extraction_quality_score": 1,
       "extraction_failure_reason": null,
-      "extraction_quality_reasons": []
+      "extraction_quality_reasons": [],
+      "public_publishable": false,
+      "can_generate_longform": false,
+      "cleaned_source_length": 1593,
+      "block_reasons": [
+        "incomplete_terminal:c",
+        "sentence_completion_score_below_0.92:0.82"
+      ]
     },
     "extraction_artifact": {
       "artifact_version": "extraction_v1",
@@ -2112,18 +2119,16 @@
       "cleaned_extracted_text": "Secretary Wright issues an emergency order to stabilize the Mid-Atlantic grid and mitigate the risk of blackouts. WASHINGTON— The U.S. Department of Energy (DOE) today issued an emergency order to mitigate blackout risks in the Mid-Atlantic ahead of the forecasted hot weather conditions and expected system load increase. The order directs PJM Interconnection, L.L.C. (PJM) to dispatch specified units and to order their operation as needed to maintain reliability. The order also authorizes PJM to direct backup generation resources to operate as a last resort before declaring an Energy Emergency Alert (EEA) 3 or during an EEA 3. PJM is authorized to call upon its Transmission Owners and Electric Distribution Companies to implement the order as needed. The order was issued pursuant to an application from PJM submitted on September 1, 2026. “Maintaining affordable, reliable, and secure power for hardworking American families and businesses during periods of hot weather is non-negotiable,” said U.S. Secretary of Energy Chris Wright . “The previous administration’s energy subtraction policies weakened the grid, leaving Americans more vulnerable during events like this. Thanks to President Trump’s leadership, we are reversing those failures and using every available tool ensuring Americans in the Mid-Atlantic have continued access to affordable, reliable, and secure energy to power and cool their homes.” DOE estimates more than 35 GW of unused backup generation remains available nationwide. The order is in effect upon issuance on September 1, 2026, through September 8, 2026.",
       "extraction_qa": {
         "cleaned_source_length": 1593,
-        "block_reasons": [],
-        "content_length": 1593,
+        "block_reasons": [
+          "incomplete_terminal:c",
+          "sentence_completion_score_below_0.92:0.82"
+        ],
+        "public_publishable": false,
+        "can_generate_longform": false,
         "boilerplate_ratio": 0,
-        "title_body_similarity": 0.8,
         "copyright_footer_detected": false,
-        "legal_boilerplate_detected": false,
         "nav_or_cta_detected": false,
-        "sentence_completion_score": 1,
-        "source_domain_adapter": "generic",
-        "extraction_quality_score": 1,
-        "extraction_failure_reason": null,
-        "extraction_quality_reasons": []
+        "sentence_completion_score": 0.82
       }
     },
     "sourceUrl": "https://www.energy.gov/articles/energy-secretary-keeps-mid-atlantic-powered-during-hot-weather-conditions",
@@ -2147,6 +2152,7 @@
       "dirty_extraction",
       "source_only_due_dirty_extraction"
     ],
+    "cleaned_source_text": "Secretary Wright issues an emergency order to stabilize the Mid-Atlantic grid and mitigate the risk of blackouts. WASHINGTON— The U.S. Department of Energy (DOE) today issued an emergency order to mitigate blackout risks in the Mid-Atlantic ahead of the forecasted hot weather conditions and expected system load increase. The order directs PJM Interconnection, L.L.C. (PJM) to dispatch specified units and to order their operation as needed to maintain reliability. The order also authorizes PJM to direct backup generation resources to operate as a last resort before declaring an Energy Emergency Alert (EEA) 3 or during an EEA 3. PJM is authorized to call upon its Transmission Owners and Electric Distribution Companies to implement the order as needed. The order was issued pursuant to an application from PJM submitted on September 1, 2026. “Maintaining affordable, reliable, and secure power for hardworking American families and businesses during periods of hot weather is non-negotiable,” said U.S. Secretary of Energy Chris Wright . “The previous administration’s energy subtraction policies weakened the grid, leaving Americans more vulnerable during events like this. Thanks to President Trump’s leadership, we are reversing those failures and using every available tool ensuring Americans in the Mid-Atlantic have continued access to affordable, reliable, and secure energy to power and cool their homes.” DOE estimates more than 35 GW of unused backup generation remains available nationwide. The order is in effect upon issuance on September 1, 2026, through September 8, 2026.",
     "searchText": "Energy Secretary Keeps the Mid-Atlantic Powered During Hot Weather Conditions U.S. Department of Energy Power & Grid Policy & Siting Power Policy / Regulation power_grid utilities, power-secured developers, and operators with firm interconnection positions developers and cloud buyers whose delivery dates depend on utility upgrades or energization schedules utility interconnection, equipment procurement, and energization milestones A power-side development can still be too narrow to change the broader delivery curve unless it scales across sites. interconnection approvals, substation equipment dates, power purchase agreements, or disclosed energization windows US The U.S. Department of Energy has issued an emergency order to stabilize the Mid-Atlantic grid amid rising temperatures and increased power demand, mitigating blackout risks. Secretary Wright issues an emergency order to stabilize the Mid-Atlantic grid and mitigate the risk of blackouts. WASHINGTON— The U.S. Department of Energy (DOE) today issued an emergency order to mitigate blackout risks in the Mid-Atlantic ahead of the forecasted hot weather conditions and expected system load increase. The order directs PJM Interconnection, L.L.C. (PJM) to dispatch specified units and to order their operation as needed to maintain reliability. The order also authorizes PJM to direct backup generation resources to operate as a last resort before declaring an Energy Emergency Alert (EEA) 3 or during an EEA 3. PJM is authorized to call upon its Transmission Owners and Electric Distribution Companies to implement the order as needed. The order was issued pursuant to an application from PJM submitted on September 1, 2026. “Maintaining affordable, reliable, and secure power for hardworking American families and businesses during periods of hot weather is non-negotiable,” said U.S. Secretary of Energy Chris Wright . “The previous administration’s energy subtraction policies weakened the grid, leaving Americans more vulnerable during events like this. Thanks to President Trump’s leadership, we are reversing those failures and using every available tool ensuring Americans in the Mid-Atlantic have continued access to affordable, reliable, and secure energy to power and cool their homes.” DOE estimates more than 35 GW of unused backup generation remains available nationwide. The order is in effect upon issuance on September 1, 2026, through September 8, 2026. utilities operators PJM electric distribution companies investors Thanks to President Trump’s leadership, we are reversing those failures and using every available tool ensuring Americans in the Mid-Atlantic have continued access to affordable, reliable, and secure energy to power and cool their homes.” DOE estimates more than 35 GW of unused backup generation remains available nationwide. “Maintaining affordable, reliable, and secure power for hardworking American families and businesses during periods of hot weather is non-negotiable,” said U.S. emergency order blackouts energy policy Mid-Atlantic grid stability"
   },
   {
@@ -2311,7 +2317,11 @@
       "source_domain_adapter": "generic",
       "extraction_quality_score": 1,
       "extraction_failure_reason": null,
-      "extraction_quality_reasons": []
+      "extraction_quality_reasons": [],
+      "public_publishable": true,
+      "can_generate_longform": true,
+      "cleaned_source_length": 1348,
+      "block_reasons": []
     },
     "extraction_artifact": {
       "artifact_version": "extraction_v1",
@@ -2321,17 +2331,12 @@
       "extraction_qa": {
         "cleaned_source_length": 1348,
         "block_reasons": [],
-        "content_length": 1348,
+        "public_publishable": true,
+        "can_generate_longform": true,
         "boilerplate_ratio": 0,
-        "title_body_similarity": 0.89,
         "copyright_footer_detected": false,
-        "legal_boilerplate_detected": false,
         "nav_or_cta_detected": false,
-        "sentence_completion_score": 1,
-        "source_domain_adapter": "generic",
-        "extraction_quality_score": 1,
-        "extraction_failure_reason": null,
-        "extraction_quality_reasons": []
+        "sentence_completion_score": 1
       }
     },
     "sourceUrl": "https://www.energy.gov/articles/energy-secretary-saves-coal-fired-generation-going-offline-florida",
@@ -2352,6 +2357,7 @@
     "seo_noindex": false,
     "noindex": false,
     "public_tier_reasons": [],
+    "cleaned_source_text": "Emergency order addresses grid reliability concerns and reduces the risk and costs of blackouts. WASHINGTON— U.S. Secretary of Energy Chris Wright today issued an emergency order to keep affordable, reliable, and secure coal generation online and address critical grid reliability issues in Florida. The emergency order directs the Orlando Utilities Commission (OUC) to ensure that Unit 1 at the Stanton Energy Center (Stanton) in Orlando, Florida, a coal-fired power plant remains available to operate. Unit 1 was slated to enter a premature extended cold shutdown in June 2026. “Taking reliable generation offline compromises energy reliability and needlessly raises energy costs for Americans,” Secretary Wright said. “The Trump Administration will continue to ensure that Floridians have access to affordable, reliable, and secure energy to power their homes.” As outlined in DOE’s Resource Adequacy Report , power outages could increase by 100 times in 2030 if the U.S. continues to take reliable power offline. Thanks to President Trump’s leadership, coal plants across the country are being saved from premature retirement and reversing plans to shut down. In 2025, more than 17 gigawatts of coal-powered electricity generation were saved from going offline. This order is in effect beginning on September 2, 2026, through November 30, 2026.",
     "searchText": "Energy Secretary Saves Coal-Fired Generation from Going Offline in Florida U.S. Department of Energy Power & Grid Policy & Siting Power Policy / Regulation power_grid utilities, power-secured developers, and operators with firm interconnection positions developers and cloud buyers whose delivery dates depend on utility upgrades or energization schedules utility interconnection, equipment procurement, and energization milestones The source may still describe intent rather than delivered capacity, so the operating impact depends on follow-through. interconnection approvals, substation equipment dates, power purchase agreements, or disclosed energization windows US The U.S. Energy Secretary has issued an emergency order to keep a coal-fired power plant in Florida operational, addressing grid reliability concerns. Emergency order addresses grid reliability concerns and reduces the risk and costs of blackouts. WASHINGTON— U.S. Secretary of Energy Chris Wright today issued an emergency order to keep affordable, reliable, and secure coal generation online and address critical grid reliability issues in Florida. The emergency order directs the Orlando Utilities Commission (OUC) to ensure that Unit 1 at the Stanton Energy Center (Stanton) in Orlando, Florida, a coal-fired power plant remains available to operate. Unit 1 was slated to enter a premature extended cold shutdown in June 2026. “Taking reliable generation offline compromises energy reliability and needlessly raises energy costs for Americans,” Secretary Wright said. “The Trump Administration will continue to ensure that Floridians have access to affordable, reliable, and secure energy to power their homes.” As outlined in DOE’s Resource Adequacy Report , power outages could increase by 100 times in 2030 if the U.S. continues to take reliable power offline. Thanks to President Trump’s leadership, coal plants across the country are being saved from premature retirement and reversing plans to shut down. In 2025, more than 17 gigawatts of coal-powered electricity generation were saved from going offline. This order is in effect beginning on September 2, 2026, through November 30, 2026. utilities operators investors regulators data center operators The emergency order directs the Orlando Utilities Commission (OUC) to ensure that Unit 1 at the Stanton Energy Center (Stanton) in Orlando, Florida, a coal-fired power plant remains available to operate. “The Trump Administration will continue to ensure that Floridians have access to affordable, reliable, and secure energy to power their homes.” As outlined in DOE’s Resource Adequacy Report, power outages could increase by 100 times in 2030 if the U.S. “Taking reliable generation offline compromises energy reliability and needlessly raises energy costs for Americans,” Secretary Wright said. Thanks to President Trump’s leadership, coal plants across the country are being saved from premature retirement and reversing plans to shut down. Florida The U.S. Energy Stanton Energy coal energy grid reliability policy Florida"
   },
   {
@@ -2524,7 +2530,11 @@
       "source_domain_adapter": "generic",
       "extraction_quality_score": 1,
       "extraction_failure_reason": null,
-      "extraction_quality_reasons": []
+      "extraction_quality_reasons": [],
+      "public_publishable": true,
+      "can_generate_longform": true,
+      "cleaned_source_length": 1798,
+      "block_reasons": []
     },
     "extraction_artifact": {
       "artifact_version": "extraction_v1",
@@ -2534,17 +2544,12 @@
       "extraction_qa": {
         "cleaned_source_length": 1798,
         "block_reasons": [],
-        "content_length": 1798,
+        "public_publishable": true,
+        "can_generate_longform": true,
         "boilerplate_ratio": 0,
-        "title_body_similarity": 0.67,
         "copyright_footer_detected": false,
-        "legal_boilerplate_detected": false,
         "nav_or_cta_detected": false,
-        "sentence_completion_score": 1,
-        "source_domain_adapter": "generic",
-        "extraction_quality_score": 1,
-        "extraction_failure_reason": null,
-        "extraction_quality_reasons": []
+        "sentence_completion_score": 1
       }
     },
     "sourceUrl": "https://www.eia.gov/todayinenergy/detail.php?id=",
@@ -2565,6 +2570,7 @@
     "seo_noindex": false,
     "noindex": false,
     "public_tier_reasons": [],
+    "cleaned_source_text": "Data source: U.S. Energy Information Administration, Liquefaction Capacity File ; U.S. Department of Energy, Natural Gas Imports and Exports Monthly Note: Golden Pass LNG exported less than 0.2 Bcf/d of gas between April and June 2026; Corpus Christi totals include Stage 3 trains. U.S. liquefied natural gas (LNG) exports averaged 17.4 billion cubic feet per day (Bcf/d) in the first six months of the year, 23% more than the same period in 2025, according to our Natural Gas Monthly . In our latest Short-Term Energy Outlook , we estimate U.S. LNG exports will average 17.3 Bcf/d in the second half of 2026 (2H26) before rising to 18.7 Bcf/d in 1H27. Tags: LNG (liquefied natural gas) , natural gas , exports/imports Data source: U.S. Energy Information Administration, Monthly Energy Review , and Domestic Uranium Production Report Note: W=Data withheld to avoid disclosure of individual company data. In 2025, uranium concentrate production in the United States totaled 2.1 million pounds of triuranium octoxide (U 3 O 8 ), the base component of nuclear reactor fuel. U.S. U 3 O 8 production in 2025 was the most since 2017 and more than triple the volume produced in 2024. Data source: U.S. Energy Information Administration, Liquids Pipeline Projects Database In the 2026 release of our Liquids Pipeline Projects Database, we tracked the completion of 8 liquid fuels pipeline projects since the start of 2025, and an additional 14 new projects have been announced. Data source: Vortexa Analytics Note: Intra-Nigeria shipments are shipped between ports within Nigeria. Seaborne petroleum product exports from Nigeria have grown seven-fold since 2023, playing an increasing role in the international market for petroleum products at a time when supplies from other areas have been constrained .",
     "searchText": "U.S. LNG exports rose 23% in the first half of 2026 because of higher capacity U.S. Energy Information Administration Power & Grid LNG Exports Power Market Analysis power_grid utilities, power-secured developers, and operators with firm interconnection positions developers and cloud buyers whose delivery dates depend on utility upgrades or energization schedules utility interconnection, equipment procurement, and energization milestones The source may still describe intent rather than delivered capacity, so the operating impact depends on follow-through. interconnection approvals, substation equipment dates, power purchase agreements, or disclosed energization windows US U.S. LNG exports surged 23% in the first half of 2026, averaging 17.4 Bcf/d, driven by increased capacity. Projections indicate further growth to 18.7 Bcf/d by mid-2027. Data source: U.S. Energy Information Administration, Liquefaction Capacity File ; U.S. Department of Energy, Natural Gas Imports and Exports Monthly Note: Golden Pass LNG exported less than 0.2 Bcf/d of gas between April and June 2026; Corpus Christi totals include Stage 3 trains. U.S. liquefied natural gas (LNG) exports averaged 17.4 billion cubic feet per day (Bcf/d) in the first six months of the year, 23% more than the same period in 2025, according to our Natural Gas Monthly . In our latest Short-Term Energy Outlook , we estimate U.S. LNG exports will average 17.3 Bcf/d in the second half of 2026 (2H26) before rising to 18.7 Bcf/d in 1H27. Tags: LNG (liquefied natural gas) , natural gas , exports/imports Data source: U.S. Energy Information Administration, Monthly Energy Review , and Domestic Uranium Production Report Note: W=Data withheld to avoid disclosure of individual company data. In 2025, uranium concentrate production in the United States totaled 2.1 million pounds of triuranium octoxide (U 3 O 8 ), the base component of nuclear reactor fuel. U.S. U 3 O 8 production in 2025 was the most since 2017 and more than triple the volume produced in 2024. Data source: U.S. Energy Information Administration, Liquids Pipeline Projects Database In the 2026 release of our Liquids Pipeline Projects Database, we tracked the completion of 8 liquid fuels pipeline projects since the start of 2025, and an additional 14 new projects have been announced. Data source: Vortexa Analytics Note: Intra-Nigeria shipments are shipped between ports within Nigeria. Seaborne petroleum product exports from Nigeria have grown seven-fold since 2023, playing an increasing role in the international market for petroleum products at a time when supplies from other areas have been constrained . operators investors utilities hyperscalers data center operators liquefied natural gas (LNG) exports averaged 17.4 billion cubic feet per day (Bcf/d) in the first six months of the year, 23% more than the same period in 2025, according to our Natural Gas Monthly. In 2025, uranium concentrate production in the United States totaled 2.1 million pounds of triuranium octoxide (U 3 O 8 ), the base component of nuclear reactor fuel. In our latest Short-Term Energy Outlook, we estimate U.S. LNG exports will average 17.3 Bcf/d in the second half of 2026 (2H26) before rising to 18.7 Bcf/d in 1H27. Energy Information Administration, Monthly Energy Review, and Domestic Uranium Production Report Note: W=Data withheld to avoid disclosure of individual company data. U.S. Energy Short-Term Energy Monthly Energy lng natural gas exports capacity energy market power"
   },
   {
@@ -2734,7 +2740,11 @@
       "source_domain_adapter": "generic",
       "extraction_quality_score": 1,
       "extraction_failure_reason": null,
-      "extraction_quality_reasons": []
+      "extraction_quality_reasons": [],
+      "public_publishable": true,
+      "can_generate_longform": true,
+      "cleaned_source_length": 1721,
+      "block_reasons": []
     },
     "extraction_artifact": {
       "artifact_version": "extraction_v1",
@@ -2744,17 +2754,12 @@
       "extraction_qa": {
         "cleaned_source_length": 1721,
         "block_reasons": [],
-        "content_length": 1721,
+        "public_publishable": true,
+        "can_generate_longform": true,
         "boilerplate_ratio": 0,
-        "title_body_similarity": 0.78,
         "copyright_footer_detected": false,
-        "legal_boilerplate_detected": false,
         "nav_or_cta_detected": false,
-        "sentence_completion_score": 1,
-        "source_domain_adapter": "generic",
-        "extraction_quality_score": 1,
-        "extraction_failure_reason": null,
-        "extraction_quality_reasons": []
+        "sentence_completion_score": 1
       }
     },
     "sourceUrl": "https://www.eia.gov/todayinenergy/detail.php?id=68044",
@@ -2775,6 +2780,7 @@
     "seo_noindex": false,
     "noindex": false,
     "public_tier_reasons": [],
+    "cleaned_source_text": "Data source: U.S. Energy Information Administration, Monthly Energy Review , and Domestic Uranium Production Report Note: W=Data withheld to avoid disclosure of individual company data. In 2025, uranium concentrate production in the United States totaled 2.1 million pounds of triuranium octoxide (U 3 O 8 ), the base component of nuclear reactor fuel. U.S. U 3 O 8 production in 2025 was the most since 2017 and more than triple the volume produced in 2024. Producing U 3 O 8 &mdash;often called yellowcake for its powdered, yellow appearance&mdash;is one of the first steps in making fuel for nuclear reactors . After uranium ore is mined, it goes through a milling process where uranium is extracted from the ore, producing U 3 O 8 , which is then processed at conversion and enrichment facilities. The enriched uranium is made into fuel pellets that are assembled into fuel rods for nuclear reactors. In 2025, exploration drilling to locate, map, and evaluate underground uranium deposits included 1,824 holes with total footage surpassing 1.0 million feet, up from the 1,324 holes with a total footage of 0.6 million feet drilled in 2024. Development drilling to measure the size, shape, and grade of known uranium deposits totaled 3,708 holes with total footage of 1.30 million feet in 2025, up from 2,462 holes and 1.26 million feet in 2024. In 2025, owners and operators of U.S. nuclear plants purchased a total of 46.9 million pounds of U 3 O 8 equivalent, down from 55.9 million pounds in 2024. Purchases were made from both domestic and foreign suppliers at a weighted-average price of $58.46 per pound, 11% higher than the 2024 weighted-average price of $52.71 per pound. Most of the U 3 O 8 delivered to U.S.",
     "searchText": "U.S. uranium production more than tripled in 2025 and was the highest since 2017 U.S. Energy Information Administration Power & Grid Nuclear Energy Power Market Analysis power_grid utilities, power-secured developers, and operators with firm interconnection positions developers and cloud buyers whose delivery dates depend on utility upgrades or energization schedules utility interconnection, equipment procurement, and energization milestones The source may still describe intent rather than delivered capacity, so the operating impact depends on follow-through. interconnection approvals, substation equipment dates, power purchase agreements, or disclosed energization windows US U.S. uranium production surged to 2.1 million pounds in 2025, the highest level since 2017, marking a threefold increase from 2024 levels. Data source: U.S. Energy Information Administration, Monthly Energy Review , and Domestic Uranium Production Report Note: W=Data withheld to avoid disclosure of individual company data. In 2025, uranium concentrate production in the United States totaled 2.1 million pounds of triuranium octoxide (U 3 O 8 ), the base component of nuclear reactor fuel. U.S. U 3 O 8 production in 2025 was the most since 2017 and more than triple the volume produced in 2024. Producing U 3 O 8 &mdash;often called yellowcake for its powdered, yellow appearance&mdash;is one of the first steps in making fuel for nuclear reactors . After uranium ore is mined, it goes through a milling process where uranium is extracted from the ore, producing U 3 O 8 , which is then processed at conversion and enrichment facilities. The enriched uranium is made into fuel pellets that are assembled into fuel rods for nuclear reactors. In 2025, exploration drilling to locate, map, and evaluate underground uranium deposits included 1,824 holes with total footage surpassing 1.0 million feet, up from the 1,324 holes with a total footage of 0.6 million feet drilled in 2024. Development drilling to measure the size, shape, and grade of known uranium deposits totaled 3,708 holes with total footage of 1.30 million feet in 2025, up from 2,462 holes and 1.26 million feet in 2024. In 2025, owners and operators of U.S. nuclear plants purchased a total of 46.9 million pounds of U 3 O 8 equivalent, down from 55.9 million pounds in 2024. Purchases were made from both domestic and foreign suppliers at a weighted-average price of $58.46 per pound, 11% higher than the 2024 weighted-average price of $52.71 per pound. Most of the U 3 O 8 delivered to U.S. operators investors utilities data center operators cloud capacity teams uranium production surged to 2.1 million pounds in 2025, the highest level since 2017, marking a threefold increase from 2024 levels. In 2025, uranium concentrate production in the United States totaled 2.1 million pounds of triuranium octoxide (U3O8), the base component of nuclear reactor fuel. In 2025, uranium concentrate production in the United States totaled 2.1 million pounds of triuranium octoxide (U 3 O 8 ), the base component of nuclear reactor fuel. In 2025, exploration drilling to locate, map, and evaluate underground uranium deposits included 1,824 holes with total footage surpassing 1.0 million feet, up from the 1,324 holes with a total footage of 0.6 million feet drilled in 2024. Development drilling to measure the size, shape, and grade of known uranium deposits totaled 3,708 holes with total footage of 1.30 million feet in 2025, up from 2,462 holes and 1.26 million feet in 2024. U.S. Energy Monthly Energy uranium nuclear energy production market"
   },
   {
@@ -3193,7 +3199,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-09-02T23:52:56.651Z",
+      "generatedAt": "2026-09-03T01:01:23.648Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "NVIDIA",
@@ -4101,7 +4107,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-09-02T23:52:57.189Z",
+      "generatedAt": "2026-09-03T01:01:24.129Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Google",
@@ -4688,7 +4694,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-09-02T23:52:57.526Z",
+      "generatedAt": "2026-09-03T01:01:24.428Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Amazon",
@@ -5612,7 +5618,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-09-02T23:52:57.954Z",
+      "generatedAt": "2026-09-03T01:01:24.813Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "AMD",
@@ -6152,7 +6158,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-09-02T23:52:58.285Z",
+      "generatedAt": "2026-09-03T01:01:25.108Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "OpenAI",
@@ -6510,7 +6516,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-09-02T23:52:58.508Z",
+      "generatedAt": "2026-09-03T01:01:25.307Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "Amazon",
@@ -7058,7 +7064,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-09-02T23:52:58.841Z",
+      "generatedAt": "2026-09-03T01:01:25.606Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "NVIDIA",
@@ -126720,6 +126726,415 @@
     "source_link_primary": true,
     "source_link_secondary": false,
     "sourceImage": null
+  },
+  {
+    "id": "18262f2c9abbb3b4",
+    "sourceRegistryId": "uk-desnz",
+    "source": "UK Department for Energy Security and Net Zero",
+    "url": "https://www.gov.uk/government/publications/oil-and-gas-opred-communications-2026",
+    "title": "Oil and gas: OPRED communications, 2026",
+    "snippet": "OPRED communications issued to stakeholders in 2026.",
+    "contentText": "OPRED communications issued to stakeholders in 2026.",
+    "publishedAt": "2026-09-02T14:34:24.000Z",
+    "sourceImage": null,
+    "region": "UK",
+    "language": "en",
+    "defaultCategory": "Power & Grid",
+    "category": "Power & Grid",
+    "primary_category": "Power & Grid",
+    "secondary_category": "Regulatory Updates",
+    "infrastructure_layer": "Policy",
+    "affected_stakeholders": [
+      "operators",
+      "investors",
+      "utilities",
+      "data center operators",
+      "cloud capacity teams"
+    ],
+    "article_type": "Policy / Regulation",
+    "urgency_score": 0.6,
+    "taxonomy_confidence": 0.69,
+    "taxonomy_reasons": [
+      "power",
+      "grid",
+      "interconnection"
+    ],
+    "direct_ai_infrastructure_relevance": 0,
+    "data_center_relevance": 0,
+    "cloud_capacity_relevance": 0,
+    "semiconductor_relevance": 0,
+    "power_grid_relevance": 0,
+    "cooling_relevance": 0,
+    "capital_markets_relevance": 0,
+    "enterprise_ai_infrastructure_relevance": 0,
+    "infrastructure_relevance_score": 0,
+    "infrastructure_relevance_tier": "archive_only",
+    "infrastructure_relevance_action": "archive_only",
+    "infrastructure_relevance_reasons": [
+      "no_strong_compute_current_infrastructure_match"
+    ],
+    "infrastructure_relevance": {
+      "direct_ai_infrastructure_relevance": 0,
+      "data_center_relevance": 0,
+      "cloud_capacity_relevance": 0,
+      "semiconductor_relevance": 0,
+      "power_grid_relevance": 0,
+      "cooling_relevance": 0,
+      "capital_markets_relevance": 0,
+      "enterprise_ai_infrastructure_relevance": 0,
+      "infrastructure_relevance_score": 0,
+      "infrastructure_relevance_tier": "archive_only",
+      "infrastructure_relevance_action": "archive_only",
+      "infrastructure_relevance_reasons": [
+        "no_strong_compute_current_infrastructure_match"
+      ],
+      "infrastructureRelevanceAction": "archive_only",
+      "articlePagePublished": false,
+      "homepagePublished": false,
+      "archiveOnly": true,
+      "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
+    },
+    "score": 20,
+    "slug": "oil-and-gas-opred-communications-2026",
+    "summary": "The UK Department for Energy Security and Net Zero issued OPRED communications to stakeholders, detailing updates and guidance for 2026.",
+    "insight": "These communications are crucial for operators and investors in the oil and gas sector, as they outline regulatory expectations and upcoming activities that may impact operations. Staying informed on these updates is essential for compliance and operational p…",
+    "expert_insight": {
+      "concrete_facts": [],
+      "named_companies": [],
+      "infrastructure_layer": "Policy",
+      "bottleneck_type": "power_grid",
+      "who_gains_leverage": "utilities, power-secured developers, and operators with firm interconnection positions",
+      "who_takes_execution_risk": "developers and cloud buyers whose delivery dates depend on utility upgrades or energization schedules",
+      "timing_dependency": "utility interconnection, equipment procurement, and energization milestones",
+      "counterargument": "The source may still describe intent rather than delivered capacity, so the operating impact depends on follow-through.",
+      "next_observable_signal": "interconnection approvals, substation equipment dates, power purchase agreements, or disclosed energization windows",
+      "expert_insight_complete": false,
+      "expert_insight_missing_fields": [
+        "concrete_facts",
+        "named_companies"
+      ]
+    },
+    "expertInsight": {
+      "concrete_facts": [],
+      "named_companies": [],
+      "infrastructure_layer": "Policy",
+      "bottleneck_type": "power_grid",
+      "who_gains_leverage": "utilities, power-secured developers, and operators with firm interconnection positions",
+      "who_takes_execution_risk": "developers and cloud buyers whose delivery dates depend on utility upgrades or energization schedules",
+      "timing_dependency": "utility interconnection, equipment procurement, and energization milestones",
+      "counterargument": "The source may still describe intent rather than delivered capacity, so the operating impact depends on follow-through.",
+      "next_observable_signal": "interconnection approvals, substation equipment dates, power purchase agreements, or disclosed energization windows",
+      "expert_insight_complete": false,
+      "expert_insight_missing_fields": [
+        "concrete_facts",
+        "named_companies"
+      ]
+    },
+    "concrete_facts": [],
+    "named_companies": [],
+    "bottleneck_type": "power_grid",
+    "who_gains_leverage": "utilities, power-secured developers, and operators with firm interconnection positions",
+    "who_takes_execution_risk": "developers and cloud buyers whose delivery dates depend on utility upgrades or energization schedules",
+    "timing_dependency": "utility interconnection, equipment procurement, and energization milestones",
+    "counterargument": "The source may still describe intent rather than delivered capacity, so the operating impact depends on follow-through.",
+    "next_observable_signal": "interconnection approvals, substation equipment dates, power purchase agreements, or disclosed energization windows",
+    "expert_insight_complete": false,
+    "expert_insight_missing_fields": [
+      "concrete_facts",
+      "named_companies"
+    ],
+    "tags": [
+      "uk",
+      "energy",
+      "regulation",
+      "oil",
+      "gas",
+      "policy"
+    ],
+    "imagePrompt": "Aerial view of an oil and gas facility with pipelines and machinery, set against a cloudy sky, showcasing the scale and complexity of energy infrastructure.",
+    "lang": "en",
+    "articleText": "FA Application Stage 2 FAQs (Issued 02 June 2026) PDF , 189 KB , 4 pages This file may not be suitable for users of assistive technology. FA Application Stage 2 Worked Examples (Issued 02 June 2026) PDF , 677 KB , 18 pages This file may not be suitable for users of assistive technology. Announcement of OPRED Interim Director (Issued 25 May 2026) PDF , 239 KB , 2 pages This file may not be suitable for users of assistive technology. Upcoming noise activities in the Southern North Sea SAC (SNS SAC) – Winter 2026/2027. Request for information (issued 6 May 2026) PDF , 218 KB , 4 pages This file may not be suitable for users of assistive technology. Request for EMS Annual Public Statement (Issued 15th April 2026) PDF , 39.4 KB , 1 page This file may not be suitable for users of assistive technology. OPRED Communication - UKETS supplementary guidance on FA Application Stage 2 (BDR) (Issued 01 April 2026) PDF , 226 KB , 5 pages This file may not be suitable for users of assistive technology. UKETS Authority communication – FA Application Stage 2 (BDR) (Issued 01 April 2026) PDF , 103 KB , 3 pages This file may not be suitable for users of assistive technology.",
+    "content_length": 1172,
+    "boilerplate_ratio": 0,
+    "title_body_similarity": 0.4,
+    "copyright_footer_detected": false,
+    "nav_or_cta_detected": false,
+    "sentence_completion_score": 1,
+    "source_domain_adapter": "generic",
+    "extraction_quality_score": 0.91,
+    "extraction_qa": {
+      "content_length": 1172,
+      "boilerplate_ratio": 0,
+      "title_body_similarity": 0.4,
+      "copyright_footer_detected": false,
+      "legal_boilerplate_detected": false,
+      "nav_or_cta_detected": false,
+      "sentence_completion_score": 1,
+      "source_domain_adapter": "generic",
+      "extraction_quality_score": 0.91,
+      "extraction_failure_reason": null,
+      "extraction_quality_reasons": [],
+      "public_publishable": true,
+      "can_generate_longform": false,
+      "cleaned_source_length": 1172,
+      "block_reasons": [
+        "cleaned_source_text_below_1200",
+        "source_evidence_length_below_1200"
+      ]
+    },
+    "extraction_artifact": {
+      "artifact_version": "extraction_v1",
+      "source_url": "https://www.gov.uk/government/publications/oil-and-gas-opred-communications-2026",
+      "extracted_text_sha256": "44e08c186869c97a88bda229f897e27b768a6b35a924344e8b2dfd2e8be4f394",
+      "cleaned_extracted_text": "FA Application Stage 2 FAQs (Issued 02 June 2026) PDF , 189 KB , 4 pages This file may not be suitable for users of assistive technology. FA Application Stage 2 Worked Examples (Issued 02 June 2026) PDF , 677 KB , 18 pages This file may not be suitable for users of assistive technology. Announcement of OPRED Interim Director (Issued 25 May 2026) PDF , 239 KB , 2 pages This file may not be suitable for users of assistive technology. Upcoming noise activities in the Southern North Sea SAC (SNS SAC) – Winter 2026/2027. Request for information (issued 6 May 2026) PDF , 218 KB , 4 pages This file may not be suitable for users of assistive technology. Request for EMS Annual Public Statement (Issued 15th April 2026) PDF , 39.4 KB , 1 page This file may not be suitable for users of assistive technology. OPRED Communication - UKETS supplementary guidance on FA Application Stage 2 (BDR) (Issued 01 April 2026) PDF , 226 KB , 5 pages This file may not be suitable for users of assistive technology. UKETS Authority communication – FA Application Stage 2 (BDR) (Issued 01 April 2026) PDF , 103 KB , 3 pages This file may not be suitable for users of assistive technology.",
+      "extraction_qa": {
+        "cleaned_source_length": 1172,
+        "block_reasons": [
+          "cleaned_source_text_below_1200",
+          "source_evidence_length_below_1200"
+        ],
+        "public_publishable": true,
+        "can_generate_longform": false,
+        "boilerplate_ratio": 0,
+        "copyright_footer_detected": false,
+        "nav_or_cta_detected": false,
+        "sentence_completion_score": 1
+      }
+    },
+    "cleaned_source_text": "FA Application Stage 2 FAQs (Issued 02 June 2026) PDF , 189 KB , 4 pages This file may not be suitable for users of assistive technology. FA Application Stage 2 Worked Examples (Issued 02 June 2026) PDF , 677 KB , 18 pages This file may not be suitable for users of assistive technology. Announcement of OPRED Interim Director (Issued 25 May 2026) PDF , 239 KB , 2 pages This file may not be suitable for users of assistive technology. Upcoming noise activities in the Southern North Sea SAC (SNS SAC) – Winter 2026/2027. Request for information (issued 6 May 2026) PDF , 218 KB , 4 pages This file may not be suitable for users of assistive technology. Request for EMS Annual Public Statement (Issued 15th April 2026) PDF , 39.4 KB , 1 page This file may not be suitable for users of assistive technology. OPRED Communication - UKETS supplementary guidance on FA Application Stage 2 (BDR) (Issued 01 April 2026) PDF , 226 KB , 5 pages This file may not be suitable for users of assistive technology. UKETS Authority communication – FA Application Stage 2 (BDR) (Issued 01 April 2026) PDF , 103 KB , 3 pages This file may not be suitable for users of assistive technology.",
+    "sourceUrl": "https://www.gov.uk/government/publications/oil-and-gas-opred-communications-2026",
+    "generatedImage": "/generated/articles/18262f2c9abbb3b4-oil-and-gas-opred-communications-2026/hero.webp",
+    "infrastructureRelevanceAction": "archive_only",
+    "articlePagePublished": false,
+    "homepagePublished": false,
+    "archiveOnly": true,
+    "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold",
+    "article_blueprint": null,
+    "articleBlueprint": null,
+    "expertLensShort": null,
+    "expertLensFull": null,
+    "expertLens": null,
+    "public_content_tier": "hidden",
+    "signalCardOnly": false,
+    "seo_noindex": true,
+    "noindex": true,
+    "public_tier_reasons": [
+      "low_relevance",
+      "relevance_below_adjacent_threshold"
+    ],
+    "searchText": "Oil and gas: OPRED communications, 2026 UK Department for Energy Security and Net Zero Power & Grid Regulatory Updates Policy Policy / Regulation power_grid utilities, power-secured developers, and operators with firm interconnection positions developers and cloud buyers whose delivery dates depend on utility upgrades or energization schedules utility interconnection, equipment procurement, and energization milestones The source may still describe intent rather than delivered capacity, so the operating impact depends on follow-through. interconnection approvals, substation equipment dates, power purchase agreements, or disclosed energization windows UK The UK Department for Energy Security and Net Zero issued OPRED communications to stakeholders, detailing updates and guidance for 2026. FA Application Stage 2 FAQs (Issued 02 June 2026) PDF , 189 KB , 4 pages This file may not be suitable for users of assistive technology. FA Application Stage 2 Worked Examples (Issued 02 June 2026) PDF , 677 KB , 18 pages This file may not be suitable for users of assistive technology. Announcement of OPRED Interim Director (Issued 25 May 2026) PDF , 239 KB , 2 pages This file may not be suitable for users of assistive technology. Upcoming noise activities in the Southern North Sea SAC (SNS SAC) – Winter 2026/2027. Request for information (issued 6 May 2026) PDF , 218 KB , 4 pages This file may not be suitable for users of assistive technology. Request for EMS Annual Public Statement (Issued 15th April 2026) PDF , 39.4 KB , 1 page This file may not be suitable for users of assistive technology. OPRED Communication - UKETS supplementary guidance on FA Application Stage 2 (BDR) (Issued 01 April 2026) PDF , 226 KB , 5 pages This file may not be suitable for users of assistive technology. UKETS Authority communication – FA Application Stage 2 (BDR) (Issued 01 April 2026) PDF , 103 KB , 3 pages This file may not be suitable for users of assistive technology. operators investors utilities data center operators cloud capacity teams uk energy regulation oil gas policy"
+  },
+  {
+    "id": "6c51874b8397a1fa",
+    "sourceRegistryId": "ftc-press",
+    "source": "Federal Trade Commission",
+    "url": "https://www.ftc.gov/news-events/news/press-releases/2026/09/statement-regarding-fairfield-medical-centers-sale-adena-health",
+    "title": "Statement Regarding Fairfield Medical Center’s Sale to Adena Health",
+    "snippet": "On Sept. 1, 2026, Adena Health announced its acquisition of Fairfield Medical Center (FMC), a hospital system in southeastern Ohio. The announcement follows a Federal Trade Commission investigation of an earlier attempt…",
+    "contentText": "On Sept. 1, 2026, Adena Health announced its acquisition of Fairfield Medical Center (FMC), a hospital system in southeastern Ohio. The announcement follows a Federal Trade Commission investigation of an earlier attempt by a different acquirer—OhioHealth—to buy FMC. View Press Release",
+    "publishedAt": "2026-09-02T12:00:00.000Z",
+    "sourceImage": null,
+    "region": "US",
+    "language": "en",
+    "defaultCategory": "Capital Markets",
+    "category": "Capital Markets",
+    "primary_category": "Capital Markets",
+    "secondary_category": "Healthcare M&A",
+    "infrastructure_layer": "Capital",
+    "affected_stakeholders": [
+      "investors",
+      "healthcare operators",
+      "regulators",
+      "lenders",
+      "developers"
+    ],
+    "article_type": "Financing / M&A",
+    "urgency_score": 0.6,
+    "taxonomy_confidence": 0.74,
+    "taxonomy_reasons": [
+      "financing",
+      "acquisition",
+      "valuation"
+    ],
+    "direct_ai_infrastructure_relevance": 0,
+    "data_center_relevance": 0,
+    "cloud_capacity_relevance": 0,
+    "semiconductor_relevance": 0,
+    "power_grid_relevance": 0,
+    "cooling_relevance": 0,
+    "capital_markets_relevance": 0.3,
+    "enterprise_ai_infrastructure_relevance": 0,
+    "infrastructure_relevance_score": 0.209,
+    "infrastructure_relevance_tier": "archive_only",
+    "infrastructure_relevance_action": "archive_only",
+    "infrastructure_relevance_reasons": [
+      "capital_markets_relevance:0.30(acquisition)"
+    ],
+    "infrastructure_relevance": {
+      "direct_ai_infrastructure_relevance": 0,
+      "data_center_relevance": 0,
+      "cloud_capacity_relevance": 0,
+      "semiconductor_relevance": 0,
+      "power_grid_relevance": 0,
+      "cooling_relevance": 0,
+      "capital_markets_relevance": 0.3,
+      "enterprise_ai_infrastructure_relevance": 0,
+      "infrastructure_relevance_score": 0.209,
+      "infrastructure_relevance_tier": "archive_only",
+      "infrastructure_relevance_action": "archive_only",
+      "infrastructure_relevance_reasons": [
+        "capital_markets_relevance:0.30(acquisition)"
+      ],
+      "infrastructureRelevanceAction": "archive_only",
+      "articlePagePublished": false,
+      "homepagePublished": false,
+      "archiveOnly": true,
+      "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
+    },
+    "score": 41,
+    "slug": "statement-regarding-fairfield-medical-center-s-sale-to-adena-health",
+    "summary": "Adena Health has acquired Fairfield Medical Center following a Federal Trade Commission investigation into a prior sale attempt. This acquisition impacts healthcare competition in…",
+    "insight": "The acquisition could reshape the competitive landscape for healthcare services in southeastern Ohio, affecting service availability and pricing. Investors and operators should monitor regulatory responses and market dynamics following this consolidation.",
+    "expert_insight": {
+      "concrete_facts": [
+        "1, 2026, Adena Health announced its acquisition of Fairfield Medical Center (FMC), a hospital system in southeastern Ohio.",
+        "Statement Regarding Fairfield Medical Center’s Sale to Adena Health Adena Health has acquired Fairfield Medical Center following a Federal Trade Commission investigation into a prior sale attempt."
+      ],
+      "named_companies": [],
+      "infrastructure_layer": "Capital",
+      "bottleneck_type": "capital_structure",
+      "who_gains_leverage": "capital providers and sponsors with credible customer contracts and delivery milestones",
+      "who_takes_execution_risk": "developers whose financing assumptions depend on demand materializing before sites are operational",
+      "timing_dependency": "financing close, construction drawdowns, signed customer commitments, and delivery milestones",
+      "counterargument": "The source may still describe intent rather than delivered capacity, so the operating impact depends on follow-through.",
+      "next_observable_signal": "financing terms, lease commitments, backlog conversion, or construction milestone disclosures",
+      "expert_insight_complete": false,
+      "expert_insight_missing_fields": [
+        "named_companies"
+      ]
+    },
+    "expertInsight": {
+      "concrete_facts": [
+        "1, 2026, Adena Health announced its acquisition of Fairfield Medical Center (FMC), a hospital system in southeastern Ohio.",
+        "Statement Regarding Fairfield Medical Center’s Sale to Adena Health Adena Health has acquired Fairfield Medical Center following a Federal Trade Commission investigation into a prior sale attempt."
+      ],
+      "named_companies": [],
+      "infrastructure_layer": "Capital",
+      "bottleneck_type": "capital_structure",
+      "who_gains_leverage": "capital providers and sponsors with credible customer contracts and delivery milestones",
+      "who_takes_execution_risk": "developers whose financing assumptions depend on demand materializing before sites are operational",
+      "timing_dependency": "financing close, construction drawdowns, signed customer commitments, and delivery milestones",
+      "counterargument": "The source may still describe intent rather than delivered capacity, so the operating impact depends on follow-through.",
+      "next_observable_signal": "financing terms, lease commitments, backlog conversion, or construction milestone disclosures",
+      "expert_insight_complete": false,
+      "expert_insight_missing_fields": [
+        "named_companies"
+      ]
+    },
+    "concrete_facts": [
+      "1, 2026, Adena Health announced its acquisition of Fairfield Medical Center (FMC), a hospital system in southeastern Ohio.",
+      "Statement Regarding Fairfield Medical Center’s Sale to Adena Health Adena Health has acquired Fairfield Medical Center following a Federal Trade Commission investigation into a prior sale attempt."
+    ],
+    "named_companies": [],
+    "bottleneck_type": "capital_structure",
+    "who_gains_leverage": "capital providers and sponsors with credible customer contracts and delivery milestones",
+    "who_takes_execution_risk": "developers whose financing assumptions depend on demand materializing before sites are operational",
+    "timing_dependency": "financing close, construction drawdowns, signed customer commitments, and delivery milestones",
+    "counterargument": "The source may still describe intent rather than delivered capacity, so the operating impact depends on follow-through.",
+    "next_observable_signal": "financing terms, lease commitments, backlog conversion, or construction milestone disclosures",
+    "expert_insight_complete": false,
+    "expert_insight_missing_fields": [
+      "named_companies"
+    ],
+    "tags": [
+      "healthcare",
+      "acquisition",
+      "FTC",
+      "competition",
+      "Ohio",
+      "Adena Health"
+    ],
+    "imagePrompt": "Aerial view of a modern hospital complex surrounded by greenery, showcasing healthcare infrastructure and community integration, 16:9.",
+    "lang": "en",
+    "articleText": "We work to advance government policies that protect consumers and promote competition. Find legal resources and guidance to understand your business responsibilities and comply with the law. Learn more about your rights as a consumer and how to spot and avoid scams. Find the resources you need to understand how consumer protection law impacts your business.",
+    "content_length": 359,
+    "boilerplate_ratio": 0,
+    "title_body_similarity": 0,
+    "copyright_footer_detected": false,
+    "nav_or_cta_detected": false,
+    "sentence_completion_score": 1,
+    "source_domain_adapter": "generic",
+    "extraction_quality_score": 0.52,
+    "extraction_qa": {
+      "content_length": 359,
+      "boilerplate_ratio": 0,
+      "title_body_similarity": 0,
+      "copyright_footer_detected": false,
+      "legal_boilerplate_detected": false,
+      "nav_or_cta_detected": false,
+      "sentence_completion_score": 1,
+      "source_domain_adapter": "generic",
+      "extraction_quality_score": 0.52,
+      "extraction_failure_reason": null,
+      "extraction_quality_reasons": [
+        "extraction_quality_score 0.52 below 0.80",
+        "content_length 359 below 650",
+        "title_body_similarity 0.00 low"
+      ],
+      "public_publishable": false,
+      "can_generate_longform": false,
+      "cleaned_source_length": 359,
+      "block_reasons": [
+        "cleaned_source_text_below_500",
+        "cleaned_source_text_below_1200",
+        "source_evidence_length_below_500",
+        "source_evidence_length_below_1200"
+      ]
+    },
+    "extraction_artifact": {
+      "artifact_version": "extraction_v1",
+      "source_url": "https://www.ftc.gov/news-events/news/press-releases/2026/09/statement-regarding-fairfield-medical-centers-sale-adena-health",
+      "extracted_text_sha256": "2fb9d316e0a0cc72b16d389ae063b99ff01ea10d77c4233bca29daff94bf2010",
+      "cleaned_extracted_text": "We work to advance government policies that protect consumers and promote competition. Find legal resources and guidance to understand your business responsibilities and comply with the law. Learn more about your rights as a consumer and how to spot and avoid scams. Find the resources you need to understand how consumer protection law impacts your business.",
+      "extraction_qa": {
+        "cleaned_source_length": 359,
+        "block_reasons": [
+          "cleaned_source_text_below_500",
+          "cleaned_source_text_below_1200",
+          "source_evidence_length_below_500",
+          "source_evidence_length_below_1200"
+        ],
+        "public_publishable": false,
+        "can_generate_longform": false,
+        "boilerplate_ratio": 0,
+        "copyright_footer_detected": false,
+        "nav_or_cta_detected": false,
+        "sentence_completion_score": 1
+      }
+    },
+    "cleaned_source_text": "We work to advance government policies that protect consumers and promote competition. Find legal resources and guidance to understand your business responsibilities and comply with the law. Learn more about your rights as a consumer and how to spot and avoid scams. Find the resources you need to understand how consumer protection law impacts your business.",
+    "sourceUrl": "https://www.ftc.gov/news-events/news/press-releases/2026/09/statement-regarding-fairfield-medical-centers-sale-adena-health",
+    "generatedImage": "/generated/articles/6c51874b8397a1fa-statement-regarding-fairfield-medical-center-s-sale-to-adena-health/hero.webp",
+    "infrastructureRelevanceAction": "archive_only",
+    "articlePagePublished": false,
+    "homepagePublished": false,
+    "archiveOnly": true,
+    "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold",
+    "article_blueprint": null,
+    "articleBlueprint": null,
+    "expertLensShort": null,
+    "expertLensFull": null,
+    "expertLens": null,
+    "public_content_tier": "hidden",
+    "signalCardOnly": false,
+    "seo_noindex": true,
+    "noindex": true,
+    "public_tier_reasons": [
+      "dirty_extraction",
+      "low_relevance",
+      "relevance_below_adjacent_threshold"
+    ],
+    "searchText": "Statement Regarding Fairfield Medical Center’s Sale to Adena Health Federal Trade Commission Capital Markets Healthcare M&A Capital Financing / M&A capital_structure capital providers and sponsors with credible customer contracts and delivery milestones developers whose financing assumptions depend on demand materializing before sites are operational financing close, construction drawdowns, signed customer commitments, and delivery milestones The source may still describe intent rather than delivered capacity, so the operating impact depends on follow-through. financing terms, lease commitments, backlog conversion, or construction milestone disclosures US Adena Health has acquired Fairfield Medical Center following a Federal Trade Commission investigation into a prior sale attempt. This acquisition impacts healthcare competition in… We work to advance government policies that protect consumers and promote competition. Find legal resources and guidance to understand your business responsibilities and comply with the law. Learn more about your rights as a consumer and how to spot and avoid scams. Find the resources you need to understand how consumer protection law impacts your business. investors healthcare operators regulators lenders developers 1, 2026, Adena Health announced its acquisition of Fairfield Medical Center (FMC), a hospital system in southeastern Ohio. Statement Regarding Fairfield Medical Center’s Sale to Adena Health Adena Health has acquired Fairfield Medical Center following a Federal Trade Commission investigation into a prior sale attempt. healthcare acquisition FTC competition Ohio Adena Health"
   },
   {
     "id": "7269bbc815aa24d0",

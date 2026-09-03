@@ -817,7 +817,9 @@
     "9a8280fcab02d6cd",
     "ad79cf79021488cb",
     "4862f6d5b6668b86",
-    "7b618b414d1ae1d7"
+    "7b618b414d1ae1d7",
+    "6c51874b8397a1fa",
+    "18262f2c9abbb3b4"
   ],
   "dayPlans": {
     "2026-03-24": {
@@ -44059,67 +44061,66 @@
     "2026-09-03": {
       "date": "2026-09-03",
       "createdAt": "2026-09-02T18:30:51.927Z",
-      "refreshedAt": "2026-09-02T23:52:43.468Z",
+      "refreshedAt": "2026-09-03T01:01:08.551Z",
       "candidateWindowHours": 24,
       "curatedItems": [
         {
-          "id": "4862f6d5b6668b86",
-          "sourceRegistryId": "doe-newsroom",
-          "source": "U.S. Department of Energy",
-          "url": "https://www.energy.gov/articles/energy-secretary-keeps-mid-atlantic-powered-during-hot-weather-conditions",
-          "title": "Energy Secretary Keeps the Mid-Atlantic Powered During Hot Weather Conditions",
-          "snippet": "Secretary Wright issues an emergency order to stabilize the Mid-Atlantic grid and mitigate the risk of blackouts.",
-          "contentText": "Secretary Wright issues an emergency order to stabilize the Mid-Atlantic grid and mitigate the risk of blackouts.",
-          "publishedAt": "2026-09-02T03:11:31.000Z",
+          "id": "6c51874b8397a1fa",
+          "sourceRegistryId": "ftc-press",
+          "source": "Federal Trade Commission",
+          "url": "https://www.ftc.gov/news-events/news/press-releases/2026/09/statement-regarding-fairfield-medical-centers-sale-adena-health",
+          "title": "Statement Regarding Fairfield Medical Center’s Sale to Adena Health",
+          "snippet": "On Sept. 1, 2026, Adena Health announced its acquisition of Fairfield Medical Center (FMC), a hospital system in southeastern Ohio. The announcement follows a Federal Trade Commission investigation of an earlier attempt…",
+          "contentText": "On Sept. 1, 2026, Adena Health announced its acquisition of Fairfield Medical Center (FMC), a hospital system in southeastern Ohio. The announcement follows a Federal Trade Commission investigation of an earlier attempt by a different acquirer—OhioHealth—to buy FMC. View Press Release",
+          "publishedAt": "2026-09-02T12:00:00.000Z",
           "sourceImage": null,
           "region": "US",
           "language": "en",
-          "defaultCategory": "Power & Grid",
-          "category": "Power & Grid",
-          "primary_category": "Power & Grid",
-          "secondary_category": "Interconnection and power procurement",
-          "infrastructure_layer": "Power",
+          "defaultCategory": "Capital Markets",
+          "category": "Capital Markets",
+          "primary_category": "Capital Markets",
+          "secondary_category": "Financing, valuation, and capital structure",
+          "infrastructure_layer": "Capital",
           "affected_stakeholders": [
-            "data center operators",
-            "utilities",
-            "cloud capacity teams",
-            "investors"
+            "investors",
+            "lenders",
+            "developers",
+            "operators"
           ],
-          "article_type": "Other",
-          "urgency_score": 0.42,
-          "taxonomy_confidence": 0.65,
+          "article_type": "Financing / M&A",
+          "urgency_score": 0.33,
+          "taxonomy_confidence": 0.58,
           "taxonomy_reasons": [
-            "power",
-            "grid"
+            "acquisition"
           ],
           "direct_ai_infrastructure_relevance": 0,
           "data_center_relevance": 0,
           "cloud_capacity_relevance": 0,
           "semiconductor_relevance": 0,
-          "power_grid_relevance": 0.28,
+          "power_grid_relevance": 0,
           "cooling_relevance": 0,
-          "capital_markets_relevance": 0,
+          "capital_markets_relevance": 0.3,
           "enterprise_ai_infrastructure_relevance": 0,
-          "infrastructure_relevance_score": 0.197,
+          "infrastructure_relevance_score": 0.209,
           "infrastructure_relevance_tier": "archive_only",
           "infrastructure_relevance_action": "archive_only",
           "infrastructure_relevance_reasons": [
-            "power_grid_relevance:0.28(grid)"
+            "capital_markets_relevance:0.30(acquisition)"
           ],
           "infrastructure_relevance": {
             "direct_ai_infrastructure_relevance": 0,
             "data_center_relevance": 0,
             "cloud_capacity_relevance": 0,
             "semiconductor_relevance": 0,
-            "power_grid_relevance": 0.28,
+            "power_grid_relevance": 0,
             "cooling_relevance": 0,
-            "capital_markets_relevance": 0,
+            "capital_markets_relevance": 0.3,
             "enterprise_ai_infrastructure_relevance": 0,
-            "infrastructure_relevance_score": 0.197,
+            "infrastructure_relevance_score": 0.209,
             "infrastructure_relevance_tier": "archive_only",
             "infrastructure_relevance_action": "archive_only",
             "infrastructure_relevance_reasons": [
-              "power_grid_relevance:0.28(grid)"
+              "capital_markets_relevance:0.30(acquisition)"
             ],
             "infrastructureRelevanceAction": "archive_only",
             "articlePagePublished": false,
@@ -44127,19 +44128,19 @@
             "archiveOnly": true,
             "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
           },
-          "score": 27
+          "score": 41
         },
         {
-          "id": "7b618b414d1ae1d7",
-          "sourceRegistryId": "doe-newsroom",
-          "source": "U.S. Department of Energy",
-          "url": "https://www.energy.gov/articles/energy-secretary-saves-coal-fired-generation-going-offline-florida",
-          "title": "Energy Secretary Saves Coal-Fired Generation from Going Offline in Florida",
-          "snippet": "Emergency order addresses grid reliability concerns and reduces the risk and costs of blackouts.",
-          "contentText": "Emergency order addresses grid reliability concerns and reduces the risk and costs of blackouts.",
-          "publishedAt": "2026-09-02T00:11:31.000Z",
+          "id": "18262f2c9abbb3b4",
+          "sourceRegistryId": "uk-desnz",
+          "source": "UK Department for Energy Security and Net Zero",
+          "url": "https://www.gov.uk/government/publications/oil-and-gas-opred-communications-2026",
+          "title": "Oil and gas: OPRED communications, 2026",
+          "snippet": "OPRED communications issued to stakeholders in 2026.",
+          "contentText": "OPRED communications issued to stakeholders in 2026.",
+          "publishedAt": "2026-09-02T14:34:24.000Z",
           "sourceImage": null,
-          "region": "US",
+          "region": "UK",
           "language": "en",
           "defaultCategory": "Power & Grid",
           "category": "Power & Grid",
@@ -44153,8 +44154,8 @@
             "investors"
           ],
           "article_type": "Other",
-          "urgency_score": 0.42,
-          "taxonomy_confidence": 0.65,
+          "urgency_score": 0.36,
+          "taxonomy_confidence": 0.61,
           "taxonomy_reasons": [
             "power",
             "grid"
@@ -44163,30 +44164,30 @@
           "data_center_relevance": 0,
           "cloud_capacity_relevance": 0,
           "semiconductor_relevance": 0,
-          "power_grid_relevance": 0.28,
+          "power_grid_relevance": 0,
           "cooling_relevance": 0,
           "capital_markets_relevance": 0,
           "enterprise_ai_infrastructure_relevance": 0,
-          "infrastructure_relevance_score": 0.197,
+          "infrastructure_relevance_score": 0,
           "infrastructure_relevance_tier": "archive_only",
           "infrastructure_relevance_action": "archive_only",
           "infrastructure_relevance_reasons": [
-            "power_grid_relevance:0.28(grid)"
+            "no_strong_compute_current_infrastructure_match"
           ],
           "infrastructure_relevance": {
             "direct_ai_infrastructure_relevance": 0,
             "data_center_relevance": 0,
             "cloud_capacity_relevance": 0,
             "semiconductor_relevance": 0,
-            "power_grid_relevance": 0.28,
+            "power_grid_relevance": 0,
             "cooling_relevance": 0,
             "capital_markets_relevance": 0,
             "enterprise_ai_infrastructure_relevance": 0,
-            "infrastructure_relevance_score": 0.197,
+            "infrastructure_relevance_score": 0,
             "infrastructure_relevance_tier": "archive_only",
             "infrastructure_relevance_action": "archive_only",
             "infrastructure_relevance_reasons": [
-              "power_grid_relevance:0.28(grid)"
+              "no_strong_compute_current_infrastructure_match"
             ],
             "infrastructureRelevanceAction": "archive_only",
             "articlePagePublished": false,
@@ -44194,18 +44195,20 @@
             "archiveOnly": true,
             "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
           },
-          "score": 27
+          "score": 20
         }
       ],
       "curatedIds": [
-        "4862f6d5b6668b86",
-        "7b618b414d1ae1d7"
+        "6c51874b8397a1fa",
+        "18262f2c9abbb3b4"
       ],
       "publishedIds": [
         "9a8280fcab02d6cd",
         "ad79cf79021488cb",
         "4862f6d5b6668b86",
-        "7b618b414d1ae1d7"
+        "7b618b414d1ae1d7",
+        "6c51874b8397a1fa",
+        "18262f2c9abbb3b4"
       ],
       "slotPublications": {
         "0": true,
@@ -44214,76 +44217,6 @@
     }
   },
   "runHistory": [
-    {
-      "at": "2026-07-23T09:31:28.362Z",
-      "day": "2026-07-23",
-      "slot": 2,
-      "publishedCount": 0,
-      "signalCardCount": 2,
-      "archiveOnlyCount": 0,
-      "processedIds": [
-        "9312247ca1aeb270",
-        "b1a45e692709c4c2"
-      ],
-      "blockedCount": 2,
-      "blockedItems": [
-        {
-          "id": "9312247ca1aeb270",
-          "title": "Israel’s AI Czar Seeks Chip Fab, New Data Centers to Keep Edge",
-          "infrastructure_relevance_score": 0.954,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:0.78(ai infrastructure)",
-            "data_center_relevance:0.97(data center, data centers)",
-            "cloud_capacity_relevance:0.32(hyperscalers)",
-            "semiconductor_relevance:0.66(semiconductor, fab)",
-            "power_grid_relevance:0.22(power)"
-          ],
-          "extraction_quality_score": 0,
-          "source_domain_adapter": "bloomberg",
-          "content_length": 220,
-          "boilerplate_ratio": 0,
-          "repetition_blocked": false,
-          "repetition_block_reasons": [],
-          "repetition_check": null,
-          "expert_insight_complete": false,
-          "expert_insight_missing_fields": [
-            "concrete_facts"
-          ],
-          "reason": "fail_closed: source_text_incomplete:source_evidence_length_below_500, source_evidence_length_below_1200, ellipsis_truncation_artifact, ellipsis_truncation_artifact, sentence_completion_score_below_0.92:0"
-        },
-        {
-          "id": "b1a45e692709c4c2",
-          "title": "Designing Electro-Optical Chips",
-          "infrastructure_relevance_score": 1,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, ai data center, neocloud)",
-            "data_center_relevance:1.00(data center, data centers, campus)",
-            "cloud_capacity_relevance:0.32(hyperscalers)",
-            "semiconductor_relevance:0.58(semiconductor, gpu)",
-            "power_grid_relevance:0.22(power)",
-            "cooling_relevance:0.30(thermal)",
-            "capital_markets_relevance:0.28(capex)"
-          ],
-          "extraction_quality_score": 1,
-          "source_domain_adapter": "semiengineering",
-          "content_length": 1730,
-          "boilerplate_ratio": 0,
-          "repetition_blocked": false,
-          "repetition_block_reasons": [],
-          "repetition_check": null,
-          "expert_insight_complete": false,
-          "expert_insight_missing_fields": [
-            "named_companies"
-          ],
-          "reason": "expert_insight_missing_fields named_companies"
-        }
-      ],
-      "archiveOnlyItems": []
-    },
     {
       "at": "2026-07-23T16:41:17.879Z",
       "day": "2026-07-24",
@@ -52710,9 +52643,83 @@
         "token_budget": 60000,
         "call_budget": 40
       }
+    },
+    {
+      "at": "2026-09-03T01:01:08.551Z",
+      "day": "2026-09-03",
+      "slot": 1,
+      "publishedCount": 0,
+      "signalCardCount": 0,
+      "archiveOnlyCount": 2,
+      "processedIds": [
+        "6c51874b8397a1fa",
+        "18262f2c9abbb3b4"
+      ],
+      "blockedCount": 0,
+      "blockedItems": [],
+      "archiveOnlyItems": [
+        {
+          "id": "6c51874b8397a1fa",
+          "title": "Statement Regarding Fairfield Medical Center’s Sale to Adena Health",
+          "infrastructure_relevance_score": 0.209,
+          "infrastructure_relevance_tier": "archive_only",
+          "infrastructure_relevance_action": "archive_only",
+          "infrastructure_relevance_reasons": [
+            "capital_markets_relevance:0.30(acquisition)"
+          ],
+          "extraction_quality_score": 0.52,
+          "source_domain_adapter": "generic",
+          "content_length": 359,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": false,
+          "repetition_block_reasons": [],
+          "repetition_check": null,
+          "expert_insight_complete": false,
+          "expert_insight_missing_fields": [
+            "named_companies"
+          ],
+          "reason": "infrastructure_relevance_below_signal_threshold"
+        },
+        {
+          "id": "18262f2c9abbb3b4",
+          "title": "Oil and gas: OPRED communications, 2026",
+          "infrastructure_relevance_score": 0,
+          "infrastructure_relevance_tier": "archive_only",
+          "infrastructure_relevance_action": "archive_only",
+          "infrastructure_relevance_reasons": [
+            "no_strong_compute_current_infrastructure_match"
+          ],
+          "extraction_quality_score": 0.91,
+          "source_domain_adapter": "generic",
+          "content_length": 1172,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": false,
+          "repetition_block_reasons": [],
+          "repetition_check": null,
+          "expert_insight_complete": false,
+          "expert_insight_missing_fields": [
+            "concrete_facts",
+            "named_companies"
+          ],
+          "reason": "infrastructure_relevance_below_signal_threshold"
+        }
+      ],
+      "authoredColumn": {
+        "published": false,
+        "reason": "no_qualifying_story"
+      },
+      "llmUsage": {
+        "calls": 3,
+        "failures": 0,
+        "prompt_tokens": 2110,
+        "completion_tokens": 432,
+        "total_tokens": 2542,
+        "token_budget": 60000,
+        "call_budget": 40
+      }
     }
   ],
-  "lastRunAt": "2026-09-02T23:52:43.468Z",
+  "lastRunAt": "2026-09-03T01:01:08.551Z",
   "authored": {
     "lastColumnAt": "2026-08-28T19:25:07.344Z",
     "columnsByDay": {
