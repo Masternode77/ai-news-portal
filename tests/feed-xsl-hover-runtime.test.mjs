@@ -28,12 +28,16 @@ test('built human-readable RSS actions retain 40px focusable controls and visibl
 test('built human-readable RSS renders each feed media image as an accessible local article link', () => {
   const renderedFeed = transform();
   const images = [...renderedFeed.matchAll(/<img[^>]+src="([^"]+)"[^>]+alt="([^"]+)"/g)];
+  // The feed grows as the wire publishes; the invariant is one local media
+  // image per media-bearing item, not a fixed item count.
+  const feedItemCount = (fs.readFileSync(builtPath('rss.xml'), 'utf8').match(/<media:content /g) || []).length;
 
-  assert.equal(images.length, 15, 'every feed item must render its media image');
-  assert.equal(new Set(images.map(([, source]) => source)).size, 15, 'feed media must retain per-article paths');
+  assert.ok(feedItemCount >= 15, `built feed should carry the public inventory, found ${feedItemCount} media items`);
+  assert.equal(images.length, feedItemCount, 'every feed item must render its media image');
+  assert.equal(new Set(images.map(([, source]) => source)).size, feedItemCount, 'feed media must retain per-article paths');
   assert.equal(images.every(([, source, alt]) => /^\/generated\/articles\//.test(source) && alt.endsWith('editorial visual')), true);
   assert.equal(images.some(([, source]) => /^https?:\/\//.test(source)), false, 'browser-rendered feed images must stay on the current origin');
-  assert.equal((renderedFeed.match(/class="item-media" href="https:\/\//g) || []).length, 15);
+  assert.equal((renderedFeed.match(/class="item-media" href="https:\/\//g) || []).length, feedItemCount);
 });
 
 test('built human-readable RSS rejects non-article media URLs before creating browser image requests', () => {
