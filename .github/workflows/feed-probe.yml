@@ -10,6 +10,10 @@ on:
       urls:
         description: Space-separated feed URLs to probe
         required: true
+      grep:
+        description: Optional extended regex; matching fragments of each body are printed (first 40)
+        required: false
+        default: ''
 
 permissions:
   contents: read
@@ -22,6 +26,7 @@ jobs:
       - name: Probe feeds
         env:
           URLS: ${{ inputs.urls }}
+          GREP: ${{ inputs.grep }}
         run: |
           set -u
           for u in $URLS; do
@@ -35,5 +40,9 @@ jobs:
             bytes=$(wc -c < "$body")
             echo "probe $u -> $meta | bytes=$bytes items=$items entries=$entries"
             (grep -o '<title>[^<]*</title>' "$body" || true) | head -4 | sed 's/^/    /'
+            if [ -n "$GREP" ]; then
+              echo "    grep '$GREP':"
+              (grep -oE "$GREP" "$body" || true) | head -40 | sed 's/^/      /'
+            fi
             rm -f "$body"
           done
