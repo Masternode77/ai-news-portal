@@ -33,20 +33,33 @@ async function curateWithLlm(items) {
       `Return JSON only with key selectedIds as an array of up to ${DAILY_CURATION_TARGET} ids, best first.`,
     ].join(' '),
     userPrompt: JSON.stringify({ candidates: payload }),
-    maxTokens: 500,
+    // Reasoning models spend completion tokens before the answer; a 500-token
+    // budget can leave the JSON body empty.
+    maxTokens: 1200,
+    responseFormat: { type: 'json_object' },
   };
+  let usedModel = CURATION_MODEL;
   const result = await callOpenRouterJson({ ...request, model: CURATION_MODEL }).catch(async (error) => {
     console.warn(`[curate] model ${CURATION_MODEL} failed: ${error.message}`);
     if (CURATION_MODEL !== OPENROUTER_MODEL && isModelNotAvailableError(error)) {
       console.warn(`[curate] retrying curation with fallback model ${OPENROUTER_MODEL}`);
+      usedModel = OPENROUTER_MODEL;
       return callOpenRouterJson({ ...request, model: OPENROUTER_MODEL }).catch(() => null);
     }
     return null;
   });
 
-  if (!result || !Array.isArray(result.selectedIds)) return null;
+  if (!result || !Array.isArray(result.selectedIds)) {
+    console.warn(`[curate] ${usedModel} returned no usable selection; deterministic ranker takes over`);
+    return null;
+  }
   const selected = result.selectedIds.filter((id) => shortlist.some((item) => item.id === id));
-  return selected.length ? selected.slice(0, DAILY_CURATION_TARGET) : null;
+  if (!selected.length) {
+    console.warn(`[curate] ${usedModel} selected ${result.selectedIds.length} ids, none from the shortlist; deterministic ranker takes over`);
+    return null;
+  }
+  console.log(`[curate] ${usedModel} selected ${selected.length} of ${shortlist.length} candidates`);
+  return selected.slice(0, DAILY_CURATION_TARGET);
 }
 
 function fallbackCurate(ranked) {

@@ -42,7 +42,7 @@ export function isModelNotAvailableError(error) {
   return error?.openrouterStatus === 400 || error?.openrouterStatus === 404;
 }
 
-async function requestOnce({ model, temperature, maxTokens, timeoutMs, systemPrompt, userPrompt, apiKey }) {
+async function requestOnce({ model, temperature, maxTokens, timeoutMs, systemPrompt, userPrompt, apiKey, responseFormat }) {
   const controller = new AbortController();
   const timeout = setTimeout(() => controller.abort(), timeoutMs);
   try {
@@ -54,6 +54,7 @@ async function requestOnce({ model, temperature, maxTokens, timeoutMs, systemPro
         model,
         temperature,
         max_tokens: maxTokens,
+        ...(responseFormat ? { response_format: responseFormat } : {}),
         messages: [
           { role: 'system', content: systemPrompt },
           { role: 'user', content: userPrompt },
@@ -85,6 +86,7 @@ export async function callOpenRouterText({
   maxTokens = 900,
   timeoutMs = 30000,
   model = OPENROUTER_MODEL,
+  responseFormat = null,
 }) {
   const apiKey = process.env.OPENROUTER_API_KEY;
   if (!apiKey || PIPELINE_OFFLINE) return '';
@@ -94,7 +96,7 @@ export async function callOpenRouterText({
   let lastError;
   for (let attempt = 0; attempt <= RETRY_DELAYS_MS.length; attempt += 1) {
     try {
-      return await requestOnce({ model, temperature, maxTokens, timeoutMs, systemPrompt, userPrompt, apiKey });
+      return await requestOnce({ model, temperature, maxTokens, timeoutMs, systemPrompt, userPrompt, apiKey, responseFormat });
     } catch (error) {
       lastError = error;
       recordLlmFailure();
@@ -110,7 +112,15 @@ export async function callOpenRouterText({
 
 export async function callOpenRouterJson(options) {
   const content = await callOpenRouterText(options);
-  return safeJsonParse(content, null);
+  const parsed = safeJsonParse(content, null);
+  if (parsed === null && content) {
+    // A reply that is not JSON is the silent failure mode of the JSON callers:
+    // they fall through to deterministic fallbacks. Name it in the log.
+    console.warn(`[openrouter] non-JSON reply from ${options.model || OPENROUTER_MODEL} (${content.length} chars): ${content.slice(0, 160).replace(/\s+/g, ' ')}`);
+  } else if (!content && process.env.OPENROUTER_API_KEY && !PIPELINE_OFFLINE) {
+    console.warn(`[openrouter] empty reply from ${options.model || OPENROUTER_MODEL}`);
+  }
+  return parsed;
 }
 
 export async function callExpertLensText(options) {
