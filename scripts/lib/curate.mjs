@@ -10,8 +10,33 @@ import { kstDayKey, kstSlot } from './normalize.mjs';
 import { callOpenRouterJson, isModelNotAvailableError } from './openrouter.mjs';
 import { rankWithDiversity } from './rank.mjs';
 
+const CURATION_SHORTLIST_LIMIT = Number(process.env.CURATION_SHORTLIST_LIMIT || 30);
+
+function laneRelevance(item = {}) {
+  return Math.max(Number(item.infrastructure_relevance_score) || 0, Number(item.ai_topic_score) || 0);
+}
+
+// The model sees the whole pool, strongest lane first, rather than the dozen
+// most recent items: on a thin day the one on-beat story is often older than
+// the audits and press statements that arrived after it.
+export function curationShortlist(items = []) {
+  return [...items]
+    .sort((a, b) => laneRelevance(b) - laneRelevance(a) || (b.score || 0) - (a.score || 0))
+    .slice(0, Math.max(DAILY_CURATION_TARGET + 4, CURATION_SHORTLIST_LIMIT));
+}
+
+// null means the model could not answer (failure, non-JSON); an empty array
+// means it answered that nothing qualifies. Only the first falls back to the
+// deterministic ranker; the second is a decision and stands.
+export function resolveCuratedSelection(result, shortlist = []) {
+  if (!result || !Array.isArray(result.selectedIds)) return null;
+  const ids = result.selectedIds.filter((id) => shortlist.some((item) => item.id === id));
+  if (!ids.length && result.selectedIds.length) return null;
+  return ids.slice(0, DAILY_CURATION_TARGET);
+}
+
 async function curateWithLlm(items) {
-  const shortlist = items.slice(0, Math.max(12, DAILY_CURATION_TARGET + 4));
+  const shortlist = curationShortlist(items);
   const payload = shortlist.map((item) => ({
     id: item.id,
     source: item.source,
@@ -29,7 +54,7 @@ async function curateWithLlm(items) {
       'You are the curation editor for an AI and data center signal board.',
       'Select the most decision-useful stories for operators, investors, site selectors, and infrastructure strategists.',
       'Two lanes qualify. Infrastructure: data center load, grid capacity, generation and interconnection, chips and accelerators, cooling, cloud capacity, colocation, or capital flowing into those. AI: frontier model releases and capabilities, AI lab strategy and financing, AI policy and regulation, AI security incidents, and compute demand from AI workloads.',
-      'Prioritize source credibility, novelty, and source diversity. Skip enforcement actions, audits, grants, and announcements that only mention AI or energy in passing, even if that leaves fewer picks.',
+      'Prioritize source credibility, novelty, and source diversity. Skip enforcement actions, audits, grants, and announcements that only mention AI or energy in passing, even if that leaves fewer picks. An empty selection is a valid answer when nothing qualifies.',
       `Return JSON only with key selectedIds as an array of up to ${DAILY_CURATION_TARGET} ids, best first.`,
     ].join(' '),
     userPrompt: JSON.stringify({ candidates: payload }),
@@ -49,17 +74,20 @@ async function curateWithLlm(items) {
     return null;
   });
 
-  if (!result || !Array.isArray(result.selectedIds)) {
-    console.warn(`[curate] ${usedModel} returned no usable selection; deterministic ranker takes over`);
+  const selected = resolveCuratedSelection(result, shortlist);
+  if (selected === null) {
+    const detail = result && Array.isArray(result.selectedIds)
+      ? `${result.selectedIds.length} ids, none from the shortlist`
+      : 'no usable selection';
+    console.warn(`[curate] ${usedModel} returned ${detail}; deterministic ranker takes over`);
     return null;
   }
-  const selected = result.selectedIds.filter((id) => shortlist.some((item) => item.id === id));
   if (!selected.length) {
-    console.warn(`[curate] ${usedModel} selected ${result.selectedIds.length} ids, none from the shortlist; deterministic ranker takes over`);
-    return null;
+    console.log(`[curate] ${usedModel} selected none of ${shortlist.length} candidates; nothing qualifies this run`);
+    return [];
   }
   console.log(`[curate] ${usedModel} selected ${selected.length} of ${shortlist.length} candidates`);
-  return selected.slice(0, DAILY_CURATION_TARGET);
+  return selected;
 }
 
 function fallbackCurate(ranked) {
@@ -119,7 +147,8 @@ export async function planForToday(pool, state, now = new Date()) {
   const key = kstDayKey(now);
   const existingPlan = state.dayPlans[key];
   const ranked = rollingCandidates(pool, state, existingPlan, now);
-  const selectedIds = (await curateWithLlm(ranked)) || fallbackCurate(ranked);
+  const llmSelection = await curateWithLlm(ranked);
+  const selectedIds = llmSelection === null ? fallbackCurate(ranked) : llmSelection;
   const curatedItems = selectedIds
     .map((id) => ranked.find((item) => item.id === id))
     .filter(Boolean)
