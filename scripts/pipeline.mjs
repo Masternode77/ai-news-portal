@@ -27,7 +27,7 @@ import {
   ARTICLE_PAGE_QUALITY_THRESHOLD,
   splitByArticleQualityGate,
 } from './lib/quality-gate.mjs';
-import { splitByInfrastructureRelevance } from './lib/relevance-classifier.mjs';
+import { classifyAiTopicRelevance, splitByInfrastructureRelevance } from './lib/relevance-classifier.mjs';
 import { analyzeSourceExtractionFailClosed } from './lib/source-extraction-fail-closed.mjs';
 import { splitByRepetitionGate } from './lib/repetition-detector.mjs';
 import {
@@ -130,6 +130,9 @@ function normalizeExistingArticle(rawItem) {
     urgency_score: item.urgency_score ?? null,
     defaultCategory: item.defaultCategory || item.category || null,
     sourceUrl: item.sourceUrl || item.url,
+    ai_topic_score: Number.isFinite(Number(item.ai_topic_score))
+      ? Number(item.ai_topic_score)
+      : classifyAiTopicRelevance(item).ai_topic_score,
   });
 }
 

@@ -1,6 +1,13 @@
-import { DAILY_CURATION_TARGET, FRESH_CANDIDATE_WINDOW_HOURS, ITEMS_PER_RUN, PIPELINE_FORCE_SLOT } from './constants.mjs';
+import {
+  CURATION_MODEL,
+  DAILY_CURATION_TARGET,
+  FRESH_CANDIDATE_WINDOW_HOURS,
+  ITEMS_PER_RUN,
+  OPENROUTER_MODEL,
+  PIPELINE_FORCE_SLOT,
+} from './constants.mjs';
 import { kstDayKey, kstSlot } from './normalize.mjs';
-import { callOpenRouterJson } from './openrouter.mjs';
+import { callOpenRouterJson, isModelNotAvailableError } from './openrouter.mjs';
 import { rankWithDiversity } from './rank.mjs';
 
 async function curateWithLlm(items) {
@@ -14,19 +21,28 @@ async function curateWithLlm(items) {
     categoryHint: item.primary_category || item.defaultCategory || item.categoryHint || null,
     region: item.region || null,
     score: item.score,
+    aiTopicScore: item.ai_topic_score ?? null,
   }));
 
-  const result = await callOpenRouterJson({
+  const request = {
     systemPrompt: [
       'You are the curation editor for an AI and data center signal board.',
       'Select the most decision-useful stories for operators, investors, site selectors, and infrastructure strategists.',
-      'Prioritize: direct relevance to AI infrastructure / cloud / power / cooling / semiconductor / colocation / APAC policy, source credibility, novelty, and source diversity.',
-      'Select only stories with a concrete infrastructure angle: data center load, grid capacity, generation and interconnection, chips and accelerators, cloud capacity, or capital flowing into those. Skip enforcement actions, audits, grants, and announcements with no such angle even if that leaves fewer picks.',
+      'Two lanes qualify. Infrastructure: data center load, grid capacity, generation and interconnection, chips and accelerators, cooling, cloud capacity, colocation, or capital flowing into those. AI: frontier model releases and capabilities, AI lab strategy and financing, AI policy and regulation, AI security incidents, and compute demand from AI workloads.',
+      'Prioritize source credibility, novelty, and source diversity. Skip enforcement actions, audits, grants, and announcements that only mention AI or energy in passing, even if that leaves fewer picks.',
       `Return JSON only with key selectedIds as an array of up to ${DAILY_CURATION_TARGET} ids, best first.`,
     ].join(' '),
     userPrompt: JSON.stringify({ candidates: payload }),
     maxTokens: 500,
-  }).catch(() => null);
+  };
+  const result = await callOpenRouterJson({ ...request, model: CURATION_MODEL }).catch(async (error) => {
+    console.warn(`[curate] model ${CURATION_MODEL} failed: ${error.message}`);
+    if (CURATION_MODEL !== OPENROUTER_MODEL && isModelNotAvailableError(error)) {
+      console.warn(`[curate] retrying curation with fallback model ${OPENROUTER_MODEL}`);
+      return callOpenRouterJson({ ...request, model: OPENROUTER_MODEL }).catch(() => null);
+    }
+    return null;
+  });
 
   if (!result || !Array.isArray(result.selectedIds)) return null;
   const selected = result.selectedIds.filter((id) => shortlist.some((item) => item.id === id));
