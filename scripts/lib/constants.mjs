@@ -28,6 +28,10 @@ export const OPENROUTER_API_URL = 'https://openrouter.ai/api/v1/chat/completions
 // preferred models via env/secrets. Unknown-model errors surface loudly in
 // logs and trigger the fallback chain instead of silently degrading.
 export const OPENROUTER_MODEL = process.env.OPENROUTER_MODEL || 'openai/gpt-4o-mini';
+// Story curation runs on OpenAI's GPT-5.6 Sol (OpenRouter id) unless overridden;
+// an unavailable model id falls back to OPENROUTER_MODEL rather than to the
+// deterministic ranker, so a catalogue change never silently degrades picks.
+export const CURATION_MODEL = process.env.CURATION_MODEL || 'openai/gpt-5.6-sol';
 export const OPENROUTER_SITE_URL = process.env.OPENROUTER_SITE_URL || '';
 export const OPENROUTER_APP_TITLE = process.env.OPENROUTER_APP_TITLE || 'Compute Current';
 export const EXPERT_LENS_MODEL = process.env.EXPERT_LENS_MODEL || 'anthropic/claude-sonnet-4.5';

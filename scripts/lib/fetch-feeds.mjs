@@ -6,7 +6,7 @@ import {
   POOL_MAX_AGE_DAYS,
 } from './constants.mjs';
 import { guessLanguage, safeHttpUrl, stableArticleId, stripHtml, truncate } from './normalize.mjs';
-import { classifyInfrastructureRelevance } from './relevance-classifier.mjs';
+import { classifyAiTopicRelevance, classifyInfrastructureRelevance } from './relevance-classifier.mjs';
 import { classifyTaxonomy } from './taxonomy.mjs';
 import { fetchPublicResource } from './public-network-fetcher.mjs';
 import { activeRegistryFeeds, loadSourceRegistry } from './source-registry.mjs';
@@ -63,10 +63,13 @@ export function parseFeedItem(feed, item) {
     defaultCategory: feed.defaultCategory || null,
   };
   const infrastructureRelevance = classifyInfrastructureRelevance(baseItem);
+  const aiTopic = classifyAiTopicRelevance(baseItem);
   const taxonomy = classifyTaxonomy({ ...baseItem, ...infrastructureRelevance });
 
   return {
     ...baseItem,
+    ai_topic_score: aiTopic.ai_topic_score,
+    ai_topic_reasons: aiTopic.ai_topic_reasons,
     category: taxonomy.primary_category,
     primary_category: taxonomy.primary_category,
     secondary_category: taxonomy.secondary_category,

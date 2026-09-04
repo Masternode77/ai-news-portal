@@ -315,6 +315,103 @@ function buildArticleText(article = {}) {
   ].filter(Boolean).join(' ');
 }
 
+// The AI lane: stories whose subject is AI itself (frontier models, labs,
+// policy, security, compute demand) rather than the infrastructure beneath it.
+// Scored separately so the wire's infrastructure gates stay honest while the
+// column can still argue an AI story through the desk's infrastructure lens.
+const AI_TOPIC_TERMS = [
+  ['artificial intelligence', 0.4],
+  ['ai model', 0.4],
+  ['ai models', 0.4],
+  ['foundation model', 0.4],
+  ['foundation models', 0.4],
+  ['frontier model', 0.4],
+  ['frontier models', 0.4],
+  ['large language model', 0.4],
+  ['large language models', 0.4],
+  ['llm', 0.36],
+  ['llms', 0.36],
+  ['generative ai', 0.36],
+  ['ai lab', 0.36],
+  ['ai labs', 0.36],
+  ['ai agent', 0.34],
+  ['ai agents', 0.34],
+  ['agentic', 0.3],
+  ['machine learning', 0.3],
+  ['model training', 0.34],
+  ['training run', 0.34],
+  ['inference', 0.28],
+  ['ai safety', 0.34],
+  ['ai regulation', 0.34],
+  ['ai act', 0.34],
+  ['ai policy', 0.34],
+  ['ai chip', 0.34],
+  ['ai chips', 0.34],
+  ['ai workload', 0.3],
+  ['ai workloads', 0.3],
+  ['ai infrastructure', 0.3],
+  ['openai', 0.36],
+  ['anthropic', 0.36],
+  ['deepmind', 0.36],
+  ['chatgpt', 0.3],
+  ['gemini', 0.24],
+  ['claude', 0.24],
+  ['llama', 0.24],
+  ['mistral', 0.24],
+  ['grok', 0.24],
+  ['nvidia', 0.26],
+  ['gpu', 0.22],
+  ['gpus', 0.22],
+  ['accelerator', 0.2],
+  ['accelerators', 0.2],
+  ['ai', 0.18],
+];
+
+const AI_SUBJECT_TERMS = [
+  ...AI_TERMS,
+  'openai',
+  'anthropic',
+  'deepmind',
+  'chatgpt',
+  'gemini',
+  'generative',
+  'agentic',
+];
+
+export function classifyAiTopicRelevance(article = {}) {
+  const titleText = normalizeText(article.title || '');
+  const text = normalizeText(buildArticleText(article));
+  const { score, matched } = scoreTerms(text, titleText, AI_TOPIC_TERMS);
+  const reasons = [];
+  let overall = score;
+
+  // AI has to be the subject, not a passing mention: a title without an AI
+  // term caps the lane below the column floor.
+  if (!hasAny(titleText, AI_SUBJECT_TERMS)) {
+    overall = Math.min(overall, 0.6);
+    reasons.push('ai_not_in_title');
+  }
+  const hasModelContext = hasAny(text, ['model', 'models', 'openai', 'anthropic', 'deepmind', 'training', 'inference', 'compute']);
+  if (hasAny(text, CONSUMER_AI_TERMS) && !hasInfraSignal(text) && !hasModelContext) {
+    overall = Math.min(overall, 0.5);
+    reasons.push('consumer_ai_without_model_or_infrastructure_context');
+  }
+  if (hasHardArchiveTopic(text)) {
+    overall = Math.min(overall, 0.2);
+    reasons.push('hard_archive_topic_outside_compute_current_boundary');
+  }
+
+  overall = Number(overall.toFixed(3));
+  return {
+    ai_topic_score: overall,
+    ai_topic_reasons: [...matched.slice(0, 6), ...reasons],
+  };
+}
+
+function hasInfraSignal(text = '') {
+  return hasAny(text, INFRA_TERMS);
+}
+
 function classifyTier(score) {
   if (score >= FULL_MEMO_RELEVANCE_THRESHOLD) return 'full_memo';
   if (score >= SIGNAL_CARD_RELEVANCE_THRESHOLD) return 'signal_card';

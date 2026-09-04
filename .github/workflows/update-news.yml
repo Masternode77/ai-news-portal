@@ -56,6 +56,7 @@ jobs:
         env:
           OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
           OPENROUTER_MODEL: ${{ secrets.OPENROUTER_MODEL }}
+          CURATION_MODEL: ${{ secrets.CURATION_MODEL }}
           EXPERT_LENS_MODEL: ${{ secrets.EXPERT_LENS_MODEL }}
           EXPERT_LENS_FALLBACK_MODEL: ${{ secrets.EXPERT_LENS_FALLBACK_MODEL }}
           AUTHORED_COLUMN_MODEL: ${{ secrets.AUTHORED_COLUMN_MODEL }}

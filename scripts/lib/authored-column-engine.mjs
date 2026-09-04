@@ -32,10 +32,23 @@ import {
 } from './authored-column-policy.mjs';
 import { isHeading, headingSequence } from './visible-body-length.mjs';
 import { buildColumnFigures } from './authored-column-figures.mjs';
+import { classifyAiTopicRelevance } from './relevance-classifier.mjs';
 
 const CHARTER_RELATIVE_PATH = 'config/editorial/persona-charter.json';
 const STORY_KEY_WINDOW_HOURS = 72;
 const MIN_STORY_RELEVANCE = 0.75;
+
+// A column can argue either lane: an infrastructure story or an AI story
+// (frontier models, labs, policy, security, compute demand) read through
+// the desk's infrastructure lens. The floor applies to whichever lane the
+// story is strongest in.
+export function columnStoryRelevance(article = {}) {
+  const infrastructure = Number(article.infrastructure_relevance_score || 0);
+  const aiTopic = Number.isFinite(Number(article.ai_topic_score))
+    ? Number(article.ai_topic_score)
+    : classifyAiTopicRelevance(article).ai_topic_score;
+  return Math.max(infrastructure, aiTopic);
+}
 const MIN_STORY_FACTS = 4;
 
 // Resolves from the working directory first (the pipeline, Astro build, and
@@ -183,7 +196,7 @@ export function selectColumnStory({ candidates = [], pool = [], excludedStoryKey
   const scored = candidates
     .filter((article) => article?.id && article.title)
     .filter((article) => article.expert_insight_complete === true || article.expert_insight?.expert_insight_complete === true)
-    .filter((article) => Number(article.infrastructure_relevance_score || 0) >= MIN_STORY_RELEVANCE)
+    .filter((article) => columnStoryRelevance(article) >= MIN_STORY_RELEVANCE)
     .filter((article) => !excludedStoryKeys.has(storyKeyFor(article)))
     .map((article) => {
       const evidencePack = buildEvidencePack(article);
@@ -191,7 +204,7 @@ export function selectColumnStory({ candidates = [], pool = [], excludedStoryKey
       const corroborating = findCorroboratingSources(article, pool).slice(0, 2);
       const ageHours = Math.max(1, (now.getTime() - articleDateMs(article)) / 3_600_000);
       const freshness = Math.max(0.25, Math.min(1, 30 / ageHours));
-      const score = Number(article.infrastructure_relevance_score || 0)
+      const score = columnStoryRelevance(article)
         * Math.min(evidencePack.facts.length, 10)
         * (1 + 0.25 * corroborating.length)
         * freshness;

@@ -11,7 +11,7 @@ import { callOpenRouterJson } from './openrouter.mjs';
 import { fetchArticleExtraction } from './source-fetch.mjs';
 import { normalizeEditorialVoice } from './editorial-humanizer.mjs';
 import { extractExpertInsight } from './expert-insight-engine.mjs';
-import { classifyInfrastructureRelevance } from './relevance-classifier.mjs';
+import { classifyAiTopicRelevance, classifyInfrastructureRelevance } from './relevance-classifier.mjs';
 import { analyzeSourceExtractionFailClosed } from './source-extraction-fail-closed.mjs';
 import {
   ARTICLE_TYPES,
@@ -179,6 +179,11 @@ export async function enrichContent(item) {
     tags: normalized.tags,
     region: normalized.region,
   });
+  const aiTopic = classifyAiTopicRelevance({
+    ...item,
+    articleText,
+    summary: normalized.summary,
+  });
   const taxonomy = classifyTaxonomy({
     ...item,
     ...infrastructureRelevance,
@@ -259,6 +264,8 @@ export async function enrichContent(item) {
     infrastructure_relevance_action: infrastructureRelevance.infrastructure_relevance_action,
     infrastructure_relevance_reasons: infrastructureRelevance.infrastructure_relevance_reasons,
     infrastructure_relevance: infrastructureRelevance,
+    ai_topic_score: aiTopic.ai_topic_score,
+    ai_topic_reasons: aiTopic.ai_topic_reasons,
     sourceUrl: item.url,
   };
 }
