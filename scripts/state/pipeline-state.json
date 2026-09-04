@@ -44513,131 +44513,21 @@
         "1": true,
         "2": true
       }
+    },
+    "2026-09-05": {
+      "date": "2026-09-05",
+      "createdAt": "2026-09-04T18:13:46.990Z",
+      "refreshedAt": "2026-09-04T18:13:46.990Z",
+      "candidateWindowHours": 24,
+      "curatedItems": [],
+      "curatedIds": [],
+      "publishedIds": [],
+      "slotPublications": {
+        "0": true
+      }
     }
   },
   "runHistory": [
-    {
-      "at": "2026-07-26T09:21:59.296Z",
-      "day": "2026-07-26",
-      "slot": 2,
-      "publishedCount": 0,
-      "signalCardCount": 1,
-      "archiveOnlyCount": 0,
-      "repetitionBlockedCount": 1,
-      "publishedIds": [],
-      "processedIds": [
-        "986a4e5c0a0a11f9",
-        "2a7bfbb600c07ddf"
-      ],
-      "blockedCount": 1,
-      "blockedItems": [
-        {
-          "id": "986a4e5c0a0a11f9",
-          "title": "Monday.com is the latest tech company to blame AI for layoffs — here are 20 others",
-          "infrastructure_relevance_score": 0.892,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, ai data center, neocloud)",
-            "data_center_relevance:0.42(data center)",
-            "cloud_capacity_relevance:0.32(hyperscalers)",
-            "semiconductor_relevance:0.22(gpu)",
-            "power_grid_relevance:0.22(power)"
-          ],
-          "extraction_quality_score": 1,
-          "source_domain_adapter": "techcrunch",
-          "content_length": 1729,
-          "boilerplate_ratio": 0,
-          "repetition_blocked": false,
-          "repetition_block_reasons": [],
-          "repetition_check": null,
-          "expert_insight_complete": true,
-          "expert_insight_missing_fields": [],
-          "reason": "fail_closed: nav_or_cta_detected"
-        }
-      ],
-      "repetitionBlockedItems": [
-        {
-          "id": "2a7bfbb600c07ddf",
-          "title": "OpenAI agent goes rogue and hacks popular AI community — left escape plans for future models inside the company's infrastructure",
-          "infrastructure_relevance_score": 0.87,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "cloud_capacity_relevance:0.32(hyperscalers)",
-            "semiconductor_relevance:0.22(gpu)",
-            "power_grid_relevance:0.22(power)"
-          ],
-          "extraction_quality_score": 1,
-          "source_domain_adapter": "generic",
-          "content_length": 1759,
-          "boilerplate_ratio": 0,
-          "repetition_blocked": true,
-          "repetition_block_reasons": [
-            "repeated_sentence_ratio>0.12",
-            "heading_sequence_similarity>0.75",
-            "conclusion_similarity>0.7"
-          ],
-          "repetition_check": {
-            "compared_article_count": 20,
-            "repeated_sentence_ratio": 0.42857142857142855,
-            "repeated_paragraph_ratio": 0.5,
-            "heading_sequence_similarity": 1,
-            "banned_phrase_count": 0,
-            "banned_phrase_counts": {},
-            "recent_banned_phrase_counts": {},
-            "ngram_overlap": 0.6982758620689655,
-            "blueprint_repetition": 1,
-            "conclusion_similarity": 0.9271050693011066,
-            "repeated_sentence_count": 3,
-            "repeated_paragraph_count": 3,
-            "heading_sequence": [
-              "Capital Move",
-              "Demand Evidence",
-              "Execution Risk",
-              "Milestone To Watch"
-            ],
-            "blocked": true,
-            "reasons": [
-              "repeated_sentence_ratio>0.12",
-              "heading_sequence_similarity>0.75",
-              "conclusion_similarity>0.7"
-            ]
-          },
-          "expert_insight_complete": true,
-          "expert_insight_missing_fields": [],
-          "reason": "repeated_sentence_ratio>0.12; heading_sequence_similarity>0.75; conclusion_similarity>0.7"
-        }
-      ],
-      "signalCardItems": [
-        {
-          "id": "986a4e5c0a0a11f9",
-          "title": "Monday.com is the latest tech company to blame AI for layoffs — here are 20 others",
-          "infrastructure_relevance_score": 0.892,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, ai data center, neocloud)",
-            "data_center_relevance:0.42(data center)",
-            "cloud_capacity_relevance:0.32(hyperscalers)",
-            "semiconductor_relevance:0.22(gpu)",
-            "power_grid_relevance:0.22(power)"
-          ],
-          "extraction_quality_score": 1,
-          "source_domain_adapter": "techcrunch",
-          "content_length": 1729,
-          "boilerplate_ratio": 0,
-          "repetition_blocked": false,
-          "repetition_block_reasons": [],
-          "repetition_check": null,
-          "expert_insight_complete": true,
-          "expert_insight_missing_fields": [],
-          "reason": "fail_closed: nav_or_cta_detected"
-        }
-      ],
-      "archiveOnlyItems": []
-    },
     {
       "at": "2026-07-26T16:09:21.774Z",
       "day": "2026-07-27",
@@ -52389,9 +52279,28 @@
         "token_budget": 60000,
         "call_budget": 40
       }
+    },
+    {
+      "at": "2026-09-04T18:13:46.990Z",
+      "day": "2026-09-05",
+      "slot": 0,
+      "publishedCount": 0,
+      "authoredColumn": {
+        "published": false,
+        "reason": "no_qualifying_story"
+      },
+      "llmUsage": {
+        "calls": 1,
+        "failures": 0,
+        "prompt_tokens": 439,
+        "completion_tokens": 12,
+        "total_tokens": 451,
+        "token_budget": 60000,
+        "call_budget": 40
+      }
     }
   ],
-  "lastRunAt": "2026-09-04T12:07:18.253Z",
+  "lastRunAt": "2026-09-04T18:13:46.990Z",
   "authored": {
     "lastColumnAt": "2026-08-28T19:25:07.344Z",
     "columnsByDay": {
