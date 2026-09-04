@@ -19,7 +19,7 @@ Audit output omits `git status` so running this writer cannot make its own repor
 
 - Renderer: `src/pages/index.astro` imports latest/archive JSON and calls `buildHomepageFeed(..., { limit: 50, minimumVisible: 30 })`.
 - Current homepage source contains public nav/feed language, but still depends on generated card copy from `scripts/lib/homepage-feed-builder.mjs`.
-- Current public homepage cards after product-fit and source-rights gates: 17. Retained JSON records are not treated as reader-visible cards.
+- Current public homepage cards after product-fit and source-rights gates: 18. Retained JSON records are not treated as reader-visible cards.
 - Evidence: `LatestAnalysisFeed` is the active feed component.
 
 ## Article Detail Renderer
@@ -32,7 +32,7 @@ Audit output omits `git status` so running this writer cannot make its own repor
 ## Article Data Store
 
 - Primary public data: `src/data/latest-news.json` (35 records).
-- Archive data: `src/data/archived-news.json` (932 records).
+- Archive data: `src/data/archived-news.json` (934 records).
 - Adjacent stores: `src/data/search-index.json`, `src/data/taxonomy-pages.json`, `src/data/editorial-cycles.json`, `src/data/claim-ledger.json`, `src/data/source-health.json`.
 - The data model is still legacy-compatible JSON rather than one explicit public article contract.
 
@@ -93,7 +93,7 @@ Audit output omits `git status` so running this writer cannot make its own repor
 ## Stale Generated Article Pages
 
 - Retained records marked article-page-published with non-blog_engine_v4 generation version: 5; examples: `eia-data-center-load-timing`, `eia-server-cooling-forecast`, `eia-virginia-peak-load`, `eia-nuclear-data-center-contracts`, `eia-texas-large-loads`. Current public detail eligibility separately requires product fit, source rights, and final publication integrity.
-- Retained source-only/direct-link items: 962.
+- Retained source-only/direct-link items: 964.
 - Whether generated article pages are stale is a review question, not an editor regeneration command. The generic editor exposes `save-draft`, `publish`, `hide`, `noindex`, `upload-image`, `preview`; regeneration controls detected: none.
 
 ## Legacy Templates and Public Output Failures
