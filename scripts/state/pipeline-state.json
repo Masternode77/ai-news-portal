@@ -44495,7 +44495,7 @@
     "2026-09-04": {
       "date": "2026-09-04",
       "createdAt": "2026-09-03T18:26:18.319Z",
-      "refreshedAt": "2026-09-04T09:58:46.263Z",
+      "refreshedAt": "2026-09-04T12:07:18.253Z",
       "candidateWindowHours": 24,
       "curatedItems": [],
       "curatedIds": [],
@@ -44516,133 +44516,6 @@
     }
   },
   "runHistory": [
-    {
-      "at": "2026-07-26T00:02:31.866Z",
-      "day": "2026-07-26",
-      "slot": 1,
-      "publishedCount": 0,
-      "signalCardCount": 1,
-      "archiveOnlyCount": 0,
-      "repetitionBlockedCount": 1,
-      "publishedIds": [],
-      "processedIds": [
-        "391c19846bd8bae0",
-        "5f2e188fe9a2ea37"
-      ],
-      "blockedCount": 1,
-      "blockedItems": [
-        {
-          "id": "391c19846bd8bae0",
-          "title": "Security flaw in Vatican’s ‘Click to Pray’ app leaves over 700,000 global users exposed — app has been leaking user data for over six months and still does",
-          "infrastructure_relevance_score": 0.87,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "cloud_capacity_relevance:0.32(hyperscalers)",
-            "semiconductor_relevance:0.22(gpu)",
-            "power_grid_relevance:0.22(power)"
-          ],
-          "extraction_quality_score": 1,
-          "source_domain_adapter": "generic",
-          "content_length": 1786,
-          "boilerplate_ratio": 0,
-          "repetition_blocked": false,
-          "repetition_block_reasons": [],
-          "repetition_check": null,
-          "expert_insight_complete": false,
-          "expert_insight_missing_fields": [
-            "named_companies"
-          ],
-          "reason": "expert_insight_missing_fields named_companies"
-        }
-      ],
-      "repetitionBlockedItems": [
-        {
-          "id": "5f2e188fe9a2ea37",
-          "title": "Supermicro H15 Servers Pair 6th Gen EPYC With MI350P GPU Systems and the Helios Rack",
-          "infrastructure_relevance_score": 0.914,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud, hpc)",
-            "data_center_relevance:0.42(data center)",
-            "cloud_capacity_relevance:0.32(hyperscalers)",
-            "semiconductor_relevance:0.52(amd, gpu)",
-            "power_grid_relevance:0.22(power)",
-            "cooling_relevance:0.30(thermal)",
-            "enterprise_ai_infrastructure_relevance:0.38(virtualization, networking)"
-          ],
-          "extraction_quality_score": 1,
-          "source_domain_adapter": "storagereview",
-          "content_length": 1742,
-          "boilerplate_ratio": 0,
-          "repetition_blocked": true,
-          "repetition_block_reasons": [
-            "repeated_sentence_ratio>0.12",
-            "heading_sequence_similarity>0.75",
-            "conclusion_similarity>0.7"
-          ],
-          "repetition_check": {
-            "compared_article_count": 20,
-            "repeated_sentence_ratio": 0.2857142857142857,
-            "repeated_paragraph_ratio": 0.3333333333333333,
-            "heading_sequence_similarity": 1,
-            "banned_phrase_count": 0,
-            "banned_phrase_counts": {},
-            "recent_banned_phrase_counts": {},
-            "ngram_overlap": 0.376,
-            "blueprint_repetition": 1,
-            "conclusion_similarity": 0.9511897312113418,
-            "repeated_sentence_count": 2,
-            "repeated_paragraph_count": 2,
-            "heading_sequence": [
-              "Cost Signal",
-              "Below The Accelerator Layer",
-              "Buyer Exposure",
-              "Planning Metric"
-            ],
-            "blocked": true,
-            "reasons": [
-              "repeated_sentence_ratio>0.12",
-              "heading_sequence_similarity>0.75",
-              "conclusion_similarity>0.7"
-            ]
-          },
-          "expert_insight_complete": true,
-          "expert_insight_missing_fields": [],
-          "reason": "repeated_sentence_ratio>0.12; heading_sequence_similarity>0.75; conclusion_similarity>0.7"
-        }
-      ],
-      "signalCardItems": [
-        {
-          "id": "391c19846bd8bae0",
-          "title": "Security flaw in Vatican’s ‘Click to Pray’ app leaves over 700,000 global users exposed — app has been leaking user data for over six months and still does",
-          "infrastructure_relevance_score": 0.87,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "cloud_capacity_relevance:0.32(hyperscalers)",
-            "semiconductor_relevance:0.22(gpu)",
-            "power_grid_relevance:0.22(power)"
-          ],
-          "extraction_quality_score": 1,
-          "source_domain_adapter": "generic",
-          "content_length": 1786,
-          "boilerplate_ratio": 0,
-          "repetition_blocked": false,
-          "repetition_block_reasons": [],
-          "repetition_check": null,
-          "expert_insight_complete": false,
-          "expert_insight_missing_fields": [
-            "named_companies"
-          ],
-          "reason": "expert_insight_missing_fields named_companies"
-        }
-      ],
-      "archiveOnlyItems": []
-    },
     {
       "at": "2026-07-26T09:21:59.296Z",
       "day": "2026-07-26",
@@ -52497,9 +52370,28 @@
         "token_budget": 60000,
         "call_budget": 40
       }
+    },
+    {
+      "at": "2026-09-04T12:07:18.253Z",
+      "day": "2026-09-04",
+      "slot": 2,
+      "publishedCount": 0,
+      "authoredColumn": {
+        "published": false,
+        "reason": "no_qualifying_story"
+      },
+      "llmUsage": {
+        "calls": 1,
+        "failures": 0,
+        "prompt_tokens": 1650,
+        "completion_tokens": 12,
+        "total_tokens": 1662,
+        "token_budget": 60000,
+        "call_budget": 40
+      }
     }
   ],
-  "lastRunAt": "2026-09-04T09:58:46.263Z",
+  "lastRunAt": "2026-09-04T12:07:18.253Z",
   "authored": {
     "lastColumnAt": "2026-08-28T19:25:07.344Z",
     "columnsByDay": {
