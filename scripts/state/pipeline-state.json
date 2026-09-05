@@ -44527,134 +44527,21 @@
         "1": true,
         "2": true
       }
+    },
+    "2026-09-06": {
+      "date": "2026-09-06",
+      "createdAt": "2026-09-05T15:23:53.987Z",
+      "refreshedAt": "2026-09-05T15:23:53.987Z",
+      "candidateWindowHours": 24,
+      "curatedItems": [],
+      "curatedIds": [],
+      "publishedIds": [],
+      "slotPublications": {
+        "0": true
+      }
     }
   },
   "runHistory": [
-    {
-      "at": "2026-07-27T10:50:22.772Z",
-      "day": "2026-07-27",
-      "slot": 2,
-      "publishedCount": 0,
-      "signalCardCount": 0,
-      "archiveOnlyCount": 0,
-      "repetitionBlockedCount": 2,
-      "publishedIds": [],
-      "processedIds": [
-        "e3287d1062714705",
-        "9eaa06b36ab66fa4"
-      ],
-      "blockedCount": 0,
-      "blockedItems": [],
-      "repetitionBlockedItems": [
-        {
-          "id": "e3287d1062714705",
-          "title": "What is circular financing in AI infrastructure, and should telecoms and data centre operators be worried?",
-          "infrastructure_relevance_score": 1,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "cloud_capacity_relevance:1.00(cloud capacity, hyperscaler, hyperscalers)",
-            "semiconductor_relevance:0.50(nvidia, amd)",
-            "power_grid_relevance:0.22(power)",
-            "capital_markets_relevance:1.00(funding, financing, debt)"
-          ],
-          "extraction_quality_score": 1,
-          "source_domain_adapter": "generic",
-          "content_length": 1745,
-          "boilerplate_ratio": 0,
-          "repetition_blocked": true,
-          "repetition_block_reasons": [
-            "heading_sequence_similarity>0.75",
-            "conclusion_similarity>0.7"
-          ],
-          "repetition_check": {
-            "compared_article_count": 20,
-            "repeated_sentence_ratio": 0,
-            "repeated_paragraph_ratio": 0,
-            "heading_sequence_similarity": 1,
-            "banned_phrase_count": 0,
-            "banned_phrase_counts": {},
-            "recent_banned_phrase_counts": {},
-            "ngram_overlap": 0.45217391304347826,
-            "blueprint_repetition": 1,
-            "conclusion_similarity": 0.9511897312113418,
-            "repeated_sentence_count": 0,
-            "repeated_paragraph_count": 0,
-            "heading_sequence": [
-              "Capital Move",
-              "Demand Evidence",
-              "Execution Risk",
-              "Milestone To Watch"
-            ],
-            "blocked": true,
-            "reasons": [
-              "heading_sequence_similarity>0.75",
-              "conclusion_similarity>0.7"
-            ]
-          },
-          "expert_insight_complete": true,
-          "expert_insight_missing_fields": [],
-          "reason": "heading_sequence_similarity>0.75; conclusion_similarity>0.7"
-        },
-        {
-          "id": "9eaa06b36ab66fa4",
-          "title": "California's largest AI data center project suing for access to 287 million gallons of Colorado River water, 0.03% of Imperial Valley’s supply — plaintiffs claim project equivalent to 160-acre farm amidst concern about jobs and reallocation of farmland",
-          "infrastructure_relevance_score": 1,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, ai data center, neocloud)",
-            "data_center_relevance:0.97(data center, data centers)",
-            "cloud_capacity_relevance:0.32(hyperscalers)",
-            "semiconductor_relevance:0.22(gpu)",
-            "power_grid_relevance:1.00(power, interconnection, megawatt)",
-            "cooling_relevance:0.34(cooling)"
-          ],
-          "extraction_quality_score": 1,
-          "source_domain_adapter": "generic",
-          "content_length": 1617,
-          "boilerplate_ratio": 0,
-          "repetition_blocked": true,
-          "repetition_block_reasons": [
-            "repeated_sentence_ratio>0.12",
-            "heading_sequence_similarity>0.75",
-            "conclusion_similarity>0.7"
-          ],
-          "repetition_check": {
-            "compared_article_count": 20,
-            "repeated_sentence_ratio": 0.6666666666666666,
-            "repeated_paragraph_ratio": 0.6666666666666666,
-            "heading_sequence_similarity": 1,
-            "banned_phrase_count": 0,
-            "banned_phrase_counts": {},
-            "recent_banned_phrase_counts": {},
-            "ngram_overlap": 0.47058823529411764,
-            "blueprint_repetition": 1,
-            "conclusion_similarity": 1,
-            "repeated_sentence_count": 4,
-            "repeated_paragraph_count": 4,
-            "heading_sequence": [
-              "Power-Market Move",
-              "Operating Lever",
-              "Grid Exposure",
-              "Metric To Watch"
-            ],
-            "blocked": true,
-            "reasons": [
-              "repeated_sentence_ratio>0.12",
-              "heading_sequence_similarity>0.75",
-              "conclusion_similarity>0.7"
-            ]
-          },
-          "expert_insight_complete": true,
-          "expert_insight_missing_fields": [],
-          "reason": "repeated_sentence_ratio>0.12; heading_sequence_similarity>0.75; conclusion_similarity>0.7"
-        }
-      ],
-      "signalCardItems": [],
-      "archiveOnlyItems": []
-    },
     {
       "at": "2026-07-27T17:04:22.919Z",
       "day": "2026-07-28",
@@ -52087,9 +51974,28 @@
         "token_budget": 60000,
         "call_budget": 40
       }
+    },
+    {
+      "at": "2026-09-05T15:23:53.987Z",
+      "day": "2026-09-06",
+      "slot": 0,
+      "publishedCount": 0,
+      "authoredColumn": {
+        "published": false,
+        "reason": "no_qualifying_story"
+      },
+      "llmUsage": {
+        "calls": 1,
+        "failures": 0,
+        "prompt_tokens": 1767,
+        "completion_tokens": 169,
+        "total_tokens": 1936,
+        "token_budget": 60000,
+        "call_budget": 40
+      }
     }
   ],
-  "lastRunAt": "2026-09-05T11:16:19.416Z",
+  "lastRunAt": "2026-09-05T15:23:53.987Z",
   "authored": {
     "lastColumnAt": "2026-08-28T19:25:07.344Z",
     "columnsByDay": {
