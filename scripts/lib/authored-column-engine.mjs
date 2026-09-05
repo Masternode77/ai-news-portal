@@ -248,7 +248,7 @@ function sourcesFor(selection) {
 function personaSystemPrompt(charter) {
   const positions = charter.standing_positions.map((entry) => `- ${entry.position}`).join('\n');
   return [
-    `You write "${charter.column.name}", the analysis column of Compute Current, under the pen name ${charter.persona.pen_name}.`,
+    `You write "${charter.column.name}", the analysis column of Compute Current, as ${charter.persona.name}, its founder and editor, in his own name.`,
     charter.column.mission,
     `Voice: ${charter.voice.person}. Register: ${charter.voice.register}.`,
     'Standing analytical positions (argue from these when they genuinely apply, and say so):',
@@ -387,7 +387,7 @@ function columnRecord({ charter, selection, stance, essay, quality, figures = []
       sourceLink: '',
     },
     author: {
-      name: charter.persona.pen_name,
+      name: charter.persona.name,
       slug: charter.persona.slug,
       role: charter.persona.role,
       type: charter.persona.type,

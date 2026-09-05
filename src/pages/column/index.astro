@@ -21,7 +21,7 @@ const dateFormatter = new Intl.DateTimeFormat('en-US', { month: 'short', day: 'n
       <h1>{charter.column.name}</h1>
       <p class="policy-lede">{charter.column.mission}</p>
       <p class="column-index-byline">
-        Written by <a href={`/author/${charter.persona.slug}/`}>{charter.persona.pen_name}</a> · {charter.column.cadence}
+        Written by <a href={`/author/${charter.persona.slug}/`}>{charter.persona.name}</a> · {charter.column.cadence}
       </p>
     </section>
 
@@ -54,7 +54,7 @@ const dateFormatter = new Intl.DateTimeFormat('en-US', { month: 'short', day: 'n
     <AdSlot variant="box" />
 
     <aside class="column-persona-note" aria-label="About the column">
-      <strong>{charter.persona.pen_name}</strong>
+      <strong>{charter.persona.name}</strong>
       <p>{charter.persona.bio_public}</p>
       <nav class="policy-link-row" aria-label="Column reference links">
         <a href={`/author/${charter.persona.slug}/`}>About the author</a>
