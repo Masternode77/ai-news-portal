@@ -25,7 +25,7 @@ import { buildRssItems } from '../scripts/lib/rss-builder.mjs';
 import { buildSitemapEntries } from '../scripts/lib/sitemap-builder.mjs';
 import { publicProductFitResult } from '../scripts/lib/public-product-fit.mjs';
 import { editorialArtworkDescriptor } from '../scripts/lib/image-store.mjs';
-import { reconcileEiaPublicInventory } from '../scripts/restore-eia-public-inventory.mjs';
+import { reconcileEiaPublicInventory, resolveSourceTexts } from '../scripts/restore-eia-public-inventory.mjs';
 
 const imageGeneratorUrl = pathToFileURL(path.resolve('scripts/lib/image-generator.mjs')).href;
 
@@ -198,4 +198,70 @@ test('fossil generation is treated as power infrastructure, not paleontology', (
   const [record] = buildEiaRestorationInventory(sourceTexts);
 
   assert.equal(publicProductFitResult(record).ok, true);
+});
+
+function eiaArticleHtml(text) {
+  return `<html><head><title>Today in Energy</title></head><body><div class="tie-article"><h1>Headline</h1><p>${text}</p></div></body></html>`;
+}
+
+const restorationEvidence = [
+  'EIA source evidence documents data centers, electricity demand, grid capacity, utilities, cooling, server load, generation, transmission, interconnection, and regional power planning.',
+  'The analysis describes data center operators, capacity planners, investors, and electricity suppliers responding to infrastructure demand and facility schedules.',
+].join(' ').repeat(12);
+
+test('restoration uses live EIA text whenever the article is served in full', async () => {
+  const specs = eiaRestorationSpecs().slice(0, 2);
+  const logs = [];
+  const texts = await resolveSourceTexts(specs, {
+    fetchText: async () => eiaArticleHtml(restorationEvidence),
+    storedRecords: [],
+    log: (line) => logs.push(line),
+    retryDelayMs: 0,
+  });
+
+  assert.deepEqual(Object.keys(texts), specs.map((spec) => spec.id));
+  assert.ok(texts[specs[0].id].length >= 500);
+  assert.deepEqual(logs, []);
+});
+
+test('restoration reuses the verified committed text when EIA serves a truncated page', async () => {
+  const specs = eiaRestorationSpecs().slice(0, 1);
+  const stored = buildEiaRestorationInventory({ [specs[0].id]: restorationEvidence });
+  const logs = [];
+  let calls = 0;
+  const texts = await resolveSourceTexts(specs, {
+    fetchText: async () => { calls += 1; return eiaArticleHtml('Access denied.'); },
+    storedRecords: stored,
+    log: (line) => logs.push(line),
+    retryDelayMs: 0,
+  });
+
+  assert.equal(calls, 2, 'a short page is retried once before falling back');
+  assert.equal(texts[specs[0].id], stored[0].extraction_artifact.cleaned_extracted_text);
+  assert.equal(buildEiaRestorationInventory(texts)[0].extraction_artifact.extracted_text_sha256, stored[0].extraction_artifact.extracted_text_sha256);
+  assert.match(logs[0], /live extraction too short \(\d+\); reusing verified text/);
+});
+
+test('restoration fails closed when neither live nor verified committed text exists', async () => {
+  const specs = eiaRestorationSpecs().slice(0, 1);
+  const wrongSource = buildEiaRestorationInventory({ [specs[0].id]: restorationEvidence }).map((record) => ({
+    ...record,
+    extraction_artifact: { ...record.extraction_artifact, source_url: 'https://www.eia.gov/todayinenergy/detail.php?id=1' },
+  }));
+  const tampered = buildEiaRestorationInventory({ [specs[0].id]: restorationEvidence }).map((record) => ({
+    ...record,
+    extraction_artifact: { ...record.extraction_artifact, cleaned_extracted_text: `${record.extraction_artifact.cleaned_extracted_text} edited.` },
+  }));
+
+  for (const storedRecords of [[], wrongSource, tampered]) {
+    await assert.rejects(
+      () => resolveSourceTexts(specs, {
+        fetchText: async () => { throw Object.assign(new Error('source_text_fetch_failed: timeout'), { code: 'timeout' }); },
+        storedRecords,
+        log: () => {},
+        retryDelayMs: 0,
+      }),
+      /source extraction unavailable: .*live fetch failed \(timeout\) and the committed inventory holds no verified text/,
+    );
+  }
 });
