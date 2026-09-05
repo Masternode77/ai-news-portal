@@ -27,10 +27,11 @@ sources:
     status: active_feed
     text_use_basis: unreviewed
     image_use_basis: unreviewed
-    terms_url:
-    reviewed_at:
+    terms_url: https://siliconangle.com/terms-of-use/
+    reviewed_at: 2026-09-05
     allow_text_use: false
     allow_image_reuse: false
+    rights_note: link-only low risk (headline + link); no copying, republishing or redistribution of material
   - id: bloomberg-technology
     name: Bloomberg Technology
     domain: bloomberg.com
@@ -42,10 +43,11 @@ sources:
     status: active_feed
     text_use_basis: unreviewed
     image_use_basis: unreviewed
-    terms_url:
-    reviewed_at:
+    terms_url: https://www.bloomberg.com/notices/tos
+    reviewed_at: 2026-09-05
     allow_text_use: false
     allow_image_reuse: false
+    rights_note: ask first; links to public pages expressly allowed, but noncommercial-only licence, scraper ban and no-database clause apply
   - id: nvidia-blog
     name: NVIDIA Blog
     domain: blogs.nvidia.com
@@ -57,10 +59,11 @@ sources:
     status: active_feed
     text_use_basis: unreviewed
     image_use_basis: unreviewed
-    terms_url:
-    reviewed_at:
+    terms_url: https://www.nvidia.com/en-eu/about-nvidia/terms-of-service/
+    reviewed_at: 2026-09-05
     allow_text_use: false
     allow_image_reuse: false
+    rights_note: link-only low risk from the feed; scraper clause forbids fetching article pages; personal non-commercial use only
   - id: google-cloud-blog
     name: Google Cloud Blog
     domain: cloud.google.com
@@ -72,10 +75,11 @@ sources:
     status: active_feed
     text_use_basis: unreviewed
     image_use_basis: unreviewed
-    terms_url:
-    reviewed_at:
+    terms_url: https://policies.google.com/terms
+    reviewed_at: 2026-09-05
     allow_text_use: false
     allow_image_reuse: false
+    rights_note: link-only low risk; generic Google terms, no blog-specific page found
   - id: aws-news-blog
     name: AWS News Blog
     domain: aws.amazon.com
@@ -87,10 +91,11 @@ sources:
     status: active_feed
     text_use_basis: unreviewed
     image_use_basis: unreviewed
-    terms_url:
-    reviewed_at:
+    terms_url: https://aws.amazon.com/terms/
+    reviewed_at: 2026-09-05
     allow_text_use: false
     allow_image_reuse: false
+    rights_note: link-only low risk; personal use licence, no commercial use or data mining; only docs.aws.amazon.com is CC-BY-SA
   - id: microsoft-azure-blog
     name: Microsoft Azure Blog
     domain: azure.microsoft.com
@@ -102,10 +107,11 @@ sources:
     status: active_feed
     text_use_basis: unreviewed
     image_use_basis: unreviewed
-    terms_url:
-    reviewed_at:
+    terms_url: https://www.microsoft.com/en-us/legal/terms-of-use
+    reviewed_at: 2026-09-05
     allow_text_use: false
     allow_image_reuse: false
+    rights_note: link-only low risk; personal and non-commercial use only
   - id: techcrunch-ai
     name: TechCrunch AI
     domain: techcrunch.com
@@ -117,10 +123,11 @@ sources:
     status: active_feed
     text_use_basis: unreviewed
     image_use_basis: unreviewed
-    terms_url:
-    reviewed_at:
+    terms_url: https://techcrunch.com/rss-terms-of-use/
+    reviewed_at: 2026-09-05
     allow_text_use: false
     allow_image_reuse: false
+    rights_note: link-only permitted explicitly: show feed content as shipped with attribution and link, no advertising inside the feed block
   - id: venturebeat-ai
     name: VentureBeat AI
     domain: venturebeat.com
@@ -132,10 +139,11 @@ sources:
     status: active_feed
     text_use_basis: unreviewed
     image_use_basis: unreviewed
-    terms_url:
-    reviewed_at:
+    terms_url: https://venturebeat.com/terms-of-service/
+    reviewed_at: 2026-09-05
     allow_text_use: false
     allow_image_reuse: false
+    rights_note: link-only low risk; terms page rate-limited (429) from the runner, feed copyright VentureBeat
   - id: theregister-data-centre
     name: The Register
     domain: theregister.com
@@ -147,10 +155,11 @@ sources:
     status: active_feed
     text_use_basis: unreviewed
     image_use_basis: unreviewed
-    terms_url:
-    reviewed_at:
+    terms_url: https://www.theregister.com/profile/terms_and_conditions_of_use
+    reviewed_at: 2026-09-05
     allow_text_use: false
     allow_image_reuse: false
+    rights_note: link-only low risk; personal non-commercial use, no copying or distribution; registered feed path returns 404
   - id: datacenterdynamics
     name: Data Center Dynamics
     domain: datacenterdynamics.com
@@ -162,10 +171,11 @@ sources:
     status: active_feed
     text_use_basis: unreviewed
     image_use_basis: unreviewed
-    terms_url:
-    reviewed_at:
+    terms_url: https://www.datacenterdynamics.com/en/terms-and-conditions/
+    reviewed_at: 2026-09-05
     allow_text_use: false
     allow_image_reuse: false
+    rights_note: link-only low risk; no copying or distribution for commercial use, no database of downloaded material
   - id: datacenterknowledge
     name: Data Center Knowledge
     domain: datacenterknowledge.com
@@ -177,10 +187,11 @@ sources:
     status: active_feed
     text_use_basis: unreviewed
     image_use_basis: unreviewed
-    terms_url:
-    reviewed_at:
+    terms_url: https://www.informatechtarget.com/terms-of-use/
+    reviewed_at: 2026-09-05
     allow_text_use: false
     allow_image_reuse: false
+    rights_note: link-only low risk; Informa TechTarget terms ban data mining and robots; reprints via Wright's Media
   - id: servethehome
     name: ServeTheHome
     domain: servethehome.com
@@ -192,10 +203,11 @@ sources:
     status: active_feed
     text_use_basis: unreviewed
     image_use_basis: unreviewed
-    terms_url:
-    reviewed_at:
+    terms_url: https://www.servethehome.com/about/editorial-copyright-policies/
+    reviewed_at: 2026-09-05
     allow_text_use: false
     allow_image_reuse: false
+    rights_note: link-only permitted explicitly: up to 300 consecutive characters plus one image when linking back
   - id: toms-hardware
     name: Tom's Hardware
     domain: tomshardware.com
@@ -207,10 +219,11 @@ sources:
     status: active_feed
     text_use_basis: unreviewed
     image_use_basis: unreviewed
-    terms_url:
-    reviewed_at:
+    terms_url: https://futureplc.com/terms-and-conditions-us/
+    reviewed_at: 2026-09-05
     allow_text_use: false
     allow_image_reuse: false
+    rights_note: link-only permitted explicitly by Future's linking rule; no commercial use of content without a licence
   - id: storagereview
     name: StorageReview
     domain: storagereview.com
@@ -223,9 +236,10 @@ sources:
     text_use_basis: unreviewed
     image_use_basis: unreviewed
     terms_url:
-    reviewed_at:
+    reviewed_at: 2026-09-05
     allow_text_use: false
     allow_image_reuse: false
+    rights_note: link-only low risk; no terms page found, default copyright Flying Pig Ventures
   - id: semiconductor-engineering
     name: Semiconductor Engineering
     domain: semiengineering.com
@@ -237,10 +251,11 @@ sources:
     status: active_feed
     text_use_basis: unreviewed
     image_use_basis: unreviewed
-    terms_url:
-    reviewed_at:
+    terms_url: https://semiengineering.com/terms-of-service/
+    reviewed_at: 2026-09-05
     allow_text_use: false
     allow_image_reuse: false
+    rights_note: link-only low risk; non-commercial personal viewing only, no copying
   - id: datacenterfrontier
     name: Data Center Frontier
     domain: datacenterfrontier.com
@@ -253,9 +268,10 @@ sources:
     text_use_basis: unreviewed
     image_use_basis: unreviewed
     terms_url:
-    reviewed_at:
+    reviewed_at: 2026-09-05
     allow_text_use: false
     allow_image_reuse: false
+    rights_note: blocked; feed returns 400 and the Endeavor terms page is gone (404)
   - id: datacenterpost
     name: Data Center POST
     domain: datacenterpost.com
@@ -268,9 +284,10 @@ sources:
     text_use_basis: unreviewed
     image_use_basis: unreviewed
     terms_url:
-    reviewed_at:
+    reviewed_at: 2026-09-05
     allow_text_use: false
     allow_image_reuse: false
+    rights_note: link-only low risk; no terms page found, default copyright iMiller Public Relations
   - id: cloudflare-blog
     name: Cloudflare Blog
     domain: blog.cloudflare.com
@@ -282,10 +299,11 @@ sources:
     status: active_feed
     text_use_basis: unreviewed
     image_use_basis: unreviewed
-    terms_url:
-    reviewed_at:
+    terms_url: https://www.cloudflare.com/website-terms/
+    reviewed_at: 2026-09-05
     allow_text_use: false
     allow_image_reuse: false
+    rights_note: link-only low risk; website terms, no feed-specific clause
   - id: meta-engineering
     name: Engineering at Meta
     domain: engineering.fb.com
@@ -297,10 +315,11 @@ sources:
     status: active_feed
     text_use_basis: unreviewed
     image_use_basis: unreviewed
-    terms_url:
-    reviewed_at:
+    terms_url: https://www.facebook.com/policies
+    reviewed_at: 2026-09-05
     allow_text_use: false
     allow_image_reuse: false
+    rights_note: link-only low risk; terms unreadable from the runner (HTTP 400)
   - id: hugging-face-blog
     name: Hugging Face Blog
     domain: huggingface.co
@@ -312,10 +331,11 @@ sources:
     status: active_feed
     text_use_basis: unreviewed
     image_use_basis: unreviewed
-    terms_url:
-    reviewed_at:
+    terms_url: https://huggingface.co/terms-of-service
+    reviewed_at: 2026-09-05
     allow_text_use: false
     allow_image_reuse: false
+    rights_note: link-only low risk; no reproduction or republishing of proprietary materials without written permission
   - id: uptime-institute-journal
     name: Uptime Institute Journal
     domain: uptimeinstitute.com
@@ -327,10 +347,11 @@ sources:
     status: active_feed
     text_use_basis: unreviewed
     image_use_basis: unreviewed
-    terms_url:
-    reviewed_at:
+    terms_url: https://uptimeinstitute.com/terms-of-use
+    reviewed_at: 2026-09-05
     allow_text_use: false
     allow_image_reuse: false
+    rights_note: ask first; internal information use only, no redistribution or republishing without written approval
   - id: hpcwire
     name: HPCwire
     domain: hpcwire.com
@@ -342,10 +363,11 @@ sources:
     status: active_feed
     text_use_basis: unreviewed
     image_use_basis: unreviewed
-    terms_url:
-    reviewed_at:
+    terms_url: https://www.taborcommunications.com/terms-of-use/
+    reviewed_at: 2026-09-05
     allow_text_use: false
     allow_image_reuse: false
+    rights_note: link-only low risk from the feed; Tabor terms ban data mining and commercial exploitation; article pages return 403
   - id: insidehpc
     name: insideHPC
     domain: insidehpc.com
@@ -358,9 +380,10 @@ sources:
     text_use_basis: unreviewed
     image_use_basis: unreviewed
     terms_url:
-    reviewed_at:
+    reviewed_at: 2026-09-05
     allow_text_use: false
     allow_image_reuse: false
+    rights_note: blocked; TLS handshake failure from the runner
   - id: blocks-and-files
     name: Blocks & Files
     domain: blocksandfiles.com
@@ -372,10 +395,11 @@ sources:
     status: active_feed
     text_use_basis: unreviewed
     image_use_basis: unreviewed
-    terms_url:
-    reviewed_at:
+    terms_url: https://www.blocksandfiles.com/tc
+    reviewed_at: 2026-09-05
     allow_text_use: false
     allow_image_reuse: false
+    rights_note: link-only low risk; Situation Publishing terms, personal non-commercial use
   - id: utility-dive
     name: Utility Dive
     domain: utilitydive.com
@@ -387,10 +411,11 @@ sources:
     status: active_feed
     text_use_basis: unreviewed
     image_use_basis: unreviewed
-    terms_url:
-    reviewed_at:
+    terms_url: https://www.informatechtarget.com/terms-of-use/
+    reviewed_at: 2026-09-05
     allow_text_use: false
     allow_image_reuse: false
+    rights_note: link-only low risk; Informa TechTarget terms ban data mining and robots
   - id: power-engineering
     name: Power Engineering
     domain: power-eng.com
@@ -403,9 +428,10 @@ sources:
     text_use_basis: unreviewed
     image_use_basis: unreviewed
     terms_url:
-    reviewed_at:
+    reviewed_at: 2026-09-05
     allow_text_use: false
     allow_image_reuse: false
+    rights_note: blocked; site returns 403 to the runner
   - id: capacity-media
     name: Capacity Media
     domain: capacitymedia.com
@@ -417,10 +443,11 @@ sources:
     status: active_feed
     text_use_basis: unreviewed
     image_use_basis: unreviewed
-    terms_url:
-    reviewed_at:
+    terms_url: https://www.capacityglobal.com/terms-conditions/
+    reviewed_at: 2026-09-05
     allow_text_use: false
     allow_image_reuse: false
+    rights_note: ask first; Delinian terms prohibit copying, summarising, storing, syndicating or scraping any content without written consent
   - id: doe-newsroom
     name: U.S. Department of Energy
     domain: energy.gov

@@ -82,7 +82,7 @@ Audit output omits `git status` so running this writer cannot make its own repor
 - The legacy plaintext `ADMIN_PASSWORD` contract is not active: authentication requires `ADMIN_USERNAME`, `ADMIN_PASSWORD_HASH`, and `ADMIN_SESSION_SECRET`=true.
 - Implemented admin controls: structured scrypt password hashes use timing-safe verification; validated session secrets sign HttpOnly, SameSite=Strict cookies; mutating requests require CSRF; local failed-login throttling and audit logging are present.
 - Remaining external production dependency: login fails closed until a distributed Vercel Firewall rate-limit rule is published, tested, and attested with `ADMIN_VERCEL_RATE_LIMIT_READY=true`.
-- Existing env constants include image, OpenRouter, Supabase, and pipeline settings in `scripts/lib/constants.mjs` (11221 bytes).
+- Existing env constants include image, OpenRouter, Supabase, and pipeline settings in `scripts/lib/constants.mjs` (11643 bytes).
 
 ## Deployment Platform Assumptions
 
