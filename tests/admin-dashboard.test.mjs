@@ -136,7 +136,7 @@ test('authored columns surface in the dashboard with column routes and edit link
       primary_category: 'Power Grid',
       public_status: 'published',
       publishedAt: '2026-08-17T14:00:00.000Z',
-      author: { name: 'Josh Inn' },
+      author: { name: 'Josh Jiwoon Inn' },
     }],
   });
   const row = model.articles.find((entry) => entry.id === 'col_abc123');

@@ -1,0 +1,58 @@
+name: Terms Probe
+
+# Manual rights research helper. Fetches publisher pages (terms of use, RSS
+# policies, feed documents) from a GitHub-hosted runner, strips markup, and
+# prints the passages that match a pattern with surrounding context, so the
+# registry's rights review can quote what a publisher actually says.
+on:
+  workflow_dispatch:
+    inputs:
+      urls:
+        description: Space-separated URLs to fetch
+        required: true
+      pattern:
+        description: Case-insensitive extended regex; passages containing it are printed with context
+        required: false
+        default: 'rss|feed|syndicat|reproduc|republish|headline|commercial|aggregat|scrap|crawl|licen[cs]e|copyright'
+      links:
+        description: Also list hrefs on each page whose URL or text matches this regex (empty to skip)
+        required: false
+        default: 'terms|legal|copyright|rss|syndicat|licen'
+
+permissions:
+  contents: read
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - name: Probe pages
+        env:
+          URLS: ${{ inputs.urls }}
+          PATTERN: ${{ inputs.pattern }}
+          LINKS: ${{ inputs.links }}
+        run: |
+          set -u
+          UA='Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0 Safari/537.36'
+          for u in $URLS; do
+            body="$(mktemp)"; text="$(mktemp)"
+            meta=$(curl -sS -o "$body" -w '%{http_code} %{content_type} %{url_effective}' -L --max-time 30 -A "$UA" \
+              -H 'accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8' "$u" || echo "000 - $u")
+            bytes=$(wc -c < "$body")
+            echo "=== $u -> $meta | bytes=$bytes"
+            if [ -n "$LINKS" ]; then
+              echo "--- links matching /$LINKS/:"
+              (grep -oiE '<a [^>]*href="[^"]+"[^>]*>[^<]{0,80}' "$body" || true) \
+                | sed -E 's/<a [^>]*href="([^"]+)"[^>]*>/\1 | /' \
+                | grep -iE "$LINKS" | sort -u | head -12 | sed 's/^/    /'
+            fi
+            # feed-level rights statements
+            (grep -oiE '<(copyright|dc:rights|rights)[^>]*>[^<]{0,300}' "$body" || true) | head -3 | sed 's/^/    feed-rights: /'
+            sed -E 's/<script[^>]*>.*<\/script>//g; s/<style[^>]*>.*<\/style>//g; s/<[^>]+>/ /g; s/&nbsp;/ /g; s/&amp;/\&/g; s/&#8217;/'"'"'/g; s/&#x27;/'"'"'/g' "$body" | tr '\n\r\t' '   ' | tr -s ' ' > "$text"
+            if [ -n "$PATTERN" ]; then
+              echo "--- passages matching /$PATTERN/:"
+              (grep -oiE ".{0,240}($PATTERN).{0,240}" "$text" || true) | head -14 | sed 's/^/    /'
+            fi
+            rm -f "$body" "$text"
+          done

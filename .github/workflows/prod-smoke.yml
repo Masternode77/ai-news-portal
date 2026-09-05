@@ -37,7 +37,7 @@ jobs:
           echo "home column nav: $(printf '%s' "$home" | grep -c 'href="/column/"' || true)"
           echo "home column hero: $(printf '%s' "$home" | grep -c 'column-hero' || true)"
           column_index="$(curl -sSL --max-time 20 "$base/column/" || true)"
-          echo "column index persona: $(printf '%s' "$column_index" | grep -c 'Josh Inn' || true)"
+          echo "column index persona: $(printf '%s' "$column_index" | grep -c 'Josh Jiwoon Inn' || true)"
           echo "column index cards: $(printf '%s' "$column_index" | grep -c 'column-list-card' || true)"
           rss="$(curl -sSL --max-time 20 "$base/rss.xml" || true)"
           echo "rss column items: $(printf '%s' "$rss" | grep -c '/column/' || true)"

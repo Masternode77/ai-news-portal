@@ -15,7 +15,7 @@ const dateFormatter = new Intl.DateTimeFormat('en-US', { month: 'short', day: 'n
 const structuredData = {
   '@context': 'https://schema.org',
   '@type': 'Person',
-  name: charter.persona.pen_name,
+  name: charter.persona.name,
   url: `${SITE.url}/author/${charter.persona.slug}/`,
   jobTitle: charter.persona.role,
   description: charter.persona.disclosure_line,
@@ -23,7 +23,7 @@ const structuredData = {
 };
 ---
 <Layout
-  title={`${charter.persona.pen_name} | ${SITE.name}`}
+  title={`${charter.persona.name} | ${SITE.name}`}
   description={charter.persona.bio_public}
   canonicalPath={`/author/${charter.persona.slug}/`}
 >
@@ -32,7 +32,7 @@ const structuredData = {
     <a class="back-link" href="/column/">{charter.column.name}</a>
     <article class="policy-page">
       <p class="eyebrow">{charter.persona.role}</p>
-      <h1>{charter.persona.pen_name}</h1>
+      <h1>{charter.persona.name}</h1>
       <p class="policy-lede">{charter.persona.bio_public}</p>
 
       <section>
@@ -40,9 +40,11 @@ const structuredData = {
         <p>{charter.persona.disclosure_line}</p>
         <p>
           Essays are drafted with AI assistance from source-linked evidence, must pass the site&rsquo;s
-          quality gates before publication, and can be corrected after the fact by the operator.
-          Full detail lives in the <a href="/ai-disclosure/">AI-assisted disclosure</a> and
-          <a href="/editorial-policy/">editorial policy</a>.
+          quality gates before publication, and are corrected after the fact by the author when a
+          reader or a source shows an error. Each essay is an original work of analysis and opinion,
+          not a reproduction of any publisher&rsquo;s article. Full detail lives in the
+          <a href="/ai-disclosure/">AI-assisted disclosure</a>, the
+          <a href="/editorial-policy/">editorial policy</a>, and the <a href="/terms/">terms of use</a>.
         </p>
       </section>
 
