@@ -1,0 +1,16 @@
+{
+  "baseline": "d740f4ea5358656b5a1c655003484933f9993948",
+  "checks": {
+    "original_root_editorial_policy_preserved": true,
+    "scoped_editorial_acceptance_unchanged": true,
+    "all_publication_block_conditions_unchanged": true,
+    "legacy_plan_body_and_explicit_approvals_preserved": true,
+    "runtime_config_workflows_application_code_unchanged": true,
+    "validator_exception_is_only_runtime_code_change": true,
+    "modified_markdown_relative_links_resolve": true,
+    "final_audit_links_and_json_valid": true,
+    "original_checkout_change_preserved": true
+  },
+  "bad_links": [],
+  "note": "Static checks validate retained policy text and changed-file scope; they do not assert live system health or dynamic agent behavior."
+}

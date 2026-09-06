@@ -30,7 +30,8 @@ export function validateFinalReport(text = '') {
       continue;
     }
     const body = sectionBody(report, pattern);
-    if (!body || /^[-*]\s*(?:none|n\/a)\.?$/i.test(body)) failures.push(`empty_${name}`);
+    const explicitNoRisks = name === 'remaining_risks' && /^[-*]\s*none\.?$/i.test(body);
+    if (!body || (!explicitNoRisks && /^[-*]\s*(?:none|n\/a)\.?$/i.test(body))) failures.push(`empty_${name}`);
   }
 
   if (!/\b(?:pass|passed|green|ok|failed|blocked|skipped)\b/i.test(report)) {

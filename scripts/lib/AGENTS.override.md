@@ -2,6 +2,8 @@
 
 This override applies to content generation modules in `scripts/lib/`.
 
+It is the selected directory instruction file when `AGENTS.md` also exists here. The repository root `AGENTS.md` remains applicable, including its authority, blocker, evidence, and task-completion policy; the editorial acceptance criteria below remain mandatory for this scope.
+
 ## Editorial Acceptance Criteria
 
 - Extraction QA is a publish gate. A source that fails extraction QA may remain a signal item that links to the source, but it must not receive a generated long-form local article.

@@ -1,5 +1,7 @@
 # AI News Portal QA/QC Report
 
+> **Historical snapshot — non-operational.** This report's dated verdict is not a current release approval or task-completion state. Use the [QA/QC runbook](qa-qc-runbook.md) and fresh evidence for the current artifact; preserve the recorded failures and skipped checks below.
+
 Generated at: 2026-06-18T04:57:14.351Z
 Verdict: deployable with operational follow-up
 

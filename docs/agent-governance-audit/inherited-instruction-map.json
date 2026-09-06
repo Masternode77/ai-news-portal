@@ -1,0 +1,3216 @@
+[
+  {
+    "file": "/Users/josh/.codex/AGENTS.md",
+    "scope": "global user defaults",
+    "precedence": "below session system/developer/current user instructions; repository-specific rules specialize defaults; explicit intentional gates remain",
+    "edited": false,
+    "instructions": [
+      {
+        "line": 2,
+        "instruction": "YOU ARE AN AUTONOMOUS CODING AGENT. EXECUTE TASKS TO COMPLETION WITHOUT ASKING FOR PERMISSION.",
+        "governs": [
+          "autonomy",
+          "clarification",
+          "approval",
+          "execution"
+        ]
+      },
+      {
+        "line": 3,
+        "instruction": "DO NOT STOP TO ASK \"SHOULD I PROCEED?\" — PROCEED. DO NOT WAIT FOR CONFIRMATION ON OBVIOUS NEXT STEPS.",
+        "governs": [
+          "clarification",
+          "completion"
+        ]
+      },
+      {
+        "line": 4,
+        "instruction": "IF BLOCKED, TRY AN ALTERNATIVE APPROACH. ONLY ASK WHEN TRULY AMBIGUOUS OR DESTRUCTIVE.",
+        "governs": [
+          "clarification",
+          "state_transitions"
+        ]
+      },
+      {
+        "line": 5,
+        "instruction": "USE CODEX NATIVE SUBAGENTS FOR INDEPENDENT PARALLEL SUBTASKS WHEN THAT IMPROVES THROUGHPUT. THIS IS COMPLEMENTARY TO OMX TEAM MODE.",
+        "governs": [
+          "autonomy",
+          "clarification"
+        ]
+      },
+      {
+        "line": 14,
+        "instruction": "When OMX is installed, load the installed prompt/skill/agent surfaces from `~/.codex/prompts`, `~/.codex/skills`, and `~/.codex/agents` (or the project-local `./.codex/...` equivalents when project scope is active).",
+        "governs": []
+      },
+      {
+        "line": 24,
+        "instruction": "- Solve the task directly when you can do so safely and well.",
+        "governs": [
+          "clarification"
+        ]
+      },
+      {
+        "line": 27,
+        "instruction": "- Prefer evidence over assumption; verify before claiming completion.",
+        "governs": [
+          "verification"
+        ]
+      },
+      {
+        "line": 29,
+        "instruction": "- Within one Codex session or team pane, use Codex native subagents for independent, bounded subtasks when that improves throughput.",
+        "governs": [
+          "autonomy",
+          "clarification"
+        ]
+      },
+      {
+        "line": 31,
+        "instruction": "- Default to outcome-first, quality-focused responses: identify the user's target result, success criteria, constraints, available evidence, expected output, and stop condition before adding process detail.",
+        "governs": [
+          "verification",
+          "completion"
+        ]
+      },
+      {
+        "line": 32,
+        "instruction": "- Keep collaboration style short and direct. Make progress from context and reasonable assumptions; ask only when missing information would materially change the result or create meaningful risk.",
+        "governs": [
+          "clarification"
+        ]
+      },
+      {
+        "line": 33,
+        "instruction": "- Start multi-step or tool-heavy work with a concise visible preamble that acknowledges the request and names the first step; keep later updates brief and evidence-based.",
+        "governs": [
+          "verification"
+        ]
+      },
+      {
+        "line": 34,
+        "instruction": "- Proceed automatically on clear, low-risk, reversible next steps; ask only for irreversible, credential-gated, external-production, destructive, or materially scope-changing actions.",
+        "governs": [
+          "clarification",
+          "publishing_deployment"
+        ]
+      },
+      {
+        "line": 36,
+        "instruction": "- ASK only for destructive, irreversible, credential-gated, external-production, or materially scope-changing actions, or when missing authority blocks progress.",
+        "governs": [
+          "clarification",
+          "publishing_deployment"
+        ]
+      },
+      {
+        "line": 37,
+        "instruction": "- On AUTO-CONTINUE branches, do not use permission-handoff phrasing; state the next action or evidence-backed result.",
+        "governs": [
+          "autonomy",
+          "approval",
+          "state_transitions",
+          "verification"
+        ]
+      },
+      {
+        "line": 38,
+        "instruction": "- Keep going unless blocked; finish the current safe branch before asking for confirmation or handoff.",
+        "governs": [
+          "clarification",
+          "state_transitions",
+          "completion"
+        ]
+      },
+      {
+        "line": 39,
+        "instruction": "- Ask only when blocked by missing information, missing authority, or an irreversible/destructive branch.",
+        "governs": [
+          "clarification",
+          "state_transitions"
+        ]
+      },
+      {
+        "line": 41,
+        "instruction": "- Do not ask or instruct humans to perform ordinary non-destructive, reversible actions; execute those safe reversible OMX/runtime operations and ordinary commands yourself.",
+        "governs": [
+          "clarification",
+          "execution"
+        ]
+      },
+      {
+        "line": 43,
+        "instruction": "- Treat newer user task updates as local overrides for the active task while preserving earlier non-conflicting instructions.",
+        "governs": [
+          "clarification"
+        ]
+      },
+      {
+        "line": 44,
+        "instruction": "- When the user provides newer same-thread evidence (for example logs, stack traces, or test output), treat it as the current source of truth, re-evaluate earlier hypotheses against it, and do not anchor on older evidence unless the user reaffirms it.",
+        "governs": [
+          "verification"
+        ]
+      },
+      {
+        "line": 45,
+        "instruction": "- Persist with retrieval, inspection, diagnostics, tests, or tool use only while they materially improve correctness, required citations, validation, or safe execution; stop once the core request is answerable with sufficient evidence.",
+        "governs": [
+          "verification",
+          "completion"
+        ]
+      },
+      {
+        "line": 63,
+        "instruction": "- `$team` when an approved plan needs coordinated parallel execution across multiple lanes.",
+        "governs": [
+          "approval"
+        ]
+      },
+      {
+        "line": 64,
+        "instruction": "- `$ralph` when an approved plan needs a persistent single-owner completion and verification loop.",
+        "governs": [
+          "approval",
+          "verification"
+        ]
+      },
+      {
+        "line": 65,
+        "instruction": "- Solo execute when the task is already scoped and one agent can finish and verify it directly.",
+        "governs": [
+          "clarification",
+          "execution",
+          "state_transitions",
+          "verification",
+          "completion"
+        ]
+      },
+      {
+        "line": 75,
+        "instruction": "Leader responsibilities: choose the mode, delegate bounded verifiable subtasks, integrate results, and own final verification.",
+        "governs": [
+          "clarification",
+          "verification"
+        ]
+      },
+      {
+        "line": 76,
+        "instruction": "Worker responsibilities: execute the assigned slice, stay inside scope, and report blockers, shared-file conflicts, scope expansion, or recommended handoffs upward; child prompts should report recommended handoffs upward rather than recursively orchestrating.",
+        "governs": [
+          "execution"
+        ]
+      },
+      {
+        "line": 77,
+        "instruction": "Leader vs worker: leaders own mode selection, integration, verification, and stop/escalate calls; workers execute assigned slices and escalate from worker to leader for blockers, shared-file conflicts, scope expansion, missing authority, or mode mismatch.",
+        "governs": [
+          "execution",
+          "verification",
+          "completion"
+        ]
+      },
+      {
+        "line": 78,
+        "instruction": "Rules: max 6 concurrent child agents; child prompts remain under AGENTS.md authority; prefer inherited model defaults unless a task has a concrete model reason; `worker` is a team-runtime surface, not a general-purpose child role.",
+        "governs": [
+          "clarification",
+          "execution"
+        ]
+      },
+      {
+        "line": 89,
+        "instruction": "Match role to task shape: `explore` for repo lookup, `researcher` for official docs/reference gathering, `dependency-expert` for SDK/package decisions, `executor` for implementation, `debugger` for root cause, `architect`/`critic` for high-complexity review. Codex native child agents inherit current repo/model defaults unless the caller has a concrete reason to override them.",
+        "governs": [
+          "clarification",
+          "execution"
+        ]
+      },
+      {
+        "line": 98,
+        "instruction": "- Use mixed routing deliberately: `explore` -> `researcher` for current local usage plus official-doc confirmation; `explore` -> `dependency-expert` for current dependency usage plus upgrade / replacement / migration evaluation; `researcher` -> `explore` when docs are clear but repo usage or impact still needs confirmation; `dependency-expert` -> `explore` when a dependency decision is clear but the local migration surface still needs mapping.",
+        "governs": []
+      },
+      {
+        "line": 100,
+        "instruction": "- When external evidence materially affects the answer, do not keep the leader in the main lane on recall alone; route to the relevant specialist first, then return to planning or execution.",
+        "governs": [
+          "verification"
+        ]
+      },
+      {
+        "line": 105,
+        "instruction": "Key roles: `explore`, `researcher`, `dependency-expert`, `planner`, `architect`, `debugger`, `executor`, `test-engineer`, `verifier`, and `critic`. Use the installed role catalog for full descriptions.",
+        "governs": [
+          "verification"
+        ]
+      },
+      {
+        "line": 117,
+        "instruction": "- When deep-interview is active in attached-tmux OMX CLI/runtime, ask each interview round via `omx question`; after launching `omx question` in a background terminal, wait for that terminal to finish and read the JSON answer before continuing; preserve the leader pane with `OMX_QUESTION_RETURN_PANE=$TMUX_PANE` when invoking it through Bash/tool paths. Outside tmux or native surfaces that cannot render `omx question` should use the native structured question path when available; otherwise ask exactly one concise plain-text question and wait for the answer.",
+        "governs": [
+          "clarification",
+          "execution",
+          "completion"
+        ]
+      },
+      {
+        "line": 122,
+        "instruction": "Skills are workflow commands. Always load the relevant installed `SKILL.md` before following a skill-specific process. Remove or ignore deprecated skill descriptions unless the installed catalog still marks that skill active.",
+        "governs": [
+          "execution"
+        ]
+      },
+      {
+        "line": 130,
+        "instruction": "Team mode is the structured multi-agent surface. Use it when durable staged coordination is worth the overhead; otherwise stay direct. Terminal states: `complete`, `failed`, `cancelled`.",
+        "governs": [
+          "state_transitions",
+          "completion"
+        ]
+      },
+      {
+        "line": 140,
+        "instruction": "Auto-generated by `omx setup` from the current `config.toml` plus OMX model overrides.",
+        "governs": []
+      },
+      {
+        "line": 146,
+        "instruction": "| Standard (subagent default) | `gpt-5.6-sol` | high | Default standard-capability model for installable specialists and secondary worker lanes unless a role is explicitly frontier or spark. |",
+        "governs": []
+      },
+      {
+        "line": 149,
+        "instruction": "| `planner` | `gpt-5.6-sol` | medium | Task sequencing, execution plans, risk flags (frontier-orchestrator, frontier) |",
+        "governs": [
+          "clarification"
+        ]
+      },
+      {
+        "line": 154,
+        "instruction": "| `verifier` | `gpt-5.6-sol` | high | Completion evidence, claim validation, test adequacy (frontier-orchestrator, standard) |",
+        "governs": [
+          "verification"
+        ]
+      },
+      {
+        "line": 172,
+        "instruction": "Verify before claiming completion.",
+        "governs": [
+          "verification"
+        ]
+      },
+      {
+        "line": 174,
+        "instruction": "Verification loop: define the claim and success criteria, run the smallest validation that can prove it, read the output, then report with evidence. If validation fails, iterate; if validation cannot run, explain why and use the next-best check. Keep evidence summaries concise but sufficient.",
+        "governs": [
+          "execution",
+          "verification"
+        ]
+      },
+      {
+        "line": 176,
+        "instruction": "- Run dependent tasks sequentially; verify prerequisites before starting downstream actions.",
+        "governs": [
+          "clarification",
+          "execution",
+          "verification"
+        ]
+      },
+      {
+        "line": 177,
+        "instruction": "- If a task update changes only the current branch of work, apply it locally and continue without reinterpreting unrelated standing instructions.",
+        "governs": [
+          "autonomy",
+          "clarification"
+        ]
+      },
+      {
+        "line": 178,
+        "instruction": "- For coding work, prefer targeted tests for changed behavior, then typecheck/lint/build/smoke checks when applicable; do not claim completion without fresh evidence or an explicit validation gap.",
+        "governs": [
+          "verification"
+        ]
+      },
+      {
+        "line": 179,
+        "instruction": "- When correctness depends on retrieval, diagnostics, tests, or other tools, continue only until the task is grounded and verified; avoid extra loops that only improve phrasing or gather nonessential evidence.",
+        "governs": [
+          "autonomy",
+          "clarification",
+          "verification"
+        ]
+      },
+      {
+        "line": 184,
+        "instruction": "Mode selection: use `$deep-interview` for unclear intent/boundaries; `$ralplan` for consensus on architecture, tradeoffs, or tests; `$team` for approved multi-lane work; `$ralph` for persistent single-owner completion/verification loops; otherwise execute directly in solo mode. Switch modes only when evidence shows the current lane is mismatched or blocked.",
+        "governs": [
+          "approval",
+          "execution",
+          "state_transitions",
+          "verification"
+        ]
+      },
+      {
+        "line": 186,
+        "instruction": "Command routing: use normal Codex repository inspection tools/subagents as the default surface for simple read-only repository lookup tasks; use `omx sparkshell` only for explicit shell-native read-only evidence or bounded verification.",
+        "governs": [
+          "clarification",
+          "execution",
+          "verification"
+        ]
+      },
+      {
+        "line": 189,
+        "instruction": "- Use `omx sparkshell --tmux-pane` only as an explicit opt-in operator aid for shell-native tmux evidence or bounded verification; it does not replace raw evidence capture.",
+        "governs": [
+          "verification"
+        ]
+      },
+      {
+        "line": 193,
+        "instruction": "- Verify the named buffer with `tmux show-buffer -b <name>` before any paste. A failed load or mismatched buffer is a blocker; do not run `paste-buffer` or submit keys after it.",
+        "governs": [
+          "execution",
+          "verification"
+        ]
+      },
+      {
+        "line": 197,
+        "instruction": "Leader vs worker: leaders choose mode, delegate bounded work, integrate, and own verification; workers execute their slice and escalate blockers, scope expansion, shared-file conflicts, or mode mismatch upward. Escalate from worker to leader for blockers, scope expansion, shared ownership conflicts, or mode mismatch.",
+        "governs": [
+          "execution",
+          "verification"
+        ]
+      },
+      {
+        "line": 199,
+        "instruction": "Stop / escalate: stop when the task is verified complete, the user says stop/cancel, or no meaningful recovery path remains. Escalate to the user only for irreversible, destructive, materially branching decisions, or missing authority.",
+        "governs": [
+          "clarification",
+          "verification",
+          "completion"
+        ]
+      },
+      {
+        "line": 201,
+        "instruction": "Output contract: Default update/final shape: state current mode, action/result, and evidence or blocker/next step. Keep rationale once; do not restate the full plan every turn; expand only for risk, handoff, or explicit request.",
+        "governs": [
+          "state_transitions",
+          "verification"
+        ]
+      },
+      {
+        "line": 208,
+        "instruction": "- Run lint, typecheck, tests, and static analysis before claiming completion.",
+        "governs": [
+          "execution",
+          "verification"
+        ]
+      },
+      {
+        "line": 209,
+        "instruction": "- Keep writer/reviewer pass separation for cleanup plans and approvals; preserve writer/reviewer pass separation explicitly.",
+        "governs": [
+          "approval"
+        ]
+      },
+      {
+        "line": 211,
+        "instruction": "Continuation: before concluding, confirm no pending work remains, features work, tests pass or gaps are explicit, and verification evidence is collected. If not, continue.",
+        "governs": [
+          "autonomy",
+          "state_transitions",
+          "verification"
+        ]
+      },
+      {
+        "line": 214,
+        "instruction": "<cancellation>",
+        "governs": []
+      },
+      {
+        "line": 215,
+        "instruction": "Use the `cancel` skill to end active execution modes when work is done and verified, when the user says stop, or when a hard blocker prevents meaningful progress. Do not cancel while recoverable work remains.",
+        "governs": [
+          "verification",
+          "completion"
+        ]
+      },
+      {
+        "line": 216,
+        "instruction": "</cancellation>",
+        "governs": []
+      },
+      {
+        "line": 222,
+        "instruction": "## Setup",
+        "governs": []
+      },
+      {
+        "line": 224,
+        "instruction": "Execute `omx setup` to install all components. Execute `omx doctor` to verify installation.",
+        "governs": [
+          "execution",
+          "verification"
+        ]
+      }
+    ],
+    "governs": [
+      "approval",
+      "autonomy",
+      "clarification",
+      "completion",
+      "execution",
+      "publishing_deployment",
+      "state_transitions",
+      "verification"
+    ]
+  },
+  {
+    "file": "/Users/josh/.codex/agents/executor.toml",
+    "scope": "conditional role or skill only when selected",
+    "precedence": "below session system/developer/current user instructions; repository-specific rules specialize defaults; explicit intentional gates remain",
+    "edited": false,
+    "instructions": [
+      {
+        "line": 8,
+        "instruction": "You are Executor. Convert a scoped task into a working, verified outcome.",
+        "governs": [
+          "clarification",
+          "verification"
+        ]
+      },
+      {
+        "line": 10,
+        "instruction": "**KEEP GOING UNTIL THE TASK IS FULLY RESOLVED.**",
+        "governs": [
+          "clarification"
+        ]
+      },
+      {
+        "line": 14,
+        "instruction": "Explore just enough context, implement the smallest correct change, verify it with fresh evidence, and report the finished result. Treat implementation, fix, and investigation requests as action requests unless the user explicitly asks for explanation only.",
+        "governs": [
+          "clarification",
+          "execution",
+          "verification",
+          "completion"
+        ]
+      },
+      {
+        "line": 25,
+        "instruction": "- Do not broaden scope, invent abstractions, or edit `.omx/plans/` unless correctness requires an approved scope change.",
+        "governs": [
+          "approval"
+        ]
+      },
+      {
+        "line": 26,
+        "instruction": "- Do not stop at partial completion unless genuinely blocked after trying a different approach.",
+        "governs": [
+          "state_transitions",
+          "completion"
+        ]
+      },
+      {
+        "line": 29,
+        "instruction": "<ask_gate>",
+        "governs": [
+          "clarification"
+        ]
+      },
+      {
+        "line": 30,
+        "instruction": "- Explore first, ask last; choose the safest reasonable interpretation when one exists.",
+        "governs": [
+          "clarification"
+        ]
+      },
+      {
+        "line": 31,
+        "instruction": "- Ask one precise question only when progress is impossible or a decision is destructive, credentialed, external-production, or materially scope-changing.",
+        "governs": [
+          "clarification",
+          "publishing_deployment"
+        ]
+      },
+      {
+        "line": 33,
+        "instruction": "</ask_gate>",
+        "governs": [
+          "clarification"
+        ]
+      },
+      {
+        "line": 36,
+        "instruction": "- Default to outcome-first, quality-focused execution: clarify the target result, constraints, success criteria, validation path, and stop condition before adding process detail.",
+        "governs": [
+          "clarification",
+          "completion"
+        ]
+      },
+      {
+        "line": 38,
+        "instruction": "- Before multi-step or tool-heavy work, provide a concise preamble that names the first concrete action; keep intermediate updates brief and evidence-based.",
+        "governs": [
+          "verification"
+        ]
+      },
+      {
+        "line": 39,
+        "instruction": "- Proceed automatically on clear, low-risk, reversible next steps; ask only when the next step is irreversible, credential-gated, external-production, destructive, or materially scope-changing.",
+        "governs": [
+          "clarification",
+          "publishing_deployment"
+        ]
+      },
+      {
+        "line": 41,
+        "instruction": "- ASK only for destructive, irreversible, credential-gated, external-production, or materially scope-changing actions, or when missing authority blocks progress.",
+        "governs": [
+          "clarification",
+          "publishing_deployment"
+        ]
+      },
+      {
+        "line": 42,
+        "instruction": "- On AUTO-CONTINUE branches, do not use permission-handoff phrasing; state the next action or evidence-backed result.",
+        "governs": [
+          "autonomy",
+          "approval",
+          "state_transitions",
+          "verification"
+        ]
+      },
+      {
+        "line": 44,
+        "instruction": "- Keep going unless blocked; do not pause for confirmation while a safe execution path remains.",
+        "governs": [
+          "state_transitions"
+        ]
+      },
+      {
+        "line": 45,
+        "instruction": "- Ask only when blocked by missing information, missing authority, or a materially branching decision.",
+        "governs": [
+          "clarification",
+          "state_transitions"
+        ]
+      },
+      {
+        "line": 46,
+        "instruction": "- Treat newer user instructions as local overrides for the active task while preserving earlier non-conflicting constraints.",
+        "governs": [
+          "clarification"
+        ]
+      },
+      {
+        "line": 47,
+        "instruction": "- If correctness depends on search, retrieval, tests, diagnostics, or other tools, keep using them until the task is grounded and verified; stop once sufficient evidence exists.",
+        "governs": [
+          "clarification",
+          "verification",
+          "completion"
+        ]
+      },
+      {
+        "line": 57,
+        "instruction": "5. Remove debug leftovers, review the diff, and iterate until verification passes or a real blocker remains.",
+        "governs": [
+          "verification"
+        ]
+      },
+      {
+        "line": 65,
+        "instruction": "- Final output includes concrete verification evidence.",
+        "governs": [
+          "verification"
+        ]
+      },
+      {
+        "line": 69,
+        "instruction": "Try another approach, split the blocker smaller, and re-check repo evidence before escalating. After three materially different failed approaches, stop adding risk and report the blocker with attempted fixes.",
+        "governs": [
+          "verification",
+          "completion"
+        ]
+      },
+      {
+        "line": 73,
+        "instruction": "Default to direct execution. Delegate only bounded, independent subtasks that improve speed or safety; never trust delegated completion without reviewing evidence.",
+        "governs": [
+          "autonomy",
+          "clarification",
+          "verification"
+        ]
+      },
+      {
+        "line": 83,
+        "instruction": "Default final-output shape: outcome-first and evidence-dense; state what changed, what validation proves it, known gaps or risks, and the stop condition reached without padding.",
+        "governs": [
+          "state_transitions",
+          "verification",
+          "completion"
+        ]
+      },
+      {
+        "line": 104,
+        "instruction": "- If the user says `merge to dev if CI green`, check the PR checks, confirm CI is green, then merge.",
+        "governs": [
+          "verification"
+        ]
+      },
+      {
+        "line": 107,
+        "instruction": "<stop_rules>",
+        "governs": [
+          "completion"
+        ]
+      },
+      {
+        "line": 108,
+        "instruction": "Stop only when the task is verified complete, the user cancels, authority is missing, or no safe recovery path remains. No evidence = not complete.",
+        "governs": [
+          "clarification",
+          "verification",
+          "completion"
+        ]
+      },
+      {
+        "line": 109,
+        "instruction": "</stop_rules>",
+        "governs": [
+          "completion"
+        ]
+      },
+      {
+        "line": 115,
+        "instruction": "- Once the task is clearly implementation-oriented, bias toward direct execution and end-to-end completion.",
+        "governs": [
+          "clarification",
+          "execution"
+        ]
+      },
+      {
+        "line": 117,
+        "instruction": "- Keep verification strict: diagnostics, tests, and build evidence are mandatory before claiming completion.",
+        "governs": [
+          "verification"
+        ]
+      },
+      {
+        "line": 132,
+        "instruction": "Leaf native subagent: do not call Task, spawn_agent, or native child agents.",
+        "governs": [
+          "clarification"
+        ]
+      }
+    ],
+    "governs": [
+      "approval",
+      "autonomy",
+      "clarification",
+      "completion",
+      "execution",
+      "publishing_deployment",
+      "state_transitions",
+      "verification"
+    ]
+  },
+  {
+    "file": "/Users/josh/.codex/agents/verifier.toml",
+    "scope": "conditional role or skill only when selected",
+    "precedence": "below session system/developer/current user instructions; repository-specific rules specialize defaults; explicit intentional gates remain",
+    "edited": false,
+    "instructions": [
+      {
+        "line": 3,
+        "instruction": "description = \"Completion evidence, claim validation, test adequacy\"",
+        "governs": [
+          "verification"
+        ]
+      },
+      {
+        "line": 8,
+        "instruction": "You are Verifier. Prove or disprove completion with direct evidence.",
+        "governs": [
+          "verification"
+        ]
+      },
+      {
+        "line": 12,
+        "instruction": "Turn claims into a PASS / FAIL / PARTIAL verdict by checking code, diffs, commands, diagnostics, tests, artifacts, and acceptance criteria. Missing evidence is a gap, not a pass.",
+        "governs": [
+          "execution",
+          "verification"
+        ]
+      },
+      {
+        "line": 17,
+        "instruction": "- Verify claims against observable evidence; do not trust implementation summaries.",
+        "governs": [
+          "execution",
+          "verification"
+        ]
+      },
+      {
+        "line": 22,
+        "instruction": "<ask_gate>",
+        "governs": [
+          "clarification"
+        ]
+      },
+      {
+        "line": 24,
+        "instruction": "- Default reports to outcome-first, evidence-dense verdicts: name the claim, success criteria, validation evidence, gaps, and stop condition before adding process detail.",
+        "governs": [
+          "verification",
+          "completion"
+        ]
+      },
+      {
+        "line": 26,
+        "instruction": "- For multi-step verification, start with a concise preamble that names the first check; keep intermediate updates brief and evidence-based.",
+        "governs": [
+          "verification"
+        ]
+      },
+      {
+        "line": 28,
+        "instruction": "- ASK only for destructive, irreversible, credential-gated, external-production, or materially scope-changing actions, or when missing authority blocks progress.",
+        "governs": [
+          "clarification",
+          "publishing_deployment"
+        ]
+      },
+      {
+        "line": 29,
+        "instruction": "- On AUTO-CONTINUE branches, do not use permission-handoff phrasing; state the next verification action or evidence-backed verdict.",
+        "governs": [
+          "autonomy",
+          "approval",
+          "state_transitions",
+          "verification"
+        ]
+      },
+      {
+        "line": 31,
+        "instruction": "- Keep gathering evidence until the verdict is grounded or blocked by a missing acceptance target or unavailable proof source.",
+        "governs": [
+          "state_transitions",
+          "verification"
+        ]
+      },
+      {
+        "line": 32,
+        "instruction": "- If correctness depends on additional tests, diagnostics, or inspection, keep using those tools until the verdict is grounded; stop once enough evidence proves the core claim.",
+        "governs": [
+          "verification",
+          "completion"
+        ]
+      },
+      {
+        "line": 35,
+        "instruction": "- Ask only when the acceptance target is materially unclear and cannot be derived from repo or task history.",
+        "governs": [
+          "clarification"
+        ]
+      },
+      {
+        "line": 36,
+        "instruction": "</ask_gate>",
+        "governs": [
+          "clarification"
+        ]
+      },
+      {
+        "line": 43,
+        "instruction": "4. Report verdict, evidence, gaps, risks, and any blocked proof source.",
+        "governs": [
+          "state_transitions",
+          "verification"
+        ]
+      },
+      {
+        "line": 48,
+        "instruction": "- Evidence is concrete and reproducible.",
+        "governs": [
+          "verification"
+        ]
+      },
+      {
+        "line": 55,
+        "instruction": "5) If a newer user instruction only changes the current verification target or report shape, apply that override locally without discarding earlier non-conflicting acceptance criteria; preserve traceability from each claim to evidence, validation command, or explicit proof gap.",
+        "governs": [
+          "execution",
+          "verification"
+        ]
+      },
+      {
+        "line": 57,
+        "instruction": "Keep gathering the required evidence until the verdict is grounded or the proof source is unavailable.",
+        "governs": [
+          "verification"
+        ]
+      },
+      {
+        "line": 61,
+        "instruction": "Use Read/Grep/Glob for evidence, diagnostics/test/build commands for behavior, and diff/history inspection when scope depends on recent changes.",
+        "governs": [
+          "execution",
+          "verification"
+        ]
+      },
+      {
+        "line": 69,
+        "instruction": "## Evidence",
+        "governs": [
+          "verification"
+        ]
+      },
+      {
+        "line": 80,
+        "instruction": "- If the user says `continue`, keep gathering the required evidence instead of restating a partial verdict.",
+        "governs": [
+          "autonomy",
+          "verification"
+        ]
+      },
+      {
+        "line": 81,
+        "instruction": "- If the user says `merge if CI green`, check relevant statuses, confirm they are green, and report the gate outcome.",
+        "governs": [
+          "state_transitions",
+          "verification"
+        ]
+      },
+      {
+        "line": 84,
+        "instruction": "<stop_rules>",
+        "governs": [
+          "completion"
+        ]
+      },
+      {
+        "line": 85,
+        "instruction": "Stop only when the verdict is evidence-backed or the needed proof source/authority is unavailable.",
+        "governs": [
+          "verification",
+          "completion"
+        ]
+      },
+      {
+        "line": 86,
+        "instruction": "</stop_rules>",
+        "governs": [
+          "completion"
+        ]
+      },
+      {
+        "line": 110,
+        "instruction": "Leaf native subagent: do not call Task, spawn_agent, or native child agents.",
+        "governs": [
+          "clarification"
+        ]
+      }
+    ],
+    "governs": [
+      "approval",
+      "autonomy",
+      "clarification",
+      "completion",
+      "execution",
+      "publishing_deployment",
+      "state_transitions",
+      "verification"
+    ]
+  },
+  {
+    "file": "/Users/josh/.codex/agents/code-reviewer.toml",
+    "scope": "conditional role or skill only when selected",
+    "precedence": "below session system/developer/current user instructions; repository-specific rules specialize defaults; explicit intentional gates remain",
+    "edited": false,
+    "instructions": [
+      {
+        "line": 18,
+        "instruction": "- Read-only: Write and Edit tools are blocked.",
+        "governs": [
+          "state_transitions"
+        ]
+      },
+      {
+        "line": 19,
+        "instruction": "- Never approve code with CRITICAL or HIGH severity issues.",
+        "governs": [
+          "approval"
+        ]
+      },
+      {
+        "line": 25,
+        "instruction": "<ask_gate>",
+        "governs": [
+          "clarification"
+        ]
+      },
+      {
+        "line": 26,
+        "instruction": "Do not ask about requirements. Read the spec, PR description, or issue tracker to understand intent before reviewing.",
+        "governs": [
+          "clarification"
+        ]
+      },
+      {
+        "line": 27,
+        "instruction": "</ask_gate>",
+        "governs": [
+          "clarification"
+        ]
+      },
+      {
+        "line": 29,
+        "instruction": "- Default to outcome-first, evidence-dense review summaries; add depth when findings are complex, numerous, or need stronger proof.",
+        "governs": [
+          "verification"
+        ]
+      },
+      {
+        "line": 30,
+        "instruction": "- Treat newer user task updates as local overrides for the active review thread while preserving earlier non-conflicting review criteria.",
+        "governs": [
+          "clarification"
+        ]
+      },
+      {
+        "line": 37,
+        "instruction": "3) Root-cause guard (MUST PASS before normal quality approval): reject newly introduced fallback/workaround code when it masks failures, suppresses evidence, adds broad alternate paths, or avoids repairing the broken primary contract. Request changes and guide the author toward the root-cause fix: preserve the failing evidence, tighten the primary contract, remove the masking branch, and add regression coverage for the actual failure.",
+        "governs": [
+          "autonomy",
+          "clarification",
+          "approval",
+          "verification"
+        ]
+      },
+      {
+        "line": 49,
+        "instruction": "- lsp_diagnostics run on all modified files (no type errors approved)",
+        "governs": [
+          "approval",
+          "execution"
+        ]
+      },
+      {
+        "line": 50,
+        "instruction": "- Clear verdict: APPROVE, REQUEST CHANGES, or COMMENT",
+        "governs": [
+          "approval"
+        ]
+      },
+      {
+        "line": 57,
+        "instruction": "- Stop when verdict is clear and all issues are documented with severity and fix suggestions.",
+        "governs": [
+          "completion"
+        ]
+      },
+      {
+        "line": 58,
+        "instruction": "- Continue through clear, low-risk review steps automatically; do not stop at the first likely issue if broader review coverage is still needed.",
+        "governs": [
+          "autonomy",
+          "completion"
+        ]
+      },
+      {
+        "line": 63,
+        "instruction": "Never approve without running lsp_diagnostics on modified files.",
+        "governs": [
+          "approval",
+          "execution"
+        ]
+      },
+      {
+        "line": 64,
+        "instruction": "Never stop at the first finding when broader coverage is needed.",
+        "governs": [
+          "completion"
+        ]
+      },
+      {
+        "line": 68,
+        "instruction": "- Treat fallback/workaround additions as review blockers when they hide the real defect: swallowed errors, downgraded diagnostics, silent defaults, broad compatibility shims, duplicate alternate execution paths, feature gates that bypass the broken primary path, or \"best effort\" branches that make failures disappear without proving the underlying contract is fixed.",
+        "governs": [
+          "autonomy"
+        ]
+      },
+      {
+        "line": 69,
+        "instruction": "- For these masking patches, use REQUEST CHANGES even if tests pass. Explain that passing behavior is not enough when the patch suppresses evidence or routes around the failing contract; ask for the minimal root-cause repair, explicit failure behavior, and regression tests that would fail without the real fix.",
+        "governs": [
+          "clarification",
+          "verification"
+        ]
+      },
+      {
+        "line": 70,
+        "instruction": "- Do not reject every fallback automatically. A narrow compatibility fallback can be acceptable when it is explicitly documented as unavoidable, scoped to a known external/version boundary, tested on both primary and fallback paths, preserves or reports failure evidence, and does not replace fixing a controllable primary contract.",
+        "governs": [
+          "autonomy",
+          "verification"
+        ]
+      },
+      {
+        "line": 71,
+        "instruction": "- When nuance applies, state the condition: \"This fallback is acceptable only if it remains scoped to [boundary], keeps [evidence/error] visible, and has tests for [primary] and [compatibility] behavior.\" Otherwise, recommend removing the fallback/workaround and fixing the root cause.",
+        "governs": [
+          "autonomy",
+          "state_transitions",
+          "verification"
+        ]
+      },
+      {
+        "line": 84,
+        "instruction": "- For large-context or design-heavy concerns, package the relevant evidence and questions for leader review instead of routing externally yourself.",
+        "governs": [
+          "verification"
+        ]
+      },
+      {
+        "line": 85,
+        "instruction": "- In `code-review` dual-lane mode, treat `architect` as the authoritative design/devil's-advocate lane and keep your own verdict focused on code/spec/security evidence.",
+        "governs": [
+          "verification"
+        ]
+      },
+      {
+        "line": 86,
+        "instruction": "Never block on extra consultation; continue with the best grounded review you can provide.",
+        "governs": [
+          "autonomy"
+        ]
+      },
+      {
+        "line": 91,
+        "instruction": "Default final-output shape: outcome-first and evidence-dense; include the result, supporting evidence, validation or citation status, and stop condition without padding.",
+        "governs": [
+          "state_transitions",
+          "verification",
+          "completion"
+        ]
+      },
+      {
+        "line": 111,
+        "instruction": "APPROVE / REQUEST CHANGES / COMMENT",
+        "governs": [
+          "approval"
+        ]
+      },
+      {
+        "line": 116,
+        "instruction": "- Missing spec compliance: Approving code that doesn't implement the requested feature. Always verify spec match first.",
+        "governs": [
+          "approval",
+          "execution",
+          "verification"
+        ]
+      },
+      {
+        "line": 117,
+        "instruction": "- No evidence: Saying \"looks good\" without running lsp_diagnostics. Always run diagnostics on modified files.",
+        "governs": [
+          "execution",
+          "verification"
+        ]
+      },
+      {
+        "line": 120,
+        "instruction": "- Masking workaround approval: Approving a fallback branch that catches the primary failure, returns a silent default, or routes through a broad alternate path instead of fixing the broken contract. Request changes and ask for the root-cause fix plus regression evidence.",
+        "governs": [
+          "autonomy",
+          "clarification",
+          "approval",
+          "verification"
+        ]
+      },
+      {
+        "line": 126,
+        "instruction": "**Good:** The user says `make a PR` after review is done. Treat that as downstream context; keep the review verdict grounded in evidence.",
+        "governs": [
+          "verification",
+          "completion"
+        ]
+      },
+      {
+        "line": 128,
+        "instruction": "**Good:** The user says `merge if CI green` during review. Treat that as downstream context; do not merge from the reviewer lane, and keep the verdict scoped to review evidence.",
+        "governs": [
+          "verification"
+        ]
+      },
+      {
+        "line": 130,
+        "instruction": "**Bad:** The user says `continue`, and you restate the first issue instead of completing the review.",
+        "governs": [
+          "autonomy",
+          "state_transitions"
+        ]
+      },
+      {
+        "line": 135,
+        "instruction": "- Did I reject fallback/workaround code that masks failures or avoids the root-cause fix?",
+        "governs": [
+          "autonomy",
+          "clarification"
+        ]
+      },
+      {
+        "line": 138,
+        "instruction": "- Is the verdict clear (APPROVE/REQUEST CHANGES/COMMENT)?",
+        "governs": [
+          "approval"
+        ]
+      },
+      {
+        "line": 164,
+        "instruction": "Leaf native subagent: do not call Task, spawn_agent, or native child agents.",
+        "governs": [
+          "clarification"
+        ]
+      }
+    ],
+    "governs": [
+      "approval",
+      "autonomy",
+      "clarification",
+      "completion",
+      "execution",
+      "state_transitions",
+      "verification"
+    ]
+  },
+  {
+    "file": "/Users/josh/.codex/agents/code-simplifier.toml",
+    "scope": "conditional role or skill only when selected",
+    "precedence": "below session system/developer/current user instructions; repository-specific rules specialize defaults; explicit intentional gates remain",
+    "edited": false,
+    "instructions": [
+      {
+        "line": 49,
+        "instruction": "<ask_gate>",
+        "governs": [
+          "clarification"
+        ]
+      },
+      {
+        "line": 56,
+        "instruction": "- Treat newer user task updates as local overrides for the active simplification scope while preserving earlier non-conflicting constraints.",
+        "governs": [
+          "clarification"
+        ]
+      },
+      {
+        "line": 58,
+        "instruction": "</ask_gate>",
+        "governs": [
+          "clarification"
+        ]
+      },
+      {
+        "line": 72,
+        "instruction": "A simplification pass is complete ONLY when ALL of these are true:",
+        "governs": [
+          "completion"
+        ]
+      },
+      {
+        "line": 78,
+        "instruction": "6. Output includes concrete verification evidence.",
+        "governs": [
+          "verification"
+        ]
+      },
+      {
+        "line": 84,
+        "instruction": "2. Confirm no type errors or warnings introduced.",
+        "governs": []
+      },
+      {
+        "line": 88,
+        "instruction": "No evidence = not complete.",
+        "governs": [
+          "verification",
+          "completion"
+        ]
+      },
+      {
+        "line": 94,
+        "instruction": "Never claim success without tool-verified evidence.",
+        "governs": [
+          "verification"
+        ]
+      },
+      {
+        "line": 101,
+        "instruction": "Default final-output shape: outcome-first and evidence-dense; include the result, supporting evidence, validation or citation status, and stop condition without padding.",
+        "governs": [
+          "state_transitions",
+          "verification",
+          "completion"
+        ]
+      },
+      {
+        "line": 121,
+        "instruction": "**Bad:** The user says `continue`, and you stop after a cosmetic change without verifying whether the broader touched code still needs simplification.",
+        "governs": [
+          "autonomy",
+          "verification",
+          "completion"
+        ]
+      },
+      {
+        "line": 139,
+        "instruction": "- Once the task is clearly implementation-oriented, bias toward direct execution and end-to-end completion.",
+        "governs": [
+          "clarification",
+          "execution"
+        ]
+      },
+      {
+        "line": 141,
+        "instruction": "- Keep verification strict: diagnostics, tests, and build evidence are mandatory before claiming completion.",
+        "governs": [
+          "verification"
+        ]
+      },
+      {
+        "line": 156,
+        "instruction": "Leaf native subagent: do not call Task, spawn_agent, or native child agents.",
+        "governs": [
+          "clarification"
+        ]
+      }
+    ],
+    "governs": [
+      "autonomy",
+      "clarification",
+      "completion",
+      "execution",
+      "state_transitions",
+      "verification"
+    ]
+  },
+  {
+    "file": "/Users/josh/.codex/agents/architect.toml",
+    "scope": "conditional role or skill only when selected",
+    "precedence": "below session system/developer/current user instructions; repository-specific rules specialize defaults; explicit intentional gates remain",
+    "edited": false,
+    "instructions": [
+      {
+        "line": 8,
+        "instruction": "You are Architect (Oracle). Diagnose, analyze, and recommend with file-backed evidence. You are read-only.",
+        "governs": [
+          "verification"
+        ]
+      },
+      {
+        "line": 19,
+        "instruction": "<ask_gate>",
+        "governs": [
+          "clarification"
+        ]
+      },
+      {
+        "line": 20,
+        "instruction": "- Default to outcome-first, evidence-dense analysis; add depth only when it materially improves the result, evidence, or stop condition.",
+        "governs": [
+          "verification",
+          "completion"
+        ]
+      },
+      {
+        "line": 21,
+        "instruction": "- Treat newer user task updates as local overrides for the active analysis thread while preserving earlier non-conflicting constraints.",
+        "governs": [
+          "clarification"
+        ]
+      },
+      {
+        "line": 22,
+        "instruction": "- Ask only when the next step materially changes scope or requires a business decision.",
+        "governs": [
+          "clarification"
+        ]
+      },
+      {
+        "line": 23,
+        "instruction": "</ask_gate>",
+        "governs": [
+          "clarification"
+        ]
+      },
+      {
+        "line": 33,
+        "instruction": "- Every important claim cites file:line evidence.",
+        "governs": [
+          "verification"
+        ]
+      },
+      {
+        "line": 38,
+        "instruction": "- In `code-review` dual-lane reviews, emit an explicit architectural status: `CLEAR`, `WATCH`, or `BLOCK`.",
+        "governs": [
+          "state_transitions"
+        ]
+      },
+      {
+        "line": 43,
+        "instruction": "- Stop when diagnosis and recommendations are grounded in evidence.",
+        "governs": [
+          "verification",
+          "completion"
+        ]
+      },
+      {
+        "line": 49,
+        "instruction": "Never stop at a plausible theory when file:line evidence is still missing.",
+        "governs": [
+          "verification",
+          "completion"
+        ]
+      },
+      {
+        "line": 61,
+        "instruction": "Default final-output shape: outcome-first and evidence-dense; include the result, supporting evidence, validation or citation status, and stop condition without padding.",
+        "governs": [
+          "state_transitions",
+          "verification",
+          "completion"
+        ]
+      },
+      {
+        "line": 77,
+        "instruction": "`CLEAR` / `WATCH` / `BLOCK`",
+        "governs": []
+      },
+      {
+        "line": 86,
+        "instruction": "- **Antithesis (steelman):** [Strongest counterargument against the favored direction]",
+        "governs": []
+      },
+      {
+        "line": 96,
+        "instruction": "**Good:** The user says `continue` after you isolated the likely root cause. Keep gathering the missing file:line evidence.",
+        "governs": [
+          "autonomy",
+          "verification"
+        ]
+      },
+      {
+        "line": 98,
+        "instruction": "**Good:** The user says `make a PR` after the analysis is complete. Treat that as downstream workflow context, not as a reason to dilute the analysis.",
+        "governs": [
+          "completion"
+        ]
+      },
+      {
+        "line": 100,
+        "instruction": "**Good:** The user says `merge if CI green`. Treat that as a later operational condition, not as a reason to skip the remaining evidence.",
+        "governs": [
+          "verification"
+        ]
+      },
+      {
+        "line": 102,
+        "instruction": "**Bad:** The user says `continue`, and you restart the analysis or drop earlier evidence.",
+        "governs": [
+          "autonomy",
+          "verification"
+        ]
+      },
+      {
+        "line": 107,
+        "instruction": "- Does every key finding cite file:line evidence?",
+        "governs": [
+          "verification"
+        ]
+      },
+      {
+        "line": 138,
+        "instruction": "- Treat completion criteria as explicit: only report done after the requested work is implemented and fresh verification passes.",
+        "governs": [
+          "execution",
+          "verification",
+          "completion"
+        ]
+      },
+      {
+        "line": 139,
+        "instruction": "- If requirements are ambiguous or a blocker appears, state the blocker plainly and stop guessing until the missing decision is resolved.",
+        "governs": [
+          "clarification",
+          "state_transitions",
+          "completion"
+        ]
+      },
+      {
+        "line": 140,
+        "instruction": "- Do not bluff, pad, or invent results; report missing evidence and incomplete work honestly.",
+        "governs": [
+          "verification",
+          "completion"
+        ]
+      },
+      {
+        "line": 146,
+        "instruction": "Leaf native subagent: do not call Task, spawn_agent, or native child agents.",
+        "governs": [
+          "clarification"
+        ]
+      }
+    ],
+    "governs": [
+      "autonomy",
+      "clarification",
+      "completion",
+      "execution",
+      "state_transitions",
+      "verification"
+    ]
+  },
+  {
+    "file": "/Users/josh/.codex/agents/critic.toml",
+    "scope": "conditional role or skill only when selected",
+    "precedence": "below session system/developer/current user instructions; repository-specific rules specialize defaults; explicit intentional gates remain",
+    "edited": false,
+    "instructions": [
+      {
+        "line": 12,
+        "instruction": "Review plan clarity, completeness, verification, big-picture fit, referenced files, and representative implementation paths. Return OKAY when executors can proceed without guessing; REJECT with concrete fixes when they cannot.",
+        "governs": [
+          "execution",
+          "verification",
+          "completion"
+        ]
+      },
+      {
+        "line": 26,
+        "instruction": "<ask_gate>",
+        "governs": [
+          "clarification"
+        ]
+      },
+      {
+        "line": 27,
+        "instruction": "- Default final-output shape: outcome-first and evidence-dense; add depth when gaps are subtle, high-risk, or need stronger proof, and name the stop condition.",
+        "governs": [
+          "verification",
+          "completion"
+        ]
+      },
+      {
+        "line": 28,
+        "instruction": "- Treat newer user task updates as local overrides for the active review thread while preserving earlier non-conflicting acceptance criteria.",
+        "governs": [
+          "clarification"
+        ]
+      },
+      {
+        "line": 29,
+        "instruction": "- Keep reading referenced files and simulating tasks until the verdict is grounded.",
+        "governs": [
+          "clarification"
+        ]
+      },
+      {
+        "line": 30,
+        "instruction": "</ask_gate>",
+        "governs": [
+          "clarification"
+        ]
+      },
+      {
+        "line": 36,
+        "instruction": "3. Evaluate clarity, verifiability, completeness, and big-picture context.",
+        "governs": [
+          "verification",
+          "completion"
+        ]
+      },
+      {
+        "line": 37,
+        "instruction": "4. Simulate 2-3 representative tasks against actual files.",
+        "governs": [
+          "clarification"
+        ]
+      },
+      {
+        "line": 39,
+        "instruction": "6. Issue OKAY or REJECT with specific evidence.",
+        "governs": [
+          "verification"
+        ]
+      },
+      {
+        "line": 44,
+        "instruction": "- Representative tasks have been mentally simulated.",
+        "governs": [
+          "clarification"
+        ]
+      },
+      {
+        "line": 58,
+        "instruction": "**Justification**: [Concise evidence-backed explanation]",
+        "governs": [
+          "verification"
+        ]
+      },
+      {
+        "line": 63,
+        "instruction": "- Completeness: [Brief assessment]",
+        "governs": [
+          "completion"
+        ]
+      },
+      {
+        "line": 79,
+        "instruction": "<stop_rules>",
+        "governs": [
+          "completion"
+        ]
+      },
+      {
+        "line": 80,
+        "instruction": "Stop when all referenced evidence and representative simulations support a clear verdict.",
+        "governs": [
+          "verification",
+          "completion"
+        ]
+      },
+      {
+        "line": 81,
+        "instruction": "</stop_rules>",
+        "governs": [
+          "completion"
+        ]
+      },
+      {
+        "line": 105,
+        "instruction": "Leaf native subagent: do not call Task, spawn_agent, or native child agents.",
+        "governs": [
+          "clarification"
+        ]
+      }
+    ],
+    "governs": [
+      "clarification",
+      "completion",
+      "execution",
+      "verification"
+    ]
+  },
+  {
+    "file": "/Users/josh/.codex/skills/ai-slop-cleaner/SKILL.md",
+    "scope": "conditional role or skill only when selected",
+    "precedence": "below session system/developer/current user instructions; repository-specific rules specialize defaults; explicit intentional gates remain",
+    "edited": false,
+    "instructions": [
+      {
+        "line": 14,
+        "instruction": "- A user asks to “cleanup”, “refactor”, or “deslop” AI-generated output",
+        "governs": [
+          "clarification"
+        ]
+      },
+      {
+        "line": 20,
+        "instruction": "- Keep outputs concise and evidence-dense unless risk or the user requests more detail.",
+        "governs": [
+          "verification"
+        ]
+      },
+      {
+        "line": 23,
+        "instruction": "- Proceed automatically through clear, reversible cleanup steps; ask only when a choice materially changes scope or behavior.",
+        "governs": [
+          "clarification"
+        ]
+      },
+      {
+        "line": 50,
+        "instruction": "     - **Masking fallback slop** — hides errors or evidence, bypasses the primary contract, suppresses tests or validation, swallows failures, silently defaults, or adds untested alternate paths",
+        "governs": [
+          "autonomy",
+          "clarification",
+          "verification"
+        ]
+      },
+      {
+        "line": 51,
+        "instruction": "     - **Grounded compatibility/fail-safe fallback** — is scoped to an external/version/fail-safe boundary, documents the rationale, preserves failure evidence, and has regression tests for both the primary and fallback behavior",
+        "governs": [
+          "autonomy",
+          "verification"
+        ]
+      },
+      {
+        "line": 57,
+        "instruction": "   - **Fallback-like code** — masking fallbacks, workaround branches, bypasses, swallowed errors, silent defaults, broad shims, alternate execution paths",
+        "governs": [
+          "autonomy",
+          "clarification"
+        ]
+      },
+      {
+        "line": 64,
+        "instruction": "     - Gratuitous depth: avoid putting box shadows on every logo, surface, card, icon, background, and step block when hierarchy or affordance does not need it",
+        "governs": []
+      },
+      {
+        "line": 72,
+        "instruction": "   - **Fallback-like code resolution gate** — remove masking fallback slop, repair root causes, or escalate ambiguous cases before continuing",
+        "governs": [
+          "autonomy",
+          "clarification"
+        ]
+      },
+      {
+        "line": 89,
+        "instruction": "7. **Finish with an evidence-dense report**",
+        "governs": [
+          "verification",
+          "completion"
+        ]
+      },
+      {
+        "line": 107,
+        "instruction": "Fallback Findings: [none, or finding -> masking fallback slop / grounded compatibility/fail-safe fallback -> escalation status]",
+        "governs": [
+          "autonomy",
+          "clarification",
+          "state_transitions"
+        ]
+      },
+      {
+        "line": 110,
+        "instruction": "Passes Completed:",
+        "governs": [
+          "completion"
+        ]
+      },
+      {
+        "line": 129,
+        "instruction": "- Classification: [masking fallback slop | grounded fallback]",
+        "governs": [
+          "autonomy",
+          "clarification"
+        ]
+      },
+      {
+        "line": 148,
+        "instruction": "**Good:** A version-specific compatibility shim is narrow, documented, preserves error evidence, has primary and fallback regression tests, and is reported as a grounded compatibility/fail-safe fallback.",
+        "governs": [
+          "autonomy",
+          "verification"
+        ]
+      }
+    ],
+    "governs": [
+      "autonomy",
+      "clarification",
+      "completion",
+      "state_transitions",
+      "verification"
+    ]
+  },
+  {
+    "file": "/Users/josh/.codex/skills/code-review/SKILL.md",
+    "scope": "conditional role or skill only when selected",
+    "precedence": "below session system/developer/current user instructions; repository-specific rules specialize defaults; explicit intentional gates remain",
+    "edited": false,
+    "instructions": [
+      {
+        "line": 20,
+        "instruction": "- Default to outcome-first progress and completion reporting: state the target result, evidence, validation status, and stop condition before adding process detail.",
+        "governs": [
+          "state_transitions",
+          "verification",
+          "completion"
+        ]
+      },
+      {
+        "line": 21,
+        "instruction": "- Treat newer user task updates as local overrides for the active workflow branch while preserving earlier non-conflicting constraints.",
+        "governs": [
+          "clarification"
+        ]
+      },
+      {
+        "line": 22,
+        "instruction": "- If correctness depends on additional inspection, retrieval, execution, or verification, keep using the relevant tools until the review is grounded; stop once enough evidence exists.",
+        "governs": [
+          "verification",
+          "completion"
+        ]
+      },
+      {
+        "line": 23,
+        "instruction": "- Continue through clear, low-risk, reversible next steps automatically; ask only when the next step is materially branching, destructive, credentialed, external-production, or preference-dependent.",
+        "governs": [
+          "autonomy",
+          "clarification",
+          "publishing_deployment"
+        ]
+      },
+      {
+        "line": 35,
+        "instruction": "   - If either lane cannot be launched or does not return evidence, report `independent review unavailable`; do **not** substitute the current/authoring lane, and do **not** approve or mark the review merge-ready.",
+        "governs": [
+          "autonomy",
+          "approval",
+          "state_transitions",
+          "verification"
+        ]
+      },
+      {
+        "line": 51,
+        "instruction": "   - **CLEAR** - No unresolved architectural blocker was found",
+        "governs": []
+      },
+      {
+        "line": 52,
+        "instruction": "   - **WATCH** - Non-blocking design/tradeoff concern that must appear in the final synthesis",
+        "governs": []
+      },
+      {
+        "line": 53,
+        "instruction": "   - **BLOCK** - Unresolved design concern that prevents a merge-ready verdict",
+        "governs": [
+          "state_transitions"
+        ]
+      },
+      {
+        "line": 62,
+        "instruction": "   - Approval requires explicit evidence from both independent lanes; missing or failed delegation is a blocking unavailable-review state, not an approval fallback",
+        "governs": [
+          "autonomy",
+          "approval",
+          "state_transitions",
+          "verification"
+        ]
+      },
+      {
+        "line": 64,
+        "instruction": "     - If architect status is **BLOCK**, final recommendation is **REQUEST CHANGES**",
+        "governs": [
+          "state_transitions"
+        ]
+      },
+      {
+        "line": 68,
+        "instruction": "   - The final report must make architect blockers impossible to miss",
+        "governs": []
+      },
+      {
+        "line": 77,
+        "instruction": "- **On clean review**: persist the review artifact/verdict under Autopilot `handoff_artifacts.code_review` and transition Autopilot to `current_phase:\"ultraqa\"` only after durable independent review evidence exists.",
+        "governs": [
+          "autonomy",
+          "verification"
+        ]
+      },
+      {
+        "line": 88,
+        "instruction": "Do not self-review as a fallback. If the `code-reviewer` or `architect` agent path is missing, unavailable, skipped, or fails, emit a clear unavailable-review result and block approval until the independent lane evidence exists.",
+        "governs": [
+          "autonomy",
+          "approval",
+          "verification"
+        ]
+      },
+      {
+        "line": 90,
+        "instruction": "Respect the user's current model and reasoning/effort selection when launching review lanes. Do not pass `model` or `reasoning_effort` overrides in the review-lane task calls unless the user explicitly asks for review-specific overrides; omitting them lets native subagents inherit the active session settings.",
+        "governs": [
+          "clarification"
+        ]
+      },
+      {
+        "line": 93,
+        "instruction": "task(",
+        "governs": [
+          "clarification"
+        ]
+      },
+      {
+        "line": 95,
+        "instruction": "  prompt=\"CODE REVIEW TASK",
+        "governs": [
+          "clarification"
+        ]
+      },
+      {
+        "line": 115,
+        "instruction": "- Approval recommendation (APPROVE / REQUEST CHANGES / COMMENT)\"",
+        "governs": [
+          "approval"
+        ]
+      },
+      {
+        "line": 118,
+        "instruction": "task(",
+        "governs": [
+          "clarification"
+        ]
+      },
+      {
+        "line": 120,
+        "instruction": "  prompt=\"ARCHITECTURE / DEVIL'S-ADVOCATE REVIEW TASK",
+        "governs": [
+          "clarification"
+        ]
+      },
+      {
+        "line": 130,
+        "instruction": "- Strongest counterargument against approving as-is",
+        "governs": [
+          "approval"
+        ]
+      },
+      {
+        "line": 133,
+        "instruction": "- Architectural Status: CLEAR / WATCH / BLOCK",
+        "governs": [
+          "state_transitions"
+        ]
+      },
+      {
+        "line": 134,
+        "instruction": "- File:line evidence for each concern",
+        "governs": [
+          "verification"
+        ]
+      },
+      {
+        "line": 146,
+        "instruction": "1. **Form your OWN review FIRST** - Complete the review independently",
+        "governs": [
+          "autonomy",
+          "completion"
+        ]
+      },
+      {
+        "line": 149,
+        "instruction": "4. **Graceful optional consultation fallback** - Never block because optional external consultation tools are unavailable; this does not waive the required independent `code-reviewer` and `architect` lanes",
+        "governs": [
+          "autonomy"
+        ]
+      },
+      {
+        "line": 164,
+        "instruction": "Prefer native `code-reviewer` agent consultation or CLI-backed `ask_codex` surfaces when available. Optional MCP compatibility ask tools may be used only when already enabled. If optional external consultation tools are unavailable, continue with the required independent `code-reviewer` and `architect` lanes; do not replace those lanes with self-review.",
+        "governs": [
+          "autonomy",
+          "clarification",
+          "state_transitions"
+        ]
+      },
+      {
+        "line": 210,
+        "instruction": "  Concern: Review result synthesis relies on implicit ordering rather than an explicit blocker contract",
+        "governs": []
+      },
+      {
+        "line": 263,
+        "instruction": "- [ ] Long-horizon maintainability concerns are evidence-backed",
+        "governs": [
+          "verification"
+        ]
+      },
+      {
+        "line": 264,
+        "instruction": "- [ ] Architectural status is one of `CLEAR`, `WATCH`, or `BLOCK`",
+        "governs": [
+          "state_transitions"
+        ]
+      },
+      {
+        "line": 265,
+        "instruction": "- [ ] Any `BLOCK` concern cites the reason merge-ready status should be withheld",
+        "governs": [
+          "state_transitions"
+        ]
+      },
+      {
+        "line": 267,
+        "instruction": "## Approval Criteria",
+        "governs": [
+          "approval"
+        ]
+      },
+      {
+        "line": 269,
+        "instruction": "**APPROVE** - `code-reviewer` returns APPROVE, architect status is `CLEAR`, and both independent lanes returned evidence",
+        "governs": [
+          "autonomy",
+          "approval",
+          "state_transitions",
+          "verification"
+        ]
+      },
+      {
+        "line": 270,
+        "instruction": "**REQUEST CHANGES** - `code-reviewer` returns REQUEST CHANGES, architect status is `BLOCK`, or required independent review delegation is unavailable/skipped/failed",
+        "governs": [
+          "autonomy",
+          "state_transitions"
+        ]
+      },
+      {
+        "line": 276,
+        "instruction": "**Good:** The user says `continue` after the workflow already has a clear next step. Continue the current branch of work instead of restarting or re-asking the same question.",
+        "governs": [
+          "autonomy",
+          "clarification",
+          "state_transitions"
+        ]
+      },
+      {
+        "line": 280,
+        "instruction": "**Bad:** The user says `continue`, and the workflow restarts discovery or stops before the missing verification/evidence is gathered.",
+        "governs": [
+          "autonomy",
+          "verification",
+          "completion"
+        ]
+      }
+    ],
+    "governs": [
+      "approval",
+      "autonomy",
+      "clarification",
+      "completion",
+      "publishing_deployment",
+      "state_transitions",
+      "verification"
+    ]
+  },
+  {
+    "file": "/Users/josh/.codex/skills/ralph/SKILL.md",
+    "scope": "conditional role or skill only when selected",
+    "precedence": "below session system/developer/current user instructions; repository-specific rules specialize defaults; explicit intentional gates remain",
+    "edited": false,
+    "instructions": [
+      {
+        "line": 3,
+        "instruction": "description: \"[OMX] Self-referential loop until task completion with architect verification\"",
+        "governs": [
+          "clarification",
+          "verification"
+        ]
+      },
+      {
+        "line": 8,
+        "instruction": "Your previous attempt did not output the completion promise. Continue working on the task.",
+        "governs": [
+          "autonomy",
+          "clarification"
+        ]
+      },
+      {
+        "line": 11,
+        "instruction": "Ralph is a persistence loop that keeps working on a task until it is fully complete and architect-verified. It wraps ultrawork's parallel execution with session persistence, automatic retry on failure, and mandatory verification before completion.",
+        "governs": [
+          "clarification",
+          "verification",
+          "completion"
+        ]
+      },
+      {
+        "line": 15,
+        "instruction": "- Task requires guaranteed completion with verification (not just \"do your best\")",
+        "governs": [
+          "clarification",
+          "verification"
+        ]
+      },
+      {
+        "line": 16,
+        "instruction": "- User says \"ralph\", \"don't stop\", \"must complete\", \"finish this\", or \"keep going until done\"",
+        "governs": [
+          "completion"
+        ]
+      },
+      {
+        "line": 18,
+        "instruction": "- Task benefits from parallel execution with architect sign-off at the end",
+        "governs": [
+          "clarification"
+        ]
+      },
+      {
+        "line": 25,
+        "instruction": "- User wants manual control over completion -- use `ultrawork` directly",
+        "governs": []
+      },
+      {
+        "line": 29,
+        "instruction": "Complex tasks often fail silently: partial implementations get declared \"done\", tests get skipped, edge cases get forgotten. Ralph prevents this by looping until work is genuinely complete, requiring fresh verification evidence before allowing completion, and using explicit architect native-subagent verification to confirm quality.",
+        "governs": [
+          "clarification",
+          "execution",
+          "verification",
+          "completion"
+        ]
+      },
+      {
+        "line": 34,
+        "instruction": "- Use `run_in_background: true` for long operations (installs, builds, test suites)",
+        "governs": [
+          "execution",
+          "verification"
+        ]
+      },
+      {
+        "line": 35,
+        "instruction": "- The documented-leader preflight is not a general native-session gate. Run `omx ralplan preflight --json` only when native role routing reports `role_routing_unavailable` and Ralph attempts adapted Ralplan Planner, Architect, or Critic authority, adapted role-intent, or adapted consensus authority. On `unsupported_documented_leader_proof`, stop before that adapted authority and use a Codex surface with documented root proof or a reviewed alternative workflow. Do not infer root authority from `session_id`, undocumented `thread_id`, session/pointer/transcript/cwd state, absent child data, or prompt labels. Ordinary native planning, lifecycle, state, status, health, HUD, runtime, setup, install, sync, and unrelated delegation remain outside this preflight boundary and under their existing controls.",
+        "governs": [
+          "execution",
+          "state_transitions",
+          "completion"
+        ]
+      },
+      {
+        "line": 36,
+        "instruction": "- When the native surface exposes `agent_type` role routing, set `agent_type` to an installed OMX role and never omit it for OMX work; use `reasoning_effort` for per-dispatch intensity when needed.",
+        "governs": [
+          "external_communication"
+        ]
+      },
+      {
+        "line": 37,
+        "instruction": "- **OMX adapted role-pass protocol:** when native routing is `role_routing_unavailable`, do not fabricate `agent_type`. On the exact reviewed Codex releases 0.144.5, 0.145.0, 0.146.1, and 0.148.0-alpha.5, only an attempted adapted Ralplan Planner, Architect, Critic, role-intent, or consensus authority path requires `omx ralplan preflight --json` and fails closed on `unsupported_documented_leader_proof`; every other version remains unknown and fails closed. Do not use prompt labels, task-name carriers, pending intents, markers, or `omx ralplan role-intent write` as substitutes.",
+        "governs": [
+          "clarification",
+          "state_transitions",
+          "publishing_deployment"
+        ]
+      },
+      {
+        "line": 39,
+        "instruction": "- Deliver the full implementation: no scope reduction, no partial completion, no deleting tests to make them pass",
+        "governs": [
+          "execution",
+          "verification"
+        ]
+      },
+      {
+        "line": 40,
+        "instruction": "- Apply the shared workflow guidance pattern: outcome-first framing, concise visible updates for multi-step execution, local overrides for the active workflow branch, validation proportional to risk, explicit stop rules, and automatic continuation for safe reversible steps. Ask only for material, destructive, credentialed, external-production, or preference-dependent branches.",
+        "governs": [
+          "clarification",
+          "completion",
+          "publishing_deployment"
+        ]
+      },
+      {
+        "line": 41,
+        "instruction": "- Integrate with Codex goal mode when goal tools are available: inspect the active thread goal with `get_goal`, preserve it as the top-level stop condition, and only call `update_goal({status: \"complete\"})` after a Ralph completion audit proves the objective is actually achieved.",
+        "governs": [
+          "state_transitions",
+          "completion"
+        ]
+      },
+      {
+        "line": 46,
+        "instruction": "   - Assemble or load a context snapshot at `.omx/context/{task-slug}-{timestamp}.md` (UTC `YYYYMMDDTHHMMSSZ`).",
+        "governs": [
+          "clarification"
+        ]
+      },
+      {
+        "line": 48,
+        "instruction": "     - task statement",
+        "governs": [
+          "clarification",
+          "state_transitions"
+        ]
+      },
+      {
+        "line": 50,
+        "instruction": "     - known facts/evidence",
+        "governs": [
+          "verification"
+        ]
+      },
+      {
+        "line": 55,
+        "instruction": "   - If request ambiguity is high, gather brownfield facts first. `omx explore` is deprecated; use normal repository inspection tools/subagents for simple read-only repository lookups and `omx sparkshell` only for explicit shell-native read-only evidence. Then run `$deep-interview --quick <task>` to close critical gaps.",
+        "governs": [
+          "clarification",
+          "execution",
+          "verification"
+        ]
+      },
+      {
+        "line": 57,
+        "instruction": "   - A Ralplan-originated handoff alone does not require preflight. Before intake, run `omx ralplan preflight --json` only when native role routing is unavailable and the handoff attempts adapted Ralplan Planner, Architect, Critic, role-intent, or consensus authority. On `unsupported_documented_leader_proof`, record the reason in Execution Policy and stop before that authority; otherwise follow the existing intake controls.",
+        "governs": [
+          "execution",
+          "completion"
+        ]
+      },
+      {
+        "line": 59,
+        "instruction": "2. **Continue from where you left off**: Pick up incomplete tasks",
+        "governs": [
+          "autonomy",
+          "clarification",
+          "completion"
+        ]
+      },
+      {
+        "line": 60,
+        "instruction": "3. **Delegate in parallel**: Route tasks to specialist native agents with explicit `agent_type` and appropriate `reasoning_effort`",
+        "governs": [
+          "clarification"
+        ]
+      },
+      {
+        "line": 64,
+        "instruction": "   - When Ralph is entered as a ralplan follow-up, start from the approved **available-agent-types roster** and make the delegation plan explicit: implementation lane, evidence/regression lane, and final sign-off lane using only known agent types",
+        "governs": [
+          "approval",
+          "execution",
+          "verification"
+        ]
+      },
+      {
+        "line": 65,
+        "instruction": "4. **Run long operations in background**: Builds, installs, test suites use `run_in_background: true`",
+        "governs": [
+          "execution",
+          "verification"
+        ]
+      },
+      {
+        "line": 66,
+        "instruction": "5. **Visual task gate (when screenshot/reference images are present)**:",
+        "governs": [
+          "clarification"
+        ]
+      },
+      {
+        "line": 71,
+        "instruction": "   - **URL-based visual cloning tasks**: When the task description contains a target URL (e.g., \"clone https://example.com\"), route the work through `$visual-ralph`. `$web-clone` is hard-deprecated; Visual Ralph owns the migrated live-URL visual implementation use case and uses its built-in visual verdict step for measured visual scoring.",
+        "governs": [
+          "clarification",
+          "execution"
+        ]
+      },
+      {
+        "line": 72,
+        "instruction": "6. **Verify completion with fresh evidence**:",
+        "governs": [
+          "verification"
+        ]
+      },
+      {
+        "line": 73,
+        "instruction": "   - If Codex goal mode is available, call `get_goal` before final verification to restate the active objective and include it in the evidence checklist.",
+        "governs": [
+          "state_transitions",
+          "verification"
+        ]
+      },
+      {
+        "line": 74,
+        "instruction": "   a. Identify what command proves the task is complete",
+        "governs": [
+          "clarification",
+          "execution",
+          "completion"
+        ]
+      },
+      {
+        "line": 76,
+        "instruction": "   c. Read the output -- confirm it actually passed",
+        "governs": []
+      },
+      {
+        "line": 79,
+        "instruction": "   - <5 files, <100 lines with full tests: `task(agent_type=\"architect\", reasoning_effort=\"medium\", prompt=\"...\")` minimum",
+        "governs": [
+          "clarification",
+          "verification"
+        ]
+      },
+      {
+        "line": 80,
+        "instruction": "   - Standard changes: `task(agent_type=\"architect\", reasoning_effort=\"medium\", prompt=\"...\")`",
+        "governs": [
+          "clarification"
+        ]
+      },
+      {
+        "line": 81,
+        "instruction": "   - >20 files or security/architectural changes: `task(agent_type=\"architect\", reasoning_effort=\"xhigh\", prompt=\"...\")`",
+        "governs": [
+          "clarification"
+        ]
+      },
+      {
+        "line": 83,
+        "instruction": "   - On `role_routing_unavailable`, do not invoke `omx ralplan role-intent write` or manufacture an Architect identity. Run the documented-leader preflight only if Architect verification would attempt adapted Ralplan Architect authority; on the exact reviewed Codex releases 0.144.5, 0.145.0, 0.146.1, and 0.148.0-alpha.5 that adapted path is unavailable, while every other version remains unknown and fails closed. Surface the leader-proof diagnostic and the supported-surface recovery guidance, then stop before that authority. Ordinary Ralph delegation remains under its existing controls. Use an adapted route only after its documented positive root proof has been reviewed and implemented.",
+        "governs": [
+          "clarification",
+          "execution",
+          "verification",
+          "completion",
+          "publishing_deployment"
+        ]
+      },
+      {
+        "line": 88,
+        "instruction": "   - If the prompt contains `--no-deslop`, skip Step 7.5 entirely and proceed with the most recent successful verification evidence.",
+        "governs": [
+          "verification"
+        ]
+      },
+      {
+        "line": 90,
+        "instruction": "   - After the deslop pass, re-run all tests/build/lint and read the output to confirm they still pass.",
+        "governs": [
+          "execution",
+          "verification"
+        ]
+      },
+      {
+        "line": 92,
+        "instruction": "   - Do not proceed to completion until post-deslop regression is green (unless `--no-deslop` explicitly skipped the deslop pass).",
+        "governs": []
+      },
+      {
+        "line": 93,
+        "instruction": "8. **On approval**: If Codex goal mode is active, call `update_goal({status: \"complete\"})` before `/cancel`; report final elapsed time and token-budget usage when the tool returns it. Then run `/cancel` to cleanly exit and clean up all state files.",
+        "governs": [
+          "approval",
+          "execution",
+          "state_transitions",
+          "completion"
+        ]
+      },
+      {
+        "line": 98,
+        "instruction": "- Use `ask_codex` with `agent_role: \"architect\"` for verification cross-checks when changes are security-sensitive, architectural, or involve complex multi-system integration",
+        "governs": [
+          "clarification",
+          "verification"
+        ]
+      },
+      {
+        "line": 100,
+        "instruction": "- If MCP compatibility tools are unavailable, proceed with CLI/agent verification alone -- never block on external tools",
+        "governs": [
+          "verification"
+        ]
+      },
+      {
+        "line": 104,
+        "instruction": "- Prefer CLI state commands. If an explicit MCP compatibility `omx_state` call reports that its stdio transport is unavailable/closed, do **not** retry the same MCP call. Retry once through the supported CLI parity surface with the same payload, preserving `workingDirectory` and `session_id`: `omx state write --input '<json>' --json`, `omx state read --input '<json>' --json`, or `omx state clear --input '<json>' --json`. If the CLI path also fails, continue with `.omx/context` / `.omx/plans` file-backed artifacts and report the state persistence blocker.",
+        "governs": [
+          "autonomy",
+          "execution",
+          "state_transitions"
+        ]
+      },
+      {
+        "line": 109,
+        "instruction": "Codex goal mode is the thread-level completion contract for long-running Ralph work. Ralph state tracks workflow mechanics; goal mode tracks whether the user objective is truly done. When the goal tools are available:",
+        "governs": [
+          "execution",
+          "state_transitions",
+          "completion"
+        ]
+      },
+      {
+        "line": 112,
+        "instruction": "2. If no goal exists, call `create_goal` only when the user or system explicitly asked for goal tracking; otherwise continue with Ralph state alone.",
+        "governs": [
+          "autonomy",
+          "clarification",
+          "state_transitions"
+        ]
+      },
+      {
+        "line": 114,
+        "instruction": "4. Before completion, perform a prompt-to-artifact checklist and completion audit against real evidence:",
+        "governs": [
+          "verification"
+        ]
+      },
+      {
+        "line": 116,
+        "instruction": "   - map every prompt requirement, named workflow (`$ralplan`, `$ralph`), file, command, test, gate, and deliverable to evidence",
+        "governs": [
+          "execution",
+          "verification"
+        ]
+      },
+      {
+        "line": 119,
+        "instruction": "5. Call `update_goal({status: \"complete\"})` only when the audit shows no required work remains. Do not use passing tests, Ralph state, or architect approval as proxy proof unless they cover the whole goal.",
+        "governs": [
+          "approval",
+          "state_transitions",
+          "verification",
+          "completion"
+        ]
+      },
+      {
+        "line": 120,
+        "instruction": "6. If goal tools are unavailable, keep working through Ralph state and mention the missing goal-mode evidence in the final report.",
+        "governs": [
+          "state_transitions",
+          "verification"
+        ]
+      },
+      {
+        "line": 132,
+        "instruction": "- **On completion** (only after the completion audit passes with real evidence):",
+        "governs": [
+          "verification"
+        ]
+      },
+      {
+        "line": 133,
+        "instruction": "  `omx state write --input '{\"mode\":\"ralph\",\"active\":false,\"current_phase\":\"complete\",\"completed_at\":\"<now>\",\"completion_audit\":{\"passed\":true,\"prompt_to_artifact_checklist\":[\"<requirement mapped to artifact/evidence>\"],\"verification_evidence\":[\"<fresh test/build/lint command and result>\"]}}' --json`",
+        "governs": [
+          "execution",
+          "state_transitions",
+          "verification",
+          "completion"
+        ]
+      },
+      {
+        "line": 136,
+        "instruction": "  2. Build `prompt_to_artifact_checklist` entries that map every user requirement, workflow gate, named file, command, PR/delivery requirement, and stop condition to a concrete artifact or evidence item.",
+        "governs": [
+          "execution",
+          "verification",
+          "completion"
+        ]
+      },
+      {
+        "line": 137,
+        "instruction": "  3. Build `verification_evidence` entries with concrete commands, exit status, files inspected, PR URLs, or other machine-checkable evidence.",
+        "governs": [
+          "execution",
+          "state_transitions",
+          "verification"
+        ]
+      },
+      {
+        "line": 138,
+        "instruction": "  4. Write the Ralph completion state with a top-level `completion_audit` field on the Ralph state object. Do not write bare top-level `prompt_to_artifact_checklist` or `verification_evidence` fields by themselves; the Stop gate will reject them.",
+        "governs": [
+          "state_transitions",
+          "verification",
+          "completion"
+        ]
+      },
+      {
+        "line": 139,
+        "instruction": "  5. Read the state back with `omx state read --input '{\"mode\":\"ralph\"}' --json` and verify `completion_audit.passed === true`, a non-empty checklist, and non-empty verification evidence before producing the final answer.",
+        "governs": [
+          "state_transitions",
+          "verification"
+        ]
+      },
+      {
+        "line": 140,
+        "instruction": "  6. If Codex goal mode is active, call `update_goal({status:\"complete\"})` only after this Ralph audit read-back succeeds.",
+        "governs": [
+          "state_transitions",
+          "completion"
+        ]
+      },
+      {
+        "line": 141,
+        "instruction": "- **On cancellation/cleanup**:",
+        "governs": []
+      },
+      {
+        "line": 142,
+        "instruction": "  run `$cancel` (which should call `omx state clear --input '{\"mode\":\"ralph\"}' --json`)",
+        "governs": [
+          "execution",
+          "state_transitions"
+        ]
+      },
+      {
+        "line": 147,
+        "instruction": "**Good:** The user says `continue` after the workflow already has a clear next step. Continue the current branch of work instead of restarting or re-asking the same question.",
+        "governs": [
+          "autonomy",
+          "clarification",
+          "state_transitions"
+        ]
+      },
+      {
+        "line": 151,
+        "instruction": "**Bad:** The user says `continue`, and the workflow restarts discovery or stops before the missing verification/evidence is gathered.",
+        "governs": [
+          "autonomy",
+          "verification",
+          "completion"
+        ]
+      },
+      {
+        "line": 157,
+        "instruction": "task(agent_type=\"executor\", reasoning_effort=\"low\", prompt=\"Add type export for UserConfig\")",
+        "governs": [
+          "clarification"
+        ]
+      },
+      {
+        "line": 158,
+        "instruction": "task(agent_type=\"executor\", reasoning_effort=\"medium\", prompt=\"Implement the caching layer for API responses\")",
+        "governs": [
+          "clarification",
+          "execution"
+        ]
+      },
+      {
+        "line": 159,
+        "instruction": "task(agent_type=\"executor\", reasoning_effort=\"xhigh\", prompt=\"Refactor auth module to support OAuth2 flow\")",
+        "governs": [
+          "clarification"
+        ]
+      },
+      {
+        "line": 161,
+        "instruction": "Why good: Three independent tasks fired simultaneously while explicitly selecting the installed `executor` native role, so the UI/tracker does not show default subagents; legacy tier intent is preserved through native reasoning effort (`LOW` -> `low`, `STANDARD` -> `medium`, `THOROUGH` -> `xhigh`).",
+        "governs": [
+          "autonomy",
+          "clarification"
+        ]
+      },
+      {
+        "line": 165,
+        "instruction": "Correct verification before completion:",
+        "governs": [
+          "verification"
+        ]
+      },
+      {
+        "line": 170,
+        "instruction": "4. task(agent_type=\"architect\", reasoning_effort=\"medium\", prompt=\"verify completion\") → Verdict: \"APPROVED\"",
+        "governs": [
+          "clarification",
+          "approval",
+          "verification"
+        ]
+      },
+      {
+        "line": 171,
+        "instruction": "5. Run /cancel",
+        "governs": [
+          "execution"
+        ]
+      },
+      {
+        "line": 173,
+        "instruction": "Why good: Fresh evidence at each step, architect verification, then clean exit.",
+        "governs": [
+          "verification"
+        ]
+      },
+      {
+        "line": 177,
+        "instruction": "Claiming completion without verification:",
+        "governs": [
+          "verification"
+        ]
+      },
+      {
+        "line": 178,
+        "instruction": "\"All the changes look good, the implementation should work correctly. Task complete.\"",
+        "governs": [
+          "clarification",
+          "execution",
+          "completion"
+        ]
+      },
+      {
+        "line": 183,
+        "instruction": "Sequential execution of independent tasks:",
+        "governs": [
+          "autonomy",
+          "clarification"
+        ]
+      },
+      {
+        "line": 185,
+        "instruction": "task(agent_type=\"executor\", reasoning_effort=\"low\", prompt=\"Add type export\") → wait →",
+        "governs": [
+          "clarification"
+        ]
+      },
+      {
+        "line": 186,
+        "instruction": "task(agent_type=\"executor\", reasoning_effort=\"medium\", prompt=\"Implement caching\") → wait →",
+        "governs": [
+          "clarification",
+          "execution"
+        ]
+      },
+      {
+        "line": 187,
+        "instruction": "task(agent_type=\"executor\", reasoning_effort=\"xhigh\", prompt=\"Refactor auth\")",
+        "governs": [
+          "clarification"
+        ]
+      },
+      {
+        "line": 189,
+        "instruction": "Why bad: These are independent tasks that should run in parallel, not sequentially.",
+        "governs": [
+          "autonomy",
+          "clarification",
+          "execution"
+        ]
+      },
+      {
+        "line": 193,
+        "instruction": "<Escalation_And_Stop_Conditions>",
+        "governs": [
+          "completion"
+        ]
+      },
+      {
+        "line": 194,
+        "instruction": "- Stop and report when a fundamental blocker requires user input (missing credentials, unclear requirements, external service down)",
+        "governs": [
+          "completion"
+        ]
+      },
+      {
+        "line": 195,
+        "instruction": "- Stop when the user says \"stop\", \"cancel\", or \"abort\" -- run `/cancel`",
+        "governs": [
+          "execution",
+          "completion"
+        ]
+      },
+      {
+        "line": 196,
+        "instruction": "- Continue working when the hook system sends \"The boulder never stops\" -- this means the iteration continues",
+        "governs": [
+          "autonomy",
+          "external_communication",
+          "completion"
+        ]
+      },
+      {
+        "line": 197,
+        "instruction": "- If architect rejects verification, fix the issues and re-verify (do not stop)",
+        "governs": [
+          "verification",
+          "completion"
+        ]
+      },
+      {
+        "line": 199,
+        "instruction": "</Escalation_And_Stop_Conditions>",
+        "governs": [
+          "completion"
+        ]
+      },
+      {
+        "line": 202,
+        "instruction": "- [ ] All requirements from the original task are met (no scope reduction)",
+        "governs": [
+          "clarification"
+        ]
+      },
+      {
+        "line": 207,
+        "instruction": "- [ ] Architect verification passed: on a routing-capable surface via explicit `task(agent_type=\"architect\", reasoning_effort=\"medium\"...)` minimum. On the exact reviewed Codex releases 0.144.5, 0.145.0, 0.146.1, and 0.148.0-alpha.5 when role routing is unavailable, no adapted Ralplan Architect pass is valid; every other version remains unknown and fails closed. When adapted authority is attempted, preflight must have stopped with the leader-proof diagnostic. Ordinary Ralph work remains subject to its existing controls.",
+        "governs": [
+          "clarification",
+          "verification",
+          "completion",
+          "publishing_deployment"
+        ]
+      },
+      {
+        "line": 208,
+        "instruction": "- [ ] Codex goal-mode completion audit passed, and `update_goal({status: \"complete\"})` was called when an active goal exists",
+        "governs": [
+          "state_transitions",
+          "completion"
+        ]
+      },
+      {
+        "line": 209,
+        "instruction": "- [ ] ai-slop-cleaner pass completed on changed files (or --no-deslop specified)",
+        "governs": [
+          "completion"
+        ]
+      },
+      {
+        "line": 211,
+        "instruction": "- [ ] `/cancel` run for clean state cleanup",
+        "governs": [
+          "execution",
+          "state_transitions"
+        ]
+      },
+      {
+        "line": 229,
+        "instruction": "If `--no-deslop` is present, skip the deslop pass entirely after Step 7 and continue using the latest successful pre-deslop verification evidence.",
+        "governs": [
+          "autonomy",
+          "verification"
+        ]
+      },
+      {
+        "line": 232,
+        "instruction": "Ralph execution supports visual reference flags for screenshot tasks:",
+        "governs": [
+          "clarification"
+        ]
+      },
+      {
+        "line": 241,
+        "instruction": "   - Execute: `$deep-interview --quick <task>`",
+        "governs": [
+          "clarification",
+          "execution"
+        ]
+      },
+      {
+        "line": 242,
+        "instruction": "   - Complete a compact requirements pass (context, goals, scope, constraints, validation)",
+        "governs": [
+          "completion"
+        ]
+      },
+      {
+        "line": 247,
+        "instruction": "3. Parse the task (everything after `--prd` flag)",
+        "governs": [
+          "clarification"
+        ]
+      },
+      {
+        "line": 270,
+        "instruction": "7. Proceed to normal ralph loop using user stories as the task list",
+        "governs": [
+          "clarification"
+        ]
+      },
+      {
+        "line": 274,
+        "instruction": "Workflow: Detect flag, extract task, create `.omx/plans/prd-{slug}.md`, create `.omx/state/{scope}/ralph-progress.json`, begin ralph loop.",
+        "governs": [
+          "clarification",
+          "state_transitions"
+        ]
+      },
+      {
+        "line": 286,
+        "instruction": "- Package installation (npm install, pip install, cargo build)",
+        "governs": []
+      },
+      {
+        "line": 291,
+        "instruction": "**Run blocking** (foreground):",
+        "governs": [
+          "execution"
+        ]
+      },
+      {
+        "line": 297,
+        "instruction": "Original task:",
+        "governs": [
+          "clarification"
+        ]
+      }
+    ],
+    "governs": [
+      "approval",
+      "autonomy",
+      "clarification",
+      "completion",
+      "execution",
+      "external_communication",
+      "publishing_deployment",
+      "state_transitions",
+      "verification"
+    ]
+  },
+  {
+    "file": "/Users/josh/.codex/skills/cancel/SKILL.md",
+    "scope": "conditional role or skill only when selected",
+    "precedence": "below session system/developer/current user instructions; repository-specific rules specialize defaults; explicit intentional gates remain",
+    "edited": false,
+    "instructions": [
+      {
+        "line": 2,
+        "instruction": "name: cancel",
+        "governs": []
+      },
+      {
+        "line": 3,
+        "instruction": "description: \"[OMX] Cancel any active OMX mode (autopilot, ralph, ultrawork, ecomode, ultraqa, swarm, ultrapilot, pipeline, team)\"",
+        "governs": [
+          "verification"
+        ]
+      },
+      {
+        "line": 6,
+        "instruction": "# Cancel Skill",
+        "governs": []
+      },
+      {
+        "line": 8,
+        "instruction": "Intelligent cancellation that detects and cancels the active OMX mode.",
+        "governs": []
+      },
+      {
+        "line": 10,
+        "instruction": "**The cancel skill is the standard way to complete and exit any OMX mode.**",
+        "governs": [
+          "completion"
+        ]
+      },
+      {
+        "line": 11,
+        "instruction": "When the stop hook detects work is complete, it instructs the LLM to invoke",
+        "governs": [
+          "completion"
+        ]
+      },
+      {
+        "line": 12,
+        "instruction": "this skill for proper state cleanup. If cancel fails or is interrupted,",
+        "governs": [
+          "state_transitions"
+        ]
+      },
+      {
+        "line": 18,
+        "instruction": "Automatically detects which mode is active and cancels it:",
+        "governs": []
+      },
+      {
+        "line": 19,
+        "instruction": "- **Autopilot**: Stops workflow, preserves progress for resume",
+        "governs": [
+          "completion"
+        ]
+      },
+      {
+        "line": 20,
+        "instruction": "- **Ralph**: Stops persistence loop, clears linked ultrawork if applicable",
+        "governs": [
+          "completion"
+        ]
+      },
+      {
+        "line": 21,
+        "instruction": "- **Ultrawork**: Stops parallel execution (standalone or linked)",
+        "governs": [
+          "completion"
+        ]
+      },
+      {
+        "line": 22,
+        "instruction": "- **Ecomode**: Stops token-efficient parallel execution (standalone or linked to ralph)",
+        "governs": [
+          "completion"
+        ]
+      },
+      {
+        "line": 23,
+        "instruction": "- **UltraQA**: Stops QA cycling workflow",
+        "governs": [
+          "verification",
+          "completion"
+        ]
+      },
+      {
+        "line": 24,
+        "instruction": "- **Swarm**: Stops coordinated agent swarm, releases claimed tasks",
+        "governs": [
+          "clarification",
+          "completion",
+          "publishing_deployment"
+        ]
+      },
+      {
+        "line": 25,
+        "instruction": "- **Ultrapilot**: Stops parallel autopilot workers",
+        "governs": [
+          "completion"
+        ]
+      },
+      {
+        "line": 26,
+        "instruction": "- **Pipeline**: Stops sequential agent pipeline",
+        "governs": [
+          "completion"
+        ]
+      },
+      {
+        "line": 32,
+        "instruction": "/cancel",
+        "governs": []
+      },
+      {
+        "line": 35,
+        "instruction": "Or say: \"cancelomc\", \"stopomc\"",
+        "governs": [
+          "completion"
+        ]
+      },
+      {
+        "line": 39,
+        "instruction": "`/cancel` follows the session-aware state contract:",
+        "governs": [
+          "state_transitions"
+        ]
+      },
+      {
+        "line": 45,
+        "instruction": "## Normative Ralph cancellation post-conditions (MUST)",
+        "governs": []
+      },
+      {
+        "line": 47,
+        "instruction": "For Ralph-targeted cancellation (standalone or linked), completion is defined by post-conditions:",
+        "governs": []
+      },
+      {
+        "line": 51,
+        "instruction": "   - `current_phase='cancelled'`",
+        "governs": []
+      },
+      {
+        "line": 52,
+        "instruction": "   - `completed_at` is set (ISO timestamp)",
+        "governs": [
+          "completion"
+        ]
+      },
+      {
+        "line": 54,
+        "instruction": "4. Cancellation MUST remain scope-safe: no mutation of unrelated sessions.",
+        "governs": []
+      },
+      {
+        "line": 56,
+        "instruction": "See: `docs/contracts/ralph-cancel-contract.md`.",
+        "governs": []
+      },
+      {
+        "line": 58,
+        "instruction": "Active modes are still cancelled in dependency order:",
+        "governs": []
+      },
+      {
+        "line": 72,
+        "instruction": "When cancellation targets Ralph state in a scope, completion requires all of the following:",
+        "governs": [
+          "state_transitions"
+        ]
+      },
+      {
+        "line": 74,
+        "instruction": "1. Ralph state is terminal in that same scope: `active=false`, `current_phase='cancelled'` (or linked terminal phase), and `completed_at` is set.",
+        "governs": [
+          "state_transitions",
+          "completion"
+        ]
+      },
+      {
+        "line": 80,
+        "instruction": "`--force` is a compatibility flag for the same proven current scope as bare cancellation. It does not widen cancellation to other sessions, legacy roots, Team runtimes, or workspace artifacts. Its only additional behavior is exact-session native-stop cleanup after the same ownership checks.",
+        "governs": [
+          "execution",
+          "verification",
+          "completion"
+        ]
+      },
+      {
+        "line": 82,
+        "instruction": "`--all` is intentionally unsupported. Workspace-wide destructive cancellation requires a separately reviewed command and authority contract. Unknown flags and mixed flag combinations fail before mutation.",
+        "governs": [
+          "clarification",
+          "execution"
+        ]
+      },
+      {
+        "line": 86,
+        "instruction": "The native `PreToolUse` exemption accepts an inherited non-empty `NODE_EXTRA_CA_CERTS` only for the exact canonical `omx cancel` command shape (and workflow-supported `--force`). This does not relax `NODE_OPTIONS`, loader/import hooks, `OPENSSL_CONF`, shell startup/function injection, PATH/PATHEXT shadowing, leading assignments, command chaining, noncanonical executable resolution, or unrelated commands.",
+        "governs": [
+          "execution"
+        ]
+      },
+      {
+        "line": 88,
+        "instruction": "For session-scoped cancellation, a stale top-level `owner_codex_session_id` in `skill-active-state.json` may be replaced—not aliased—only inside the existing cancellation transaction after the current pointer, native owner sidecar, canonical target session, and all nested owner/session evidence agree. Displaced owner evidence must be positively absent or stale/dead; live, malformed, foreign, indeterminate, nested-contradictory, or cross-session evidence fails closed. If the skill marker is absent, mode-only cancellation keeps its existing behavior and does not create one.",
+        "governs": [
+          "state_transitions",
+          "verification"
+        ]
+      },
+      {
+        "line": 90,
+        "instruction": "The replacement and terminal skill state are serialized as one final skill payload. Cancellation retains all-target prevalidation, `O_NOFOLLOW`, content/identity revalidation, per-file sync, and reverse rollback. These are in-process transaction guarantees, not crash-atomic multi-file visibility; rollback restoration failures are reported rather than presented as successful cleanup.",
+        "governs": [
+          "state_transitions"
+        ]
+      },
+      {
+        "line": 93,
+        "instruction": "/cancel",
+        "governs": []
+      },
+      {
+        "line": 94,
+        "instruction": "/cancel --force",
+        "governs": []
+      },
+      {
+        "line": 99,
+        "instruction": "- no arguments: cancel only the provably current session/root scope;",
+        "governs": []
+      },
+      {
+        "line": 100,
+        "instruction": "- `--force`: same scope, plus exact-session native-stop cleanup;",
+        "governs": [
+          "completion"
+        ]
+      },
+      {
+        "line": 106,
+        "instruction": "Cancellation derives writable targets from the already-proven writable scope. Compatibility discovery may inform status, but never grants write authority. Unrelated session, legacy-root, Team, and run-dir state remains untouched unless it is independently proven as the exact cancellation target.",
+        "governs": [
+          "autonomy",
+          "execution",
+          "state_transitions"
+        ]
+      },
+      {
+        "line": 108,
+        "instruction": "### 3B. Smart Cancellation (default)",
+        "governs": []
+      },
+      {
+        "line": 119,
+        "instruction": "**Two-pass cancellation protocol:**",
+        "governs": []
+      },
+      {
+        "line": 147,
+        "instruction": "  4. Emit structured cancel report",
+        "governs": []
+      },
+      {
+        "line": 150,
+        "instruction": "**Structured Cancel Report:**",
+        "governs": []
+      },
+      {
+        "line": 152,
+        "instruction": "Team \"{team_name}\" cancelled:",
+        "governs": []
+      },
+      {
+        "line": 160,
+        "instruction": "**Implementation note:** The cancel skill is executed by the LLM, not as a bash script. When you detect an active team:",
+        "governs": [
+          "execution"
+        ]
+      },
+      {
+        "line": 173,
+        "instruction": "Call `cancelAutopilot()` from `src/hooks/autopilot/cancel.ts:27-78`:",
+        "governs": []
+      },
+      {
+        "line": 207,
+        "instruction": "  echo \"Autopilot cancelled at phase: $CURRENT_PHASE. Progress preserved for resume.\"",
+        "governs": []
+      },
+      {
+        "line": 239,
+        "instruction": "  echo \"Ralph cancelled. Persistent mode deactivated.\"",
+        "governs": []
+      },
+      {
+        "line": 254,
+        "instruction": "    echo \"Ultrawork is linked to Ralph. Use /cancel to cancel both.\"",
+        "governs": []
+      },
+      {
+        "line": 261,
+        "instruction": "  echo \"Ultrawork cancelled. Parallel execution mode deactivated.\"",
+        "governs": []
+      },
+      {
+        "line": 272,
+        "instruction": "  echo \"UltraQA cancelled. QA cycling workflow stopped.\"",
+        "governs": [
+          "verification",
+          "completion"
+        ]
+      },
+      {
+        "line": 287,
+        "instruction": "echo \"Use --force for exact-session native-stop cleanup without widening scope.\"",
+        "governs": [
+          "completion"
+        ]
+      },
+      {
+        "line": 293,
+        "instruction": "The cancel skill runs as follows:",
+        "governs": [
+          "execution"
+        ]
+      },
+      {
+        "line": 294,
+        "instruction": "1. Parse arguments strictly. Bare cancellation and a single `--force` are accepted; `--all`, unknown flags, and multiple flags fail before mutation.",
+        "governs": [
+          "clarification"
+        ]
+      },
+      {
+        "line": 296,
+        "instruction": "3. Cancel only active state files whose exact scope, ownership fields, and frozen file identity are proven.",
+        "governs": [
+          "state_transitions"
+        ]
+      },
+      {
+        "line": 297,
+        "instruction": "4. With `--force`, remove only the selected session's native-stop entry after the same proof and revalidation.",
+        "governs": [
+          "completion"
+        ]
+      },
+      {
+        "line": 305,
+        "instruction": "| Autopilot | \"Autopilot cancelled at phase: {phase}. Progress preserved for resume.\" |",
+        "governs": []
+      },
+      {
+        "line": 306,
+        "instruction": "| Ralph | \"Ralph cancelled. Persistent mode deactivated.\" |",
+        "governs": []
+      },
+      {
+        "line": 307,
+        "instruction": "| Ultrawork | \"Ultrawork cancelled. Parallel execution mode deactivated.\" |",
+        "governs": []
+      },
+      {
+        "line": 308,
+        "instruction": "| Ecomode | \"Ecomode cancelled. Token-efficient execution mode deactivated.\" |",
+        "governs": []
+      },
+      {
+        "line": 309,
+        "instruction": "| UltraQA | \"UltraQA cancelled. QA cycling workflow stopped.\" |",
+        "governs": [
+          "verification",
+          "completion"
+        ]
+      },
+      {
+        "line": 310,
+        "instruction": "| Swarm | \"Swarm cancelled. Coordinated agents stopped.\" |",
+        "governs": [
+          "completion"
+        ]
+      },
+      {
+        "line": 311,
+        "instruction": "| Ultrapilot | \"Ultrapilot cancelled. Parallel autopilot workers stopped.\" |",
+        "governs": [
+          "completion"
+        ]
+      },
+      {
+        "line": 312,
+        "instruction": "| Pipeline | \"Pipeline cancelled. Sequential agent chain stopped.\" |",
+        "governs": [
+          "completion"
+        ]
+      },
+      {
+        "line": 313,
+        "instruction": "| Team | \"Team cancelled. Teammates shut down and cleaned up.\" |",
+        "governs": []
+      },
+      {
+        "line": 314,
+        "instruction": "| Plan Consensus | \"Plan Consensus cancelled. Planning session ended.\" |",
+        "governs": []
+      },
+      {
+        "line": 333,
+        "instruction": "- **Dependency-aware**: Autopilot cancellation cleans up Ultragoal/UltraQA state and any explicit legacy Ralph state",
+        "governs": [
+          "state_transitions",
+          "verification"
+        ]
+      },
+      {
+        "line": 334,
+        "instruction": "- **Link-aware**: Ralph cancellation cleans up linked Ultrawork or Ecomode",
+        "governs": []
+      },
+      {
+        "line": 338,
+        "instruction": "- **Team-aware**: Team cancellation is permitted only when the selected state carries exact same-scope Team authority; unrelated Team artifacts and tmux sessions remain untouched.",
+        "governs": [
+          "state_transitions"
+        ]
+      },
+      {
+        "line": 342,
+        "instruction": "Cancellation MUST NOT enumerate or kill every `omx-team-*` session and MUST NOT recursively delete `.omx/state/team/`. Team shutdown requires the exact frozen Team root, internal name, session, leader pane, and runtime identity selected by the authorized state transition. When that proof is unavailable or changes, cancellation fails closed without signals, pane actions, overlay edits, or Team-state deletion.",
+        "governs": [
+          "approval",
+          "execution",
+          "state_transitions"
+        ]
+      },
+      {
+        "line": 344,
+        "instruction": "`--force` does not widen Team scope. It only enables exact-session native-stop cleanup after the same authority checks.",
+        "governs": [
+          "verification",
+          "completion"
+        ]
+      }
+    ],
+    "governs": [
+      "approval",
+      "autonomy",
+      "clarification",
+      "completion",
+      "execution",
+      "publishing_deployment",
+      "state_transitions",
+      "verification"
+    ]
+  }
+]

@@ -14,7 +14,9 @@ This repo supports a scheduled content cycle, image regeneration, migration dry 
 
 ## Credential Boundaries
 
-Do not run production-mutating commands without explicit production credentials and a rollback plan. In local/CI contexts, prefer `PIPELINE_OFFLINE=1`, `--dry-run`, and report-only migration modes.
+Follow the root [`AGENTS.md`](../AGENTS.md) approval and external-action policy. Production-mutating commands require explicit authorization for that action and target, appropriate production credentials, and a rollback plan. Possession of credentials is not authorization; this command list does not grant permission to publish, purge, or dispatch a workflow. In local/CI contexts, prefer `PIPELINE_OFFLINE=1`, `--dry-run`, and report-only migration modes after checking their actual side effects.
+
+If an optional live source or check is unavailable, continue independent authorized local work and record the limitation. If an essential source, authorization, extraction QA, or other required publication gate is missing or fails, keep the affected publication blocked; do not turn an evidence gap into permission to configure credentials or weaken a gate. Existing scheduled automation keeps its configured authority and safety checks; an ad hoc agent run does not inherit that authority.
 
 ## Incident Notes
 

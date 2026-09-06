@@ -1,5 +1,7 @@
 # Homepage Premium Redesign Plan
 
+> Historical task specification — not a standing work order. Resume only within a current authorized task under [`AGENTS.md`](../AGENTS.md), using fresh production/local evidence. Keep this plan's explicit human approvals, independent reviews, and safety gates when it is selected; its example commands do not themselves authorize dispatch, deployment, push, installation, or secret access. If required tools/evidence are unavailable, report the affected check as not performed and continue safe independent work without claiming that requirement passed.
+
 ## Objective
 Make the Compute Current homepage feel more premium, editorial, and distinctive instead of generic article aggregation while preserving the AI infrastructure intelligence product boundary.
 

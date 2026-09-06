@@ -1,5 +1,7 @@
 # Compute Current Missing Images Vercel Deployment Plan
 
+> Historical task specification — not a standing work order. Resume only within a current authorized task under [`AGENTS.md`](../AGENTS.md), using fresh production/local evidence. Keep this plan's explicit human approvals, independent reviews, and safety gates when it is selected; its example commands do not themselves authorize dispatch, deployment, push, installation, or secret access. If required tools/evidence are unavailable, report the affected check as not performed and continue safe independent work without claiming that requirement passed.
+
 ## TL;DR
 > Summary:      Fix the shared public image selector so displayable local generated assets beat unvalidated remote source images when both exist, then deploy the verified result to Vercel production.
 > Deliverables:

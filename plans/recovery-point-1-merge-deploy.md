@@ -1,5 +1,7 @@
 # Recovery Point 1 Merge Deploy Plan
 
+> Historical task specification — not a standing work order. Resume only within a current authorized task under [`AGENTS.md`](../AGENTS.md), using fresh production/local evidence. Keep this plan's explicit human approvals, independent reviews, and safety gates when it is selected; its example commands do not themselves authorize dispatch, deployment, push, installation, or secret access. If required tools/evidence are unavailable, report the affected check as not performed and continue safe independent work without claiming that requirement passed.
+
 ## TL;DR
 > Summary:      Verify the already-created source preservation commit `16262026` and merge commit `3cb84d3b`, clean local agent artifacts out of the restore-point tree, run local and production verification, deploy to Vercel, then push the branch and annotated tag `recovery-point-1` with message `복구지점1`.
 > Deliverables:

@@ -1,5 +1,7 @@
 # Compute Current Public Article Images Implementation Plan
 
+> Historical task specification — not a standing work order. Resume only within a current authorized task under [`AGENTS.md`](../AGENTS.md), using fresh production/local evidence. Keep this plan's explicit human approvals, independent reviews, and safety gates when it is selected; its example commands do not themselves authorize dispatch, deployment, push, installation, or secret access. If required tools/evidence are unavailable, report the affected check as not performed and continue safe independent work without claiming that requirement passed.
+
 > **For agentic workers:** REQUIRED SUB-SKILLS: Use `superpowers:test-driven-development` for any behavior/code change, `superpowers:verification-before-completion` before any completion/commit/push claim, and `editorial-humanizer` if any reader-facing card, dek, alt, or article copy is rewritten. Track steps with checkbox syntax.
 
 **Goal:** Ensure every public Compute Current article/card displays extracted or generated imagery, stock-derived public card imagery is replaced with generated editorial art when needed, and public/internal language plus feed quality gates remain clean before any commit/push.

@@ -27,12 +27,14 @@ Low-relevance, weak extraction, missing image, and generation failure paths shou
 
 ## Cache Purge
 
-After publishing or regenerating a batch, run:
+After publishing or regenerating a batch, prepare the cache-purge follow-up. Run the following command only when the purge action and target are explicitly authorized, its credentials are available through permitted access, and the rollback prerequisites in the [automation runbook](automation-runbook.md) are satisfied:
 
 ```bash
 npm run purge:cache
 ```
 
 Production purges require `COMPUTE_CURRENT_CACHE_PURGE_URL`. Optional bearer auth uses `COMPUTE_CURRENT_CACHE_PURGE_TOKEN`.
+
+A regeneration or draft request alone does not authorize a purge. Otherwise record the purge as not performed and continue independent local verification under [`AGENTS.md`](../AGENTS.md); do not claim live freshness from local results.
 
 `VERCEL_DEPLOY_HOOK_URL` is a deployment trigger, not a cache-purge endpoint; do not use it for purge runs.

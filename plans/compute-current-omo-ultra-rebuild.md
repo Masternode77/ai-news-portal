@@ -1,5 +1,7 @@
 # Compute Current OMO Ultra Rebuild
 
+> Historical task specification — not a standing work order. Resume only within a current authorized task under [`AGENTS.md`](../AGENTS.md), using fresh production/local evidence. Keep this plan's explicit human approvals, independent reviews, and safety gates when it is selected; its example commands do not themselves authorize dispatch, deployment, push, installation, or secret access. If required tools/evidence are unavailable, report the affected check as not performed and continue safe independent work without claiming that requirement passed.
+
 ## TL;DR
 > **Summary**: Rebuild Compute Current inside the existing Astro + Vercel + file-backed JSON architecture so the public product reads like a premium AI infrastructure publication, the generation pipeline fails closed on weak sources, per-article images are reliable, and the private admin CMS is secure enough for owner editing and publishing.
 > **Deliverables**:

@@ -1,5 +1,7 @@
 # Production Verification Report
 
+> **Historical snapshot — non-operational.** The dated results below do not establish current production health, readiness, or deployment authority. Recheck the production baseline under [`AGENTS.md`](../AGENTS.md). Referenced `evidence/compute-current-omo-ultra-rebuild/` artifacts are unavailable in this audit checkout; retain their references as historical records, not fresh proof.
+
 Generated at: 2026-05-31T07:26:52.140Z
 Build ID: 0.0.1:dist-mtime-1780211413505
 

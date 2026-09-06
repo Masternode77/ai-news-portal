@@ -1,5 +1,7 @@
 # Article Graphics Image2/Origin Plan
 
+> Historical task specification — not a standing work order. Resume only within a current authorized task under [`AGENTS.md`](../AGENTS.md), using fresh production/local evidence. Keep this plan's explicit human approvals, independent reviews, and safety gates when it is selected; its example commands do not themselves authorize dispatch, deployment, push, installation, or secret access. If required tools/evidence are unavailable, report the affected check as not performed and continue safe independent work without claiming that requirement passed.
+
 ## Objective
 Preserve the current Compute Current repo state, then ensure every reader-facing blog/signal article surface has graphical imagery. Priority order: existing/new image2 or canonical generated assets, trusted origin source artwork canonicalized locally, then local graphical fallback.
 

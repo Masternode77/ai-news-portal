@@ -1,0 +1,39 @@
+{
+  "production_baseline": "9e0db38ae9e58c7a4dd9a85e3cee9e8c7aa44263",
+  "rollback_deployment": "dpl_3btcDnmJUh6Eoen1mKzL4Md3WmGt",
+  "authorization": "User explicitly requested commit, push, deploy after the completed audit",
+  "checks": {
+    "astro_check": {
+      "errors": 0,
+      "warnings": 0,
+      "hints": 18
+    },
+    "source_tests_initial": {
+      "passed": 533,
+      "failed": 1,
+      "reason": "Pre-existing stale taxonomy report"
+    },
+    "taxonomy_recheck": {
+      "passed": 3,
+      "failed": 0
+    },
+    "build": {
+      "pages": 74,
+      "status": "passed"
+    },
+    "built_tests": {
+      "passed": 22,
+      "failed": 0
+    },
+    "quality_gate": "passed",
+    "relevance": "passed",
+    "taxonomy": "passed",
+    "repetition": "passed"
+  },
+  "additional_fix": {
+    "file": "docs/taxonomy-pages-report.md",
+    "authority_class": "A",
+    "scope": "Refresh stale report counts only"
+  },
+  "remote_status": "Preflight only; final remote commit/deployment verification recorded in task"
+}

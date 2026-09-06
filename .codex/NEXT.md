@@ -1,5 +1,7 @@
 # NEXT
 
+> Historical handoff — not a current task or verification result. The sections below retain an earlier run's observations; their date/commit is not established here. Before reusing them, follow `AGENTS.md`, verify the current production baseline and local evidence, and use the user's current request to select work. Recorded next steps do not authorize a commit, push, publication, or deployment.
+
 ## Completed
 - Applied the article-detail editorial treatment across the portal.
 - Homepage/search titles now prefer hook-style `expertLensFull.finalHeadline`.

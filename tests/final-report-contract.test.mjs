@@ -39,3 +39,39 @@ test('production verification report records live blockers or live results', () 
   assert.match(text, /(credential blocker|live status|skipped live step)/i);
   assert.doesNotMatch(text, /production reflects changes/i);
 });
+
+const cleanReview = `# Read-only review
+
+## Commands Run
+- Read the scoped instructions and compared the proposed patch with the unchanged safety gates.
+
+## Artifacts
+- Review evidence is retained in the task's canonical audit record with the reviewed commit and file references.
+
+## Pass/Fail
+- Passed the scoped document checks; no production or runtime-health verification was requested or performed.
+
+## Remaining Risks
+- None
+
+## Cleanup Receipts
+- Not applicable: no services, credentials, or temporary runtime resources were created.
+`;
+
+test('a clean review can explicitly report zero remaining risks without inventing a finding', () => {
+  assert.deepEqual(validateFinalReport(cleanReview), { ok: true, failures: [] });
+});
+
+test('zero-risk allowance does not waive required evidence, cleanup receipts, or risk disclosure', () => {
+  const cases = [
+    [cleanReview.replace(/## Commands Run[\s\S]*?(?=## Artifacts)/, '## Commands Run\n- None\n\n'), 'empty_commands_run'],
+    [cleanReview.replace(/## Cleanup Receipts[\s\S]*/, '## Cleanup Receipts\n- n/a\n'), 'empty_cleanup_receipts'],
+    [cleanReview.replace('## Remaining Risks\n- None', '## Remaining Risks\n'), 'empty_remaining_risks'],
+    [cleanReview.replace('## Remaining Risks\n- None', '## Remaining Risks\n- n/a'), 'empty_remaining_risks'],
+  ];
+  for (const [report, failure] of cases) {
+    const result = validateFinalReport(report);
+    assert.equal(result.ok, false);
+    assert.ok(result.failures.includes(failure), failure);
+  }
+});

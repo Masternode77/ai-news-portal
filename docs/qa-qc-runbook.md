@@ -16,6 +16,8 @@ QA/QC covers three simultaneous questions:
 - `deployable with operational follow-up`: local gates pass, merge/data integrity passes, and the built local artifact passes, but live deployment, staging, or cache freshness still needs operator action.
 - `blocked`: local gates fail, merge/data integrity fails, or local distribution verification fails.
 
+These verdicts describe artifact readiness, not execution authority or task-store completion. A `blocked` verdict prevents release of the affected artifact; it does not prevent safe diagnosis, repair, report preparation, or independent checks. A missing optional live check can permit an evidence-limited local assessment, but never substitutes for a check explicitly required by the active release workflow. Keep skipped checks labeled skipped and unresolved required review/gate failures blocking. Follow [`AGENTS.md`](../AGENTS.md) for clarification, approval reuse, worker status, and audit-record preservation.
+
 ## Required Local Gate
 
 Run:
@@ -56,3 +58,5 @@ Cache purge status must be recorded as an operational follow-up unless a separat
 3. If the verdict is `deployable with operational follow-up`, verify the follow-up list is limited to deployment, staging, live freshness, or cache status.
 4. Commit local docs/scripts/tests/data changes after verification.
 5. Push or deploy only after a separate explicit instruction.
+
+A still-valid explicit instruction for the same action, artifact and target need not be requested again; any separately required human release approval still applies. None of the verdicts grants permission to push, deploy, purge, or change production.
