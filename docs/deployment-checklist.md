@@ -51,7 +51,7 @@ This checklist separates local, staging, and production actions so credentialed 
 ## Staging Verification
 
 1. Configure staging `ADMIN_USERNAME`, `ADMIN_PASSWORD_HASH`, and `ADMIN_SESSION_SECRET`.
-2. Configure `IMAGE_PROVIDER=image2`; add `OPENAI_API_KEY` only if staging should generate paid images.
+2. Configure `IMAGE_PROVIDER=codex`; verify registered artwork and local fallback rendering.
 3. Configure GitHub token access only to the staging branch.
 4. Run `npm run content:cycle`, then `npm run content:gate`.
 5. Run `npm run purge:cache` and confirm the report is either purged or explicitly skipped due missing cache-purge credentials.
@@ -61,7 +61,7 @@ This checklist separates local, staging, and production actions so credentialed 
 1. Rotate secrets before first production launch or after any suspected exposure.
 2. Set production `COMPUTE_CURRENT_CACHE_PURGE_URL` and optional `COMPUTE_CURRENT_CACHE_PURGE_TOKEN`.
 3. Confirm `GITHUB_REPO`, `GITHUB_BRANCH`, and GitHub token scopes.
-4. Confirm `OPENROUTER_API_KEY` and image-generation credentials are intentionally enabled.
+4. Confirm `OPENROUTER_API_KEY` is intentionally enabled and Codex-registered image files are present.
 5. Run live smoke checks for homepage, article page, RSS, sitemap, admin login, image rendering, and cache purge.
 6. Record evidence before claiming live production verification.
 

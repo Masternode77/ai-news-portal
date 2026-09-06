@@ -89,3 +89,7 @@ Do not generate or preserve generic patterns in reader-facing article copy. The 
 For content generation, curation, extraction, editorial prompts, article QA, and archive/search article shaping under `scripts/lib/`, also follow `scripts/lib/AGENTS.override.md`.
 
 If changing prompts, fallback editorial copy, quality gates, source extraction, article enrichment, category/tag logic, or publish readiness checks, treat these editorial standards as acceptance criteria. Do not weaken extraction QA, repetition checks, source-fidelity checks, or product-fit boundaries without an explicit user request.
+
+## Article Image Workflow
+
+Use the active Codex session's native image-generation capability for newly requested article artwork. Register the visually reviewed output through `scripts/import-codex-image.mjs`; follow `docs/codex-image-workflow.md`. Do not request or configure an OpenAI API key or copy Codex/ChatGPT credentials to CI for this workflow. Scheduled publication consumes registered local artwork and uses the existing local fallback when none is available; do not describe that fallback as Codex-generated.

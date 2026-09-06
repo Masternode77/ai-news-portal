@@ -94,9 +94,16 @@ OPENROUTER_API_KEY=sk-... node scripts/generate-authored-column.mjs --force
 항목을 걸러냅니다. 수치가 풍부하면 바 차트/수치 표, 부족하면 출처 표기가 붙은 팩트 표가
 자동 구성됩니다. 편집은 admin에서 칼럼 레코드의 `figures` 배열을 수정하면 됩니다.
 
-## 9. 칼럼 히어로 이미지 (image2)
+## 9. 칼럼 히어로 이미지 (Codex)
 
-`OPENAI_API_KEY` 시크릿을 GitHub Actions에 등록하면 칼럼 히어로 이미지가 wire 기사와 동일한
-image2(OpenAI 이미지) 경로로 **칼럼 내용 기반** 생성됩니다(hero/og/thumbnail 세트,
-`public/generated/col_.../`). 키가 없으면 원천 기사 이미지를 재사용하는 기존 동작이 유지되며
-발행은 막히지 않습니다.
+현재 Codex 세션의 이미지 생성 도구로 칼럼 내용에 맞는 이미지를 만들고 시각 검토한 뒤,
+로컬 파일을 다음 명령으로 등록합니다.
+
+```sh
+node scripts/import-codex-image.mjs --id <column-id> --file <generated-image-path>
+```
+
+등록 과정은 hero/og/thumbnail 세트를 `public/generated/articles/` 아래에 만들고 매니페스트에
+원본 해시와 프롬프트 지문을 기록합니다. GitHub Actions와 Vercel은 등록된 파일 또는 로컬
+fallback만 사용하며 별도의 이미지 API 키를 요구하지 않습니다. 세부 절차는
+`docs/codex-image-workflow.md`를 따릅니다.

@@ -40,3 +40,7 @@ test('stock detector does not flag SVG placeholders or OpenAI generated rasters'
     generatedImageProvider: 'local-generated',
   }), false);
 });
+
+test('Codex artwork and local procedural artwork are not publisher-stock images',()=>{
+ for(const provider of ['codex','local']) assert.equal(isStockDerivedCardImage({generatedImage:'/generated/articles/example/hero.webp',sourceImage:'https://stock.example.com/photo.jpg',generatedImageProvider:provider}),false);
+});

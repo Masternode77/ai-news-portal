@@ -30,17 +30,17 @@ function fixtureArticle(overrides = {}) {
   };
 }
 
-test('image2 is the canonical configured image provider', () => {
+test('legacy image2 callers resolve to the Codex file provider', () => {
   const provider = createImageProvider('image2');
   const description = describeImageProvider('image2');
 
-  assert.equal(provider.name, 'image2');
+  assert.equal(provider.name, 'codex');
   assert.equal(description.requested, 'image2');
-  assert.equal(description.active, 'image2');
+  assert.equal(description.active, 'codex');
   assert.equal(description.configured, true);
 });
 
-test('Given no IMAGE_PROVIDER override When the provider registry loads Then image2 is the active default', async () => {
+test('Given no IMAGE_PROVIDER override When the provider registry loads Then codex is the active default', async () => {
   const script = `
     const { describeImageProvider } = await import(${JSON.stringify(imageProvidersUrl)});
     console.log(JSON.stringify(describeImageProvider()));
@@ -50,8 +50,8 @@ test('Given no IMAGE_PROVIDER override When the provider registry loads Then ima
   });
 
   assert.deepEqual(JSON.parse(stdout), {
-    requested: 'image2',
-    active: 'image2',
+    requested: 'codex',
+    active: 'codex',
     configured: true,
   });
 });
@@ -80,10 +80,10 @@ test('offline image2 generation writes metadata and canonical fallback variants'
   });
   const patch = metadataPatchFromImageSet(result);
 
-  assert.equal(result.provider, 'image2');
-  assert.equal(result.model, 'gpt-image-2');
+  assert.equal(result.provider, 'local');
+  assert.equal(result.model, '');
   assert.equal(result.status, 'fallback');
-  assert.match(result.error, /offline/i);
+  assert.match(result.error, /No Codex artwork registered/i);
   assert.equal(result.generatedAt, '2026-05-31T00:00:00.000Z');
   assert.match(result.prompt, /data center|grid|power/i);
   assert.match(result.alt, /Utility queue/);
@@ -101,8 +101,8 @@ test('offline image2 generation writes metadata and canonical fallback variants'
   assert.equal(patch.thumbnailImage, result.thumbnailImage);
   assert.equal(patch.ogImage, result.ogImage);
   assert.equal(patch.imageStatus, 'fallback');
-  assert.equal(patch.generatedImageProvider, 'image2');
-  assert.equal(patch.generatedImageModel, 'gpt-image-2');
+  assert.equal(patch.generatedImageProvider, 'local');
+  assert.equal(patch.generatedImageModel, '');
 });
 
 test('Given image2 without an API key When generation runs online Then it writes deterministic local fallback variants', async () => {
@@ -116,9 +116,9 @@ test('Given image2 without an API key When generation runs online Then it writes
       now: () => new Date('2026-08-11T00:00:00.000Z'),
     });
 
-    assert.equal(result.provider, 'image2');
+    assert.equal(result.provider, 'local');
     assert.equal(result.status, 'fallback');
-    assert.match(result.error, /OPENAI_API_KEY missing/i);
+    assert.match(result.error, /No Codex artwork registered/i);
     for (const imagePath of [result.heroImage, result.thumbnailImage, result.ogImage, result.legacyImage]) {
       assert.equal(fs.existsSync(path.join(publicDir, imagePath.replace(/^\//, ''))), true, `${imagePath} should exist`);
     }

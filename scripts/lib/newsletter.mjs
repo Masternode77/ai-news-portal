@@ -12,16 +12,6 @@ function plainText(value = '') {
   return String(value || '').replace(/\s+/g, ' ').trim();
 }
 
-export function validNewsletterSubscribeUrl(value = '') {
-  try {
-    const url = new URL(String(value || '').trim());
-    if (url.protocol !== 'https:' || url.username || url.password || !url.hostname) return '';
-    return url.href;
-  } catch {
-    return '';
-  }
-}
-
 export function escapeNewsletterHtml(value = '') {
   return String(value || '')
     .replace(/&/g, '&amp;')

@@ -4,7 +4,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import latestNews from '../src/data/latest-news.json' with { type: 'json' };
 import archivedNews from '../src/data/archived-news.json' with { type: 'json' };
-import { IMAGE_PROVIDER, OPENAI_IMAGE_MODEL } from './lib/constants.mjs';
+import { IMAGE_PROVIDER } from './lib/constants.mjs';
 import { buildHomepageFeed } from './lib/homepage-feed-builder.mjs';
 import { activeRegistryFeeds, loadSourceRegistry } from './lib/source-registry.mjs';
 
@@ -310,7 +310,7 @@ export async function buildOmoUltraAudit() {
     '',
     '## Current Image Handling',
     '',
-    `- Current provider default: \`IMAGE_PROVIDER=${IMAGE_PROVIDER}\`, \`OPENAI_IMAGE_MODEL=${OPENAI_IMAGE_MODEL}\`.`,
+    `- Current provider default: \`IMAGE_PROVIDER=${IMAGE_PROVIDER}\`; registered local Codex artwork, with no image API key.`,
     `- Provider registry files: ${imageProviderFiles.map((entry) => `\`${entry}\``).join(', ') || 'none found'}.`,
     `- Duplicate provider files needing cleanup decision: ${duplicateProviderFiles.map((entry) => `\`${entry}\``).join(', ') || 'none found'}.`,
     `- Public generated assets directory: \`public/generated/\`.`,

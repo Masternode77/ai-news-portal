@@ -177,7 +177,7 @@ export async function ensureArticleImage(item) {
 
   const provider = createImageProvider();
 
-  if (provider && !PIPELINE_OFFLINE) {
+  if (provider && (!PIPELINE_OFFLINE || provider.name === 'codex')) {
     try {
       return await provider.generate(item);
     } catch (error) {

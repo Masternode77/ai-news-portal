@@ -264,3 +264,12 @@ test('article image provenance labels fallback and missing metadata as image2 vi
 });
 
 registerPublicImageAuditContractTests();
+
+test('Codex and local artwork retain distinct truthful provenance labels',()=>{
+ const image=[...latestNews,...archivedNews].flatMap(article=>[article.heroImage,article.generatedImage]).find(image=>typeof image==='string'&&image.endsWith('.webp')&&isTrustedPublicImage(image));
+ assert.ok(image);
+ const codex=articleImageProvenance({id:'codex-provenance',generatedImage:image,generatedImageProvider:'codex',imageStatus:'generated'});
+ const local=articleImageProvenance({id:'local-provenance',generatedImage:image,generatedImageProvider:'local',imageStatus:'fallback'});
+ assert.equal(codex.kind,'codex');assert.equal(codex.label,'Codex-generated illustration');
+ assert.equal(local.kind,'local');assert.equal(local.label,'Local editorial illustration');
+});

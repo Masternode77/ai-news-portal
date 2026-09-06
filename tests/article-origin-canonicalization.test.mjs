@@ -489,7 +489,7 @@ test('article origin canonicalization', async (t) => {
     }
   });
 
-  await t.test('forced image generation keeps image2 ahead of source canonicalization', async () => {
+  await t.test('forced image generation uses truthful local metadata without registered Codex artwork', async () => {
     const { root, publicDir } = await makeTempProject();
     const remote = await createRemotePngServer();
     const collectionPath = path.join(root, 'forced-images.json');
@@ -519,8 +519,8 @@ test('article origin canonicalization', async (t) => {
       });
       const [updated] = JSON.parse(await fs.readFile(collectionPath, 'utf8'));
 
-      assert.equal(updated.generatedImageProvider, 'image2');
-      assert.equal(updated.generatedImageModel, 'gpt-image-2');
+      assert.equal(updated.generatedImageProvider, 'local');
+      assert.equal(updated.generatedImageModel, '');
       assert.equal(updated.imageStatus, 'fallback');
       assert.match(updated.heroImage, /\/generated\/articles\/force-image2-fixture-forced-image2-output-should-win-over-source-artwork\/hero\.webp$/);
       assert.match(updated.thumbnailImage, /\/thumbnail\.webp$/);

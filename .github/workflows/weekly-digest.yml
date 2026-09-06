@@ -17,7 +17,7 @@ jobs:
           cache: npm
       - run: npm ci --no-audit --no-fund
       - run: node --test tests/newsletter.test.mjs
-      - name: Prepare reviewable digest (no email delivery)
+      - name: Prepare on-site weekly digest
         run: |
           mkdir -p digest-artifact
           node scripts/build-weekly-digest.mjs --format=json > digest-artifact/digest.json

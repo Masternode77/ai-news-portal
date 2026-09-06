@@ -27,7 +27,7 @@ test('operator docs cover admin, image, cycle, automation, and deployment duties
     'ADMIN_PASSWORD_HASH',
     'ADMIN_SESSION_SECRET',
     'secret rotation',
-    'IMAGE_PROVIDER=image2',
+    'IMAGE_PROVIDER=codex',
     'category fallback',
     'public/generated/articles',
     'npm run content:cycle',

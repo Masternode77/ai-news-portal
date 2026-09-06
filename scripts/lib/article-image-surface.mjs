@@ -52,7 +52,7 @@ const IMAGE_METADATA_FIELDS = [
   'imagePrompt',
 ];
 
-const AI_IMAGE_PROVIDER_RE = /\b(?:chatgpt|image2|openai|gpt-image|nano|nanobanana|gemini|legacy-gemini)\b/i;
+const AI_IMAGE_PROVIDER_RE = /\b(?:codex|chatgpt|image2|openai|gpt-image|nano|nanobanana|gemini|legacy-gemini)\b/i;
 const PLACEHOLDER_IMAGE_PROVIDER_RE = /\b(?:local-placeholder|local-svg|category-fallback)\b/i;
 const SOURCE_DERIVED_IMAGE_RE = /\b(?:source-image|source-canonical|origin-canonical)\b/i;
 const SOURCE_REGISTRY = (() => {
@@ -240,9 +240,9 @@ export function articleImageProvenance(article = {}, variant = 'hero') {
   const selected = variants[variant] || variants.hero;
   const provider = clean(selected.provider);
   const status = clean(selected.status);
-  const kind = status === 'source' || provider === 'source-image' ? 'source' : 'image2';
+  const kind = status === 'source' || provider === 'source-image' ? 'source' : provider === 'codex' ? 'codex' : provider === 'local' ? 'local' : 'image2';
   return {
-    label: kind === 'source' ? 'Original source image' : 'ChatGPT Image2 visual',
+    label: kind === 'source' ? 'Original source image' : kind === 'codex' ? 'Codex-generated illustration' : kind === 'local' ? 'Local editorial illustration' : 'ChatGPT Image2 visual',
     kind,
     provider,
     status,

@@ -2,12 +2,78 @@
 import ProductLayout from '../../layouts/ProductLayout.astro';
 import data from '../../data/grid/capacity.json';
 import { capacityGroups } from '../../../scripts/lib/infrastructure-data.mjs';
+import { summarizeCapacityGroups } from '../../lib/capacity-filter.mjs';
 const groups=capacityGroups(data.records);
 const total=data.records.reduce((s,r)=>s+(r.netSummerMW||0),0);
+const years=[...new Set(groups.map(group=>group.year).filter(year=>year!=null))].sort((a,b)=>a-b);
+const states=[...new Set(groups.map(group=>group.state))].sort();
+const groupSummary=summarizeCapacityGroups(groups);
 ---
 <ProductLayout title="Monthly capacity ledger" description="Preliminary EIA-860M planned generating and storage units, grouped by planned operation year and state.">
   <p class="product-note">Inventory edition {data.asOf}. Plans can slip, change or be cancelled. Net summer capacity includes storage power ratings and is neither firm available supply nor a forecast of generation.</p>
   <div class="product-grid"><article class="product-card"><h2>Planned units</h2><p class="product-value">{data.records.length.toLocaleString('en-US')}</p></article><article class="product-card"><h2>Net summer capacity</h2><p class="product-value">{total.toLocaleString('en-US',{maximumFractionDigits:1})} <small>MW</small></p></article><article class="product-card"><h2>Missing capacity values</h2><p class="product-value">{data.missingCapacityCount}</p></article></div>
-  <section class="product-section"><h2>Plans by year and state</h2><div class="product-table-wrap"><table class="product-table"><caption>Counts of units and sum of reported net summer capacity; no inference of project completion.</caption><thead><tr><th scope="col">Planned year</th><th scope="col">State</th><th scope="col">Units</th><th scope="col">Net summer MW</th></tr></thead><tbody>{groups.map(r=><tr><td>{r.year??'Not reported'}</td><td>{r.state}</td><td>{r.units}</td><td>{r.netSummerMW.toLocaleString('en-US',{maximumFractionDigits:1})}</td></tr>)}</tbody></table></div></section>
+  <section class="product-section" data-capacity-filter>
+    <h2>Plans by year and state</h2>
+    <form class="product-filter" data-filter-form>
+      <label for="capacity-year">Planned year</label>
+      <select id="capacity-year" name="year" data-year-filter>
+        <option value="">All years</option>
+        {years.map(year=><option value={year}>{year}</option>)}
+      </select>
+      <label for="capacity-state">State</label>
+      <select id="capacity-state" name="state" data-state-filter>
+        <option value="">All states</option>
+        {states.map(state=><option value={state}>{state}</option>)}
+      </select>
+      <button class="product-button" type="reset">Reset filters</button>
+    </form>
+    <p class="product-note" data-filter-summary aria-live="polite">
+      Showing <strong data-summary-rows>{groupSummary.rows.toLocaleString('en-US')}</strong> year-state rows, <strong data-summary-units>{groupSummary.units.toLocaleString('en-US')}</strong> planned units and <strong data-summary-mw>{groupSummary.netSummerMW.toLocaleString('en-US',{maximumFractionDigits:1})}</strong> MW net summer capacity.
+    </p>
+    <p class="product-note" data-empty-state hidden>No plans match both filters. Reset the filters or choose another year or state.</p>
+    <div class="product-table-wrap"><table class="product-table"><caption>Counts of units and sum of reported net summer capacity; no inference of project completion.</caption><thead><tr><th scope="col">Planned year</th><th scope="col">State</th><th scope="col">Units</th><th scope="col">Net summer MW</th></tr></thead><tbody>{groups.map(r=><tr data-capacity-row data-year={r.year??'unknown'} data-state={r.state} data-units={r.units} data-mw={r.netSummerMW}><td>{r.year??'Not reported'}</td><td>{r.state}</td><td>{r.units}</td><td>{r.netSummerMW.toLocaleString('en-US',{maximumFractionDigits:1})}</td></tr>)}</tbody></table></div>
+    <noscript><p class="product-meta">The complete table is shown. Enable JavaScript to filter it on this page.</p></noscript>
+  </section>
   <section class="product-section"><h2>Source and method</h2><p><a href={data.sourceUrl}>Download the original EIA-860M workbook</a>. The Planned worksheet supplies plant and generator identifiers, status, technology, state, operation year and net summer capacity. Existing units are excluded. Blank capacity values remain missing and are excluded from sums.</p><p><a href="https://www.eia.gov/electricity/data/eia860m/">EIA release notes and preliminary-data limitations</a>. This inventory covers generating facilities with at least 1 MW of combined nameplate capacity. It is not a count of data-center power contracts.</p><p class="product-meta">Retrieved {data.retrievedAt}. Source SHA-256: <code style="overflow-wrap:anywhere">{data.sha256}</code></p><a class="product-button" href="/data/capacity.csv" download>Download all planned units CSV</a></section>
 </ProductLayout>
+
+<script>
+  const numberFormat = new Intl.NumberFormat('en-US', { maximumFractionDigits: 1 });
+
+  document.querySelectorAll('[data-capacity-filter]').forEach((section) => {
+    if (!(section instanceof HTMLElement)) return;
+    const form = section.querySelector('[data-filter-form]');
+    const yearFilter = section.querySelector('[data-year-filter]');
+    const stateFilter = section.querySelector('[data-state-filter]');
+    const rows = [...section.querySelectorAll('[data-capacity-row]')];
+    const rowTotal = section.querySelector('[data-summary-rows]');
+    const unitTotal = section.querySelector('[data-summary-units]');
+    const mwTotal = section.querySelector('[data-summary-mw]');
+    const emptyState = section.querySelector('[data-empty-state]');
+    if (!(form instanceof HTMLFormElement) || !(yearFilter instanceof HTMLSelectElement) || !(stateFilter instanceof HTMLSelectElement)) return;
+
+    const applyFilters = () => {
+      let visibleRows = 0;
+      let visibleUnits = 0;
+      let visibleMW = 0;
+      rows.forEach((row) => {
+        if (!(row instanceof HTMLTableRowElement)) return;
+        const matches = (!yearFilter.value || row.dataset.year === yearFilter.value)
+          && (!stateFilter.value || row.dataset.state === stateFilter.value);
+        row.hidden = !matches;
+        if (matches) {
+          visibleRows += 1;
+          visibleUnits += Number(row.dataset.units || 0);
+          visibleMW += Number(row.dataset.mw || 0);
+        }
+      });
+      if (rowTotal) rowTotal.textContent = numberFormat.format(visibleRows);
+      if (unitTotal) unitTotal.textContent = numberFormat.format(visibleUnits);
+      if (mwTotal) mwTotal.textContent = numberFormat.format(Math.round(visibleMW * 10) / 10);
+      if (emptyState instanceof HTMLElement) emptyState.hidden = visibleRows !== 0;
+    };
+
+    form.addEventListener('change', applyFilters);
+    form.addEventListener('reset', () => requestAnimationFrame(applyFilters));
+  });
+</script>

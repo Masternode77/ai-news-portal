@@ -2,6 +2,7 @@ const RASTER_IMAGE_RE = /\.(?:jpe?g|png|webp)(?:$|[?#])/i;
 const LOCAL_GENERATED_RE = /^\/generated\//i;
 
 const AI_IMAGE_PROVIDERS = new Set([
+  'codex',
   'chatgpt',
   'image2',
   'openai-api',
@@ -13,6 +14,7 @@ const AI_IMAGE_PROVIDERS = new Set([
 ]);
 
 const LOCAL_EDITORIAL_IMAGE_PROVIDERS = new Set([
+  'local',
   'local-generated',
   'local-placeholder',
   'category-fallback',

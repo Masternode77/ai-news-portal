@@ -5,7 +5,7 @@ import archivedNews from '../src/data/archived-news.json' with { type: 'json' };
 import latestNews from '../src/data/latest-news.json' with { type: 'json' };
 import { buildOmoUltraAudit } from '../scripts/audit-omo-ultra-current-state.mjs';
 import { buildHomepageFeed } from '../scripts/lib/homepage-feed-builder.mjs';
-import { OPENAI_IMAGE_MODEL } from '../scripts/lib/constants.mjs';
+import { IMAGE_PROVIDER } from '../scripts/lib/constants.mjs';
 
 const read = (relativePath) => fs.readFile(new URL(`../${relativePath}`, import.meta.url), 'utf8');
 
@@ -30,12 +30,12 @@ test('Given the source-authorized public pipeline When reading the pipeline map 
   assert.doesNotMatch(map, /unless manually approved|manual approval flag overrides homepage suppression/i);
 });
 
-test('Given the executable image fallback default When reading the README Then it names the same model', async () => {
+test('Given the executable image fallback default When reading the README Then it names the same Codex workflow', async () => {
   const readme = await read('README.md');
 
-  assert.equal(OPENAI_IMAGE_MODEL, 'gpt-image-2');
-  assert.match(readme, new RegExp(`OPENAI_IMAGE_MODEL.*${OPENAI_IMAGE_MODEL}`));
-  assert.doesNotMatch(readme, /OPENAI_IMAGE_MODEL.*gpt-image-1/i);
+  assert.equal(IMAGE_PROVIDER, 'codex');
+  assert.match(readme, /IMAGE_PROVIDER=codex/);
+  assert.doesNotMatch(readme, /remote image generation need.*OPENAI_API_KEY/i);
 });
 
 test('Given public RSS and social-share assets When reading their source contracts Then neither promises a fixed cadence', async () => {

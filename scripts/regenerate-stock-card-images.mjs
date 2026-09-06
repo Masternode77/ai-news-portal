@@ -1,7 +1,7 @@
 import { buildHomepageFeed, publicHomepageFeedEligible } from './lib/homepage-feed-builder.mjs';
 import { ensureArticleImage } from './lib/image-generator.mjs';
 import { createImageProvider, describeImageProvider } from './lib/image-providers/index.mjs';
-import { ARCHIVE_NEWS_PATH, LATEST_NEWS_PATH, OPENAI_IMAGE_MODEL, SEARCH_INDEX_PATH } from './lib/constants.mjs';
+import { ARCHIVE_NEWS_PATH, LATEST_NEWS_PATH, SEARCH_INDEX_PATH } from './lib/constants.mjs';
 import { isStockDerivedCardImage, stockDerivedImageReason } from './lib/stock-card-image-detector.mjs';
 import { readJsonFile, writeJsonFile } from './lib/state-store.mjs';
 
@@ -57,13 +57,12 @@ async function generateReplacement(article, provider) {
     forceImageRefresh: true,
     forcePlaceholderImage: ALLOW_LOCAL_PLACEHOLDER,
   };
-  const generatedImage = await ensureArticleImage(input);
-  return {
-    generatedImage,
-    generatedImageProvider: ALLOW_LOCAL_PLACEHOLDER ? 'local-placeholder' : provider.name,
-    generatedImageModel: ALLOW_LOCAL_PLACEHOLDER ? 'local-svg' : OPENAI_IMAGE_MODEL,
-    stockImageReplacedAt: new Date().toISOString(),
-  };
+  if (!ALLOW_LOCAL_PLACEHOLDER) {
+    const result = await provider.generateWithMetadata(input);
+    if (result.status !== 'generated') throw new Error(`Codex artwork is not registered for ${article.id}; register it or explicitly allow local artwork.`);
+    return { generatedImage: result.heroImage, generatedImageProvider: result.provider, generatedImageModel: result.model || '', stockImageReplacedAt: new Date().toISOString() };
+  }
+  return { generatedImage: await ensureArticleImage(input), generatedImageProvider: 'local-placeholder', generatedImageModel: '', stockImageReplacedAt: new Date().toISOString() };
 }
 
 function patchCollection(items = [], replacementsByKey = new Map()) {
@@ -135,7 +134,7 @@ async function main() {
   const providerPlan = describeImageProvider();
 
   console.log(
-    `[stock-card-images] targets=${targets.length} provider=${providerPlan.active} configured=${providerPlan.configured} model=${OPENAI_IMAGE_MODEL}`
+    `[stock-card-images] targets=${targets.length} provider=${providerPlan.active} configured=${providerPlan.configured}`
   );
 
   for (const target of targets) {
@@ -148,7 +147,7 @@ async function main() {
 
   if (!provider && !ALLOW_LOCAL_PLACEHOLDER) {
     throw new Error(
-      'No image provider is configured. Set CHATGPT_IMAGE_OAUTH_ENDPOINT/CHATGPT_IMAGE_OAUTH_ACCESS_TOKEN or IMAGE_PROVIDER=openai-api with OPENAI_API_KEY, or rerun with --allow-local-placeholder.'
+      'Register Codex artwork with scripts/import-codex-image.mjs, or rerun with --allow-local-placeholder.'
     );
   }
 

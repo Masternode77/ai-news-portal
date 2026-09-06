@@ -15,7 +15,7 @@ longer describe the candidate and must not be used to configure it.
 - `DESIGN.md` defines the current light, neutral, source-linked editorial
   system; it is not a glass or monochrome dashboard.
 - `README.md` and `docs/image-generation-setup.md` describe the current
-  `IMAGE_PROVIDER=image2` default and provider-specific fallback behavior.
+  `IMAGE_PROVIDER=codex` default and provider-specific fallback behavior.
 - `scripts/lib/constants.mjs`, `scripts/lib/image2-provider.mjs`, and
   `scripts/lib/image-generator.mjs` are the executable image-provider and
   fallback contract.

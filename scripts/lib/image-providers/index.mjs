@@ -1,32 +1,12 @@
 import { IMAGE_PROVIDER } from '../constants.mjs';
-import { createChatGptOauthRuntimeProvider } from './chatgpt-oauth-runtime.mjs';
-import { createGeminiImageProvider } from './gemini.mjs';
-import { createImage2Provider } from '../image2-provider.mjs';
-import { createOpenAiImageApiProvider } from './openai-image-api.mjs';
+import { createCodexImageProvider } from '../codex-image-provider.mjs';
 
 export function createImageProvider(providerName = IMAGE_PROVIDER) {
-  switch (providerName) {
-    case 'image2':
-      return createImage2Provider();
-    case 'chatgpt':
-      return createChatGptOauthRuntimeProvider();
-    case 'openai-api':
-      return createOpenAiImageApiProvider();
-    case 'legacy-gemini':
-      return createGeminiImageProvider();
-    case 'local':
-      return null;
-    default:
-      console.warn(`[pipeline] unsupported IMAGE_PROVIDER="${providerName}", using local image fallback`);
-      return null;
-  }
+  if (providerName === 'codex' || providerName === 'image2') return createCodexImageProvider();
+  if (providerName !== 'local') console.warn(`[pipeline] IMAGE_PROVIDER=${providerName} is disabled; using local artwork`);
+  return null;
 }
-
 export function describeImageProvider(providerName = IMAGE_PROVIDER) {
   const provider = createImageProvider(providerName);
-  return {
-    requested: providerName,
-    active: provider?.name || 'local',
-    configured: Boolean(provider),
-  };
+  return { requested: providerName, active: provider?.name || 'local', configured: Boolean(provider) };
 }

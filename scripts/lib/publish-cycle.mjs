@@ -88,7 +88,7 @@ function materializeArticle(source = {}, result = {}, now = new Date().toISOStri
     seo_noindex: false,
     imageAlt: `${clean(source.title || result.title)} editorial visual`,
     imageStatus: 'queued',
-    imageProvider: 'image2',
+    imageProvider: 'codex',
     ...images,
     public_routing: publicRoutingFor(result),
     expertLensShort: deck,

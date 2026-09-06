@@ -2,10 +2,9 @@
 import ProductLayout from '../../layouts/ProductLayout.astro';
 import latestNews from '../../data/latest-news.json';
 import archivedNews from '../../data/archived-news.json';
-import { buildWeeklyDigest, validNewsletterSubscribeUrl } from '../../../scripts/lib/newsletter.mjs';
+import { buildWeeklyDigest } from '../../../scripts/lib/newsletter.mjs';
 
 const digest = buildWeeklyDigest([...latestNews, ...archivedNews], { now: new Date() });
-const subscribeUrl = validNewsletterSubscribeUrl(import.meta.env.PUBLIC_NEWSLETTER_SUBSCRIBE_URL);
 const dateFormatter = new Intl.DateTimeFormat('en-US', {
   month: 'short', day: 'numeric', year: 'numeric', timeZone: 'UTC',
 });
@@ -13,14 +12,9 @@ const dateFormatter = new Intl.DateTimeFormat('en-US', {
 <ProductLayout
   title="Weekly infrastructure digest"
   description="The week’s public Compute Current analysis on power, capacity, delivery risk and data-center infrastructure decisions."
-  eyebrow="Newsletter"
+  eyebrow="Weekly brief"
 >
   <div class="product-actions">
-    {subscribeUrl ? (
-      <a href={subscribeUrl} target="_blank" rel="noopener noreferrer">Join the weekly email list</a>
-    ) : (
-      <span>Email sign-up is not active yet.</span>
-    )}
     <a href="/rss.xml">Follow the RSS feed</a>
   </div>
 
@@ -28,7 +22,7 @@ const dateFormatter = new Intl.DateTimeFormat('en-US', {
     <h2 id="weekly-digest-heading">Latest seven-day digest</h2>
     <p class="product-note">
       Analysis published from {dateFormatter.format(new Date(digest.windowStart))} through {dateFormatter.format(new Date(digest.windowEnd))}.
-      {subscribeUrl ? 'Join the email list for the weekly edition, or follow new coverage through RSS.' : 'Email subscriptions are being prepared; you can follow new coverage through RSS.'}
+      This page updates from eligible public analysis; follow the RSS feed for newly published work.
     </p>
     {digest.articles.length ? (
       <div class="product-grid two">

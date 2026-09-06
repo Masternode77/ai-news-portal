@@ -4,7 +4,6 @@ import test from 'node:test';
 import {
   buildWeeklyDigest,
   renderWeeklyDigestHtml,
-  validNewsletterSubscribeUrl,
 } from '../scripts/lib/newsletter.mjs';
 import {
   authorizePublicTestRecords,
@@ -79,25 +78,16 @@ test('rendered digest escapes hostile titles and attributes', () => {
   assert.match(html, /href="https:\/\/www\.computecurrent\.com\/newsletter\/"/);
 });
 
-test('subscription URL accepts HTTPS only and rejects credentials or invented local actions', () => {
-  assert.equal(validNewsletterSubscribeUrl('https://newsletter.example/join'), 'https://newsletter.example/join');
-  assert.equal(validNewsletterSubscribeUrl('http://newsletter.example/join'), '');
-  assert.equal(validNewsletterSubscribeUrl('javascript:alert(1)'), '');
-  assert.equal(validNewsletterSubscribeUrl('https://user:pass@newsletter.example/join'), '');
-});
-
-test('newsletter page uses ProductLayout and does not claim or implement an unconfigured subscription form', () => {
+test('weekly digest page uses ProductLayout and contains no subscription or sender integration', () => {
   const page = fs.readFileSync('src/pages/newsletter/index.astro', 'utf8');
   assert.match(page, /ProductLayout/);
-  assert.match(page, /PUBLIC_NEWSLETTER_SUBSCRIBE_URL/);
-  assert.match(page, /Email sign-up is not active yet/);
   assert.match(page, /href="\/rss\.xml"/);
-  assert.doesNotMatch(page, /<form\b|subscribed successfully|thanks for subscribing/i);
+  assert.doesNotMatch(page, /<form\b|subscribe|email list|sender|PUBLIC_NEWSLETTER_SUBSCRIBE_URL/i);
   assert.match(page, /\{article\.title\}/);
   assert.doesNotMatch(page, /set:html/);
 });
 
-test('digest builder is generation-only and contains no email dispatch integration', () => {
+test('digest builder is generation-only and contains no external dispatch integration', () => {
   const script = fs.readFileSync('scripts/build-weekly-digest.mjs', 'utf8');
   assert.match(script, /--format=json/);
   assert.match(script, /renderWeeklyDigestHtml/);

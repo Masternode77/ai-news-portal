@@ -63,14 +63,11 @@ Comparator evidence, current implementation crosswalk, and operator boundaries: 
   - Primary model wiring is exposed via `EXPERT_LENS_MODEL`; unavailable model
     calls fall back through the repository&rsquo;s deterministic path.
 
-- **Image2-first image provider flow**
-  - Default provider is `IMAGE_PROVIDER=image2`, which uses the OpenAI image API path and `OPENAI_IMAGE_MODEL=gpt-image-2`
-  - `IMAGE_PROVIDER=openai-api` remains an explicit OpenAI API fallback path
-  - `IMAGE_PROVIDER=chatgpt` is a legacy OAuth runtime adapter, not the default
-  - `IMAGE_PROVIDER=legacy-gemini` keeps the old Gemini / Nano Banana path available but deprecated
-  - For the default `image2` provider, a missing `OPENAI_API_KEY`, `PIPELINE_OFFLINE=1`, or image-request failure writes a deterministic local WebP fallback variant set; those cases do not invoke a source-image poster
-  - The `local`/no-provider path can attempt a source-authorized poster only while online and only after the source-image rights check; otherwise it writes the same local fallback variant set
-  - Reader-side selection uses a category fallback SVG only when no trusted article variant is available; that category fallback is not an image2 request result
+- **Codex-managed image flow**
+  - Default provider is `IMAGE_PROVIDER=codex`; legacy `image2` callers resolve to the same local provider
+  - New artwork is generated and visually reviewed in an active Codex session, then registered with `scripts/import-codex-image.mjs`
+  - CI and Vercel consume registered files or write deterministic local WebP fallback variants without an image API credential
+  - Reader-side selection uses a category fallback SVG only when no trusted article variant is available
   - External image hotlinking is avoided for published cards
 
 - **Authorized 50-card homepage + archive search**
@@ -131,24 +128,15 @@ npm run dev
 - `EXPERT_LENS_FALLBACK_MODEL` *(optional)*: backup model id if the preferred lens model is unavailable
 
 ### Image generation
-- `IMAGE_PROVIDER` *(optional)*: defaults to `image2`
-  - `image2`: canonical OpenAI image API provider for hero, thumbnail, and OpenGraph variants
-  - `openai-api`: explicit OpenAI API fallback
-  - `chatgpt`: legacy ChatGPT/OpenAI OAuth-backed runtime adapter
-  - `local`: skip remote generation and build local source-image posters when possible
-  - `legacy-gemini`: deprecated Gemini / Nano Banana provider
-- `CHATGPT_IMAGE_OAUTH_ENDPOINT` *(for `IMAGE_PROVIDER=chatgpt`)*: callable image runtime endpoint
-- `CHATGPT_IMAGE_OAUTH_ACCESS_TOKEN` *(for `IMAGE_PROVIDER=chatgpt`)*: OAuth access token for the runtime endpoint
-- `OPENAI_API_KEY` *(for `IMAGE_PROVIDER=image2` or `openai-api`)*: OpenAI API-key auth and API billing
-- `OPENAI_IMAGE_MODEL` *(optional)*: defaults to `gpt-image-2`
-- `OPENAI_IMAGE_SIZE` *(optional)*: defaults to `1536x1024`
-- `OPENAI_IMAGE_QUALITY` *(optional)*: defaults to `medium`
-- `GEMINI_API_KEY` *(legacy only)*: used only with `IMAGE_PROVIDER=legacy-gemini`
-- `GEMINI_IMAGE_MODEL` *(legacy only)*: defaults to `gemini-2.5-flash-image`
+- `IMAGE_PROVIDER` *(optional)*: defaults to `codex`
+  - `codex`: consumes artwork registered from the current Codex session and otherwise uses local fallback variants
+  - `image2`: compatibility alias for the same local provider
+  - `local`: deterministic local fallback provider
+- `IMAGE2_HERO_SIZE` and `IMAGE2_OUTPUT_FORMAT` control the local article variant contract retained for compatibility.
 
-The published image contract is unchanged: generated assets are written under `public/generated/`, article data receives `/generated/<filename>`, and external source images are not hotlinked as published card art. Image2 writes either generated WebP variants or its deterministic local WebP fallback variant set. A source-authorized poster is limited to the online local/no-provider path; reader-side category fallback SVGs cover missing or untrusted article variants.
+The published image contract is unchanged: registered assets and fallback variants are written under `public/generated/articles/`, article data receives local `/generated/` paths, and external source images are not hotlinked as published card art. Reader-side category fallback SVGs cover missing or untrusted article variants.
 
-`IMAGE_PROVIDER=image2` is the current default. Environments that perform remote image generation need `OPENAI_API_KEY`; without it, or in offline mode, image2 writes the local fallback set. `IMAGE_PROVIDER=chatgpt` remains available only for an operator-provided OAuth runtime endpoint and token.
+See [docs/codex-image-workflow.md](docs/codex-image-workflow.md) for the artwork registration and verification procedure. GitHub Actions and Vercel do not perform remote image generation.
 
 ### Pipeline controls
 - `MAX_ITEMS_FETCHED` *(optional)*: defaults to `30`

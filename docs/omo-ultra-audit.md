@@ -52,7 +52,7 @@ Audit output omits `git status` so running this writer cannot make its own repor
 
 ## Current Image Handling
 
-- Current provider default: `IMAGE_PROVIDER=image2`, `OPENAI_IMAGE_MODEL=gpt-image-2`.
+- Current provider default: `IMAGE_PROVIDER=codex`; registered local Codex artwork, with no image API key.
 - Provider registry files: `chatgpt-oauth-runtime 2.mjs`, `chatgpt-oauth-runtime.mjs`, `gemini 2.mjs`, `gemini.mjs`, `index 2.mjs`, `index.mjs`, `openai-image-api 2.mjs`, `openai-image-api.mjs`, `shared 2.mjs`, `shared.mjs`.
 - Duplicate provider files needing cleanup decision: `chatgpt-oauth-runtime 2.mjs`, `gemini 2.mjs`, `index 2.mjs`, `openai-image-api 2.mjs`, `shared 2.mjs`.
 - Public generated assets directory: `public/generated/`.
@@ -82,7 +82,7 @@ Audit output omits `git status` so running this writer cannot make its own repor
 - The legacy plaintext `ADMIN_PASSWORD` contract is not active: authentication requires `ADMIN_USERNAME`, `ADMIN_PASSWORD_HASH`, and `ADMIN_SESSION_SECRET`=true.
 - Implemented admin controls: structured scrypt password hashes use timing-safe verification; validated session secrets sign HttpOnly, SameSite=Strict cookies; mutating requests require CSRF; local failed-login throttling and audit logging are present.
 - Remaining external production dependency: login fails closed until a distributed Vercel Firewall rate-limit rule is published, tested, and attested with `ADMIN_VERCEL_RATE_LIMIT_READY=true`.
-- Existing env constants include image, OpenRouter, Supabase, and pipeline settings in `scripts/lib/constants.mjs` (11643 bytes).
+- Existing env constants include image, OpenRouter, Supabase, and pipeline settings in `scripts/lib/constants.mjs` (11642 bytes).
 
 ## Deployment Platform Assumptions
 

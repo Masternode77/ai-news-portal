@@ -45,20 +45,20 @@ test('Given the fail-closed workflow When reading the README Then it describes c
   assert.doesNotMatch(readme, /send the screenshot to Telegram/i);
 });
 
-test('Given the image2 runtime contract When reading operator image guidance Then it names the current provider-specific fallback paths', async () => {
+test('Given the Codex file runtime contract When reading operator image guidance Then it names the current provider-specific fallback paths', async () => {
   const [implementationNotes, readme, imageReport] = await Promise.all([
     readRepositoryText('IMPLEMENTATION_NOTES.md'),
     readRepositoryText('README.md'),
     readRepositoryText('docs/image-generation-report.md'),
   ]);
 
-  assert.equal(IMAGE_PROVIDER, 'image2');
+  assert.equal(IMAGE_PROVIDER, 'codex');
   assert.doesNotMatch(implementationNotes, /premium glass \/ monochrome dashboard/i);
   assert.doesNotMatch(implementationNotes, /Defaults to `IMAGE_PROVIDER=chatgpt`/);
-  assert.match(readme, /IMAGE_PROVIDER=image2/);
-  assert.match(readme, /OPENAI_API_KEY/);
-  assert.match(readme, /PIPELINE_OFFLINE/);
-  assert.match(readme, /source-authorized poster/i);
+  assert.match(readme, /IMAGE_PROVIDER=codex/);
+  assert.match(readme, /import-codex-image/);
+  assert.match(readme, /registered/i);
+  assert.match(readme, /local.*fallback/i);
   assert.match(readme, /category fallback/i);
   assert.match(imageReport, /Historical snapshot — non-operational/);
 });
