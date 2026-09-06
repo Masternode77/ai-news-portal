@@ -94,3 +94,23 @@ Compute Current is a light, source-linked editorial product for AI-infrastructur
 - Favor open canvas and single-level cards over nested panels.
 - Avoid dark visual identity, copper or teal primary controls, decorative orbs, and purple-gradient AI motifs.
 - Preserve the existing light/neutral/blue editorial language; this system governs refinements, not a redesign.
+
+## 8. Product expansion contract (Active, 2026-09-06)
+
+### Source of truth and goals
+
+Evidence: `src/layouts/Layout.astro`, `src/pages/index.astro`, current policy/taxonomy pages and the tokens above. Extend the existing editorial product for site/power planners and infrastructure investors. Readers should compare verified observations, inspect provenance, follow regional constraints, and return via a weekly digest. Do not claim grid demand is AI-specific, or present a project queue as firm capacity.
+
+### Information architecture and components
+
+Add `/data/` (demand tracker and capacity ledger), `/ko/`, `/hubs/`, `/entities/`, `/glossary/`, and `/newsletter/`. Reuse Layout/SiteFooter, typography and policy-shell conventions; use one compact cross-product navigation and a shared product-page stylesheet, not a second design system. Add homepage discovery links. Tables pair observation dates and units with source links; regional/entity pages link related data and glossary terms.
+
+### Accessible responsive behavior and states
+
+Use semantic table captions/headers, labelled selects, keyboard focus and text status labels, never color alone. Desktop comparisons become stacked reading sections below720px; wide data tables scroll inside their own container without page overflow. Charts are optional enhancements with equivalent tabular values. Respect reduced motion; keep primary targets >=44px.
+
+Loading occurs during scheduled refresh, not on page read. Empty data says no verified observations; stale data keeps its observation date and clear stale label; errors never turn into zero values. Korean pages set the document language to ko. Subscription controls appear only when an approved public subscription endpoint is configured; otherwise offer the actual public digest and honestly state email enrollment availability. Never expose API keys, internal pipeline IDs or budget errors in reader flows.
+
+### Content, constraints and open questions
+
+Keep concise source-derived copy and explicit observation vs forecast vs queue distinctions. Reuse static builds and existing libraries; data refresh is independent of the news pipeline. Acceptance: desktop/mobile rendering, no broken links, truthful empty/stale/failure states, and source/license checks. Newsletter service/sender, monthly spend cap and image key location remain activation questions for the owner; they do not block unrelated product work.

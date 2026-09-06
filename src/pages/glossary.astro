@@ -1,0 +1,53 @@
+---
+import ProductLayout from '../layouts/ProductLayout.astro';
+import reference from '../data/infrastructure-reference.json';
+---
+<ProductLayout
+  title="AI infrastructure glossary"
+  description="Precise working definitions for the power, grid, data-center and ownership terms used across Compute Current."
+  eyebrow="Reader reference"
+>
+  <section class="product-section" aria-labelledby="glossary-terms">
+    <h2 id="glossary-terms">Terms</h2>
+    <form class="product-filter" role="search" data-glossary-filter>
+      <label for="glossary-search">Filter terms</label>
+      <input id="glossary-search" type="search" placeholder="Try energization or capacity" autocomplete="off" />
+      <span class="product-meta" aria-live="polite" data-glossary-status>{reference.glossary.length} terms</span>
+    </form>
+    <p class="product-note" data-glossary-empty hidden>No glossary terms match that search. Try a broader term or browse the regional hubs.</p>
+    <dl class="product-list" data-glossary-list>
+      {reference.glossary.map((entry) => (
+        <div id={entry.slug} data-glossary-entry data-search={`${entry.term} ${entry.definition}`.toLowerCase()}>
+          <dt><strong>{entry.term}</strong></dt>
+          <dd><p>{entry.definition}</p><p class="product-meta"><a href={entry.source} target="_blank" rel="noopener noreferrer">Definition source</a></p></dd>
+        </div>
+      ))}
+    </dl>
+  </section>
+  <script is:inline>
+    const form = document.querySelector('[data-glossary-filter]');
+    const input = form?.querySelector('input');
+    const entries = [...document.querySelectorAll('[data-glossary-entry]')];
+    const status = document.querySelector('[data-glossary-status]');
+    const empty = document.querySelector('[data-glossary-empty]');
+    const applyFilter = () => {
+      const query = input.value.trim().toLocaleLowerCase();
+      let visible = 0;
+      for (const entry of entries) {
+        const matches = !query || entry.dataset.search.includes(query);
+        entry.hidden = !matches;
+        if (matches) visible += 1;
+      }
+      status.textContent = `${visible} ${visible === 1 ? 'term' : 'terms'}`;
+      empty.hidden = visible !== 0;
+    };
+    form?.addEventListener('submit', (event) => event.preventDefault());
+    input?.addEventListener('input', applyFilter);
+  </script>
+  <style>
+    [data-glossary-list] > div { padding: 22px 0; border-bottom: 1px solid var(--al-hairline, #d2d2d7); scroll-margin-top: 24px; }
+    [data-glossary-list] dt { font-size: 1.1rem; }
+    [data-glossary-list] dd { margin: 8px 0 0; }
+    [data-glossary-list] dd p { margin: 6px 0; line-height: 1.7; }
+  </style>
+</ProductLayout>

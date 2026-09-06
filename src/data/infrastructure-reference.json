@@ -1,0 +1,146 @@
+{
+  "asOf": "2026-09-06",
+  "hubs": [
+    {
+      "slug": "northern-virginia",
+      "name": "Northern Virginia",
+      "eyebrow": "Regional power and siting hub",
+      "summary": "Northern Virginia is a mature data-center market where the practical constraint is the sequence between forecast demand, transmission planning, utility delivery and site energization. PJM’s load-forecast process incorporates utility submissions and adjustments; its 2026 supplement separately identifies the Dominion zone adjustment associated with data-center forecasts from NOVEC, ODEC and Rappahannock Electric Cooperative. That evidence is a planning input, not a count of operating AI facilities or firm power awards. Developers should compare forecast revisions with approved network work, substation milestones and utility service commitments. Capacity owners benefit from deliverable power; projects depending on uncommitted upgrades remain exposed to schedule changes.",
+      "bottleneck": "The timing gap between forecast load, transmission work, utility construction and a customer’s energization date.",
+      "watch": [
+        "PJM load-forecast revisions and the assumptions behind utility adjustments",
+        "Transmission and substation milestones tied to the relevant service territory",
+        "Whether a project has a utility commitment rather than only a forecast or request"
+      ],
+      "entitySlugs": ["dominion-energy", "equinix", "digital-realty"],
+      "glossarySlugs": ["interconnection-queue", "energization", "hyperscale", "colocation", "reit"],
+      "relatedTerms": ["virginia", "dominion", "novec", "pjm"],
+      "sources": [
+        { "label": "PJM 2026 Load Forecast Supplement", "url": "https://www.pjm.com/-/media/DotCom/planning/res-adeq/load-forecast/load-forecast-supplement-2026.pdf" },
+        { "label": "PJM load forecast development process", "url": "https://www.pjm.com/planning/resource-adequacy-planning/load-forecast-dev-process.aspx" }
+      ]
+    },
+    {
+      "slug": "texas",
+      "name": "Texas",
+      "eyebrow": "Regional power and siting hub",
+      "summary": "Texas offers multiple development paths, but requests inside the ERCOT region must be read through the grid operator’s large-load integration process. ERCOT publishes the process and requirements for connecting large loads; a request or study position does not establish that a site is operating, approved for full service or backed by firm capacity. The decision point is whether generation, transmission, interconnection studies and customer construction can converge on the same schedule. Sites with credible power milestones and flexible operating plans gain leverage. Projects marketed from headline queue totals, without evidence of study progress or energization, carry the greatest execution risk.",
+      "bottleneck": "Aligning large-load studies, transmission readiness, generation adequacy and customer construction before energization.",
+      "watch": [
+        "ERCOT large-load integration requirements and process changes",
+        "Study, transmission and substation milestones for a specific site",
+        "The distinction among requested load, approved service and measured demand"
+      ],
+      "entitySlugs": ["ercot", "equinix", "digital-realty"],
+      "glossarySlugs": ["interconnection-queue", "energization", "balancing-authority", "ppa", "mw-mwh"],
+      "relatedTerms": ["texas", "ercot", "large load"],
+      "sources": [
+        { "label": "ERCOT large-load integration", "url": "https://www.ercot.com/services/rq/large-load-integration/" }
+      ]
+    },
+    {
+      "slug": "phoenix",
+      "name": "Phoenix",
+      "eyebrow": "Regional power and siting hub",
+      "summary": "Phoenix-area data-center planning depends on utility-specific service conditions, long-lead electrical infrastructure and the gap between a proposed campus and an executable energization plan. APS describes how it evaluates data-center growth while planning generation and grid investments and protecting existing customers. That public material should be used as a process reference, not proof that any named project has capacity. Developers need site-level confirmation of service territory, study status, required facilities and cost responsibility. Utilities and projects with staged, credible load ramps benefit; campuses that treat a requested megawatt figure as available power remain exposed to delay and redesign.",
+      "bottleneck": "Converting a proposed load ramp into utility-approved facilities, cost responsibility and staged service dates.",
+      "watch": [
+        "APS resource planning and data-center service updates",
+        "Site-specific substation, transmission and equipment milestones",
+        "Evidence that requested load is matched to staged energization commitments"
+      ],
+      "entitySlugs": ["aps", "equinix", "digital-realty"],
+      "glossarySlugs": ["energization", "nameplate-net-summer-capacity", "capacity-factor", "hyperscale", "colocation"],
+      "relatedTerms": ["phoenix", "arizona", "aps"],
+      "sources": [
+        { "label": "APS resources", "url": "https://www.aps.com/resources" },
+        { "label": "APS data-center planning explainer", "url": "https://www.aps.com/en/Utility/Company-wide-Events-and-Messages/Data_Centers_How_Were_Protecting_Customers_While_Planning-for_Big_Energy_Needs" }
+      ]
+    }
+  ],
+  "entities": [
+    {
+      "slug": "dominion-energy",
+      "name": "Dominion Energy",
+      "kind": "Utility reference",
+      "summary": "Dominion Energy’s Virginia service territory sits inside PJM’s planning footprint and includes the core Northern Virginia market. Use PJM forecasts as planning evidence, then look for project-specific utility and transmission milestones before treating forecast demand as deliverable capacity.",
+      "watch": ["PJM Dominion-zone forecast revisions", "Utility and transmission construction milestones", "Staged service and energization evidence"],
+      "hubSlugs": ["northern-virginia"],
+      "glossarySlugs": ["energization", "interconnection-queue", "mw-mwh"],
+      "relatedTerms": ["dominion", "virginia", "pjm"],
+      "sources": [
+        { "label": "PJM 2026 Load Forecast Supplement", "url": "https://www.pjm.com/-/media/DotCom/planning/res-adeq/load-forecast/load-forecast-supplement-2026.pdf" },
+        { "label": "PJM load forecast development process", "url": "https://www.pjm.com/planning/resource-adequacy-planning/load-forecast-dev-process.aspx" }
+      ]
+    },
+    {
+      "slug": "ercot",
+      "name": "ERCOT",
+      "kind": "Grid operator reference",
+      "summary": "ERCOT operates the grid and wholesale market for most of Texas and publishes a large-load integration process. It is not a utility serving every Texas site. Treat submitted or studied load as a pipeline signal until project-level evidence supports approval, construction and energization.",
+      "watch": ["Large-load process and requirement changes", "Site-specific study and transmission milestones", "Requested load versus approved service versus measured demand"],
+      "hubSlugs": ["texas"],
+      "glossarySlugs": ["balancing-authority", "interconnection-queue", "energization", "mw-mwh"],
+      "relatedTerms": ["ercot", "texas", "large load"],
+      "sources": [
+        { "label": "ERCOT large-load integration", "url": "https://www.ercot.com/services/rq/large-load-integration/" }
+      ]
+    },
+    {
+      "slug": "aps",
+      "name": "Arizona Public Service",
+      "kind": "Utility reference",
+      "summary": "APS is an Arizona electric utility whose public resources describe planning for large data-center needs while protecting existing customers. Its general material explains the planning context; it does not confirm capacity for a particular Phoenix-area development.",
+      "watch": ["Resource-plan changes", "Customer and grid facility milestones", "Staged load ramps and cost responsibility"],
+      "hubSlugs": ["phoenix"],
+      "glossarySlugs": ["energization", "nameplate-net-summer-capacity", "capacity-factor"],
+      "relatedTerms": ["aps", "arizona public service", "phoenix", "arizona"],
+      "sources": [
+        { "label": "APS resources", "url": "https://www.aps.com/resources" },
+        { "label": "APS data-center planning explainer", "url": "https://www.aps.com/en/Utility/Company-wide-Events-and-Messages/Data_Centers_How_Were_Protecting_Customers_While_Planning-for_Big_Energy_Needs" }
+      ]
+    },
+    {
+      "slug": "equinix",
+      "name": "Equinix",
+      "kind": "Data-center operator reference",
+      "summary": "Equinix describes itself as a digital infrastructure company operating data centers and interconnection services. Its company and investor pages are the primary references for disclosed strategy and financial reporting; regional capacity claims still require facility-level evidence.",
+      "watch": ["Company-reported capacity and expansion milestones", "Power procurement and energization disclosures", "Capital allocation and customer mix"],
+      "hubSlugs": ["northern-virginia", "texas", "phoenix"],
+      "glossarySlugs": ["colocation", "interconnection", "reit"],
+      "relatedTerms": ["equinix"],
+      "sources": [
+        { "label": "Equinix company overview", "url": "https://www.equinix.com/about" },
+        { "label": "Equinix investor relations", "url": "https://investor.equinix.com/" }
+      ]
+    },
+    {
+      "slug": "digital-realty",
+      "name": "Digital Realty",
+      "kind": "Data-center operator reference",
+      "summary": "Digital Realty describes a global data-center platform serving colocation and related infrastructure needs. Its corporate and investor disclosures are the primary sources for portfolio, strategy and financial reporting; a market presence alone does not establish available powered capacity.",
+      "watch": ["Company-reported development and lease milestones", "Power availability and staged delivery disclosures", "Capital spending, funding and occupancy signals"],
+      "hubSlugs": ["northern-virginia", "texas", "phoenix"],
+      "glossarySlugs": ["colocation", "hyperscale", "reit"],
+      "relatedTerms": ["digital realty"],
+      "sources": [
+        { "label": "Digital Realty company overview", "url": "https://www.digitalrealty.com/about" },
+        { "label": "Digital Realty investor relations", "url": "https://investor.digitalrealty.com/" }
+      ]
+    }
+  ],
+  "glossary": [
+    { "slug": "mw-mwh", "term": "MW and MWh", "definition": "A megawatt (MW) measures power at an instant; a megawatt-hour (MWh) measures energy delivered or consumed over time. A 10 MW load running for two hours uses 20 MWh.", "source": "https://www.eia.gov/energyexplained/electricity/electricity-and-the-environment.php" },
+    { "slug": "interconnection-queue", "term": "Interconnection queue", "definition": "A list and study process for proposed facilities seeking to connect to a grid. Queue entry is a request for evaluation, not proof that a project will be built or receive service on its proposed schedule.", "source": "https://www.ferc.gov/explainer-interconnection-final-rule" },
+    { "slug": "nameplate-net-summer-capacity", "term": "Nameplate and net summer capacity", "definition": "Nameplate capacity is the manufacturer-rated output of generating equipment. Net summer capacity is the maximum output a plant expects to supply after station use during summer conditions. They are not interchangeable measures.", "source": "https://www.eia.gov/tools/glossary/index.php?id=Electricity" },
+    { "slug": "ppa", "term": "Power purchase agreement (PPA)", "definition": "A contract for the purchase of electricity under stated commercial terms. A PPA can support procurement or project finance, but it does not by itself prove that local transmission and utility service are ready for a data-center load.", "source": "https://www.energy.gov/femp/power-purchase-agreements" },
+    { "slug": "capacity-factor", "term": "Capacity factor", "definition": "Actual electricity produced during a period divided by the amount that could have been produced at continuous full-power operation. It describes utilization of generation, not the capacity reserved for a customer.", "source": "https://www.eia.gov/tools/faqs/faq.php?id=187&t=3" },
+    { "slug": "energization", "term": "Energization", "definition": "The step at which electrical equipment or a customer facility is made live. For a data-center project, an energization date should be tied to defined utility, transmission, substation and customer-side milestones.", "source": "https://www.ercot.com/services/rq/large-load-integration/" },
+    { "slug": "balancing-authority", "term": "Balancing authority", "definition": "The responsible entity that maintains the balance between electricity supply and demand within a defined area and supports interconnection frequency in real time.", "source": "https://www.eia.gov/tools/glossary/index.php?id=Electricity" },
+    { "slug": "hyperscale", "term": "Hyperscale data center", "definition": "A very large, highly scalable computing facility or campus designed for substantial fleets of servers and network equipment. The label describes operating scale, not a verified amount of available grid capacity.", "source": "https://www.eia.gov/todayinenergy/detail.php?id=67664" },
+    { "slug": "colocation", "term": "Colocation", "definition": "A model in which customers place computing equipment in a third-party data center and buy space, power, cooling and connectivity under contract. Contracted space does not always mean power is immediately deliverable.", "source": "https://www.equinix.com/about" },
+    { "slug": "reit", "term": "Real estate investment trust (REIT)", "definition": "A company that owns or finances income-producing real estate and elects to operate under REIT tax rules. The term describes a corporate and tax structure; this glossary does not provide investment advice.", "source": "https://www.sec.gov/files/reits.pdf" },
+    { "slug": "interconnection", "term": "Data-center interconnection", "definition": "Physical and logical connections that let networks, cloud services and customers exchange traffic. In data-center usage, this is distinct from electric-grid interconnection.", "source": "https://www.equinix.com/about" },
+    { "slug": "load-forecast", "term": "Load forecast", "definition": "An estimate of future electricity demand used in planning. Forecasts depend on assumptions and may include adjustments for proposed large loads; they are not measurements of current consumption.", "source": "https://www.pjm.com/planning/resource-adequacy-planning/load-forecast-dev-process.aspx" }
+  ]
+}

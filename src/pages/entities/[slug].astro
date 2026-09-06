@@ -1,0 +1,57 @@
+---
+import ProductLayout from '../../layouts/ProductLayout.astro';
+import reference from '../../data/infrastructure-reference.json';
+import latestNews from '../../data/latest-news.json';
+import archivedNews from '../../data/archived-news.json';
+import { buildHomepageFeed } from '../../../scripts/lib/homepage-feed-builder.mjs';
+
+export function getStaticPaths() {
+  const eligibleArticles = buildHomepageFeed([...latestNews, ...archivedNews], { limit: 500, minimumVisible: 0 }).items;
+  return reference.entities.map((entity) => {
+    const relatedArticles = eligibleArticles.filter((article) => {
+      const searchable = [article.publicSignal.title, article.publicSignal.deck, article.publicSignal.source].join(' ').toLowerCase();
+      return entity.relatedTerms.some((term) => searchable.includes(term.toLowerCase()));
+    }).slice(0, 4);
+    return { params: { slug: entity.slug }, props: { entity, relatedArticles } };
+  });
+}
+
+const { entity, relatedArticles } = Astro.props;
+const hubs = reference.hubs.filter((hub) => entity.hubSlugs.includes(hub.slug));
+const glossary = reference.glossary.filter((entry) => entity.glossarySlugs.includes(entry.slug));
+---
+<ProductLayout title={entity.name} description={entity.summary} eyebrow={entity.kind}>
+  <p class="product-meta">Reference reviewed {reference.asOf}. Company and system conditions may have changed after this date.</p>
+
+  <section class="product-section" aria-labelledby="watch-list">
+    <h2 id="watch-list">Decision signals to watch</h2>
+    <ul>{entity.watch.map((item) => <li>{item}</li>)}</ul>
+  </section>
+
+  <section class="product-section" aria-labelledby="connected-guides">
+    <h2 id="connected-guides">Connected guides</h2>
+    <div class="product-grid two">
+      <article class="product-card"><h3>Regional hubs</h3><ul>{hubs.map((hub) => <li><a href={`/hubs/${hub.slug}/`}>{hub.name}</a></li>)}</ul></article>
+      <article class="product-card"><h3>Terms</h3><ul>{glossary.map((entry) => <li><a href={`/glossary/#${entry.slug}`}>{entry.term}</a></li>)}</ul></article>
+    </div>
+    <div class="product-actions"><a href="/data/">Open the data desk</a><a href="/entities/">All entities</a></div>
+  </section>
+
+  <section class="product-section" aria-labelledby="related-coverage">
+    <h2 id="related-coverage">Related coverage</h2>
+    {relatedArticles.length ? (
+      <ul class="product-list">
+        {relatedArticles.map((article) => {
+          const href = article.publicSignal?.view_detail || article.publicSignal?.read_source;
+          const external = !article.publicSignal?.view_detail;
+          return <li><a href={href} target={external ? '_blank' : undefined} rel={external ? 'noopener noreferrer' : undefined}>{article.title}</a><p class="product-meta">{article.source}</p></li>;
+        })}
+      </ul>
+    ) : <p class="product-note">No current article passes both the public-feed checks and this entity’s relevance match. Use the primary sources below for the current reference point.</p>}
+  </section>
+
+  <section class="product-section" aria-labelledby="primary-sources">
+    <h2 id="primary-sources">Primary sources</h2>
+    <ul>{entity.sources.map((source) => <li><a href={source.url} target="_blank" rel="noopener noreferrer">{source.label}</a></li>)}</ul>
+  </section>
+</ProductLayout>

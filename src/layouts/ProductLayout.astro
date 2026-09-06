@@ -1,0 +1,17 @@
+---
+import Layout from './Layout.astro';
+import ProductNav from '../components/ProductNav.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+import '../styles/products.css';
+interface Props { title: string; description: string; eyebrow?: string; lang?: 'en' | 'ko'; noindex?: boolean; }
+const { title, description, eyebrow = 'Compute Current research', lang = 'en', noindex = false } = Astro.props;
+---
+<Layout title={`${title} | Compute Current`} description={description} canonicalPath={Astro.url.pathname} lang={lang} noindex={noindex}>
+  <main class="product-shell">
+    <a class="product-brand" href="/">Compute <strong>Current</strong></a>
+    <ProductNav />
+    <header class="product-heading"><p class="eyebrow">{eyebrow}</p><h1>{title}</h1><p class="product-lede">{description}</p></header>
+    <slot />
+  </main>
+  <SiteFooter />
+</Layout>

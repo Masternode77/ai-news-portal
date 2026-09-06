@@ -1,4 +1,6 @@
 ---
+import ProductNav from '../components/ProductNav.astro';
+import '../styles/products.css';
 import Layout from '../layouts/Layout.astro';
 import ArticleCardImage from '../components/ArticleCardImage.astro';
 import FeaturedArticle from '../components/FeaturedArticle.astro';
@@ -193,6 +195,7 @@ const structuredData = {
         <a class="btn-primary" href="/follow/">Follow</a>
       </div>
     </header>
+  <div class="product-shell" style="padding-top:0;padding-bottom:0"><ProductNav /></div>
 
     <TickerTape items={tickerItems} />
 

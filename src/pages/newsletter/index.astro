@@ -1,0 +1,55 @@
+---
+import ProductLayout from '../../layouts/ProductLayout.astro';
+import latestNews from '../../data/latest-news.json';
+import archivedNews from '../../data/archived-news.json';
+import { buildWeeklyDigest, validNewsletterSubscribeUrl } from '../../../scripts/lib/newsletter.mjs';
+
+const digest = buildWeeklyDigest([...latestNews, ...archivedNews], { now: new Date() });
+const subscribeUrl = validNewsletterSubscribeUrl(import.meta.env.PUBLIC_NEWSLETTER_SUBSCRIBE_URL);
+const dateFormatter = new Intl.DateTimeFormat('en-US', {
+  month: 'short', day: 'numeric', year: 'numeric', timeZone: 'UTC',
+});
+---
+<ProductLayout
+  title="Weekly infrastructure digest"
+  description="The week’s public Compute Current analysis on power, capacity, delivery risk and data-center infrastructure decisions."
+  eyebrow="Newsletter"
+>
+  <div class="product-actions">
+    {subscribeUrl ? (
+      <a href={subscribeUrl} target="_blank" rel="noopener noreferrer">Join the weekly email list</a>
+    ) : (
+      <span>Email sign-up is not active yet.</span>
+    )}
+    <a href="/rss.xml">Follow the RSS feed</a>
+  </div>
+
+  <section class="product-section" aria-labelledby="weekly-digest-heading">
+    <h2 id="weekly-digest-heading">Latest seven-day digest</h2>
+    <p class="product-note">
+      Analysis published from {dateFormatter.format(new Date(digest.windowStart))} through {dateFormatter.format(new Date(digest.windowEnd))}.
+      {subscribeUrl ? 'Join the email list for the weekly edition, or follow new coverage through RSS.' : 'Email subscriptions are being prepared; you can follow new coverage through RSS.'}
+    </p>
+    {digest.articles.length ? (
+      <div class="product-grid two">
+        {digest.articles.map((article) => (
+          <article class="product-card">
+            <div class="product-meta">
+              <span class="product-tag">{article.category}</span>{' '}
+              <span>{dateFormatter.format(new Date(article.publishedAt))}</span>
+            </div>
+            <h3><a href={article.href}>{article.title}</a></h3>
+            <p>{article.deck}</p>
+            {article.whyItMatters && <p><strong>Why it matters:</strong> {article.whyItMatters}</p>}
+            <p class="product-meta">Source: {article.source}</p>
+            <a href={article.href}>Read the analysis</a>
+          </article>
+        ))}
+      </div>
+    ) : (
+      <div class="product-note" data-newsletter-empty-state>
+        No analysis is available for this seven-day window. The RSS feed remains available for newly published work.
+      </div>
+    )}
+  </section>
+</ProductLayout>

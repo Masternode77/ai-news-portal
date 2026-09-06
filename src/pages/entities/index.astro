@@ -1,0 +1,24 @@
+---
+import ProductLayout from '../../layouts/ProductLayout.astro';
+import reference from '../../data/infrastructure-reference.json';
+---
+<ProductLayout
+  title="Infrastructure entities"
+  description="A source-linked reference set for utilities, grid operators and data-center companies that shape power delivery and capacity decisions."
+  eyebrow="Entity reference desk"
+>
+  <section class="product-section" aria-labelledby="tracked-entities">
+    <h2 id="tracked-entities">Tracked organizations</h2>
+    <p class="product-note">An entity page identifies what the organization controls and which evidence to watch. It does not rate securities or imply that a proposed site has secured power.</p>
+    <div class="product-grid">
+      {reference.entities.map((entity) => (
+        <article class="product-card">
+          <span class="product-tag">{entity.kind}</span>
+          <h3><a href={`/entities/${entity.slug}/`}>{entity.name}</a></h3>
+          <p>{entity.summary}</p>
+          <a href={`/entities/${entity.slug}/`}>Open entity guide</a>
+        </article>
+      ))}
+    </div>
+  </section>
+</ProductLayout>

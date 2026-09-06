@@ -20,6 +20,7 @@ export interface Props {
   canonicalPath?: string;
   type?: 'website' | 'article';
   noindex?: boolean;
+  lang?: 'en' | 'ko';
 }
 
 const {
@@ -29,6 +30,7 @@ const {
   canonicalPath,
   type = 'website',
   noindex = false,
+  lang = 'en',
 } = Astro.props;
 
 const joinUrl = (base: string, path: string) =>
@@ -50,7 +52,7 @@ const consentModeBootstrap = [
 ].join('');
 ---
 <!doctype html>
-<html lang="en">
+<html lang={lang}>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -65,7 +67,7 @@ const consentModeBootstrap = [
     <meta property="og:description" content={description} />
     <meta property="og:type" content={type} />
     <meta property="og:url" content={canonical} />
-    <meta property="og:locale" content="en_US" />
+    <meta property="og:locale" content={lang === 'ko' ? 'ko_KR' : 'en_US'} />
     <OpenGraphImage image={image} alt={description} />
     <meta property="og:site_name" content={SITE.name} />
     <meta name="twitter:card" content="summary_large_image" />

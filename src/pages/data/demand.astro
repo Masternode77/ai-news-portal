@@ -1,0 +1,16 @@
+---
+import ProductLayout from '../../layouts/ProductLayout.astro';
+import data from '../../data/grid/demand.json';
+import { snapshotAge } from '../../../scripts/lib/infrastructure-data.mjs';
+const names = { ERCO: 'ERCOT', PJM: 'PJM', AZPS: 'Arizona Public Service' };
+const freshness = snapshotAge(data.asOf);
+---
+<ProductLayout title="Hourly grid demand" description="Observed electricity demand across three balancing authorities, from EIA-930. All timestamps are UTC.">
+  <p class="product-note">{freshness.label} · Last observation {data.asOf}. This is total grid demand, including homes and businesses. It is not a measurement of data-center or AI electricity use. Gaps are not interpolated.</p>
+  <div class="product-grid">{Object.entries(names).map(([code,name]) => {
+    const rows=data.records.filter(r=>r.respondent===code), last=rows.at(-1);
+    return <article class="product-card"><h2>{name}</h2><p class="product-value">{last?.value.toLocaleString('en-US')} <small>MWh</small></p><p>Latest reported hourly interval</p><p class="product-meta">{last?.period}</p></article>;
+  })}</div>
+  <section class="product-section"><h2>Observation table</h2><div class="product-table-wrap"><table class="product-table"><caption>Last 24 reported observations per authority. Energy in MWh for each hourly interval.</caption><thead><tr><th scope="col">UTC interval</th><th scope="col">Authority</th><th scope="col">MWh</th></tr></thead><tbody>{Object.keys(names).flatMap(code=>data.records.filter(r=>r.respondent===code).slice(-24)).sort((a,b)=>b.period.localeCompare(a.period)||a.respondent.localeCompare(b.respondent)).map(r=><tr><td><time datetime={r.period}>{r.period.replace('T',' ').replace(':00:00Z',':00')}</time></td><td>{names[r.respondent as keyof typeof names]}</td><td>{r.value.toLocaleString('en-US')}</td></tr>)}</tbody></table></div></section>
+  <section class="product-section"><h2>Source and method</h2><p><a href={data.sourceUrl}>EIA Hourly Electric Grid Monitor</a>. Type D, reported unit megawatthours; no conversion to power, AI share or estimated consumption. EIA can revise recent observations.</p><p class="product-meta">Retrieved {data.retrievedAt}. The page serves a stored snapshot; its date is the freshness reference.</p><a class="product-button" href="/data/demand.csv" download>Download observations CSV</a></section>
+</ProductLayout>

@@ -1,0 +1,13 @@
+---
+import ProductLayout from '../../layouts/ProductLayout.astro';
+import data from '../../data/grid/capacity.json';
+import { capacityGroups } from '../../../scripts/lib/infrastructure-data.mjs';
+const groups=capacityGroups(data.records);
+const total=data.records.reduce((s,r)=>s+(r.netSummerMW||0),0);
+---
+<ProductLayout title="Monthly capacity ledger" description="Preliminary EIA-860M planned generating and storage units, grouped by planned operation year and state.">
+  <p class="product-note">Inventory edition {data.asOf}. Plans can slip, change or be cancelled. Net summer capacity includes storage power ratings and is neither firm available supply nor a forecast of generation.</p>
+  <div class="product-grid"><article class="product-card"><h2>Planned units</h2><p class="product-value">{data.records.length.toLocaleString('en-US')}</p></article><article class="product-card"><h2>Net summer capacity</h2><p class="product-value">{total.toLocaleString('en-US',{maximumFractionDigits:1})} <small>MW</small></p></article><article class="product-card"><h2>Missing capacity values</h2><p class="product-value">{data.missingCapacityCount}</p></article></div>
+  <section class="product-section"><h2>Plans by year and state</h2><div class="product-table-wrap"><table class="product-table"><caption>Counts of units and sum of reported net summer capacity; no inference of project completion.</caption><thead><tr><th scope="col">Planned year</th><th scope="col">State</th><th scope="col">Units</th><th scope="col">Net summer MW</th></tr></thead><tbody>{groups.map(r=><tr><td>{r.year??'Not reported'}</td><td>{r.state}</td><td>{r.units}</td><td>{r.netSummerMW.toLocaleString('en-US',{maximumFractionDigits:1})}</td></tr>)}</tbody></table></div></section>
+  <section class="product-section"><h2>Source and method</h2><p><a href={data.sourceUrl}>Download the original EIA-860M workbook</a>. The Planned worksheet supplies plant and generator identifiers, status, technology, state, operation year and net summer capacity. Existing units are excluded. Blank capacity values remain missing and are excluded from sums.</p><p><a href="https://www.eia.gov/electricity/data/eia860m/">EIA release notes and preliminary-data limitations</a>. This inventory covers generating facilities with at least 1 MW of combined nameplate capacity. It is not a count of data-center power contracts.</p><p class="product-meta">Retrieved {data.retrievedAt}. Source SHA-256: <code style="overflow-wrap:anywhere">{data.sha256}</code></p><a class="product-button" href="/data/capacity.csv" download>Download all planned units CSV</a></section>
+</ProductLayout>

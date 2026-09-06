@@ -108,6 +108,7 @@ jobs:
             src/data/pipeline-heartbeat.json \
             scripts/state/pipeline-state.json \
             docs/omo-ultra-audit.md \
+            docs/taxonomy-pages-report.md \
             public/generated
 
           if git diff --cached --quiet; then

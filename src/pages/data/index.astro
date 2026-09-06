@@ -1,0 +1,15 @@
+---
+import ProductLayout from '../../layouts/ProductLayout.astro';
+import demand from '../../data/grid/demand.json';
+import capacity from '../../data/grid/capacity.json';
+import queue from '../../data/grid/ercot.json';
+---
+<ProductLayout title="Grid & Capacity Ledger" description="Public electricity demand, planned generation and large-load applications for AI infrastructure planning.">
+  <p class="product-note">These datasets describe different stages of the power system. Grid demand includes all end uses; it does not measure AI consumption. Planned supply and load applications are not operating capacity.</p>
+  <div class="product-grid">
+    <article class="product-card"><h2><a href="/data/demand/">Hourly grid demand</a></h2><p>EIA-930 observations for ERCOT, PJM and Arizona Public Service, in megawatt-hours per hourly interval.</p><p class="product-meta">Last observation: {demand.asOf}</p></article>
+    <article class="product-card"><h2><a href="/data/capacity/">Monthly capacity ledger</a></h2><p>Planned generating and storage units from preliminary EIA-860M inventory. Compare planned year, state and net summer capacity.</p><p class="product-meta">Inventory edition: {capacity.asOf}</p></article>
+    <article class="product-card"><h2><a href="/data/ercot/">Texas large-load queue</a></h2><p>A dated view of the gap between requested load, studies, approvals and energization.</p><p class="product-meta">Historical snapshot: {queue.asOf}</p></article>
+  </div>
+  <section class="product-section"><h2>Read the units before comparing</h2><p>MWh is energy delivered during a period. MW and GW express power or capacity. An application, a planned generator and an energized load are not interchangeable. Storage capacity also depends on discharge duration, which this ledger does not measure.</p><p><a href="/glossary/">Infrastructure glossary</a> · <a href="/hubs/">Regional planning hubs</a></p></section>
+</ProductLayout>

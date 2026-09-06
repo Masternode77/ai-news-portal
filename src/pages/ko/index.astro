@@ -1,0 +1,49 @@
+---
+import ProductLayout from '../../layouts/ProductLayout.astro';
+import records from '../../data/korea-briefs.json';
+import { getPublishedKoreaBriefs } from '../../../scripts/lib/korea-briefs.mjs';
+
+const briefs = getPublishedKoreaBriefs(records);
+type KoreaBrief = (typeof records)[number] & { publicationMode: 'summary' | 'link_only' };
+const formatDate = (value: string) => new Intl.DateTimeFormat('ko-KR', {
+  year: 'numeric', month: 'long', day: 'numeric', timeZone: 'Asia/Seoul',
+}).format(new Date(value));
+---
+<ProductLayout
+  title="한국 AI 인프라 브리프"
+  description="한국 정부의 전력망·데이터센터·냉각 정책 원문을 검토해, 부지와 용량 결정에 필요한 변화만 짧게 정리합니다."
+  eyebrow="Korea infrastructure brief"
+  lang="ko"
+>
+  <section class="product-note" aria-label="편집 및 이용 기준">
+    모든 항목은 편집자가 원문과 항목별 공공누리 표시를 직접 확인한 고정 스냅샷입니다. 텍스트만 사용하며 사진·영상·첨부파일은 재사용하지 않습니다.
+    자동 수집 결과를 바로 게시하지 않으며, 검토 기한이 지나면 항목은 공개 목록에서 제외됩니다.
+  </section>
+
+  <div class="product-actions">
+    <a href="/ko/rss.xml">한국어 RSS</a>
+    <a href="/methodology/">편집 방법론</a>
+  </div>
+
+  <section class="product-section" aria-labelledby="korea-brief-list">
+    <h2 id="korea-brief-list">검토된 정책 신호</h2>
+    <div class="product-grid two">
+      {(briefs as KoreaBrief[]).map((brief) => (
+        <article class="product-card">
+          <div class="product-meta">
+            <span class="product-tag">{brief.topic}</span>{' '}
+            {brief.archive ? <span class="product-tag">정책 아카이브</span> : <span class="product-tag">최근 발표</span>}
+          </div>
+          <h3>{brief.title}</h3>
+          {brief.summary ? <p>{brief.summary}</p> : <p>요약 이용 조건이 확인되지 않아 원문 링크만 제공합니다.</p>}
+          <p class="product-meta">
+            발표 {formatDate(brief.publishedAt)} · {brief.organization}<br />
+            출처: {brief.source} · {brief.license.name} · 텍스트 한정 · 검토 만료 {formatDate(brief.review.expiresAt)}<br />
+            원문 URL: <span>{brief.sourceUrl}</span>
+          </p>
+          <a href={brief.sourceUrl} rel="noopener noreferrer">정부 원문 보기</a>
+        </article>
+      ))}
+    </div>
+  </section>
+</ProductLayout>

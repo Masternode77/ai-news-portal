@@ -1,0 +1,29 @@
+name: Prepare weekly digest
+on:
+  schedule:
+    - cron: '30 22 * * 0'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  prepare:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: '22.22.0'
+          cache: npm
+      - run: npm ci --no-audit --no-fund
+      - run: node --test tests/newsletter.test.mjs
+      - name: Prepare reviewable digest (no email delivery)
+        run: |
+          mkdir -p digest-artifact
+          node scripts/build-weekly-digest.mjs --format=json > digest-artifact/digest.json
+          node scripts/build-weekly-digest.mjs --format=html > digest-artifact/digest.html
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: weekly-digest
+          path: digest-artifact/
+          retention-days: 30

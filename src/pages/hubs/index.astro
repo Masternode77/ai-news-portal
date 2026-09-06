@@ -1,0 +1,24 @@
+---
+import ProductLayout from '../../layouts/ProductLayout.astro';
+import reference from '../../data/infrastructure-reference.json';
+---
+<ProductLayout
+  title="Regional infrastructure hubs"
+  description="Source-linked guides to the power, siting and delivery constraints shaping major U.S. data-center markets."
+  eyebrow="Regional reference desk"
+>
+  <section class="product-section" aria-labelledby="regional-hubs">
+    <h2 id="regional-hubs">Markets to watch</h2>
+    <p class="product-note">These guides separate planning evidence from operating capacity. Forecasts, study requests and queue positions do not prove that a project is energized.</p>
+    <div class="product-grid">
+      {reference.hubs.map((hub) => (
+        <article class="product-card">
+          <span class="product-tag">As of {reference.asOf}</span>
+          <h3><a href={`/hubs/${hub.slug}/`}>{hub.name}</a></h3>
+          <p>{hub.bottleneck}</p>
+          <a href={`/hubs/${hub.slug}/`}>Open regional guide</a>
+        </article>
+      ))}
+    </div>
+  </section>
+</ProductLayout>

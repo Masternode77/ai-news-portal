@@ -112,6 +112,42 @@ const ADJACENT_ONLY_TOPICS = [
   'consumer hardware',
 ];
 
+// Korean source text is normalized into the same narrow, physical
+// infrastructure vocabulary used by the English classifier. Keep aliases
+// concrete: broad AI or finance language must not create an infrastructure hit.
+const KOREAN_INFRA_ALIASES = [
+  [/인공지능\s*데이터\s*센터/g, ' ai data center '],
+  [/데이터\s*센터/g, ' data center '],
+  [/전력\s*계통/g, ' power grid '],
+  [/계통\s*(?:연계|접속)/g, ' grid interconnection '],
+  [/전력망/g, ' grid '],
+  [/변전소/g, ' substation '],
+  [/송전(?:선로|망)?/g, ' transmission '],
+  [/전력\s*공급/g, ' power capacity '],
+  [/전력\s*수요/g, ' power load growth '],
+  [/액침\s*냉각/g, ' immersion cooling '],
+  [/수랭(?:식)?\s*냉각/g, ' liquid cooling '],
+  [/냉각\s*시스템/g, ' cooling system '],
+  [/칠러/g, ' chiller '],
+  [/고대역폭\s*메모리/g, ' high-bandwidth memory '],
+  [/그래픽\s*처리\s*장치/g, ' gpu '],
+  [/반도체/g, ' semiconductor '],
+  [/클라우드/g, ' cloud '],
+  [/서버\s*랙/g, ' rack '],
+  [/인허가/g, ' permitting '],
+  [/부지/g, ' siting '],
+  [/용량/g, ' capacity '],
+  [/인공지능/g, ' artificial intelligence '],
+  [/챗봇/g, ' chatbot '],
+  [/소비자\s*앱/g, ' consumer app '],
+  [/사진\s*앱/g, ' photo app '],
+  [/영상\s*생성(?:기|도구)?/g, ' video generator '],
+  [/글쓰기\s*도우미/g, ' writing assistant '],
+];
+
+const KOREAN_SPECULATIVE_MARKET_TERMS = /(?<![가-힣])(?:관련주|수혜주|주가|증시)(?![가-힣])|(?<![가-힣])(?:급등|급락)(?:세|했|한|하|$|\s)/;
+const KOREAN_PHYSICAL_INFRA_TERMS = /전력망|전력\s*계통|계통\s*(?:연계|접속)|변전소|송전(?:선로|망)?|전력\s*(?:공급|수요)|냉각|칠러|액침|수랭|데이터\s*센터\s*(?:건설|구축|부지|착공|준공)|서버\s*랙|\b(?:mw|gw)\b/i;
+
 const DIMENSIONS = {
   direct_ai_infrastructure_relevance: [
     ['ai infrastructure', 0.48],
@@ -259,8 +295,11 @@ const DIMENSIONS = {
 };
 
 function normalizeText(value = '') {
-  return String(value)
-    .toLowerCase()
+  let normalized = String(value).toLowerCase();
+  for (const [pattern, replacement] of KOREAN_INFRA_ALIASES) {
+    normalized = normalized.replace(pattern, replacement);
+  }
+  return normalized
     .replace(/&/g, ' and ')
     .replace(/[^a-z0-9.+#/$%-]+/g, ' ')
     .replace(/\s+/g, ' ')
@@ -453,8 +492,9 @@ function routeFields(tier) {
 }
 
 export function classifyInfrastructureRelevance(article = {}) {
+  const sourceText = buildArticleText(article);
   const titleText = normalizeText(article.title || '');
-  const text = normalizeText(buildArticleText(article));
+  const text = normalizeText(sourceText);
   const dimensionResults = {};
   const matchedByDimension = {};
 
@@ -552,6 +592,10 @@ export function classifyInfrastructureRelevance(article = {}) {
     overall = Math.min(overall, hasAi ? 0.38 : 0.28);
   }
 
+  if (KOREAN_SPECULATIVE_MARKET_TERMS.test(sourceText) && !KOREAN_PHYSICAL_INFRA_TERMS.test(sourceText)) {
+    overall = Math.min(overall, 0.38);
+  }
+
   if (hardArchiveTopic) {
     overall = Math.min(overall, 0.2);
   } else if (hasAdjacentOnlyTopic) {
@@ -571,6 +615,9 @@ export function classifyInfrastructureRelevance(article = {}) {
   if (hasConsumerAiOnly) reasons.push('consumer_ai_without_infrastructure_surface');
   if (hasWeakAiAdjacent && overall < FULL_MEMO_RELEVANCE_THRESHOLD) {
     reasons.push('weak_ai_adjacent_without_compute_current_infrastructure_surface');
+  }
+  if (KOREAN_SPECULATIVE_MARKET_TERMS.test(sourceText) && !KOREAN_PHYSICAL_INFRA_TERMS.test(sourceText)) {
+    reasons.push('korean_market_chatter_without_physical_infrastructure_evidence');
   }
 
   return {

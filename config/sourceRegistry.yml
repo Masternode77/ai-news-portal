@@ -149,17 +149,17 @@ sources:
     domain: theregister.com
     coverage: cloud, chips, data center, enterprise infrastructure
     priority: P1
-    feed: https://www.theregister.com/data_centre/headlines.atom
+    feed: https://api.theregister.com/api/v1/article?limit=25&orderBy=published&query=tag%3Aon_prem&remapper=rss&site_id=2
     defaultCategory: Colocation & Wholesale
     region: Global
     status: active_feed
     text_use_basis: unreviewed
     image_use_basis: unreviewed
     terms_url: https://www.theregister.com/profile/terms_and_conditions_of_use
-    reviewed_at: 2026-09-05
+    reviewed_at: 2026-09-06
     allow_text_use: false
     allow_image_reuse: false
-    rights_note: link-only low risk; personal non-commercial use, no copying or distribution; registered feed path returns 404
+    rights_note: link-only low risk; official RSS directory replacement feed returns 200, while personal non-commercial and no-copying terms keep text and images unauthorized
   - id: datacenterdynamics
     name: Data Center Dynamics
     domain: datacenterdynamics.com
@@ -268,10 +268,10 @@ sources:
     text_use_basis: unreviewed
     image_use_basis: unreviewed
     terms_url:
-    reviewed_at: 2026-09-05
+    reviewed_at: 2026-09-06
     allow_text_use: false
     allow_image_reuse: false
-    rights_note: blocked; feed returns 400 and the Endeavor terms page is gone (404)
+    rights_note: feed returns 200 as RSS; rights remain unreviewed because the Endeavor terms page is gone (404), so text and image use stay unauthorized
   - id: datacenterpost
     name: Data Center POST
     domain: datacenterpost.com

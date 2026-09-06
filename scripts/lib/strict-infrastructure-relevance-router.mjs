@@ -65,7 +65,14 @@ const INFRA_LAYER_PATTERNS = [
   /\bconstruction\b/i,
   /\bequipment\b/i,
   /\bsupply chain\b/i,
+  /데이터\s*센터/i,
+  /전력망|전력\s*계통|계통\s*(?:연계|접속)/i,
+  /변전소|송전(?:선로|망)?|전력\s*(?:공급|수요)/i,
+  /냉각|칠러|액침|수랭/i,
+  /서버\s*랙|인허가|부지/i,
 ];
+
+const KOREAN_SPECULATIVE_MARKET_PATTERN = /(?<![가-힣])(?:관련주|수혜주|주가|증시)(?![가-힣])|(?<![가-힣])(?:급등|급락)(?:세|했|한|하|$|\s)/i;
 
 const ALWAYS_ARCHIVE_PATTERNS = [
   /\bdinosaur\b/i,
@@ -208,6 +215,15 @@ function isAdjacentBoundary(text = '') {
 
 function laneForCore(article = {}, archetype) {
   const text = textBundle(article).toLowerCase();
+  if (/(냉각|칠러|액침|수랭)/i.test(text)) {
+    return { laneKey: 'technical-bottlenecks', laneTitle: 'Technical Bottlenecks' };
+  }
+  if (/(전력망|전력\s*계통|계통\s*(?:연계|접속)|변전소|송전(?:선로|망)?|전력\s*(?:공급|수요))/i.test(text)) {
+    return { laneKey: 'operator-alerts', laneTitle: 'Operator Alerts' };
+  }
+  if (/(반도체|고대역폭\s*메모리|그래픽\s*처리\s*장치)/i.test(text)) {
+    return { laneKey: 'stack-shifts', laneTitle: 'Stack Shifts' };
+  }
   if (archetype.id === 'market-map' || /(roundup|market map|land and expand|nvidia, iren|coatue|switch|core scientific)/i.test(text)) {
     return { laneKey: 'market-maps', laneTitle: 'Market Maps' };
   }
@@ -240,6 +256,8 @@ function publicLabelFor(article = {}, archetype = {}) {
 
 function lensFor(article = {}, archetype = {}) {
   const text = textBundle(article).toLowerCase();
+  if (/(냉각|칠러|액침|수랭)/i.test(text)) return 'Technical Bottleneck';
+  if (/(전력망|전력\s*계통|계통\s*(?:연계|접속)|변전소|송전(?:선로|망)?)/i.test(text)) return 'Power Market Signal';
   if (/(spot power|power trading|electricity market|ppa)/i.test(text)) return 'Power Market Signal';
   if (/(moratorium|permit|siting|zoning|county)/i.test(text)) return 'Policy and Siting Risk';
   if (/(netapp|openshift|backup|disaster recovery)/i.test(text)) return 'Platform Resilience';
@@ -279,8 +297,9 @@ export function routeStrictInfrastructureRelevance(article = {}) {
   const adjacentOnly = isAdjacentBoundary(text) || archetype.id === 'adjacent-signal';
   const hasLayer = namesConcreteInfrastructureLayer(article);
   const conditionalArchive = CONDITIONAL_ARCHIVE_PATTERNS.some((pattern) => pattern.test(text)) && !hasLayer;
+  const koreanMarketChatterWithoutInfrastructure = KOREAN_SPECULATIVE_MARKET_PATTERN.test(text) && !hasLayer;
 
-  if (isHardArchive(text) || conditionalArchive || archetype.id === 'archive-only') {
+  if (isHardArchive(text) || conditionalArchive || koreanMarketChatterWithoutInfrastructure || archetype.id === 'archive-only') {
     return {
       score,
       visibility: 'archive',
@@ -290,7 +309,11 @@ export function routeStrictInfrastructureRelevance(article = {}) {
       editorial_lens: 'Archive Only',
       story_archetype: archetype.name,
       routing_decision: 'archive_only',
-      blocked_reasons: conditionalArchive ? ['generic_non_infrastructure_topic'] : ['outside_compute_current_product_boundary'],
+      blocked_reasons: koreanMarketChatterWithoutInfrastructure
+        ? ['korean_market_chatter_without_physical_infrastructure_evidence']
+        : conditionalArchive
+          ? ['generic_non_infrastructure_topic']
+          : ['outside_compute_current_product_boundary'],
     };
   }
 

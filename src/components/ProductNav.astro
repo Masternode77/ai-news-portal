@@ -1,0 +1,6 @@
+---
+const links = [['Data desk', '/data/'], ['한국어', '/ko/'], ['Regional hubs', '/hubs/'], ['Entities', '/entities/'], ['Glossary', '/glossary/'], ['Weekly digest', '/newsletter/']];
+---
+<nav class="product-nav" aria-label="Research tools">
+  {links.map(([label, href]) => <a href={href} aria-current={Astro.url.pathname.startsWith(href) ? 'page' : undefined}>{label}</a>)}
+</nav>
