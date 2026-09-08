@@ -27,7 +27,7 @@ jobs:
         run: node scripts/refresh-infrastructure-data.mjs
       - name: Validate retained and refreshed data
         run: |
-          node --test tests/infrastructure-data.test.mjs
+          node --test tests/infrastructure-data.test.mjs tests/eia860m-discovery.test.mjs
           python3 -m unittest discover -s tests -p test_eia860_parser.py
       - name: Commit validated snapshots
         run: |
