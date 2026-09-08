@@ -3,7 +3,7 @@ import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { execFileSync } from 'node:child_process';
 import { normalizeDemand } from './lib/infrastructure-data.mjs';
-import { EIA_ORIGIN, selectPublishedWorkbook, workbookCandidates } from './lib/eia860m-discovery.mjs';
+import { EIA_ORIGIN, listedEditions, selectPublishedWorkbook, workbookCandidates } from './lib/eia860m-discovery.mjs';
 const root = new URL('../src/data/grid/', import.meta.url);
 async function commit(name, snapshot) {
   const target = new URL(name, root), temporary = new URL(`${name}.tmp`, root);
@@ -38,7 +38,11 @@ await independent('EIA-860M', async () => {
   const landing = await fetch(base, { signal: AbortSignal.timeout(30000) });
   if (!landing.ok) throw new Error('Capacity discovery failed');
   const previous = JSON.parse(await readFile(new URL('capacity.json', root),'utf8'));
-  const candidates = workbookCandidates(await landing.text(), { previousAsOf: previous.asOf });
+  const html = await landing.text();
+  // A landing page with no recognisable edition links is an error or
+  // challenge page, not proof that nothing newer exists.
+  if (!listedEditions(html).length) throw new Error('Capacity discovery failed');
+  const candidates = workbookCandidates(html, { previousAsOf: previous.asOf });
   if (!candidates.length) return 'no newer monthly edition';
   const MAX_BYTES = 32000000;
   // EIA lists editions before they exist and answers missing files with an

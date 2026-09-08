@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
-import { classifyWorkbookResponse, isWorkbookResponse, selectPublishedWorkbook, workbookCandidates } from '../scripts/lib/eia860m-discovery.mjs';
+import { classifyWorkbookResponse, isWorkbookResponse, listedEditions, selectPublishedWorkbook, workbookCandidates } from '../scripts/lib/eia860m-discovery.mjs';
 
 const landing = `
 <a href="/electricity/data/eia860m/archive/xls/april_generator2026.xlsx">XLS</a>
@@ -14,6 +14,13 @@ const landing = `
 const now = new Date('2026-09-08T00:00:00Z');
 const zip = Buffer.from([0x50, 0x4b, 0x03, 0x04, 0x14, 0x00]);
 const html = Buffer.from('<!DOCTYPE html><html>');
+
+test('a page without recognisable edition links yields no editions, unlike a page with only older ones', () => {
+  assert.deepEqual(listedEditions('<html><body><h1>Request blocked</h1></body></html>'), []);
+  assert.deepEqual(listedEditions('<a href="/electricity/data/eia860m/xls/foo_generator2026.xlsx">bad month</a>'), []);
+  assert.equal(listedEditions(landing).length, 6);
+  assert.deepEqual(listedEditions(landing).map((e) => e.date), ['2026-12', '2026-10', '2026-09', '2026-08', '2026-07', '2026-04']);
+});
 
 test('discovery lists only editions newer than the committed snapshot and older than the current month', () => {
   const candidates = workbookCandidates(landing, { now, previousAsOf: '2026-06' });
@@ -29,6 +36,10 @@ test('responses are classified as workbook, unpublished placeholder, untrusted o
   assert.equal(classifyWorkbookResponse({ ok: true, finalUrl: july, contentType: XLSX, head: zip }), 'workbook');
   assert.equal(isWorkbookResponse({ ok: true, finalUrl: july, contentType: XLSX, head: zip }), true);
   assert.equal(classifyWorkbookResponse({ ok: true, finalUrl: 'https://www.eia.gov/electricity/', contentType: 'text/html; charset=UTF-8', head: html }), 'unpublished');
+  assert.equal(classifyWorkbookResponse({ ok: true, finalUrl: 'https://www.eia.gov/electricity/data/eia860m', contentType: 'text/html', head: html }), 'unpublished');
+  assert.equal(classifyWorkbookResponse({ ok: false, finalUrl: 'https://www.eia.gov/electricity/', contentType: 'text/html', head: html }), 'invalid');
+  assert.equal(classifyWorkbookResponse({ ok: true, finalUrl: 'https://www.eia.gov/challenge/verify', contentType: 'text/html', head: html }), 'invalid');
+  assert.equal(classifyWorkbookResponse({ ok: false, finalUrl: 'https://www.eia.gov/some/missing/page', contentType: 'text/html', head: html }), 'invalid');
   assert.equal(classifyWorkbookResponse({ ok: true, finalUrl: 'https://cdn.example.net/xls/july_generator2026.xlsx', contentType: XLSX, head: zip }), 'untrusted');
   assert.equal(classifyWorkbookResponse({ ok: true, finalUrl: 'http://www.eia.gov/electricity/data/eia860m/xls/july_generator2026.xlsx', contentType: XLSX, head: zip }), 'untrusted');
   assert.equal(classifyWorkbookResponse({ ok: true, finalUrl: july, contentType: 'text/html', head: html }), 'invalid');
@@ -45,6 +56,10 @@ test('selection fails closed on an off-origin redirect or a malformed response a
   );
   await assert.rejects(
     () => selectPublishedWorkbook(candidates, async (candidate) => ({ ok: true, finalUrl: `https://www.eia.gov${candidate.path}`, contentType: 'text/html', head: html })),
+    /Workbook response invalid/,
+  );
+  await assert.rejects(
+    () => selectPublishedWorkbook(candidates, async () => ({ ok: true, finalUrl: 'https://www.eia.gov/challenge/verify', contentType: 'text/html', head: html })),
     /Workbook response invalid/,
   );
 });
