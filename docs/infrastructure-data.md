@@ -12,6 +12,8 @@ Scheduled demand refresh requires the `EIA_API_KEY` GitHub Actions secret. When 
 
 `capacity.json` is parsed from a verified EIA-860M `Planned` worksheet. Each row is keyed by plant ID and generator ID and reports net summer capacity in MW, planned operation year and month, state, technology and status. Missing capacity remains `null` and contributes to `missingCapacityCount`; it is never converted to zero. The source workbook hash is retained for provenance.
 
+EIA lists every month of the current year on the EIA-860M landing page before the corresponding workbook exists, and a request for a missing workbook is redirected with HTTP 200 to an HTML section page. Discovery (`scripts/lib/eia860m-discovery.mjs`) therefore walks the listed editions newest first and accepts a candidate only when the final URL is a same-origin `.xlsx`, the content type is not HTML, and the body starts with the ZIP signature; an unpublished listing is reported as `no newer monthly edition (YYYY-MM is listed but not published yet)` rather than as a failure.
+
 The July 2026 source workbook currently parses to 2,341 planned-unit rows. That count excludes worksheet headings and column headers. Counts and capacity totals will legitimately change with later monthly editions, so automated tests enforce dimensions, uniqueness, date ranges, missing-value accounting and aggregate consistency rather than freezing those values.
 
 ## ERCOT large-load snapshot
