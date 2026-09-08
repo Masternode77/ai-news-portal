@@ -1,10 +1,1015 @@
 {
   "dataset": "EIA-930 hourly balancing-authority demand",
   "sourceUrl": "https://www.eia.gov/electricity/gridmonitor/",
-  "retrievedAt": "2026-09-06T02:07:59.255Z",
-  "asOf": "2026-09-05T23:00:00Z",
+  "retrievedAt": "2026-09-08T05:18:02.504Z",
+  "asOf": "2026-09-08T04:00:00Z",
   "unit": "MWh",
   "records": [
+    {
+      "period": "2026-09-01T05:00:00Z",
+      "respondent": "AZPS",
+      "value": 6102
+    },
+    {
+      "period": "2026-09-01T05:00:00Z",
+      "respondent": "ERCO",
+      "value": 69271
+    },
+    {
+      "period": "2026-09-01T05:00:00Z",
+      "respondent": "PJM",
+      "value": 106290
+    },
+    {
+      "period": "2026-09-01T06:00:00Z",
+      "respondent": "AZPS",
+      "value": 5846
+    },
+    {
+      "period": "2026-09-01T06:00:00Z",
+      "respondent": "ERCO",
+      "value": 65599
+    },
+    {
+      "period": "2026-09-01T06:00:00Z",
+      "respondent": "PJM",
+      "value": 103003
+    },
+    {
+      "period": "2026-09-01T07:00:00Z",
+      "respondent": "AZPS",
+      "value": 5322
+    },
+    {
+      "period": "2026-09-01T07:00:00Z",
+      "respondent": "ERCO",
+      "value": 62704
+    },
+    {
+      "period": "2026-09-01T07:00:00Z",
+      "respondent": "PJM",
+      "value": 99937
+    },
+    {
+      "period": "2026-09-01T08:00:00Z",
+      "respondent": "AZPS",
+      "value": 5150
+    },
+    {
+      "period": "2026-09-01T08:00:00Z",
+      "respondent": "ERCO",
+      "value": 60793
+    },
+    {
+      "period": "2026-09-01T08:00:00Z",
+      "respondent": "PJM",
+      "value": 97943
+    },
+    {
+      "period": "2026-09-01T09:00:00Z",
+      "respondent": "AZPS",
+      "value": 5023
+    },
+    {
+      "period": "2026-09-01T09:00:00Z",
+      "respondent": "ERCO",
+      "value": 59544
+    },
+    {
+      "period": "2026-09-01T09:00:00Z",
+      "respondent": "PJM",
+      "value": 97756
+    },
+    {
+      "period": "2026-09-01T10:00:00Z",
+      "respondent": "AZPS",
+      "value": 5057
+    },
+    {
+      "period": "2026-09-01T10:00:00Z",
+      "respondent": "ERCO",
+      "value": 59009
+    },
+    {
+      "period": "2026-09-01T10:00:00Z",
+      "respondent": "PJM",
+      "value": 100809
+    },
+    {
+      "period": "2026-09-01T11:00:00Z",
+      "respondent": "AZPS",
+      "value": 5024
+    },
+    {
+      "period": "2026-09-01T11:00:00Z",
+      "respondent": "ERCO",
+      "value": 59726
+    },
+    {
+      "period": "2026-09-01T11:00:00Z",
+      "respondent": "PJM",
+      "value": 106147
+    },
+    {
+      "period": "2026-09-01T12:00:00Z",
+      "respondent": "AZPS",
+      "value": 5014
+    },
+    {
+      "period": "2026-09-01T12:00:00Z",
+      "respondent": "ERCO",
+      "value": 60957
+    },
+    {
+      "period": "2026-09-01T12:00:00Z",
+      "respondent": "PJM",
+      "value": 110361
+    },
+    {
+      "period": "2026-09-01T13:00:00Z",
+      "respondent": "AZPS",
+      "value": 4837
+    },
+    {
+      "period": "2026-09-01T13:00:00Z",
+      "respondent": "ERCO",
+      "value": 61114
+    },
+    {
+      "period": "2026-09-01T13:00:00Z",
+      "respondent": "PJM",
+      "value": 113885
+    },
+    {
+      "period": "2026-09-01T14:00:00Z",
+      "respondent": "AZPS",
+      "value": 4844
+    },
+    {
+      "period": "2026-09-01T14:00:00Z",
+      "respondent": "ERCO",
+      "value": 62985
+    },
+    {
+      "period": "2026-09-01T14:00:00Z",
+      "respondent": "PJM",
+      "value": 118161
+    },
+    {
+      "period": "2026-09-01T15:00:00Z",
+      "respondent": "AZPS",
+      "value": 4705
+    },
+    {
+      "period": "2026-09-01T15:00:00Z",
+      "respondent": "ERCO",
+      "value": 66785
+    },
+    {
+      "period": "2026-09-01T15:00:00Z",
+      "respondent": "PJM",
+      "value": 124027
+    },
+    {
+      "period": "2026-09-01T16:00:00Z",
+      "respondent": "AZPS",
+      "value": 4247
+    },
+    {
+      "period": "2026-09-01T16:00:00Z",
+      "respondent": "ERCO",
+      "value": 71184
+    },
+    {
+      "period": "2026-09-01T16:00:00Z",
+      "respondent": "PJM",
+      "value": 129345
+    },
+    {
+      "period": "2026-09-01T17:00:00Z",
+      "respondent": "AZPS",
+      "value": 4595
+    },
+    {
+      "period": "2026-09-01T17:00:00Z",
+      "respondent": "ERCO",
+      "value": 75296
+    },
+    {
+      "period": "2026-09-01T17:00:00Z",
+      "respondent": "PJM",
+      "value": 135176
+    },
+    {
+      "period": "2026-09-01T18:00:00Z",
+      "respondent": "AZPS",
+      "value": 4801
+    },
+    {
+      "period": "2026-09-01T18:00:00Z",
+      "respondent": "ERCO",
+      "value": 78641
+    },
+    {
+      "period": "2026-09-01T18:00:00Z",
+      "respondent": "PJM",
+      "value": 140150
+    },
+    {
+      "period": "2026-09-01T19:00:00Z",
+      "respondent": "AZPS",
+      "value": 4917
+    },
+    {
+      "period": "2026-09-01T19:00:00Z",
+      "respondent": "ERCO",
+      "value": 81511
+    },
+    {
+      "period": "2026-09-01T19:00:00Z",
+      "respondent": "PJM",
+      "value": 145032
+    },
+    {
+      "period": "2026-09-01T20:00:00Z",
+      "respondent": "AZPS",
+      "value": 5323
+    },
+    {
+      "period": "2026-09-01T20:00:00Z",
+      "respondent": "ERCO",
+      "value": 83218
+    },
+    {
+      "period": "2026-09-01T20:00:00Z",
+      "respondent": "PJM",
+      "value": 148721
+    },
+    {
+      "period": "2026-09-01T21:00:00Z",
+      "respondent": "AZPS",
+      "value": 5650
+    },
+    {
+      "period": "2026-09-01T21:00:00Z",
+      "respondent": "ERCO",
+      "value": 83778
+    },
+    {
+      "period": "2026-09-01T21:00:00Z",
+      "respondent": "PJM",
+      "value": 151246
+    },
+    {
+      "period": "2026-09-01T22:00:00Z",
+      "respondent": "AZPS",
+      "value": 5940
+    },
+    {
+      "period": "2026-09-01T22:00:00Z",
+      "respondent": "ERCO",
+      "value": 83908
+    },
+    {
+      "period": "2026-09-01T22:00:00Z",
+      "respondent": "PJM",
+      "value": 152547
+    },
+    {
+      "period": "2026-09-01T23:00:00Z",
+      "respondent": "AZPS",
+      "value": 6260
+    },
+    {
+      "period": "2026-09-01T23:00:00Z",
+      "respondent": "ERCO",
+      "value": 83501
+    },
+    {
+      "period": "2026-09-01T23:00:00Z",
+      "respondent": "PJM",
+      "value": 150835
+    },
+    {
+      "period": "2026-09-02T00:00:00Z",
+      "respondent": "AZPS",
+      "value": 6410
+    },
+    {
+      "period": "2026-09-02T00:00:00Z",
+      "respondent": "ERCO",
+      "value": 83164
+    },
+    {
+      "period": "2026-09-02T00:00:00Z",
+      "respondent": "PJM",
+      "value": 147499
+    },
+    {
+      "period": "2026-09-02T01:00:00Z",
+      "respondent": "AZPS",
+      "value": 6792
+    },
+    {
+      "period": "2026-09-02T01:00:00Z",
+      "respondent": "ERCO",
+      "value": 81563
+    },
+    {
+      "period": "2026-09-02T01:00:00Z",
+      "respondent": "PJM",
+      "value": 142443
+    },
+    {
+      "period": "2026-09-02T02:00:00Z",
+      "respondent": "AZPS",
+      "value": 6865
+    },
+    {
+      "period": "2026-09-02T02:00:00Z",
+      "respondent": "ERCO",
+      "value": 79229
+    },
+    {
+      "period": "2026-09-02T02:00:00Z",
+      "respondent": "PJM",
+      "value": 134934
+    },
+    {
+      "period": "2026-09-02T03:00:00Z",
+      "respondent": "AZPS",
+      "value": 6911
+    },
+    {
+      "period": "2026-09-02T03:00:00Z",
+      "respondent": "ERCO",
+      "value": 76450
+    },
+    {
+      "period": "2026-09-02T03:00:00Z",
+      "respondent": "PJM",
+      "value": 126310
+    },
+    {
+      "period": "2026-09-02T04:00:00Z",
+      "respondent": "AZPS",
+      "value": 6656
+    },
+    {
+      "period": "2026-09-02T04:00:00Z",
+      "respondent": "ERCO",
+      "value": 72771
+    },
+    {
+      "period": "2026-09-02T04:00:00Z",
+      "respondent": "PJM",
+      "value": 119234
+    },
+    {
+      "period": "2026-09-02T05:00:00Z",
+      "respondent": "AZPS",
+      "value": 6562
+    },
+    {
+      "period": "2026-09-02T05:00:00Z",
+      "respondent": "ERCO",
+      "value": 69007
+    },
+    {
+      "period": "2026-09-02T05:00:00Z",
+      "respondent": "PJM",
+      "value": 113914
+    },
+    {
+      "period": "2026-09-02T06:00:00Z",
+      "respondent": "AZPS",
+      "value": 6117
+    },
+    {
+      "period": "2026-09-02T06:00:00Z",
+      "respondent": "ERCO",
+      "value": 65737
+    },
+    {
+      "period": "2026-09-02T06:00:00Z",
+      "respondent": "PJM",
+      "value": 109257
+    },
+    {
+      "period": "2026-09-02T07:00:00Z",
+      "respondent": "AZPS",
+      "value": 5875
+    },
+    {
+      "period": "2026-09-02T07:00:00Z",
+      "respondent": "ERCO",
+      "value": 63208
+    },
+    {
+      "period": "2026-09-02T07:00:00Z",
+      "respondent": "PJM",
+      "value": 105329
+    },
+    {
+      "period": "2026-09-02T08:00:00Z",
+      "respondent": "AZPS",
+      "value": 5538
+    },
+    {
+      "period": "2026-09-02T08:00:00Z",
+      "respondent": "ERCO",
+      "value": 61148
+    },
+    {
+      "period": "2026-09-02T08:00:00Z",
+      "respondent": "PJM",
+      "value": 102515
+    },
+    {
+      "period": "2026-09-02T09:00:00Z",
+      "respondent": "AZPS",
+      "value": 5386
+    },
+    {
+      "period": "2026-09-02T09:00:00Z",
+      "respondent": "ERCO",
+      "value": 59714
+    },
+    {
+      "period": "2026-09-02T09:00:00Z",
+      "respondent": "PJM",
+      "value": 101652
+    },
+    {
+      "period": "2026-09-02T10:00:00Z",
+      "respondent": "AZPS",
+      "value": 5327
+    },
+    {
+      "period": "2026-09-02T10:00:00Z",
+      "respondent": "ERCO",
+      "value": 59363
+    },
+    {
+      "period": "2026-09-02T10:00:00Z",
+      "respondent": "PJM",
+      "value": 103823
+    },
+    {
+      "period": "2026-09-02T11:00:00Z",
+      "respondent": "AZPS",
+      "value": 5329
+    },
+    {
+      "period": "2026-09-02T11:00:00Z",
+      "respondent": "ERCO",
+      "value": 60165
+    },
+    {
+      "period": "2026-09-02T11:00:00Z",
+      "respondent": "PJM",
+      "value": 107742
+    },
+    {
+      "period": "2026-09-02T12:00:00Z",
+      "respondent": "AZPS",
+      "value": 5298
+    },
+    {
+      "period": "2026-09-02T12:00:00Z",
+      "respondent": "ERCO",
+      "value": 61692
+    },
+    {
+      "period": "2026-09-02T12:00:00Z",
+      "respondent": "PJM",
+      "value": 110845
+    },
+    {
+      "period": "2026-09-02T13:00:00Z",
+      "respondent": "AZPS",
+      "value": 5238
+    },
+    {
+      "period": "2026-09-02T13:00:00Z",
+      "respondent": "ERCO",
+      "value": 61913
+    },
+    {
+      "period": "2026-09-02T13:00:00Z",
+      "respondent": "PJM",
+      "value": 114811
+    },
+    {
+      "period": "2026-09-02T14:00:00Z",
+      "respondent": "AZPS",
+      "value": 5307
+    },
+    {
+      "period": "2026-09-02T14:00:00Z",
+      "respondent": "ERCO",
+      "value": 63541
+    },
+    {
+      "period": "2026-09-02T14:00:00Z",
+      "respondent": "PJM",
+      "value": 119793
+    },
+    {
+      "period": "2026-09-02T15:00:00Z",
+      "respondent": "AZPS",
+      "value": 4850
+    },
+    {
+      "period": "2026-09-02T15:00:00Z",
+      "respondent": "ERCO",
+      "value": 66805
+    },
+    {
+      "period": "2026-09-02T15:00:00Z",
+      "respondent": "PJM",
+      "value": 125496
+    },
+    {
+      "period": "2026-09-02T16:00:00Z",
+      "respondent": "AZPS",
+      "value": 4606
+    },
+    {
+      "period": "2026-09-02T16:00:00Z",
+      "respondent": "ERCO",
+      "value": 71184
+    },
+    {
+      "period": "2026-09-02T16:00:00Z",
+      "respondent": "PJM",
+      "value": 130169
+    },
+    {
+      "period": "2026-09-02T17:00:00Z",
+      "respondent": "AZPS",
+      "value": 4614
+    },
+    {
+      "period": "2026-09-02T17:00:00Z",
+      "respondent": "ERCO",
+      "value": 75859
+    },
+    {
+      "period": "2026-09-02T17:00:00Z",
+      "respondent": "PJM",
+      "value": 134968
+    },
+    {
+      "period": "2026-09-02T18:00:00Z",
+      "respondent": "AZPS",
+      "value": 4936
+    },
+    {
+      "period": "2026-09-02T18:00:00Z",
+      "respondent": "ERCO",
+      "value": 80358
+    },
+    {
+      "period": "2026-09-02T18:00:00Z",
+      "respondent": "PJM",
+      "value": 139001
+    },
+    {
+      "period": "2026-09-02T19:00:00Z",
+      "respondent": "AZPS",
+      "value": 5489
+    },
+    {
+      "period": "2026-09-02T19:00:00Z",
+      "respondent": "ERCO",
+      "value": 83756
+    },
+    {
+      "period": "2026-09-02T19:00:00Z",
+      "respondent": "PJM",
+      "value": 139819
+    },
+    {
+      "period": "2026-09-02T20:00:00Z",
+      "respondent": "AZPS",
+      "value": 5896
+    },
+    {
+      "period": "2026-09-02T20:00:00Z",
+      "respondent": "ERCO",
+      "value": 84976
+    },
+    {
+      "period": "2026-09-02T20:00:00Z",
+      "respondent": "PJM",
+      "value": 140270
+    },
+    {
+      "period": "2026-09-02T21:00:00Z",
+      "respondent": "AZPS",
+      "value": 6195
+    },
+    {
+      "period": "2026-09-02T21:00:00Z",
+      "respondent": "ERCO",
+      "value": 85865
+    },
+    {
+      "period": "2026-09-02T21:00:00Z",
+      "respondent": "PJM",
+      "value": 140995
+    },
+    {
+      "period": "2026-09-02T22:00:00Z",
+      "respondent": "AZPS",
+      "value": 6512
+    },
+    {
+      "period": "2026-09-02T22:00:00Z",
+      "respondent": "ERCO",
+      "value": 86343
+    },
+    {
+      "period": "2026-09-02T22:00:00Z",
+      "respondent": "PJM",
+      "value": 141558
+    },
+    {
+      "period": "2026-09-02T23:00:00Z",
+      "respondent": "AZPS",
+      "value": 6753
+    },
+    {
+      "period": "2026-09-02T23:00:00Z",
+      "respondent": "ERCO",
+      "value": 86098
+    },
+    {
+      "period": "2026-09-02T23:00:00Z",
+      "respondent": "PJM",
+      "value": 140353
+    },
+    {
+      "period": "2026-09-03T00:00:00Z",
+      "respondent": "AZPS",
+      "value": 6671
+    },
+    {
+      "period": "2026-09-03T00:00:00Z",
+      "respondent": "ERCO",
+      "value": 85453
+    },
+    {
+      "period": "2026-09-03T00:00:00Z",
+      "respondent": "PJM",
+      "value": 138510
+    },
+    {
+      "period": "2026-09-03T01:00:00Z",
+      "respondent": "AZPS",
+      "value": 6938
+    },
+    {
+      "period": "2026-09-03T01:00:00Z",
+      "respondent": "ERCO",
+      "value": 83132
+    },
+    {
+      "period": "2026-09-03T01:00:00Z",
+      "respondent": "PJM",
+      "value": 135884
+    },
+    {
+      "period": "2026-09-03T02:00:00Z",
+      "respondent": "AZPS",
+      "value": 6958
+    },
+    {
+      "period": "2026-09-03T02:00:00Z",
+      "respondent": "ERCO",
+      "value": 79779
+    },
+    {
+      "period": "2026-09-03T02:00:00Z",
+      "respondent": "PJM",
+      "value": 130274
+    },
+    {
+      "period": "2026-09-03T03:00:00Z",
+      "respondent": "AZPS",
+      "value": 7093
+    },
+    {
+      "period": "2026-09-03T03:00:00Z",
+      "respondent": "ERCO",
+      "value": 76966
+    },
+    {
+      "period": "2026-09-03T03:00:00Z",
+      "respondent": "PJM",
+      "value": 122457
+    },
+    {
+      "period": "2026-09-03T04:00:00Z",
+      "respondent": "AZPS",
+      "value": 6741
+    },
+    {
+      "period": "2026-09-03T04:00:00Z",
+      "respondent": "ERCO",
+      "value": 74536
+    },
+    {
+      "period": "2026-09-03T04:00:00Z",
+      "respondent": "PJM",
+      "value": 115747
+    },
+    {
+      "period": "2026-09-03T05:00:00Z",
+      "respondent": "AZPS",
+      "value": 6390
+    },
+    {
+      "period": "2026-09-03T05:00:00Z",
+      "respondent": "ERCO",
+      "value": 70506
+    },
+    {
+      "period": "2026-09-03T05:00:00Z",
+      "respondent": "PJM",
+      "value": 111129
+    },
+    {
+      "period": "2026-09-03T06:00:00Z",
+      "respondent": "AZPS",
+      "value": 6055
+    },
+    {
+      "period": "2026-09-03T06:00:00Z",
+      "respondent": "ERCO",
+      "value": 67002
+    },
+    {
+      "period": "2026-09-03T06:00:00Z",
+      "respondent": "PJM",
+      "value": 107395
+    },
+    {
+      "period": "2026-09-03T07:00:00Z",
+      "respondent": "AZPS",
+      "value": 5901
+    },
+    {
+      "period": "2026-09-03T07:00:00Z",
+      "respondent": "ERCO",
+      "value": 64245
+    },
+    {
+      "period": "2026-09-03T07:00:00Z",
+      "respondent": "PJM",
+      "value": 103845
+    },
+    {
+      "period": "2026-09-03T08:00:00Z",
+      "respondent": "AZPS",
+      "value": 5471
+    },
+    {
+      "period": "2026-09-03T08:00:00Z",
+      "respondent": "ERCO",
+      "value": 62074
+    },
+    {
+      "period": "2026-09-03T08:00:00Z",
+      "respondent": "PJM",
+      "value": 101359
+    },
+    {
+      "period": "2026-09-03T09:00:00Z",
+      "respondent": "AZPS",
+      "value": 5347
+    },
+    {
+      "period": "2026-09-03T09:00:00Z",
+      "respondent": "ERCO",
+      "value": 60926
+    },
+    {
+      "period": "2026-09-03T09:00:00Z",
+      "respondent": "PJM",
+      "value": 101440
+    },
+    {
+      "period": "2026-09-03T10:00:00Z",
+      "respondent": "AZPS",
+      "value": 5291
+    },
+    {
+      "period": "2026-09-03T10:00:00Z",
+      "respondent": "ERCO",
+      "value": 60609
+    },
+    {
+      "period": "2026-09-03T10:00:00Z",
+      "respondent": "PJM",
+      "value": 103879
+    },
+    {
+      "period": "2026-09-03T11:00:00Z",
+      "respondent": "AZPS",
+      "value": 5410
+    },
+    {
+      "period": "2026-09-03T11:00:00Z",
+      "respondent": "ERCO",
+      "value": 61492
+    },
+    {
+      "period": "2026-09-03T11:00:00Z",
+      "respondent": "PJM",
+      "value": 109097
+    },
+    {
+      "period": "2026-09-03T12:00:00Z",
+      "respondent": "AZPS",
+      "value": 5506
+    },
+    {
+      "period": "2026-09-03T12:00:00Z",
+      "respondent": "ERCO",
+      "value": 63039
+    },
+    {
+      "period": "2026-09-03T12:00:00Z",
+      "respondent": "PJM",
+      "value": 112301
+    },
+    {
+      "period": "2026-09-03T13:00:00Z",
+      "respondent": "AZPS",
+      "value": 5521
+    },
+    {
+      "period": "2026-09-03T13:00:00Z",
+      "respondent": "ERCO",
+      "value": 63163
+    },
+    {
+      "period": "2026-09-03T13:00:00Z",
+      "respondent": "PJM",
+      "value": 115032
+    },
+    {
+      "period": "2026-09-03T14:00:00Z",
+      "respondent": "AZPS",
+      "value": 5454
+    },
+    {
+      "period": "2026-09-03T14:00:00Z",
+      "respondent": "ERCO",
+      "value": 63981
+    },
+    {
+      "period": "2026-09-03T14:00:00Z",
+      "respondent": "PJM",
+      "value": 119293
+    },
+    {
+      "period": "2026-09-03T15:00:00Z",
+      "respondent": "AZPS",
+      "value": 5010
+    },
+    {
+      "period": "2026-09-03T15:00:00Z",
+      "respondent": "ERCO",
+      "value": 66319
+    },
+    {
+      "period": "2026-09-03T15:00:00Z",
+      "respondent": "PJM",
+      "value": 125089
+    },
+    {
+      "period": "2026-09-03T16:00:00Z",
+      "respondent": "AZPS",
+      "value": 4595
+    },
+    {
+      "period": "2026-09-03T16:00:00Z",
+      "respondent": "ERCO",
+      "value": 69644
+    },
+    {
+      "period": "2026-09-03T16:00:00Z",
+      "respondent": "PJM",
+      "value": 129720
+    },
+    {
+      "period": "2026-09-03T17:00:00Z",
+      "respondent": "AZPS",
+      "value": 4839
+    },
+    {
+      "period": "2026-09-03T17:00:00Z",
+      "respondent": "ERCO",
+      "value": 73268
+    },
+    {
+      "period": "2026-09-03T17:00:00Z",
+      "respondent": "PJM",
+      "value": 132845
+    },
+    {
+      "period": "2026-09-03T18:00:00Z",
+      "respondent": "AZPS",
+      "value": 5137
+    },
+    {
+      "period": "2026-09-03T18:00:00Z",
+      "respondent": "ERCO",
+      "value": 76385
+    },
+    {
+      "period": "2026-09-03T18:00:00Z",
+      "respondent": "PJM",
+      "value": 137608
+    },
+    {
+      "period": "2026-09-03T19:00:00Z",
+      "respondent": "AZPS",
+      "value": 5421
+    },
+    {
+      "period": "2026-09-03T19:00:00Z",
+      "respondent": "ERCO",
+      "value": 78296
+    },
+    {
+      "period": "2026-09-03T19:00:00Z",
+      "respondent": "PJM",
+      "value": 142306
+    },
+    {
+      "period": "2026-09-03T20:00:00Z",
+      "respondent": "AZPS",
+      "value": 5435
+    },
+    {
+      "period": "2026-09-03T20:00:00Z",
+      "respondent": "ERCO",
+      "value": 79875
+    },
+    {
+      "period": "2026-09-03T20:00:00Z",
+      "respondent": "PJM",
+      "value": 145918
+    },
+    {
+      "period": "2026-09-03T21:00:00Z",
+      "respondent": "AZPS",
+      "value": 5662
+    },
+    {
+      "period": "2026-09-03T21:00:00Z",
+      "respondent": "ERCO",
+      "value": 81085
+    },
+    {
+      "period": "2026-09-03T21:00:00Z",
+      "respondent": "PJM",
+      "value": 149077
+    },
+    {
+      "period": "2026-09-03T22:00:00Z",
+      "respondent": "AZPS",
+      "value": 6371
+    },
+    {
+      "period": "2026-09-03T22:00:00Z",
+      "respondent": "ERCO",
+      "value": 81784
+    },
+    {
+      "period": "2026-09-03T22:00:00Z",
+      "respondent": "PJM",
+      "value": 149874
+    },
+    {
+      "period": "2026-09-03T23:00:00Z",
+      "respondent": "AZPS",
+      "value": 6671
+    },
+    {
+      "period": "2026-09-03T23:00:00Z",
+      "respondent": "ERCO",
+      "value": 81565
+    },
+    {
+      "period": "2026-09-03T23:00:00Z",
+      "respondent": "PJM",
+      "value": 147781
+    },
     {
       "period": "2026-09-04T00:00:00Z",
       "respondent": "AZPS",
@@ -478,7 +1483,7 @@
     {
       "period": "2026-09-05T07:00:00Z",
       "respondent": "ERCO",
-      "value": 61939
+      "value": 61940
     },
     {
       "period": "2026-09-05T07:00:00Z",
@@ -488,7 +1493,7 @@
     {
       "period": "2026-09-05T08:00:00Z",
       "respondent": "AZPS",
-      "value": 5658
+      "value": 5646
     },
     {
       "period": "2026-09-05T08:00:00Z",
@@ -503,7 +1508,7 @@
     {
       "period": "2026-09-05T09:00:00Z",
       "respondent": "AZPS",
-      "value": 5452
+      "value": 5440
     },
     {
       "period": "2026-09-05T09:00:00Z",
@@ -518,7 +1523,7 @@
     {
       "period": "2026-09-05T10:00:00Z",
       "respondent": "AZPS",
-      "value": 5426
+      "value": 5418
     },
     {
       "period": "2026-09-05T10:00:00Z",
@@ -533,7 +1538,7 @@
     {
       "period": "2026-09-05T11:00:00Z",
       "respondent": "AZPS",
-      "value": 5303
+      "value": 5295
     },
     {
       "period": "2026-09-05T11:00:00Z",
@@ -548,7 +1553,7 @@
     {
       "period": "2026-09-05T12:00:00Z",
       "respondent": "AZPS",
-      "value": 5231
+      "value": 5220
     },
     {
       "period": "2026-09-05T12:00:00Z",
@@ -563,12 +1568,12 @@
     {
       "period": "2026-09-05T13:00:00Z",
       "respondent": "AZPS",
-      "value": 5293
+      "value": 5190
     },
     {
       "period": "2026-09-05T13:00:00Z",
       "respondent": "ERCO",
-      "value": 56515
+      "value": 56514
     },
     {
       "period": "2026-09-05T13:00:00Z",
@@ -578,12 +1583,12 @@
     {
       "period": "2026-09-05T14:00:00Z",
       "respondent": "AZPS",
-      "value": 5579
+      "value": 5146
     },
     {
       "period": "2026-09-05T14:00:00Z",
       "respondent": "ERCO",
-      "value": 59383
+      "value": 59385
     },
     {
       "period": "2026-09-05T14:00:00Z",
@@ -593,7 +1598,7 @@
     {
       "period": "2026-09-05T15:00:00Z",
       "respondent": "AZPS",
-      "value": 5291
+      "value": 4881
     },
     {
       "period": "2026-09-05T15:00:00Z",
@@ -608,12 +1613,12 @@
     {
       "period": "2026-09-05T16:00:00Z",
       "respondent": "AZPS",
-      "value": 6421
+      "value": 4532
     },
     {
       "period": "2026-09-05T16:00:00Z",
       "respondent": "ERCO",
-      "value": 68481
+      "value": 68482
     },
     {
       "period": "2026-09-05T16:00:00Z",
@@ -623,7 +1628,7 @@
     {
       "period": "2026-09-05T17:00:00Z",
       "respondent": "AZPS",
-      "value": 6742
+      "value": 4612
     },
     {
       "period": "2026-09-05T17:00:00Z",
@@ -638,12 +1643,12 @@
     {
       "period": "2026-09-05T18:00:00Z",
       "respondent": "AZPS",
-      "value": 6929
+      "value": 5012
     },
     {
       "period": "2026-09-05T18:00:00Z",
       "respondent": "ERCO",
-      "value": 76996
+      "value": 76995
     },
     {
       "period": "2026-09-05T18:00:00Z",
@@ -653,7 +1658,7 @@
     {
       "period": "2026-09-05T19:00:00Z",
       "respondent": "AZPS",
-      "value": 7769
+      "value": 5750
     },
     {
       "period": "2026-09-05T19:00:00Z",
@@ -668,7 +1673,7 @@
     {
       "period": "2026-09-05T20:00:00Z",
       "respondent": "AZPS",
-      "value": 7730
+      "value": 6156
     },
     {
       "period": "2026-09-05T20:00:00Z",
@@ -683,7 +1688,7 @@
     {
       "period": "2026-09-05T21:00:00Z",
       "respondent": "AZPS",
-      "value": 7513
+      "value": 6480
     },
     {
       "period": "2026-09-05T21:00:00Z",
@@ -698,7 +1703,7 @@
     {
       "period": "2026-09-05T22:00:00Z",
       "respondent": "AZPS",
-      "value": 7408
+      "value": 6962
     },
     {
       "period": "2026-09-05T22:00:00Z",
@@ -713,7 +1718,7 @@
     {
       "period": "2026-09-05T23:00:00Z",
       "respondent": "AZPS",
-      "value": 7168
+      "value": 7107
     },
     {
       "period": "2026-09-05T23:00:00Z",
@@ -724,7 +1729,801 @@
       "period": "2026-09-05T23:00:00Z",
       "respondent": "PJM",
       "value": 119259
+    },
+    {
+      "period": "2026-09-06T00:00:00Z",
+      "respondent": "AZPS",
+      "value": 7408
+    },
+    {
+      "period": "2026-09-06T00:00:00Z",
+      "respondent": "ERCO",
+      "value": 81976
+    },
+    {
+      "period": "2026-09-06T00:00:00Z",
+      "respondent": "PJM",
+      "value": 115285
+    },
+    {
+      "period": "2026-09-06T01:00:00Z",
+      "respondent": "AZPS",
+      "value": 7157
+    },
+    {
+      "period": "2026-09-06T01:00:00Z",
+      "respondent": "ERCO",
+      "value": 79589
+    },
+    {
+      "period": "2026-09-06T01:00:00Z",
+      "respondent": "PJM",
+      "value": 111941
+    },
+    {
+      "period": "2026-09-06T02:00:00Z",
+      "respondent": "AZPS",
+      "value": 6766
+    },
+    {
+      "period": "2026-09-06T02:00:00Z",
+      "respondent": "ERCO",
+      "value": 77093
+    },
+    {
+      "period": "2026-09-06T02:00:00Z",
+      "respondent": "PJM",
+      "value": 107437
+    },
+    {
+      "period": "2026-09-06T03:00:00Z",
+      "respondent": "AZPS",
+      "value": 6470
+    },
+    {
+      "period": "2026-09-06T03:00:00Z",
+      "respondent": "ERCO",
+      "value": 73931
+    },
+    {
+      "period": "2026-09-06T03:00:00Z",
+      "respondent": "PJM",
+      "value": 101992
+    },
+    {
+      "period": "2026-09-06T04:00:00Z",
+      "respondent": "AZPS",
+      "value": 6337
+    },
+    {
+      "period": "2026-09-06T04:00:00Z",
+      "respondent": "ERCO",
+      "value": 70623
+    },
+    {
+      "period": "2026-09-06T04:00:00Z",
+      "respondent": "PJM",
+      "value": 96874
+    },
+    {
+      "period": "2026-09-06T05:00:00Z",
+      "respondent": "AZPS",
+      "value": 5932
+    },
+    {
+      "period": "2026-09-06T05:00:00Z",
+      "respondent": "ERCO",
+      "value": 67404
+    },
+    {
+      "period": "2026-09-06T05:00:00Z",
+      "respondent": "PJM",
+      "value": 91835
+    },
+    {
+      "period": "2026-09-06T06:00:00Z",
+      "respondent": "AZPS",
+      "value": 5826
+    },
+    {
+      "period": "2026-09-06T06:00:00Z",
+      "respondent": "ERCO",
+      "value": 64271
+    },
+    {
+      "period": "2026-09-06T06:00:00Z",
+      "respondent": "PJM",
+      "value": 88484
+    },
+    {
+      "period": "2026-09-06T07:00:00Z",
+      "respondent": "AZPS",
+      "value": 5762
+    },
+    {
+      "period": "2026-09-06T07:00:00Z",
+      "respondent": "ERCO",
+      "value": 61577
+    },
+    {
+      "period": "2026-09-06T07:00:00Z",
+      "respondent": "PJM",
+      "value": 86319
+    },
+    {
+      "period": "2026-09-06T08:00:00Z",
+      "respondent": "AZPS",
+      "value": 5473
+    },
+    {
+      "period": "2026-09-06T08:00:00Z",
+      "respondent": "ERCO",
+      "value": 59632
+    },
+    {
+      "period": "2026-09-06T08:00:00Z",
+      "respondent": "PJM",
+      "value": 84714
+    },
+    {
+      "period": "2026-09-06T09:00:00Z",
+      "respondent": "AZPS",
+      "value": 5358
+    },
+    {
+      "period": "2026-09-06T09:00:00Z",
+      "respondent": "ERCO",
+      "value": 58203
+    },
+    {
+      "period": "2026-09-06T09:00:00Z",
+      "respondent": "PJM",
+      "value": 83905
+    },
+    {
+      "period": "2026-09-06T10:00:00Z",
+      "respondent": "AZPS",
+      "value": 5201
+    },
+    {
+      "period": "2026-09-06T10:00:00Z",
+      "respondent": "ERCO",
+      "value": 56756
+    },
+    {
+      "period": "2026-09-06T10:00:00Z",
+      "respondent": "PJM",
+      "value": 83444
+    },
+    {
+      "period": "2026-09-06T11:00:00Z",
+      "respondent": "AZPS",
+      "value": 5256
+    },
+    {
+      "period": "2026-09-06T11:00:00Z",
+      "respondent": "ERCO",
+      "value": 56095
+    },
+    {
+      "period": "2026-09-06T11:00:00Z",
+      "respondent": "PJM",
+      "value": 83735
+    },
+    {
+      "period": "2026-09-06T12:00:00Z",
+      "respondent": "AZPS",
+      "value": 5204
+    },
+    {
+      "period": "2026-09-06T12:00:00Z",
+      "respondent": "ERCO",
+      "value": 55799
+    },
+    {
+      "period": "2026-09-06T12:00:00Z",
+      "respondent": "PJM",
+      "value": 84309
+    },
+    {
+      "period": "2026-09-06T13:00:00Z",
+      "respondent": "AZPS",
+      "value": 5243
+    },
+    {
+      "period": "2026-09-06T13:00:00Z",
+      "respondent": "ERCO",
+      "value": 55415
+    },
+    {
+      "period": "2026-09-06T13:00:00Z",
+      "respondent": "PJM",
+      "value": 86814
+    },
+    {
+      "period": "2026-09-06T14:00:00Z",
+      "respondent": "AZPS",
+      "value": 5137
+    },
+    {
+      "period": "2026-09-06T14:00:00Z",
+      "respondent": "ERCO",
+      "value": 58468
+    },
+    {
+      "period": "2026-09-06T14:00:00Z",
+      "respondent": "PJM",
+      "value": 90822
+    },
+    {
+      "period": "2026-09-06T15:00:00Z",
+      "respondent": "AZPS",
+      "value": 4897
+    },
+    {
+      "period": "2026-09-06T15:00:00Z",
+      "respondent": "ERCO",
+      "value": 63083
+    },
+    {
+      "period": "2026-09-06T15:00:00Z",
+      "respondent": "PJM",
+      "value": 94653
+    },
+    {
+      "period": "2026-09-06T16:00:00Z",
+      "respondent": "AZPS",
+      "value": 4849
+    },
+    {
+      "period": "2026-09-06T16:00:00Z",
+      "respondent": "ERCO",
+      "value": 67805
+    },
+    {
+      "period": "2026-09-06T16:00:00Z",
+      "respondent": "PJM",
+      "value": 97664
+    },
+    {
+      "period": "2026-09-06T17:00:00Z",
+      "respondent": "AZPS",
+      "value": 5131
+    },
+    {
+      "period": "2026-09-06T17:00:00Z",
+      "respondent": "ERCO",
+      "value": 72055
+    },
+    {
+      "period": "2026-09-06T17:00:00Z",
+      "respondent": "PJM",
+      "value": 100011
+    },
+    {
+      "period": "2026-09-06T18:00:00Z",
+      "respondent": "AZPS",
+      "value": 5472
+    },
+    {
+      "period": "2026-09-06T18:00:00Z",
+      "respondent": "ERCO",
+      "value": 75321
+    },
+    {
+      "period": "2026-09-06T18:00:00Z",
+      "respondent": "PJM",
+      "value": 103408
+    },
+    {
+      "period": "2026-09-06T19:00:00Z",
+      "respondent": "AZPS",
+      "value": 5717
+    },
+    {
+      "period": "2026-09-06T19:00:00Z",
+      "respondent": "ERCO",
+      "value": 77352
+    },
+    {
+      "period": "2026-09-06T19:00:00Z",
+      "respondent": "PJM",
+      "value": 106305
+    },
+    {
+      "period": "2026-09-06T20:00:00Z",
+      "respondent": "AZPS",
+      "value": 6208
+    },
+    {
+      "period": "2026-09-06T20:00:00Z",
+      "respondent": "ERCO",
+      "value": 79422
+    },
+    {
+      "period": "2026-09-06T20:00:00Z",
+      "respondent": "PJM",
+      "value": 108939
+    },
+    {
+      "period": "2026-09-06T21:00:00Z",
+      "respondent": "AZPS",
+      "value": 6761
+    },
+    {
+      "period": "2026-09-06T21:00:00Z",
+      "respondent": "ERCO",
+      "value": 81194
+    },
+    {
+      "period": "2026-09-06T21:00:00Z",
+      "respondent": "PJM",
+      "value": 111219
+    },
+    {
+      "period": "2026-09-06T22:00:00Z",
+      "respondent": "AZPS",
+      "value": 7235
+    },
+    {
+      "period": "2026-09-06T22:00:00Z",
+      "respondent": "ERCO",
+      "value": 81923
+    },
+    {
+      "period": "2026-09-06T22:00:00Z",
+      "respondent": "PJM",
+      "value": 112444
+    },
+    {
+      "period": "2026-09-06T23:00:00Z",
+      "respondent": "AZPS",
+      "value": 7414
+    },
+    {
+      "period": "2026-09-06T23:00:00Z",
+      "respondent": "ERCO",
+      "value": 82270
+    },
+    {
+      "period": "2026-09-06T23:00:00Z",
+      "respondent": "PJM",
+      "value": 111182
+    },
+    {
+      "period": "2026-09-07T00:00:00Z",
+      "respondent": "AZPS",
+      "value": 7492
+    },
+    {
+      "period": "2026-09-07T00:00:00Z",
+      "respondent": "ERCO",
+      "value": 81129
+    },
+    {
+      "period": "2026-09-07T00:00:00Z",
+      "respondent": "PJM",
+      "value": 107189
+    },
+    {
+      "period": "2026-09-07T01:00:00Z",
+      "respondent": "AZPS",
+      "value": 7686
+    },
+    {
+      "period": "2026-09-07T01:00:00Z",
+      "respondent": "ERCO",
+      "value": 78442
+    },
+    {
+      "period": "2026-09-07T01:00:00Z",
+      "respondent": "PJM",
+      "value": 103951
+    },
+    {
+      "period": "2026-09-07T02:00:00Z",
+      "respondent": "AZPS",
+      "value": 7573
+    },
+    {
+      "period": "2026-09-07T02:00:00Z",
+      "respondent": "ERCO",
+      "value": 76309
+    },
+    {
+      "period": "2026-09-07T02:00:00Z",
+      "respondent": "PJM",
+      "value": 99641
+    },
+    {
+      "period": "2026-09-07T03:00:00Z",
+      "respondent": "AZPS",
+      "value": 7059
+    },
+    {
+      "period": "2026-09-07T03:00:00Z",
+      "respondent": "ERCO",
+      "value": 73604
+    },
+    {
+      "period": "2026-09-07T03:00:00Z",
+      "respondent": "PJM",
+      "value": 94477
+    },
+    {
+      "period": "2026-09-07T04:00:00Z",
+      "respondent": "AZPS",
+      "value": 6887
+    },
+    {
+      "period": "2026-09-07T04:00:00Z",
+      "respondent": "ERCO",
+      "value": 70074
+    },
+    {
+      "period": "2026-09-07T04:00:00Z",
+      "respondent": "PJM",
+      "value": 89592
+    },
+    {
+      "period": "2026-09-07T05:00:00Z",
+      "respondent": "AZPS",
+      "value": 6686
+    },
+    {
+      "period": "2026-09-07T05:00:00Z",
+      "respondent": "ERCO",
+      "value": 66626
+    },
+    {
+      "period": "2026-09-07T05:00:00Z",
+      "respondent": "PJM",
+      "value": 85013
+    },
+    {
+      "period": "2026-09-07T06:00:00Z",
+      "respondent": "AZPS",
+      "value": 6507
+    },
+    {
+      "period": "2026-09-07T06:00:00Z",
+      "respondent": "ERCO",
+      "value": 63489
+    },
+    {
+      "period": "2026-09-07T06:00:00Z",
+      "respondent": "PJM",
+      "value": 81639
+    },
+    {
+      "period": "2026-09-07T07:00:00Z",
+      "respondent": "AZPS",
+      "value": 6160
+    },
+    {
+      "period": "2026-09-07T07:00:00Z",
+      "respondent": "ERCO",
+      "value": 60931
+    },
+    {
+      "period": "2026-09-07T07:00:00Z",
+      "respondent": "PJM",
+      "value": 80305
+    },
+    {
+      "period": "2026-09-07T08:00:00Z",
+      "respondent": "AZPS",
+      "value": 5532
+    },
+    {
+      "period": "2026-09-07T08:00:00Z",
+      "respondent": "ERCO",
+      "value": 59000
+    },
+    {
+      "period": "2026-09-07T08:00:00Z",
+      "respondent": "PJM",
+      "value": 79835
+    },
+    {
+      "period": "2026-09-07T09:00:00Z",
+      "respondent": "AZPS",
+      "value": 5463
+    },
+    {
+      "period": "2026-09-07T09:00:00Z",
+      "respondent": "ERCO",
+      "value": 57637
+    },
+    {
+      "period": "2026-09-07T09:00:00Z",
+      "respondent": "PJM",
+      "value": 79541
+    },
+    {
+      "period": "2026-09-07T10:00:00Z",
+      "respondent": "AZPS",
+      "value": 5515
+    },
+    {
+      "period": "2026-09-07T10:00:00Z",
+      "respondent": "ERCO",
+      "value": 56808
+    },
+    {
+      "period": "2026-09-07T10:00:00Z",
+      "respondent": "PJM",
+      "value": 79679
+    },
+    {
+      "period": "2026-09-07T11:00:00Z",
+      "respondent": "AZPS",
+      "value": 5409
+    },
+    {
+      "period": "2026-09-07T11:00:00Z",
+      "respondent": "ERCO",
+      "value": 56589
+    },
+    {
+      "period": "2026-09-07T11:00:00Z",
+      "respondent": "PJM",
+      "value": 80821
+    },
+    {
+      "period": "2026-09-07T12:00:00Z",
+      "respondent": "AZPS",
+      "value": 5425
+    },
+    {
+      "period": "2026-09-07T12:00:00Z",
+      "respondent": "ERCO",
+      "value": 56429
+    },
+    {
+      "period": "2026-09-07T12:00:00Z",
+      "respondent": "PJM",
+      "value": 80955
+    },
+    {
+      "period": "2026-09-07T13:00:00Z",
+      "respondent": "AZPS",
+      "value": 5352
+    },
+    {
+      "period": "2026-09-07T13:00:00Z",
+      "respondent": "ERCO",
+      "value": 56059
+    },
+    {
+      "period": "2026-09-07T13:00:00Z",
+      "respondent": "PJM",
+      "value": 83085
+    },
+    {
+      "period": "2026-09-07T14:00:00Z",
+      "respondent": "AZPS",
+      "value": 5850
+    },
+    {
+      "period": "2026-09-07T14:00:00Z",
+      "respondent": "ERCO",
+      "value": 58720
+    },
+    {
+      "period": "2026-09-07T14:00:00Z",
+      "respondent": "PJM",
+      "value": 86573
+    },
+    {
+      "period": "2026-09-07T15:00:00Z",
+      "respondent": "AZPS",
+      "value": 6579
+    },
+    {
+      "period": "2026-09-07T15:00:00Z",
+      "respondent": "ERCO",
+      "value": 63851
+    },
+    {
+      "period": "2026-09-07T15:00:00Z",
+      "respondent": "PJM",
+      "value": 89230
+    },
+    {
+      "period": "2026-09-07T16:00:00Z",
+      "respondent": "AZPS",
+      "value": 7086
+    },
+    {
+      "period": "2026-09-07T16:00:00Z",
+      "respondent": "ERCO",
+      "value": 69424
+    },
+    {
+      "period": "2026-09-07T16:00:00Z",
+      "respondent": "PJM",
+      "value": 93069
+    },
+    {
+      "period": "2026-09-07T17:00:00Z",
+      "respondent": "AZPS",
+      "value": 7403
+    },
+    {
+      "period": "2026-09-07T17:00:00Z",
+      "respondent": "ERCO",
+      "value": 74747
+    },
+    {
+      "period": "2026-09-07T17:00:00Z",
+      "respondent": "PJM",
+      "value": 97364
+    },
+    {
+      "period": "2026-09-07T18:00:00Z",
+      "respondent": "AZPS",
+      "value": 7572
+    },
+    {
+      "period": "2026-09-07T18:00:00Z",
+      "respondent": "ERCO",
+      "value": 79518
+    },
+    {
+      "period": "2026-09-07T18:00:00Z",
+      "respondent": "PJM",
+      "value": 101257
+    },
+    {
+      "period": "2026-09-07T19:00:00Z",
+      "respondent": "AZPS",
+      "value": 8033
+    },
+    {
+      "period": "2026-09-07T19:00:00Z",
+      "respondent": "ERCO",
+      "value": 83079
+    },
+    {
+      "period": "2026-09-07T19:00:00Z",
+      "respondent": "PJM",
+      "value": 105168
+    },
+    {
+      "period": "2026-09-07T20:00:00Z",
+      "respondent": "AZPS",
+      "value": 7742
+    },
+    {
+      "period": "2026-09-07T20:00:00Z",
+      "respondent": "ERCO",
+      "value": 85416
+    },
+    {
+      "period": "2026-09-07T20:00:00Z",
+      "respondent": "PJM",
+      "value": 109222
+    },
+    {
+      "period": "2026-09-07T21:00:00Z",
+      "respondent": "AZPS",
+      "value": 7466
+    },
+    {
+      "period": "2026-09-07T21:00:00Z",
+      "respondent": "ERCO",
+      "value": 85927
+    },
+    {
+      "period": "2026-09-07T21:00:00Z",
+      "respondent": "PJM",
+      "value": 113557
+    },
+    {
+      "period": "2026-09-07T22:00:00Z",
+      "respondent": "AZPS",
+      "value": 7516
+    },
+    {
+      "period": "2026-09-07T22:00:00Z",
+      "respondent": "ERCO",
+      "value": 86393
+    },
+    {
+      "period": "2026-09-07T22:00:00Z",
+      "respondent": "PJM",
+      "value": 116532
+    },
+    {
+      "period": "2026-09-07T23:00:00Z",
+      "respondent": "AZPS",
+      "value": 7489
+    },
+    {
+      "period": "2026-09-07T23:00:00Z",
+      "respondent": "ERCO",
+      "value": 86405
+    },
+    {
+      "period": "2026-09-07T23:00:00Z",
+      "respondent": "PJM",
+      "value": 115747
+    },
+    {
+      "period": "2026-09-08T00:00:00Z",
+      "respondent": "AZPS",
+      "value": 7908
+    },
+    {
+      "period": "2026-09-08T00:00:00Z",
+      "respondent": "ERCO",
+      "value": 85686
+    },
+    {
+      "period": "2026-09-08T00:00:00Z",
+      "respondent": "PJM",
+      "value": 112285
+    },
+    {
+      "period": "2026-09-08T01:00:00Z",
+      "respondent": "AZPS",
+      "value": 8142
+    },
+    {
+      "period": "2026-09-08T01:00:00Z",
+      "respondent": "ERCO",
+      "value": 83942
+    },
+    {
+      "period": "2026-09-08T01:00:00Z",
+      "respondent": "PJM",
+      "value": 109045
+    },
+    {
+      "period": "2026-09-08T02:00:00Z",
+      "respondent": "AZPS",
+      "value": 8074
+    },
+    {
+      "period": "2026-09-08T02:00:00Z",
+      "respondent": "ERCO",
+      "value": 81664
+    },
+    {
+      "period": "2026-09-08T02:00:00Z",
+      "respondent": "PJM",
+      "value": 103353
+    },
+    {
+      "period": "2026-09-08T03:00:00Z",
+      "respondent": "AZPS",
+      "value": 7693
+    },
+    {
+      "period": "2026-09-08T03:00:00Z",
+      "respondent": "ERCO",
+      "value": 78329
+    },
+    {
+      "period": "2026-09-08T03:00:00Z",
+      "respondent": "PJM",
+      "value": 96653
+    },
+    {
+      "period": "2026-09-08T04:00:00Z",
+      "respondent": "AZPS",
+      "value": 6227
+    },
+    {
+      "period": "2026-09-08T04:00:00Z",
+      "respondent": "ERCO",
+      "value": 74532
+    },
+    {
+      "period": "2026-09-08T04:00:00Z",
+      "respondent": "PJM",
+      "value": 91489
     }
-  ],
-  "collectionNote": "Initial research snapshot. Scheduled refresh requires a configured EIA API key."
+  ]
 }
