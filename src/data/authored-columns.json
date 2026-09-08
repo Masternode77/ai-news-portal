@@ -1,5 +1,144 @@
 [
   {
+    "id": "col_4fcaacca965031d9",
+    "content_origin": "authored",
+    "generation_version": "authored_column_v1",
+    "public_content_tier": "authored_column",
+    "slug": "cooling-capacity-should-set-the-server-procurement-envelope-2026-09-08",
+    "title": "Cooling Capacity Should Set the Server Procurement Envelope",
+    "deck": "A retrospective EIA forecast points to a better buying rule: accept server capacity only when the site can reject its heat across credible operating conditions.",
+    "summary": "A retrospective EIA forecast points to a better buying rule: accept server capacity only when the site can reject its heat across credible operating conditions.",
+    "expertLensFull": {
+      "finalHeadline": "Cooling Capacity Should Set the Server Procurement Envelope",
+      "metaDescription": "A retrospective EIA forecast points to a better buying rule: accept server capacity only when the site can reject its heat across credible operating conditions.",
+      "finalArticleBody": "The Forecast Has Two Loads\n\nIn a May analysis, the U.S. Energy Information Administration changed the way I think about an old planning problem. Its Annual Energy Outlook separates electricity used by data center servers from the broader commercial computing category. It then treats the server end use as essentially flat across the day while allowing cooling demand to respond to weather and population assumptions. This is a retrospective reading of that forecast, not a claim about a new release.\n\nThe EIA cases also separate the drivers of server demand. The higher demand case combines a larger installed server stock, greater average power draw, and a larger role for AI servers. The baseline gives efficiency a stronger future role. Cooling and ventilation sit alongside those server assumptions rather than disappearing inside them. That modeling choice matters more to me than any single forecast outcome because a procurement plan can incorrectly compress those two loads into one.\n\nI would accept server capacity only inside a tested thermal envelope, because a server purchase that outruns heat rejection is not usable compute capacity. The bottleneck can migrate from electrical service to cooling even when the utility connection is ready. That shifts the decision from how many servers can be ordered to how much combined server and cooling load a site can sustain under demanding conditions.\n\nAcceptance Starts With Heat\n\nA purchase order can specify processors, racks, delivery windows, and electrical draw with impressive precision. None of those terms proves that the facility can hold the required inlet conditions when outdoor temperatures rise, water conditions change, or part of the cooling train is unavailable. I would therefore make thermal performance part of acceptance rather than a facility assumption buried behind the server contract. The useful unit of capacity is the load that passes an integrated test at the rack, cooling plant, and electrical boundary.\n\nThat test should begin with a declared operating envelope. The parties need to state the rack mix, expected utilization pattern, coolant temperatures where applicable, air and liquid flow requirements, and the weather conditions used for acceptance. They should also define what happens during maintenance and equipment loss. A design that works only with every pump, fan, and heat exchanger available has little operating margin. A design that holds its limits through the agreed contingency has earned the label of capacity.\n\nThis approach favors operators that can show measured thermal performance and cooling vendors whose equipment can be verified as part of a system. It exposes buyers that reserve server supply before confirming plant capability, and developers that market electrical capacity without a matching heat rejection plan. The consequence is practical. Delivery can occur on paper while revenue service waits for commissioning work, controls tuning, or additional cooling equipment. The schedule belongs to the slower system.\n\nUtilities Need Load Envelopes\n\nThe EIA framework also suggests a better conversation with utilities. A flat server profile is a useful planning simplification, but the facility presented to the grid includes cooling that changes with local conditions. I would ask a project team to provide an hourly load envelope rather than a single demand point. The lower boundary would reflect efficient server operation and mild conditions. The upper boundary would combine demanding server operation with the cooling duty required under the agreed weather case.\n\nThat envelope should connect directly to energization milestones. A utility can then see which portion of demand is firm, which portion depends on commissioning, and which portion may appear only during stressful weather. The developer can test whether transformer, feeder, and backup arrangements support the same boundary conditions used in the thermal acceptance plan. If the two documents use different assumptions, the project has created a hidden gap between contracted power and operable load.\n\nI would also require change control when the server mix changes. A denser configuration can alter coolant flow, return temperatures, pump demand, and heat rejection even when total server power appears manageable. The customer proposing the change should show that it remains inside the accepted envelope or fund the work needed to expand it. This keeps a commercial request from becoming an unpriced facility obligation and gives the utility a stable basis for its own planning.\n\nEfficiency Deserves Its Best Case\n\nThe strongest counterargument is that server efficiency could improve enough to create thermal headroom. Better computing performance per unit of electricity may let customers deploy more useful work without a matching rise in average power. Controls can improve, cooling equipment can operate more effectively, and utilization can be managed. The EIA baseline explicitly gives efficiency a stronger role than its higher demand case, so procurement should not assume the most demanding path is inevitable.\n\nI take that countercase seriously, but it does not justify buying against an untested best case. Efficiency gains can be consumed by more installed servers, higher utilization, or a mix that produces heat differently. The buyer still needs a method that works if savings arrive slowly or are reinvested in additional compute. A thermal envelope does exactly that. It allows efficiency to create headroom without treating hoped for headroom as committed capacity.\n\nThe falsifier for my thesis is clear. If repeated integrated tests show that new server generations expand useful compute while facility cooling demand and contingency margins remain comfortably inside existing limits, then cooling has not become the schedule setter at that site. Procurement can move faster. Until that evidence exists, I would price efficiency as an upside case and contract against the measured facility boundary.\n\nContracts Must Follow Heat\n\nThe contract should identify who owns each boundary. The server vendor owns declared heat and flow characteristics for the delivered configuration. The operator owns the performance of the cooling plant and controls within the agreed site conditions. The customer owns changes to workload or rack mix that push beyond the accepted range. Shared tests should decide whether a failure sits in equipment, integration, or operation. Without that allocation, every delay invites a dispute about whose capacity was actually unavailable.\n\nI would put three checkpoints on the delivery calendar. Before equipment shipment, the parties should freeze the thermal assumptions and review the utility load envelope. Before service acceptance, they should complete an integrated test under the agreed demanding condition and contingency. After an operating period, they should compare measured server and cooling loads with the envelope and reopen commercial terms if the configuration has moved outside it. These are decision gates, not ceremonial reports.\n\nThis framework makes the EIA analysis useful well after its publication date. The forecast does not tell a particular buyer which site will succeed. It provides a disciplined separation of server demand, cooling demand, and efficiency assumptions. I would carry that separation into procurement, utility coordination, and liability language. The observable that matters is whether each contracted block of compute can pass the same thermal and electrical test before its revenue date.",
+      "sourceLink": ""
+    },
+    "author": {
+      "name": "Josh Jiwoon Inn",
+      "slug": "josh-inn",
+      "role": "Founder & Editor, Compute Current",
+      "type": "person"
+    },
+    "publishedAt": "2026-09-08T14:48:51.667Z",
+    "analysisPublishedAt": "2026-09-08T14:48:51.667Z",
+    "updatedAt": "2026-09-08T14:48:51.667Z",
+    "category": "Cooling",
+    "primary_category": "Cooling",
+    "tags": [
+      "data centers",
+      "electricity",
+      "cooling",
+      "EIA"
+    ],
+    "figures": [
+      {
+        "type": "table",
+        "title": "Separate Server and Cooling Assumptions",
+        "anchor": 2,
+        "items": [
+          {
+            "label": "Server electricity demand is modeled as essentially flat across the day.",
+            "source": "U.S. Energy Information Administration",
+            "value": null,
+            "unit": "",
+            "display": ""
+          },
+          {
+            "label": "Space cooling service demand responds to weather assumptions.",
+            "source": "U.S. Energy Information Administration",
+            "value": null,
+            "unit": "",
+            "display": ""
+          },
+          {
+            "label": "Cooling and ventilation support server operation.",
+            "source": "U.S. Energy Information Administration",
+            "value": null,
+            "unit": "",
+            "display": ""
+          }
+        ],
+        "source_note": "EIA Annual Energy Outlook analysis, May 19, 2026; paraphrased model assumptions"
+      }
+    ],
+    "sources": [
+      {
+        "name": "U.S. Energy Information Administration",
+        "url": "https://www.eia.gov/todayinenergy/detail.php?id=67704",
+        "title": "Data center server energy use grows across the commercial building stock",
+        "publishedAt": "2026-05-19T00:00:00.000Z"
+      }
+    ],
+    "based_on_article_ids": [
+      "eia-server-cooling-forecast"
+    ],
+    "story_key": "https://www.eia.gov/todayinenergy/detail.php?id=67704",
+    "stance": {
+      "thesis": "Buyers should accept server capacity only inside a tested thermal envelope, because ordered servers that outrun heat rejection are not usable compute capacity.",
+      "angle": "Procurement should convert server demand into a weather-aware facility load envelope and assign the cost of exceeding it before delivery.",
+      "standing_position_ids": [
+        "migrating-bottleneck",
+        "cooling-underpriced",
+        "power-binding-constraint"
+      ]
+    },
+    "authored_quality": {
+      "ok": true,
+      "generatedAt": "2026-09-08T14:48:51.667Z",
+      "model": "codex-session",
+      "attempts": 1,
+      "metrics": {
+        "chars": 7556,
+        "words": 1144,
+        "sections": 5,
+        "paragraphs": 15,
+        "human_style_score": 0.84,
+        "insight_density_score": 0.9,
+        "source_summary_ratio": 0.095,
+        "copyright_overlap_score": 0,
+        "unsupported_claim_count": 0,
+        "repeated_sentence_ratio": 0,
+        "heading_sequence_similarity": 0,
+        "conclusion_similarity": 0.131,
+        "thesis_overlap": 0.077,
+        "heading_reuse_max": 0.2,
+        "lead_reuse_max": 0.043,
+        "figure_count": 1
+      }
+    },
+    "llm_usage": {
+      "calls": 0,
+      "failures": 0,
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "total_tokens": 0,
+      "token_budget": 60000,
+      "call_budget": 40
+    },
+    "heroImage": "/generated/articles/col_4fcaacca965031d9-cooling-capacity-should-set-the-server-procurement-envelope/hero.webp",
+    "generatedImage": "/generated/articles/col_4fcaacca965031d9-cooling-capacity-should-set-the-server-procurement-envelope/hero.webp",
+    "imageAlt": "Editorial image for Cooling Capacity Should Set the Server Procurement Envelope",
+    "articlePagePublished": true,
+    "homepagePublished": true,
+    "public_status": "published",
+    "draft": false,
+    "noindex": false,
+    "seo_noindex": false,
+    "archiveOnly": false,
+    "thumbnailImage": "/generated/articles/col_4fcaacca965031d9-cooling-capacity-should-set-the-server-procurement-envelope/thumbnail.webp",
+    "ogImage": "/generated/articles/col_4fcaacca965031d9-cooling-capacity-should-set-the-server-procurement-envelope/og.webp",
+    "legacyImage": "/generated/col_4fcaacca965031d9.webp",
+    "imagePrompt": "Use case: Compute Current public article image.\nTitle: Cooling Capacity Should Set the Server Procurement Envelope\nCategory: Cooling\nInfrastructure layer: Cooling\nStory archetype: infrastructure analysis\nRegion: Global\nTone: premium infrastructure intelligence\nContext: A retrospective EIA forecast points to a better buying rule: accept server capacity only when the site can reject its heat across credible operating conditions.\nComposition: original editorial infrastructure image, realistic depth, wide hero crop, clear subject, enough negative space for card and OpenGraph crops.\nVisual vocabulary: data center halls, substations, transformers, grid interconnects, cooling loops, semiconductor packages, cloud capacity signals, financing pressure, or siting constraints when relevant.\nConstraints: no logos, no brand marks, no readable text, no watermarks, no stock-photo people, no decorative bokeh, no generic purple gradient.",
+    "generatedImageProvider": "codex",
+    "generatedImageModel": "",
+    "imageProvider": "codex",
+    "imageModel": "",
+    "imageStatus": "generated",
+    "imageError": "",
+    "imageGeneratedAt": "2026-09-08T14:48:53.218Z"
+  },
+  {
     "id": "col_776dcf6e9c89b581",
     "content_origin": "authored",
     "generation_version": "authored_column_v1",

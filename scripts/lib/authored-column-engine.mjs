@@ -156,8 +156,18 @@ function articleDateMs(article = {}) {
   return Number.isFinite(stamp) ? stamp : 0;
 }
 
-function storyKeyFor(article = {}) {
-  return String(article.sourceUrl || article.url || article.title || '').trim().toLowerCase().replace(/[?#].*$/, '');
+export function storyKeyFor(article = {}) {
+  const raw = String(article.sourceUrl || article.url || article.title || '').trim();
+  try {
+    const parsed = new URL(raw);
+    if (parsed.hostname === 'www.eia.gov' && parsed.pathname === '/todayinenergy/detail.php') {
+      const id = parsed.searchParams.get('id');
+      if (id) return `${parsed.origin}${parsed.pathname}?id=${id}`.toLowerCase();
+    }
+  } catch {
+    // Preserve the existing string fallback for non-URL story keys.
+  }
+  return raw.toLowerCase().replace(/[?#].*$/, '');
 }
 
 function authoredState(state = {}) {
@@ -364,7 +374,7 @@ async function voicePass({ charter, draft, feedback = [], callModel }) {
   return parseModelJson(content);
 }
 
-function columnRecord({ charter, selection, stance, essay, quality, figures = [], now }) {
+function columnRecord({ charter, selection, stance, essay, quality, figures = [], now, model = AUTHORED_COLUMN_MODEL }) {
   const publishedAt = now.toISOString();
   const dateSlug = publishedAt.slice(0, 10);
   const slug = `${slugify(essay.headline).slice(0, 64).replace(/-+$/, '')}-${dateSlug}`;
@@ -410,7 +420,7 @@ function columnRecord({ charter, selection, stance, essay, quality, figures = []
     authored_quality: {
       ok: true,
       generatedAt: publishedAt,
-      model: AUTHORED_COLUMN_MODEL,
+      model,
       attempts: quality.attempts,
       metrics: quality.metrics,
     },
@@ -440,9 +450,13 @@ export async function generateAuthoredColumn({
   now = new Date(),
   force = false,
   callModel = callOpenRouterText,
+  model = AUTHORED_COLUMN_MODEL,
 } = {}) {
   if (!AUTHORED_COLUMN_ENABLED) return { column: null, skipReason: 'disabled' };
-  if (!process.env.OPENROUTER_API_KEY || PIPELINE_OFFLINE) return { column: null, skipReason: 'llm_disabled' };
+  const explicitModel = callModel !== callOpenRouterText;
+  if ((!process.env.OPENROUTER_API_KEY && !explicitModel) || (PIPELINE_OFFLINE && !explicitModel)) {
+    return { column: null, skipReason: 'llm_disabled' };
+  }
 
   const authored = authoredState(state);
   const frequency = frequencyCheck(authored, now, { force });
@@ -541,6 +555,7 @@ export async function generateAuthoredColumn({
     essay,
     quality: { attempts, metrics: quality.metrics },
     figures,
+    model,
     now,
   });
 

@@ -1,0 +1,88 @@
+{
+  "articleId": "col_4fcaacca965031d9",
+  "slug": "cooling-capacity-should-set-the-server-procurement-envelope-2026-09-08",
+  "title": "Cooling Capacity Should Set the Server Procurement Envelope",
+  "preparedAt": "2026-09-08T14:48:51.667Z",
+  "baseline": "36058defac0c09f477cf6f3297c4b40514376583",
+  "source": {
+    "name": "U.S. Energy Information Administration",
+    "url": "https://www.eia.gov/todayinenergy/detail.php?id=67704",
+    "title": "Data center server energy use grows across the commercial building stock",
+    "publishedAt": "2026-05-19T00:00:00.000Z"
+  },
+  "sourceChecks": {
+    "url": "https://www.eia.gov/todayinenergy/detail.php?id=67704",
+    "checkedAt": "2026-09-08T14:44:37.300Z",
+    "extraction": {
+      "ok": true,
+      "chars": 2557
+    },
+    "authorization": {
+      "ok": true,
+      "authorized": true,
+      "reason": "",
+      "detail": "",
+      "sourceId": "eia-today-in-energy",
+      "reviewedAt": "2026-08-12T00:00:00.000Z",
+      "termsUrl": "https://www.eia.gov/about/copyrights_reuse.php",
+      "checkedAt": "2026-09-08T14:44:37.210Z",
+      "registryDigest": "5325a21e082f0b13d1268aabfff064a186e3d7f2d98776e95a1a4eb9568e05d5",
+      "registryBlobSha": "",
+      "contentDigest": "d15ccae9ee9ddf6214d8b39fbdf87ac41a1f82721e955148a1cd5e0a2de7b028"
+    },
+    "evidenceFacts": [
+      "U.S. Energy Information Administration reported: Cooling makes server growth a two-part electricity forecast.",
+      "Data center server energy use grows across the commercial building stock - U.S.",
+      "In the 2003 Commercial Buildings Energy Consumption Survey , electricity intensity for the newest buildings, constructed from 1990 onward, was as much as twice that of the oldest buildings, constructed prior to 1959.",
+      "Data center servers and associated end uses that support server operation, including space cooling and ventilation , increase commercial energy intensity in our AEO2026 projections.",
+      "Data center servers require cooling to enable chips and related IT equipment to operate efficiently.",
+      "We assume space cooling requirements in data center floorspace are as much as 2.9 times as energy intensive as non-data center floorspace, on average.",
+      "Service demand for space cooling is sensitive to assumptions about population migration and the weather.",
+      "Using the same population and weather assumptions, electricity consumption for space cooling in the High Electricity Demand case is 84 BkWh higher than the Counterfactual Baseline case in 2050 to support more intensive data center operations."
+    ]
+  },
+  "quality": {
+    "ok": true,
+    "generatedAt": "2026-09-08T14:48:51.667Z",
+    "model": "codex-session",
+    "attempts": 1,
+    "metrics": {
+      "chars": 7556,
+      "words": 1144,
+      "sections": 5,
+      "paragraphs": 15,
+      "human_style_score": 0.84,
+      "insight_density_score": 0.9,
+      "source_summary_ratio": 0.095,
+      "copyright_overlap_score": 0,
+      "unsupported_claim_count": 0,
+      "repeated_sentence_ratio": 0,
+      "heading_sequence_similarity": 0,
+      "conclusion_similarity": 0.131,
+      "thesis_overlap": 0.077,
+      "heading_reuse_max": 0.2,
+      "lead_reuse_max": 0.043,
+      "figure_count": 1
+    }
+  },
+  "artwork": {
+    "provider": "codex",
+    "model": "",
+    "hero": "/generated/articles/col_4fcaacca965031d9-cooling-capacity-should-set-the-server-procurement-envelope/hero.webp"
+  },
+  "notes": [
+    "Original retrospective analysis, not a new EIA release.",
+    "Codex-session draft evaluated with unchanged authored-column quality gates; no OpenRouter call.",
+    "Qualitative figure paraphrases verified EIA modeling assumptions."
+  ],
+  "independentReview": {
+    "status": "clear",
+    "scope": "source fidelity, duplicate story, figure claims, local adapter and EIA identity fixes"
+  },
+  "validation": {
+    "testsPassed": 25,
+    "buildPages": 92,
+    "typeErrors": 0,
+    "typeWarnings": 0
+  }
+}
