@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
-import { isWorkbookResponse, selectPublishedWorkbook, workbookCandidates } from '../scripts/lib/eia860m-discovery.mjs';
+import { classifyWorkbookResponse, isWorkbookResponse, selectPublishedWorkbook, workbookCandidates } from '../scripts/lib/eia860m-discovery.mjs';
 
 const landing = `
 <a href="/electricity/data/eia860m/archive/xls/april_generator2026.xlsx">XLS</a>
@@ -22,12 +22,31 @@ test('discovery lists only editions newer than the committed snapshot and older 
   assert.deepEqual(workbookCandidates(landing, { now, previousAsOf: '2026-08' }), []);
 });
 
-test('a redirect to an HTML page is not a workbook, a same-origin xlsx with a ZIP signature is', () => {
-  assert.equal(isWorkbookResponse({ ok: true, finalUrl: 'https://www.eia.gov/electricity/', contentType: 'text/html; charset=UTF-8', head: html }), false);
-  assert.equal(isWorkbookResponse({ ok: true, finalUrl: 'https://www.eia.gov/electricity/data/eia860m/xls/august_generator2026.xlsx', contentType: 'text/html', head: html }), false);
-  assert.equal(isWorkbookResponse({ ok: true, finalUrl: 'https://www.eia.gov/electricity/data/eia860m/xls/july_generator2026.xlsx', contentType: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', head: html }), false);
-  assert.equal(isWorkbookResponse({ ok: false, finalUrl: 'https://www.eia.gov/electricity/data/eia860m/xls/july_generator2026.xlsx', contentType: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', head: zip }), false);
-  assert.equal(isWorkbookResponse({ ok: true, finalUrl: 'https://www.eia.gov/electricity/data/eia860m/xls/july_generator2026.xlsx', contentType: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', head: zip }), true);
+const XLSX = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
+const july = 'https://www.eia.gov/electricity/data/eia860m/xls/july_generator2026.xlsx';
+
+test('responses are classified as workbook, unpublished placeholder, untrusted origin or invalid', () => {
+  assert.equal(classifyWorkbookResponse({ ok: true, finalUrl: july, contentType: XLSX, head: zip }), 'workbook');
+  assert.equal(isWorkbookResponse({ ok: true, finalUrl: july, contentType: XLSX, head: zip }), true);
+  assert.equal(classifyWorkbookResponse({ ok: true, finalUrl: 'https://www.eia.gov/electricity/', contentType: 'text/html; charset=UTF-8', head: html }), 'unpublished');
+  assert.equal(classifyWorkbookResponse({ ok: true, finalUrl: 'https://cdn.example.net/xls/july_generator2026.xlsx', contentType: XLSX, head: zip }), 'untrusted');
+  assert.equal(classifyWorkbookResponse({ ok: true, finalUrl: 'http://www.eia.gov/electricity/data/eia860m/xls/july_generator2026.xlsx', contentType: XLSX, head: zip }), 'untrusted');
+  assert.equal(classifyWorkbookResponse({ ok: true, finalUrl: july, contentType: 'text/html', head: html }), 'invalid');
+  assert.equal(classifyWorkbookResponse({ ok: true, finalUrl: july, contentType: XLSX, head: html }), 'invalid');
+  assert.equal(classifyWorkbookResponse({ ok: false, finalUrl: july, contentType: XLSX, head: zip }), 'invalid');
+  assert.equal(classifyWorkbookResponse({ ok: true, finalUrl: 'not a url', contentType: XLSX, head: zip }), 'invalid');
+});
+
+test('selection fails closed on an off-origin redirect or a malformed response at a workbook URL', async () => {
+  const candidates = workbookCandidates(landing, { now, previousAsOf: '2026-06' });
+  await assert.rejects(
+    () => selectPublishedWorkbook(candidates, async () => ({ ok: true, finalUrl: 'https://cdn.example.net/xls/august_generator2026.xlsx', contentType: XLSX, head: zip })),
+    /Untrusted workbook URL/,
+  );
+  await assert.rejects(
+    () => selectPublishedWorkbook(candidates, async (candidate) => ({ ok: true, finalUrl: `https://www.eia.gov${candidate.path}`, contentType: 'text/html', head: html })),
+    /Workbook response invalid/,
+  );
 });
 
 test('selection skips the unpublished newest listing and returns the newest real edition', async () => {
@@ -36,7 +55,7 @@ test('selection skips the unpublished newest listing and returns the newest real
   const published = await selectPublishedWorkbook(candidates, async (candidate) => {
     fetched.push(candidate.date);
     if (candidate.date === '2026-08') return { ok: true, finalUrl: 'https://www.eia.gov/electricity/', contentType: 'text/html; charset=UTF-8', head: html };
-    return { ok: true, finalUrl: `https://www.eia.gov${candidate.path}`, contentType: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', head: zip };
+    return { ok: true, finalUrl: `https://www.eia.gov${candidate.path}`, contentType: XLSX, head: zip };
   });
   assert.deepEqual(fetched, ['2026-08', '2026-07']);
   assert.equal(published.candidate.date, '2026-07');

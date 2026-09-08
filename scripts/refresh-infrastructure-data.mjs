@@ -3,7 +3,7 @@ import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { execFileSync } from 'node:child_process';
 import { normalizeDemand } from './lib/infrastructure-data.mjs';
-import { selectPublishedWorkbook, workbookCandidates } from './lib/eia860m-discovery.mjs';
+import { EIA_ORIGIN, selectPublishedWorkbook, workbookCandidates } from './lib/eia860m-discovery.mjs';
 const root = new URL('../src/data/grid/', import.meta.url);
 async function commit(name, snapshot) {
   const target = new URL(name, root), temporary = new URL(`${name}.tmp`, root);
@@ -15,7 +15,7 @@ async function independent(name, fn) {
   try { results.push({ dataset: name, status: await fn() }); }
   catch (error) {
     // Never log an upstream response body, request URL, or child-process output.
-    const known = new Set(['Demand fetch failed','Incomplete balancing authority coverage','Demand snapshot would regress','Capacity discovery failed','No supported EIA workbook','Untrusted workbook URL','Workbook unavailable or oversized','Workbook too large','Workbook edition mismatch','Workbook parse failed']);
+    const known = new Set(['Demand fetch failed','Incomplete balancing authority coverage','Demand snapshot would regress','Capacity discovery failed','No supported EIA workbook','Untrusted workbook URL','Workbook unavailable or oversized','Workbook too large','Workbook response invalid','Workbook edition mismatch','Workbook parse failed']);
     const diagnostic = known.has(error.message) ? error.message : error.code ? `operation failed (${String(error.code).replace(/[^A-Z0-9_]/gi,'')})` : `operation failed (${error.name || 'Error'})`;
     results.push({ dataset: name, status: 'failed; previous validated snapshot retained', diagnostic }); process.exitCode = 1;
   }
@@ -42,17 +42,19 @@ await independent('EIA-860M', async () => {
   if (!candidates.length) return 'no newer monthly edition';
   const MAX_BYTES = 32000000;
   // EIA lists editions before they exist and answers missing files with an
-  // HTML page, so each candidate must prove it is a spreadsheet: same-origin
-  // .xlsx URL after redirects, non-HTML content type, ZIP signature.
+  // HTML page, so each candidate must prove it is a spreadsheet after
+  // redirects: EIA origin, .xlsx path, non-HTML content type, ZIP signature.
+  // A placeholder redirect is skipped; an off-origin or malformed response
+  // fails the refresh.
   const published = await selectPublishedWorkbook(candidates, async (candidate) => {
     const url = new URL(candidate.path, base);
-    if (url.origin !== 'https://www.eia.gov') throw new Error('Untrusted workbook URL');
+    if (url.origin !== EIA_ORIGIN) throw new Error('Untrusted workbook URL');
     const response = await fetch(url, { signal: AbortSignal.timeout(60000) });
     if (!response.ok || Number(response.headers.get('content-length')) > MAX_BYTES) throw new Error('Workbook unavailable or oversized');
     const chunks=[]; let size=0;
     for await (const chunk of response.body) { size+=chunk.length; if(size>MAX_BYTES) throw new Error('Workbook too large'); chunks.push(chunk); }
     const bytes = Buffer.concat(chunks);
-    return { ok: true, finalUrl: response.url, contentType: response.headers.get('content-type') || '', head: bytes.subarray(0, 4), bytes, url };
+    return { ok: true, finalUrl: response.url, contentType: response.headers.get('content-type') || '', head: bytes.subarray(0, 4), bytes };
   });
   if (!published) return `no newer monthly edition (${candidates[0].date} is listed but not published yet)`;
   const { candidate: latest, result } = published;
@@ -61,7 +63,7 @@ await independent('EIA-860M', async () => {
     const workbook = join(dir,'source.xlsx'), output=join(dir,'snapshot.json');
     await writeFile(workbook,result.bytes);
     try {
-      execFileSync('python3', [new URL('./parse-eia860m.py',import.meta.url).pathname,workbook,'--source-url',result.url.href,'--output',output], { timeout:60000, stdio:'pipe' });
+      execFileSync('python3', [new URL('./parse-eia860m.py',import.meta.url).pathname,workbook,'--source-url',result.finalUrl,'--output',output], { timeout:60000, stdio:'pipe' });
     } catch { throw new Error('Workbook parse failed'); }
     const snapshot=JSON.parse(await readFile(output,'utf8'));
     if(snapshot.asOf !== latest.date) throw new Error('Workbook edition mismatch');
