@@ -829,7 +829,8 @@
     "9453401ca1c844cc",
     "6aba5ac09054653c",
     "1281e075e49ee626",
-    "38461fd830044f24"
+    "38461fd830044f24",
+    "cb84eb89598b7f3a"
   ],
   "dayPlans": {
     "2026-03-24": {
@@ -44634,151 +44635,98 @@
     "2026-09-08": {
       "date": "2026-09-08",
       "createdAt": "2026-09-07T19:04:01.355Z",
-      "refreshedAt": "2026-09-08T01:08:48.096Z",
+      "refreshedAt": "2026-09-08T12:07:14.624Z",
       "candidateWindowHours": 24,
-      "curatedItems": [],
-      "curatedIds": [],
-      "publishedIds": [],
+      "curatedItems": [
+        {
+          "id": "cb84eb89598b7f3a",
+          "sourceRegistryId": "doe-newsroom",
+          "source": "U.S. Department of Energy",
+          "url": "https://www.energy.gov/articles/energy-department-closes-19-billion-loan-restart-duane-arnold-nuclear-plant",
+          "title": "Energy Department Closes $1.9 Billion Loan to Restart Duane Arnold Nuclear Plant",
+          "snippet": "The U.S. Department of Energy’s Office of Energy Dominance Financing today announced the financial close of a loan of up to $1.9 billion to NextEra Energy to help finance the restart of the Duane Arnold Energy Center in…",
+          "contentText": "The U.S. Department of Energy’s Office of Energy Dominance Financing today announced the financial close of a loan of up to $1.9 billion to NextEra Energy to help finance the restart of the Duane Arnold Energy Center in Linn County, Iowa.",
+          "publishedAt": "2026-09-08T11:30:00.000Z",
+          "sourceImage": null,
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "Power & Grid",
+          "ai_topic_score": 0,
+          "ai_topic_reasons": [
+            "ai_not_in_title"
+          ],
+          "category": "Power & Grid",
+          "primary_category": "Power & Grid",
+          "secondary_category": "Interconnection and power procurement",
+          "infrastructure_layer": "Power",
+          "affected_stakeholders": [
+            "data center operators",
+            "utilities",
+            "cloud capacity teams",
+            "investors"
+          ],
+          "article_type": "Financing / M&A",
+          "urgency_score": 0.45,
+          "taxonomy_confidence": 0.77,
+          "taxonomy_reasons": [
+            "power",
+            "grid",
+            "nuclear"
+          ],
+          "direct_ai_infrastructure_relevance": 0,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0,
+          "power_grid_relevance": 0.351,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0.32,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.28,
+          "infrastructure_relevance_tier": "archive_only",
+          "infrastructure_relevance_action": "archive_only",
+          "infrastructure_relevance_reasons": [
+            "power_grid_relevance:0.35(nuclear)",
+            "capital_markets_relevance:0.32(financing)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 0,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0,
+            "power_grid_relevance": 0.351,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0.32,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.28,
+            "infrastructure_relevance_tier": "archive_only",
+            "infrastructure_relevance_action": "archive_only",
+            "infrastructure_relevance_reasons": [
+              "power_grid_relevance:0.35(nuclear)",
+              "capital_markets_relevance:0.32(financing)"
+            ],
+            "infrastructureRelevanceAction": "archive_only",
+            "articlePagePublished": false,
+            "homepagePublished": false,
+            "archiveOnly": true,
+            "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
+          },
+          "score": 58
+        }
+      ],
+      "curatedIds": [
+        "cb84eb89598b7f3a"
+      ],
+      "publishedIds": [
+        "cb84eb89598b7f3a"
+      ],
       "slotPublications": {
         "0": true,
-        "1": true
+        "1": true,
+        "2": true
       }
     }
   },
   "runHistory": [
-    {
-      "at": "2026-07-29T16:27:02.516Z",
-      "day": "2026-07-30",
-      "slot": 0,
-      "publishedCount": 0,
-      "signalCardCount": 1,
-      "archiveOnlyCount": 0,
-      "repetitionBlockedCount": 1,
-      "publishedIds": [],
-      "processedIds": [
-        "892b3d9fd8d06cc9",
-        "7beac75f5a18082d"
-      ],
-      "blockedCount": 1,
-      "blockedItems": [
-        {
-          "id": "892b3d9fd8d06cc9",
-          "title": "From “Cloud-Only” to Cloud-Smart: Why Neocloud and Edge Colocation Belong Together",
-          "infrastructure_relevance_score": 0.993,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "data_center_relevance:0.88(data center, colocation)",
-            "cloud_capacity_relevance:0.60(capacity expansion, hyperscalers)",
-            "semiconductor_relevance:0.22(gpu)",
-            "power_grid_relevance:0.58(power, interconnection)",
-            "cooling_relevance:0.34(cooling)",
-            "enterprise_ai_infrastructure_relevance:0.48(hybrid cloud, disaster recovery)"
-          ],
-          "extraction_quality_score": 1,
-          "source_domain_adapter": "datacenterpost",
-          "content_length": 1771,
-          "boilerplate_ratio": 0,
-          "repetition_blocked": false,
-          "repetition_block_reasons": [],
-          "repetition_check": null,
-          "expert_insight_complete": false,
-          "expert_insight_missing_fields": [
-            "concrete_facts",
-            "named_companies"
-          ],
-          "reason": "expert_insight_missing_fields concrete_facts, named_companies"
-        }
-      ],
-      "repetitionBlockedItems": [
-        {
-          "id": "7beac75f5a18082d",
-          "title": "Nvidia employee implicated in escalating Supermicro smuggling scandal, but demand only intensifies for Nvidia hardware",
-          "infrastructure_relevance_score": 0.932,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "data_center_relevance:0.42(data centers)",
-            "cloud_capacity_relevance:0.32(hyperscalers)",
-            "semiconductor_relevance:0.60(nvidia, gpu)",
-            "power_grid_relevance:0.22(power)"
-          ],
-          "extraction_quality_score": 1,
-          "source_domain_adapter": "generic",
-          "content_length": 1625,
-          "boilerplate_ratio": 0,
-          "repetition_blocked": true,
-          "repetition_block_reasons": [
-            "repeated_sentence_ratio>0.12",
-            "heading_sequence_similarity>0.75",
-            "conclusion_similarity>0.7"
-          ],
-          "repetition_check": {
-            "compared_article_count": 20,
-            "repeated_sentence_ratio": 0.2857142857142857,
-            "repeated_paragraph_ratio": 0.3333333333333333,
-            "heading_sequence_similarity": 1,
-            "banned_phrase_count": 0,
-            "banned_phrase_counts": {},
-            "recent_banned_phrase_counts": {},
-            "ngram_overlap": 0.6410256410256411,
-            "blueprint_repetition": 1,
-            "conclusion_similarity": 0.9271050693011066,
-            "repeated_sentence_count": 2,
-            "repeated_paragraph_count": 2,
-            "heading_sequence": [
-              "Technical Signal",
-              "Failure Domain",
-              "Operator Exposure",
-              "Benchmark To Watch"
-            ],
-            "blocked": true,
-            "reasons": [
-              "repeated_sentence_ratio>0.12",
-              "heading_sequence_similarity>0.75",
-              "conclusion_similarity>0.7"
-            ]
-          },
-          "expert_insight_complete": true,
-          "expert_insight_missing_fields": [],
-          "reason": "repeated_sentence_ratio>0.12; heading_sequence_similarity>0.75; conclusion_similarity>0.7"
-        }
-      ],
-      "signalCardItems": [
-        {
-          "id": "892b3d9fd8d06cc9",
-          "title": "From “Cloud-Only” to Cloud-Smart: Why Neocloud and Edge Colocation Belong Together",
-          "infrastructure_relevance_score": 0.993,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "data_center_relevance:0.88(data center, colocation)",
-            "cloud_capacity_relevance:0.60(capacity expansion, hyperscalers)",
-            "semiconductor_relevance:0.22(gpu)",
-            "power_grid_relevance:0.58(power, interconnection)",
-            "cooling_relevance:0.34(cooling)",
-            "enterprise_ai_infrastructure_relevance:0.48(hybrid cloud, disaster recovery)"
-          ],
-          "extraction_quality_score": 1,
-          "source_domain_adapter": "datacenterpost",
-          "content_length": 1771,
-          "boilerplate_ratio": 0,
-          "repetition_blocked": false,
-          "repetition_block_reasons": [],
-          "repetition_check": null,
-          "expert_insight_complete": false,
-          "expert_insight_missing_fields": [
-            "concrete_facts",
-            "named_companies"
-          ],
-          "reason": "expert_insight_missing_fields concrete_facts, named_companies"
-        }
-      ],
-      "archiveOnlyItems": []
-    },
     {
       "at": "2026-07-30T00:02:23.365Z",
       "day": "2026-07-30",
@@ -51542,9 +51490,36 @@
         "token_budget": 60000,
         "call_budget": 40
       }
+    },
+    {
+      "at": "2026-09-08T12:07:14.624Z",
+      "day": "2026-09-08",
+      "slot": 2,
+      "publishedCount": 0,
+      "signalCardCount": 1,
+      "archiveOnlyCount": 0,
+      "processedIds": [
+        "cb84eb89598b7f3a"
+      ],
+      "blockedCount": 0,
+      "blockedItems": [],
+      "archiveOnlyItems": [],
+      "authoredColumn": {
+        "published": false,
+        "reason": "no_qualifying_story"
+      },
+      "llmUsage": {
+        "calls": 2,
+        "failures": 0,
+        "prompt_tokens": 2683,
+        "completion_tokens": 286,
+        "total_tokens": 2969,
+        "token_budget": 60000,
+        "call_budget": 40
+      }
     }
   ],
-  "lastRunAt": "2026-09-08T01:08:48.096Z",
+  "lastRunAt": "2026-09-08T12:07:14.624Z",
   "authored": {
     "lastColumnAt": "2026-08-28T19:25:07.344Z",
     "columnsByDay": {

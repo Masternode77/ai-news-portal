@@ -70,6 +70,79 @@
     }
   },
   {
+    "id": "cb84eb89598b7f3a",
+    "sourceRegistryId": "doe-newsroom",
+    "source": "U.S. Department of Energy",
+    "url": "https://www.energy.gov/articles/energy-department-closes-19-billion-loan-restart-duane-arnold-nuclear-plant",
+    "title": "Energy Department Closes $1.9 Billion Loan to Restart Duane Arnold Nuclear Plant",
+    "snippet": "The U.S. Department of Energy’s Office of Energy Dominance Financing today announced the financial close of a loan of up to $1.9 billion to NextEra Energy to help finance the restart of the Duane Arnold Energy Center in…",
+    "contentText": "The U.S. Department of Energy’s Office of Energy Dominance Financing today announced the financial close of a loan of up to $1.9 billion to NextEra Energy to help finance the restart of the Duane Arnold Energy Center in Linn County, Iowa.",
+    "publishedAt": "2026-09-08T11:30:00.000Z",
+    "sourceImage": null,
+    "region": "US",
+    "language": "en",
+    "defaultCategory": "Power & Grid",
+    "ai_topic_score": 0,
+    "ai_topic_reasons": [
+      "ai_not_in_title"
+    ],
+    "category": "Power & Grid",
+    "primary_category": "Power & Grid",
+    "secondary_category": "Interconnection and power procurement",
+    "infrastructure_layer": "Power",
+    "affected_stakeholders": [
+      "data center operators",
+      "utilities",
+      "cloud capacity teams",
+      "investors"
+    ],
+    "article_type": "Financing / M&A",
+    "urgency_score": 0.45,
+    "taxonomy_confidence": 0.77,
+    "taxonomy_reasons": [
+      "power",
+      "grid",
+      "nuclear"
+    ],
+    "direct_ai_infrastructure_relevance": 0,
+    "data_center_relevance": 0,
+    "cloud_capacity_relevance": 0,
+    "semiconductor_relevance": 0,
+    "power_grid_relevance": 0.351,
+    "cooling_relevance": 0,
+    "capital_markets_relevance": 0.32,
+    "enterprise_ai_infrastructure_relevance": 0,
+    "infrastructure_relevance_score": 0.28,
+    "infrastructure_relevance_tier": "archive_only",
+    "infrastructure_relevance_action": "archive_only",
+    "infrastructure_relevance_reasons": [
+      "power_grid_relevance:0.35(nuclear)",
+      "capital_markets_relevance:0.32(financing)"
+    ],
+    "infrastructure_relevance": {
+      "direct_ai_infrastructure_relevance": 0,
+      "data_center_relevance": 0,
+      "cloud_capacity_relevance": 0,
+      "semiconductor_relevance": 0,
+      "power_grid_relevance": 0.351,
+      "cooling_relevance": 0,
+      "capital_markets_relevance": 0.32,
+      "enterprise_ai_infrastructure_relevance": 0,
+      "infrastructure_relevance_score": 0.28,
+      "infrastructure_relevance_tier": "archive_only",
+      "infrastructure_relevance_action": "archive_only",
+      "infrastructure_relevance_reasons": [
+        "power_grid_relevance:0.35(nuclear)",
+        "capital_markets_relevance:0.32(financing)"
+      ],
+      "infrastructureRelevanceAction": "archive_only",
+      "articlePagePublished": false,
+      "homepagePublished": false,
+      "archiveOnly": true,
+      "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
+    }
+  },
+  {
     "id": "39ef5621160efc50",
     "sourceRegistryId": "eia-today-in-energy",
     "source": "U.S. Energy Information Administration",
@@ -133,76 +206,6 @@
       "infrastructure_relevance_action": "archive_only",
       "infrastructure_relevance_reasons": [
         "power_grid_relevance:0.52(electricity, transmission)"
-      ],
-      "infrastructureRelevanceAction": "archive_only",
-      "articlePagePublished": false,
-      "homepagePublished": false,
-      "archiveOnly": true,
-      "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
-    }
-  },
-  {
-    "id": "9fd1207b973b6260",
-    "sourceRegistryId": "doe-newsroom",
-    "source": "U.S. Department of Energy",
-    "url": "https://www.energy.gov/articles/energy-secretary-secures-carolinas-grid-ahead-holiday-weekend",
-    "title": "Energy Secretary Secures Carolinas’ Grid Ahead of Holiday Weekend",
-    "snippet": "Secretary Wright issued an emergency order to stabilize the Carolinas’ grid and mitigate blackout risks amid hot weather conditions.",
-    "contentText": "Secretary Wright issued an emergency order to stabilize the Carolinas’ grid and mitigate blackout risks amid hot weather conditions.",
-    "publishedAt": "2026-09-03T23:11:31.000Z",
-    "sourceImage": null,
-    "region": "US",
-    "language": "en",
-    "defaultCategory": "Power & Grid",
-    "ai_topic_score": 0,
-    "ai_topic_reasons": [
-      "ai_not_in_title"
-    ],
-    "category": "Power & Grid",
-    "primary_category": "Power & Grid",
-    "secondary_category": "Interconnection and power procurement",
-    "infrastructure_layer": "Power",
-    "affected_stakeholders": [
-      "data center operators",
-      "utilities",
-      "cloud capacity teams",
-      "investors"
-    ],
-    "article_type": "Other",
-    "urgency_score": 0.44,
-    "taxonomy_confidence": 0.7,
-    "taxonomy_reasons": [
-      "power",
-      "grid"
-    ],
-    "direct_ai_infrastructure_relevance": 0,
-    "data_center_relevance": 0,
-    "cloud_capacity_relevance": 0,
-    "semiconductor_relevance": 0,
-    "power_grid_relevance": 0.378,
-    "cooling_relevance": 0,
-    "capital_markets_relevance": 0,
-    "enterprise_ai_infrastructure_relevance": 0,
-    "infrastructure_relevance_score": 0.254,
-    "infrastructure_relevance_tier": "archive_only",
-    "infrastructure_relevance_action": "archive_only",
-    "infrastructure_relevance_reasons": [
-      "power_grid_relevance:0.38(grid)"
-    ],
-    "infrastructure_relevance": {
-      "direct_ai_infrastructure_relevance": 0,
-      "data_center_relevance": 0,
-      "cloud_capacity_relevance": 0,
-      "semiconductor_relevance": 0,
-      "power_grid_relevance": 0.378,
-      "cooling_relevance": 0,
-      "capital_markets_relevance": 0,
-      "enterprise_ai_infrastructure_relevance": 0,
-      "infrastructure_relevance_score": 0.254,
-      "infrastructure_relevance_tier": "archive_only",
-      "infrastructure_relevance_action": "archive_only",
-      "infrastructure_relevance_reasons": [
-        "power_grid_relevance:0.38(grid)"
       ],
       "infrastructureRelevanceAction": "archive_only",
       "articlePagePublished": false,
@@ -413,6 +416,76 @@
       "infrastructure_relevance_action": "archive_only",
       "infrastructure_relevance_reasons": [
         "no_strong_compute_current_infrastructure_match"
+      ],
+      "infrastructureRelevanceAction": "archive_only",
+      "articlePagePublished": false,
+      "homepagePublished": false,
+      "archiveOnly": true,
+      "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
+    }
+  },
+  {
+    "id": "9fd1207b973b6260",
+    "sourceRegistryId": "doe-newsroom",
+    "source": "U.S. Department of Energy",
+    "url": "https://www.energy.gov/articles/energy-secretary-secures-carolinas-grid-ahead-holiday-weekend",
+    "title": "Energy Secretary Secures Carolinas’ Grid Ahead of Holiday Weekend",
+    "snippet": "Secretary Wright issued an emergency order to stabilize the Carolinas’ grid and mitigate blackout risks amid hot weather conditions.",
+    "contentText": "Secretary Wright issued an emergency order to stabilize the Carolinas’ grid and mitigate blackout risks amid hot weather conditions.",
+    "publishedAt": "2026-09-03T23:11:31.000Z",
+    "sourceImage": null,
+    "region": "US",
+    "language": "en",
+    "defaultCategory": "Power & Grid",
+    "ai_topic_score": 0,
+    "ai_topic_reasons": [
+      "ai_not_in_title"
+    ],
+    "category": "Power & Grid",
+    "primary_category": "Power & Grid",
+    "secondary_category": "Interconnection and power procurement",
+    "infrastructure_layer": "Power",
+    "affected_stakeholders": [
+      "data center operators",
+      "utilities",
+      "cloud capacity teams",
+      "investors"
+    ],
+    "article_type": "Other",
+    "urgency_score": 0.44,
+    "taxonomy_confidence": 0.7,
+    "taxonomy_reasons": [
+      "power",
+      "grid"
+    ],
+    "direct_ai_infrastructure_relevance": 0,
+    "data_center_relevance": 0,
+    "cloud_capacity_relevance": 0,
+    "semiconductor_relevance": 0,
+    "power_grid_relevance": 0.378,
+    "cooling_relevance": 0,
+    "capital_markets_relevance": 0,
+    "enterprise_ai_infrastructure_relevance": 0,
+    "infrastructure_relevance_score": 0.254,
+    "infrastructure_relevance_tier": "archive_only",
+    "infrastructure_relevance_action": "archive_only",
+    "infrastructure_relevance_reasons": [
+      "power_grid_relevance:0.38(grid)"
+    ],
+    "infrastructure_relevance": {
+      "direct_ai_infrastructure_relevance": 0,
+      "data_center_relevance": 0,
+      "cloud_capacity_relevance": 0,
+      "semiconductor_relevance": 0,
+      "power_grid_relevance": 0.378,
+      "cooling_relevance": 0,
+      "capital_markets_relevance": 0,
+      "enterprise_ai_infrastructure_relevance": 0,
+      "infrastructure_relevance_score": 0.254,
+      "infrastructure_relevance_tier": "archive_only",
+      "infrastructure_relevance_action": "archive_only",
+      "infrastructure_relevance_reasons": [
+        "power_grid_relevance:0.38(grid)"
       ],
       "infrastructureRelevanceAction": "archive_only",
       "articlePagePublished": false,
