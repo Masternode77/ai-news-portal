@@ -15,3 +15,23 @@ The manifest binds artwork to the article prompt fingerprint and SHA-256 of the 
 GitHub Actions and Vercel do not have access to an active desktop Codex conversation. They consume registered files or use local fallback artwork without making paid image API calls. Existing approved article artwork is preserved; this configuration does not regenerate the archive unnecessarily.
 
 Registration serializes manifest updates and command-line article updates with exclusive lock files. Concurrent callers wait up to five seconds and then report busy instead of losing a successful registration. Each lock records its process ID and creation time. After an interrupted process, read the exact `.lock` path from the error and inspect the recorded PID with `ps -p <pid> -o pid=,command=`. If the process is alive, wait; never remove its lock. If the process has exited, remove only that leftover lock and retry. The two possible lock files are `config/codex-image-manifest.json.lock` and `config/codex-image-import.lock`. A Codex operator can perform this local recovery without another user approval. Locks are never automatically removed solely because time elapsed.
+
+## Automatic local Codex workflow
+
+Ask Codex to use `.codex/skills/compute-current-images/SKILL.md` for pending article artwork. The reusable workflow checks live production alignment, prepares a bounded queue, invokes native generation, reviews the result, imports the actual output, and verifies registration without another manual handoff. A native tool call runs inside Codex; an npm process cannot call the active desktop session. This does not install a background schedule.
+
+Prepare the next job without modifying any files:
+
+```sh
+node scripts/prepare-codex-images.mjs --limit 1
+```
+
+The queue includes a canonical article fingerprint. Pass it when importing generated artwork so a revised article cannot silently receive artwork prepared for an earlier version:
+
+```sh
+node scripts/import-codex-image.mjs --id <article-id> --file <generated-image-path> --fingerprint <queued-fingerprint>
+```
+
+Keep the returned fingerprint throughout generation and visual review. Existing registered/approved artwork is preserved by default. A failed native generation leaves the job pending; no API fallback or generated-image claim is made. The built-in tool's model selection is controlled by Codex; the repository does not force or infer `gpt-image-2` from the name `image2`.
+
+Partial imports are recoverable: a valid source registration without applied article metadata or output files is returned as `register_existing`. Codex reuses that local source rather than generating or paying for another image. Registration re-reads the article collection after image processing, checks the prompt revision again, and merges only image metadata into the latest records. Its lock coordinates image importers; unrelated writers do not share it, so avoid running separate news writers against the same checkout during import. Detected collection changes stop the import for retry.
