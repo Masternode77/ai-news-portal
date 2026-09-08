@@ -140,3 +140,14 @@ const sources = (columnRecord.sources || [])
     </article>
   </main>
 </Layout>
+
+<style>
+  .column-detail .detail-card {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .column-detail .detail-body {
+    min-width: 0;
+    max-width: 100%;
+  }
+</style>

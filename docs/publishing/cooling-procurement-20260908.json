@@ -83,6 +83,16 @@
     "testsPassed": 25,
     "buildPages": 92,
     "typeErrors": 0,
-    "typeWarnings": 0
+    "typeWarnings": 0,
+    "mobileRegression": {
+      "widths": [
+        390,
+        1440
+      ],
+      "headingsWithinViewport": true,
+      "imagesLoaded": true,
+      "pageErrors": 0,
+      "fix": "Bound column grid tracks and allow the detail body to shrink"
+    }
   }
 }
