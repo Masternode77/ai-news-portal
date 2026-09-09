@@ -44738,130 +44738,21 @@
         "1": true,
         "2": true
       }
+    },
+    "2026-09-10": {
+      "date": "2026-09-10",
+      "createdAt": "2026-09-09T18:25:03.307Z",
+      "refreshedAt": "2026-09-09T18:25:03.307Z",
+      "candidateWindowHours": 24,
+      "curatedItems": [],
+      "curatedIds": [],
+      "publishedIds": [],
+      "slotPublications": {
+        "0": true
+      }
     }
   },
   "runHistory": [
-    {
-      "at": "2026-07-31T00:04:54.862Z",
-      "day": "2026-07-31",
-      "slot": 1,
-      "publishedCount": 0,
-      "signalCardCount": 1,
-      "archiveOnlyCount": 0,
-      "repetitionBlockedCount": 1,
-      "publishedIds": [],
-      "processedIds": [
-        "cc3770092753e460",
-        "1ce47aa37efb89ff"
-      ],
-      "blockedCount": 1,
-      "blockedItems": [
-        {
-          "id": "cc3770092753e460",
-          "title": "Genesis Mission Awardee Hopes to Challenge ASML with X-Ray Lithography",
-          "infrastructure_relevance_score": 1,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud, high-performance computing)",
-            "cloud_capacity_relevance:0.32(hyperscalers)",
-            "semiconductor_relevance:1.00(semiconductor, semiconductors, amd)",
-            "power_grid_relevance:0.22(power)"
-          ],
-          "extraction_quality_score": 0.98,
-          "source_domain_adapter": "generic",
-          "content_length": 1353,
-          "boilerplate_ratio": 0,
-          "repetition_blocked": false,
-          "repetition_block_reasons": [],
-          "repetition_check": null,
-          "expert_insight_complete": true,
-          "expert_insight_missing_fields": [],
-          "reason": "fail_closed: source_text_incomplete:ellipsis_truncation_artifact, ellipsis_truncation_artifact"
-        }
-      ],
-      "repetitionBlockedItems": [
-        {
-          "id": "1ce47aa37efb89ff",
-          "title": "AMD’s Physical AI Plans Come Into Focus as Company Launches Ryzen Embedded AI X100",
-          "infrastructure_relevance_score": 0.914,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "data_center_relevance:0.42(datacenter)",
-            "cloud_capacity_relevance:0.32(hyperscalers)",
-            "semiconductor_relevance:0.52(amd, gpu)",
-            "power_grid_relevance:0.22(power)"
-          ],
-          "extraction_quality_score": 1,
-          "source_domain_adapter": "servethehome",
-          "content_length": 1670,
-          "boilerplate_ratio": 0,
-          "repetition_blocked": true,
-          "repetition_block_reasons": [
-            "repeated_sentence_ratio>0.12",
-            "heading_sequence_similarity>0.75",
-            "conclusion_similarity>0.7"
-          ],
-          "repetition_check": {
-            "compared_article_count": 20,
-            "repeated_sentence_ratio": 0.2857142857142857,
-            "repeated_paragraph_ratio": 0.3333333333333333,
-            "heading_sequence_similarity": 1,
-            "banned_phrase_count": 0,
-            "banned_phrase_counts": {},
-            "recent_banned_phrase_counts": {},
-            "ngram_overlap": 0.6792452830188679,
-            "blueprint_repetition": 1,
-            "conclusion_similarity": 0.9511897312113418,
-            "repeated_sentence_count": 2,
-            "repeated_paragraph_count": 2,
-            "heading_sequence": [
-              "System Change",
-              "Bottleneck",
-              "Engineering Tradeoff",
-              "Validation Metric"
-            ],
-            "blocked": true,
-            "reasons": [
-              "repeated_sentence_ratio>0.12",
-              "heading_sequence_similarity>0.75",
-              "conclusion_similarity>0.7"
-            ]
-          },
-          "expert_insight_complete": true,
-          "expert_insight_missing_fields": [],
-          "reason": "repeated_sentence_ratio>0.12; heading_sequence_similarity>0.75; conclusion_similarity>0.7"
-        }
-      ],
-      "signalCardItems": [
-        {
-          "id": "cc3770092753e460",
-          "title": "Genesis Mission Awardee Hopes to Challenge ASML with X-Ray Lithography",
-          "infrastructure_relevance_score": 1,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud, high-performance computing)",
-            "cloud_capacity_relevance:0.32(hyperscalers)",
-            "semiconductor_relevance:1.00(semiconductor, semiconductors, amd)",
-            "power_grid_relevance:0.22(power)"
-          ],
-          "extraction_quality_score": 0.98,
-          "source_domain_adapter": "generic",
-          "content_length": 1353,
-          "boilerplate_ratio": 0,
-          "repetition_blocked": false,
-          "repetition_block_reasons": [],
-          "repetition_check": null,
-          "expert_insight_complete": true,
-          "expert_insight_missing_fields": [],
-          "reason": "fail_closed: source_text_incomplete:ellipsis_truncation_artifact, ellipsis_truncation_artifact"
-        }
-      ],
-      "archiveOnlyItems": []
-    },
     {
       "at": "2026-07-31T09:51:40.301Z",
       "day": "2026-07-31",
@@ -51209,9 +51100,28 @@
         "token_budget": 60000,
         "call_budget": 40
       }
+    },
+    {
+      "at": "2026-09-09T18:25:03.307Z",
+      "day": "2026-09-10",
+      "slot": 0,
+      "publishedCount": 0,
+      "authoredColumn": {
+        "published": false,
+        "reason": "no_qualifying_story"
+      },
+      "llmUsage": {
+        "calls": 1,
+        "failures": 0,
+        "prompt_tokens": 415,
+        "completion_tokens": 98,
+        "total_tokens": 513,
+        "token_budget": 60000,
+        "call_budget": 40
+      }
     }
   ],
-  "lastRunAt": "2026-09-09T12:19:26.864Z",
+  "lastRunAt": "2026-09-09T18:25:03.307Z",
   "authored": {
     "lastColumnAt": "2026-09-08T14:48:51.667Z",
     "columnsByDay": {
