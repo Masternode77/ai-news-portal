@@ -210,9 +210,21 @@ const DOCKET_COMPUTE_CONTEXT_TERMS = [
   'cloud region',
   'cloud capacity',
   'availability zone',
-  'servers',
+  // "servers" alone is agency boilerplate ("the filing is available from
+  // agency servers"); only server capacity language counts.
   'server farm',
+  'server farms',
   'server load',
+  'server rack',
+  'server racks',
+  'server capacity',
+  'server fleet',
+  'server hall',
+  'server halls',
+  'server cluster',
+  'server clusters',
+  'gpu servers',
+  'ai servers',
   'digital infrastructure',
   'bitcoin',
 ];

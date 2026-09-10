@@ -181,9 +181,9 @@ these are in the registry.
   as a signal card at 0.615 on that score alone. `classifyInfrastructureRelevance()` now caps
   such a notice at 0.44 (`procedural_regulatory_docket_without_compute_context`) unless the text
   carries an unambiguous compute term ("AI", "artificial intelligence", "GPU", "data center",
-  "colocation", "hyperscale", "semiconductor", "HPC", "large load", co-location, servers, digital
-  infrastructure, crypto mining; a bare "training", "inference", "accelerator" or "Colo." does
-  not count) in its source evidence (title, extracted body or feed snippet, source metadata;
+  "colocation", "hyperscale", "semiconductor", "HPC", "large load", co-location, server racks or
+  farms, digital infrastructure, crypto mining; a bare "training", "inference", "accelerator",
+  "servers" or "Colo." does not count) in its source evidence (title, extracted body or feed snippet, source metadata;
   never the generated summary or insight), and `routeStrictInfrastructureRelevance()` archives it
   whatever its stored score, so the public
   content tier pass hides a record published before the guard existed. The guard only fires for
