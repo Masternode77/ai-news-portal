@@ -44745,7 +44745,7 @@
     "2026-09-10": {
       "date": "2026-09-10",
       "createdAt": "2026-09-09T18:25:03.307Z",
-      "refreshedAt": "2026-09-10T12:13:07.906Z",
+      "refreshedAt": "2026-09-10T12:47:21.846Z",
       "candidateWindowHours": 24,
       "curatedItems": [],
       "curatedIds": [],
@@ -44762,138 +44762,6 @@
     }
   },
   "runHistory": [
-    {
-      "at": "2026-08-01T16:07:11.336Z",
-      "day": "2026-08-02",
-      "slot": 0,
-      "publishedCount": 0,
-      "signalCardCount": 1,
-      "archiveOnlyCount": 0,
-      "repetitionBlockedCount": 1,
-      "publishedIds": [],
-      "processedIds": [
-        "c96996609cb254ae",
-        "2fc5e9b7c0b127b6"
-      ],
-      "blockedCount": 1,
-      "blockedItems": [
-        {
-          "id": "c96996609cb254ae",
-          "title": "Sponsored: Tackling complexity in AI data centers: leveraging fully integrated solutions",
-          "infrastructure_relevance_score": 0.98,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:0.78",
-            "data_center_relevance:1.00(data center, data centers, colocation)",
-            "power_grid_relevance:0.22(power)",
-            "cooling_relevance:0.82(cooling, liquid cooling)",
-            "capital_markets_relevance:0.28(capex)",
-            "enterprise_ai_infrastructure_relevance:0.42(storage, ai workloads)"
-          ],
-          "extraction_quality_score": 1,
-          "source_domain_adapter": "generic",
-          "content_length": 1793,
-          "boilerplate_ratio": 0,
-          "repetition_blocked": false,
-          "repetition_block_reasons": [],
-          "repetition_check": null,
-          "expert_insight_complete": false,
-          "expert_insight_missing_fields": [
-            "concrete_facts",
-            "named_companies"
-          ],
-          "reason": "expert_insight_missing_fields concrete_facts, named_companies"
-        }
-      ],
-      "repetitionBlockedItems": [
-        {
-          "id": "2fc5e9b7c0b127b6",
-          "title": "Supermicro Rack Series Adds Ten Models Rated for 5,500 lb and 3,000 Racks a Month",
-          "infrastructure_relevance_score": 1,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, gpu clusters, neocloud)",
-            "data_center_relevance:0.84(data center, data centers)",
-            "cloud_capacity_relevance:0.32(hyperscalers)",
-            "semiconductor_relevance:0.50(nvidia, gpu)",
-            "power_grid_relevance:0.22(power)",
-            "cooling_relevance:1.00(cooling, liquid cooling, cdus)"
-          ],
-          "extraction_quality_score": 1,
-          "source_domain_adapter": "storagereview",
-          "content_length": 1791,
-          "boilerplate_ratio": 0,
-          "repetition_blocked": true,
-          "repetition_block_reasons": [
-            "repeated_sentence_ratio>0.12",
-            "heading_sequence_similarity>0.75",
-            "conclusion_similarity>0.7"
-          ],
-          "repetition_check": {
-            "compared_article_count": 20,
-            "repeated_sentence_ratio": 0.2857142857142857,
-            "repeated_paragraph_ratio": 0.3333333333333333,
-            "heading_sequence_similarity": 1,
-            "banned_phrase_count": 0,
-            "banned_phrase_counts": {},
-            "recent_banned_phrase_counts": {},
-            "ngram_overlap": 0.4339622641509434,
-            "blueprint_repetition": 1,
-            "conclusion_similarity": 0.9271050693011066,
-            "repeated_sentence_count": 2,
-            "repeated_paragraph_count": 2,
-            "heading_sequence": [
-              "System Change",
-              "Bottleneck",
-              "Engineering Tradeoff",
-              "Validation Metric"
-            ],
-            "blocked": true,
-            "reasons": [
-              "repeated_sentence_ratio>0.12",
-              "heading_sequence_similarity>0.75",
-              "conclusion_similarity>0.7"
-            ]
-          },
-          "expert_insight_complete": true,
-          "expert_insight_missing_fields": [],
-          "reason": "repeated_sentence_ratio>0.12; heading_sequence_similarity>0.75; conclusion_similarity>0.7"
-        }
-      ],
-      "signalCardItems": [
-        {
-          "id": "c96996609cb254ae",
-          "title": "Sponsored: Tackling complexity in AI data centers: leveraging fully integrated solutions",
-          "infrastructure_relevance_score": 0.98,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:0.78",
-            "data_center_relevance:1.00(data center, data centers, colocation)",
-            "power_grid_relevance:0.22(power)",
-            "cooling_relevance:0.82(cooling, liquid cooling)",
-            "capital_markets_relevance:0.28(capex)",
-            "enterprise_ai_infrastructure_relevance:0.42(storage, ai workloads)"
-          ],
-          "extraction_quality_score": 1,
-          "source_domain_adapter": "generic",
-          "content_length": 1793,
-          "boilerplate_ratio": 0,
-          "repetition_blocked": false,
-          "repetition_block_reasons": [],
-          "repetition_check": null,
-          "expert_insight_complete": false,
-          "expert_insight_missing_fields": [
-            "concrete_facts",
-            "named_companies"
-          ],
-          "reason": "expert_insight_missing_fields concrete_facts, named_companies"
-        }
-      ],
-      "archiveOnlyItems": []
-    },
     {
       "at": "2026-08-01T23:59:18.367Z",
       "day": "2026-08-02",
@@ -50766,9 +50634,28 @@
         "token_budget": 60000,
         "call_budget": 40
       }
+    },
+    {
+      "at": "2026-09-10T12:47:21.846Z",
+      "day": "2026-09-10",
+      "slot": 2,
+      "publishedCount": 0,
+      "authoredColumn": {
+        "published": false,
+        "reason": "no_qualifying_story"
+      },
+      "llmUsage": {
+        "calls": 1,
+        "failures": 0,
+        "prompt_tokens": 1408,
+        "completion_tokens": 60,
+        "total_tokens": 1468,
+        "token_budget": 60000,
+        "call_budget": 40
+      }
     }
   ],
-  "lastRunAt": "2026-09-10T12:13:07.906Z",
+  "lastRunAt": "2026-09-10T12:47:21.846Z",
   "authored": {
     "lastColumnAt": "2026-09-08T14:48:51.667Z",
     "columnsByDay": {
