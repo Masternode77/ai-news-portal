@@ -112,6 +112,41 @@ const ADJACENT_ONLY_TOPICS = [
   'consumer hardware',
 ];
 
+// Procedural filings from broad government dockets (the Federal Register
+// agency feeds): hydro relicensing and EIS availability notices, pipeline
+// blanket authorizations, exempt wholesale generator and information-
+// collection notices. Their text is thick with "power" and "megawatts", which
+// saturates the grid dimension on its own (run #3199 published a hydro EIS
+// notice as a signal card on that score), yet says nothing about compute.
+// Without an explicit compute or large-load hook they stay archive-only.
+const PROCEDURAL_DOCKET_PATTERNS = [
+  /\bhydroelectric\b/,
+  /\bhydropower\b/,
+  /\brelicens(?:e|es|ed|ing)\b/,
+  /\benvironmental (?:impact statement|assessment)\b/,
+  /\bnotice of (?:availability|intent to prepare|application)\b/,
+  /\bblanket (?:authorization|certificate)\b/,
+  /\bexempt wholesale generator\b/,
+  /\bforeign utility compan(?:y|ies)\b/,
+  /\binformation collection\b/,
+  /\bcombined notice of filings\b/,
+  /\bsunshine act\b/,
+  /\bgas transmission\b/,
+  /\bnatural gas pipeline\b/,
+  /\bpreliminary permit\b/,
+  /\bsurrender of (?:license|exemption)\b/,
+  /\bmarket-based rate\b/,
+];
+
+const COMPUTE_CONTEXT_PATTERNS = [
+  /\blarge loads?\b/,
+  /\bco-?locat(?:e|ed|es|ion|ing)\b/,
+  /\bcomput(?:e|ing)\b/,
+  /\bservers?\b/,
+  /\bdigital infrastructure\b/,
+  /\bcrypto(?:currency)? min(?:e|es|ing|ers)\b/,
+];
+
 // Korean source text is normalized into the same narrow, physical
 // infrastructure vocabulary used by the English classifier. Keep aliases
 // concrete: broad AI or finance language must not create an infrastructure hit.
@@ -357,6 +392,38 @@ function buildArticleText(article = {}) {
   ].filter(Boolean).join(' ');
 }
 
+function isProceduralDocket(text = '') {
+  return PROCEDURAL_DOCKET_PATTERNS.some((pattern) => pattern.test(text));
+}
+
+function hasComputeContext(text = '', dimensionResults = {}) {
+  if (hasAny(text, AI_TERMS)) return true;
+  if (COMPUTE_CONTEXT_PATTERNS.some((pattern) => pattern.test(text))) return true;
+  return [
+    'data_center_relevance',
+    'cloud_capacity_relevance',
+    'semiconductor_relevance',
+    'enterprise_ai_infrastructure_relevance',
+  ].some((key) => Number(dimensionResults[key] || 0) >= 0.2);
+}
+
+// Shared with the public lane router so a stored score cannot keep a
+// procedural docket notice on the homepage once the guard exists.
+export function proceduralDocketWithoutComputeContext(article = {}) {
+  const text = normalizeText([
+    buildArticleText(article),
+    article.cleaned_source_text,
+    article.fullArticleText,
+  ].filter(Boolean).join(' '));
+  if (!isProceduralDocket(text)) return false;
+  const titleText = normalizeText(article.title || '');
+  const dimensionResults = {};
+  for (const [key, terms] of Object.entries(DIMENSIONS)) {
+    dimensionResults[key] = scoreTerms(text, titleText, terms).score;
+  }
+  return !hasComputeContext(text, dimensionResults);
+}
+
 // The AI lane: stories whose subject is AI itself (frontier models, labs,
 // policy, security, compute demand) rather than the infrastructure beneath it.
 // Scored separately so the wire's infrastructure gates stay honest while the
@@ -516,6 +583,7 @@ export function classifyInfrastructureRelevance(article = {}) {
   const hasWeakAiAdjacent = hasAi && hasAny(text, WEAK_AI_ADJACENT_TERMS);
   const hardArchiveTopic = hasHardArchiveTopic(text);
   const hasAdjacentOnlyTopic = hasAny(text, ADJACENT_ONLY_TOPICS);
+  const proceduralDocket = isProceduralDocket(text) && !hasComputeContext(text, dimensionResults);
 
   if (hasAi && hasInfra) {
     dimensionResults.direct_ai_infrastructure_relevance = Math.min(
@@ -605,6 +673,10 @@ export function classifyInfrastructureRelevance(article = {}) {
     overall = Math.min(overall, 0.62);
   }
 
+  if (proceduralDocket) {
+    overall = Math.min(overall, 0.44);
+  }
+
   overall = Number(overall.toFixed(3));
   // An abstract-only source (arXiv: CC0 metadata, never the e-print) cannot
   // carry a 4,500-character local memo; the first attempt was quarantined for
@@ -629,6 +701,9 @@ export function classifyInfrastructureRelevance(article = {}) {
   }
   if (tier !== uncappedTier) {
     reasons.push('abstract_only_source_capped_at_signal_card');
+  }
+  if (proceduralDocket) {
+    reasons.push('procedural_regulatory_docket_without_compute_context');
   }
 
   return {

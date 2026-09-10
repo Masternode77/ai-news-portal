@@ -1,4 +1,4 @@
-import { classifyInfrastructureRelevance } from './relevance-classifier.mjs';
+import { classifyInfrastructureRelevance, proceduralDocketWithoutComputeContext } from './relevance-classifier.mjs';
 import { normalizeProperNouns } from './proper-noun-normalizer.mjs';
 import { abstractOnlyTextScope } from './source-registry.mjs';
 import { routeStoryArchetype } from './story-archetype-router.mjs';
@@ -299,8 +299,13 @@ export function routeStrictInfrastructureRelevance(article = {}) {
   const hasLayer = namesConcreteInfrastructureLayer(article);
   const conditionalArchive = CONDITIONAL_ARCHIVE_PATTERNS.some((pattern) => pattern.test(text)) && !hasLayer;
   const koreanMarketChatterWithoutInfrastructure = KOREAN_SPECULATIVE_MARKET_PATTERN.test(text) && !hasLayer;
+  // A procedural docket notice (hydro relicensing, pipeline authorizations,
+  // information collections) names power and megawatts, so it passes the
+  // layer check and can carry a stored score above the adjacent threshold;
+  // without compute context it is archived here as well as in the classifier.
+  const proceduralDocket = proceduralDocketWithoutComputeContext(article);
 
-  if (isHardArchive(text) || conditionalArchive || koreanMarketChatterWithoutInfrastructure || archetype.id === 'archive-only') {
+  if (isHardArchive(text) || conditionalArchive || koreanMarketChatterWithoutInfrastructure || proceduralDocket || archetype.id === 'archive-only') {
     return {
       score,
       visibility: 'archive',
@@ -312,9 +317,11 @@ export function routeStrictInfrastructureRelevance(article = {}) {
       routing_decision: 'archive_only',
       blocked_reasons: koreanMarketChatterWithoutInfrastructure
         ? ['korean_market_chatter_without_physical_infrastructure_evidence']
-        : conditionalArchive
-          ? ['generic_non_infrastructure_topic']
-          : ['outside_compute_current_product_boundary'],
+        : proceduralDocket
+          ? ['procedural_regulatory_docket_without_compute_context']
+          : conditionalArchive
+            ? ['generic_non_infrastructure_topic']
+            : ['outside_compute_current_product_boundary'],
     };
   }
 

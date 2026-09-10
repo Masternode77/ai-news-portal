@@ -18,7 +18,8 @@ import { applyPublicRouting, routeStrictInfrastructureRelevance } from '../scrip
 import { canGenerateFullArticle } from '../scripts/lib/editorial-story-engine-v2.mjs';
 import { abstractOnlyTextScope } from '../scripts/lib/source-registry.mjs';
 import { fixtureArticle } from './fixtures/authored-column-fixture.mjs';
-import { classifyInfrastructureRelevance } from '../scripts/lib/relevance-classifier.mjs';
+import { classifyInfrastructureRelevance, proceduralDocketWithoutComputeContext } from '../scripts/lib/relevance-classifier.mjs';
+import { applyPublicContentTier } from '../scripts/lib/public-content-tier-router.mjs';
 import { ecPresscornerApiTarget, fetchArticleExtraction } from '../scripts/lib/source-fetch.mjs';
 import { activeRegistryFeeds, loadSourceRegistry } from '../scripts/lib/source-registry.mjs';
 import { sourceTextTargetDecision } from '../scripts/lib/source-text-fetcher.mjs';
@@ -383,6 +384,7 @@ test('Federal Register documents drop printed-page markers and the FR Doc traile
   const html = `<html><body><nav><a href="/">Federal Register</a></nav>
 <main><aside><p>This document has a comment period that ends in 30 days. Submit a formal comment now.</p></aside>
 <div id="fulltext_content_area" class="fulltext-content">
+<div class="document-headings-note"><p>Document headings vary by document type but may contain the following:</p><ul><li>the agency or agencies that issued and signed a document</li><li>the number of the CFR title and the number of each part the document amends, proposes to amend, or is directly related to</li></ul><p>See the Document Drafting Handbook for more details.</p></div>
 <p>The Federal Energy Regulatory Commission hereby gives notice that the interconnection procedures for large loads above 100 megawatts will be revised to require cluster studies and firm transmission service commitments before energization. Start Printed Page 43210 Any person desiring to intervene or to protest this filing must file in accordance with Rules 211 and 214 of the Commission's Rules of Practice and Procedure.</p>
 <p>The Commission encourages electronic submission of protests and interventions in lieu of paper using the eFiling link at the Commission's website, and comment date requirements apply to every party that seeks to participate in the proceeding.</p>
 <p>[FR Doc. 2026-18361 Filed 9-8-26; 8:45 am]</p>
@@ -400,7 +402,97 @@ test('Federal Register documents drop printed-page markers and the FR Doc traile
   assert.ok(!/BILLING CODE/.test(articleText));
   assert.ok(!/FR Doc\./.test(articleText));
   assert.ok(!/comment period that ends/.test(articleText));
+  assert.ok(!/Document headings vary/.test(articleText), articleText);
+  assert.ok(!/Document Drafting Handbook/.test(articleText), articleText);
+  assert.ok(!/the agency or agencies that issued/.test(articleText), articleText);
+  assert.ok(articleText.startsWith('The Federal Energy Regulatory Commission hereby gives notice'), articleText);
   assert.equal(extractionQa.source_domain_adapter, 'federalregister');
+});
+
+// Run #3199 published this hydro relicensing notice as a signal card: the
+// extracted text names "power" and "megawatts" often enough to saturate the
+// grid dimension (0.615) although nothing in it concerns compute.
+const HYDRO_NOTICE = {
+  id: 'aa7900ef9280e5f6',
+  sourceRegistryId: 'federal-register-ferc',
+  source: 'Federal Register',
+  url: 'https://www.federalregister.gov/documents/2026/09/10/2026-18456/idaho-power-company-notice-of-availability-of-the-final-supplemental-environmental-impact-statement',
+  title: 'Idaho Power Company; Notice of Availability of the Final Supplemental Environmental Impact Statement for the Hells Canyon Hydroelectric Project',
+  snippet: 'Idaho Power Company has released a final supplemental environmental impact statement for the Hells Canyon Hydroelectric Project, which generates over 1,222 MW of power.',
+  contentText: 'In accordance with the National Environmental Policy Act of 1969 and the Federal Energy Regulatory Commission\'s regulations, the Office of Energy Projects has reviewed Idaho Power Company\'s application for a new license to continue to operate and maintain the Hells Canyon Hydroelectric Project and has prepared a final supplemental environmental impact statement for the project. The project consists of three developments with a total installed capacity of 1,222 megawatts of power. The project generates power for the utility\'s customers and the power is delivered over transmission lines. Staff recommends licensing the project with the measures in the final supplemental EIS. The final supplemental EIS is available for review; copies can be obtained from the Commission\'s public reference room.',
+  publishedAt: '2026-09-10T04:00:00.000Z',
+};
+
+const DOCKET_NOTICES = [
+  {
+    title: 'Enable Gas Transmission, LLC; Notice of Request Under Blanket Authorization and Establishing Intervention and Protest Deadline',
+    contentText: 'Take notice that Enable Gas Transmission filed a prior notice request under its blanket certificate to abandon a compressor unit and to replace pipeline facilities. The power of the replacement compressor is 1,200 horsepower. Any person may protest or intervene in the proceeding.',
+  },
+  {
+    title: 'Agency Information Collection Extension',
+    contentText: 'The Department of Energy invites public comment on a proposed three-year extension of an information collection for power and transmission data submitted by utilities under the Federal Power Act.',
+  },
+  {
+    title: 'Notice of Effectiveness of Exempt Wholesale Generator and Foreign Utility Company Status',
+    contentText: 'Take notice that the exempt wholesale generator status of the listed power companies and the foreign utility company status of the listed entities is effective. The generators sell power at wholesale and interconnect with the utility grid.',
+  },
+];
+
+test('procedural Federal Register docket notices stay archive-only without compute context', () => {
+  // Given: the notice exactly as it reached the wire, with the score it earned there.
+  assert.equal(proceduralDocketWithoutComputeContext(HYDRO_NOTICE), true);
+  const classified = classifyInfrastructureRelevance(HYDRO_NOTICE);
+  assert.equal(classified.infrastructure_relevance_tier, 'archive_only', JSON.stringify(classified));
+  assert.ok(classified.infrastructure_relevance_score <= 0.44, String(classified.infrastructure_relevance_score));
+  assert.ok(classified.infrastructure_relevance_reasons.includes('procedural_regulatory_docket_without_compute_context'));
+
+  // The stored 0.615 must not keep it on the homepage: the router archives it
+  // and the public content tier pass hides it on the next run.
+  const stored = { ...HYDRO_NOTICE, infrastructure_relevance_score: 0.615, infrastructure_relevance_tier: 'signal_card', homepagePublished: true, signalCardOnly: true };
+  const route = routeStrictInfrastructureRelevance(stored);
+  assert.equal(route.visibility, 'archive');
+  assert.deepEqual(route.blocked_reasons, ['procedural_regulatory_docket_without_compute_context']);
+  const tiered = applyPublicContentTier(stored);
+  assert.equal(tiered.homepagePublished, false);
+  assert.equal(tiered.archiveOnly, true);
+  assert.equal(tiered.public_content_tier, 'hidden');
+
+  for (const notice of DOCKET_NOTICES) {
+    const result = classifyInfrastructureRelevance({ ...notice, source: 'Federal Register' });
+    assert.equal(result.infrastructure_relevance_tier, 'archive_only', `${notice.title}: ${result.infrastructure_relevance_score}`);
+    assert.equal(routeStrictInfrastructureRelevance({ ...notice, source: 'Federal Register', infrastructure_relevance_score: 0.7 }).visibility, 'archive', notice.title);
+  }
+});
+
+test('the docket guard releases notices that carry compute or large-load context', () => {
+  // Given: the same hydro notice once the filing concerns a co-located data center load.
+  const coLocated = {
+    ...HYDRO_NOTICE,
+    contentText: `${HYDRO_NOTICE.contentText} The licensee also asks the Commission to approve a 300 MW large load interconnection for a data center campus co-located at the plant.`,
+  };
+  assert.equal(proceduralDocketWithoutComputeContext(coLocated), false);
+  const classified = classifyInfrastructureRelevance(coLocated);
+  assert.ok(classified.infrastructure_relevance_score >= 0.55, String(classified.infrastructure_relevance_score));
+  assert.ok(!classified.infrastructure_relevance_reasons.includes('procedural_regulatory_docket_without_compute_context'));
+  assert.notEqual(routeStrictInfrastructureRelevance(coLocated).visibility, 'archive');
+
+  // A FERC rulemaking on large-load interconnection is a docket item too, but it is the beat.
+  const largeLoadRule = {
+    source: 'Federal Register',
+    title: 'Large Load Interconnection Procedures; Notice of Proposed Rulemaking',
+    contentText: 'The Commission proposes to revise the interconnection procedures for large loads above 100 megawatts, including data centers, to require cluster studies and firm transmission service commitments before energization.',
+  };
+  assert.equal(proceduralDocketWithoutComputeContext(largeLoadRule), false);
+  assert.ok(classifyInfrastructureRelevance(largeLoadRule).infrastructure_relevance_score >= 0.55);
+
+  // A plain grid item without a docket pattern is untouched by the guard.
+  const gridOrder = {
+    source: 'U.S. Department of Energy',
+    title: 'Energy Secretary Secures Carolinas\' Grid Ahead of Holiday Weekend',
+    contentText: 'The Department of Energy issued an emergency order directing the utility to keep 800 megawatts of generation available to the grid through the weekend peak.',
+  };
+  assert.equal(proceduralDocketWithoutComputeContext(gridOrder), false);
+  assert.ok(!classifyInfrastructureRelevance(gridOrder).infrastructure_relevance_reasons.includes('procedural_regulatory_docket_without_compute_context'));
 });
 
 test('Commission press-corner pages are read through the same-host documents API', async () => {

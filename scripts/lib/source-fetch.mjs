@@ -142,6 +142,9 @@ const SOURCE_ADAPTERS = [
       /\[FR Doc\.[\s\S]*$/i,
       /BILLING CODE [0-9A-Z-]+/gi,
       /Start Printed Page \d+/gi,
+      // The page's explanatory note about document headings sits inside the
+      // full-text area and otherwise opens every extracted document.
+      /(?:Document Headings\s+)?Document headings vary by document type but may contain the following:?(?:[\s\S]{0,900}?Document Drafting Handbook[^.]*\.)?\s*/gi,
     ],
   },
   {

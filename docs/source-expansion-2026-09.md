@@ -174,6 +174,22 @@ these are in the registry.
 - `parseFeedItem()` also flattens markup-wrapped feed fields (`textValue()`): the same run failed
   the ACER feed with "(item.title || '').trim is not a function" because every ACER title is an
   anchor element, which rss-parser returns as an object.
+- Procedural docket notices stay archive-only. The Federal Register agency feeds carry hydro
+  relicensing and EIS availability notices, pipeline blanket authorizations, exempt wholesale
+  generator and information-collection notices whose text names "power" and "megawatts" often
+  enough to saturate the grid dimension: run #3199 published the Hells Canyon hydro SEIS notice
+  as a signal card at 0.615 on that score alone. `classifyInfrastructureRelevance()` now caps
+  such a notice at 0.44 (`procedural_regulatory_docket_without_compute_context`) unless the text
+  carries compute or large-load context (AI terms; the data center, cloud, semiconductor or
+  enterprise dimensions; "large load", co-location, computing, servers, digital infrastructure),
+  and `routeStrictInfrastructureRelevance()` archives it whatever its stored score, so the public
+  content tier pass hides a record published before the guard existed. A FERC large-load
+  rulemaking is a docket item too, but it names data centers and passes.
+- The Federal Register adapter drops the page's "Document headings vary by document type" note,
+  which sits inside `fulltext_content_area` and opened every extracted document. (Feed Probe
+  cannot read FR document pages: with the RSS accept header the site answers with its
+  `unblock.federalregister.gov` access page; Terms Probe, with a browser accept header, and the
+  pipeline fetcher get the document.)
 - Tests: `tests/source-expansion-2026-09.test.mjs` covers the link/date repair, the pool
   reservation rule, both adapters, and checks that every expansion row is text-authorized for its
   real article host while every unreviewed row stays unfetched.
@@ -189,7 +205,12 @@ these are in the registry.
    arXiv items are abstract-scoped and always publish as signal cards (linked briefs).
    Verification run #3199 on 2026-09-10 fetched 21 of the 22 feeds, loaded a 30-item pool
    (arXiv 6, Federal Register 6, DOE 5, NRC 5, GAO 3, DESNZ 2, EIA 1, FTC 1, White House 1),
-   and published a Federal Register signal card to the homepage and RSS.
+   and published a Federal Register signal card to the homepage and RSS. The second forced run
+   (#3200, v0.0.27, after the ACER fix and the abstract cap) fetched all 22 feeds
+   (`failedSources=0`), loaded a 30-item pool (arXiv 6, Federal Register 6, NRC 5, DOE 4, GAO 3,
+   DESNZ 2, ACER 1, EIA 1, FTC 1, White House 1) in which the six arXiv abstracts entered as two
+   signal cards and four archive-only items and nothing scored `full_memo`, and the curation
+   model selected none of the eight fresh candidates, so that run published nothing.
 3. Authored columns draw on the same authorized pool and archive. A Federal Register order or an
    ACER assessment becomes column material the moment its extraction artifact passes, and its
    figures can enter the claim ledger as `verified_primary` because the text is the primary

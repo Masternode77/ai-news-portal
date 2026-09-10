@@ -195,6 +195,7 @@ Infrastructure relevance classification:
 - RSS items receive a preliminary score in `fetch-feeds.mjs`; enriched items are rescored in `content.mjs` after full source extraction and editorial summary fields are available.
 - `infrastructure_relevance_score >= 0.75` routes an item to the full Compute Current memo path, subject to extraction QA.
 - `0.45 <= infrastructure_relevance_score < 0.75` routes an item to a short signal card only.
+- Procedural docket notices from broad government feeds (hydro relicensing, EIS availability, pipeline blanket authorizations, exempt wholesale generator and information-collection notices) are capped at 0.44 (`procedural_regulatory_docket_without_compute_context`) unless the text carries compute or large-load context; `routeStrictInfrastructureRelevance()` archives them on the same predicate (`proceduralDocketWithoutComputeContext()`), whatever score a record already carries.
 - `infrastructure_relevance_score < 0.45` marks an item `archiveOnly: true` and `homepagePublished: false`. The final public product-fit gate and current source-text authorization are universal public-output requirements; there is no manual approval bypass.
 
 Expert insight extraction:
