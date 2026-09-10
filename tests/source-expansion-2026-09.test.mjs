@@ -296,7 +296,8 @@ test('the autonomous source scan keeps the abstract scope and the selection engi
   assert.equal(capped.held_signals.length, 1);
   assert.equal(capped.held_signals[0].editorial_route, 'Watchlist Signal');
   assert.equal(capped.held_signals[0].abstract_only_source, true);
-  const uncapped = selectEditorialSignals([{ ...cluster, representative_source: { ...scanned, source_text_scope: undefined } }]);
+  // A full-document source (registry id without a text scope, nothing stamped) is selected as usual.
+  const uncapped = selectEditorialSignals([{ ...cluster, representative_source: { ...scanned, source_text_scope: undefined, sourceRegistryId: 'doe-newsroom' } }]);
   assert.equal(uncapped.selected_for_analysis.length, 1);
   assert.equal(uncapped.selected_for_analysis[0].editorial_route, 'Featured Analysis');
 });
