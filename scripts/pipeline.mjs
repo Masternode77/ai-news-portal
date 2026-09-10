@@ -38,7 +38,7 @@ import {
   writePipelineState,
 } from './lib/state-store.mjs';
 import { stableArticleId, truncate } from './lib/normalize.mjs';
-import { loadSourceRegistry, textAuthorizedRecords } from './lib/source-registry.mjs';
+import { loadSourceRegistry, loadSourceRegistrySync, textAuthorizedRecords } from './lib/source-registry.mjs';
 import { generateAuthoredColumn } from './lib/authored-column-engine.mjs';
 import { generateArticleImageSet, metadataPatchFromImageSet } from './lib/image2-provider.mjs';
 import { appendAuthoredColumn, readAuthoredColumns } from './lib/authored-column-store.mjs';
@@ -175,13 +175,16 @@ export function authorizedTextFallbackPool(records = [], sources = [], now = new
 // Column candidates span the whole recent corpus, not just the 30-item
 // public surface: the fetched pool plus anything archived in the last two
 // weeks. The surface alone ran dry once every story on it had a column.
-export function columnCandidateRecords({ latest = [], pool = [], existingArchive = [], now = new Date() } = {}) {
+export function columnCandidateRecords({ latest = [], pool = [], existingArchive = [], now = new Date(), sources } = {}) {
   const archiveCutoff = now.getTime() - 14 * 86_400_000;
   const recentArchive = (existingArchive || []).filter((article) => {
     const stamp = new Date(article?.analysisPublishedAt || article?.publishedAt || 0).getTime();
     return Number.isFinite(stamp) && stamp >= archiveCutoff;
   });
-  return dedupeById([...(latest || []), ...(pool || []), ...recentArchive]);
+  // Archived and surface records predate the registry text scope; re-stamp it
+  // so an abstract-only record is recognised before column selection.
+  const registry = Array.isArray(sources) ? sources : loadSourceRegistrySync();
+  return hydrateSourceTextScope(dedupeById([...(latest || []), ...(pool || []), ...recentArchive]), registry);
 }
 
 async function loadPoolWithFallback(existingLatest) {

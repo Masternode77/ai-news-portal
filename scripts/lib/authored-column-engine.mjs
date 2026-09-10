@@ -33,6 +33,7 @@ import {
 import { isHeading, headingSequence } from './visible-body-length.mjs';
 import { buildColumnFigures } from './authored-column-figures.mjs';
 import { classifyAiTopicRelevance } from './relevance-classifier.mjs';
+import { loadSourceRegistrySync } from './source-registry.mjs';
 
 const CHARTER_RELATIVE_PATH = 'config/editorial/persona-charter.json';
 const STORY_KEY_WINDOW_HOURS = 72;
@@ -51,11 +52,29 @@ export function columnStoryRelevance(article = {}) {
 }
 const MIN_STORY_FACTS = 4;
 
+let registryCache = null;
+function registrySources(sources) {
+  if (Array.isArray(sources) && sources.length) return sources;
+  if (!registryCache) {
+    try {
+      registryCache = loadSourceRegistrySync();
+    } catch {
+      registryCache = [];
+    }
+  }
+  return registryCache;
+}
+
 // An abstract-only source (arXiv: CC0 metadata, never the e-print) is capped
 // at the signal-card lane on the wire; it cannot anchor a column either. It may
-// still corroborate a column whose primary source is a full document.
-export function abstractOnlySource(article = {}) {
-  return String(article?.source_text_scope || '').trim().toLowerCase() === 'abstract';
+// still corroborate a column whose primary source is a full document. Legacy
+// records predate the stamped field, so the registry row is consulted too.
+export function abstractOnlySource(article = {}, sources = []) {
+  if (String(article?.source_text_scope || '').trim().toLowerCase() === 'abstract') return true;
+  const id = String(article?.sourceRegistryId || '').trim().toLowerCase();
+  if (!id) return false;
+  const row = registrySources(sources).find((source) => String(source?.id || '').trim().toLowerCase() === id);
+  return String(row?.text_scope || '').trim().toLowerCase() === 'abstract';
 }
 
 // Resolves from the working directory first (the pipeline, Astro build, and
@@ -209,10 +228,10 @@ function frequencyCheck(authored, now, { force = false } = {}) {
 // Pass 0 — deterministic story selection. No LLM: relevance x evidence depth
 // x corroboration x freshness, with a hard floor so weak news never earns a
 // column. Returning null here is a normal outcome, not a failure.
-export function selectColumnStory({ candidates = [], pool = [], excludedStoryKeys = new Set(), now = new Date() } = {}) {
+export function selectColumnStory({ candidates = [], pool = [], excludedStoryKeys = new Set(), now = new Date(), sources = [] } = {}) {
   const scored = candidates
     .filter((article) => article?.id && article.title)
-    .filter((article) => !abstractOnlySource(article))
+    .filter((article) => !abstractOnlySource(article, sources))
     .filter((article) => article.expert_insight_complete === true || article.expert_insight?.expert_insight_complete === true)
     .filter((article) => columnStoryRelevance(article) >= MIN_STORY_RELEVANCE)
     .filter((article) => !excludedStoryKeys.has(storyKeyFor(article)))
@@ -457,6 +476,7 @@ export async function generateAuthoredColumn({
   state = {},
   now = new Date(),
   force = false,
+  sources = [],
   callModel = callOpenRouterText,
   model = AUTHORED_COLUMN_MODEL,
 } = {}) {
@@ -476,7 +496,7 @@ export async function generateAuthoredColumn({
   }
 
   const charter = loadPersonaCharter();
-  const selection = selectColumnStory({ candidates, pool, excludedStoryKeys: excluded, now });
+  const selection = selectColumnStory({ candidates, pool, excludedStoryKeys: excluded, now, sources });
   if (!selection) return { column: null, skipReason: 'no_qualifying_story' };
 
   const ledger = buildClaimLedger(clusterFor(selection), selection.article.id);

@@ -10,7 +10,7 @@ import {
   selectPoolItems,
   textValue,
 } from '../scripts/lib/fetch-feeds.mjs';
-import { authorizedTextFallbackPool } from '../scripts/pipeline.mjs';
+import { authorizedTextFallbackPool, columnCandidateRecords } from '../scripts/pipeline.mjs';
 import { abstractOnlySource, selectColumnStory } from '../scripts/lib/authored-column-engine.mjs';
 import { fixtureArticle } from './fixtures/authored-column-fixture.mjs';
 import { classifyInfrastructureRelevance } from '../scripts/lib/relevance-classifier.mjs';
@@ -230,6 +230,26 @@ test('an abstract-only record can never anchor an authored column', () => {
   assert.equal(selectColumnStory({ candidates: [abstractOnly], pool: [] }), null);
   const selected = selectColumnStory({ candidates: [abstractOnly, fixtureArticle()], pool: [abstractOnly] });
   assert.equal(selected?.article?.id, 'wire-001');
+
+  // And: a legacy record without the stamped field is recognised through its registry row,
+  // both from an explicit registry and from the production registry on disk.
+  const legacy = fixtureArticle({ id: 'legacy-arxiv', sourceRegistryId: 'arxiv-cs-ar' });
+  assert.equal(abstractOnlySource(legacy, [authorizedSource('arxiv-cs-ar', 'arxiv.org', { text_scope: 'abstract' })]), true);
+  assert.equal(abstractOnlySource(legacy), true);
+  assert.equal(selectColumnStory({ candidates: [legacy], pool: [] }), null);
+
+  // And: column candidates drawn from the archive are re-stamped and reclassified first.
+  const archived = {
+    ...legacy,
+    infrastructure_relevance_tier: 'full_memo',
+    infrastructure_relevance: { infrastructure_relevance_tier: 'full_memo' },
+    publishedAt: NOW.toISOString(),
+  };
+  const candidates = columnCandidateRecords({ latest: [], pool: [], existingArchive: [archived], now: NOW });
+  assert.equal(candidates.length, 1);
+  assert.equal(candidates[0].source_text_scope, 'abstract');
+  assert.notEqual(candidates[0].infrastructure_relevance_tier, 'full_memo');
+  assert.equal(candidates[0].infrastructure_relevance.infrastructure_relevance_tier, candidates[0].infrastructure_relevance_tier);
 });
 
 test('a source whose best item is off-beat does not reserve a pool slot ahead of on-beat items', () => {
