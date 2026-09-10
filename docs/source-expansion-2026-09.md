@@ -183,8 +183,14 @@ these are in the registry.
   carries compute or large-load context (AI terms; the data center, cloud, semiconductor or
   enterprise dimensions; "large load", co-location, computing, servers, digital infrastructure),
   and `routeStrictInfrastructureRelevance()` archives it whatever its stored score, so the public
-  content tier pass hides a record published before the guard existed. A FERC large-load
-  rulemaking is a docket item too, but it names data centers and passes.
+  content tier pass hides a record published before the guard existed. The guard only fires for
+  docket sources (`federalregister.gov`, `ferc.gov`, `regulations.gov`, `govinfo.gov`, or a
+  `federal-register-*`/`ferc-*` registry row) and only on a formulaic notice title ("Notice of
+  Availability/Application/Request…", "Information Collection", "Blanket Authorization",
+  "Exempt Wholesale Generator", "Environmental Impact Statement", "Hydroelectric", …) or FERC's
+  "Take notice that" body opener, so an EIA analysis that mentions hydroelectric generation in
+  passing is never touched. A FERC large-load rulemaking is a docket item too, but it names data
+  centers and passes.
 - The Federal Register adapter drops the page's "Document headings vary by document type" note,
   which sits inside `fulltext_content_area` and opened every extracted document. (Feed Probe
   cannot read FR document pages: with the RSS accept header the site answers with its

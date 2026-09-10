@@ -112,30 +112,43 @@ const ADJACENT_ONLY_TOPICS = [
   'consumer hardware',
 ];
 
-// Procedural filings from broad government dockets (the Federal Register
-// agency feeds): hydro relicensing and EIS availability notices, pipeline
-// blanket authorizations, exempt wholesale generator and information-
-// collection notices. Their text is thick with "power" and "megawatts", which
-// saturates the grid dimension on its own (run #3199 published a hydro EIS
-// notice as a signal card on that score), yet says nothing about compute.
-// Without an explicit compute or large-load hook they stay archive-only.
-const PROCEDURAL_DOCKET_PATTERNS = [
-  /\bhydroelectric\b/,
-  /\bhydropower\b/,
-  /\brelicens(?:e|es|ed|ing)\b/,
-  /\benvironmental (?:impact statement|assessment)\b/,
-  /\bnotice of (?:availability|intent to prepare|application)\b/,
+// Procedural filings from government dockets (the Federal Register agency
+// feeds): hydro relicensing and EIS availability notices, pipeline blanket
+// authorizations, exempt wholesale generator and information-collection
+// notices. Their text is thick with "power" and "megawatts", which saturates
+// the grid dimension on its own (run #3199 published a hydro EIS notice as a
+// signal card on that score), yet says nothing about compute. Without an
+// explicit compute or large-load hook they stay archive-only. The guard is
+// scoped to docket sources and to formulaic notice titles (or FERC's "Take
+// notice that" body opener) so an EIA or trade article that mentions
+// hydroelectric generation in passing is never touched.
+const DOCKET_SOURCE_HOSTS = ['federalregister.gov', 'ferc.gov', 'regulations.gov', 'govinfo.gov'];
+const DOCKET_REGISTRY_PREFIXES = ['federal-register-', 'ferc-'];
+const DOCKET_SOURCE_NAMES = ['federal register'];
+
+const PROCEDURAL_NOTICE_TITLE_PATTERNS = [
+  /\bnotice of (?:availability|intent|application|request|effectiveness|petition|filing|proposed)\b/,
+  /\bnotice(?:s)? of (?:institution|termination|cancellation|amendment)\b/,
+  /\bcombined notice of filings\b/,
+  /\bsunshine act\b/,
+  /\binformation collection\b/,
   /\bblanket (?:authorization|certificate)\b/,
   /\bexempt wholesale generator\b/,
   /\bforeign utility compan(?:y|ies)\b/,
-  /\binformation collection\b/,
-  /\bcombined notice of filings\b/,
-  /\bsunshine act\b/,
-  /\bgas transmission\b/,
-  /\bnatural gas pipeline\b/,
+  /\benvironmental (?:impact statement|assessment)\b/,
+  /\bhydroelectric\b/,
+  /\bhydropower\b/,
+  /\brelicens(?:e|es|ed|ing)\b/,
   /\bpreliminary permit\b/,
   /\bsurrender of (?:license|exemption)\b/,
   /\bmarket-based rate\b/,
+  /\bgas transmission\b/,
+  /\bnatural gas pipeline\b/,
+];
+
+const PROCEDURAL_NOTICE_BODY_PATTERNS = [
+  /\btake notice that\b/,
+  /\bany person desiring to intervene\b/,
 ];
 
 const COMPUTE_CONTEXT_PATTERNS = [
@@ -392,8 +405,22 @@ function buildArticleText(article = {}) {
   ].filter(Boolean).join(' ');
 }
 
-function isProceduralDocket(text = '') {
-  return PROCEDURAL_DOCKET_PATTERNS.some((pattern) => pattern.test(text));
+function isDocketSource(article = {}) {
+  const registryId = String(article.sourceRegistryId || '').trim().toLowerCase();
+  if (DOCKET_REGISTRY_PREFIXES.some((prefix) => registryId.startsWith(prefix))) return true;
+  if (DOCKET_SOURCE_NAMES.includes(String(article.source || '').trim().toLowerCase())) return true;
+  try {
+    const host = new URL(String(article.url || article.sourceUrl || '')).hostname.toLowerCase();
+    return DOCKET_SOURCE_HOSTS.some((docketHost) => host === docketHost || host.endsWith(`.${docketHost}`));
+  } catch {
+    return false;
+  }
+}
+
+function isProceduralDocket(article = {}, titleText = '', text = '') {
+  if (!isDocketSource(article)) return false;
+  return PROCEDURAL_NOTICE_TITLE_PATTERNS.some((pattern) => pattern.test(titleText))
+    || PROCEDURAL_NOTICE_BODY_PATTERNS.some((pattern) => pattern.test(text));
 }
 
 function hasComputeContext(text = '', dimensionResults = {}) {
@@ -415,8 +442,8 @@ export function proceduralDocketWithoutComputeContext(article = {}) {
     article.cleaned_source_text,
     article.fullArticleText,
   ].filter(Boolean).join(' '));
-  if (!isProceduralDocket(text)) return false;
   const titleText = normalizeText(article.title || '');
+  if (!isProceduralDocket(article, titleText, text)) return false;
   const dimensionResults = {};
   for (const [key, terms] of Object.entries(DIMENSIONS)) {
     dimensionResults[key] = scoreTerms(text, titleText, terms).score;
@@ -583,7 +610,7 @@ export function classifyInfrastructureRelevance(article = {}) {
   const hasWeakAiAdjacent = hasAi && hasAny(text, WEAK_AI_ADJACENT_TERMS);
   const hardArchiveTopic = hasHardArchiveTopic(text);
   const hasAdjacentOnlyTopic = hasAny(text, ADJACENT_ONLY_TOPICS);
-  const proceduralDocket = isProceduralDocket(text) && !hasComputeContext(text, dimensionResults);
+  const proceduralDocket = isProceduralDocket(article, titleText, text) && !hasComputeContext(text, dimensionResults);
 
   if (hasAi && hasInfra) {
     dimensionResults.direct_ai_infrastructure_relevance = Math.min(

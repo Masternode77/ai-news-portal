@@ -495,6 +495,62 @@ test('the docket guard releases notices that carry compute or large-load context
   assert.ok(!classifyInfrastructureRelevance(gridOrder).infrastructure_relevance_reasons.includes('procedural_regulatory_docket_without_compute_context'));
 });
 
+test('the docket guard is scoped to docket sources and formulaic notices', () => {
+  // Given: the archived EIA analysis that mentions hydroelectric generation in passing (stored 0.795).
+  const eiaImports = {
+    id: '9a641af25826b599',
+    sourceRegistryId: 'eia-today-in-energy',
+    source: 'U.S. Energy Information Administration',
+    url: 'https://www.eia.gov/todayinenergy/detail.php?id=67867',
+    title: 'New York imports more electricity from Canada after high-voltage transmission line opens',
+    articleText: 'The Champlain Hudson Power Express transmission line began delivering up to 1,250 megawatts of power from Quebec into New York City. The line was taken offline again on July 4 for further repairs. In recent years, both ISO-New England and NYISO have relied less on electricity imports from Canada as drought conditions have limited hydroelectric generation.',
+    infrastructure_relevance_score: 0.795,
+  };
+  assert.equal(proceduralDocketWithoutComputeContext(eiaImports), false);
+  assert.notEqual(routeStrictInfrastructureRelevance(eiaImports).visibility, 'archive');
+  assert.ok(!classifyInfrastructureRelevance(eiaImports).infrastructure_relevance_reasons.includes('procedural_regulatory_docket_without_compute_context'));
+
+  // An EIA pipeline note is grid coverage, not a docket filing.
+  const eiaPipelines = {
+    sourceRegistryId: 'eia-today-in-energy',
+    source: 'U.S. Energy Information Administration',
+    url: 'https://www.eia.gov/todayinenergy/detail.php?id=67901',
+    title: 'Eight petroleum liquids pipeline projects have been completed since the start of 2026',
+    articleText: 'Operators completed eight natural gas pipeline and petroleum liquids projects adding 1.4 million barrels per day of capacity; the power sector relies on the gas transmission network for generation.',
+  };
+  assert.equal(proceduralDocketWithoutComputeContext(eiaPipelines), false);
+
+  // A trade headline that borrows notice wording is not a docket source either.
+  const tradeHeadline = {
+    source: 'Data Center Dynamics',
+    url: 'https://www.datacenterdynamics.com/en/news/notice-of-availability-utility-files-hydroelectric-plan/',
+    title: 'Notice of availability: utility files hydroelectric relicensing plan',
+    snippet: 'The utility filed its relicensing plan with regulators; the plant generates 900 megawatts of power for the grid.',
+  };
+  assert.equal(proceduralDocketWithoutComputeContext(tradeHeadline), false);
+
+  // Inside a docket source, FERC's "Take notice that" opener is enough even when the title is bare.
+  const bareTitleNotice = {
+    sourceRegistryId: 'federal-register-ferc',
+    source: 'Federal Register',
+    url: 'https://www.federalregister.gov/documents/2026/09/10/2026-18470/pacific-gas-and-electric-company',
+    title: 'Pacific Gas and Electric Company',
+    contentText: 'Take notice that on September 3, 2026, Pacific Gas and Electric Company filed an application to amend its license for the Drum-Spaulding hydroelectric project, which has an installed capacity of 190 megawatts of power delivered to the utility grid.',
+  };
+  assert.equal(proceduralDocketWithoutComputeContext(bareTitleNotice), true);
+  assert.equal(classifyInfrastructureRelevance(bareTitleNotice).infrastructure_relevance_tier, 'archive_only');
+
+  // A docket rule without notice wording is left to the ordinary score.
+  const bulkPowerRule = {
+    sourceRegistryId: 'federal-register-doe',
+    source: 'Federal Register',
+    url: 'https://www.federalregister.gov/documents/2026/09/08/2026-18300/securing-the-united-states-bulk-power-system',
+    title: 'Securing the United States Bulk-Power System',
+    contentText: 'The Department of Energy prohibits the acquisition of bulk-power system electric equipment from foreign adversaries for transformers, substations and grid control systems that serve critical loads.',
+  };
+  assert.equal(proceduralDocketWithoutComputeContext(bulkPowerRule), false);
+});
+
 test('Commission press-corner pages are read through the same-host documents API', async () => {
   // Given: the Angular detail URL from the Commission feed and the API payload shape seen on 2026-09-10.
   const source = authorizedSource('ec-press-corner', 'ec.europa.eu', { article_hosts: 'ec.europa.eu' });
