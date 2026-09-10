@@ -99,6 +99,13 @@ General framing that applies to every row:
   block; ServeTheHome: ≤300 characters), and a removal path via the contact address published
   in the terms.
 
+## 2026-09-10 addendum
+
+The follow-up review that added rights-clean government, regulator and preprint feeds (Federal
+Register agency and term feeds, the White House, NSF, SEC, ACER, arXiv) and registered 26 further
+link-only candidates is recorded in `docs/source-expansion-2026-09.md`, with the runner evidence
+for every row. The verdict key above applies to its link-only table.
+
 ## Recommended next actions
 
 1. Email Bloomberg, Capacity (techoraco) and Uptime Institute before listing anything from them.

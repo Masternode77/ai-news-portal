@@ -601,3 +601,688 @@ sources:
     reviewed_at: 2026-09-02T00:00:00.000Z
     allow_text_use: true
     allow_image_reuse: false
+  # --- 2026-09-10 expansion: rights-clean text sources verified from the runner ---
+  # The five Federal Register feeds share one source name on purpose: the pool caps
+  # items per source name, so the Federal Register never takes more than one
+  # publisher's share of the pool no matter how many agency/term feeds are listed.
+  - id: federal-register-ferc
+    name: Federal Register
+    domain: federalregister.gov
+    article_hosts: federalregister.gov,www.federalregister.gov
+    coverage: FERC orders, rulemakings, tariff and interconnection filings, transmission planning and large-load notices as published in the Federal Register
+    priority: P0
+    feed: https://www.federalregister.gov/api/v1/documents.rss?conditions%5Bagencies%5D%5B%5D=federal-energy-regulatory-commission
+    defaultCategory: Power & Grid
+    region: US
+    language: en
+    status: active_feed
+    text_use_basis: us_federal_public_domain
+    image_use_basis: unreviewed
+    terms_url: https://www.federalregister.gov/reader-aids/government-policy-and-ofr-procedures/about-this-site
+    reviewed_at: 2026-09-10T00:00:00.000Z
+    allow_text_use: true
+    allow_image_reuse: false
+    rights_note: 1 CFR 2.6 - any person may reproduce or republish any material appearing in the Federal Register; public-domain route around the Cloudflare-blocked ferc.gov feed (Feed Probe run 9 - 133 items)
+  - id: federal-register-doe
+    name: Federal Register
+    domain: federalregister.gov
+    article_hosts: federalregister.gov,www.federalregister.gov
+    coverage: Department of Energy rulemakings, bulk-power system security orders, loan and grid program notices in the Federal Register
+    priority: P1
+    feed: https://www.federalregister.gov/api/v1/documents.rss?conditions%5Bagencies%5D%5B%5D=energy-department
+    defaultCategory: Power & Grid
+    region: US
+    language: en
+    status: active_feed
+    text_use_basis: us_federal_public_domain
+    image_use_basis: unreviewed
+    terms_url: https://www.federalregister.gov/reader-aids/government-policy-and-ofr-procedures/about-this-site
+    reviewed_at: 2026-09-10T00:00:00.000Z
+    allow_text_use: true
+    allow_image_reuse: false
+    rights_note: 1 CFR 2.6 reproduction permission; complements the DOE newsroom feed with the formal rulemaking record (Feed Probe run 9 - 148 items)
+  - id: federal-register-bis
+    name: Federal Register
+    domain: federalregister.gov
+    article_hosts: federalregister.gov,www.federalregister.gov
+    coverage: Bureau of Industry and Security export controls on advanced chips, AI model weights and semiconductor equipment, entity list revisions
+    priority: P1
+    feed: https://www.federalregister.gov/api/v1/documents.rss?conditions%5Bagencies%5D%5B%5D=industry-and-security-bureau
+    defaultCategory: Semiconductors
+    region: US
+    language: en
+    status: active_feed
+    text_use_basis: us_federal_public_domain
+    image_use_basis: unreviewed
+    terms_url: https://www.federalregister.gov/reader-aids/government-policy-and-ofr-procedures/about-this-site
+    reviewed_at: 2026-09-10T00:00:00.000Z
+    allow_text_use: true
+    allow_image_reuse: false
+    rights_note: 1 CFR 2.6 reproduction permission; bis.gov itself has no feed (404 from the runner), so the Federal Register carries the export-control record (Feed Probe run 9 - 5 items)
+  - id: federal-register-data-center-search
+    name: Federal Register
+    domain: federalregister.gov
+    article_hosts: federalregister.gov,www.federalregister.gov
+    coverage: every Federal Register document whose full text mentions data centers - permitting, siting, energy, procurement and agency notices across all agencies
+    priority: P0
+    feed: https://www.federalregister.gov/api/v1/documents.rss?conditions%5Bterm%5D=%22data+center%22
+    defaultCategory: Data Centers
+    region: US
+    language: en
+    status: active_feed
+    text_use_basis: us_federal_public_domain
+    image_use_basis: unreviewed
+    terms_url: https://www.federalregister.gov/reader-aids/government-policy-and-ofr-procedures/about-this-site
+    reviewed_at: 2026-09-10T00:00:00.000Z
+    allow_text_use: true
+    allow_image_reuse: false
+    rights_note: 1 CFR 2.6 reproduction permission; full-text search feed, so the relevance gate decides which notices are on-beat (Feed Probe run 9 - 15 items)
+  - id: federal-register-ai-search
+    name: Federal Register
+    domain: federalregister.gov
+    article_hosts: federalregister.gov,www.federalregister.gov
+    coverage: every Federal Register document whose full text mentions artificial intelligence - executive orders, procurement rules, agency AI guidance and compute-related notices
+    priority: P1
+    feed: https://www.federalregister.gov/api/v1/documents.rss?conditions%5Bterm%5D=%22artificial+intelligence%22
+    defaultCategory: AI Infrastructure
+    region: US
+    language: en
+    status: active_feed
+    text_use_basis: us_federal_public_domain
+    image_use_basis: unreviewed
+    terms_url: https://www.federalregister.gov/reader-aids/government-policy-and-ofr-procedures/about-this-site
+    reviewed_at: 2026-09-10T00:00:00.000Z
+    allow_text_use: true
+    allow_image_reuse: false
+    rights_note: 1 CFR 2.6 reproduction permission; presidential documents appear here a few days after whitehouse.gov (Feed Probe run 9 - 36 items)
+  - id: whitehouse-presidential-actions
+    name: The White House
+    domain: whitehouse.gov
+    article_hosts: whitehouse.gov,www.whitehouse.gov
+    coverage: executive orders, proclamations and memoranda on AI, data center permitting, energy and export policy
+    priority: P2
+    feed: https://www.whitehouse.gov/presidential-actions/feed/
+    defaultCategory: Policy & Siting
+    region: US
+    language: en
+    status: active_feed
+    text_use_basis: us_federal_public_domain
+    image_use_basis: unreviewed
+    terms_url: https://www.whitehouse.gov/copyright/
+    reviewed_at: 2026-09-10T00:00:00.000Z
+    allow_text_use: true
+    allow_image_reuse: false
+    rights_note: copyright page - government-produced materials appearing on this site are not copyright protected; third-party content is CC BY 3.0 US and must not be copied; most items are off-beat and stay archive-only under the relevance gate (Feed Probe run 9 - 30 items)
+  - id: nsf-news
+    name: U.S. National Science Foundation
+    domain: nsf.gov
+    article_hosts: nsf.gov,www.nsf.gov
+    coverage: NSF AI infrastructure hubs, national research compute, quantum and materials investments, science and technology centers
+    priority: P2
+    feed: https://www.nsf.gov/rss/rss_www_news.xml
+    defaultCategory: AI Infrastructure
+    region: US
+    language: en
+    status: active_feed
+    text_use_basis: us_federal_public_domain
+    image_use_basis: unreviewed
+    terms_url: https://www.nsf.gov/policies
+    reviewed_at: 2026-09-10T00:00:00.000Z
+    allow_text_use: true
+    allow_image_reuse: false
+    rights_note: 17 U.S.C. 105 work of the United States Government (govinfo public domain notice); the NSF policies page renders its copyright section client-side, so it could not be text-verified from the runner; robots.txt disallows /news/releases only (Feed Probe run 9 - 15 items)
+  - id: sec-press
+    name: U.S. Securities and Exchange Commission
+    domain: sec.gov
+    article_hosts: sec.gov,www.sec.gov
+    coverage: disclosure rules, market-structure and enforcement actions touching AI claims, data center REITs, utilities and infrastructure financing
+    priority: P2
+    feed: https://www.sec.gov/news/pressreleases.rss
+    defaultCategory: Capital Markets
+    region: US
+    language: en
+    status: active_feed
+    text_use_basis: us_federal_public_domain
+    image_use_basis: unreviewed
+    terms_url: https://www.sec.gov/about/privacy-information
+    reviewed_at: 2026-09-10T00:00:00.000Z
+    allow_text_use: true
+    allow_image_reuse: false
+    rights_note: privacy-information page (Website Dissemination) - public information and may be copied or further distributed by users of the web site without the SEC's permission, with citation to the SEC; dropped in PR 19 as off-beat, restored now that off-beat items no longer reserve a pool slot (Feed Probe run 5 - 25 items)
+  - id: ec-press-corner
+    name: European Commission
+    domain: ec.europa.eu
+    article_hosts: ec.europa.eu
+    coverage: Commission press releases and Q&As on the AI Continent Action Plan, gigafactories, cloud and AI development act, energy union, grids and chips
+    priority: P1
+    feed: https://ec.europa.eu/commission/presscorner/api/rss?language=en
+    defaultCategory: Policy & Siting
+    region: EU
+    language: en
+    status: active_feed
+    text_use_basis: eu_commission_reuse_cc_by_4_0
+    image_use_basis: unreviewed
+    terms_url: https://commission.europa.eu/legal-notice_en
+    reviewed_at: 2026-09-10T00:00:00.000Z
+    allow_text_use: true
+    allow_image_reuse: false
+    rights_note: Commission Decision 2011/833/EU - EU-owned content is CC BY 4.0 (credit and indicate changes); press-corner detail pages are an Angular shell, so source-fetch reads the same-host documents API (reference TYPE/YY/NNNN, JSON htmlContent - Terms Probe run 21) (Feed Probe run 6 - 10 items)
+  - id: acer-news
+    name: ACER (EU energy regulators)
+    domain: acer.europa.eu
+    article_hosts: acer.europa.eu,www.acer.europa.eu
+    coverage: EU electricity market decisions, adequacy assessments, data centre demand versus supply, flexibility and capacity calculation rules
+    priority: P1
+    feed: https://www.acer.europa.eu/rss.xml
+    defaultCategory: Power & Grid
+    region: EU
+    language: en
+    status: active_feed
+    text_use_basis: acer_legal_notice_reuse_with_acknowledgement
+    image_use_basis: unreviewed
+    terms_url: https://www.acer.europa.eu/legal-notice
+    reviewed_at: 2026-09-10T00:00:00.000Z
+    allow_text_use: true
+    allow_image_reuse: false
+    rights_note: legal notice - information and documents on the Agency's webpages are public and may be reproduced and/or distributed, totally or in part, for non-commercial and commercial purposes, provided that the Agency is always acknowledged as the source; the feed ships escaped anchor tags as links and Drupal dates, which fetch-feeds now repairs (Feed Probe run 6 - 10 items)
+  # arXiv feeds also share one source name so preprints stay within one publisher's pool share.
+  # Only the abstract page is fetched: arXiv metadata (title, abstract, authors) is CC0; the e-print is not.
+  - id: arxiv-cs-dc
+    name: arXiv
+    domain: arxiv.org
+    article_hosts: arxiv.org,www.arxiv.org
+    coverage: distributed, parallel and cluster computing preprints - GPU cluster scheduling, datacenter networking, multi-cloud orchestration, large-scale training systems
+    priority: P2
+    feed: https://rss.arxiv.org/rss/cs.DC
+    defaultCategory: AI Infrastructure
+    region: Global
+    language: en
+    status: active_feed
+    text_use_basis: arxiv_metadata_cc0_1_0
+    image_use_basis: unreviewed
+    terms_url: https://info.arxiv.org/help/api/tou.html
+    reviewed_at: 2026-09-10T00:00:00.000Z
+    allow_text_use: true
+    allow_image_reuse: false
+    rights_note: API terms of use - descriptive metadata (title, abstract, authors) is CC0 1.0; e-prints remain under the authors' licences, so only the abstract page is fetched and the item links to it; robots.txt allows /abs/ with Crawl-delay 15 (Feed Probe run 6 - 24 items)
+  - id: arxiv-cs-ar
+    name: arXiv
+    domain: arxiv.org
+    article_hosts: arxiv.org,www.arxiv.org
+    coverage: hardware architecture preprints - accelerators, HBM and memory systems, interconnects, inference silicon, power-efficient design
+    priority: P2
+    feed: https://rss.arxiv.org/rss/cs.AR
+    defaultCategory: Semiconductors
+    region: Global
+    language: en
+    status: active_feed
+    text_use_basis: arxiv_metadata_cc0_1_0
+    image_use_basis: unreviewed
+    terms_url: https://info.arxiv.org/help/api/tou.html
+    reviewed_at: 2026-09-10T00:00:00.000Z
+    allow_text_use: true
+    allow_image_reuse: false
+    rights_note: API terms of use - descriptive metadata is CC0 1.0; abstract page only (Feed Probe run 6 - 20 items)
+  - id: arxiv-cs-pf
+    name: arXiv
+    domain: arxiv.org
+    article_hosts: arxiv.org,www.arxiv.org
+    coverage: performance preprints - inference efficiency, energy-aware scheduling, cache and memory modelling for large systems
+    priority: P2
+    feed: https://rss.arxiv.org/rss/cs.PF
+    defaultCategory: AI Infrastructure
+    region: Global
+    language: en
+    status: active_feed
+    text_use_basis: arxiv_metadata_cc0_1_0
+    image_use_basis: unreviewed
+    terms_url: https://info.arxiv.org/help/api/tou.html
+    reviewed_at: 2026-09-10T00:00:00.000Z
+    allow_text_use: true
+    allow_image_reuse: false
+    rights_note: API terms of use - descriptive metadata is CC0 1.0; abstract page only (Feed Probe run 6 - 7 items)
+  # --- 2026-09-10 expansion: link-only candidates (feed reachable, text rights unreviewed) ---
+  # These are inert until an operator records a reviewed basis: allow_text_use stays false,
+  # so activeRegistryFeeds() never fetches them. See docs/source-expansion-2026-09.md.
+  - id: nextplatform
+    name: The Next Platform
+    domain: nextplatform.com
+    coverage: HPC and AI systems, accelerators, hyperscale infrastructure economics
+    priority: P1
+    feed: https://www.nextplatform.com/feed/
+    defaultCategory: AI Infrastructure
+    region: Global
+    language: en
+    status: active_feed
+    text_use_basis: unreviewed
+    image_use_basis: unreviewed
+    terms_url:
+    reviewed_at: 2026-09-10
+    allow_text_use: false
+    allow_image_reuse: false
+    rights_note: link-only candidate; feed 200 (83 items, redirects to ?lab_viewport=rss); about/terms page 404, footer reserves all rights
+  - id: fierce-network
+    name: Fierce Network
+    domain: fierce-network.com
+    coverage: telecom and network infrastructure, fiber, data center connectivity
+    priority: P2
+    feed: https://www.fierce-network.com/rss/xml
+    defaultCategory: Cloud Capacity
+    region: Global
+    language: en
+    status: active_feed
+    text_use_basis: unreviewed
+    image_use_basis: unreviewed
+    terms_url:
+    reviewed_at: 2026-09-10
+    allow_text_use: false
+    allow_image_reuse: false
+    rights_note: link-only candidate; feed 200 (25 items); Questex terms not yet read from the runner
+  - id: light-reading
+    name: Light Reading
+    domain: lightreading.com
+    coverage: optical networking, telecom capex, data center interconnect
+    priority: P2
+    feed: https://www.lightreading.com/rss.xml
+    defaultCategory: Cloud Capacity
+    region: Global
+    language: en
+    status: active_feed
+    text_use_basis: unreviewed
+    image_use_basis: unreviewed
+    terms_url: https://www.informatechtarget.com/terms-of-use/
+    reviewed_at: 2026-09-10
+    allow_text_use: false
+    allow_image_reuse: false
+    rights_note: link-only candidate; feed 200 (50 items); Informa TechTarget terms ban data mining and robots, same as Data Center Knowledge
+  - id: network-world
+    name: Network World
+    domain: networkworld.com
+    coverage: enterprise networking, data center networking, cloud connectivity
+    priority: P2
+    feed: https://www.networkworld.com/feed/
+    defaultCategory: Enterprise AI Infrastructure
+    region: Global
+    language: en
+    status: active_feed
+    text_use_basis: unreviewed
+    image_use_basis: unreviewed
+    terms_url:
+    reviewed_at: 2026-09-10
+    allow_text_use: false
+    allow_image_reuse: false
+    rights_note: link-only candidate; feed 200 (20 items, full text in feed); Foundry terms not yet read from the runner
+  - id: eetimes
+    name: EE Times
+    domain: eetimes.com
+    coverage: semiconductor design and manufacturing, memory, power electronics
+    priority: P2
+    feed: https://www.eetimes.com/feed/
+    defaultCategory: Semiconductors
+    region: Global
+    language: en
+    status: active_feed
+    text_use_basis: unreviewed
+    image_use_basis: unreviewed
+    terms_url:
+    reviewed_at: 2026-09-10
+    allow_text_use: false
+    allow_image_reuse: false
+    rights_note: link-only candidate; feed 200 (10 items); AspenCore terms not yet read from the runner
+  - id: techpowerup
+    name: TechPowerUp
+    domain: techpowerup.com
+    coverage: GPUs, memory pricing, accelerator launches, component supply
+    priority: P2
+    feed: https://www.techpowerup.com/rss/news
+    defaultCategory: Semiconductors
+    region: Global
+    language: en
+    status: active_feed
+    text_use_basis: unreviewed
+    image_use_basis: unreviewed
+    terms_url:
+    reviewed_at: 2026-09-10
+    allow_text_use: false
+    allow_image_reuse: false
+    rights_note: link-only candidate; feed 200 (125 items, consumer-heavy); terms not yet read from the runner
+  - id: semiconductor-digest
+    name: Semiconductor Digest
+    domain: semiconductor-digest.com
+    coverage: fab investment, CHIPS awards, packaging, equipment
+    priority: P2
+    feed: https://www.semiconductor-digest.com/feed/
+    defaultCategory: Semiconductors
+    region: Global
+    language: en
+    status: active_feed
+    text_use_basis: unreviewed
+    image_use_basis: unreviewed
+    terms_url:
+    reviewed_at: 2026-09-10
+    allow_text_use: false
+    allow_image_reuse: false
+    rights_note: link-only candidate; feed 200 (100 items, full text in feed); terms not yet read from the runner
+  - id: ieee-spectrum-computing
+    name: IEEE Spectrum
+    domain: spectrum.ieee.org
+    coverage: computing hardware, AI compute economics, energy use of AI
+    priority: P2
+    feed: https://spectrum.ieee.org/feeds/topic/computing.rss
+    defaultCategory: AI Infrastructure
+    region: Global
+    language: en
+    status: active_feed
+    text_use_basis: unreviewed
+    image_use_basis: unreviewed
+    terms_url: https://www.ieee.org/about/help/site-terms-conditions.html
+    reviewed_at: 2026-09-10
+    allow_text_use: false
+    allow_image_reuse: false
+    rights_note: link-only candidate; feed 200 (30 items); IEEE site terms reserve reproduction rights
+  - id: mit-technology-review
+    name: MIT Technology Review
+    domain: technologyreview.com
+    coverage: AI compute, energy demand of AI, chips, climate technology
+    priority: P2
+    feed: https://www.technologyreview.com/feed/
+    defaultCategory: AI Infrastructure
+    region: Global
+    language: en
+    status: active_feed
+    text_use_basis: unreviewed
+    image_use_basis: unreviewed
+    terms_url: https://www.technologyreview.com/terms-of-service/
+    reviewed_at: 2026-09-10
+    allow_text_use: false
+    allow_image_reuse: false
+    rights_note: link-only candidate; feed 200 (10 items); paywalled site, terms reserve all rights
+  - id: ars-technica-biz-it
+    name: Ars Technica
+    domain: arstechnica.com
+    coverage: Biz & IT - cloud outages, enterprise infrastructure, AI compute, chips
+    priority: P2
+    feed: https://feeds.arstechnica.com/arstechnica/technology-lab
+    defaultCategory: Enterprise AI Infrastructure
+    region: Global
+    language: en
+    status: active_feed
+    text_use_basis: unreviewed
+    image_use_basis: unreviewed
+    terms_url: https://www.condenast.com/user-agreement
+    reviewed_at: 2026-09-10
+    allow_text_use: false
+    allow_image_reuse: false
+    rights_note: link-only candidate; feed 200 (20 items); Conde Nast user agreement reserves reproduction rights
+  - id: canary-media
+    name: Canary Media
+    domain: canarymedia.com
+    coverage: clean energy, data center power demand, utility rate cases, nuclear restarts
+    priority: P1
+    feed: https://www.canarymedia.com/rss.rss
+    defaultCategory: Power & Grid
+    region: US
+    language: en
+    status: active_feed
+    text_use_basis: unreviewed
+    image_use_basis: unreviewed
+    terms_url:
+    reviewed_at: 2026-09-10
+    allow_text_use: false
+    allow_image_reuse: false
+    rights_note: link-only candidate; feed 200 (100 items); republishing page 404 from the runner, so the nonprofit's republication terms remain unverified
+  - id: latitude-media
+    name: Latitude Media
+    domain: latitudemedia.com
+    coverage: energy transition business, data center power procurement, grid technology
+    priority: P2
+    feed: https://www.latitudemedia.com/feed/
+    defaultCategory: Power & Grid
+    region: US
+    language: en
+    status: active_feed
+    text_use_basis: unreviewed
+    image_use_basis: unreviewed
+    terms_url:
+    reviewed_at: 2026-09-10
+    allow_text_use: false
+    allow_image_reuse: false
+    rights_note: link-only candidate; feed 200 (10 items, full text in feed); terms not yet read from the runner
+  - id: carbon-brief
+    name: Carbon Brief
+    domain: carbonbrief.org
+    coverage: energy system analysis, UK and global electricity data, AI energy demand
+    priority: P2
+    feed: https://www.carbonbrief.org/feed
+    defaultCategory: Power & Grid
+    region: UK
+    language: en
+    status: active_feed
+    text_use_basis: unreviewed
+    image_use_basis: unreviewed
+    terms_url:
+    reviewed_at: 2026-09-10
+    allow_text_use: false
+    allow_image_reuse: false
+    rights_note: link-only candidate; feed 200 (12 items, full text in feed); licence page not yet read from the runner
+  - id: ieefa
+    name: IEEFA
+    domain: ieefa.org
+    coverage: energy finance analysis, utility and data center load forecasts, LNG and coal economics
+    priority: P2
+    feed: https://ieefa.org/rss.xml
+    defaultCategory: Capital Markets
+    region: Global
+    language: en
+    status: active_feed
+    text_use_basis: unreviewed
+    image_use_basis: unreviewed
+    terms_url:
+    reviewed_at: 2026-09-10
+    allow_text_use: false
+    allow_image_reuse: false
+    rights_note: link-only candidate; feed 200 (10 items); terms not yet read from the runner
+  - id: berkeley-lab-news
+    name: Berkeley Lab News Center
+    domain: newscenter.lbl.gov
+    coverage: DOE national lab research on data center energy use, grid, materials and computing
+    priority: P2
+    feed: https://newscenter.lbl.gov/feed/
+    defaultCategory: Power & Grid
+    region: US
+    language: en
+    status: active_feed
+    text_use_basis: unreviewed
+    image_use_basis: unreviewed
+    terms_url: https://www.lbl.gov/disclaimers/
+    reviewed_at: 2026-09-10
+    allow_text_use: false
+    allow_image_reuse: false
+    rights_note: link-only candidate; feed 200 (12 items); lab is operated by the University of California, so releases are not automatically federal public domain - about page 404 from the runner
+  - id: semianalysis
+    name: SemiAnalysis
+    domain: newsletter.semianalysis.com
+    coverage: AI accelerator supply chain, datacenter capex models, networking and cooling economics
+    priority: P1
+    feed: https://newsletter.semianalysis.com/feed
+    defaultCategory: Semiconductors
+    region: Global
+    language: en
+    status: active_feed
+    text_use_basis: unreviewed
+    image_use_basis: unreviewed
+    terms_url: https://substack.com/tos
+    reviewed_at: 2026-09-10
+    allow_text_use: false
+    allow_image_reuse: false
+    rights_note: link-only candidate; Substack feed 200 (20 items, partly paywalled); author holds copyright under Substack terms
+  - id: interconnects
+    name: Interconnects
+    domain: interconnects.ai
+    coverage: open model training, post-training compute, frontier lab infrastructure commentary
+    priority: P2
+    feed: https://www.interconnects.ai/feed
+    defaultCategory: AI Infrastructure
+    region: Global
+    language: en
+    status: active_feed
+    text_use_basis: unreviewed
+    image_use_basis: unreviewed
+    terms_url: https://substack.com/tos
+    reviewed_at: 2026-09-10
+    allow_text_use: false
+    allow_image_reuse: false
+    rights_note: link-only candidate; Substack feed 200 (7 items); author holds copyright under Substack terms
+  - id: fabricated-knowledge
+    name: Fabricated Knowledge
+    domain: fabricatedknowledge.com
+    coverage: semiconductor equipment, memory and foundry cycle analysis
+    priority: P2
+    feed: https://www.fabricatedknowledge.com/feed
+    defaultCategory: Semiconductors
+    region: Global
+    language: en
+    status: active_feed
+    text_use_basis: unreviewed
+    image_use_basis: unreviewed
+    terms_url: https://substack.com/tos
+    reviewed_at: 2026-09-10
+    allow_text_use: false
+    allow_image_reuse: false
+    rights_note: link-only candidate; Substack feed 200 (16 items); author holds copyright under Substack terms
+  - id: latent-space
+    name: Latent Space
+    domain: latent.space
+    coverage: AI engineering, inference platforms, GPU cloud economics
+    priority: P2
+    feed: https://www.latent.space/feed
+    defaultCategory: AI Infrastructure
+    region: Global
+    language: en
+    status: active_feed
+    text_use_basis: unreviewed
+    image_use_basis: unreviewed
+    terms_url: https://substack.com/tos
+    reviewed_at: 2026-09-10
+    allow_text_use: false
+    allow_image_reuse: false
+    rights_note: link-only candidate; Substack feed 200 (12 items); author holds copyright under Substack terms
+  - id: etnews
+    name: 전자신문
+    domain: etnews.com
+    coverage: Korean semiconductor, data center and telecom industry news
+    priority: P1
+    feed: https://rss.etnews.com/Section901.xml
+    defaultCategory: Semiconductors
+    region: Korea
+    language: ko
+    status: active_feed
+    text_use_basis: unreviewed
+    image_use_basis: unreviewed
+    terms_url:
+    reviewed_at: 2026-09-10
+    allow_text_use: false
+    allow_image_reuse: false
+    rights_note: link-only candidate; section feed 200 (30 items); Korean press copyright, no text reuse without a licence
+  - id: zdnet-korea
+    name: ZDNet Korea
+    domain: zdnet.co.kr
+    coverage: Korean cloud, AI infrastructure and enterprise IT news
+    priority: P2
+    feed: https://feeds.feedburner.com/zdkorea
+    defaultCategory: Cloud Capacity
+    region: Korea
+    language: ko
+    status: active_feed
+    text_use_basis: unreviewed
+    image_use_basis: unreviewed
+    terms_url:
+    reviewed_at: 2026-09-10
+    allow_text_use: false
+    allow_image_reuse: false
+    rights_note: link-only candidate; FeedBurner feed 200 (29 items); Korean press copyright
+  - id: electimes
+    name: 전기신문
+    domain: electimes.com
+    coverage: Korean power industry, KEPCO, grid and data center power supply
+    priority: P1
+    feed: http://www.electimes.com/rss/allArticle.xml
+    defaultCategory: Power & Grid
+    region: Korea
+    language: ko
+    status: blocked
+    text_use_basis: unreviewed
+    image_use_basis: unreviewed
+    terms_url:
+    reviewed_at: 2026-09-10
+    allow_text_use: false
+    allow_image_reuse: false
+    rights_note: blocked - the only working feed is plain http (50 items) and the fetcher requires https; Korean press copyright
+  - id: thelec
+    name: 디일렉
+    domain: thelec.kr
+    coverage: Korean semiconductor, display and AI infrastructure investment news
+    priority: P1
+    feed: https://www.thelec.kr/rss/allArticle.xml
+    defaultCategory: Semiconductors
+    region: Korea
+    language: ko
+    status: active_feed
+    text_use_basis: unreviewed
+    image_use_basis: unreviewed
+    terms_url:
+    reviewed_at: 2026-09-10
+    allow_text_use: false
+    allow_image_reuse: false
+    rights_note: link-only candidate; feed 200 (50 items); Korean press copyright
+  - id: datanet
+    name: 데이터넷
+    domain: datanet.co.kr
+    coverage: Korean enterprise networking, cloud and data center operations news
+    priority: P2
+    feed: https://www.datanet.co.kr/rss/allArticle.xml
+    defaultCategory: Enterprise AI Infrastructure
+    region: Korea
+    language: ko
+    status: active_feed
+    text_use_basis: unreviewed
+    image_use_basis: unreviewed
+    terms_url:
+    reviewed_at: 2026-09-10
+    allow_text_use: false
+    allow_image_reuse: false
+    rights_note: link-only candidate; feed 200 (50 items); Korean press copyright
+  - id: ofgem
+    name: Ofgem
+    domain: ofgem.gov.uk
+    coverage: GB energy regulator decisions, connections reform, network charging
+    priority: P2
+    feed: https://www.ofgem.gov.uk/rss.xml
+    defaultCategory: Power & Grid
+    region: UK
+    language: en
+    status: active_feed
+    text_use_basis: unreviewed
+    image_use_basis: unreviewed
+    terms_url:
+    reviewed_at: 2026-09-10
+    allow_text_use: false
+    allow_image_reuse: false
+    rights_note: candidate; feed 200 but carries a single item and the terms page is 404 from the runner - likely Crown copyright under OGL v3, unverified
+  - id: neso
+    name: National Energy System Operator
+    domain: neso.energy
+    coverage: GB system operator - connections queue reform, demand forecasts, grid code
+    priority: P2
+    feed: https://www.neso.energy/rss.xml
+    defaultCategory: Power & Grid
+    region: UK
+    language: en
+    status: active_feed
+    text_use_basis: unreviewed
+    image_use_basis: unreviewed
+    terms_url: https://www.neso.energy/terms-and-conditions
+    reviewed_at: 2026-09-10
+    allow_text_use: false
+    allow_image_reuse: false
+    rights_note: ask first; feed 200 (10 mixed items - FOI responses, workgroup papers) and the terms prohibit commercial exploitation of site material without written permission

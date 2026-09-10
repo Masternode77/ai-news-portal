@@ -116,6 +116,9 @@ const ADJACENT_ONLY_TOPICS = [
 // infrastructure vocabulary used by the English classifier. Keep aliases
 // concrete: broad AI or finance language must not create an infrastructure hit.
 const KOREAN_INFRA_ALIASES = [
+  // British and EU spellings (ACER, Ofgem, gov.uk, Commission) score like US ones.
+  [/\bdata\s*centres?\b/g, ' data center '],
+  [/\bdatacentres?\b/g, ' datacenter '],
   [/인공지능\s*데이터\s*센터/g, ' ai data center '],
   [/데이터\s*센터/g, ' data center '],
   [/전력\s*계통/g, ' power grid '],
