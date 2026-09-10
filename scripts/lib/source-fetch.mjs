@@ -118,7 +118,117 @@ const SOURCE_ADAPTERS = [
       /Subscribe[\s\S]*$/i,
     ],
   },
+  {
+    // Abstract pages only: arXiv metadata (title, abstract, authors) is CC0,
+    // the e-print itself is not. The abstract sits in a blockquote without
+    // paragraph tags, so the section falls through to plain text.
+    domain: 'arxiv.org',
+    id: 'arxiv',
+    contentPatterns: [
+      /<blockquote[^>]+class=["'][^"']*abstract[^"']*["'][^>]*>([\s\S]*?)<\/blockquote>/i,
+    ],
+    removePatterns: [
+      /^\s*Abstract:\s*/i,
+    ],
+  },
+  {
+    domain: 'federalregister.gov',
+    id: 'federalregister',
+    contentPatterns: [
+      /<div[^>]+id=["']fulltext_content_area["'][^>]*>([\s\S]{0,45000})<\/div>/i,
+      /<main[\s\S]*?>([\s\S]{0,45000})<\/main>/i,
+    ],
+    removePatterns: [
+      /\[FR Doc\.[\s\S]*$/i,
+      /BILLING CODE [0-9A-Z-]+/gi,
+      /Start Printed Page \d+/gi,
+    ],
+  },
+  {
+    domain: 'whitehouse.gov',
+    id: 'whitehouse',
+    contentPatterns: [
+      /<div[^>]+class=["'][^"']*(?:entry-content|wp-block-post-content)[^"']*["'][^>]*>([\s\S]{0,45000})<\/div>/i,
+      /<main[\s\S]*?>([\s\S]{0,45000})<\/main>/i,
+    ],
+    removePatterns: [],
+  },
+  {
+    domain: 'nsf.gov',
+    id: 'nsf',
+    contentPatterns: [
+      /<div[^>]+class=["'][^"']*node__content[^"']*["'][^>]*>([\s\S]{0,45000})<\/div>/i,
+      /<article[\s\S]*?>([\s\S]{0,45000})<\/article>/i,
+      /<main[\s\S]*?>([\s\S]{0,45000})<\/main>/i,
+    ],
+    removePatterns: [],
+  },
+  {
+    domain: 'sec.gov',
+    id: 'sec',
+    contentPatterns: [
+      /<div[^>]+class=["'][^"']*field--name-body[^"']*["'][^>]*>([\s\S]{0,45000})<\/div>/i,
+      /<main[\s\S]*?>([\s\S]{0,45000})<\/main>/i,
+    ],
+    removePatterns: [
+      /###\s*$/,
+    ],
+  },
+  {
+    domain: 'acer.europa.eu',
+    id: 'acer',
+    contentPatterns: [
+      /<article[\s\S]*?>([\s\S]{0,45000})<\/article>/i,
+      /<main[\s\S]*?>([\s\S]{0,45000})<\/main>/i,
+    ],
+    removePatterns: [],
+  },
+  {
+    // Press-corner detail pages are an Angular shell; the text lives behind the
+    // documents API on the same host, keyed by TYPE/YY/NNNN.
+    domain: 'ec.europa.eu',
+    id: 'ec-presscorner',
+    apiTarget: ecPresscornerApiTarget,
+    contentPatterns: [
+      /<article[\s\S]*?>([\s\S]{0,45000})<\/article>/i,
+    ],
+    removePatterns: [],
+  },
 ];
+
+const EC_PRESSCORNER_DETAIL = /^https:\/\/ec\.europa\.eu\/commission\/presscorner\/detail\/([a-z]{2})\/([a-z]+)_(\d+)_(\d+)\/?(?:[?#].*)?$/i;
+
+function escapeHtml(value = '') {
+  return String(value)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
+}
+
+export function ecPresscornerApiTarget(url = '') {
+  const match = String(url || '').match(EC_PRESSCORNER_DETAIL);
+  if (!match) return null;
+  const [, language, type, year, number] = match;
+  const reference = `${type.toUpperCase()}/${year}/${number}`;
+  return {
+    url: `https://ec.europa.eu/commission/presscorner/api/documents?reference=${encodeURIComponent(reference)}&language=${language.toLowerCase()}`,
+    contentTypes: ['application/json'],
+    accept: 'application/json',
+    toHtml(text = '') {
+      let payload;
+      try {
+        payload = JSON.parse(text);
+      } catch {
+        return '';
+      }
+      const resource = payload?.docuLanguageResource || {};
+      const body = String(resource.htmlContent || '').trim();
+      if (!body) return '';
+      const title = String(resource.title || '').trim();
+      return `<article>${title ? `<h1>${escapeHtml(title)}</h1>` : ''}${body}</article>`;
+    },
+  };
+}
 
 function sourceDomain(url = '') {
   try {
@@ -232,15 +342,18 @@ export async function fetchArticleExtraction({
   }
 
   const adapter = adapterForUrl(url);
+  const apiTarget = typeof adapter.apiTarget === 'function' ? adapter.apiTarget(url) : null;
 
   try {
-    const fetched = await fetchAuthorizedSourceText({ url, sourceRegistryId }, {
+    const fetched = await fetchAuthorizedSourceText({ url: apiTarget?.url || url, sourceRegistryId }, {
       ...networkOptions,
       now,
       sources,
       timeoutMs,
+      contentTypes: apiTarget?.contentTypes,
+      accept: apiTarget?.accept,
     });
-    const html = fetched.text;
+    const html = apiTarget ? apiTarget.toHtml(fetched.text) : fetched.text;
     const articleSection = extractSection(html, adapter);
     const { rawText, cleanedText } = paragraphTextFromSection(articleSection, adapter);
     const articleText = truncateAtSentence(cleanedText || fallbackSnippet, 1800);

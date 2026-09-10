@@ -22,19 +22,34 @@ failed, and pass the text-rights decision. Each source needs a non-placeholder
 `allow_image_reuse` and its image basis are separate requirements for source
 image reuse.
 
-All present registry entries remain unreviewed or disabled until an authorized
-operator verifies them. In that state `activeRegistryFeeds()` returns no feeds,
-`fetchNewsPoolResult()` reports `no_authorized_sources`, and the pipeline exits
-without publication. Use `config/sourceRightsAttestation.template.yml` to
-record an authorized review before changing registry fields; RSS availability or
-public accessibility does not grant text or image rights.
+Only entries with a reviewed, rights-clean basis are authorized: US federal
+public-domain agencies (EIA, DOE, NIST, FTC, GAO, NRC, NSF, SEC, the White House
+and the Federal Register agency/term feeds), UK Open Government Licence
+departments, the European Commission press corner (CC BY 4.0), ACER (reuse with
+acknowledgement) and arXiv abstract metadata (CC0). Commercial publishers stay `text_use_basis: unreviewed` with
+`allow_text_use: false`; they are listed as link-only candidates and are never
+fetched. If every entry were unreviewed or disabled, `activeRegistryFeeds()`
+would return no feeds, `fetchNewsPoolResult()` would report
+`no_authorized_sources`, and the pipeline would exit without publication. Use
+`config/sourceRightsAttestation.template.yml` to record an authorized review
+before changing registry fields; RSS availability or public accessibility does
+not grant text or image rights. The 2026-09-10 expansion and its evidence are
+recorded in `docs/source-expansion-2026-09.md`.
 
 The crawler is RSS/Atom based through `rss-parser` in
 `scripts/lib/fetch-feeds.mjs`. `parseFeedItem()` reads title, link/guid URL, RSS
 body/snippet fields, publish date, source image, region, language, and default
-category. `fetchNewsPool()` deduplicates by stable article ID and normalized
-title, preserves minimum per-source representation when configured, and caps
-the pool at `MAX_ITEMS_FETCHED`.
+category; `repairFeedLink()` recovers article URLs from feeds that ship an
+escaped anchor tag as the link, `httpsItemUrl()` upgrades http item links to
+https so the source-text gate (which only fetches https) can judge them, and
+`publishedAtIso()` parses Drupal-style dates instead of letting an invalid
+date fail the whole feed.
+`fetchNewsPool()` deduplicates by stable article ID and normalized title,
+preserves minimum per-source representation when configured (a source only
+reserves that slot with an item that is at least signal-card relevant), and
+caps the pool at `MAX_ITEMS_FETCHED`. Feeds from one publication (the five
+Federal Register feeds, the three arXiv feeds) share a source name so the
+per-source cap applies to the publication.
 
 ## 2. Source Article Extraction Logic
 
@@ -48,9 +63,9 @@ Feed item extraction happens in `scripts/lib/fetch-feeds.mjs`:
 
 Full article excerpt extraction happens in `scripts/lib/source-fetch.mjs`:
 
-- `fetchArticleExtraction({ url, title, fallbackSnippet, sourceRegistryId, sources, networkOptions, timeoutMs = 12000 })` delegates to `fetchAuthorizedSourceText()` after source-registry authorization. Its text, feed, and source-image requests identify as `ComputeCurrentBot/1.0` and use the configured source-host boundary.
+- `fetchArticleExtraction({ url, title, fallbackSnippet, sourceRegistryId, sources, networkOptions, timeoutMs = 12000 })` delegates to `fetchAuthorizedSourceText()` after source-registry authorization. Its text, feed, and source-image requests identify as `ComputeCurrentBot/1.0` and use the configured source-host boundary. An adapter may declare an `apiTarget(url)` hook that swaps the page URL for a same-host API URL (with its own `contentTypes`/`accept`) and converts the response to HTML; the host allow-list and rights decision still apply to that URL.
 - In offline mode, failed HTTP, failed fetch, or non-OK response, it falls back to the provided snippet and records extraction QA against that fallback.
-- Source-specific adapters handle extraction/cleanup for `datacenterknowledge.com`, `bloomberg.com`, `storagereview.com`, `datacenterfrontier.com`, `semiengineering.com`, `cloud.google.com`, `techcrunch.com`, `servethehome.com`, and `datacenterpost.com`.
+- Source-specific adapters handle extraction/cleanup for `datacenterknowledge.com`, `bloomberg.com`, `storagereview.com`, `datacenterfrontier.com`, `semiengineering.com`, `cloud.google.com`, `techcrunch.com`, `servethehome.com`, `datacenterpost.com`, `arxiv.org` (abstract blockquote only), `federalregister.gov` (`fulltext_content_area`, printed-page and FR Doc markers removed), `whitehouse.gov`, `nsf.gov`, `sec.gov`, `acer.europa.eu`, and `ec.europa.eu` (press-corner detail URLs are rewritten to the same-host documents API and its JSON `htmlContent` is extracted).
 - It prefers adapter selectors, then `<article>`, `<main>`, and body fallbacks; strips HTML; removes common navigation, CTA, newsletter, cookie, and copyright boilerplate; truncates to a sentence boundary; and returns article text plus QA metadata.
 
 Extraction quality is scored in `scripts/lib/quality-gate.mjs`:

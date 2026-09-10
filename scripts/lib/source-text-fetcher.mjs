@@ -53,9 +53,9 @@ export async function fetchAuthorizedSourceText(subject = {}, options = {}) {
   try {
     const result = await fetchPublicResource(subject.url, {
       allowedHosts: decision.allowedHosts,
-      contentTypes: ARTICLE_TEXT_TYPES,
+      contentTypes: options.contentTypes || ARTICLE_TEXT_TYPES,
       headers: {
-        accept: 'text/html,application/xhtml+xml',
+        accept: options.accept || 'text/html,application/xhtml+xml',
         'user-agent': 'Mozilla/5.0 (compatible; ComputeCurrentBot/1.0)',
       },
       maxBytes: options.maxBytes || SOURCE_TEXT_MAX_BYTES,

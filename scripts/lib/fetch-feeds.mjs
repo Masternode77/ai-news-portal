@@ -39,14 +39,70 @@ function firstImage(item) {
   return safeHttpUrl(match?.[1]) || null;
 }
 
-export function parseFeedItem(feed, item) {
+// Some Drupal feeds ship an escaped anchor tag where the item link belongs
+// ("https://host/%3Ca%20href%3D%22/news/slug%22 ..."), which resolves to a
+// 404. Recover the href so the item points at the article page.
+export function repairFeedLink(raw = '', feedUrl = '') {
+  const value = String(raw || '').trim();
+  if (!value) return '';
+  let decoded;
+  try {
+    decoded = decodeURIComponent(value);
+  } catch {
+    return value;
+  }
+  const anchor = decoded.match(/<a\s[^>]*href=["']([^"']+)["']/i);
+  if (!anchor) return value;
+  try {
+    return new URL(anchor[1], feedUrl || value).toString();
+  } catch {
+    return '';
+  }
+}
+
+const DRUPAL_DATE_PATTERN = /^(?:[A-Za-z]{3},\s*)?(\d{1,2})\/(\d{1,2})\/(\d{4})\s*-\s*(\d{1,2}):(\d{2})$/;
+
+// rss-parser only fills isoDate when the feed date parses. Drupal's default
+// "D, m/d/Y - H:i" format does not, and an Invalid Date would throw from
+// toISOString() and take the whole feed down with it.
+export function publishedAtIso(item = {}, now = new Date()) {
+  for (const candidate of [item.isoDate, item.pubDate, item.published, item.updated, item.date]) {
+    const raw = String(candidate || '').trim();
+    if (!raw) continue;
+    const parsed = new Date(raw);
+    if (Number.isFinite(parsed.getTime())) return parsed.toISOString();
+    const drupal = raw.match(DRUPAL_DATE_PATTERN);
+    if (drupal) {
+      const [, month, day, year, hour, minute] = drupal.map(Number);
+      const stamp = Date.UTC(year, month - 1, day, hour, minute);
+      if (Number.isFinite(stamp)) return new Date(stamp).toISOString();
+    }
+  }
+  return new Date(now).toISOString();
+}
+
+// The source-text gate only fetches https article URLs, so an item whose feed
+// still carries an http link would be dropped silently. Every authorized
+// publisher serves https; try the upgraded scheme and let the gate decide.
+export function httpsItemUrl(url = '') {
+  const safe = safeHttpUrl(url);
+  if (!safe) return '';
+  try {
+    const parsed = new URL(safe);
+    if (parsed.protocol === 'http:') parsed.protocol = 'https:';
+    return parsed.toString();
+  } catch {
+    return '';
+  }
+}
+
+export function parseFeedItem(feed, item, now = new Date()) {
   const title = (item.title || '').trim();
-  const url = safeHttpUrl(item.link || item.guid || '');
+  const url = httpsItemUrl(repairFeedLink(item.link || item.guid || '', feed.url));
   if (!title || !url) return null;
 
   const rawBody = stripHtml(item.contentEncoded || item.content || item.summary || item.contentSnippet || '');
   const rawSnippet = stripHtml(item.contentSnippet || item.summary || rawBody || '');
-  const publishedAt = item.isoDate || item.pubDate || new Date().toISOString();
 
   const baseItem = {
     id: stableArticleId(url, title),
@@ -56,7 +112,7 @@ export function parseFeedItem(feed, item) {
     title,
     snippet: truncate(rawSnippet || rawBody, 220),
     contentText: truncate(rawBody, 800),
-    publishedAt: new Date(publishedAt).toISOString(),
+    publishedAt: publishedAtIso(item, now),
     sourceImage: firstImage(item),
     region: feed.region || 'Global',
     language: feed.language || guessLanguage(`${title} ${rawSnippet}`),
@@ -111,8 +167,9 @@ async function fetchFeedItems(feed, networkOptions = {}) {
     timeoutMs: networkOptions.timeoutMs || 20_000,
   });
   const parsed = await parser.parseString(response.bytes.toString('utf8'));
+  const now = networkOptions.now || new Date();
   return (parsed.items || [])
-    .map((item) => parseFeedItem(feed, item))
+    .map((item) => parseFeedItem(feed, item, now))
     .filter(Boolean);
 }
 
@@ -125,6 +182,14 @@ function relevanceThenRecency(a, b) {
 function isFresh(item, now) {
   const stamp = new Date(item.publishedAt).getTime();
   return Number.isFinite(stamp) && now - stamp <= POOL_MAX_AGE_DAYS * 86_400_000;
+}
+
+// A source only reserves its representation slot with an item that is at
+// least signal-card relevant. An off-beat top item (hydro licence notices,
+// enforcement actions, proclamations) is left to the relevance-ordered pass,
+// so registering more government feeds does not push on-beat items out.
+function reservesSourceSlot(item) {
+  return item.infrastructure_relevance_tier !== 'archive_only';
 }
 
 // The pool is capped, and several authorized sources publish far more
@@ -167,7 +232,7 @@ export function selectPoolItems(fetched = [], now = Date.now()) {
     for (const item of dedupedByRecency) {
       if (selected.length >= MAX_ITEMS_FETCHED) break;
       const count = sourceCount.get(item.source) || 0;
-      if (count >= minPerSource) continue;
+      if (count >= minPerSource || !reservesSourceSlot(item)) continue;
 
       selected.push(item);
       selectedIds.add(item.id);
