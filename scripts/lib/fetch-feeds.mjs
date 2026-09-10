@@ -81,9 +81,24 @@ export function publishedAtIso(item = {}, now = new Date()) {
   return new Date(now).toISOString();
 }
 
+// The source-text gate only fetches https article URLs, so an item whose feed
+// still carries an http link would be dropped silently. Every authorized
+// publisher serves https; try the upgraded scheme and let the gate decide.
+export function httpsItemUrl(url = '') {
+  const safe = safeHttpUrl(url);
+  if (!safe) return '';
+  try {
+    const parsed = new URL(safe);
+    if (parsed.protocol === 'http:') parsed.protocol = 'https:';
+    return parsed.toString();
+  } catch {
+    return '';
+  }
+}
+
 export function parseFeedItem(feed, item, now = new Date()) {
   const title = (item.title || '').trim();
-  const url = safeHttpUrl(repairFeedLink(item.link || item.guid || '', feed.url));
+  const url = httpsItemUrl(repairFeedLink(item.link || item.guid || '', feed.url));
   if (!title || !url) return null;
 
   const rawBody = stripHtml(item.contentEncoded || item.content || item.summary || item.contentSnippet || '');

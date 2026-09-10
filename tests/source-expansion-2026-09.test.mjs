@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import {
+  httpsItemUrl,
   parseFeedItem,
   publishedAtIso,
   repairFeedLink,
@@ -83,6 +84,22 @@ test('Drupal feeds that ship an escaped anchor tag as the link resolve to the ar
   assert.equal(item.url, 'https://www.acer.europa.eu/news/acer-calls-better-market-modelling');
   assert.equal(item.publishedAt, '2026-09-07T08:13:00.000Z');
   assert.equal(repairFeedLink('https://arxiv.org/abs/2609.09160', 'https://rss.arxiv.org/rss/cs.DC'), 'https://arxiv.org/abs/2609.09160');
+});
+
+test('http item links are upgraded to https before the source-text gate sees them', () => {
+  // Given: an arXiv-style item whose feed link still uses http.
+  const feed = { sourceRegistryId: 'arxiv-cs-dc', source: 'arXiv', url: 'https://rss.arxiv.org/rss/cs.DC' };
+  const item = parseFeedItem(feed, {
+    title: 'LBFAST: A Lightweight Moment-Represented Lattice Boltzmann Solver for Multi-GPU Architectures',
+    link: 'http://arxiv.org/abs/2609.09160',
+    isoDate: '2026-09-10T04:00:00.000Z',
+  }, NOW);
+
+  // Then: the item carries the https URL the gate accepts, and the id is stable across schemes.
+  assert.equal(item.url, 'https://arxiv.org/abs/2609.09160');
+  assert.equal(httpsItemUrl('https://arxiv.org/abs/2609.09160'), 'https://arxiv.org/abs/2609.09160');
+  assert.equal(httpsItemUrl('javascript:alert(1)'), '');
+  assert.equal(httpsItemUrl(''), '');
 });
 
 test('an unparseable feed date falls back to the run time instead of throwing', () => {
