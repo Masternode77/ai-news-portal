@@ -51,6 +51,13 @@ export function columnStoryRelevance(article = {}) {
 }
 const MIN_STORY_FACTS = 4;
 
+// An abstract-only source (arXiv: CC0 metadata, never the e-print) is capped
+// at the signal-card lane on the wire; it cannot anchor a column either. It may
+// still corroborate a column whose primary source is a full document.
+export function abstractOnlySource(article = {}) {
+  return String(article?.source_text_scope || '').trim().toLowerCase() === 'abstract';
+}
+
 // Resolves from the working directory first (the pipeline, Astro build, and
 // CI all run from the repo root); the module-relative path only backs up
 // direct Node invocations from elsewhere. Bundled page code must NOT call
@@ -205,6 +212,7 @@ function frequencyCheck(authored, now, { force = false } = {}) {
 export function selectColumnStory({ candidates = [], pool = [], excludedStoryKeys = new Set(), now = new Date() } = {}) {
   const scored = candidates
     .filter((article) => article?.id && article.title)
+    .filter((article) => !abstractOnlySource(article))
     .filter((article) => article.expert_insight_complete === true || article.expert_insight?.expert_insight_complete === true)
     .filter((article) => columnStoryRelevance(article) >= MIN_STORY_RELEVANCE)
     .filter((article) => !excludedStoryKeys.has(storyKeyFor(article)))

@@ -11,6 +11,8 @@ import {
   textValue,
 } from '../scripts/lib/fetch-feeds.mjs';
 import { authorizedTextFallbackPool } from '../scripts/pipeline.mjs';
+import { abstractOnlySource, selectColumnStory } from '../scripts/lib/authored-column-engine.mjs';
+import { fixtureArticle } from './fixtures/authored-column-fixture.mjs';
 import { classifyInfrastructureRelevance } from '../scripts/lib/relevance-classifier.mjs';
 import { ecPresscornerApiTarget, fetchArticleExtraction } from '../scripts/lib/source-fetch.mjs';
 import { activeRegistryFeeds, loadSourceRegistry } from '../scripts/lib/source-registry.mjs';
@@ -216,6 +218,18 @@ test('cached and legacy fallback pools re-stamp the registry text scope and recl
   assert.equal(pool.find((item) => item.id === 'cached-doe'), cachedDoe);
   // And: an already-stamped record is returned as-is.
   assert.equal(hydrateSourceTextScope([hydrated], [arxiv])[0], hydrated);
+});
+
+test('an abstract-only record can never anchor an authored column', () => {
+  // Given: a column-grade story that would otherwise be selected, marked abstract-only.
+  const abstractOnly = fixtureArticle({ id: 'abstract-001', source_text_scope: 'abstract' });
+  assert.equal(abstractOnlySource(abstractOnly), true);
+  assert.equal(abstractOnlySource(fixtureArticle()), false);
+
+  // Then: it is refused as the primary source, while a full document still wins.
+  assert.equal(selectColumnStory({ candidates: [abstractOnly], pool: [] }), null);
+  const selected = selectColumnStory({ candidates: [abstractOnly, fixtureArticle()], pool: [abstractOnly] });
+  assert.equal(selected?.article?.id, 'wire-001');
 });
 
 test('a source whose best item is off-beat does not reserve a pool slot ahead of on-beat items', () => {

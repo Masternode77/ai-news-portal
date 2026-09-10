@@ -158,7 +158,9 @@ these are in the registry.
   item publishes as a linked brief instead of costing a generation slot. Cached and legacy
   fallback pools (`PIPELINE_USE_EXISTING_POOL`, live-fetch failure) are re-stamped from the
   registry and reclassified by `hydrateSourceTextScope()`, so records written before the field
-  existed cannot slip back into long-form generation.
+  existed cannot slip back into long-form generation. `selectColumnStory()` applies the same
+  boundary to authored columns: an abstract-only record is never the primary source of a column,
+  though it can still corroborate one anchored on a full document.
 - `parseFeedItem()` also flattens markup-wrapped feed fields (`textValue()`): the same run failed
   the ACER feed with "(item.title || '').trim is not a function" because every ACER title is an
   anchor element, which rss-parser returns as an object.
@@ -181,7 +183,7 @@ these are in the registry.
 3. Authored columns draw on the same authorized pool and archive. A Federal Register order or an
    ACER assessment becomes column material the moment its extraction artifact passes, and its
    figures can enter the claim ledger as `verified_primary` because the text is the primary
-   document itself.
+   document itself. arXiv abstracts can corroborate a column but never anchor one.
 4. Attribution on the site names the publication (`Federal Register`, `arXiv`, `The White
    House`); the article text identifies the agency or authors.
 
