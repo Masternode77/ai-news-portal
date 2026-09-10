@@ -206,7 +206,11 @@ these are in the registry.
   routes any cluster still anchored on one to `Internal Archive` whatever its signal score. The
   guard reads canonical source evidence (`source_evidence_text`/`cleaned_source_text` first;
   `contentText`/`articleText` only before extraction) because the autonomous writer stores
-  generated prose in the body fields.
+  generated prose in the body fields. The public product-fit projection
+  (`publicSourceEvidence()`, verified title and artifact text only) now carries the registry id
+  and source URL so the guard can recognise the notice there too, and `buildHomepageFeed()`
+  never re-opens a docket archive route through a stored tier, so the already-published card
+  leaves the homepage, RSS and sitemap on the next build rather than the next pipeline run.
 - The Federal Register adapter drops the page's "Document headings vary by document type" note,
   which sits inside `fulltext_content_area` and opened every extracted document. (Feed Probe
   cannot read FR document pages: with the RSS accept header the site answers with its

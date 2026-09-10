@@ -16,6 +16,9 @@ import { abstractOnlySource, selectColumnStory } from '../scripts/lib/authored-c
 import { abstractOnlyCluster, proceduralDocketCluster, selectEditorialSignals } from '../scripts/lib/editorial-selection-engine.mjs';
 import { cleanScanItem, scanSourceItems } from '../scripts/lib/global-source-scan.mjs';
 import { definitivelyArchived, rollingCandidates } from '../scripts/lib/curate.mjs';
+import { isPublicProductFit, publicProductFitResult } from '../scripts/lib/public-product-fit.mjs';
+import { buildHomepageFeed } from '../scripts/lib/homepage-feed-builder.mjs';
+import { createExtractionArtifact } from '../scripts/lib/extraction-artifact.mjs';
 import { applyPublicRouting, routeStrictInfrastructureRelevance } from '../scripts/lib/strict-infrastructure-relevance-router.mjs';
 import { canGenerateFullArticle } from '../scripts/lib/editorial-story-engine-v2.mjs';
 import { abstractOnlyTextScope } from '../scripts/lib/source-registry.mjs';
@@ -633,6 +636,52 @@ test('cached and legacy records that the docket guard catches are demoted before
   const doeCluster = { ...cluster, representative_source: cleanScanItem(untouched) };
   assert.equal(proceduralDocketCluster(doeCluster), false);
   assert.notEqual(selectEditorialSignals([doeCluster]).ranked_candidates[0].editorial_route, 'Internal Archive');
+});
+
+test('the homepage product-fit check recognises a docket notice through its source identity', () => {
+  // Given: the published hydro notice as the homepage sees it, with its verified extraction
+  // artifact and the editorial_brief tier an earlier run stored.
+  const sourceUrl = HYDRO_NOTICE.url;
+  const cleanedExtractedText = `${HYDRO_NOTICE.contentText} ${Array.from({ length: 6 }, (_, index) => `Section ${index + 1} of the final supplemental EIS records a distinct licensing measure for the project.`).join(' ')}`;
+  const artifact = createExtractionArtifact({
+    sourceUrl,
+    cleanedExtractedText,
+    extractionQa: { public_publishable: true, can_generate_longform: true, sentence_completion_score: 1 },
+  });
+  const published = {
+    ...HYDRO_NOTICE,
+    sourceUrl,
+    extraction_artifact: artifact,
+    extraction_quality_score: 0.92,
+    infrastructure_relevance_score: 0.615,
+    infrastructure_relevance_tier: 'signal_card',
+    homepagePublished: true,
+    articlePagePublished: false,
+    archiveOnly: false,
+    signalCardOnly: true,
+    public_status: 'published',
+    public_content_tier: 'editorial_brief',
+  };
+
+  // Then: product fit fails on the docket decision even though the projection holds only verified evidence,
+  // and the homepage feed drops the record instead of re-opening its archive route through the stored tier.
+  const fit = publicProductFitResult(published);
+  assert.equal(fit.ok, false);
+  assert.ok(fit.reasons.includes('procedural_regulatory_docket_without_compute_context'), fit.reasons.join(', '));
+  assert.equal(buildHomepageFeed([published]).items.length, 0);
+
+  // And: the same filing about a co-located data center load passes the product-fit check.
+  const coLocatedText = `${cleanedExtractedText} The licensee also asks the Commission to approve a 300 MW large load interconnection for a data center campus co-located at the plant.`;
+  const coLocated = {
+    ...published,
+    contentText: coLocatedText,
+    extraction_artifact: createExtractionArtifact({
+      sourceUrl,
+      cleanedExtractedText: coLocatedText,
+      extractionQa: { public_publishable: true, can_generate_longform: true, sentence_completion_score: 1 },
+    }),
+  };
+  assert.equal(isPublicProductFit(coLocated), true, publicProductFitResult(coLocated).reasons.join(', '));
 });
 
 test('definitive archive decisions leave the curation planning pool', () => {
