@@ -30,11 +30,31 @@ const parser = new Parser({
   },
 });
 
+// rss-parser hands back an xml2js object instead of a string when a feed puts
+// markup inside a text element (ACER wraps every item title in an anchor).
+// Flatten it to its text so a decorated title cannot crash the whole feed.
+export function textValue(value) {
+  if (value == null) return '';
+  if (typeof value === 'string') return value;
+  if (typeof value === 'number' || typeof value === 'boolean') return String(value);
+  if (Array.isArray(value)) return value.map(textValue).filter(Boolean).join(' ');
+  if (typeof value === 'object') {
+    const parts = [];
+    if (typeof value._ === 'string') parts.push(value._);
+    for (const [key, child] of Object.entries(value)) {
+      if (key === '_' || key === '$') continue;
+      parts.push(textValue(child));
+    }
+    return parts.filter(Boolean).join(' ');
+  }
+  return '';
+}
+
 function firstImage(item) {
   if (item.enclosure?.url && item.enclosure?.type?.startsWith('image')) return safeHttpUrl(item.enclosure.url) || null;
   const media = item.mediaContent?.[0]?.$?.url;
   if (media) return safeHttpUrl(media) || null;
-  const html = item.contentEncoded || item.content || item.summary || '';
+  const html = textValue(item.contentEncoded || item.content || item.summary || '');
   const match = html.match(/<img[^>]+src=["']([^"']+)["']/i);
   return safeHttpUrl(match?.[1]) || null;
 }
@@ -97,12 +117,12 @@ export function httpsItemUrl(url = '') {
 }
 
 export function parseFeedItem(feed, item, now = new Date()) {
-  const title = (item.title || '').trim();
-  const url = httpsItemUrl(repairFeedLink(item.link || item.guid || '', feed.url));
+  const title = textValue(item.title).replace(/\s+/g, ' ').trim();
+  const url = httpsItemUrl(repairFeedLink(textValue(item.link) || textValue(item.guid) || '', feed.url));
   if (!title || !url) return null;
 
-  const rawBody = stripHtml(item.contentEncoded || item.content || item.summary || item.contentSnippet || '');
-  const rawSnippet = stripHtml(item.contentSnippet || item.summary || rawBody || '');
+  const rawBody = stripHtml(textValue(item.contentEncoded || item.content || item.summary || item.contentSnippet || ''));
+  const rawSnippet = stripHtml(textValue(item.contentSnippet || item.summary || rawBody || ''));
 
   const baseItem = {
     id: stableArticleId(url, title),
@@ -117,6 +137,7 @@ export function parseFeedItem(feed, item, now = new Date()) {
     region: feed.region || 'Global',
     language: feed.language || guessLanguage(`${title} ${rawSnippet}`),
     defaultCategory: feed.defaultCategory || null,
+    ...(feed.textScope ? { source_text_scope: feed.textScope } : {}),
   };
   const infrastructureRelevance = classifyInfrastructureRelevance(baseItem);
   const aiTopic = classifyAiTopicRelevance(baseItem);
@@ -182,6 +203,43 @@ function relevanceThenRecency(a, b) {
 function isFresh(item, now) {
   const stamp = new Date(item.publishedAt).getTime();
   return Number.isFinite(stamp) && now - stamp <= POOL_MAX_AGE_DAYS * 86_400_000;
+}
+
+function registrySourceFor(record = {}, sources = []) {
+  const id = String(record.sourceRegistryId || '').trim().toLowerCase();
+  if (id) {
+    const byId = sources.find((source) => String(source.id || '').trim().toLowerCase() === id);
+    if (byId) return byId;
+  }
+  const name = String(record.source || '').trim().toLowerCase();
+  return sources.find((source) => String(source.name || '').trim().toLowerCase() === name) || null;
+}
+
+// Cached and legacy pool records were classified before their registry row
+// carried text_scope (or by an older build), so a fallback run would still
+// route an abstract-only item to long-form generation. Re-stamp the scope from
+// the registry and reclassify so the cap applies on every acquisition path.
+export function hydrateSourceTextScope(records = [], sources = []) {
+  return records.map((record) => {
+    const source = registrySourceFor(record, sources);
+    const scope = String(source?.text_scope || '').trim().toLowerCase();
+    if (!scope || record.source_text_scope === scope) return record;
+    const next = { ...record, source_text_scope: scope };
+    const relevance = classifyInfrastructureRelevance(next);
+    return {
+      ...next,
+      infrastructure_relevance_score: relevance.infrastructure_relevance_score,
+      infrastructure_relevance_tier: relevance.infrastructure_relevance_tier,
+      infrastructure_relevance_action: relevance.infrastructure_relevance_action,
+      infrastructure_relevance_reasons: relevance.infrastructure_relevance_reasons,
+      infrastructureRelevanceAction: relevance.infrastructureRelevanceAction,
+      articlePagePublished: relevance.articlePagePublished,
+      homepagePublished: relevance.homepagePublished,
+      archiveOnly: relevance.archiveOnly,
+      archiveOnlyReason: relevance.archiveOnlyReason,
+      infrastructure_relevance: relevance,
+    };
+  });
 }
 
 // A source only reserves its representation slot with an item that is at

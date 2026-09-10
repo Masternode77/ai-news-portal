@@ -149,6 +149,31 @@ these are in the registry.
 - `scripts/lib/relevance-classifier.mjs` normalises "data centre" / "datacentre" to the US
   spelling before scoring, so ACER, Ofgem, gov.uk and Commission items score like US ones (the
   ACER Portugal item moved from `archive_only` 0.22 to `signal_card` 0.64).
+- The arXiv rows carry `text_scope: abstract`; `activeRegistryFeeds()` passes it to the feed,
+  `parseFeedItem()` stamps `source_text_scope` on each item, and the classifier caps such items
+  at the signal-card lane (`abstract_only_source_capped_at_signal_card`) while keeping the score
+  for pool ordering. The first forced run (2026-09-10, run #3199) scored an arXiv abstract
+  `full_memo` 0.83, generated a memo from 1,671 characters of source, and the final integrity gate
+  quarantined it (`visible_body_below_4500`, `unsupported_claims:7`); as a signal card the same
+  item publishes as a linked brief instead of costing a generation slot. Cached and legacy
+  fallback pools (`PIPELINE_USE_EXISTING_POOL`, live-fetch failure) are re-stamped from the
+  registry and reclassified by `hydrateSourceTextScope()`, so records written before the field
+  existed cannot slip back into long-form generation. `selectColumnStory()` applies the same
+  boundary to authored columns: an abstract-only record is never the primary source of a column,
+  though it can still corroborate one anchored on a full document. The autonomous editorial
+  cycle (`run:editorial-cycle`) keeps the scope through `scanSourceItems()`/`cleanScanItem()`,
+  and `selectEditorialSignals()` holds a cluster anchored on an abstract-only source at
+  `Watchlist Signal` instead of `Standard`/`Featured Analysis`. The public lane router
+  (`routeStrictInfrastructureRelevance()`, shared by `applyPublicRouting()` and the
+  `canGenerateFullArticle()` story gate) routes an abstract-only source to the adjacent lane
+  whatever its score, and the maintenance regenerators (`regenerate:public-content-v2`,
+  NarrativeDNA) re-stamp the scope from the registry before routing, so no later run can
+  recreate a long-form page from an abstract. `abstractOnlyTextScope()` in
+  `source-registry.mjs` is the single detector (stamped field first, registry row for legacy
+  records).
+- `parseFeedItem()` also flattens markup-wrapped feed fields (`textValue()`): the same run failed
+  the ACER feed with "(item.title || '').trim is not a function" because every ACER title is an
+  anchor element, which rss-parser returns as an object.
 - Tests: `tests/source-expansion-2026-09.test.mjs` covers the link/date repair, the pool
   reservation rule, both adapters, and checks that every expansion row is text-authorized for its
   real article host while every unreviewed row stays unfetched.
@@ -160,12 +185,15 @@ these are in the registry.
 2. The curation model picks the run's stories from that pool; extraction then fetches the article
    page through the host allow-list and the adapters above. Federal Register documents, White
    House actions, NSF and SEC releases and ACER news pass as long-form when the cleaned text is
-   at least 1,200 characters; arXiv abstracts usually land between 1,000 and 2,000 characters, so
-   some publish as signal cards rather than full memos.
+   at least 1,200 characters and the generated memo clears the 4,500-character detail contract;
+   arXiv items are abstract-scoped and always publish as signal cards (linked briefs).
+   Verification run #3199 on 2026-09-10 fetched 21 of the 22 feeds, loaded a 30-item pool
+   (arXiv 6, Federal Register 6, DOE 5, NRC 5, GAO 3, DESNZ 2, EIA 1, FTC 1, White House 1),
+   and published a Federal Register signal card to the homepage and RSS.
 3. Authored columns draw on the same authorized pool and archive. A Federal Register order or an
    ACER assessment becomes column material the moment its extraction artifact passes, and its
    figures can enter the claim ledger as `verified_primary` because the text is the primary
-   document itself.
+   document itself. arXiv abstracts can corroborate a column but never anchor one.
 4. Attribution on the site names the publication (`Federal Register`, `arXiv`, `The White
    House`); the article text identifies the agency or authors.
 

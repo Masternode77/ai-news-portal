@@ -9,6 +9,8 @@ import { syncArchiveArtifacts } from './lib/archive-store.mjs';
 import { buildEditorialStoryV2, canGenerateFullArticle } from './lib/editorial-story-engine-v2.mjs';
 import { generateEditorialExcerpt } from './lib/editorial-excerpt-generator.mjs';
 import { classifyInfrastructureRelevance } from './lib/relevance-classifier.mjs';
+import { hydrateSourceTextScope } from './lib/fetch-feeds.mjs';
+import { loadSourceRegistrySync } from './lib/source-registry.mjs';
 import { applyPublicRouting, routePublicLane } from './lib/public-lane-router.mjs';
 import { buildPublicPresentation } from './lib/public-presentation.mjs';
 import { normalizeProperNouns } from './lib/proper-noun-normalizer.mjs';
@@ -301,7 +303,9 @@ async function writeReports({ beforeRecords, afterRecords, processedCount }) {
 async function main() {
   const latest = await readJsonFile(LATEST_NEWS_PATH, []);
   const archive = await readJsonFile(ARCHIVE_NEWS_PATH, []);
-  const merged = mergeById([...latest, ...archive]);
+  // Records written before the registry text scope existed are re-stamped so
+  // an abstract-only source is capped here exactly as on the live wire.
+  const merged = hydrateSourceTextScope(mergeById([...latest, ...archive]), loadSourceRegistrySync());
   const selectedIds = new Set(merged.slice(0, REGENERATE_LIMIT).map((article) => article.id));
   const recentDecks = [];
   const regenerated = [];

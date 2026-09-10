@@ -1,4 +1,4 @@
-import { fetchNewsPool } from './fetch-feeds.mjs';
+import { fetchNewsPool, hydrateSourceTextScope } from './fetch-feeds.mjs';
 import { loadSourceRegistry } from './source-registry.mjs';
 import { dedupeSourceItems } from './source-deduplication.mjs';
 import { sourceCredibilityTier } from './source-priority-policy.mjs';
@@ -21,13 +21,18 @@ import {
   verifiedFactSentences,
 } from './autonomous-desk-utils.mjs';
 
-function cleanScanItem(item = {}) {
+export function cleanScanItem(item = {}) {
   const url = publicSourceUrl(item);
   const evidence = evidenceTextFor(item);
   const facts = verifiedFactSentences(item, 6);
   const sourceDomain = domainFor(url);
+  const textScope = String(item.source_text_scope || '').trim().toLowerCase();
   return {
     id: item.id || hash([url, item.title].join('|')),
+    ...(item.sourceRegistryId ? { sourceRegistryId: item.sourceRegistryId } : {}),
+    // Abstract-only sources (arXiv) keep their scope so the selection engine
+    // can hold them at the watchlist instead of routing them to long-form.
+    ...(textScope ? { source_text_scope: textScope } : {}),
     source_name: item.source || item.source_name || sourceDomain || 'Unknown source',
     source: item.source || item.source_name || sourceDomain || 'Unknown source',
     source_url: url,
@@ -57,6 +62,12 @@ function sourceLikeItem(item = {}) {
   return Boolean(item.url || item.sourceUrl);
 }
 
+// Cached pool, surface and archive records predate the registry text scope;
+// re-stamp it from the registry before cleaning so the scope survives the scan.
+export function scanSourceItems(fetched = [], sources = []) {
+  return dedupeSourceItems(hydrateSourceTextScope(fetched, sources).map(cleanScanItem));
+}
+
 export async function runGlobalSourceScan(options = {}) {
   const sources = await loadSourceRegistry();
   let fetched = [];
@@ -76,7 +87,7 @@ export async function runGlobalSourceScan(options = {}) {
     ];
   }
 
-  const source_items = dedupeSourceItems(fetched.map(cleanScanItem));
+  const source_items = scanSourceItems(fetched, sources);
   const latest_source_published_at = Math.max(0, ...source_items.map((item) => new Date(item.source_published_at).getTime()));
   const clean_items = source_items.filter((item) => item.extraction_quality >= 0.8 && item.cleaned_text.length >= 160 && item.crawl_status === 'clean');
   const source_health = buildSourceHealthReport(sources, source_items);

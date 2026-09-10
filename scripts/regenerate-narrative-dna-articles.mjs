@@ -10,6 +10,8 @@ import {
 import { hydrateExpertLens } from './lib/expert-lens.mjs';
 import { applyAntiTemplateRewrite } from './lib/anti-template-rewrite.mjs';
 import { classifyInfrastructureRelevance } from './lib/relevance-classifier.mjs';
+import { hydrateSourceTextScope } from './lib/fetch-feeds.mjs';
+import { loadSourceRegistrySync } from './lib/source-registry.mjs';
 import { qualityGateReason } from './lib/quality-gate.mjs';
 import { buildNarrativeLensFields, extractNarrativeDNA, GENERATION_VERSION } from './lib/narrative-dna.mjs';
 import { analyzeArticleRepetition } from './lib/repetition-detector.mjs';
@@ -107,6 +109,11 @@ function extractionBlocked(article = {}) {
 
 function relevanceBlocked(article = {}) {
   const relevance = article.infrastructure_relevance || classifyInfrastructureRelevance(article);
+  // The score alone is not enough: an abstract-only source is capped at the
+  // signal-card tier however high it scores.
+  if (relevance.infrastructure_relevance_tier && relevance.infrastructure_relevance_tier !== 'full_memo') {
+    return `infrastructure_relevance_tier ${relevance.infrastructure_relevance_tier} routes to ${relevance.infrastructure_relevance_action}`;
+  }
   if (relevance.infrastructure_relevance_score >= 0.75) return null;
   return `infrastructure_relevance_score ${relevance.infrastructure_relevance_score.toFixed(2)} routes to ${relevance.infrastructure_relevance_action}`;
 }
@@ -238,7 +245,10 @@ function reportLineArticle(article = {}, status = '', reason = '') {
 async function main() {
   const latest = await readJsonFile(LATEST_NEWS_PATH, []);
   const archive = await readJsonFile(ARCHIVE_NEWS_PATH, []);
-  const merged = sortNewest(mergeById([...archive, ...latest]).map((article) => hydrateExpertLens(article)));
+  const merged = sortNewest(
+    hydrateSourceTextScope(mergeById([...archive, ...latest]), loadSourceRegistrySync())
+      .map((article) => hydrateExpertLens(article)),
+  );
   const publicTargets = merged
     .filter((article) => article.homepagePublished !== false || pageIsPublic(article) || article.generation_version === GENERATION_VERSION || article.qualityGateBlocked || article.repetition_blocked)
     .slice(0, Math.max(TARGET_PUBLIC_COUNT, 220));
