@@ -485,6 +485,20 @@ test('the docket guard releases notices that carry compute or large-load context
   assert.equal(proceduralDocketWithoutComputeContext(largeLoadRule), false);
   assert.ok(classifyInfrastructureRelevance(largeLoadRule).infrastructure_relevance_score >= 0.55);
 
+  // Ordinary words that also live in the broad AI vocabulary do not release
+  // the notice: safety training, a particle accelerator, an inference about
+  // the schedule, a Colorado abbreviation, pumped storage with backup power.
+  for (const filler of [
+    'All plant staff completed the annual safety training program before the inspection.',
+    'The licensee operates a small particle accelerator at the research annex and an inference about the outage schedule is included.',
+    'The licensee is headquartered in Denver, Colo., and the plant provides pumped storage and backup power for the region.',
+  ]) {
+    const decorated = { ...HYDRO_NOTICE, contentText: `${HYDRO_NOTICE.contentText} ${filler}` };
+    assert.equal(proceduralDocketWithoutComputeContext(decorated), true, filler);
+    assert.equal(classifyInfrastructureRelevance(decorated).infrastructure_relevance_tier, 'archive_only', filler);
+    assert.equal(routeStrictInfrastructureRelevance({ ...decorated, infrastructure_relevance_score: 0.627 }).visibility, 'archive', filler);
+  }
+
   // A plain grid item without a docket pattern is untouched by the guard.
   const gridOrder = {
     source: 'U.S. Department of Energy',

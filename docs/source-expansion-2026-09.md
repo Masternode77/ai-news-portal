@@ -180,9 +180,10 @@ these are in the registry.
   enough to saturate the grid dimension: run #3199 published the Hells Canyon hydro SEIS notice
   as a signal card at 0.615 on that score alone. `classifyInfrastructureRelevance()` now caps
   such a notice at 0.44 (`procedural_regulatory_docket_without_compute_context`) unless the text
-  carries compute or large-load context (AI terms; the data center, cloud, semiconductor or
-  enterprise dimensions; "large load", co-location, computing, servers, digital infrastructure),
-  and `routeStrictInfrastructureRelevance()` archives it whatever its stored score, so the public
+  carries an unambiguous compute term ("AI", "artificial intelligence", "GPU", "data center",
+  "colocation", "hyperscale", "semiconductor", "HPC", "large load", co-location, servers, digital
+  infrastructure, crypto mining; a bare "training", "inference", "accelerator" or "Colo." does
+  not count), and `routeStrictInfrastructureRelevance()` archives it whatever its stored score, so the public
   content tier pass hides a record published before the guard existed. The guard only fires for
   docket sources (`federalregister.gov`, `ferc.gov`, `regulations.gov`, `govinfo.gov`, or a
   `federal-register-*`/`ferc-*` registry row) and only on a formulaic notice title ("Notice of

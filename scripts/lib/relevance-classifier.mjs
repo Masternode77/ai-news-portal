@@ -151,12 +151,75 @@ const PROCEDURAL_NOTICE_BODY_PATTERNS = [
   /\bany person desiring to intervene\b/,
 ];
 
+// What releases a docket notice from the cap: an unambiguous compute term.
+// The broad AI_TERMS list is not used here because "training", "inference"
+// and "accelerator" are ordinary words in a filing (safety training, a
+// particle accelerator), and the dimension scores are not used because "Colo."
+// or "pumped storage" plus "backup" would count as data-center or enterprise
+// evidence. Bare "compute"/"computing" is left out too: FERC notices compute
+// annual charges.
+const DOCKET_COMPUTE_CONTEXT_TERMS = [
+  'ai',
+  'artificial intelligence',
+  'machine learning',
+  'llm',
+  'llms',
+  'foundation model',
+  'foundation models',
+  'generative ai',
+  'model training',
+  'training run',
+  'training runs',
+  'training cluster',
+  'training clusters',
+  'inference workload',
+  'inference workloads',
+  'inference capacity',
+  'ai workload',
+  'ai workloads',
+  'gpu',
+  'gpus',
+  'accelerator cluster',
+  'accelerator capacity',
+  'compute capacity',
+  'compute load',
+  'compute demand',
+  'computing load',
+  'computing facility',
+  'computing facilities',
+  'computing hub',
+  'computing campus',
+  'high-performance computing',
+  'hpc',
+  'supercomputer',
+  'supercomputing',
+  'semiconductor',
+  'semiconductors',
+  'wafer',
+  'nvidia',
+  'hbm',
+  'data center',
+  'data centers',
+  'datacenter',
+  'datacenters',
+  'colocation',
+  'hyperscale',
+  'hyperscaler',
+  'hyperscalers',
+  'cloud computing',
+  'cloud region',
+  'cloud capacity',
+  'availability zone',
+  'servers',
+  'server farm',
+  'server load',
+  'digital infrastructure',
+  'bitcoin',
+];
+
 const COMPUTE_CONTEXT_PATTERNS = [
   /\blarge loads?\b/,
   /\bco-?locat(?:e|ed|es|ion|ing)\b/,
-  /\bcomput(?:e|ing)\b/,
-  /\bservers?\b/,
-  /\bdigital infrastructure\b/,
   /\bcrypto(?:currency)? min(?:e|es|ing|ers)\b/,
 ];
 
@@ -423,15 +486,9 @@ function isProceduralDocket(article = {}, titleText = '', text = '') {
     || PROCEDURAL_NOTICE_BODY_PATTERNS.some((pattern) => pattern.test(text));
 }
 
-function hasComputeContext(text = '', dimensionResults = {}) {
-  if (hasAny(text, AI_TERMS)) return true;
-  if (COMPUTE_CONTEXT_PATTERNS.some((pattern) => pattern.test(text))) return true;
-  return [
-    'data_center_relevance',
-    'cloud_capacity_relevance',
-    'semiconductor_relevance',
-    'enterprise_ai_infrastructure_relevance',
-  ].some((key) => Number(dimensionResults[key] || 0) >= 0.2);
+function hasComputeContext(text = '') {
+  if (hasAny(text, DOCKET_COMPUTE_CONTEXT_TERMS)) return true;
+  return COMPUTE_CONTEXT_PATTERNS.some((pattern) => pattern.test(text));
 }
 
 // Shared with the public lane router so a stored score cannot keep a
@@ -444,11 +501,7 @@ export function proceduralDocketWithoutComputeContext(article = {}) {
   ].filter(Boolean).join(' '));
   const titleText = normalizeText(article.title || '');
   if (!isProceduralDocket(article, titleText, text)) return false;
-  const dimensionResults = {};
-  for (const [key, terms] of Object.entries(DIMENSIONS)) {
-    dimensionResults[key] = scoreTerms(text, titleText, terms).score;
-  }
-  return !hasComputeContext(text, dimensionResults);
+  return !hasComputeContext(text);
 }
 
 // The AI lane: stories whose subject is AI itself (frontier models, labs,
@@ -610,7 +663,7 @@ export function classifyInfrastructureRelevance(article = {}) {
   const hasWeakAiAdjacent = hasAi && hasAny(text, WEAK_AI_ADJACENT_TERMS);
   const hardArchiveTopic = hasHardArchiveTopic(text);
   const hasAdjacentOnlyTopic = hasAny(text, ADJACENT_ONLY_TOPICS);
-  const proceduralDocket = isProceduralDocket(article, titleText, text) && !hasComputeContext(text, dimensionResults);
+  const proceduralDocket = isProceduralDocket(article, titleText, text) && !hasComputeContext(text);
 
   if (hasAi && hasInfra) {
     dimensionResults.direct_ai_infrastructure_relevance = Math.min(
