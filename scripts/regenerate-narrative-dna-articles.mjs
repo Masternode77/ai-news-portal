@@ -10,7 +10,7 @@ import {
 import { hydrateExpertLens } from './lib/expert-lens.mjs';
 import { applyAntiTemplateRewrite } from './lib/anti-template-rewrite.mjs';
 import { classifyInfrastructureRelevance } from './lib/relevance-classifier.mjs';
-import { hydrateSourceTextScope } from './lib/fetch-feeds.mjs';
+import { refreshCachedRelevance } from './lib/fetch-feeds.mjs';
 import { loadSourceRegistrySync } from './lib/source-registry.mjs';
 import { qualityGateReason } from './lib/quality-gate.mjs';
 import { buildNarrativeLensFields, extractNarrativeDNA, GENERATION_VERSION } from './lib/narrative-dna.mjs';
@@ -246,7 +246,7 @@ async function main() {
   const latest = await readJsonFile(LATEST_NEWS_PATH, []);
   const archive = await readJsonFile(ARCHIVE_NEWS_PATH, []);
   const merged = sortNewest(
-    hydrateSourceTextScope(mergeById([...archive, ...latest]), loadSourceRegistrySync())
+    refreshCachedRelevance(mergeById([...archive, ...latest]), loadSourceRegistrySync())
       .map((article) => hydrateExpertLens(article)),
   );
   const publicTargets = merged

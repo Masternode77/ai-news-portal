@@ -6,6 +6,7 @@ import {
   hydrateSourceTextScope,
   parseFeedItem,
   publishedAtIso,
+  refreshCachedRelevance,
   repairFeedLink,
   selectPoolItems,
   textValue,
@@ -543,6 +544,65 @@ test('the docket guard releases notices that carry compute or large-load context
   };
   assert.equal(proceduralDocketWithoutComputeContext(gridOrder), false);
   assert.ok(!classifyInfrastructureRelevance(gridOrder).infrastructure_relevance_reasons.includes('procedural_regulatory_docket_without_compute_context'));
+});
+
+test('cached and legacy records that the docket guard catches are demoted before curation', () => {
+  // Given: the Hells Canyon record as the cached pool and the archive still store it.
+  const federalRegister = authorizedSource('federal-register-ferc', 'federalregister.gov', {
+    name: 'Federal Register',
+    article_hosts: 'federalregister.gov,www.federalregister.gov',
+  });
+  const cached = {
+    ...HYDRO_NOTICE,
+    infrastructure_relevance_score: 0.615,
+    infrastructure_relevance_tier: 'signal_card',
+    infrastructure_relevance_action: 'publish_signal_card_only',
+    infrastructure_relevance_reasons: ['power_grid_relevance:1.00(power, megawatt, megawatts)'],
+    homepagePublished: true,
+    archiveOnly: false,
+    signalCardOnly: true,
+    infrastructure_relevance: { infrastructure_relevance_score: 0.615, infrastructure_relevance_tier: 'signal_card' },
+  };
+  const untouched = {
+    id: 'cached-doe-order',
+    sourceRegistryId: 'doe-newsroom',
+    source: 'U.S. Department of Energy',
+    url: 'https://www.energy.gov/articles/order',
+    title: 'Energy Secretary Secures Carolinas\' Grid Ahead of Holiday Weekend',
+    contentText: 'The Department of Energy issued an emergency order directing the utility to keep 800 megawatts of generation available to the grid through the weekend peak.',
+    publishedAt: '2026-09-08T11:30:00.000Z',
+    infrastructure_relevance_tier: 'signal_card',
+    infrastructure_relevance: { infrastructure_relevance_tier: 'signal_card' },
+  };
+
+  // When: the fallback pool, the column candidates and the regenerators refresh cached relevance.
+  const doe = authorizedSource('doe-newsroom', 'energy.gov', { name: 'U.S. Department of Energy' });
+  const refreshedSets = [
+    { name: 'refreshCachedRelevance', records: refreshCachedRelevance([cached, untouched], [federalRegister, doe]), identity: true },
+    { name: 'authorizedTextFallbackPool', records: authorizedTextFallbackPool([cached, untouched], [federalRegister, doe], NOW), identity: true },
+    // Column candidates are normalised on the way in, so identity is not expected there.
+    { name: 'columnCandidateRecords', records: columnCandidateRecords({ latest: [cached], pool: [untouched], existingArchive: [], now: NOW, sources: [federalRegister, doe] }), identity: false },
+  ];
+  for (const { name, records, identity } of refreshedSets) {
+    const demoted = records.find((item) => item.id === cached.id);
+    assert.equal(demoted.infrastructure_relevance_tier, 'archive_only', name);
+    assert.equal(demoted.infrastructure_relevance_action, 'archive_only', name);
+    assert.ok(demoted.infrastructure_relevance_score <= 0.44, `${name}: ${demoted.infrastructure_relevance_score}`);
+    assert.ok(demoted.infrastructure_relevance_reasons.includes('procedural_regulatory_docket_without_compute_context'), name);
+    assert.equal(demoted.homepagePublished, false, name);
+    assert.equal(demoted.archiveOnly, true, name);
+    assert.equal(demoted.infrastructure_relevance.infrastructure_relevance_tier, 'archive_only', name);
+    // And: a record the guard does not catch keeps its classification (and its identity where records pass through untouched).
+    const kept = records.find((item) => item.id === untouched.id);
+    assert.equal(kept.infrastructure_relevance_tier, 'signal_card', name);
+    assert.ok(!(kept.infrastructure_relevance_reasons || []).includes('procedural_regulatory_docket_without_compute_context'), name);
+    if (identity) assert.equal(kept, untouched, name);
+  }
+
+  // And: the autonomous scan carries the demoted score (and the demoted record) into its cleaned items.
+  const [scanned] = scanSourceItems([cached], [federalRegister]);
+  assert.ok(scanned.relevance_score <= 0.44, String(scanned.relevance_score));
+  assert.equal(scanned.original.infrastructure_relevance_tier, 'archive_only');
 });
 
 test('the docket guard is scoped to docket sources and formulaic notices', () => {

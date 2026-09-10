@@ -1,4 +1,4 @@
-import { fetchNewsPool, hydrateSourceTextScope } from './fetch-feeds.mjs';
+import { fetchNewsPool, refreshCachedRelevance } from './fetch-feeds.mjs';
 import { loadSourceRegistry } from './source-registry.mjs';
 import { dedupeSourceItems } from './source-deduplication.mjs';
 import { sourceCredibilityTier } from './source-priority-policy.mjs';
@@ -62,10 +62,11 @@ function sourceLikeItem(item = {}) {
   return Boolean(item.url || item.sourceUrl);
 }
 
-// Cached pool, surface and archive records predate the registry text scope;
-// re-stamp it from the registry before cleaning so the scope survives the scan.
+// Cached pool, surface and archive records predate the registry text scope
+// and the docket guard; re-stamp and demote them before cleaning so the scope
+// and the current classification survive the scan.
 export function scanSourceItems(fetched = [], sources = []) {
-  return dedupeSourceItems(hydrateSourceTextScope(fetched, sources).map(cleanScanItem));
+  return dedupeSourceItems(refreshCachedRelevance(fetched, sources).map(cleanScanItem));
 }
 
 export async function runGlobalSourceScan(options = {}) {

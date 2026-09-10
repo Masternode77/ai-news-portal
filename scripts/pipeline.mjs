@@ -20,7 +20,7 @@ import {
   hydrateExpertLens,
   mergeArticleRecords,
 } from './lib/expert-lens.mjs';
-import { fetchNewsPoolResult, hydrateSourceTextScope } from './lib/fetch-feeds.mjs';
+import { fetchNewsPoolResult, refreshCachedRelevance } from './lib/fetch-feeds.mjs';
 import { ensureArticleImage, needsImageRefresh } from './lib/image-generator.mjs';
 import { splitByExpertInsightGate } from './lib/expert-insight-engine.mjs';
 import {
@@ -169,7 +169,7 @@ function sortForPipelineVisibility(articles = []) {
 }
 
 export function authorizedTextFallbackPool(records = [], sources = [], now = new Date()) {
-  return hydrateSourceTextScope(textAuthorizedRecords(records, sources, now), sources);
+  return refreshCachedRelevance(textAuthorizedRecords(records, sources, now), sources);
 }
 
 // Column candidates span the whole recent corpus, not just the 30-item
@@ -181,10 +181,11 @@ export function columnCandidateRecords({ latest = [], pool = [], existingArchive
     const stamp = new Date(article?.analysisPublishedAt || article?.publishedAt || 0).getTime();
     return Number.isFinite(stamp) && stamp >= archiveCutoff;
   });
-  // Archived and surface records predate the registry text scope; re-stamp it
-  // so an abstract-only record is recognised before column selection.
+  // Archived and surface records predate the registry text scope and the
+  // docket guard; re-stamp and demote them so an abstract-only record or a
+  // procedural notice is recognised before column selection.
   const registry = Array.isArray(sources) ? sources : loadSourceRegistrySync();
-  return hydrateSourceTextScope(dedupeById([...(latest || []), ...(pool || []), ...recentArchive]), registry);
+  return refreshCachedRelevance(dedupeById([...(latest || []), ...(pool || []), ...recentArchive]), registry);
 }
 
 async function loadPoolWithFallback(existingLatest) {

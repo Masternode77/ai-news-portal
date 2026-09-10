@@ -193,7 +193,11 @@ these are in the registry.
   "Exempt Wholesale Generator", "Environmental Impact Statement", "Hydroelectric", …) or FERC's
   "Take notice that" body opener, so an EIA analysis that mentions hydroelectric generation in
   passing is never touched. A FERC large-load rulemaking is a docket item too, but it names data
-  centers and passes.
+  centers and passes. Cached and legacy records are demoted as well: `refreshCachedRelevance()`
+  (the successor of the text-scope hydration at the fallback pool, the column candidates, the
+  autonomous scan and both regenerators) reclassifies a stored `signal_card`/`full_memo` record
+  that the guard catches, so a curation-model outage cannot hand the deterministic ranker a
+  notice that the live classifier would archive.
 - The Federal Register adapter drops the page's "Document headings vary by document type" note,
   which sits inside `fulltext_content_area` and opened every extracted document. (Feed Probe
   cannot read FR document pages: with the RSS accept header the site answers with its

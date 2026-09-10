@@ -6,7 +6,11 @@ import {
   POOL_MAX_AGE_DAYS,
 } from './constants.mjs';
 import { guessLanguage, safeHttpUrl, stableArticleId, stripHtml, truncate } from './normalize.mjs';
-import { classifyAiTopicRelevance, classifyInfrastructureRelevance } from './relevance-classifier.mjs';
+import {
+  classifyAiTopicRelevance,
+  classifyInfrastructureRelevance,
+  proceduralDocketWithoutComputeContext,
+} from './relevance-classifier.mjs';
 import { classifyTaxonomy } from './taxonomy.mjs';
 import { fetchPublicResource } from './public-network-fetcher.mjs';
 import { activeRegistryFeeds, loadSourceRegistry } from './source-registry.mjs';
@@ -219,27 +223,51 @@ function registrySourceFor(record = {}, sources = []) {
 // carried text_scope (or by an older build), so a fallback run would still
 // route an abstract-only item to long-form generation. Re-stamp the scope from
 // the registry and reclassify so the cap applies on every acquisition path.
+function restampRelevance(record, relevance) {
+  return {
+    ...record,
+    infrastructure_relevance_score: relevance.infrastructure_relevance_score,
+    infrastructure_relevance_tier: relevance.infrastructure_relevance_tier,
+    infrastructure_relevance_action: relevance.infrastructure_relevance_action,
+    infrastructure_relevance_reasons: relevance.infrastructure_relevance_reasons,
+    infrastructureRelevanceAction: relevance.infrastructureRelevanceAction,
+    articlePagePublished: relevance.articlePagePublished,
+    homepagePublished: relevance.homepagePublished,
+    archiveOnly: relevance.archiveOnly,
+    archiveOnlyReason: relevance.archiveOnlyReason,
+    infrastructure_relevance: relevance,
+  };
+}
+
 export function hydrateSourceTextScope(records = [], sources = []) {
   return records.map((record) => {
     const source = registrySourceFor(record, sources);
     const scope = String(source?.text_scope || '').trim().toLowerCase();
     if (!scope || record.source_text_scope === scope) return record;
     const next = { ...record, source_text_scope: scope };
-    const relevance = classifyInfrastructureRelevance(next);
-    return {
-      ...next,
-      infrastructure_relevance_score: relevance.infrastructure_relevance_score,
-      infrastructure_relevance_tier: relevance.infrastructure_relevance_tier,
-      infrastructure_relevance_action: relevance.infrastructure_relevance_action,
-      infrastructure_relevance_reasons: relevance.infrastructure_relevance_reasons,
-      infrastructureRelevanceAction: relevance.infrastructureRelevanceAction,
-      articlePagePublished: relevance.articlePagePublished,
-      homepagePublished: relevance.homepagePublished,
-      archiveOnly: relevance.archiveOnly,
-      archiveOnlyReason: relevance.archiveOnlyReason,
-      infrastructure_relevance: relevance,
-    };
+    return restampRelevance(next, classifyInfrastructureRelevance(next));
   });
+}
+
+// A cached or legacy record keeps the classification it was written with,
+// which can predate the procedural docket guard: run #3199's hydro notice sits
+// in the pool as a 0.615 signal card. Demote such a record here so a fallback
+// run (PIPELINE_USE_EXISTING_POOL, live-fetch failure, a curation-model outage
+// that hands selection to the deterministic ranker) never enriches a notice
+// the live classifier would archive. Records the guard does not catch are
+// returned as-is; the classification is never raised here.
+export function demoteCachedDocketNotices(records = []) {
+  return records.map((record) => {
+    if (!record || record.infrastructure_relevance_tier === 'archive_only') return record;
+    if (!proceduralDocketWithoutComputeContext(record)) return record;
+    return restampRelevance(record, classifyInfrastructureRelevance(record));
+  });
+}
+
+// Every seam that reads stored records instead of the live wire (fallback
+// pool, column candidates, autonomous scan, regenerators) refreshes them here.
+export function refreshCachedRelevance(records = [], sources = []) {
+  return demoteCachedDocketNotices(hydrateSourceTextScope(records, sources));
 }
 
 // A source only reserves its representation slot with an item that is at
