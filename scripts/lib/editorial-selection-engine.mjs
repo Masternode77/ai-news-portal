@@ -19,6 +19,14 @@ function hasExplicitInfrastructureLink(cluster = {}) {
   return /\b(data centers?|power|grid|cloud capacity|ec2|server|hpc|epyc|enterprise storage|powerstore|network fabric|fiber backbone|platform infrastructure|reit|lease|permitting|siting)\b/i.test(text);
 }
 
+// A cluster anchored on an abstract-only source (arXiv: CC0 metadata, never
+// the e-print) cannot support a generated long-form page; the most it earns
+// is a watchlist signal that links to the abstract.
+export function abstractOnlyCluster(cluster = {}) {
+  const scope = cluster.representative_source?.source_text_scope || cluster.source_text_scope || '';
+  return String(scope).trim().toLowerCase() === 'abstract';
+}
+
 function routeForScore(cluster = {}) {
   const score = Number(cluster.signal_score || 0);
   const factCount = cluster.extracted_facts?.length || 0;
@@ -26,8 +34,9 @@ function routeForScore(cluster = {}) {
   const hasAnchor = (cluster.numeric_claims?.length || 0) > 0
     || /policy|siting|permit|moratorium|regulation/i.test(cluster.primary_infrastructure_layer || cluster.cluster_topic || '')
     || /\b(storage|platform|cloud|server|hpc|semiconductor|memory|network|fiber|data center|facility|power|grid)\b/i.test(signalText(cluster));
-  if (score >= 82 && factCount >= 4 && hasLayer && hasAnchor) return 'Featured Analysis';
-  if (score >= 70 && factCount >= 4 && hasLayer && hasAnchor) return 'Standard Analysis';
+  const longformAllowed = !abstractOnlyCluster(cluster);
+  if (longformAllowed && score >= 82 && factCount >= 4 && hasLayer && hasAnchor) return 'Featured Analysis';
+  if (longformAllowed && score >= 70 && factCount >= 4 && hasLayer && hasAnchor) return 'Standard Analysis';
   if (score >= 55 && hasLayer) return 'Watchlist Signal';
   return 'Internal Archive';
 }
@@ -40,6 +49,7 @@ export function selectEditorialSignals(clusters = [], options = {}) {
       return {
         ...cluster,
         editorial_route,
+        ...(abstractOnlyCluster(cluster) ? { abstract_only_source: true } : {}),
         rank_reasons: explainSignalRank(cluster),
       };
     })

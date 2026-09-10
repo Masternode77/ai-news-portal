@@ -160,7 +160,10 @@ these are in the registry.
   registry and reclassified by `hydrateSourceTextScope()`, so records written before the field
   existed cannot slip back into long-form generation. `selectColumnStory()` applies the same
   boundary to authored columns: an abstract-only record is never the primary source of a column,
-  though it can still corroborate one anchored on a full document.
+  though it can still corroborate one anchored on a full document. The autonomous editorial
+  cycle (`run:editorial-cycle`) keeps the scope through `scanSourceItems()`/`cleanScanItem()`,
+  and `selectEditorialSignals()` holds a cluster anchored on an abstract-only source at
+  `Watchlist Signal` instead of `Standard`/`Featured Analysis`.
 - `parseFeedItem()` also flattens markup-wrapped feed fields (`textValue()`): the same run failed
   the ACER feed with "(item.title || '').trim is not a function" because every ACER title is an
   anchor element, which rss-parser returns as an object.

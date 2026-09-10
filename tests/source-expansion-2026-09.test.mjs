@@ -12,6 +12,8 @@ import {
 } from '../scripts/lib/fetch-feeds.mjs';
 import { authorizedTextFallbackPool, columnCandidateRecords } from '../scripts/pipeline.mjs';
 import { abstractOnlySource, selectColumnStory } from '../scripts/lib/authored-column-engine.mjs';
+import { abstractOnlyCluster, selectEditorialSignals } from '../scripts/lib/editorial-selection-engine.mjs';
+import { cleanScanItem, scanSourceItems } from '../scripts/lib/global-source-scan.mjs';
 import { fixtureArticle } from './fixtures/authored-column-fixture.mjs';
 import { classifyInfrastructureRelevance } from '../scripts/lib/relevance-classifier.mjs';
 import { ecPresscornerApiTarget, fetchArticleExtraction } from '../scripts/lib/source-fetch.mjs';
@@ -250,6 +252,50 @@ test('an abstract-only record can never anchor an authored column', () => {
   assert.equal(candidates[0].source_text_scope, 'abstract');
   assert.notEqual(candidates[0].infrastructure_relevance_tier, 'full_memo');
   assert.equal(candidates[0].infrastructure_relevance.infrastructure_relevance_tier, candidates[0].infrastructure_relevance_tier);
+});
+
+test('the autonomous source scan keeps the abstract scope and the selection engine holds it at the watchlist', () => {
+  // Given: a cached arXiv record (no stamped scope) entering the global source scan.
+  const arxiv = authorizedSource('arxiv-cs-ar', 'arxiv.org', { name: 'arXiv', text_scope: 'abstract' });
+  const cached = {
+    id: 'scan-arxiv',
+    sourceRegistryId: 'arxiv-cs-ar',
+    source: 'arXiv',
+    url: 'https://arxiv.org/abs/2609.09800',
+    title: 'HBFSim: Fast and Faithful Simulation of High-Bandwidth Flash Under Real GPU Execution',
+    publishedAt: '2026-09-10T04:00:00.000Z',
+    cleaned_source_text: 'Serving a large language model is limited by memory capacity. High-Bandwidth Flash stacks NAND flash inside the accelerator package, one tier below high-bandwidth memory, so a GPU can hold more weights per device. HBFSim simulates the device under real inference workloads on a GPU cluster and reports thermal and datacenter power effects across 64 servers.',
+    infrastructure_relevance_score: 0.826,
+    infrastructure_relevance_tier: 'full_memo',
+  };
+
+  // Then: the scope survives cleaning, whether stamped on the item or only on the registry row.
+  const [scanned] = scanSourceItems([cached], [arxiv]);
+  assert.equal(scanned.source_text_scope, 'abstract');
+  assert.equal(scanned.sourceRegistryId, 'arxiv-cs-ar');
+  assert.equal(cleanScanItem({ ...cached, source_text_scope: 'abstract' }).source_text_scope, 'abstract');
+  assert.equal(Object.hasOwn(cleanScanItem(cached), 'source_text_scope'), false);
+
+  // And: a cluster anchored on that item is held as a watchlist signal, never selected for analysis.
+  const cluster = {
+    cluster_id: 'sig-hbf',
+    cluster_title: 'High-Bandwidth Flash for GPU memory capacity',
+    cluster_topic: 'GPU memory and accelerator silicon',
+    primary_infrastructure_layer: 'Silicon',
+    extracted_facts: ['HBF stacks NAND flash inside the accelerator package.', 'It sits one tier below HBM.', 'HBFSim simulates real GPU inference workloads.', 'The study reports power effects across 64 servers.'],
+    numeric_claims: [{ raw: '64 servers' }],
+    signal_score: 88,
+    representative_source: scanned,
+  };
+  assert.equal(abstractOnlyCluster(cluster), true);
+  const capped = selectEditorialSignals([cluster]);
+  assert.equal(capped.selected_for_analysis.length, 0);
+  assert.equal(capped.held_signals.length, 1);
+  assert.equal(capped.held_signals[0].editorial_route, 'Watchlist Signal');
+  assert.equal(capped.held_signals[0].abstract_only_source, true);
+  const uncapped = selectEditorialSignals([{ ...cluster, representative_source: { ...scanned, source_text_scope: undefined } }]);
+  assert.equal(uncapped.selected_for_analysis.length, 1);
+  assert.equal(uncapped.selected_for_analysis[0].editorial_route, 'Featured Analysis');
 });
 
 test('a source whose best item is off-beat does not reserve a pool slot ahead of on-beat items', () => {
