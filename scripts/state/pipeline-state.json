@@ -44745,7 +44745,7 @@
     "2026-09-10": {
       "date": "2026-09-10",
       "createdAt": "2026-09-09T18:25:03.307Z",
-      "refreshedAt": "2026-09-10T08:42:26.027Z",
+      "refreshedAt": "2026-09-10T12:13:07.906Z",
       "candidateWindowHours": 24,
       "curatedItems": [],
       "curatedIds": [],
@@ -44762,133 +44762,6 @@
     }
   },
   "runHistory": [
-    {
-      "at": "2026-08-01T09:15:36.674Z",
-      "day": "2026-08-01",
-      "slot": 2,
-      "publishedCount": 0,
-      "signalCardCount": 1,
-      "archiveOnlyCount": 0,
-      "repetitionBlockedCount": 1,
-      "publishedIds": [],
-      "processedIds": [
-        "c346fc277f42c8b2",
-        "994c4a6b476bd8dd"
-      ],
-      "blockedCount": 1,
-      "blockedItems": [
-        {
-          "id": "c346fc277f42c8b2",
-          "title": "Lost one-of-a-kind Nintendo DS cartridge hits eBay for $9,100 — PokePark Fishing Contest designed to delete itself after 12 hours, game so rare it was only distributed to theme park attendees in 2005",
-          "infrastructure_relevance_score": 0.87,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "cloud_capacity_relevance:0.32(hyperscalers)",
-            "semiconductor_relevance:0.22(gpu)",
-            "power_grid_relevance:0.22(power)",
-            "capital_markets_relevance:0.28(capex)"
-          ],
-          "extraction_quality_score": 1,
-          "source_domain_adapter": "generic",
-          "content_length": 1713,
-          "boilerplate_ratio": 0,
-          "repetition_blocked": false,
-          "repetition_block_reasons": [],
-          "repetition_check": null,
-          "expert_insight_complete": false,
-          "expert_insight_missing_fields": [
-            "named_companies"
-          ],
-          "reason": "expert_insight_missing_fields named_companies"
-        }
-      ],
-      "repetitionBlockedItems": [
-        {
-          "id": "994c4a6b476bd8dd",
-          "title": "PCIe Gen6 and Gen5 Will Both Matter for AI Storage",
-          "infrastructure_relevance_score": 0.946,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, gpu cluster, neocloud)",
-            "cloud_capacity_relevance:0.32(hyperscalers)",
-            "semiconductor_relevance:0.44(amd, gpu)",
-            "power_grid_relevance:0.22(power)",
-            "enterprise_ai_infrastructure_relevance:0.66(storage, networking, ai workloads)"
-          ],
-          "extraction_quality_score": 1,
-          "source_domain_adapter": "servethehome",
-          "content_length": 1607,
-          "boilerplate_ratio": 0,
-          "repetition_blocked": true,
-          "repetition_block_reasons": [
-            "repeated_sentence_ratio>0.12",
-            "heading_sequence_similarity>0.75",
-            "conclusion_similarity>0.7"
-          ],
-          "repetition_check": {
-            "compared_article_count": 20,
-            "repeated_sentence_ratio": 0.14285714285714285,
-            "repeated_paragraph_ratio": 0.16666666666666666,
-            "heading_sequence_similarity": 1,
-            "banned_phrase_count": 0,
-            "banned_phrase_counts": {},
-            "recent_banned_phrase_counts": {},
-            "ngram_overlap": 0.46153846153846156,
-            "blueprint_repetition": 2,
-            "conclusion_similarity": 0.9271050693011066,
-            "repeated_sentence_count": 1,
-            "repeated_paragraph_count": 1,
-            "heading_sequence": [
-              "System Change",
-              "Bottleneck",
-              "Engineering Tradeoff",
-              "Validation Metric"
-            ],
-            "blocked": true,
-            "reasons": [
-              "repeated_sentence_ratio>0.12",
-              "heading_sequence_similarity>0.75",
-              "conclusion_similarity>0.7"
-            ]
-          },
-          "expert_insight_complete": true,
-          "expert_insight_missing_fields": [],
-          "reason": "repeated_sentence_ratio>0.12; heading_sequence_similarity>0.75; conclusion_similarity>0.7"
-        }
-      ],
-      "signalCardItems": [
-        {
-          "id": "c346fc277f42c8b2",
-          "title": "Lost one-of-a-kind Nintendo DS cartridge hits eBay for $9,100 — PokePark Fishing Contest designed to delete itself after 12 hours, game so rare it was only distributed to theme park attendees in 2005",
-          "infrastructure_relevance_score": 0.87,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "cloud_capacity_relevance:0.32(hyperscalers)",
-            "semiconductor_relevance:0.22(gpu)",
-            "power_grid_relevance:0.22(power)",
-            "capital_markets_relevance:0.28(capex)"
-          ],
-          "extraction_quality_score": 1,
-          "source_domain_adapter": "generic",
-          "content_length": 1713,
-          "boilerplate_ratio": 0,
-          "repetition_blocked": false,
-          "repetition_block_reasons": [],
-          "repetition_check": null,
-          "expert_insight_complete": false,
-          "expert_insight_missing_fields": [
-            "named_companies"
-          ],
-          "reason": "expert_insight_missing_fields named_companies"
-        }
-      ],
-      "archiveOnlyItems": []
-    },
     {
       "at": "2026-08-01T16:07:11.336Z",
       "day": "2026-08-02",
@@ -50874,9 +50747,28 @@
         "token_budget": 60000,
         "call_budget": 40
       }
+    },
+    {
+      "at": "2026-09-10T12:13:07.906Z",
+      "day": "2026-09-10",
+      "slot": 2,
+      "publishedCount": 0,
+      "authoredColumn": {
+        "published": false,
+        "reason": "no_qualifying_story"
+      },
+      "llmUsage": {
+        "calls": 1,
+        "failures": 0,
+        "prompt_tokens": 1408,
+        "completion_tokens": 69,
+        "total_tokens": 1477,
+        "token_budget": 60000,
+        "call_budget": 40
+      }
     }
   ],
-  "lastRunAt": "2026-09-10T08:42:26.027Z",
+  "lastRunAt": "2026-09-10T12:13:07.906Z",
   "authored": {
     "lastColumnAt": "2026-09-08T14:48:51.667Z",
     "columnsByDay": {

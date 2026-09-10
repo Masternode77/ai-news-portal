@@ -9,7 +9,7 @@ Source artifact category partitions: 9
 Source artifact company partitions: 16
 Source artifact region partitions: 7
 Source artifact archive partitions: 20
-Source artifact records: 472
+Source artifact records: 471
 
 ## Current reader-facing route state
 
