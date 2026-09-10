@@ -1,4 +1,5 @@
 import { fetchNewsPool, refreshCachedRelevance } from './fetch-feeds.mjs';
+import { proceduralDocketWithoutComputeContext } from './relevance-classifier.mjs';
 import { loadSourceRegistry } from './source-registry.mjs';
 import { dedupeSourceItems } from './source-deduplication.mjs';
 import { sourceCredibilityTier } from './source-priority-policy.mjs';
@@ -27,12 +28,21 @@ export function cleanScanItem(item = {}) {
   const facts = verifiedFactSentences(item, 6);
   const sourceDomain = domainFor(url);
   const textScope = String(item.source_text_scope || '').trim().toLowerCase();
+  const relevanceTier = String(item.infrastructure_relevance_tier || '').trim().toLowerCase();
+  const relevanceReasons = Array.isArray(item.infrastructure_relevance_reasons) ? item.infrastructure_relevance_reasons : [];
+  // The archive decision travels with the item: the signal scorer works from
+  // other dimensions and would otherwise promote a procedural docket notice
+  // that the wire classifier archived.
+  const proceduralDocket = proceduralDocketWithoutComputeContext(item);
   return {
     id: item.id || hash([url, item.title].join('|')),
     ...(item.sourceRegistryId ? { sourceRegistryId: item.sourceRegistryId } : {}),
     // Abstract-only sources (arXiv) keep their scope so the selection engine
     // can hold them at the watchlist instead of routing them to long-form.
     ...(textScope ? { source_text_scope: textScope } : {}),
+    ...(relevanceTier ? { infrastructure_relevance_tier: relevanceTier } : {}),
+    ...(relevanceReasons.length ? { infrastructure_relevance_reasons: relevanceReasons } : {}),
+    ...(proceduralDocket ? { procedural_docket_notice: true } : {}),
     source_name: item.source || item.source_name || sourceDomain || 'Unknown source',
     source: item.source || item.source_name || sourceDomain || 'Unknown source',
     source_url: url,
@@ -66,7 +76,14 @@ function sourceLikeItem(item = {}) {
 // and the docket guard; re-stamp and demote them before cleaning so the scope
 // and the current classification survive the scan.
 export function scanSourceItems(fetched = [], sources = []) {
-  return dedupeSourceItems(refreshCachedRelevance(fetched, sources).map(cleanScanItem));
+  // A procedural docket notice without compute context is archived by the
+  // wire classifier; it never enters clustering, whatever the signal scorer
+  // would make of its text.
+  return dedupeSourceItems(
+    refreshCachedRelevance(fetched, sources)
+      .map(cleanScanItem)
+      .filter((item) => item.procedural_docket_notice !== true),
+  );
 }
 
 export async function runGlobalSourceScan(options = {}) {

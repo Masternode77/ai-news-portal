@@ -13,8 +13,9 @@ import {
 } from '../scripts/lib/fetch-feeds.mjs';
 import { authorizedTextFallbackPool, columnCandidateRecords } from '../scripts/pipeline.mjs';
 import { abstractOnlySource, selectColumnStory } from '../scripts/lib/authored-column-engine.mjs';
-import { abstractOnlyCluster, selectEditorialSignals } from '../scripts/lib/editorial-selection-engine.mjs';
+import { abstractOnlyCluster, proceduralDocketCluster, selectEditorialSignals } from '../scripts/lib/editorial-selection-engine.mjs';
 import { cleanScanItem, scanSourceItems } from '../scripts/lib/global-source-scan.mjs';
+import { definitivelyArchived, rollingCandidates } from '../scripts/lib/curate.mjs';
 import { applyPublicRouting, routeStrictInfrastructureRelevance } from '../scripts/lib/strict-infrastructure-relevance-router.mjs';
 import { canGenerateFullArticle } from '../scripts/lib/editorial-story-engine-v2.mjs';
 import { abstractOnlyTextScope } from '../scripts/lib/source-registry.mjs';
@@ -599,10 +600,118 @@ test('cached and legacy records that the docket guard catches are demoted before
     if (identity) assert.equal(kept, untouched, name);
   }
 
-  // And: the autonomous scan carries the demoted score (and the demoted record) into its cleaned items.
-  const [scanned] = scanSourceItems([cached], [federalRegister]);
-  assert.ok(scanned.relevance_score <= 0.44, String(scanned.relevance_score));
-  assert.equal(scanned.original.infrastructure_relevance_tier, 'archive_only');
+  // And: the autonomous scan carries the archive decision on the cleaned item and drops the notice
+  // before clustering, while the DOE order passes through.
+  const cleaned = cleanScanItem(refreshCachedRelevance([cached], [federalRegister])[0]);
+  assert.equal(cleaned.procedural_docket_notice, true);
+  assert.equal(cleaned.infrastructure_relevance_tier, 'archive_only');
+  assert.ok(cleaned.infrastructure_relevance_reasons.includes('procedural_regulatory_docket_without_compute_context'));
+  const scanned = scanSourceItems([cached, untouched], [federalRegister, doe]);
+  assert.deepEqual(scanned.map((item) => item.id), [untouched.id]);
+
+  // And: a cluster built elsewhere on that item is archived by the selection engine whatever it scores.
+  const cluster = {
+    cluster_id: 'sig-hells-canyon',
+    cluster_title: 'Hells Canyon hydro relicensing keeps 1,222 MW on the grid',
+    cluster_topic: 'Hydro generation and grid power',
+    primary_infrastructure_layer: 'Power',
+    extracted_facts: ['The project has an installed capacity of 1,222 megawatts.', 'Staff recommends licensing the project.', 'The project spans three developments.', 'Power is delivered over transmission lines.'],
+    numeric_claims: [{ raw: '1,222 megawatts' }],
+    signal_score: 79,
+    representative_source: cleaned,
+  };
+  assert.equal(proceduralDocketCluster(cluster), true);
+  const selection = selectEditorialSignals([cluster]);
+  assert.equal(selection.selected_for_analysis.length, 0);
+  assert.equal(selection.held_signals.length, 0);
+  assert.equal(selection.rejected_signals[0].editorial_route, 'Internal Archive');
+  assert.equal(selection.rejected_signals[0].procedural_docket_notice, true);
+  // A legacy cleaned item without the flag is re-checked through its original record.
+  const { procedural_docket_notice: _flag, ...legacyCleaned } = cleaned;
+  assert.equal(proceduralDocketCluster({ ...cluster, representative_source: legacyCleaned }), true);
+  // The same cluster on the DOE order is routed on its merits.
+  const doeCluster = { ...cluster, representative_source: cleanScanItem(untouched) };
+  assert.equal(proceduralDocketCluster(doeCluster), false);
+  assert.notEqual(selectEditorialSignals([doeCluster]).ranked_candidates[0].editorial_route, 'Internal Archive');
+});
+
+test('definitive archive decisions leave the curation planning pool', () => {
+  // Given: the demoted hydro notice, a hard-archive item, an extracted archive-only item,
+  // and a snippet-only archive-only item the curation model may still weigh.
+  const federalRegister = authorizedSource('federal-register-ferc', 'federalregister.gov', {
+    name: 'Federal Register',
+    article_hosts: 'federalregister.gov,www.federalregister.gov',
+  });
+  const hydro = refreshCachedRelevance([{
+    ...HYDRO_NOTICE,
+    infrastructure_relevance_score: 0.615,
+    infrastructure_relevance_tier: 'signal_card',
+    score: 56,
+  }], [federalRegister])[0];
+  assert.equal(definitivelyArchived(hydro), true);
+  const dinosaur = {
+    id: 'dino',
+    source: 'Science Daily',
+    title: 'A new stegosaurus skeleton rewrites the fossil record',
+    snippet: 'Museum staff unveiled the dinosaur fossil.',
+    publishedAt: NOW.toISOString(),
+    score: 40,
+    infrastructure_relevance_tier: 'archive_only',
+    infrastructure_relevance_reasons: ['hard_archive_topic_outside_compute_current_boundary'],
+  };
+  const extractedArchive = {
+    id: 'extracted-archive',
+    source: 'U.S. Nuclear Regulatory Commission',
+    title: 'NRC Proposes Rule That Will Protect Drinking Water Near Uranium Mills',
+    cleaned_source_text: 'The rule sets groundwater protection standards for uranium recovery facilities.',
+    publishedAt: NOW.toISOString(),
+    score: 38,
+    infrastructure_relevance_tier: 'archive_only',
+    infrastructure_relevance_reasons: ['power_grid_relevance:0.26(nuclear)'],
+  };
+  const snippetOnly = {
+    id: 'duane-arnold',
+    source: 'U.S. Department of Energy',
+    title: 'Energy Department Closes $1.9 Billion Loan to Restart Duane Arnold Nuclear Plant',
+    snippet: 'The loan supports the restart of the 615 MW plant.',
+    publishedAt: NOW.toISOString(),
+    score: 44,
+    infrastructure_relevance_score: 0.28,
+    infrastructure_relevance_tier: 'archive_only',
+    infrastructure_relevance_reasons: ['power_grid_relevance:0.35(nuclear)'],
+  };
+  assert.equal(definitivelyArchived(dinosaur), true);
+  assert.equal(definitivelyArchived(extractedArchive), true);
+  assert.equal(definitivelyArchived(snippetOnly), false);
+
+  // When: the daily plan draws its candidates.
+  const candidates = rollingCandidates([hydro, dinosaur, extractedArchive, snippetOnly], { publishedIds: [] }, null, NOW);
+
+  // Then: only the snippet-only item is left for the model or the deterministic ranker.
+  assert.deepEqual(candidates.map((item) => item.id), ['duane-arnold']);
+});
+
+test('the docket guard reads canonical source evidence, not generated prose', () => {
+  // Given: an autonomous record whose generated body mentions data centers while the
+  // verified source evidence is a bare information-collection notice.
+  const generated = {
+    sourceRegistryId: 'federal-register-doe',
+    source: 'Federal Register',
+    url: 'https://www.federalregister.gov/documents/2026/09/10/2026-18460/agency-information-collection-extension',
+    title: 'Agency Information Collection Extension',
+    contentText: 'Data center operators and AI campus developers should read this filing as a signal that hyperscale load will be counted.',
+    articleText: 'Data center operators and AI campus developers should read this filing as a signal that hyperscale load will be counted.',
+    fullArticleText: 'Data center operators and AI campus developers should read this filing as a signal that hyperscale load will be counted.',
+    cleaned_source_text: 'The Department of Energy invites public comment on a proposed three-year extension of an information collection for power and transmission data submitted by utilities.',
+    source_evidence_text: 'The Department of Energy invites public comment on a proposed three-year extension of an information collection for power and transmission data submitted by utilities.',
+    infrastructure_relevance_score: 0.7,
+  };
+  assert.equal(proceduralDocketWithoutComputeContext(generated), true);
+  assert.equal(routeStrictInfrastructureRelevance(generated).visibility, 'archive');
+
+  // And: a wire record before extraction is judged on its feed body, then its snippet.
+  const wire = { ...generated, contentText: `${generated.cleaned_source_text} The schedule covers large load customers above 100 MW.`, articleText: undefined, fullArticleText: undefined, cleaned_source_text: undefined, source_evidence_text: undefined };
+  assert.equal(proceduralDocketWithoutComputeContext(wire), false);
 });
 
 test('the docket guard is scoped to docket sources and formulaic notices', () => {

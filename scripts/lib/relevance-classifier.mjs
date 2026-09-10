@@ -468,16 +468,21 @@ function buildArticleText(article = {}) {
   ].filter(Boolean).join(' ');
 }
 
-// The docket guard reads source evidence only: the title, the extracted body
-// (or, before extraction, the feed snippet) and the source metadata. The
-// generated summary and insight are left out so an enrichment phrase such as
-// "data center operators should watch this filing" cannot release the cap.
+// The docket guard reads source evidence only: the title, the canonical
+// extracted text (or, before extraction, the wire body and then the feed
+// snippet) and the source metadata. The generated summary and insight are
+// left out so an enrichment phrase such as "data center operators should
+// watch this filing" cannot release the cap, and contentText/articleText are
+// consulted only when no canonical extraction exists because the autonomous
+// writer stores generated prose in those fields.
 function docketEvidenceText(article = {}) {
-  const body = [
+  const canonical = [
+    article.source_evidence_text,
+    article.cleaned_source_text,
+  ].filter(Boolean).join(' ');
+  const body = canonical || [
     article.contentText,
     article.articleText,
-    article.cleaned_source_text,
-    article.fullArticleText,
   ].filter(Boolean).join(' ');
   return normalizeText([
     article.title,

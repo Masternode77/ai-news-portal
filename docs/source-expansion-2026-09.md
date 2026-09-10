@@ -197,7 +197,16 @@ these are in the registry.
   (the successor of the text-scope hydration at the fallback pool, the column candidates, the
   autonomous scan and both regenerators) reclassifies a stored `signal_card`/`full_memo` record
   that the guard catches, so a curation-model outage cannot hand the deterministic ranker a
-  notice that the live classifier would archive.
+  notice that the live classifier would archive. The curation planner (`rollingCandidates()`)
+  also drops definitively archived items (`definitivelyArchived()`: a docket notice, a hard
+  archive topic, or an item already extracted and still archive-only) before the model or the
+  ranker sees them, while a snippet-only archive estimate stays for the model to weigh. The
+  autonomous scan carries the archive decision on the cleaned item (`procedural_docket_notice`,
+  the tier and reasons), drops such items before clustering, and `selectEditorialSignals()`
+  routes any cluster still anchored on one to `Internal Archive` whatever its signal score. The
+  guard reads canonical source evidence (`source_evidence_text`/`cleaned_source_text` first;
+  `contentText`/`articleText` only before extraction) because the autonomous writer stores
+  generated prose in the body fields.
 - The Federal Register adapter drops the page's "Document headings vary by document type" note,
   which sits inside `fulltext_content_area` and opened every extracted document. (Feed Probe
   cannot read FR document pages: with the RSS accept header the site answers with its

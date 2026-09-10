@@ -258,8 +258,13 @@ export function hydrateSourceTextScope(records = [], sources = []) {
 // returned as-is; the classification is never raised here.
 export function demoteCachedDocketNotices(records = []) {
   return records.map((record) => {
-    if (!record || record.infrastructure_relevance_tier === 'archive_only') return record;
+    if (!record) return record;
+    const alreadyStamped = record.infrastructure_relevance_tier === 'archive_only'
+      && (record.infrastructure_relevance_reasons || []).includes('procedural_regulatory_docket_without_compute_context');
+    if (alreadyStamped) return record;
     if (!proceduralDocketWithoutComputeContext(record)) return record;
+    // An archive-only record classified before the guard existed is re-stamped
+    // too, so its reasons name the docket decision downstream.
     return restampRelevance(record, classifyInfrastructureRelevance(record));
   });
 }
