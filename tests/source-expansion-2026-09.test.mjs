@@ -487,6 +487,10 @@ test('the docket guard releases notices that carry compute or large-load context
     contentText: `${HYDRO_NOTICE.contentText} The licensee proposes to host 40 MW of server racks in a new hall beside the powerhouse.`,
   };
   assert.equal(proceduralDocketWithoutComputeContext(serverRacks), false);
+  for (const phrase of ['server fleets', 'server loads', 'server capacities', 'GPU server']) {
+    const variant = { ...HYDRO_NOTICE, contentText: `${HYDRO_NOTICE.contentText} The licensee reports growing ${phrase} behind the meter at the plant.` };
+    assert.equal(proceduralDocketWithoutComputeContext(variant), false, phrase);
+  }
 
   // A FERC rulemaking on large-load interconnection is a docket item too, but it is the beat.
   const largeLoadRule = {
