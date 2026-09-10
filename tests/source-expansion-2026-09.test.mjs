@@ -481,6 +481,17 @@ test('the docket guard releases notices that carry compute or large-load context
   assert.ok(!classified.infrastructure_relevance_reasons.includes('procedural_regulatory_docket_without_compute_context'));
   assert.notEqual(routeStrictInfrastructureRelevance(coLocated).visibility, 'archive');
 
+  // Server capacity language, unlike agency boilerplate about servers, is compute context.
+  const serverRacks = {
+    ...HYDRO_NOTICE,
+    contentText: `${HYDRO_NOTICE.contentText} The licensee proposes to host 40 MW of server racks in a new hall beside the powerhouse.`,
+  };
+  assert.equal(proceduralDocketWithoutComputeContext(serverRacks), false);
+  for (const phrase of ['server fleets', 'server loads', 'server capacities', 'GPU server']) {
+    const variant = { ...HYDRO_NOTICE, contentText: `${HYDRO_NOTICE.contentText} The licensee reports growing ${phrase} behind the meter at the plant.` };
+    assert.equal(proceduralDocketWithoutComputeContext(variant), false, phrase);
+  }
+
   // A FERC rulemaking on large-load interconnection is a docket item too, but it is the beat.
   const largeLoadRule = {
     source: 'Federal Register',
@@ -497,6 +508,7 @@ test('the docket guard releases notices that carry compute or large-load context
     'All plant staff completed the annual safety training program before the inspection.',
     'The licensee operates a small particle accelerator at the research annex and an inference about the outage schedule is included.',
     'The licensee is headquartered in Denver, Colo., and the plant provides pumped storage and backup power for the region.',
+    'The filing is available from agency servers and the Commission\'s eLibrary system; the computing of annual charges follows 18 CFR part 11.',
   ]) {
     const decorated = { ...HYDRO_NOTICE, contentText: `${HYDRO_NOTICE.contentText} ${filler}` };
     assert.equal(proceduralDocketWithoutComputeContext(decorated), true, filler);
