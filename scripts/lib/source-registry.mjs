@@ -58,6 +58,30 @@ export function loadSourceRegistrySync(filePath = SOURCE_REGISTRY_PATH) {
   return parseSourceRegistryYaml(fsSync.readFileSync(filePath, 'utf8'));
 }
 
+let cachedRegistryForScope = null;
+
+// An abstract-only source (arXiv: CC0 metadata, never the e-print) may only
+// publish as a signal card. The stamped field wins; legacy records that
+// predate it are recognised through their registry row.
+export function abstractOnlyTextScope(subject = {}, sources) {
+  if (String(subject?.source_text_scope || '').trim().toLowerCase() === 'abstract') return true;
+  const id = String(subject?.sourceRegistryId || '').trim().toLowerCase();
+  if (!id) return false;
+  let registry = Array.isArray(sources) && sources.length ? sources : null;
+  if (!registry) {
+    if (!cachedRegistryForScope) {
+      try {
+        cachedRegistryForScope = loadSourceRegistrySync();
+      } catch {
+        cachedRegistryForScope = [];
+      }
+    }
+    registry = cachedRegistryForScope;
+  }
+  const row = registry.find((source) => String(source?.id || '').trim().toLowerCase() === id);
+  return String(row?.text_scope || '').trim().toLowerCase() === 'abstract';
+}
+
 function normalizedHost(value = '') {
   try {
     return new URL(String(value || '').trim()).hostname.toLowerCase().replace(/^www\./, '');

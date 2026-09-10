@@ -1,5 +1,6 @@
 import { classifyInfrastructureRelevance } from './relevance-classifier.mjs';
 import { normalizeProperNouns } from './proper-noun-normalizer.mjs';
+import { abstractOnlyTextScope } from './source-registry.mjs';
 import { routeStoryArchetype } from './story-archetype-router.mjs';
 import { detectBoilerplate } from './boilerplate-detector.mjs';
 
@@ -331,10 +332,15 @@ export function routeStrictInfrastructureRelevance(article = {}) {
     };
   }
 
-  if (score < CORE_RELEVANCE_THRESHOLD || adjacentOnly || !hasLayer) {
+  // An abstract-only source can carry a signal card but never a generated
+  // long-form page, whatever its score; regeneration scripts route through
+  // here too, so the cap must not depend on the classifier's tier alone.
+  const abstractOnly = abstractOnlyTextScope(article);
+  if (score < CORE_RELEVANCE_THRESHOLD || adjacentOnly || !hasLayer || abstractOnly) {
     if (score < CORE_RELEVANCE_THRESHOLD) blockedReasons.push('relevance_below_core_threshold');
     if (adjacentOnly) blockedReasons.push('adjacent_topic_boundary');
     if (!hasLayer) blockedReasons.push('missing_concrete_infrastructure_layer');
+    if (abstractOnly) blockedReasons.push('abstract_only_source_capped_at_signal_card');
     return {
       score,
       visibility: 'adjacent',

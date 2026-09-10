@@ -14,6 +14,9 @@ import { authorizedTextFallbackPool, columnCandidateRecords } from '../scripts/p
 import { abstractOnlySource, selectColumnStory } from '../scripts/lib/authored-column-engine.mjs';
 import { abstractOnlyCluster, selectEditorialSignals } from '../scripts/lib/editorial-selection-engine.mjs';
 import { cleanScanItem, scanSourceItems } from '../scripts/lib/global-source-scan.mjs';
+import { applyPublicRouting, routeStrictInfrastructureRelevance } from '../scripts/lib/strict-infrastructure-relevance-router.mjs';
+import { canGenerateFullArticle } from '../scripts/lib/editorial-story-engine-v2.mjs';
+import { abstractOnlyTextScope } from '../scripts/lib/source-registry.mjs';
 import { fixtureArticle } from './fixtures/authored-column-fixture.mjs';
 import { classifyInfrastructureRelevance } from '../scripts/lib/relevance-classifier.mjs';
 import { ecPresscornerApiTarget, fetchArticleExtraction } from '../scripts/lib/source-fetch.mjs';
@@ -296,6 +299,37 @@ test('the autonomous source scan keeps the abstract scope and the selection engi
   const uncapped = selectEditorialSignals([{ ...cluster, representative_source: { ...scanned, source_text_scope: undefined } }]);
   assert.equal(uncapped.selected_for_analysis.length, 1);
   assert.equal(uncapped.selected_for_analysis[0].editorial_route, 'Featured Analysis');
+});
+
+test('the public lane router and story gate never give an abstract-only source a core lane', () => {
+  // Given: core-worthy source text from an arXiv record, with and without the stamped scope.
+  const evidence = `${'Clean source evidence about data center power, storage, and semiconductor capacity for GPU clusters. '.repeat(20)}Final sentence complete.`;
+  const article = {
+    id: 'router-arxiv',
+    title: 'High-Bandwidth Flash gives data center GPU clusters more memory capacity per server',
+    articleText: evidence,
+    cleaned_source_text: evidence,
+    infrastructure_relevance_score: 0.9,
+  };
+  assert.equal(routeStrictInfrastructureRelevance(article).visibility, 'core');
+
+  // Then: the stamped field, or the registry row of a legacy record, routes it to the adjacent lane.
+  const stamped = routeStrictInfrastructureRelevance({ ...article, source_text_scope: 'abstract' });
+  assert.equal(stamped.visibility, 'adjacent');
+  assert.ok(stamped.blocked_reasons.includes('abstract_only_source_capped_at_signal_card'));
+  const legacy = routeStrictInfrastructureRelevance({ ...article, sourceRegistryId: 'arxiv-cs-ar' });
+  assert.equal(legacy.visibility, 'adjacent');
+  assert.equal(abstractOnlyTextScope({ sourceRegistryId: 'arxiv-cs-ar' }), true);
+  assert.equal(abstractOnlyTextScope({ sourceRegistryId: 'doe-newsroom' }), false);
+  assert.equal(abstractOnlyTextScope({ sourceRegistryId: 'x' }, [authorizedSource('x', 'x.example', { text_scope: 'abstract' })]), true);
+
+  // And: applyPublicRouting() yields a signal card and the story gate refuses a full article.
+  const routed = applyPublicRouting({ ...article, source_text_scope: 'abstract' });
+  assert.equal(routed.signalCardOnly, true);
+  assert.equal(routed.articlePagePublished, false);
+  const gate = canGenerateFullArticle({ ...article, source_text_scope: 'abstract' });
+  assert.equal(gate.ok, false);
+  assert.ok(gate.reasons.includes('adjacent_watchlist'));
 });
 
 test('a source whose best item is off-beat does not reserve a pool slot ahead of on-beat items', () => {

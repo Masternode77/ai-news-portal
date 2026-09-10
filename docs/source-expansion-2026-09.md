@@ -163,7 +163,14 @@ these are in the registry.
   though it can still corroborate one anchored on a full document. The autonomous editorial
   cycle (`run:editorial-cycle`) keeps the scope through `scanSourceItems()`/`cleanScanItem()`,
   and `selectEditorialSignals()` holds a cluster anchored on an abstract-only source at
-  `Watchlist Signal` instead of `Standard`/`Featured Analysis`.
+  `Watchlist Signal` instead of `Standard`/`Featured Analysis`. The public lane router
+  (`routeStrictInfrastructureRelevance()`, shared by `applyPublicRouting()` and the
+  `canGenerateFullArticle()` story gate) routes an abstract-only source to the adjacent lane
+  whatever its score, and the maintenance regenerators (`regenerate:public-content-v2`,
+  NarrativeDNA) re-stamp the scope from the registry before routing, so no later run can
+  recreate a long-form page from an abstract. `abstractOnlyTextScope()` in
+  `source-registry.mjs` is the single detector (stamped field first, registry row for legacy
+  records).
 - `parseFeedItem()` also flattens markup-wrapped feed fields (`textValue()`): the same run failed
   the ACER feed with "(item.title || '').trim is not a function" because every ACER title is an
   anchor element, which rss-parser returns as an object.

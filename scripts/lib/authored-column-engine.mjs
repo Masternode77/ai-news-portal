@@ -33,7 +33,7 @@ import {
 import { isHeading, headingSequence } from './visible-body-length.mjs';
 import { buildColumnFigures } from './authored-column-figures.mjs';
 import { classifyAiTopicRelevance } from './relevance-classifier.mjs';
-import { loadSourceRegistrySync } from './source-registry.mjs';
+import { abstractOnlyTextScope } from './source-registry.mjs';
 
 const CHARTER_RELATIVE_PATH = 'config/editorial/persona-charter.json';
 const STORY_KEY_WINDOW_HOURS = 72;
@@ -52,29 +52,12 @@ export function columnStoryRelevance(article = {}) {
 }
 const MIN_STORY_FACTS = 4;
 
-let registryCache = null;
-function registrySources(sources) {
-  if (Array.isArray(sources) && sources.length) return sources;
-  if (!registryCache) {
-    try {
-      registryCache = loadSourceRegistrySync();
-    } catch {
-      registryCache = [];
-    }
-  }
-  return registryCache;
-}
-
 // An abstract-only source (arXiv: CC0 metadata, never the e-print) is capped
 // at the signal-card lane on the wire; it cannot anchor a column either. It may
 // still corroborate a column whose primary source is a full document. Legacy
 // records predate the stamped field, so the registry row is consulted too.
 export function abstractOnlySource(article = {}, sources = []) {
-  if (String(article?.source_text_scope || '').trim().toLowerCase() === 'abstract') return true;
-  const id = String(article?.sourceRegistryId || '').trim().toLowerCase();
-  if (!id) return false;
-  const row = registrySources(sources).find((source) => String(source?.id || '').trim().toLowerCase() === id);
-  return String(row?.text_scope || '').trim().toLowerCase() === 'abstract';
+  return abstractOnlyTextScope(article, sources);
 }
 
 // Resolves from the working directory first (the pipeline, Astro build, and

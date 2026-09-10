@@ -1,4 +1,5 @@
 import { explainSignalRank } from './signal-rank-explainer.mjs';
+import { abstractOnlyTextScope } from './source-registry.mjs';
 
 function signalText(cluster = {}) {
   return [
@@ -23,8 +24,8 @@ function hasExplicitInfrastructureLink(cluster = {}) {
 // the e-print) cannot support a generated long-form page; the most it earns
 // is a watchlist signal that links to the abstract.
 export function abstractOnlyCluster(cluster = {}) {
-  const scope = cluster.representative_source?.source_text_scope || cluster.source_text_scope || '';
-  return String(scope).trim().toLowerCase() === 'abstract';
+  if (String(cluster.source_text_scope || '').trim().toLowerCase() === 'abstract') return true;
+  return abstractOnlyTextScope(cluster.representative_source || {});
 }
 
 function routeForScore(cluster = {}) {
