@@ -39,9 +39,11 @@ recorded in `docs/source-expansion-2026-09.md`.
 The crawler is RSS/Atom based through `rss-parser` in
 `scripts/lib/fetch-feeds.mjs`. `parseFeedItem()` reads title, link/guid URL, RSS
 body/snippet fields, publish date, source image, region, language, and default
-category; `repairFeedLink()` recovers article URLs from feeds that ship an
-escaped anchor tag as the link, `httpsItemUrl()` upgrades http item links to
-https so the source-text gate (which only fetches https) can judge them, and
+category; `textValue()` flattens the xml2js objects rss-parser returns when a
+feed puts markup inside a text element (ACER wraps titles in an anchor),
+`repairFeedLink()` recovers article URLs from feeds that ship an escaped
+anchor tag as the link, `httpsItemUrl()` upgrades http item links to https so
+the source-text gate (which only fetches https) can judge them, and
 `publishedAtIso()` parses Drupal-style dates instead of letting an invalid
 date fail the whole feed.
 `fetchNewsPool()` deduplicates by stable article ID and normalized title,

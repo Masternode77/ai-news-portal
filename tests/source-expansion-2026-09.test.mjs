@@ -1,11 +1,13 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
+import Parser from 'rss-parser';
 import {
   httpsItemUrl,
   parseFeedItem,
   publishedAtIso,
   repairFeedLink,
   selectPoolItems,
+  textValue,
 } from '../scripts/lib/fetch-feeds.mjs';
 import { ecPresscornerApiTarget, fetchArticleExtraction } from '../scripts/lib/source-fetch.mjs';
 import { activeRegistryFeeds, loadSourceRegistry } from '../scripts/lib/source-registry.mjs';
@@ -84,6 +86,25 @@ test('Drupal feeds that ship an escaped anchor tag as the link resolve to the ar
   assert.equal(item.url, 'https://www.acer.europa.eu/news/acer-calls-better-market-modelling');
   assert.equal(item.publishedAt, '2026-09-07T08:13:00.000Z');
   assert.equal(repairFeedLink('https://arxiv.org/abs/2609.09160', 'https://rss.arxiv.org/rss/cs.DC'), 'https://arxiv.org/abs/2609.09160');
+});
+
+test('a feed that wraps item titles in markup still parses instead of failing the feed', async () => {
+  // Given: the ACER feed as rss-parser sees it — the title element contains an anchor, so
+  // xml2js returns an object, which previously threw "(item.title || '').trim is not a function".
+  const xml = `<?xml version="1.0" encoding="utf-8"?><rss version="2.0"><channel><title>www.acer.europa.eu</title><link>https://www.acer.europa.eu/</link><description></description>
+<item><title><a href="/news/acer-calls-better-market-modelling" hreflang="en">ACER calls for better market modelling as data centre demand outpaces electricity supply in Portugal</a></title><link>https://www.acer.europa.eu/%3Ca%20href%3D%22/news/acer-calls-better-market-modelling%22%20hreflang%3D%22en%22%3EACER%3C/a%3E</link><description>&lt;p&gt;Data centre demand in Portugal is growing faster than supply.&lt;/p&gt;</description><pubDate>Mon, 09/07/2026 - 08:13</pubDate></item>
+</channel></rss>`;
+  const parsed = await new Parser().parseString(xml);
+  assert.equal(typeof parsed.items[0].title, 'object');
+
+  const item = parseFeedItem({ sourceRegistryId: 'acer-news', source: 'ACER', url: 'https://www.acer.europa.eu/rss.xml' }, parsed.items[0], NOW);
+
+  assert.equal(item.title, 'ACER calls for better market modelling as data centre demand outpaces electricity supply in Portugal');
+  assert.equal(item.url, 'https://www.acer.europa.eu/news/acer-calls-better-market-modelling');
+  assert.equal(item.publishedAt, '2026-09-07T08:13:00.000Z');
+  assert.equal(item.snippet, 'Data centre demand in Portugal is growing faster than supply.');
+  assert.equal(textValue({ _: 'Lead', b: [{ _: 'bold' }], $: { attr: 'ignored' } }), 'Lead bold');
+  assert.equal(textValue(null), '');
 });
 
 test('http item links are upgraded to https before the source-text gate sees them', () => {
