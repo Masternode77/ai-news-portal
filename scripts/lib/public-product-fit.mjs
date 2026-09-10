@@ -57,10 +57,15 @@ function sourceEvidenceResult(article = {}) {
   const extractedFacts = verifiedArtifact
     ? verifiedClaimEvidence(article, extractedText, artifactUrl)
     : [];
+  // Source identity rides along so the docket guard can recognise a Federal
+  // Register notice; sourceUrl and the registry id are not scoring text, so
+  // the relevance of the projection is still the verified evidence alone.
   const projection = {
     ...(title ? { title } : {}),
     ...(extractedText ? { articleText: extractedText } : {}),
     ...(extractedFacts.length ? { extracted_facts: extractedFacts } : {}),
+    ...(article.sourceRegistryId ? { sourceRegistryId: article.sourceRegistryId } : {}),
+    ...(articleUrl ? { sourceUrl: articleUrl } : {}),
   };
   return {
     projection,
@@ -81,6 +86,7 @@ function sourceProductFit(article = {}) {
   const hardBoundary = route.blocked_reasons?.some((reason) => [
     'outside_compute_current_product_boundary',
     'generic_non_infrastructure_topic',
+    'procedural_regulatory_docket_without_compute_context',
   ].includes(reason));
   const decisiveMatch = DECISIVE_SOURCE_PATTERNS.some((pattern) => pattern.test(text));
   const sourceBacked = hasSourceBackedCardProductFit(projection);
@@ -111,6 +117,9 @@ export function publicProductFitResult(article = {}, copy = undefined) {
   }
   if (source.route.blocked_reasons?.some((reason) => reason === 'generic_non_infrastructure_topic')) {
     reasons.push('generic_non_infrastructure_topic');
+  }
+  if (source.route.blocked_reasons?.some((reason) => reason === 'procedural_regulatory_docket_without_compute_context')) {
+    reasons.push('procedural_regulatory_docket_without_compute_context');
   }
   if (!source.ok && !reasons.length) reasons.push('source_relevance_below_public_threshold');
 

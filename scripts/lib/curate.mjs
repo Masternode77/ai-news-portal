@@ -9,6 +9,7 @@ import {
 import { kstDayKey, kstSlot } from './normalize.mjs';
 import { callOpenRouterJson, isModelNotAvailableError } from './openrouter.mjs';
 import { rankWithDiversity } from './rank.mjs';
+import { proceduralDocketWithoutComputeContext } from './relevance-classifier.mjs';
 
 const CURATION_SHORTLIST_LIMIT = Number(process.env.CURATION_SHORTLIST_LIMIT || 30);
 
@@ -123,13 +124,38 @@ function publishedAtMs(item) {
   return Number.isFinite(timestamp) ? timestamp : 0;
 }
 
-function rollingCandidates(pool, state, existingPlan, now) {
+// A fetch-time archive tier is a title-and-snippet estimate, and the curation
+// model may still pick such an item (the Duane Arnold restart brief scored
+// 0.28 on its feed snippet). An archive decision is definitive, and the item
+// leaves the planning pool, when the classifier reached it for a reason that
+// extraction cannot change (a procedural docket notice, a hard archive topic)
+// or when the item was already extracted and still scores archive-only.
+const DEFINITIVE_ARCHIVE_REASONS = new Set([
+  'procedural_regulatory_docket_without_compute_context',
+  'hard_archive_topic_outside_compute_current_boundary',
+]);
+
+export function definitivelyArchived(item = {}) {
+  // A docket notice is judged directly: a cached pool item classified before
+  // the guard existed carries the archive tier without the reason code.
+  if (proceduralDocketWithoutComputeContext(item)) return true;
+  if (item.infrastructure_relevance_tier !== 'archive_only') return false;
+  const reasons = Array.isArray(item.infrastructure_relevance_reasons)
+    ? item.infrastructure_relevance_reasons
+    : (item.infrastructure_relevance?.infrastructure_relevance_reasons || []);
+  if (reasons.some((reason) => DEFINITIVE_ARCHIVE_REASONS.has(String(reason)))) return true;
+  return Boolean(item.cleaned_source_text || item.extraction_artifact);
+}
+
+export function rollingCandidates(pool, state, existingPlan, now) {
   const publishedSet = new Set([
     ...(state.publishedIds || []),
     ...(existingPlan?.publishedIds || []),
   ]);
   const cutoffMs = now.getTime() - FRESH_CANDIDATE_WINDOW_HOURS * 60 * 60 * 1000;
-  const ranked = rankWithDiversity(pool).filter((item) => !publishedSet.has(item.id));
+  const ranked = rankWithDiversity(pool)
+    .filter((item) => !publishedSet.has(item.id))
+    .filter((item) => !definitivelyArchived(item));
   const fresh = ranked.filter((item) => publishedAtMs(item) >= cutoffMs);
 
   if (fresh.length >= ITEMS_PER_RUN) {

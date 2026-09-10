@@ -112,6 +112,117 @@ const ADJACENT_ONLY_TOPICS = [
   'consumer hardware',
 ];
 
+// Procedural filings from government dockets (the Federal Register agency
+// feeds): hydro relicensing and EIS availability notices, pipeline blanket
+// authorizations, exempt wholesale generator and information-collection
+// notices. Their text is thick with "power" and "megawatts", which saturates
+// the grid dimension on its own (run #3199 published a hydro EIS notice as a
+// signal card on that score), yet says nothing about compute. Without an
+// explicit compute or large-load hook they stay archive-only. The guard is
+// scoped to docket sources and to formulaic notice titles (or FERC's "Take
+// notice that" body opener) so an EIA or trade article that mentions
+// hydroelectric generation in passing is never touched.
+const DOCKET_SOURCE_HOSTS = ['federalregister.gov', 'ferc.gov', 'regulations.gov', 'govinfo.gov'];
+const DOCKET_REGISTRY_PREFIXES = ['federal-register-', 'ferc-'];
+const DOCKET_SOURCE_NAMES = ['federal register'];
+
+const PROCEDURAL_NOTICE_TITLE_PATTERNS = [
+  /\bnotice of (?:availability|intent|application|request|effectiveness|petition|filing|proposed)\b/,
+  /\bnotice(?:s)? of (?:institution|termination|cancellation|amendment)\b/,
+  /\bcombined notice of filings\b/,
+  /\bsunshine act\b/,
+  /\binformation collection\b/,
+  /\bblanket (?:authorization|certificate)\b/,
+  /\bexempt wholesale generator\b/,
+  /\bforeign utility compan(?:y|ies)\b/,
+  /\benvironmental (?:impact statement|assessment)\b/,
+  /\bhydroelectric\b/,
+  /\bhydropower\b/,
+  /\brelicens(?:e|es|ed|ing)\b/,
+  /\bpreliminary permit\b/,
+  /\bsurrender of (?:license|exemption)\b/,
+  /\bmarket-based rate\b/,
+  /\bgas transmission\b/,
+  /\bnatural gas pipeline\b/,
+];
+
+const PROCEDURAL_NOTICE_BODY_PATTERNS = [
+  /\btake notice that\b/,
+  /\bany person desiring to intervene\b/,
+];
+
+// What releases a docket notice from the cap: an unambiguous compute term.
+// The broad AI_TERMS list is not used here because "training", "inference"
+// and "accelerator" are ordinary words in a filing (safety training, a
+// particle accelerator), and the dimension scores are not used because "Colo."
+// or "pumped storage" plus "backup" would count as data-center or enterprise
+// evidence. Bare "compute"/"computing" is left out too: FERC notices compute
+// annual charges.
+const DOCKET_COMPUTE_CONTEXT_TERMS = [
+  'ai',
+  'artificial intelligence',
+  'machine learning',
+  'llm',
+  'llms',
+  'foundation model',
+  'foundation models',
+  'generative ai',
+  'model training',
+  'training run',
+  'training runs',
+  'training cluster',
+  'training clusters',
+  'inference workload',
+  'inference workloads',
+  'inference capacity',
+  'ai workload',
+  'ai workloads',
+  'gpu',
+  'gpus',
+  'accelerator cluster',
+  'accelerator capacity',
+  'compute capacity',
+  'compute load',
+  'compute demand',
+  'computing load',
+  'computing facility',
+  'computing facilities',
+  'computing hub',
+  'computing campus',
+  'high-performance computing',
+  'hpc',
+  'supercomputer',
+  'supercomputing',
+  'semiconductor',
+  'semiconductors',
+  'wafer',
+  'nvidia',
+  'hbm',
+  'data center',
+  'data centers',
+  'datacenter',
+  'datacenters',
+  'colocation',
+  'hyperscale',
+  'hyperscaler',
+  'hyperscalers',
+  'cloud computing',
+  'cloud region',
+  'cloud capacity',
+  'availability zone',
+  'servers',
+  'server farm',
+  'server load',
+  'digital infrastructure',
+  'bitcoin',
+];
+
+const COMPUTE_CONTEXT_PATTERNS = [
+  /\blarge loads?\b/,
+  /\bco-?locat(?:e|ed|es|ion|ing)\b/,
+  /\bcrypto(?:currency)? min(?:e|es|ing|ers)\b/,
+];
+
 // Korean source text is normalized into the same narrow, physical
 // infrastructure vocabulary used by the English classifier. Keep aliases
 // concrete: broad AI or finance language must not create an infrastructure hit.
@@ -357,6 +468,62 @@ function buildArticleText(article = {}) {
   ].filter(Boolean).join(' ');
 }
 
+// The docket guard reads source evidence only: the title, the canonical
+// extracted text (or, before extraction, the wire body and then the feed
+// snippet) and the source metadata. The generated summary and insight are
+// left out so an enrichment phrase such as "data center operators should
+// watch this filing" cannot release the cap, and contentText/articleText are
+// consulted only when no canonical extraction exists because the autonomous
+// writer stores generated prose in those fields.
+function docketEvidenceText(article = {}) {
+  const canonical = [
+    article.source_evidence_text,
+    article.cleaned_source_text,
+  ].filter(Boolean).join(' ');
+  const body = canonical || [
+    article.contentText,
+    article.articleText,
+  ].filter(Boolean).join(' ');
+  return normalizeText([
+    article.title,
+    body || article.snippet,
+    article.source,
+    article.url,
+  ].filter(Boolean).join(' '));
+}
+
+function isDocketSource(article = {}) {
+  const registryId = String(article.sourceRegistryId || '').trim().toLowerCase();
+  if (DOCKET_REGISTRY_PREFIXES.some((prefix) => registryId.startsWith(prefix))) return true;
+  if (DOCKET_SOURCE_NAMES.includes(String(article.source || '').trim().toLowerCase())) return true;
+  try {
+    const host = new URL(String(article.url || article.sourceUrl || '')).hostname.toLowerCase();
+    return DOCKET_SOURCE_HOSTS.some((docketHost) => host === docketHost || host.endsWith(`.${docketHost}`));
+  } catch {
+    return false;
+  }
+}
+
+function isProceduralDocket(article = {}, titleText = '', text = '') {
+  if (!isDocketSource(article)) return false;
+  return PROCEDURAL_NOTICE_TITLE_PATTERNS.some((pattern) => pattern.test(titleText))
+    || PROCEDURAL_NOTICE_BODY_PATTERNS.some((pattern) => pattern.test(text));
+}
+
+function hasComputeContext(text = '') {
+  if (hasAny(text, DOCKET_COMPUTE_CONTEXT_TERMS)) return true;
+  return COMPUTE_CONTEXT_PATTERNS.some((pattern) => pattern.test(text));
+}
+
+// Shared with the public lane router so a stored score cannot keep a
+// procedural docket notice on the homepage once the guard exists.
+export function proceduralDocketWithoutComputeContext(article = {}) {
+  const text = docketEvidenceText(article);
+  const titleText = normalizeText(article.title || '');
+  if (!isProceduralDocket(article, titleText, text)) return false;
+  return !hasComputeContext(text);
+}
+
 // The AI lane: stories whose subject is AI itself (frontier models, labs,
 // policy, security, compute demand) rather than the infrastructure beneath it.
 // Scored separately so the wire's infrastructure gates stay honest while the
@@ -516,6 +683,7 @@ export function classifyInfrastructureRelevance(article = {}) {
   const hasWeakAiAdjacent = hasAi && hasAny(text, WEAK_AI_ADJACENT_TERMS);
   const hardArchiveTopic = hasHardArchiveTopic(text);
   const hasAdjacentOnlyTopic = hasAny(text, ADJACENT_ONLY_TOPICS);
+  const proceduralDocket = proceduralDocketWithoutComputeContext(article);
 
   if (hasAi && hasInfra) {
     dimensionResults.direct_ai_infrastructure_relevance = Math.min(
@@ -605,6 +773,10 @@ export function classifyInfrastructureRelevance(article = {}) {
     overall = Math.min(overall, 0.62);
   }
 
+  if (proceduralDocket) {
+    overall = Math.min(overall, 0.44);
+  }
+
   overall = Number(overall.toFixed(3));
   // An abstract-only source (arXiv: CC0 metadata, never the e-print) cannot
   // carry a 4,500-character local memo; the first attempt was quarantined for
@@ -629,6 +801,9 @@ export function classifyInfrastructureRelevance(article = {}) {
   }
   if (tier !== uncappedTier) {
     reasons.push('abstract_only_source_capped_at_signal_card');
+  }
+  if (proceduralDocket) {
+    reasons.push('procedural_regulatory_docket_without_compute_context');
   }
 
   return {

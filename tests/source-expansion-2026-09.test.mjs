@@ -6,19 +6,25 @@ import {
   hydrateSourceTextScope,
   parseFeedItem,
   publishedAtIso,
+  refreshCachedRelevance,
   repairFeedLink,
   selectPoolItems,
   textValue,
 } from '../scripts/lib/fetch-feeds.mjs';
 import { authorizedTextFallbackPool, columnCandidateRecords } from '../scripts/pipeline.mjs';
 import { abstractOnlySource, selectColumnStory } from '../scripts/lib/authored-column-engine.mjs';
-import { abstractOnlyCluster, selectEditorialSignals } from '../scripts/lib/editorial-selection-engine.mjs';
+import { abstractOnlyCluster, proceduralDocketCluster, selectEditorialSignals } from '../scripts/lib/editorial-selection-engine.mjs';
 import { cleanScanItem, scanSourceItems } from '../scripts/lib/global-source-scan.mjs';
+import { definitivelyArchived, rollingCandidates } from '../scripts/lib/curate.mjs';
+import { isPublicProductFit, publicProductFitResult } from '../scripts/lib/public-product-fit.mjs';
+import { buildHomepageFeed } from '../scripts/lib/homepage-feed-builder.mjs';
+import { createExtractionArtifact } from '../scripts/lib/extraction-artifact.mjs';
 import { applyPublicRouting, routeStrictInfrastructureRelevance } from '../scripts/lib/strict-infrastructure-relevance-router.mjs';
 import { canGenerateFullArticle } from '../scripts/lib/editorial-story-engine-v2.mjs';
 import { abstractOnlyTextScope } from '../scripts/lib/source-registry.mjs';
 import { fixtureArticle } from './fixtures/authored-column-fixture.mjs';
-import { classifyInfrastructureRelevance } from '../scripts/lib/relevance-classifier.mjs';
+import { classifyInfrastructureRelevance, proceduralDocketWithoutComputeContext } from '../scripts/lib/relevance-classifier.mjs';
+import { applyPublicContentTier } from '../scripts/lib/public-content-tier-router.mjs';
 import { ecPresscornerApiTarget, fetchArticleExtraction } from '../scripts/lib/source-fetch.mjs';
 import { activeRegistryFeeds, loadSourceRegistry } from '../scripts/lib/source-registry.mjs';
 import { sourceTextTargetDecision } from '../scripts/lib/source-text-fetcher.mjs';
@@ -383,6 +389,7 @@ test('Federal Register documents drop printed-page markers and the FR Doc traile
   const html = `<html><body><nav><a href="/">Federal Register</a></nav>
 <main><aside><p>This document has a comment period that ends in 30 days. Submit a formal comment now.</p></aside>
 <div id="fulltext_content_area" class="fulltext-content">
+<div class="document-headings-note"><p>Document headings vary by document type but may contain the following:</p><ul><li>the agency or agencies that issued and signed a document</li><li>the number of the CFR title and the number of each part the document amends, proposes to amend, or is directly related to</li></ul><p>See the Document Drafting Handbook for more details.</p></div>
 <p>The Federal Energy Regulatory Commission hereby gives notice that the interconnection procedures for large loads above 100 megawatts will be revised to require cluster studies and firm transmission service commitments before energization. Start Printed Page 43210 Any person desiring to intervene or to protest this filing must file in accordance with Rules 211 and 214 of the Commission's Rules of Practice and Procedure.</p>
 <p>The Commission encourages electronic submission of protests and interventions in lieu of paper using the eFiling link at the Commission's website, and comment date requirements apply to every party that seeks to participate in the proceeding.</p>
 <p>[FR Doc. 2026-18361 Filed 9-8-26; 8:45 am]</p>
@@ -400,7 +407,416 @@ test('Federal Register documents drop printed-page markers and the FR Doc traile
   assert.ok(!/BILLING CODE/.test(articleText));
   assert.ok(!/FR Doc\./.test(articleText));
   assert.ok(!/comment period that ends/.test(articleText));
+  assert.ok(!/Document headings vary/.test(articleText), articleText);
+  assert.ok(!/Document Drafting Handbook/.test(articleText), articleText);
+  assert.ok(!/the agency or agencies that issued/.test(articleText), articleText);
+  assert.ok(articleText.startsWith('The Federal Energy Regulatory Commission hereby gives notice'), articleText);
   assert.equal(extractionQa.source_domain_adapter, 'federalregister');
+});
+
+// Run #3199 published this hydro relicensing notice as a signal card: the
+// extracted text names "power" and "megawatts" often enough to saturate the
+// grid dimension (0.615) although nothing in it concerns compute.
+const HYDRO_NOTICE = {
+  id: 'aa7900ef9280e5f6',
+  sourceRegistryId: 'federal-register-ferc',
+  source: 'Federal Register',
+  url: 'https://www.federalregister.gov/documents/2026/09/10/2026-18456/idaho-power-company-notice-of-availability-of-the-final-supplemental-environmental-impact-statement',
+  title: 'Idaho Power Company; Notice of Availability of the Final Supplemental Environmental Impact Statement for the Hells Canyon Hydroelectric Project',
+  snippet: 'Idaho Power Company has released a final supplemental environmental impact statement for the Hells Canyon Hydroelectric Project, which generates over 1,222 MW of power.',
+  contentText: 'In accordance with the National Environmental Policy Act of 1969 and the Federal Energy Regulatory Commission\'s regulations, the Office of Energy Projects has reviewed Idaho Power Company\'s application for a new license to continue to operate and maintain the Hells Canyon Hydroelectric Project and has prepared a final supplemental environmental impact statement for the project. The project consists of three developments with a total installed capacity of 1,222 megawatts of power. The project generates power for the utility\'s customers and the power is delivered over transmission lines. Staff recommends licensing the project with the measures in the final supplemental EIS. The final supplemental EIS is available for review; copies can be obtained from the Commission\'s public reference room.',
+  publishedAt: '2026-09-10T04:00:00.000Z',
+};
+
+const DOCKET_NOTICES = [
+  {
+    title: 'Enable Gas Transmission, LLC; Notice of Request Under Blanket Authorization and Establishing Intervention and Protest Deadline',
+    contentText: 'Take notice that Enable Gas Transmission filed a prior notice request under its blanket certificate to abandon a compressor unit and to replace pipeline facilities. The power of the replacement compressor is 1,200 horsepower. Any person may protest or intervene in the proceeding.',
+  },
+  {
+    title: 'Agency Information Collection Extension',
+    contentText: 'The Department of Energy invites public comment on a proposed three-year extension of an information collection for power and transmission data submitted by utilities under the Federal Power Act.',
+  },
+  {
+    title: 'Notice of Effectiveness of Exempt Wholesale Generator and Foreign Utility Company Status',
+    contentText: 'Take notice that the exempt wholesale generator status of the listed power companies and the foreign utility company status of the listed entities is effective. The generators sell power at wholesale and interconnect with the utility grid.',
+  },
+];
+
+test('procedural Federal Register docket notices stay archive-only without compute context', () => {
+  // Given: the notice exactly as it reached the wire, with the score it earned there.
+  assert.equal(proceduralDocketWithoutComputeContext(HYDRO_NOTICE), true);
+  const classified = classifyInfrastructureRelevance(HYDRO_NOTICE);
+  assert.equal(classified.infrastructure_relevance_tier, 'archive_only', JSON.stringify(classified));
+  assert.ok(classified.infrastructure_relevance_score <= 0.44, String(classified.infrastructure_relevance_score));
+  assert.ok(classified.infrastructure_relevance_reasons.includes('procedural_regulatory_docket_without_compute_context'));
+
+  // The stored 0.615 must not keep it on the homepage: the router archives it
+  // and the public content tier pass hides it on the next run.
+  const stored = { ...HYDRO_NOTICE, infrastructure_relevance_score: 0.615, infrastructure_relevance_tier: 'signal_card', homepagePublished: true, signalCardOnly: true };
+  const route = routeStrictInfrastructureRelevance(stored);
+  assert.equal(route.visibility, 'archive');
+  assert.deepEqual(route.blocked_reasons, ['procedural_regulatory_docket_without_compute_context']);
+  const tiered = applyPublicContentTier(stored);
+  assert.equal(tiered.homepagePublished, false);
+  assert.equal(tiered.archiveOnly, true);
+  assert.equal(tiered.public_content_tier, 'hidden');
+
+  for (const notice of DOCKET_NOTICES) {
+    const result = classifyInfrastructureRelevance({ ...notice, source: 'Federal Register' });
+    assert.equal(result.infrastructure_relevance_tier, 'archive_only', `${notice.title}: ${result.infrastructure_relevance_score}`);
+    assert.equal(routeStrictInfrastructureRelevance({ ...notice, source: 'Federal Register', infrastructure_relevance_score: 0.7 }).visibility, 'archive', notice.title);
+  }
+});
+
+test('the docket guard releases notices that carry compute or large-load context', () => {
+  // Given: the same hydro notice once the filing concerns a co-located data center load.
+  const coLocated = {
+    ...HYDRO_NOTICE,
+    contentText: `${HYDRO_NOTICE.contentText} The licensee also asks the Commission to approve a 300 MW large load interconnection for a data center campus co-located at the plant.`,
+  };
+  assert.equal(proceduralDocketWithoutComputeContext(coLocated), false);
+  const classified = classifyInfrastructureRelevance(coLocated);
+  assert.ok(classified.infrastructure_relevance_score >= 0.55, String(classified.infrastructure_relevance_score));
+  assert.ok(!classified.infrastructure_relevance_reasons.includes('procedural_regulatory_docket_without_compute_context'));
+  assert.notEqual(routeStrictInfrastructureRelevance(coLocated).visibility, 'archive');
+
+  // A FERC rulemaking on large-load interconnection is a docket item too, but it is the beat.
+  const largeLoadRule = {
+    source: 'Federal Register',
+    title: 'Large Load Interconnection Procedures; Notice of Proposed Rulemaking',
+    contentText: 'The Commission proposes to revise the interconnection procedures for large loads above 100 megawatts, including data centers, to require cluster studies and firm transmission service commitments before energization.',
+  };
+  assert.equal(proceduralDocketWithoutComputeContext(largeLoadRule), false);
+  assert.ok(classifyInfrastructureRelevance(largeLoadRule).infrastructure_relevance_score >= 0.55);
+
+  // Ordinary words that also live in the broad AI vocabulary do not release
+  // the notice: safety training, a particle accelerator, an inference about
+  // the schedule, a Colorado abbreviation, pumped storage with backup power.
+  for (const filler of [
+    'All plant staff completed the annual safety training program before the inspection.',
+    'The licensee operates a small particle accelerator at the research annex and an inference about the outage schedule is included.',
+    'The licensee is headquartered in Denver, Colo., and the plant provides pumped storage and backup power for the region.',
+  ]) {
+    const decorated = { ...HYDRO_NOTICE, contentText: `${HYDRO_NOTICE.contentText} ${filler}` };
+    assert.equal(proceduralDocketWithoutComputeContext(decorated), true, filler);
+    assert.equal(classifyInfrastructureRelevance(decorated).infrastructure_relevance_tier, 'archive_only', filler);
+    assert.equal(routeStrictInfrastructureRelevance({ ...decorated, infrastructure_relevance_score: 0.627 }).visibility, 'archive', filler);
+  }
+
+  // Generated copy never releases the cap: only the title, the extracted body
+  // (or the feed snippet before extraction) and the source metadata count.
+  const enrichedNotice = {
+    ...DOCKET_NOTICES[1],
+    sourceRegistryId: 'federal-register-doe',
+    source: 'Federal Register',
+    url: 'https://www.federalregister.gov/documents/2026/09/10/2026-18460/agency-information-collection-extension',
+    snippet: 'Data center operators and AI campus developers should watch this filing.',
+    summary: 'Data center operators and AI campus developers should watch this filing.',
+    insight: 'Hyperscalers building GPU clusters will feel this information collection first.',
+    infrastructure_relevance_score: 0.66,
+  };
+  assert.equal(proceduralDocketWithoutComputeContext(enrichedNotice), true);
+  assert.equal(classifyInfrastructureRelevance(enrichedNotice).infrastructure_relevance_tier, 'archive_only');
+  assert.equal(routeStrictInfrastructureRelevance(enrichedNotice).visibility, 'archive');
+
+  // The same notice is released when the source body itself names the load.
+  const sourceNamesLoad = {
+    ...enrichedNotice,
+    summary: 'A routine paperwork extension.',
+    insight: '',
+    contentText: `${DOCKET_NOTICES[1].contentText} The collection adds a schedule for large load customers above 100 MW, including data centers.`,
+  };
+  assert.equal(proceduralDocketWithoutComputeContext(sourceNamesLoad), false);
+
+  // Before extraction only the feed snippet stands in for the body.
+  const feedOnlyNotice = {
+    sourceRegistryId: 'federal-register-ferc',
+    source: 'Federal Register',
+    url: 'https://www.federalregister.gov/documents/2026/09/10/2026-18470/notice-of-application',
+    title: 'Notice of Application Accepted for Filing and Soliciting Comments',
+    snippet: 'Application for a 400 MW large load interconnection serving a data center campus.',
+  };
+  assert.equal(proceduralDocketWithoutComputeContext(feedOnlyNotice), false);
+  assert.equal(proceduralDocketWithoutComputeContext({ ...feedOnlyNotice, snippet: 'Application to amend the hydro license for the 40 MW project.' }), true);
+
+  // A plain grid item without a docket pattern is untouched by the guard.
+  const gridOrder = {
+    source: 'U.S. Department of Energy',
+    title: 'Energy Secretary Secures Carolinas\' Grid Ahead of Holiday Weekend',
+    contentText: 'The Department of Energy issued an emergency order directing the utility to keep 800 megawatts of generation available to the grid through the weekend peak.',
+  };
+  assert.equal(proceduralDocketWithoutComputeContext(gridOrder), false);
+  assert.ok(!classifyInfrastructureRelevance(gridOrder).infrastructure_relevance_reasons.includes('procedural_regulatory_docket_without_compute_context'));
+});
+
+test('cached and legacy records that the docket guard catches are demoted before curation', () => {
+  // Given: the Hells Canyon record as the cached pool and the archive still store it.
+  const federalRegister = authorizedSource('federal-register-ferc', 'federalregister.gov', {
+    name: 'Federal Register',
+    article_hosts: 'federalregister.gov,www.federalregister.gov',
+  });
+  const cached = {
+    ...HYDRO_NOTICE,
+    infrastructure_relevance_score: 0.615,
+    infrastructure_relevance_tier: 'signal_card',
+    infrastructure_relevance_action: 'publish_signal_card_only',
+    infrastructure_relevance_reasons: ['power_grid_relevance:1.00(power, megawatt, megawatts)'],
+    homepagePublished: true,
+    archiveOnly: false,
+    signalCardOnly: true,
+    infrastructure_relevance: { infrastructure_relevance_score: 0.615, infrastructure_relevance_tier: 'signal_card' },
+  };
+  const untouched = {
+    id: 'cached-doe-order',
+    sourceRegistryId: 'doe-newsroom',
+    source: 'U.S. Department of Energy',
+    url: 'https://www.energy.gov/articles/order',
+    title: 'Energy Secretary Secures Carolinas\' Grid Ahead of Holiday Weekend',
+    contentText: 'The Department of Energy issued an emergency order directing the utility to keep 800 megawatts of generation available to the grid through the weekend peak.',
+    publishedAt: '2026-09-08T11:30:00.000Z',
+    infrastructure_relevance_tier: 'signal_card',
+    infrastructure_relevance: { infrastructure_relevance_tier: 'signal_card' },
+  };
+
+  // When: the fallback pool, the column candidates and the regenerators refresh cached relevance.
+  const doe = authorizedSource('doe-newsroom', 'energy.gov', { name: 'U.S. Department of Energy' });
+  const refreshedSets = [
+    { name: 'refreshCachedRelevance', records: refreshCachedRelevance([cached, untouched], [federalRegister, doe]), identity: true },
+    { name: 'authorizedTextFallbackPool', records: authorizedTextFallbackPool([cached, untouched], [federalRegister, doe], NOW), identity: true },
+    // Column candidates are normalised on the way in, so identity is not expected there.
+    { name: 'columnCandidateRecords', records: columnCandidateRecords({ latest: [cached], pool: [untouched], existingArchive: [], now: NOW, sources: [federalRegister, doe] }), identity: false },
+  ];
+  for (const { name, records, identity } of refreshedSets) {
+    const demoted = records.find((item) => item.id === cached.id);
+    assert.equal(demoted.infrastructure_relevance_tier, 'archive_only', name);
+    assert.equal(demoted.infrastructure_relevance_action, 'archive_only', name);
+    assert.ok(demoted.infrastructure_relevance_score <= 0.44, `${name}: ${demoted.infrastructure_relevance_score}`);
+    assert.ok(demoted.infrastructure_relevance_reasons.includes('procedural_regulatory_docket_without_compute_context'), name);
+    assert.equal(demoted.homepagePublished, false, name);
+    assert.equal(demoted.archiveOnly, true, name);
+    assert.equal(demoted.infrastructure_relevance.infrastructure_relevance_tier, 'archive_only', name);
+    // And: a record the guard does not catch keeps its classification (and its identity where records pass through untouched).
+    const kept = records.find((item) => item.id === untouched.id);
+    assert.equal(kept.infrastructure_relevance_tier, 'signal_card', name);
+    assert.ok(!(kept.infrastructure_relevance_reasons || []).includes('procedural_regulatory_docket_without_compute_context'), name);
+    if (identity) assert.equal(kept, untouched, name);
+  }
+
+  // And: the autonomous scan carries the archive decision on the cleaned item and drops the notice
+  // before clustering, while the DOE order passes through.
+  const cleaned = cleanScanItem(refreshCachedRelevance([cached], [federalRegister])[0]);
+  assert.equal(cleaned.procedural_docket_notice, true);
+  assert.equal(cleaned.infrastructure_relevance_tier, 'archive_only');
+  assert.ok(cleaned.infrastructure_relevance_reasons.includes('procedural_regulatory_docket_without_compute_context'));
+  const scanned = scanSourceItems([cached, untouched], [federalRegister, doe]);
+  assert.deepEqual(scanned.map((item) => item.id), [untouched.id]);
+
+  // And: a cluster built elsewhere on that item is archived by the selection engine whatever it scores.
+  const cluster = {
+    cluster_id: 'sig-hells-canyon',
+    cluster_title: 'Hells Canyon hydro relicensing keeps 1,222 MW on the grid',
+    cluster_topic: 'Hydro generation and grid power',
+    primary_infrastructure_layer: 'Power',
+    extracted_facts: ['The project has an installed capacity of 1,222 megawatts.', 'Staff recommends licensing the project.', 'The project spans three developments.', 'Power is delivered over transmission lines.'],
+    numeric_claims: [{ raw: '1,222 megawatts' }],
+    signal_score: 79,
+    representative_source: cleaned,
+  };
+  assert.equal(proceduralDocketCluster(cluster), true);
+  const selection = selectEditorialSignals([cluster]);
+  assert.equal(selection.selected_for_analysis.length, 0);
+  assert.equal(selection.held_signals.length, 0);
+  assert.equal(selection.rejected_signals[0].editorial_route, 'Internal Archive');
+  assert.equal(selection.rejected_signals[0].procedural_docket_notice, true);
+  // A legacy cleaned item without the flag is re-checked through its original record.
+  const { procedural_docket_notice: _flag, ...legacyCleaned } = cleaned;
+  assert.equal(proceduralDocketCluster({ ...cluster, representative_source: legacyCleaned }), true);
+  // The same cluster on the DOE order is routed on its merits.
+  const doeCluster = { ...cluster, representative_source: cleanScanItem(untouched) };
+  assert.equal(proceduralDocketCluster(doeCluster), false);
+  assert.notEqual(selectEditorialSignals([doeCluster]).ranked_candidates[0].editorial_route, 'Internal Archive');
+});
+
+test('the homepage product-fit check recognises a docket notice through its source identity', () => {
+  // Given: the published hydro notice as the homepage sees it, with its verified extraction
+  // artifact and the editorial_brief tier an earlier run stored.
+  const sourceUrl = HYDRO_NOTICE.url;
+  const cleanedExtractedText = `${HYDRO_NOTICE.contentText} ${Array.from({ length: 6 }, (_, index) => `Section ${index + 1} of the final supplemental EIS records a distinct licensing measure for the project.`).join(' ')}`;
+  const artifact = createExtractionArtifact({
+    sourceUrl,
+    cleanedExtractedText,
+    extractionQa: { public_publishable: true, can_generate_longform: true, sentence_completion_score: 1 },
+  });
+  const published = {
+    ...HYDRO_NOTICE,
+    sourceUrl,
+    extraction_artifact: artifact,
+    extraction_quality_score: 0.92,
+    infrastructure_relevance_score: 0.615,
+    infrastructure_relevance_tier: 'signal_card',
+    homepagePublished: true,
+    articlePagePublished: false,
+    archiveOnly: false,
+    signalCardOnly: true,
+    public_status: 'published',
+    public_content_tier: 'editorial_brief',
+  };
+
+  // Then: product fit fails on the docket decision even though the projection holds only verified evidence,
+  // and the homepage feed drops the record instead of re-opening its archive route through the stored tier.
+  const fit = publicProductFitResult(published);
+  assert.equal(fit.ok, false);
+  assert.ok(fit.reasons.includes('procedural_regulatory_docket_without_compute_context'), fit.reasons.join(', '));
+  assert.equal(buildHomepageFeed([published]).items.length, 0);
+
+  // And: the same filing about a co-located data center load passes the product-fit check.
+  const coLocatedText = `${cleanedExtractedText} The licensee also asks the Commission to approve a 300 MW large load interconnection for a data center campus co-located at the plant.`;
+  const coLocated = {
+    ...published,
+    contentText: coLocatedText,
+    extraction_artifact: createExtractionArtifact({
+      sourceUrl,
+      cleanedExtractedText: coLocatedText,
+      extractionQa: { public_publishable: true, can_generate_longform: true, sentence_completion_score: 1 },
+    }),
+  };
+  assert.equal(isPublicProductFit(coLocated), true, publicProductFitResult(coLocated).reasons.join(', '));
+});
+
+test('definitive archive decisions leave the curation planning pool', () => {
+  // Given: the demoted hydro notice, a hard-archive item, an extracted archive-only item,
+  // and a snippet-only archive-only item the curation model may still weigh.
+  const federalRegister = authorizedSource('federal-register-ferc', 'federalregister.gov', {
+    name: 'Federal Register',
+    article_hosts: 'federalregister.gov,www.federalregister.gov',
+  });
+  const hydro = refreshCachedRelevance([{
+    ...HYDRO_NOTICE,
+    infrastructure_relevance_score: 0.615,
+    infrastructure_relevance_tier: 'signal_card',
+    score: 56,
+  }], [federalRegister])[0];
+  assert.equal(definitivelyArchived(hydro), true);
+  const dinosaur = {
+    id: 'dino',
+    source: 'Science Daily',
+    title: 'A new stegosaurus skeleton rewrites the fossil record',
+    snippet: 'Museum staff unveiled the dinosaur fossil.',
+    publishedAt: NOW.toISOString(),
+    score: 40,
+    infrastructure_relevance_tier: 'archive_only',
+    infrastructure_relevance_reasons: ['hard_archive_topic_outside_compute_current_boundary'],
+  };
+  const extractedArchive = {
+    id: 'extracted-archive',
+    source: 'U.S. Nuclear Regulatory Commission',
+    title: 'NRC Proposes Rule That Will Protect Drinking Water Near Uranium Mills',
+    cleaned_source_text: 'The rule sets groundwater protection standards for uranium recovery facilities.',
+    publishedAt: NOW.toISOString(),
+    score: 38,
+    infrastructure_relevance_tier: 'archive_only',
+    infrastructure_relevance_reasons: ['power_grid_relevance:0.26(nuclear)'],
+  };
+  const snippetOnly = {
+    id: 'duane-arnold',
+    source: 'U.S. Department of Energy',
+    title: 'Energy Department Closes $1.9 Billion Loan to Restart Duane Arnold Nuclear Plant',
+    snippet: 'The loan supports the restart of the 615 MW plant.',
+    publishedAt: NOW.toISOString(),
+    score: 44,
+    infrastructure_relevance_score: 0.28,
+    infrastructure_relevance_tier: 'archive_only',
+    infrastructure_relevance_reasons: ['power_grid_relevance:0.35(nuclear)'],
+  };
+  assert.equal(definitivelyArchived(dinosaur), true);
+  assert.equal(definitivelyArchived(extractedArchive), true);
+  assert.equal(definitivelyArchived(snippetOnly), false);
+
+  // When: the daily plan draws its candidates.
+  const candidates = rollingCandidates([hydro, dinosaur, extractedArchive, snippetOnly], { publishedIds: [] }, null, NOW);
+
+  // Then: only the snippet-only item is left for the model or the deterministic ranker.
+  assert.deepEqual(candidates.map((item) => item.id), ['duane-arnold']);
+});
+
+test('the docket guard reads canonical source evidence, not generated prose', () => {
+  // Given: an autonomous record whose generated body mentions data centers while the
+  // verified source evidence is a bare information-collection notice.
+  const generated = {
+    sourceRegistryId: 'federal-register-doe',
+    source: 'Federal Register',
+    url: 'https://www.federalregister.gov/documents/2026/09/10/2026-18460/agency-information-collection-extension',
+    title: 'Agency Information Collection Extension',
+    contentText: 'Data center operators and AI campus developers should read this filing as a signal that hyperscale load will be counted.',
+    articleText: 'Data center operators and AI campus developers should read this filing as a signal that hyperscale load will be counted.',
+    fullArticleText: 'Data center operators and AI campus developers should read this filing as a signal that hyperscale load will be counted.',
+    cleaned_source_text: 'The Department of Energy invites public comment on a proposed three-year extension of an information collection for power and transmission data submitted by utilities.',
+    source_evidence_text: 'The Department of Energy invites public comment on a proposed three-year extension of an information collection for power and transmission data submitted by utilities.',
+    infrastructure_relevance_score: 0.7,
+  };
+  assert.equal(proceduralDocketWithoutComputeContext(generated), true);
+  assert.equal(routeStrictInfrastructureRelevance(generated).visibility, 'archive');
+
+  // And: a wire record before extraction is judged on its feed body, then its snippet.
+  const wire = { ...generated, contentText: `${generated.cleaned_source_text} The schedule covers large load customers above 100 MW.`, articleText: undefined, fullArticleText: undefined, cleaned_source_text: undefined, source_evidence_text: undefined };
+  assert.equal(proceduralDocketWithoutComputeContext(wire), false);
+});
+
+test('the docket guard is scoped to docket sources and formulaic notices', () => {
+  // Given: the archived EIA analysis that mentions hydroelectric generation in passing (stored 0.795).
+  const eiaImports = {
+    id: '9a641af25826b599',
+    sourceRegistryId: 'eia-today-in-energy',
+    source: 'U.S. Energy Information Administration',
+    url: 'https://www.eia.gov/todayinenergy/detail.php?id=67867',
+    title: 'New York imports more electricity from Canada after high-voltage transmission line opens',
+    articleText: 'The Champlain Hudson Power Express transmission line began delivering up to 1,250 megawatts of power from Quebec into New York City. The line was taken offline again on July 4 for further repairs. In recent years, both ISO-New England and NYISO have relied less on electricity imports from Canada as drought conditions have limited hydroelectric generation.',
+    infrastructure_relevance_score: 0.795,
+  };
+  assert.equal(proceduralDocketWithoutComputeContext(eiaImports), false);
+  assert.notEqual(routeStrictInfrastructureRelevance(eiaImports).visibility, 'archive');
+  assert.ok(!classifyInfrastructureRelevance(eiaImports).infrastructure_relevance_reasons.includes('procedural_regulatory_docket_without_compute_context'));
+
+  // An EIA pipeline note is grid coverage, not a docket filing.
+  const eiaPipelines = {
+    sourceRegistryId: 'eia-today-in-energy',
+    source: 'U.S. Energy Information Administration',
+    url: 'https://www.eia.gov/todayinenergy/detail.php?id=67901',
+    title: 'Eight petroleum liquids pipeline projects have been completed since the start of 2026',
+    articleText: 'Operators completed eight natural gas pipeline and petroleum liquids projects adding 1.4 million barrels per day of capacity; the power sector relies on the gas transmission network for generation.',
+  };
+  assert.equal(proceduralDocketWithoutComputeContext(eiaPipelines), false);
+
+  // A trade headline that borrows notice wording is not a docket source either.
+  const tradeHeadline = {
+    source: 'Data Center Dynamics',
+    url: 'https://www.datacenterdynamics.com/en/news/notice-of-availability-utility-files-hydroelectric-plan/',
+    title: 'Notice of availability: utility files hydroelectric relicensing plan',
+    snippet: 'The utility filed its relicensing plan with regulators; the plant generates 900 megawatts of power for the grid.',
+  };
+  assert.equal(proceduralDocketWithoutComputeContext(tradeHeadline), false);
+
+  // Inside a docket source, FERC's "Take notice that" opener is enough even when the title is bare.
+  const bareTitleNotice = {
+    sourceRegistryId: 'federal-register-ferc',
+    source: 'Federal Register',
+    url: 'https://www.federalregister.gov/documents/2026/09/10/2026-18470/pacific-gas-and-electric-company',
+    title: 'Pacific Gas and Electric Company',
+    contentText: 'Take notice that on September 3, 2026, Pacific Gas and Electric Company filed an application to amend its license for the Drum-Spaulding hydroelectric project, which has an installed capacity of 190 megawatts of power delivered to the utility grid.',
+  };
+  assert.equal(proceduralDocketWithoutComputeContext(bareTitleNotice), true);
+  assert.equal(classifyInfrastructureRelevance(bareTitleNotice).infrastructure_relevance_tier, 'archive_only');
+
+  // A docket rule without notice wording is left to the ordinary score.
+  const bulkPowerRule = {
+    sourceRegistryId: 'federal-register-doe',
+    source: 'Federal Register',
+    url: 'https://www.federalregister.gov/documents/2026/09/08/2026-18300/securing-the-united-states-bulk-power-system',
+    title: 'Securing the United States Bulk-Power System',
+    contentText: 'The Department of Energy prohibits the acquisition of bulk-power system electric equipment from foreign adversaries for transformers, substations and grid control systems that serve critical loads.',
+  };
+  assert.equal(proceduralDocketWithoutComputeContext(bulkPowerRule), false);
 });
 
 test('Commission press-corner pages are read through the same-host documents API', async () => {

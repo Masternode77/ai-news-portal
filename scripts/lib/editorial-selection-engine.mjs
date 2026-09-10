@@ -1,4 +1,5 @@
 import { explainSignalRank } from './signal-rank-explainer.mjs';
+import { proceduralDocketWithoutComputeContext } from './relevance-classifier.mjs';
 import { abstractOnlyTextScope } from './source-registry.mjs';
 
 function signalText(cluster = {}) {
@@ -28,7 +29,20 @@ export function abstractOnlyCluster(cluster = {}) {
   return abstractOnlyTextScope(cluster.representative_source || {});
 }
 
+// A cluster anchored on a procedural docket notice without compute context
+// (hydro relicensing, pipeline authorizations, information collections) is
+// archived by the wire classifier; the signal scorer must not promote it from
+// other dimensions. The scan drops such items, and a cleaned item or its
+// original record is re-checked here for clusters built elsewhere.
+export function proceduralDocketCluster(cluster = {}) {
+  if (cluster.procedural_docket_notice === true) return true;
+  const representative = cluster.representative_source || {};
+  if (representative.procedural_docket_notice === true) return true;
+  return proceduralDocketWithoutComputeContext(representative.original || representative);
+}
+
 function routeForScore(cluster = {}) {
+  if (proceduralDocketCluster(cluster)) return 'Internal Archive';
   const score = Number(cluster.signal_score || 0);
   const factCount = cluster.extracted_facts?.length || 0;
   const hasLayer = Boolean(cluster.primary_infrastructure_layer) && hasExplicitInfrastructureLink(cluster);
@@ -51,6 +65,7 @@ export function selectEditorialSignals(clusters = [], options = {}) {
         ...cluster,
         editorial_route,
         ...(abstractOnlyCluster(cluster) ? { abstract_only_source: true } : {}),
+        ...(proceduralDocketCluster(cluster) ? { procedural_docket_notice: true } : {}),
         rank_reasons: explainSignalRank(cluster),
       };
     })

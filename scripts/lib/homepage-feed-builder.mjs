@@ -58,6 +58,13 @@ function dedupeFeedItems(items = []) {
 function decorate(article = {}, options = {}) {
   const fallbackRoute = routePublicLane(article);
   const articleRoute = article.public_routing || fallbackRoute;
+  // A stored tier may re-open an archive route for a legacy record, but never
+  // a definitive one: a procedural docket notice stays off the homepage
+  // whatever tier an earlier run gave it.
+  if (fallbackRoute.visibility === 'archive'
+    && (fallbackRoute.blocked_reasons || []).includes('procedural_regulatory_docket_without_compute_context')) {
+    return null;
+  }
   const route = article.public_content_tier && article.public_content_tier !== 'hidden' && articleRoute.visibility === 'archive'
     ? {
         ...articleRoute,

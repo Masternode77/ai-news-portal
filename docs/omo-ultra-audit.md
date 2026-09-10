@@ -19,7 +19,7 @@ Audit output omits `git status` so running this writer cannot make its own repor
 
 - Renderer: `src/pages/index.astro` imports latest/archive JSON and calls `buildHomepageFeed(..., { limit: 50, minimumVisible: 30 })`.
 - Current homepage source contains public nav/feed language, but still depends on generated card copy from `scripts/lib/homepage-feed-builder.mjs`.
-- Current public homepage cards after product-fit and source-rights gates: 20. Retained JSON records are not treated as reader-visible cards.
+- Current public homepage cards after product-fit and source-rights gates: 19. Retained JSON records are not treated as reader-visible cards.
 - Evidence: `LatestAnalysisFeed` is the active feed component.
 
 ## Article Detail Renderer

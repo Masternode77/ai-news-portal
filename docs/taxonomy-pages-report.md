@@ -13,6 +13,6 @@ Source artifact records: 472
 
 ## Current reader-facing route state
 
-Public archive route: `/archive/` (20 rendered eligible records)
+Public archive route: `/archive/` (19 rendered eligible records)
 Taxonomy detail routes with rendered eligible records: 5
 Static taxonomy route shells: 32 (not counts of rendered eligible records)
