@@ -1,5 +1,454 @@
 [
   {
+    "id": "0b8fe31119db4abb",
+    "sourceRegistryId": "arxiv-cs-dc",
+    "source": "arXiv",
+    "url": "https://arxiv.org/abs/2609.10368",
+    "title": "Stencil Computation at the Intersection of AI and HPC",
+    "snippet": "arXiv:2609.10368v1 Announce Type: new Abstract: Tensor compilers such as TinyTC and OpenAI Triton were originally developed for AI workloads, but the same tiling and memory abstractions can be applied to implement effic…",
+    "contentText": "arXiv:2609.10368v1 Announce Type: new Abstract: Tensor compilers such as TinyTC and OpenAI Triton were originally developed for AI workloads, but the same tiling and memory abstractions can be applied to implement efficient high-order stencils for scientific and industrial applications. We demonstrate this for an 8th-order, 25-point acoustic stencil with boundary conditions over an a demanding-sized grid, targeting GPGPUs, where we compare the hardware-specialized TinyTC implementation with a portable PyTorch/Triton implementation. The target platforms for evaluation include Intel B70, B580, GPU MAX 1550, NVIDIA A100/RTX6000 Blackwell/H100, and AMD MI325x. For instance, on Battlemage B580 TinyTC reaches 15.6 Gpts/s versus 13.5 Gpts/s for PT/Triton under random initialization, while zero-i…",
+    "publishedAt": "2026-09-10T04:00:00.000Z",
+    "sourceImage": null,
+    "region": "US",
+    "language": "en",
+    "defaultCategory": "AI Infrastructure",
+    "ai_topic_score": 1,
+    "ai_topic_reasons": [
+      "ai workloads",
+      "openai",
+      "nvidia",
+      "gpu",
+      "ai"
+    ],
+    "category": "Semiconductors",
+    "primary_category": "Semiconductors",
+    "secondary_category": "Accelerators, memory, and advanced packaging",
+    "infrastructure_layer": "Silicon",
+    "affected_stakeholders": [
+      "semiconductor suppliers",
+      "hyperscalers",
+      "server OEMs",
+      "investors"
+    ],
+    "article_type": "Product / Platform Update",
+    "urgency_score": 0.53,
+    "taxonomy_confidence": 0.92,
+    "taxonomy_reasons": [
+      "gpu",
+      "nvidia",
+      "amd",
+      "intel"
+    ],
+    "direct_ai_infrastructure_relevance": 0.49,
+    "data_center_relevance": 0,
+    "cloud_capacity_relevance": 0,
+    "semiconductor_relevance": 0.92,
+    "power_grid_relevance": 0.28,
+    "cooling_relevance": 0,
+    "capital_markets_relevance": 0,
+    "enterprise_ai_infrastructure_relevance": 0.24,
+    "infrastructure_relevance_score": 0.781,
+    "infrastructure_relevance_tier": "full_memo",
+    "infrastructure_relevance_action": "generate_full_memo",
+    "infrastructure_relevance_reasons": [
+      "direct_ai_infrastructure_relevance:0.49(hpc)",
+      "semiconductor_relevance:0.92(nvidia, amd, intel)",
+      "power_grid_relevance:0.28(grid)",
+      "enterprise_ai_infrastructure_relevance:0.24(ai workloads)"
+    ],
+    "infrastructure_relevance": {
+      "direct_ai_infrastructure_relevance": 0.49,
+      "data_center_relevance": 0,
+      "cloud_capacity_relevance": 0,
+      "semiconductor_relevance": 0.92,
+      "power_grid_relevance": 0.28,
+      "cooling_relevance": 0,
+      "capital_markets_relevance": 0,
+      "enterprise_ai_infrastructure_relevance": 0.24,
+      "infrastructure_relevance_score": 0.781,
+      "infrastructure_relevance_tier": "full_memo",
+      "infrastructure_relevance_action": "generate_full_memo",
+      "infrastructure_relevance_reasons": [
+        "direct_ai_infrastructure_relevance:0.49(hpc)",
+        "semiconductor_relevance:0.92(nvidia, amd, intel)",
+        "power_grid_relevance:0.28(grid)",
+        "enterprise_ai_infrastructure_relevance:0.24(ai workloads)"
+      ],
+      "infrastructureRelevanceAction": "generate_full_memo",
+      "articlePagePublished": true,
+      "homepagePublished": true,
+      "archiveOnly": false,
+      "archiveOnlyReason": null
+    }
+  },
+  {
+    "id": "72ad02024af5de17",
+    "sourceRegistryId": "arxiv-cs-ar",
+    "source": "arXiv",
+    "url": "https://arxiv.org/abs/2609.09800",
+    "title": "HBFSim: Fast and Faithful Simulation of High-Bandwidth Flash Under Real GPU Execution",
+    "snippet": "arXiv:2609.09800v1 Announce Type: new Abstract: Serving a large language model (LLM) is limited by memory capacity. High-Bandwidth Flash (HBF) stacks NAND flash inside the accelerator package, one tier below high-bandwi…",
+    "contentText": "arXiv:2609.09800v1 Announce Type: new Abstract: Serving a large language model (LLM) is limited by memory capacity. High-Bandwidth Flash (HBF) stacks NAND flash inside the accelerator package, one tier below high-bandwidth memory (HBM); the specification was published on August 3, 2026, and the first inference devices are expected to sample in early 2027. Decisions about capacity and data placement cannot wait for silicon. No existing method settles those decisions: a storage simulator replaying a recorded access sequence never executes the workload, a GPU simulator does not run the real compute kernels, and a cycle-accurate simulator cannot finish one LLM inference run. We present HBFSim, the first evaluation platform that applies HBF timing, capacity, and thermal effects to a real infer…",
+    "publishedAt": "2026-09-10T04:00:00.000Z",
+    "sourceImage": null,
+    "region": "APAC",
+    "language": "en",
+    "defaultCategory": "Semiconductors",
+    "ai_topic_score": 1,
+    "ai_topic_reasons": [
+      "large language model",
+      "llm",
+      "inference",
+      "gpu",
+      "accelerator"
+    ],
+    "category": "Semiconductors",
+    "primary_category": "Semiconductors",
+    "secondary_category": "Accelerators, memory, and advanced packaging",
+    "infrastructure_layer": "Silicon",
+    "affected_stakeholders": [
+      "semiconductor suppliers",
+      "hyperscalers",
+      "server OEMs",
+      "investors"
+    ],
+    "article_type": "Capacity Expansion",
+    "urgency_score": 0.5,
+    "taxonomy_confidence": 0.8,
+    "taxonomy_reasons": [
+      "gpu",
+      "hbm"
+    ],
+    "direct_ai_infrastructure_relevance": 0.22,
+    "data_center_relevance": 0,
+    "cloud_capacity_relevance": 0,
+    "semiconductor_relevance": 1,
+    "power_grid_relevance": 0,
+    "cooling_relevance": 0.3,
+    "capital_markets_relevance": 0,
+    "enterprise_ai_infrastructure_relevance": 0.18,
+    "infrastructure_relevance_score": 0.751,
+    "infrastructure_relevance_tier": "full_memo",
+    "infrastructure_relevance_action": "generate_full_memo",
+    "infrastructure_relevance_reasons": [
+      "direct_ai_infrastructure_relevance:0.22",
+      "semiconductor_relevance:1.00(hbm, high-bandwidth memory, accelerator)",
+      "cooling_relevance:0.30(thermal)"
+    ],
+    "infrastructure_relevance": {
+      "direct_ai_infrastructure_relevance": 0.22,
+      "data_center_relevance": 0,
+      "cloud_capacity_relevance": 0,
+      "semiconductor_relevance": 1,
+      "power_grid_relevance": 0,
+      "cooling_relevance": 0.3,
+      "capital_markets_relevance": 0,
+      "enterprise_ai_infrastructure_relevance": 0.18,
+      "infrastructure_relevance_score": 0.751,
+      "infrastructure_relevance_tier": "full_memo",
+      "infrastructure_relevance_action": "generate_full_memo",
+      "infrastructure_relevance_reasons": [
+        "direct_ai_infrastructure_relevance:0.22",
+        "semiconductor_relevance:1.00(hbm, high-bandwidth memory, accelerator)",
+        "cooling_relevance:0.30(thermal)"
+      ],
+      "infrastructureRelevanceAction": "generate_full_memo",
+      "articlePagePublished": true,
+      "homepagePublished": true,
+      "archiveOnly": false,
+      "archiveOnlyReason": null
+    }
+  },
+  {
+    "id": "368c3db340b4432d",
+    "sourceRegistryId": "arxiv-cs-dc",
+    "source": "arXiv",
+    "url": "https://arxiv.org/abs/2609.09164",
+    "title": "HELIOS: Guardrailed LLM-Driven Evolution of Autonomous Resource Orchestration Policies for Multi-Cloud Distributed Systems",
+    "snippet": "arXiv:2609.09164v1 Announce Type: new Abstract: Operating latency-sensitive services across multiple public clouds creates an optimization surface no single provider autoscaler can see: on-demand vCPU prices differ by p…",
+    "contentText": "arXiv:2609.09164v1 Announce Type: new Abstract: Operating latency-sensitive services across multiple public clouds creates an optimization surface no single provider autoscaler can see: on-demand vCPU prices differ by provider, spot discounts and interruption risks vary by provider and instance type, egress fees penalize state movement, and provider-level failures can take down single-cloud deployments. Large language models (LLMs) are appealing orchestrators because they can synthesize non-trivial decision logic from a natural-language environment description. However, placing an LLM on the critical path of every scheduling decision is impractical: for a 200-service fleet, per-decision inference would cost more than the cloud capacity it manages and add multi-second latency to a millisec…",
+    "publishedAt": "2026-09-10T04:00:00.000Z",
+    "sourceImage": null,
+    "region": "APAC",
+    "language": "en",
+    "defaultCategory": "AI Infrastructure",
+    "ai_topic_score": 1,
+    "ai_topic_reasons": [
+      "large language models",
+      "llm",
+      "llms",
+      "inference"
+    ],
+    "category": "AI Infrastructure",
+    "primary_category": "AI Infrastructure",
+    "secondary_category": "GPU clusters and deployment readiness",
+    "infrastructure_layer": "Compute",
+    "affected_stakeholders": [
+      "operators",
+      "hyperscalers",
+      "cloud buyers",
+      "investors"
+    ],
+    "article_type": "Capacity Expansion",
+    "urgency_score": 0.43,
+    "taxonomy_confidence": 0.63,
+    "taxonomy_reasons": [
+      "ai infrastructure"
+    ],
+    "direct_ai_infrastructure_relevance": 0.64,
+    "data_center_relevance": 0,
+    "cloud_capacity_relevance": 0.44,
+    "semiconductor_relevance": 0,
+    "power_grid_relevance": 0,
+    "cooling_relevance": 0,
+    "capital_markets_relevance": 0,
+    "enterprise_ai_infrastructure_relevance": 0,
+    "infrastructure_relevance_score": 0.538,
+    "infrastructure_relevance_tier": "archive_only",
+    "infrastructure_relevance_action": "archive_only",
+    "infrastructure_relevance_reasons": [
+      "direct_ai_infrastructure_relevance:0.64",
+      "cloud_capacity_relevance:0.44(cloud capacity)"
+    ],
+    "infrastructure_relevance": {
+      "direct_ai_infrastructure_relevance": 0.64,
+      "data_center_relevance": 0,
+      "cloud_capacity_relevance": 0.44,
+      "semiconductor_relevance": 0,
+      "power_grid_relevance": 0,
+      "cooling_relevance": 0,
+      "capital_markets_relevance": 0,
+      "enterprise_ai_infrastructure_relevance": 0,
+      "infrastructure_relevance_score": 0.538,
+      "infrastructure_relevance_tier": "archive_only",
+      "infrastructure_relevance_action": "archive_only",
+      "infrastructure_relevance_reasons": [
+        "direct_ai_infrastructure_relevance:0.64",
+        "cloud_capacity_relevance:0.44(cloud capacity)"
+      ],
+      "infrastructureRelevanceAction": "archive_only",
+      "articlePagePublished": false,
+      "homepagePublished": false,
+      "archiveOnly": true,
+      "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
+    }
+  },
+  {
+    "id": "d58abbbed9220b3f",
+    "sourceRegistryId": "arxiv-cs-dc",
+    "source": "arXiv",
+    "url": "https://arxiv.org/abs/2609.09160",
+    "title": "LBFAST: A Lightweight Moment-Represented Lattice Boltzmann Solver for Multi-GPU Architectures",
+    "snippet": "arXiv:2609.09160v1 Announce Type: new Abstract: We present LBFAST, a GPU-oriented lattice Boltzmann solver based on a lightweight moment-represented formulation, in which post-collision populations are reconstructed on…",
+    "contentText": "arXiv:2609.09160v1 Announce Type: new Abstract: We present LBFAST, a GPU-oriented lattice Boltzmann solver based on a lightweight moment-represented formulation, in which post-collision populations are reconstructed on the fly from a reduced set of moments rather than stored explicitly. This approach significantly lowers the memory footprint, enabling large three-dimensional simulations within the constraints of modern accelerator architectures, where VRAM capacity and bandwidth are critical resources. The method is assessed through standard single- and two-component benchmarks demonstrating good accuracy and stability. Extensive scaling experiments on multi-GPU systems show near-ideal weak scaling up to 512 GPUs and sustained performance across different velocity sets. The combination of…",
+    "publishedAt": "2026-09-10T04:00:00.000Z",
+    "sourceImage": null,
+    "region": "APAC",
+    "language": "en",
+    "defaultCategory": "AI Infrastructure",
+    "ai_topic_score": 0.717,
+    "ai_topic_reasons": [
+      "gpu",
+      "gpus",
+      "accelerator"
+    ],
+    "category": "Semiconductors",
+    "primary_category": "Semiconductors",
+    "secondary_category": "Accelerators, memory, and advanced packaging",
+    "infrastructure_layer": "Silicon",
+    "affected_stakeholders": [
+      "semiconductor suppliers",
+      "hyperscalers",
+      "server OEMs",
+      "investors"
+    ],
+    "article_type": "Capacity Expansion",
+    "urgency_score": 0.39,
+    "taxonomy_confidence": 0.64,
+    "taxonomy_reasons": [
+      "gpu"
+    ],
+    "direct_ai_infrastructure_relevance": 0.22,
+    "data_center_relevance": 0,
+    "cloud_capacity_relevance": 0,
+    "semiconductor_relevance": 0.517,
+    "power_grid_relevance": 0,
+    "cooling_relevance": 0,
+    "capital_markets_relevance": 0,
+    "enterprise_ai_infrastructure_relevance": 0,
+    "infrastructure_relevance_score": 0.418,
+    "infrastructure_relevance_tier": "archive_only",
+    "infrastructure_relevance_action": "archive_only",
+    "infrastructure_relevance_reasons": [
+      "direct_ai_infrastructure_relevance:0.22",
+      "semiconductor_relevance:0.52(accelerator, gpu)"
+    ],
+    "infrastructure_relevance": {
+      "direct_ai_infrastructure_relevance": 0.22,
+      "data_center_relevance": 0,
+      "cloud_capacity_relevance": 0,
+      "semiconductor_relevance": 0.517,
+      "power_grid_relevance": 0,
+      "cooling_relevance": 0,
+      "capital_markets_relevance": 0,
+      "enterprise_ai_infrastructure_relevance": 0,
+      "infrastructure_relevance_score": 0.418,
+      "infrastructure_relevance_tier": "archive_only",
+      "infrastructure_relevance_action": "archive_only",
+      "infrastructure_relevance_reasons": [
+        "direct_ai_infrastructure_relevance:0.22",
+        "semiconductor_relevance:0.52(accelerator, gpu)"
+      ],
+      "infrastructureRelevanceAction": "archive_only",
+      "articlePagePublished": false,
+      "homepagePublished": false,
+      "archiveOnly": true,
+      "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
+    }
+  },
+  {
+    "id": "d6ad5c88b632385a",
+    "sourceRegistryId": "arxiv-cs-dc",
+    "source": "arXiv",
+    "url": "https://arxiv.org/abs/2606.23698",
+    "title": "FP8 is All You Need (Part 2): Full-FP64 3-D FFT on FP8-Generation Tensor CoresThe Integer-Epilogue Wall and the Minimal Hardware That Would Remove It",
+    "snippet": "arXiv:2606.23698v3 Announce Type: replace-cross Abstract: The NVIDIA Blackwell Ultra (B300) GPU cuts FP64 vector throughput $\\sim 30\\times$ while multiplying FP8 tensor throughput. After the recovery of FP64 GEMM via Oz…",
+    "contentText": "arXiv:2606.23698v3 Announce Type: replace-cross Abstract: The NVIDIA Blackwell Ultra (B300) GPU cuts FP64 vector throughput $\\sim 30\\times$ while multiplying FP8 tensor throughput. After the recovery of FP64 GEMM via Ozaki Scheme II on FP8 tensor cores and the Tensor-Memory Equilibrium model of the companions (\"FP8 is All You Need, Part 1\" and \"Ozaki 2.5\") we ask whether the fifth canonical HPC primitive, the full-FP64 $1024^3$ 3-D FFT, can be carried by the same substrate, and answer with a design and its limit. It is a Bailey six-step transform with no FP64 arithmetic: FP8-tensor DFT GEMMs with fused twiddles, residue-domain Karatsuba combines and exact CRT reconstruction whose bulk is a small GEMM on the FP16 tensor path and whose remainder is a Kulisch fixed-point accumulation with a…",
+    "publishedAt": "2026-09-10T04:00:00.000Z",
+    "sourceImage": null,
+    "region": "US",
+    "language": "en",
+    "defaultCategory": "AI Infrastructure",
+    "ai_topic_score": 0.48,
+    "ai_topic_reasons": [
+      "nvidia",
+      "gpu",
+      "ai_not_in_title"
+    ],
+    "category": "Semiconductors",
+    "primary_category": "Semiconductors",
+    "secondary_category": "Accelerators, memory, and advanced packaging",
+    "infrastructure_layer": "Silicon",
+    "affected_stakeholders": [
+      "semiconductor suppliers",
+      "hyperscalers",
+      "server OEMs",
+      "investors"
+    ],
+    "article_type": "Supply Chain",
+    "urgency_score": 0.3,
+    "taxonomy_confidence": 0.69,
+    "taxonomy_reasons": [
+      "gpu",
+      "nvidia"
+    ],
+    "direct_ai_infrastructure_relevance": 0.2,
+    "data_center_relevance": 0,
+    "cloud_capacity_relevance": 0,
+    "semiconductor_relevance": 0.5,
+    "power_grid_relevance": 0,
+    "cooling_relevance": 0,
+    "capital_markets_relevance": 0,
+    "enterprise_ai_infrastructure_relevance": 0,
+    "infrastructure_relevance_score": 0.369,
+    "infrastructure_relevance_tier": "archive_only",
+    "infrastructure_relevance_action": "archive_only",
+    "infrastructure_relevance_reasons": [
+      "semiconductor_relevance:0.50(nvidia, gpu)"
+    ],
+    "infrastructure_relevance": {
+      "direct_ai_infrastructure_relevance": 0.2,
+      "data_center_relevance": 0,
+      "cloud_capacity_relevance": 0,
+      "semiconductor_relevance": 0.5,
+      "power_grid_relevance": 0,
+      "cooling_relevance": 0,
+      "capital_markets_relevance": 0,
+      "enterprise_ai_infrastructure_relevance": 0,
+      "infrastructure_relevance_score": 0.369,
+      "infrastructure_relevance_tier": "archive_only",
+      "infrastructure_relevance_action": "archive_only",
+      "infrastructure_relevance_reasons": [
+        "semiconductor_relevance:0.50(nvidia, gpu)"
+      ],
+      "infrastructureRelevanceAction": "archive_only",
+      "articlePagePublished": false,
+      "homepagePublished": false,
+      "archiveOnly": true,
+      "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
+    }
+  },
+  {
+    "id": "2bd485063b2fd66f",
+    "sourceRegistryId": "arxiv-cs-ar",
+    "source": "arXiv",
+    "url": "https://arxiv.org/abs/2609.09208",
+    "title": "Shift-Accumulate Attention: Multiplier-Free Query--Key Products for Transformer Decoding",
+    "snippet": "arXiv:2609.09208v1 Announce Type: new Abstract: Power-of-two (PoT) quantisation turns a multiplication into a bit shift, so far only for the post-softmax attention--value product. The earlier and larger product, S=QK^T,…",
+    "contentText": "arXiv:2609.09208v1 Announce Type: new Abstract: Power-of-two (PoT) quantisation turns a multiplication into a bit shift, so far only for the post-softmax attention--value product. The earlier and larger product, S=QK^T, has not been reformulated the same way. We quantise the key cache to a signed power-of-two fixed-point code, so that every scalar multiplication in QK^T becomes a sign flip, a bit shift and an integer accumulation. A fixed-point head-room F>= e_max turns every shift index r=F-e into a non-negative left shift, making the accumulation exact in integer arithmetic. We add a sub-power mantissa extension that halves the score error for one extra shift-add, a shift-exact online softmax whose running maximum lives in an integer log2 domain so that every rescaling is itself an exac…",
+    "publishedAt": "2026-09-10T04:00:00.000Z",
+    "sourceImage": null,
+    "region": "Global",
+    "language": "en",
+    "defaultCategory": "Semiconductors",
+    "ai_topic_score": 0,
+    "ai_topic_reasons": [
+      "ai_not_in_title"
+    ],
+    "category": "Power & Grid",
+    "primary_category": "Power & Grid",
+    "secondary_category": "Interconnection and power procurement",
+    "infrastructure_layer": "Power",
+    "affected_stakeholders": [
+      "data center operators",
+      "utilities",
+      "cloud capacity teams",
+      "investors"
+    ],
+    "article_type": "Other",
+    "urgency_score": 0.38,
+    "taxonomy_confidence": 0.73,
+    "taxonomy_reasons": [
+      "power",
+      "transformer"
+    ],
+    "direct_ai_infrastructure_relevance": 0,
+    "data_center_relevance": 0,
+    "cloud_capacity_relevance": 0,
+    "semiconductor_relevance": 0,
+    "power_grid_relevance": 0.571,
+    "cooling_relevance": 0,
+    "capital_markets_relevance": 0,
+    "enterprise_ai_infrastructure_relevance": 0,
+    "infrastructure_relevance_score": 0.366,
+    "infrastructure_relevance_tier": "archive_only",
+    "infrastructure_relevance_action": "archive_only",
+    "infrastructure_relevance_reasons": [
+      "power_grid_relevance:0.57(power, transformer)"
+    ],
+    "infrastructure_relevance": {
+      "direct_ai_infrastructure_relevance": 0,
+      "data_center_relevance": 0,
+      "cloud_capacity_relevance": 0,
+      "semiconductor_relevance": 0,
+      "power_grid_relevance": 0.571,
+      "cooling_relevance": 0,
+      "capital_markets_relevance": 0,
+      "enterprise_ai_infrastructure_relevance": 0,
+      "infrastructure_relevance_score": 0.366,
+      "infrastructure_relevance_tier": "archive_only",
+      "infrastructure_relevance_action": "archive_only",
+      "infrastructure_relevance_reasons": [
+        "power_grid_relevance:0.57(power, transformer)"
+      ],
+      "infrastructureRelevanceAction": "archive_only",
+      "articlePagePublished": false,
+      "homepagePublished": false,
+      "archiveOnly": true,
+      "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
+    }
+  },
+  {
     "id": "47d3dfc57517654e",
     "sourceRegistryId": "gao-reports",
     "source": "U.S. Government Accountability Office",
@@ -61,6 +510,77 @@
       "infrastructure_relevance_action": "archive_only",
       "infrastructure_relevance_reasons": [
         "capital_markets_relevance:0.54(funding, equity)"
+      ],
+      "infrastructureRelevanceAction": "archive_only",
+      "articlePagePublished": false,
+      "homepagePublished": false,
+      "archiveOnly": true,
+      "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
+    }
+  },
+  {
+    "id": "eb713b4a35c5a6a7",
+    "sourceRegistryId": "federal-register-doe",
+    "source": "Federal Register",
+    "url": "https://www.federalregister.gov/documents/2026/09/10/2026-18482/agency-information-collection-extension",
+    "title": "Agency Information Collection Extension",
+    "snippet": "The Department of Energy (DOE) is developing an information collection request to the OMB for extension under the provisions of the Paperwork Reduction Act of 1995. The information collection requests a three-year appro…",
+    "contentText": "The Department of Energy (DOE) is developing an information collection request to the OMB for extension under the provisions of the Paperwork Reduction Act of 1995. The information collection requests a three-year approval of its collection, titled BPA Generic Benchmarking Surveys, OMB Control Number 1910-NEW. The proposed collection will be a retrospective analysis of existing construction and design standards in power transmission through comparison with standards in use by comparable entities.",
+    "publishedAt": "2026-09-10T04:00:00.000Z",
+    "sourceImage": null,
+    "region": "US",
+    "language": "en",
+    "defaultCategory": "Power & Grid",
+    "ai_topic_score": 0,
+    "ai_topic_reasons": [
+      "ai_not_in_title"
+    ],
+    "category": "Power & Grid",
+    "primary_category": "Power & Grid",
+    "secondary_category": "Interconnection and power procurement",
+    "infrastructure_layer": "Power",
+    "affected_stakeholders": [
+      "data center operators",
+      "utilities",
+      "cloud capacity teams",
+      "investors"
+    ],
+    "article_type": "Policy / Regulation",
+    "urgency_score": 0.54,
+    "taxonomy_confidence": 0.77,
+    "taxonomy_reasons": [
+      "power",
+      "grid",
+      "transmission"
+    ],
+    "direct_ai_infrastructure_relevance": 0,
+    "data_center_relevance": 0,
+    "cloud_capacity_relevance": 0,
+    "semiconductor_relevance": 0,
+    "power_grid_relevance": 0.5,
+    "cooling_relevance": 0,
+    "capital_markets_relevance": 0,
+    "enterprise_ai_infrastructure_relevance": 0,
+    "infrastructure_relevance_score": 0.325,
+    "infrastructure_relevance_tier": "archive_only",
+    "infrastructure_relevance_action": "archive_only",
+    "infrastructure_relevance_reasons": [
+      "power_grid_relevance:0.50(power, transmission)"
+    ],
+    "infrastructure_relevance": {
+      "direct_ai_infrastructure_relevance": 0,
+      "data_center_relevance": 0,
+      "cloud_capacity_relevance": 0,
+      "semiconductor_relevance": 0,
+      "power_grid_relevance": 0.5,
+      "cooling_relevance": 0,
+      "capital_markets_relevance": 0,
+      "enterprise_ai_infrastructure_relevance": 0,
+      "infrastructure_relevance_score": 0.325,
+      "infrastructure_relevance_tier": "archive_only",
+      "infrastructure_relevance_action": "archive_only",
+      "infrastructure_relevance_reasons": [
+        "power_grid_relevance:0.50(power, transmission)"
       ],
       "infrastructureRelevanceAction": "archive_only",
       "articlePagePublished": false,
@@ -215,6 +735,359 @@
     }
   },
   {
+    "id": "8312a021d7eab068",
+    "sourceRegistryId": "federal-register-ferc",
+    "source": "Federal Register",
+    "url": "https://www.federalregister.gov/documents/2026/09/08/2026-18230/enable-gas-transmission-llc-notice-of-request-under-blanket-authorization-and-establishing",
+    "title": "Enable Gas Transmission, LLC Notice of Request Under Blanket Authorization and Establishing Intervention and Protest Deadline",
+    "snippet": "",
+    "contentText": "",
+    "publishedAt": "2026-09-08T04:00:00.000Z",
+    "sourceImage": null,
+    "region": "US",
+    "language": "en",
+    "defaultCategory": "Power & Grid",
+    "ai_topic_score": 0,
+    "ai_topic_reasons": [
+      "ai_not_in_title"
+    ],
+    "category": "Power & Grid",
+    "primary_category": "Power & Grid",
+    "secondary_category": "Interconnection and power procurement",
+    "infrastructure_layer": "Power",
+    "affected_stakeholders": [
+      "data center operators",
+      "utilities",
+      "cloud capacity teams",
+      "investors"
+    ],
+    "article_type": "Other",
+    "urgency_score": 0.44,
+    "taxonomy_confidence": 0.78,
+    "taxonomy_reasons": [
+      "power",
+      "grid",
+      "transmission"
+    ],
+    "direct_ai_infrastructure_relevance": 0,
+    "data_center_relevance": 0,
+    "cloud_capacity_relevance": 0,
+    "semiconductor_relevance": 0,
+    "power_grid_relevance": 0.378,
+    "cooling_relevance": 0,
+    "capital_markets_relevance": 0,
+    "enterprise_ai_infrastructure_relevance": 0,
+    "infrastructure_relevance_score": 0.254,
+    "infrastructure_relevance_tier": "archive_only",
+    "infrastructure_relevance_action": "archive_only",
+    "infrastructure_relevance_reasons": [
+      "power_grid_relevance:0.38(transmission)"
+    ],
+    "infrastructure_relevance": {
+      "direct_ai_infrastructure_relevance": 0,
+      "data_center_relevance": 0,
+      "cloud_capacity_relevance": 0,
+      "semiconductor_relevance": 0,
+      "power_grid_relevance": 0.378,
+      "cooling_relevance": 0,
+      "capital_markets_relevance": 0,
+      "enterprise_ai_infrastructure_relevance": 0,
+      "infrastructure_relevance_score": 0.254,
+      "infrastructure_relevance_tier": "archive_only",
+      "infrastructure_relevance_action": "archive_only",
+      "infrastructure_relevance_reasons": [
+        "power_grid_relevance:0.38(transmission)"
+      ],
+      "infrastructureRelevanceAction": "archive_only",
+      "articlePagePublished": false,
+      "homepagePublished": false,
+      "archiveOnly": true,
+      "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
+    }
+  },
+  {
+    "id": "9fd1207b973b6260",
+    "sourceRegistryId": "doe-newsroom",
+    "source": "U.S. Department of Energy",
+    "url": "https://www.energy.gov/articles/energy-secretary-secures-carolinas-grid-ahead-holiday-weekend",
+    "title": "Energy Secretary Secures Carolinas’ Grid Ahead of Holiday Weekend",
+    "snippet": "Secretary Wright issued an emergency order to stabilize the Carolinas’ grid and mitigate blackout risks amid hot weather conditions.",
+    "contentText": "Secretary Wright issued an emergency order to stabilize the Carolinas’ grid and mitigate blackout risks amid hot weather conditions.",
+    "publishedAt": "2026-09-03T23:11:31.000Z",
+    "sourceImage": null,
+    "region": "US",
+    "language": "en",
+    "defaultCategory": "Power & Grid",
+    "ai_topic_score": 0,
+    "ai_topic_reasons": [
+      "ai_not_in_title"
+    ],
+    "category": "Power & Grid",
+    "primary_category": "Power & Grid",
+    "secondary_category": "Interconnection and power procurement",
+    "infrastructure_layer": "Power",
+    "affected_stakeholders": [
+      "data center operators",
+      "utilities",
+      "cloud capacity teams",
+      "investors"
+    ],
+    "article_type": "Other",
+    "urgency_score": 0.44,
+    "taxonomy_confidence": 0.7,
+    "taxonomy_reasons": [
+      "power",
+      "grid"
+    ],
+    "direct_ai_infrastructure_relevance": 0,
+    "data_center_relevance": 0,
+    "cloud_capacity_relevance": 0,
+    "semiconductor_relevance": 0,
+    "power_grid_relevance": 0.378,
+    "cooling_relevance": 0,
+    "capital_markets_relevance": 0,
+    "enterprise_ai_infrastructure_relevance": 0,
+    "infrastructure_relevance_score": 0.254,
+    "infrastructure_relevance_tier": "archive_only",
+    "infrastructure_relevance_action": "archive_only",
+    "infrastructure_relevance_reasons": [
+      "power_grid_relevance:0.38(grid)"
+    ],
+    "infrastructure_relevance": {
+      "direct_ai_infrastructure_relevance": 0,
+      "data_center_relevance": 0,
+      "cloud_capacity_relevance": 0,
+      "semiconductor_relevance": 0,
+      "power_grid_relevance": 0.378,
+      "cooling_relevance": 0,
+      "capital_markets_relevance": 0,
+      "enterprise_ai_infrastructure_relevance": 0,
+      "infrastructure_relevance_score": 0.254,
+      "infrastructure_relevance_tier": "archive_only",
+      "infrastructure_relevance_action": "archive_only",
+      "infrastructure_relevance_reasons": [
+        "power_grid_relevance:0.38(grid)"
+      ],
+      "infrastructureRelevanceAction": "archive_only",
+      "articlePagePublished": false,
+      "homepagePublished": false,
+      "archiveOnly": true,
+      "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
+    }
+  },
+  {
+    "id": "b596f8b3044ce1ea",
+    "sourceRegistryId": "federal-register-ferc",
+    "source": "Federal Register",
+    "url": "https://www.federalregister.gov/documents/2026/09/03/2026-18037/florida-gas-transmission-company-llc-notice-of-request-under-blanket-authorization-and-establishing",
+    "title": "Florida Gas Transmission Company, LLC; Notice of Request Under Blanket Authorization and Establishing Intervention and Protest Deadline",
+    "snippet": "",
+    "contentText": "",
+    "publishedAt": "2026-09-03T04:00:00.000Z",
+    "sourceImage": null,
+    "region": "US",
+    "language": "en",
+    "defaultCategory": "Power & Grid",
+    "ai_topic_score": 0,
+    "ai_topic_reasons": [
+      "ai_not_in_title"
+    ],
+    "category": "Power & Grid",
+    "primary_category": "Power & Grid",
+    "secondary_category": "Interconnection and power procurement",
+    "infrastructure_layer": "Power",
+    "affected_stakeholders": [
+      "data center operators",
+      "utilities",
+      "cloud capacity teams",
+      "investors"
+    ],
+    "article_type": "Other",
+    "urgency_score": 0.44,
+    "taxonomy_confidence": 0.78,
+    "taxonomy_reasons": [
+      "power",
+      "grid",
+      "transmission"
+    ],
+    "direct_ai_infrastructure_relevance": 0,
+    "data_center_relevance": 0,
+    "cloud_capacity_relevance": 0,
+    "semiconductor_relevance": 0,
+    "power_grid_relevance": 0.378,
+    "cooling_relevance": 0,
+    "capital_markets_relevance": 0,
+    "enterprise_ai_infrastructure_relevance": 0,
+    "infrastructure_relevance_score": 0.254,
+    "infrastructure_relevance_tier": "archive_only",
+    "infrastructure_relevance_action": "archive_only",
+    "infrastructure_relevance_reasons": [
+      "power_grid_relevance:0.38(transmission)"
+    ],
+    "infrastructure_relevance": {
+      "direct_ai_infrastructure_relevance": 0,
+      "data_center_relevance": 0,
+      "cloud_capacity_relevance": 0,
+      "semiconductor_relevance": 0,
+      "power_grid_relevance": 0.378,
+      "cooling_relevance": 0,
+      "capital_markets_relevance": 0,
+      "enterprise_ai_infrastructure_relevance": 0,
+      "infrastructure_relevance_score": 0.254,
+      "infrastructure_relevance_tier": "archive_only",
+      "infrastructure_relevance_action": "archive_only",
+      "infrastructure_relevance_reasons": [
+        "power_grid_relevance:0.38(transmission)"
+      ],
+      "infrastructureRelevanceAction": "archive_only",
+      "articlePagePublished": false,
+      "homepagePublished": false,
+      "archiveOnly": true,
+      "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
+    }
+  },
+  {
+    "id": "53c44679ee2064d4",
+    "sourceRegistryId": "federal-register-ferc",
+    "source": "Federal Register",
+    "url": "https://www.federalregister.gov/documents/2026/09/09/2026-18358/city-of-thief-river-falls-municipal-utilities-notice-of-application-tendered-for-filing-with-the",
+    "title": "City of Thief River Falls Municipal Utilities; Notice of Application Tendered for Filing With the Commission and Soliciting Additional Study Requests and Establishing Procedural Schedule for Relicensing and Deadline for Submission of Final Amendments",
+    "snippet": "",
+    "contentText": "",
+    "publishedAt": "2026-09-09T04:00:00.000Z",
+    "sourceImage": null,
+    "region": "US",
+    "language": "en",
+    "defaultCategory": "Power & Grid",
+    "ai_topic_score": 0,
+    "ai_topic_reasons": [
+      "ai_not_in_title"
+    ],
+    "category": "Power & Grid",
+    "primary_category": "Power & Grid",
+    "secondary_category": "Interconnection and power procurement",
+    "infrastructure_layer": "Power",
+    "affected_stakeholders": [
+      "data center operators",
+      "utilities",
+      "cloud capacity teams",
+      "investors"
+    ],
+    "article_type": "Other",
+    "urgency_score": 0.44,
+    "taxonomy_confidence": 0.67,
+    "taxonomy_reasons": [
+      "power",
+      "grid"
+    ],
+    "direct_ai_infrastructure_relevance": 0,
+    "data_center_relevance": 0,
+    "cloud_capacity_relevance": 0,
+    "semiconductor_relevance": 0,
+    "power_grid_relevance": 0.351,
+    "cooling_relevance": 0,
+    "capital_markets_relevance": 0,
+    "enterprise_ai_infrastructure_relevance": 0,
+    "infrastructure_relevance_score": 0.239,
+    "infrastructure_relevance_tier": "archive_only",
+    "infrastructure_relevance_action": "archive_only",
+    "infrastructure_relevance_reasons": [
+      "power_grid_relevance:0.35(utilities)"
+    ],
+    "infrastructure_relevance": {
+      "direct_ai_infrastructure_relevance": 0,
+      "data_center_relevance": 0,
+      "cloud_capacity_relevance": 0,
+      "semiconductor_relevance": 0,
+      "power_grid_relevance": 0.351,
+      "cooling_relevance": 0,
+      "capital_markets_relevance": 0,
+      "enterprise_ai_infrastructure_relevance": 0,
+      "infrastructure_relevance_score": 0.239,
+      "infrastructure_relevance_tier": "archive_only",
+      "infrastructure_relevance_action": "archive_only",
+      "infrastructure_relevance_reasons": [
+        "power_grid_relevance:0.35(utilities)"
+      ],
+      "infrastructureRelevanceAction": "archive_only",
+      "articlePagePublished": false,
+      "homepagePublished": false,
+      "archiveOnly": true,
+      "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
+    }
+  },
+  {
+    "id": "c4910856ee984a37",
+    "sourceRegistryId": "federal-register-ferc",
+    "source": "Federal Register",
+    "url": "https://www.federalregister.gov/documents/2026/09/09/2026-18355/notice-of-effectiveness-of-exempt-wholesale-generator-and-foreign-utility-company-status",
+    "title": "Notice of Effectiveness of Exempt Wholesale Generator and Foreign Utility Company Status",
+    "snippet": "",
+    "contentText": "",
+    "publishedAt": "2026-09-09T04:00:00.000Z",
+    "sourceImage": null,
+    "region": "US",
+    "language": "en",
+    "defaultCategory": "Power & Grid",
+    "ai_topic_score": 0,
+    "ai_topic_reasons": [
+      "ai_not_in_title"
+    ],
+    "category": "Power & Grid",
+    "primary_category": "Power & Grid",
+    "secondary_category": "Interconnection and power procurement",
+    "infrastructure_layer": "Power",
+    "affected_stakeholders": [
+      "data center operators",
+      "utilities",
+      "cloud capacity teams",
+      "investors"
+    ],
+    "article_type": "Other",
+    "urgency_score": 0.44,
+    "taxonomy_confidence": 0.77,
+    "taxonomy_reasons": [
+      "power",
+      "grid",
+      "utility"
+    ],
+    "direct_ai_infrastructure_relevance": 0,
+    "data_center_relevance": 0,
+    "cloud_capacity_relevance": 0,
+    "semiconductor_relevance": 0,
+    "power_grid_relevance": 0.351,
+    "cooling_relevance": 0,
+    "capital_markets_relevance": 0,
+    "enterprise_ai_infrastructure_relevance": 0,
+    "infrastructure_relevance_score": 0.239,
+    "infrastructure_relevance_tier": "archive_only",
+    "infrastructure_relevance_action": "archive_only",
+    "infrastructure_relevance_reasons": [
+      "power_grid_relevance:0.35(utility)"
+    ],
+    "infrastructure_relevance": {
+      "direct_ai_infrastructure_relevance": 0,
+      "data_center_relevance": 0,
+      "cloud_capacity_relevance": 0,
+      "semiconductor_relevance": 0,
+      "power_grid_relevance": 0.351,
+      "cooling_relevance": 0,
+      "capital_markets_relevance": 0,
+      "enterprise_ai_infrastructure_relevance": 0,
+      "infrastructure_relevance_score": 0.239,
+      "infrastructure_relevance_tier": "archive_only",
+      "infrastructure_relevance_action": "archive_only",
+      "infrastructure_relevance_reasons": [
+        "power_grid_relevance:0.35(utility)"
+      ],
+      "infrastructureRelevanceAction": "archive_only",
+      "articlePagePublished": false,
+      "homepagePublished": false,
+      "archiveOnly": true,
+      "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
+    }
+  },
+  {
     "id": "910babff08e38ac9",
     "sourceRegistryId": "nrc-news",
     "source": "U.S. Nuclear Regulatory Commission",
@@ -355,85 +1228,14 @@
     }
   },
   {
-    "id": "074ff0c83c48d6ab",
-    "sourceRegistryId": "uk-desnz",
-    "source": "UK Department for Energy Security and Net Zero",
-    "url": "https://www.gov.uk/government/speeches/minister-mccluskey-speech-on-ai-for-clean-energy-vision",
-    "title": "Minister McCluskey speech on AI for clean energy vision",
-    "snippet": "Minister for Local Energy and Jobs Martin McCluskey delivered a speech at the Google for Startups Accelerator: Europe event in London on 8 September.",
-    "contentText": "Minister for Local Energy and Jobs Martin McCluskey delivered a speech at the Google for Startups Accelerator: Europe event in London on 8 September.",
-    "publishedAt": "2026-09-08T12:55:52.000Z",
-    "sourceImage": null,
-    "region": "US",
-    "language": "en",
-    "defaultCategory": "Power & Grid",
-    "ai_topic_score": 0.443,
-    "ai_topic_reasons": [
-      "accelerator",
-      "ai"
-    ],
-    "category": "Power & Grid",
-    "primary_category": "Power & Grid",
-    "secondary_category": "Interconnection and power procurement",
-    "infrastructure_layer": "Power",
-    "affected_stakeholders": [
-      "data center operators",
-      "utilities",
-      "cloud capacity teams",
-      "investors"
-    ],
-    "article_type": "Other",
-    "urgency_score": 0.41,
-    "taxonomy_confidence": 0.61,
-    "taxonomy_reasons": [
-      "power",
-      "grid"
-    ],
-    "direct_ai_infrastructure_relevance": 0,
-    "data_center_relevance": 0,
-    "cloud_capacity_relevance": 0,
-    "semiconductor_relevance": 0.22,
-    "power_grid_relevance": 0,
-    "cooling_relevance": 0,
-    "capital_markets_relevance": 0,
-    "enterprise_ai_infrastructure_relevance": 0,
-    "infrastructure_relevance_score": 0.163,
-    "infrastructure_relevance_tier": "archive_only",
-    "infrastructure_relevance_action": "archive_only",
-    "infrastructure_relevance_reasons": [
-      "semiconductor_relevance:0.22(accelerator)"
-    ],
-    "infrastructure_relevance": {
-      "direct_ai_infrastructure_relevance": 0,
-      "data_center_relevance": 0,
-      "cloud_capacity_relevance": 0,
-      "semiconductor_relevance": 0.22,
-      "power_grid_relevance": 0,
-      "cooling_relevance": 0,
-      "capital_markets_relevance": 0,
-      "enterprise_ai_infrastructure_relevance": 0,
-      "infrastructure_relevance_score": 0.163,
-      "infrastructure_relevance_tier": "archive_only",
-      "infrastructure_relevance_action": "archive_only",
-      "infrastructure_relevance_reasons": [
-        "semiconductor_relevance:0.22(accelerator)"
-      ],
-      "infrastructureRelevanceAction": "archive_only",
-      "articlePagePublished": false,
-      "homepagePublished": false,
-      "archiveOnly": true,
-      "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
-    }
-  },
-  {
-    "id": "9fd1207b973b6260",
-    "sourceRegistryId": "doe-newsroom",
-    "source": "U.S. Department of Energy",
-    "url": "https://www.energy.gov/articles/energy-secretary-secures-carolinas-grid-ahead-holiday-weekend",
-    "title": "Energy Secretary Secures Carolinas’ Grid Ahead of Holiday Weekend",
-    "snippet": "Secretary Wright issued an emergency order to stabilize the Carolinas’ grid and mitigate blackout risks amid hot weather conditions.",
-    "contentText": "Secretary Wright issued an emergency order to stabilize the Carolinas’ grid and mitigate blackout risks amid hot weather conditions.",
-    "publishedAt": "2026-09-03T23:11:31.000Z",
+    "id": "aa7900ef9280e5f6",
+    "sourceRegistryId": "federal-register-ferc",
+    "source": "Federal Register",
+    "url": "https://www.federalregister.gov/documents/2026/09/10/2026-18456/idaho-power-company-notice-of-availability-of-the-final-supplemental-environmental-impact-statement",
+    "title": "Idaho Power Company; Notice of Availability of the Final Supplemental Environmental Impact Statement for the Hells Canyon Hydroelectric Project",
+    "snippet": "",
+    "contentText": "",
+    "publishedAt": "2026-09-10T04:00:00.000Z",
     "sourceImage": null,
     "region": "US",
     "language": "en",
@@ -453,8 +1255,8 @@
       "investors"
     ],
     "article_type": "Other",
-    "urgency_score": 0.44,
-    "taxonomy_confidence": 0.7,
+    "urgency_score": 0.43,
+    "taxonomy_confidence": 0.69,
     "taxonomy_reasons": [
       "power",
       "grid"
@@ -463,30 +1265,30 @@
     "data_center_relevance": 0,
     "cloud_capacity_relevance": 0,
     "semiconductor_relevance": 0,
-    "power_grid_relevance": 0.378,
+    "power_grid_relevance": 0.297,
     "cooling_relevance": 0,
     "capital_markets_relevance": 0,
     "enterprise_ai_infrastructure_relevance": 0,
-    "infrastructure_relevance_score": 0.254,
+    "infrastructure_relevance_score": 0.207,
     "infrastructure_relevance_tier": "archive_only",
     "infrastructure_relevance_action": "archive_only",
     "infrastructure_relevance_reasons": [
-      "power_grid_relevance:0.38(grid)"
+      "power_grid_relevance:0.30(power)"
     ],
     "infrastructure_relevance": {
       "direct_ai_infrastructure_relevance": 0,
       "data_center_relevance": 0,
       "cloud_capacity_relevance": 0,
       "semiconductor_relevance": 0,
-      "power_grid_relevance": 0.378,
+      "power_grid_relevance": 0.297,
       "cooling_relevance": 0,
       "capital_markets_relevance": 0,
       "enterprise_ai_infrastructure_relevance": 0,
-      "infrastructure_relevance_score": 0.254,
+      "infrastructure_relevance_score": 0.207,
       "infrastructure_relevance_tier": "archive_only",
       "infrastructure_relevance_action": "archive_only",
       "infrastructure_relevance_reasons": [
-        "power_grid_relevance:0.38(grid)"
+        "power_grid_relevance:0.30(power)"
       ],
       "infrastructureRelevanceAction": "archive_only",
       "articlePagePublished": false,
@@ -986,6 +1788,146 @@
     }
   },
   {
+    "id": "074ff0c83c48d6ab",
+    "sourceRegistryId": "uk-desnz",
+    "source": "UK Department for Energy Security and Net Zero",
+    "url": "https://www.gov.uk/government/speeches/minister-mccluskey-speech-on-ai-for-clean-energy-vision",
+    "title": "Minister McCluskey speech on AI for clean energy vision",
+    "snippet": "Minister for Local Energy and Jobs Martin McCluskey delivered a speech at the Google for Startups Accelerator: Europe event in London on 8 September.",
+    "contentText": "Minister for Local Energy and Jobs Martin McCluskey delivered a speech at the Google for Startups Accelerator: Europe event in London on 8 September.",
+    "publishedAt": "2026-09-08T12:55:52.000Z",
+    "sourceImage": null,
+    "region": "US",
+    "language": "en",
+    "defaultCategory": "Power & Grid",
+    "ai_topic_score": 0.443,
+    "ai_topic_reasons": [
+      "accelerator",
+      "ai"
+    ],
+    "category": "Power & Grid",
+    "primary_category": "Power & Grid",
+    "secondary_category": "Interconnection and power procurement",
+    "infrastructure_layer": "Power",
+    "affected_stakeholders": [
+      "data center operators",
+      "utilities",
+      "cloud capacity teams",
+      "investors"
+    ],
+    "article_type": "Other",
+    "urgency_score": 0.41,
+    "taxonomy_confidence": 0.61,
+    "taxonomy_reasons": [
+      "power",
+      "grid"
+    ],
+    "direct_ai_infrastructure_relevance": 0,
+    "data_center_relevance": 0,
+    "cloud_capacity_relevance": 0,
+    "semiconductor_relevance": 0.22,
+    "power_grid_relevance": 0,
+    "cooling_relevance": 0,
+    "capital_markets_relevance": 0,
+    "enterprise_ai_infrastructure_relevance": 0,
+    "infrastructure_relevance_score": 0.163,
+    "infrastructure_relevance_tier": "archive_only",
+    "infrastructure_relevance_action": "archive_only",
+    "infrastructure_relevance_reasons": [
+      "semiconductor_relevance:0.22(accelerator)"
+    ],
+    "infrastructure_relevance": {
+      "direct_ai_infrastructure_relevance": 0,
+      "data_center_relevance": 0,
+      "cloud_capacity_relevance": 0,
+      "semiconductor_relevance": 0.22,
+      "power_grid_relevance": 0,
+      "cooling_relevance": 0,
+      "capital_markets_relevance": 0,
+      "enterprise_ai_infrastructure_relevance": 0,
+      "infrastructure_relevance_score": 0.163,
+      "infrastructure_relevance_tier": "archive_only",
+      "infrastructure_relevance_action": "archive_only",
+      "infrastructure_relevance_reasons": [
+        "semiconductor_relevance:0.22(accelerator)"
+      ],
+      "infrastructureRelevanceAction": "archive_only",
+      "articlePagePublished": false,
+      "homepagePublished": false,
+      "archiveOnly": true,
+      "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
+    }
+  },
+  {
+    "id": "33190e3ceff4c223",
+    "sourceRegistryId": "whitehouse-presidential-actions",
+    "source": "The White House",
+    "url": "https://www.whitehouse.gov/presidential-actions/2026/09/patriot-day-2026-the-25th-anniversary-of-the-september-11-terrorist-attacks/",
+    "title": "Patriot Day 2026, The 25th Anniversary of the September 11 Terrorist Attacks",
+    "snippet": "BY THE PRESIDENT OF THE UNITED STATES OF AMERICA A PROCLAMATION A quarter of a century has passed since the terrible day of September 11, 2001, and an entire generation of Americans has now come of age with no living me…",
+    "contentText": "Presidential Actions Search Select Category All News Briefings & Statements All Presidential Actions Executive Orders Nominations & Appointments Presidential Memoranda Proclamations Fact Sheets Releases Remarks Research All Briefings & Statements Presidential Actions All Executive Orders Nominations & Appointments Presidential Memoranda Proclamations Fact Sheets Releases Remarks Research BY THE PRESIDENT OF THE UNITED STATES OF AMERICA A PROCLAMATION A quarter of a century has passed since the terrible day of September 11, 2001, and an entire generation of Americans has now come of age with no living memory of that fateful day. The passage of time must never dim what will forever burn bright in the conscience of our Nation. Amid the ashes of Ground Zero, we made a solemn vow to Never Forg…",
+    "publishedAt": "2026-09-09T23:23:01.000Z",
+    "sourceImage": null,
+    "region": "US",
+    "language": "en",
+    "defaultCategory": "Policy & Siting",
+    "ai_topic_score": 0,
+    "ai_topic_reasons": [
+      "ai_not_in_title"
+    ],
+    "category": "Policy & Siting",
+    "primary_category": "Policy & Siting",
+    "secondary_category": "Permitting, regulation, and market access",
+    "infrastructure_layer": "Policy",
+    "affected_stakeholders": [
+      "regulators",
+      "site selectors",
+      "developers",
+      "utilities"
+    ],
+    "article_type": "Policy / Regulation",
+    "urgency_score": 0.18,
+    "taxonomy_confidence": 0.53,
+    "taxonomy_reasons": [
+      "policy"
+    ],
+    "direct_ai_infrastructure_relevance": 0,
+    "data_center_relevance": 0,
+    "cloud_capacity_relevance": 0,
+    "semiconductor_relevance": 0,
+    "power_grid_relevance": 0,
+    "cooling_relevance": 0,
+    "capital_markets_relevance": 0,
+    "enterprise_ai_infrastructure_relevance": 0,
+    "infrastructure_relevance_score": 0,
+    "infrastructure_relevance_tier": "archive_only",
+    "infrastructure_relevance_action": "archive_only",
+    "infrastructure_relevance_reasons": [
+      "no_strong_compute_current_infrastructure_match"
+    ],
+    "infrastructure_relevance": {
+      "direct_ai_infrastructure_relevance": 0,
+      "data_center_relevance": 0,
+      "cloud_capacity_relevance": 0,
+      "semiconductor_relevance": 0,
+      "power_grid_relevance": 0,
+      "cooling_relevance": 0,
+      "capital_markets_relevance": 0,
+      "enterprise_ai_infrastructure_relevance": 0,
+      "infrastructure_relevance_score": 0,
+      "infrastructure_relevance_tier": "archive_only",
+      "infrastructure_relevance_action": "archive_only",
+      "infrastructure_relevance_reasons": [
+        "no_strong_compute_current_infrastructure_match"
+      ],
+      "infrastructureRelevanceAction": "archive_only",
+      "articlePagePublished": false,
+      "homepagePublished": false,
+      "archiveOnly": true,
+      "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
+    }
+  },
+  {
     "id": "adfb998dfa898a0f",
     "sourceRegistryId": "gao-reports",
     "source": "U.S. Government Accountability Office",
@@ -1158,902 +2100,6 @@
     "taxonomy_reasons": [
       "power",
       "grid"
-    ],
-    "direct_ai_infrastructure_relevance": 0,
-    "data_center_relevance": 0,
-    "cloud_capacity_relevance": 0,
-    "semiconductor_relevance": 0,
-    "power_grid_relevance": 0,
-    "cooling_relevance": 0,
-    "capital_markets_relevance": 0,
-    "enterprise_ai_infrastructure_relevance": 0,
-    "infrastructure_relevance_score": 0,
-    "infrastructure_relevance_tier": "archive_only",
-    "infrastructure_relevance_action": "archive_only",
-    "infrastructure_relevance_reasons": [
-      "no_strong_compute_current_infrastructure_match"
-    ],
-    "infrastructure_relevance": {
-      "direct_ai_infrastructure_relevance": 0,
-      "data_center_relevance": 0,
-      "cloud_capacity_relevance": 0,
-      "semiconductor_relevance": 0,
-      "power_grid_relevance": 0,
-      "cooling_relevance": 0,
-      "capital_markets_relevance": 0,
-      "enterprise_ai_infrastructure_relevance": 0,
-      "infrastructure_relevance_score": 0,
-      "infrastructure_relevance_tier": "archive_only",
-      "infrastructure_relevance_action": "archive_only",
-      "infrastructure_relevance_reasons": [
-        "no_strong_compute_current_infrastructure_match"
-      ],
-      "infrastructureRelevanceAction": "archive_only",
-      "articlePagePublished": false,
-      "homepagePublished": false,
-      "archiveOnly": true,
-      "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
-    }
-  },
-  {
-    "id": "95d1882192ba82df",
-    "sourceRegistryId": "eia-today-in-energy",
-    "source": "U.S. Energy Information Administration",
-    "url": "https://www.eia.gov/todayinenergy/detail.php?id=68124",
-    "title": "New England natural gas prices have been trading near record discounts to Henry Hub",
-    "snippet": "Low-cost Appalachian and Canadian natural gas supplies coupled with lower-than-usual regional consumption have pushed down natural gas prices at a major New England pricing hub in recent months to trade at a discount to…",
-    "contentText": "Low-cost Appalachian and Canadian natural gas supplies coupled with lower-than-usual regional consumption have pushed down natural gas prices at a major New England pricing hub in recent months to trade at a discount to the widely cited U.S. benchmark, Henry Hub.",
-    "publishedAt": "2026-09-09T14:00:00.000Z",
-    "sourceImage": null,
-    "region": "US",
-    "language": "en",
-    "defaultCategory": "Power & Grid",
-    "ai_topic_score": 0,
-    "ai_topic_reasons": [
-      "ai_not_in_title"
-    ],
-    "category": "Power & Grid",
-    "primary_category": "Power & Grid",
-    "secondary_category": "Interconnection and power procurement",
-    "infrastructure_layer": "Power",
-    "affected_stakeholders": [
-      "data center operators",
-      "utilities",
-      "cloud capacity teams",
-      "investors"
-    ],
-    "article_type": "Research / Technical",
-    "urgency_score": 0.36,
-    "taxonomy_confidence": 0.61,
-    "taxonomy_reasons": [
-      "power",
-      "grid"
-    ],
-    "direct_ai_infrastructure_relevance": 0,
-    "data_center_relevance": 0,
-    "cloud_capacity_relevance": 0,
-    "semiconductor_relevance": 0,
-    "power_grid_relevance": 0,
-    "cooling_relevance": 0,
-    "capital_markets_relevance": 0,
-    "enterprise_ai_infrastructure_relevance": 0,
-    "infrastructure_relevance_score": 0,
-    "infrastructure_relevance_tier": "archive_only",
-    "infrastructure_relevance_action": "archive_only",
-    "infrastructure_relevance_reasons": [
-      "no_strong_compute_current_infrastructure_match"
-    ],
-    "infrastructure_relevance": {
-      "direct_ai_infrastructure_relevance": 0,
-      "data_center_relevance": 0,
-      "cloud_capacity_relevance": 0,
-      "semiconductor_relevance": 0,
-      "power_grid_relevance": 0,
-      "cooling_relevance": 0,
-      "capital_markets_relevance": 0,
-      "enterprise_ai_infrastructure_relevance": 0,
-      "infrastructure_relevance_score": 0,
-      "infrastructure_relevance_tier": "archive_only",
-      "infrastructure_relevance_action": "archive_only",
-      "infrastructure_relevance_reasons": [
-        "no_strong_compute_current_infrastructure_match"
-      ],
-      "infrastructureRelevanceAction": "archive_only",
-      "articlePagePublished": false,
-      "homepagePublished": false,
-      "archiveOnly": true,
-      "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
-    }
-  },
-  {
-    "id": "470c5b840dc3926f",
-    "sourceRegistryId": "ftc-press",
-    "source": "Federal Trade Commission",
-    "url": "https://www.ftc.gov/news-events/news/press-releases/2026/09/ftc-withdraws-obsolete-policy-statement",
-    "title": "FTC Withdraws Obsolete Policy Statement",
-    "snippet": "Commission takes action to rescind unnecessary 2021 guidance document The Federal Trade Commission rescinded the 2021 Policy Statement on Breaches by Health Apps and Other Connected Devices. View Press Release",
-    "contentText": "Commission takes action to rescind unnecessary 2021 guidance document The Federal Trade Commission rescinded the 2021 Policy Statement on Breaches by Health Apps and Other Connected Devices. View Press Release",
-    "publishedAt": "2026-09-09T12:00:00.000Z",
-    "sourceImage": null,
-    "region": "US",
-    "language": "en",
-    "defaultCategory": "Capital Markets",
-    "ai_topic_score": 0,
-    "ai_topic_reasons": [
-      "ai_not_in_title"
-    ],
-    "category": "Policy & Siting",
-    "primary_category": "Policy & Siting",
-    "secondary_category": "Permitting, regulation, and market access",
-    "infrastructure_layer": "Policy",
-    "affected_stakeholders": [
-      "regulators",
-      "site selectors",
-      "developers",
-      "utilities"
-    ],
-    "article_type": "Policy / Regulation",
-    "urgency_score": 0.18,
-    "taxonomy_confidence": 0.56,
-    "taxonomy_reasons": [
-      "policy"
-    ],
-    "direct_ai_infrastructure_relevance": 0,
-    "data_center_relevance": 0,
-    "cloud_capacity_relevance": 0,
-    "semiconductor_relevance": 0,
-    "power_grid_relevance": 0,
-    "cooling_relevance": 0,
-    "capital_markets_relevance": 0,
-    "enterprise_ai_infrastructure_relevance": 0,
-    "infrastructure_relevance_score": 0,
-    "infrastructure_relevance_tier": "archive_only",
-    "infrastructure_relevance_action": "archive_only",
-    "infrastructure_relevance_reasons": [
-      "no_strong_compute_current_infrastructure_match"
-    ],
-    "infrastructure_relevance": {
-      "direct_ai_infrastructure_relevance": 0,
-      "data_center_relevance": 0,
-      "cloud_capacity_relevance": 0,
-      "semiconductor_relevance": 0,
-      "power_grid_relevance": 0,
-      "cooling_relevance": 0,
-      "capital_markets_relevance": 0,
-      "enterprise_ai_infrastructure_relevance": 0,
-      "infrastructure_relevance_score": 0,
-      "infrastructure_relevance_tier": "archive_only",
-      "infrastructure_relevance_action": "archive_only",
-      "infrastructure_relevance_reasons": [
-        "no_strong_compute_current_infrastructure_match"
-      ],
-      "infrastructureRelevanceAction": "archive_only",
-      "articlePagePublished": false,
-      "homepagePublished": false,
-      "archiveOnly": true,
-      "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
-    }
-  },
-  {
-    "id": "e2b95d9f8e1c385c",
-    "sourceRegistryId": "ftc-press",
-    "source": "Federal Trade Commission",
-    "url": "https://www.ftc.gov/news-events/news/press-releases/2026/09/ftc-takes-action-against-payment-processor-humboldt-merchant-services-knowingly-facilitating-payment",
-    "title": "FTC Takes Action Against Payment Processor Humboldt Merchant Services for Knowingly Facilitating Payment Processing for Sham Merchants",
-    "snippet": "Under proposed order, defendant will be required to pay $12 million, stop payment processing for certain categories of merchants Payment processing company Humboldt Merchant Services will pay $12 million and be permanen…",
-    "contentText": "Under proposed order, defendant will be required to pay $12 million, stop payment processing for certain categories of merchants Payment processing company Humboldt Merchant Services will pay $12 million and be permanently banned from processing payments for merchants with a heightened risk of potential fraud to settle allegations that Humboldt processed payments for merchants that defrauded consumers. View Press Release",
-    "publishedAt": "2026-09-08T12:00:00.000Z",
-    "sourceImage": null,
-    "region": "US",
-    "language": "en",
-    "defaultCategory": "Capital Markets",
-    "ai_topic_score": 0,
-    "ai_topic_reasons": [
-      "ai_not_in_title"
-    ],
-    "category": "Other",
-    "primary_category": "Other",
-    "secondary_category": "General AI infrastructure signal",
-    "infrastructure_layer": "Demand",
-    "affected_stakeholders": [
-      "operators"
-    ],
-    "article_type": "Product / Platform Update",
-    "urgency_score": 0.18,
-    "taxonomy_confidence": null,
-    "taxonomy_reasons": [
-      "fallback_taxonomy"
-    ],
-    "direct_ai_infrastructure_relevance": 0,
-    "data_center_relevance": 0,
-    "cloud_capacity_relevance": 0,
-    "semiconductor_relevance": 0,
-    "power_grid_relevance": 0,
-    "cooling_relevance": 0,
-    "capital_markets_relevance": 0,
-    "enterprise_ai_infrastructure_relevance": 0,
-    "infrastructure_relevance_score": 0,
-    "infrastructure_relevance_tier": "archive_only",
-    "infrastructure_relevance_action": "archive_only",
-    "infrastructure_relevance_reasons": [
-      "no_strong_compute_current_infrastructure_match"
-    ],
-    "infrastructure_relevance": {
-      "direct_ai_infrastructure_relevance": 0,
-      "data_center_relevance": 0,
-      "cloud_capacity_relevance": 0,
-      "semiconductor_relevance": 0,
-      "power_grid_relevance": 0,
-      "cooling_relevance": 0,
-      "capital_markets_relevance": 0,
-      "enterprise_ai_infrastructure_relevance": 0,
-      "infrastructure_relevance_score": 0,
-      "infrastructure_relevance_tier": "archive_only",
-      "infrastructure_relevance_action": "archive_only",
-      "infrastructure_relevance_reasons": [
-        "no_strong_compute_current_infrastructure_match"
-      ],
-      "infrastructureRelevanceAction": "archive_only",
-      "articlePagePublished": false,
-      "homepagePublished": false,
-      "archiveOnly": true,
-      "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
-    }
-  },
-  {
-    "id": "4c3f387bdfe22c43",
-    "sourceRegistryId": "gao-reports",
-    "source": "U.S. Government Accountability Office",
-    "url": "https://www.gao.gov/products/gao-26-107498",
-    "title": "Banking Services: Cannabis Businesses Face Access Challenges",
-    "snippet": "What GAO Found In 2014, the Financial Crimes Enforcement Network (FinCEN)—a federal agency that helps combat financial crimes—issued guidance on how financial institutions can serve cannabis-related businesses (CRB) whi…",
-    "contentText": "What GAO Found In 2014, the Financial Crimes Enforcement Network (FinCEN)—a federal agency that helps combat financial crimes—issued guidance on how financial institutions can serve cannabis-related businesses (CRB) while complying with Bank Secrecy Act (BSA) requirements. This guidance instructs institutions to gather thorough information on CRB customers and file suspicious activity reports for certain transactions involving CRBs. Federal banking regulators help oversee institutions’ compliance with these requirements through BSA examinations. Financial institutions consider various factors when deciding whether to serve CRBs, according to GAO’s focus groups and interviews. Factors dissuading institutions from serving CRBs include potential legal and regulatory sanctions and the costs o…",
-    "publishedAt": "2026-09-08T11:24:33.000Z",
-    "sourceImage": null,
-    "region": "US",
-    "language": "en",
-    "defaultCategory": "Power & Grid",
-    "ai_topic_score": 0,
-    "ai_topic_reasons": [
-      "ai_not_in_title"
-    ],
-    "category": "Power & Grid",
-    "primary_category": "Power & Grid",
-    "secondary_category": "Interconnection and power procurement",
-    "infrastructure_layer": "Power",
-    "affected_stakeholders": [
-      "data center operators",
-      "utilities",
-      "cloud capacity teams",
-      "investors"
-    ],
-    "article_type": "Policy / Regulation",
-    "urgency_score": 0.36,
-    "taxonomy_confidence": 0.61,
-    "taxonomy_reasons": [
-      "power",
-      "grid"
-    ],
-    "direct_ai_infrastructure_relevance": 0,
-    "data_center_relevance": 0,
-    "cloud_capacity_relevance": 0,
-    "semiconductor_relevance": 0,
-    "power_grid_relevance": 0,
-    "cooling_relevance": 0,
-    "capital_markets_relevance": 0,
-    "enterprise_ai_infrastructure_relevance": 0,
-    "infrastructure_relevance_score": 0,
-    "infrastructure_relevance_tier": "archive_only",
-    "infrastructure_relevance_action": "archive_only",
-    "infrastructure_relevance_reasons": [
-      "no_strong_compute_current_infrastructure_match"
-    ],
-    "infrastructure_relevance": {
-      "direct_ai_infrastructure_relevance": 0,
-      "data_center_relevance": 0,
-      "cloud_capacity_relevance": 0,
-      "semiconductor_relevance": 0,
-      "power_grid_relevance": 0,
-      "cooling_relevance": 0,
-      "capital_markets_relevance": 0,
-      "enterprise_ai_infrastructure_relevance": 0,
-      "infrastructure_relevance_score": 0,
-      "infrastructure_relevance_tier": "archive_only",
-      "infrastructure_relevance_action": "archive_only",
-      "infrastructure_relevance_reasons": [
-        "no_strong_compute_current_infrastructure_match"
-      ],
-      "infrastructureRelevanceAction": "archive_only",
-      "articlePagePublished": false,
-      "homepagePublished": false,
-      "archiveOnly": true,
-      "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
-    }
-  },
-  {
-    "id": "98de78ec75cce645",
-    "sourceRegistryId": "gao-reports",
-    "source": "U.S. Government Accountability Office",
-    "url": "https://www.gao.gov/products/gao-26-108127",
-    "title": "Chemical Security: DHS Should Provide Options for Voluntary Vetting of Facility Personnel for Terrorist Ties",
-    "snippet": "What GAO Found The Department of Homeland Security’s (DHS) Cybersecurity and Infrastructure Security Agency (CISA) is the sector risk management agency (SRMA) for the U.S. chemical sector, responsible for implementing p…",
-    "contentText": "What GAO Found The Department of Homeland Security’s (DHS) Cybersecurity and Infrastructure Security Agency (CISA) is the sector risk management agency (SRMA) for the U.S. chemical sector, responsible for implementing programs to assist facility owners and operators in identifying and mitigating security risks. In 2007, DHS established a regulatory program to mitigate security risks for high-risk chemical facilities. As part of this program, CISA required facilities to vet their personnel and certain unescorted visitors for terrorist ties against the U.S. government’s terrorist watchlist. Vetting against the U.S. terrorist watchlist is an inherently governmental function that the private sector cannot perform on its own; therefore, CISA set up a process with options facilities could use f…",
-    "publishedAt": "2026-09-08T11:19:29.000Z",
-    "sourceImage": null,
-    "region": "US",
-    "language": "en",
-    "defaultCategory": "Power & Grid",
-    "ai_topic_score": 0,
-    "ai_topic_reasons": [
-      "ai_not_in_title"
-    ],
-    "category": "Power & Grid",
-    "primary_category": "Power & Grid",
-    "secondary_category": "Interconnection and power procurement",
-    "infrastructure_layer": "Power",
-    "affected_stakeholders": [
-      "data center operators",
-      "utilities",
-      "cloud capacity teams",
-      "investors"
-    ],
-    "article_type": "Other",
-    "urgency_score": 0.36,
-    "taxonomy_confidence": 0.61,
-    "taxonomy_reasons": [
-      "power",
-      "grid"
-    ],
-    "direct_ai_infrastructure_relevance": 0,
-    "data_center_relevance": 0,
-    "cloud_capacity_relevance": 0,
-    "semiconductor_relevance": 0,
-    "power_grid_relevance": 0,
-    "cooling_relevance": 0,
-    "capital_markets_relevance": 0,
-    "enterprise_ai_infrastructure_relevance": 0,
-    "infrastructure_relevance_score": 0,
-    "infrastructure_relevance_tier": "archive_only",
-    "infrastructure_relevance_action": "archive_only",
-    "infrastructure_relevance_reasons": [
-      "no_strong_compute_current_infrastructure_match"
-    ],
-    "infrastructure_relevance": {
-      "direct_ai_infrastructure_relevance": 0,
-      "data_center_relevance": 0,
-      "cloud_capacity_relevance": 0,
-      "semiconductor_relevance": 0,
-      "power_grid_relevance": 0,
-      "cooling_relevance": 0,
-      "capital_markets_relevance": 0,
-      "enterprise_ai_infrastructure_relevance": 0,
-      "infrastructure_relevance_score": 0,
-      "infrastructure_relevance_tier": "archive_only",
-      "infrastructure_relevance_action": "archive_only",
-      "infrastructure_relevance_reasons": [
-        "no_strong_compute_current_infrastructure_match"
-      ],
-      "infrastructureRelevanceAction": "archive_only",
-      "articlePagePublished": false,
-      "homepagePublished": false,
-      "archiveOnly": true,
-      "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
-    }
-  },
-  {
-    "id": "ebb30ff46eff36c0",
-    "sourceRegistryId": "eia-today-in-energy",
-    "source": "U.S. Energy Information Administration",
-    "url": "https://www.eia.gov/todayinenergy/detail.php?id=68104",
-    "title": "Elevated crack spreads and crude oil prices contribute to higher prices at the pump",
-    "snippet": "What are crack spreads and why are they elevated? Crack spreads are indicators of the profitability of refining crude oil into petroleum products such as gasoline and diesel. One common crack spread is calculated by sub…",
-    "contentText": "What are crack spreads and why are they elevated? Crack spreads are indicators of the profitability of refining crude oil into petroleum products such as gasoline and diesel. One common crack spread is calculated by subtracting the spot market price of a gallon of crude oil from the wholesale price of a gallon of refined product. Since May, the gasoline crack spread in New York Harbor has averaged about $1 per gallon (gal) higher than in 2025, when the crack spread peaked around 60 cents/gal. Gasoline crack spreads are elevated primarily because of tight gasoline supplies globally.",
-    "publishedAt": "2026-09-04T14:00:00.000Z",
-    "sourceImage": null,
-    "region": "US",
-    "language": "en",
-    "defaultCategory": "Power & Grid",
-    "ai_topic_score": 0,
-    "ai_topic_reasons": [
-      "ai_not_in_title"
-    ],
-    "category": "Power & Grid",
-    "primary_category": "Power & Grid",
-    "secondary_category": "Interconnection and power procurement",
-    "infrastructure_layer": "Power",
-    "affected_stakeholders": [
-      "data center operators",
-      "utilities",
-      "cloud capacity teams",
-      "investors"
-    ],
-    "article_type": "Market Analysis",
-    "urgency_score": 0.36,
-    "taxonomy_confidence": 0.61,
-    "taxonomy_reasons": [
-      "power",
-      "grid"
-    ],
-    "direct_ai_infrastructure_relevance": 0,
-    "data_center_relevance": 0,
-    "cloud_capacity_relevance": 0,
-    "semiconductor_relevance": 0,
-    "power_grid_relevance": 0,
-    "cooling_relevance": 0,
-    "capital_markets_relevance": 0,
-    "enterprise_ai_infrastructure_relevance": 0,
-    "infrastructure_relevance_score": 0,
-    "infrastructure_relevance_tier": "archive_only",
-    "infrastructure_relevance_action": "archive_only",
-    "infrastructure_relevance_reasons": [
-      "no_strong_compute_current_infrastructure_match"
-    ],
-    "infrastructure_relevance": {
-      "direct_ai_infrastructure_relevance": 0,
-      "data_center_relevance": 0,
-      "cloud_capacity_relevance": 0,
-      "semiconductor_relevance": 0,
-      "power_grid_relevance": 0,
-      "cooling_relevance": 0,
-      "capital_markets_relevance": 0,
-      "enterprise_ai_infrastructure_relevance": 0,
-      "infrastructure_relevance_score": 0,
-      "infrastructure_relevance_tier": "archive_only",
-      "infrastructure_relevance_action": "archive_only",
-      "infrastructure_relevance_reasons": [
-        "no_strong_compute_current_infrastructure_match"
-      ],
-      "infrastructureRelevanceAction": "archive_only",
-      "articlePagePublished": false,
-      "homepagePublished": false,
-      "archiveOnly": true,
-      "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
-    }
-  },
-  {
-    "id": "2ac2fc87a41f9cd1",
-    "sourceRegistryId": "ftc-press",
-    "source": "Federal Trade Commission",
-    "url": "https://www.ftc.gov/news-events/news/press-releases/2026/09/payment-processor-nuvei-must-implement-robust-merchant-screening-practices-pay-485-million-settle",
-    "title": "Payment Processor Nuvei Must Implement Robust Merchant Screening Practices and Pay $4.85 Million to Settle FTC Charges that the Firm Facilitated Merchant Fraud",
-    "snippet": "Nuvei and its subsidiaries alleged to have knowingly processed for merchants engaged in fraudulent activity Global payment processor Nuvei will pay $4.85 million to settle the Federal Trade Commission’s charges that the…",
-    "contentText": "Nuvei and its subsidiaries alleged to have knowingly processed for merchants engaged in fraudulent activity Global payment processor Nuvei will pay $4.85 million to settle the Federal Trade Commission’s charges that the firm opened and maintained payment processing accounts for merchants that it knew or should have known were engaged in deception, including tech support scams that took millions of dollars from consumers. View Press Release",
-    "publishedAt": "2026-09-04T12:00:00.000Z",
-    "sourceImage": null,
-    "region": "US",
-    "language": "en",
-    "defaultCategory": "Capital Markets",
-    "ai_topic_score": 0,
-    "ai_topic_reasons": [
-      "ai_not_in_title"
-    ],
-    "category": "Other",
-    "primary_category": "Other",
-    "secondary_category": "General AI infrastructure signal",
-    "infrastructure_layer": "Demand",
-    "affected_stakeholders": [
-      "operators"
-    ],
-    "article_type": "Product / Platform Update",
-    "urgency_score": 0.18,
-    "taxonomy_confidence": null,
-    "taxonomy_reasons": [
-      "fallback_taxonomy"
-    ],
-    "direct_ai_infrastructure_relevance": 0,
-    "data_center_relevance": 0,
-    "cloud_capacity_relevance": 0,
-    "semiconductor_relevance": 0,
-    "power_grid_relevance": 0,
-    "cooling_relevance": 0,
-    "capital_markets_relevance": 0,
-    "enterprise_ai_infrastructure_relevance": 0,
-    "infrastructure_relevance_score": 0,
-    "infrastructure_relevance_tier": "archive_only",
-    "infrastructure_relevance_action": "archive_only",
-    "infrastructure_relevance_reasons": [
-      "no_strong_compute_current_infrastructure_match"
-    ],
-    "infrastructure_relevance": {
-      "direct_ai_infrastructure_relevance": 0,
-      "data_center_relevance": 0,
-      "cloud_capacity_relevance": 0,
-      "semiconductor_relevance": 0,
-      "power_grid_relevance": 0,
-      "cooling_relevance": 0,
-      "capital_markets_relevance": 0,
-      "enterprise_ai_infrastructure_relevance": 0,
-      "infrastructure_relevance_score": 0,
-      "infrastructure_relevance_tier": "archive_only",
-      "infrastructure_relevance_action": "archive_only",
-      "infrastructure_relevance_reasons": [
-        "no_strong_compute_current_infrastructure_match"
-      ],
-      "infrastructureRelevanceAction": "archive_only",
-      "articlePagePublished": false,
-      "homepagePublished": false,
-      "archiveOnly": true,
-      "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
-    }
-  },
-  {
-    "id": "848f14c9bfd2aef8",
-    "sourceRegistryId": "gao-reports",
-    "source": "U.S. Government Accountability Office",
-    "url": "https://www.gao.gov/products/gao-26-108208",
-    "title": "Federal Rulemaking: Agencies Continue to Use Good Cause and Other Mechanisms to Forgo Public Comments",
-    "snippet": "What GAO Found During the rulemaking process, agencies are generally required to issue a notice of proposed rulemaking (NPRM) and seek public comment before issuing a final rule. They can expedite the process and forgo…",
-    "contentText": "What GAO Found During the rulemaking process, agencies are generally required to issue a notice of proposed rulemaking (NPRM) and seek public comment before issuing a final rule. They can expedite the process and forgo this requirement when they find good cause that the process would be impracticable, unnecessary, or contrary to the public interest. This can occur, for example, when agencies are responding to natural disasters or public health emergencies. Agencies cited good cause reasons for expedited rulemaking for about 71 percent of major interim final rules GAO reviewed and that agencies published between January 20, 2013, and January 20, 2025. This is consistent with GAO’s 2012 report, which found that 77 percent of major rules issued without an NPRM cited good cause for doing so.…",
-    "publishedAt": "2026-09-04T11:15:33.000Z",
-    "sourceImage": null,
-    "region": "US",
-    "language": "en",
-    "defaultCategory": "Power & Grid",
-    "ai_topic_score": 0,
-    "ai_topic_reasons": [
-      "ai_not_in_title"
-    ],
-    "category": "Power & Grid",
-    "primary_category": "Power & Grid",
-    "secondary_category": "Interconnection and power procurement",
-    "infrastructure_layer": "Power",
-    "affected_stakeholders": [
-      "data center operators",
-      "utilities",
-      "cloud capacity teams",
-      "investors"
-    ],
-    "article_type": "Other",
-    "urgency_score": 0.36,
-    "taxonomy_confidence": 0.61,
-    "taxonomy_reasons": [
-      "power",
-      "grid"
-    ],
-    "direct_ai_infrastructure_relevance": 0,
-    "data_center_relevance": 0,
-    "cloud_capacity_relevance": 0,
-    "semiconductor_relevance": 0,
-    "power_grid_relevance": 0,
-    "cooling_relevance": 0,
-    "capital_markets_relevance": 0,
-    "enterprise_ai_infrastructure_relevance": 0,
-    "infrastructure_relevance_score": 0,
-    "infrastructure_relevance_tier": "archive_only",
-    "infrastructure_relevance_action": "archive_only",
-    "infrastructure_relevance_reasons": [
-      "no_strong_compute_current_infrastructure_match"
-    ],
-    "infrastructure_relevance": {
-      "direct_ai_infrastructure_relevance": 0,
-      "data_center_relevance": 0,
-      "cloud_capacity_relevance": 0,
-      "semiconductor_relevance": 0,
-      "power_grid_relevance": 0,
-      "cooling_relevance": 0,
-      "capital_markets_relevance": 0,
-      "enterprise_ai_infrastructure_relevance": 0,
-      "infrastructure_relevance_score": 0,
-      "infrastructure_relevance_tier": "archive_only",
-      "infrastructure_relevance_action": "archive_only",
-      "infrastructure_relevance_reasons": [
-        "no_strong_compute_current_infrastructure_match"
-      ],
-      "infrastructureRelevanceAction": "archive_only",
-      "articlePagePublished": false,
-      "homepagePublished": false,
-      "archiveOnly": true,
-      "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
-    }
-  },
-  {
-    "id": "9453401ca1c844cc",
-    "sourceRegistryId": "doe-newsroom",
-    "source": "U.S. Department of Energy",
-    "url": "https://www.energy.gov/articles/president-trumps-energy-dominance-agenda-delivering-american-energy-workers",
-    "title": "President Trump’s Energy Dominance Agenda is Delivering for American Energy Workers",
-    "snippet": "Annual Report Highlights Strong Job Growth Across the Energy Sectors Powering American Industry and Economic Growth",
-    "contentText": "Annual Report Highlights Strong Job Growth Across the Energy Sectors Powering American Industry and Economic Growth",
-    "publishedAt": "2026-09-03T19:21:47.000Z",
-    "sourceImage": null,
-    "region": "US",
-    "language": "en",
-    "defaultCategory": "Power & Grid",
-    "ai_topic_score": 0,
-    "ai_topic_reasons": [
-      "ai_not_in_title"
-    ],
-    "category": "Power & Grid",
-    "primary_category": "Power & Grid",
-    "secondary_category": "Interconnection and power procurement",
-    "infrastructure_layer": "Power",
-    "affected_stakeholders": [
-      "data center operators",
-      "utilities",
-      "cloud capacity teams",
-      "investors"
-    ],
-    "article_type": "Other",
-    "urgency_score": 0.36,
-    "taxonomy_confidence": 0.61,
-    "taxonomy_reasons": [
-      "power",
-      "grid"
-    ],
-    "direct_ai_infrastructure_relevance": 0,
-    "data_center_relevance": 0,
-    "cloud_capacity_relevance": 0,
-    "semiconductor_relevance": 0,
-    "power_grid_relevance": 0,
-    "cooling_relevance": 0,
-    "capital_markets_relevance": 0,
-    "enterprise_ai_infrastructure_relevance": 0,
-    "infrastructure_relevance_score": 0,
-    "infrastructure_relevance_tier": "archive_only",
-    "infrastructure_relevance_action": "archive_only",
-    "infrastructure_relevance_reasons": [
-      "no_strong_compute_current_infrastructure_match"
-    ],
-    "infrastructure_relevance": {
-      "direct_ai_infrastructure_relevance": 0,
-      "data_center_relevance": 0,
-      "cloud_capacity_relevance": 0,
-      "semiconductor_relevance": 0,
-      "power_grid_relevance": 0,
-      "cooling_relevance": 0,
-      "capital_markets_relevance": 0,
-      "enterprise_ai_infrastructure_relevance": 0,
-      "infrastructure_relevance_score": 0,
-      "infrastructure_relevance_tier": "archive_only",
-      "infrastructure_relevance_action": "archive_only",
-      "infrastructure_relevance_reasons": [
-        "no_strong_compute_current_infrastructure_match"
-      ],
-      "infrastructureRelevanceAction": "archive_only",
-      "articlePagePublished": false,
-      "homepagePublished": false,
-      "archiveOnly": true,
-      "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
-    }
-  },
-  {
-    "id": "1281e075e49ee626",
-    "sourceRegistryId": "uk-desnz",
-    "source": "UK Department for Energy Security and Net Zero",
-    "url": "https://www.gov.uk/government/news/investment-boost-for-climate-action-and-forest-protection",
-    "title": "Investment boost for climate action and forest protection",
-    "snippet": "The UK has announced its intention to invest £400 million into the Tropical Forests Forever Facility (TFFF).",
-    "contentText": "The UK has announced its intention to invest £400 million into the Tropical Forests Forever Facility (TFFF).",
-    "publishedAt": "2026-09-03T14:00:12.000Z",
-    "sourceImage": null,
-    "region": "EU",
-    "language": "en",
-    "defaultCategory": "Power & Grid",
-    "ai_topic_score": 0,
-    "ai_topic_reasons": [
-      "ai_not_in_title"
-    ],
-    "category": "Power & Grid",
-    "primary_category": "Power & Grid",
-    "secondary_category": "Interconnection and power procurement",
-    "infrastructure_layer": "Power",
-    "affected_stakeholders": [
-      "data center operators",
-      "utilities",
-      "cloud capacity teams",
-      "investors"
-    ],
-    "article_type": "Other",
-    "urgency_score": 0.36,
-    "taxonomy_confidence": 0.61,
-    "taxonomy_reasons": [
-      "power",
-      "grid"
-    ],
-    "direct_ai_infrastructure_relevance": 0,
-    "data_center_relevance": 0,
-    "cloud_capacity_relevance": 0,
-    "semiconductor_relevance": 0,
-    "power_grid_relevance": 0,
-    "cooling_relevance": 0,
-    "capital_markets_relevance": 0,
-    "enterprise_ai_infrastructure_relevance": 0,
-    "infrastructure_relevance_score": 0,
-    "infrastructure_relevance_tier": "archive_only",
-    "infrastructure_relevance_action": "archive_only",
-    "infrastructure_relevance_reasons": [
-      "no_strong_compute_current_infrastructure_match"
-    ],
-    "infrastructure_relevance": {
-      "direct_ai_infrastructure_relevance": 0,
-      "data_center_relevance": 0,
-      "cloud_capacity_relevance": 0,
-      "semiconductor_relevance": 0,
-      "power_grid_relevance": 0,
-      "cooling_relevance": 0,
-      "capital_markets_relevance": 0,
-      "enterprise_ai_infrastructure_relevance": 0,
-      "infrastructure_relevance_score": 0,
-      "infrastructure_relevance_tier": "archive_only",
-      "infrastructure_relevance_action": "archive_only",
-      "infrastructure_relevance_reasons": [
-        "no_strong_compute_current_infrastructure_match"
-      ],
-      "infrastructureRelevanceAction": "archive_only",
-      "articlePagePublished": false,
-      "homepagePublished": false,
-      "archiveOnly": true,
-      "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
-    }
-  },
-  {
-    "id": "3295674ec177dab6",
-    "sourceRegistryId": "ftc-press",
-    "source": "Federal Trade Commission",
-    "url": "https://www.ftc.gov/news-events/news/press-releases/2026/09/ftc-extends-public-comment-proposed-policy-statement-regarding-personalized-pricing",
-    "title": "FTC Extends Public Comment on Proposed Policy Statement Regarding Personalized Pricing",
-    "snippet": "The Federal Trade Commission extended by seven days the public comment period on the proposed enforcement policy statement regarding personalized pricingView Press Release",
-    "contentText": "The Federal Trade Commission extended by seven days the public comment period on the proposed enforcement policy statement regarding personalized pricing View Press Release",
-    "publishedAt": "2026-09-03T12:00:00.000Z",
-    "sourceImage": null,
-    "region": "US",
-    "language": "en",
-    "defaultCategory": "Capital Markets",
-    "ai_topic_score": 0,
-    "ai_topic_reasons": [
-      "ai_not_in_title"
-    ],
-    "category": "Policy & Siting",
-    "primary_category": "Policy & Siting",
-    "secondary_category": "Permitting, regulation, and market access",
-    "infrastructure_layer": "Policy",
-    "affected_stakeholders": [
-      "regulators",
-      "site selectors",
-      "developers",
-      "utilities"
-    ],
-    "article_type": "Policy / Regulation",
-    "urgency_score": 0.18,
-    "taxonomy_confidence": 0.56,
-    "taxonomy_reasons": [
-      "policy"
-    ],
-    "direct_ai_infrastructure_relevance": 0,
-    "data_center_relevance": 0,
-    "cloud_capacity_relevance": 0,
-    "semiconductor_relevance": 0,
-    "power_grid_relevance": 0,
-    "cooling_relevance": 0,
-    "capital_markets_relevance": 0,
-    "enterprise_ai_infrastructure_relevance": 0,
-    "infrastructure_relevance_score": 0,
-    "infrastructure_relevance_tier": "archive_only",
-    "infrastructure_relevance_action": "archive_only",
-    "infrastructure_relevance_reasons": [
-      "no_strong_compute_current_infrastructure_match"
-    ],
-    "infrastructure_relevance": {
-      "direct_ai_infrastructure_relevance": 0,
-      "data_center_relevance": 0,
-      "cloud_capacity_relevance": 0,
-      "semiconductor_relevance": 0,
-      "power_grid_relevance": 0,
-      "cooling_relevance": 0,
-      "capital_markets_relevance": 0,
-      "enterprise_ai_infrastructure_relevance": 0,
-      "infrastructure_relevance_score": 0,
-      "infrastructure_relevance_tier": "archive_only",
-      "infrastructure_relevance_action": "archive_only",
-      "infrastructure_relevance_reasons": [
-        "no_strong_compute_current_infrastructure_match"
-      ],
-      "infrastructureRelevanceAction": "archive_only",
-      "articlePagePublished": false,
-      "homepagePublished": false,
-      "archiveOnly": true,
-      "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
-    }
-  },
-  {
-    "id": "55a22e77ed66a1ed",
-    "sourceRegistryId": "eia-today-in-energy",
-    "source": "U.S. Energy Information Administration",
-    "url": "https://www.eia.gov/todayinenergy/detail.php?id=68064",
-    "title": "U.S. LNG exports rose 23% in the first half of 2026 because of higher capacity",
-    "snippet": "U.S. liquefied natural gas (LNG) exports averaged 17.4 billion cubic feet per day (Bcf/d) in the first six months of the year, 23% more than the same period in 2025, according to our Natural Gas Monthly. In our latest S…",
-    "contentText": "U.S. liquefied natural gas (LNG) exports averaged 17.4 billion cubic feet per day (Bcf/d) in the first six months of the year, 23% more than the same period in 2025, according to our Natural Gas Monthly. In our latest Short-Term Energy Outlook, we estimate U.S. LNG exports will average 17.3 Bcf/d in the second half of 2026 (2H26) before rising to 18.7 Bcf/d in 1H27.",
-    "publishedAt": "2026-09-01T14:00:00.000Z",
-    "sourceImage": null,
-    "region": "APAC",
-    "language": "en",
-    "defaultCategory": "Power & Grid",
-    "ai_topic_score": 0,
-    "ai_topic_reasons": [
-      "ai_not_in_title"
-    ],
-    "category": "Power & Grid",
-    "primary_category": "Power & Grid",
-    "secondary_category": "Interconnection and power procurement",
-    "infrastructure_layer": "Power",
-    "affected_stakeholders": [
-      "data center operators",
-      "utilities",
-      "cloud capacity teams",
-      "investors"
-    ],
-    "article_type": "Capacity Expansion",
-    "urgency_score": 0.44,
-    "taxonomy_confidence": 0.61,
-    "taxonomy_reasons": [
-      "power",
-      "grid"
-    ],
-    "direct_ai_infrastructure_relevance": 0,
-    "data_center_relevance": 0,
-    "cloud_capacity_relevance": 0,
-    "semiconductor_relevance": 0,
-    "power_grid_relevance": 0,
-    "cooling_relevance": 0,
-    "capital_markets_relevance": 0,
-    "enterprise_ai_infrastructure_relevance": 0,
-    "infrastructure_relevance_score": 0,
-    "infrastructure_relevance_tier": "archive_only",
-    "infrastructure_relevance_action": "archive_only",
-    "infrastructure_relevance_reasons": [
-      "no_strong_compute_current_infrastructure_match"
-    ],
-    "infrastructure_relevance": {
-      "direct_ai_infrastructure_relevance": 0,
-      "data_center_relevance": 0,
-      "cloud_capacity_relevance": 0,
-      "semiconductor_relevance": 0,
-      "power_grid_relevance": 0,
-      "cooling_relevance": 0,
-      "capital_markets_relevance": 0,
-      "enterprise_ai_infrastructure_relevance": 0,
-      "infrastructure_relevance_score": 0,
-      "infrastructure_relevance_tier": "archive_only",
-      "infrastructure_relevance_action": "archive_only",
-      "infrastructure_relevance_reasons": [
-        "no_strong_compute_current_infrastructure_match"
-      ],
-      "infrastructureRelevanceAction": "archive_only",
-      "articlePagePublished": false,
-      "homepagePublished": false,
-      "archiveOnly": true,
-      "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
-    }
-  },
-  {
-    "id": "a68b6dfbbce0987d",
-    "sourceRegistryId": "ftc-press",
-    "source": "Federal Trade Commission",
-    "url": "https://www.ftc.gov/news-events/news/press-releases/2026/08/ftc-states-sue-amazon-over-secret-ad-surcharge-scheme",
-    "title": "FTC, States Sue Amazon Over Secret Ad Surcharge Scheme",
-    "snippet": "FTC and 22 state attorneys general allege Amazon concealed unfair charges in its digital advertising auction pricing Today, 22 states joined the Federal Trade Commission in filing suit against Amazon, alleging that the…",
-    "contentText": "FTC and 22 state attorneys general allege Amazon concealed unfair charges in its digital advertising auction pricing Today, 22 states joined the Federal Trade Commission in filing suit against Amazon, alleging that the company engaged in deceptive and unfair practices that secretly inflated prices in its online search advertising auctions. View Press Release",
-    "publishedAt": "2026-08-31T12:00:00.000Z",
-    "sourceImage": null,
-    "region": "US",
-    "language": "en",
-    "defaultCategory": "Capital Markets",
-    "ai_topic_score": 0,
-    "ai_topic_reasons": [
-      "ai_not_in_title"
-    ],
-    "category": "Other",
-    "primary_category": "Other",
-    "secondary_category": "General AI infrastructure signal",
-    "infrastructure_layer": "Demand",
-    "affected_stakeholders": [
-      "operators"
-    ],
-    "article_type": "Product / Platform Update",
-    "urgency_score": 0.18,
-    "taxonomy_confidence": null,
-    "taxonomy_reasons": [
-      "fallback_taxonomy"
     ],
     "direct_ai_infrastructure_relevance": 0,
     "data_center_relevance": 0,
