@@ -144,6 +144,9 @@ export function activeRegistryFeeds(sources = [], now = new Date()) {
       region: source.region || 'Global',
       language: source.language || 'en',
       defaultCategory: source.defaultCategory || 'AI Infrastructure (GPU/Neocloud)',
+      // 'abstract' marks sources whose authorized text is metadata only (arXiv);
+      // the relevance classifier caps such items at the signal-card lane.
+      textScope: String(source.text_scope || '').trim().toLowerCase(),
     }));
 }
 

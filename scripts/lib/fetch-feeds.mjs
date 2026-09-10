@@ -137,6 +137,7 @@ export function parseFeedItem(feed, item, now = new Date()) {
     region: feed.region || 'Global',
     language: feed.language || guessLanguage(`${title} ${rawSnippet}`),
     defaultCategory: feed.defaultCategory || null,
+    ...(feed.textScope ? { source_text_scope: feed.textScope } : {}),
   };
   const infrastructureRelevance = classifyInfrastructureRelevance(baseItem);
   const aiTopic = classifyAiTopicRelevance(baseItem);

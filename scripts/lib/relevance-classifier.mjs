@@ -606,7 +606,12 @@ export function classifyInfrastructureRelevance(article = {}) {
   }
 
   overall = Number(overall.toFixed(3));
-  const tier = classifyTier(overall);
+  // An abstract-only source (arXiv: CC0 metadata, never the e-print) cannot
+  // carry a 4,500-character local memo; the first attempt was quarantined for
+  // unsupported claims. Keep the score for pool ordering, cap the lane.
+  const abstractOnlySource = String(article.source_text_scope || '').trim().toLowerCase() === 'abstract';
+  const uncappedTier = classifyTier(overall);
+  const tier = abstractOnlySource && uncappedTier === 'full_memo' ? 'signal_card' : uncappedTier;
   const route = routeFields(tier);
   const reasons = DIMENSION_KEYS
     .filter((key) => dimensionResults[key] >= 0.22)
@@ -621,6 +626,9 @@ export function classifyInfrastructureRelevance(article = {}) {
   }
   if (KOREAN_SPECULATIVE_MARKET_TERMS.test(sourceText) && !KOREAN_PHYSICAL_INFRA_TERMS.test(sourceText)) {
     reasons.push('korean_market_chatter_without_physical_infrastructure_evidence');
+  }
+  if (tier !== uncappedTier) {
+    reasons.push('abstract_only_source_capped_at_signal_card');
   }
 
   return {

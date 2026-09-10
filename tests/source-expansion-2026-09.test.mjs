@@ -9,6 +9,7 @@ import {
   selectPoolItems,
   textValue,
 } from '../scripts/lib/fetch-feeds.mjs';
+import { classifyInfrastructureRelevance } from '../scripts/lib/relevance-classifier.mjs';
 import { ecPresscornerApiTarget, fetchArticleExtraction } from '../scripts/lib/source-fetch.mjs';
 import { activeRegistryFeeds, loadSourceRegistry } from '../scripts/lib/source-registry.mjs';
 import { sourceTextTargetDecision } from '../scripts/lib/source-text-fetcher.mjs';
@@ -132,6 +133,43 @@ test('an unparseable feed date falls back to the run time instead of throwing', 
     NOW,
   );
   assert.equal(item.publishedAt, NOW.toISOString());
+});
+
+test('abstract-only sources keep their relevance score but are capped at the signal-card lane', () => {
+  // Given: the arXiv item that scored full_memo (0.83) on 2026-09-10 and was then quarantined
+  // because a 1,671-character abstract cannot support a 4,500-character local memo.
+  const article = {
+    title: 'HBFSim: Fast and Faithful Simulation of High-Bandwidth Flash Under Real GPU Execution',
+    snippet: 'Serving a large language model (LLM) is limited by memory capacity. High-Bandwidth Flash (HBF) stacks NAND flash inside the accelerator package, one tier below HBM.',
+    articleText: 'Serving a large language model (LLM) is limited by memory capacity. High-Bandwidth Flash (HBF) stacks NAND flash inside the accelerator package, one tier below high-bandwidth memory, so an NVIDIA GPU can hold more weights per device. HBFSim simulates the device under real inference workloads on a GPU cluster and reports thermal and datacenter power effects.',
+    source: 'arXiv',
+    url: 'https://arxiv.org/abs/2609.09800',
+  };
+  const uncapped = classifyInfrastructureRelevance(article);
+  const capped = classifyInfrastructureRelevance({ ...article, source_text_scope: 'abstract' });
+
+  assert.equal(uncapped.infrastructure_relevance_tier, 'full_memo');
+  assert.equal(capped.infrastructure_relevance_tier, 'signal_card');
+  assert.equal(capped.infrastructure_relevance_score, uncapped.infrastructure_relevance_score);
+  assert.equal(capped.infrastructure_relevance_action, 'publish_signal_card_only');
+  assert.equal(capped.articlePagePublished, false);
+  assert.equal(capped.homepagePublished, true);
+  assert.ok(capped.infrastructure_relevance_reasons.includes('abstract_only_source_capped_at_signal_card'));
+
+  // And: the feed object carries the scope so parseFeedItem stamps it on every item.
+  const item = parseFeedItem(
+    { sourceRegistryId: 'arxiv-cs-ar', source: 'arXiv', url: 'https://rss.arxiv.org/rss/cs.AR', textScope: 'abstract' },
+    { title: article.title, link: article.url, contentSnippet: article.snippet, content: article.articleText, isoDate: '2026-09-10T04:00:00.000Z' },
+    NOW,
+  );
+  assert.equal(item.source_text_scope, 'abstract');
+  assert.notEqual(item.infrastructure_relevance_tier, 'full_memo');
+  const plain = parseFeedItem(
+    { sourceRegistryId: 'nsf-news', source: 'NSF', url: 'https://www.nsf.gov/rss/rss_www_news.xml' },
+    { title: 'Undecorated item', link: 'https://www.nsf.gov/news/item', isoDate: '2026-09-10T04:00:00.000Z' },
+    NOW,
+  );
+  assert.equal(Object.hasOwn(plain, 'source_text_scope'), false);
 });
 
 test('a source whose best item is off-beat does not reserve a pool slot ahead of on-beat items', () => {
@@ -278,6 +316,11 @@ test('the 2026-09 expansion sources are text-authorized and accept their real ar
   const arxiv = sources.filter((source) => source.id.startsWith('arxiv-'));
   assert.equal(arxiv.length, 3);
   assert.ok(arxiv.every((source) => source.name === 'arXiv'));
+  // arXiv authorizes metadata only, so its feeds are abstract-scoped and never produce a local memo.
+  assert.ok(arxiv.every((source) => source.text_scope === 'abstract'));
+  const feeds = activeRegistryFeeds(sources, NOW);
+  assert.ok(feeds.filter((feed) => feed.sourceRegistryId.startsWith('arxiv-')).every((feed) => feed.textScope === 'abstract'));
+  assert.ok(feeds.filter((feed) => !feed.sourceRegistryId.startsWith('arxiv-')).every((feed) => feed.textScope === ''));
 
   // Link-only candidates never authorize text.
   for (const source of sources.filter((entry) => entry.text_use_basis === 'unreviewed')) {
