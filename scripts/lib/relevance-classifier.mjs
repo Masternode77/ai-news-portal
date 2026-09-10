@@ -468,6 +468,25 @@ function buildArticleText(article = {}) {
   ].filter(Boolean).join(' ');
 }
 
+// The docket guard reads source evidence only: the title, the extracted body
+// (or, before extraction, the feed snippet) and the source metadata. The
+// generated summary and insight are left out so an enrichment phrase such as
+// "data center operators should watch this filing" cannot release the cap.
+function docketEvidenceText(article = {}) {
+  const body = [
+    article.contentText,
+    article.articleText,
+    article.cleaned_source_text,
+    article.fullArticleText,
+  ].filter(Boolean).join(' ');
+  return normalizeText([
+    article.title,
+    body || article.snippet,
+    article.source,
+    article.url,
+  ].filter(Boolean).join(' '));
+}
+
 function isDocketSource(article = {}) {
   const registryId = String(article.sourceRegistryId || '').trim().toLowerCase();
   if (DOCKET_REGISTRY_PREFIXES.some((prefix) => registryId.startsWith(prefix))) return true;
@@ -494,11 +513,7 @@ function hasComputeContext(text = '') {
 // Shared with the public lane router so a stored score cannot keep a
 // procedural docket notice on the homepage once the guard exists.
 export function proceduralDocketWithoutComputeContext(article = {}) {
-  const text = normalizeText([
-    buildArticleText(article),
-    article.cleaned_source_text,
-    article.fullArticleText,
-  ].filter(Boolean).join(' '));
+  const text = docketEvidenceText(article);
   const titleText = normalizeText(article.title || '');
   if (!isProceduralDocket(article, titleText, text)) return false;
   return !hasComputeContext(text);
@@ -663,7 +678,7 @@ export function classifyInfrastructureRelevance(article = {}) {
   const hasWeakAiAdjacent = hasAi && hasAny(text, WEAK_AI_ADJACENT_TERMS);
   const hardArchiveTopic = hasHardArchiveTopic(text);
   const hasAdjacentOnlyTopic = hasAny(text, ADJACENT_ONLY_TOPICS);
-  const proceduralDocket = isProceduralDocket(article, titleText, text) && !hasComputeContext(text);
+  const proceduralDocket = proceduralDocketWithoutComputeContext(article);
 
   if (hasAi && hasInfra) {
     dimensionResults.direct_ai_infrastructure_relevance = Math.min(

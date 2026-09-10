@@ -183,7 +183,9 @@ these are in the registry.
   carries an unambiguous compute term ("AI", "artificial intelligence", "GPU", "data center",
   "colocation", "hyperscale", "semiconductor", "HPC", "large load", co-location, servers, digital
   infrastructure, crypto mining; a bare "training", "inference", "accelerator" or "Colo." does
-  not count), and `routeStrictInfrastructureRelevance()` archives it whatever its stored score, so the public
+  not count) in its source evidence (title, extracted body or feed snippet, source metadata;
+  never the generated summary or insight), and `routeStrictInfrastructureRelevance()` archives it
+  whatever its stored score, so the public
   content tier pass hides a record published before the guard existed. The guard only fires for
   docket sources (`federalregister.gov`, `ferc.gov`, `regulations.gov`, `govinfo.gov`, or a
   `federal-register-*`/`ferc-*` registry row) and only on a formulaic notice title ("Notice of

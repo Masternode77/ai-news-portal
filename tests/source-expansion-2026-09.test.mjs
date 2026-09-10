@@ -499,6 +499,42 @@ test('the docket guard releases notices that carry compute or large-load context
     assert.equal(routeStrictInfrastructureRelevance({ ...decorated, infrastructure_relevance_score: 0.627 }).visibility, 'archive', filler);
   }
 
+  // Generated copy never releases the cap: only the title, the extracted body
+  // (or the feed snippet before extraction) and the source metadata count.
+  const enrichedNotice = {
+    ...DOCKET_NOTICES[1],
+    sourceRegistryId: 'federal-register-doe',
+    source: 'Federal Register',
+    url: 'https://www.federalregister.gov/documents/2026/09/10/2026-18460/agency-information-collection-extension',
+    snippet: 'Data center operators and AI campus developers should watch this filing.',
+    summary: 'Data center operators and AI campus developers should watch this filing.',
+    insight: 'Hyperscalers building GPU clusters will feel this information collection first.',
+    infrastructure_relevance_score: 0.66,
+  };
+  assert.equal(proceduralDocketWithoutComputeContext(enrichedNotice), true);
+  assert.equal(classifyInfrastructureRelevance(enrichedNotice).infrastructure_relevance_tier, 'archive_only');
+  assert.equal(routeStrictInfrastructureRelevance(enrichedNotice).visibility, 'archive');
+
+  // The same notice is released when the source body itself names the load.
+  const sourceNamesLoad = {
+    ...enrichedNotice,
+    summary: 'A routine paperwork extension.',
+    insight: '',
+    contentText: `${DOCKET_NOTICES[1].contentText} The collection adds a schedule for large load customers above 100 MW, including data centers.`,
+  };
+  assert.equal(proceduralDocketWithoutComputeContext(sourceNamesLoad), false);
+
+  // Before extraction only the feed snippet stands in for the body.
+  const feedOnlyNotice = {
+    sourceRegistryId: 'federal-register-ferc',
+    source: 'Federal Register',
+    url: 'https://www.federalregister.gov/documents/2026/09/10/2026-18470/notice-of-application',
+    title: 'Notice of Application Accepted for Filing and Soliciting Comments',
+    snippet: 'Application for a 400 MW large load interconnection serving a data center campus.',
+  };
+  assert.equal(proceduralDocketWithoutComputeContext(feedOnlyNotice), false);
+  assert.equal(proceduralDocketWithoutComputeContext({ ...feedOnlyNotice, snippet: 'Application to amend the hydro license for the 40 MW project.' }), true);
+
   // A plain grid item without a docket pattern is untouched by the guard.
   const gridOrder = {
     source: 'U.S. Department of Energy',
