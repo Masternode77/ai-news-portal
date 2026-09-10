@@ -20,7 +20,7 @@ import {
   hydrateExpertLens,
   mergeArticleRecords,
 } from './lib/expert-lens.mjs';
-import { fetchNewsPoolResult } from './lib/fetch-feeds.mjs';
+import { fetchNewsPoolResult, hydrateSourceTextScope } from './lib/fetch-feeds.mjs';
 import { ensureArticleImage, needsImageRefresh } from './lib/image-generator.mjs';
 import { splitByExpertInsightGate } from './lib/expert-insight-engine.mjs';
 import {
@@ -169,7 +169,7 @@ function sortForPipelineVisibility(articles = []) {
 }
 
 export function authorizedTextFallbackPool(records = [], sources = [], now = new Date()) {
-  return textAuthorizedRecords(records, sources, now);
+  return hydrateSourceTextScope(textAuthorizedRecords(records, sources, now), sources);
 }
 
 // Column candidates span the whole recent corpus, not just the 30-item

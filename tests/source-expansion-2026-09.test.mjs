@@ -3,12 +3,14 @@ import test from 'node:test';
 import Parser from 'rss-parser';
 import {
   httpsItemUrl,
+  hydrateSourceTextScope,
   parseFeedItem,
   publishedAtIso,
   repairFeedLink,
   selectPoolItems,
   textValue,
 } from '../scripts/lib/fetch-feeds.mjs';
+import { authorizedTextFallbackPool } from '../scripts/pipeline.mjs';
 import { classifyInfrastructureRelevance } from '../scripts/lib/relevance-classifier.mjs';
 import { ecPresscornerApiTarget, fetchArticleExtraction } from '../scripts/lib/source-fetch.mjs';
 import { activeRegistryFeeds, loadSourceRegistry } from '../scripts/lib/source-registry.mjs';
@@ -170,6 +172,50 @@ test('abstract-only sources keep their relevance score but are capped at the sig
     NOW,
   );
   assert.equal(Object.hasOwn(plain, 'source_text_scope'), false);
+});
+
+test('cached and legacy fallback pools re-stamp the registry text scope and reclassify', () => {
+  // Given: a cached arXiv record classified before its registry row carried text_scope,
+  // next to a DOE record whose row has no scope.
+  const arxiv = authorizedSource('arxiv-cs-ar', 'arxiv.org', { name: 'arXiv', text_scope: 'abstract' });
+  const doe = authorizedSource('doe-newsroom', 'energy.gov', { name: 'U.S. Department of Energy' });
+  const cachedArxiv = {
+    id: 'cached-arxiv',
+    sourceRegistryId: 'arxiv-cs-ar',
+    source: 'arXiv',
+    url: 'https://arxiv.org/abs/2609.09800',
+    title: 'HBFSim: Fast and Faithful Simulation of High-Bandwidth Flash Under Real GPU Execution',
+    snippet: 'Serving a large language model (LLM) is limited by memory capacity. High-Bandwidth Flash (HBF) stacks NAND flash inside the accelerator package, one tier below HBM.',
+    contentText: 'Serving a large language model (LLM) is limited by memory capacity. High-Bandwidth Flash (HBF) stacks NAND flash inside the accelerator package, one tier below high-bandwidth memory, so an NVIDIA GPU can hold more weights per device. HBFSim simulates the device under real inference workloads on a GPU cluster and reports thermal and datacenter power effects.',
+    publishedAt: '2026-09-10T04:00:00.000Z',
+    infrastructure_relevance_tier: 'full_memo',
+    infrastructure_relevance_action: 'generate_full_memo',
+    infrastructure_relevance: { infrastructure_relevance_score: 0.826, infrastructure_relevance_tier: 'full_memo', infrastructure_relevance_action: 'generate_full_memo' },
+  };
+  const cachedDoe = {
+    id: 'cached-doe',
+    sourceRegistryId: 'doe-newsroom',
+    source: 'U.S. Department of Energy',
+    url: 'https://www.energy.gov/articles/loan',
+    title: 'Energy Department closes loan to restart nuclear plant for data center load',
+    publishedAt: '2026-09-08T11:30:00.000Z',
+    infrastructure_relevance_tier: 'full_memo',
+    infrastructure_relevance: { infrastructure_relevance_tier: 'full_memo' },
+  };
+
+  // When: the fallback pool crosses the production authorization seam.
+  const pool = authorizedTextFallbackPool([cachedArxiv, cachedDoe], [arxiv, doe], NOW);
+
+  // Then: the arXiv record is capped everywhere the router looks, and the DOE record is untouched.
+  const hydrated = pool.find((item) => item.id === 'cached-arxiv');
+  assert.equal(hydrated.source_text_scope, 'abstract');
+  assert.equal(hydrated.infrastructure_relevance_tier, 'signal_card');
+  assert.equal(hydrated.infrastructure_relevance_action, 'publish_signal_card_only');
+  assert.equal(hydrated.infrastructure_relevance.infrastructure_relevance_tier, 'signal_card');
+  assert.equal(hydrated.articlePagePublished, false);
+  assert.equal(pool.find((item) => item.id === 'cached-doe'), cachedDoe);
+  // And: an already-stamped record is returned as-is.
+  assert.equal(hydrateSourceTextScope([hydrated], [arxiv])[0], hydrated);
 });
 
 test('a source whose best item is off-beat does not reserve a pool slot ahead of on-beat items', () => {

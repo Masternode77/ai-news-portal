@@ -155,7 +155,10 @@ these are in the registry.
   for pool ordering. The first forced run (2026-09-10, run #3199) scored an arXiv abstract
   `full_memo` 0.83, generated a memo from 1,671 characters of source, and the final integrity gate
   quarantined it (`visible_body_below_4500`, `unsupported_claims:7`); as a signal card the same
-  item publishes as a linked brief instead of costing a generation slot.
+  item publishes as a linked brief instead of costing a generation slot. Cached and legacy
+  fallback pools (`PIPELINE_USE_EXISTING_POOL`, live-fetch failure) are re-stamped from the
+  registry and reclassified by `hydrateSourceTextScope()`, so records written before the field
+  existed cannot slip back into long-form generation.
 - `parseFeedItem()` also flattens markup-wrapped feed fields (`textValue()`): the same run failed
   the ACER feed with "(item.title || '').trim is not a function" because every ACER title is an
   anchor element, which rss-parser returns as an object.

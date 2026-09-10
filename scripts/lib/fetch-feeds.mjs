@@ -205,6 +205,43 @@ function isFresh(item, now) {
   return Number.isFinite(stamp) && now - stamp <= POOL_MAX_AGE_DAYS * 86_400_000;
 }
 
+function registrySourceFor(record = {}, sources = []) {
+  const id = String(record.sourceRegistryId || '').trim().toLowerCase();
+  if (id) {
+    const byId = sources.find((source) => String(source.id || '').trim().toLowerCase() === id);
+    if (byId) return byId;
+  }
+  const name = String(record.source || '').trim().toLowerCase();
+  return sources.find((source) => String(source.name || '').trim().toLowerCase() === name) || null;
+}
+
+// Cached and legacy pool records were classified before their registry row
+// carried text_scope (or by an older build), so a fallback run would still
+// route an abstract-only item to long-form generation. Re-stamp the scope from
+// the registry and reclassify so the cap applies on every acquisition path.
+export function hydrateSourceTextScope(records = [], sources = []) {
+  return records.map((record) => {
+    const source = registrySourceFor(record, sources);
+    const scope = String(source?.text_scope || '').trim().toLowerCase();
+    if (!scope || record.source_text_scope === scope) return record;
+    const next = { ...record, source_text_scope: scope };
+    const relevance = classifyInfrastructureRelevance(next);
+    return {
+      ...next,
+      infrastructure_relevance_score: relevance.infrastructure_relevance_score,
+      infrastructure_relevance_tier: relevance.infrastructure_relevance_tier,
+      infrastructure_relevance_action: relevance.infrastructure_relevance_action,
+      infrastructure_relevance_reasons: relevance.infrastructure_relevance_reasons,
+      infrastructureRelevanceAction: relevance.infrastructureRelevanceAction,
+      articlePagePublished: relevance.articlePagePublished,
+      homepagePublished: relevance.homepagePublished,
+      archiveOnly: relevance.archiveOnly,
+      archiveOnlyReason: relevance.archiveOnlyReason,
+      infrastructure_relevance: relevance,
+    };
+  });
+}
+
 // A source only reserves its representation slot with an item that is at
 // least signal-card relevant. An off-beat top item (hydro licence notices,
 // enforcement actions, proclamations) is left to the relevance-ordered pass,

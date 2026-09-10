@@ -61,7 +61,7 @@ Feed item extraction happens in `scripts/lib/fetch-feeds.mjs`:
 - `stableArticleId()` hashes normalized URL plus canonicalized title.
 - `firstImage()` checks enclosure images, `media:content`, then the first `<img>` in feed content.
 - RSS content is stripped and truncated into `snippet` and `contentText`.
-- `parseFeedItem()` also attaches a preliminary infrastructure relevance score from `scripts/lib/relevance-classifier.mjs` using RSS title/snippet/body fields. A registry row with `text_scope: abstract` (arXiv, whose authorized text is CC0 metadata only) reaches the item as `source_text_scope`, and the classifier caps such items at the signal-card lane because an abstract cannot support the 4,500-character local memo contract.
+- `parseFeedItem()` also attaches a preliminary infrastructure relevance score from `scripts/lib/relevance-classifier.mjs` using RSS title/snippet/body fields. A registry row with `text_scope: abstract` (arXiv, whose authorized text is CC0 metadata only) reaches the item as `source_text_scope`, and the classifier caps such items at the signal-card lane because an abstract cannot support the 4,500-character local memo contract. `authorizedTextFallbackPool()` re-stamps that scope from the registry and reclassifies cached or legacy pool records (`hydrateSourceTextScope()`), so the cap also holds when a run falls back to `news-pool.json` or uses `PIPELINE_USE_EXISTING_POOL`.
 
 Full article excerpt extraction happens in `scripts/lib/source-fetch.mjs`:
 
