@@ -837,7 +837,8 @@
     "13ad2522a8e75d11",
     "a9993fb180f7704f",
     "7b9198007713e225",
-    "6dcf0d40dfe57b49"
+    "6dcf0d40dfe57b49",
+    "b97c0e642b65b101"
   ],
   "dayPlans": {
     "2026-03-24": {
@@ -45112,385 +45113,97 @@
     "2026-09-12": {
       "date": "2026-09-12",
       "createdAt": "2026-09-11T18:18:20.588Z",
-      "refreshedAt": "2026-09-11T18:18:20.588Z",
+      "refreshedAt": "2026-09-12T01:04:18.786Z",
       "candidateWindowHours": 24,
       "curatedItems": [
         {
-          "id": "7b9198007713e225",
-          "sourceRegistryId": "arxiv-cs-pf",
-          "source": "arXiv",
-          "url": "https://arxiv.org/abs/2609.10549",
-          "title": "Compass: Dissecting Communication and Computation Operators for Efficient LLM Training",
-          "snippet": "arXiv:2609.10549v1 Announce Type: new Abstract: Overlapping communication and computation operators is a common practice to hide communication overheads, accelerating large language models (LLMs) training on GPU cluster…",
-          "contentText": "arXiv:2609.10549v1 Announce Type: new Abstract: Overlapping communication and computation operators is a common practice to hide communication overheads, accelerating large language models (LLMs) training on GPU clusters. Existing systems achieve this through either intra-operator fusion (IntraFusion), which packs operators into a single large kernel, or inter-operator decomposition (InterDecom), which splits a tensor into multiple parts for pipelined execution. However, current IntraFusion methods underutilize network topology, causing suboptimal bandwidth usage on multi-GPU systems, while InterDecom struggles to determine the optimal number of decomposed parts for peak performance. To address these issues, we introduce Compass, which employs systematic optimization and comprehensive mod…",
-          "publishedAt": "2026-09-11T04:00:00.000Z",
+          "id": "b97c0e642b65b101",
+          "sourceRegistryId": "nrc-news",
+          "source": "U.S. Nuclear Regulatory Commission",
+          "url": "https://www.nrc.gov/sites/default/files/cdn/doc-collection-news/2026/26-077.pdf",
+          "title": "NRC Proposes Broad Overhaul of Nuclear Reactor Regulations",
+          "snippet": "",
+          "contentText": "",
+          "publishedAt": "2026-09-11T08:00:00.000Z",
           "sourceImage": null,
           "region": "US",
           "language": "en",
-          "defaultCategory": "AI Infrastructure",
-          "source_text_scope": "abstract",
-          "ai_topic_score": 1,
+          "defaultCategory": "Power & Grid",
+          "ai_topic_score": 0,
           "ai_topic_reasons": [
-            "large language models",
-            "llm",
-            "llms",
-            "gpu"
+            "ai_not_in_title"
           ],
-          "category": "AI Infrastructure",
-          "primary_category": "AI Infrastructure",
-          "secondary_category": "GPU clusters and deployment readiness",
-          "infrastructure_layer": "Compute",
-          "affected_stakeholders": [
-            "operators",
-            "hyperscalers",
-            "cloud buyers",
-            "investors"
-          ],
-          "article_type": "Other",
-          "urgency_score": 0.43,
-          "taxonomy_confidence": 0.77,
-          "taxonomy_reasons": [
-            "ai infrastructure",
-            "gpu cluster"
-          ],
-          "direct_ai_infrastructure_relevance": 1,
-          "data_center_relevance": 0,
-          "cloud_capacity_relevance": 0,
-          "semiconductor_relevance": 0.22,
-          "power_grid_relevance": 0,
-          "cooling_relevance": 0,
-          "capital_markets_relevance": 0,
-          "enterprise_ai_infrastructure_relevance": 0,
-          "infrastructure_relevance_score": 0.778,
-          "infrastructure_relevance_tier": "signal_card",
-          "infrastructure_relevance_action": "publish_signal_card_only",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(gpu cluster, gpu clusters)",
-            "semiconductor_relevance:0.22(gpu)",
-            "abstract_only_source_capped_at_signal_card"
-          ],
-          "infrastructure_relevance": {
-            "direct_ai_infrastructure_relevance": 1,
-            "data_center_relevance": 0,
-            "cloud_capacity_relevance": 0,
-            "semiconductor_relevance": 0.22,
-            "power_grid_relevance": 0,
-            "cooling_relevance": 0,
-            "capital_markets_relevance": 0,
-            "enterprise_ai_infrastructure_relevance": 0,
-            "infrastructure_relevance_score": 0.778,
-            "infrastructure_relevance_tier": "signal_card",
-            "infrastructure_relevance_action": "publish_signal_card_only",
-            "infrastructure_relevance_reasons": [
-              "direct_ai_infrastructure_relevance:1.00(gpu cluster, gpu clusters)",
-              "semiconductor_relevance:0.22(gpu)",
-              "abstract_only_source_capped_at_signal_card"
-            ],
-            "infrastructureRelevanceAction": "publish_signal_card_only",
-            "articlePagePublished": false,
-            "homepagePublished": true,
-            "archiveOnly": false,
-            "archiveOnlyReason": null
-          },
-          "score": 61
-        },
-        {
-          "id": "6dcf0d40dfe57b49",
-          "sourceRegistryId": "arxiv-cs-dc",
-          "source": "arXiv",
-          "url": "https://arxiv.org/abs/2609.10812",
-          "title": "ExaServe: Large-Scale LLM Serving on Exascale HPC Systems",
-          "snippet": "arXiv:2609.10812v1 Announce Type: new Abstract: Cloud-native LLM serving frameworks have made deployment routine in data centers, yet deploying them on leadership-class supercomputers remains an engineering challenge re…",
-          "contentText": "arXiv:2609.10812v1 Announce Type: new Abstract: Cloud-native LLM serving frameworks have made deployment routine in data centers, yet deploying them on leadership-class supercomputers remains an engineering challenge requiring scheduler integration, MPI launch, accelerator selection, node-local weight staging, and platform-specific patches. We present \\textit{ExaServe}, a pip-installable framework that transforms a declarative YAML specification into a reproducible large-scale LLM serving deployment. Using ExaServe, we deploy LLM serving on ALCF Aurora from 1 to 256 nodes (3072 vLLM replicas). Non-streaming inference scales nearly linearly to 256 nodes, reaching 27.1\\,k requests/s (3.8\\,M tokens/s). Token streaming scales differently: a centralized proxy plateaus at $\\sim$4.7\\,k requests/…",
-          "publishedAt": "2026-09-11T04:00:00.000Z",
-          "sourceImage": null,
-          "region": "US",
-          "language": "en",
-          "defaultCategory": "AI Infrastructure",
-          "source_text_scope": "abstract",
-          "ai_topic_score": 0.966,
-          "ai_topic_reasons": [
-            "llm",
-            "inference",
-            "accelerator"
-          ],
-          "category": "AI Infrastructure",
-          "primary_category": "AI Infrastructure",
-          "secondary_category": "GPU clusters and deployment readiness",
-          "infrastructure_layer": "Compute",
-          "affected_stakeholders": [
-            "operators",
-            "hyperscalers",
-            "cloud buyers",
-            "investors"
-          ],
-          "article_type": "Product / Platform Update",
-          "urgency_score": 0.45,
-          "taxonomy_confidence": 0.76,
-          "taxonomy_reasons": [
-            "ai infrastructure",
-            "hpc"
-          ],
-          "direct_ai_infrastructure_relevance": 0.78,
-          "data_center_relevance": 0.42,
-          "cloud_capacity_relevance": 0,
-          "semiconductor_relevance": 0.22,
-          "power_grid_relevance": 0,
-          "cooling_relevance": 0,
-          "capital_markets_relevance": 0,
-          "enterprise_ai_infrastructure_relevance": 0,
-          "infrastructure_relevance_score": 0.73,
-          "infrastructure_relevance_tier": "signal_card",
-          "infrastructure_relevance_action": "publish_signal_card_only",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:0.78(hpc)",
-            "data_center_relevance:0.42(data centers)",
-            "semiconductor_relevance:0.22(accelerator)"
-          ],
-          "infrastructure_relevance": {
-            "direct_ai_infrastructure_relevance": 0.78,
-            "data_center_relevance": 0.42,
-            "cloud_capacity_relevance": 0,
-            "semiconductor_relevance": 0.22,
-            "power_grid_relevance": 0,
-            "cooling_relevance": 0,
-            "capital_markets_relevance": 0,
-            "enterprise_ai_infrastructure_relevance": 0,
-            "infrastructure_relevance_score": 0.73,
-            "infrastructure_relevance_tier": "signal_card",
-            "infrastructure_relevance_action": "publish_signal_card_only",
-            "infrastructure_relevance_reasons": [
-              "direct_ai_infrastructure_relevance:0.78(hpc)",
-              "data_center_relevance:0.42(data centers)",
-              "semiconductor_relevance:0.22(accelerator)"
-            ],
-            "infrastructureRelevanceAction": "publish_signal_card_only",
-            "articlePagePublished": false,
-            "homepagePublished": true,
-            "archiveOnly": false,
-            "archiveOnlyReason": null
-          },
-          "score": 55
-        },
-        {
-          "id": "c8646761ef4d0c56",
-          "sourceRegistryId": "arxiv-cs-ar",
-          "source": "arXiv",
-          "url": "https://arxiv.org/abs/2609.11906",
-          "title": "AccelForge: Comprehensive Modeling and Co-Design Framework for AI Accelerators",
-          "snippet": "arXiv:2609.11906v1 Announce Type: new Abstract: Tensor algebra workloads, of which deep neural networks are prominent examples, are energy-intensive workloads in modern datacenter and edge deployments, making accelerato…",
-          "contentText": "arXiv:2609.11906v1 Announce Type: new Abstract: Tensor algebra workloads, of which deep neural networks are prominent examples, are energy-intensive workloads in modern datacenter and edge deployments, making accelerators necessary to achieve energy efficiency and high throughput. To quickly evaluate and iterate on accelerator designs, we need an accelerator modeling framework that captures salient attributes of devices, circuits, architectures, workloads, as well as optimizing the mapping of the workload onto the hardware. In this paper, we introduce AccelForge, which improves upon existing accelerator modeling frameworks in capabilities, speed, and ease-of-use. AccelForge unifies and multiple works into one framework, and it includes (1) composable user-defined and user-modifiable model…",
-          "publishedAt": "2026-09-11T04:00:00.000Z",
-          "sourceImage": null,
-          "region": "US",
-          "language": "en",
-          "defaultCategory": "Semiconductors",
-          "source_text_scope": "abstract",
-          "ai_topic_score": 0.713,
-          "ai_topic_reasons": [
-            "accelerator",
-            "accelerators",
-            "ai"
-          ],
-          "category": "Data Centers",
-          "primary_category": "Data Centers",
-          "secondary_category": "Campus development and colocation capacity",
-          "infrastructure_layer": "Facility",
+          "category": "Power & Grid",
+          "primary_category": "Power & Grid",
+          "secondary_category": "Interconnection and power procurement",
+          "infrastructure_layer": "Power",
           "affected_stakeholders": [
             "data center operators",
-            "developers",
-            "site selectors",
+            "utilities",
+            "cloud capacity teams",
             "investors"
           ],
           "article_type": "Other",
-          "urgency_score": 0.41,
-          "taxonomy_confidence": 0.6,
+          "urgency_score": 0.44,
+          "taxonomy_confidence": 0.77,
           "taxonomy_reasons": [
-            "datacenter"
+            "power",
+            "grid",
+            "nuclear"
           ],
-          "direct_ai_infrastructure_relevance": 0.78,
-          "data_center_relevance": 0.42,
+          "direct_ai_infrastructure_relevance": 0,
+          "data_center_relevance": 0,
           "cloud_capacity_relevance": 0,
-          "semiconductor_relevance": 0.22,
-          "power_grid_relevance": 0,
+          "semiconductor_relevance": 0,
+          "power_grid_relevance": 0.351,
           "cooling_relevance": 0,
           "capital_markets_relevance": 0,
           "enterprise_ai_infrastructure_relevance": 0,
-          "infrastructure_relevance_score": 0.73,
-          "infrastructure_relevance_tier": "signal_card",
-          "infrastructure_relevance_action": "publish_signal_card_only",
+          "infrastructure_relevance_score": 0.239,
+          "infrastructure_relevance_tier": "archive_only",
+          "infrastructure_relevance_action": "archive_only",
           "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:0.78",
-            "data_center_relevance:0.42(datacenter)",
-            "semiconductor_relevance:0.22(accelerator)"
+            "power_grid_relevance:0.35(nuclear)"
           ],
           "infrastructure_relevance": {
-            "direct_ai_infrastructure_relevance": 0.78,
-            "data_center_relevance": 0.42,
+            "direct_ai_infrastructure_relevance": 0,
+            "data_center_relevance": 0,
             "cloud_capacity_relevance": 0,
-            "semiconductor_relevance": 0.22,
-            "power_grid_relevance": 0,
+            "semiconductor_relevance": 0,
+            "power_grid_relevance": 0.351,
             "cooling_relevance": 0,
             "capital_markets_relevance": 0,
             "enterprise_ai_infrastructure_relevance": 0,
-            "infrastructure_relevance_score": 0.73,
-            "infrastructure_relevance_tier": "signal_card",
-            "infrastructure_relevance_action": "publish_signal_card_only",
+            "infrastructure_relevance_score": 0.239,
+            "infrastructure_relevance_tier": "archive_only",
+            "infrastructure_relevance_action": "archive_only",
             "infrastructure_relevance_reasons": [
-              "direct_ai_infrastructure_relevance:0.78",
-              "data_center_relevance:0.42(datacenter)",
-              "semiconductor_relevance:0.22(accelerator)"
+              "power_grid_relevance:0.35(nuclear)"
             ],
-            "infrastructureRelevanceAction": "publish_signal_card_only",
+            "infrastructureRelevanceAction": "archive_only",
             "articlePagePublished": false,
-            "homepagePublished": true,
-            "archiveOnly": false,
-            "archiveOnlyReason": null
+            "homepagePublished": false,
+            "archiveOnly": true,
+            "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
           },
-          "score": 51
+          "score": 30
         }
       ],
       "curatedIds": [
-        "7b9198007713e225",
-        "6dcf0d40dfe57b49",
-        "c8646761ef4d0c56"
+        "b97c0e642b65b101"
       ],
       "publishedIds": [
         "7b9198007713e225",
-        "6dcf0d40dfe57b49"
+        "6dcf0d40dfe57b49",
+        "b97c0e642b65b101"
       ],
       "slotPublications": {
-        "0": true
+        "0": true,
+        "1": true
       }
     }
   },
   "runHistory": [
-    {
-      "at": "2026-08-03T10:51:01.423Z",
-      "day": "2026-08-03",
-      "slot": 2,
-      "publishedCount": 0,
-      "signalCardCount": 1,
-      "archiveOnlyCount": 0,
-      "repetitionBlockedCount": 1,
-      "publishedIds": [],
-      "processedIds": [
-        "01f53af419a55a0b",
-        "336736c8b9f9dd0d"
-      ],
-      "blockedCount": 1,
-      "blockedItems": [
-        {
-          "id": "01f53af419a55a0b",
-          "title": "Hideo Kojima unveils a Death Stranding 2-themed wireless CD player — Limited edition device costs ~$160, comes with Bluetooth 5.3 & exclusive artwork",
-          "infrastructure_relevance_score": 0.967,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "cloud_capacity_relevance:0.32(hyperscalers)",
-            "semiconductor_relevance:0.22(gpu)",
-            "power_grid_relevance:0.76(power, grid, nuclear)",
-            "capital_markets_relevance:0.28(capex)"
-          ],
-          "extraction_quality_score": 1,
-          "source_domain_adapter": "generic",
-          "content_length": 1719,
-          "boilerplate_ratio": 0,
-          "repetition_blocked": false,
-          "repetition_block_reasons": [],
-          "repetition_check": null,
-          "expert_insight_complete": false,
-          "expert_insight_missing_fields": [
-            "named_companies"
-          ],
-          "reason": "expert_insight_missing_fields named_companies"
-        }
-      ],
-      "repetitionBlockedItems": [
-        {
-          "id": "336736c8b9f9dd0d",
-          "title": "Grab 32GB of Corsair DDR5 for an effective $230 right now in this 9950X3D combo deal —Newegg RAM bundle ships with 16-core AMD X3D chip alongside an MSI X870E board and a free 240mm cooler for $1,308",
-          "infrastructure_relevance_score": 0.914,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "cloud_capacity_relevance:0.32(hyperscalers)",
-            "semiconductor_relevance:0.52(amd, gpu)",
-            "power_grid_relevance:0.22(power)"
-          ],
-          "extraction_quality_score": 1,
-          "source_domain_adapter": "generic",
-          "content_length": 1769,
-          "boilerplate_ratio": 0,
-          "repetition_blocked": true,
-          "repetition_block_reasons": [
-            "repeated_sentence_ratio>0.12",
-            "heading_sequence_similarity>0.75",
-            "conclusion_similarity>0.7"
-          ],
-          "repetition_check": {
-            "compared_article_count": 20,
-            "repeated_sentence_ratio": 0.16666666666666666,
-            "repeated_paragraph_ratio": 0.16666666666666666,
-            "heading_sequence_similarity": 1,
-            "banned_phrase_count": 0,
-            "banned_phrase_counts": {},
-            "recent_banned_phrase_counts": {},
-            "ngram_overlap": 0.514018691588785,
-            "blueprint_repetition": 1,
-            "conclusion_similarity": 0.9511897312113418,
-            "repeated_sentence_count": 1,
-            "repeated_paragraph_count": 1,
-            "heading_sequence": [
-              "System Change",
-              "Bottleneck",
-              "Engineering Tradeoff",
-              "Validation Metric"
-            ],
-            "blocked": true,
-            "reasons": [
-              "repeated_sentence_ratio>0.12",
-              "heading_sequence_similarity>0.75",
-              "conclusion_similarity>0.7"
-            ]
-          },
-          "expert_insight_complete": true,
-          "expert_insight_missing_fields": [],
-          "reason": "repeated_sentence_ratio>0.12; heading_sequence_similarity>0.75; conclusion_similarity>0.7"
-        }
-      ],
-      "signalCardItems": [
-        {
-          "id": "01f53af419a55a0b",
-          "title": "Hideo Kojima unveils a Death Stranding 2-themed wireless CD player — Limited edition device costs ~$160, comes with Bluetooth 5.3 & exclusive artwork",
-          "infrastructure_relevance_score": 0.967,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "cloud_capacity_relevance:0.32(hyperscalers)",
-            "semiconductor_relevance:0.22(gpu)",
-            "power_grid_relevance:0.76(power, grid, nuclear)",
-            "capital_markets_relevance:0.28(capex)"
-          ],
-          "extraction_quality_score": 1,
-          "source_domain_adapter": "generic",
-          "content_length": 1719,
-          "boilerplate_ratio": 0,
-          "repetition_blocked": false,
-          "repetition_block_reasons": [],
-          "repetition_check": null,
-          "expert_insight_complete": false,
-          "expert_insight_missing_fields": [
-            "named_companies"
-          ],
-          "reason": "expert_insight_missing_fields named_companies"
-        }
-      ],
-      "archiveOnlyItems": []
-    },
     {
       "at": "2026-08-03T17:14:47.780Z",
       "day": "2026-08-04",
@@ -50880,9 +50593,63 @@
         "token_budget": 60000,
         "call_budget": 40
       }
+    },
+    {
+      "at": "2026-09-12T01:04:18.786Z",
+      "day": "2026-09-12",
+      "slot": 1,
+      "publishedCount": 0,
+      "signalCardCount": 0,
+      "archiveOnlyCount": 1,
+      "processedIds": [
+        "b97c0e642b65b101"
+      ],
+      "blockedCount": 0,
+      "blockedItems": [],
+      "archiveOnlyItems": [
+        {
+          "id": "b97c0e642b65b101",
+          "title": "NRC Proposes Broad Overhaul of Nuclear Reactor Regulations",
+          "infrastructure_relevance_score": 0.239,
+          "infrastructure_relevance_tier": "archive_only",
+          "infrastructure_relevance_action": "archive_only",
+          "infrastructure_relevance_reasons": [
+            "power_grid_relevance:0.35(nuclear)"
+          ],
+          "extraction_quality_score": 0,
+          "source_domain_adapter": "generic",
+          "content_length": 0,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": false,
+          "repetition_block_reasons": [],
+          "repetition_check": null,
+          "expert_insight_complete": false,
+          "expert_insight_missing_fields": [
+            "named_companies",
+            "who_gains_leverage",
+            "who_takes_execution_risk",
+            "timing_dependency",
+            "next_observable_signal"
+          ],
+          "reason": "infrastructure_relevance_below_signal_threshold"
+        }
+      ],
+      "authoredColumn": {
+        "published": false,
+        "reason": "no_qualifying_story"
+      },
+      "llmUsage": {
+        "calls": 2,
+        "failures": 0,
+        "prompt_tokens": 1256,
+        "completion_tokens": 349,
+        "total_tokens": 1605,
+        "token_budget": 60000,
+        "call_budget": 40
+      }
     }
   ],
-  "lastRunAt": "2026-09-11T18:18:20.588Z",
+  "lastRunAt": "2026-09-12T01:04:18.786Z",
   "authored": {
     "lastColumnAt": "2026-09-08T14:48:51.667Z",
     "columnsByDay": {

@@ -1046,6 +1046,77 @@
     }
   },
   {
+    "id": "b97c0e642b65b101",
+    "sourceRegistryId": "nrc-news",
+    "source": "U.S. Nuclear Regulatory Commission",
+    "url": "https://www.nrc.gov/sites/default/files/cdn/doc-collection-news/2026/26-077.pdf",
+    "title": "NRC Proposes Broad Overhaul of Nuclear Reactor Regulations",
+    "snippet": "",
+    "contentText": "",
+    "publishedAt": "2026-09-11T08:00:00.000Z",
+    "sourceImage": null,
+    "region": "US",
+    "language": "en",
+    "defaultCategory": "Power & Grid",
+    "ai_topic_score": 0,
+    "ai_topic_reasons": [
+      "ai_not_in_title"
+    ],
+    "category": "Power & Grid",
+    "primary_category": "Power & Grid",
+    "secondary_category": "Interconnection and power procurement",
+    "infrastructure_layer": "Power",
+    "affected_stakeholders": [
+      "data center operators",
+      "utilities",
+      "cloud capacity teams",
+      "investors"
+    ],
+    "article_type": "Other",
+    "urgency_score": 0.44,
+    "taxonomy_confidence": 0.77,
+    "taxonomy_reasons": [
+      "power",
+      "grid",
+      "nuclear"
+    ],
+    "direct_ai_infrastructure_relevance": 0,
+    "data_center_relevance": 0,
+    "cloud_capacity_relevance": 0,
+    "semiconductor_relevance": 0,
+    "power_grid_relevance": 0.351,
+    "cooling_relevance": 0,
+    "capital_markets_relevance": 0,
+    "enterprise_ai_infrastructure_relevance": 0,
+    "infrastructure_relevance_score": 0.239,
+    "infrastructure_relevance_tier": "archive_only",
+    "infrastructure_relevance_action": "archive_only",
+    "infrastructure_relevance_reasons": [
+      "power_grid_relevance:0.35(nuclear)"
+    ],
+    "infrastructure_relevance": {
+      "direct_ai_infrastructure_relevance": 0,
+      "data_center_relevance": 0,
+      "cloud_capacity_relevance": 0,
+      "semiconductor_relevance": 0,
+      "power_grid_relevance": 0.351,
+      "cooling_relevance": 0,
+      "capital_markets_relevance": 0,
+      "enterprise_ai_infrastructure_relevance": 0,
+      "infrastructure_relevance_score": 0.239,
+      "infrastructure_relevance_tier": "archive_only",
+      "infrastructure_relevance_action": "archive_only",
+      "infrastructure_relevance_reasons": [
+        "power_grid_relevance:0.35(nuclear)"
+      ],
+      "infrastructureRelevanceAction": "archive_only",
+      "articlePagePublished": false,
+      "homepagePublished": false,
+      "archiveOnly": true,
+      "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
+    }
+  },
+  {
     "id": "fd8f6522e69178d7",
     "sourceRegistryId": "gao-reports",
     "source": "U.S. Government Accountability Office",
@@ -1622,76 +1693,6 @@
     "snippet": "Secretary Wright issues an emergency order to stabilize the Mid-Atlantic grid and mitigate the risk of blackouts.",
     "contentText": "Secretary Wright issues an emergency order to stabilize the Mid-Atlantic grid and mitigate the risk of blackouts.",
     "publishedAt": "2026-09-02T03:11:31.000Z",
-    "sourceImage": null,
-    "region": "US",
-    "language": "en",
-    "defaultCategory": "Power & Grid",
-    "ai_topic_score": 0,
-    "ai_topic_reasons": [
-      "ai_not_in_title"
-    ],
-    "category": "Power & Grid",
-    "primary_category": "Power & Grid",
-    "secondary_category": "Interconnection and power procurement",
-    "infrastructure_layer": "Power",
-    "affected_stakeholders": [
-      "data center operators",
-      "utilities",
-      "cloud capacity teams",
-      "investors"
-    ],
-    "article_type": "Other",
-    "urgency_score": 0.42,
-    "taxonomy_confidence": 0.65,
-    "taxonomy_reasons": [
-      "power",
-      "grid"
-    ],
-    "direct_ai_infrastructure_relevance": 0,
-    "data_center_relevance": 0,
-    "cloud_capacity_relevance": 0,
-    "semiconductor_relevance": 0,
-    "power_grid_relevance": 0.28,
-    "cooling_relevance": 0,
-    "capital_markets_relevance": 0,
-    "enterprise_ai_infrastructure_relevance": 0,
-    "infrastructure_relevance_score": 0.197,
-    "infrastructure_relevance_tier": "archive_only",
-    "infrastructure_relevance_action": "archive_only",
-    "infrastructure_relevance_reasons": [
-      "power_grid_relevance:0.28(grid)"
-    ],
-    "infrastructure_relevance": {
-      "direct_ai_infrastructure_relevance": 0,
-      "data_center_relevance": 0,
-      "cloud_capacity_relevance": 0,
-      "semiconductor_relevance": 0,
-      "power_grid_relevance": 0.28,
-      "cooling_relevance": 0,
-      "capital_markets_relevance": 0,
-      "enterprise_ai_infrastructure_relevance": 0,
-      "infrastructure_relevance_score": 0.197,
-      "infrastructure_relevance_tier": "archive_only",
-      "infrastructure_relevance_action": "archive_only",
-      "infrastructure_relevance_reasons": [
-        "power_grid_relevance:0.28(grid)"
-      ],
-      "infrastructureRelevanceAction": "archive_only",
-      "articlePagePublished": false,
-      "homepagePublished": false,
-      "archiveOnly": true,
-      "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
-    }
-  },
-  {
-    "id": "7b618b414d1ae1d7",
-    "sourceRegistryId": "doe-newsroom",
-    "source": "U.S. Department of Energy",
-    "url": "https://www.energy.gov/articles/energy-secretary-saves-coal-fired-generation-going-offline-florida",
-    "title": "Energy Secretary Saves Coal-Fired Generation from Going Offline in Florida",
-    "snippet": "Emergency order addresses grid reliability concerns and reduces the risk and costs of blackouts.",
-    "contentText": "Emergency order addresses grid reliability concerns and reduces the risk and costs of blackouts.",
-    "publishedAt": "2026-09-02T00:11:31.000Z",
     "sourceImage": null,
     "region": "US",
     "language": "en",
