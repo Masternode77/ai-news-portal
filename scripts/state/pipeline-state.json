@@ -838,7 +838,8 @@
     "a9993fb180f7704f",
     "7b9198007713e225",
     "6dcf0d40dfe57b49",
-    "b97c0e642b65b101"
+    "b97c0e642b65b101",
+    "ecdef643d0239aeb"
   ],
   "dayPlans": {
     "2026-03-24": {
@@ -45113,18 +45114,18 @@
     "2026-09-12": {
       "date": "2026-09-12",
       "createdAt": "2026-09-11T18:18:20.588Z",
-      "refreshedAt": "2026-09-12T01:04:18.786Z",
+      "refreshedAt": "2026-09-12T11:36:19.999Z",
       "candidateWindowHours": 24,
       "curatedItems": [
         {
-          "id": "b97c0e642b65b101",
-          "sourceRegistryId": "nrc-news",
-          "source": "U.S. Nuclear Regulatory Commission",
-          "url": "https://www.nrc.gov/sites/default/files/cdn/doc-collection-news/2026/26-077.pdf",
-          "title": "NRC Proposes Broad Overhaul of Nuclear Reactor Regulations",
-          "snippet": "",
-          "contentText": "",
-          "publishedAt": "2026-09-11T08:00:00.000Z",
+          "id": "ecdef643d0239aeb",
+          "sourceRegistryId": "doe-newsroom",
+          "source": "U.S. Department of Energy",
+          "url": "https://www.energy.gov/articles/energy-secretary-keeps-northwest-coal-generating-plant-online",
+          "title": "Energy Secretary Keeps Northwest Coal Generating Plant Online",
+          "snippet": "Emergency order addresses critical grid reliability issues in the Northwestern U.S. by keeping coal plant online",
+          "contentText": "Emergency order addresses critical grid reliability issues in the Northwestern U.S. by keeping coal plant online",
+          "publishedAt": "2026-09-12T00:01:00.000Z",
           "sourceImage": null,
           "region": "US",
           "language": "en",
@@ -45144,41 +45145,40 @@
             "investors"
           ],
           "article_type": "Other",
-          "urgency_score": 0.44,
-          "taxonomy_confidence": 0.77,
+          "urgency_score": 0.42,
+          "taxonomy_confidence": 0.65,
           "taxonomy_reasons": [
             "power",
-            "grid",
-            "nuclear"
+            "grid"
           ],
           "direct_ai_infrastructure_relevance": 0,
           "data_center_relevance": 0,
           "cloud_capacity_relevance": 0,
           "semiconductor_relevance": 0,
-          "power_grid_relevance": 0.351,
+          "power_grid_relevance": 0.28,
           "cooling_relevance": 0,
           "capital_markets_relevance": 0,
           "enterprise_ai_infrastructure_relevance": 0,
-          "infrastructure_relevance_score": 0.239,
+          "infrastructure_relevance_score": 0.197,
           "infrastructure_relevance_tier": "archive_only",
           "infrastructure_relevance_action": "archive_only",
           "infrastructure_relevance_reasons": [
-            "power_grid_relevance:0.35(nuclear)"
+            "power_grid_relevance:0.28(grid)"
           ],
           "infrastructure_relevance": {
             "direct_ai_infrastructure_relevance": 0,
             "data_center_relevance": 0,
             "cloud_capacity_relevance": 0,
             "semiconductor_relevance": 0,
-            "power_grid_relevance": 0.351,
+            "power_grid_relevance": 0.28,
             "cooling_relevance": 0,
             "capital_markets_relevance": 0,
             "enterprise_ai_infrastructure_relevance": 0,
-            "infrastructure_relevance_score": 0.239,
+            "infrastructure_relevance_score": 0.197,
             "infrastructure_relevance_tier": "archive_only",
             "infrastructure_relevance_action": "archive_only",
             "infrastructure_relevance_reasons": [
-              "power_grid_relevance:0.35(nuclear)"
+              "power_grid_relevance:0.28(grid)"
             ],
             "infrastructureRelevanceAction": "archive_only",
             "articlePagePublished": false,
@@ -45186,148 +45186,26 @@
             "archiveOnly": true,
             "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
           },
-          "score": 30
+          "score": 33
         }
       ],
       "curatedIds": [
-        "b97c0e642b65b101"
+        "ecdef643d0239aeb"
       ],
       "publishedIds": [
         "7b9198007713e225",
         "6dcf0d40dfe57b49",
-        "b97c0e642b65b101"
+        "b97c0e642b65b101",
+        "ecdef643d0239aeb"
       ],
       "slotPublications": {
         "0": true,
-        "1": true
+        "1": true,
+        "2": true
       }
     }
   },
   "runHistory": [
-    {
-      "at": "2026-08-03T17:14:47.780Z",
-      "day": "2026-08-04",
-      "slot": 0,
-      "publishedCount": 0,
-      "signalCardCount": 1,
-      "archiveOnlyCount": 0,
-      "repetitionBlockedCount": 1,
-      "publishedIds": [],
-      "processedIds": [
-        "732768f72a590692",
-        "8b6a760a300b1653"
-      ],
-      "blockedCount": 1,
-      "blockedItems": [
-        {
-          "id": "732768f72a590692",
-          "title": "KIOXIA GP1 Series Hits 10 Million Random Read IOPS on XL-FLASH Gen 2",
-          "infrastructure_relevance_score": 0.928,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "cloud_capacity_relevance:0.32(hyperscalers)",
-            "semiconductor_relevance:0.58(hbm, gpu)",
-            "power_grid_relevance:0.22(power)"
-          ],
-          "extraction_quality_score": 1,
-          "source_domain_adapter": "storagereview",
-          "content_length": 1639,
-          "boilerplate_ratio": 0,
-          "repetition_blocked": false,
-          "repetition_block_reasons": [],
-          "repetition_check": null,
-          "expert_insight_complete": false,
-          "expert_insight_missing_fields": [
-            "named_companies"
-          ],
-          "reason": "expert_insight_missing_fields named_companies"
-        }
-      ],
-      "repetitionBlockedItems": [
-        {
-          "id": "8b6a760a300b1653",
-          "title": "In a troubling sign, Nvidia RTX 50 series prices jump up to 30% in South Korea — TSMC wafer hikes and $20 GDDR7 modules push RTX 5090 past $5,100",
-          "infrastructure_relevance_score": 1,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "cloud_capacity_relevance:0.32(hyperscalers)",
-            "semiconductor_relevance:1.00(semiconductor, nvidia, tsmc)",
-            "power_grid_relevance:0.22(power)"
-          ],
-          "extraction_quality_score": 1,
-          "source_domain_adapter": "generic",
-          "content_length": 1688,
-          "boilerplate_ratio": 0,
-          "repetition_blocked": true,
-          "repetition_block_reasons": [
-            "repeated_sentence_ratio>0.12",
-            "heading_sequence_similarity>0.75",
-            "conclusion_similarity>0.7"
-          ],
-          "repetition_check": {
-            "compared_article_count": 20,
-            "repeated_sentence_ratio": 0.42857142857142855,
-            "repeated_paragraph_ratio": 0.5,
-            "heading_sequence_similarity": 1,
-            "banned_phrase_count": 0,
-            "banned_phrase_counts": {},
-            "recent_banned_phrase_counts": {},
-            "ngram_overlap": 0.6016949152542372,
-            "blueprint_repetition": 1,
-            "conclusion_similarity": 0.9511897312113418,
-            "repeated_sentence_count": 3,
-            "repeated_paragraph_count": 3,
-            "heading_sequence": [
-              "Technical Signal",
-              "Failure Domain",
-              "Operator Exposure",
-              "Benchmark To Watch"
-            ],
-            "blocked": true,
-            "reasons": [
-              "repeated_sentence_ratio>0.12",
-              "heading_sequence_similarity>0.75",
-              "conclusion_similarity>0.7"
-            ]
-          },
-          "expert_insight_complete": true,
-          "expert_insight_missing_fields": [],
-          "reason": "repeated_sentence_ratio>0.12; heading_sequence_similarity>0.75; conclusion_similarity>0.7"
-        }
-      ],
-      "signalCardItems": [
-        {
-          "id": "732768f72a590692",
-          "title": "KIOXIA GP1 Series Hits 10 Million Random Read IOPS on XL-FLASH Gen 2",
-          "infrastructure_relevance_score": 0.928,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "cloud_capacity_relevance:0.32(hyperscalers)",
-            "semiconductor_relevance:0.58(hbm, gpu)",
-            "power_grid_relevance:0.22(power)"
-          ],
-          "extraction_quality_score": 1,
-          "source_domain_adapter": "storagereview",
-          "content_length": 1639,
-          "boilerplate_ratio": 0,
-          "repetition_blocked": false,
-          "repetition_block_reasons": [],
-          "repetition_check": null,
-          "expert_insight_complete": false,
-          "expert_insight_missing_fields": [
-            "named_companies"
-          ],
-          "reason": "expert_insight_missing_fields named_companies"
-        }
-      ],
-      "archiveOnlyItems": []
-    },
     {
       "at": "2026-08-04T00:11:27.969Z",
       "day": "2026-08-04",
@@ -50647,9 +50525,36 @@
         "token_budget": 60000,
         "call_budget": 40
       }
+    },
+    {
+      "at": "2026-09-12T11:36:19.999Z",
+      "day": "2026-09-12",
+      "slot": 2,
+      "publishedCount": 0,
+      "signalCardCount": 1,
+      "archiveOnlyCount": 0,
+      "processedIds": [
+        "ecdef643d0239aeb"
+      ],
+      "blockedCount": 0,
+      "blockedItems": [],
+      "archiveOnlyItems": [],
+      "authoredColumn": {
+        "published": false,
+        "reason": "no_qualifying_story"
+      },
+      "llmUsage": {
+        "calls": 2,
+        "failures": 0,
+        "prompt_tokens": 1566,
+        "completion_tokens": 228,
+        "total_tokens": 1794,
+        "token_budget": 60000,
+        "call_budget": 40
+      }
     }
   ],
-  "lastRunAt": "2026-09-12T01:04:18.786Z",
+  "lastRunAt": "2026-09-12T11:36:19.999Z",
   "authored": {
     "lastColumnAt": "2026-09-08T14:48:51.667Z",
     "columnsByDay": {
