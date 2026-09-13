@@ -34,7 +34,7 @@ export async function main(args = process.argv.slice(2)) {
   if (args.includes('--generated-at') && !Number.isFinite(Date.parse(value('--generated-at') || ''))) throw Error('Expected the registered generation timestamp');
   if (args.includes('--fingerprint') && !/^[a-f0-9]{64}$/.test(expectedFingerprint || '')) throw Error('Expected a SHA-256 article fingerprint');
   return withCodexImageLock('config/codex-image-import', async () => {
-    const collections = await Promise.all(['src/data/latest-news.json', 'src/data/archived-news.json'].map(async file => ({ file, items: JSON.parse(await fs.readFile(file, 'utf8')) })));
+    const collections = await Promise.all(['src/data/latest-news.json', 'src/data/archived-news.json', 'src/data/authored-columns.json'].map(async file => ({ file, items: JSON.parse(await fs.readFile(file, 'utf8')) })));
     const collection = collections.find(c => c.items.some(a => a.id === id));
     const article = collection?.items.find(a => a.id === id);
     if (!article) throw Error('Article not found');
@@ -42,8 +42,9 @@ export async function main(args = process.argv.slice(2)) {
     if (expectedFingerprint && fingerprint !== expectedFingerprint) throw Error('Article changed after image preparation; prepare and review artwork again before importing');
     const stat = await fs.stat(imageFile);
     if (!stat.isFile() || stat.size > 25 * 1024 * 1024) throw Error('Expected a local image file up to 25 MB');
-    await registerCodexImage(article, await fs.readFile(imageFile), { model: value('--model'), generatedAt: value('--generated-at') });
-    const result = await generateCodexImageSet(article, { throwOnError: true });
+    const manifestPath = path.resolve('config/codex-image-manifest.json');
+    await registerCodexImage(article, await fs.readFile(imageFile), { manifestPath, model: value('--model'), generatedAt: value('--generated-at') });
+    const result = await generateCodexImageSet(article, { manifestPath, throwOnError: true });
     await applyCodexImageMetadata(collection.file, id, fingerprint, metadataPatchFromImageSet(result));
     console.log(JSON.stringify({ id, provider: result.provider, heroImage: result.heroImage, status: result.status }));
     return result;
