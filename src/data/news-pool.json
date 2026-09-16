@@ -1,5 +1,302 @@
 [
   {
+    "id": "b870ab527fa58d1d",
+    "sourceRegistryId": "arxiv-cs-ar",
+    "source": "arXiv",
+    "url": "https://arxiv.org/abs/2609.16363",
+    "title": "FSNIC: A Low-Latency Flow-Based Intrusion Detection Architecture for FPGA SmartNICs",
+    "snippet": "arXiv:2609.16363v1 Announce Type: new Abstract: Modern data centres require high-performance networking alongside effective real-time security. Traditional Intrusion Detection Systems (IDS) commonly rely on general-purp…",
+    "contentText": "arXiv:2609.16363v1 Announce Type: new Abstract: Modern data centres require high-performance networking alongside effective real-time security. Traditional Intrusion Detection Systems (IDS) commonly rely on general-purpose processors and often struggle to inspect high-speed traffic at line rate without introducing latency or performance bottlenecks. Smart Network Interface Cards (NICs) provide an alternative by enabling computation directly within the network data plane. This work presents a machine learning-based IDS implemented within an FPGA-based SmartNIC pipeline. The system integrates P4-based packet parsing with a LogicNets IDS model implemented in RTL, enabling deterministic, low-latency inference. Compared with traditional stateless packet-level classifiers, the proposed stateful…",
+    "publishedAt": "2026-09-16T04:00:00.000Z",
+    "sourceImage": null,
+    "region": "US",
+    "language": "en",
+    "defaultCategory": "Semiconductors",
+    "source_text_scope": "abstract",
+    "ai_topic_score": 0.58,
+    "ai_topic_reasons": [
+      "machine learning",
+      "inference",
+      "ai_not_in_title"
+    ],
+    "category": "AI Infrastructure",
+    "primary_category": "AI Infrastructure",
+    "secondary_category": "GPU clusters and deployment readiness",
+    "infrastructure_layer": "Compute",
+    "affected_stakeholders": [
+      "operators",
+      "hyperscalers",
+      "cloud buyers",
+      "investors"
+    ],
+    "article_type": "Research / Technical",
+    "urgency_score": 0.4,
+    "taxonomy_confidence": 0.57,
+    "taxonomy_reasons": [
+      "fallback_taxonomy"
+    ],
+    "direct_ai_infrastructure_relevance": 0.78,
+    "data_center_relevance": 0.42,
+    "cloud_capacity_relevance": 0,
+    "semiconductor_relevance": 0,
+    "power_grid_relevance": 0,
+    "cooling_relevance": 0,
+    "capital_markets_relevance": 0,
+    "enterprise_ai_infrastructure_relevance": 0.18,
+    "infrastructure_relevance_score": 0.695,
+    "infrastructure_relevance_tier": "signal_card",
+    "infrastructure_relevance_action": "publish_signal_card_only",
+    "infrastructure_relevance_reasons": [
+      "direct_ai_infrastructure_relevance:0.78",
+      "data_center_relevance:0.42(data center)"
+    ],
+    "infrastructure_relevance": {
+      "direct_ai_infrastructure_relevance": 0.78,
+      "data_center_relevance": 0.42,
+      "cloud_capacity_relevance": 0,
+      "semiconductor_relevance": 0,
+      "power_grid_relevance": 0,
+      "cooling_relevance": 0,
+      "capital_markets_relevance": 0,
+      "enterprise_ai_infrastructure_relevance": 0.18,
+      "infrastructure_relevance_score": 0.695,
+      "infrastructure_relevance_tier": "signal_card",
+      "infrastructure_relevance_action": "publish_signal_card_only",
+      "infrastructure_relevance_reasons": [
+        "direct_ai_infrastructure_relevance:0.78",
+        "data_center_relevance:0.42(data center)"
+      ],
+      "infrastructureRelevanceAction": "publish_signal_card_only",
+      "articlePagePublished": false,
+      "homepagePublished": true,
+      "archiveOnly": false,
+      "archiveOnlyReason": null
+    }
+  },
+  {
+    "id": "76d9f8a8b1030370",
+    "sourceRegistryId": "arxiv-cs-ar",
+    "source": "arXiv",
+    "url": "https://arxiv.org/abs/2609.16358",
+    "title": "EBL: Efficient Broad Learning for Distributed Adaptive Harmonic Analysis",
+    "snippet": "arXiv:2609.16358v1 Announce Type: new Abstract: Renewable energy systems and electrified transport have found widespread adoption in recent years. The integration of these non-linear loads, dominated by electric vehicle…",
+    "contentText": "arXiv:2609.16358v1 Announce Type: new Abstract: Renewable energy systems and electrified transport have found widespread adoption in recent years. The integration of these non-linear loads, dominated by electric vehicle (EV) charging, however, has introduced severe harmonic distortion into the power grid, impacting the efficiency and lifetime of substation equipment and switchgear in the distribution network. Rapid and high-precision harmonic analysis has hence become a prerequisite for effective harmonic control at the source of injection. This paper proposes an Efficient Broad Learning (EBL) framework for distributed adaptive harmonic estimation. As a quantised FPGA acceleration framework for BLS-style harmonic estimation, it offers high-accuracy estimation with half-cycle input, reconf…",
+    "publishedAt": "2026-09-16T04:00:00.000Z",
+    "sourceImage": null,
+    "region": "Global",
+    "language": "en",
+    "defaultCategory": "Semiconductors",
+    "source_text_scope": "abstract",
+    "ai_topic_score": 0,
+    "ai_topic_reasons": [
+      "ai_not_in_title"
+    ],
+    "category": "Power & Grid",
+    "primary_category": "Power & Grid",
+    "secondary_category": "Interconnection and power procurement",
+    "infrastructure_layer": "Power",
+    "affected_stakeholders": [
+      "data center operators",
+      "utilities",
+      "cloud capacity teams",
+      "investors"
+    ],
+    "article_type": "Market Analysis",
+    "urgency_score": 0.56,
+    "taxonomy_confidence": 0.85,
+    "taxonomy_reasons": [
+      "power",
+      "grid",
+      "substation"
+    ],
+    "direct_ai_infrastructure_relevance": 0,
+    "data_center_relevance": 0,
+    "cloud_capacity_relevance": 0,
+    "semiconductor_relevance": 0,
+    "power_grid_relevance": 1,
+    "cooling_relevance": 0,
+    "capital_markets_relevance": 0,
+    "enterprise_ai_infrastructure_relevance": 0,
+    "infrastructure_relevance_score": 0.615,
+    "infrastructure_relevance_tier": "signal_card",
+    "infrastructure_relevance_action": "publish_signal_card_only",
+    "infrastructure_relevance_reasons": [
+      "power_grid_relevance:1.00(power, grid, substation)"
+    ],
+    "infrastructure_relevance": {
+      "direct_ai_infrastructure_relevance": 0,
+      "data_center_relevance": 0,
+      "cloud_capacity_relevance": 0,
+      "semiconductor_relevance": 0,
+      "power_grid_relevance": 1,
+      "cooling_relevance": 0,
+      "capital_markets_relevance": 0,
+      "enterprise_ai_infrastructure_relevance": 0,
+      "infrastructure_relevance_score": 0.615,
+      "infrastructure_relevance_tier": "signal_card",
+      "infrastructure_relevance_action": "publish_signal_card_only",
+      "infrastructure_relevance_reasons": [
+        "power_grid_relevance:1.00(power, grid, substation)"
+      ],
+      "infrastructureRelevanceAction": "publish_signal_card_only",
+      "articlePagePublished": false,
+      "homepagePublished": true,
+      "archiveOnly": false,
+      "archiveOnlyReason": null
+    }
+  },
+  {
+    "id": "a26ed84d84600daf",
+    "sourceRegistryId": "arxiv-cs-dc",
+    "source": "arXiv",
+    "url": "https://arxiv.org/abs/2609.16682",
+    "title": "DeepShare: Assurance-Driven Deep Learning Job Scheduling for Multi-Tenant Clusters",
+    "snippet": "arXiv:2609.16682v1 Announce Type: new Abstract: Multi-tenant GPU clusters frequently remain underutilized even when tenants experience long queueing delays, because quota control, queue ordering, preemption, and GPU sha…",
+    "contentText": "arXiv:2609.16682v1 Announce Type: new Abstract: Multi-tenant GPU clusters frequently remain underutilized even when tenants experience long queueing delays, because quota control, queue ordering, preemption, and GPU sharing are driven by different local signals. We present DeepShare, a scheduler that uses a continuous tenant-assurance signal to coordinate these decisions at runtime. DeepShare combines elastic quota borrowing, tenant-specific runtime prediction, cost-aware best-effort preemption, and interference-aware MPS colocation, while using the same assurance signal to decide when borrowed capacity should be reclaimed and when sharing should become more conservative. In trace-driven experiments on 23,859 Venus jobs and 3,200 internal jobs, DeepShare achieves an average GPU utilizatio…",
+    "publishedAt": "2026-09-16T04:00:00.000Z",
+    "sourceImage": null,
+    "region": "APAC",
+    "language": "en",
+    "defaultCategory": "AI Infrastructure",
+    "source_text_scope": "abstract",
+    "ai_topic_score": 0.22,
+    "ai_topic_reasons": [
+      "gpu",
+      "ai_not_in_title"
+    ],
+    "category": "AI Infrastructure",
+    "primary_category": "AI Infrastructure",
+    "secondary_category": "GPU clusters and deployment readiness",
+    "infrastructure_layer": "Compute",
+    "affected_stakeholders": [
+      "operators",
+      "hyperscalers",
+      "cloud buyers",
+      "investors"
+    ],
+    "article_type": "Capacity Expansion",
+    "urgency_score": 0.44,
+    "taxonomy_confidence": 0.63,
+    "taxonomy_reasons": [
+      "ai infrastructure"
+    ],
+    "direct_ai_infrastructure_relevance": 0.64,
+    "data_center_relevance": 0.34,
+    "cloud_capacity_relevance": 0,
+    "semiconductor_relevance": 0.22,
+    "power_grid_relevance": 0,
+    "cooling_relevance": 0,
+    "capital_markets_relevance": 0,
+    "enterprise_ai_infrastructure_relevance": 0,
+    "infrastructure_relevance_score": 0.551,
+    "infrastructure_relevance_tier": "signal_card",
+    "infrastructure_relevance_action": "publish_signal_card_only",
+    "infrastructure_relevance_reasons": [
+      "direct_ai_infrastructure_relevance:0.64(gpu clusters)",
+      "data_center_relevance:0.34(colocation)",
+      "semiconductor_relevance:0.22(gpu)"
+    ],
+    "infrastructure_relevance": {
+      "direct_ai_infrastructure_relevance": 0.64,
+      "data_center_relevance": 0.34,
+      "cloud_capacity_relevance": 0,
+      "semiconductor_relevance": 0.22,
+      "power_grid_relevance": 0,
+      "cooling_relevance": 0,
+      "capital_markets_relevance": 0,
+      "enterprise_ai_infrastructure_relevance": 0,
+      "infrastructure_relevance_score": 0.551,
+      "infrastructure_relevance_tier": "signal_card",
+      "infrastructure_relevance_action": "publish_signal_card_only",
+      "infrastructure_relevance_reasons": [
+        "direct_ai_infrastructure_relevance:0.64(gpu clusters)",
+        "data_center_relevance:0.34(colocation)",
+        "semiconductor_relevance:0.22(gpu)"
+      ],
+      "infrastructureRelevanceAction": "publish_signal_card_only",
+      "articlePagePublished": false,
+      "homepagePublished": true,
+      "archiveOnly": false,
+      "archiveOnlyReason": null
+    }
+  },
+  {
+    "id": "61dd41876d07df82",
+    "sourceRegistryId": "arxiv-cs-ar",
+    "source": "arXiv",
+    "url": "https://arxiv.org/abs/2609.17123",
+    "title": "AI for Science with GPT-6 Astra: Thermal Design and Electrothermal Analysis of 2D CFET",
+    "snippet": "arXiv:2609.17123v1 Announce Type: cross Abstract: Thermal optimization of 2D CFET inverters requires testing structural proposals against their electrical costs. We examine these research tasks using an AI agent workflo…",
+    "contentText": "arXiv:2609.17123v1 Announce Type: cross Abstract: Thermal optimization of 2D CFET inverters requires testing structural proposals against their electrical costs. We examine these research tasks using an AI agent workflow within a supplied electrothermal model. At 12 nm, Astra selects a redistributed source-interconnect geometry, while a coordinating agent proposes a substrate-directed heat-removal path. The combined design reduces peak temperature rise by 1.67 K at fixed metal volume and 20 {\\mu}W. A subsequent metal-resistance sensitivity gives about 0.6-K inverter cooling alongside a 2% nFET on-current loss. Effective contact-length scaling further shows that lower temperature can accompany higher thermal resistance when current falls. Reproduction identifies agreeing implementations an…",
+    "publishedAt": "2026-09-16T04:00:00.000Z",
+    "sourceImage": null,
+    "region": "US",
+    "language": "en",
+    "defaultCategory": "Semiconductors",
+    "source_text_scope": "abstract",
+    "ai_topic_score": 0.583,
+    "ai_topic_reasons": [
+      "ai agent",
+      "ai"
+    ],
+    "category": "Cooling & Facility Engineering",
+    "primary_category": "Cooling & Facility Engineering",
+    "secondary_category": "Thermal design and rack density",
+    "infrastructure_layer": "Cooling",
+    "affected_stakeholders": [
+      "operators",
+      "equipment vendors",
+      "data center developers",
+      "enterprise IT"
+    ],
+    "article_type": "Research / Technical",
+    "urgency_score": 0.36,
+    "taxonomy_confidence": 0.76,
+    "taxonomy_reasons": [
+      "cooling",
+      "thermal"
+    ],
+    "direct_ai_infrastructure_relevance": 0.22,
+    "data_center_relevance": 0,
+    "cloud_capacity_relevance": 0,
+    "semiconductor_relevance": 0,
+    "power_grid_relevance": 0,
+    "cooling_relevance": 0.745,
+    "capital_markets_relevance": 0,
+    "enterprise_ai_infrastructure_relevance": 0,
+    "infrastructure_relevance_score": 0.55,
+    "infrastructure_relevance_tier": "signal_card",
+    "infrastructure_relevance_action": "publish_signal_card_only",
+    "infrastructure_relevance_reasons": [
+      "direct_ai_infrastructure_relevance:0.22",
+      "cooling_relevance:0.74(cooling, thermal)",
+      "weak_ai_adjacent_without_compute_current_infrastructure_surface"
+    ],
+    "infrastructure_relevance": {
+      "direct_ai_infrastructure_relevance": 0.22,
+      "data_center_relevance": 0,
+      "cloud_capacity_relevance": 0,
+      "semiconductor_relevance": 0,
+      "power_grid_relevance": 0,
+      "cooling_relevance": 0.745,
+      "capital_markets_relevance": 0,
+      "enterprise_ai_infrastructure_relevance": 0,
+      "infrastructure_relevance_score": 0.55,
+      "infrastructure_relevance_tier": "signal_card",
+      "infrastructure_relevance_action": "publish_signal_card_only",
+      "infrastructure_relevance_reasons": [
+        "direct_ai_infrastructure_relevance:0.22",
+        "cooling_relevance:0.74(cooling, thermal)",
+        "weak_ai_adjacent_without_compute_current_infrastructure_surface"
+      ],
+      "infrastructureRelevanceAction": "publish_signal_card_only",
+      "articlePagePublished": false,
+      "homepagePublished": true,
+      "archiveOnly": false,
+      "archiveOnlyReason": null
+    }
+  },
+  {
     "id": "0541b920f49f8e3e",
     "sourceRegistryId": "acer-news",
     "source": "ACER (EU energy regulators)",
@@ -64,6 +361,155 @@
       "infrastructure_relevance_reasons": [
         "data_center_relevance:0.55(data center)",
         "power_grid_relevance:0.32(electricity)"
+      ],
+      "infrastructureRelevanceAction": "archive_only",
+      "articlePagePublished": false,
+      "homepagePublished": false,
+      "archiveOnly": true,
+      "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
+    }
+  },
+  {
+    "id": "77f0d42e4f9b799f",
+    "sourceRegistryId": "arxiv-cs-ar",
+    "source": "arXiv",
+    "url": "https://arxiv.org/abs/2609.16085",
+    "title": "Is INT8 Portable? A Cross-Platform Measurement Study of Quantized Inference on Embedded and Automotive Accelerators",
+    "snippet": "arXiv:2609.16085v1 Announce Type: new Abstract: Eight-bit integer (INT8) post-training quantization is the default recipe for edge deployment, under a widely held assumption: INT8 makes inference faster at a small, pred…",
+    "contentText": "arXiv:2609.16085v1 Announce Type: new Abstract: Eight-bit integer (INT8) post-training quantization is the default recipe for edge deployment, under a widely held assumption: INT8 makes inference faster at a small, predictable accuracy cost, and a model quantized once can be carried to any target. We test that assumption with a controlled measurement study across seven hardware classes -- ARM and x86 CPUs, a discrete GPU, an NVIDIA Jetson AGX Orin iGPU and its NVDLA cores, and two vendor NPUs (Qualcomm Hexagon HTP, DEEPX DX-M1) -- holding the ONNX artifact and the quantization scales fixed so the integer kernel or ISA is the only free variable. Portability fails on three axes. (1) The sign of the INT8 speedup is set by the CPU's dot-product ISA (ARM dotprod/SDOT, x86 VNNI): cores that hav…",
+    "publishedAt": "2026-09-16T04:00:00.000Z",
+    "sourceImage": null,
+    "region": "US",
+    "language": "en",
+    "defaultCategory": "Semiconductors",
+    "source_text_scope": "abstract",
+    "ai_topic_score": 1,
+    "ai_topic_reasons": [
+      "inference",
+      "nvidia",
+      "gpu",
+      "accelerators"
+    ],
+    "category": "Semiconductors",
+    "primary_category": "Semiconductors",
+    "secondary_category": "Accelerators, memory, and advanced packaging",
+    "infrastructure_layer": "Silicon",
+    "affected_stakeholders": [
+      "semiconductor suppliers",
+      "hyperscalers",
+      "server OEMs",
+      "investors"
+    ],
+    "article_type": "Product / Platform Update",
+    "urgency_score": 0.31,
+    "taxonomy_confidence": 0.69,
+    "taxonomy_reasons": [
+      "gpu",
+      "nvidia"
+    ],
+    "direct_ai_infrastructure_relevance": 0.22,
+    "data_center_relevance": 0,
+    "cloud_capacity_relevance": 0,
+    "semiconductor_relevance": 0.5,
+    "power_grid_relevance": 0,
+    "cooling_relevance": 0,
+    "capital_markets_relevance": 0,
+    "enterprise_ai_infrastructure_relevance": 0,
+    "infrastructure_relevance_score": 0.408,
+    "infrastructure_relevance_tier": "archive_only",
+    "infrastructure_relevance_action": "archive_only",
+    "infrastructure_relevance_reasons": [
+      "direct_ai_infrastructure_relevance:0.22",
+      "semiconductor_relevance:0.50(nvidia, gpu)"
+    ],
+    "infrastructure_relevance": {
+      "direct_ai_infrastructure_relevance": 0.22,
+      "data_center_relevance": 0,
+      "cloud_capacity_relevance": 0,
+      "semiconductor_relevance": 0.5,
+      "power_grid_relevance": 0,
+      "cooling_relevance": 0,
+      "capital_markets_relevance": 0,
+      "enterprise_ai_infrastructure_relevance": 0,
+      "infrastructure_relevance_score": 0.408,
+      "infrastructure_relevance_tier": "archive_only",
+      "infrastructure_relevance_action": "archive_only",
+      "infrastructure_relevance_reasons": [
+        "direct_ai_infrastructure_relevance:0.22",
+        "semiconductor_relevance:0.50(nvidia, gpu)"
+      ],
+      "infrastructureRelevanceAction": "archive_only",
+      "articlePagePublished": false,
+      "homepagePublished": false,
+      "archiveOnly": true,
+      "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
+    }
+  },
+  {
+    "id": "e38bbb4e96c27f9e",
+    "sourceRegistryId": "arxiv-cs-dc",
+    "source": "arXiv",
+    "url": "https://arxiv.org/abs/2512.08725",
+    "title": "Spatio-Temporal Shifting to Reduce Carbon, Water, and Land-Use Footprints of Cloud Workloads",
+    "snippet": "arXiv:2512.08725v3 Announce Type: replace Abstract: In this paper, we investigate the potential of spatial and temporal cloud workload shifting to reduce carbon, water, and land use footprints. Specifically, we perform…",
+    "contentText": "arXiv:2512.08725v3 Announce Type: replace Abstract: In this paper, we investigate the potential of spatial and temporal cloud workload shifting to reduce carbon, water, and land use footprints. Specifically, we perform a simulation study leveraging publicly available data on the cloud infrastructure of major providers (AWS and Azure) as well as real-world workload traces (big data analytics and FaaS) and grid mix data to consider two different scenarios. Our simulation results indicate that spatial shifting can substantially lower carbon, water, and land use footprints. In the FaaS applications, shifting the spatiotemporal workload achieves carbon savings of up to 85%, water savings of around 50%, and reductions in land use of up to 45%, all while optimizing for the respective factors. Mi…",
+    "publishedAt": "2026-09-16T04:00:00.000Z",
+    "sourceImage": null,
+    "region": "US",
+    "language": "en",
+    "defaultCategory": "AI Infrastructure",
+    "source_text_scope": "abstract",
+    "ai_topic_score": 0,
+    "ai_topic_reasons": [
+      "ai_not_in_title"
+    ],
+    "category": "Cloud Capacity",
+    "primary_category": "Cloud Capacity",
+    "secondary_category": "Hyperscale regions and accelerator availability",
+    "infrastructure_layer": "Cloud Platform",
+    "affected_stakeholders": [
+      "hyperscalers",
+      "cloud buyers",
+      "enterprise IT",
+      "operators"
+    ],
+    "article_type": "Other",
+    "urgency_score": 0.4,
+    "taxonomy_confidence": 0.68,
+    "taxonomy_reasons": [
+      "aws",
+      "azure"
+    ],
+    "direct_ai_infrastructure_relevance": 0,
+    "data_center_relevance": 0,
+    "cloud_capacity_relevance": 0.44,
+    "semiconductor_relevance": 0,
+    "power_grid_relevance": 0.28,
+    "cooling_relevance": 0,
+    "capital_markets_relevance": 0,
+    "enterprise_ai_infrastructure_relevance": 0,
+    "infrastructure_relevance_score": 0.387,
+    "infrastructure_relevance_tier": "archive_only",
+    "infrastructure_relevance_action": "archive_only",
+    "infrastructure_relevance_reasons": [
+      "cloud_capacity_relevance:0.44(aws, azure)",
+      "power_grid_relevance:0.28(grid)"
+    ],
+    "infrastructure_relevance": {
+      "direct_ai_infrastructure_relevance": 0,
+      "data_center_relevance": 0,
+      "cloud_capacity_relevance": 0.44,
+      "semiconductor_relevance": 0,
+      "power_grid_relevance": 0.28,
+      "cooling_relevance": 0,
+      "capital_markets_relevance": 0,
+      "enterprise_ai_infrastructure_relevance": 0,
+      "infrastructure_relevance_score": 0.387,
+      "infrastructure_relevance_tier": "archive_only",
+      "infrastructure_relevance_action": "archive_only",
+      "infrastructure_relevance_reasons": [
+        "cloud_capacity_relevance:0.44(aws, azure)",
+        "power_grid_relevance:0.28(grid)"
       ],
       "infrastructureRelevanceAction": "archive_only",
       "articlePagePublished": false,
@@ -291,6 +737,75 @@
     }
   },
   {
+    "id": "eb92f731ea4b9615",
+    "sourceRegistryId": "gao-reports",
+    "source": "U.S. Government Accountability Office",
+    "url": "https://www.gao.gov/products/gao-26-109028",
+    "title": "Mortgage Insurance: HUD’s Risk-Sharing Program and Its Role in Financing Affordable Rental Housing",
+    "snippet": "What GAO Found Each year, the Department of Housing and Urban Development’s (HUD) Federal Housing Administration (FHA) insures billions of dollars in mortgages for multifamily properties through a variety of programs. H…",
+    "contentText": "What GAO Found Each year, the Department of Housing and Urban Development’s (HUD) Federal Housing Administration (FHA) insures billions of dollars in mortgages for multifamily properties through a variety of programs. HUD’s section 542(c) program provides FHA insurance for loans on affordable multifamily properties that are originated, underwritten, and serviced by housing finance agencies (HFA). The program is also known as the risk-sharing program because HUD and HFAs share the risk of loss on the loans. From fiscal years 2016 through 2025, HFAs underwrote over $12 billion (adjusted for inflation) in FHA-insured multifamily loans under the program. These loans helped finance 776 projects that are expected to produce or preserve about 93,670 rental units (see figure). Loan Amounts and Re…",
+    "publishedAt": "2026-09-15T11:21:48.000Z",
+    "sourceImage": null,
+    "region": "US",
+    "language": "en",
+    "defaultCategory": "Power & Grid",
+    "ai_topic_score": 0,
+    "ai_topic_reasons": [
+      "ai_not_in_title"
+    ],
+    "category": "Capital Markets",
+    "primary_category": "Capital Markets",
+    "secondary_category": "Financing, valuation, and capital structure",
+    "infrastructure_layer": "Capital",
+    "affected_stakeholders": [
+      "investors",
+      "lenders",
+      "developers",
+      "operators"
+    ],
+    "article_type": "Financing / M&A",
+    "urgency_score": 0.45,
+    "taxonomy_confidence": 0.63,
+    "taxonomy_reasons": [
+      "financing"
+    ],
+    "direct_ai_infrastructure_relevance": 0,
+    "data_center_relevance": 0,
+    "cloud_capacity_relevance": 0,
+    "semiconductor_relevance": 0,
+    "power_grid_relevance": 0,
+    "cooling_relevance": 0,
+    "capital_markets_relevance": 0.432,
+    "enterprise_ai_infrastructure_relevance": 0,
+    "infrastructure_relevance_score": 0.28,
+    "infrastructure_relevance_tier": "archive_only",
+    "infrastructure_relevance_action": "archive_only",
+    "infrastructure_relevance_reasons": [
+      "capital_markets_relevance:0.43(financing)"
+    ],
+    "infrastructure_relevance": {
+      "direct_ai_infrastructure_relevance": 0,
+      "data_center_relevance": 0,
+      "cloud_capacity_relevance": 0,
+      "semiconductor_relevance": 0,
+      "power_grid_relevance": 0,
+      "cooling_relevance": 0,
+      "capital_markets_relevance": 0.432,
+      "enterprise_ai_infrastructure_relevance": 0,
+      "infrastructure_relevance_score": 0.28,
+      "infrastructure_relevance_tier": "archive_only",
+      "infrastructure_relevance_action": "archive_only",
+      "infrastructure_relevance_reasons": [
+        "capital_markets_relevance:0.43(financing)"
+      ],
+      "infrastructureRelevanceAction": "archive_only",
+      "articlePagePublished": false,
+      "homepagePublished": false,
+      "archiveOnly": true,
+      "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
+    }
+  },
+  {
     "id": "cb84eb89598b7f3a",
     "sourceRegistryId": "doe-newsroom",
     "source": "U.S. Department of Energy",
@@ -364,16 +879,154 @@
     }
   },
   {
-    "id": "39ef5621160efc50",
-    "sourceRegistryId": "eia-today-in-energy",
-    "source": "U.S. Energy Information Administration",
-    "url": "https://www.eia.gov/todayinenergy/detail.php?id=68084",
-    "title": "Weekly average load in ERCOT continues near record high",
-    "snippet": "Sustained high temperatures have contributed to persistently high electricity demand in the Electric Reliability Council of Texas (ERCOT), the regional transmission organization for most of the state.",
-    "contentText": "Sustained high temperatures have contributed to persistently high electricity demand in the Electric Reliability Council of Texas (ERCOT), the regional transmission organization for most of the state.",
-    "publishedAt": "2026-09-03T14:00:00.000Z",
+    "id": "ebfaf8cc0598fac3",
+    "sourceRegistryId": "ec-press-corner",
+    "source": "European Commission",
+    "url": "https://ec.europa.eu/commission/presscorner/detail/en/ip_26_1877",
+    "title": "Commission sends Statement of Objections over the proposed acquisition of Anglo American's nickel business by MMG",
+    "snippet": "European Commission Press release Brussels, 16 Sep 2026 The European Commission has informed MMG Limited ('MMG') of its preliminary view that its proposed acquisition of Anglo American's nickel business ('the target') m…",
+    "contentText": "European Commission Press release Brussels, 16 Sep 2026 The European Commission has informed MMG Limited ('MMG') of its preliminary view that its proposed acquisition of Anglo American's nickel business ('the target') may restrict competition in the market for low-carbon ferronickel, a key alloying material in stainless steel production.",
+    "publishedAt": "2026-09-15T22:00:00.000Z",
     "sourceImage": null,
     "region": "US",
+    "language": "en",
+    "defaultCategory": "Policy & Siting",
+    "ai_topic_score": 0,
+    "ai_topic_reasons": [
+      "ai_not_in_title"
+    ],
+    "category": "Capital Markets",
+    "primary_category": "Capital Markets",
+    "secondary_category": "Financing, valuation, and capital structure",
+    "infrastructure_layer": "Capital",
+    "affected_stakeholders": [
+      "investors",
+      "lenders",
+      "developers",
+      "operators"
+    ],
+    "article_type": "Financing / M&A",
+    "urgency_score": 0.35,
+    "taxonomy_confidence": 0.62,
+    "taxonomy_reasons": [
+      "acquisition"
+    ],
+    "direct_ai_infrastructure_relevance": 0,
+    "data_center_relevance": 0,
+    "cloud_capacity_relevance": 0,
+    "semiconductor_relevance": 0,
+    "power_grid_relevance": 0,
+    "cooling_relevance": 0,
+    "capital_markets_relevance": 0.405,
+    "enterprise_ai_infrastructure_relevance": 0,
+    "infrastructure_relevance_score": 0.27,
+    "infrastructure_relevance_tier": "archive_only",
+    "infrastructure_relevance_action": "archive_only",
+    "infrastructure_relevance_reasons": [
+      "capital_markets_relevance:0.41(acquisition)"
+    ],
+    "infrastructure_relevance": {
+      "direct_ai_infrastructure_relevance": 0,
+      "data_center_relevance": 0,
+      "cloud_capacity_relevance": 0,
+      "semiconductor_relevance": 0,
+      "power_grid_relevance": 0,
+      "cooling_relevance": 0,
+      "capital_markets_relevance": 0.405,
+      "enterprise_ai_infrastructure_relevance": 0,
+      "infrastructure_relevance_score": 0.27,
+      "infrastructure_relevance_tier": "archive_only",
+      "infrastructure_relevance_action": "archive_only",
+      "infrastructure_relevance_reasons": [
+        "capital_markets_relevance:0.41(acquisition)"
+      ],
+      "infrastructureRelevanceAction": "archive_only",
+      "articlePagePublished": false,
+      "homepagePublished": false,
+      "archiveOnly": true,
+      "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
+    }
+  },
+  {
+    "id": "c7f06c7b67ed7039",
+    "sourceRegistryId": "nsf-news",
+    "source": "U.S. National Science Foundation",
+    "url": "https://www.nsf.gov/news/podcast-creating-thermal-cloaking-new-structures",
+    "title": "Podcast: Creating thermal cloaking and new structures",
+    "snippet": "Shelly Zhang, an NSF-supported researcher, discusses her work using additive manufacturing and topology optimization to create new structures, including a 3D thermal cloaking device...",
+    "contentText": "Shelly Zhang, an NSF-supported researcher, discusses her work using additive manufacturing and topology optimization to create new structures, including a 3D thermal cloaking device...",
+    "publishedAt": "2026-09-14T21:28:01.000Z",
+    "sourceImage": null,
+    "region": "US",
+    "language": "en",
+    "defaultCategory": "AI Infrastructure",
+    "ai_topic_score": 0,
+    "ai_topic_reasons": [
+      "ai_not_in_title"
+    ],
+    "category": "Cooling & Facility Engineering",
+    "primary_category": "Cooling & Facility Engineering",
+    "secondary_category": "Thermal design and rack density",
+    "infrastructure_layer": "Cooling",
+    "affected_stakeholders": [
+      "operators",
+      "equipment vendors",
+      "data center developers",
+      "enterprise IT"
+    ],
+    "article_type": "Other",
+    "urgency_score": 0.27,
+    "taxonomy_confidence": 0.62,
+    "taxonomy_reasons": [
+      "thermal"
+    ],
+    "direct_ai_infrastructure_relevance": 0,
+    "data_center_relevance": 0,
+    "cloud_capacity_relevance": 0,
+    "semiconductor_relevance": 0,
+    "power_grid_relevance": 0,
+    "cooling_relevance": 0.405,
+    "capital_markets_relevance": 0,
+    "enterprise_ai_infrastructure_relevance": 0,
+    "infrastructure_relevance_score": 0.27,
+    "infrastructure_relevance_tier": "archive_only",
+    "infrastructure_relevance_action": "archive_only",
+    "infrastructure_relevance_reasons": [
+      "cooling_relevance:0.41(thermal)"
+    ],
+    "infrastructure_relevance": {
+      "direct_ai_infrastructure_relevance": 0,
+      "data_center_relevance": 0,
+      "cloud_capacity_relevance": 0,
+      "semiconductor_relevance": 0,
+      "power_grid_relevance": 0,
+      "cooling_relevance": 0.405,
+      "capital_markets_relevance": 0,
+      "enterprise_ai_infrastructure_relevance": 0,
+      "infrastructure_relevance_score": 0.27,
+      "infrastructure_relevance_tier": "archive_only",
+      "infrastructure_relevance_action": "archive_only",
+      "infrastructure_relevance_reasons": [
+        "cooling_relevance:0.41(thermal)"
+      ],
+      "infrastructureRelevanceAction": "archive_only",
+      "articlePagePublished": false,
+      "homepagePublished": false,
+      "archiveOnly": true,
+      "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
+    }
+  },
+  {
+    "id": "c3101511ea35e917",
+    "sourceRegistryId": "acer-news",
+    "source": "ACER (EU energy regulators)",
+    "url": "https://www.acer.europa.eu/news/acer-finds-irish-gas-transmission-tariffs-largely-compliant-eu-rules-calls-clarity-corrib-linkline-service",
+    "title": "ACER finds Irish gas transmission tariffs largely compliant with EU rules, but calls for clarity on the Corrib Linkline service",
+    "snippet": "ACER releases its report on the Irish gas transmission tariffs, assessing whether the proposed reference price methodology (RPM) complies with the requirements of the EU Network Code on Harmonised Transmission Tariff St…",
+    "contentText": "ACER releases its report on the Irish gas transmission tariffs, assessing whether the proposed reference price methodology (RPM) complies with the requirements of the EU Network Code on Harmonised Transmission Tariff Structures (NC TAR).",
+    "publishedAt": "2026-09-16T16:15:00.000Z",
+    "sourceImage": null,
+    "region": "EU",
     "language": "en",
     "defaultCategory": "Power & Grid",
     "ai_topic_score": 0,
@@ -390,43 +1043,111 @@
       "cloud capacity teams",
       "investors"
     ],
-    "article_type": "Market Analysis",
-    "urgency_score": 0.45,
-    "taxonomy_confidence": 0.85,
+    "article_type": "Policy / Regulation",
+    "urgency_score": 0.44,
+    "taxonomy_confidence": 0.78,
     "taxonomy_reasons": [
       "power",
       "grid",
-      "electricity",
       "transmission"
     ],
     "direct_ai_infrastructure_relevance": 0,
     "data_center_relevance": 0,
     "cloud_capacity_relevance": 0,
     "semiconductor_relevance": 0,
-    "power_grid_relevance": 0.52,
+    "power_grid_relevance": 0.378,
     "cooling_relevance": 0,
     "capital_markets_relevance": 0,
     "enterprise_ai_infrastructure_relevance": 0,
-    "infrastructure_relevance_score": 0.28,
+    "infrastructure_relevance_score": 0.254,
     "infrastructure_relevance_tier": "archive_only",
     "infrastructure_relevance_action": "archive_only",
     "infrastructure_relevance_reasons": [
-      "power_grid_relevance:0.52(electricity, transmission)"
+      "power_grid_relevance:0.38(transmission)"
     ],
     "infrastructure_relevance": {
       "direct_ai_infrastructure_relevance": 0,
       "data_center_relevance": 0,
       "cloud_capacity_relevance": 0,
       "semiconductor_relevance": 0,
-      "power_grid_relevance": 0.52,
+      "power_grid_relevance": 0.378,
       "cooling_relevance": 0,
       "capital_markets_relevance": 0,
       "enterprise_ai_infrastructure_relevance": 0,
-      "infrastructure_relevance_score": 0.28,
+      "infrastructure_relevance_score": 0.254,
       "infrastructure_relevance_tier": "archive_only",
       "infrastructure_relevance_action": "archive_only",
       "infrastructure_relevance_reasons": [
-        "power_grid_relevance:0.52(electricity, transmission)"
+        "power_grid_relevance:0.38(transmission)"
+      ],
+      "infrastructureRelevanceAction": "archive_only",
+      "articlePagePublished": false,
+      "homepagePublished": false,
+      "archiveOnly": true,
+      "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
+    }
+  },
+  {
+    "id": "b19b0ed61acf6def",
+    "sourceRegistryId": "gao-reports",
+    "source": "U.S. Government Accountability Office",
+    "url": "https://www.gao.gov/products/gao-26-108530",
+    "title": "Export-Import Bank: Expanded Use of Delinquent Federal Debt Data Could Better Mitigate Credit Risk",
+    "snippet": "What GAO Found The Export-Import Bank of the United States’ (EXIM) loan guarantee transactions are approved by EXIM’s Board of Directors, staff with individual delegated authority, or delegated authority lenders. The un…",
+    "contentText": "What GAO Found The Export-Import Bank of the United States’ (EXIM) loan guarantee transactions are approved by EXIM’s Board of Directors, staff with individual delegated authority, or delegated authority lenders. The underwriting process for loan guarantee transactions approved by EXIM includes several steps, such as screening applications for completeness, reviewing for minimal eligibility requirements, and performing due diligence to assess transactions’ risks. Selected Underwriting Processes EXIM Performs for Loan Guarantees EXIM followed its underwriting guidelines but has not fully leveraged available data to identify participants with delinquent federal nontax debt. By law, a person owing certain outstanding delinquent federal nontax debt is generally not eligible for loans or loan…",
+    "publishedAt": "2026-09-16T11:20:31.000Z",
+    "sourceImage": null,
+    "region": "US",
+    "language": "en",
+    "defaultCategory": "Power & Grid",
+    "ai_topic_score": 0,
+    "ai_topic_reasons": [
+      "ai_not_in_title"
+    ],
+    "category": "Capital Markets",
+    "primary_category": "Capital Markets",
+    "secondary_category": "Financing, valuation, and capital structure",
+    "infrastructure_layer": "Capital",
+    "affected_stakeholders": [
+      "investors",
+      "lenders",
+      "developers",
+      "operators"
+    ],
+    "article_type": "Financing / M&A",
+    "urgency_score": 0.52,
+    "taxonomy_confidence": 0.62,
+    "taxonomy_reasons": [
+      "debt"
+    ],
+    "direct_ai_infrastructure_relevance": 0,
+    "data_center_relevance": 0,
+    "cloud_capacity_relevance": 0,
+    "semiconductor_relevance": 0,
+    "power_grid_relevance": 0,
+    "cooling_relevance": 0,
+    "capital_markets_relevance": 0.378,
+    "enterprise_ai_infrastructure_relevance": 0,
+    "infrastructure_relevance_score": 0.254,
+    "infrastructure_relevance_tier": "archive_only",
+    "infrastructure_relevance_action": "archive_only",
+    "infrastructure_relevance_reasons": [
+      "capital_markets_relevance:0.38(debt)"
+    ],
+    "infrastructure_relevance": {
+      "direct_ai_infrastructure_relevance": 0,
+      "data_center_relevance": 0,
+      "cloud_capacity_relevance": 0,
+      "semiconductor_relevance": 0,
+      "power_grid_relevance": 0,
+      "cooling_relevance": 0,
+      "capital_markets_relevance": 0.378,
+      "enterprise_ai_infrastructure_relevance": 0,
+      "infrastructure_relevance_score": 0.254,
+      "infrastructure_relevance_tier": "archive_only",
+      "infrastructure_relevance_action": "archive_only",
+      "infrastructure_relevance_reasons": [
+        "capital_markets_relevance:0.38(debt)"
       ],
       "infrastructureRelevanceAction": "archive_only",
       "articlePagePublished": false,
@@ -509,16 +1230,16 @@
     }
   },
   {
-    "id": "9fd1207b973b6260",
-    "sourceRegistryId": "doe-newsroom",
-    "source": "U.S. Department of Energy",
-    "url": "https://www.energy.gov/articles/energy-secretary-secures-carolinas-grid-ahead-holiday-weekend",
-    "title": "Energy Secretary Secures Carolinas’ Grid Ahead of Holiday Weekend",
-    "snippet": "Secretary Wright issued an emergency order to stabilize the Carolinas’ grid and mitigate blackout risks amid hot weather conditions.",
-    "contentText": "Secretary Wright issued an emergency order to stabilize the Carolinas’ grid and mitigate blackout risks amid hot weather conditions.",
-    "publishedAt": "2026-09-03T23:11:31.000Z",
+    "id": "a2566f4a58c649cd",
+    "sourceRegistryId": "acer-news",
+    "source": "ACER (EU energy regulators)",
+    "url": "https://www.acer.europa.eu/news/acer-supports-exemption-bi-directional-gas-flow-between-austria-and-slovenia",
+    "title": "ACER supports exemption from bi-directional gas flow between Austria and Slovenia",
+    "snippet": "ACER has issued a favourable Opinion on the decisions by the Austrian and Slovenian energy regulators to prolong the existing exemption from establishing physical bi-directional capacity at the Murfeld/Ceršak interconne…",
+    "contentText": "ACER has issued a favourable Opinion on the decisions by the Austrian and Slovenian energy regulators to prolong the existing exemption from establishing physical bi-directional capacity at the Murfeld/Ceršak interconnection point between the countries.",
+    "publishedAt": "2026-09-14T14:22:00.000Z",
     "sourceImage": null,
-    "region": "US",
+    "region": "APAC",
     "language": "en",
     "defaultCategory": "Power & Grid",
     "ai_topic_score": 0,
@@ -535,114 +1256,42 @@
       "cloud capacity teams",
       "investors"
     ],
-    "article_type": "Other",
-    "urgency_score": 0.44,
-    "taxonomy_confidence": 0.7,
-    "taxonomy_reasons": [
-      "power",
-      "grid"
-    ],
-    "direct_ai_infrastructure_relevance": 0,
-    "data_center_relevance": 0,
-    "cloud_capacity_relevance": 0,
-    "semiconductor_relevance": 0,
-    "power_grid_relevance": 0.378,
-    "cooling_relevance": 0,
-    "capital_markets_relevance": 0,
-    "enterprise_ai_infrastructure_relevance": 0,
-    "infrastructure_relevance_score": 0.254,
-    "infrastructure_relevance_tier": "archive_only",
-    "infrastructure_relevance_action": "archive_only",
-    "infrastructure_relevance_reasons": [
-      "power_grid_relevance:0.38(grid)"
-    ],
-    "infrastructure_relevance": {
-      "direct_ai_infrastructure_relevance": 0,
-      "data_center_relevance": 0,
-      "cloud_capacity_relevance": 0,
-      "semiconductor_relevance": 0,
-      "power_grid_relevance": 0.378,
-      "cooling_relevance": 0,
-      "capital_markets_relevance": 0,
-      "enterprise_ai_infrastructure_relevance": 0,
-      "infrastructure_relevance_score": 0.254,
-      "infrastructure_relevance_tier": "archive_only",
-      "infrastructure_relevance_action": "archive_only",
-      "infrastructure_relevance_reasons": [
-        "power_grid_relevance:0.38(grid)"
-      ],
-      "infrastructureRelevanceAction": "archive_only",
-      "articlePagePublished": false,
-      "homepagePublished": false,
-      "archiveOnly": true,
-      "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
-    }
-  },
-  {
-    "id": "b596f8b3044ce1ea",
-    "sourceRegistryId": "federal-register-ferc",
-    "source": "Federal Register",
-    "url": "https://www.federalregister.gov/documents/2026/09/03/2026-18037/florida-gas-transmission-company-llc-notice-of-request-under-blanket-authorization-and-establishing",
-    "title": "Florida Gas Transmission Company, LLC; Notice of Request Under Blanket Authorization and Establishing Intervention and Protest Deadline",
-    "snippet": "",
-    "contentText": "",
-    "publishedAt": "2026-09-03T04:00:00.000Z",
-    "sourceImage": null,
-    "region": "US",
-    "language": "en",
-    "defaultCategory": "Power & Grid",
-    "ai_topic_score": 0,
-    "ai_topic_reasons": [
-      "ai_not_in_title"
-    ],
-    "category": "Power & Grid",
-    "primary_category": "Power & Grid",
-    "secondary_category": "Interconnection and power procurement",
-    "infrastructure_layer": "Power",
-    "affected_stakeholders": [
-      "data center operators",
-      "utilities",
-      "cloud capacity teams",
-      "investors"
-    ],
-    "article_type": "Other",
-    "urgency_score": 0.44,
-    "taxonomy_confidence": 0.78,
+    "article_type": "Capacity Expansion",
+    "urgency_score": 0.66,
+    "taxonomy_confidence": 0.75,
     "taxonomy_reasons": [
       "power",
       "grid",
-      "transmission"
+      "interconnection"
     ],
     "direct_ai_infrastructure_relevance": 0,
     "data_center_relevance": 0,
     "cloud_capacity_relevance": 0,
     "semiconductor_relevance": 0,
-    "power_grid_relevance": 0.378,
+    "power_grid_relevance": 0.36,
     "cooling_relevance": 0,
     "capital_markets_relevance": 0,
     "enterprise_ai_infrastructure_relevance": 0,
-    "infrastructure_relevance_score": 0.254,
+    "infrastructure_relevance_score": 0.244,
     "infrastructure_relevance_tier": "archive_only",
     "infrastructure_relevance_action": "archive_only",
     "infrastructure_relevance_reasons": [
-      "power_grid_relevance:0.38(transmission)",
-      "procedural_regulatory_docket_without_compute_context"
+      "power_grid_relevance:0.36(interconnection)"
     ],
     "infrastructure_relevance": {
       "direct_ai_infrastructure_relevance": 0,
       "data_center_relevance": 0,
       "cloud_capacity_relevance": 0,
       "semiconductor_relevance": 0,
-      "power_grid_relevance": 0.378,
+      "power_grid_relevance": 0.36,
       "cooling_relevance": 0,
       "capital_markets_relevance": 0,
       "enterprise_ai_infrastructure_relevance": 0,
-      "infrastructure_relevance_score": 0.254,
+      "infrastructure_relevance_score": 0.244,
       "infrastructure_relevance_tier": "archive_only",
       "infrastructure_relevance_action": "archive_only",
       "infrastructure_relevance_reasons": [
-        "power_grid_relevance:0.38(transmission)",
-        "procedural_regulatory_docket_without_compute_context"
+        "power_grid_relevance:0.36(interconnection)"
       ],
       "infrastructureRelevanceAction": "archive_only",
       "articlePagePublished": false,
@@ -939,14 +1588,14 @@
     }
   },
   {
-    "id": "910babff08e38ac9",
-    "sourceRegistryId": "nrc-news",
-    "source": "U.S. Nuclear Regulatory Commission",
-    "url": "https://www.nrc.gov/sites/default/files/cdn/doc-collection-news/2026/s-26-005.pdf",
-    "title": "Modern Regulation for a New Nuclear Era",
+    "id": "aa7900ef9280e5f6",
+    "sourceRegistryId": "federal-register-ferc",
+    "source": "Federal Register",
+    "url": "https://www.federalregister.gov/documents/2026/09/10/2026-18456/idaho-power-company-notice-of-availability-of-the-final-supplemental-environmental-impact-statement",
+    "title": "Idaho Power Company; Notice of Availability of the Final Supplemental Environmental Impact Statement for the Hells Canyon Hydroelectric Project",
     "snippet": "",
     "contentText": "",
-    "publishedAt": "2026-09-04T08:00:00.000Z",
+    "publishedAt": "2026-09-10T04:00:00.000Z",
     "sourceImage": null,
     "region": "US",
     "language": "en",
@@ -965,42 +1614,43 @@
       "cloud capacity teams",
       "investors"
     ],
-    "article_type": "Policy / Regulation",
-    "urgency_score": 0.44,
-    "taxonomy_confidence": 0.77,
+    "article_type": "Other",
+    "urgency_score": 0.43,
+    "taxonomy_confidence": 0.69,
     "taxonomy_reasons": [
       "power",
-      "grid",
-      "nuclear"
+      "grid"
     ],
     "direct_ai_infrastructure_relevance": 0,
     "data_center_relevance": 0,
     "cloud_capacity_relevance": 0,
     "semiconductor_relevance": 0,
-    "power_grid_relevance": 0.351,
+    "power_grid_relevance": 0.297,
     "cooling_relevance": 0,
     "capital_markets_relevance": 0,
     "enterprise_ai_infrastructure_relevance": 0,
-    "infrastructure_relevance_score": 0.239,
+    "infrastructure_relevance_score": 0.207,
     "infrastructure_relevance_tier": "archive_only",
     "infrastructure_relevance_action": "archive_only",
     "infrastructure_relevance_reasons": [
-      "power_grid_relevance:0.35(nuclear)"
+      "power_grid_relevance:0.30(power)",
+      "procedural_regulatory_docket_without_compute_context"
     ],
     "infrastructure_relevance": {
       "direct_ai_infrastructure_relevance": 0,
       "data_center_relevance": 0,
       "cloud_capacity_relevance": 0,
       "semiconductor_relevance": 0,
-      "power_grid_relevance": 0.351,
+      "power_grid_relevance": 0.297,
       "cooling_relevance": 0,
       "capital_markets_relevance": 0,
       "enterprise_ai_infrastructure_relevance": 0,
-      "infrastructure_relevance_score": 0.239,
+      "infrastructure_relevance_score": 0.207,
       "infrastructure_relevance_tier": "archive_only",
       "infrastructure_relevance_action": "archive_only",
       "infrastructure_relevance_reasons": [
-        "power_grid_relevance:0.35(nuclear)"
+        "power_grid_relevance:0.30(power)",
+        "procedural_regulatory_docket_without_compute_context"
       ],
       "infrastructureRelevanceAction": "archive_only",
       "articlePagePublished": false,
@@ -1220,6 +1870,145 @@
     }
   },
   {
+    "id": "917239549fe368e3",
+    "sourceRegistryId": "nist-news",
+    "source": "National Institute of Standards and Technology",
+    "url": "https://www.nist.gov/news-events/news/2026/09/nist-awards-more-30-million-mep-centers-11-states-and-puerto-rico",
+    "title": "NIST Awards More Than $30 Million for MEP Centers in 11 States and Puerto Rico",
+    "snippet": "The awards will help small and medium-sized manufacturers increase the adoption of advanced manufacturing technology.",
+    "contentText": "The awards will help small and medium-sized manufacturers increase the adoption of advanced manufacturing technology.",
+    "publishedAt": "2026-09-15T12:00:00.000Z",
+    "sourceImage": null,
+    "region": "US",
+    "language": "en",
+    "defaultCategory": "AI Infrastructure",
+    "ai_topic_score": 0,
+    "ai_topic_reasons": [
+      "ai_not_in_title"
+    ],
+    "category": "AI Infrastructure",
+    "primary_category": "AI Infrastructure",
+    "secondary_category": "GPU clusters and deployment readiness",
+    "infrastructure_layer": "Compute",
+    "affected_stakeholders": [
+      "operators",
+      "hyperscalers",
+      "cloud buyers",
+      "investors"
+    ],
+    "article_type": "Other",
+    "urgency_score": 0.24,
+    "taxonomy_confidence": 0.53,
+    "taxonomy_reasons": [
+      "ai infrastructure"
+    ],
+    "direct_ai_infrastructure_relevance": 0,
+    "data_center_relevance": 0.27,
+    "cloud_capacity_relevance": 0,
+    "semiconductor_relevance": 0,
+    "power_grid_relevance": 0,
+    "cooling_relevance": 0,
+    "capital_markets_relevance": 0,
+    "enterprise_ai_infrastructure_relevance": 0,
+    "infrastructure_relevance_score": 0.192,
+    "infrastructure_relevance_tier": "archive_only",
+    "infrastructure_relevance_action": "archive_only",
+    "infrastructure_relevance_reasons": [
+      "data_center_relevance:0.27(mep)"
+    ],
+    "infrastructure_relevance": {
+      "direct_ai_infrastructure_relevance": 0,
+      "data_center_relevance": 0.27,
+      "cloud_capacity_relevance": 0,
+      "semiconductor_relevance": 0,
+      "power_grid_relevance": 0,
+      "cooling_relevance": 0,
+      "capital_markets_relevance": 0,
+      "enterprise_ai_infrastructure_relevance": 0,
+      "infrastructure_relevance_score": 0.192,
+      "infrastructure_relevance_tier": "archive_only",
+      "infrastructure_relevance_action": "archive_only",
+      "infrastructure_relevance_reasons": [
+        "data_center_relevance:0.27(mep)"
+      ],
+      "infrastructureRelevanceAction": "archive_only",
+      "articlePagePublished": false,
+      "homepagePublished": false,
+      "archiveOnly": true,
+      "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
+    }
+  },
+  {
+    "id": "cde0f86e887a9abf",
+    "sourceRegistryId": "nrc-news",
+    "source": "U.S. Nuclear Regulatory Commission",
+    "url": "https://www.nrc.gov/sites/default/files/cdn/doc-collection-news/2026/26-029-a.pdf",
+    "title": "NRC Advisory: NRC to Hold Mandatory Hearing on Proposed Long Mott Generating Station",
+    "snippet": "",
+    "contentText": "",
+    "publishedAt": "2026-09-14T08:00:00.000Z",
+    "sourceImage": null,
+    "region": "US",
+    "language": "en",
+    "defaultCategory": "Power & Grid",
+    "ai_topic_score": 0,
+    "ai_topic_reasons": [
+      "ai_not_in_title"
+    ],
+    "category": "Power & Grid",
+    "primary_category": "Power & Grid",
+    "secondary_category": "Interconnection and power procurement",
+    "infrastructure_layer": "Power",
+    "affected_stakeholders": [
+      "data center operators",
+      "utilities",
+      "cloud capacity teams",
+      "investors"
+    ],
+    "article_type": "Other",
+    "urgency_score": 0.42,
+    "taxonomy_confidence": 0.65,
+    "taxonomy_reasons": [
+      "power",
+      "grid"
+    ],
+    "direct_ai_infrastructure_relevance": 0,
+    "data_center_relevance": 0,
+    "cloud_capacity_relevance": 0,
+    "semiconductor_relevance": 0,
+    "power_grid_relevance": 0.26,
+    "cooling_relevance": 0,
+    "capital_markets_relevance": 0,
+    "enterprise_ai_infrastructure_relevance": 0,
+    "infrastructure_relevance_score": 0.186,
+    "infrastructure_relevance_tier": "archive_only",
+    "infrastructure_relevance_action": "archive_only",
+    "infrastructure_relevance_reasons": [
+      "power_grid_relevance:0.26(nuclear)"
+    ],
+    "infrastructure_relevance": {
+      "direct_ai_infrastructure_relevance": 0,
+      "data_center_relevance": 0,
+      "cloud_capacity_relevance": 0,
+      "semiconductor_relevance": 0,
+      "power_grid_relevance": 0.26,
+      "cooling_relevance": 0,
+      "capital_markets_relevance": 0,
+      "enterprise_ai_infrastructure_relevance": 0,
+      "infrastructure_relevance_score": 0.186,
+      "infrastructure_relevance_tier": "archive_only",
+      "infrastructure_relevance_action": "archive_only",
+      "infrastructure_relevance_reasons": [
+        "power_grid_relevance:0.26(nuclear)"
+      ],
+      "infrastructureRelevanceAction": "archive_only",
+      "articlePagePublished": false,
+      "homepagePublished": false,
+      "archiveOnly": true,
+      "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
+    }
+  },
+  {
     "id": "54e74d47c200ba79",
     "sourceRegistryId": "nrc-news",
     "source": "U.S. Nuclear Regulatory Commission",
@@ -1351,762 +2140,6 @@
       "infrastructure_relevance_action": "archive_only",
       "infrastructure_relevance_reasons": [
         "power_grid_relevance:0.26(nuclear)"
-      ],
-      "infrastructureRelevanceAction": "archive_only",
-      "articlePagePublished": false,
-      "homepagePublished": false,
-      "archiveOnly": true,
-      "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
-    }
-  },
-  {
-    "id": "57acfd30c12fd2df",
-    "sourceRegistryId": "nrc-news",
-    "source": "U.S. Nuclear Regulatory Commission",
-    "url": "https://www.nrc.gov/sites/default/files/cdn/doc-collection-news/2026/26-026-a.pdf",
-    "title": "NRC to Host 7th Artificial Intelligence Workshop",
-    "snippet": "",
-    "contentText": "",
-    "publishedAt": "2026-09-03T08:00:00.000Z",
-    "sourceImage": null,
-    "region": "US",
-    "language": "en",
-    "defaultCategory": "Power & Grid",
-    "ai_topic_score": 0.54,
-    "ai_topic_reasons": [
-      "artificial intelligence"
-    ],
-    "category": "Power & Grid",
-    "primary_category": "Power & Grid",
-    "secondary_category": "Interconnection and power procurement",
-    "infrastructure_layer": "Power",
-    "affected_stakeholders": [
-      "data center operators",
-      "utilities",
-      "cloud capacity teams",
-      "investors"
-    ],
-    "article_type": "Other",
-    "urgency_score": 0.42,
-    "taxonomy_confidence": 0.65,
-    "taxonomy_reasons": [
-      "power",
-      "grid"
-    ],
-    "direct_ai_infrastructure_relevance": 0,
-    "data_center_relevance": 0,
-    "cloud_capacity_relevance": 0,
-    "semiconductor_relevance": 0,
-    "power_grid_relevance": 0.26,
-    "cooling_relevance": 0,
-    "capital_markets_relevance": 0,
-    "enterprise_ai_infrastructure_relevance": 0,
-    "infrastructure_relevance_score": 0.186,
-    "infrastructure_relevance_tier": "archive_only",
-    "infrastructure_relevance_action": "archive_only",
-    "infrastructure_relevance_reasons": [
-      "power_grid_relevance:0.26(nuclear)"
-    ],
-    "infrastructure_relevance": {
-      "direct_ai_infrastructure_relevance": 0,
-      "data_center_relevance": 0,
-      "cloud_capacity_relevance": 0,
-      "semiconductor_relevance": 0,
-      "power_grid_relevance": 0.26,
-      "cooling_relevance": 0,
-      "capital_markets_relevance": 0,
-      "enterprise_ai_infrastructure_relevance": 0,
-      "infrastructure_relevance_score": 0.186,
-      "infrastructure_relevance_tier": "archive_only",
-      "infrastructure_relevance_action": "archive_only",
-      "infrastructure_relevance_reasons": [
-        "power_grid_relevance:0.26(nuclear)"
-      ],
-      "infrastructureRelevanceAction": "archive_only",
-      "articlePagePublished": false,
-      "homepagePublished": false,
-      "archiveOnly": true,
-      "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
-    }
-  },
-  {
-    "id": "074ff0c83c48d6ab",
-    "sourceRegistryId": "uk-desnz",
-    "source": "UK Department for Energy Security and Net Zero",
-    "url": "https://www.gov.uk/government/speeches/minister-mccluskey-speech-on-ai-for-clean-energy-vision",
-    "title": "Minister McCluskey speech on AI for clean energy vision",
-    "snippet": "Minister for Local Energy and Jobs Martin McCluskey delivered a speech at the Google for Startups Accelerator: Europe event in London on 8 September.",
-    "contentText": "Minister for Local Energy and Jobs Martin McCluskey delivered a speech at the Google for Startups Accelerator: Europe event in London on 8 September.",
-    "publishedAt": "2026-09-08T12:55:52.000Z",
-    "sourceImage": null,
-    "region": "US",
-    "language": "en",
-    "defaultCategory": "Power & Grid",
-    "ai_topic_score": 0.443,
-    "ai_topic_reasons": [
-      "accelerator",
-      "ai"
-    ],
-    "category": "Power & Grid",
-    "primary_category": "Power & Grid",
-    "secondary_category": "Interconnection and power procurement",
-    "infrastructure_layer": "Power",
-    "affected_stakeholders": [
-      "data center operators",
-      "utilities",
-      "cloud capacity teams",
-      "investors"
-    ],
-    "article_type": "Other",
-    "urgency_score": 0.41,
-    "taxonomy_confidence": 0.61,
-    "taxonomy_reasons": [
-      "power",
-      "grid"
-    ],
-    "direct_ai_infrastructure_relevance": 0,
-    "data_center_relevance": 0,
-    "cloud_capacity_relevance": 0,
-    "semiconductor_relevance": 0.22,
-    "power_grid_relevance": 0,
-    "cooling_relevance": 0,
-    "capital_markets_relevance": 0,
-    "enterprise_ai_infrastructure_relevance": 0,
-    "infrastructure_relevance_score": 0.163,
-    "infrastructure_relevance_tier": "archive_only",
-    "infrastructure_relevance_action": "archive_only",
-    "infrastructure_relevance_reasons": [
-      "semiconductor_relevance:0.22(accelerator)"
-    ],
-    "infrastructure_relevance": {
-      "direct_ai_infrastructure_relevance": 0,
-      "data_center_relevance": 0,
-      "cloud_capacity_relevance": 0,
-      "semiconductor_relevance": 0.22,
-      "power_grid_relevance": 0,
-      "cooling_relevance": 0,
-      "capital_markets_relevance": 0,
-      "enterprise_ai_infrastructure_relevance": 0,
-      "infrastructure_relevance_score": 0.163,
-      "infrastructure_relevance_tier": "archive_only",
-      "infrastructure_relevance_action": "archive_only",
-      "infrastructure_relevance_reasons": [
-        "semiconductor_relevance:0.22(accelerator)"
-      ],
-      "infrastructureRelevanceAction": "archive_only",
-      "articlePagePublished": false,
-      "homepagePublished": false,
-      "archiveOnly": true,
-      "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
-    }
-  },
-  {
-    "id": "5d0e09f1a9e769a6",
-    "sourceRegistryId": "ec-press-corner",
-    "source": "European Commission",
-    "url": "https://ec.europa.eu/commission/presscorner/detail/en/speech_26_1862",
-    "title": "Press Remarks by Commissioner Lahbib in Moldova",
-    "snippet": "European Commission Speech Chișinău, 11 Sep 2026 This is my first visit to Moldova as Commissioner, and it comes at a pivotal moment. You are moving forward on your path towards the European Union, and the EU ...",
-    "contentText": "European Commission Speech Chișinău, 11 Sep 2026 This is my first visit to Moldova as Commissioner, and it comes at a pivotal moment. You are moving forward on your path towards the European Union, and the EU ...",
-    "publishedAt": "2026-09-11T15:34:00.000Z",
-    "sourceImage": null,
-    "region": "EU",
-    "language": "en",
-    "defaultCategory": "Policy & Siting",
-    "ai_topic_score": 0,
-    "ai_topic_reasons": [
-      "ai_not_in_title"
-    ],
-    "category": "Policy & Siting",
-    "primary_category": "Policy & Siting",
-    "secondary_category": "Permitting, regulation, and market access",
-    "infrastructure_layer": "Policy",
-    "affected_stakeholders": [
-      "regulators",
-      "site selectors",
-      "developers",
-      "utilities"
-    ],
-    "article_type": "Policy / Regulation",
-    "urgency_score": 0.18,
-    "taxonomy_confidence": 0.53,
-    "taxonomy_reasons": [
-      "policy"
-    ],
-    "direct_ai_infrastructure_relevance": 0,
-    "data_center_relevance": 0,
-    "cloud_capacity_relevance": 0,
-    "semiconductor_relevance": 0,
-    "power_grid_relevance": 0,
-    "cooling_relevance": 0,
-    "capital_markets_relevance": 0,
-    "enterprise_ai_infrastructure_relevance": 0,
-    "infrastructure_relevance_score": 0,
-    "infrastructure_relevance_tier": "archive_only",
-    "infrastructure_relevance_action": "archive_only",
-    "infrastructure_relevance_reasons": [
-      "no_strong_compute_current_infrastructure_match"
-    ],
-    "infrastructure_relevance": {
-      "direct_ai_infrastructure_relevance": 0,
-      "data_center_relevance": 0,
-      "cloud_capacity_relevance": 0,
-      "semiconductor_relevance": 0,
-      "power_grid_relevance": 0,
-      "cooling_relevance": 0,
-      "capital_markets_relevance": 0,
-      "enterprise_ai_infrastructure_relevance": 0,
-      "infrastructure_relevance_score": 0,
-      "infrastructure_relevance_tier": "archive_only",
-      "infrastructure_relevance_action": "archive_only",
-      "infrastructure_relevance_reasons": [
-        "no_strong_compute_current_infrastructure_match"
-      ],
-      "infrastructureRelevanceAction": "archive_only",
-      "articlePagePublished": false,
-      "homepagePublished": false,
-      "archiveOnly": true,
-      "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
-    }
-  },
-  {
-    "id": "9ac64c61a8be2574",
-    "sourceRegistryId": "sec-press",
-    "source": "U.S. Securities and Exchange Commission",
-    "url": "https://www.sec.gov/newsroom/press-releases/2026-87-joint-readout-principals-meeting-us-uk-authorities-regarding-central-counterparty-resolution",
-    "title": "Joint Readout of Principals’ Meeting of U.S. and UK Authorities Regarding Central Counterparty Resolution",
-    "snippet": "Senior officials from the Securities and Exchange Commission, Federal Deposit Insurance Corporation, Commodity Futures Trading Commission, Federal Reserve Board, and Bank of England convened for a tabletop exercise on S…",
-    "contentText": "Senior officials from the Securities and Exchange Commission, Federal Deposit Insurance Corporation, Commodity Futures Trading Commission, Federal Reserve Board, and Bank of England convened for a tabletop exercise on Sept. 3, 2026, to discuss certain…",
-    "publishedAt": "2026-09-11T15:00:00.000Z",
-    "sourceImage": null,
-    "region": "US",
-    "language": "en",
-    "defaultCategory": "Capital Markets",
-    "ai_topic_score": 0,
-    "ai_topic_reasons": [
-      "ai_not_in_title"
-    ],
-    "category": "Other",
-    "primary_category": "Other",
-    "secondary_category": "General AI infrastructure signal",
-    "infrastructure_layer": "Demand",
-    "affected_stakeholders": [
-      "operators"
-    ],
-    "article_type": "Other",
-    "urgency_score": 0.18,
-    "taxonomy_confidence": null,
-    "taxonomy_reasons": [
-      "fallback_taxonomy"
-    ],
-    "direct_ai_infrastructure_relevance": 0,
-    "data_center_relevance": 0,
-    "cloud_capacity_relevance": 0,
-    "semiconductor_relevance": 0,
-    "power_grid_relevance": 0,
-    "cooling_relevance": 0,
-    "capital_markets_relevance": 0,
-    "enterprise_ai_infrastructure_relevance": 0,
-    "infrastructure_relevance_score": 0,
-    "infrastructure_relevance_tier": "archive_only",
-    "infrastructure_relevance_action": "archive_only",
-    "infrastructure_relevance_reasons": [
-      "no_strong_compute_current_infrastructure_match"
-    ],
-    "infrastructure_relevance": {
-      "direct_ai_infrastructure_relevance": 0,
-      "data_center_relevance": 0,
-      "cloud_capacity_relevance": 0,
-      "semiconductor_relevance": 0,
-      "power_grid_relevance": 0,
-      "cooling_relevance": 0,
-      "capital_markets_relevance": 0,
-      "enterprise_ai_infrastructure_relevance": 0,
-      "infrastructure_relevance_score": 0,
-      "infrastructure_relevance_tier": "archive_only",
-      "infrastructure_relevance_action": "archive_only",
-      "infrastructure_relevance_reasons": [
-        "no_strong_compute_current_infrastructure_match"
-      ],
-      "infrastructureRelevanceAction": "archive_only",
-      "articlePagePublished": false,
-      "homepagePublished": false,
-      "archiveOnly": true,
-      "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
-    }
-  },
-  {
-    "id": "68cecfaddcb2767f",
-    "sourceRegistryId": "ec-press-corner",
-    "source": "European Commission",
-    "url": "https://ec.europa.eu/commission/presscorner/detail/en/mex_26_1856",
-    "title": "Daily News 11 / 09 / 2026",
-    "snippet": "European Commission Daily news Brussels, 11 Sep 2026 Delivering Europe's independence – five days until State of the Union 2026 Next Wednesday 16 September, at 9:00 CEST, President Ursula von der Leyen will deliv...",
-    "contentText": "European Commission Daily news Brussels, 11 Sep 2026 Delivering Europe's independence – five days until State of the Union 2026 Next Wednesday 16 September, at 9:00 CEST, President Ursula von der Leyen will deliv...",
-    "publishedAt": "2026-09-11T10:01:31.000Z",
-    "sourceImage": null,
-    "region": "US",
-    "language": "en",
-    "defaultCategory": "Policy & Siting",
-    "ai_topic_score": 0,
-    "ai_topic_reasons": [
-      "ai_not_in_title"
-    ],
-    "category": "Policy & Siting",
-    "primary_category": "Policy & Siting",
-    "secondary_category": "Permitting, regulation, and market access",
-    "infrastructure_layer": "Policy",
-    "affected_stakeholders": [
-      "regulators",
-      "site selectors",
-      "developers",
-      "utilities"
-    ],
-    "article_type": "Policy / Regulation",
-    "urgency_score": 0.18,
-    "taxonomy_confidence": 0.53,
-    "taxonomy_reasons": [
-      "policy"
-    ],
-    "direct_ai_infrastructure_relevance": 0,
-    "data_center_relevance": 0,
-    "cloud_capacity_relevance": 0,
-    "semiconductor_relevance": 0,
-    "power_grid_relevance": 0,
-    "cooling_relevance": 0,
-    "capital_markets_relevance": 0,
-    "enterprise_ai_infrastructure_relevance": 0,
-    "infrastructure_relevance_score": 0,
-    "infrastructure_relevance_tier": "archive_only",
-    "infrastructure_relevance_action": "archive_only",
-    "infrastructure_relevance_reasons": [
-      "no_strong_compute_current_infrastructure_match"
-    ],
-    "infrastructure_relevance": {
-      "direct_ai_infrastructure_relevance": 0,
-      "data_center_relevance": 0,
-      "cloud_capacity_relevance": 0,
-      "semiconductor_relevance": 0,
-      "power_grid_relevance": 0,
-      "cooling_relevance": 0,
-      "capital_markets_relevance": 0,
-      "enterprise_ai_infrastructure_relevance": 0,
-      "infrastructure_relevance_score": 0,
-      "infrastructure_relevance_tier": "archive_only",
-      "infrastructure_relevance_action": "archive_only",
-      "infrastructure_relevance_reasons": [
-        "no_strong_compute_current_infrastructure_match"
-      ],
-      "infrastructureRelevanceAction": "archive_only",
-      "articlePagePublished": false,
-      "homepagePublished": false,
-      "archiveOnly": true,
-      "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
-    }
-  },
-  {
-    "id": "f99e288248469e92",
-    "sourceRegistryId": "ec-press-corner",
-    "source": "European Commission",
-    "url": "https://ec.europa.eu/commission/presscorner/detail/en/speech_26_1850",
-    "title": "Commissioner Roswall's speech at the event, ‘Experimentation Journey for Achieving Circularity' hosted by the JRC",
-    "snippet": "European Commission Speech Stockholm, 11 Sep 2026 Dear Birgitta, dear Blerta, Distinguished guests from Dalarna and partner territories. It is a pleasure to join you in Avesta – my hometown! You know, I have s...",
-    "contentText": "European Commission Speech Stockholm, 11 Sep 2026 Dear Birgitta, dear Blerta, Distinguished guests from Dalarna and partner territories. It is a pleasure to join you in Avesta – my hometown! You know, I have s...",
-    "publishedAt": "2026-09-11T08:36:18.000Z",
-    "sourceImage": null,
-    "region": "EU",
-    "language": "en",
-    "defaultCategory": "Policy & Siting",
-    "ai_topic_score": 0,
-    "ai_topic_reasons": [
-      "ai_not_in_title"
-    ],
-    "category": "Policy & Siting",
-    "primary_category": "Policy & Siting",
-    "secondary_category": "Permitting, regulation, and market access",
-    "infrastructure_layer": "Policy",
-    "affected_stakeholders": [
-      "regulators",
-      "site selectors",
-      "developers",
-      "utilities"
-    ],
-    "article_type": "Policy / Regulation",
-    "urgency_score": 0.18,
-    "taxonomy_confidence": 0.53,
-    "taxonomy_reasons": [
-      "policy"
-    ],
-    "direct_ai_infrastructure_relevance": 0,
-    "data_center_relevance": 0,
-    "cloud_capacity_relevance": 0,
-    "semiconductor_relevance": 0,
-    "power_grid_relevance": 0,
-    "cooling_relevance": 0,
-    "capital_markets_relevance": 0,
-    "enterprise_ai_infrastructure_relevance": 0,
-    "infrastructure_relevance_score": 0,
-    "infrastructure_relevance_tier": "archive_only",
-    "infrastructure_relevance_action": "archive_only",
-    "infrastructure_relevance_reasons": [
-      "no_strong_compute_current_infrastructure_match"
-    ],
-    "infrastructure_relevance": {
-      "direct_ai_infrastructure_relevance": 0,
-      "data_center_relevance": 0,
-      "cloud_capacity_relevance": 0,
-      "semiconductor_relevance": 0,
-      "power_grid_relevance": 0,
-      "cooling_relevance": 0,
-      "capital_markets_relevance": 0,
-      "enterprise_ai_infrastructure_relevance": 0,
-      "infrastructure_relevance_score": 0,
-      "infrastructure_relevance_tier": "archive_only",
-      "infrastructure_relevance_action": "archive_only",
-      "infrastructure_relevance_reasons": [
-        "no_strong_compute_current_infrastructure_match"
-      ],
-      "infrastructureRelevanceAction": "archive_only",
-      "articlePagePublished": false,
-      "homepagePublished": false,
-      "archiveOnly": true,
-      "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
-    }
-  },
-  {
-    "id": "2e8adff6fd6305ce",
-    "sourceRegistryId": "ec-press-corner",
-    "source": "European Commission",
-    "url": "https://ec.europa.eu/commission/presscorner/detail/en/speech_26_1849",
-    "title": "Speaking notes by Commissioner Kubilius at the first Board meeting of the EU-Ukraine Drone Alliance",
-    "snippet": "European Commission Speech Brussels, 11 Sep 2026 Ladies and gentlemen, Welcome to Brussels at this very special moment: The very first Board meeting of the EU–Ukraine Drone Alliance. We had over 400 applicants...",
-    "contentText": "European Commission Speech Brussels, 11 Sep 2026 Ladies and gentlemen, Welcome to Brussels at this very special moment: The very first Board meeting of the EU–Ukraine Drone Alliance. We had over 400 applicants...",
-    "publishedAt": "2026-09-11T07:30:48.000Z",
-    "sourceImage": null,
-    "region": "US",
-    "language": "en",
-    "defaultCategory": "Policy & Siting",
-    "ai_topic_score": 0,
-    "ai_topic_reasons": [
-      "ai_not_in_title"
-    ],
-    "category": "Policy & Siting",
-    "primary_category": "Policy & Siting",
-    "secondary_category": "Permitting, regulation, and market access",
-    "infrastructure_layer": "Policy",
-    "affected_stakeholders": [
-      "regulators",
-      "site selectors",
-      "developers",
-      "utilities"
-    ],
-    "article_type": "Policy / Regulation",
-    "urgency_score": 0.18,
-    "taxonomy_confidence": 0.53,
-    "taxonomy_reasons": [
-      "policy"
-    ],
-    "direct_ai_infrastructure_relevance": 0,
-    "data_center_relevance": 0,
-    "cloud_capacity_relevance": 0,
-    "semiconductor_relevance": 0,
-    "power_grid_relevance": 0,
-    "cooling_relevance": 0,
-    "capital_markets_relevance": 0,
-    "enterprise_ai_infrastructure_relevance": 0,
-    "infrastructure_relevance_score": 0,
-    "infrastructure_relevance_tier": "archive_only",
-    "infrastructure_relevance_action": "archive_only",
-    "infrastructure_relevance_reasons": [
-      "no_strong_compute_current_infrastructure_match"
-    ],
-    "infrastructure_relevance": {
-      "direct_ai_infrastructure_relevance": 0,
-      "data_center_relevance": 0,
-      "cloud_capacity_relevance": 0,
-      "semiconductor_relevance": 0,
-      "power_grid_relevance": 0,
-      "cooling_relevance": 0,
-      "capital_markets_relevance": 0,
-      "enterprise_ai_infrastructure_relevance": 0,
-      "infrastructure_relevance_score": 0,
-      "infrastructure_relevance_tier": "archive_only",
-      "infrastructure_relevance_action": "archive_only",
-      "infrastructure_relevance_reasons": [
-        "no_strong_compute_current_infrastructure_match"
-      ],
-      "infrastructureRelevanceAction": "archive_only",
-      "articlePagePublished": false,
-      "homepagePublished": false,
-      "archiveOnly": true,
-      "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
-    }
-  },
-  {
-    "id": "d39eb919889636c1",
-    "sourceRegistryId": "ec-press-corner",
-    "source": "European Commission",
-    "url": "https://ec.europa.eu/commission/presscorner/detail/en/speech_26_1846",
-    "title": "Speech by Executive Vice-President Virkkunen at Irish Presidency's Conference on Online Safety for Children and Young People",
-    "snippet": "European Commission Speech Dublin, 11 Sep 2026 Dear colleagues, it is a pleasure to address you today at the Irish Presidency's Conference on Online Safety for Children and Young People. It is fitting that w...",
-    "contentText": "European Commission Speech Dublin, 11 Sep 2026 Dear colleagues, it is a pleasure to address you today at the Irish Presidency's Conference on Online Safety for Children and Young People. It is fitting that w...",
-    "publishedAt": "2026-09-11T07:01:28.000Z",
-    "sourceImage": null,
-    "region": "EU",
-    "language": "en",
-    "defaultCategory": "Policy & Siting",
-    "ai_topic_score": 0,
-    "ai_topic_reasons": [
-      "ai_not_in_title"
-    ],
-    "category": "Policy & Siting",
-    "primary_category": "Policy & Siting",
-    "secondary_category": "Permitting, regulation, and market access",
-    "infrastructure_layer": "Policy",
-    "affected_stakeholders": [
-      "regulators",
-      "site selectors",
-      "developers",
-      "utilities"
-    ],
-    "article_type": "Policy / Regulation",
-    "urgency_score": 0.18,
-    "taxonomy_confidence": 0.53,
-    "taxonomy_reasons": [
-      "policy"
-    ],
-    "direct_ai_infrastructure_relevance": 0,
-    "data_center_relevance": 0,
-    "cloud_capacity_relevance": 0,
-    "semiconductor_relevance": 0,
-    "power_grid_relevance": 0,
-    "cooling_relevance": 0,
-    "capital_markets_relevance": 0,
-    "enterprise_ai_infrastructure_relevance": 0,
-    "infrastructure_relevance_score": 0,
-    "infrastructure_relevance_tier": "archive_only",
-    "infrastructure_relevance_action": "archive_only",
-    "infrastructure_relevance_reasons": [
-      "no_strong_compute_current_infrastructure_match"
-    ],
-    "infrastructure_relevance": {
-      "direct_ai_infrastructure_relevance": 0,
-      "data_center_relevance": 0,
-      "cloud_capacity_relevance": 0,
-      "semiconductor_relevance": 0,
-      "power_grid_relevance": 0,
-      "cooling_relevance": 0,
-      "capital_markets_relevance": 0,
-      "enterprise_ai_infrastructure_relevance": 0,
-      "infrastructure_relevance_score": 0,
-      "infrastructure_relevance_tier": "archive_only",
-      "infrastructure_relevance_action": "archive_only",
-      "infrastructure_relevance_reasons": [
-        "no_strong_compute_current_infrastructure_match"
-      ],
-      "infrastructureRelevanceAction": "archive_only",
-      "articlePagePublished": false,
-      "homepagePublished": false,
-      "archiveOnly": true,
-      "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
-    }
-  },
-  {
-    "id": "36fe9ff6b0770079",
-    "sourceRegistryId": "ec-press-corner",
-    "source": "European Commission",
-    "url": "https://ec.europa.eu/commission/presscorner/detail/en/fs_22_3862",
-    "title": "Factsheet - EU solidarity with Ukraine",
-    "snippet": "European Commission Factsheet Brussels, 11 Sep 2026 Factsheet - EU solidarity with Ukraine Factsheet - EU solidarity with Ukraine",
-    "contentText": "European Commission Factsheet Brussels, 11 Sep 2026 Factsheet - EU solidarity with Ukraine Factsheet - EU solidarity with Ukraine",
-    "publishedAt": "2026-09-10T22:00:00.000Z",
-    "sourceImage": null,
-    "region": "US",
-    "language": "en",
-    "defaultCategory": "Policy & Siting",
-    "ai_topic_score": 0,
-    "ai_topic_reasons": [
-      "ai_not_in_title"
-    ],
-    "category": "Policy & Siting",
-    "primary_category": "Policy & Siting",
-    "secondary_category": "Permitting, regulation, and market access",
-    "infrastructure_layer": "Policy",
-    "affected_stakeholders": [
-      "regulators",
-      "site selectors",
-      "developers",
-      "utilities"
-    ],
-    "article_type": "Policy / Regulation",
-    "urgency_score": 0.18,
-    "taxonomy_confidence": 0.53,
-    "taxonomy_reasons": [
-      "policy"
-    ],
-    "direct_ai_infrastructure_relevance": 0,
-    "data_center_relevance": 0,
-    "cloud_capacity_relevance": 0,
-    "semiconductor_relevance": 0,
-    "power_grid_relevance": 0,
-    "cooling_relevance": 0,
-    "capital_markets_relevance": 0,
-    "enterprise_ai_infrastructure_relevance": 0,
-    "infrastructure_relevance_score": 0,
-    "infrastructure_relevance_tier": "archive_only",
-    "infrastructure_relevance_action": "archive_only",
-    "infrastructure_relevance_reasons": [
-      "no_strong_compute_current_infrastructure_match"
-    ],
-    "infrastructure_relevance": {
-      "direct_ai_infrastructure_relevance": 0,
-      "data_center_relevance": 0,
-      "cloud_capacity_relevance": 0,
-      "semiconductor_relevance": 0,
-      "power_grid_relevance": 0,
-      "cooling_relevance": 0,
-      "capital_markets_relevance": 0,
-      "enterprise_ai_infrastructure_relevance": 0,
-      "infrastructure_relevance_score": 0,
-      "infrastructure_relevance_tier": "archive_only",
-      "infrastructure_relevance_action": "archive_only",
-      "infrastructure_relevance_reasons": [
-        "no_strong_compute_current_infrastructure_match"
-      ],
-      "infrastructureRelevanceAction": "archive_only",
-      "articlePagePublished": false,
-      "homepagePublished": false,
-      "archiveOnly": true,
-      "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
-    }
-  },
-  {
-    "id": "a895d3b81657b86a",
-    "sourceRegistryId": "nsf-news",
-    "source": "U.S. National Science Foundation",
-    "url": "https://www.nsf.gov/news/nsf-leadership-new-golden-age-science",
-    "title": "NSF leadership in a new golden age of science",
-    "snippet": "The U.S. National Science Foundation was established in 1950 to keep American discovery at the frontier. That mission has not changed. The science and technology ecosystem around it has...",
-    "contentText": "The U.S. National Science Foundation was established in 1950 to keep American discovery at the frontier. That mission has not changed. The science and technology ecosystem around it has...",
-    "publishedAt": "2026-09-10T18:59:14.000Z",
-    "sourceImage": null,
-    "region": "US",
-    "language": "en",
-    "defaultCategory": "AI Infrastructure",
-    "ai_topic_score": 0,
-    "ai_topic_reasons": [
-      "ai_not_in_title"
-    ],
-    "category": "AI Infrastructure",
-    "primary_category": "AI Infrastructure",
-    "secondary_category": "GPU clusters and deployment readiness",
-    "infrastructure_layer": "Compute",
-    "affected_stakeholders": [
-      "operators",
-      "hyperscalers",
-      "cloud buyers",
-      "investors"
-    ],
-    "article_type": "Other",
-    "urgency_score": 0.18,
-    "taxonomy_confidence": 0.53,
-    "taxonomy_reasons": [
-      "ai infrastructure"
-    ],
-    "direct_ai_infrastructure_relevance": 0,
-    "data_center_relevance": 0,
-    "cloud_capacity_relevance": 0,
-    "semiconductor_relevance": 0,
-    "power_grid_relevance": 0,
-    "cooling_relevance": 0,
-    "capital_markets_relevance": 0,
-    "enterprise_ai_infrastructure_relevance": 0,
-    "infrastructure_relevance_score": 0,
-    "infrastructure_relevance_tier": "archive_only",
-    "infrastructure_relevance_action": "archive_only",
-    "infrastructure_relevance_reasons": [
-      "no_strong_compute_current_infrastructure_match"
-    ],
-    "infrastructure_relevance": {
-      "direct_ai_infrastructure_relevance": 0,
-      "data_center_relevance": 0,
-      "cloud_capacity_relevance": 0,
-      "semiconductor_relevance": 0,
-      "power_grid_relevance": 0,
-      "cooling_relevance": 0,
-      "capital_markets_relevance": 0,
-      "enterprise_ai_infrastructure_relevance": 0,
-      "infrastructure_relevance_score": 0,
-      "infrastructure_relevance_tier": "archive_only",
-      "infrastructure_relevance_action": "archive_only",
-      "infrastructure_relevance_reasons": [
-        "no_strong_compute_current_infrastructure_match"
-      ],
-      "infrastructureRelevanceAction": "archive_only",
-      "articlePagePublished": false,
-      "homepagePublished": false,
-      "archiveOnly": true,
-      "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
-    }
-  },
-  {
-    "id": "a8f4e95761a5715e",
-    "sourceRegistryId": "sec-press",
-    "source": "U.S. Securities and Exchange Commission",
-    "url": "https://www.sec.gov/newsroom/press-releases/2026-86-sec-charges-founder-his-two-new-jersey-based-companies-alleged-16-million-ponzi-scheme",
-    "title": "SEC Charges Founder and His Two New Jersey-Based Companies in Alleged $16 Million Ponzi Scheme",
-    "snippet": "The Securities and Exchange Commission today charged Ernest Ossei Boateng and two New Jersey-based companies he controls, Intercontinental Wealth Network LLC and I Wealth Network LP, for allegedly raising approximately…",
-    "contentText": "The Securities and Exchange Commission today charged Ernest Ossei Boateng and two New Jersey-based companies he controls, Intercontinental Wealth Network LLC and I Wealth Network LP, for allegedly raising approximately $16 million from more than 200…",
-    "publishedAt": "2026-09-10T17:45:22.000Z",
-    "sourceImage": null,
-    "region": "US",
-    "language": "en",
-    "defaultCategory": "Capital Markets",
-    "ai_topic_score": 0,
-    "ai_topic_reasons": [
-      "ai_not_in_title"
-    ],
-    "category": "Other",
-    "primary_category": "Other",
-    "secondary_category": "General AI infrastructure signal",
-    "infrastructure_layer": "Demand",
-    "affected_stakeholders": [
-      "operators"
-    ],
-    "article_type": "Other",
-    "urgency_score": 0.18,
-    "taxonomy_confidence": null,
-    "taxonomy_reasons": [
-      "fallback_taxonomy"
-    ],
-    "direct_ai_infrastructure_relevance": 0,
-    "data_center_relevance": 0,
-    "cloud_capacity_relevance": 0,
-    "semiconductor_relevance": 0,
-    "power_grid_relevance": 0,
-    "cooling_relevance": 0,
-    "capital_markets_relevance": 0,
-    "enterprise_ai_infrastructure_relevance": 0,
-    "infrastructure_relevance_score": 0,
-    "infrastructure_relevance_tier": "archive_only",
-    "infrastructure_relevance_action": "archive_only",
-    "infrastructure_relevance_reasons": [
-      "no_strong_compute_current_infrastructure_match"
-    ],
-    "infrastructure_relevance": {
-      "direct_ai_infrastructure_relevance": 0,
-      "data_center_relevance": 0,
-      "cloud_capacity_relevance": 0,
-      "semiconductor_relevance": 0,
-      "power_grid_relevance": 0,
-      "cooling_relevance": 0,
-      "capital_markets_relevance": 0,
-      "enterprise_ai_infrastructure_relevance": 0,
-      "infrastructure_relevance_score": 0,
-      "infrastructure_relevance_tier": "archive_only",
-      "infrastructure_relevance_action": "archive_only",
-      "infrastructure_relevance_reasons": [
-        "no_strong_compute_current_infrastructure_match"
       ],
       "infrastructureRelevanceAction": "archive_only",
       "articlePagePublished": false,
