@@ -11,6 +11,7 @@ import { finalPublicationIntegrityResult, publicationIntegritySnapshot } from '.
 import { buildHomepageFeed } from './lib/homepage-feed-builder.mjs';
 import { buildRssItems } from './lib/rss-builder.mjs';
 import { buildSitemapEntries } from './lib/sitemap-builder.mjs';
+import { isTrustedPublicImage, mergeArticleImageFields } from './lib/article-image-surface.mjs';
 import { readJsonFile, writeJsonFile } from './lib/state-store.mjs';
 import { ARCHIVE_NEWS_PATH, LATEST_NEWS_PATH, SEARCH_INDEX_PATH } from './lib/constants.mjs';
 import { rebuildTaxonomyPages } from './rebuild-taxonomy-pages.mjs';
@@ -23,9 +24,110 @@ function assert(condition, message) {
 
 const MIN_SOURCE_TEXT_CHARS = 500;
 const LIVE_FETCH_ATTEMPTS = 2;
+const RESTORABLE_VARIANT_FIELDS = ['heroImage', 'generatedImage', 'thumbnailImage', 'ogImage'];
+const RESTORABLE_IMAGE_FIELDS = [...RESTORABLE_VARIANT_FIELDS, 'legacyImage'];
+const PRIOR_IMAGE_REFERENCE_FIELDS = [
+  ...RESTORABLE_IMAGE_FIELDS,
+  'sourceImage',
+  'image',
+  'imageUrl',
+  'image_url',
+  'thumbnail',
+];
+const RESTORABLE_IMAGE_METADATA_FIELDS = [
+  'imageAlt',
+  'imageStatus',
+  'imageGeneratedAt',
+  'imageModel',
+  'generatedImageProvider',
+  'generatedImageModel',
+  'imageProvider',
+  'imagePrompt',
+];
+const SOURCE_DERIVED_IMAGE_RE = /\b(?:source(?:-image|-canonical)?|origin-canonical)\b/i;
+const GENERATED_IMAGE_PROVIDER_RE = /\b(?:codex|chatgpt|image2|openai|gpt-image|nano|nanobanana|gemini|local|fallback)\b/i;
 
 function sleep(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+function clean(value = '') {
+  return String(value || '').trim();
+}
+
+function cleanImageId(value = '') {
+  return String(value || '').replace(/[^a-zA-Z0-9_-]/g, '').slice(0, 80);
+}
+
+function trustedLocalGeneratedImage(value = '') {
+  const image = clean(value);
+  return /^\/generated\/[a-z0-9_./-]+$/i.test(image)
+    && !/(?:^|\/)\.\.(?:\/|$)/.test(image)
+    && isTrustedPublicImage(image);
+}
+
+function variantsFormSafeSet(record = {}) {
+  const id = cleanImageId(record.id);
+  const hero = clean(record.heroImage || record.generatedImage);
+  const generated = clean(record.generatedImage || hero);
+  const thumbnail = clean(record.thumbnailImage);
+  const og = clean(record.ogImage);
+  if (!trustedLocalGeneratedImage(hero)) return false;
+
+  const fallbackMatch = hero.match(/^(\/generated\/fallbacks\/[a-z0-9_-]+\.svg)$/i);
+  if (fallbackMatch) {
+    return [record.heroImage, record.generatedImage, record.thumbnailImage, record.ogImage]
+      .map(clean)
+      .filter(Boolean)
+      .every((image) => image === hero);
+  }
+  if (![generated, thumbnail, og].every(trustedLocalGeneratedImage)) return false;
+  if (generated !== hero) return false;
+
+  const heroMatch = hero.match(/^\/generated\/articles\/([a-z0-9_-]+)\/hero\.webp$/i);
+  if (!heroMatch) return false;
+  const slug = heroMatch[1];
+  if (!id || (slug !== id && !slug.startsWith(`${id}-`))) return false;
+  const base = `/generated/articles/${slug}`;
+  return thumbnail === `${base}/thumbnail.webp`
+    && og === `${base}/og.webp`;
+}
+
+function legacyImageMatchesRecord(record = {}) {
+  const legacy = clean(record.legacyImage);
+  if (!legacy) return true;
+  const match = legacy.match(/^\/generated\/([a-z0-9_-]+)\.[a-z0-9]+$/i);
+  return Boolean(match && cleanImageId(record.id) && match[1] === cleanImageId(record.id));
+}
+
+function restorableArtwork(record = {}) {
+  const priorReferences = PRIOR_IMAGE_REFERENCE_FIELDS.map((field) => clean(record[field])).filter(Boolean);
+  if (!priorReferences.length || priorReferences.some((image) => !trustedLocalGeneratedImage(image))) return null;
+  if ([record.sourceImage, record.imageUrl, record.image_url].some((image) => clean(image))) return null;
+
+  const provenance = [
+    record.generatedImageProvider,
+    record.imageProvider,
+    record.image_source_provider,
+    record.generatedImageModel,
+    record.imageModel,
+    record.imageStatus,
+    record.image_status,
+  ].map(clean).filter(Boolean).join(' ');
+  if (SOURCE_DERIVED_IMAGE_RE.test(provenance)) return null;
+
+  const restorableVariants = RESTORABLE_VARIANT_FIELDS.filter((field) => trustedLocalGeneratedImage(record[field]));
+  if (!variantsFormSafeSet(record) || !legacyImageMatchesRecord(record)) return null;
+  const fallbackOnly = restorableVariants.every((field) => /^\/generated\/fallbacks\//i.test(clean(record[field])));
+  if (!fallbackOnly && !GENERATED_IMAGE_PROVIDER_RE.test(provenance)) return null;
+
+  const artwork = { id: record.id };
+  for (const field of restorableVariants) artwork[field] = record[field];
+  if (trustedLocalGeneratedImage(record.legacyImage)) artwork.legacyImage = record.legacyImage;
+  for (const field of RESTORABLE_IMAGE_METADATA_FIELDS) {
+    if (clean(record[field])) artwork[field] = record[field];
+  }
+  return artwork;
 }
 
 // The committed inventory already carries each restoration record with an
@@ -117,13 +219,23 @@ function verifyAndStamp(records, sources) {
 }
 
 export function reconcileEiaPublicInventory({ records = [], latest = [], archived = [], search = [] } = {}) {
-  const restorationIds = new Set(records.map((record) => record.id));
+  const artworkById = new Map();
+  for (const record of [...latest, ...archived, ...search]) {
+    if (!record?.id || artworkById.has(record.id)) continue;
+    const artwork = restorableArtwork(record);
+    if (artwork) artworkById.set(record.id, artwork);
+  }
+  const recordsWithArtwork = records.map((record) => {
+    const artwork = artworkById.get(record.id);
+    return artwork ? mergeArticleImageFields(record, artwork) : record;
+  });
+  const restorationIds = new Set(recordsWithArtwork.map((record) => record.id));
   const withoutRestorationRecords = (items) => items.filter((record) => !restorationIds.has(record.id));
 
   return {
-    latest: [...records, ...withoutRestorationRecords(latest)],
+    latest: [...recordsWithArtwork, ...withoutRestorationRecords(latest)],
     archived: withoutRestorationRecords(archived),
-    search: [...records, ...withoutRestorationRecords(search)],
+    search: [...recordsWithArtwork, ...withoutRestorationRecords(search)],
   };
 }
 

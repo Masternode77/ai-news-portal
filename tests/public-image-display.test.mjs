@@ -138,7 +138,7 @@ test('public feed carries non-visible publication image provenance metadata', ()
   assert.equal(publicSignals.length, volume.homepageCount);
   assert.equal(publicSignals.every((signal) => signal.image_provenance_label), true);
   assert.equal(publicSignals.every((signal) => signal.image_provenance_kind), true);
-  assert.equal(publicSignals.some((signal) => signal.image_provenance_kind === 'image2'), true);
+  assert.equal(publicSignals.some((signal) => signal.image_provenance_kind === 'codex'), true);
   assert.doesNotMatch(JSON.stringify(visibleSignalCopy), FORBIDDEN_VISIBLE_PROVENANCE_LABELS);
 });
 

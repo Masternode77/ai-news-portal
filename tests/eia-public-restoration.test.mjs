@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import { execFileSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
+import fsSync from 'node:fs';
 import fs from 'node:fs/promises';
 import os from 'node:os';
 import path from 'node:path';
@@ -158,6 +159,141 @@ test('EIA restoration moves pipeline-archived restoration records back to their 
   assert.equal(reconciled.archived.some((record) => record.id === restorationId), false);
   assert.equal(reconciled.search.filter((record) => record.id === restorationId).length, 1);
   assert.deepEqual(reconciled.archived, [archived]);
+});
+
+test('EIA restoration preserves registered artwork from the matching existing record', () => {
+  const [restored] = eiaRecords();
+  const latest = JSON.parse(fsSync.readFileSync('src/data/latest-news.json', 'utf8'));
+  const existing = latest.find((record) => record.id === restored.id);
+  assert.ok(existing?.heroImage && existing?.thumbnailImage && existing?.ogImage);
+  const reconciled = reconcileEiaPublicInventory({
+    records: [restored],
+    latest: [{ id: restored.id }],
+    search: [existing],
+  });
+  const [record] = reconciled.latest;
+
+  for (const field of [
+    'heroImage',
+    'thumbnailImage',
+    'ogImage',
+    'generatedImage',
+    'generatedImageProvider',
+    'generatedImageModel',
+    'imageStatus',
+  ].filter((field) => existing[field])) {
+    assert.equal(record[field], existing[field]);
+  }
+  assert.equal(record.public_presentation.image, existing.heroImage);
+});
+
+test('EIA restoration rejects remote, source-derived, and malformed prior artwork', () => {
+  const [restored] = eiaRecords();
+  const latest = JSON.parse(fsSync.readFileSync('src/data/latest-news.json', 'utf8'));
+  const validLocal = latest.find((record) => record.id === restored.id);
+  const otherLocal = latest.find((record) => record.id !== restored.id
+    && record.heroImage
+    && record.thumbnailImage
+    && record.ogImage
+    && record.legacyImage);
+  assert.ok(validLocal?.heroImage && validLocal?.thumbnailImage && validLocal?.ogImage);
+  assert.ok(otherLocal);
+  const unsafeCandidates = [
+    {
+      id: restored.id,
+      heroImage: 'https://www.eia.gov/source-chart.png',
+      sourceImage: 'https://www.eia.gov/source-chart.png',
+      generatedImageProvider: 'source-image',
+      imageStatus: 'source-canonical',
+    },
+    {
+      id: restored.id,
+      heroImage: 'https://www.eia.gov/remote-hero.webp',
+      generatedImageProvider: 'codex',
+      imageStatus: 'generated',
+    },
+    {
+      ...validLocal,
+      generatedImageProvider: 'source-image',
+      imageProvider: 'source-image',
+      imageStatus: 'source-canonical',
+    },
+    {
+      ...validLocal,
+      sourceImage: validLocal.heroImage,
+    },
+    {
+      ...validLocal,
+      thumbnailImage: otherLocal.thumbnailImage,
+    },
+    {
+      ...otherLocal,
+      id: restored.id,
+    },
+    {
+      ...validLocal,
+      legacyImage: otherLocal.legacyImage,
+    },
+    {
+      id: restored.id,
+      heroImage: '/generated/articles/does-not-exist/hero.webp',
+      thumbnailImage: '/generated/articles/does-not-exist/thumbnail.webp',
+      ogImage: '/generated/articles/does-not-exist/og.webp',
+      generatedImageProvider: 'codex',
+      imageStatus: 'generated',
+    },
+    {
+      id: restored.id,
+      heroImage: '/generated/../generated/fallbacks/power-grid.svg',
+      generatedImage: '/generated/../generated/fallbacks/power-grid.svg',
+      thumbnailImage: '/generated/../generated/fallbacks/power-grid.svg',
+      ogImage: '/generated/../generated/fallbacks/power-grid.svg',
+      generatedImageProvider: 'category-fallback',
+      imageStatus: 'fallback',
+    },
+    {
+      id: restored.id,
+      heroImage: 'generated/articles/malformed/hero.webp',
+      generatedImageProvider: 'codex',
+      imageStatus: 'generated',
+    },
+  ];
+
+  for (const existing of unsafeCandidates) {
+    const [record] = reconcileEiaPublicInventory({ records: [restored], latest: [existing] }).latest;
+    for (const field of [
+      'heroImage',
+      'thumbnailImage',
+      'ogImage',
+      'generatedImage',
+      'sourceImage',
+      'generatedImageProvider',
+      'imageProvider',
+      'imageStatus',
+    ]) {
+      assert.equal(record[field], undefined, `${field} must not survive unsafe artwork reconciliation`);
+    }
+    assert.equal(record.public_presentation.image, undefined);
+  }
+});
+
+test('EIA restoration preserves an existing trusted local fallback without source provenance', () => {
+  const [restored] = eiaRecords();
+  const fallback = '/generated/fallbacks/power-grid.svg';
+  const existing = {
+    id: restored.id,
+    generatedImage: fallback,
+    generatedImageProvider: 'category-fallback',
+    imageProvider: 'category-fallback',
+    imageStatus: 'fallback',
+  };
+  const [record] = reconcileEiaPublicInventory({ records: [restored], latest: [existing] }).latest;
+
+  assert.equal(record.generatedImage, fallback);
+  assert.equal(record.public_presentation.image, fallback);
+  assert.equal(record.generatedImageProvider, 'category-fallback');
+  assert.equal(record.imageStatus, 'fallback');
+  assert.equal(record.sourceImage, undefined);
 });
 
 test('EIA local artwork is deterministic and article-specific without reusing source images', async () => {
