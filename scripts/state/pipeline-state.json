@@ -842,7 +842,8 @@
     "ecdef643d0239aeb",
     "0541b920f49f8e3e",
     "a26ed84d84600daf",
-    "77f0d42e4f9b799f"
+    "77f0d42e4f9b799f",
+    "e38bbb4e96c27f9e"
   ],
   "dayPlans": {
     "2026-03-24": {
@@ -45225,162 +45226,9 @@
     "2026-09-17": {
       "date": "2026-09-17",
       "createdAt": "2026-09-16T18:47:02.256Z",
-      "refreshedAt": "2026-09-16T18:47:02.256Z",
+      "refreshedAt": "2026-09-17T01:19:51.286Z",
       "candidateWindowHours": 24,
       "curatedItems": [
-        {
-          "id": "a26ed84d84600daf",
-          "sourceRegistryId": "arxiv-cs-dc",
-          "source": "arXiv",
-          "url": "https://arxiv.org/abs/2609.16682",
-          "title": "DeepShare: Assurance-Driven Deep Learning Job Scheduling for Multi-Tenant Clusters",
-          "snippet": "arXiv:2609.16682v1 Announce Type: new Abstract: Multi-tenant GPU clusters frequently remain underutilized even when tenants experience long queueing delays, because quota control, queue ordering, preemption, and GPU sha…",
-          "contentText": "arXiv:2609.16682v1 Announce Type: new Abstract: Multi-tenant GPU clusters frequently remain underutilized even when tenants experience long queueing delays, because quota control, queue ordering, preemption, and GPU sharing are driven by different local signals. We present DeepShare, a scheduler that uses a continuous tenant-assurance signal to coordinate these decisions at runtime. DeepShare combines elastic quota borrowing, tenant-specific runtime prediction, cost-aware best-effort preemption, and interference-aware MPS colocation, while using the same assurance signal to decide when borrowed capacity should be reclaimed and when sharing should become more conservative. In trace-driven experiments on 23,859 Venus jobs and 3,200 internal jobs, DeepShare achieves an average GPU utilizatio…",
-          "publishedAt": "2026-09-16T04:00:00.000Z",
-          "sourceImage": null,
-          "region": "APAC",
-          "language": "en",
-          "defaultCategory": "AI Infrastructure",
-          "source_text_scope": "abstract",
-          "ai_topic_score": 0.22,
-          "ai_topic_reasons": [
-            "gpu",
-            "ai_not_in_title"
-          ],
-          "category": "AI Infrastructure",
-          "primary_category": "AI Infrastructure",
-          "secondary_category": "GPU clusters and deployment readiness",
-          "infrastructure_layer": "Compute",
-          "affected_stakeholders": [
-            "operators",
-            "hyperscalers",
-            "cloud buyers",
-            "investors"
-          ],
-          "article_type": "Capacity Expansion",
-          "urgency_score": 0.44,
-          "taxonomy_confidence": 0.63,
-          "taxonomy_reasons": [
-            "ai infrastructure"
-          ],
-          "direct_ai_infrastructure_relevance": 0.64,
-          "data_center_relevance": 0.34,
-          "cloud_capacity_relevance": 0,
-          "semiconductor_relevance": 0.22,
-          "power_grid_relevance": 0,
-          "cooling_relevance": 0,
-          "capital_markets_relevance": 0,
-          "enterprise_ai_infrastructure_relevance": 0,
-          "infrastructure_relevance_score": 0.551,
-          "infrastructure_relevance_tier": "signal_card",
-          "infrastructure_relevance_action": "publish_signal_card_only",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:0.64(gpu clusters)",
-            "data_center_relevance:0.34(colocation)",
-            "semiconductor_relevance:0.22(gpu)"
-          ],
-          "infrastructure_relevance": {
-            "direct_ai_infrastructure_relevance": 0.64,
-            "data_center_relevance": 0.34,
-            "cloud_capacity_relevance": 0,
-            "semiconductor_relevance": 0.22,
-            "power_grid_relevance": 0,
-            "cooling_relevance": 0,
-            "capital_markets_relevance": 0,
-            "enterprise_ai_infrastructure_relevance": 0,
-            "infrastructure_relevance_score": 0.551,
-            "infrastructure_relevance_tier": "signal_card",
-            "infrastructure_relevance_action": "publish_signal_card_only",
-            "infrastructure_relevance_reasons": [
-              "direct_ai_infrastructure_relevance:0.64(gpu clusters)",
-              "data_center_relevance:0.34(colocation)",
-              "semiconductor_relevance:0.22(gpu)"
-            ],
-            "infrastructureRelevanceAction": "publish_signal_card_only",
-            "articlePagePublished": false,
-            "homepagePublished": true,
-            "archiveOnly": false,
-            "archiveOnlyReason": null
-          },
-          "score": 51
-        },
-        {
-          "id": "77f0d42e4f9b799f",
-          "sourceRegistryId": "arxiv-cs-ar",
-          "source": "arXiv",
-          "url": "https://arxiv.org/abs/2609.16085",
-          "title": "Is INT8 Portable? A Cross-Platform Measurement Study of Quantized Inference on Embedded and Automotive Accelerators",
-          "snippet": "arXiv:2609.16085v1 Announce Type: new Abstract: Eight-bit integer (INT8) post-training quantization is the default recipe for edge deployment, under a widely held assumption: INT8 makes inference faster at a small, pred…",
-          "contentText": "arXiv:2609.16085v1 Announce Type: new Abstract: Eight-bit integer (INT8) post-training quantization is the default recipe for edge deployment, under a widely held assumption: INT8 makes inference faster at a small, predictable accuracy cost, and a model quantized once can be carried to any target. We test that assumption with a controlled measurement study across seven hardware classes -- ARM and x86 CPUs, a discrete GPU, an NVIDIA Jetson AGX Orin iGPU and its NVDLA cores, and two vendor NPUs (Qualcomm Hexagon HTP, DEEPX DX-M1) -- holding the ONNX artifact and the quantization scales fixed so the integer kernel or ISA is the only free variable. Portability fails on three axes. (1) The sign of the INT8 speedup is set by the CPU's dot-product ISA (ARM dotprod/SDOT, x86 VNNI): cores that hav…",
-          "publishedAt": "2026-09-16T04:00:00.000Z",
-          "sourceImage": null,
-          "region": "US",
-          "language": "en",
-          "defaultCategory": "Semiconductors",
-          "source_text_scope": "abstract",
-          "ai_topic_score": 1,
-          "ai_topic_reasons": [
-            "inference",
-            "nvidia",
-            "gpu",
-            "accelerators"
-          ],
-          "category": "Semiconductors",
-          "primary_category": "Semiconductors",
-          "secondary_category": "Accelerators, memory, and advanced packaging",
-          "infrastructure_layer": "Silicon",
-          "affected_stakeholders": [
-            "semiconductor suppliers",
-            "hyperscalers",
-            "server OEMs",
-            "investors"
-          ],
-          "article_type": "Product / Platform Update",
-          "urgency_score": 0.31,
-          "taxonomy_confidence": 0.69,
-          "taxonomy_reasons": [
-            "gpu",
-            "nvidia"
-          ],
-          "direct_ai_infrastructure_relevance": 0.22,
-          "data_center_relevance": 0,
-          "cloud_capacity_relevance": 0,
-          "semiconductor_relevance": 0.5,
-          "power_grid_relevance": 0,
-          "cooling_relevance": 0,
-          "capital_markets_relevance": 0,
-          "enterprise_ai_infrastructure_relevance": 0,
-          "infrastructure_relevance_score": 0.408,
-          "infrastructure_relevance_tier": "archive_only",
-          "infrastructure_relevance_action": "archive_only",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:0.22",
-            "semiconductor_relevance:0.50(nvidia, gpu)"
-          ],
-          "infrastructure_relevance": {
-            "direct_ai_infrastructure_relevance": 0.22,
-            "data_center_relevance": 0,
-            "cloud_capacity_relevance": 0,
-            "semiconductor_relevance": 0.5,
-            "power_grid_relevance": 0,
-            "cooling_relevance": 0,
-            "capital_markets_relevance": 0,
-            "enterprise_ai_infrastructure_relevance": 0,
-            "infrastructure_relevance_score": 0.408,
-            "infrastructure_relevance_tier": "archive_only",
-            "infrastructure_relevance_action": "archive_only",
-            "infrastructure_relevance_reasons": [
-              "direct_ai_infrastructure_relevance:0.22",
-              "semiconductor_relevance:0.50(nvidia, gpu)"
-            ],
-            "infrastructureRelevanceAction": "archive_only",
-            "articlePagePublished": false,
-            "homepagePublished": false,
-            "archiveOnly": true,
-            "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
-          },
-          "score": 37
-        },
         {
           "id": "e38bbb4e96c27f9e",
           "sourceRegistryId": "arxiv-cs-dc",
@@ -45453,149 +45301,24 @@
             "archiveOnly": true,
             "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
           },
-          "score": 32
+          "score": 26
         }
       ],
       "curatedIds": [
-        "a26ed84d84600daf",
-        "77f0d42e4f9b799f",
         "e38bbb4e96c27f9e"
       ],
       "publishedIds": [
         "a26ed84d84600daf",
-        "77f0d42e4f9b799f"
+        "77f0d42e4f9b799f",
+        "e38bbb4e96c27f9e"
       ],
       "slotPublications": {
-        "0": true
+        "0": true,
+        "1": true
       }
     }
   },
   "runHistory": [
-    {
-      "at": "2026-08-05T00:05:59.126Z",
-      "day": "2026-08-05",
-      "slot": 1,
-      "publishedCount": 0,
-      "signalCardCount": 1,
-      "archiveOnlyCount": 0,
-      "repetitionBlockedCount": 1,
-      "publishedIds": [],
-      "processedIds": [
-        "cd0168485ccd25c9",
-        "a41fb6f84a14567e"
-      ],
-      "blockedCount": 1,
-      "blockedItems": [
-        {
-          "id": "cd0168485ccd25c9",
-          "title": "Runware Debuts Containerized AI Inference Pods for Faster GPU Deployment",
-          "infrastructure_relevance_score": 1,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud, high-performance computing)",
-            "data_center_relevance:0.84(data center, data centers)",
-            "cloud_capacity_relevance:0.32(hyperscalers)",
-            "semiconductor_relevance:0.80(nvidia, amd, gpu)",
-            "power_grid_relevance:1.00(power, grid, utility)",
-            "cooling_relevance:0.34(cooling)"
-          ],
-          "extraction_quality_score": 1,
-          "source_domain_adapter": "generic",
-          "content_length": 1793,
-          "boilerplate_ratio": 0,
-          "repetition_blocked": false,
-          "repetition_block_reasons": [],
-          "repetition_check": null,
-          "expert_insight_complete": true,
-          "expert_insight_missing_fields": [],
-          "reason": "fail_closed: source_text_incomplete:ellipsis_truncation_artifact, ellipsis_truncation_artifact"
-        }
-      ],
-      "repetitionBlockedItems": [
-        {
-          "id": "a41fb6f84a14567e",
-          "title": "AMD doubles data center revenue year over year, but gaming revenue plunged by 31% — CEO Lisa Su says prices have 'weighed on' consumer demand but is 'optimistic' about client market",
-          "infrastructure_relevance_score": 0.921,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "data_center_relevance:0.55(data center)",
-            "cloud_capacity_relevance:0.32(hyperscalers)",
-            "semiconductor_relevance:0.52(amd, gpu)",
-            "power_grid_relevance:0.22(power)"
-          ],
-          "extraction_quality_score": 1,
-          "source_domain_adapter": "generic",
-          "content_length": 1771,
-          "boilerplate_ratio": 0,
-          "repetition_blocked": true,
-          "repetition_block_reasons": [
-            "repeated_sentence_ratio>0.12",
-            "heading_sequence_similarity>0.75",
-            "conclusion_similarity>0.7"
-          ],
-          "repetition_check": {
-            "compared_article_count": 20,
-            "repeated_sentence_ratio": 0.14285714285714285,
-            "repeated_paragraph_ratio": 0.16666666666666666,
-            "heading_sequence_similarity": 1,
-            "banned_phrase_count": 0,
-            "banned_phrase_counts": {},
-            "recent_banned_phrase_counts": {},
-            "ngram_overlap": 0.4205607476635514,
-            "blueprint_repetition": 1,
-            "conclusion_similarity": 0.9271050693011066,
-            "repeated_sentence_count": 1,
-            "repeated_paragraph_count": 1,
-            "heading_sequence": [
-              "System Change",
-              "Bottleneck",
-              "Engineering Tradeoff",
-              "Validation Metric"
-            ],
-            "blocked": true,
-            "reasons": [
-              "repeated_sentence_ratio>0.12",
-              "heading_sequence_similarity>0.75",
-              "conclusion_similarity>0.7"
-            ]
-          },
-          "expert_insight_complete": true,
-          "expert_insight_missing_fields": [],
-          "reason": "repeated_sentence_ratio>0.12; heading_sequence_similarity>0.75; conclusion_similarity>0.7"
-        }
-      ],
-      "signalCardItems": [
-        {
-          "id": "cd0168485ccd25c9",
-          "title": "Runware Debuts Containerized AI Inference Pods for Faster GPU Deployment",
-          "infrastructure_relevance_score": 1,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud, high-performance computing)",
-            "data_center_relevance:0.84(data center, data centers)",
-            "cloud_capacity_relevance:0.32(hyperscalers)",
-            "semiconductor_relevance:0.80(nvidia, amd, gpu)",
-            "power_grid_relevance:1.00(power, grid, utility)",
-            "cooling_relevance:0.34(cooling)"
-          ],
-          "extraction_quality_score": 1,
-          "source_domain_adapter": "generic",
-          "content_length": 1793,
-          "boilerplate_ratio": 0,
-          "repetition_blocked": false,
-          "repetition_block_reasons": [],
-          "repetition_check": null,
-          "expert_insight_complete": true,
-          "expert_insight_missing_fields": [],
-          "reason": "fail_closed: source_text_incomplete:ellipsis_truncation_artifact, ellipsis_truncation_artifact"
-        }
-      ],
-      "archiveOnlyItems": []
-    },
     {
       "at": "2026-08-05T09:44:13.671Z",
       "day": "2026-08-05",
@@ -50619,9 +50342,58 @@
         "token_budget": 60000,
         "call_budget": 40
       }
+    },
+    {
+      "at": "2026-09-17T01:19:51.286Z",
+      "day": "2026-09-17",
+      "slot": 1,
+      "publishedCount": 0,
+      "signalCardCount": 0,
+      "archiveOnlyCount": 1,
+      "processedIds": [
+        "e38bbb4e96c27f9e"
+      ],
+      "blockedCount": 0,
+      "blockedItems": [],
+      "archiveOnlyItems": [
+        {
+          "id": "e38bbb4e96c27f9e",
+          "title": "Spatio-Temporal Shifting to Reduce Carbon, Water, and Land-Use Footprints of Cloud Workloads",
+          "infrastructure_relevance_score": 0.387,
+          "infrastructure_relevance_tier": "archive_only",
+          "infrastructure_relevance_action": "archive_only",
+          "infrastructure_relevance_reasons": [
+            "cloud_capacity_relevance:0.44(aws, azure)",
+            "power_grid_relevance:0.28(grid)"
+          ],
+          "extraction_quality_score": 1,
+          "source_domain_adapter": "arxiv",
+          "content_length": 1421,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": false,
+          "repetition_block_reasons": [],
+          "repetition_check": null,
+          "expert_insight_complete": true,
+          "expert_insight_missing_fields": [],
+          "reason": "infrastructure_relevance_below_signal_threshold"
+        }
+      ],
+      "authoredColumn": {
+        "published": false,
+        "reason": "no_qualifying_story"
+      },
+      "llmUsage": {
+        "calls": 2,
+        "failures": 0,
+        "prompt_tokens": 2126,
+        "completion_tokens": 522,
+        "total_tokens": 2648,
+        "token_budget": 60000,
+        "call_budget": 40
+      }
     }
   ],
-  "lastRunAt": "2026-09-16T18:47:02.256Z",
+  "lastRunAt": "2026-09-17T01:19:51.286Z",
   "authored": {
     "lastColumnAt": "2026-09-16T18:47:02.256Z",
     "columnsByDay": {
