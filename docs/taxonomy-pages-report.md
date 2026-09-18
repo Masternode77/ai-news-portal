@@ -1,6 +1,6 @@
 # Taxonomy Source Artifact and Public Route Report
 
-Source snapshot at: 2026-09-17T04:00:00.000Z
+Source snapshot at: 2026-09-17T21:01:00.000Z
 
 ## Source artifact inventory
 
@@ -9,7 +9,7 @@ Source artifact category partitions: 9
 Source artifact company partitions: 16
 Source artifact region partitions: 7
 Source artifact archive partitions: 21
-Source artifact records: 481
+Source artifact records: 482
 
 ## Current reader-facing route state
 

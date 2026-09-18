@@ -847,7 +847,8 @@
     "5eee12e3ff5ae578",
     "76631d4abb37e795",
     "5cb4536d1fa8da96",
-    "dfb68bb9b6e9e40a"
+    "dfb68bb9b6e9e40a",
+    "b397723216b316e7"
   ],
   "dayPlans": {
     "2026-03-24": {
@@ -45478,240 +45479,96 @@
     "2026-09-18": {
       "date": "2026-09-18",
       "createdAt": "2026-09-17T18:54:49.515Z",
-      "refreshedAt": "2026-09-17T18:54:49.515Z",
+      "refreshedAt": "2026-09-18T01:14:55.063Z",
       "candidateWindowHours": 24,
       "curatedItems": [
         {
-          "id": "5cb4536d1fa8da96",
-          "sourceRegistryId": "arxiv-cs-dc",
-          "source": "arXiv",
-          "url": "https://arxiv.org/abs/2609.18519",
-          "title": "COMPASS-ABS: Reducing Fragmentation in Shared GPU Clusters for Deep Learning Training Workloads",
-          "snippet": "arXiv:2609.18519v1 Announce Type: new Abstract: With the rapid advancement of deep learning technology, shared GPU clusters receive an increasing number of deep learning training (DLT) jobs. Yet resource fragmentation m…",
-          "contentText": "arXiv:2609.18519v1 Announce Type: new Abstract: With the rapid advancement of deep learning technology, shared GPU clusters receive an increasing number of deep learning training (DLT) jobs. Yet resource fragmentation make such clusters underutilized and forces the DLT jobs running on them to endure long turnaround times. Extensive research has been devoted to quantifying fragmentation and developing scheduling algorithms that alleviate its impact. However, existing fragmentation measures break down in the absence of workload distribution information, while current schedulers cannot continuously maintain resource fragmentation at a low level. To tackle these problems, we first introduce Scheduler-Induced Fragmentation (SIF), a metric built on the notion of partial-nodes that is independen…",
-          "publishedAt": "2026-09-17T04:00:00.000Z",
+          "id": "b397723216b316e7",
+          "sourceRegistryId": "doe-newsroom",
+          "source": "U.S. Department of Energy",
+          "url": "https://www.energy.gov/articles/energy-secretary-secures-mid-atlantic-grid-due-anticipated-stressed-system-conditions",
+          "title": "Energy Secretary Secures Mid-Atlantic Grid Due to Anticipated Stressed System Conditions",
+          "snippet": "Secretary Wright issues an emergency order to stabilize the Mid-Atlantic grid and mitigate the risk of blackouts.",
+          "contentText": "Secretary Wright issues an emergency order to stabilize the Mid-Atlantic grid and mitigate the risk of blackouts.",
+          "publishedAt": "2026-09-17T21:01:00.000Z",
           "sourceImage": null,
           "region": "US",
           "language": "en",
-          "defaultCategory": "AI Infrastructure",
-          "source_text_scope": "abstract",
-          "ai_topic_score": 0.297,
+          "defaultCategory": "Power & Grid",
+          "ai_topic_score": 0,
           "ai_topic_reasons": [
-            "gpu"
+            "ai_not_in_title"
           ],
-          "category": "AI Infrastructure",
-          "primary_category": "AI Infrastructure",
-          "secondary_category": "GPU clusters and deployment readiness",
-          "infrastructure_layer": "Compute",
+          "category": "Power & Grid",
+          "primary_category": "Power & Grid",
+          "secondary_category": "Interconnection and power procurement",
+          "infrastructure_layer": "Power",
           "affected_stakeholders": [
-            "operators",
-            "hyperscalers",
-            "cloud buyers",
+            "data center operators",
+            "utilities",
+            "cloud capacity teams",
             "investors"
           ],
-          "article_type": "Research / Technical",
-          "urgency_score": 0.39,
-          "taxonomy_confidence": 0.65,
+          "article_type": "Other",
+          "urgency_score": 0.44,
+          "taxonomy_confidence": 0.7,
           "taxonomy_reasons": [
-            "ai infrastructure"
+            "power",
+            "grid"
           ],
-          "direct_ai_infrastructure_relevance": 0.77,
+          "direct_ai_infrastructure_relevance": 0,
           "data_center_relevance": 0,
           "cloud_capacity_relevance": 0,
-          "semiconductor_relevance": 0.297,
-          "power_grid_relevance": 0,
+          "semiconductor_relevance": 0,
+          "power_grid_relevance": 0.378,
           "cooling_relevance": 0,
           "capital_markets_relevance": 0,
           "enterprise_ai_infrastructure_relevance": 0,
-          "infrastructure_relevance_score": 0.662,
-          "infrastructure_relevance_tier": "signal_card",
-          "infrastructure_relevance_action": "publish_signal_card_only",
+          "infrastructure_relevance_score": 0.254,
+          "infrastructure_relevance_tier": "archive_only",
+          "infrastructure_relevance_action": "archive_only",
           "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:0.77(gpu clusters)",
-            "semiconductor_relevance:0.30(gpu)"
+            "power_grid_relevance:0.38(grid)"
           ],
           "infrastructure_relevance": {
-            "direct_ai_infrastructure_relevance": 0.77,
+            "direct_ai_infrastructure_relevance": 0,
             "data_center_relevance": 0,
             "cloud_capacity_relevance": 0,
-            "semiconductor_relevance": 0.297,
-            "power_grid_relevance": 0,
-            "cooling_relevance": 0,
-            "capital_markets_relevance": 0,
-            "enterprise_ai_infrastructure_relevance": 0,
-            "infrastructure_relevance_score": 0.662,
-            "infrastructure_relevance_tier": "signal_card",
-            "infrastructure_relevance_action": "publish_signal_card_only",
-            "infrastructure_relevance_reasons": [
-              "direct_ai_infrastructure_relevance:0.77(gpu clusters)",
-              "semiconductor_relevance:0.30(gpu)"
-            ],
-            "infrastructureRelevanceAction": "publish_signal_card_only",
-            "articlePagePublished": false,
-            "homepagePublished": true,
-            "archiveOnly": false,
-            "archiveOnlyReason": null
-          },
-          "score": 52
-        },
-        {
-          "id": "dfb68bb9b6e9e40a",
-          "sourceRegistryId": "arxiv-cs-dc",
-          "source": "arXiv",
-          "url": "https://arxiv.org/abs/2609.18066",
-          "title": "Towards Training Private LLMs: Exploring Fine-Tuning Language Models on Apple Silicon with RDMA over Thunderbolt",
-          "snippet": "arXiv:2609.18066v1 Announce Type: new Abstract: Private large language model (LLM) fine-tuning is increasingly important for organizations that need to adapt models using sensitive data, but it often exceeds the memory…",
-          "contentText": "arXiv:2609.18066v1 Announce Type: new Abstract: Private large language model (LLM) fine-tuning is increasingly important for organizations that need to adapt models using sensitive data, but it often exceeds the memory capacity of commodity datacenter accelerators. Apple Silicon offers a different design point through large unified memory and lower complete-system cost, while recent Apple software support enables distributed execution over RDMA-over-Thunderbolt (TB). This paper studies whether Apple Silicon can serve as a practical platform for private LLM fine-tuning. We characterize RDMA-over-TB communication on Mac Studio nodes, showing that the measured bandwidth is far below nominal TB specifications. Next, we extend Apple's implementation with multi-trunk communication, persistent w…",
-          "publishedAt": "2026-09-17T04:00:00.000Z",
-          "sourceImage": null,
-          "region": "APAC",
-          "language": "en",
-          "defaultCategory": "AI Infrastructure",
-          "source_text_scope": "abstract",
-          "ai_topic_score": 1,
-          "ai_topic_reasons": [
-            "large language model",
-            "llm",
-            "llms",
-            "accelerators"
-          ],
-          "category": "AI Infrastructure",
-          "primary_category": "AI Infrastructure",
-          "secondary_category": "GPU clusters and deployment readiness",
-          "infrastructure_layer": "Compute",
-          "affected_stakeholders": [
-            "operators",
-            "hyperscalers",
-            "cloud buyers",
-            "investors"
-          ],
-          "article_type": "Capacity Expansion",
-          "urgency_score": 0.48,
-          "taxonomy_confidence": 0.65,
-          "taxonomy_reasons": [
-            "ai infrastructure"
-          ],
-          "direct_ai_infrastructure_relevance": 0.78,
-          "data_center_relevance": 0.42,
-          "cloud_capacity_relevance": 0,
-          "semiconductor_relevance": 0,
-          "power_grid_relevance": 0,
-          "cooling_relevance": 0,
-          "capital_markets_relevance": 0,
-          "enterprise_ai_infrastructure_relevance": 0,
-          "infrastructure_relevance_score": 0.695,
-          "infrastructure_relevance_tier": "signal_card",
-          "infrastructure_relevance_action": "publish_signal_card_only",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:0.78",
-            "data_center_relevance:0.42(datacenter)"
-          ],
-          "infrastructure_relevance": {
-            "direct_ai_infrastructure_relevance": 0.78,
-            "data_center_relevance": 0.42,
-            "cloud_capacity_relevance": 0,
             "semiconductor_relevance": 0,
-            "power_grid_relevance": 0,
+            "power_grid_relevance": 0.378,
             "cooling_relevance": 0,
             "capital_markets_relevance": 0,
             "enterprise_ai_infrastructure_relevance": 0,
-            "infrastructure_relevance_score": 0.695,
-            "infrastructure_relevance_tier": "signal_card",
-            "infrastructure_relevance_action": "publish_signal_card_only",
+            "infrastructure_relevance_score": 0.254,
+            "infrastructure_relevance_tier": "archive_only",
+            "infrastructure_relevance_action": "archive_only",
             "infrastructure_relevance_reasons": [
-              "direct_ai_infrastructure_relevance:0.78",
-              "data_center_relevance:0.42(datacenter)"
+              "power_grid_relevance:0.38(grid)"
             ],
-            "infrastructureRelevanceAction": "publish_signal_card_only",
+            "infrastructureRelevanceAction": "archive_only",
             "articlePagePublished": false,
-            "homepagePublished": true,
-            "archiveOnly": false,
-            "archiveOnlyReason": null
+            "homepagePublished": false,
+            "archiveOnly": true,
+            "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
           },
-          "score": 57
+          "score": 42
         }
       ],
       "curatedIds": [
-        "5cb4536d1fa8da96",
-        "dfb68bb9b6e9e40a"
+        "b397723216b316e7"
       ],
       "publishedIds": [
         "5cb4536d1fa8da96",
-        "dfb68bb9b6e9e40a"
+        "dfb68bb9b6e9e40a",
+        "b397723216b316e7"
       ],
       "slotPublications": {
-        "0": true
+        "0": true,
+        "1": true
       }
     }
   },
   "runHistory": [
-    {
-      "at": "2026-08-06T00:02:06.775Z",
-      "day": "2026-08-06",
-      "slot": 1,
-      "publishedCount": 0,
-      "signalCardCount": 2,
-      "archiveOnlyCount": 0,
-      "processedIds": [
-        "036c1d16c41e98eb",
-        "716a7811bb9b1145"
-      ],
-      "blockedCount": 2,
-      "blockedItems": [
-        {
-          "id": "036c1d16c41e98eb",
-          "title": "Etched Series C Lands $300M at $10.3B, the Highest-Valued Sequoia-Led Series C",
-          "infrastructure_relevance_score": 0.95,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "data_center_relevance:0.42(data center)",
-            "cloud_capacity_relevance:0.32(hyperscalers)",
-            "semiconductor_relevance:0.22(gpu)",
-            "power_grid_relevance:0.68(power, mw, transformer)",
-            "capital_markets_relevance:0.54(funding, valuation)",
-            "enterprise_ai_infrastructure_relevance:0.24(ai workloads)"
-          ],
-          "extraction_quality_score": 1,
-          "source_domain_adapter": "storagereview",
-          "content_length": 1687,
-          "boilerplate_ratio": 0,
-          "repetition_blocked": false,
-          "repetition_block_reasons": [],
-          "repetition_check": null,
-          "expert_insight_complete": true,
-          "expert_insight_missing_fields": [],
-          "reason": "fail_closed: source_text_incomplete:single_letter_or_clo_sentence_fragment, single_letter_or_clo_sentence_fragment, sentence_completion_score_below_0.92:0.82"
-        },
-        {
-          "id": "716a7811bb9b1145",
-          "title": "Processing-in-Memory Simulator Supporting 11 Memory Technologies (Riken, Keio,Los Alamos, ORNL)",
-          "infrastructure_relevance_score": 0.928,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "cloud_capacity_relevance:0.32(hyperscalers)",
-            "semiconductor_relevance:0.58(semiconductor, gpu)",
-            "power_grid_relevance:0.22(power)"
-          ],
-          "extraction_quality_score": 1,
-          "source_domain_adapter": "semiengineering",
-          "content_length": 1489,
-          "boilerplate_ratio": 0,
-          "repetition_blocked": false,
-          "repetition_block_reasons": [],
-          "repetition_check": null,
-          "expert_insight_complete": false,
-          "expert_insight_missing_fields": [
-            "concrete_facts"
-          ],
-          "reason": "fail_closed: source_text_incomplete:single_letter_or_clo_sentence_fragment, single_letter_or_clo_sentence_fragment, sentence_completion_score_below_0.92:0.82"
-        }
-      ],
-      "archiveOnlyItems": []
-    },
     {
       "at": "2026-08-06T09:47:31.249Z",
       "day": "2026-08-06",
@@ -50536,9 +50393,36 @@
         "token_budget": 60000,
         "call_budget": 40
       }
+    },
+    {
+      "at": "2026-09-18T01:14:55.063Z",
+      "day": "2026-09-18",
+      "slot": 1,
+      "publishedCount": 0,
+      "signalCardCount": 1,
+      "archiveOnlyCount": 0,
+      "processedIds": [
+        "b397723216b316e7"
+      ],
+      "blockedCount": 0,
+      "blockedItems": [],
+      "archiveOnlyItems": [],
+      "authoredColumn": {
+        "published": false,
+        "reason": "no_qualifying_story"
+      },
+      "llmUsage": {
+        "calls": 2,
+        "failures": 0,
+        "prompt_tokens": 2121,
+        "completion_tokens": 281,
+        "total_tokens": 2402,
+        "token_budget": 60000,
+        "call_budget": 40
+      }
     }
   ],
-  "lastRunAt": "2026-09-17T18:54:49.515Z",
+  "lastRunAt": "2026-09-18T01:14:55.063Z",
   "authored": {
     "lastColumnAt": "2026-09-16T18:47:02.256Z",
     "columnsByDay": {
