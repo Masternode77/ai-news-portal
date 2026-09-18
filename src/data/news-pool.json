@@ -1,162 +1,13 @@
 [
   {
-    "id": "ca63c0d8a717a2ca",
-    "sourceRegistryId": "arxiv-cs-ar",
-    "source": "arXiv",
-    "url": "https://arxiv.org/abs/2609.09990",
-    "title": "Analytic Gradients and Nonadiabatic Couplings for Device-Resident DMRG-QD-NEVPT2 Through Conical Intersections on a Consumer GPU",
-    "snippet": "arXiv:2609.09990v2 Announce Type: replace-cross Abstract: Nonadiabatic dynamics through a conical intersection requires both static and dynamic correlation and, at every geometry, an excited-state gradient and interstat…",
-    "contentText": "arXiv:2609.09990v2 Announce Type: replace-cross Abstract: Nonadiabatic dynamics through a conical intersection requires both static and dynamic correlation and, at every geometry, an excited-state gradient and interstate nonadiabatic coupling (NACME). Analytic multireference derivatives at this level have been confined to datacenter-scale hardware. We report device-resident \\mbox{DMRG-QD-NEVPT2} with analytic gradients and NACMEs within the $8$\\,GB of a consumer GPU: a density-matrix-renormalization-group (DMRG) active-space reference supplies the static correlation, and quasi-degenerate SC-NEVPT2 dresses it through a multi-state effective Hamiltonian that remains valid \\emph{through} a conical intersection, where single-state perturbation theory develops a vanishing denominator and fails…",
-    "publishedAt": "2026-09-17T04:00:00.000Z",
-    "sourceImage": null,
-    "region": "Global",
-    "language": "en",
-    "defaultCategory": "Semiconductors",
-    "source_text_scope": "abstract",
-    "ai_topic_score": 0.297,
-    "ai_topic_reasons": [
-      "gpu"
-    ],
-    "category": "Semiconductors",
-    "primary_category": "Semiconductors",
-    "secondary_category": "Accelerators, memory, and advanced packaging",
-    "infrastructure_layer": "Silicon",
-    "affected_stakeholders": [
-      "semiconductor suppliers",
-      "hyperscalers",
-      "server OEMs",
-      "investors"
-    ],
-    "article_type": "Other",
-    "urgency_score": 0.41,
-    "taxonomy_confidence": 0.61,
-    "taxonomy_reasons": [
-      "gpu"
-    ],
-    "direct_ai_infrastructure_relevance": 0.78,
-    "data_center_relevance": 0.42,
-    "cloud_capacity_relevance": 0,
-    "semiconductor_relevance": 0.297,
-    "power_grid_relevance": 0,
-    "cooling_relevance": 0,
-    "capital_markets_relevance": 0,
-    "enterprise_ai_infrastructure_relevance": 0,
-    "infrastructure_relevance_score": 0.73,
-    "infrastructure_relevance_tier": "signal_card",
-    "infrastructure_relevance_action": "publish_signal_card_only",
-    "infrastructure_relevance_reasons": [
-      "direct_ai_infrastructure_relevance:0.78",
-      "data_center_relevance:0.42(datacenter)",
-      "semiconductor_relevance:0.30(gpu)"
-    ],
-    "infrastructure_relevance": {
-      "direct_ai_infrastructure_relevance": 0.78,
-      "data_center_relevance": 0.42,
-      "cloud_capacity_relevance": 0,
-      "semiconductor_relevance": 0.297,
-      "power_grid_relevance": 0,
-      "cooling_relevance": 0,
-      "capital_markets_relevance": 0,
-      "enterprise_ai_infrastructure_relevance": 0,
-      "infrastructure_relevance_score": 0.73,
-      "infrastructure_relevance_tier": "signal_card",
-      "infrastructure_relevance_action": "publish_signal_card_only",
-      "infrastructure_relevance_reasons": [
-        "direct_ai_infrastructure_relevance:0.78",
-        "data_center_relevance:0.42(datacenter)",
-        "semiconductor_relevance:0.30(gpu)"
-      ],
-      "infrastructureRelevanceAction": "publish_signal_card_only",
-      "articlePagePublished": false,
-      "homepagePublished": true,
-      "archiveOnly": false,
-      "archiveOnlyReason": null
-    }
-  },
-  {
-    "id": "5eee12e3ff5ae578",
-    "sourceRegistryId": "arxiv-cs-dc",
-    "source": "arXiv",
-    "url": "https://arxiv.org/abs/2609.19024",
-    "title": "OAK: Restart- and Age-Aware Scheduling for Distributed Machine Learning on Shared GPU Clusters",
-    "snippet": "arXiv:2609.19024v1 Announce Type: new Abstract: Distributed machine learning increasingly runs on shared multi-tenant GPU clusters where contention and failures are routine. Goodput-driven schedulers maximise instantane…",
-    "contentText": "arXiv:2609.19024v1 Announce Type: new Abstract: Distributed machine learning increasingly runs on shared multi-tenant GPU clusters where contention and failures are routine. Goodput-driven schedulers maximise instantaneous throughput but treat accumulated waiting time and restart cost as second-class signals: long-waiting jobs are repeatedly deferred, and the minutes of checkpoint loading paid after each interruption are not folded back into allocation decisions. We present OAK, a per-round mixed-integer linear scheduler whose composite utility adds two first-class terms to goodput: an age key that elevates jobs with high cumulative waiting time, and a decomposed restart factor that tracks productive training time and checkpoint overhead as separately measured quantities rather than a sin…",
-    "publishedAt": "2026-09-17T04:00:00.000Z",
-    "sourceImage": null,
-    "region": "US",
-    "language": "en",
-    "defaultCategory": "AI Infrastructure",
-    "source_text_scope": "abstract",
-    "ai_topic_score": 0.702,
-    "ai_topic_reasons": [
-      "machine learning",
-      "gpu"
-    ],
-    "category": "AI Infrastructure",
-    "primary_category": "AI Infrastructure",
-    "secondary_category": "GPU clusters and deployment readiness",
-    "infrastructure_layer": "Compute",
-    "affected_stakeholders": [
-      "operators",
-      "hyperscalers",
-      "cloud buyers",
-      "investors"
-    ],
-    "article_type": "Capacity Expansion",
-    "urgency_score": 0.4,
-    "taxonomy_confidence": 0.65,
-    "taxonomy_reasons": [
-      "ai infrastructure"
-    ],
-    "direct_ai_infrastructure_relevance": 0.77,
-    "data_center_relevance": 0,
-    "cloud_capacity_relevance": 0,
-    "semiconductor_relevance": 0.297,
-    "power_grid_relevance": 0.26,
-    "cooling_relevance": 0,
-    "capital_markets_relevance": 0,
-    "enterprise_ai_infrastructure_relevance": 0,
-    "infrastructure_relevance_score": 0.697,
-    "infrastructure_relevance_tier": "signal_card",
-    "infrastructure_relevance_action": "publish_signal_card_only",
-    "infrastructure_relevance_reasons": [
-      "direct_ai_infrastructure_relevance:0.77(gpu clusters)",
-      "semiconductor_relevance:0.30(gpu)",
-      "power_grid_relevance:0.26(utility)"
-    ],
-    "infrastructure_relevance": {
-      "direct_ai_infrastructure_relevance": 0.77,
-      "data_center_relevance": 0,
-      "cloud_capacity_relevance": 0,
-      "semiconductor_relevance": 0.297,
-      "power_grid_relevance": 0.26,
-      "cooling_relevance": 0,
-      "capital_markets_relevance": 0,
-      "enterprise_ai_infrastructure_relevance": 0,
-      "infrastructure_relevance_score": 0.697,
-      "infrastructure_relevance_tier": "signal_card",
-      "infrastructure_relevance_action": "publish_signal_card_only",
-      "infrastructure_relevance_reasons": [
-        "direct_ai_infrastructure_relevance:0.77(gpu clusters)",
-        "semiconductor_relevance:0.30(gpu)",
-        "power_grid_relevance:0.26(utility)"
-      ],
-      "infrastructureRelevanceAction": "publish_signal_card_only",
-      "articlePagePublished": false,
-      "homepagePublished": true,
-      "archiveOnly": false,
-      "archiveOnlyReason": null
-    }
-  },
-  {
     "id": "dfb68bb9b6e9e40a",
     "sourceRegistryId": "arxiv-cs-dc",
     "source": "arXiv",
     "url": "https://arxiv.org/abs/2609.18066",
     "title": "Towards Training Private LLMs: Exploring Fine-Tuning Language Models on Apple Silicon with RDMA over Thunderbolt",
-    "snippet": "arXiv:2609.18066v1 Announce Type: new Abstract: Private large language model (LLM) fine-tuning is increasingly important for organizations that need to adapt models using sensitive data, but it often exceeds the memory…",
-    "contentText": "arXiv:2609.18066v1 Announce Type: new Abstract: Private large language model (LLM) fine-tuning is increasingly important for organizations that need to adapt models using sensitive data, but it often exceeds the memory capacity of commodity datacenter accelerators. Apple Silicon offers a different design point through large unified memory and lower complete-system cost, while recent Apple software support enables distributed execution over RDMA-over-Thunderbolt (TB). This paper studies whether Apple Silicon can serve as a practical platform for private LLM fine-tuning. We characterize RDMA-over-TB communication on Mac Studio nodes, showing that the measured bandwidth is far below nominal TB specifications. Next, we extend Apple's implementation with multi-trunk communication, persistent w…",
-    "publishedAt": "2026-09-17T04:00:00.000Z",
+    "snippet": "arXiv:2609.18066v2 Announce Type: replace Abstract: Private large language model (LLM) fine-tuning is increasingly important for organizations that need to adapt models using sensitive data, but it often exceeds the mem…",
+    "contentText": "arXiv:2609.18066v2 Announce Type: replace Abstract: Private large language model (LLM) fine-tuning is increasingly important for organizations that need to adapt models using sensitive data, but it often exceeds the memory capacity of commodity datacenter accelerators. Apple Silicon offers a different design point through large unified memory and lower complete-system cost, while recent Apple software support enables distributed execution over RDMA-over-Thunderbolt (TB). This paper studies whether Apple Silicon can serve as a practical platform for private LLM fine-tuning. We characterize RDMA-over-TB communication on Mac Studio nodes, showing that the measured bandwidth is far below nominal TB specifications. Next, we extend Apple's implementation with multi-trunk communication, persiste…",
+    "publishedAt": "2026-09-18T04:00:00.000Z",
     "sourceImage": null,
     "region": "APAC",
     "language": "en",
@@ -224,169 +75,25 @@
     }
   },
   {
-    "id": "5cb4536d1fa8da96",
-    "sourceRegistryId": "arxiv-cs-dc",
-    "source": "arXiv",
-    "url": "https://arxiv.org/abs/2609.18519",
-    "title": "COMPASS-ABS: Reducing Fragmentation in Shared GPU Clusters for Deep Learning Training Workloads",
-    "snippet": "arXiv:2609.18519v1 Announce Type: new Abstract: With the rapid advancement of deep learning technology, shared GPU clusters receive an increasing number of deep learning training (DLT) jobs. Yet resource fragmentation m…",
-    "contentText": "arXiv:2609.18519v1 Announce Type: new Abstract: With the rapid advancement of deep learning technology, shared GPU clusters receive an increasing number of deep learning training (DLT) jobs. Yet resource fragmentation make such clusters underutilized and forces the DLT jobs running on them to endure long turnaround times. Extensive research has been devoted to quantifying fragmentation and developing scheduling algorithms that alleviate its impact. However, existing fragmentation measures break down in the absence of workload distribution information, while current schedulers cannot continuously maintain resource fragmentation at a low level. To tackle these problems, we first introduce Scheduler-Induced Fragmentation (SIF), a metric built on the notion of partial-nodes that is independen…",
-    "publishedAt": "2026-09-17T04:00:00.000Z",
-    "sourceImage": null,
-    "region": "US",
-    "language": "en",
-    "defaultCategory": "AI Infrastructure",
-    "source_text_scope": "abstract",
-    "ai_topic_score": 0.297,
-    "ai_topic_reasons": [
-      "gpu"
-    ],
-    "category": "AI Infrastructure",
-    "primary_category": "AI Infrastructure",
-    "secondary_category": "GPU clusters and deployment readiness",
-    "infrastructure_layer": "Compute",
-    "affected_stakeholders": [
-      "operators",
-      "hyperscalers",
-      "cloud buyers",
-      "investors"
-    ],
-    "article_type": "Research / Technical",
-    "urgency_score": 0.39,
-    "taxonomy_confidence": 0.65,
-    "taxonomy_reasons": [
-      "ai infrastructure"
-    ],
-    "direct_ai_infrastructure_relevance": 0.77,
-    "data_center_relevance": 0,
-    "cloud_capacity_relevance": 0,
-    "semiconductor_relevance": 0.297,
-    "power_grid_relevance": 0,
-    "cooling_relevance": 0,
-    "capital_markets_relevance": 0,
-    "enterprise_ai_infrastructure_relevance": 0,
-    "infrastructure_relevance_score": 0.662,
-    "infrastructure_relevance_tier": "signal_card",
-    "infrastructure_relevance_action": "publish_signal_card_only",
-    "infrastructure_relevance_reasons": [
-      "direct_ai_infrastructure_relevance:0.77(gpu clusters)",
-      "semiconductor_relevance:0.30(gpu)"
-    ],
-    "infrastructure_relevance": {
-      "direct_ai_infrastructure_relevance": 0.77,
-      "data_center_relevance": 0,
-      "cloud_capacity_relevance": 0,
-      "semiconductor_relevance": 0.297,
-      "power_grid_relevance": 0,
-      "cooling_relevance": 0,
-      "capital_markets_relevance": 0,
-      "enterprise_ai_infrastructure_relevance": 0,
-      "infrastructure_relevance_score": 0.662,
-      "infrastructure_relevance_tier": "signal_card",
-      "infrastructure_relevance_action": "publish_signal_card_only",
-      "infrastructure_relevance_reasons": [
-        "direct_ai_infrastructure_relevance:0.77(gpu clusters)",
-        "semiconductor_relevance:0.30(gpu)"
-      ],
-      "infrastructureRelevanceAction": "publish_signal_card_only",
-      "articlePagePublished": false,
-      "homepagePublished": true,
-      "archiveOnly": false,
-      "archiveOnlyReason": null
-    }
-  },
-  {
-    "id": "a2e7fab065c803e0",
+    "id": "d7fcf6306cbef100",
     "sourceRegistryId": "arxiv-cs-ar",
     "source": "arXiv",
-    "url": "https://arxiv.org/abs/2609.17556",
-    "title": "WARD: Runtime Workload-Adaptive Vision TRansformer Framework for Dependable Edge AI",
-    "snippet": "arXiv:2609.17556v1 Announce Type: new Abstract: Edge-deployed AI operate under dynamically changing power budgets, reliability requirements, and input distributions, requiring continuous adaptation. Such conditions aris…",
-    "contentText": "arXiv:2609.17556v1 Announce Type: new Abstract: Edge-deployed AI operate under dynamically changing power budgets, reliability requirements, and input distributions, requiring continuous adaptation. Such conditions arise in long-running edge AI applications, including autonomous systems, industrial monitoring, and satellite onboard intelligence. Existing fault-tolerant methods assume static operating conditions, whereas continual learning techniques neglect concurrent hardware faults during online adaptation. Moreover, the practical deployment of runtime-adaptive reliability frameworks on programmable AI accelerators remains largely unexplored. This paper presents WARD, a runtime-adaptive Vision Transformer framework that combines channel-wise subnetwork partitioning, reliability-aware co…",
-    "publishedAt": "2026-09-17T04:00:00.000Z",
+    "url": "https://arxiv.org/abs/2603.01517",
+    "title": "RoboGPU: Accelerating GPU Collision Detection for Robotics",
+    "snippet": "arXiv:2603.01517v2 Announce Type: replace Abstract: Autonomous robots are anticipated to be deployed soon in domains ranging from transportation to healthcare and home assistance. Enabling autonomous robotics requires a…",
+    "contentText": "arXiv:2603.01517v2 Announce Type: replace Abstract: Autonomous robots are anticipated to be deployed soon in domains ranging from transportation to healthcare and home assistance. Enabling autonomous robotics requires a computation platform flexible enough to execute a diverse and evolving collection of workloads while meeting real-time requirements. We believe a GPU-like architecture will be a key component of such platforms. Recent GPUs combine a flexible parallel processing fabric augmented with efficient support for important application domains via embedded accelerators (e.g., Tensor Cores), and a GPU-like architecture has reportedly been adopted for the Tesla AI5 accelerator. While current GPUs are effective at supporting emerging neural motion planners, we find that collision detec…",
+    "publishedAt": "2026-09-18T04:00:00.000Z",
     "sourceImage": null,
     "region": "US",
     "language": "en",
     "defaultCategory": "Semiconductors",
     "source_text_scope": "abstract",
-    "ai_topic_score": 0.443,
+    "ai_topic_score": 0.917,
     "ai_topic_reasons": [
-      "accelerators",
-      "ai"
-    ],
-    "category": "Power & Grid",
-    "primary_category": "Power & Grid",
-    "secondary_category": "Interconnection and power procurement",
-    "infrastructure_layer": "Power",
-    "affected_stakeholders": [
-      "data center operators",
-      "utilities",
-      "cloud capacity teams",
-      "investors"
-    ],
-    "article_type": "Operations Update",
-    "urgency_score": 0.4,
-    "taxonomy_confidence": 0.73,
-    "taxonomy_reasons": [
-      "power",
-      "transformer"
-    ],
-    "direct_ai_infrastructure_relevance": 0.22,
-    "data_center_relevance": 0,
-    "cloud_capacity_relevance": 0,
-    "semiconductor_relevance": 0,
-    "power_grid_relevance": 0.571,
-    "cooling_relevance": 0,
-    "capital_markets_relevance": 0,
-    "enterprise_ai_infrastructure_relevance": 0,
-    "infrastructure_relevance_score": 0.45,
-    "infrastructure_relevance_tier": "archive_only",
-    "infrastructure_relevance_action": "archive_only",
-    "infrastructure_relevance_reasons": [
-      "direct_ai_infrastructure_relevance:0.22",
-      "power_grid_relevance:0.57(power, transformer)"
-    ],
-    "infrastructure_relevance": {
-      "direct_ai_infrastructure_relevance": 0.22,
-      "data_center_relevance": 0,
-      "cloud_capacity_relevance": 0,
-      "semiconductor_relevance": 0,
-      "power_grid_relevance": 0.571,
-      "cooling_relevance": 0,
-      "capital_markets_relevance": 0,
-      "enterprise_ai_infrastructure_relevance": 0,
-      "infrastructure_relevance_score": 0.45,
-      "infrastructure_relevance_tier": "archive_only",
-      "infrastructure_relevance_action": "archive_only",
-      "infrastructure_relevance_reasons": [
-        "direct_ai_infrastructure_relevance:0.22",
-        "power_grid_relevance:0.57(power, transformer)"
-      ],
-      "infrastructureRelevanceAction": "archive_only",
-      "articlePagePublished": false,
-      "homepagePublished": false,
-      "archiveOnly": true,
-      "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
-    }
-  },
-  {
-    "id": "d66a6775ceb9e05e",
-    "sourceRegistryId": "arxiv-cs-ar",
-    "source": "arXiv",
-    "url": "https://arxiv.org/abs/2609.18662",
-    "title": "Automated Instruction Encoding Synthesis for Modern GPU ISA Compression",
-    "snippet": "arXiv:2609.18662v1 Announce Type: new Abstract: Modern GPU kernels increasingly stress the instruction supply path, while fixed instruction containers can leave substantial footprint slack. This paper presents an automa…",
-    "contentText": "arXiv:2609.18662v1 Announce Type: new Abstract: Modern GPU kernels increasingly stress the instruction supply path, while fixed instruction containers can leave substantial footprint slack. This paper presents an automated encoding-synthesis framework that treats instruction layout as a constrained slot-assignment problem over a validated instruction-form field specification. The formulation separates semantic field identity from physical bit positions and supports tied, pinned, and free placement constraints, making it applicable when recurring decoded fields are not frozen by a public format contract. We instantiate the framework for NVIDIA SASS: raw public encoding text is normalized into a machine-readable specification, a SASS disassembler is validated against nvdisasm on 3.78M instr…",
-    "publishedAt": "2026-09-17T04:00:00.000Z",
-    "sourceImage": null,
-    "region": "Global",
-    "language": "en",
-    "defaultCategory": "Semiconductors",
-    "source_text_scope": "abstract",
-    "ai_topic_score": 0.557,
-    "ai_topic_reasons": [
-      "nvidia",
-      "gpu"
+      "gpu",
+      "gpus",
+      "accelerator",
+      "accelerators"
     ],
     "category": "Semiconductors",
     "primary_category": "Semiconductors",
@@ -398,41 +105,42 @@
       "server OEMs",
       "investors"
     ],
-    "article_type": "Supply Chain",
-    "urgency_score": 0.3,
-    "taxonomy_confidence": 0.73,
+    "article_type": "Product / Platform Update",
+    "urgency_score": 0.31,
+    "taxonomy_confidence": 0.64,
     "taxonomy_reasons": [
-      "gpu",
-      "nvidia"
+      "gpu"
     ],
-    "direct_ai_infrastructure_relevance": 0,
+    "direct_ai_infrastructure_relevance": 0.22,
     "data_center_relevance": 0,
     "cloud_capacity_relevance": 0,
-    "semiconductor_relevance": 0.577,
+    "semiconductor_relevance": 0.517,
     "power_grid_relevance": 0,
     "cooling_relevance": 0,
     "capital_markets_relevance": 0,
     "enterprise_ai_infrastructure_relevance": 0,
-    "infrastructure_relevance_score": 0.37,
+    "infrastructure_relevance_score": 0.418,
     "infrastructure_relevance_tier": "archive_only",
     "infrastructure_relevance_action": "archive_only",
     "infrastructure_relevance_reasons": [
-      "semiconductor_relevance:0.58(nvidia, gpu)"
+      "direct_ai_infrastructure_relevance:0.22",
+      "semiconductor_relevance:0.52(accelerator, gpu)"
     ],
     "infrastructure_relevance": {
-      "direct_ai_infrastructure_relevance": 0,
+      "direct_ai_infrastructure_relevance": 0.22,
       "data_center_relevance": 0,
       "cloud_capacity_relevance": 0,
-      "semiconductor_relevance": 0.577,
+      "semiconductor_relevance": 0.517,
       "power_grid_relevance": 0,
       "cooling_relevance": 0,
       "capital_markets_relevance": 0,
       "enterprise_ai_infrastructure_relevance": 0,
-      "infrastructure_relevance_score": 0.37,
+      "infrastructure_relevance_score": 0.418,
       "infrastructure_relevance_tier": "archive_only",
       "infrastructure_relevance_action": "archive_only",
       "infrastructure_relevance_reasons": [
-        "semiconductor_relevance:0.58(nvidia, gpu)"
+        "direct_ai_infrastructure_relevance:0.22",
+        "semiconductor_relevance:0.52(accelerator, gpu)"
       ],
       "infrastructureRelevanceAction": "archive_only",
       "articlePagePublished": false,
@@ -660,6 +368,80 @@
     }
   },
   {
+    "id": "781530f863cbfa09",
+    "sourceRegistryId": "arxiv-cs-ar",
+    "source": "arXiv",
+    "url": "https://arxiv.org/abs/2609.19207",
+    "title": "MeshKV: A Network-on-Chip KV Cache Fabric for Scalable Transformer Decoding Accelerators",
+    "snippet": "arXiv:2609.19207v1 Announce Type: new Abstract: Autoregressive transformer decoding is constrained by irregular key-value (KV) cache movement on tiled accelerators. Prior compression and DRAM-placement systems still con…",
+    "contentText": "arXiv:2609.19207v1 Announce Type: new Abstract: Autoregressive transformer decoding is constrained by irregular key-value (KV) cache movement on tiled accelerators. Prior compression and DRAM-placement systems still concentrate traffic on centralized memory paths that bottleneck long-context serving. We present MeshKV, a KV cache fabric that moves blocks as packetized flows over a lightweight NoC. It co-designs (i) TaKV affine striping to spread homes and cut hotspot load, (ii) Mare multicast with verified duplicate suppression, and (iii) Pad, which overlaps prefetch, tile multiply, and streaming softmax behind credit-aligned FIFOs. Together they convert bisection back-pressure into useful KV transfer. On our 8x8 FPGA implementation with LLaMA-2-7B and Mistral-7B at 8K-32K, MeshKV reduces…",
+    "publishedAt": "2026-09-18T04:00:00.000Z",
+    "sourceImage": null,
+    "region": "US",
+    "language": "en",
+    "defaultCategory": "Semiconductors",
+    "source_text_scope": "abstract",
+    "ai_topic_score": 0.75,
+    "ai_topic_reasons": [
+      "llama",
+      "mistral",
+      "accelerators"
+    ],
+    "category": "Power & Grid",
+    "primary_category": "Power & Grid",
+    "secondary_category": "Interconnection and power procurement",
+    "infrastructure_layer": "Power",
+    "affected_stakeholders": [
+      "data center operators",
+      "utilities",
+      "cloud capacity teams",
+      "investors"
+    ],
+    "article_type": "Supply Chain",
+    "urgency_score": 0.28,
+    "taxonomy_confidence": 0.61,
+    "taxonomy_reasons": [
+      "transformer"
+    ],
+    "direct_ai_infrastructure_relevance": 0.22,
+    "data_center_relevance": 0,
+    "cloud_capacity_relevance": 0,
+    "semiconductor_relevance": 0,
+    "power_grid_relevance": 0.351,
+    "cooling_relevance": 0,
+    "capital_markets_relevance": 0,
+    "enterprise_ai_infrastructure_relevance": 0,
+    "infrastructure_relevance_score": 0.322,
+    "infrastructure_relevance_tier": "archive_only",
+    "infrastructure_relevance_action": "archive_only",
+    "infrastructure_relevance_reasons": [
+      "direct_ai_infrastructure_relevance:0.22",
+      "power_grid_relevance:0.35(transformer)"
+    ],
+    "infrastructure_relevance": {
+      "direct_ai_infrastructure_relevance": 0.22,
+      "data_center_relevance": 0,
+      "cloud_capacity_relevance": 0,
+      "semiconductor_relevance": 0,
+      "power_grid_relevance": 0.351,
+      "cooling_relevance": 0,
+      "capital_markets_relevance": 0,
+      "enterprise_ai_infrastructure_relevance": 0,
+      "infrastructure_relevance_score": 0.322,
+      "infrastructure_relevance_tier": "archive_only",
+      "infrastructure_relevance_action": "archive_only",
+      "infrastructure_relevance_reasons": [
+        "direct_ai_infrastructure_relevance:0.22",
+        "power_grid_relevance:0.35(transformer)"
+      ],
+      "infrastructureRelevanceAction": "archive_only",
+      "articlePagePublished": false,
+      "homepagePublished": false,
+      "archiveOnly": true,
+      "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
+    }
+  },
+  {
     "id": "eff04f6506da505b",
     "sourceRegistryId": "nsf-news",
     "source": "U.S. National Science Foundation",
@@ -720,6 +502,223 @@
       "infrastructure_relevance_action": "archive_only",
       "infrastructure_relevance_reasons": [
         "semiconductor_relevance:0.49(semiconductor)"
+      ],
+      "infrastructureRelevanceAction": "archive_only",
+      "articlePagePublished": false,
+      "homepagePublished": false,
+      "archiveOnly": true,
+      "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
+    }
+  },
+  {
+    "id": "7e012874dc6fd5c8",
+    "sourceRegistryId": "arxiv-cs-ar",
+    "source": "arXiv",
+    "url": "https://arxiv.org/abs/2609.19998",
+    "title": "Evaluation of Power-Clock Waveforms for Positive Feedback Adiabatic Logic in 16 nm FinFET Technology",
+    "snippet": "arXiv:2609.19998v1 Announce Type: new Abstract: Adiabatic logic can recover part of the energy stored on load capacitances through quasi-reversible switching, but its waveform-optimized operation in FinFET technology an…",
+    "contentText": "arXiv:2609.19998v1 Announce Type: new Abstract: Adiabatic logic can recover part of the energy stored on load capacitances through quasi-reversible switching, but its waveform-optimized operation in FinFET technology and at multi-GHz frequencies remains underexplored. This work investigates Positive Feedback Adiabatic Logic (PFAL) in the TSMC 16 nm FinFET process. A functionally complete PFAL gate library is designed, verified, and characterised using energy-delay product optimization over power-clock amplitude, frequency, and waveform shape. The power-clock sweep shows that the minimum-energy waveform approaches a triangular shape rather than a conventional trapezoid. The optimized single-gate PFAL cells achieve up to 3.83x lower energy than equivalent static CMOS gates, while sinusoidal…",
+    "publishedAt": "2026-09-18T04:00:00.000Z",
+    "sourceImage": null,
+    "region": "APAC",
+    "language": "en",
+    "defaultCategory": "Semiconductors",
+    "source_text_scope": "abstract",
+    "ai_topic_score": 0,
+    "ai_topic_reasons": [
+      "ai_not_in_title"
+    ],
+    "category": "Power & Grid",
+    "primary_category": "Power & Grid",
+    "secondary_category": "Interconnection and power procurement",
+    "infrastructure_layer": "Power",
+    "affected_stakeholders": [
+      "data center operators",
+      "utilities",
+      "cloud capacity teams",
+      "investors"
+    ],
+    "article_type": "Other",
+    "urgency_score": 0.5,
+    "taxonomy_confidence": 0.61,
+    "taxonomy_reasons": [
+      "power"
+    ],
+    "direct_ai_infrastructure_relevance": 0,
+    "data_center_relevance": 0,
+    "cloud_capacity_relevance": 0,
+    "semiconductor_relevance": 0.28,
+    "power_grid_relevance": 0.297,
+    "cooling_relevance": 0,
+    "capital_markets_relevance": 0,
+    "enterprise_ai_infrastructure_relevance": 0,
+    "infrastructure_relevance_score": 0.304,
+    "infrastructure_relevance_tier": "archive_only",
+    "infrastructure_relevance_action": "archive_only",
+    "infrastructure_relevance_reasons": [
+      "semiconductor_relevance:0.28(tsmc)",
+      "power_grid_relevance:0.30(power)"
+    ],
+    "infrastructure_relevance": {
+      "direct_ai_infrastructure_relevance": 0,
+      "data_center_relevance": 0,
+      "cloud_capacity_relevance": 0,
+      "semiconductor_relevance": 0.28,
+      "power_grid_relevance": 0.297,
+      "cooling_relevance": 0,
+      "capital_markets_relevance": 0,
+      "enterprise_ai_infrastructure_relevance": 0,
+      "infrastructure_relevance_score": 0.304,
+      "infrastructure_relevance_tier": "archive_only",
+      "infrastructure_relevance_action": "archive_only",
+      "infrastructure_relevance_reasons": [
+        "semiconductor_relevance:0.28(tsmc)",
+        "power_grid_relevance:0.30(power)"
+      ],
+      "infrastructureRelevanceAction": "archive_only",
+      "articlePagePublished": false,
+      "homepagePublished": false,
+      "archiveOnly": true,
+      "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
+    }
+  },
+  {
+    "id": "a4a6b30d1b85aeea",
+    "sourceRegistryId": "arxiv-cs-ar",
+    "source": "arXiv",
+    "url": "https://arxiv.org/abs/2609.19999",
+    "title": "Evaluating Positive Feedback Adiabatic Logic in 16nm FinFET with a Realistic Power-Clock",
+    "snippet": "arXiv:2609.19999v1 Announce Type: new Abstract: Adiabatic logic reuses the energy stored on load capacitances through quasi-reversible switching, enabling a lower minimum energy consumption than conventional static CMOS…",
+    "contentText": "arXiv:2609.19999v1 Announce Type: new Abstract: Adiabatic logic reuses the energy stored on load capacitances through quasi-reversible switching, enabling a lower minimum energy consumption than conventional static CMOS. Yet its practicality in FinFET technologies and at multi-GHz clock rates has yet to be investigated. This work provides a systematic evaluation of Positive Feedback Adiabatic Logic (PFAL) simulated in the TSMC 16nm FinFET process. A set of PFAL standard-cell gates were realised, along with two representative combinational circuits - a 2$\\times$2 multiplier and a 4-bit comparator - and compared against static CMOS logic using the energy--delay product (EDP) and the energy advantage metric $\\eta = E_{\\mathrm{CMOS}} / E_{\\mathrm{PFAL}}$. Transient simulations reveal three so…",
+    "publishedAt": "2026-09-18T04:00:00.000Z",
+    "sourceImage": null,
+    "region": "APAC",
+    "language": "en",
+    "defaultCategory": "Semiconductors",
+    "source_text_scope": "abstract",
+    "ai_topic_score": 0,
+    "ai_topic_reasons": [
+      "ai_not_in_title"
+    ],
+    "category": "Power & Grid",
+    "primary_category": "Power & Grid",
+    "secondary_category": "Interconnection and power procurement",
+    "infrastructure_layer": "Power",
+    "affected_stakeholders": [
+      "data center operators",
+      "utilities",
+      "cloud capacity teams",
+      "investors"
+    ],
+    "article_type": "Research / Technical",
+    "urgency_score": 0.5,
+    "taxonomy_confidence": 0.61,
+    "taxonomy_reasons": [
+      "power"
+    ],
+    "direct_ai_infrastructure_relevance": 0,
+    "data_center_relevance": 0,
+    "cloud_capacity_relevance": 0,
+    "semiconductor_relevance": 0.28,
+    "power_grid_relevance": 0.297,
+    "cooling_relevance": 0,
+    "capital_markets_relevance": 0,
+    "enterprise_ai_infrastructure_relevance": 0,
+    "infrastructure_relevance_score": 0.304,
+    "infrastructure_relevance_tier": "archive_only",
+    "infrastructure_relevance_action": "archive_only",
+    "infrastructure_relevance_reasons": [
+      "semiconductor_relevance:0.28(tsmc)",
+      "power_grid_relevance:0.30(power)"
+    ],
+    "infrastructure_relevance": {
+      "direct_ai_infrastructure_relevance": 0,
+      "data_center_relevance": 0,
+      "cloud_capacity_relevance": 0,
+      "semiconductor_relevance": 0.28,
+      "power_grid_relevance": 0.297,
+      "cooling_relevance": 0,
+      "capital_markets_relevance": 0,
+      "enterprise_ai_infrastructure_relevance": 0,
+      "infrastructure_relevance_score": 0.304,
+      "infrastructure_relevance_tier": "archive_only",
+      "infrastructure_relevance_action": "archive_only",
+      "infrastructure_relevance_reasons": [
+        "semiconductor_relevance:0.28(tsmc)",
+        "power_grid_relevance:0.30(power)"
+      ],
+      "infrastructureRelevanceAction": "archive_only",
+      "articlePagePublished": false,
+      "homepagePublished": false,
+      "archiveOnly": true,
+      "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
+    }
+  },
+  {
+    "id": "02a5b3f98c5b81e6",
+    "sourceRegistryId": "arxiv-cs-dc",
+    "source": "arXiv",
+    "url": "https://arxiv.org/abs/2609.19936",
+    "title": "VERA: Reinforcement Learning for Dynamic Memory Scaling of HPC Workloads in Kubernetes",
+    "snippet": "arXiv:2609.19936v1 Announce Type: new Abstract: Memory over-provisioning results in resource underutilization when HPC workloads run on Kubernetes. The default Vertical Pod Autoscaler (VPA) cannot anticipate phase-drive…",
+    "contentText": "arXiv:2609.19936v1 Announce Type: new Abstract: Memory over-provisioning results in resource underutilization when HPC workloads run on Kubernetes. The default Vertical Pod Autoscaler (VPA) cannot anticipate phase-driven memory spikes for first-run HPC jobs. In this work, we present a reinforcement learning (RL) recommender VERA that formulates vertical memory scaling as a Markov Decision Process and trains an agent on 3353 real Prometheus traces. Evaluated on a live Google Kubernetes Engine cluster using LAMMPS, graph analytics, in-memory analytics, and MLPerf 3D-UNet, the RL agent reclaims 31.6% of the available memory headroom and incurs at most one OOM event while VPA reclaims -7.9% over the same runs, raising memory provisioning, and its recommendation would have been insufficient to…",
+    "publishedAt": "2026-09-18T04:00:00.000Z",
+    "sourceImage": null,
+    "region": "US",
+    "language": "en",
+    "defaultCategory": "AI Infrastructure",
+    "source_text_scope": "abstract",
+    "ai_topic_score": 0,
+    "ai_topic_reasons": [
+      "ai_not_in_title"
+    ],
+    "category": "AI Infrastructure",
+    "primary_category": "AI Infrastructure",
+    "secondary_category": "GPU clusters and deployment readiness",
+    "infrastructure_layer": "Compute",
+    "affected_stakeholders": [
+      "operators",
+      "hyperscalers",
+      "cloud buyers",
+      "investors"
+    ],
+    "article_type": "Supply Chain",
+    "urgency_score": 0.28,
+    "taxonomy_confidence": 0.68,
+    "taxonomy_reasons": [
+      "ai infrastructure",
+      "hpc"
+    ],
+    "direct_ai_infrastructure_relevance": 0.27,
+    "data_center_relevance": 0,
+    "cloud_capacity_relevance": 0.2,
+    "semiconductor_relevance": 0,
+    "power_grid_relevance": 0,
+    "cooling_relevance": 0,
+    "capital_markets_relevance": 0,
+    "enterprise_ai_infrastructure_relevance": 0.297,
+    "infrastructure_relevance_score": 0.302,
+    "infrastructure_relevance_tier": "archive_only",
+    "infrastructure_relevance_action": "archive_only",
+    "infrastructure_relevance_reasons": [
+      "direct_ai_infrastructure_relevance:0.27(hpc)",
+      "enterprise_ai_infrastructure_relevance:0.30(kubernetes)"
+    ],
+    "infrastructure_relevance": {
+      "direct_ai_infrastructure_relevance": 0.27,
+      "data_center_relevance": 0,
+      "cloud_capacity_relevance": 0.2,
+      "semiconductor_relevance": 0,
+      "power_grid_relevance": 0,
+      "cooling_relevance": 0,
+      "capital_markets_relevance": 0,
+      "enterprise_ai_infrastructure_relevance": 0.297,
+      "infrastructure_relevance_score": 0.302,
+      "infrastructure_relevance_tier": "archive_only",
+      "infrastructure_relevance_action": "archive_only",
+      "infrastructure_relevance_reasons": [
+        "direct_ai_infrastructure_relevance:0.27(hpc)",
+        "enterprise_ai_infrastructure_relevance:0.30(kubernetes)"
       ],
       "infrastructureRelevanceAction": "archive_only",
       "articlePagePublished": false,
@@ -798,79 +797,6 @@
     }
   },
   {
-    "id": "cb84eb89598b7f3a",
-    "sourceRegistryId": "doe-newsroom",
-    "source": "U.S. Department of Energy",
-    "url": "https://www.energy.gov/articles/energy-department-closes-19-billion-loan-restart-duane-arnold-nuclear-plant",
-    "title": "Energy Department Closes $1.9 Billion Loan to Restart Duane Arnold Nuclear Plant",
-    "snippet": "The U.S. Department of Energy’s Office of Energy Dominance Financing today announced the financial close of a loan of up to $1.9 billion to NextEra Energy to help finance the restart of the Duane Arnold Energy Center in…",
-    "contentText": "The U.S. Department of Energy’s Office of Energy Dominance Financing today announced the financial close of a loan of up to $1.9 billion to NextEra Energy to help finance the restart of the Duane Arnold Energy Center in Linn County, Iowa.",
-    "publishedAt": "2026-09-08T11:30:00.000Z",
-    "sourceImage": null,
-    "region": "US",
-    "language": "en",
-    "defaultCategory": "Power & Grid",
-    "ai_topic_score": 0,
-    "ai_topic_reasons": [
-      "ai_not_in_title"
-    ],
-    "category": "Power & Grid",
-    "primary_category": "Power & Grid",
-    "secondary_category": "Interconnection and power procurement",
-    "infrastructure_layer": "Power",
-    "affected_stakeholders": [
-      "data center operators",
-      "utilities",
-      "cloud capacity teams",
-      "investors"
-    ],
-    "article_type": "Financing / M&A",
-    "urgency_score": 0.45,
-    "taxonomy_confidence": 0.77,
-    "taxonomy_reasons": [
-      "power",
-      "grid",
-      "nuclear"
-    ],
-    "direct_ai_infrastructure_relevance": 0,
-    "data_center_relevance": 0,
-    "cloud_capacity_relevance": 0,
-    "semiconductor_relevance": 0,
-    "power_grid_relevance": 0.351,
-    "cooling_relevance": 0,
-    "capital_markets_relevance": 0.32,
-    "enterprise_ai_infrastructure_relevance": 0,
-    "infrastructure_relevance_score": 0.28,
-    "infrastructure_relevance_tier": "archive_only",
-    "infrastructure_relevance_action": "archive_only",
-    "infrastructure_relevance_reasons": [
-      "power_grid_relevance:0.35(nuclear)",
-      "capital_markets_relevance:0.32(financing)"
-    ],
-    "infrastructure_relevance": {
-      "direct_ai_infrastructure_relevance": 0,
-      "data_center_relevance": 0,
-      "cloud_capacity_relevance": 0,
-      "semiconductor_relevance": 0,
-      "power_grid_relevance": 0.351,
-      "cooling_relevance": 0,
-      "capital_markets_relevance": 0.32,
-      "enterprise_ai_infrastructure_relevance": 0,
-      "infrastructure_relevance_score": 0.28,
-      "infrastructure_relevance_tier": "archive_only",
-      "infrastructure_relevance_action": "archive_only",
-      "infrastructure_relevance_reasons": [
-        "power_grid_relevance:0.35(nuclear)",
-        "capital_markets_relevance:0.32(financing)"
-      ],
-      "infrastructureRelevanceAction": "archive_only",
-      "articlePagePublished": false,
-      "homepagePublished": false,
-      "archiveOnly": true,
-      "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
-    }
-  },
-  {
     "id": "c7f06c7b67ed7039",
     "sourceRegistryId": "nsf-news",
     "source": "U.S. National Science Foundation",
@@ -931,6 +857,75 @@
       "infrastructure_relevance_action": "archive_only",
       "infrastructure_relevance_reasons": [
         "cooling_relevance:0.41(thermal)"
+      ],
+      "infrastructureRelevanceAction": "archive_only",
+      "articlePagePublished": false,
+      "homepagePublished": false,
+      "archiveOnly": true,
+      "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
+    }
+  },
+  {
+    "id": "582c79618bdd27a9",
+    "sourceRegistryId": "ec-press-corner",
+    "source": "European Commission",
+    "url": "https://ec.europa.eu/commission/presscorner/detail/en/ip_26_1900",
+    "title": "Commission disburses €3.3 billion in defence funding to Ukraine",
+    "snippet": "European Commission Press release Brussels, 18 Sep 2026 The European Commission will today disburse €3.3 billion to Ukraine for defence procurement under the €90 billion Ukraine Support Loan.",
+    "contentText": "European Commission Press release Brussels, 18 Sep 2026 The European Commission will today disburse €3.3 billion to Ukraine for defence procurement under the €90 billion Ukraine Support Loan.",
+    "publishedAt": "2026-09-18T07:30:35.000Z",
+    "sourceImage": null,
+    "region": "US",
+    "language": "en",
+    "defaultCategory": "Policy & Siting",
+    "ai_topic_score": 0,
+    "ai_topic_reasons": [
+      "ai_not_in_title"
+    ],
+    "category": "Capital Markets",
+    "primary_category": "Capital Markets",
+    "secondary_category": "Financing, valuation, and capital structure",
+    "infrastructure_layer": "Capital",
+    "affected_stakeholders": [
+      "investors",
+      "lenders",
+      "developers",
+      "operators"
+    ],
+    "article_type": "Financing / M&A",
+    "urgency_score": 0.34,
+    "taxonomy_confidence": 0.62,
+    "taxonomy_reasons": [
+      "funding"
+    ],
+    "direct_ai_infrastructure_relevance": 0,
+    "data_center_relevance": 0,
+    "cloud_capacity_relevance": 0,
+    "semiconductor_relevance": 0,
+    "power_grid_relevance": 0,
+    "cooling_relevance": 0,
+    "capital_markets_relevance": 0.378,
+    "enterprise_ai_infrastructure_relevance": 0,
+    "infrastructure_relevance_score": 0.254,
+    "infrastructure_relevance_tier": "archive_only",
+    "infrastructure_relevance_action": "archive_only",
+    "infrastructure_relevance_reasons": [
+      "capital_markets_relevance:0.38(funding)"
+    ],
+    "infrastructure_relevance": {
+      "direct_ai_infrastructure_relevance": 0,
+      "data_center_relevance": 0,
+      "cloud_capacity_relevance": 0,
+      "semiconductor_relevance": 0,
+      "power_grid_relevance": 0,
+      "cooling_relevance": 0,
+      "capital_markets_relevance": 0.378,
+      "enterprise_ai_infrastructure_relevance": 0,
+      "infrastructure_relevance_score": 0.254,
+      "infrastructure_relevance_tier": "archive_only",
+      "infrastructure_relevance_action": "archive_only",
+      "infrastructure_relevance_reasons": [
+        "capital_markets_relevance:0.38(funding)"
       ],
       "infrastructureRelevanceAction": "archive_only",
       "articlePagePublished": false,
@@ -1365,77 +1360,6 @@
     }
   },
   {
-    "id": "ecc38b0e49d50ab3",
-    "sourceRegistryId": "nrc-news",
-    "source": "U.S. Nuclear Regulatory Commission",
-    "url": "https://www.nrc.gov/sites/default/files/documents/26-077.pdf",
-    "title": "NRC Proposes Broad Overhaul of Nuclear Reactor Regulations",
-    "snippet": "",
-    "contentText": "",
-    "publishedAt": "2026-09-11T08:00:00.000Z",
-    "sourceImage": null,
-    "region": "US",
-    "language": "en",
-    "defaultCategory": "Power & Grid",
-    "ai_topic_score": 0,
-    "ai_topic_reasons": [
-      "ai_not_in_title"
-    ],
-    "category": "Power & Grid",
-    "primary_category": "Power & Grid",
-    "secondary_category": "Interconnection and power procurement",
-    "infrastructure_layer": "Power",
-    "affected_stakeholders": [
-      "data center operators",
-      "utilities",
-      "cloud capacity teams",
-      "investors"
-    ],
-    "article_type": "Other",
-    "urgency_score": 0.44,
-    "taxonomy_confidence": 0.77,
-    "taxonomy_reasons": [
-      "power",
-      "grid",
-      "nuclear"
-    ],
-    "direct_ai_infrastructure_relevance": 0,
-    "data_center_relevance": 0,
-    "cloud_capacity_relevance": 0,
-    "semiconductor_relevance": 0,
-    "power_grid_relevance": 0.351,
-    "cooling_relevance": 0,
-    "capital_markets_relevance": 0,
-    "enterprise_ai_infrastructure_relevance": 0,
-    "infrastructure_relevance_score": 0.239,
-    "infrastructure_relevance_tier": "archive_only",
-    "infrastructure_relevance_action": "archive_only",
-    "infrastructure_relevance_reasons": [
-      "power_grid_relevance:0.35(nuclear)"
-    ],
-    "infrastructure_relevance": {
-      "direct_ai_infrastructure_relevance": 0,
-      "data_center_relevance": 0,
-      "cloud_capacity_relevance": 0,
-      "semiconductor_relevance": 0,
-      "power_grid_relevance": 0.351,
-      "cooling_relevance": 0,
-      "capital_markets_relevance": 0,
-      "enterprise_ai_infrastructure_relevance": 0,
-      "infrastructure_relevance_score": 0.239,
-      "infrastructure_relevance_tier": "archive_only",
-      "infrastructure_relevance_action": "archive_only",
-      "infrastructure_relevance_reasons": [
-        "power_grid_relevance:0.35(nuclear)"
-      ],
-      "infrastructureRelevanceAction": "archive_only",
-      "articlePagePublished": false,
-      "homepagePublished": false,
-      "archiveOnly": true,
-      "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
-    }
-  },
-  {
     "id": "fd8f6522e69178d7",
     "sourceRegistryId": "gao-reports",
     "source": "U.S. Government Accountability Office",
@@ -1652,14 +1576,14 @@
     }
   },
   {
-    "id": "76631d4abb37e795",
-    "sourceRegistryId": "federal-register-doe",
+    "id": "10f635efa61ab6d3",
+    "sourceRegistryId": "federal-register-ferc",
     "source": "Federal Register",
-    "url": "https://www.federalregister.gov/documents/2026/09/17/2026-19050/revision-of-fiscal-year-fy-2026-2028-power-rate-schedules-and-general-rate-schedule-provisions-grsps",
-    "title": "Revision of Fiscal Year (FY) 2026-2028 Power Rate Schedules and General Rate Schedule Provisions (GRSPs) for the Remainder of BP-26 Rate Period; Public Hearing and Opportunities for Public Review and Comment",
-    "snippet": "Because of a recent district court decision in a lawsuit filed by the National Wildlife Federation, a coalition of fishing and environmental groups, and the State of Oregon, Bonneville is holding an expedited rate proce…",
-    "contentText": "Because of a recent district court decision in a lawsuit filed by the National Wildlife Federation, a coalition of fishing and environmental groups, and the State of Oregon, Bonneville is holding an expedited rate proceeding pursuant to the Pacific Northwest Electric Power Planning and Conservation Act (Northwest Power Act) to add power rate adjustment mechanisms to the FY 2026-2028 Power Rate Schedules and GRSPs for the remainder of the BP-26 rate period. The Northwest Power Act requires that Bonneville's rates be established through a section 7(i) rate proceeding and based on the record of a formal hearing. The expedited proceeding is required to ensure the proposed mechanism takes effect as soon as practicable, given Bonneville is already being negatively impacted by the court order. B…",
-    "publishedAt": "2026-09-17T04:00:00.000Z",
+    "url": "https://www.federalregister.gov/documents/2026/09/18/2026-19197/southeast-alaska-power-agency-notice-of-application-accepted-for-filing-and-soliciting-comments",
+    "title": "Southeast Alaska Power Agency; Notice of Application Accepted for Filing and Soliciting Comments, Motions To Intervene, and Protests",
+    "snippet": "",
+    "contentText": "",
+    "publishedAt": "2026-09-18T04:00:00.000Z",
     "sourceImage": null,
     "region": "US",
     "language": "en",
@@ -1697,7 +1621,8 @@
     "infrastructure_relevance_tier": "archive_only",
     "infrastructure_relevance_action": "archive_only",
     "infrastructure_relevance_reasons": [
-      "power_grid_relevance:0.30(power)"
+      "power_grid_relevance:0.30(power)",
+      "procedural_regulatory_docket_without_compute_context"
     ],
     "infrastructure_relevance": {
       "direct_ai_infrastructure_relevance": 0,
@@ -1712,7 +1637,8 @@
       "infrastructure_relevance_tier": "archive_only",
       "infrastructure_relevance_action": "archive_only",
       "infrastructure_relevance_reasons": [
-        "power_grid_relevance:0.30(power)"
+        "power_grid_relevance:0.30(power)",
+        "procedural_regulatory_docket_without_compute_context"
       ],
       "infrastructureRelevanceAction": "archive_only",
       "articlePagePublished": false,
@@ -2133,6 +2059,75 @@
       "infrastructure_relevance_action": "archive_only",
       "infrastructure_relevance_reasons": [
         "data_center_relevance:0.27(mep)"
+      ],
+      "infrastructureRelevanceAction": "archive_only",
+      "articlePagePublished": false,
+      "homepagePublished": false,
+      "archiveOnly": true,
+      "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
+    }
+  },
+  {
+    "id": "a38f7f95e107cb00",
+    "sourceRegistryId": "whitehouse-presidential-actions",
+    "source": "The White House",
+    "url": "https://www.whitehouse.gov/presidential-actions/2026/09/constitution-day-citizenship-day-and-constitution-week-2026/",
+    "title": "Constitution Day, Citizenship Day, and Constitution Week, 2026",
+    "snippet": "BY THE PRESIDENT OF THE UNITED STATES OF AMERICA A PROCLAMATION During Constitution Week, we proudly commemorate the 239th anniversary of the signing of the United States Constitution, the very foundation of our Republi…",
+    "contentText": "Presidential Actions Search Select Category All News Briefings & Statements All Presidential Actions Executive Orders Nominations & Appointments Presidential Memoranda Proclamations Fact Sheets Releases Remarks Research All Briefings & Statements Presidential Actions All Executive Orders Nominations & Appointments Presidential Memoranda Proclamations Fact Sheets Releases Remarks Research BY THE PRESIDENT OF THE UNITED STATES OF AMERICA A PROCLAMATION During Constitution Week, we proudly commemorate the 239th anniversary of the signing of the United States Constitution, the very foundation of our Republic and an eternal reminder that all power throughout our land flows from We the People. Over two centuries later, we remain more committed than ever to protecting and cherishing the fundamen…",
+    "publishedAt": "2026-09-16T20:09:16.000Z",
+    "sourceImage": null,
+    "region": "US",
+    "language": "en",
+    "defaultCategory": "Policy & Siting",
+    "ai_topic_score": 0,
+    "ai_topic_reasons": [
+      "ai_not_in_title"
+    ],
+    "category": "Power & Grid",
+    "primary_category": "Power & Grid",
+    "secondary_category": "Interconnection and power procurement",
+    "infrastructure_layer": "Power",
+    "affected_stakeholders": [
+      "data center operators",
+      "utilities",
+      "cloud capacity teams",
+      "investors"
+    ],
+    "article_type": "Policy / Regulation",
+    "urgency_score": 0.31,
+    "taxonomy_confidence": 0.57,
+    "taxonomy_reasons": [
+      "power"
+    ],
+    "direct_ai_infrastructure_relevance": 0,
+    "data_center_relevance": 0,
+    "cloud_capacity_relevance": 0,
+    "semiconductor_relevance": 0,
+    "power_grid_relevance": 0.22,
+    "cooling_relevance": 0,
+    "capital_markets_relevance": 0,
+    "enterprise_ai_infrastructure_relevance": 0,
+    "infrastructure_relevance_score": 0.163,
+    "infrastructure_relevance_tier": "archive_only",
+    "infrastructure_relevance_action": "archive_only",
+    "infrastructure_relevance_reasons": [
+      "power_grid_relevance:0.22(power)"
+    ],
+    "infrastructure_relevance": {
+      "direct_ai_infrastructure_relevance": 0,
+      "data_center_relevance": 0,
+      "cloud_capacity_relevance": 0,
+      "semiconductor_relevance": 0,
+      "power_grid_relevance": 0.22,
+      "cooling_relevance": 0,
+      "capital_markets_relevance": 0,
+      "enterprise_ai_infrastructure_relevance": 0,
+      "infrastructure_relevance_score": 0.163,
+      "infrastructure_relevance_tier": "archive_only",
+      "infrastructure_relevance_action": "archive_only",
+      "infrastructure_relevance_reasons": [
+        "power_grid_relevance:0.22(power)"
       ],
       "infrastructureRelevanceAction": "archive_only",
       "articlePagePublished": false,

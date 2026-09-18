@@ -1,6 +1,6 @@
 # Taxonomy Source Artifact and Public Route Report
 
-Source snapshot at: 2026-09-17T21:01:00.000Z
+Source snapshot at: 2026-09-18T04:00:00.000Z
 
 ## Source artifact inventory
 

@@ -848,7 +848,8 @@
     "76631d4abb37e795",
     "5cb4536d1fa8da96",
     "dfb68bb9b6e9e40a",
-    "b397723216b316e7"
+    "b397723216b316e7",
+    "781530f863cbfa09"
   ],
   "dayPlans": {
     "2026-03-24": {
@@ -45479,25 +45480,28 @@
     "2026-09-18": {
       "date": "2026-09-18",
       "createdAt": "2026-09-17T18:54:49.515Z",
-      "refreshedAt": "2026-09-18T01:14:55.063Z",
+      "refreshedAt": "2026-09-18T12:13:46.521Z",
       "candidateWindowHours": 24,
       "curatedItems": [
         {
-          "id": "b397723216b316e7",
-          "sourceRegistryId": "doe-newsroom",
-          "source": "U.S. Department of Energy",
-          "url": "https://www.energy.gov/articles/energy-secretary-secures-mid-atlantic-grid-due-anticipated-stressed-system-conditions",
-          "title": "Energy Secretary Secures Mid-Atlantic Grid Due to Anticipated Stressed System Conditions",
-          "snippet": "Secretary Wright issues an emergency order to stabilize the Mid-Atlantic grid and mitigate the risk of blackouts.",
-          "contentText": "Secretary Wright issues an emergency order to stabilize the Mid-Atlantic grid and mitigate the risk of blackouts.",
-          "publishedAt": "2026-09-17T21:01:00.000Z",
+          "id": "781530f863cbfa09",
+          "sourceRegistryId": "arxiv-cs-ar",
+          "source": "arXiv",
+          "url": "https://arxiv.org/abs/2609.19207",
+          "title": "MeshKV: A Network-on-Chip KV Cache Fabric for Scalable Transformer Decoding Accelerators",
+          "snippet": "arXiv:2609.19207v1 Announce Type: new Abstract: Autoregressive transformer decoding is constrained by irregular key-value (KV) cache movement on tiled accelerators. Prior compression and DRAM-placement systems still con…",
+          "contentText": "arXiv:2609.19207v1 Announce Type: new Abstract: Autoregressive transformer decoding is constrained by irregular key-value (KV) cache movement on tiled accelerators. Prior compression and DRAM-placement systems still concentrate traffic on centralized memory paths that bottleneck long-context serving. We present MeshKV, a KV cache fabric that moves blocks as packetized flows over a lightweight NoC. It co-designs (i) TaKV affine striping to spread homes and cut hotspot load, (ii) Mare multicast with verified duplicate suppression, and (iii) Pad, which overlaps prefetch, tile multiply, and streaming softmax behind credit-aligned FIFOs. Together they convert bisection back-pressure into useful KV transfer. On our 8x8 FPGA implementation with LLaMA-2-7B and Mistral-7B at 8K-32K, MeshKV reduces…",
+          "publishedAt": "2026-09-18T04:00:00.000Z",
           "sourceImage": null,
           "region": "US",
           "language": "en",
-          "defaultCategory": "Power & Grid",
-          "ai_topic_score": 0,
+          "defaultCategory": "Semiconductors",
+          "source_text_scope": "abstract",
+          "ai_topic_score": 0.75,
           "ai_topic_reasons": [
-            "ai_not_in_title"
+            "llama",
+            "mistral",
+            "accelerators"
           ],
           "category": "Power & Grid",
           "primary_category": "Power & Grid",
@@ -45509,41 +45513,42 @@
             "cloud capacity teams",
             "investors"
           ],
-          "article_type": "Other",
-          "urgency_score": 0.44,
-          "taxonomy_confidence": 0.7,
+          "article_type": "Supply Chain",
+          "urgency_score": 0.28,
+          "taxonomy_confidence": 0.61,
           "taxonomy_reasons": [
-            "power",
-            "grid"
+            "transformer"
           ],
-          "direct_ai_infrastructure_relevance": 0,
+          "direct_ai_infrastructure_relevance": 0.22,
           "data_center_relevance": 0,
           "cloud_capacity_relevance": 0,
           "semiconductor_relevance": 0,
-          "power_grid_relevance": 0.378,
+          "power_grid_relevance": 0.351,
           "cooling_relevance": 0,
           "capital_markets_relevance": 0,
           "enterprise_ai_infrastructure_relevance": 0,
-          "infrastructure_relevance_score": 0.254,
+          "infrastructure_relevance_score": 0.322,
           "infrastructure_relevance_tier": "archive_only",
           "infrastructure_relevance_action": "archive_only",
           "infrastructure_relevance_reasons": [
-            "power_grid_relevance:0.38(grid)"
+            "direct_ai_infrastructure_relevance:0.22",
+            "power_grid_relevance:0.35(transformer)"
           ],
           "infrastructure_relevance": {
-            "direct_ai_infrastructure_relevance": 0,
+            "direct_ai_infrastructure_relevance": 0.22,
             "data_center_relevance": 0,
             "cloud_capacity_relevance": 0,
             "semiconductor_relevance": 0,
-            "power_grid_relevance": 0.378,
+            "power_grid_relevance": 0.351,
             "cooling_relevance": 0,
             "capital_markets_relevance": 0,
             "enterprise_ai_infrastructure_relevance": 0,
-            "infrastructure_relevance_score": 0.254,
+            "infrastructure_relevance_score": 0.322,
             "infrastructure_relevance_tier": "archive_only",
             "infrastructure_relevance_action": "archive_only",
             "infrastructure_relevance_reasons": [
-              "power_grid_relevance:0.38(grid)"
+              "direct_ai_infrastructure_relevance:0.22",
+              "power_grid_relevance:0.35(transformer)"
             ],
             "infrastructureRelevanceAction": "archive_only",
             "articlePagePublished": false,
@@ -45555,151 +45560,22 @@
         }
       ],
       "curatedIds": [
-        "b397723216b316e7"
+        "781530f863cbfa09"
       ],
       "publishedIds": [
         "5cb4536d1fa8da96",
         "dfb68bb9b6e9e40a",
-        "b397723216b316e7"
+        "b397723216b316e7",
+        "781530f863cbfa09"
       ],
       "slotPublications": {
         "0": true,
-        "1": true
+        "1": true,
+        "2": true
       }
     }
   },
   "runHistory": [
-    {
-      "at": "2026-08-06T09:47:31.249Z",
-      "day": "2026-08-06",
-      "slot": 2,
-      "publishedCount": 0,
-      "signalCardCount": 1,
-      "archiveOnlyCount": 0,
-      "repetitionBlockedCount": 1,
-      "publishedIds": [],
-      "processedIds": [
-        "24a7d495d6d84b10",
-        "152fbef0c1ef295c"
-      ],
-      "blockedCount": 1,
-      "blockedItems": [
-        {
-          "id": "24a7d495d6d84b10",
-          "title": "Shared IDE For PCIe Bifurcation: Scaling Security Without Scaling Complexity & Resources",
-          "infrastructure_relevance_score": 0.928,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "data_center_relevance:0.42(data center)",
-            "cloud_capacity_relevance:0.32(hyperscalers)",
-            "semiconductor_relevance:0.58(semiconductor, gpu)",
-            "power_grid_relevance:0.22(power)",
-            "enterprise_ai_infrastructure_relevance:0.36(storage, networking)"
-          ],
-          "extraction_quality_score": 1,
-          "source_domain_adapter": "semiengineering",
-          "content_length": 1753,
-          "boilerplate_ratio": 0,
-          "repetition_blocked": false,
-          "repetition_block_reasons": [],
-          "repetition_check": null,
-          "expert_insight_complete": false,
-          "expert_insight_missing_fields": [
-            "concrete_facts",
-            "named_companies"
-          ],
-          "reason": "expert_insight_missing_fields concrete_facts, named_companies"
-        }
-      ],
-      "repetitionBlockedItems": [
-        {
-          "id": "152fbef0c1ef295c",
-          "title": "Do We Really Need Mega Next-Gen Data Center Campuses?",
-          "infrastructure_relevance_score": 1,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:0.82",
-            "data_center_relevance:1.00(data center, data centers, colocation)",
-            "cloud_capacity_relevance:0.32(hyperscalers)",
-            "power_grid_relevance:0.98(power, mw, gigawatts)",
-            "enterprise_ai_infrastructure_relevance:0.24(ai workloads)"
-          ],
-          "extraction_quality_score": 1,
-          "source_domain_adapter": "datacenterknowledge",
-          "content_length": 1694,
-          "boilerplate_ratio": 0,
-          "repetition_blocked": true,
-          "repetition_block_reasons": [
-            "repeated_sentence_ratio>0.12",
-            "heading_sequence_similarity>0.75",
-            "conclusion_similarity>0.7"
-          ],
-          "repetition_check": {
-            "compared_article_count": 20,
-            "repeated_sentence_ratio": 0.14285714285714285,
-            "repeated_paragraph_ratio": 0.16666666666666666,
-            "heading_sequence_similarity": 1,
-            "banned_phrase_count": 0,
-            "banned_phrase_counts": {},
-            "recent_banned_phrase_counts": {},
-            "ngram_overlap": 0.3203125,
-            "blueprint_repetition": 1,
-            "conclusion_similarity": 0.9511897312113418,
-            "repeated_sentence_count": 1,
-            "repeated_paragraph_count": 1,
-            "heading_sequence": [
-              "Deal Signal",
-              "Contract Quality",
-              "Operating Dependency",
-              "Investor Test"
-            ],
-            "blocked": true,
-            "reasons": [
-              "repeated_sentence_ratio>0.12",
-              "heading_sequence_similarity>0.75",
-              "conclusion_similarity>0.7"
-            ]
-          },
-          "expert_insight_complete": true,
-          "expert_insight_missing_fields": [],
-          "reason": "repeated_sentence_ratio>0.12; heading_sequence_similarity>0.75; conclusion_similarity>0.7"
-        }
-      ],
-      "signalCardItems": [
-        {
-          "id": "24a7d495d6d84b10",
-          "title": "Shared IDE For PCIe Bifurcation: Scaling Security Without Scaling Complexity & Resources",
-          "infrastructure_relevance_score": 0.928,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "data_center_relevance:0.42(data center)",
-            "cloud_capacity_relevance:0.32(hyperscalers)",
-            "semiconductor_relevance:0.58(semiconductor, gpu)",
-            "power_grid_relevance:0.22(power)",
-            "enterprise_ai_infrastructure_relevance:0.36(storage, networking)"
-          ],
-          "extraction_quality_score": 1,
-          "source_domain_adapter": "semiengineering",
-          "content_length": 1753,
-          "boilerplate_ratio": 0,
-          "repetition_blocked": false,
-          "repetition_block_reasons": [],
-          "repetition_check": null,
-          "expert_insight_complete": false,
-          "expert_insight_missing_fields": [
-            "concrete_facts",
-            "named_companies"
-          ],
-          "reason": "expert_insight_missing_fields concrete_facts, named_companies"
-        }
-      ],
-      "archiveOnlyItems": []
-    },
     {
       "at": "2026-08-07T01:42:37.868Z",
       "day": "2026-08-07",
@@ -50420,9 +50296,36 @@
         "token_budget": 60000,
         "call_budget": 40
       }
+    },
+    {
+      "at": "2026-09-18T12:13:46.521Z",
+      "day": "2026-09-18",
+      "slot": 2,
+      "publishedCount": 0,
+      "signalCardCount": 1,
+      "archiveOnlyCount": 0,
+      "processedIds": [
+        "781530f863cbfa09"
+      ],
+      "blockedCount": 0,
+      "blockedItems": [],
+      "archiveOnlyItems": [],
+      "authoredColumn": {
+        "published": false,
+        "reason": "no_qualifying_story"
+      },
+      "llmUsage": {
+        "calls": 2,
+        "failures": 0,
+        "prompt_tokens": 2010,
+        "completion_tokens": 319,
+        "total_tokens": 2329,
+        "token_budget": 60000,
+        "call_budget": 40
+      }
     }
   ],
-  "lastRunAt": "2026-09-18T01:14:55.063Z",
+  "lastRunAt": "2026-09-18T12:13:46.521Z",
   "authored": {
     "lastColumnAt": "2026-09-16T18:47:02.256Z",
     "columnsByDay": {
