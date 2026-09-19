@@ -1,155 +1,5 @@
 [
   {
-    "id": "dfb68bb9b6e9e40a",
-    "sourceRegistryId": "arxiv-cs-dc",
-    "source": "arXiv",
-    "url": "https://arxiv.org/abs/2609.18066",
-    "title": "Towards Training Private LLMs: Exploring Fine-Tuning Language Models on Apple Silicon with RDMA over Thunderbolt",
-    "snippet": "arXiv:2609.18066v2 Announce Type: replace Abstract: Private large language model (LLM) fine-tuning is increasingly important for organizations that need to adapt models using sensitive data, but it often exceeds the mem…",
-    "contentText": "arXiv:2609.18066v2 Announce Type: replace Abstract: Private large language model (LLM) fine-tuning is increasingly important for organizations that need to adapt models using sensitive data, but it often exceeds the memory capacity of commodity datacenter accelerators. Apple Silicon offers a different design point through large unified memory and lower complete-system cost, while recent Apple software support enables distributed execution over RDMA-over-Thunderbolt (TB). This paper studies whether Apple Silicon can serve as a practical platform for private LLM fine-tuning. We characterize RDMA-over-TB communication on Mac Studio nodes, showing that the measured bandwidth is far below nominal TB specifications. Next, we extend Apple's implementation with multi-trunk communication, persiste…",
-    "publishedAt": "2026-09-18T04:00:00.000Z",
-    "sourceImage": null,
-    "region": "APAC",
-    "language": "en",
-    "defaultCategory": "AI Infrastructure",
-    "source_text_scope": "abstract",
-    "ai_topic_score": 1,
-    "ai_topic_reasons": [
-      "large language model",
-      "llm",
-      "llms",
-      "accelerators"
-    ],
-    "category": "AI Infrastructure",
-    "primary_category": "AI Infrastructure",
-    "secondary_category": "GPU clusters and deployment readiness",
-    "infrastructure_layer": "Compute",
-    "affected_stakeholders": [
-      "operators",
-      "hyperscalers",
-      "cloud buyers",
-      "investors"
-    ],
-    "article_type": "Capacity Expansion",
-    "urgency_score": 0.48,
-    "taxonomy_confidence": 0.65,
-    "taxonomy_reasons": [
-      "ai infrastructure"
-    ],
-    "direct_ai_infrastructure_relevance": 0.78,
-    "data_center_relevance": 0.42,
-    "cloud_capacity_relevance": 0,
-    "semiconductor_relevance": 0,
-    "power_grid_relevance": 0,
-    "cooling_relevance": 0,
-    "capital_markets_relevance": 0,
-    "enterprise_ai_infrastructure_relevance": 0,
-    "infrastructure_relevance_score": 0.695,
-    "infrastructure_relevance_tier": "signal_card",
-    "infrastructure_relevance_action": "publish_signal_card_only",
-    "infrastructure_relevance_reasons": [
-      "direct_ai_infrastructure_relevance:0.78",
-      "data_center_relevance:0.42(datacenter)"
-    ],
-    "infrastructure_relevance": {
-      "direct_ai_infrastructure_relevance": 0.78,
-      "data_center_relevance": 0.42,
-      "cloud_capacity_relevance": 0,
-      "semiconductor_relevance": 0,
-      "power_grid_relevance": 0,
-      "cooling_relevance": 0,
-      "capital_markets_relevance": 0,
-      "enterprise_ai_infrastructure_relevance": 0,
-      "infrastructure_relevance_score": 0.695,
-      "infrastructure_relevance_tier": "signal_card",
-      "infrastructure_relevance_action": "publish_signal_card_only",
-      "infrastructure_relevance_reasons": [
-        "direct_ai_infrastructure_relevance:0.78",
-        "data_center_relevance:0.42(datacenter)"
-      ],
-      "infrastructureRelevanceAction": "publish_signal_card_only",
-      "articlePagePublished": false,
-      "homepagePublished": true,
-      "archiveOnly": false,
-      "archiveOnlyReason": null
-    }
-  },
-  {
-    "id": "d7fcf6306cbef100",
-    "sourceRegistryId": "arxiv-cs-ar",
-    "source": "arXiv",
-    "url": "https://arxiv.org/abs/2603.01517",
-    "title": "RoboGPU: Accelerating GPU Collision Detection for Robotics",
-    "snippet": "arXiv:2603.01517v2 Announce Type: replace Abstract: Autonomous robots are anticipated to be deployed soon in domains ranging from transportation to healthcare and home assistance. Enabling autonomous robotics requires a…",
-    "contentText": "arXiv:2603.01517v2 Announce Type: replace Abstract: Autonomous robots are anticipated to be deployed soon in domains ranging from transportation to healthcare and home assistance. Enabling autonomous robotics requires a computation platform flexible enough to execute a diverse and evolving collection of workloads while meeting real-time requirements. We believe a GPU-like architecture will be a key component of such platforms. Recent GPUs combine a flexible parallel processing fabric augmented with efficient support for important application domains via embedded accelerators (e.g., Tensor Cores), and a GPU-like architecture has reportedly been adopted for the Tesla AI5 accelerator. While current GPUs are effective at supporting emerging neural motion planners, we find that collision detec…",
-    "publishedAt": "2026-09-18T04:00:00.000Z",
-    "sourceImage": null,
-    "region": "US",
-    "language": "en",
-    "defaultCategory": "Semiconductors",
-    "source_text_scope": "abstract",
-    "ai_topic_score": 0.917,
-    "ai_topic_reasons": [
-      "gpu",
-      "gpus",
-      "accelerator",
-      "accelerators"
-    ],
-    "category": "Semiconductors",
-    "primary_category": "Semiconductors",
-    "secondary_category": "Accelerators, memory, and advanced packaging",
-    "infrastructure_layer": "Silicon",
-    "affected_stakeholders": [
-      "semiconductor suppliers",
-      "hyperscalers",
-      "server OEMs",
-      "investors"
-    ],
-    "article_type": "Product / Platform Update",
-    "urgency_score": 0.31,
-    "taxonomy_confidence": 0.64,
-    "taxonomy_reasons": [
-      "gpu"
-    ],
-    "direct_ai_infrastructure_relevance": 0.22,
-    "data_center_relevance": 0,
-    "cloud_capacity_relevance": 0,
-    "semiconductor_relevance": 0.517,
-    "power_grid_relevance": 0,
-    "cooling_relevance": 0,
-    "capital_markets_relevance": 0,
-    "enterprise_ai_infrastructure_relevance": 0,
-    "infrastructure_relevance_score": 0.418,
-    "infrastructure_relevance_tier": "archive_only",
-    "infrastructure_relevance_action": "archive_only",
-    "infrastructure_relevance_reasons": [
-      "direct_ai_infrastructure_relevance:0.22",
-      "semiconductor_relevance:0.52(accelerator, gpu)"
-    ],
-    "infrastructure_relevance": {
-      "direct_ai_infrastructure_relevance": 0.22,
-      "data_center_relevance": 0,
-      "cloud_capacity_relevance": 0,
-      "semiconductor_relevance": 0.517,
-      "power_grid_relevance": 0,
-      "cooling_relevance": 0,
-      "capital_markets_relevance": 0,
-      "enterprise_ai_infrastructure_relevance": 0,
-      "infrastructure_relevance_score": 0.418,
-      "infrastructure_relevance_tier": "archive_only",
-      "infrastructure_relevance_action": "archive_only",
-      "infrastructure_relevance_reasons": [
-        "direct_ai_infrastructure_relevance:0.22",
-        "semiconductor_relevance:0.52(accelerator, gpu)"
-      ],
-      "infrastructureRelevanceAction": "archive_only",
-      "articlePagePublished": false,
-      "homepagePublished": false,
-      "archiveOnly": true,
-      "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
-    }
-  },
-  {
     "id": "21ed9551b05dc362",
     "sourceRegistryId": "nist-news",
     "source": "National Institute of Standards and Technology",
@@ -368,80 +218,6 @@
     }
   },
   {
-    "id": "781530f863cbfa09",
-    "sourceRegistryId": "arxiv-cs-ar",
-    "source": "arXiv",
-    "url": "https://arxiv.org/abs/2609.19207",
-    "title": "MeshKV: A Network-on-Chip KV Cache Fabric for Scalable Transformer Decoding Accelerators",
-    "snippet": "arXiv:2609.19207v1 Announce Type: new Abstract: Autoregressive transformer decoding is constrained by irregular key-value (KV) cache movement on tiled accelerators. Prior compression and DRAM-placement systems still con…",
-    "contentText": "arXiv:2609.19207v1 Announce Type: new Abstract: Autoregressive transformer decoding is constrained by irregular key-value (KV) cache movement on tiled accelerators. Prior compression and DRAM-placement systems still concentrate traffic on centralized memory paths that bottleneck long-context serving. We present MeshKV, a KV cache fabric that moves blocks as packetized flows over a lightweight NoC. It co-designs (i) TaKV affine striping to spread homes and cut hotspot load, (ii) Mare multicast with verified duplicate suppression, and (iii) Pad, which overlaps prefetch, tile multiply, and streaming softmax behind credit-aligned FIFOs. Together they convert bisection back-pressure into useful KV transfer. On our 8x8 FPGA implementation with LLaMA-2-7B and Mistral-7B at 8K-32K, MeshKV reduces…",
-    "publishedAt": "2026-09-18T04:00:00.000Z",
-    "sourceImage": null,
-    "region": "US",
-    "language": "en",
-    "defaultCategory": "Semiconductors",
-    "source_text_scope": "abstract",
-    "ai_topic_score": 0.75,
-    "ai_topic_reasons": [
-      "llama",
-      "mistral",
-      "accelerators"
-    ],
-    "category": "Power & Grid",
-    "primary_category": "Power & Grid",
-    "secondary_category": "Interconnection and power procurement",
-    "infrastructure_layer": "Power",
-    "affected_stakeholders": [
-      "data center operators",
-      "utilities",
-      "cloud capacity teams",
-      "investors"
-    ],
-    "article_type": "Supply Chain",
-    "urgency_score": 0.28,
-    "taxonomy_confidence": 0.61,
-    "taxonomy_reasons": [
-      "transformer"
-    ],
-    "direct_ai_infrastructure_relevance": 0.22,
-    "data_center_relevance": 0,
-    "cloud_capacity_relevance": 0,
-    "semiconductor_relevance": 0,
-    "power_grid_relevance": 0.351,
-    "cooling_relevance": 0,
-    "capital_markets_relevance": 0,
-    "enterprise_ai_infrastructure_relevance": 0,
-    "infrastructure_relevance_score": 0.322,
-    "infrastructure_relevance_tier": "archive_only",
-    "infrastructure_relevance_action": "archive_only",
-    "infrastructure_relevance_reasons": [
-      "direct_ai_infrastructure_relevance:0.22",
-      "power_grid_relevance:0.35(transformer)"
-    ],
-    "infrastructure_relevance": {
-      "direct_ai_infrastructure_relevance": 0.22,
-      "data_center_relevance": 0,
-      "cloud_capacity_relevance": 0,
-      "semiconductor_relevance": 0,
-      "power_grid_relevance": 0.351,
-      "cooling_relevance": 0,
-      "capital_markets_relevance": 0,
-      "enterprise_ai_infrastructure_relevance": 0,
-      "infrastructure_relevance_score": 0.322,
-      "infrastructure_relevance_tier": "archive_only",
-      "infrastructure_relevance_action": "archive_only",
-      "infrastructure_relevance_reasons": [
-        "direct_ai_infrastructure_relevance:0.22",
-        "power_grid_relevance:0.35(transformer)"
-      ],
-      "infrastructureRelevanceAction": "archive_only",
-      "articlePagePublished": false,
-      "homepagePublished": false,
-      "archiveOnly": true,
-      "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
-    }
-  },
-  {
     "id": "eff04f6506da505b",
     "sourceRegistryId": "nsf-news",
     "source": "U.S. National Science Foundation",
@@ -502,223 +278,6 @@
       "infrastructure_relevance_action": "archive_only",
       "infrastructure_relevance_reasons": [
         "semiconductor_relevance:0.49(semiconductor)"
-      ],
-      "infrastructureRelevanceAction": "archive_only",
-      "articlePagePublished": false,
-      "homepagePublished": false,
-      "archiveOnly": true,
-      "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
-    }
-  },
-  {
-    "id": "7e012874dc6fd5c8",
-    "sourceRegistryId": "arxiv-cs-ar",
-    "source": "arXiv",
-    "url": "https://arxiv.org/abs/2609.19998",
-    "title": "Evaluation of Power-Clock Waveforms for Positive Feedback Adiabatic Logic in 16 nm FinFET Technology",
-    "snippet": "arXiv:2609.19998v1 Announce Type: new Abstract: Adiabatic logic can recover part of the energy stored on load capacitances through quasi-reversible switching, but its waveform-optimized operation in FinFET technology an…",
-    "contentText": "arXiv:2609.19998v1 Announce Type: new Abstract: Adiabatic logic can recover part of the energy stored on load capacitances through quasi-reversible switching, but its waveform-optimized operation in FinFET technology and at multi-GHz frequencies remains underexplored. This work investigates Positive Feedback Adiabatic Logic (PFAL) in the TSMC 16 nm FinFET process. A functionally complete PFAL gate library is designed, verified, and characterised using energy-delay product optimization over power-clock amplitude, frequency, and waveform shape. The power-clock sweep shows that the minimum-energy waveform approaches a triangular shape rather than a conventional trapezoid. The optimized single-gate PFAL cells achieve up to 3.83x lower energy than equivalent static CMOS gates, while sinusoidal…",
-    "publishedAt": "2026-09-18T04:00:00.000Z",
-    "sourceImage": null,
-    "region": "APAC",
-    "language": "en",
-    "defaultCategory": "Semiconductors",
-    "source_text_scope": "abstract",
-    "ai_topic_score": 0,
-    "ai_topic_reasons": [
-      "ai_not_in_title"
-    ],
-    "category": "Power & Grid",
-    "primary_category": "Power & Grid",
-    "secondary_category": "Interconnection and power procurement",
-    "infrastructure_layer": "Power",
-    "affected_stakeholders": [
-      "data center operators",
-      "utilities",
-      "cloud capacity teams",
-      "investors"
-    ],
-    "article_type": "Other",
-    "urgency_score": 0.5,
-    "taxonomy_confidence": 0.61,
-    "taxonomy_reasons": [
-      "power"
-    ],
-    "direct_ai_infrastructure_relevance": 0,
-    "data_center_relevance": 0,
-    "cloud_capacity_relevance": 0,
-    "semiconductor_relevance": 0.28,
-    "power_grid_relevance": 0.297,
-    "cooling_relevance": 0,
-    "capital_markets_relevance": 0,
-    "enterprise_ai_infrastructure_relevance": 0,
-    "infrastructure_relevance_score": 0.304,
-    "infrastructure_relevance_tier": "archive_only",
-    "infrastructure_relevance_action": "archive_only",
-    "infrastructure_relevance_reasons": [
-      "semiconductor_relevance:0.28(tsmc)",
-      "power_grid_relevance:0.30(power)"
-    ],
-    "infrastructure_relevance": {
-      "direct_ai_infrastructure_relevance": 0,
-      "data_center_relevance": 0,
-      "cloud_capacity_relevance": 0,
-      "semiconductor_relevance": 0.28,
-      "power_grid_relevance": 0.297,
-      "cooling_relevance": 0,
-      "capital_markets_relevance": 0,
-      "enterprise_ai_infrastructure_relevance": 0,
-      "infrastructure_relevance_score": 0.304,
-      "infrastructure_relevance_tier": "archive_only",
-      "infrastructure_relevance_action": "archive_only",
-      "infrastructure_relevance_reasons": [
-        "semiconductor_relevance:0.28(tsmc)",
-        "power_grid_relevance:0.30(power)"
-      ],
-      "infrastructureRelevanceAction": "archive_only",
-      "articlePagePublished": false,
-      "homepagePublished": false,
-      "archiveOnly": true,
-      "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
-    }
-  },
-  {
-    "id": "a4a6b30d1b85aeea",
-    "sourceRegistryId": "arxiv-cs-ar",
-    "source": "arXiv",
-    "url": "https://arxiv.org/abs/2609.19999",
-    "title": "Evaluating Positive Feedback Adiabatic Logic in 16nm FinFET with a Realistic Power-Clock",
-    "snippet": "arXiv:2609.19999v1 Announce Type: new Abstract: Adiabatic logic reuses the energy stored on load capacitances through quasi-reversible switching, enabling a lower minimum energy consumption than conventional static CMOS…",
-    "contentText": "arXiv:2609.19999v1 Announce Type: new Abstract: Adiabatic logic reuses the energy stored on load capacitances through quasi-reversible switching, enabling a lower minimum energy consumption than conventional static CMOS. Yet its practicality in FinFET technologies and at multi-GHz clock rates has yet to be investigated. This work provides a systematic evaluation of Positive Feedback Adiabatic Logic (PFAL) simulated in the TSMC 16nm FinFET process. A set of PFAL standard-cell gates were realised, along with two representative combinational circuits - a 2$\\times$2 multiplier and a 4-bit comparator - and compared against static CMOS logic using the energy--delay product (EDP) and the energy advantage metric $\\eta = E_{\\mathrm{CMOS}} / E_{\\mathrm{PFAL}}$. Transient simulations reveal three so…",
-    "publishedAt": "2026-09-18T04:00:00.000Z",
-    "sourceImage": null,
-    "region": "APAC",
-    "language": "en",
-    "defaultCategory": "Semiconductors",
-    "source_text_scope": "abstract",
-    "ai_topic_score": 0,
-    "ai_topic_reasons": [
-      "ai_not_in_title"
-    ],
-    "category": "Power & Grid",
-    "primary_category": "Power & Grid",
-    "secondary_category": "Interconnection and power procurement",
-    "infrastructure_layer": "Power",
-    "affected_stakeholders": [
-      "data center operators",
-      "utilities",
-      "cloud capacity teams",
-      "investors"
-    ],
-    "article_type": "Research / Technical",
-    "urgency_score": 0.5,
-    "taxonomy_confidence": 0.61,
-    "taxonomy_reasons": [
-      "power"
-    ],
-    "direct_ai_infrastructure_relevance": 0,
-    "data_center_relevance": 0,
-    "cloud_capacity_relevance": 0,
-    "semiconductor_relevance": 0.28,
-    "power_grid_relevance": 0.297,
-    "cooling_relevance": 0,
-    "capital_markets_relevance": 0,
-    "enterprise_ai_infrastructure_relevance": 0,
-    "infrastructure_relevance_score": 0.304,
-    "infrastructure_relevance_tier": "archive_only",
-    "infrastructure_relevance_action": "archive_only",
-    "infrastructure_relevance_reasons": [
-      "semiconductor_relevance:0.28(tsmc)",
-      "power_grid_relevance:0.30(power)"
-    ],
-    "infrastructure_relevance": {
-      "direct_ai_infrastructure_relevance": 0,
-      "data_center_relevance": 0,
-      "cloud_capacity_relevance": 0,
-      "semiconductor_relevance": 0.28,
-      "power_grid_relevance": 0.297,
-      "cooling_relevance": 0,
-      "capital_markets_relevance": 0,
-      "enterprise_ai_infrastructure_relevance": 0,
-      "infrastructure_relevance_score": 0.304,
-      "infrastructure_relevance_tier": "archive_only",
-      "infrastructure_relevance_action": "archive_only",
-      "infrastructure_relevance_reasons": [
-        "semiconductor_relevance:0.28(tsmc)",
-        "power_grid_relevance:0.30(power)"
-      ],
-      "infrastructureRelevanceAction": "archive_only",
-      "articlePagePublished": false,
-      "homepagePublished": false,
-      "archiveOnly": true,
-      "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
-    }
-  },
-  {
-    "id": "02a5b3f98c5b81e6",
-    "sourceRegistryId": "arxiv-cs-dc",
-    "source": "arXiv",
-    "url": "https://arxiv.org/abs/2609.19936",
-    "title": "VERA: Reinforcement Learning for Dynamic Memory Scaling of HPC Workloads in Kubernetes",
-    "snippet": "arXiv:2609.19936v1 Announce Type: new Abstract: Memory over-provisioning results in resource underutilization when HPC workloads run on Kubernetes. The default Vertical Pod Autoscaler (VPA) cannot anticipate phase-drive…",
-    "contentText": "arXiv:2609.19936v1 Announce Type: new Abstract: Memory over-provisioning results in resource underutilization when HPC workloads run on Kubernetes. The default Vertical Pod Autoscaler (VPA) cannot anticipate phase-driven memory spikes for first-run HPC jobs. In this work, we present a reinforcement learning (RL) recommender VERA that formulates vertical memory scaling as a Markov Decision Process and trains an agent on 3353 real Prometheus traces. Evaluated on a live Google Kubernetes Engine cluster using LAMMPS, graph analytics, in-memory analytics, and MLPerf 3D-UNet, the RL agent reclaims 31.6% of the available memory headroom and incurs at most one OOM event while VPA reclaims -7.9% over the same runs, raising memory provisioning, and its recommendation would have been insufficient to…",
-    "publishedAt": "2026-09-18T04:00:00.000Z",
-    "sourceImage": null,
-    "region": "US",
-    "language": "en",
-    "defaultCategory": "AI Infrastructure",
-    "source_text_scope": "abstract",
-    "ai_topic_score": 0,
-    "ai_topic_reasons": [
-      "ai_not_in_title"
-    ],
-    "category": "AI Infrastructure",
-    "primary_category": "AI Infrastructure",
-    "secondary_category": "GPU clusters and deployment readiness",
-    "infrastructure_layer": "Compute",
-    "affected_stakeholders": [
-      "operators",
-      "hyperscalers",
-      "cloud buyers",
-      "investors"
-    ],
-    "article_type": "Supply Chain",
-    "urgency_score": 0.28,
-    "taxonomy_confidence": 0.68,
-    "taxonomy_reasons": [
-      "ai infrastructure",
-      "hpc"
-    ],
-    "direct_ai_infrastructure_relevance": 0.27,
-    "data_center_relevance": 0,
-    "cloud_capacity_relevance": 0.2,
-    "semiconductor_relevance": 0,
-    "power_grid_relevance": 0,
-    "cooling_relevance": 0,
-    "capital_markets_relevance": 0,
-    "enterprise_ai_infrastructure_relevance": 0.297,
-    "infrastructure_relevance_score": 0.302,
-    "infrastructure_relevance_tier": "archive_only",
-    "infrastructure_relevance_action": "archive_only",
-    "infrastructure_relevance_reasons": [
-      "direct_ai_infrastructure_relevance:0.27(hpc)",
-      "enterprise_ai_infrastructure_relevance:0.30(kubernetes)"
-    ],
-    "infrastructure_relevance": {
-      "direct_ai_infrastructure_relevance": 0.27,
-      "data_center_relevance": 0,
-      "cloud_capacity_relevance": 0.2,
-      "semiconductor_relevance": 0,
-      "power_grid_relevance": 0,
-      "cooling_relevance": 0,
-      "capital_markets_relevance": 0,
-      "enterprise_ai_infrastructure_relevance": 0.297,
-      "infrastructure_relevance_score": 0.302,
-      "infrastructure_relevance_tier": "archive_only",
-      "infrastructure_relevance_action": "archive_only",
-      "infrastructure_relevance_reasons": [
-        "direct_ai_infrastructure_relevance:0.27(hpc)",
-        "enterprise_ai_infrastructure_relevance:0.30(kubernetes)"
       ],
       "infrastructureRelevanceAction": "archive_only",
       "articlePagePublished": false,
@@ -1431,151 +990,6 @@
     }
   },
   {
-    "id": "53c44679ee2064d4",
-    "sourceRegistryId": "federal-register-ferc",
-    "source": "Federal Register",
-    "url": "https://www.federalregister.gov/documents/2026/09/09/2026-18358/city-of-thief-river-falls-municipal-utilities-notice-of-application-tendered-for-filing-with-the",
-    "title": "City of Thief River Falls Municipal Utilities; Notice of Application Tendered for Filing With the Commission and Soliciting Additional Study Requests and Establishing Procedural Schedule for Relicensing and Deadline for Submission of Final Amendments",
-    "snippet": "",
-    "contentText": "",
-    "publishedAt": "2026-09-09T04:00:00.000Z",
-    "sourceImage": null,
-    "region": "US",
-    "language": "en",
-    "defaultCategory": "Power & Grid",
-    "ai_topic_score": 0,
-    "ai_topic_reasons": [
-      "ai_not_in_title"
-    ],
-    "category": "Power & Grid",
-    "primary_category": "Power & Grid",
-    "secondary_category": "Interconnection and power procurement",
-    "infrastructure_layer": "Power",
-    "affected_stakeholders": [
-      "data center operators",
-      "utilities",
-      "cloud capacity teams",
-      "investors"
-    ],
-    "article_type": "Other",
-    "urgency_score": 0.44,
-    "taxonomy_confidence": 0.67,
-    "taxonomy_reasons": [
-      "power",
-      "grid"
-    ],
-    "direct_ai_infrastructure_relevance": 0,
-    "data_center_relevance": 0,
-    "cloud_capacity_relevance": 0,
-    "semiconductor_relevance": 0,
-    "power_grid_relevance": 0.351,
-    "cooling_relevance": 0,
-    "capital_markets_relevance": 0,
-    "enterprise_ai_infrastructure_relevance": 0,
-    "infrastructure_relevance_score": 0.239,
-    "infrastructure_relevance_tier": "archive_only",
-    "infrastructure_relevance_action": "archive_only",
-    "infrastructure_relevance_reasons": [
-      "power_grid_relevance:0.35(utilities)",
-      "procedural_regulatory_docket_without_compute_context"
-    ],
-    "infrastructure_relevance": {
-      "direct_ai_infrastructure_relevance": 0,
-      "data_center_relevance": 0,
-      "cloud_capacity_relevance": 0,
-      "semiconductor_relevance": 0,
-      "power_grid_relevance": 0.351,
-      "cooling_relevance": 0,
-      "capital_markets_relevance": 0,
-      "enterprise_ai_infrastructure_relevance": 0,
-      "infrastructure_relevance_score": 0.239,
-      "infrastructure_relevance_tier": "archive_only",
-      "infrastructure_relevance_action": "archive_only",
-      "infrastructure_relevance_reasons": [
-        "power_grid_relevance:0.35(utilities)",
-        "procedural_regulatory_docket_without_compute_context"
-      ],
-      "infrastructureRelevanceAction": "archive_only",
-      "articlePagePublished": false,
-      "homepagePublished": false,
-      "archiveOnly": true,
-      "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
-    }
-  },
-  {
-    "id": "c4910856ee984a37",
-    "sourceRegistryId": "federal-register-ferc",
-    "source": "Federal Register",
-    "url": "https://www.federalregister.gov/documents/2026/09/09/2026-18355/notice-of-effectiveness-of-exempt-wholesale-generator-and-foreign-utility-company-status",
-    "title": "Notice of Effectiveness of Exempt Wholesale Generator and Foreign Utility Company Status",
-    "snippet": "",
-    "contentText": "",
-    "publishedAt": "2026-09-09T04:00:00.000Z",
-    "sourceImage": null,
-    "region": "US",
-    "language": "en",
-    "defaultCategory": "Power & Grid",
-    "ai_topic_score": 0,
-    "ai_topic_reasons": [
-      "ai_not_in_title"
-    ],
-    "category": "Power & Grid",
-    "primary_category": "Power & Grid",
-    "secondary_category": "Interconnection and power procurement",
-    "infrastructure_layer": "Power",
-    "affected_stakeholders": [
-      "data center operators",
-      "utilities",
-      "cloud capacity teams",
-      "investors"
-    ],
-    "article_type": "Other",
-    "urgency_score": 0.44,
-    "taxonomy_confidence": 0.77,
-    "taxonomy_reasons": [
-      "power",
-      "grid",
-      "utility"
-    ],
-    "direct_ai_infrastructure_relevance": 0,
-    "data_center_relevance": 0,
-    "cloud_capacity_relevance": 0,
-    "semiconductor_relevance": 0,
-    "power_grid_relevance": 0.351,
-    "cooling_relevance": 0,
-    "capital_markets_relevance": 0,
-    "enterprise_ai_infrastructure_relevance": 0,
-    "infrastructure_relevance_score": 0.239,
-    "infrastructure_relevance_tier": "archive_only",
-    "infrastructure_relevance_action": "archive_only",
-    "infrastructure_relevance_reasons": [
-      "power_grid_relevance:0.35(utility)",
-      "procedural_regulatory_docket_without_compute_context"
-    ],
-    "infrastructure_relevance": {
-      "direct_ai_infrastructure_relevance": 0,
-      "data_center_relevance": 0,
-      "cloud_capacity_relevance": 0,
-      "semiconductor_relevance": 0,
-      "power_grid_relevance": 0.351,
-      "cooling_relevance": 0,
-      "capital_markets_relevance": 0,
-      "enterprise_ai_infrastructure_relevance": 0,
-      "infrastructure_relevance_score": 0.239,
-      "infrastructure_relevance_tier": "archive_only",
-      "infrastructure_relevance_action": "archive_only",
-      "infrastructure_relevance_reasons": [
-        "power_grid_relevance:0.35(utility)",
-        "procedural_regulatory_docket_without_compute_context"
-      ],
-      "infrastructureRelevanceAction": "archive_only",
-      "articlePagePublished": false,
-      "homepagePublished": false,
-      "archiveOnly": true,
-      "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
-    }
-  },
-  {
     "id": "10f635efa61ab6d3",
     "sourceRegistryId": "federal-register-ferc",
     "source": "Federal Register",
@@ -1648,6 +1062,76 @@
     }
   },
   {
+    "id": "76631d4abb37e795",
+    "sourceRegistryId": "federal-register-doe",
+    "source": "Federal Register",
+    "url": "https://www.federalregister.gov/documents/2026/09/17/2026-19050/revision-of-fiscal-year-fy-2026-2028-power-rate-schedules-and-general-rate-schedule-provisions-grsps",
+    "title": "Revision of Fiscal Year (FY) 2026-2028 Power Rate Schedules and General Rate Schedule Provisions (GRSPs) for the Remainder of BP-26 Rate Period; Public Hearing and Opportunities for Public Review and Comment",
+    "snippet": "Because of a recent district court decision in a lawsuit filed by the National Wildlife Federation, a coalition of fishing and environmental groups, and the State of Oregon, Bonneville is holding an expedited rate proce…",
+    "contentText": "Because of a recent district court decision in a lawsuit filed by the National Wildlife Federation, a coalition of fishing and environmental groups, and the State of Oregon, Bonneville is holding an expedited rate proceeding pursuant to the Pacific Northwest Electric Power Planning and Conservation Act (Northwest Power Act) to add power rate adjustment mechanisms to the FY 2026-2028 Power Rate Schedules and GRSPs for the remainder of the BP-26 rate period. The Northwest Power Act requires that Bonneville's rates be established through a section 7(i) rate proceeding and based on the record of a formal hearing. The expedited proceeding is required to ensure the proposed mechanism takes effect as soon as practicable, given Bonneville is already being negatively impacted by the court order. B…",
+    "publishedAt": "2026-09-17T04:00:00.000Z",
+    "sourceImage": null,
+    "region": "US",
+    "language": "en",
+    "defaultCategory": "Power & Grid",
+    "ai_topic_score": 0,
+    "ai_topic_reasons": [
+      "ai_not_in_title"
+    ],
+    "category": "Power & Grid",
+    "primary_category": "Power & Grid",
+    "secondary_category": "Interconnection and power procurement",
+    "infrastructure_layer": "Power",
+    "affected_stakeholders": [
+      "data center operators",
+      "utilities",
+      "cloud capacity teams",
+      "investors"
+    ],
+    "article_type": "Other",
+    "urgency_score": 0.43,
+    "taxonomy_confidence": 0.69,
+    "taxonomy_reasons": [
+      "power",
+      "grid"
+    ],
+    "direct_ai_infrastructure_relevance": 0,
+    "data_center_relevance": 0,
+    "cloud_capacity_relevance": 0,
+    "semiconductor_relevance": 0,
+    "power_grid_relevance": 0.297,
+    "cooling_relevance": 0,
+    "capital_markets_relevance": 0,
+    "enterprise_ai_infrastructure_relevance": 0,
+    "infrastructure_relevance_score": 0.207,
+    "infrastructure_relevance_tier": "archive_only",
+    "infrastructure_relevance_action": "archive_only",
+    "infrastructure_relevance_reasons": [
+      "power_grid_relevance:0.30(power)"
+    ],
+    "infrastructure_relevance": {
+      "direct_ai_infrastructure_relevance": 0,
+      "data_center_relevance": 0,
+      "cloud_capacity_relevance": 0,
+      "semiconductor_relevance": 0,
+      "power_grid_relevance": 0.297,
+      "cooling_relevance": 0,
+      "capital_markets_relevance": 0,
+      "enterprise_ai_infrastructure_relevance": 0,
+      "infrastructure_relevance_score": 0.207,
+      "infrastructure_relevance_tier": "archive_only",
+      "infrastructure_relevance_action": "archive_only",
+      "infrastructure_relevance_reasons": [
+        "power_grid_relevance:0.30(power)"
+      ],
+      "infrastructureRelevanceAction": "archive_only",
+      "articlePagePublished": false,
+      "homepagePublished": false,
+      "archiveOnly": true,
+      "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
+    }
+  },
+  {
     "id": "4814601bbae06e57",
     "sourceRegistryId": "uk-desnz",
     "source": "UK Department for Energy Security and Net Zero",
@@ -1709,6 +1193,78 @@
       "infrastructure_relevance_action": "archive_only",
       "infrastructure_relevance_reasons": [
         "power_grid_relevance:0.30(power)"
+      ],
+      "infrastructureRelevanceAction": "archive_only",
+      "articlePagePublished": false,
+      "homepagePublished": false,
+      "archiveOnly": true,
+      "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
+    }
+  },
+  {
+    "id": "aa7900ef9280e5f6",
+    "sourceRegistryId": "federal-register-ferc",
+    "source": "Federal Register",
+    "url": "https://www.federalregister.gov/documents/2026/09/10/2026-18456/idaho-power-company-notice-of-availability-of-the-final-supplemental-environmental-impact-statement",
+    "title": "Idaho Power Company; Notice of Availability of the Final Supplemental Environmental Impact Statement for the Hells Canyon Hydroelectric Project",
+    "snippet": "",
+    "contentText": "",
+    "publishedAt": "2026-09-10T04:00:00.000Z",
+    "sourceImage": null,
+    "region": "US",
+    "language": "en",
+    "defaultCategory": "Power & Grid",
+    "ai_topic_score": 0,
+    "ai_topic_reasons": [
+      "ai_not_in_title"
+    ],
+    "category": "Power & Grid",
+    "primary_category": "Power & Grid",
+    "secondary_category": "Interconnection and power procurement",
+    "infrastructure_layer": "Power",
+    "affected_stakeholders": [
+      "data center operators",
+      "utilities",
+      "cloud capacity teams",
+      "investors"
+    ],
+    "article_type": "Other",
+    "urgency_score": 0.43,
+    "taxonomy_confidence": 0.69,
+    "taxonomy_reasons": [
+      "power",
+      "grid"
+    ],
+    "direct_ai_infrastructure_relevance": 0,
+    "data_center_relevance": 0,
+    "cloud_capacity_relevance": 0,
+    "semiconductor_relevance": 0,
+    "power_grid_relevance": 0.297,
+    "cooling_relevance": 0,
+    "capital_markets_relevance": 0,
+    "enterprise_ai_infrastructure_relevance": 0,
+    "infrastructure_relevance_score": 0.207,
+    "infrastructure_relevance_tier": "archive_only",
+    "infrastructure_relevance_action": "archive_only",
+    "infrastructure_relevance_reasons": [
+      "power_grid_relevance:0.30(power)",
+      "procedural_regulatory_docket_without_compute_context"
+    ],
+    "infrastructure_relevance": {
+      "direct_ai_infrastructure_relevance": 0,
+      "data_center_relevance": 0,
+      "cloud_capacity_relevance": 0,
+      "semiconductor_relevance": 0,
+      "power_grid_relevance": 0.297,
+      "cooling_relevance": 0,
+      "capital_markets_relevance": 0,
+      "enterprise_ai_infrastructure_relevance": 0,
+      "infrastructure_relevance_score": 0.207,
+      "infrastructure_relevance_tier": "archive_only",
+      "infrastructure_relevance_action": "archive_only",
+      "infrastructure_relevance_reasons": [
+        "power_grid_relevance:0.30(power)",
+        "procedural_regulatory_docket_without_compute_context"
       ],
       "infrastructureRelevanceAction": "archive_only",
       "articlePagePublished": false,
@@ -2068,14 +1624,83 @@
     }
   },
   {
-    "id": "54e74d47c200ba79",
-    "sourceRegistryId": "nrc-news",
-    "source": "U.S. Nuclear Regulatory Commission",
-    "url": "https://www.nrc.gov/sites/default/files/cdn/doc-collection-news/2026/26-028-a.pdf",
-    "title": "NRC Advisory: NRC to Hold Mandatory Hearing on Belews Creek Early Site Permit",
-    "snippet": "",
-    "contentText": "",
-    "publishedAt": "2026-09-09T08:00:00.000Z",
+    "id": "a38f7f95e107cb00",
+    "sourceRegistryId": "whitehouse-presidential-actions",
+    "source": "The White House",
+    "url": "https://www.whitehouse.gov/presidential-actions/2026/09/constitution-day-citizenship-day-and-constitution-week-2026/",
+    "title": "Constitution Day, Citizenship Day, and Constitution Week, 2026",
+    "snippet": "BY THE PRESIDENT OF THE UNITED STATES OF AMERICA A PROCLAMATION During Constitution Week, we proudly commemorate the 239th anniversary of the signing of the United States Constitution, the very foundation of our Republi…",
+    "contentText": "Presidential Actions Search Select Category All News Briefings & Statements All Presidential Actions Executive Orders Nominations & Appointments Presidential Memoranda Proclamations Fact Sheets Releases Remarks Research All Briefings & Statements Presidential Actions All Executive Orders Nominations & Appointments Presidential Memoranda Proclamations Fact Sheets Releases Remarks Research BY THE PRESIDENT OF THE UNITED STATES OF AMERICA A PROCLAMATION During Constitution Week, we proudly commemorate the 239th anniversary of the signing of the United States Constitution, the very foundation of our Republic and an eternal reminder that all power throughout our land flows from We the People. Over two centuries later, we remain more committed than ever to protecting and cherishing the fundamen…",
+    "publishedAt": "2026-09-16T20:09:16.000Z",
+    "sourceImage": null,
+    "region": "US",
+    "language": "en",
+    "defaultCategory": "Policy & Siting",
+    "ai_topic_score": 0,
+    "ai_topic_reasons": [
+      "ai_not_in_title"
+    ],
+    "category": "Power & Grid",
+    "primary_category": "Power & Grid",
+    "secondary_category": "Interconnection and power procurement",
+    "infrastructure_layer": "Power",
+    "affected_stakeholders": [
+      "data center operators",
+      "utilities",
+      "cloud capacity teams",
+      "investors"
+    ],
+    "article_type": "Policy / Regulation",
+    "urgency_score": 0.31,
+    "taxonomy_confidence": 0.57,
+    "taxonomy_reasons": [
+      "power"
+    ],
+    "direct_ai_infrastructure_relevance": 0,
+    "data_center_relevance": 0,
+    "cloud_capacity_relevance": 0,
+    "semiconductor_relevance": 0,
+    "power_grid_relevance": 0.22,
+    "cooling_relevance": 0,
+    "capital_markets_relevance": 0,
+    "enterprise_ai_infrastructure_relevance": 0,
+    "infrastructure_relevance_score": 0.163,
+    "infrastructure_relevance_tier": "archive_only",
+    "infrastructure_relevance_action": "archive_only",
+    "infrastructure_relevance_reasons": [
+      "power_grid_relevance:0.22(power)"
+    ],
+    "infrastructure_relevance": {
+      "direct_ai_infrastructure_relevance": 0,
+      "data_center_relevance": 0,
+      "cloud_capacity_relevance": 0,
+      "semiconductor_relevance": 0,
+      "power_grid_relevance": 0.22,
+      "cooling_relevance": 0,
+      "capital_markets_relevance": 0,
+      "enterprise_ai_infrastructure_relevance": 0,
+      "infrastructure_relevance_score": 0.163,
+      "infrastructure_relevance_tier": "archive_only",
+      "infrastructure_relevance_action": "archive_only",
+      "infrastructure_relevance_reasons": [
+        "power_grid_relevance:0.22(power)"
+      ],
+      "infrastructureRelevanceAction": "archive_only",
+      "articlePagePublished": false,
+      "homepagePublished": false,
+      "archiveOnly": true,
+      "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
+    }
+  },
+  {
+    "id": "6c5105b61ca87f68",
+    "sourceRegistryId": "gao-reports",
+    "source": "U.S. Government Accountability Office",
+    "url": "https://www.gao.gov/products/gao-26-108669",
+    "title": "Federal Real Property: GSA Should Take Additional Steps to Improve Agencies’ Awareness of Meeting Spaces List",
+    "snippet": "What GAO Found Federal buildings often contain special use spaces like meeting rooms and conference centers, some of which may be shared across agencies. Agencies varied in how they shared these spaces in the selected G…",
+    "contentText": "What GAO Found Federal buildings often contain special use spaces like meeting rooms and conference centers, some of which may be shared across agencies. Agencies varied in how they shared these spaces in the selected General Services Administration (GSA)-owned and -leased buildings GAO visited. Interviewees, including officials from federal tenant agencies in those selected buildings, said that sharing these spaces can provide benefits, including: access to useful spaces their agency might not otherwise have, reduced costs and more efficient use of space (e.g., agencies do not need to lease or construct individual spaces), and increased collaboration between agencies. However, interviewees also identified challenges to sharing, such as lack of awareness of what spaces are available or ho…",
+    "publishedAt": "2026-09-14T11:10:47.000Z",
     "sourceImage": null,
     "region": "US",
     "language": "en",
@@ -2094,9 +1719,9 @@
       "cloud capacity teams",
       "investors"
     ],
-    "article_type": "Policy / Regulation",
-    "urgency_score": 0.5,
-    "taxonomy_confidence": 0.65,
+    "article_type": "Partnership",
+    "urgency_score": 0.39,
+    "taxonomy_confidence": 0.61,
     "taxonomy_reasons": [
       "power",
       "grid"
@@ -2105,30 +1730,376 @@
     "data_center_relevance": 0,
     "cloud_capacity_relevance": 0,
     "semiconductor_relevance": 0,
-    "power_grid_relevance": 0.26,
+    "power_grid_relevance": 0,
     "cooling_relevance": 0,
-    "capital_markets_relevance": 0,
+    "capital_markets_relevance": 0.18,
     "enterprise_ai_infrastructure_relevance": 0,
-    "infrastructure_relevance_score": 0.186,
+    "infrastructure_relevance_score": 0.104,
     "infrastructure_relevance_tier": "archive_only",
     "infrastructure_relevance_action": "archive_only",
     "infrastructure_relevance_reasons": [
-      "power_grid_relevance:0.26(nuclear)"
+      "no_strong_compute_current_infrastructure_match"
     ],
     "infrastructure_relevance": {
       "direct_ai_infrastructure_relevance": 0,
       "data_center_relevance": 0,
       "cloud_capacity_relevance": 0,
       "semiconductor_relevance": 0,
-      "power_grid_relevance": 0.26,
+      "power_grid_relevance": 0,
       "cooling_relevance": 0,
-      "capital_markets_relevance": 0,
+      "capital_markets_relevance": 0.18,
       "enterprise_ai_infrastructure_relevance": 0,
-      "infrastructure_relevance_score": 0.186,
+      "infrastructure_relevance_score": 0.104,
       "infrastructure_relevance_tier": "archive_only",
       "infrastructure_relevance_action": "archive_only",
       "infrastructure_relevance_reasons": [
-        "power_grid_relevance:0.26(nuclear)"
+        "no_strong_compute_current_infrastructure_match"
+      ],
+      "infrastructureRelevanceAction": "archive_only",
+      "articlePagePublished": false,
+      "homepagePublished": false,
+      "archiveOnly": true,
+      "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
+    }
+  },
+  {
+    "id": "ce6f3fe8647f8eda",
+    "sourceRegistryId": "whitehouse-presidential-actions",
+    "source": "The White House",
+    "url": "https://www.whitehouse.gov/presidential-actions/2026/09/enhancing-program-integrity-and-integrity-and-interagency-coordination-in-the-administration-of-the-h-1b-nonimmigrant-visa-program/",
+    "title": "Enhancing Program Integrity and Integrity and Interagency Coordination in the Administration of the H-1B Nonimmigrant Visa Program",
+    "snippet": "By the authority vested in me as President by the Constitution and the laws of the United States of America, it is hereby ordered: Section 1. Purpose. The H-1B nonimmigrant visa program was created to identify uniquely…",
+    "contentText": "Presidential Actions Search Select Category All News Briefings & Statements All Presidential Actions Executive Orders Nominations & Appointments Presidential Memoranda Proclamations Fact Sheets Releases Remarks Research All Briefings & Statements Presidential Actions All Executive Orders Nominations & Appointments Presidential Memoranda Proclamations Fact Sheets Releases Remarks Research By the authority vested in me as President by the Constitution and the laws of the United States of America, it is hereby ordered: Section 1 . Purpose . The H-1B nonimmigrant visa program was created to identify uniquely skilled and highly specialized foreign temporary workers to strategically supplement the United States economy. Instead, the program has been widely abused by certain employers, third-par…",
+    "publishedAt": "2026-09-18T22:02:43.000Z",
+    "sourceImage": null,
+    "region": "US",
+    "language": "en",
+    "defaultCategory": "Policy & Siting",
+    "ai_topic_score": 0,
+    "ai_topic_reasons": [
+      "ai_not_in_title"
+    ],
+    "category": "Policy & Siting",
+    "primary_category": "Policy & Siting",
+    "secondary_category": "Permitting, regulation, and market access",
+    "infrastructure_layer": "Policy",
+    "affected_stakeholders": [
+      "regulators",
+      "site selectors",
+      "developers",
+      "utilities"
+    ],
+    "article_type": "Policy / Regulation",
+    "urgency_score": 0.18,
+    "taxonomy_confidence": 0.53,
+    "taxonomy_reasons": [
+      "policy"
+    ],
+    "direct_ai_infrastructure_relevance": 0,
+    "data_center_relevance": 0,
+    "cloud_capacity_relevance": 0,
+    "semiconductor_relevance": 0,
+    "power_grid_relevance": 0,
+    "cooling_relevance": 0,
+    "capital_markets_relevance": 0,
+    "enterprise_ai_infrastructure_relevance": 0,
+    "infrastructure_relevance_score": 0,
+    "infrastructure_relevance_tier": "archive_only",
+    "infrastructure_relevance_action": "archive_only",
+    "infrastructure_relevance_reasons": [
+      "no_strong_compute_current_infrastructure_match"
+    ],
+    "infrastructure_relevance": {
+      "direct_ai_infrastructure_relevance": 0,
+      "data_center_relevance": 0,
+      "cloud_capacity_relevance": 0,
+      "semiconductor_relevance": 0,
+      "power_grid_relevance": 0,
+      "cooling_relevance": 0,
+      "capital_markets_relevance": 0,
+      "enterprise_ai_infrastructure_relevance": 0,
+      "infrastructure_relevance_score": 0,
+      "infrastructure_relevance_tier": "archive_only",
+      "infrastructure_relevance_action": "archive_only",
+      "infrastructure_relevance_reasons": [
+        "no_strong_compute_current_infrastructure_match"
+      ],
+      "infrastructureRelevanceAction": "archive_only",
+      "articlePagePublished": false,
+      "homepagePublished": false,
+      "archiveOnly": true,
+      "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
+    }
+  },
+  {
+    "id": "b5a4b6c06231a953",
+    "sourceRegistryId": "whitehouse-presidential-actions",
+    "source": "The White House",
+    "url": "https://www.whitehouse.gov/presidential-actions/2026/09/restriction-on-entry-of-certain-nonimmigrant-workers-faad/",
+    "title": "Restriction on Entry of Certain Nonimmigrant Workers",
+    "snippet": "BY THE PRESIDENT OF THE UNITED STATES OF AMERICA A PROCLAMATION On September 19, 2025, Proclamation 10973 (Restriction on Entry of Certain Nonimmigrant Workers) (2025 Proclamation), was issued to address significant abu…",
+    "contentText": "Presidential Actions Search Select Category All News Briefings & Statements All Presidential Actions Executive Orders Nominations & Appointments Presidential Memoranda Proclamations Fact Sheets Releases Remarks Research All Briefings & Statements Presidential Actions All Executive Orders Nominations & Appointments Presidential Memoranda Proclamations Fact Sheets Releases Remarks Research BY THE PRESIDENT OF THE UNITED STATES OF AMERICA A PROCLAMATION On September 19, 2025, Proclamation 10973 (Restriction on Entry of Certain Nonimmigrant Workers) (2025 Proclamation), was issued to address significant abuses of the H-1B nonimmigrant visa program. The restrictions enacted by the 2025 Proclamation have proven to be highly effective but the underlying conditions necessitating the restrictions…",
+    "publishedAt": "2026-09-18T21:42:13.000Z",
+    "sourceImage": null,
+    "region": "US",
+    "language": "en",
+    "defaultCategory": "Policy & Siting",
+    "ai_topic_score": 0,
+    "ai_topic_reasons": [
+      "ai_not_in_title"
+    ],
+    "category": "Policy & Siting",
+    "primary_category": "Policy & Siting",
+    "secondary_category": "Permitting, regulation, and market access",
+    "infrastructure_layer": "Policy",
+    "affected_stakeholders": [
+      "regulators",
+      "site selectors",
+      "developers",
+      "utilities"
+    ],
+    "article_type": "Policy / Regulation",
+    "urgency_score": 0.18,
+    "taxonomy_confidence": 0.53,
+    "taxonomy_reasons": [
+      "policy"
+    ],
+    "direct_ai_infrastructure_relevance": 0,
+    "data_center_relevance": 0,
+    "cloud_capacity_relevance": 0,
+    "semiconductor_relevance": 0,
+    "power_grid_relevance": 0,
+    "cooling_relevance": 0,
+    "capital_markets_relevance": 0,
+    "enterprise_ai_infrastructure_relevance": 0,
+    "infrastructure_relevance_score": 0,
+    "infrastructure_relevance_tier": "archive_only",
+    "infrastructure_relevance_action": "archive_only",
+    "infrastructure_relevance_reasons": [
+      "no_strong_compute_current_infrastructure_match"
+    ],
+    "infrastructure_relevance": {
+      "direct_ai_infrastructure_relevance": 0,
+      "data_center_relevance": 0,
+      "cloud_capacity_relevance": 0,
+      "semiconductor_relevance": 0,
+      "power_grid_relevance": 0,
+      "cooling_relevance": 0,
+      "capital_markets_relevance": 0,
+      "enterprise_ai_infrastructure_relevance": 0,
+      "infrastructure_relevance_score": 0,
+      "infrastructure_relevance_tier": "archive_only",
+      "infrastructure_relevance_action": "archive_only",
+      "infrastructure_relevance_reasons": [
+        "no_strong_compute_current_infrastructure_match"
+      ],
+      "infrastructureRelevanceAction": "archive_only",
+      "articlePagePublished": false,
+      "homepagePublished": false,
+      "archiveOnly": true,
+      "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
+    }
+  },
+  {
+    "id": "1ccd590b2922c294",
+    "sourceRegistryId": "eia-today-in-energy",
+    "source": "U.S. Energy Information Administration",
+    "url": "https://www.eia.gov/todayinenergy/detail.php?id=68164",
+    "title": "What goes into diesel prices?",
+    "snippet": "The price of distillate fuel oil, often sold as diesel, is driven by the price of crude oil, retail margins, distribution costs, taxes, and crack spreads, the indicator we use for refining margins. Tight global supplies…",
+    "contentText": "The price of distillate fuel oil, often sold as diesel, is driven by the price of crude oil, retail margins, distribution costs, taxes, and crack spreads, the indicator we use for refining margins. Tight global supplies of distillate fuel oil and elevated crude oil prices have driven prices higher in recent months.",
+    "publishedAt": "2026-09-18T14:00:00.000Z",
+    "sourceImage": null,
+    "region": "US",
+    "language": "en",
+    "defaultCategory": "Power & Grid",
+    "ai_topic_score": 0,
+    "ai_topic_reasons": [
+      "ai_not_in_title"
+    ],
+    "category": "Power & Grid",
+    "primary_category": "Power & Grid",
+    "secondary_category": "Interconnection and power procurement",
+    "infrastructure_layer": "Power",
+    "affected_stakeholders": [
+      "data center operators",
+      "utilities",
+      "cloud capacity teams",
+      "investors"
+    ],
+    "article_type": "Other",
+    "urgency_score": 0.36,
+    "taxonomy_confidence": 0.61,
+    "taxonomy_reasons": [
+      "power",
+      "grid"
+    ],
+    "direct_ai_infrastructure_relevance": 0,
+    "data_center_relevance": 0,
+    "cloud_capacity_relevance": 0,
+    "semiconductor_relevance": 0,
+    "power_grid_relevance": 0,
+    "cooling_relevance": 0,
+    "capital_markets_relevance": 0,
+    "enterprise_ai_infrastructure_relevance": 0,
+    "infrastructure_relevance_score": 0,
+    "infrastructure_relevance_tier": "archive_only",
+    "infrastructure_relevance_action": "archive_only",
+    "infrastructure_relevance_reasons": [
+      "no_strong_compute_current_infrastructure_match"
+    ],
+    "infrastructure_relevance": {
+      "direct_ai_infrastructure_relevance": 0,
+      "data_center_relevance": 0,
+      "cloud_capacity_relevance": 0,
+      "semiconductor_relevance": 0,
+      "power_grid_relevance": 0,
+      "cooling_relevance": 0,
+      "capital_markets_relevance": 0,
+      "enterprise_ai_infrastructure_relevance": 0,
+      "infrastructure_relevance_score": 0,
+      "infrastructure_relevance_tier": "archive_only",
+      "infrastructure_relevance_action": "archive_only",
+      "infrastructure_relevance_reasons": [
+        "no_strong_compute_current_infrastructure_match"
+      ],
+      "infrastructureRelevanceAction": "archive_only",
+      "articlePagePublished": false,
+      "homepagePublished": false,
+      "archiveOnly": true,
+      "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
+    }
+  },
+  {
+    "id": "2539ef88a4c92461",
+    "sourceRegistryId": "nist-news",
+    "source": "National Institute of Standards and Technology",
+    "url": "https://www.nist.gov/news-events/news/2026/09/nist-awards-more-17-million-support-cybersecurity-workforce-development",
+    "title": "NIST Awards More Than $1.7 Million to Support Cybersecurity Workforce Development Across 8 States",
+    "snippet": "Projects will address local cybersecurity workforce needs and will offer practical learning opportunities including internships, apprenticeships and hands-on projects.",
+    "contentText": "Projects will address local cybersecurity workforce needs and will offer practical learning opportunities including internships, apprenticeships and hands-on projects.",
+    "publishedAt": "2026-09-18T12:00:00.000Z",
+    "sourceImage": null,
+    "region": "US",
+    "language": "en",
+    "defaultCategory": "AI Infrastructure",
+    "ai_topic_score": 0,
+    "ai_topic_reasons": [
+      "ai_not_in_title"
+    ],
+    "category": "AI Infrastructure",
+    "primary_category": "AI Infrastructure",
+    "secondary_category": "GPU clusters and deployment readiness",
+    "infrastructure_layer": "Compute",
+    "affected_stakeholders": [
+      "operators",
+      "hyperscalers",
+      "cloud buyers",
+      "investors"
+    ],
+    "article_type": "Other",
+    "urgency_score": 0.18,
+    "taxonomy_confidence": 0.53,
+    "taxonomy_reasons": [
+      "ai infrastructure"
+    ],
+    "direct_ai_infrastructure_relevance": 0,
+    "data_center_relevance": 0,
+    "cloud_capacity_relevance": 0,
+    "semiconductor_relevance": 0,
+    "power_grid_relevance": 0,
+    "cooling_relevance": 0,
+    "capital_markets_relevance": 0,
+    "enterprise_ai_infrastructure_relevance": 0,
+    "infrastructure_relevance_score": 0,
+    "infrastructure_relevance_tier": "archive_only",
+    "infrastructure_relevance_action": "archive_only",
+    "infrastructure_relevance_reasons": [
+      "no_strong_compute_current_infrastructure_match"
+    ],
+    "infrastructure_relevance": {
+      "direct_ai_infrastructure_relevance": 0,
+      "data_center_relevance": 0,
+      "cloud_capacity_relevance": 0,
+      "semiconductor_relevance": 0,
+      "power_grid_relevance": 0,
+      "cooling_relevance": 0,
+      "capital_markets_relevance": 0,
+      "enterprise_ai_infrastructure_relevance": 0,
+      "infrastructure_relevance_score": 0,
+      "infrastructure_relevance_tier": "archive_only",
+      "infrastructure_relevance_action": "archive_only",
+      "infrastructure_relevance_reasons": [
+        "no_strong_compute_current_infrastructure_match"
+      ],
+      "infrastructureRelevanceAction": "archive_only",
+      "articlePagePublished": false,
+      "homepagePublished": false,
+      "archiveOnly": true,
+      "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
+    }
+  },
+  {
+    "id": "7fa726c81805a836",
+    "sourceRegistryId": "ec-press-corner",
+    "source": "European Commission",
+    "url": "https://ec.europa.eu/commission/presscorner/detail/en/speech_26_1909",
+    "title": "Commissioner Roswall's speech at the Clean Growth Summit – Road to COP31",
+    "snippet": "European Commission Speech Lisbon, 18 Sep 2026 Ladies and gentlemen, distinguished guests, Mayor Araújo, Professor Arezes, dear Lidia – thank you for the invitation. I am delighted to be here in beautif...",
+    "contentText": "European Commission Speech Lisbon, 18 Sep 2026 Ladies and gentlemen, distinguished guests, Mayor Araújo, Professor Arezes, dear Lidia – thank you for the invitation. I am delighted to be here in beautif...",
+    "publishedAt": "2026-09-18T11:42:54.000Z",
+    "sourceImage": null,
+    "region": "EU",
+    "language": "en",
+    "defaultCategory": "Policy & Siting",
+    "ai_topic_score": 0,
+    "ai_topic_reasons": [
+      "ai_not_in_title"
+    ],
+    "category": "Policy & Siting",
+    "primary_category": "Policy & Siting",
+    "secondary_category": "Permitting, regulation, and market access",
+    "infrastructure_layer": "Policy",
+    "affected_stakeholders": [
+      "regulators",
+      "site selectors",
+      "developers",
+      "utilities"
+    ],
+    "article_type": "Policy / Regulation",
+    "urgency_score": 0.18,
+    "taxonomy_confidence": 0.53,
+    "taxonomy_reasons": [
+      "policy"
+    ],
+    "direct_ai_infrastructure_relevance": 0,
+    "data_center_relevance": 0,
+    "cloud_capacity_relevance": 0,
+    "semiconductor_relevance": 0,
+    "power_grid_relevance": 0,
+    "cooling_relevance": 0,
+    "capital_markets_relevance": 0,
+    "enterprise_ai_infrastructure_relevance": 0,
+    "infrastructure_relevance_score": 0,
+    "infrastructure_relevance_tier": "archive_only",
+    "infrastructure_relevance_action": "archive_only",
+    "infrastructure_relevance_reasons": [
+      "no_strong_compute_current_infrastructure_match"
+    ],
+    "infrastructure_relevance": {
+      "direct_ai_infrastructure_relevance": 0,
+      "data_center_relevance": 0,
+      "cloud_capacity_relevance": 0,
+      "semiconductor_relevance": 0,
+      "power_grid_relevance": 0,
+      "cooling_relevance": 0,
+      "capital_markets_relevance": 0,
+      "enterprise_ai_infrastructure_relevance": 0,
+      "infrastructure_relevance_score": 0,
+      "infrastructure_relevance_tier": "archive_only",
+      "infrastructure_relevance_action": "archive_only",
+      "infrastructure_relevance_reasons": [
+        "no_strong_compute_current_infrastructure_match"
       ],
       "infrastructureRelevanceAction": "archive_only",
       "articlePagePublished": false,
