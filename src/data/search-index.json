@@ -140,7 +140,7 @@
         "sourceId": "eia-today-in-energy",
         "reviewedAt": "2026-08-12T00:00:00.000Z",
         "termsUrl": "https://www.eia.gov/about/copyrights_reuse.php",
-        "checkedAt": "2026-09-19T18:03:20.551Z",
+        "checkedAt": "2026-09-20T01:10:51.565Z",
         "registryDigest": "b7a6bfe7b34bbb3ceeddab4fe5c7e6fd9a391af3c82cd9641e7e42964813913b",
         "registryBlobSha": "",
         "contentDigest": "beeeed148253b62b7ae888a3bc79c5979dbfa234b587e2f7b91bbaeafcf5acde"
@@ -299,7 +299,7 @@
         "sourceId": "eia-today-in-energy",
         "reviewedAt": "2026-08-12T00:00:00.000Z",
         "termsUrl": "https://www.eia.gov/about/copyrights_reuse.php",
-        "checkedAt": "2026-09-19T18:03:20.824Z",
+        "checkedAt": "2026-09-20T01:10:51.831Z",
         "registryDigest": "b7a6bfe7b34bbb3ceeddab4fe5c7e6fd9a391af3c82cd9641e7e42964813913b",
         "registryBlobSha": "",
         "contentDigest": "d15ccae9ee9ddf6214d8b39fbdf87ac41a1f82721e955148a1cd5e0a2de7b028"
@@ -458,7 +458,7 @@
         "sourceId": "eia-today-in-energy",
         "reviewedAt": "2026-08-12T00:00:00.000Z",
         "termsUrl": "https://www.eia.gov/about/copyrights_reuse.php",
-        "checkedAt": "2026-09-19T18:03:21.063Z",
+        "checkedAt": "2026-09-20T01:10:52.071Z",
         "registryDigest": "b7a6bfe7b34bbb3ceeddab4fe5c7e6fd9a391af3c82cd9641e7e42964813913b",
         "registryBlobSha": "",
         "contentDigest": "ade711e2b20996fa86c8248da2f499d76c8f2f8bdd82d9e630f5e080f97f58e2"
@@ -617,7 +617,7 @@
         "sourceId": "eia-today-in-energy",
         "reviewedAt": "2026-08-12T00:00:00.000Z",
         "termsUrl": "https://www.eia.gov/about/copyrights_reuse.php",
-        "checkedAt": "2026-09-19T18:03:21.311Z",
+        "checkedAt": "2026-09-20T01:10:52.315Z",
         "registryDigest": "b7a6bfe7b34bbb3ceeddab4fe5c7e6fd9a391af3c82cd9641e7e42964813913b",
         "registryBlobSha": "",
         "contentDigest": "8e6376116876948d8a9e27d52a0f3747ce46816914268a5bd0bf93fafd85c604"
@@ -776,7 +776,7 @@
         "sourceId": "eia-today-in-energy",
         "reviewedAt": "2026-08-12T00:00:00.000Z",
         "termsUrl": "https://www.eia.gov/about/copyrights_reuse.php",
-        "checkedAt": "2026-09-19T18:03:21.584Z",
+        "checkedAt": "2026-09-20T01:10:52.590Z",
         "registryDigest": "b7a6bfe7b34bbb3ceeddab4fe5c7e6fd9a391af3c82cd9641e7e42964813913b",
         "registryBlobSha": "",
         "contentDigest": "2c6d66c26ee5e8faea303eb6655f65da943f22d62f0b30f232281dfa85dca6d7"
@@ -6321,7 +6321,7 @@
     "expertLensFull": {
       "version": 2,
       "mode": "narrative-dna-editorial-v1",
-      "generatedAt": "2026-09-19T17:53:02.590Z",
+      "generatedAt": "2026-09-20T01:00:55.833Z",
       "generation_version": "editorial_surface_v2",
       "narrative_dna": {
         "protagonist": "NVIDIA",
@@ -134143,6 +134143,453 @@
       "relevance_below_adjacent_threshold"
     ],
     "searchText": "Is INT8 Portable? A Cross-Platform Measurement Study of Quantized Inference on Embedded and Automotive Accelerators arXiv Semiconductors AI Infrastructure Silicon Research / Technical compute_supply chip suppliers, systems integrators, and buyers with committed accelerator allocations cloud providers and enterprises that still need networking, power, and facility readiness around purchased systems accelerator allocation, server integration, memory supply, and cluster turn-up The source may still describe intent rather than delivered capacity, so the operating impact depends on follow-through. delivery schedules, memory availability, networking readiness, or deployed cluster utilization US A study reveals that INT8 quantization for edge deployment is not universally portable across different hardware, affecting inference speed and accuracy. Eight-bit integer (INT8) post-training quantization is the default recipe for edge deployment, under a widely held assumption: INT8 makes inference faster at a small, predictable accuracy cost, and a model quantized once can be carried to any target. We test that assumption with a controlled measurement study across seven hardware classes -- ARM and x86 CPUs, a discrete GPU, an NVIDIA Jetson AGX Orin iGPU and its NVDLA cores, and two vendor NPUs (Qualcomm Hexagon HTP, DEEPX DX-M1) -- holding the ONNX artifact and the quantization scales fixed so the integer kernel or ISA is the only free variable. Portability fails on three axes. (1) The sign of the INT8 speedup is set by the CPU's dot-product ISA (ARM dotprod/SDOT, x86 VNNI): cores that have it speed up by up to 2.1x, cores that lack it slow down by 1.7x, for the identical model and runtime. (2) INT8 outputs are not portable, and the rule is an invariance rather than a gradient: FP32 predictions are bit-identical for every pair (1000/1000), while INT8 predictions agree 1000/1000 exactly when two targets share an integer kernel and 958-965/1000 whenever they do not -- independent of whether the boundary is CPU&lt;-&gt;CPU or CPU&lt;-&gt;accelerator, and invisible to top-1 accuracy, which is preserved. (3) Vendor NPUs own quantization: a bring-your-own QDQ graph fails silently on one NPU (external scales ignored, accuracy 0.75 -&gt; 0.005 while it compiles, profiles and runs without error) and loudly on the other (the compiler refuses the graph), so only the vendor's native path yields a correct engine. We further show that edge-NPU latency regimes are set by output/device-to-host transfer size rather than compute, and locate the transition with a fixed-compute sweep. We release the scripts and 32 reports. operators developers investors hardware manufacturers semiconductor suppliers We test that assumption with a controlled measurement study across seven hardware classes -- ARM and x86 CPUs, a discrete GPU, an NVIDIA Jetson AGX Orin iGPU and its NVDLA cores, and two vendor NPUs (Qualcomm Hexagon HTP, DEEPX DX-M1) -- holding the ONNX artifact and the quantization scales fixed so the integer kernel or ISA is the only free variable. (1) The sign of the INT8 speedup is set by the CPU's dot-product ISA (ARM dotprod/SDOT, x86 VNNI): cores that have it speed up by up to 2.1x, cores that lack it slow down by 1.7x, for the identical model and runtime. (1) The sign of the INT8 speedup is set by the CPU's dot-product ISA (ARM dotprod/SDOT, x86 VNNI): cores that hav… ARM NVIDIA int8 quantization ai embedded automotive performance"
+  },
+  {
+    "id": "cde0f86e887a9abf",
+    "sourceRegistryId": "nrc-news",
+    "source": "U.S. Nuclear Regulatory Commission",
+    "url": "https://www.nrc.gov/sites/default/files/cdn/doc-collection-news/2026/26-029-a.pdf",
+    "title": "NRC Advisory: NRC to Hold Mandatory Hearing on Proposed Long Mott Generating Station",
+    "snippet": "The NRC will conduct a mandatory hearing regarding the proposed Long Mott Generating Station, focusing on safety and regulatory compliance.",
+    "contentText": "The NRC will conduct a mandatory hearing regarding the proposed Long Mott Generating Station, focusing on safety and regulatory compliance.",
+    "publishedAt": "2026-09-14T08:00:00.000Z",
+    "sourceImage": null,
+    "region": "US",
+    "language": "en",
+    "defaultCategory": "Power & Grid",
+    "ai_topic_score": 0,
+    "ai_topic_reasons": [
+      "ai_not_in_title"
+    ],
+    "category": "Power & Grid",
+    "primary_category": "Power & Grid",
+    "secondary_category": "Policy & Siting",
+    "infrastructure_layer": "Power",
+    "affected_stakeholders": [
+      "operators",
+      "investors",
+      "utilities",
+      "data center operators",
+      "cloud capacity teams"
+    ],
+    "article_type": "Policy / Regulation",
+    "urgency_score": 0.7,
+    "taxonomy_confidence": 0.81,
+    "taxonomy_reasons": [
+      "power",
+      "grid",
+      "interconnection",
+      "nuclear"
+    ],
+    "direct_ai_infrastructure_relevance": 0,
+    "data_center_relevance": 0,
+    "cloud_capacity_relevance": 0,
+    "semiconductor_relevance": 0,
+    "power_grid_relevance": 0.26,
+    "cooling_relevance": 0,
+    "capital_markets_relevance": 0,
+    "enterprise_ai_infrastructure_relevance": 0,
+    "infrastructure_relevance_score": 0.186,
+    "infrastructure_relevance_tier": "archive_only",
+    "infrastructure_relevance_action": "archive_only",
+    "infrastructure_relevance_reasons": [
+      "power_grid_relevance:0.26(nuclear)"
+    ],
+    "infrastructure_relevance": {
+      "direct_ai_infrastructure_relevance": 0,
+      "data_center_relevance": 0,
+      "cloud_capacity_relevance": 0,
+      "semiconductor_relevance": 0,
+      "power_grid_relevance": 0.26,
+      "cooling_relevance": 0,
+      "capital_markets_relevance": 0,
+      "enterprise_ai_infrastructure_relevance": 0,
+      "infrastructure_relevance_score": 0.186,
+      "infrastructure_relevance_tier": "archive_only",
+      "infrastructure_relevance_action": "archive_only",
+      "infrastructure_relevance_reasons": [
+        "power_grid_relevance:0.26(nuclear)"
+      ],
+      "infrastructureRelevanceAction": "archive_only",
+      "articlePagePublished": false,
+      "homepagePublished": false,
+      "archiveOnly": true,
+      "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
+    },
+    "score": 12,
+    "slug": "nrc-advisory-nrc-to-hold-mandatory-hearing-on-proposed-long-mott-generating-station",
+    "summary": "The NRC will conduct a mandatory hearing regarding the proposed Long Mott Generating Station, focusing on safety and regulatory compliance.",
+    "insight": "This hearing is crucial for stakeholders as it will determine the project's viability and regulatory hurdles. Operators and investors should prepare for potential delays or changes in project timelines.",
+    "expert_insight": {
+      "concrete_facts": [
+        "NRC Advisory: NRC to Hold Mandatory Hearing on Proposed Long Mott Generating Station The NRC will conduct a mandatory hearing regarding the proposed Long Mott Generating Station, focusing on safety and regulatory compliance.",
+        "This hearing is crucial for stakeholders as it will determine the project's viability and regulatory hurdles."
+      ],
+      "named_companies": [],
+      "infrastructure_layer": "Power",
+      "bottleneck_type": "power",
+      "who_gains_leverage": "",
+      "who_takes_execution_risk": "",
+      "timing_dependency": "",
+      "counterargument": "The source supports a specific infrastructure read, but it does not by itself prove a broad market shift.",
+      "next_observable_signal": "",
+      "expert_insight_complete": false,
+      "expert_insight_missing_fields": [
+        "named_companies",
+        "who_gains_leverage",
+        "who_takes_execution_risk",
+        "timing_dependency",
+        "next_observable_signal"
+      ]
+    },
+    "expertInsight": {
+      "concrete_facts": [
+        "NRC Advisory: NRC to Hold Mandatory Hearing on Proposed Long Mott Generating Station The NRC will conduct a mandatory hearing regarding the proposed Long Mott Generating Station, focusing on safety and regulatory compliance.",
+        "This hearing is crucial for stakeholders as it will determine the project's viability and regulatory hurdles."
+      ],
+      "named_companies": [],
+      "infrastructure_layer": "Power",
+      "bottleneck_type": "power",
+      "who_gains_leverage": "",
+      "who_takes_execution_risk": "",
+      "timing_dependency": "",
+      "counterargument": "The source supports a specific infrastructure read, but it does not by itself prove a broad market shift.",
+      "next_observable_signal": "",
+      "expert_insight_complete": false,
+      "expert_insight_missing_fields": [
+        "named_companies",
+        "who_gains_leverage",
+        "who_takes_execution_risk",
+        "timing_dependency",
+        "next_observable_signal"
+      ]
+    },
+    "concrete_facts": [
+      "NRC Advisory: NRC to Hold Mandatory Hearing on Proposed Long Mott Generating Station The NRC will conduct a mandatory hearing regarding the proposed Long Mott Generating Station, focusing on safety and regulatory compliance.",
+      "This hearing is crucial for stakeholders as it will determine the project's viability and regulatory hurdles."
+    ],
+    "named_companies": [],
+    "bottleneck_type": "power",
+    "who_gains_leverage": "",
+    "who_takes_execution_risk": "",
+    "timing_dependency": "",
+    "counterargument": "The source supports a specific infrastructure read, but it does not by itself prove a broad market shift.",
+    "next_observable_signal": "",
+    "expert_insight_complete": false,
+    "expert_insight_missing_fields": [
+      "named_companies",
+      "who_gains_leverage",
+      "who_takes_execution_risk",
+      "timing_dependency",
+      "next_observable_signal"
+    ],
+    "tags": [
+      "nuclear",
+      "regulation",
+      "power generation",
+      "NRC",
+      "Long Mott",
+      "hearing"
+    ],
+    "imagePrompt": "A modern nuclear power plant with cooling towers and green landscape, showcasing a clear blue sky, in a 16:9 format, no logos or text.",
+    "lang": "en",
+    "articleText": "",
+    "content_length": 0,
+    "boilerplate_ratio": 0,
+    "title_body_similarity": 0,
+    "copyright_footer_detected": false,
+    "nav_or_cta_detected": false,
+    "sentence_completion_score": 0,
+    "source_domain_adapter": "generic",
+    "extraction_quality_score": 0,
+    "extraction_qa": {
+      "content_length": 0,
+      "boilerplate_ratio": 0,
+      "title_body_similarity": 0,
+      "copyright_footer_detected": false,
+      "legal_boilerplate_detected": false,
+      "nav_or_cta_detected": false,
+      "sentence_completion_score": 0,
+      "source_domain_adapter": "generic",
+      "extraction_quality_score": 0,
+      "extraction_failure_reason": "remote_content_type_rejected",
+      "extraction_quality_reasons": [
+        "extraction_quality_score 0.00 below 0.80",
+        "content_length 0 below 650",
+        "title_body_similarity 0.00 low",
+        "sentence_completion_score 0.00 low",
+        "extraction_failure_reason remote_content_type_rejected"
+      ],
+      "public_publishable": false,
+      "can_generate_longform": false,
+      "cleaned_source_length": 0,
+      "block_reasons": [
+        "sentence_completion_score_below_0.92:0",
+        "cleaned_source_text_below_500",
+        "cleaned_source_text_below_1200",
+        "source_evidence_length_below_500",
+        "source_evidence_length_below_1200"
+      ]
+    },
+    "extraction_artifact": {
+      "artifact_version": "extraction_v1",
+      "source_url": "https://www.nrc.gov/sites/default/files/cdn/doc-collection-news/2026/26-029-a.pdf",
+      "extracted_text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "cleaned_extracted_text": "",
+      "extraction_qa": {
+        "cleaned_source_length": 0,
+        "block_reasons": [
+          "sentence_completion_score_below_0.92:0",
+          "cleaned_source_text_below_500",
+          "cleaned_source_text_below_1200",
+          "source_evidence_length_below_500",
+          "source_evidence_length_below_1200"
+        ],
+        "public_publishable": false,
+        "can_generate_longform": false,
+        "boilerplate_ratio": 0,
+        "copyright_footer_detected": false,
+        "nav_or_cta_detected": false,
+        "sentence_completion_score": 0
+      }
+    },
+    "cleaned_source_text": "",
+    "sourceUrl": "https://www.nrc.gov/sites/default/files/cdn/doc-collection-news/2026/26-029-a.pdf",
+    "generatedImage": "/generated/articles/cde0f86e887a9abf-nrc-advisory-nrc-to-hold-mandatory-hearing-on-proposed-long-mott-generating-station/hero.webp",
+    "infrastructureRelevanceAction": "archive_only",
+    "articlePagePublished": false,
+    "homepagePublished": false,
+    "archiveOnly": true,
+    "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold",
+    "article_blueprint": null,
+    "articleBlueprint": null,
+    "expertLensShort": null,
+    "expertLensFull": null,
+    "expertLens": null,
+    "public_content_tier": "hidden",
+    "signalCardOnly": false,
+    "seo_noindex": true,
+    "noindex": true,
+    "public_tier_reasons": [
+      "dirty_extraction",
+      "low_relevance",
+      "relevance_below_adjacent_threshold"
+    ],
+    "searchText": "NRC Advisory: NRC to Hold Mandatory Hearing on Proposed Long Mott Generating Station U.S. Nuclear Regulatory Commission Power & Grid Policy & Siting Power Policy / Regulation power The source supports a specific infrastructure read, but it does not by itself prove a broad market shift. US The NRC will conduct a mandatory hearing regarding the proposed Long Mott Generating Station, focusing on safety and regulatory compliance. operators investors utilities data center operators cloud capacity teams NRC Advisory: NRC to Hold Mandatory Hearing on Proposed Long Mott Generating Station The NRC will conduct a mandatory hearing regarding the proposed Long Mott Generating Station, focusing on safety and regulatory compliance. This hearing is crucial for stakeholders as it will determine the project's viability and regulatory hurdles. nuclear regulation power generation NRC Long Mott hearing"
+  },
+  {
+    "id": "ecc38b0e49d50ab3",
+    "sourceRegistryId": "nrc-news",
+    "source": "U.S. Nuclear Regulatory Commission",
+    "url": "https://www.nrc.gov/sites/default/files/documents/26-077.pdf",
+    "title": "NRC Proposes Broad Overhaul of Nuclear Reactor Regulations",
+    "snippet": "The U.S. Nuclear Regulatory Commission proposes a comprehensive overhaul of nuclear reactor regulations to enhance safety and efficiency in the sector.",
+    "contentText": "The U.S. Nuclear Regulatory Commission proposes a comprehensive overhaul of nuclear reactor regulations to enhance safety and efficiency in the sector.",
+    "publishedAt": "2026-09-11T08:00:00.000Z",
+    "sourceImage": null,
+    "region": "US",
+    "language": "en",
+    "defaultCategory": "Power & Grid",
+    "ai_topic_score": 0,
+    "ai_topic_reasons": [
+      "ai_not_in_title"
+    ],
+    "category": "Power & Grid",
+    "primary_category": "Power & Grid",
+    "secondary_category": "Regulatory Update",
+    "infrastructure_layer": "Policy",
+    "affected_stakeholders": [
+      "operators",
+      "utilities",
+      "investors",
+      "data center operators",
+      "cloud capacity teams"
+    ],
+    "article_type": "Policy / Regulation",
+    "urgency_score": 0.6,
+    "taxonomy_confidence": 0.85,
+    "taxonomy_reasons": [
+      "power",
+      "grid",
+      "interconnection",
+      "nuclear"
+    ],
+    "direct_ai_infrastructure_relevance": 0,
+    "data_center_relevance": 0,
+    "cloud_capacity_relevance": 0,
+    "semiconductor_relevance": 0,
+    "power_grid_relevance": 0.351,
+    "cooling_relevance": 0,
+    "capital_markets_relevance": 0,
+    "enterprise_ai_infrastructure_relevance": 0,
+    "infrastructure_relevance_score": 0.239,
+    "infrastructure_relevance_tier": "archive_only",
+    "infrastructure_relevance_action": "archive_only",
+    "infrastructure_relevance_reasons": [
+      "power_grid_relevance:0.35(nuclear)"
+    ],
+    "infrastructure_relevance": {
+      "direct_ai_infrastructure_relevance": 0,
+      "data_center_relevance": 0,
+      "cloud_capacity_relevance": 0,
+      "semiconductor_relevance": 0,
+      "power_grid_relevance": 0.351,
+      "cooling_relevance": 0,
+      "capital_markets_relevance": 0,
+      "enterprise_ai_infrastructure_relevance": 0,
+      "infrastructure_relevance_score": 0.239,
+      "infrastructure_relevance_tier": "archive_only",
+      "infrastructure_relevance_action": "archive_only",
+      "infrastructure_relevance_reasons": [
+        "power_grid_relevance:0.35(nuclear)"
+      ],
+      "infrastructureRelevanceAction": "archive_only",
+      "articlePagePublished": false,
+      "homepagePublished": false,
+      "archiveOnly": true,
+      "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
+    },
+    "score": 14,
+    "slug": "nrc-proposes-broad-overhaul-of-nuclear-reactor-regulations",
+    "summary": "The U.S. Nuclear Regulatory Commission proposes a comprehensive overhaul of nuclear reactor regulations to enhance safety and efficiency in the sector.",
+    "insight": "This regulatory shift could impact operational protocols for nuclear facilities, influencing investment decisions and compliance costs for operators. Stakeholders must prepare for potential changes in regulatory frameworks that could affect project timelines…",
+    "expert_insight": {
+      "concrete_facts": [],
+      "named_companies": [],
+      "infrastructure_layer": "Policy",
+      "bottleneck_type": "capital_structure",
+      "who_gains_leverage": "capital providers and sponsors with credible customer contracts and delivery milestones",
+      "who_takes_execution_risk": "developers whose financing assumptions depend on demand materializing before sites are operational",
+      "timing_dependency": "financing close, construction drawdowns, signed customer commitments, and delivery milestones",
+      "counterargument": "The source may still describe intent rather than delivered capacity, so the operating impact depends on follow-through.",
+      "next_observable_signal": "financing terms, lease commitments, backlog conversion, or construction milestone disclosures",
+      "expert_insight_complete": false,
+      "expert_insight_missing_fields": [
+        "concrete_facts",
+        "named_companies"
+      ]
+    },
+    "expertInsight": {
+      "concrete_facts": [],
+      "named_companies": [],
+      "infrastructure_layer": "Policy",
+      "bottleneck_type": "capital_structure",
+      "who_gains_leverage": "capital providers and sponsors with credible customer contracts and delivery milestones",
+      "who_takes_execution_risk": "developers whose financing assumptions depend on demand materializing before sites are operational",
+      "timing_dependency": "financing close, construction drawdowns, signed customer commitments, and delivery milestones",
+      "counterargument": "The source may still describe intent rather than delivered capacity, so the operating impact depends on follow-through.",
+      "next_observable_signal": "financing terms, lease commitments, backlog conversion, or construction milestone disclosures",
+      "expert_insight_complete": false,
+      "expert_insight_missing_fields": [
+        "concrete_facts",
+        "named_companies"
+      ]
+    },
+    "concrete_facts": [],
+    "named_companies": [],
+    "bottleneck_type": "capital_structure",
+    "who_gains_leverage": "capital providers and sponsors with credible customer contracts and delivery milestones",
+    "who_takes_execution_risk": "developers whose financing assumptions depend on demand materializing before sites are operational",
+    "timing_dependency": "financing close, construction drawdowns, signed customer commitments, and delivery milestones",
+    "counterargument": "The source may still describe intent rather than delivered capacity, so the operating impact depends on follow-through.",
+    "next_observable_signal": "financing terms, lease commitments, backlog conversion, or construction milestone disclosures",
+    "expert_insight_complete": false,
+    "expert_insight_missing_fields": [
+      "concrete_facts",
+      "named_companies"
+    ],
+    "tags": [
+      "nuclear",
+      "regulation",
+      "safety",
+      "policy",
+      "energy"
+    ],
+    "imagePrompt": "A modern nuclear power plant with cooling towers against a clear blue sky, showcasing advanced technology and safety features, in a vibrant landscape.",
+    "lang": "en",
+    "articleText": "",
+    "content_length": 0,
+    "boilerplate_ratio": 0,
+    "title_body_similarity": 0,
+    "copyright_footer_detected": false,
+    "nav_or_cta_detected": false,
+    "sentence_completion_score": 0,
+    "source_domain_adapter": "generic",
+    "extraction_quality_score": 0,
+    "extraction_qa": {
+      "content_length": 0,
+      "boilerplate_ratio": 0,
+      "title_body_similarity": 0,
+      "copyright_footer_detected": false,
+      "legal_boilerplate_detected": false,
+      "nav_or_cta_detected": false,
+      "sentence_completion_score": 0,
+      "source_domain_adapter": "generic",
+      "extraction_quality_score": 0,
+      "extraction_failure_reason": "remote_content_type_rejected",
+      "extraction_quality_reasons": [
+        "extraction_quality_score 0.00 below 0.80",
+        "content_length 0 below 650",
+        "title_body_similarity 0.00 low",
+        "sentence_completion_score 0.00 low",
+        "extraction_failure_reason remote_content_type_rejected"
+      ],
+      "public_publishable": false,
+      "can_generate_longform": false,
+      "cleaned_source_length": 0,
+      "block_reasons": [
+        "sentence_completion_score_below_0.92:0",
+        "cleaned_source_text_below_500",
+        "cleaned_source_text_below_1200",
+        "source_evidence_length_below_500",
+        "source_evidence_length_below_1200"
+      ]
+    },
+    "extraction_artifact": {
+      "artifact_version": "extraction_v1",
+      "source_url": "https://www.nrc.gov/sites/default/files/documents/26-077.pdf",
+      "extracted_text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "cleaned_extracted_text": "",
+      "extraction_qa": {
+        "cleaned_source_length": 0,
+        "block_reasons": [
+          "sentence_completion_score_below_0.92:0",
+          "cleaned_source_text_below_500",
+          "cleaned_source_text_below_1200",
+          "source_evidence_length_below_500",
+          "source_evidence_length_below_1200"
+        ],
+        "public_publishable": false,
+        "can_generate_longform": false,
+        "boilerplate_ratio": 0,
+        "copyright_footer_detected": false,
+        "nav_or_cta_detected": false,
+        "sentence_completion_score": 0
+      }
+    },
+    "cleaned_source_text": "",
+    "sourceUrl": "https://www.nrc.gov/sites/default/files/documents/26-077.pdf",
+    "generatedImage": "/generated/articles/ecc38b0e49d50ab3-nrc-proposes-broad-overhaul-of-nuclear-reactor-regulations/hero.webp",
+    "infrastructureRelevanceAction": "archive_only",
+    "articlePagePublished": false,
+    "homepagePublished": false,
+    "archiveOnly": true,
+    "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold",
+    "article_blueprint": null,
+    "articleBlueprint": null,
+    "expertLensShort": null,
+    "expertLensFull": null,
+    "expertLens": null,
+    "public_content_tier": "hidden",
+    "signalCardOnly": false,
+    "seo_noindex": true,
+    "noindex": true,
+    "public_tier_reasons": [
+      "dirty_extraction",
+      "low_relevance",
+      "relevance_below_adjacent_threshold"
+    ],
+    "searchText": "NRC Proposes Broad Overhaul of Nuclear Reactor Regulations U.S. Nuclear Regulatory Commission Power & Grid Regulatory Update Policy Policy / Regulation capital_structure capital providers and sponsors with credible customer contracts and delivery milestones developers whose financing assumptions depend on demand materializing before sites are operational financing close, construction drawdowns, signed customer commitments, and delivery milestones The source may still describe intent rather than delivered capacity, so the operating impact depends on follow-through. financing terms, lease commitments, backlog conversion, or construction milestone disclosures US The U.S. Nuclear Regulatory Commission proposes a comprehensive overhaul of nuclear reactor regulations to enhance safety and efficiency in the sector. operators utilities investors data center operators cloud capacity teams nuclear regulation safety policy energy"
   },
   {
     "id": "b97c0e642b65b101",
