@@ -1,5 +1,381 @@
 [
   {
+    "id": "e55d48792519c872",
+    "source": "NVIDIA Blog",
+    "url": "https://blogs.nvidia.com/blog/800-vdc-power-architecture-ai-factory/",
+    "title": "Why Scaling AI Compute Performance Requires a New Power Architecture",
+    "snippet": "Every new generation of accelerated computing demands more from the infrastructure underneath it — more compute performance, higher rack density and more efficient, scalable power distribution. The bottleneck isn’t just…",
+    "contentText": "Every new generation of accelerated computing demands more from the infrastructure underneath it — more compute performance, higher rack density and more efficient, scalable power distribution. The bottleneck isn’t just wattage. It’s how power gets from the grid to the GPU. In traditional power delivery, electricity travels from the grid as an alternating current (AC) and gets converted multiple times, each time adding overhead and complexity as racks become denser. At the power levels that next-generation AI compute demands, even small inefficiencies compound quickly. 800 VDC simplifies that path. By distributing power at higher voltage through a direct current (DC), fewer conversion stages stand between the grid and the accelerator — which means more of the available power reaches the c…",
+    "publishedAt": "2026-08-11T15:00:06.000Z",
+    "sourceImage": "https://blogs.nvidia.com/wp-content/uploads/2026/08/800vdc.jpg",
+    "region": "US",
+    "language": "en",
+    "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+    "category": "Power & Grid",
+    "primary_category": "Power & Grid",
+    "secondary_category": "Interconnection and power procurement",
+    "infrastructure_layer": "Power",
+    "affected_stakeholders": [
+      "data center operators",
+      "utilities",
+      "cloud capacity teams",
+      "investors"
+    ],
+    "article_type": "Supply Chain",
+    "urgency_score": 0.82,
+    "taxonomy_confidence": 0.95,
+    "taxonomy_reasons": [
+      "power",
+      "grid",
+      "interconnection",
+      "electricity",
+      "transformer"
+    ],
+    "direct_ai_infrastructure_relevance": 1,
+    "data_center_relevance": 0.28,
+    "cloud_capacity_relevance": 0.32,
+    "semiconductor_relevance": 0.72,
+    "power_grid_relevance": 1,
+    "cooling_relevance": 0.24,
+    "capital_markets_relevance": 0,
+    "enterprise_ai_infrastructure_relevance": 0,
+    "infrastructure_relevance_score": 1,
+    "infrastructure_relevance_tier": "full_memo",
+    "infrastructure_relevance_action": "generate_full_memo",
+    "infrastructure_relevance_reasons": [
+      "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud, rack density)",
+      "data_center_relevance:0.28(rack density)",
+      "cloud_capacity_relevance:0.32(hyperscalers)",
+      "semiconductor_relevance:0.72(nvidia, accelerator, gpu)",
+      "power_grid_relevance:1.00(power, grid, electricity)",
+      "cooling_relevance:0.24(rack density)"
+    ],
+    "infrastructure_relevance": {
+      "direct_ai_infrastructure_relevance": 1,
+      "data_center_relevance": 0.28,
+      "cloud_capacity_relevance": 0.32,
+      "semiconductor_relevance": 0.72,
+      "power_grid_relevance": 1,
+      "cooling_relevance": 0.24,
+      "capital_markets_relevance": 0,
+      "enterprise_ai_infrastructure_relevance": 0,
+      "infrastructure_relevance_score": 1,
+      "infrastructure_relevance_tier": "full_memo",
+      "infrastructure_relevance_action": "generate_full_memo",
+      "infrastructure_relevance_reasons": [
+        "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud, rack density)",
+        "data_center_relevance:0.28(rack density)",
+        "cloud_capacity_relevance:0.32(hyperscalers)",
+        "semiconductor_relevance:0.72(nvidia, accelerator, gpu)",
+        "power_grid_relevance:1.00(power, grid, electricity)",
+        "cooling_relevance:0.24(rack density)"
+      ],
+      "infrastructureRelevanceAction": "generate_full_memo",
+      "articlePagePublished": true,
+      "homepagePublished": true,
+      "archiveOnly": false,
+      "archiveOnlyReason": null
+    },
+    "score": 87,
+    "slug": "why-scaling-ai-compute-performance-requires-a-new-power-architecture",
+    "summary": "Every new generation of accelerated computing demands more from the infrastructure underneath it — more compute performance, higher rack density and more efficient, scalable power…",
+    "insight": "The practical effect is on compute supply, deployment speed, and network orchestration. The advantage goes to teams that line up power, facility design, network topology, and silicon timing instead of optimizing one layer in isolation.",
+    "expert_insight": {
+      "concrete_facts": [
+        "The NVIDIA MGX-compatible 800 VDC power rack, arriving in the second half of 2026, creates a hybrid architecture that brings next-generation rack-scale compute performance to facilities that are already built and operational.",
+        "NVIDIA DSX reference designs are built to guide AI factories through the transition from today’s AC infrastructure through hybrid architectures and into fully native 800 VDC facilities.",
+        "NVIDIA, Google and Microsoft have been developing the 800 VDC architecture together through the Open Compute Project (OCP), and published a joint white paper March 2026 and the LVDC Solid-State Transformer Specification v0.3 July 2026."
+      ],
+      "named_companies": [
+        "NVIDIA",
+        "Google",
+        "Microsoft",
+        "New Power"
+      ],
+      "infrastructure_layer": "Power",
+      "bottleneck_type": "power_grid",
+      "who_gains_leverage": "utilities, power-secured developers, and operators with firm interconnection positions",
+      "who_takes_execution_risk": "developers and cloud buyers whose delivery dates depend on utility upgrades or energization schedules",
+      "timing_dependency": "utility interconnection, equipment procurement, and energization milestones",
+      "counterargument": "More compute supply does not automatically become useful capacity if facilities, power, networking, and software readiness lag.",
+      "next_observable_signal": "interconnection approvals, substation equipment dates, power purchase agreements, or disclosed energization windows",
+      "expert_insight_complete": true,
+      "expert_insight_missing_fields": []
+    },
+    "expertInsight": {
+      "concrete_facts": [
+        "The NVIDIA MGX-compatible 800 VDC power rack, arriving in the second half of 2026, creates a hybrid architecture that brings next-generation rack-scale compute performance to facilities that are already built and operational.",
+        "NVIDIA DSX reference designs are built to guide AI factories through the transition from today’s AC infrastructure through hybrid architectures and into fully native 800 VDC facilities.",
+        "NVIDIA, Google and Microsoft have been developing the 800 VDC architecture together through the Open Compute Project (OCP), and published a joint white paper March 2026 and the LVDC Solid-State Transformer Specification v0.3 July 2026."
+      ],
+      "named_companies": [
+        "NVIDIA",
+        "Google",
+        "Microsoft",
+        "New Power"
+      ],
+      "infrastructure_layer": "Power",
+      "bottleneck_type": "power_grid",
+      "who_gains_leverage": "utilities, power-secured developers, and operators with firm interconnection positions",
+      "who_takes_execution_risk": "developers and cloud buyers whose delivery dates depend on utility upgrades or energization schedules",
+      "timing_dependency": "utility interconnection, equipment procurement, and energization milestones",
+      "counterargument": "More compute supply does not automatically become useful capacity if facilities, power, networking, and software readiness lag.",
+      "next_observable_signal": "interconnection approvals, substation equipment dates, power purchase agreements, or disclosed energization windows",
+      "expert_insight_complete": true,
+      "expert_insight_missing_fields": []
+    },
+    "concrete_facts": [
+      "The NVIDIA MGX-compatible 800 VDC power rack, arriving in the second half of 2026, creates a hybrid architecture that brings next-generation rack-scale compute performance to facilities that are already built and operational.",
+      "NVIDIA DSX reference designs are built to guide AI factories through the transition from today’s AC infrastructure through hybrid architectures and into fully native 800 VDC facilities.",
+      "NVIDIA, Google and Microsoft have been developing the 800 VDC architecture together through the Open Compute Project (OCP), and published a joint white paper March 2026 and the LVDC Solid-State Transformer Specification v0.3 July 2026."
+    ],
+    "named_companies": [
+      "NVIDIA",
+      "Google",
+      "Microsoft",
+      "New Power"
+    ],
+    "bottleneck_type": "power_grid",
+    "who_gains_leverage": "utilities, power-secured developers, and operators with firm interconnection positions",
+    "who_takes_execution_risk": "developers and cloud buyers whose delivery dates depend on utility upgrades or energization schedules",
+    "timing_dependency": "utility interconnection, equipment procurement, and energization milestones",
+    "counterargument": "More compute supply does not automatically become useful capacity if facilities, power, networking, and software readiness lag.",
+    "next_observable_signal": "interconnection approvals, substation equipment dates, power purchase agreements, or disclosed energization windows",
+    "expert_insight_complete": true,
+    "expert_insight_missing_fields": [],
+    "tags": [
+      "gpu",
+      "power"
+    ],
+    "imagePrompt": "Use case: Compute Current public article image.\nTitle: Why Scaling AI Compute Performance Requires a New Power Architecture\nCategory: Power & Grid\nInfrastructure layer: Power\nStory archetype: infrastructure analysis\nRegion: US\nTone: premium infrastructure intelligence\nContext: Every new generation of accelerated computing demands more from the infrastructure underneath it — more compute performance, higher rack density and more efficient, scalable power…\nComposition: original editorial infrastructure image, realistic depth, wide hero crop, clear subject, enough negative space for card and OpenGraph crops.\nVisual vocabulary: data center halls, substations, transformers, grid interconnects, cooling loops, semiconductor packages, cloud capacity signals, financing pressure, or siting constraints when relevant.\nConstraints: no logos, no brand marks, no readable text, no watermarks, no stock-photo people, no decorative bokeh, no generic purple gradient.",
+    "lang": "en",
+    "articleText": "Every new generation of accelerated computing demands more from the infrastructure underneath it — more compute performance, higher rack density and more efficient, scalable power distribution. The bottleneck isn’t just wattage. It’s how power gets from the grid to the GPU. In traditional power delivery, electricity travels from the grid as an alternating current (AC) and gets converted multiple times, each time adding overhead and complexity as racks become denser. At the power levels that next-generation AI compute demands, even small inefficiencies compound quickly. 800 VDC simplifies that path. By distributing power at higher voltage through a direct current (DC), fewer conversion stages stand between the grid and the accelerator — which means more of the available power reaches the compute. NVIDIA DSX reference designs are built to guide AI factories through the transition from today’s AC infrastructure through hybrid architectures and into fully native 800 VDC facilities. NVIDIA, Google and Microsoft have been developing the 800 VDC architecture together through the Open Compute Project (OCP), and published a joint white paper March 2026 and the LVDC Solid-State Transformer Specification v0.3 July 2026. More than 80 equipment manufacturers and infrastructure companies are already building products to this specification. Most of today’s AI factories were designed around AC distribution. The NVIDIA MGX-compatible 800 VDC power rack, arriving in the second half of 2026, creates a hybrid architecture that brings next-generation rack-scale compute performance to facilities that are already built and operational.",
+    "content_length": 1640,
+    "boilerplate_ratio": 0,
+    "title_body_similarity": 0.57,
+    "copyright_footer_detected": false,
+    "nav_or_cta_detected": false,
+    "sentence_completion_score": 1,
+    "source_domain_adapter": "generic",
+    "extraction_quality_score": 1,
+    "extraction_qa": {
+      "content_length": 1640,
+      "boilerplate_ratio": 0,
+      "title_body_similarity": 0.57,
+      "copyright_footer_detected": false,
+      "legal_boilerplate_detected": false,
+      "nav_or_cta_detected": false,
+      "sentence_completion_score": 1,
+      "source_domain_adapter": "generic",
+      "extraction_quality_score": 1,
+      "extraction_failure_reason": null,
+      "extraction_quality_reasons": []
+    },
+    "sourceUrl": "https://blogs.nvidia.com/blog/800-vdc-power-architecture-ai-factory/",
+    "generatedImage": "/generated/articles/e55d48792519c872-why-scaling-ai-compute-performance-requires-a-new-power-architecture/hero.webp",
+    "infrastructureRelevanceAction": "generate_full_memo",
+    "articlePagePublished": false,
+    "homepagePublished": true,
+    "archiveOnly": false,
+    "archiveOnlyReason": "repeated_sentence_ratio>0.12; heading_sequence_similarity>0.75; conclusion_similarity>0.7",
+    "article_blueprint": "stakeholder-map",
+    "articleBlueprint": {
+      "id": "stakeholder-map",
+      "name": "Stakeholder Map",
+      "sectionHeadings": [
+        "The Move",
+        "Who Benefits",
+        "Who Is Exposed",
+        "Bottleneck to Watch"
+      ],
+      "paragraphRhythm": [
+        2,
+        1,
+        1,
+        2
+      ],
+      "targetParagraphs": 6,
+      "minChars": 1000,
+      "maxChars": 1650
+    },
+    "expertLensShort": "NVIDIA is a power market signal item for policy/risk watch readers, with the infrastructure read limited to source-backed facts.",
+    "expertLensFull": {
+      "version": 2,
+      "mode": "narrative-dna-editorial-v1",
+      "generatedAt": "2026-09-21T14:00:46.932Z",
+      "generation_version": "editorial_surface_v2",
+      "narrative_dna": {
+        "protagonist": "NVIDIA",
+        "concrete_event": "Every new generation of accelerated computing demands more from the infrastructure underneath it — more compute performance, higher rack density and more efficient, scalable power…",
+        "core_tension": "NVIDIA has to translate every new generation of accelerated computing demands more from the infrastructure underneath it — more compute performance, higher rack density and more efficient, scalable power… into a power decision that survives cost, timing, or operating constraints",
+        "infrastructure_layer": "Power",
+        "reader_role": [
+          "data center operators",
+          "utilities",
+          "cloud capacity teams",
+          "investors"
+        ],
+        "decision_relevance": "data center operators and utilities can use the item to test power market signal before changing procurement, deployment, or risk assumptions",
+        "evidence_anchor": "The NVIDIA MGX-compatible 800 VDC power rack, arriving in the second half of 2026, creates a hybrid architecture that brings next-generation rack-scale compute performance to facilities that are already built and operational.",
+        "counterpoint": "More compute supply does not automatically become useful capacity if facilities, power, networking, and software readiness lag.",
+        "watch_metric": "interconnection approvals, substation equipment dates, power purchase agreements, or disclosed energization windows",
+        "time_horizon": "near term",
+        "public_signal_label": "Core Signal",
+        "editorial_lens": "Power Market Signal",
+        "story_archetype": "Power Market Signal",
+        "story_archetype_id": "power-market-signal",
+        "routing_decision": "core_lane",
+        "valid_for_full_article": false,
+        "missing_fields": [
+          "concrete_event",
+          "core_tension"
+        ],
+        "truncation": {
+          "ok": false,
+          "artifacts": [
+            "ellipsis_truncation_artifact"
+          ]
+        }
+      },
+      "dynamicBriefLabel": "Core Signal",
+      "blueprintId": "stakeholder-map",
+      "blueprintName": "Stakeholder Map",
+      "blueprint": {
+        "id": "stakeholder-map",
+        "name": "Stakeholder Map",
+        "sectionHeadings": [
+          "The Move",
+          "Who Benefits",
+          "Who Is Exposed",
+          "Bottleneck to Watch"
+        ],
+        "paragraphRhythm": [
+          2,
+          1,
+          1,
+          2
+        ],
+        "targetParagraphs": 6,
+        "minChars": 1000,
+        "maxChars": 1650
+      },
+      "thesis": "NVIDIA is a power market signal item for policy/risk watch readers, with the infrastructure read limited to source-backed facts.",
+      "whatHappened": "Every new generation of accelerated computing demands more from the infrastructure underneath it — more compute performance, higher rack density and more efficient, scalable power",
+      "whyThisMatters": "The public card stays short because the available evidence supports a watchlist signal more than a full infrastructure memo.",
+      "marketMissing": "More compute supply does not automatically become useful capacity if facilities, power, networking, and software readiness lag.",
+      "investors": "Data center operators and utilities can use the item to test power market signal before changing procurement, deployment, or risk assumptions.",
+      "operators": "Power teams should track interconnection approvals, substation equipment dates, power purchase agreements, or disclosed energization windows.",
+      "hyperscalers": "Cloud and platform buyers should separate source evidence from generic AI demand before changing deployment plans.",
+      "watchNext": "Interconnection approvals, substation equipment dates, power purchase agreements, or disclosed energization windows.",
+      "executiveSummary": [
+        "Every new generation of accelerated computing demands more from the infrastructure underneath it — more compute performance, higher rack density and more efficient, scalable power",
+        "Data center operators and utilities can use the item to test power market signal before changing procurement, deployment, or risk assumptions.",
+        "Watch interconnection approvals, substation equipment dates, power purchase agreements, or disclosed energization windows."
+      ],
+      "headlineOptions": [
+        "Why Scaling AI Compute Performance Requires a New Power Architecture",
+        "NVIDIA Blog: the execution test behind the latest power & grid move",
+        "The bottleneck behind Why Scaling AI Compute Performance Requires a New Power Architecture",
+        "Why Scaling AI Compute Performance Requires a New Power Architecture puts execution back in focus",
+        "What to watch after Why Scaling AI Compute Performance Requires a New Power Architecture"
+      ],
+      "finalHeadline": "Why Scaling AI Compute Performance Requires a New Power Architecture",
+      "metaDescription": "NVIDIA is a power market signal item for policy/risk watch readers, with the infrastructure read limited to source-backed facts.",
+      "finalArticleBody": "NVIDIA is a power market signal item for policy/risk watch readers, with the infrastructure read limited to source-backed facts.\n\nPower-Market Move\n\nEvery new generation of accelerated computing demands more from the infrastructure underneath it — more compute performance, higher rack density and more efficient, scalable power… is the evidence anchor, with NVIDIA as the actor readers can track.\n\nOperating Lever\n\nPower is the operating layer that turns the update into power market signal, especially for data center operators, utilities, cloud capacity teams.\n\nGrid Exposure\n\nMore compute supply does not automatically become useful capacity if facilities, power, networking, and software readiness lag.; that keeps the public read tied to evidence instead of treating the announcement as finished capacity.\n\nMetric To Watch\n\nThe next useful checkpoint is interconnection approvals, substation equipment dates, power purchase agreements, or disclosed energization windows over the near term window.\n\nReaders should track interconnection approvals, substation equipment dates, power purchase agreements, or disclosed energization windows before treating the item as a planning assumption for power.",
+      "sourceLink": "https://blogs.nvidia.com/blog/800-vdc-power-architecture-ai-factory/"
+    },
+    "expertLens": "NVIDIA is a power market signal item for policy/risk watch readers, with the infrastructure read limited to source-backed facts.",
+    "generation_version": "editorial_surface_v2",
+    "narrative_dna": {
+      "protagonist": "NVIDIA",
+      "concrete_event": "Every new generation of accelerated computing demands more from the infrastructure underneath it — more compute performance, higher rack density and more efficient, scalable power…",
+      "core_tension": "NVIDIA has to translate every new generation of accelerated computing demands more from the infrastructure underneath it — more compute performance, higher rack density and more efficient, scalable power… into a power decision that survives cost, timing, or operating constraints",
+      "infrastructure_layer": "Power",
+      "reader_role": [
+        "data center operators",
+        "utilities",
+        "cloud capacity teams",
+        "investors"
+      ],
+      "decision_relevance": "data center operators and utilities can use the item to test power market signal before changing procurement, deployment, or risk assumptions",
+      "evidence_anchor": "The NVIDIA MGX-compatible 800 VDC power rack, arriving in the second half of 2026, creates a hybrid architecture that brings next-generation rack-scale compute performance to facilities that are already built and operational.",
+      "counterpoint": "More compute supply does not automatically become useful capacity if facilities, power, networking, and software readiness lag.",
+      "watch_metric": "interconnection approvals, substation equipment dates, power purchase agreements, or disclosed energization windows",
+      "time_horizon": "near term",
+      "public_signal_label": "Core Signal",
+      "editorial_lens": "Power Market Signal",
+      "story_archetype": "Power Market Signal",
+      "story_archetype_id": "power-market-signal",
+      "routing_decision": "core_lane",
+      "valid_for_full_article": false,
+      "missing_fields": [
+        "concrete_event",
+        "core_tension"
+      ],
+      "truncation": {
+        "ok": false,
+        "artifacts": [
+          "ellipsis_truncation_artifact"
+        ]
+      }
+    },
+    "dynamic_brief_label": "Core Signal",
+    "anti_template_rewrite": true,
+    "repetition_check": {
+      "compared_article_count": 20,
+      "repeated_sentence_ratio": 0.5,
+      "repeated_paragraph_ratio": 0.5,
+      "heading_sequence_similarity": 1,
+      "banned_phrase_count": 0,
+      "banned_phrase_counts": {},
+      "recent_banned_phrase_counts": {},
+      "ngram_overlap": 0.3770491803278688,
+      "blueprint_repetition": 2,
+      "conclusion_similarity": 1,
+      "repeated_sentence_count": 3,
+      "repeated_paragraph_count": 3,
+      "heading_sequence": [
+        "Power-Market Move",
+        "Operating Lever",
+        "Grid Exposure",
+        "Metric To Watch"
+      ],
+      "blocked": true,
+      "reasons": [
+        "repeated_sentence_ratio>0.12",
+        "heading_sequence_similarity>0.75",
+        "conclusion_similarity>0.7"
+      ]
+    },
+    "repetition_blocked": true,
+    "repetition_block_reasons": [
+      "repeated_sentence_ratio>0.12",
+      "heading_sequence_similarity>0.75",
+      "conclusion_similarity>0.7"
+    ],
+    "searchText": "Why Scaling AI Compute Performance Requires a New Power Architecture NVIDIA Blog Power & Grid Interconnection and power procurement Power Supply Chain power_grid utilities, power-secured developers, and operators with firm interconnection positions developers and cloud buyers whose delivery dates depend on utility upgrades or energization schedules utility interconnection, equipment procurement, and energization milestones More compute supply does not automatically become useful capacity if facilities, power, networking, and software readiness lag. interconnection approvals, substation equipment dates, power purchase agreements, or disclosed energization windows US Every new generation of accelerated computing demands more from the infrastructure underneath it — more compute performance, higher rack density and more efficient, scalable power… NVIDIA is a power market signal item for policy/risk watch readers, with the infrastructure read limited to source-backed facts. Every new generation of accelerated computing demands more from the infrastructure underneath it — more compute performance, higher rack density and more efficient, scalable power The public card stays short because the available evidence supports a watchlist signal more than a full infrastructure memo. Data center operators and utilities can use the item to test power market signal before changing procurement, deployment, or risk assumptions. Power teams should track interconnection approvals, substation equipment dates, power purchase agreements, or disclosed energization windows. Cloud and platform buyers should separate source evidence from generic AI demand before changing deployment plans. Interconnection approvals, substation equipment dates, power purchase agreements, or disclosed energization windows. Every new generation of accelerated computing demands more from the infrastructure underneath it — more compute performance, higher rack density and more efficient, scalable power distribution. The bottleneck isn’t just wattage. It’s how power gets from the grid to the GPU. In traditional power delivery, electricity travels from the grid as an alternating current (AC) and gets converted multiple times, each time adding overhead and complexity as racks become denser. At the power levels that next-generation AI compute demands, even small inefficiencies compound quickly. 800 VDC simplifies that path. By distributing power at higher voltage through a direct current (DC), fewer conversion stages stand between the grid and the accelerator — which means more of the available power reaches the compute. NVIDIA DSX reference designs are built to guide AI factories through the transition from today’s AC infrastructure through hybrid architectures and into fully native 800 VDC facilities. NVIDIA, Google and Microsoft have been developing the 800 VDC architecture together through the Open Compute Project (OCP), and published a joint white paper March 2026 and the LVDC Solid-State Transformer Specification v0.3 July 2026. More than 80 equipment manufacturers and infrastructure companies are already building products to this specification. Most of today’s AI factories were designed around AC distribution. The NVIDIA MGX-compatible 800 VDC power rack, arriving in the second half of 2026, creates a hybrid architecture that brings next-generation rack-scale compute performance to facilities that are already built and operational. data center operators utilities cloud capacity teams investors The NVIDIA MGX-compatible 800 VDC power rack, arriving in the second half of 2026, creates a hybrid architecture that brings next-generation rack-scale compute performance to facilities that are already built and operational. NVIDIA DSX reference designs are built to guide AI factories through the transition from today’s AC infrastructure through hybrid architectures and into fully native 800 VDC facilities. NVIDIA, Google and Microsoft have been developing the 800 VDC architecture together through the Open Compute Project (OCP), and published a joint white paper March 2026 and the LVDC Solid-State Transformer Specification v0.3 July 2026. NVIDIA Google Microsoft New Power gpu power",
+    "heroImage": "/generated/articles/e55d48792519c872-why-scaling-ai-compute-performance-requires-a-new-power-architecture/hero.webp",
+    "thumbnailImage": "/generated/articles/e55d48792519c872-why-scaling-ai-compute-performance-requires-a-new-power-architecture/thumbnail.webp",
+    "ogImage": "/generated/articles/e55d48792519c872-why-scaling-ai-compute-performance-requires-a-new-power-architecture/og.webp",
+    "legacyImage": "/generated/e55d48792519c872.webp",
+    "generatedImageProvider": "codex",
+    "generatedImageModel": "",
+    "imageStatus": "generated",
+    "public_content_tier": "editorial_brief",
+    "signalCardOnly": true,
+    "seo_noindex": false,
+    "noindex": false,
+    "public_tier_reasons": [
+      "detail_page_requires_generation_gates"
+    ],
+    "ai_topic_score": 0.923,
+    "imageAlt": "Editorial image for Why Scaling AI Compute Performance Requires a New Power Architecture",
+    "imageProvider": "codex",
+    "imageModel": "",
+    "imageError": "",
+    "imageGeneratedAt": "2026-09-12T23:37:04.576Z"
+  },
+  {
     "id": "c345faa13e1c1463",
     "source": "Semiconductor Engineering",
     "url": "https://semiengineering.com/measuring-what-matters-using-picosecond-ultrasonic-technology-for-sicr-film-thickness-control-in-bcd-devices/",
@@ -126579,6 +126955,207 @@
     "imageStatus": "generated",
     "imageError": "",
     "imageGeneratedAt": "2026-09-12T23:42:06.374Z"
+  },
+  {
+    "id": "b7195ba8965453d5",
+    "sourceRegistryId": "arxiv-cs-dc",
+    "source": "arXiv",
+    "url": "https://arxiv.org/abs/2609.21058",
+    "title": "How Much of a Real Workload Can LLM-Generated GPU Kernels Actually Reach?",
+    "snippet": "arXiv:2609.21058v1 Announce Type: new Abstract: Language models can now write GPU kernels that outperform PyTorch. We evaluate five model configurations on KernelBench level 1 and find that a frontier model produces cor…",
+    "contentText": "arXiv:2609.21058v1 Announce Type: new Abstract: Language models can now write GPU kernels that outperform PyTorch. We evaluate five model configurations on KernelBench level 1 and find that a frontier model produces correct kernels for 91.1% of problems and independently verified speedups on 22 of 56, including three convolutions, with a median of 1.235x. Open-weights models are far behind: the best reaches 30.4% correct with three verified speedups and solves zero convolutions. We then ask a question the literature does not: what fraction of a real model's wall clock do such kernels govern? Profiling seven workloads across three domains, we find the addressable fraction ranges from 8.9% to 58.2%. On transformers, 80-86% of runtime is spent in cuBLAS GEMM and FlashAttention, bounding real…",
+    "publishedAt": "2026-09-21T04:00:00.000Z",
+    "sourceImage": null,
+    "region": "Global",
+    "language": "en",
+    "defaultCategory": "AI Infrastructure",
+    "source_text_scope": "abstract",
+    "ai_topic_score": 1,
+    "ai_topic_reasons": [
+      "frontier model",
+      "llm",
+      "gpu"
+    ],
+    "category": "AI Infrastructure",
+    "primary_category": "AI Infrastructure",
+    "secondary_category": "Research / Technical",
+    "infrastructure_layer": "Compute",
+    "affected_stakeholders": [
+      "operators",
+      "investors",
+      "hyperscalers",
+      "enterprise IT",
+      "semiconductor suppliers"
+    ],
+    "article_type": "Research / Technical",
+    "urgency_score": 0.5,
+    "taxonomy_confidence": 0.69,
+    "taxonomy_reasons": [
+      "gpu",
+      "advanced packaging"
+    ],
+    "direct_ai_infrastructure_relevance": 0.22,
+    "data_center_relevance": 0,
+    "cloud_capacity_relevance": 0,
+    "semiconductor_relevance": 0.297,
+    "power_grid_relevance": 0,
+    "cooling_relevance": 0,
+    "capital_markets_relevance": 0,
+    "enterprise_ai_infrastructure_relevance": 0.24,
+    "infrastructure_relevance_score": 0.33,
+    "infrastructure_relevance_tier": "archive_only",
+    "infrastructure_relevance_action": "archive_only",
+    "infrastructure_relevance_reasons": [
+      "direct_ai_infrastructure_relevance:0.22",
+      "semiconductor_relevance:0.30(gpu)",
+      "enterprise_ai_infrastructure_relevance:0.24(ai workloads)"
+    ],
+    "infrastructure_relevance": {
+      "direct_ai_infrastructure_relevance": 0.22,
+      "data_center_relevance": 0,
+      "cloud_capacity_relevance": 0,
+      "semiconductor_relevance": 0.297,
+      "power_grid_relevance": 0,
+      "cooling_relevance": 0,
+      "capital_markets_relevance": 0,
+      "enterprise_ai_infrastructure_relevance": 0.24,
+      "infrastructure_relevance_score": 0.33,
+      "infrastructure_relevance_tier": "archive_only",
+      "infrastructure_relevance_action": "archive_only",
+      "infrastructure_relevance_reasons": [
+        "direct_ai_infrastructure_relevance:0.22",
+        "semiconductor_relevance:0.30(gpu)",
+        "enterprise_ai_infrastructure_relevance:0.24(ai workloads)"
+      ],
+      "infrastructureRelevanceAction": "archive_only",
+      "articlePagePublished": false,
+      "homepagePublished": false,
+      "archiveOnly": true,
+      "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
+    },
+    "score": 28,
+    "slug": "how-much-of-a-real-workload-can-llm-generated-gpu-kernels-actually-reach",
+    "summary": "Language models can now generate GPU kernels that outperform PyTorch, achieving a 91.1% correctness rate on KernelBench. However, real-world performance improvements are limited.",
+    "insight": "This development highlights the potential for AI to enhance GPU programming efficiency, which could influence hardware utilization strategies. Operators and investors should consider the implications for performance optimization in AI workloads.",
+    "expert_insight": {
+      "concrete_facts": [],
+      "named_companies": [],
+      "infrastructure_layer": "Compute",
+      "bottleneck_type": "compute_supply",
+      "who_gains_leverage": "chip suppliers, systems integrators, and buyers with committed accelerator allocations",
+      "who_takes_execution_risk": "cloud providers and enterprises that still need networking, power, and facility readiness around purchased systems",
+      "timing_dependency": "accelerator allocation, server integration, memory supply, and cluster turn-up",
+      "counterargument": "The source may still describe intent rather than delivered capacity, so the operating impact depends on follow-through.",
+      "next_observable_signal": "delivery schedules, memory availability, networking readiness, or deployed cluster utilization",
+      "expert_insight_complete": false,
+      "expert_insight_missing_fields": [
+        "concrete_facts",
+        "named_companies"
+      ]
+    },
+    "expertInsight": {
+      "concrete_facts": [],
+      "named_companies": [],
+      "infrastructure_layer": "Compute",
+      "bottleneck_type": "compute_supply",
+      "who_gains_leverage": "chip suppliers, systems integrators, and buyers with committed accelerator allocations",
+      "who_takes_execution_risk": "cloud providers and enterprises that still need networking, power, and facility readiness around purchased systems",
+      "timing_dependency": "accelerator allocation, server integration, memory supply, and cluster turn-up",
+      "counterargument": "The source may still describe intent rather than delivered capacity, so the operating impact depends on follow-through.",
+      "next_observable_signal": "delivery schedules, memory availability, networking readiness, or deployed cluster utilization",
+      "expert_insight_complete": false,
+      "expert_insight_missing_fields": [
+        "concrete_facts",
+        "named_companies"
+      ]
+    },
+    "concrete_facts": [],
+    "named_companies": [],
+    "bottleneck_type": "compute_supply",
+    "who_gains_leverage": "chip suppliers, systems integrators, and buyers with committed accelerator allocations",
+    "who_takes_execution_risk": "cloud providers and enterprises that still need networking, power, and facility readiness around purchased systems",
+    "timing_dependency": "accelerator allocation, server integration, memory supply, and cluster turn-up",
+    "counterargument": "The source may still describe intent rather than delivered capacity, so the operating impact depends on follow-through.",
+    "next_observable_signal": "delivery schedules, memory availability, networking readiness, or deployed cluster utilization",
+    "expert_insight_complete": false,
+    "expert_insight_missing_fields": [
+      "concrete_facts",
+      "named_companies"
+    ],
+    "tags": [
+      "gpu",
+      "ai",
+      "kernels",
+      "performance",
+      "research",
+      "machinelearning"
+    ],
+    "imagePrompt": "A visually striking editorial image depicting advanced GPU technology and AI algorithms in action, showcasing the intersection of artificial intelligence and computing power.",
+    "lang": "en",
+    "articleText": "Language models can now write GPU kernels that outperform PyTorch. We evaluate five model configurations on KernelBench level 1 and find that a frontier model produces correct kernels for 91.1% of problems and independently verified speedups on 22 of 56, including three convolutions, with a median of 1.235x. Open-weights models are far behind: the best reaches 30.4% correct with three verified speedups and solves zero convolutions. We then ask a question the literature does not: what fraction of a real model's wall clock do such kernels govern? Profiling seven workloads across three domains, we find the addressable fraction ranges from 8.9% to 58.2%. On transformers, 80-86% of runtime is spent in cuBLAS GEMM and FlashAttention, bounding realistic end-to-end improvement at roughly 1%, and the fraction shrinks with model scale. On recommenders it is 58.2%, concentrated in a single embedding kernel. We introduce DLRM-Bench, 12 recommender kernel problems in KernelBench format, and measure a 41.7% win rate at a 1.552x median there, projecting 8.63% end-to-end. Separately, we show that KernelBench's correctness check ( this http URL with an absolute tolerance) is satisfied by a tensor of zeros on 4 of 60 level-1 problems. Two kernels in our own results exploited this before we detected them, including one scored at 283x that wrote 0.3% of its output buffer. We propose scale-invariant replacements and release all 879 evaluations.",
+    "content_length": 1447,
+    "boilerplate_ratio": 0,
+    "title_body_similarity": 0.36,
+    "copyright_footer_detected": false,
+    "nav_or_cta_detected": false,
+    "sentence_completion_score": 1,
+    "source_domain_adapter": "arxiv",
+    "extraction_quality_score": 1,
+    "extraction_qa": {
+      "content_length": 1447,
+      "boilerplate_ratio": 0,
+      "title_body_similarity": 0.36,
+      "copyright_footer_detected": false,
+      "legal_boilerplate_detected": false,
+      "nav_or_cta_detected": false,
+      "sentence_completion_score": 1,
+      "source_domain_adapter": "arxiv",
+      "extraction_quality_score": 1,
+      "extraction_failure_reason": null,
+      "extraction_quality_reasons": [],
+      "public_publishable": true,
+      "can_generate_longform": true,
+      "cleaned_source_length": 1447,
+      "block_reasons": []
+    },
+    "extraction_artifact": {
+      "artifact_version": "extraction_v1",
+      "source_url": "https://arxiv.org/abs/2609.21058",
+      "extracted_text_sha256": "05e1155b5985478aa98818c45f2e166585195845a8327cc8d8165e0cbcf2fd71",
+      "cleaned_extracted_text": "Language models can now write GPU kernels that outperform PyTorch. We evaluate five model configurations on KernelBench level 1 and find that a frontier model produces correct kernels for 91.1% of problems and independently verified speedups on 22 of 56, including three convolutions, with a median of 1.235x. Open-weights models are far behind: the best reaches 30.4% correct with three verified speedups and solves zero convolutions. We then ask a question the literature does not: what fraction of a real model's wall clock do such kernels govern? Profiling seven workloads across three domains, we find the addressable fraction ranges from 8.9% to 58.2%. On transformers, 80-86% of runtime is spent in cuBLAS GEMM and FlashAttention, bounding realistic end-to-end improvement at roughly 1%, and the fraction shrinks with model scale. On recommenders it is 58.2%, concentrated in a single embedding kernel. We introduce DLRM-Bench, 12 recommender kernel problems in KernelBench format, and measure a 41.7% win rate at a 1.552x median there, projecting 8.63% end-to-end. Separately, we show that KernelBench's correctness check ( this http URL with an absolute tolerance) is satisfied by a tensor of zeros on 4 of 60 level-1 problems. Two kernels in our own results exploited this before we detected them, including one scored at 283x that wrote 0.3% of its output buffer. We propose scale-invariant replacements and release all 879 evaluations.",
+      "extraction_qa": {
+        "cleaned_source_length": 1447,
+        "block_reasons": [],
+        "public_publishable": true,
+        "can_generate_longform": true,
+        "boilerplate_ratio": 0,
+        "copyright_footer_detected": false,
+        "nav_or_cta_detected": false,
+        "sentence_completion_score": 1
+      }
+    },
+    "cleaned_source_text": "Language models can now write GPU kernels that outperform PyTorch. We evaluate five model configurations on KernelBench level 1 and find that a frontier model produces correct kernels for 91.1% of problems and independently verified speedups on 22 of 56, including three convolutions, with a median of 1.235x. Open-weights models are far behind: the best reaches 30.4% correct with three verified speedups and solves zero convolutions. We then ask a question the literature does not: what fraction of a real model's wall clock do such kernels govern? Profiling seven workloads across three domains, we find the addressable fraction ranges from 8.9% to 58.2%. On transformers, 80-86% of runtime is spent in cuBLAS GEMM and FlashAttention, bounding realistic end-to-end improvement at roughly 1%, and the fraction shrinks with model scale. On recommenders it is 58.2%, concentrated in a single embedding kernel. We introduce DLRM-Bench, 12 recommender kernel problems in KernelBench format, and measure a 41.7% win rate at a 1.552x median there, projecting 8.63% end-to-end. Separately, we show that KernelBench's correctness check ( this http URL with an absolute tolerance) is satisfied by a tensor of zeros on 4 of 60 level-1 problems. Two kernels in our own results exploited this before we detected them, including one scored at 283x that wrote 0.3% of its output buffer. We propose scale-invariant replacements and release all 879 evaluations.",
+    "sourceUrl": "https://arxiv.org/abs/2609.21058",
+    "generatedImage": "/generated/articles/b7195ba8965453d5-how-much-of-a-real-workload-can-llm-generated-gpu-kernels-actually-reach/hero.webp",
+    "infrastructureRelevanceAction": "archive_only",
+    "articlePagePublished": false,
+    "homepagePublished": false,
+    "archiveOnly": true,
+    "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold",
+    "article_blueprint": null,
+    "articleBlueprint": null,
+    "expertLensShort": null,
+    "expertLensFull": null,
+    "expertLens": null,
+    "public_content_tier": "hidden",
+    "signalCardOnly": false,
+    "seo_noindex": true,
+    "noindex": true,
+    "public_tier_reasons": [
+      "low_relevance",
+      "relevance_below_adjacent_threshold"
+    ],
+    "searchText": "How Much of a Real Workload Can LLM-Generated GPU Kernels Actually Reach? arXiv AI Infrastructure Research / Technical Compute compute_supply chip suppliers, systems integrators, and buyers with committed accelerator allocations cloud providers and enterprises that still need networking, power, and facility readiness around purchased systems accelerator allocation, server integration, memory supply, and cluster turn-up The source may still describe intent rather than delivered capacity, so the operating impact depends on follow-through. delivery schedules, memory availability, networking readiness, or deployed cluster utilization Global Language models can now generate GPU kernels that outperform PyTorch, achieving a 91.1% correctness rate on KernelBench. However, real-world performance improvements are limited. Language models can now write GPU kernels that outperform PyTorch. We evaluate five model configurations on KernelBench level 1 and find that a frontier model produces correct kernels for 91.1% of problems and independently verified speedups on 22 of 56, including three convolutions, with a median of 1.235x. Open-weights models are far behind: the best reaches 30.4% correct with three verified speedups and solves zero convolutions. We then ask a question the literature does not: what fraction of a real model's wall clock do such kernels govern? Profiling seven workloads across three domains, we find the addressable fraction ranges from 8.9% to 58.2%. On transformers, 80-86% of runtime is spent in cuBLAS GEMM and FlashAttention, bounding realistic end-to-end improvement at roughly 1%, and the fraction shrinks with model scale. On recommenders it is 58.2%, concentrated in a single embedding kernel. We introduce DLRM-Bench, 12 recommender kernel problems in KernelBench format, and measure a 41.7% win rate at a 1.552x median there, projecting 8.63% end-to-end. Separately, we show that KernelBench's correctness check ( this http URL with an absolute tolerance) is satisfied by a tensor of zeros on 4 of 60 level-1 problems. Two kernels in our own results exploited this before we detected them, including one scored at 283x that wrote 0.3% of its output buffer. We propose scale-invariant replacements and release all 879 evaluations. operators investors hyperscalers enterprise IT semiconductor suppliers gpu ai kernels performance research machinelearning"
   },
   {
     "id": "1fe53de9b7b504da",
