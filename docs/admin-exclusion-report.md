@@ -1,8 +1,10 @@
 # Admin Exclusion Report
 
-Generated at: 2026-06-04T15:26:41.233Z
-Admin pages checked: 1043
-Index files checked: 4
+Generated at: 2026-09-21T15:18:19.076Z
+Admin pages checked: 4
+Index files checked: 5
+Forbidden private artifacts found: 0
+Private record marker leaks found: 0
 
 ## Failures
 
