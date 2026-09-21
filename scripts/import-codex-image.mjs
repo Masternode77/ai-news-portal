@@ -43,7 +43,7 @@ export async function main(args = process.argv.slice(2)) {
     const stat = await fs.stat(imageFile);
     if (!stat.isFile() || stat.size > 25 * 1024 * 1024) throw Error('Expected a local image file up to 25 MB');
     const manifestPath = path.resolve('config/codex-image-manifest.json');
-    await registerCodexImage(article, await fs.readFile(imageFile), { manifestPath, model: value('--model'), generatedAt: value('--generated-at') });
+    await registerCodexImage(article, await fs.readFile(imageFile), { manifestPath, model: value('--model'), generatedAt: value('--generated-at'), uniqueToArticle: collection.file === 'src/data/authored-columns.json' });
     const result = await generateCodexImageSet(article, { manifestPath, throwOnError: true });
     await applyCodexImageMetadata(collection.file, id, fingerprint, metadataPatchFromImageSet(result));
     console.log(JSON.stringify({ id, provider: result.provider, heroImage: result.heroImage, status: result.status }));
