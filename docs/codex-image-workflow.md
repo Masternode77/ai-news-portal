@@ -18,6 +18,8 @@ Registration serializes manifest updates and command-line article updates with e
 
 ## Automatic local Codex workflow
 
+Authored columns require a fresh image for each new column. The queue includes published authored columns, prioritizes them over news, and requeues shared topic-library registrations for replacement. Unique valid artwork for the same column remains a no-op; copying another article's registered source into a column is rejected. See [Mac column automation](mac-column-image-automation.md) for repository refresh, post-column generation and bounded replacement of existing repeated images.
+
 Ask Codex to use `.codex/skills/compute-current-images/SKILL.md` for pending article artwork. The reusable workflow checks live production alignment, prepares a bounded queue, invokes native generation, reviews the result, imports the actual output, and verifies registration without another manual handoff. A native tool call runs inside Codex; an npm process cannot call the active desktop session. This does not install a background schedule.
 
 Prepare the next job without modifying any files:

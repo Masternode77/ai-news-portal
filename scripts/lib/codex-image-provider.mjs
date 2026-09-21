@@ -6,6 +6,7 @@ import { createHash, randomUUID } from 'node:crypto';
 import sharp from 'sharp';
 import { buildArticleImagePrompt, articleImageAltText } from './article-image-prompt.mjs';
 import { writeArticleImageSetFromBytes, writeFallbackArticleImageSet } from './image-store.mjs';
+import { isAuthoredColumn } from './authored-column-policy.mjs';
 
 export async function withCodexImageLock(file, action) {
   const lock = `${file instanceof URL ? fileURLToPath(file) : path.resolve(file)}.lock`;
@@ -36,17 +37,27 @@ export async function registerCodexImage(article, bytes, options = {}) {
   if(!['png','jpeg','webp'].includes(info.format) || (info.pages||1)!==1 || info.width<640 || info.height<360)throw Error('Expected a single PNG, JPEG or WebP image at least 640×360');
   const publicDir=options.publicDir || path.join(process.cwd(),'public');
   const manifestPath=options.manifestPath || defaultManifest;
-  const normalized=await sharp(bytes,{limitInputPixels:40_000_000}).rotate().webp({quality:92}).toBuffer();
+  const uniqueToArticle=isAuthoredColumn(article) || options.uniqueToArticle===true;
+  const inputDigest=hash(bytes);
+  const previous=(await readManifest(manifestPath)).images[article.id];
+  const normalized=previous?.provider==='codex' && previous.sha256===inputDigest && info.format==='webp'
+    ? bytes
+    : await sharp(bytes,{limitInputPixels:40_000_000}).rotate().webp({quality:92}).toBuffer();
   const digest=hash(normalized), sourcePath=`/generated/codex-inputs/${digest}.webp`;
   const target=path.join(publicDir,sourcePath.slice(1));
   await fs.mkdir(path.dirname(target),{recursive:true});
-  const sourceTemporary=`${target}.${randomUUID()}.tmp`;
-  await fs.writeFile(sourceTemporary,normalized);await fs.rename(sourceTemporary,target);
   const generatedAt=options.generatedAt || new Date().toISOString();
   if(!Number.isFinite(Date.parse(generatedAt)))throw Error('Invalid image generation date');
-  const entry={fingerprint:imageFingerprint(article),sha256:digest,sourcePath,generatedAt,provider:'codex',model:options.model || ''};
+  const entry={fingerprint:imageFingerprint(article),sha256:digest,sourcePath,generatedAt,provider:'codex',model:options.model || '',...(uniqueToArticle ? {uniqueToArticle:true} : {})};
   await withCodexImageLock(manifestPath, async () => {
     const manifest=await readManifest(manifestPath);
+    const duplicate=Object.entries(manifest.images).find(([id, other]) => id!==article.id
+      && (uniqueToArticle || other.uniqueToArticle)
+      && (other.sha256===digest || other.sha256===inputDigest));
+    if(duplicate)throw Error(`Column artwork must be unique; this image is already registered to article ${duplicate[0]}. Generate a new image for this column.`);
+    const sourceTemporary=`${target}.${randomUUID()}.tmp`;
+    try { await fs.writeFile(sourceTemporary,normalized);await fs.rename(sourceTemporary,target); }
+    finally { await fs.rm(sourceTemporary,{force:true}); }
     manifest.images[article.id]=entry;
     const file=manifestPath instanceof URL ? fileURLToPath(manifestPath) : path.resolve(manifestPath);
     const temporary=`${file}.${randomUUID()}.tmp`;

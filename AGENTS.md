@@ -93,3 +93,5 @@ If changing prompts, fallback editorial copy, quality gates, source extraction, 
 ## Article Image Workflow
 
 Use the active Codex session's native image-generation capability for newly requested article artwork. Register the visually reviewed output through `scripts/import-codex-image.mjs`; follow `docs/codex-image-workflow.md`. Do not request or configure an OpenAI API key or copy Codex/ChatGPT credentials to CI for this workflow. Scheduled publication consumes registered local artwork and uses the existing local fallback when none is available; do not describe that fallback as Codex-generated.
+
+Each newly authored column needs its own newly generated image. Do not reuse the source news image or a shared topic-library image as the completed column artwork. After creating a column, run the image queue for its ID, generate and visually review its native artwork, then import it with the queued fingerprint. Existing shared column images are replacement jobs; a valid unique image for the same column is preserved on retries. For Mac scheduled runs, follow `docs/mac-column-image-automation.md`.

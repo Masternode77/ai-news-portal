@@ -1,9 +1,37 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { randomUUID } from 'node:crypto';
+import { createHash, randomUUID } from 'node:crypto';
 import { registerCodexImage, generateCodexImageSet, withCodexImageLock, imageFingerprint } from './lib/codex-image-provider.mjs';
 import { metadataPatchFromImageSet } from './lib/image2-provider.mjs';
+import { canonicalArticleImagePaths } from './lib/image-store.mjs';
+
+async function rejectReusedArticleVariant(id, bytes, articles) {
+  const candidates = new Map();
+  for (const article of articles.filter(item => item.id !== id)) {
+    for (const images of [article, canonicalArticleImagePaths(article, { extension: 'webp', legacyExtension: 'webp' })]) {
+      for (const key of ['heroImage', 'thumbnailImage', 'ogImage', 'generatedImage', 'legacyImage']) {
+        const image = images[key];
+        if (typeof image === 'string' && /^\/generated\/[A-Za-z0-9/_-]+\.(webp|png|jpe?g)$/i.test(image)) candidates.set(image, article.id);
+      }
+    }
+  }
+  let publicRoot;
+  try { publicRoot = await fs.realpath('public'); }
+  catch (error) { if (error.code === 'ENOENT') return; throw error; }
+  const inputHash = createHash('sha256').update(bytes).digest('hex');
+  for (const [image, owner] of candidates) {
+    try {
+      const file = await fs.realpath(path.join(publicRoot, image.slice(1)));
+      if (!file.startsWith(publicRoot + path.sep)) throw Error('Existing article image escapes the public directory');
+      const stat = await fs.stat(file);
+      if (!stat.isFile() || stat.size !== bytes.length) continue;
+      if (createHash('sha256').update(await fs.readFile(file)).digest('hex') === inputHash) {
+        throw Error(`Column artwork must be unique; this rendered image already belongs to article ${owner}. Generate a new image.`);
+      }
+    } catch (error) { if (error.code !== 'ENOENT') throw error; }
+  }
+}
 
 // Re-read after image processing: the initial collection is not a write snapshot.
 export async function applyCodexImageMetadata(file, id, expectedFingerprint, patch) {
@@ -43,7 +71,10 @@ export async function main(args = process.argv.slice(2)) {
     const stat = await fs.stat(imageFile);
     if (!stat.isFile() || stat.size > 25 * 1024 * 1024) throw Error('Expected a local image file up to 25 MB');
     const manifestPath = path.resolve('config/codex-image-manifest.json');
-    await registerCodexImage(article, await fs.readFile(imageFile), { manifestPath, model: value('--model'), generatedAt: value('--generated-at') });
+    const bytes = await fs.readFile(imageFile);
+    const uniqueToArticle = collection.file === 'src/data/authored-columns.json';
+    if (uniqueToArticle) await rejectReusedArticleVariant(id, bytes, collections.flatMap(item => item.items));
+    await registerCodexImage(article, bytes, { manifestPath, model: value('--model'), generatedAt: value('--generated-at'), uniqueToArticle });
     const result = await generateCodexImageSet(article, { manifestPath, throwOnError: true });
     await applyCodexImageMetadata(collection.file, id, fingerprint, metadataPatchFromImageSet(result));
     console.log(JSON.stringify({ id, provider: result.provider, heroImage: result.heroImage, status: result.status }));

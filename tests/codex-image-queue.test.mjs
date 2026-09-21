@@ -185,13 +185,14 @@ test('registered artwork symlinks cannot escape the public directory', async () 
   const publicDir = path.join(root, 'public');
   const manifestPath = path.join(root, 'manifest.json');
   const target = article('symlink-target', '2026-08-03T00:00:00.000Z');
-  const outside = path.join(root, 'outside.webp');
+  const outsideDir = path.join(root, 'outside');
   const bytes = Buffer.from('outside-image');
   const digest = createHash('sha256').update(bytes).digest('hex');
   const sourcePath = `/generated/codex-inputs/${digest}.webp`;
-  await fs.mkdir(path.join(publicDir, 'generated/codex-inputs'), { recursive: true });
-  await fs.writeFile(outside, bytes);
-  await fs.symlink(outside, path.join(publicDir, sourcePath.slice(1)));
+  await fs.mkdir(path.join(publicDir, 'generated'), { recursive: true });
+  await fs.mkdir(outsideDir);
+  await fs.writeFile(path.join(outsideDir, `${digest}.webp`), bytes);
+  await fs.symlink(outsideDir, path.join(publicDir, 'generated/codex-inputs'), process.platform === 'win32' ? 'junction' : 'dir');
   await fs.writeFile(manifestPath, JSON.stringify({ version: 1, images: {
     'symlink-target': {
       fingerprint: imageFingerprint(target), sha256: digest, sourcePath,

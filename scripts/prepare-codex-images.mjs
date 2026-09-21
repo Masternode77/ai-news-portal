@@ -6,6 +6,8 @@ import { buildArticleImagePrompt } from './lib/article-image-prompt.mjs';
 import { imageFingerprint } from './lib/codex-image-provider.mjs';
 import { canonicalArticleImagePaths } from './lib/image-store.mjs';
 import { isPublicLongformArticle } from './lib/public-surface-eligibility.mjs';
+import { isAuthoredColumn } from './lib/authored-column-policy.mjs';
+import { publishedColumns } from './lib/column-surface.mjs';
 
 const DEFAULT_ARTICLES_PATH = 'src/data/latest-news.json';
 const DEFAULT_MANIFEST_PATH = 'config/codex-image-manifest.json';
@@ -45,14 +47,16 @@ export function selectCodexImageJobs(articles = [], registrations = {}, options 
   const requestedId = clean(options.id);
   const eligible = articles
     .filter((article) => !requestedId || article?.id === requestedId)
-    .filter((article) => isPublicLongformArticle(article, options.eligibilityOptions))
+    .filter((article) => isAuthoredColumn(article)
+      ? publishedColumns([article]).length > 0
+      : isPublicLongformArticle(article, options.eligibilityOptions))
     .filter((article) => {
       const provider = clean(article.generatedImageProvider || article.imageProvider).toLowerCase();
       return clean(article.imageStatus).toLowerCase() !== 'approved'
         && !(PRESERVED_PROVIDERS.has(provider) && provider !== 'codex');
     })
-    .filter((article) => ['stale', 'recoverable'].includes(registrations[article.id]?.state) || needsCodexArtwork(article))
-    .sort((left, right) => articleTime(right) - articleTime(left));
+    .filter((article) => isAuthoredColumn(article) || ['stale', 'recoverable'].includes(registrations[article.id]?.state) || needsCodexArtwork(article))
+    .sort((left, right) => Number(isAuthoredColumn(right)) - Number(isAuthoredColumn(left)) || articleTime(right) - articleTime(left));
 
   return eligible.flatMap((article) => {
     if (!SAFE_ARTICLE_ID.test(article.id) || ['__proto__', 'constructor', 'prototype'].includes(article.id)) {
@@ -84,8 +88,11 @@ export function selectCodexImageJobs(articles = [], registrations = {}, options 
       id: article.id,
       title: article.expertLensFull?.finalHeadline || article.title,
       fingerprint,
-      prompt: buildArticleImagePrompt(article),
-      reason: registration.state === 'stale' ? 'registered_artwork_is_for_an_earlier_article_revision' : 'codex_artwork_needed',
+      prompt: [buildArticleImagePrompt(article), ...(isAuthoredColumn(article) ? [
+        'Create a new original image specifically for this column. Do not reuse an existing image or the shared topic library. Choose a distinct scene and composition that express this column’s thesis.',
+      ] : [])].join('\n'),
+      reason: registration.state === 'shared' ? 'column_artwork_is_shared_with_another_article'
+        : registration.state === 'stale' ? 'registered_artwork_is_for_an_earlier_article_revision' : 'codex_artwork_needed',
       importArgs: ['node', 'scripts/import-codex-image.mjs', '--id', article.id, '--file', '<generated-image-path>', '--fingerprint', fingerprint],
       importCommand: `node scripts/import-codex-image.mjs --id ${article.id} --file <generated-image-path> --fingerprint ${fingerprint}`,
     }];
@@ -171,6 +178,10 @@ export async function inspectCodexImageRegistrations(articles = [], options = {}
     if (digest !== entry.sha256) {
       throw manifestError(`Registered Codex artwork hash does not match for article "${article.id}".`);
     }
+    if (isAuthoredColumn(article) && Object.entries(manifest.images).some(([id, other]) => id !== article.id && other.sha256 === digest)) {
+      states[article.id] = { state: 'shared' };
+      continue;
+    }
     states[article.id] = await registrationApplied(article, entry, publicDir)
       ? { state: 'valid' }
       : { state: 'recoverable', sourcePath: entry.sourcePath, generatedAt: entry.generatedAt, ...(clean(entry.model) ? { model: clean(entry.model) } : {}) };
@@ -193,9 +204,13 @@ export function parseArgs(args) {
 
 export async function main(args = process.argv.slice(2)) {
   const options = parseArgs(args);
-  const articles = JSON.parse(await fs.readFile(DEFAULT_ARTICLES_PATH, 'utf8'));
-  if (!Array.isArray(articles)) throw new Error(`${DEFAULT_ARTICLES_PATH} must contain an array.`);
-  if (options.id && !articles.some((article) => article?.id === options.id)) throw new Error(`Article "${options.id}" was not found in ${DEFAULT_ARTICLES_PATH}.`);
+  const collections = await Promise.all([DEFAULT_ARTICLES_PATH, 'src/data/authored-columns.json'].map(async (file) => {
+    const items = JSON.parse(await fs.readFile(file, 'utf8'));
+    if (!Array.isArray(items)) throw new Error(`${file} must contain an array.`);
+    return items;
+  }));
+  const articles = collections.flat();
+  if (options.id && !articles.some((article) => article?.id === options.id)) throw new Error(`Article "${options.id}" was not found in latest news or authored columns.`);
   const registrations = await inspectCodexImageRegistrations(articles);
   const jobs = selectCodexImageJobs(articles, registrations, options);
   process.stdout.write(`${JSON.stringify({ jobs }, null, 2)}\n`);
