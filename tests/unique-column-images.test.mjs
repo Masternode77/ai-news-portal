@@ -42,6 +42,17 @@ test('CLI reads authored columns alongside news and stops queuing after a succes
     assert.equal(saved.title, column.title);
     assert.equal(saved.imageStatus, 'generated');
     assert.notEqual(saved.heroImage, column.heroImage);
+    const next = { ...column, id: 'next-column', slug: 'next-column' };
+    await fs.writeFile(path.join(root, 'src/data/authored-columns.json'), JSON.stringify([saved, next]));
+    const manifestBefore = await fs.readFile(path.join(root, 'config/codex-image-manifest.json'), 'utf8');
+    for (const key of ['heroImage', 'thumbnailImage', 'ogImage']) {
+      const copied = path.join(root, `copied-${key}.webp`);
+      await fs.copyFile(path.join(root, 'public', saved[key].slice(1)), copied);
+      const result = spawnSync(process.execPath, [importScript, '--id', next.id, '--file', copied], { cwd: root, encoding: 'utf8' });
+      assert.notEqual(result.status, 0, `Reused ${key} must be rejected`);
+      assert.match(result.stderr, /already.*article|unique/i);
+    }
+    assert.equal(await fs.readFile(path.join(root, 'config/codex-image-manifest.json'), 'utf8'), manifestBefore);
   } finally { await fs.rm(root, { recursive: true, force: true }); }
 });
 
