@@ -858,7 +858,9 @@
     "b7195ba8965453d5",
     "cb2203c17303b947",
     "6457591e1f3bafc9",
-    "2a718cc24df463d9"
+    "2a718cc24df463d9",
+    "d8d76f80d5161434",
+    "d6c501b032fc194f"
   ],
   "dayPlans": {
     "2026-03-24": {
@@ -45942,79 +45944,154 @@
     "2026-09-22": {
       "date": "2026-09-22",
       "createdAt": "2026-09-21T19:55:50.463Z",
-      "refreshedAt": "2026-09-22T01:35:34.869Z",
+      "refreshedAt": "2026-09-22T12:34:23.559Z",
       "candidateWindowHours": 24,
       "curatedItems": [
         {
-          "id": "2a718cc24df463d9",
+          "id": "d8d76f80d5161434",
+          "sourceRegistryId": "arxiv-cs-dc",
+          "source": "arXiv",
+          "url": "https://arxiv.org/abs/2609.24205",
+          "title": "A principled approach for energy-efficient training via phase-aware GPU frequency tuning",
+          "snippet": "arXiv:2609.24205v1 Announce Type: new Abstract: Modern AI model training imposes unprecedented computational demands, making it a key contributor to datacenter energy consumption. Yet a significant fraction of the energ…",
+          "contentText": "arXiv:2609.24205v1 Announce Type: new Abstract: Modern AI model training imposes unprecedented computational demands, making it a key contributor to datacenter energy consumption. Yet a significant fraction of the energy consumed during training does not translate to useful computation due to bottlenecks throughout the training pipeline. We present PAFT, a phase-aware, dynamically adaptable GPU frequency tuning system that reduces energy consumption of training workloads with minimal performance overhead. The key insight behind PAFT is that bottlenecks represent an energy optimization opportunity, rather than purely a performance problem: when GPUs are bound to stall, PAFT opportunistically reduces their clock frequencies to match the pace of bottlenecked devices, saving energy without im…",
+          "publishedAt": "2026-09-22T04:00:00.000Z",
+          "sourceImage": null,
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure",
+          "source_text_scope": "abstract",
+          "ai_topic_score": 1,
+          "ai_topic_reasons": [
+            "ai model",
+            "model training",
+            "gpu",
+            "gpus",
+            "ai"
+          ],
+          "category": "AI Infrastructure",
+          "primary_category": "AI Infrastructure",
+          "secondary_category": "GPU clusters and deployment readiness",
+          "infrastructure_layer": "Compute",
+          "affected_stakeholders": [
+            "operators",
+            "hyperscalers",
+            "cloud buyers",
+            "investors"
+          ],
+          "article_type": "Other",
+          "urgency_score": 0.41,
+          "taxonomy_confidence": 0.65,
+          "taxonomy_reasons": [
+            "ai infrastructure"
+          ],
+          "direct_ai_infrastructure_relevance": 0.78,
+          "data_center_relevance": 0.42,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0.297,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.73,
+          "infrastructure_relevance_tier": "signal_card",
+          "infrastructure_relevance_action": "publish_signal_card_only",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:0.78",
+            "data_center_relevance:0.42(datacenter)",
+            "semiconductor_relevance:0.30(gpu)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 0.78,
+            "data_center_relevance": 0.42,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0.297,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.73,
+            "infrastructure_relevance_tier": "signal_card",
+            "infrastructure_relevance_action": "publish_signal_card_only",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:0.78",
+              "data_center_relevance:0.42(datacenter)",
+              "semiconductor_relevance:0.30(gpu)"
+            ],
+            "infrastructureRelevanceAction": "publish_signal_card_only",
+            "articlePagePublished": false,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 63
+        },
+        {
+          "id": "d6c501b032fc194f",
           "sourceRegistryId": "arxiv-cs-ar",
           "source": "arXiv",
-          "url": "https://arxiv.org/abs/2609.21774",
-          "title": "Scalable Packet Tracking on FPGAs for Erasure-Coded RDMA over Lossy WANs",
-          "snippet": "arXiv:2609.21774v1 Announce Type: new Abstract: Modern AI workloads increasingly rely on scale across architectures that interconnect multiple datacenters to form a single \"AI factory\", overcoming the power and cooling…",
-          "contentText": "arXiv:2609.21774v1 Announce Type: new Abstract: Modern AI workloads increasingly rely on scale across architectures that interconnect multiple datacenters to form a single \"AI factory\", overcoming the power and cooling constraints of individual sites. However, extending Remote Direct Memory Access (RDMA) across wide area networks (WANs) introduces fundamental challenges: multi-path packet reordering, high latency, and packet loss that severely degrade performance. While erasure coding (EC) has emerged as a promising mechanism for loss recovery, its effectiveness critically depends on efficient packet arrival tracking implemented in hardware. We present COmpact Multi-path Erasure-coded Tracking (COMET), the first fully hardware-offloaded packet-arrival tracking design implemented on an FPG…",
-          "publishedAt": "2026-09-21T04:00:00.000Z",
+          "url": "https://arxiv.org/abs/2609.23816",
+          "title": "SPLASH: Co-Designing Sparse Attention with High-Bandwidth Flash for Efficient Long-Context Inference",
+          "snippet": "arXiv:2609.23816v1 Announce Type: new Abstract: The key-value (KV) cache has become the dominant consumer of memory in large language model (LLM) serving systems as context lengths, concurrency, and request lifetimes gr…",
+          "contentText": "arXiv:2609.23816v1 Announce Type: new Abstract: The key-value (KV) cache has become the dominant consumer of memory in large language model (LLM) serving systems as context lengths, concurrency, and request lifetimes grow. High-bandwidth memory (HBM) provides the bandwidth attention decode needs but limited capacity, while off-package memory and storage add capacity but lack the bandwidth to sustain attention decode. High-Bandwidth Flash (HBF) is a promising substrate that combines terabyte-scale capacity with near-HBM read bandwidth. Limited write endurance makes read-only model weights its natural use, but we argue that HBF paired with HBM as a hierarchy can also hold the KV cache. Unlike prior hierarchies, whose secondary tiers are bandwidth bottlenecked, the comparable bandwidths let…",
+          "publishedAt": "2026-09-22T04:00:00.000Z",
           "sourceImage": null,
-          "region": "Global",
+          "region": "APAC",
           "language": "en",
           "defaultCategory": "Semiconductors",
           "source_text_scope": "abstract",
-          "ai_topic_score": 0.48,
+          "ai_topic_score": 1,
           "ai_topic_reasons": [
-            "ai workloads",
-            "ai",
-            "ai_not_in_title"
+            "large language model",
+            "llm",
+            "inference"
           ],
-          "category": "Cooling & Facility Engineering",
-          "primary_category": "Cooling & Facility Engineering",
-          "secondary_category": "Thermal design and rack density",
-          "infrastructure_layer": "Cooling",
+          "category": "Semiconductors",
+          "primary_category": "Semiconductors",
+          "secondary_category": "Accelerators, memory, and advanced packaging",
+          "infrastructure_layer": "Silicon",
           "affected_stakeholders": [
-            "operators",
-            "equipment vendors",
-            "data center developers",
-            "enterprise IT"
+            "semiconductor suppliers",
+            "hyperscalers",
+            "server OEMs",
+            "investors"
           ],
-          "article_type": "Supply Chain",
-          "urgency_score": 0.38,
-          "taxonomy_confidence": 0.58,
+          "article_type": "Capacity Expansion",
+          "urgency_score": 0.43,
+          "taxonomy_confidence": 0.65,
           "taxonomy_reasons": [
-            "cooling"
+            "hbm"
           ],
           "direct_ai_infrastructure_relevance": 0.22,
           "data_center_relevance": 0,
           "cloud_capacity_relevance": 0,
-          "semiconductor_relevance": 0,
-          "power_grid_relevance": 0.22,
-          "cooling_relevance": 0.34,
+          "semiconductor_relevance": 0.72,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
           "capital_markets_relevance": 0,
-          "enterprise_ai_infrastructure_relevance": 0.24,
-          "infrastructure_relevance_score": 0.39,
+          "enterprise_ai_infrastructure_relevance": 0.18,
+          "infrastructure_relevance_score": 0.536,
           "infrastructure_relevance_tier": "archive_only",
           "infrastructure_relevance_action": "archive_only",
           "infrastructure_relevance_reasons": [
             "direct_ai_infrastructure_relevance:0.22",
-            "power_grid_relevance:0.22(power)",
-            "cooling_relevance:0.34(cooling)",
-            "enterprise_ai_infrastructure_relevance:0.24(ai workloads)"
+            "semiconductor_relevance:0.72(hbm, high-bandwidth memory)"
           ],
           "infrastructure_relevance": {
             "direct_ai_infrastructure_relevance": 0.22,
             "data_center_relevance": 0,
             "cloud_capacity_relevance": 0,
-            "semiconductor_relevance": 0,
-            "power_grid_relevance": 0.22,
-            "cooling_relevance": 0.34,
+            "semiconductor_relevance": 0.72,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
             "capital_markets_relevance": 0,
-            "enterprise_ai_infrastructure_relevance": 0.24,
-            "infrastructure_relevance_score": 0.39,
+            "enterprise_ai_infrastructure_relevance": 0.18,
+            "infrastructure_relevance_score": 0.536,
             "infrastructure_relevance_tier": "archive_only",
             "infrastructure_relevance_action": "archive_only",
             "infrastructure_relevance_reasons": [
               "direct_ai_infrastructure_relevance:0.22",
-              "power_grid_relevance:0.22(power)",
-              "cooling_relevance:0.34(cooling)",
-              "enterprise_ai_infrastructure_relevance:0.24(ai workloads)"
+              "semiconductor_relevance:0.72(hbm, high-bandwidth memory)"
             ],
             "infrastructureRelevanceAction": "archive_only",
             "articlePagePublished": false,
@@ -46022,150 +46099,108 @@
             "archiveOnly": true,
             "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
           },
-          "score": 34
+          "score": 43
+        },
+        {
+          "id": "581473454ae70fcd",
+          "sourceRegistryId": "arxiv-cs-dc",
+          "source": "arXiv",
+          "url": "https://arxiv.org/abs/2604.10180",
+          "title": "Tessera: Unlocking Heterogeneous GPUs through Kernel-Granularity Disaggregation",
+          "snippet": "arXiv:2604.10180v3 Announce Type: replace Abstract: Disaggregation maps parts of an AI workload to different types of GPUs, offering a path to utilize modern heterogeneous GPU clusters. However, existing solutions opera…",
+          "contentText": "arXiv:2604.10180v3 Announce Type: replace Abstract: Disaggregation maps parts of an AI workload to different types of GPUs, offering a path to utilize modern heterogeneous GPU clusters. However, existing solutions operate at a coarse granularity and are tightly coupled to specific model architectures, leaving much room for performance improvement. This paper presents Tessera, the first kernel disaggregation system to improve performance and cost efficiency on heterogeneous GPUs for large model inference. Our key insight is that kernels within a single application exhibit diverse resource demands, making them the most suitable granularity for aligning computation with hardware capabilities. Tessera integrates offline analysis with online adaptation by extracting precise inter-kernel depend…",
+          "publishedAt": "2026-09-22T04:00:00.000Z",
+          "sourceImage": null,
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure",
+          "source_text_scope": "abstract",
+          "ai_topic_score": 1,
+          "ai_topic_reasons": [
+            "inference",
+            "ai workload",
+            "gpu",
+            "gpus",
+            "ai"
+          ],
+          "category": "AI Infrastructure",
+          "primary_category": "AI Infrastructure",
+          "secondary_category": "GPU clusters and deployment readiness",
+          "infrastructure_layer": "Compute",
+          "affected_stakeholders": [
+            "operators",
+            "hyperscalers",
+            "cloud buyers",
+            "investors"
+          ],
+          "article_type": "Market Analysis",
+          "urgency_score": 0.35,
+          "taxonomy_confidence": 0.63,
+          "taxonomy_reasons": [
+            "ai infrastructure"
+          ],
+          "direct_ai_infrastructure_relevance": 0.64,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0.22,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0.24,
+          "infrastructure_relevance_score": 0.529,
+          "infrastructure_relevance_tier": "archive_only",
+          "infrastructure_relevance_action": "archive_only",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:0.64(gpu clusters)",
+            "semiconductor_relevance:0.22(gpu)",
+            "enterprise_ai_infrastructure_relevance:0.24(ai workload)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 0.64,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0.22,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0.24,
+            "infrastructure_relevance_score": 0.529,
+            "infrastructure_relevance_tier": "archive_only",
+            "infrastructure_relevance_action": "archive_only",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:0.64(gpu clusters)",
+              "semiconductor_relevance:0.22(gpu)",
+              "enterprise_ai_infrastructure_relevance:0.24(ai workload)"
+            ],
+            "infrastructureRelevanceAction": "archive_only",
+            "articlePagePublished": false,
+            "homepagePublished": false,
+            "archiveOnly": true,
+            "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
+          },
+          "score": 38
         }
       ],
       "curatedIds": [
-        "2a718cc24df463d9"
+        "d8d76f80d5161434",
+        "d6c501b032fc194f",
+        "581473454ae70fcd"
       ],
       "publishedIds": [
         "cb2203c17303b947",
         "6457591e1f3bafc9",
-        "2a718cc24df463d9"
+        "2a718cc24df463d9",
+        "d8d76f80d5161434",
+        "d6c501b032fc194f"
       ],
       "slotPublications": {
         "0": true,
-        "1": true
+        "1": true,
+        "2": true
       }
     }
   },
   "runHistory": [
-    {
-      "at": "2026-08-10T16:05:04.447Z",
-      "day": "2026-08-11",
-      "slot": 0,
-      "publishedCount": 0,
-      "signalCardCount": 1,
-      "archiveOnlyCount": 0,
-      "repetitionBlockedCount": 1,
-      "publishedIds": [],
-      "processedIds": [
-        "2cc01594647686aa",
-        "8dee57372b8b0eeb"
-      ],
-      "blockedCount": 1,
-      "blockedItems": [
-        {
-          "id": "2cc01594647686aa",
-          "title": "Infleqtion Selected by Eaton to Support Research Advancing Quantum Computing for US Grid Resilience",
-          "infrastructure_relevance_score": 0.989,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud, hpc)",
-            "data_center_relevance:0.42(colo, campus)",
-            "cloud_capacity_relevance:0.32(hyperscalers)",
-            "semiconductor_relevance:0.22(gpu)",
-            "power_grid_relevance:0.86(power, grid, utilities)",
-            "capital_markets_relevance:0.28(capex)"
-          ],
-          "extraction_quality_score": 1,
-          "source_domain_adapter": "generic",
-          "content_length": 1622,
-          "boilerplate_ratio": 0,
-          "repetition_blocked": false,
-          "repetition_block_reasons": [],
-          "repetition_check": null,
-          "expert_insight_complete": true,
-          "expert_insight_missing_fields": [],
-          "reason": "fail_closed: source_text_incomplete:ellipsis_truncation_artifact, ellipsis_truncation_artifact"
-        }
-      ],
-      "repetitionBlockedItems": [
-        {
-          "id": "8dee57372b8b0eeb",
-          "title": "Rogue AI agent tasked with booking a gym class hacks system, removes other participant — says 'sorry about that' after trying to bump user up the waitlist",
-          "infrastructure_relevance_score": 0.985,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, ai data center, neocloud)",
-            "data_center_relevance:0.84(data center, data centers)",
-            "cloud_capacity_relevance:0.32(hyperscalers)",
-            "semiconductor_relevance:0.22(gpu)",
-            "power_grid_relevance:0.58(power, interconnection)",
-            "cooling_relevance:0.34(cooling)"
-          ],
-          "extraction_quality_score": 1,
-          "source_domain_adapter": "generic",
-          "content_length": 1739,
-          "boilerplate_ratio": 0,
-          "repetition_blocked": true,
-          "repetition_block_reasons": [
-            "repeated_sentence_ratio>0.12",
-            "heading_sequence_similarity>0.75",
-            "conclusion_similarity>0.7"
-          ],
-          "repetition_check": {
-            "compared_article_count": 20,
-            "repeated_sentence_ratio": 0.2857142857142857,
-            "repeated_paragraph_ratio": 0.3333333333333333,
-            "heading_sequence_similarity": 1,
-            "banned_phrase_count": 0,
-            "banned_phrase_counts": {},
-            "recent_banned_phrase_counts": {},
-            "ngram_overlap": 0.38461538461538464,
-            "blueprint_repetition": 1,
-            "conclusion_similarity": 1,
-            "repeated_sentence_count": 2,
-            "repeated_paragraph_count": 2,
-            "heading_sequence": [
-              "What Changed",
-              "Energy Procurement Read",
-              "Volatility Risk",
-              "Next Market Test"
-            ],
-            "blocked": true,
-            "reasons": [
-              "repeated_sentence_ratio>0.12",
-              "heading_sequence_similarity>0.75",
-              "conclusion_similarity>0.7"
-            ]
-          },
-          "expert_insight_complete": true,
-          "expert_insight_missing_fields": [],
-          "reason": "repeated_sentence_ratio>0.12; heading_sequence_similarity>0.75; conclusion_similarity>0.7"
-        }
-      ],
-      "signalCardItems": [
-        {
-          "id": "2cc01594647686aa",
-          "title": "Infleqtion Selected by Eaton to Support Research Advancing Quantum Computing for US Grid Resilience",
-          "infrastructure_relevance_score": 0.989,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud, hpc)",
-            "data_center_relevance:0.42(colo, campus)",
-            "cloud_capacity_relevance:0.32(hyperscalers)",
-            "semiconductor_relevance:0.22(gpu)",
-            "power_grid_relevance:0.86(power, grid, utilities)",
-            "capital_markets_relevance:0.28(capex)"
-          ],
-          "extraction_quality_score": 1,
-          "source_domain_adapter": "generic",
-          "content_length": 1622,
-          "boilerplate_ratio": 0,
-          "repetition_blocked": false,
-          "repetition_block_reasons": [],
-          "repetition_check": null,
-          "expert_insight_complete": true,
-          "expert_insight_missing_fields": [],
-          "reason": "fail_closed: source_text_incomplete:ellipsis_truncation_artifact, ellipsis_truncation_artifact"
-        }
-      ],
-      "archiveOnlyItems": []
-    },
     {
       "at": "2026-08-10T23:37:44.845Z",
       "day": "2026-08-11",
@@ -49853,9 +49888,37 @@
         "token_budget": 60000,
         "call_budget": 40
       }
+    },
+    {
+      "at": "2026-09-22T12:34:23.559Z",
+      "day": "2026-09-22",
+      "slot": 2,
+      "publishedCount": 0,
+      "signalCardCount": 2,
+      "archiveOnlyCount": 0,
+      "processedIds": [
+        "d8d76f80d5161434",
+        "d6c501b032fc194f"
+      ],
+      "blockedCount": 0,
+      "blockedItems": [],
+      "archiveOnlyItems": [],
+      "authoredColumn": {
+        "published": false,
+        "reason": "no_qualifying_story"
+      },
+      "llmUsage": {
+        "calls": 3,
+        "failures": 0,
+        "prompt_tokens": 3407,
+        "completion_tokens": 584,
+        "total_tokens": 3991,
+        "token_budget": 60000,
+        "call_budget": 40
+      }
     }
   ],
-  "lastRunAt": "2026-09-22T01:35:34.869Z",
+  "lastRunAt": "2026-09-22T12:34:23.559Z",
   "authored": {
     "lastColumnAt": "2026-09-16T18:47:02.256Z",
     "columnsByDay": {
