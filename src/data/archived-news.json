@@ -127176,6 +127176,209 @@
     "imageGeneratedAt": "2026-09-12T23:42:06.374Z"
   },
   {
+    "id": "352ebe9521dab276",
+    "sourceRegistryId": "arxiv-cs-dc",
+    "source": "arXiv",
+    "url": "https://arxiv.org/abs/2609.25560",
+    "title": "Co-Fabric: Breaking Host-Domain Boundaries for Unified xPU Interconnection",
+    "snippet": "arXiv:2609.25560v1 Announce Type: new Abstract: Large-model parameters have grown beyond the capacity of a single xPU, dispersing across multiple xPUs spanning distinct host domains, where xPU-to-xPU communication domin…",
+    "contentText": "arXiv:2609.25560v1 Announce Type: new Abstract: Large-model parameters have grown beyond the capacity of a single xPU, dispersing across multiple xPUs spanning distinct host domains, where xPU-to-xPU communication dominates overall system efficiency. Existing scale-up interconnect remains inadequate: network-based solutions built on Ethernet--such as RoCE (RDMA over Converged Ethernet)--introduce specific message-semantics and protocol-stack characteristics, and rely on fragmented per-host addressing, while conventional host-based fabrics are confined to a single host domain and lack cross-host unified addressing. This paper presents Co-Fabric, a bus-based interconnect that, unlike conventional bus designs, breaks host-domain boundaries to deliver unified xPU interconnection for scale-up…",
+    "publishedAt": "2026-09-23T04:00:00.000Z",
+    "sourceImage": null,
+    "region": "APAC",
+    "language": "en",
+    "defaultCategory": "AI Infrastructure",
+    "source_text_scope": "abstract",
+    "ai_topic_score": 0.46,
+    "ai_topic_reasons": [
+      "inference",
+      "ai",
+      "ai_not_in_title"
+    ],
+    "category": "AI Infrastructure",
+    "primary_category": "AI Infrastructure",
+    "secondary_category": "Product / Platform Update",
+    "infrastructure_layer": "Network",
+    "affected_stakeholders": [
+      "operators",
+      "hyperscalers",
+      "investors",
+      "AI developers",
+      "data center operators"
+    ],
+    "article_type": "Product / Platform Update",
+    "urgency_score": 0.7,
+    "taxonomy_confidence": 0.83,
+    "taxonomy_reasons": [
+      "power",
+      "grid",
+      "interconnection"
+    ],
+    "direct_ai_infrastructure_relevance": 0.22,
+    "data_center_relevance": 0,
+    "cloud_capacity_relevance": 0,
+    "semiconductor_relevance": 0,
+    "power_grid_relevance": 0.706,
+    "cooling_relevance": 0,
+    "capital_markets_relevance": 0,
+    "enterprise_ai_infrastructure_relevance": 0,
+    "infrastructure_relevance_score": 0.528,
+    "infrastructure_relevance_tier": "archive_only",
+    "infrastructure_relevance_action": "archive_only",
+    "infrastructure_relevance_reasons": [
+      "direct_ai_infrastructure_relevance:0.22",
+      "power_grid_relevance:0.71(power, interconnection)"
+    ],
+    "infrastructure_relevance": {
+      "direct_ai_infrastructure_relevance": 0.22,
+      "data_center_relevance": 0,
+      "cloud_capacity_relevance": 0,
+      "semiconductor_relevance": 0,
+      "power_grid_relevance": 0.706,
+      "cooling_relevance": 0,
+      "capital_markets_relevance": 0,
+      "enterprise_ai_infrastructure_relevance": 0,
+      "infrastructure_relevance_score": 0.528,
+      "infrastructure_relevance_tier": "archive_only",
+      "infrastructure_relevance_action": "archive_only",
+      "infrastructure_relevance_reasons": [
+        "direct_ai_infrastructure_relevance:0.22",
+        "power_grid_relevance:0.71(power, interconnection)"
+      ],
+      "infrastructureRelevanceAction": "archive_only",
+      "articlePagePublished": false,
+      "homepagePublished": false,
+      "archiveOnly": true,
+      "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
+    },
+    "score": 29,
+    "slug": "co-fabric-breaking-host-domain-boundaries-for-unified-xpu-interconnection",
+    "summary": "Co-Fabric introduces a bus-based interconnect that enhances xPU communication across host domains, significantly reducing latency and improving bandwidth for AI applications.",
+    "insight": "This innovation addresses the limitations of existing interconnects, enabling more efficient AI model training and inference. Operators and investors can expect reduced costs and improved performance in AI computing centers.",
+    "expert_insight": {
+      "concrete_facts": [
+        "Co-Fabric: Breaking Host-Domain Boundaries for Unified xPU Interconnection Co-Fabric introduces a bus-based interconnect that enhances xPU communication across host domains, significantly reducing latency and improving bandwidth for AI applications."
+      ],
+      "named_companies": [
+        "Interconnection Co"
+      ],
+      "infrastructure_layer": "Network",
+      "bottleneck_type": "power_grid",
+      "who_gains_leverage": "utilities, power-secured developers, and operators with firm interconnection positions",
+      "who_takes_execution_risk": "developers and cloud buyers whose delivery dates depend on utility upgrades or energization schedules",
+      "timing_dependency": "utility interconnection, equipment procurement, and energization milestones",
+      "counterargument": "The source may still describe intent rather than delivered capacity, so the operating impact depends on follow-through.",
+      "next_observable_signal": "interconnection approvals, substation equipment dates, power purchase agreements, or disclosed energization windows",
+      "expert_insight_complete": true,
+      "expert_insight_missing_fields": []
+    },
+    "expertInsight": {
+      "concrete_facts": [
+        "Co-Fabric: Breaking Host-Domain Boundaries for Unified xPU Interconnection Co-Fabric introduces a bus-based interconnect that enhances xPU communication across host domains, significantly reducing latency and improving bandwidth for AI applications."
+      ],
+      "named_companies": [
+        "Interconnection Co"
+      ],
+      "infrastructure_layer": "Network",
+      "bottleneck_type": "power_grid",
+      "who_gains_leverage": "utilities, power-secured developers, and operators with firm interconnection positions",
+      "who_takes_execution_risk": "developers and cloud buyers whose delivery dates depend on utility upgrades or energization schedules",
+      "timing_dependency": "utility interconnection, equipment procurement, and energization milestones",
+      "counterargument": "The source may still describe intent rather than delivered capacity, so the operating impact depends on follow-through.",
+      "next_observable_signal": "interconnection approvals, substation equipment dates, power purchase agreements, or disclosed energization windows",
+      "expert_insight_complete": true,
+      "expert_insight_missing_fields": []
+    },
+    "concrete_facts": [
+      "Co-Fabric: Breaking Host-Domain Boundaries for Unified xPU Interconnection Co-Fabric introduces a bus-based interconnect that enhances xPU communication across host domains, significantly reducing latency and improving bandwidth for AI applications."
+    ],
+    "named_companies": [
+      "Interconnection Co"
+    ],
+    "bottleneck_type": "power_grid",
+    "who_gains_leverage": "utilities, power-secured developers, and operators with firm interconnection positions",
+    "who_takes_execution_risk": "developers and cloud buyers whose delivery dates depend on utility upgrades or energization schedules",
+    "timing_dependency": "utility interconnection, equipment procurement, and energization milestones",
+    "counterargument": "The source may still describe intent rather than delivered capacity, so the operating impact depends on follow-through.",
+    "next_observable_signal": "interconnection approvals, substation equipment dates, power purchase agreements, or disclosed energization windows",
+    "expert_insight_complete": true,
+    "expert_insight_missing_fields": [],
+    "tags": [
+      "xpu",
+      "interconnect",
+      "ai",
+      "bandwidth",
+      "latency",
+      "technology"
+    ],
+    "imagePrompt": "A futuristic data center showcasing advanced interconnect technology, with multiple xPUs interconnected, vibrant lights, and a sleek design, in a high-tech environment.",
+    "lang": "en",
+    "articleText": "Large-model parameters have grown beyond the capacity of a single xPU, dispersing across multiple xPUs spanning distinct host domains, where xPU-to-xPU communication dominates overall system efficiency. Existing scale-up interconnect remains inadequate: network-based solutions built on Ethernet--such as RoCE (RDMA over Converged Ethernet)--introduce specific message-semantics and protocol-stack characteristics, and rely on fragmented per-host addressing, while conventional host-based fabrics are confined to a single host domain and lack cross-host unified addressing. This paper presents Co-Fabric, a bus-based interconnect that, unlike conventional bus designs, breaks host-domain boundaries to deliver unified xPU interconnection for scale-up superpods. Co-Fabric makes three contributions: a streamlined four-layer protocol stack achieving nanosecond-scale processing latency with native reliability; a cross-domain scaling and P2P mechanism that routes using port identifiers embedded in the packet header; and a unified address space built on shadow-device auto-enumeration. On a 64-xPU 3D-Mesh system, Co-Fabric cuts inter-node communication latency by over 50% and improves bandwidth by 2-5x over RoCE, accelerating DeepSeek R1 inference by 30%-80%. Moreover, since its streamlined four-layer protocol stack and higher data-communication efficiency reduce protocol and processing overhead relative to the Ethernet-based RoCE stack, Co-Fabric cuts the cost and power of the interconnect itself by up to 80% and 5%, respectively. These results demonstrate Co-Fabric's advantage for AI computing centers.",
+    "content_length": 1614,
+    "boilerplate_ratio": 0,
+    "title_body_similarity": 0.88,
+    "copyright_footer_detected": false,
+    "nav_or_cta_detected": false,
+    "sentence_completion_score": 1,
+    "source_domain_adapter": "arxiv",
+    "extraction_quality_score": 1,
+    "extraction_qa": {
+      "content_length": 1614,
+      "boilerplate_ratio": 0,
+      "title_body_similarity": 0.88,
+      "copyright_footer_detected": false,
+      "legal_boilerplate_detected": false,
+      "nav_or_cta_detected": false,
+      "sentence_completion_score": 1,
+      "source_domain_adapter": "arxiv",
+      "extraction_quality_score": 1,
+      "extraction_failure_reason": null,
+      "extraction_quality_reasons": [],
+      "public_publishable": true,
+      "can_generate_longform": true,
+      "cleaned_source_length": 1614,
+      "block_reasons": []
+    },
+    "extraction_artifact": {
+      "artifact_version": "extraction_v1",
+      "source_url": "https://arxiv.org/abs/2609.25560",
+      "extracted_text_sha256": "711d3718bc5c5614e7810d3503b48111cc4a67c166bd445bea0fcf52d2fba79f",
+      "cleaned_extracted_text": "Large-model parameters have grown beyond the capacity of a single xPU, dispersing across multiple xPUs spanning distinct host domains, where xPU-to-xPU communication dominates overall system efficiency. Existing scale-up interconnect remains inadequate: network-based solutions built on Ethernet--such as RoCE (RDMA over Converged Ethernet)--introduce specific message-semantics and protocol-stack characteristics, and rely on fragmented per-host addressing, while conventional host-based fabrics are confined to a single host domain and lack cross-host unified addressing. This paper presents Co-Fabric, a bus-based interconnect that, unlike conventional bus designs, breaks host-domain boundaries to deliver unified xPU interconnection for scale-up superpods. Co-Fabric makes three contributions: a streamlined four-layer protocol stack achieving nanosecond-scale processing latency with native reliability; a cross-domain scaling and P2P mechanism that routes using port identifiers embedded in the packet header; and a unified address space built on shadow-device auto-enumeration. On a 64-xPU 3D-Mesh system, Co-Fabric cuts inter-node communication latency by over 50% and improves bandwidth by 2-5x over RoCE, accelerating DeepSeek R1 inference by 30%-80%. Moreover, since its streamlined four-layer protocol stack and higher data-communication efficiency reduce protocol and processing overhead relative to the Ethernet-based RoCE stack, Co-Fabric cuts the cost and power of the interconnect itself by up to 80% and 5%, respectively. These results demonstrate Co-Fabric's advantage for AI computing centers.",
+      "extraction_qa": {
+        "cleaned_source_length": 1614,
+        "block_reasons": [],
+        "public_publishable": true,
+        "can_generate_longform": true,
+        "boilerplate_ratio": 0,
+        "copyright_footer_detected": false,
+        "nav_or_cta_detected": false,
+        "sentence_completion_score": 1
+      }
+    },
+    "cleaned_source_text": "Large-model parameters have grown beyond the capacity of a single xPU, dispersing across multiple xPUs spanning distinct host domains, where xPU-to-xPU communication dominates overall system efficiency. Existing scale-up interconnect remains inadequate: network-based solutions built on Ethernet--such as RoCE (RDMA over Converged Ethernet)--introduce specific message-semantics and protocol-stack characteristics, and rely on fragmented per-host addressing, while conventional host-based fabrics are confined to a single host domain and lack cross-host unified addressing. This paper presents Co-Fabric, a bus-based interconnect that, unlike conventional bus designs, breaks host-domain boundaries to deliver unified xPU interconnection for scale-up superpods. Co-Fabric makes three contributions: a streamlined four-layer protocol stack achieving nanosecond-scale processing latency with native reliability; a cross-domain scaling and P2P mechanism that routes using port identifiers embedded in the packet header; and a unified address space built on shadow-device auto-enumeration. On a 64-xPU 3D-Mesh system, Co-Fabric cuts inter-node communication latency by over 50% and improves bandwidth by 2-5x over RoCE, accelerating DeepSeek R1 inference by 30%-80%. Moreover, since its streamlined four-layer protocol stack and higher data-communication efficiency reduce protocol and processing overhead relative to the Ethernet-based RoCE stack, Co-Fabric cuts the cost and power of the interconnect itself by up to 80% and 5%, respectively. These results demonstrate Co-Fabric's advantage for AI computing centers.",
+    "sourceUrl": "https://arxiv.org/abs/2609.25560",
+    "generatedImage": "/generated/articles/352ebe9521dab276-co-fabric-breaking-host-domain-boundaries-for-unified-xpu-interconnection/hero.webp",
+    "infrastructureRelevanceAction": "archive_only",
+    "articlePagePublished": false,
+    "homepagePublished": false,
+    "archiveOnly": true,
+    "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold",
+    "article_blueprint": null,
+    "articleBlueprint": null,
+    "expertLensShort": null,
+    "expertLensFull": null,
+    "expertLens": null,
+    "public_content_tier": "hidden",
+    "signalCardOnly": false,
+    "seo_noindex": true,
+    "noindex": true,
+    "public_tier_reasons": [
+      "low_relevance",
+      "relevance_below_adjacent_threshold"
+    ],
+    "searchText": "Co-Fabric: Breaking Host-Domain Boundaries for Unified xPU Interconnection arXiv AI Infrastructure Product / Platform Update Network power_grid utilities, power-secured developers, and operators with firm interconnection positions developers and cloud buyers whose delivery dates depend on utility upgrades or energization schedules utility interconnection, equipment procurement, and energization milestones The source may still describe intent rather than delivered capacity, so the operating impact depends on follow-through. interconnection approvals, substation equipment dates, power purchase agreements, or disclosed energization windows APAC Co-Fabric introduces a bus-based interconnect that enhances xPU communication across host domains, significantly reducing latency and improving bandwidth for AI applications. Large-model parameters have grown beyond the capacity of a single xPU, dispersing across multiple xPUs spanning distinct host domains, where xPU-to-xPU communication dominates overall system efficiency. Existing scale-up interconnect remains inadequate: network-based solutions built on Ethernet--such as RoCE (RDMA over Converged Ethernet)--introduce specific message-semantics and protocol-stack characteristics, and rely on fragmented per-host addressing, while conventional host-based fabrics are confined to a single host domain and lack cross-host unified addressing. This paper presents Co-Fabric, a bus-based interconnect that, unlike conventional bus designs, breaks host-domain boundaries to deliver unified xPU interconnection for scale-up superpods. Co-Fabric makes three contributions: a streamlined four-layer protocol stack achieving nanosecond-scale processing latency with native reliability; a cross-domain scaling and P2P mechanism that routes using port identifiers embedded in the packet header; and a unified address space built on shadow-device auto-enumeration. On a 64-xPU 3D-Mesh system, Co-Fabric cuts inter-node communication latency by over 50% and improves bandwidth by 2-5x over RoCE, accelerating DeepSeek R1 inference by 30%-80%. Moreover, since its streamlined four-layer protocol stack and higher data-communication efficiency reduce protocol and processing overhead relative to the Ethernet-based RoCE stack, Co-Fabric cuts the cost and power of the interconnect itself by up to 80% and 5%, respectively. These results demonstrate Co-Fabric's advantage for AI computing centers. operators hyperscalers investors AI developers data center operators Co-Fabric: Breaking Host-Domain Boundaries for Unified xPU Interconnection Co-Fabric introduces a bus-based interconnect that enhances xPU communication across host domains, significantly reducing latency and improving bandwidth for AI applications. Interconnection Co xpu interconnect ai bandwidth latency technology"
+  },
+  {
     "id": "a9fe95621998cb1d",
     "sourceRegistryId": "arxiv-cs-ar",
     "source": "arXiv",
