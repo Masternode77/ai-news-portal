@@ -127176,6 +127176,215 @@
     "imageGeneratedAt": "2026-09-12T23:42:06.374Z"
   },
   {
+    "id": "a9fe95621998cb1d",
+    "sourceRegistryId": "arxiv-cs-ar",
+    "source": "arXiv",
+    "url": "https://arxiv.org/abs/2609.25782",
+    "title": "Hot-Cold Tiering of HBM and High Bandwidth Flash for Agentic LLM Serving",
+    "snippet": "arXiv:2609.25782v1 Announce Type: new Abstract: Large language model (LLM) serving is increasingly agentic, with multi-turn sessions that idle between actions yet must retain their full context. Limited GPU memory capac…",
+    "contentText": "arXiv:2609.25782v1 Announce Type: new Abstract: Large language model (LLM) serving is increasingly agentic, with multi-turn sessions that idle between actions yet must retain their full context. Limited GPU memory capacity forces inactive KV states to be evicted, so resuming a session incurs either costly recomputation or slow interconnect transfers. To address this, high bandwidth flash (HBF)-an on-package 3D-NAND memory offering orders-of-magnitude greater capacity than high bandwidth memory (HBM) at comparable read bandwidth-has emerged as a strong candidate. However, its high read energy and limited write endurance make it impractical to serve all KV traffic. Fortunately, our analysis shows that agentic KV states exhibit distinct access patterns: a small hot set is read for every deco…",
+    "publishedAt": "2026-09-23T04:00:00.000Z",
+    "sourceImage": null,
+    "region": "APAC",
+    "language": "en",
+    "defaultCategory": "Semiconductors",
+    "source_text_scope": "abstract",
+    "ai_topic_score": 1,
+    "ai_topic_reasons": [
+      "large language model",
+      "llm",
+      "agentic",
+      "gpu"
+    ],
+    "category": "Semiconductors",
+    "primary_category": "Semiconductors",
+    "secondary_category": "AI Infrastructure",
+    "infrastructure_layer": "Silicon",
+    "affected_stakeholders": [
+      "operators",
+      "hyperscalers",
+      "investors",
+      "semiconductor suppliers",
+      "server OEMs"
+    ],
+    "article_type": "Research / Technical",
+    "urgency_score": 0.7,
+    "taxonomy_confidence": 0.83,
+    "taxonomy_reasons": [
+      "gpu",
+      "hbm",
+      "advanced packaging"
+    ],
+    "direct_ai_infrastructure_relevance": 0.22,
+    "data_center_relevance": 0,
+    "cloud_capacity_relevance": 0,
+    "semiconductor_relevance": 0.706,
+    "power_grid_relevance": 0.22,
+    "cooling_relevance": 0,
+    "capital_markets_relevance": 0,
+    "enterprise_ai_infrastructure_relevance": 0,
+    "infrastructure_relevance_score": 0.563,
+    "infrastructure_relevance_tier": "signal_card",
+    "infrastructure_relevance_action": "publish_signal_card_only",
+    "infrastructure_relevance_reasons": [
+      "direct_ai_infrastructure_relevance:0.22",
+      "semiconductor_relevance:0.71(hbm, gpu)",
+      "power_grid_relevance:0.22(power)"
+    ],
+    "infrastructure_relevance": {
+      "direct_ai_infrastructure_relevance": 0.22,
+      "data_center_relevance": 0,
+      "cloud_capacity_relevance": 0,
+      "semiconductor_relevance": 0.706,
+      "power_grid_relevance": 0.22,
+      "cooling_relevance": 0,
+      "capital_markets_relevance": 0,
+      "enterprise_ai_infrastructure_relevance": 0,
+      "infrastructure_relevance_score": 0.563,
+      "infrastructure_relevance_tier": "signal_card",
+      "infrastructure_relevance_action": "publish_signal_card_only",
+      "infrastructure_relevance_reasons": [
+        "direct_ai_infrastructure_relevance:0.22",
+        "semiconductor_relevance:0.71(hbm, gpu)",
+        "power_grid_relevance:0.22(power)"
+      ],
+      "infrastructureRelevanceAction": "publish_signal_card_only",
+      "articlePagePublished": false,
+      "homepagePublished": true,
+      "archiveOnly": false,
+      "archiveOnlyReason": null
+    },
+    "score": 46,
+    "slug": "hot-cold-tiering-of-hbm-and-high-bandwidth-flash-for-agentic-llm-serving",
+    "summary": "A new approach to large language model serving utilizes a hot-cold memory hierarchy, optimizing GPU memory usage and reducing power consumption significantly.",
+    "insight": "This innovation allows operators to handle more concurrent sessions efficiently, which is crucial for scaling AI applications. Investors should note the potential for reduced operational costs through improved memory management.",
+    "expert_insight": {
+      "concrete_facts": [
+        "On agentic workloads with Qwen3-Coder-30B-A3B, our design delivers 14 ms time-between-tokens (TBT) and adds only $\\approx$0.1 ms of resume latency on top of prefill, while hosting $24\\times$ more concurrent sessions per GPU.",
+        "By confining HBM to the hot set, our design also cuts read power by 7.6 kW per 8-GPU node relative to serving all KV from flash-establishing HBF as a cold-tier complement to HBM rather than its replacement."
+      ],
+      "named_companies": [],
+      "infrastructure_layer": "Silicon",
+      "bottleneck_type": "power_grid",
+      "who_gains_leverage": "utilities, power-secured developers, and operators with firm interconnection positions",
+      "who_takes_execution_risk": "developers and cloud buyers whose delivery dates depend on utility upgrades or energization schedules",
+      "timing_dependency": "utility interconnection, equipment procurement, and energization milestones",
+      "counterargument": "More compute supply does not automatically become useful capacity if facilities, power, networking, and software readiness lag.",
+      "next_observable_signal": "interconnection approvals, substation equipment dates, power purchase agreements, or disclosed energization windows",
+      "expert_insight_complete": false,
+      "expert_insight_missing_fields": [
+        "named_companies"
+      ]
+    },
+    "expertInsight": {
+      "concrete_facts": [
+        "On agentic workloads with Qwen3-Coder-30B-A3B, our design delivers 14 ms time-between-tokens (TBT) and adds only $\\approx$0.1 ms of resume latency on top of prefill, while hosting $24\\times$ more concurrent sessions per GPU.",
+        "By confining HBM to the hot set, our design also cuts read power by 7.6 kW per 8-GPU node relative to serving all KV from flash-establishing HBF as a cold-tier complement to HBM rather than its replacement."
+      ],
+      "named_companies": [],
+      "infrastructure_layer": "Silicon",
+      "bottleneck_type": "power_grid",
+      "who_gains_leverage": "utilities, power-secured developers, and operators with firm interconnection positions",
+      "who_takes_execution_risk": "developers and cloud buyers whose delivery dates depend on utility upgrades or energization schedules",
+      "timing_dependency": "utility interconnection, equipment procurement, and energization milestones",
+      "counterargument": "More compute supply does not automatically become useful capacity if facilities, power, networking, and software readiness lag.",
+      "next_observable_signal": "interconnection approvals, substation equipment dates, power purchase agreements, or disclosed energization windows",
+      "expert_insight_complete": false,
+      "expert_insight_missing_fields": [
+        "named_companies"
+      ]
+    },
+    "concrete_facts": [
+      "On agentic workloads with Qwen3-Coder-30B-A3B, our design delivers 14 ms time-between-tokens (TBT) and adds only $\\approx$0.1 ms of resume latency on top of prefill, while hosting $24\\times$ more concurrent sessions per GPU.",
+      "By confining HBM to the hot set, our design also cuts read power by 7.6 kW per 8-GPU node relative to serving all KV from flash-establishing HBF as a cold-tier complement to HBM rather than its replacement."
+    ],
+    "named_companies": [],
+    "bottleneck_type": "power_grid",
+    "who_gains_leverage": "utilities, power-secured developers, and operators with firm interconnection positions",
+    "who_takes_execution_risk": "developers and cloud buyers whose delivery dates depend on utility upgrades or energization schedules",
+    "timing_dependency": "utility interconnection, equipment procurement, and energization milestones",
+    "counterargument": "More compute supply does not automatically become useful capacity if facilities, power, networking, and software readiness lag.",
+    "next_observable_signal": "interconnection approvals, substation equipment dates, power purchase agreements, or disclosed energization windows",
+    "expert_insight_complete": false,
+    "expert_insight_missing_fields": [
+      "named_companies"
+    ],
+    "tags": [
+      "hbm",
+      "hbf",
+      "gpu",
+      "ai",
+      "memory",
+      "llm"
+    ],
+    "imagePrompt": "A high-tech GPU memory architecture showcasing a hot-cold tiering system with vibrant colors, emphasizing high bandwidth flash and high bandwidth memory in a futuristic setting.",
+    "lang": "en",
+    "articleText": "Large language model (LLM) serving is increasingly agentic, with multi-turn sessions that idle between actions yet must retain their full context. Limited GPU memory capacity forces inactive KV states to be evicted, so resuming a session incurs either costly recomputation or slow interconnect transfers. To address this, high bandwidth flash (HBF)-an on-package 3D-NAND memory offering orders-of-magnitude greater capacity than high bandwidth memory (HBM) at comparable read bandwidth-has emerged as a strong candidate. However, its high read energy and limited write endurance make it impractical to serve all KV traffic. Fortunately, our analysis shows that agentic KV states exhibit distinct access patterns: a small hot set is read for every decoding step, while a large cold pool is read only when a paused session resumes. Exploiting this, we place the hot set in HBM and the cold pool in HBF, forming a hot-cold KV hierarchy within the GPU memory tier. On agentic workloads with Qwen3-Coder-30B-A3B, our design delivers 14 ms time-between-tokens (TBT) and adds only $\\approx$0.1 ms of resume latency on top of prefill, while hosting $24\\times$ more concurrent sessions per GPU. By confining HBM to the hot set, our design also cuts read power by 7.6 kW per 8-GPU node relative to serving all KV from flash-establishing HBF as a cold-tier complement to HBM rather than its replacement.",
+    "content_length": 1392,
+    "boilerplate_ratio": 0,
+    "title_body_similarity": 0.9,
+    "copyright_footer_detected": false,
+    "nav_or_cta_detected": false,
+    "sentence_completion_score": 1,
+    "source_domain_adapter": "arxiv",
+    "extraction_quality_score": 1,
+    "extraction_qa": {
+      "content_length": 1392,
+      "boilerplate_ratio": 0,
+      "title_body_similarity": 0.9,
+      "copyright_footer_detected": false,
+      "legal_boilerplate_detected": false,
+      "nav_or_cta_detected": false,
+      "sentence_completion_score": 1,
+      "source_domain_adapter": "arxiv",
+      "extraction_quality_score": 1,
+      "extraction_failure_reason": null,
+      "extraction_quality_reasons": [],
+      "public_publishable": true,
+      "can_generate_longform": true,
+      "cleaned_source_length": 1392,
+      "block_reasons": []
+    },
+    "extraction_artifact": {
+      "artifact_version": "extraction_v1",
+      "source_url": "https://arxiv.org/abs/2609.25782",
+      "extracted_text_sha256": "fa1c9beba4693d4351fb6b9b7cb006baf84adf60148d53913525a57f39cfd085",
+      "cleaned_extracted_text": "Large language model (LLM) serving is increasingly agentic, with multi-turn sessions that idle between actions yet must retain their full context. Limited GPU memory capacity forces inactive KV states to be evicted, so resuming a session incurs either costly recomputation or slow interconnect transfers. To address this, high bandwidth flash (HBF)-an on-package 3D-NAND memory offering orders-of-magnitude greater capacity than high bandwidth memory (HBM) at comparable read bandwidth-has emerged as a strong candidate. However, its high read energy and limited write endurance make it impractical to serve all KV traffic. Fortunately, our analysis shows that agentic KV states exhibit distinct access patterns: a small hot set is read for every decoding step, while a large cold pool is read only when a paused session resumes. Exploiting this, we place the hot set in HBM and the cold pool in HBF, forming a hot-cold KV hierarchy within the GPU memory tier. On agentic workloads with Qwen3-Coder-30B-A3B, our design delivers 14 ms time-between-tokens (TBT) and adds only $\\approx$0.1 ms of resume latency on top of prefill, while hosting $24\\times$ more concurrent sessions per GPU. By confining HBM to the hot set, our design also cuts read power by 7.6 kW per 8-GPU node relative to serving all KV from flash-establishing HBF as a cold-tier complement to HBM rather than its replacement.",
+      "extraction_qa": {
+        "cleaned_source_length": 1392,
+        "block_reasons": [],
+        "public_publishable": true,
+        "can_generate_longform": true,
+        "boilerplate_ratio": 0,
+        "copyright_footer_detected": false,
+        "nav_or_cta_detected": false,
+        "sentence_completion_score": 1
+      }
+    },
+    "cleaned_source_text": "Large language model (LLM) serving is increasingly agentic, with multi-turn sessions that idle between actions yet must retain their full context. Limited GPU memory capacity forces inactive KV states to be evicted, so resuming a session incurs either costly recomputation or slow interconnect transfers. To address this, high bandwidth flash (HBF)-an on-package 3D-NAND memory offering orders-of-magnitude greater capacity than high bandwidth memory (HBM) at comparable read bandwidth-has emerged as a strong candidate. However, its high read energy and limited write endurance make it impractical to serve all KV traffic. Fortunately, our analysis shows that agentic KV states exhibit distinct access patterns: a small hot set is read for every decoding step, while a large cold pool is read only when a paused session resumes. Exploiting this, we place the hot set in HBM and the cold pool in HBF, forming a hot-cold KV hierarchy within the GPU memory tier. On agentic workloads with Qwen3-Coder-30B-A3B, our design delivers 14 ms time-between-tokens (TBT) and adds only $\\approx$0.1 ms of resume latency on top of prefill, while hosting $24\\times$ more concurrent sessions per GPU. By confining HBM to the hot set, our design also cuts read power by 7.6 kW per 8-GPU node relative to serving all KV from flash-establishing HBF as a cold-tier complement to HBM rather than its replacement.",
+    "sourceUrl": "https://arxiv.org/abs/2609.25782",
+    "generatedImage": "/generated/articles/a9fe95621998cb1d-hot-cold-tiering-of-hbm-and-high-bandwidth-flash-for-agentic-llm-serving/hero.webp",
+    "infrastructureRelevanceAction": "publish_signal_card_only",
+    "articlePagePublished": false,
+    "homepagePublished": false,
+    "archiveOnly": true,
+    "archiveOnlyReason": null,
+    "signalCardOnly": false,
+    "signalCardReason": "infrastructure_relevance_signal_card_threshold",
+    "article_blueprint": null,
+    "articleBlueprint": null,
+    "expertLensShort": null,
+    "expertLensFull": null,
+    "expertLens": null,
+    "public_content_tier": "hidden",
+    "seo_noindex": true,
+    "noindex": true,
+    "public_tier_reasons": [
+      "not_enough_public_evidence"
+    ],
+    "searchText": "Hot-Cold Tiering of HBM and High Bandwidth Flash for Agentic LLM Serving arXiv Semiconductors AI Infrastructure Silicon Research / Technical power_grid utilities, power-secured developers, and operators with firm interconnection positions developers and cloud buyers whose delivery dates depend on utility upgrades or energization schedules utility interconnection, equipment procurement, and energization milestones More compute supply does not automatically become useful capacity if facilities, power, networking, and software readiness lag. interconnection approvals, substation equipment dates, power purchase agreements, or disclosed energization windows APAC A new approach to large language model serving utilizes a hot-cold memory hierarchy, optimizing GPU memory usage and reducing power consumption significantly. Large language model (LLM) serving is increasingly agentic, with multi-turn sessions that idle between actions yet must retain their full context. Limited GPU memory capacity forces inactive KV states to be evicted, so resuming a session incurs either costly recomputation or slow interconnect transfers. To address this, high bandwidth flash (HBF)-an on-package 3D-NAND memory offering orders-of-magnitude greater capacity than high bandwidth memory (HBM) at comparable read bandwidth-has emerged as a strong candidate. However, its high read energy and limited write endurance make it impractical to serve all KV traffic. Fortunately, our analysis shows that agentic KV states exhibit distinct access patterns: a small hot set is read for every decoding step, while a large cold pool is read only when a paused session resumes. Exploiting this, we place the hot set in HBM and the cold pool in HBF, forming a hot-cold KV hierarchy within the GPU memory tier. On agentic workloads with Qwen3-Coder-30B-A3B, our design delivers 14 ms time-between-tokens (TBT) and adds only $\\approx$0.1 ms of resume latency on top of prefill, while hosting $24\\times$ more concurrent sessions per GPU. By confining HBM to the hot set, our design also cuts read power by 7.6 kW per 8-GPU node relative to serving all KV from flash-establishing HBF as a cold-tier complement to HBM rather than its replacement. operators hyperscalers investors semiconductor suppliers server OEMs On agentic workloads with Qwen3-Coder-30B-A3B, our design delivers 14 ms time-between-tokens (TBT) and adds only $\\approx$0.1 ms of resume latency on top of prefill, while hosting $24\\times$ more concurrent sessions per GPU. By confining HBM to the hot set, our design also cuts read power by 7.6 kW per 8-GPU node relative to serving all KV from flash-establishing HBF as a cold-tier complement to HBM rather than its replacement. hbm hbf gpu ai memory llm"
+  },
+  {
     "id": "b7195ba8965453d5",
     "sourceRegistryId": "arxiv-cs-dc",
     "source": "arXiv",

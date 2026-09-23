@@ -862,7 +862,9 @@
     "d8d76f80d5161434",
     "d6c501b032fc194f",
     "a2f03dfbd4a029fc",
-    "581473454ae70fcd"
+    "581473454ae70fcd",
+    "b6986b1fcf01eed3",
+    "a9fe95621998cb1d"
   ],
   "dayPlans": {
     "2026-03-24": {
@@ -46204,149 +46206,257 @@
     "2026-09-23": {
       "date": "2026-09-23",
       "createdAt": "2026-09-22T18:39:05.154Z",
-      "refreshedAt": "2026-09-23T01:27:14.466Z",
+      "refreshedAt": "2026-09-23T12:44:55.946Z",
       "candidateWindowHours": 24,
-      "curatedItems": [],
-      "curatedIds": [],
+      "curatedItems": [
+        {
+          "id": "b6986b1fcf01eed3",
+          "sourceRegistryId": "arxiv-cs-dc",
+          "source": "arXiv",
+          "url": "https://arxiv.org/abs/2609.25437",
+          "title": "Data center cooling choices shift water impacts across the grid: An integrated water-energy model for sustainable data center development",
+          "snippet": "arXiv:2609.25437v1 Announce Type: cross Abstract: Data centers are being developed at an unprecedented pace, yet their energy and water impacts, and the spatial and temporal distribution of these impacts, remain poorly…",
+          "contentText": "arXiv:2609.25437v1 Announce Type: cross Abstract: Data centers are being developed at an unprecedented pace, yet their energy and water impacts, and the spatial and temporal distribution of these impacts, remain poorly characterized. Data centers consume water for cooling (direct) and through electricity generation (indirect). Decisions on siting and cooling technology result in water-energy trade-offs that extend impacts beyond the facility's location. Existing assessment frameworks rely on facility efficiency metrics and average grid water intensity factors, suppressing the temporal impacts of data center load and generation availability. They also attribute indirect consumption to the facility's location rather than to the generators (and corresponding hydrologic regions) that respond…",
+          "publishedAt": "2026-09-23T04:00:00.000Z",
+          "sourceImage": null,
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure",
+          "source_text_scope": "abstract",
+          "ai_topic_score": 0,
+          "ai_topic_reasons": [
+            "ai_not_in_title"
+          ],
+          "category": "Power & Grid",
+          "primary_category": "Power & Grid",
+          "secondary_category": "Interconnection and power procurement",
+          "infrastructure_layer": "Power",
+          "affected_stakeholders": [
+            "data center operators",
+            "utilities",
+            "cloud capacity teams",
+            "investors"
+          ],
+          "article_type": "Other",
+          "urgency_score": 0.55,
+          "taxonomy_confidence": 0.74,
+          "taxonomy_reasons": [
+            "grid",
+            "electricity"
+          ],
+          "direct_ai_infrastructure_relevance": 0.7,
+          "data_center_relevance": 0.97,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0,
+          "power_grid_relevance": 0.618,
+          "cooling_relevance": 0.459,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.857,
+          "infrastructure_relevance_tier": "signal_card",
+          "infrastructure_relevance_action": "publish_signal_card_only",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:0.70",
+            "data_center_relevance:0.97(data center, data centers)",
+            "power_grid_relevance:0.62(grid, electricity)",
+            "cooling_relevance:0.46(cooling)",
+            "abstract_only_source_capped_at_signal_card"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 0.7,
+            "data_center_relevance": 0.97,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0,
+            "power_grid_relevance": 0.618,
+            "cooling_relevance": 0.459,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.857,
+            "infrastructure_relevance_tier": "signal_card",
+            "infrastructure_relevance_action": "publish_signal_card_only",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:0.70",
+              "data_center_relevance:0.97(data center, data centers)",
+              "power_grid_relevance:0.62(grid, electricity)",
+              "cooling_relevance:0.46(cooling)",
+              "abstract_only_source_capped_at_signal_card"
+            ],
+            "infrastructureRelevanceAction": "publish_signal_card_only",
+            "articlePagePublished": false,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 68
+        },
+        {
+          "id": "a9fe95621998cb1d",
+          "sourceRegistryId": "arxiv-cs-ar",
+          "source": "arXiv",
+          "url": "https://arxiv.org/abs/2609.25782",
+          "title": "Hot-Cold Tiering of HBM and High Bandwidth Flash for Agentic LLM Serving",
+          "snippet": "arXiv:2609.25782v1 Announce Type: new Abstract: Large language model (LLM) serving is increasingly agentic, with multi-turn sessions that idle between actions yet must retain their full context. Limited GPU memory capac…",
+          "contentText": "arXiv:2609.25782v1 Announce Type: new Abstract: Large language model (LLM) serving is increasingly agentic, with multi-turn sessions that idle between actions yet must retain their full context. Limited GPU memory capacity forces inactive KV states to be evicted, so resuming a session incurs either costly recomputation or slow interconnect transfers. To address this, high bandwidth flash (HBF)-an on-package 3D-NAND memory offering orders-of-magnitude greater capacity than high bandwidth memory (HBM) at comparable read bandwidth-has emerged as a strong candidate. However, its high read energy and limited write endurance make it impractical to serve all KV traffic. Fortunately, our analysis shows that agentic KV states exhibit distinct access patterns: a small hot set is read for every deco…",
+          "publishedAt": "2026-09-23T04:00:00.000Z",
+          "sourceImage": null,
+          "region": "APAC",
+          "language": "en",
+          "defaultCategory": "Semiconductors",
+          "source_text_scope": "abstract",
+          "ai_topic_score": 1,
+          "ai_topic_reasons": [
+            "large language model",
+            "llm",
+            "agentic",
+            "gpu"
+          ],
+          "category": "Semiconductors",
+          "primary_category": "Semiconductors",
+          "secondary_category": "Accelerators, memory, and advanced packaging",
+          "infrastructure_layer": "Silicon",
+          "affected_stakeholders": [
+            "semiconductor suppliers",
+            "hyperscalers",
+            "server OEMs",
+            "investors"
+          ],
+          "article_type": "Capacity Expansion",
+          "urgency_score": 0.43,
+          "taxonomy_confidence": 0.75,
+          "taxonomy_reasons": [
+            "gpu",
+            "hbm"
+          ],
+          "direct_ai_infrastructure_relevance": 0.22,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0.706,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.528,
+          "infrastructure_relevance_tier": "archive_only",
+          "infrastructure_relevance_action": "archive_only",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:0.22",
+            "semiconductor_relevance:0.71(hbm, gpu)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 0.22,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0.706,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.528,
+            "infrastructure_relevance_tier": "archive_only",
+            "infrastructure_relevance_action": "archive_only",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:0.22",
+              "semiconductor_relevance:0.71(hbm, gpu)"
+            ],
+            "infrastructureRelevanceAction": "archive_only",
+            "articlePagePublished": false,
+            "homepagePublished": false,
+            "archiveOnly": true,
+            "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
+          },
+          "score": 46
+        },
+        {
+          "id": "352ebe9521dab276",
+          "sourceRegistryId": "arxiv-cs-dc",
+          "source": "arXiv",
+          "url": "https://arxiv.org/abs/2609.25560",
+          "title": "Co-Fabric: Breaking Host-Domain Boundaries for Unified xPU Interconnection",
+          "snippet": "arXiv:2609.25560v1 Announce Type: new Abstract: Large-model parameters have grown beyond the capacity of a single xPU, dispersing across multiple xPUs spanning distinct host domains, where xPU-to-xPU communication domin…",
+          "contentText": "arXiv:2609.25560v1 Announce Type: new Abstract: Large-model parameters have grown beyond the capacity of a single xPU, dispersing across multiple xPUs spanning distinct host domains, where xPU-to-xPU communication dominates overall system efficiency. Existing scale-up interconnect remains inadequate: network-based solutions built on Ethernet--such as RoCE (RDMA over Converged Ethernet)--introduce specific message-semantics and protocol-stack characteristics, and rely on fragmented per-host addressing, while conventional host-based fabrics are confined to a single host domain and lack cross-host unified addressing. This paper presents Co-Fabric, a bus-based interconnect that, unlike conventional bus designs, breaks host-domain boundaries to deliver unified xPU interconnection for scale-up…",
+          "publishedAt": "2026-09-23T04:00:00.000Z",
+          "sourceImage": null,
+          "region": "APAC",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure",
+          "source_text_scope": "abstract",
+          "ai_topic_score": 0,
+          "ai_topic_reasons": [
+            "ai_not_in_title"
+          ],
+          "category": "Power & Grid",
+          "primary_category": "Power & Grid",
+          "secondary_category": "Interconnection and power procurement",
+          "infrastructure_layer": "Power",
+          "affected_stakeholders": [
+            "data center operators",
+            "utilities",
+            "cloud capacity teams",
+            "investors"
+          ],
+          "article_type": "Capacity Expansion",
+          "urgency_score": 0.5,
+          "taxonomy_confidence": 0.64,
+          "taxonomy_reasons": [
+            "interconnection"
+          ],
+          "direct_ai_infrastructure_relevance": 0,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0,
+          "power_grid_relevance": 0.486,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.317,
+          "infrastructure_relevance_tier": "archive_only",
+          "infrastructure_relevance_action": "archive_only",
+          "infrastructure_relevance_reasons": [
+            "power_grid_relevance:0.49(interconnection)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 0,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0,
+            "power_grid_relevance": 0.486,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.317,
+            "infrastructure_relevance_tier": "archive_only",
+            "infrastructure_relevance_action": "archive_only",
+            "infrastructure_relevance_reasons": [
+              "power_grid_relevance:0.49(interconnection)"
+            ],
+            "infrastructureRelevanceAction": "archive_only",
+            "articlePagePublished": false,
+            "homepagePublished": false,
+            "archiveOnly": true,
+            "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
+          },
+          "score": 29
+        }
+      ],
+      "curatedIds": [
+        "b6986b1fcf01eed3",
+        "a9fe95621998cb1d",
+        "352ebe9521dab276"
+      ],
       "publishedIds": [
         "a2f03dfbd4a029fc",
-        "581473454ae70fcd"
+        "581473454ae70fcd",
+        "b6986b1fcf01eed3",
+        "a9fe95621998cb1d"
       ],
       "slotPublications": {
         "0": true,
-        "1": true
+        "1": true,
+        "2": true
       }
     }
   },
   "runHistory": [
-    {
-      "at": "2026-08-11T16:05:09.558Z",
-      "day": "2026-08-12",
-      "slot": 0,
-      "publishedCount": 0,
-      "signalCardCount": 1,
-      "archiveOnlyCount": 0,
-      "repetitionBlockedCount": 1,
-      "publishedIds": [],
-      "processedIds": [
-        "9ccadbbb854d8c11",
-        "e55d48792519c872"
-      ],
-      "blockedCount": 1,
-      "blockedItems": [
-        {
-          "id": "9ccadbbb854d8c11",
-          "title": "NVIDIA’s $500 Billion AI Bet: Jensen Huang Brings Wall Street Into the Race",
-          "infrastructure_relevance_score": 0.932,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud, high-performance computing)",
-            "data_center_relevance:0.42(data centers)",
-            "cloud_capacity_relevance:0.32(hyperscalers)",
-            "semiconductor_relevance:0.60(nvidia, gpu)",
-            "power_grid_relevance:0.22(power)",
-            "capital_markets_relevance:0.32(financing)",
-            "enterprise_ai_infrastructure_relevance:0.30(inference workloads)"
-          ],
-          "extraction_quality_score": 0.98,
-          "source_domain_adapter": "generic",
-          "content_length": 1413,
-          "boilerplate_ratio": 0,
-          "repetition_blocked": false,
-          "repetition_block_reasons": [],
-          "repetition_check": null,
-          "expert_insight_complete": true,
-          "expert_insight_missing_fields": [],
-          "reason": "fail_closed: source_text_incomplete:ellipsis_truncation_artifact, ellipsis_truncation_artifact"
-        }
-      ],
-      "repetitionBlockedItems": [
-        {
-          "id": "e55d48792519c872",
-          "title": "Why Scaling AI Compute Performance Requires a New Power Architecture",
-          "infrastructure_relevance_score": 1,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud, rack density)",
-            "data_center_relevance:0.28(rack density)",
-            "cloud_capacity_relevance:0.32(hyperscalers)",
-            "semiconductor_relevance:0.72(nvidia, accelerator, gpu)",
-            "power_grid_relevance:1.00(power, grid, electricity)",
-            "cooling_relevance:0.24(rack density)"
-          ],
-          "extraction_quality_score": 1,
-          "source_domain_adapter": "generic",
-          "content_length": 1640,
-          "boilerplate_ratio": 0,
-          "repetition_blocked": true,
-          "repetition_block_reasons": [
-            "repeated_sentence_ratio>0.12",
-            "heading_sequence_similarity>0.75",
-            "conclusion_similarity>0.7"
-          ],
-          "repetition_check": {
-            "compared_article_count": 20,
-            "repeated_sentence_ratio": 0.5,
-            "repeated_paragraph_ratio": 0.5,
-            "heading_sequence_similarity": 1,
-            "banned_phrase_count": 0,
-            "banned_phrase_counts": {},
-            "recent_banned_phrase_counts": {},
-            "ngram_overlap": 0.3770491803278688,
-            "blueprint_repetition": 2,
-            "conclusion_similarity": 1,
-            "repeated_sentence_count": 3,
-            "repeated_paragraph_count": 3,
-            "heading_sequence": [
-              "Power-Market Move",
-              "Operating Lever",
-              "Grid Exposure",
-              "Metric To Watch"
-            ],
-            "blocked": true,
-            "reasons": [
-              "repeated_sentence_ratio>0.12",
-              "heading_sequence_similarity>0.75",
-              "conclusion_similarity>0.7"
-            ]
-          },
-          "expert_insight_complete": true,
-          "expert_insight_missing_fields": [],
-          "reason": "repeated_sentence_ratio>0.12; heading_sequence_similarity>0.75; conclusion_similarity>0.7"
-        }
-      ],
-      "signalCardItems": [
-        {
-          "id": "9ccadbbb854d8c11",
-          "title": "NVIDIA’s $500 Billion AI Bet: Jensen Huang Brings Wall Street Into the Race",
-          "infrastructure_relevance_score": 0.932,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud, high-performance computing)",
-            "data_center_relevance:0.42(data centers)",
-            "cloud_capacity_relevance:0.32(hyperscalers)",
-            "semiconductor_relevance:0.60(nvidia, gpu)",
-            "power_grid_relevance:0.22(power)",
-            "capital_markets_relevance:0.32(financing)",
-            "enterprise_ai_infrastructure_relevance:0.30(inference workloads)"
-          ],
-          "extraction_quality_score": 0.98,
-          "source_domain_adapter": "generic",
-          "content_length": 1413,
-          "boilerplate_ratio": 0,
-          "repetition_blocked": false,
-          "repetition_block_reasons": [],
-          "repetition_check": null,
-          "expert_insight_complete": true,
-          "expert_insight_missing_fields": [],
-          "reason": "fail_closed: source_text_incomplete:ellipsis_truncation_artifact, ellipsis_truncation_artifact"
-        }
-      ],
-      "archiveOnlyItems": []
-    },
     {
       "at": "2026-08-15T16:23:10.801Z",
       "day": "2026-08-16",
@@ -49848,9 +49958,37 @@
         "token_budget": 60000,
         "call_budget": 40
       }
+    },
+    {
+      "at": "2026-09-23T12:44:55.946Z",
+      "day": "2026-09-23",
+      "slot": 2,
+      "publishedCount": 0,
+      "signalCardCount": 2,
+      "archiveOnlyCount": 0,
+      "processedIds": [
+        "b6986b1fcf01eed3",
+        "a9fe95621998cb1d"
+      ],
+      "blockedCount": 0,
+      "blockedItems": [],
+      "archiveOnlyItems": [],
+      "authoredColumn": {
+        "published": false,
+        "reason": "no_qualifying_story"
+      },
+      "llmUsage": {
+        "calls": 3,
+        "failures": 0,
+        "prompt_tokens": 3394,
+        "completion_tokens": 547,
+        "total_tokens": 3941,
+        "token_budget": 60000,
+        "call_budget": 40
+      }
     }
   ],
-  "lastRunAt": "2026-09-23T01:27:14.466Z",
+  "lastRunAt": "2026-09-23T12:44:55.946Z",
   "authored": {
     "lastColumnAt": "2026-09-16T18:47:02.256Z",
     "columnsByDay": {
