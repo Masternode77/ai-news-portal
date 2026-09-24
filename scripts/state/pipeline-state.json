@@ -868,7 +868,8 @@
     "819aaf5424bf34a4",
     "352ebe9521dab276",
     "114e9bcd76e351dd",
-    "e0218df442136eec"
+    "e0218df442136eec",
+    "dab941d2ad44772a"
   ],
   "dayPlans": {
     "2026-03-24": {
@@ -46727,84 +46728,112 @@
         "1": true,
         "2": true
       }
+    },
+    "2026-09-25": {
+      "date": "2026-09-25",
+      "createdAt": "2026-09-24T18:55:47.819Z",
+      "refreshedAt": "2026-09-24T18:55:47.819Z",
+      "candidateWindowHours": 24,
+      "curatedItems": [
+        {
+          "id": "dab941d2ad44772a",
+          "sourceRegistryId": "arxiv-cs-ar",
+          "source": "arXiv",
+          "url": "https://arxiv.org/abs/2609.26829",
+          "title": "Balancing Generality and Specialization: A Survey on AI Datacenter Hardware Architecture",
+          "snippet": "arXiv:2609.26829v1 Announce Type: new Abstract: Rapidly growing AI workloads are driving large investments in AI datacenters. This survey classifies industrial AI accelerators into four architectural categories and comp…",
+          "contentText": "arXiv:2609.26829v1 Announce Type: new Abstract: Rapidly growing AI workloads are driving large investments in AI datacenters. This survey classifies industrial AI accelerators into four architectural categories and compares their compute and memory organizations. It examines how node-, rack-, and pod-scale interconnects support collective communication, and traces architectural evolution across accelerator generations. The analysis connects advances in arithmetic throughput with changes in precision, data delivery, execution coordination, communication, power delivery, and cooling. It also discusses future design challenges arising from workload diversity, data movement, infrastructure constraints, and model evolution, showing how the trade-off between generality and specialization extend…",
+          "publishedAt": "2026-09-24T04:00:00.000Z",
+          "sourceImage": null,
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "Semiconductors",
+          "source_text_scope": "abstract",
+          "ai_topic_score": 0.943,
+          "ai_topic_reasons": [
+            "ai workloads",
+            "accelerator",
+            "accelerators",
+            "ai"
+          ],
+          "category": "Data Centers",
+          "primary_category": "Data Centers",
+          "secondary_category": "Campus development and colocation capacity",
+          "infrastructure_layer": "Facility",
+          "affected_stakeholders": [
+            "data center operators",
+            "developers",
+            "site selectors",
+            "investors"
+          ],
+          "article_type": "Supply Chain",
+          "urgency_score": 0.51,
+          "taxonomy_confidence": 0.65,
+          "taxonomy_reasons": [
+            "datacenter"
+          ],
+          "direct_ai_infrastructure_relevance": 0.78,
+          "data_center_relevance": 0.55,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0.22,
+          "power_grid_relevance": 0.22,
+          "cooling_relevance": 0.34,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0.24,
+          "infrastructure_relevance_score": 0.793,
+          "infrastructure_relevance_tier": "signal_card",
+          "infrastructure_relevance_action": "publish_signal_card_only",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:0.78(ai datacenter)",
+            "data_center_relevance:0.55(datacenter)",
+            "semiconductor_relevance:0.22(accelerator)",
+            "power_grid_relevance:0.22(power)",
+            "cooling_relevance:0.34(cooling)",
+            "enterprise_ai_infrastructure_relevance:0.24(ai workloads)",
+            "abstract_only_source_capped_at_signal_card"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 0.78,
+            "data_center_relevance": 0.55,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0.22,
+            "power_grid_relevance": 0.22,
+            "cooling_relevance": 0.34,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0.24,
+            "infrastructure_relevance_score": 0.793,
+            "infrastructure_relevance_tier": "signal_card",
+            "infrastructure_relevance_action": "publish_signal_card_only",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:0.78(ai datacenter)",
+              "data_center_relevance:0.55(datacenter)",
+              "semiconductor_relevance:0.22(accelerator)",
+              "power_grid_relevance:0.22(power)",
+              "cooling_relevance:0.34(cooling)",
+              "enterprise_ai_infrastructure_relevance:0.24(ai workloads)",
+              "abstract_only_source_capped_at_signal_card"
+            ],
+            "infrastructureRelevanceAction": "publish_signal_card_only",
+            "articlePagePublished": false,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 65
+        }
+      ],
+      "curatedIds": [
+        "dab941d2ad44772a"
+      ],
+      "publishedIds": [
+        "dab941d2ad44772a"
+      ],
+      "slotPublications": {
+        "0": true
+      }
     }
   },
   "runHistory": [
-    {
-      "at": "2026-08-16T15:26:31.555Z",
-      "day": "2026-08-17",
-      "slot": 0,
-      "publishedCount": 1,
-      "signalCardCount": 1,
-      "archiveOnlyCount": 0,
-      "repetitionBlockedCount": 0,
-      "publishedIds": [
-        "433b6291c085c015"
-      ],
-      "processedIds": [
-        "433b6291c085c015",
-        "e3ca7ce34440e2f2"
-      ],
-      "blockedCount": 1,
-      "blockedItems": [
-        {
-          "id": "e3ca7ce34440e2f2",
-          "title": "Hybrid sales rise while battery electric sales remain lower after tax credit expiration",
-          "infrastructure_relevance_score": 0.963,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "semiconductor_relevance:0.22(gpu)",
-            "power_grid_relevance:0.74(power, grid, electricity)",
-            "capital_markets_relevance:0.28(capex)"
-          ],
-          "extraction_quality_score": 1,
-          "source_domain_adapter": "generic",
-          "content_length": 1785,
-          "boilerplate_ratio": 0,
-          "repetition_blocked": false,
-          "repetition_block_reasons": [],
-          "repetition_check": null,
-          "expert_insight_complete": false,
-          "expert_insight_missing_fields": [
-            "concrete_facts",
-            "named_companies"
-          ],
-          "reason": "expert_insight_missing_fields concrete_facts, named_companies"
-        }
-      ],
-      "repetitionBlockedItems": [],
-      "signalCardItems": [
-        {
-          "id": "e3ca7ce34440e2f2",
-          "title": "Hybrid sales rise while battery electric sales remain lower after tax credit expiration",
-          "infrastructure_relevance_score": 0.963,
-          "infrastructure_relevance_tier": "full_memo",
-          "infrastructure_relevance_action": "generate_full_memo",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:1.00(ai infrastructure, neocloud)",
-            "semiconductor_relevance:0.22(gpu)",
-            "power_grid_relevance:0.74(power, grid, electricity)",
-            "capital_markets_relevance:0.28(capex)"
-          ],
-          "extraction_quality_score": 1,
-          "source_domain_adapter": "generic",
-          "content_length": 1785,
-          "boilerplate_ratio": 0,
-          "repetition_blocked": false,
-          "repetition_block_reasons": [],
-          "repetition_check": null,
-          "expert_insight_complete": false,
-          "expert_insight_missing_fields": [
-            "concrete_facts",
-            "named_companies"
-          ],
-          "reason": "expert_insight_missing_fields concrete_facts, named_companies"
-        }
-      ],
-      "archiveOnlyItems": []
-    },
     {
       "at": "2026-08-16T23:30:21.113Z",
       "day": "2026-08-17",
@@ -50194,9 +50223,36 @@
         "token_budget": 60000,
         "call_budget": 40
       }
+    },
+    {
+      "at": "2026-09-24T18:55:47.819Z",
+      "day": "2026-09-25",
+      "slot": 0,
+      "publishedCount": 0,
+      "signalCardCount": 1,
+      "archiveOnlyCount": 0,
+      "processedIds": [
+        "dab941d2ad44772a"
+      ],
+      "blockedCount": 0,
+      "blockedItems": [],
+      "archiveOnlyItems": [],
+      "authoredColumn": {
+        "published": false,
+        "reason": "no_qualifying_story"
+      },
+      "llmUsage": {
+        "calls": 2,
+        "failures": 0,
+        "prompt_tokens": 1758,
+        "completion_tokens": 295,
+        "total_tokens": 2053,
+        "token_budget": 60000,
+        "call_budget": 40
+      }
     }
   ],
-  "lastRunAt": "2026-09-24T12:43:19.036Z",
+  "lastRunAt": "2026-09-24T18:55:47.819Z",
   "authored": {
     "lastColumnAt": "2026-09-16T18:47:02.256Z",
     "columnsByDay": {
