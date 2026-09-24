@@ -866,7 +866,9 @@
     "b6986b1fcf01eed3",
     "a9fe95621998cb1d",
     "819aaf5424bf34a4",
-    "352ebe9521dab276"
+    "352ebe9521dab276",
+    "114e9bcd76e351dd",
+    "e0218df442136eec"
   ],
   "dayPlans": {
     "2026-03-24": {
@@ -46460,65 +46462,274 @@
     "2026-09-24": {
       "date": "2026-09-24",
       "createdAt": "2026-09-23T18:57:04.559Z",
-      "refreshedAt": "2026-09-24T01:19:50.289Z",
+      "refreshedAt": "2026-09-24T12:43:19.036Z",
       "candidateWindowHours": 24,
-      "curatedItems": [],
-      "curatedIds": [],
+      "curatedItems": [
+        {
+          "id": "114e9bcd76e351dd",
+          "sourceRegistryId": "arxiv-cs-pf",
+          "source": "arXiv",
+          "url": "https://arxiv.org/abs/2609.27926",
+          "title": "The Joule Point: an Energy-Optimal Operating Point for AI Inference",
+          "snippet": "arXiv:2609.27926v1 Announce Type: new Abstract: Data centers serving AI inference strive to maximize GPU utilization, running their cards at full power by default: this maximizes throughput and holds latencies down, but…",
+          "contentText": "arXiv:2609.27926v1 Announce Type: new Abstract: Data centers serving AI inference strive to maximize GPU utilization, running their cards at full power by default: this maximizes throughput and holds latencies down, but it is energy-inefficient, spending more energy per inference than the same work needs at a better operating point. That inefficiency is a scheduling choice, not a hardware limit. The cause is physical: for a given workload, a GPU's board power rises superlinearly along its power-performance curve, on top of a fixed power floor that is paid for as long as the job runs, so energy per inference is U-shaped in the operating point (GPU, power cap). The minimum, which we name the Joule Point, is a cap at 43 to 46 per cent of a large GPU's rated power; capping to it cuts energy p…",
+          "publishedAt": "2026-09-24T04:00:00.000Z",
+          "sourceImage": null,
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure",
+          "source_text_scope": "abstract",
+          "ai_topic_score": 0.841,
+          "ai_topic_reasons": [
+            "inference",
+            "gpu",
+            "ai"
+          ],
+          "category": "AI Infrastructure",
+          "primary_category": "AI Infrastructure",
+          "secondary_category": "GPU clusters and deployment readiness",
+          "infrastructure_layer": "Compute",
+          "affected_stakeholders": [
+            "operators",
+            "hyperscalers",
+            "cloud buyers",
+            "investors"
+          ],
+          "article_type": "Other",
+          "urgency_score": 0.5,
+          "taxonomy_confidence": 0.65,
+          "taxonomy_reasons": [
+            "ai infrastructure"
+          ],
+          "direct_ai_infrastructure_relevance": 0.78,
+          "data_center_relevance": 0.42,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0.22,
+          "power_grid_relevance": 0.22,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.765,
+          "infrastructure_relevance_tier": "signal_card",
+          "infrastructure_relevance_action": "publish_signal_card_only",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:0.78",
+            "data_center_relevance:0.42(data centers)",
+            "semiconductor_relevance:0.22(gpu)",
+            "power_grid_relevance:0.22(power)",
+            "abstract_only_source_capped_at_signal_card"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 0.78,
+            "data_center_relevance": 0.42,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0.22,
+            "power_grid_relevance": 0.22,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.765,
+            "infrastructure_relevance_tier": "signal_card",
+            "infrastructure_relevance_action": "publish_signal_card_only",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:0.78",
+              "data_center_relevance:0.42(data centers)",
+              "semiconductor_relevance:0.22(gpu)",
+              "power_grid_relevance:0.22(power)",
+              "abstract_only_source_capped_at_signal_card"
+            ],
+            "infrastructureRelevanceAction": "publish_signal_card_only",
+            "articlePagePublished": false,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 64
+        },
+        {
+          "id": "e0218df442136eec",
+          "sourceRegistryId": "arxiv-cs-dc",
+          "source": "arXiv",
+          "url": "https://arxiv.org/abs/2609.27040",
+          "title": "EMA: Elastic and Performance Transparent Memory Across GPUs",
+          "snippet": "arXiv:2609.27040v1 Announce Type: new Abstract: Multi-GPU servers have become the standard building block of modern data centers, providing aggregated capacity through high-bandwidth interconnects. At the same time, wor…",
+          "contentText": "arXiv:2609.27040v1 Announce Type: new Abstract: Multi-GPU servers have become the standard building block of modern data centers, providing aggregated capacity through high-bandwidth interconnects. At the same time, workloads such as LLM inference exhibit highly dynamic memory demands, which can cause one GPU to exhaust its local memory while others remain underutilized. This mismatch motivates a model of elastic resource sharing across GPUs. We present EMA, a memory sharing system that allows GPUs within a server to borrow and reclaim memory from each other, forming an elastic pool of capacity. EMA ensures performance transparency for both borrowers and lenders. For borrowers, prefetching hides remote access costs so that applications experience remote and local memory as indistinguishab…",
+          "publishedAt": "2026-09-24T04:00:00.000Z",
+          "sourceImage": null,
+          "region": "APAC",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure",
+          "source_text_scope": "abstract",
+          "ai_topic_score": 1,
+          "ai_topic_reasons": [
+            "llm",
+            "inference",
+            "gpu",
+            "gpus"
+          ],
+          "category": "AI Infrastructure",
+          "primary_category": "AI Infrastructure",
+          "secondary_category": "GPU clusters and deployment readiness",
+          "infrastructure_layer": "Compute",
+          "affected_stakeholders": [
+            "operators",
+            "hyperscalers",
+            "cloud buyers",
+            "investors"
+          ],
+          "article_type": "Capacity Expansion",
+          "urgency_score": 0.65,
+          "taxonomy_confidence": 0.65,
+          "taxonomy_reasons": [
+            "ai infrastructure"
+          ],
+          "direct_ai_infrastructure_relevance": 0.78,
+          "data_center_relevance": 0.42,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0.22,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.73,
+          "infrastructure_relevance_tier": "signal_card",
+          "infrastructure_relevance_action": "publish_signal_card_only",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:0.78",
+            "data_center_relevance:0.42(data centers)",
+            "semiconductor_relevance:0.22(gpu)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 0.78,
+            "data_center_relevance": 0.42,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0.22,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.73,
+            "infrastructure_relevance_tier": "signal_card",
+            "infrastructure_relevance_action": "publish_signal_card_only",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:0.78",
+              "data_center_relevance:0.42(data centers)",
+              "semiconductor_relevance:0.22(gpu)"
+            ],
+            "infrastructureRelevanceAction": "publish_signal_card_only",
+            "articlePagePublished": false,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 59
+        },
+        {
+          "id": "dab941d2ad44772a",
+          "sourceRegistryId": "arxiv-cs-ar",
+          "source": "arXiv",
+          "url": "https://arxiv.org/abs/2609.26829",
+          "title": "Balancing Generality and Specialization: A Survey on AI Datacenter Hardware Architecture",
+          "snippet": "arXiv:2609.26829v1 Announce Type: new Abstract: Rapidly growing AI workloads are driving large investments in AI datacenters. This survey classifies industrial AI accelerators into four architectural categories and comp…",
+          "contentText": "arXiv:2609.26829v1 Announce Type: new Abstract: Rapidly growing AI workloads are driving large investments in AI datacenters. This survey classifies industrial AI accelerators into four architectural categories and compares their compute and memory organizations. It examines how node-, rack-, and pod-scale interconnects support collective communication, and traces architectural evolution across accelerator generations. The analysis connects advances in arithmetic throughput with changes in precision, data delivery, execution coordination, communication, power delivery, and cooling. It also discusses future design challenges arising from workload diversity, data movement, infrastructure constraints, and model evolution, showing how the trade-off between generality and specialization extend…",
+          "publishedAt": "2026-09-24T04:00:00.000Z",
+          "sourceImage": null,
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "Semiconductors",
+          "source_text_scope": "abstract",
+          "ai_topic_score": 0.943,
+          "ai_topic_reasons": [
+            "ai workloads",
+            "accelerator",
+            "accelerators",
+            "ai"
+          ],
+          "category": "Data Centers",
+          "primary_category": "Data Centers",
+          "secondary_category": "Campus development and colocation capacity",
+          "infrastructure_layer": "Facility",
+          "affected_stakeholders": [
+            "data center operators",
+            "developers",
+            "site selectors",
+            "investors"
+          ],
+          "article_type": "Supply Chain",
+          "urgency_score": 0.51,
+          "taxonomy_confidence": 0.65,
+          "taxonomy_reasons": [
+            "datacenter"
+          ],
+          "direct_ai_infrastructure_relevance": 0.78,
+          "data_center_relevance": 0.55,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0.22,
+          "power_grid_relevance": 0.22,
+          "cooling_relevance": 0.34,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0.24,
+          "infrastructure_relevance_score": 0.793,
+          "infrastructure_relevance_tier": "signal_card",
+          "infrastructure_relevance_action": "publish_signal_card_only",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:0.78(ai datacenter)",
+            "data_center_relevance:0.55(datacenter)",
+            "semiconductor_relevance:0.22(accelerator)",
+            "power_grid_relevance:0.22(power)",
+            "cooling_relevance:0.34(cooling)",
+            "enterprise_ai_infrastructure_relevance:0.24(ai workloads)",
+            "abstract_only_source_capped_at_signal_card"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 0.78,
+            "data_center_relevance": 0.55,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0.22,
+            "power_grid_relevance": 0.22,
+            "cooling_relevance": 0.34,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0.24,
+            "infrastructure_relevance_score": 0.793,
+            "infrastructure_relevance_tier": "signal_card",
+            "infrastructure_relevance_action": "publish_signal_card_only",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:0.78(ai datacenter)",
+              "data_center_relevance:0.55(datacenter)",
+              "semiconductor_relevance:0.22(accelerator)",
+              "power_grid_relevance:0.22(power)",
+              "cooling_relevance:0.34(cooling)",
+              "enterprise_ai_infrastructure_relevance:0.24(ai workloads)",
+              "abstract_only_source_capped_at_signal_card"
+            ],
+            "infrastructureRelevanceAction": "publish_signal_card_only",
+            "articlePagePublished": false,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 65
+        }
+      ],
+      "curatedIds": [
+        "114e9bcd76e351dd",
+        "e0218df442136eec",
+        "dab941d2ad44772a"
+      ],
       "publishedIds": [
         "819aaf5424bf34a4",
-        "352ebe9521dab276"
+        "352ebe9521dab276",
+        "114e9bcd76e351dd",
+        "e0218df442136eec"
       ],
       "slotPublications": {
         "0": true,
-        "1": true
+        "1": true,
+        "2": true
       }
     }
   },
   "runHistory": [
-    {
-      "at": "2026-08-16T07:41:09.424Z",
-      "day": "2026-08-16",
-      "slot": 2,
-      "publishedCount": 1,
-      "signalCardCount": 1,
-      "archiveOnlyCount": 0,
-      "repetitionBlockedCount": 0,
-      "publishedIds": [
-        "3da1bb519d086075"
-      ],
-      "processedIds": [
-        "3da1bb519d086075",
-        "746a7ec31db41f14"
-      ],
-      "blockedCount": 0,
-      "blockedItems": [],
-      "repetitionBlockedItems": [],
-      "signalCardItems": [
-        {
-          "id": "746a7ec31db41f14",
-          "title": "China's crude oil imports fell in the second quarter",
-          "infrastructure_relevance_score": 0.621,
-          "infrastructure_relevance_tier": "signal_card",
-          "infrastructure_relevance_action": "publish_signal_card_only",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:0.70(ai infrastructure)",
-            "cloud_capacity_relevance:0.32(hyperscalers)",
-            "power_grid_relevance:0.50(power, grid)"
-          ],
-          "extraction_quality_score": 1,
-          "source_domain_adapter": "generic",
-          "content_length": 1764,
-          "boilerplate_ratio": 0,
-          "repetition_blocked": false,
-          "repetition_block_reasons": [],
-          "repetition_check": null,
-          "expert_insight_complete": true,
-          "expert_insight_missing_fields": [],
-          "reason": "infrastructure_relevance_signal_card_threshold"
-        }
-      ],
-      "archiveOnlyItems": []
-    },
     {
       "at": "2026-08-16T15:26:31.555Z",
       "day": "2026-08-17",
@@ -49955,9 +50166,37 @@
         "token_budget": 60000,
         "call_budget": 40
       }
+    },
+    {
+      "at": "2026-09-24T12:43:19.036Z",
+      "day": "2026-09-24",
+      "slot": 2,
+      "publishedCount": 0,
+      "signalCardCount": 2,
+      "archiveOnlyCount": 0,
+      "processedIds": [
+        "114e9bcd76e351dd",
+        "e0218df442136eec"
+      ],
+      "blockedCount": 0,
+      "blockedItems": [],
+      "archiveOnlyItems": [],
+      "authoredColumn": {
+        "published": false,
+        "reason": "no_qualifying_story"
+      },
+      "llmUsage": {
+        "calls": 3,
+        "failures": 0,
+        "prompt_tokens": 3248,
+        "completion_tokens": 521,
+        "total_tokens": 3769,
+        "token_budget": 60000,
+        "call_budget": 40
+      }
     }
   ],
-  "lastRunAt": "2026-09-24T01:19:50.289Z",
+  "lastRunAt": "2026-09-24T12:43:19.036Z",
   "authored": {
     "lastColumnAt": "2026-09-16T18:47:02.256Z",
     "columnsByDay": {
