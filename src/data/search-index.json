@@ -140,7 +140,7 @@
         "sourceId": "eia-today-in-energy",
         "reviewedAt": "2026-08-12T00:00:00.000Z",
         "termsUrl": "https://www.eia.gov/about/copyrights_reuse.php",
-        "checkedAt": "2026-09-25T01:36:15.750Z",
+        "checkedAt": "2026-09-25T12:55:41.562Z",
         "registryDigest": "b7a6bfe7b34bbb3ceeddab4fe5c7e6fd9a391af3c82cd9641e7e42964813913b",
         "registryBlobSha": "",
         "contentDigest": "beeeed148253b62b7ae888a3bc79c5979dbfa234b587e2f7b91bbaeafcf5acde"
@@ -299,7 +299,7 @@
         "sourceId": "eia-today-in-energy",
         "reviewedAt": "2026-08-12T00:00:00.000Z",
         "termsUrl": "https://www.eia.gov/about/copyrights_reuse.php",
-        "checkedAt": "2026-09-25T01:36:16.014Z",
+        "checkedAt": "2026-09-25T12:55:41.820Z",
         "registryDigest": "b7a6bfe7b34bbb3ceeddab4fe5c7e6fd9a391af3c82cd9641e7e42964813913b",
         "registryBlobSha": "",
         "contentDigest": "d15ccae9ee9ddf6214d8b39fbdf87ac41a1f82721e955148a1cd5e0a2de7b028"
@@ -458,7 +458,7 @@
         "sourceId": "eia-today-in-energy",
         "reviewedAt": "2026-08-12T00:00:00.000Z",
         "termsUrl": "https://www.eia.gov/about/copyrights_reuse.php",
-        "checkedAt": "2026-09-25T01:36:16.260Z",
+        "checkedAt": "2026-09-25T12:55:42.053Z",
         "registryDigest": "b7a6bfe7b34bbb3ceeddab4fe5c7e6fd9a391af3c82cd9641e7e42964813913b",
         "registryBlobSha": "",
         "contentDigest": "ade711e2b20996fa86c8248da2f499d76c8f2f8bdd82d9e630f5e080f97f58e2"
@@ -617,7 +617,7 @@
         "sourceId": "eia-today-in-energy",
         "reviewedAt": "2026-08-12T00:00:00.000Z",
         "termsUrl": "https://www.eia.gov/about/copyrights_reuse.php",
-        "checkedAt": "2026-09-25T01:36:16.508Z",
+        "checkedAt": "2026-09-25T12:55:42.293Z",
         "registryDigest": "b7a6bfe7b34bbb3ceeddab4fe5c7e6fd9a391af3c82cd9641e7e42964813913b",
         "registryBlobSha": "",
         "contentDigest": "8e6376116876948d8a9e27d52a0f3747ce46816914268a5bd0bf93fafd85c604"
@@ -776,7 +776,7 @@
         "sourceId": "eia-today-in-energy",
         "reviewedAt": "2026-08-12T00:00:00.000Z",
         "termsUrl": "https://www.eia.gov/about/copyrights_reuse.php",
-        "checkedAt": "2026-09-25T01:36:16.778Z",
+        "checkedAt": "2026-09-25T12:55:42.563Z",
         "registryDigest": "b7a6bfe7b34bbb3ceeddab4fe5c7e6fd9a391af3c82cd9641e7e42964813913b",
         "registryBlobSha": "",
         "contentDigest": "2c6d66c26ee5e8faea303eb6655f65da943f22d62f0b30f232281dfa85dca6d7"
@@ -135790,6 +135790,424 @@
     "imageStatus": "generated",
     "imageError": "",
     "imageGeneratedAt": "2026-09-12T23:42:06.374Z"
+  },
+  {
+    "id": "da60d6f9264d334b",
+    "sourceRegistryId": "arxiv-cs-dc",
+    "source": "arXiv",
+    "url": "https://arxiv.org/abs/2609.29707",
+    "title": "Where Does the Energy Go? Profiling LLM Agent Inference on Blackwell GPUs",
+    "snippet": "arXiv:2609.29707v1 Announce Type: new Abstract: LLM agents that iteratively reason, plan, and invoke tools create workload profiles fundamentally different from single-pass inference, yet how their energy consumption is…",
+    "contentText": "arXiv:2609.29707v1 Announce Type: new Abstract: LLM agents that iteratively reason, plan, and invoke tools create workload profiles fundamentally different from single-pass inference, yet how their energy consumption is distributed across hardware components and workload phases remains poorly understood. Characterizing these workloads therefore requires simultaneous visibility into both component-level power and phase-level execution. We conduct a full-stack energy profiling study combining NVML GPU counters, Intel RAPL CPU/DRAM counters, and Intelligent Platform Management Interface (IPMI) system-level sensors on 2x NVIDIA RTX PRO 6000 Blackwell GPUs, and profile three representative workloads with Qwen3.8-27B. For mathematical reasoning, we compare thinking-enabled and thinking-disabled…",
+    "publishedAt": "2026-09-25T04:00:00.000Z",
+    "sourceImage": null,
+    "region": "US",
+    "language": "en",
+    "defaultCategory": "AI Infrastructure",
+    "source_text_scope": "abstract",
+    "ai_topic_score": 1,
+    "ai_topic_reasons": [
+      "llm",
+      "inference",
+      "nvidia",
+      "gpu",
+      "gpus"
+    ],
+    "category": "AI Infrastructure",
+    "primary_category": "AI Infrastructure",
+    "secondary_category": "Research / Technical",
+    "infrastructure_layer": "Compute",
+    "affected_stakeholders": [
+      "operators",
+      "hyperscalers",
+      "investors",
+      "enterprise IT",
+      "semiconductor suppliers"
+    ],
+    "article_type": "Research / Technical",
+    "urgency_score": 0.6,
+    "taxonomy_confidence": 0.88,
+    "taxonomy_reasons": [
+      "gpu",
+      "nvidia",
+      "intel",
+      "advanced packaging"
+    ],
+    "direct_ai_infrastructure_relevance": 0.22,
+    "data_center_relevance": 0,
+    "cloud_capacity_relevance": 0,
+    "semiconductor_relevance": 0.7,
+    "power_grid_relevance": 0.22,
+    "cooling_relevance": 0,
+    "capital_markets_relevance": 0,
+    "enterprise_ai_infrastructure_relevance": 0,
+    "infrastructure_relevance_score": 0.559,
+    "infrastructure_relevance_tier": "signal_card",
+    "infrastructure_relevance_action": "publish_signal_card_only",
+    "infrastructure_relevance_reasons": [
+      "direct_ai_infrastructure_relevance:0.22",
+      "semiconductor_relevance:0.70(nvidia, intel, gpu)",
+      "power_grid_relevance:0.22(power)"
+    ],
+    "infrastructure_relevance": {
+      "direct_ai_infrastructure_relevance": 0.22,
+      "data_center_relevance": 0,
+      "cloud_capacity_relevance": 0,
+      "semiconductor_relevance": 0.7,
+      "power_grid_relevance": 0.22,
+      "cooling_relevance": 0,
+      "capital_markets_relevance": 0,
+      "enterprise_ai_infrastructure_relevance": 0,
+      "infrastructure_relevance_score": 0.559,
+      "infrastructure_relevance_tier": "signal_card",
+      "infrastructure_relevance_action": "publish_signal_card_only",
+      "infrastructure_relevance_reasons": [
+        "direct_ai_infrastructure_relevance:0.22",
+        "semiconductor_relevance:0.70(nvidia, intel, gpu)",
+        "power_grid_relevance:0.22(power)"
+      ],
+      "infrastructureRelevanceAction": "publish_signal_card_only",
+      "articlePagePublished": false,
+      "homepagePublished": true,
+      "archiveOnly": false,
+      "archiveOnlyReason": null
+    },
+    "score": 55,
+    "slug": "where-does-the-energy-go-profiling-llm-agent-inference-on-blackwell-gpus",
+    "summary": "A study on LLM agent inference using Blackwell GPUs reveals significant energy consumption patterns, highlighting inefficiencies in non-GPU components during processing.",
+    "insight": "Understanding the energy distribution across hardware components is crucial for optimizing performance and cost in AI deployments. The findings emphasize the need for improved batching techniques to enhance energy efficiency.",
+    "expert_insight": {
+      "concrete_facts": [
+        "We conduct a full-stack energy profiling study combining NVML GPU counters, Intel RAPL CPU/DRAM counters, and Intelligent Platform Management Interface (IPMI) system-level sensors on 2x NVIDIA RTX PRO 6000 Blackwell GPUs, and profile three representative workloads with Qwen3.8-27B."
+      ],
+      "named_companies": [
+        "Intel",
+        "NVIDIA"
+      ],
+      "infrastructure_layer": "Compute",
+      "bottleneck_type": "power_grid",
+      "who_gains_leverage": "utilities, power-secured developers, and operators with firm interconnection positions",
+      "who_takes_execution_risk": "developers and cloud buyers whose delivery dates depend on utility upgrades or energization schedules",
+      "timing_dependency": "utility interconnection, equipment procurement, and energization milestones",
+      "counterargument": "The source may still describe intent rather than delivered capacity, so the operating impact depends on follow-through.",
+      "next_observable_signal": "interconnection approvals, substation equipment dates, power purchase agreements, or disclosed energization windows",
+      "expert_insight_complete": true,
+      "expert_insight_missing_fields": []
+    },
+    "expertInsight": {
+      "concrete_facts": [
+        "We conduct a full-stack energy profiling study combining NVML GPU counters, Intel RAPL CPU/DRAM counters, and Intelligent Platform Management Interface (IPMI) system-level sensors on 2x NVIDIA RTX PRO 6000 Blackwell GPUs, and profile three representative workloads with Qwen3.8-27B."
+      ],
+      "named_companies": [
+        "Intel",
+        "NVIDIA"
+      ],
+      "infrastructure_layer": "Compute",
+      "bottleneck_type": "power_grid",
+      "who_gains_leverage": "utilities, power-secured developers, and operators with firm interconnection positions",
+      "who_takes_execution_risk": "developers and cloud buyers whose delivery dates depend on utility upgrades or energization schedules",
+      "timing_dependency": "utility interconnection, equipment procurement, and energization milestones",
+      "counterargument": "The source may still describe intent rather than delivered capacity, so the operating impact depends on follow-through.",
+      "next_observable_signal": "interconnection approvals, substation equipment dates, power purchase agreements, or disclosed energization windows",
+      "expert_insight_complete": true,
+      "expert_insight_missing_fields": []
+    },
+    "concrete_facts": [
+      "We conduct a full-stack energy profiling study combining NVML GPU counters, Intel RAPL CPU/DRAM counters, and Intelligent Platform Management Interface (IPMI) system-level sensors on 2x NVIDIA RTX PRO 6000 Blackwell GPUs, and profile three representative workloads with Qwen3.8-27B."
+    ],
+    "named_companies": [
+      "Intel",
+      "NVIDIA"
+    ],
+    "bottleneck_type": "power_grid",
+    "who_gains_leverage": "utilities, power-secured developers, and operators with firm interconnection positions",
+    "who_takes_execution_risk": "developers and cloud buyers whose delivery dates depend on utility upgrades or energization schedules",
+    "timing_dependency": "utility interconnection, equipment procurement, and energization milestones",
+    "counterargument": "The source may still describe intent rather than delivered capacity, so the operating impact depends on follow-through.",
+    "next_observable_signal": "interconnection approvals, substation equipment dates, power purchase agreements, or disclosed energization windows",
+    "expert_insight_complete": true,
+    "expert_insight_missing_fields": [],
+    "tags": [
+      "llm",
+      "energy",
+      "gpu",
+      "inference",
+      "efficiency",
+      "profiling"
+    ],
+    "imagePrompt": "A high-tech data center with advanced GPUs in operation, showcasing energy consumption metrics and AI processing, in a modern and sleek environment, 16:9.",
+    "lang": "en",
+    "articleText": "LLM agents that iteratively reason, plan, and invoke tools create workload profiles fundamentally different from single-pass inference, yet how their energy consumption is distributed across hardware components and workload phases remains poorly understood. Characterizing these workloads therefore requires simultaneous visibility into both component-level power and phase-level execution. We conduct a full-stack energy profiling study combining NVML GPU counters, Intel RAPL CPU/DRAM counters, and Intelligent Platform Management Interface (IPMI) system-level sensors on 2x NVIDIA RTX PRO 6000 Blackwell GPUs, and profile three representative workloads with Qwen3.8-27B. For mathematical reasoning, we compare thinking-enabled and thinking-disabled modes. Our measurements reveal that GPU-only telemetry misses 41-45% of system energy across all three workloads, with non-GPU components accounting for the remainder. In our setup, the sequential agent workload consumes 63x more system energy per output token than saturated serving, reflecting the absence of batching, context growth across turns, and tool-induced idle periods. Extended thinking generates 21-75% more tokens per problem, while per-token energy differs by less than 1% between modes within each dataset, indicating that the resulting increase in energy is driven by output volume rather than a change in per-token efficiency. Continuous batching improves system-level energy efficiency by 3.2x from 1 to 16 requests per second, as GPU power plateaus while throughput continues to increase with batching depth. For the memory-bandwidth-bound reasoning workload, throughput remains unchanged under per-GPU power caps of 400-600 W but drops sharply at 300 W.",
+    "content_length": 1726,
+    "boilerplate_ratio": 0,
+    "title_body_similarity": 0.78,
+    "copyright_footer_detected": false,
+    "nav_or_cta_detected": false,
+    "sentence_completion_score": 1,
+    "source_domain_adapter": "arxiv",
+    "extraction_quality_score": 1,
+    "extraction_qa": {
+      "content_length": 1726,
+      "boilerplate_ratio": 0,
+      "title_body_similarity": 0.78,
+      "copyright_footer_detected": false,
+      "legal_boilerplate_detected": false,
+      "nav_or_cta_detected": false,
+      "sentence_completion_score": 1,
+      "source_domain_adapter": "arxiv",
+      "extraction_quality_score": 1,
+      "extraction_failure_reason": null,
+      "extraction_quality_reasons": [],
+      "public_publishable": true,
+      "can_generate_longform": true,
+      "cleaned_source_length": 1726,
+      "block_reasons": []
+    },
+    "extraction_artifact": {
+      "artifact_version": "extraction_v1",
+      "source_url": "https://arxiv.org/abs/2609.29707",
+      "extracted_text_sha256": "b6f7e4df2c569298f3995cf23ab52ff2e70aaad345ff4761dcd2b11b58c06625",
+      "cleaned_extracted_text": "LLM agents that iteratively reason, plan, and invoke tools create workload profiles fundamentally different from single-pass inference, yet how their energy consumption is distributed across hardware components and workload phases remains poorly understood. Characterizing these workloads therefore requires simultaneous visibility into both component-level power and phase-level execution. We conduct a full-stack energy profiling study combining NVML GPU counters, Intel RAPL CPU/DRAM counters, and Intelligent Platform Management Interface (IPMI) system-level sensors on 2x NVIDIA RTX PRO 6000 Blackwell GPUs, and profile three representative workloads with Qwen3.8-27B. For mathematical reasoning, we compare thinking-enabled and thinking-disabled modes. Our measurements reveal that GPU-only telemetry misses 41-45% of system energy across all three workloads, with non-GPU components accounting for the remainder. In our setup, the sequential agent workload consumes 63x more system energy per output token than saturated serving, reflecting the absence of batching, context growth across turns, and tool-induced idle periods. Extended thinking generates 21-75% more tokens per problem, while per-token energy differs by less than 1% between modes within each dataset, indicating that the resulting increase in energy is driven by output volume rather than a change in per-token efficiency. Continuous batching improves system-level energy efficiency by 3.2x from 1 to 16 requests per second, as GPU power plateaus while throughput continues to increase with batching depth. For the memory-bandwidth-bound reasoning workload, throughput remains unchanged under per-GPU power caps of 400-600 W but drops sharply at 300 W.",
+      "extraction_qa": {
+        "cleaned_source_length": 1726,
+        "block_reasons": [],
+        "public_publishable": true,
+        "can_generate_longform": true,
+        "boilerplate_ratio": 0,
+        "copyright_footer_detected": false,
+        "nav_or_cta_detected": false,
+        "sentence_completion_score": 1
+      }
+    },
+    "cleaned_source_text": "LLM agents that iteratively reason, plan, and invoke tools create workload profiles fundamentally different from single-pass inference, yet how their energy consumption is distributed across hardware components and workload phases remains poorly understood. Characterizing these workloads therefore requires simultaneous visibility into both component-level power and phase-level execution. We conduct a full-stack energy profiling study combining NVML GPU counters, Intel RAPL CPU/DRAM counters, and Intelligent Platform Management Interface (IPMI) system-level sensors on 2x NVIDIA RTX PRO 6000 Blackwell GPUs, and profile three representative workloads with Qwen3.8-27B. For mathematical reasoning, we compare thinking-enabled and thinking-disabled modes. Our measurements reveal that GPU-only telemetry misses 41-45% of system energy across all three workloads, with non-GPU components accounting for the remainder. In our setup, the sequential agent workload consumes 63x more system energy per output token than saturated serving, reflecting the absence of batching, context growth across turns, and tool-induced idle periods. Extended thinking generates 21-75% more tokens per problem, while per-token energy differs by less than 1% between modes within each dataset, indicating that the resulting increase in energy is driven by output volume rather than a change in per-token efficiency. Continuous batching improves system-level energy efficiency by 3.2x from 1 to 16 requests per second, as GPU power plateaus while throughput continues to increase with batching depth. For the memory-bandwidth-bound reasoning workload, throughput remains unchanged under per-GPU power caps of 400-600 W but drops sharply at 300 W.",
+    "sourceUrl": "https://arxiv.org/abs/2609.29707",
+    "generatedImage": "/generated/articles/da60d6f9264d334b-where-does-the-energy-go-profiling-llm-agent-inference-on-blackwell-gpus/hero.webp",
+    "infrastructureRelevanceAction": "publish_signal_card_only",
+    "articlePagePublished": false,
+    "homepagePublished": false,
+    "archiveOnly": true,
+    "archiveOnlyReason": null,
+    "signalCardOnly": false,
+    "signalCardReason": "infrastructure_relevance_signal_card_threshold",
+    "article_blueprint": null,
+    "articleBlueprint": null,
+    "expertLensShort": null,
+    "expertLensFull": null,
+    "expertLens": null,
+    "public_content_tier": "hidden",
+    "seo_noindex": true,
+    "noindex": true,
+    "public_tier_reasons": [
+      "not_enough_public_evidence"
+    ],
+    "searchText": "Where Does the Energy Go? Profiling LLM Agent Inference on Blackwell GPUs arXiv AI Infrastructure Research / Technical Compute power_grid utilities, power-secured developers, and operators with firm interconnection positions developers and cloud buyers whose delivery dates depend on utility upgrades or energization schedules utility interconnection, equipment procurement, and energization milestones The source may still describe intent rather than delivered capacity, so the operating impact depends on follow-through. interconnection approvals, substation equipment dates, power purchase agreements, or disclosed energization windows US A study on LLM agent inference using Blackwell GPUs reveals significant energy consumption patterns, highlighting inefficiencies in non-GPU components during processing. LLM agents that iteratively reason, plan, and invoke tools create workload profiles fundamentally different from single-pass inference, yet how their energy consumption is distributed across hardware components and workload phases remains poorly understood. Characterizing these workloads therefore requires simultaneous visibility into both component-level power and phase-level execution. We conduct a full-stack energy profiling study combining NVML GPU counters, Intel RAPL CPU/DRAM counters, and Intelligent Platform Management Interface (IPMI) system-level sensors on 2x NVIDIA RTX PRO 6000 Blackwell GPUs, and profile three representative workloads with Qwen3.8-27B. For mathematical reasoning, we compare thinking-enabled and thinking-disabled modes. Our measurements reveal that GPU-only telemetry misses 41-45% of system energy across all three workloads, with non-GPU components accounting for the remainder. In our setup, the sequential agent workload consumes 63x more system energy per output token than saturated serving, reflecting the absence of batching, context growth across turns, and tool-induced idle periods. Extended thinking generates 21-75% more tokens per problem, while per-token energy differs by less than 1% between modes within each dataset, indicating that the resulting increase in energy is driven by output volume rather than a change in per-token efficiency. Continuous batching improves system-level energy efficiency by 3.2x from 1 to 16 requests per second, as GPU power plateaus while throughput continues to increase with batching depth. For the memory-bandwidth-bound reasoning workload, throughput remains unchanged under per-GPU power caps of 400-600 W but drops sharply at 300 W. operators hyperscalers investors enterprise IT semiconductor suppliers We conduct a full-stack energy profiling study combining NVML GPU counters, Intel RAPL CPU/DRAM counters, and Intelligent Platform Management Interface (IPMI) system-level sensors on 2x NVIDIA RTX PRO 6000 Blackwell GPUs, and profile three representative workloads with Qwen3.8-27B. Intel NVIDIA llm energy gpu inference efficiency profiling"
+  },
+  {
+    "id": "5b109c48f719a8ed",
+    "sourceRegistryId": "arxiv-cs-dc",
+    "source": "arXiv",
+    "url": "https://arxiv.org/abs/2609.28870",
+    "title": "When Fancy Eviction Fails: Rethinking Cache Replacement For LLM Prefix Reuse",
+    "snippet": "arXiv:2609.28870v1 Announce Type: new Abstract: Long-running LLM applications repeatedly send growing context, making prefix caching critical for reducing prefill cost. Yet prefix-cache behavior under agentic workloads…",
+    "contentText": "arXiv:2609.28870v1 Announce Type: new Abstract: Long-running LLM applications repeatedly send growing context, making prefix caching critical for reducing prefill cost. Yet prefix-cache behavior under agentic workloads remains poorly understood. We study production traces from two companies and evaluate 14 eviction algorithms across HBM-constrained and large memory-pool settings. Despite a large gap to Belady, sophisticated policies designed for traditional caches provide little benefit over LRU. The reason is structural: prefix reuse is dominated by the regular pacing of active sessions, making recency unusually predictive. Prefix caching nevertheless introduces new challenges, including heavy-tailed session footprints and highly variable miss costs as attention computation grows with se…",
+    "publishedAt": "2026-09-25T04:00:00.000Z",
+    "sourceImage": null,
+    "region": "US",
+    "language": "en",
+    "defaultCategory": "AI Infrastructure",
+    "source_text_scope": "abstract",
+    "ai_topic_score": 0.786,
+    "ai_topic_reasons": [
+      "llm",
+      "agentic"
+    ],
+    "category": "AI Infrastructure",
+    "primary_category": "AI Infrastructure",
+    "secondary_category": "Research / Technical",
+    "infrastructure_layer": "Compute",
+    "affected_stakeholders": [
+      "operators",
+      "investors",
+      "AI developers",
+      "semiconductor suppliers",
+      "hyperscalers"
+    ],
+    "article_type": "Research / Technical",
+    "urgency_score": 0.6,
+    "taxonomy_confidence": 0.67,
+    "taxonomy_reasons": [
+      "hbm",
+      "advanced packaging"
+    ],
+    "direct_ai_infrastructure_relevance": 0.7,
+    "data_center_relevance": 0,
+    "cloud_capacity_relevance": 0,
+    "semiconductor_relevance": 0.36,
+    "power_grid_relevance": 0,
+    "cooling_relevance": 0,
+    "capital_markets_relevance": 0,
+    "enterprise_ai_infrastructure_relevance": 0,
+    "infrastructure_relevance_score": 0.555,
+    "infrastructure_relevance_tier": "signal_card",
+    "infrastructure_relevance_action": "publish_signal_card_only",
+    "infrastructure_relevance_reasons": [
+      "direct_ai_infrastructure_relevance:0.70(ai infrastructure)",
+      "semiconductor_relevance:0.36(hbm)"
+    ],
+    "infrastructure_relevance": {
+      "direct_ai_infrastructure_relevance": 0.7,
+      "data_center_relevance": 0,
+      "cloud_capacity_relevance": 0,
+      "semiconductor_relevance": 0.36,
+      "power_grid_relevance": 0,
+      "cooling_relevance": 0,
+      "capital_markets_relevance": 0,
+      "enterprise_ai_infrastructure_relevance": 0,
+      "infrastructure_relevance_score": 0.555,
+      "infrastructure_relevance_tier": "signal_card",
+      "infrastructure_relevance_action": "publish_signal_card_only",
+      "infrastructure_relevance_reasons": [
+        "direct_ai_infrastructure_relevance:0.70(ai infrastructure)",
+        "semiconductor_relevance:0.36(hbm)"
+      ],
+      "infrastructureRelevanceAction": "publish_signal_card_only",
+      "articlePagePublished": false,
+      "homepagePublished": true,
+      "archiveOnly": false,
+      "archiveOnlyReason": null
+    },
+    "score": 38,
+    "slug": "when-fancy-eviction-fails-rethinking-cache-replacement-for-llm-prefix-reuse",
+    "summary": "New research evaluates prefix caching for long-running LLM applications, highlighting the limitations of traditional eviction algorithms in managing memory efficiently.",
+    "insight": "Understanding effective prefix-cache management is crucial for optimizing compute costs in LLM applications. This could influence design decisions for operators and investors focused on AI infrastructure.",
+    "expert_insight": {
+      "concrete_facts": [
+        "We will release the traces and simulator to support future research."
+      ],
+      "named_companies": [],
+      "infrastructure_layer": "Compute",
+      "bottleneck_type": "compute_supply",
+      "who_gains_leverage": "chip suppliers, systems integrators, and buyers with committed accelerator allocations",
+      "who_takes_execution_risk": "cloud providers and enterprises that still need networking, power, and facility readiness around purchased systems",
+      "timing_dependency": "accelerator allocation, server integration, memory supply, and cluster turn-up",
+      "counterargument": "The source may still describe intent rather than delivered capacity, so the operating impact depends on follow-through.",
+      "next_observable_signal": "delivery schedules, memory availability, networking readiness, or deployed cluster utilization",
+      "expert_insight_complete": false,
+      "expert_insight_missing_fields": [
+        "named_companies"
+      ]
+    },
+    "expertInsight": {
+      "concrete_facts": [
+        "We will release the traces and simulator to support future research."
+      ],
+      "named_companies": [],
+      "infrastructure_layer": "Compute",
+      "bottleneck_type": "compute_supply",
+      "who_gains_leverage": "chip suppliers, systems integrators, and buyers with committed accelerator allocations",
+      "who_takes_execution_risk": "cloud providers and enterprises that still need networking, power, and facility readiness around purchased systems",
+      "timing_dependency": "accelerator allocation, server integration, memory supply, and cluster turn-up",
+      "counterargument": "The source may still describe intent rather than delivered capacity, so the operating impact depends on follow-through.",
+      "next_observable_signal": "delivery schedules, memory availability, networking readiness, or deployed cluster utilization",
+      "expert_insight_complete": false,
+      "expert_insight_missing_fields": [
+        "named_companies"
+      ]
+    },
+    "concrete_facts": [
+      "We will release the traces and simulator to support future research."
+    ],
+    "named_companies": [],
+    "bottleneck_type": "compute_supply",
+    "who_gains_leverage": "chip suppliers, systems integrators, and buyers with committed accelerator allocations",
+    "who_takes_execution_risk": "cloud providers and enterprises that still need networking, power, and facility readiness around purchased systems",
+    "timing_dependency": "accelerator allocation, server integration, memory supply, and cluster turn-up",
+    "counterargument": "The source may still describe intent rather than delivered capacity, so the operating impact depends on follow-through.",
+    "next_observable_signal": "delivery schedules, memory availability, networking readiness, or deployed cluster utilization",
+    "expert_insight_complete": false,
+    "expert_insight_missing_fields": [
+      "named_companies"
+    ],
+    "tags": [
+      "llm",
+      "caching",
+      "ai",
+      "memory",
+      "research",
+      "optimization"
+    ],
+    "imagePrompt": "A conceptual illustration of AI infrastructure with focus on memory management and caching, featuring abstract representations of data flow and computation, 16:9.",
+    "lang": "en",
+    "articleText": "Long-running LLM applications repeatedly send growing context, making prefix caching critical for reducing prefill cost. Yet prefix-cache behavior under agentic workloads remains poorly understood. We study production traces from two companies and evaluate 14 eviction algorithms across HBM-constrained and large memory-pool settings. Despite a large gap to Belady, sophisticated policies designed for traditional caches provide little benefit over LRU. The reason is structural: prefix reuse is dominated by the regular pacing of active sessions, making recency unusually predictive. Prefix caching nevertheless introduces new challenges, including heavy-tailed session footprints and highly variable miss costs as attention computation grows with sequence length. We introduce the compute-savings ratio and two offline oracles to quantify these effects. Our results show that effective prefix-cache management should retain recency as its foundation while selectively adding quick demotion for one-hit prefixes, compute-aware partial eviction for expensive misses, and capacity-dependent eviction granularity. We will release the traces and simulator to support future research.",
+    "content_length": 1180,
+    "boilerplate_ratio": 0,
+    "title_body_similarity": 0.5,
+    "copyright_footer_detected": false,
+    "nav_or_cta_detected": false,
+    "sentence_completion_score": 1,
+    "source_domain_adapter": "arxiv",
+    "extraction_quality_score": 0.98,
+    "extraction_qa": {
+      "content_length": 1180,
+      "boilerplate_ratio": 0,
+      "title_body_similarity": 0.5,
+      "copyright_footer_detected": false,
+      "legal_boilerplate_detected": false,
+      "nav_or_cta_detected": false,
+      "sentence_completion_score": 1,
+      "source_domain_adapter": "arxiv",
+      "extraction_quality_score": 0.98,
+      "extraction_failure_reason": null,
+      "extraction_quality_reasons": [],
+      "public_publishable": true,
+      "can_generate_longform": false,
+      "cleaned_source_length": 1180,
+      "block_reasons": [
+        "cleaned_source_text_below_1200",
+        "source_evidence_length_below_1200"
+      ]
+    },
+    "extraction_artifact": {
+      "artifact_version": "extraction_v1",
+      "source_url": "https://arxiv.org/abs/2609.28870",
+      "extracted_text_sha256": "026661c6905cd1abeb865653e74c7bbeaf5642e09201615816f60052e244fbb1",
+      "cleaned_extracted_text": "Long-running LLM applications repeatedly send growing context, making prefix caching critical for reducing prefill cost. Yet prefix-cache behavior under agentic workloads remains poorly understood. We study production traces from two companies and evaluate 14 eviction algorithms across HBM-constrained and large memory-pool settings. Despite a large gap to Belady, sophisticated policies designed for traditional caches provide little benefit over LRU. The reason is structural: prefix reuse is dominated by the regular pacing of active sessions, making recency unusually predictive. Prefix caching nevertheless introduces new challenges, including heavy-tailed session footprints and highly variable miss costs as attention computation grows with sequence length. We introduce the compute-savings ratio and two offline oracles to quantify these effects. Our results show that effective prefix-cache management should retain recency as its foundation while selectively adding quick demotion for one-hit prefixes, compute-aware partial eviction for expensive misses, and capacity-dependent eviction granularity. We will release the traces and simulator to support future research.",
+      "extraction_qa": {
+        "cleaned_source_length": 1180,
+        "block_reasons": [
+          "cleaned_source_text_below_1200",
+          "source_evidence_length_below_1200"
+        ],
+        "public_publishable": true,
+        "can_generate_longform": false,
+        "boilerplate_ratio": 0,
+        "copyright_footer_detected": false,
+        "nav_or_cta_detected": false,
+        "sentence_completion_score": 1
+      }
+    },
+    "cleaned_source_text": "Long-running LLM applications repeatedly send growing context, making prefix caching critical for reducing prefill cost. Yet prefix-cache behavior under agentic workloads remains poorly understood. We study production traces from two companies and evaluate 14 eviction algorithms across HBM-constrained and large memory-pool settings. Despite a large gap to Belady, sophisticated policies designed for traditional caches provide little benefit over LRU. The reason is structural: prefix reuse is dominated by the regular pacing of active sessions, making recency unusually predictive. Prefix caching nevertheless introduces new challenges, including heavy-tailed session footprints and highly variable miss costs as attention computation grows with sequence length. We introduce the compute-savings ratio and two offline oracles to quantify these effects. Our results show that effective prefix-cache management should retain recency as its foundation while selectively adding quick demotion for one-hit prefixes, compute-aware partial eviction for expensive misses, and capacity-dependent eviction granularity. We will release the traces and simulator to support future research.",
+    "sourceUrl": "https://arxiv.org/abs/2609.28870",
+    "generatedImage": "/generated/articles/5b109c48f719a8ed-when-fancy-eviction-fails-rethinking-cache-replacement-for-llm-prefix-reuse/hero.webp",
+    "infrastructureRelevanceAction": "publish_signal_card_only",
+    "articlePagePublished": false,
+    "homepagePublished": false,
+    "archiveOnly": true,
+    "archiveOnlyReason": null,
+    "signalCardOnly": false,
+    "signalCardReason": "infrastructure_relevance_signal_card_threshold",
+    "article_blueprint": null,
+    "articleBlueprint": null,
+    "expertLensShort": null,
+    "expertLensFull": null,
+    "expertLens": null,
+    "public_content_tier": "hidden",
+    "seo_noindex": true,
+    "noindex": true,
+    "public_tier_reasons": [
+      "not_enough_public_evidence"
+    ],
+    "searchText": "When Fancy Eviction Fails: Rethinking Cache Replacement For LLM Prefix Reuse arXiv AI Infrastructure Research / Technical Compute compute_supply chip suppliers, systems integrators, and buyers with committed accelerator allocations cloud providers and enterprises that still need networking, power, and facility readiness around purchased systems accelerator allocation, server integration, memory supply, and cluster turn-up The source may still describe intent rather than delivered capacity, so the operating impact depends on follow-through. delivery schedules, memory availability, networking readiness, or deployed cluster utilization US New research evaluates prefix caching for long-running LLM applications, highlighting the limitations of traditional eviction algorithms in managing memory efficiently. Long-running LLM applications repeatedly send growing context, making prefix caching critical for reducing prefill cost. Yet prefix-cache behavior under agentic workloads remains poorly understood. We study production traces from two companies and evaluate 14 eviction algorithms across HBM-constrained and large memory-pool settings. Despite a large gap to Belady, sophisticated policies designed for traditional caches provide little benefit over LRU. The reason is structural: prefix reuse is dominated by the regular pacing of active sessions, making recency unusually predictive. Prefix caching nevertheless introduces new challenges, including heavy-tailed session footprints and highly variable miss costs as attention computation grows with sequence length. We introduce the compute-savings ratio and two offline oracles to quantify these effects. Our results show that effective prefix-cache management should retain recency as its foundation while selectively adding quick demotion for one-hit prefixes, compute-aware partial eviction for expensive misses, and capacity-dependent eviction granularity. We will release the traces and simulator to support future research. operators investors AI developers semiconductor suppliers hyperscalers We will release the traces and simulator to support future research. llm caching ai memory research optimization"
   },
   {
     "id": "352ebe9521dab276",
