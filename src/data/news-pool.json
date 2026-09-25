@@ -608,6 +608,78 @@
     }
   },
   {
+    "id": "c624b2fdc5ce7ada",
+    "sourceRegistryId": "gao-reports",
+    "source": "U.S. Government Accountability Office",
+    "url": "https://www.gao.gov/products/gao-26-109087",
+    "title": "Funding Status: Infrastructure Investment and Jobs and Inflation Reduction Acts at the Departments of Agriculture and Energy",
+    "snippet": "What GAO Found The Infrastructure Investment and Jobs Act (IIJA) and Inflation Reduction Act (IRA) provided federal funding to agencies, including the Department of Agriculture (USDA) and Department of Energy (DOE), for…",
+    "contentText": "What GAO Found The Infrastructure Investment and Jobs Act (IIJA) and Inflation Reduction Act (IRA) provided federal funding to agencies, including the Department of Agriculture (USDA) and Department of Energy (DOE), for a wide range of efforts. These efforts included projects to reduce wildfire risk, improve rural power production, and develop clean energy technologies. Of the $37 billion provided to USDA that was not later rescinded by Public Law 119-21, commonly known as the One Big Beautiful Bill Act, USDA obligated $32.2 billion for fiscal years 2022 through 2025. Of the $78 billion provided to DOE that was not later rescinded, DOE obligated $51 billion for fiscal years 2022 through 2025. Infrastructure Investment and Jobs Act (IIJA) and Inflation Reduction Act (IRA) Funding for USDA…",
+    "publishedAt": "2026-09-24T11:13:19.000Z",
+    "sourceImage": null,
+    "region": "US",
+    "language": "en",
+    "defaultCategory": "Power & Grid",
+    "ai_topic_score": 0,
+    "ai_topic_reasons": [
+      "ai_not_in_title"
+    ],
+    "category": "Power & Grid",
+    "primary_category": "Power & Grid",
+    "secondary_category": "Interconnection and power procurement",
+    "infrastructure_layer": "Power",
+    "affected_stakeholders": [
+      "data center operators",
+      "utilities",
+      "cloud capacity teams",
+      "investors"
+    ],
+    "article_type": "Financing / M&A",
+    "urgency_score": 0.55,
+    "taxonomy_confidence": 0.65,
+    "taxonomy_reasons": [
+      "power",
+      "grid"
+    ],
+    "direct_ai_infrastructure_relevance": 0,
+    "data_center_relevance": 0,
+    "cloud_capacity_relevance": 0,
+    "semiconductor_relevance": 0,
+    "power_grid_relevance": 0.22,
+    "cooling_relevance": 0,
+    "capital_markets_relevance": 0.378,
+    "enterprise_ai_infrastructure_relevance": 0,
+    "infrastructure_relevance_score": 0.338,
+    "infrastructure_relevance_tier": "archive_only",
+    "infrastructure_relevance_action": "archive_only",
+    "infrastructure_relevance_reasons": [
+      "power_grid_relevance:0.22(power)",
+      "capital_markets_relevance:0.38(funding)"
+    ],
+    "infrastructure_relevance": {
+      "direct_ai_infrastructure_relevance": 0,
+      "data_center_relevance": 0,
+      "cloud_capacity_relevance": 0,
+      "semiconductor_relevance": 0,
+      "power_grid_relevance": 0.22,
+      "cooling_relevance": 0,
+      "capital_markets_relevance": 0.378,
+      "enterprise_ai_infrastructure_relevance": 0,
+      "infrastructure_relevance_score": 0.338,
+      "infrastructure_relevance_tier": "archive_only",
+      "infrastructure_relevance_action": "archive_only",
+      "infrastructure_relevance_reasons": [
+        "power_grid_relevance:0.22(power)",
+        "capital_markets_relevance:0.38(funding)"
+      ],
+      "infrastructureRelevanceAction": "archive_only",
+      "articlePagePublished": false,
+      "homepagePublished": false,
+      "archiveOnly": true,
+      "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
+    }
+  },
+  {
     "id": "eff04f6506da505b",
     "sourceRegistryId": "nsf-news",
     "source": "U.S. National Science Foundation",
@@ -879,75 +951,6 @@
       "infrastructure_relevance_action": "archive_only",
       "infrastructure_relevance_reasons": [
         "power_grid_relevance:0.60(electricity, transmission)"
-      ],
-      "infrastructureRelevanceAction": "archive_only",
-      "articlePagePublished": false,
-      "homepagePublished": false,
-      "archiveOnly": true,
-      "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
-    }
-  },
-  {
-    "id": "c7f06c7b67ed7039",
-    "sourceRegistryId": "nsf-news",
-    "source": "U.S. National Science Foundation",
-    "url": "https://www.nsf.gov/news/podcast-creating-thermal-cloaking-new-structures",
-    "title": "Podcast: Creating thermal cloaking and new structures",
-    "snippet": "Shelly Zhang, an NSF-supported researcher, discusses her work using additive manufacturing and topology optimization to create new structures, including a 3D thermal cloaking device...",
-    "contentText": "Shelly Zhang, an NSF-supported researcher, discusses her work using additive manufacturing and topology optimization to create new structures, including a 3D thermal cloaking device...",
-    "publishedAt": "2026-09-14T21:28:01.000Z",
-    "sourceImage": null,
-    "region": "US",
-    "language": "en",
-    "defaultCategory": "AI Infrastructure",
-    "ai_topic_score": 0,
-    "ai_topic_reasons": [
-      "ai_not_in_title"
-    ],
-    "category": "Cooling & Facility Engineering",
-    "primary_category": "Cooling & Facility Engineering",
-    "secondary_category": "Thermal design and rack density",
-    "infrastructure_layer": "Cooling",
-    "affected_stakeholders": [
-      "operators",
-      "equipment vendors",
-      "data center developers",
-      "enterprise IT"
-    ],
-    "article_type": "Other",
-    "urgency_score": 0.27,
-    "taxonomy_confidence": 0.62,
-    "taxonomy_reasons": [
-      "thermal"
-    ],
-    "direct_ai_infrastructure_relevance": 0,
-    "data_center_relevance": 0,
-    "cloud_capacity_relevance": 0,
-    "semiconductor_relevance": 0,
-    "power_grid_relevance": 0,
-    "cooling_relevance": 0.405,
-    "capital_markets_relevance": 0,
-    "enterprise_ai_infrastructure_relevance": 0,
-    "infrastructure_relevance_score": 0.27,
-    "infrastructure_relevance_tier": "archive_only",
-    "infrastructure_relevance_action": "archive_only",
-    "infrastructure_relevance_reasons": [
-      "cooling_relevance:0.41(thermal)"
-    ],
-    "infrastructure_relevance": {
-      "direct_ai_infrastructure_relevance": 0,
-      "data_center_relevance": 0,
-      "cloud_capacity_relevance": 0,
-      "semiconductor_relevance": 0,
-      "power_grid_relevance": 0,
-      "cooling_relevance": 0.405,
-      "capital_markets_relevance": 0,
-      "enterprise_ai_infrastructure_relevance": 0,
-      "infrastructure_relevance_score": 0.27,
-      "infrastructure_relevance_tier": "archive_only",
-      "infrastructure_relevance_action": "archive_only",
-      "infrastructure_relevance_reasons": [
-        "cooling_relevance:0.41(thermal)"
       ],
       "infrastructureRelevanceAction": "archive_only",
       "articlePagePublished": false,
@@ -1736,6 +1739,76 @@
     }
   },
   {
+    "id": "a1f3d1906518a2ae",
+    "sourceRegistryId": "gao-reports",
+    "source": "U.S. Government Accountability Office",
+    "url": "https://www.gao.gov/products/gao-26-108690",
+    "title": "Maternal Health: Information on and Federal Oversight of Mortality Review Committees",
+    "snippet": "What GAO Found The U.S. faces a maternal mortality crisis, with mortality rates that exceed every other high-income country. More than 600 women die during pregnancy or from causes aggravated by pregnancy each year in t…",
+    "contentText": "What GAO Found The U.S. faces a maternal mortality crisis, with mortality rates that exceed every other high-income country. More than 600 women die during pregnancy or from causes aggravated by pregnancy each year in the U.S.; over 80 percent of these deaths are preventable, according to the Centers for Disease Control and Prevention (CDC). To help prevent these kinds of deaths, CDC provides funding for Maternal Mortality Review Committees (MMRCs). These committees, typically supported and maintained by state and local health agencies, identify factors contributing to pregnancy-related deaths and make recommendations to patients and their families, providers, hospitals, or state policymakers to help prevent similar deaths. They convene at the state or local level and comprise clinical an…",
+    "publishedAt": "2026-09-24T11:00:28.000Z",
+    "sourceImage": null,
+    "region": "US",
+    "language": "en",
+    "defaultCategory": "Power & Grid",
+    "ai_topic_score": 0,
+    "ai_topic_reasons": [
+      "ai_not_in_title"
+    ],
+    "category": "Power & Grid",
+    "primary_category": "Power & Grid",
+    "secondary_category": "Interconnection and power procurement",
+    "infrastructure_layer": "Power",
+    "affected_stakeholders": [
+      "data center operators",
+      "utilities",
+      "cloud capacity teams",
+      "investors"
+    ],
+    "article_type": "Financing / M&A",
+    "urgency_score": 0.5,
+    "taxonomy_confidence": 0.61,
+    "taxonomy_reasons": [
+      "power",
+      "grid"
+    ],
+    "direct_ai_infrastructure_relevance": 0,
+    "data_center_relevance": 0,
+    "cloud_capacity_relevance": 0,
+    "semiconductor_relevance": 0,
+    "power_grid_relevance": 0,
+    "cooling_relevance": 0,
+    "capital_markets_relevance": 0.28,
+    "enterprise_ai_infrastructure_relevance": 0,
+    "infrastructure_relevance_score": 0.197,
+    "infrastructure_relevance_tier": "archive_only",
+    "infrastructure_relevance_action": "archive_only",
+    "infrastructure_relevance_reasons": [
+      "capital_markets_relevance:0.28(funding)"
+    ],
+    "infrastructure_relevance": {
+      "direct_ai_infrastructure_relevance": 0,
+      "data_center_relevance": 0,
+      "cloud_capacity_relevance": 0,
+      "semiconductor_relevance": 0,
+      "power_grid_relevance": 0,
+      "cooling_relevance": 0,
+      "capital_markets_relevance": 0.28,
+      "enterprise_ai_infrastructure_relevance": 0,
+      "infrastructure_relevance_score": 0.197,
+      "infrastructure_relevance_tier": "archive_only",
+      "infrastructure_relevance_action": "archive_only",
+      "infrastructure_relevance_reasons": [
+        "capital_markets_relevance:0.28(funding)"
+      ],
+      "infrastructureRelevanceAction": "archive_only",
+      "articlePagePublished": false,
+      "homepagePublished": false,
+      "archiveOnly": true,
+      "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
+    }
+  },
+  {
     "id": "0e0960ed6f51211b",
     "sourceRegistryId": "uk-desnz",
     "source": "UK Department for Energy Security and Net Zero",
@@ -1834,146 +1907,6 @@
     ],
     "article_type": "Financing / M&A",
     "urgency_score": 0.5,
-    "taxonomy_confidence": 0.61,
-    "taxonomy_reasons": [
-      "power",
-      "grid"
-    ],
-    "direct_ai_infrastructure_relevance": 0,
-    "data_center_relevance": 0,
-    "cloud_capacity_relevance": 0,
-    "semiconductor_relevance": 0,
-    "power_grid_relevance": 0,
-    "cooling_relevance": 0,
-    "capital_markets_relevance": 0.28,
-    "enterprise_ai_infrastructure_relevance": 0,
-    "infrastructure_relevance_score": 0.197,
-    "infrastructure_relevance_tier": "archive_only",
-    "infrastructure_relevance_action": "archive_only",
-    "infrastructure_relevance_reasons": [
-      "capital_markets_relevance:0.28(funding)"
-    ],
-    "infrastructure_relevance": {
-      "direct_ai_infrastructure_relevance": 0,
-      "data_center_relevance": 0,
-      "cloud_capacity_relevance": 0,
-      "semiconductor_relevance": 0,
-      "power_grid_relevance": 0,
-      "cooling_relevance": 0,
-      "capital_markets_relevance": 0.28,
-      "enterprise_ai_infrastructure_relevance": 0,
-      "infrastructure_relevance_score": 0.197,
-      "infrastructure_relevance_tier": "archive_only",
-      "infrastructure_relevance_action": "archive_only",
-      "infrastructure_relevance_reasons": [
-        "capital_markets_relevance:0.28(funding)"
-      ],
-      "infrastructureRelevanceAction": "archive_only",
-      "articlePagePublished": false,
-      "homepagePublished": false,
-      "archiveOnly": true,
-      "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
-    }
-  },
-  {
-    "id": "58f83755f3422cb3",
-    "sourceRegistryId": "gao-reports",
-    "source": "U.S. Government Accountability Office",
-    "url": "https://www.gao.gov/products/gao-26-107178",
-    "title": "Tribal Water Infrastructure: Opportunities Exist to Improve Federal Assistance",
-    "snippet": "What GAO Found As part of the federal government’s efforts to support Tribes and tribal members’ health and to help prevent disease, an Indian Health Service (IHS) program provides Tribes with technical and financial as…",
-    "contentText": "What GAO Found As part of the federal government’s efforts to support Tribes and tribal members’ health and to help prevent disease, an Indian Health Service (IHS) program provides Tribes with technical and financial assistance to build drinking water and wastewater infrastructure in tribal communities. Through this program, IHS staff work closely with Tribes to identify their needs and design and build water projects. Several U.S. Environmental Protection Agency (EPA) and U.S. Department of Agriculture (USDA) programs also provide assistance for tribal water projects, and the three agencies often work together and with Tribes. Selected Agencies’ Funding for Tribal Water Projects, Fiscal Year 2025 IHS has determined that only certain homes are eligible for funding as part of a community t…",
-    "publishedAt": "2026-09-22T11:14:56.000Z",
-    "sourceImage": null,
-    "region": "APAC",
-    "language": "en",
-    "defaultCategory": "Power & Grid",
-    "ai_topic_score": 0,
-    "ai_topic_reasons": [
-      "ai_not_in_title"
-    ],
-    "category": "Power & Grid",
-    "primary_category": "Power & Grid",
-    "secondary_category": "Interconnection and power procurement",
-    "infrastructure_layer": "Power",
-    "affected_stakeholders": [
-      "data center operators",
-      "utilities",
-      "cloud capacity teams",
-      "investors"
-    ],
-    "article_type": "Financing / M&A",
-    "urgency_score": 0.5,
-    "taxonomy_confidence": 0.61,
-    "taxonomy_reasons": [
-      "power",
-      "grid"
-    ],
-    "direct_ai_infrastructure_relevance": 0,
-    "data_center_relevance": 0,
-    "cloud_capacity_relevance": 0,
-    "semiconductor_relevance": 0,
-    "power_grid_relevance": 0,
-    "cooling_relevance": 0,
-    "capital_markets_relevance": 0.28,
-    "enterprise_ai_infrastructure_relevance": 0,
-    "infrastructure_relevance_score": 0.197,
-    "infrastructure_relevance_tier": "archive_only",
-    "infrastructure_relevance_action": "archive_only",
-    "infrastructure_relevance_reasons": [
-      "capital_markets_relevance:0.28(funding)"
-    ],
-    "infrastructure_relevance": {
-      "direct_ai_infrastructure_relevance": 0,
-      "data_center_relevance": 0,
-      "cloud_capacity_relevance": 0,
-      "semiconductor_relevance": 0,
-      "power_grid_relevance": 0,
-      "cooling_relevance": 0,
-      "capital_markets_relevance": 0.28,
-      "enterprise_ai_infrastructure_relevance": 0,
-      "infrastructure_relevance_score": 0.197,
-      "infrastructure_relevance_tier": "archive_only",
-      "infrastructure_relevance_action": "archive_only",
-      "infrastructure_relevance_reasons": [
-        "capital_markets_relevance:0.28(funding)"
-      ],
-      "infrastructureRelevanceAction": "archive_only",
-      "articlePagePublished": false,
-      "homepagePublished": false,
-      "archiveOnly": true,
-      "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
-    }
-  },
-  {
-    "id": "de267fdc6eeb2e8d",
-    "sourceRegistryId": "gao-reports",
-    "source": "U.S. Government Accountability Office",
-    "url": "https://www.gao.gov/products/gao-26-109097",
-    "title": "DHS Grants: Approach to Terminations and Pauses Disrupted Some Program Activities",
-    "snippet": "What GAO Found In February 2025, the President issued an executive order that called for agencies to consult with the U.S. DOGE Service (also known as the Department of Government Efficiency) to review and terminate gra…",
-    "contentText": "What GAO Found In February 2025, the President issued an executive order that called for agencies to consult with the U.S. DOGE Service (also known as the Department of Government Efficiency) to review and terminate grants within 30 days of the executive order to reduce spending. Department of Homeland Security (DHS) officials told GAO that they followed directions from the Secretary of Homeland Security in 2025 to determine which grants to terminate. DHS took several actions during fiscal year 2025 to implement the Secretary’s grant review guidance. For example: DHS paused the disbursement of all obligated grant funding in February 2025. With approval from the Secretary, four DHS components terminated 362 grants and deobligated about $1 billion for those grants, as shown in the table bel…",
-    "publishedAt": "2026-09-17T11:11:24.000Z",
-    "sourceImage": null,
-    "region": "US",
-    "language": "en",
-    "defaultCategory": "Power & Grid",
-    "ai_topic_score": 0,
-    "ai_topic_reasons": [
-      "ai_not_in_title"
-    ],
-    "category": "Power & Grid",
-    "primary_category": "Power & Grid",
-    "secondary_category": "Interconnection and power procurement",
-    "infrastructure_layer": "Power",
-    "affected_stakeholders": [
-      "data center operators",
-      "utilities",
-      "cloud capacity teams",
-      "investors"
-    ],
-    "article_type": "Financing / M&A",
-    "urgency_score": 0.58,
     "taxonomy_confidence": 0.61,
     "taxonomy_reasons": [
       "power",
@@ -2145,6 +2078,78 @@
       "infrastructure_relevance_action": "archive_only",
       "infrastructure_relevance_reasons": [
         "power_grid_relevance:0.26(nuclear)"
+      ],
+      "infrastructureRelevanceAction": "archive_only",
+      "articlePagePublished": false,
+      "homepagePublished": false,
+      "archiveOnly": true,
+      "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
+    }
+  },
+  {
+    "id": "3f3554a1e1533423",
+    "sourceRegistryId": "federal-register-ferc",
+    "source": "Federal Register",
+    "url": "https://www.federalregister.gov/documents/2026/09/16/2026-19011/commission-information-collection-activities-ferc-555-comment-request-extension",
+    "title": "Commission Information Collection Activities (Ferc-555); Comment Request; Extension",
+    "snippet": "In compliance with the requirements of the Paperwork Reduction Act of 1995, the Federal Energy Regulatory Commission (Commission or FERC) is soliciting public comment on the currently approved information collection, FE…",
+    "contentText": "In compliance with the requirements of the Paperwork Reduction Act of 1995, the Federal Energy Regulatory Commission (Commission or FERC) is soliciting public comment on the currently approved information collection, FERC-555: Preservation of Records for Public Utilities and Licensees, Natural Gas and Oil Pipeline Companies (OMB Control No. 1902-0098) which will be submitted to the Office of Management and Budget (OMB) for a review of the information collection requirements. There are no proposed changes to the record keeping requirements. The 60-day notice period ended on September 8, 2026, with no comments received.",
+    "publishedAt": "2026-09-16T04:00:00.000Z",
+    "sourceImage": null,
+    "region": "US",
+    "language": "en",
+    "defaultCategory": "Power & Grid",
+    "ai_topic_score": 0,
+    "ai_topic_reasons": [
+      "ai_not_in_title"
+    ],
+    "category": "Power & Grid",
+    "primary_category": "Power & Grid",
+    "secondary_category": "Interconnection and power procurement",
+    "infrastructure_layer": "Power",
+    "affected_stakeholders": [
+      "data center operators",
+      "utilities",
+      "cloud capacity teams",
+      "investors"
+    ],
+    "article_type": "Policy / Regulation",
+    "urgency_score": 0.42,
+    "taxonomy_confidence": 0.65,
+    "taxonomy_reasons": [
+      "power",
+      "grid"
+    ],
+    "direct_ai_infrastructure_relevance": 0,
+    "data_center_relevance": 0,
+    "cloud_capacity_relevance": 0,
+    "semiconductor_relevance": 0,
+    "power_grid_relevance": 0.26,
+    "cooling_relevance": 0,
+    "capital_markets_relevance": 0,
+    "enterprise_ai_infrastructure_relevance": 0,
+    "infrastructure_relevance_score": 0.186,
+    "infrastructure_relevance_tier": "archive_only",
+    "infrastructure_relevance_action": "archive_only",
+    "infrastructure_relevance_reasons": [
+      "power_grid_relevance:0.26(utilities)",
+      "procedural_regulatory_docket_without_compute_context"
+    ],
+    "infrastructure_relevance": {
+      "direct_ai_infrastructure_relevance": 0,
+      "data_center_relevance": 0,
+      "cloud_capacity_relevance": 0,
+      "semiconductor_relevance": 0,
+      "power_grid_relevance": 0.26,
+      "cooling_relevance": 0,
+      "capital_markets_relevance": 0,
+      "enterprise_ai_infrastructure_relevance": 0,
+      "infrastructure_relevance_score": 0.186,
+      "infrastructure_relevance_tier": "archive_only",
+      "infrastructure_relevance_action": "archive_only",
+      "infrastructure_relevance_reasons": [
+        "power_grid_relevance:0.26(utilities)",
+        "procedural_regulatory_docket_without_compute_context"
       ],
       "infrastructureRelevanceAction": "archive_only",
       "articlePagePublished": false,
