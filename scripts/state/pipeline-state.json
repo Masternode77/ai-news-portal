@@ -871,7 +871,9 @@
     "e0218df442136eec",
     "dab941d2ad44772a",
     "da60d6f9264d334b",
-    "5b109c48f719a8ed"
+    "5b109c48f719a8ed",
+    "626eac9e14588b8a",
+    "014ef10f3f64d488"
   ],
   "dayPlans": {
     "2026-03-24": {
@@ -46984,28 +46986,178 @@
         "1": true,
         "2": true
       }
+    },
+    "2026-09-26": {
+      "date": "2026-09-26",
+      "createdAt": "2026-09-25T19:12:37.081Z",
+      "refreshedAt": "2026-09-25T19:12:37.081Z",
+      "candidateWindowHours": 24,
+      "curatedItems": [
+        {
+          "id": "626eac9e14588b8a",
+          "sourceRegistryId": "arxiv-cs-ar",
+          "source": "arXiv",
+          "url": "https://arxiv.org/abs/2609.29246",
+          "title": "HBF-Sim: An Extensible HBF Simulator for Large-scale GPU Memory Systems",
+          "snippet": "arXiv:2609.29246v1 Announce Type: new Abstract: High-bandwidth flash (HBF) is introduced to address the memory wall, which can co-package a dense NAND stack with the GPU, targeting the performance gap between near-accel…",
+          "contentText": "arXiv:2609.29246v1 Announce Type: new Abstract: High-bandwidth flash (HBF) is introduced to address the memory wall, which can co-package a dense NAND stack with the GPU, targeting the performance gap between near-accelerator bandwidth and flash density. HBF, however, is neither a large HBM nor a fast NVMe SSD. Its usable bandwidth depends on how GPU cache-line requests map onto NAND pages, how concurrency spreads across channel-affine die sets, and how media management interacts with the GPU memory pipeline. To our knowledge, existing GPU, SSD, or HBF simulators cannot faithfully model this behavior. We present HBF-Sim, an extensible, reusable, and faithful HBF simulator integrated with simulated GPUs. It closes the loop between GPU issue limits, device queuing, and NAND behavior in one…",
+          "publishedAt": "2026-09-25T04:00:00.000Z",
+          "sourceImage": null,
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "Semiconductors",
+          "source_text_scope": "abstract",
+          "ai_topic_score": 0.717,
+          "ai_topic_reasons": [
+            "gpu",
+            "gpus",
+            "accelerator"
+          ],
+          "category": "Semiconductors",
+          "primary_category": "Semiconductors",
+          "secondary_category": "Accelerators, memory, and advanced packaging",
+          "infrastructure_layer": "Silicon",
+          "affected_stakeholders": [
+            "semiconductor suppliers",
+            "hyperscalers",
+            "server OEMs",
+            "investors"
+          ],
+          "article_type": "Supply Chain",
+          "urgency_score": 0.38,
+          "taxonomy_confidence": 0.78,
+          "taxonomy_reasons": [
+            "gpu",
+            "hbm"
+          ],
+          "direct_ai_infrastructure_relevance": 0.22,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0.877,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.627,
+          "infrastructure_relevance_tier": "signal_card",
+          "infrastructure_relevance_action": "publish_signal_card_only",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:0.22",
+            "semiconductor_relevance:0.88(hbm, accelerator, gpu)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 0.22,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0.877,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.627,
+            "infrastructure_relevance_tier": "signal_card",
+            "infrastructure_relevance_action": "publish_signal_card_only",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:0.22",
+              "semiconductor_relevance:0.88(hbm, accelerator, gpu)"
+            ],
+            "infrastructureRelevanceAction": "publish_signal_card_only",
+            "articlePagePublished": false,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 58
+        },
+        {
+          "id": "014ef10f3f64d488",
+          "sourceRegistryId": "arxiv-cs-dc",
+          "source": "arXiv",
+          "url": "https://arxiv.org/abs/2510.05111",
+          "title": "Agora: A System for Consumption-Based GPU Pricing",
+          "snippet": "arXiv:2510.05111v2 Announce Type: replace Abstract: We present Agora, a lightweight system designed for cloud-based GPUs which meters a three-dimensional resource vector from commodity performance counters and prices it…",
+          "contentText": "arXiv:2510.05111v2 Announce Type: replace Abstract: We present Agora, a lightweight system designed for cloud-based GPUs which meters a three-dimensional resource vector from commodity performance counters and prices it with a function that charges customers based on resources used rather than time spent renting. Because the calibration is revenue-neutral, any gain must come from demand the flat rate had priced out, and we report under what conditions this consumption-based pricing scheme increases revenue: we find that the switch is revenue-negative at the median on a fixed market, but provides benefits in 86 percent of cases where a provider serves 15 to 30 percent of its addressable market against 10 percent where it serves over 60 percent. Revenue expands dramatically in proportion to…",
+          "publishedAt": "2026-09-25T04:00:00.000Z",
+          "sourceImage": null,
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure",
+          "source_text_scope": "abstract",
+          "ai_topic_score": 0.517,
+          "ai_topic_reasons": [
+            "gpu",
+            "gpus"
+          ],
+          "category": "Semiconductors",
+          "primary_category": "Semiconductors",
+          "secondary_category": "Accelerators, memory, and advanced packaging",
+          "infrastructure_layer": "Silicon",
+          "affected_stakeholders": [
+            "semiconductor suppliers",
+            "hyperscalers",
+            "server OEMs",
+            "investors"
+          ],
+          "article_type": "Capacity Expansion",
+          "urgency_score": 0.33,
+          "taxonomy_confidence": 0.61,
+          "taxonomy_reasons": [
+            "gpu"
+          ],
+          "direct_ai_infrastructure_relevance": 0.22,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0.297,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.291,
+          "infrastructure_relevance_tier": "archive_only",
+          "infrastructure_relevance_action": "archive_only",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:0.22",
+            "semiconductor_relevance:0.30(gpu)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 0.22,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0.297,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.291,
+            "infrastructure_relevance_tier": "archive_only",
+            "infrastructure_relevance_action": "archive_only",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:0.22",
+              "semiconductor_relevance:0.30(gpu)"
+            ],
+            "infrastructureRelevanceAction": "archive_only",
+            "articlePagePublished": false,
+            "homepagePublished": false,
+            "archiveOnly": true,
+            "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
+          },
+          "score": 28
+        }
+      ],
+      "curatedIds": [
+        "626eac9e14588b8a",
+        "014ef10f3f64d488"
+      ],
+      "publishedIds": [
+        "626eac9e14588b8a",
+        "014ef10f3f64d488"
+      ],
+      "slotPublications": {
+        "0": true
+      }
     }
   },
   "runHistory": [
-    {
-      "at": "2026-08-17T12:57:41.184Z",
-      "day": "2026-08-17",
-      "slot": 2,
-      "publishedCount": 0,
-      "authoredColumn": {
-        "published": false,
-        "reason": "verify:fewer_than_4_sections|missing_watchlist_section|missing_counterargument_section|unsupported_numeric_claims"
-      },
-      "llmUsage": {
-        "calls": 5,
-        "failures": 0,
-        "prompt_tokens": 13364,
-        "completion_tokens": 7204,
-        "total_tokens": 20568,
-        "token_budget": 60000,
-        "call_budget": 40
-      }
-    },
     {
       "at": "2026-08-17T13:45:22.853Z",
       "day": "2026-08-17",
@@ -50302,9 +50454,61 @@
         "token_budget": 60000,
         "call_budget": 40
       }
+    },
+    {
+      "at": "2026-09-25T19:12:37.081Z",
+      "day": "2026-09-26",
+      "slot": 0,
+      "publishedCount": 0,
+      "signalCardCount": 1,
+      "archiveOnlyCount": 1,
+      "processedIds": [
+        "626eac9e14588b8a",
+        "014ef10f3f64d488"
+      ],
+      "blockedCount": 0,
+      "blockedItems": [],
+      "archiveOnlyItems": [
+        {
+          "id": "014ef10f3f64d488",
+          "title": "Agora: A System for Consumption-Based GPU Pricing",
+          "infrastructure_relevance_score": 0.291,
+          "infrastructure_relevance_tier": "archive_only",
+          "infrastructure_relevance_action": "archive_only",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:0.22",
+            "semiconductor_relevance:0.30(gpu)"
+          ],
+          "extraction_quality_score": 0.92,
+          "source_domain_adapter": "arxiv",
+          "content_length": 841,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": false,
+          "repetition_block_reasons": [],
+          "repetition_check": null,
+          "expert_insight_complete": false,
+          "expert_insight_missing_fields": [
+            "named_companies"
+          ],
+          "reason": "infrastructure_relevance_below_signal_threshold"
+        }
+      ],
+      "authoredColumn": {
+        "published": false,
+        "reason": "no_qualifying_story"
+      },
+      "llmUsage": {
+        "calls": 3,
+        "failures": 0,
+        "prompt_tokens": 2843,
+        "completion_tokens": 602,
+        "total_tokens": 3445,
+        "token_budget": 60000,
+        "call_budget": 40
+      }
     }
   ],
-  "lastRunAt": "2026-09-25T12:45:06.492Z",
+  "lastRunAt": "2026-09-25T19:12:37.081Z",
   "authored": {
     "lastColumnAt": "2026-09-16T18:47:02.256Z",
     "columnsByDay": {

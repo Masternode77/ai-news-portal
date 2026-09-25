@@ -140,7 +140,7 @@
         "sourceId": "eia-today-in-energy",
         "reviewedAt": "2026-08-12T00:00:00.000Z",
         "termsUrl": "https://www.eia.gov/about/copyrights_reuse.php",
-        "checkedAt": "2026-09-25T12:55:41.562Z",
+        "checkedAt": "2026-09-25T19:24:08.007Z",
         "registryDigest": "b7a6bfe7b34bbb3ceeddab4fe5c7e6fd9a391af3c82cd9641e7e42964813913b",
         "registryBlobSha": "",
         "contentDigest": "beeeed148253b62b7ae888a3bc79c5979dbfa234b587e2f7b91bbaeafcf5acde"
@@ -299,7 +299,7 @@
         "sourceId": "eia-today-in-energy",
         "reviewedAt": "2026-08-12T00:00:00.000Z",
         "termsUrl": "https://www.eia.gov/about/copyrights_reuse.php",
-        "checkedAt": "2026-09-25T12:55:41.820Z",
+        "checkedAt": "2026-09-25T19:24:08.308Z",
         "registryDigest": "b7a6bfe7b34bbb3ceeddab4fe5c7e6fd9a391af3c82cd9641e7e42964813913b",
         "registryBlobSha": "",
         "contentDigest": "d15ccae9ee9ddf6214d8b39fbdf87ac41a1f82721e955148a1cd5e0a2de7b028"
@@ -458,7 +458,7 @@
         "sourceId": "eia-today-in-energy",
         "reviewedAt": "2026-08-12T00:00:00.000Z",
         "termsUrl": "https://www.eia.gov/about/copyrights_reuse.php",
-        "checkedAt": "2026-09-25T12:55:42.053Z",
+        "checkedAt": "2026-09-25T19:24:08.569Z",
         "registryDigest": "b7a6bfe7b34bbb3ceeddab4fe5c7e6fd9a391af3c82cd9641e7e42964813913b",
         "registryBlobSha": "",
         "contentDigest": "ade711e2b20996fa86c8248da2f499d76c8f2f8bdd82d9e630f5e080f97f58e2"
@@ -617,7 +617,7 @@
         "sourceId": "eia-today-in-energy",
         "reviewedAt": "2026-08-12T00:00:00.000Z",
         "termsUrl": "https://www.eia.gov/about/copyrights_reuse.php",
-        "checkedAt": "2026-09-25T12:55:42.293Z",
+        "checkedAt": "2026-09-25T19:24:08.830Z",
         "registryDigest": "b7a6bfe7b34bbb3ceeddab4fe5c7e6fd9a391af3c82cd9641e7e42964813913b",
         "registryBlobSha": "",
         "contentDigest": "8e6376116876948d8a9e27d52a0f3747ce46816914268a5bd0bf93fafd85c604"
@@ -776,7 +776,7 @@
         "sourceId": "eia-today-in-energy",
         "reviewedAt": "2026-08-12T00:00:00.000Z",
         "termsUrl": "https://www.eia.gov/about/copyrights_reuse.php",
-        "checkedAt": "2026-09-25T12:55:42.563Z",
+        "checkedAt": "2026-09-25T19:24:09.116Z",
         "registryDigest": "b7a6bfe7b34bbb3ceeddab4fe5c7e6fd9a391af3c82cd9641e7e42964813913b",
         "registryBlobSha": "",
         "contentDigest": "2c6d66c26ee5e8faea303eb6655f65da943f22d62f0b30f232281dfa85dca6d7"
@@ -1993,6 +1993,207 @@
     "generatedImageProvider": "codex",
     "imageProvider": "codex",
     "imagePrompt": "Use case: Compute Current public article image.\nTitle: On-premise data centers remain a hidden cooling load\nCategory: Cooling\nInfrastructure layer: Cooling\nStory archetype: source-signal\nRegion: US\nTone: premium infrastructure intelligence\nContext: EIA building data show that offices with data centers use more electricity for computing and cooling than comparable offices without server facilities.\nComposition: original editorial infrastructure image, realistic depth, wide hero crop, clear subject, enough negative space for card and OpenGraph crops.\nVisual vocabulary: data center halls, substations, transformers, grid interconnects, cooling loops, semiconductor packages, cloud capacity signals, financing pressure, or siting constraints when relevant.\nConstraints: no logos, no brand marks, no readable text, no watermarks, no stock-photo people, no decorative bokeh, no generic purple gradient."
+  },
+  {
+    "id": "626eac9e14588b8a",
+    "sourceRegistryId": "arxiv-cs-ar",
+    "source": "arXiv",
+    "url": "https://arxiv.org/abs/2609.29246",
+    "title": "HBF-Sim: An Extensible HBF Simulator for Large-scale GPU Memory Systems",
+    "snippet": "arXiv:2609.29246v1 Announce Type: new Abstract: High-bandwidth flash (HBF) is introduced to address the memory wall, which can co-package a dense NAND stack with the GPU, targeting the performance gap between near-accel…",
+    "contentText": "arXiv:2609.29246v1 Announce Type: new Abstract: High-bandwidth flash (HBF) is introduced to address the memory wall, which can co-package a dense NAND stack with the GPU, targeting the performance gap between near-accelerator bandwidth and flash density. HBF, however, is neither a large HBM nor a fast NVMe SSD. Its usable bandwidth depends on how GPU cache-line requests map onto NAND pages, how concurrency spreads across channel-affine die sets, and how media management interacts with the GPU memory pipeline. To our knowledge, existing GPU, SSD, or HBF simulators cannot faithfully model this behavior. We present HBF-Sim, an extensible, reusable, and faithful HBF simulator integrated with simulated GPUs. It closes the loop between GPU issue limits, device queuing, and NAND behavior in one…",
+    "publishedAt": "2026-09-25T04:00:00.000Z",
+    "sourceImage": null,
+    "region": "US",
+    "language": "en",
+    "defaultCategory": "Semiconductors",
+    "source_text_scope": "abstract",
+    "ai_topic_score": 0.717,
+    "ai_topic_reasons": [
+      "gpu",
+      "gpus",
+      "accelerator"
+    ],
+    "category": "Semiconductors",
+    "primary_category": "Semiconductors",
+    "secondary_category": "GPU Memory Systems",
+    "infrastructure_layer": "Silicon",
+    "affected_stakeholders": [
+      "operators",
+      "investors",
+      "hyperscalers",
+      "developers",
+      "researchers"
+    ],
+    "article_type": "Research / Technical",
+    "urgency_score": 0.6,
+    "taxonomy_confidence": 0.86,
+    "taxonomy_reasons": [
+      "gpu",
+      "hbm",
+      "advanced packaging"
+    ],
+    "direct_ai_infrastructure_relevance": 0.22,
+    "data_center_relevance": 0,
+    "cloud_capacity_relevance": 0,
+    "semiconductor_relevance": 0.877,
+    "power_grid_relevance": 0,
+    "cooling_relevance": 0,
+    "capital_markets_relevance": 0,
+    "enterprise_ai_infrastructure_relevance": 0.18,
+    "infrastructure_relevance_score": 0.627,
+    "infrastructure_relevance_tier": "signal_card",
+    "infrastructure_relevance_action": "publish_signal_card_only",
+    "infrastructure_relevance_reasons": [
+      "direct_ai_infrastructure_relevance:0.22",
+      "semiconductor_relevance:0.88(hbm, accelerator, gpu)"
+    ],
+    "infrastructure_relevance": {
+      "direct_ai_infrastructure_relevance": 0.22,
+      "data_center_relevance": 0,
+      "cloud_capacity_relevance": 0,
+      "semiconductor_relevance": 0.877,
+      "power_grid_relevance": 0,
+      "cooling_relevance": 0,
+      "capital_markets_relevance": 0,
+      "enterprise_ai_infrastructure_relevance": 0.18,
+      "infrastructure_relevance_score": 0.627,
+      "infrastructure_relevance_tier": "signal_card",
+      "infrastructure_relevance_action": "publish_signal_card_only",
+      "infrastructure_relevance_reasons": [
+        "direct_ai_infrastructure_relevance:0.22",
+        "semiconductor_relevance:0.88(hbm, accelerator, gpu)"
+      ],
+      "infrastructureRelevanceAction": "publish_signal_card_only",
+      "articlePagePublished": false,
+      "homepagePublished": true,
+      "archiveOnly": false,
+      "archiveOnlyReason": null
+    },
+    "score": 58,
+    "slug": "hbf-sim-an-extensible-hbf-simulator-for-large-scale-gpu-memory-systems",
+    "summary": "HBF-Sim is a new simulator designed for high-bandwidth flash (HBF) systems, addressing the performance gap in GPU memory systems. It models the full GPU-HBF request path for bette…",
+    "insight": "This simulator provides critical insights into optimizing HBF architectures, which is essential for improving GPU performance in data-intensive applications. Operators and developers can leverage HBF-Sim to enhance memory management strategies and address per…",
+    "expert_insight": {
+      "concrete_facts": [
+        "HBF-Sim: An Extensible HBF Simulator for Large-scale GPU Memory Systems HBF-Sim is a new simulator designed for high-bandwidth flash (HBF) systems, addressing the performance gap in GPU memory systems."
+      ],
+      "named_companies": [
+        "Large-scale GPU Memory Systems"
+      ],
+      "infrastructure_layer": "Silicon",
+      "bottleneck_type": "compute_supply",
+      "who_gains_leverage": "chip suppliers, systems integrators, and buyers with committed accelerator allocations",
+      "who_takes_execution_risk": "cloud providers and enterprises that still need networking, power, and facility readiness around purchased systems",
+      "timing_dependency": "accelerator allocation, server integration, memory supply, and cluster turn-up",
+      "counterargument": "More compute supply does not automatically become useful capacity if facilities, power, networking, and software readiness lag.",
+      "next_observable_signal": "delivery schedules, memory availability, networking readiness, or deployed cluster utilization",
+      "expert_insight_complete": true,
+      "expert_insight_missing_fields": []
+    },
+    "expertInsight": {
+      "concrete_facts": [
+        "HBF-Sim: An Extensible HBF Simulator for Large-scale GPU Memory Systems HBF-Sim is a new simulator designed for high-bandwidth flash (HBF) systems, addressing the performance gap in GPU memory systems."
+      ],
+      "named_companies": [
+        "Large-scale GPU Memory Systems"
+      ],
+      "infrastructure_layer": "Silicon",
+      "bottleneck_type": "compute_supply",
+      "who_gains_leverage": "chip suppliers, systems integrators, and buyers with committed accelerator allocations",
+      "who_takes_execution_risk": "cloud providers and enterprises that still need networking, power, and facility readiness around purchased systems",
+      "timing_dependency": "accelerator allocation, server integration, memory supply, and cluster turn-up",
+      "counterargument": "More compute supply does not automatically become useful capacity if facilities, power, networking, and software readiness lag.",
+      "next_observable_signal": "delivery schedules, memory availability, networking readiness, or deployed cluster utilization",
+      "expert_insight_complete": true,
+      "expert_insight_missing_fields": []
+    },
+    "concrete_facts": [
+      "HBF-Sim: An Extensible HBF Simulator for Large-scale GPU Memory Systems HBF-Sim is a new simulator designed for high-bandwidth flash (HBF) systems, addressing the performance gap in GPU memory systems."
+    ],
+    "named_companies": [
+      "Large-scale GPU Memory Systems"
+    ],
+    "bottleneck_type": "compute_supply",
+    "who_gains_leverage": "chip suppliers, systems integrators, and buyers with committed accelerator allocations",
+    "who_takes_execution_risk": "cloud providers and enterprises that still need networking, power, and facility readiness around purchased systems",
+    "timing_dependency": "accelerator allocation, server integration, memory supply, and cluster turn-up",
+    "counterargument": "More compute supply does not automatically become useful capacity if facilities, power, networking, and software readiness lag.",
+    "next_observable_signal": "delivery schedules, memory availability, networking readiness, or deployed cluster utilization",
+    "expert_insight_complete": true,
+    "expert_insight_missing_fields": [],
+    "tags": [
+      "hbf",
+      "gpu",
+      "memory",
+      "simulation",
+      "architecture",
+      "performance"
+    ],
+    "imagePrompt": "A high-tech laboratory with advanced semiconductor equipment, showcasing GPU and NAND flash components, with a focus on simulation and performance analysis, 16:9.",
+    "lang": "en",
+    "articleText": "High-bandwidth flash (HBF) is introduced to address the memory wall, which can co-package a dense NAND stack with the GPU, targeting the performance gap between near-accelerator bandwidth and flash density. HBF, however, is neither a large HBM nor a fast NVMe SSD. Its usable bandwidth depends on how GPU cache-line requests map onto NAND pages, how concurrency spreads across channel-affine die sets, and how media management interacts with the GPU memory pipeline. To our knowledge, existing GPU, SSD, or HBF simulators cannot faithfully model this behavior. We present HBF-Sim, an extensible, reusable, and faithful HBF simulator integrated with simulated GPUs. It closes the loop between GPU issue limits, device queuing, and NAND behavior in one end-to-end request path. HBF-Sim separates a GPU-HBF interaction controller from page-based parallel stack storage, and it models the full GPU-HBF request path. It provides an MSHR-based address mapping table that merges cache-line requests into page-based operations, as well as a page-based multi-stack flash manager for highly parallel reads and writes. Validation tests and device-level microbenchmarks expose performance bottlenecks caused by limited channel distribution and resource conflicts, offering concrete guidance for next-generation HBF architectures.",
+    "content_length": 1317,
+    "boilerplate_ratio": 0,
+    "title_body_similarity": 0.78,
+    "copyright_footer_detected": false,
+    "nav_or_cta_detected": false,
+    "sentence_completion_score": 1,
+    "source_domain_adapter": "arxiv",
+    "extraction_quality_score": 1,
+    "extraction_qa": {
+      "content_length": 1317,
+      "boilerplate_ratio": 0,
+      "title_body_similarity": 0.78,
+      "copyright_footer_detected": false,
+      "legal_boilerplate_detected": false,
+      "nav_or_cta_detected": false,
+      "sentence_completion_score": 1,
+      "source_domain_adapter": "arxiv",
+      "extraction_quality_score": 1,
+      "extraction_failure_reason": null,
+      "extraction_quality_reasons": [],
+      "public_publishable": true,
+      "can_generate_longform": true,
+      "cleaned_source_length": 1317,
+      "block_reasons": []
+    },
+    "extraction_artifact": {
+      "artifact_version": "extraction_v1",
+      "source_url": "https://arxiv.org/abs/2609.29246",
+      "extracted_text_sha256": "7f140c11a4d7fe28c4da313da37e2817bf438a7d69dd4d11b128f5c45a9fd688",
+      "cleaned_extracted_text": "High-bandwidth flash (HBF) is introduced to address the memory wall, which can co-package a dense NAND stack with the GPU, targeting the performance gap between near-accelerator bandwidth and flash density. HBF, however, is neither a large HBM nor a fast NVMe SSD. Its usable bandwidth depends on how GPU cache-line requests map onto NAND pages, how concurrency spreads across channel-affine die sets, and how media management interacts with the GPU memory pipeline. To our knowledge, existing GPU, SSD, or HBF simulators cannot faithfully model this behavior. We present HBF-Sim, an extensible, reusable, and faithful HBF simulator integrated with simulated GPUs. It closes the loop between GPU issue limits, device queuing, and NAND behavior in one end-to-end request path. HBF-Sim separates a GPU-HBF interaction controller from page-based parallel stack storage, and it models the full GPU-HBF request path. It provides an MSHR-based address mapping table that merges cache-line requests into page-based operations, as well as a page-based multi-stack flash manager for highly parallel reads and writes. Validation tests and device-level microbenchmarks expose performance bottlenecks caused by limited channel distribution and resource conflicts, offering concrete guidance for next-generation HBF architectures.",
+      "extraction_qa": {
+        "cleaned_source_length": 1317,
+        "block_reasons": [],
+        "public_publishable": true,
+        "can_generate_longform": true,
+        "boilerplate_ratio": 0,
+        "copyright_footer_detected": false,
+        "nav_or_cta_detected": false,
+        "sentence_completion_score": 1
+      }
+    },
+    "cleaned_source_text": "High-bandwidth flash (HBF) is introduced to address the memory wall, which can co-package a dense NAND stack with the GPU, targeting the performance gap between near-accelerator bandwidth and flash density. HBF, however, is neither a large HBM nor a fast NVMe SSD. Its usable bandwidth depends on how GPU cache-line requests map onto NAND pages, how concurrency spreads across channel-affine die sets, and how media management interacts with the GPU memory pipeline. To our knowledge, existing GPU, SSD, or HBF simulators cannot faithfully model this behavior. We present HBF-Sim, an extensible, reusable, and faithful HBF simulator integrated with simulated GPUs. It closes the loop between GPU issue limits, device queuing, and NAND behavior in one end-to-end request path. HBF-Sim separates a GPU-HBF interaction controller from page-based parallel stack storage, and it models the full GPU-HBF request path. It provides an MSHR-based address mapping table that merges cache-line requests into page-based operations, as well as a page-based multi-stack flash manager for highly parallel reads and writes. Validation tests and device-level microbenchmarks expose performance bottlenecks caused by limited channel distribution and resource conflicts, offering concrete guidance for next-generation HBF architectures.",
+    "sourceUrl": "https://arxiv.org/abs/2609.29246",
+    "generatedImage": "/generated/articles/626eac9e14588b8a-hbf-sim-an-extensible-hbf-simulator-for-large-scale-gpu-memory-systems/hero.webp",
+    "infrastructureRelevanceAction": "publish_signal_card_only",
+    "articlePagePublished": false,
+    "homepagePublished": true,
+    "archiveOnly": false,
+    "archiveOnlyReason": null,
+    "signalCardOnly": true,
+    "signalCardReason": "infrastructure_relevance_signal_card_threshold",
+    "article_blueprint": null,
+    "articleBlueprint": null,
+    "expertLensShort": null,
+    "expertLensFull": null,
+    "expertLens": null,
+    "public_content_tier": "editorial_brief",
+    "seo_noindex": false,
+    "noindex": false,
+    "public_tier_reasons": [],
+    "searchText": "HBF-Sim: An Extensible HBF Simulator for Large-scale GPU Memory Systems arXiv Semiconductors GPU Memory Systems Silicon Research / Technical compute_supply chip suppliers, systems integrators, and buyers with committed accelerator allocations cloud providers and enterprises that still need networking, power, and facility readiness around purchased systems accelerator allocation, server integration, memory supply, and cluster turn-up More compute supply does not automatically become useful capacity if facilities, power, networking, and software readiness lag. delivery schedules, memory availability, networking readiness, or deployed cluster utilization US HBF-Sim is a new simulator designed for high-bandwidth flash (HBF) systems, addressing the performance gap in GPU memory systems. It models the full GPU-HBF request path for bette… High-bandwidth flash (HBF) is introduced to address the memory wall, which can co-package a dense NAND stack with the GPU, targeting the performance gap between near-accelerator bandwidth and flash density. HBF, however, is neither a large HBM nor a fast NVMe SSD. Its usable bandwidth depends on how GPU cache-line requests map onto NAND pages, how concurrency spreads across channel-affine die sets, and how media management interacts with the GPU memory pipeline. To our knowledge, existing GPU, SSD, or HBF simulators cannot faithfully model this behavior. We present HBF-Sim, an extensible, reusable, and faithful HBF simulator integrated with simulated GPUs. It closes the loop between GPU issue limits, device queuing, and NAND behavior in one end-to-end request path. HBF-Sim separates a GPU-HBF interaction controller from page-based parallel stack storage, and it models the full GPU-HBF request path. It provides an MSHR-based address mapping table that merges cache-line requests into page-based operations, as well as a page-based multi-stack flash manager for highly parallel reads and writes. Validation tests and device-level microbenchmarks expose performance bottlenecks caused by limited channel distribution and resource conflicts, offering concrete guidance for next-generation HBF architectures. operators investors hyperscalers developers researchers HBF-Sim: An Extensible HBF Simulator for Large-scale GPU Memory Systems HBF-Sim is a new simulator designed for high-bandwidth flash (HBF) systems, addressing the performance gap in GPU memory systems. Large-scale GPU Memory Systems hbf gpu memory simulation architecture performance"
   },
   {
     "id": "dab941d2ad44772a",
@@ -135790,6 +135991,213 @@
     "imageStatus": "generated",
     "imageError": "",
     "imageGeneratedAt": "2026-09-12T23:42:06.374Z"
+  },
+  {
+    "id": "014ef10f3f64d488",
+    "sourceRegistryId": "arxiv-cs-dc",
+    "source": "arXiv",
+    "url": "https://arxiv.org/abs/2510.05111",
+    "title": "Agora: A System for Consumption-Based GPU Pricing",
+    "snippet": "arXiv:2510.05111v2 Announce Type: replace Abstract: We present Agora, a lightweight system designed for cloud-based GPUs which meters a three-dimensional resource vector from commodity performance counters and prices it…",
+    "contentText": "arXiv:2510.05111v2 Announce Type: replace Abstract: We present Agora, a lightweight system designed for cloud-based GPUs which meters a three-dimensional resource vector from commodity performance counters and prices it with a function that charges customers based on resources used rather than time spent renting. Because the calibration is revenue-neutral, any gain must come from demand the flat rate had priced out, and we report under what conditions this consumption-based pricing scheme increases revenue: we find that the switch is revenue-negative at the median on a fixed market, but provides benefits in 86 percent of cases where a provider serves 15 to 30 percent of its addressable market against 10 percent where it serves over 60 percent. Revenue expands dramatically in proportion to…",
+    "publishedAt": "2026-09-25T04:00:00.000Z",
+    "sourceImage": null,
+    "region": "US",
+    "language": "en",
+    "defaultCategory": "AI Infrastructure",
+    "source_text_scope": "abstract",
+    "ai_topic_score": 0.517,
+    "ai_topic_reasons": [
+      "gpu",
+      "gpus"
+    ],
+    "category": "AI Infrastructure",
+    "primary_category": "AI Infrastructure",
+    "secondary_category": "Product / Platform Update",
+    "infrastructure_layer": "Compute",
+    "affected_stakeholders": [
+      "cloud providers",
+      "operators",
+      "investors",
+      "semiconductor suppliers",
+      "hyperscalers"
+    ],
+    "article_type": "Product / Platform Update",
+    "urgency_score": 0.6,
+    "taxonomy_confidence": 0.69,
+    "taxonomy_reasons": [
+      "gpu",
+      "advanced packaging"
+    ],
+    "direct_ai_infrastructure_relevance": 0.22,
+    "data_center_relevance": 0,
+    "cloud_capacity_relevance": 0,
+    "semiconductor_relevance": 0.297,
+    "power_grid_relevance": 0,
+    "cooling_relevance": 0,
+    "capital_markets_relevance": 0,
+    "enterprise_ai_infrastructure_relevance": 0,
+    "infrastructure_relevance_score": 0.291,
+    "infrastructure_relevance_tier": "archive_only",
+    "infrastructure_relevance_action": "archive_only",
+    "infrastructure_relevance_reasons": [
+      "direct_ai_infrastructure_relevance:0.22",
+      "semiconductor_relevance:0.30(gpu)"
+    ],
+    "infrastructure_relevance": {
+      "direct_ai_infrastructure_relevance": 0.22,
+      "data_center_relevance": 0,
+      "cloud_capacity_relevance": 0,
+      "semiconductor_relevance": 0.297,
+      "power_grid_relevance": 0,
+      "cooling_relevance": 0,
+      "capital_markets_relevance": 0,
+      "enterprise_ai_infrastructure_relevance": 0,
+      "infrastructure_relevance_score": 0.291,
+      "infrastructure_relevance_tier": "archive_only",
+      "infrastructure_relevance_action": "archive_only",
+      "infrastructure_relevance_reasons": [
+        "direct_ai_infrastructure_relevance:0.22",
+        "semiconductor_relevance:0.30(gpu)"
+      ],
+      "infrastructureRelevanceAction": "archive_only",
+      "articlePagePublished": false,
+      "homepagePublished": false,
+      "archiveOnly": true,
+      "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
+    },
+    "score": 28,
+    "slug": "agora-a-system-for-consumption-based-gpu-pricing",
+    "summary": "Agora introduces a consumption-based pricing model for cloud GPUs, charging based on resource usage rather than rental time. This system aims to optimize revenue by catering to pr…",
+    "insight": "This pricing model could significantly enhance revenue for GPU cloud providers by attracting a broader customer base. Operators should evaluate their current pricing strategies to leverage potential gains from this approach.",
+    "expert_insight": {
+      "concrete_facts": [
+        "Revenue expands dramatically in proportion to the number of customers priced out by the flat rate: up to 141 percent in an optimistic case."
+      ],
+      "named_companies": [],
+      "infrastructure_layer": "Compute",
+      "bottleneck_type": "compute_supply",
+      "who_gains_leverage": "chip suppliers, systems integrators, and buyers with committed accelerator allocations",
+      "who_takes_execution_risk": "cloud providers and enterprises that still need networking, power, and facility readiness around purchased systems",
+      "timing_dependency": "accelerator allocation, server integration, memory supply, and cluster turn-up",
+      "counterargument": "The source may still describe intent rather than delivered capacity, so the operating impact depends on follow-through.",
+      "next_observable_signal": "delivery schedules, memory availability, networking readiness, or deployed cluster utilization",
+      "expert_insight_complete": false,
+      "expert_insight_missing_fields": [
+        "named_companies"
+      ]
+    },
+    "expertInsight": {
+      "concrete_facts": [
+        "Revenue expands dramatically in proportion to the number of customers priced out by the flat rate: up to 141 percent in an optimistic case."
+      ],
+      "named_companies": [],
+      "infrastructure_layer": "Compute",
+      "bottleneck_type": "compute_supply",
+      "who_gains_leverage": "chip suppliers, systems integrators, and buyers with committed accelerator allocations",
+      "who_takes_execution_risk": "cloud providers and enterprises that still need networking, power, and facility readiness around purchased systems",
+      "timing_dependency": "accelerator allocation, server integration, memory supply, and cluster turn-up",
+      "counterargument": "The source may still describe intent rather than delivered capacity, so the operating impact depends on follow-through.",
+      "next_observable_signal": "delivery schedules, memory availability, networking readiness, or deployed cluster utilization",
+      "expert_insight_complete": false,
+      "expert_insight_missing_fields": [
+        "named_companies"
+      ]
+    },
+    "concrete_facts": [
+      "Revenue expands dramatically in proportion to the number of customers priced out by the flat rate: up to 141 percent in an optimistic case."
+    ],
+    "named_companies": [],
+    "bottleneck_type": "compute_supply",
+    "who_gains_leverage": "chip suppliers, systems integrators, and buyers with committed accelerator allocations",
+    "who_takes_execution_risk": "cloud providers and enterprises that still need networking, power, and facility readiness around purchased systems",
+    "timing_dependency": "accelerator allocation, server integration, memory supply, and cluster turn-up",
+    "counterargument": "The source may still describe intent rather than delivered capacity, so the operating impact depends on follow-through.",
+    "next_observable_signal": "delivery schedules, memory availability, networking readiness, or deployed cluster utilization",
+    "expert_insight_complete": false,
+    "expert_insight_missing_fields": [
+      "named_companies"
+    ],
+    "tags": [
+      "gpu",
+      "cloud",
+      "pricing",
+      "revenue",
+      "ai",
+      "technology"
+    ],
+    "imagePrompt": "A modern data center with GPU servers in operation, showcasing high-tech computing resources and a vibrant, dynamic environment, 16:9 aspect ratio.",
+    "lang": "en",
+    "articleText": "We present Agora, a lightweight system designed for cloud-based GPUs which meters a three-dimensional resource vector from commodity performance counters and prices it with a function that charges customers based on resources used rather than time spent renting. Because the calibration is revenue-neutral, any gain must come from demand the flat rate had priced out, and we report under what conditions this consumption-based pricing scheme increases revenue: we find that the switch is revenue-negative at the median on a fixed market, but provides benefits in 86 percent of cases where a provider serves 15 to 30 percent of its addressable market against 10 percent where it serves over 60 percent. Revenue expands dramatically in proportion to the number of customers priced out by the flat rate: up to 141 percent in an optimistic case.",
+    "content_length": 841,
+    "boilerplate_ratio": 0,
+    "title_body_similarity": 0.83,
+    "copyright_footer_detected": false,
+    "nav_or_cta_detected": false,
+    "sentence_completion_score": 1,
+    "source_domain_adapter": "arxiv",
+    "extraction_quality_score": 0.92,
+    "extraction_qa": {
+      "content_length": 841,
+      "boilerplate_ratio": 0,
+      "title_body_similarity": 0.83,
+      "copyright_footer_detected": false,
+      "legal_boilerplate_detected": false,
+      "nav_or_cta_detected": false,
+      "sentence_completion_score": 1,
+      "source_domain_adapter": "arxiv",
+      "extraction_quality_score": 0.92,
+      "extraction_failure_reason": null,
+      "extraction_quality_reasons": [],
+      "public_publishable": true,
+      "can_generate_longform": false,
+      "cleaned_source_length": 841,
+      "block_reasons": [
+        "cleaned_source_text_below_1200",
+        "source_evidence_length_below_1200"
+      ]
+    },
+    "extraction_artifact": {
+      "artifact_version": "extraction_v1",
+      "source_url": "https://arxiv.org/abs/2510.05111",
+      "extracted_text_sha256": "8839eaa40834a8caf0c5bf24d72e7aa7e0044e4538f6f7a68050969e8c7236a8",
+      "cleaned_extracted_text": "We present Agora, a lightweight system designed for cloud-based GPUs which meters a three-dimensional resource vector from commodity performance counters and prices it with a function that charges customers based on resources used rather than time spent renting. Because the calibration is revenue-neutral, any gain must come from demand the flat rate had priced out, and we report under what conditions this consumption-based pricing scheme increases revenue: we find that the switch is revenue-negative at the median on a fixed market, but provides benefits in 86 percent of cases where a provider serves 15 to 30 percent of its addressable market against 10 percent where it serves over 60 percent. Revenue expands dramatically in proportion to the number of customers priced out by the flat rate: up to 141 percent in an optimistic case.",
+      "extraction_qa": {
+        "cleaned_source_length": 841,
+        "block_reasons": [
+          "cleaned_source_text_below_1200",
+          "source_evidence_length_below_1200"
+        ],
+        "public_publishable": true,
+        "can_generate_longform": false,
+        "boilerplate_ratio": 0,
+        "copyright_footer_detected": false,
+        "nav_or_cta_detected": false,
+        "sentence_completion_score": 1
+      }
+    },
+    "cleaned_source_text": "We present Agora, a lightweight system designed for cloud-based GPUs which meters a three-dimensional resource vector from commodity performance counters and prices it with a function that charges customers based on resources used rather than time spent renting. Because the calibration is revenue-neutral, any gain must come from demand the flat rate had priced out, and we report under what conditions this consumption-based pricing scheme increases revenue: we find that the switch is revenue-negative at the median on a fixed market, but provides benefits in 86 percent of cases where a provider serves 15 to 30 percent of its addressable market against 10 percent where it serves over 60 percent. Revenue expands dramatically in proportion to the number of customers priced out by the flat rate: up to 141 percent in an optimistic case.",
+    "sourceUrl": "https://arxiv.org/abs/2510.05111",
+    "generatedImage": "/generated/articles/014ef10f3f64d488-agora-a-system-for-consumption-based-gpu-pricing/hero.webp",
+    "infrastructureRelevanceAction": "archive_only",
+    "articlePagePublished": false,
+    "homepagePublished": false,
+    "archiveOnly": true,
+    "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold",
+    "article_blueprint": null,
+    "articleBlueprint": null,
+    "expertLensShort": null,
+    "expertLensFull": null,
+    "expertLens": null,
+    "public_content_tier": "hidden",
+    "signalCardOnly": false,
+    "seo_noindex": true,
+    "noindex": true,
+    "public_tier_reasons": [
+      "low_relevance",
+      "relevance_below_adjacent_threshold"
+    ],
+    "searchText": "Agora: A System for Consumption-Based GPU Pricing arXiv AI Infrastructure Product / Platform Update Compute compute_supply chip suppliers, systems integrators, and buyers with committed accelerator allocations cloud providers and enterprises that still need networking, power, and facility readiness around purchased systems accelerator allocation, server integration, memory supply, and cluster turn-up The source may still describe intent rather than delivered capacity, so the operating impact depends on follow-through. delivery schedules, memory availability, networking readiness, or deployed cluster utilization US Agora introduces a consumption-based pricing model for cloud GPUs, charging based on resource usage rather than rental time. This system aims to optimize revenue by catering to pr… We present Agora, a lightweight system designed for cloud-based GPUs which meters a three-dimensional resource vector from commodity performance counters and prices it with a function that charges customers based on resources used rather than time spent renting. Because the calibration is revenue-neutral, any gain must come from demand the flat rate had priced out, and we report under what conditions this consumption-based pricing scheme increases revenue: we find that the switch is revenue-negative at the median on a fixed market, but provides benefits in 86 percent of cases where a provider serves 15 to 30 percent of its addressable market against 10 percent where it serves over 60 percent. Revenue expands dramatically in proportion to the number of customers priced out by the flat rate: up to 141 percent in an optimistic case. cloud providers operators investors semiconductor suppliers hyperscalers Revenue expands dramatically in proportion to the number of customers priced out by the flat rate: up to 141 percent in an optimistic case. gpu cloud pricing revenue ai technology"
   },
   {
     "id": "da60d6f9264d334b",

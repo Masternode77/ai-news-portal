@@ -298,6 +298,79 @@
     }
   },
   {
+    "id": "dcc497596891311f",
+    "sourceRegistryId": "eia-today-in-energy",
+    "source": "U.S. Energy Information Administration",
+    "url": "https://www.eia.gov/todayinenergy/detail.php?id=68204",
+    "title": "Henry Hub natural gas prices this summer were 6% lower than last summer",
+    "snippet": "The Henry Hub natural gas spot price averaged $2.93 per million British thermal units from June through August, 6% less than the same period last year. Prices were lower this summer despite exceptionally hot weather tha…",
+    "contentText": "The Henry Hub natural gas spot price averaged $2.93 per million British thermal units from June through August, 6% less than the same period last year. Prices were lower this summer despite exceptionally hot weather that increased electricity demand for air conditioning. Natural gas-fired power plants often help meet higher demand during such periods.",
+    "publishedAt": "2026-09-25T14:00:00.000Z",
+    "sourceImage": null,
+    "region": "US",
+    "language": "en",
+    "defaultCategory": "Power & Grid",
+    "ai_topic_score": 0,
+    "ai_topic_reasons": [
+      "ai_not_in_title"
+    ],
+    "category": "Power & Grid",
+    "primary_category": "Power & Grid",
+    "secondary_category": "Interconnection and power procurement",
+    "infrastructure_layer": "Power",
+    "affected_stakeholders": [
+      "data center operators",
+      "utilities",
+      "cloud capacity teams",
+      "investors"
+    ],
+    "article_type": "Market Analysis",
+    "urgency_score": 0.49,
+    "taxonomy_confidence": 0.76,
+    "taxonomy_reasons": [
+      "power",
+      "grid",
+      "electricity"
+    ],
+    "direct_ai_infrastructure_relevance": 0,
+    "data_center_relevance": 0,
+    "cloud_capacity_relevance": 0,
+    "semiconductor_relevance": 0,
+    "power_grid_relevance": 0.46,
+    "cooling_relevance": 0.3,
+    "capital_markets_relevance": 0,
+    "enterprise_ai_infrastructure_relevance": 0,
+    "infrastructure_relevance_score": 0.403,
+    "infrastructure_relevance_tier": "archive_only",
+    "infrastructure_relevance_action": "archive_only",
+    "infrastructure_relevance_reasons": [
+      "power_grid_relevance:0.46(power, electricity)",
+      "cooling_relevance:0.30(thermal)"
+    ],
+    "infrastructure_relevance": {
+      "direct_ai_infrastructure_relevance": 0,
+      "data_center_relevance": 0,
+      "cloud_capacity_relevance": 0,
+      "semiconductor_relevance": 0,
+      "power_grid_relevance": 0.46,
+      "cooling_relevance": 0.3,
+      "capital_markets_relevance": 0,
+      "enterprise_ai_infrastructure_relevance": 0,
+      "infrastructure_relevance_score": 0.403,
+      "infrastructure_relevance_tier": "archive_only",
+      "infrastructure_relevance_action": "archive_only",
+      "infrastructure_relevance_reasons": [
+        "power_grid_relevance:0.46(power, electricity)",
+        "cooling_relevance:0.30(thermal)"
+      ],
+      "infrastructureRelevanceAction": "archive_only",
+      "articlePagePublished": false,
+      "homepagePublished": false,
+      "archiveOnly": true,
+      "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
+    }
+  },
+  {
     "id": "1fe53de9b7b504da",
     "sourceRegistryId": "doe-newsroom",
     "source": "U.S. Department of Energy",
@@ -934,6 +1007,75 @@
       "infrastructure_relevance_action": "archive_only",
       "infrastructure_relevance_reasons": [
         "power_grid_relevance:0.60(electricity, transmission)"
+      ],
+      "infrastructureRelevanceAction": "archive_only",
+      "articlePagePublished": false,
+      "homepagePublished": false,
+      "archiveOnly": true,
+      "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
+    }
+  },
+  {
+    "id": "6f5cd337b07090ec",
+    "sourceRegistryId": "gao-reports",
+    "source": "U.S. Government Accountability Office",
+    "url": "https://www.gao.gov/products/oig-26-3",
+    "title": "Acquisition Management: Opportunities Exist for GAO to Strengthen Its Policies and Procedures",
+    "snippet": "What the OIG Found Proper contract administration is critical to ensure GAO complies with contract terms and conditions. In FY 2019, GAO entered into a blanket purchase agreement for commercial facility maintenance (the…",
+    "contentText": "What the OIG Found Proper contract administration is critical to ensure GAO complies with contract terms and conditions. In FY 2019, GAO entered into a blanket purchase agreement for commercial facility maintenance (the BPA), which it awarded under the General Services Administration (GSA) Schedule program. After subsequent modification, the BPA’s maximum value was about $119 million. Although the contractor submitted adjusted labor rates from a collective bargaining agreement, GAO did not modify the BPA and associated time-and-materials orders to reflect these higher rates before payment. As a result, the agency paid about $94,000 more than the previously negotiated rates during the second option year. GAO was unable to explain why the BPA and the associated orders were not modified prio…",
+    "publishedAt": "2026-09-25T15:00:25.000Z",
+    "sourceImage": null,
+    "region": "US",
+    "language": "en",
+    "defaultCategory": "Power & Grid",
+    "ai_topic_score": 0,
+    "ai_topic_reasons": [
+      "ai_not_in_title"
+    ],
+    "category": "Capital Markets",
+    "primary_category": "Capital Markets",
+    "secondary_category": "Financing, valuation, and capital structure",
+    "infrastructure_layer": "Capital",
+    "affected_stakeholders": [
+      "investors",
+      "lenders",
+      "developers",
+      "operators"
+    ],
+    "article_type": "Financing / M&A",
+    "urgency_score": 0.53,
+    "taxonomy_confidence": 0.62,
+    "taxonomy_reasons": [
+      "acquisition"
+    ],
+    "direct_ai_infrastructure_relevance": 0,
+    "data_center_relevance": 0,
+    "cloud_capacity_relevance": 0,
+    "semiconductor_relevance": 0,
+    "power_grid_relevance": 0,
+    "cooling_relevance": 0,
+    "capital_markets_relevance": 0.405,
+    "enterprise_ai_infrastructure_relevance": 0,
+    "infrastructure_relevance_score": 0.27,
+    "infrastructure_relevance_tier": "archive_only",
+    "infrastructure_relevance_action": "archive_only",
+    "infrastructure_relevance_reasons": [
+      "capital_markets_relevance:0.41(acquisition)"
+    ],
+    "infrastructure_relevance": {
+      "direct_ai_infrastructure_relevance": 0,
+      "data_center_relevance": 0,
+      "cloud_capacity_relevance": 0,
+      "semiconductor_relevance": 0,
+      "power_grid_relevance": 0,
+      "cooling_relevance": 0,
+      "capital_markets_relevance": 0.405,
+      "enterprise_ai_infrastructure_relevance": 0,
+      "infrastructure_relevance_score": 0.27,
+      "infrastructure_relevance_tier": "archive_only",
+      "infrastructure_relevance_action": "archive_only",
+      "infrastructure_relevance_reasons": [
+        "capital_markets_relevance:0.41(acquisition)"
       ],
       "infrastructureRelevanceAction": "archive_only",
       "articlePagePublished": false,
@@ -1862,76 +2004,6 @@
     }
   },
   {
-    "id": "2db52154ff73126a",
-    "sourceRegistryId": "gao-reports",
-    "source": "U.S. Government Accountability Office",
-    "url": "https://www.gao.gov/products/gao-26-107920",
-    "title": "K-12 Education: Actions to Improve Oversight of Key Federal Programs and Address High Chronic Absenteeism",
-    "snippet": "What GAO Found All states that receive funding under Title I of the Elementary and Secondary Education Act of 1965, as amended (ESEA) are required to develop statewide accountability systems. Thirty-six states have chos…",
-    "contentText": "What GAO Found All states that receive funding under Title I of the Elementary and Secondary Education Act of 1965, as amended (ESEA) are required to develop statewide accountability systems. Thirty-six states have chosen to include indicators related to chronic absenteeism in their statewide accountability systems. ESEA also has certain chronic absenteeism reporting requirements for all states, regardless of whether a state includes chronic absenteeism in its accountability system. In 2026, the Department of Education discontinued its most comprehensive monitoring of ESEA’s programmatic and fiscal requirements. The ESEA provision intended to improve oversight of funds does not explicitly direct Education to monitor grantees, nor does it include specific requirements regarding the method…",
-    "publishedAt": "2026-09-23T11:51:00.000Z",
-    "sourceImage": null,
-    "region": "US",
-    "language": "en",
-    "defaultCategory": "Power & Grid",
-    "ai_topic_score": 0,
-    "ai_topic_reasons": [
-      "ai_not_in_title"
-    ],
-    "category": "Power & Grid",
-    "primary_category": "Power & Grid",
-    "secondary_category": "Interconnection and power procurement",
-    "infrastructure_layer": "Power",
-    "affected_stakeholders": [
-      "data center operators",
-      "utilities",
-      "cloud capacity teams",
-      "investors"
-    ],
-    "article_type": "Financing / M&A",
-    "urgency_score": 0.5,
-    "taxonomy_confidence": 0.61,
-    "taxonomy_reasons": [
-      "power",
-      "grid"
-    ],
-    "direct_ai_infrastructure_relevance": 0,
-    "data_center_relevance": 0,
-    "cloud_capacity_relevance": 0,
-    "semiconductor_relevance": 0,
-    "power_grid_relevance": 0,
-    "cooling_relevance": 0,
-    "capital_markets_relevance": 0.28,
-    "enterprise_ai_infrastructure_relevance": 0,
-    "infrastructure_relevance_score": 0.197,
-    "infrastructure_relevance_tier": "archive_only",
-    "infrastructure_relevance_action": "archive_only",
-    "infrastructure_relevance_reasons": [
-      "capital_markets_relevance:0.28(funding)"
-    ],
-    "infrastructure_relevance": {
-      "direct_ai_infrastructure_relevance": 0,
-      "data_center_relevance": 0,
-      "cloud_capacity_relevance": 0,
-      "semiconductor_relevance": 0,
-      "power_grid_relevance": 0,
-      "cooling_relevance": 0,
-      "capital_markets_relevance": 0.28,
-      "enterprise_ai_infrastructure_relevance": 0,
-      "infrastructure_relevance_score": 0.197,
-      "infrastructure_relevance_tier": "archive_only",
-      "infrastructure_relevance_action": "archive_only",
-      "infrastructure_relevance_reasons": [
-        "capital_markets_relevance:0.28(funding)"
-      ],
-      "infrastructureRelevanceAction": "archive_only",
-      "articlePagePublished": false,
-      "homepagePublished": false,
-      "archiveOnly": true,
-      "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
-    }
-  },
-  {
     "id": "40b1b6ea96c37cb2",
     "sourceRegistryId": "federal-register-bis",
     "source": "Federal Register",
@@ -2064,75 +2136,6 @@
       "infrastructure_relevance_reasons": [
         "power_grid_relevance:0.26(utilities)",
         "procedural_regulatory_docket_without_compute_context"
-      ],
-      "infrastructureRelevanceAction": "archive_only",
-      "articlePagePublished": false,
-      "homepagePublished": false,
-      "archiveOnly": true,
-      "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
-    }
-  },
-  {
-    "id": "a38f7f95e107cb00",
-    "sourceRegistryId": "whitehouse-presidential-actions",
-    "source": "The White House",
-    "url": "https://www.whitehouse.gov/presidential-actions/2026/09/constitution-day-citizenship-day-and-constitution-week-2026/",
-    "title": "Constitution Day, Citizenship Day, and Constitution Week, 2026",
-    "snippet": "BY THE PRESIDENT OF THE UNITED STATES OF AMERICA A PROCLAMATION During Constitution Week, we proudly commemorate the 239th anniversary of the signing of the United States Constitution, the very foundation of our Republi…",
-    "contentText": "Presidential Actions Search Select Category All News Briefings & Statements All Presidential Actions Executive Orders Nominations & Appointments Presidential Memoranda Proclamations Fact Sheets Releases Remarks Research All Briefings & Statements Presidential Actions All Executive Orders Nominations & Appointments Presidential Memoranda Proclamations Fact Sheets Releases Remarks Research BY THE PRESIDENT OF THE UNITED STATES OF AMERICA A PROCLAMATION During Constitution Week, we proudly commemorate the 239th anniversary of the signing of the United States Constitution, the very foundation of our Republic and an eternal reminder that all power throughout our land flows from We the People. Over two centuries later, we remain more committed than ever to protecting and cherishing the fundamen…",
-    "publishedAt": "2026-09-16T20:09:16.000Z",
-    "sourceImage": null,
-    "region": "US",
-    "language": "en",
-    "defaultCategory": "Policy & Siting",
-    "ai_topic_score": 0,
-    "ai_topic_reasons": [
-      "ai_not_in_title"
-    ],
-    "category": "Power & Grid",
-    "primary_category": "Power & Grid",
-    "secondary_category": "Interconnection and power procurement",
-    "infrastructure_layer": "Power",
-    "affected_stakeholders": [
-      "data center operators",
-      "utilities",
-      "cloud capacity teams",
-      "investors"
-    ],
-    "article_type": "Policy / Regulation",
-    "urgency_score": 0.31,
-    "taxonomy_confidence": 0.57,
-    "taxonomy_reasons": [
-      "power"
-    ],
-    "direct_ai_infrastructure_relevance": 0,
-    "data_center_relevance": 0,
-    "cloud_capacity_relevance": 0,
-    "semiconductor_relevance": 0,
-    "power_grid_relevance": 0.22,
-    "cooling_relevance": 0,
-    "capital_markets_relevance": 0,
-    "enterprise_ai_infrastructure_relevance": 0,
-    "infrastructure_relevance_score": 0.163,
-    "infrastructure_relevance_tier": "archive_only",
-    "infrastructure_relevance_action": "archive_only",
-    "infrastructure_relevance_reasons": [
-      "power_grid_relevance:0.22(power)"
-    ],
-    "infrastructure_relevance": {
-      "direct_ai_infrastructure_relevance": 0,
-      "data_center_relevance": 0,
-      "cloud_capacity_relevance": 0,
-      "semiconductor_relevance": 0,
-      "power_grid_relevance": 0.22,
-      "cooling_relevance": 0,
-      "capital_markets_relevance": 0,
-      "enterprise_ai_infrastructure_relevance": 0,
-      "infrastructure_relevance_score": 0.163,
-      "infrastructure_relevance_tier": "archive_only",
-      "infrastructure_relevance_action": "archive_only",
-      "infrastructure_relevance_reasons": [
-        "power_grid_relevance:0.22(power)"
       ],
       "infrastructureRelevanceAction": "archive_only",
       "articlePagePublished": false,
