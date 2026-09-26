@@ -47003,65 +47003,21 @@
         "1": true,
         "2": true
       }
+    },
+    "2026-09-27": {
+      "date": "2026-09-27",
+      "createdAt": "2026-09-26T18:27:13.460Z",
+      "refreshedAt": "2026-09-26T18:27:13.460Z",
+      "candidateWindowHours": 24,
+      "curatedItems": [],
+      "curatedIds": [],
+      "publishedIds": [],
+      "slotPublications": {
+        "0": true
+      }
     }
   },
   "runHistory": [
-    {
-      "at": "2026-08-17T23:32:53.896Z",
-      "day": "2026-08-18",
-      "slot": 1,
-      "publishedCount": 1,
-      "signalCardCount": 0,
-      "archiveOnlyCount": 1,
-      "repetitionBlockedCount": 0,
-      "publishedIds": [
-        "18bc4705e44a352f"
-      ],
-      "processedIds": [
-        "18bc4705e44a352f",
-        "b91f4ec4c41d4ba8"
-      ],
-      "blockedCount": 0,
-      "blockedItems": [],
-      "repetitionBlockedItems": [],
-      "signalCardItems": [],
-      "archiveOnlyItems": [
-        {
-          "id": "b91f4ec4c41d4ba8",
-          "title": "The United States produced more crude oil than any other country in 2025",
-          "infrastructure_relevance_score": 0.435,
-          "infrastructure_relevance_tier": "archive_only",
-          "infrastructure_relevance_action": "archive_only",
-          "infrastructure_relevance_reasons": [
-            "data_center_relevance:0.34(colocation)",
-            "power_grid_relevance:0.50(power, grid)"
-          ],
-          "extraction_quality_score": 1,
-          "source_domain_adapter": "generic",
-          "content_length": 1676,
-          "boilerplate_ratio": 0,
-          "repetition_blocked": false,
-          "repetition_block_reasons": [],
-          "repetition_check": null,
-          "expert_insight_complete": true,
-          "expert_insight_missing_fields": [],
-          "reason": "infrastructure_relevance_below_signal_threshold"
-        }
-      ],
-      "authoredColumn": {
-        "published": true,
-        "slug": "hormuz-volatility-exposed-diesel-backup-as-an-unhedged-margin-li-2026-08-17"
-      },
-      "llmUsage": {
-        "calls": 6,
-        "failures": 0,
-        "prompt_tokens": 12828,
-        "completion_tokens": 5469,
-        "total_tokens": 18297,
-        "token_budget": 60000,
-        "call_budget": 40
-      }
-    },
     {
       "at": "2026-08-18T07:50:14.866Z",
       "day": "2026-08-18",
@@ -50338,9 +50294,28 @@
         "token_budget": 60000,
         "call_budget": 40
       }
+    },
+    {
+      "at": "2026-09-26T18:27:13.460Z",
+      "day": "2026-09-27",
+      "slot": 0,
+      "publishedCount": 0,
+      "authoredColumn": {
+        "published": false,
+        "reason": "no_qualifying_story"
+      },
+      "llmUsage": {
+        "calls": 1,
+        "failures": 0,
+        "prompt_tokens": 608,
+        "completion_tokens": 13,
+        "total_tokens": 621,
+        "token_budget": 60000,
+        "call_budget": 40
+      }
     }
   ],
-  "lastRunAt": "2026-09-26T12:12:58.684Z",
+  "lastRunAt": "2026-09-26T18:27:13.460Z",
   "authored": {
     "lastColumnAt": "2026-09-16T18:47:02.256Z",
     "columnsByDay": {
