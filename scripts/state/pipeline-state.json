@@ -46990,7 +46990,7 @@
     "2026-09-26": {
       "date": "2026-09-26",
       "createdAt": "2026-09-25T19:12:37.081Z",
-      "refreshedAt": "2026-09-26T01:29:09.709Z",
+      "refreshedAt": "2026-09-26T12:12:58.684Z",
       "candidateWindowHours": 24,
       "curatedItems": [],
       "curatedIds": [],
@@ -47000,46 +47000,12 @@
       ],
       "slotPublications": {
         "0": true,
-        "1": true
+        "1": true,
+        "2": true
       }
     }
   },
   "runHistory": [
-    {
-      "at": "2026-08-17T15:30:35.670Z",
-      "day": "2026-08-18",
-      "slot": 0,
-      "publishedCount": 2,
-      "signalCardCount": 0,
-      "archiveOnlyCount": 0,
-      "repetitionBlockedCount": 0,
-      "publishedIds": [
-        "104c58bb6eae234e",
-        "f0101c9478981251"
-      ],
-      "processedIds": [
-        "104c58bb6eae234e",
-        "f0101c9478981251"
-      ],
-      "blockedCount": 0,
-      "blockedItems": [],
-      "repetitionBlockedItems": [],
-      "signalCardItems": [],
-      "archiveOnlyItems": [],
-      "authoredColumn": {
-        "published": false,
-        "reason": "min_gap_not_reached:1.8h<4h"
-      },
-      "llmUsage": {
-        "calls": 4,
-        "failures": 0,
-        "prompt_tokens": 6172,
-        "completion_tokens": 1562,
-        "total_tokens": 7734,
-        "token_budget": 60000,
-        "call_budget": 40
-      }
-    },
     {
       "at": "2026-08-17T23:32:53.896Z",
       "day": "2026-08-18",
@@ -50353,9 +50319,28 @@
         "token_budget": 60000,
         "call_budget": 40
       }
+    },
+    {
+      "at": "2026-09-26T12:12:58.684Z",
+      "day": "2026-09-26",
+      "slot": 2,
+      "publishedCount": 0,
+      "authoredColumn": {
+        "published": false,
+        "reason": "no_qualifying_story"
+      },
+      "llmUsage": {
+        "calls": 1,
+        "failures": 0,
+        "prompt_tokens": 987,
+        "completion_tokens": 40,
+        "total_tokens": 1027,
+        "token_budget": 60000,
+        "call_budget": 40
+      }
     }
   ],
-  "lastRunAt": "2026-09-26T01:29:09.709Z",
+  "lastRunAt": "2026-09-26T12:12:58.684Z",
   "authored": {
     "lastColumnAt": "2026-09-16T18:47:02.256Z",
     "columnsByDay": {

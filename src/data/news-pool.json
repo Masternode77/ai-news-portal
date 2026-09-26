@@ -1,80 +1,5 @@
 [
   {
-    "id": "626eac9e14588b8a",
-    "sourceRegistryId": "arxiv-cs-ar",
-    "source": "arXiv",
-    "url": "https://arxiv.org/abs/2609.29246",
-    "title": "HBF-Sim: An Extensible HBF Simulator for Large-scale GPU Memory Systems",
-    "snippet": "arXiv:2609.29246v1 Announce Type: new Abstract: High-bandwidth flash (HBF) is introduced to address the memory wall, which can co-package a dense NAND stack with the GPU, targeting the performance gap between near-accel…",
-    "contentText": "arXiv:2609.29246v1 Announce Type: new Abstract: High-bandwidth flash (HBF) is introduced to address the memory wall, which can co-package a dense NAND stack with the GPU, targeting the performance gap between near-accelerator bandwidth and flash density. HBF, however, is neither a large HBM nor a fast NVMe SSD. Its usable bandwidth depends on how GPU cache-line requests map onto NAND pages, how concurrency spreads across channel-affine die sets, and how media management interacts with the GPU memory pipeline. To our knowledge, existing GPU, SSD, or HBF simulators cannot faithfully model this behavior. We present HBF-Sim, an extensible, reusable, and faithful HBF simulator integrated with simulated GPUs. It closes the loop between GPU issue limits, device queuing, and NAND behavior in one…",
-    "publishedAt": "2026-09-25T04:00:00.000Z",
-    "sourceImage": null,
-    "region": "US",
-    "language": "en",
-    "defaultCategory": "Semiconductors",
-    "source_text_scope": "abstract",
-    "ai_topic_score": 0.717,
-    "ai_topic_reasons": [
-      "gpu",
-      "gpus",
-      "accelerator"
-    ],
-    "category": "Semiconductors",
-    "primary_category": "Semiconductors",
-    "secondary_category": "Accelerators, memory, and advanced packaging",
-    "infrastructure_layer": "Silicon",
-    "affected_stakeholders": [
-      "semiconductor suppliers",
-      "hyperscalers",
-      "server OEMs",
-      "investors"
-    ],
-    "article_type": "Supply Chain",
-    "urgency_score": 0.38,
-    "taxonomy_confidence": 0.78,
-    "taxonomy_reasons": [
-      "gpu",
-      "hbm"
-    ],
-    "direct_ai_infrastructure_relevance": 0.22,
-    "data_center_relevance": 0,
-    "cloud_capacity_relevance": 0,
-    "semiconductor_relevance": 0.877,
-    "power_grid_relevance": 0,
-    "cooling_relevance": 0,
-    "capital_markets_relevance": 0,
-    "enterprise_ai_infrastructure_relevance": 0,
-    "infrastructure_relevance_score": 0.627,
-    "infrastructure_relevance_tier": "signal_card",
-    "infrastructure_relevance_action": "publish_signal_card_only",
-    "infrastructure_relevance_reasons": [
-      "direct_ai_infrastructure_relevance:0.22",
-      "semiconductor_relevance:0.88(hbm, accelerator, gpu)"
-    ],
-    "infrastructure_relevance": {
-      "direct_ai_infrastructure_relevance": 0.22,
-      "data_center_relevance": 0,
-      "cloud_capacity_relevance": 0,
-      "semiconductor_relevance": 0.877,
-      "power_grid_relevance": 0,
-      "cooling_relevance": 0,
-      "capital_markets_relevance": 0,
-      "enterprise_ai_infrastructure_relevance": 0,
-      "infrastructure_relevance_score": 0.627,
-      "infrastructure_relevance_tier": "signal_card",
-      "infrastructure_relevance_action": "publish_signal_card_only",
-      "infrastructure_relevance_reasons": [
-        "direct_ai_infrastructure_relevance:0.22",
-        "semiconductor_relevance:0.88(hbm, accelerator, gpu)"
-      ],
-      "infrastructureRelevanceAction": "publish_signal_card_only",
-      "articlePagePublished": false,
-      "homepagePublished": true,
-      "archiveOnly": false,
-      "archiveOnlyReason": null
-    }
-  },
-  {
     "id": "a5497ac8cff12225",
     "sourceRegistryId": "doe-newsroom",
     "source": "U.S. Department of Energy",
@@ -137,86 +62,6 @@
       "infrastructure_relevance_action": "publish_signal_card_only",
       "infrastructure_relevance_reasons": [
         "power_grid_relevance:1.00(power, grid, electricity)"
-      ],
-      "infrastructureRelevanceAction": "publish_signal_card_only",
-      "articlePagePublished": false,
-      "homepagePublished": true,
-      "archiveOnly": false,
-      "archiveOnlyReason": null
-    }
-  },
-  {
-    "id": "da60d6f9264d334b",
-    "sourceRegistryId": "arxiv-cs-dc",
-    "source": "arXiv",
-    "url": "https://arxiv.org/abs/2609.29707",
-    "title": "Where Does the Energy Go? Profiling LLM Agent Inference on Blackwell GPUs",
-    "snippet": "arXiv:2609.29707v1 Announce Type: new Abstract: LLM agents that iteratively reason, plan, and invoke tools create workload profiles fundamentally different from single-pass inference, yet how their energy consumption is…",
-    "contentText": "arXiv:2609.29707v1 Announce Type: new Abstract: LLM agents that iteratively reason, plan, and invoke tools create workload profiles fundamentally different from single-pass inference, yet how their energy consumption is distributed across hardware components and workload phases remains poorly understood. Characterizing these workloads therefore requires simultaneous visibility into both component-level power and phase-level execution. We conduct a full-stack energy profiling study combining NVML GPU counters, Intel RAPL CPU/DRAM counters, and Intelligent Platform Management Interface (IPMI) system-level sensors on 2x NVIDIA RTX PRO 6000 Blackwell GPUs, and profile three representative workloads with Qwen3.8-27B. For mathematical reasoning, we compare thinking-enabled and thinking-disabled…",
-    "publishedAt": "2026-09-25T04:00:00.000Z",
-    "sourceImage": null,
-    "region": "US",
-    "language": "en",
-    "defaultCategory": "AI Infrastructure",
-    "source_text_scope": "abstract",
-    "ai_topic_score": 1,
-    "ai_topic_reasons": [
-      "llm",
-      "inference",
-      "nvidia",
-      "gpu",
-      "gpus"
-    ],
-    "category": "Semiconductors",
-    "primary_category": "Semiconductors",
-    "secondary_category": "Accelerators, memory, and advanced packaging",
-    "infrastructure_layer": "Silicon",
-    "affected_stakeholders": [
-      "semiconductor suppliers",
-      "hyperscalers",
-      "server OEMs",
-      "investors"
-    ],
-    "article_type": "Product / Platform Update",
-    "urgency_score": 0.44,
-    "taxonomy_confidence": 0.8,
-    "taxonomy_reasons": [
-      "gpu",
-      "nvidia",
-      "intel"
-    ],
-    "direct_ai_infrastructure_relevance": 0.22,
-    "data_center_relevance": 0,
-    "cloud_capacity_relevance": 0,
-    "semiconductor_relevance": 0.7,
-    "power_grid_relevance": 0.22,
-    "cooling_relevance": 0,
-    "capital_markets_relevance": 0,
-    "enterprise_ai_infrastructure_relevance": 0,
-    "infrastructure_relevance_score": 0.559,
-    "infrastructure_relevance_tier": "signal_card",
-    "infrastructure_relevance_action": "publish_signal_card_only",
-    "infrastructure_relevance_reasons": [
-      "direct_ai_infrastructure_relevance:0.22",
-      "semiconductor_relevance:0.70(nvidia, intel, gpu)",
-      "power_grid_relevance:0.22(power)"
-    ],
-    "infrastructure_relevance": {
-      "direct_ai_infrastructure_relevance": 0.22,
-      "data_center_relevance": 0,
-      "cloud_capacity_relevance": 0,
-      "semiconductor_relevance": 0.7,
-      "power_grid_relevance": 0.22,
-      "cooling_relevance": 0,
-      "capital_markets_relevance": 0,
-      "enterprise_ai_infrastructure_relevance": 0,
-      "infrastructure_relevance_score": 0.559,
-      "infrastructure_relevance_tier": "signal_card",
-      "infrastructure_relevance_action": "publish_signal_card_only",
-      "infrastructure_relevance_reasons": [
-        "direct_ai_infrastructure_relevance:0.22",
-        "semiconductor_relevance:0.70(nvidia, intel, gpu)",
-        "power_grid_relevance:0.22(power)"
       ],
       "infrastructureRelevanceAction": "publish_signal_card_only",
       "articlePagePublished": false,
@@ -442,80 +287,6 @@
     }
   },
   {
-    "id": "f8dc09e613395c33",
-    "sourceRegistryId": "arxiv-cs-dc",
-    "source": "arXiv",
-    "url": "https://arxiv.org/abs/2604.09517",
-    "title": "HPL and HPL-MxP at Exascale on Aurora: Performance Engineering and Characterization",
-    "snippet": "arXiv:2604.09517v2 Announce Type: replace Abstract: Running HPL and HPL-MxP at exascale requires more than optimized numerical kernels; it requires coordinated performance engineering across communication, resource mapp…",
-    "contentText": "arXiv:2604.09517v2 Announce Type: replace Abstract: Running HPL and HPL-MxP at exascale requires more than optimized numerical kernels; it requires coordinated performance engineering across communication, resource mapping, runtime configuration, CPU--GPU interaction, and mixed-precision execution. This paper reports experience from large-scale benchmarking campaigns on Aurora, the Intel-based exascale supercomputer at the Argonne Leadership Computing Facility. Aurora progressed from 0.585~EF/s on 5,439 nodes to 1.012EF/s on 9,234 nodes in FP64 HPL, while HPL-MxP reached 11.64EF/s on 9,500 nodes. We describe the system-level choices behind these results and grade the evidence for each (measured, operational, or reasoned), including locality-aware rank, GPU, memory, and NIC placement; expl…",
-    "publishedAt": "2026-09-25T04:00:00.000Z",
-    "sourceImage": null,
-    "region": "Global",
-    "language": "en",
-    "defaultCategory": "AI Infrastructure",
-    "source_text_scope": "abstract",
-    "ai_topic_score": 0.22,
-    "ai_topic_reasons": [
-      "gpu",
-      "ai_not_in_title"
-    ],
-    "category": "Semiconductors",
-    "primary_category": "Semiconductors",
-    "secondary_category": "Accelerators, memory, and advanced packaging",
-    "infrastructure_layer": "Silicon",
-    "affected_stakeholders": [
-      "semiconductor suppliers",
-      "hyperscalers",
-      "server OEMs",
-      "investors"
-    ],
-    "article_type": "Supply Chain",
-    "urgency_score": 0.3,
-    "taxonomy_confidence": 0.68,
-    "taxonomy_reasons": [
-      "gpu",
-      "intel"
-    ],
-    "direct_ai_infrastructure_relevance": 0.22,
-    "data_center_relevance": 0,
-    "cloud_capacity_relevance": 0,
-    "semiconductor_relevance": 0.42,
-    "power_grid_relevance": 0,
-    "cooling_relevance": 0,
-    "capital_markets_relevance": 0,
-    "enterprise_ai_infrastructure_relevance": 0,
-    "infrastructure_relevance_score": 0.362,
-    "infrastructure_relevance_tier": "archive_only",
-    "infrastructure_relevance_action": "archive_only",
-    "infrastructure_relevance_reasons": [
-      "direct_ai_infrastructure_relevance:0.22",
-      "semiconductor_relevance:0.42(intel, gpu)"
-    ],
-    "infrastructure_relevance": {
-      "direct_ai_infrastructure_relevance": 0.22,
-      "data_center_relevance": 0,
-      "cloud_capacity_relevance": 0,
-      "semiconductor_relevance": 0.42,
-      "power_grid_relevance": 0,
-      "cooling_relevance": 0,
-      "capital_markets_relevance": 0,
-      "enterprise_ai_infrastructure_relevance": 0,
-      "infrastructure_relevance_score": 0.362,
-      "infrastructure_relevance_tier": "archive_only",
-      "infrastructure_relevance_action": "archive_only",
-      "infrastructure_relevance_reasons": [
-        "direct_ai_infrastructure_relevance:0.22",
-        "semiconductor_relevance:0.42(intel, gpu)"
-      ],
-      "infrastructureRelevanceAction": "archive_only",
-      "articlePagePublished": false,
-      "homepagePublished": false,
-      "archiveOnly": true,
-      "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
-    }
-  },
-  {
     "id": "c624b2fdc5ce7ada",
     "sourceRegistryId": "gao-reports",
     "source": "U.S. Government Accountability Office",
@@ -588,79 +359,6 @@
     }
   },
   {
-    "id": "5b109c48f719a8ed",
-    "sourceRegistryId": "arxiv-cs-dc",
-    "source": "arXiv",
-    "url": "https://arxiv.org/abs/2609.28870",
-    "title": "When Fancy Eviction Fails: Rethinking Cache Replacement For LLM Prefix Reuse",
-    "snippet": "arXiv:2609.28870v1 Announce Type: new Abstract: Long-running LLM applications repeatedly send growing context, making prefix caching critical for reducing prefill cost. Yet prefix-cache behavior under agentic workloads…",
-    "contentText": "arXiv:2609.28870v1 Announce Type: new Abstract: Long-running LLM applications repeatedly send growing context, making prefix caching critical for reducing prefill cost. Yet prefix-cache behavior under agentic workloads remains poorly understood. We study production traces from two companies and evaluate 14 eviction algorithms across HBM-constrained and large memory-pool settings. Despite a large gap to Belady, sophisticated policies designed for traditional caches provide little benefit over LRU. The reason is structural: prefix reuse is dominated by the regular pacing of active sessions, making recency unusually predictive. Prefix caching nevertheless introduces new challenges, including heavy-tailed session footprints and highly variable miss costs as attention computation grows with se…",
-    "publishedAt": "2026-09-25T04:00:00.000Z",
-    "sourceImage": null,
-    "region": "US",
-    "language": "en",
-    "defaultCategory": "AI Infrastructure",
-    "source_text_scope": "abstract",
-    "ai_topic_score": 0.786,
-    "ai_topic_reasons": [
-      "llm",
-      "agentic"
-    ],
-    "category": "Semiconductors",
-    "primary_category": "Semiconductors",
-    "secondary_category": "Accelerators, memory, and advanced packaging",
-    "infrastructure_layer": "Silicon",
-    "affected_stakeholders": [
-      "semiconductor suppliers",
-      "hyperscalers",
-      "server OEMs",
-      "investors"
-    ],
-    "article_type": "Supply Chain",
-    "urgency_score": 0.28,
-    "taxonomy_confidence": 0.59,
-    "taxonomy_reasons": [
-      "hbm"
-    ],
-    "direct_ai_infrastructure_relevance": 0.22,
-    "data_center_relevance": 0,
-    "cloud_capacity_relevance": 0,
-    "semiconductor_relevance": 0.36,
-    "power_grid_relevance": 0,
-    "cooling_relevance": 0,
-    "capital_markets_relevance": 0,
-    "enterprise_ai_infrastructure_relevance": 0,
-    "infrastructure_relevance_score": 0.327,
-    "infrastructure_relevance_tier": "archive_only",
-    "infrastructure_relevance_action": "archive_only",
-    "infrastructure_relevance_reasons": [
-      "direct_ai_infrastructure_relevance:0.22",
-      "semiconductor_relevance:0.36(hbm)"
-    ],
-    "infrastructure_relevance": {
-      "direct_ai_infrastructure_relevance": 0.22,
-      "data_center_relevance": 0,
-      "cloud_capacity_relevance": 0,
-      "semiconductor_relevance": 0.36,
-      "power_grid_relevance": 0,
-      "cooling_relevance": 0,
-      "capital_markets_relevance": 0,
-      "enterprise_ai_infrastructure_relevance": 0,
-      "infrastructure_relevance_score": 0.327,
-      "infrastructure_relevance_tier": "archive_only",
-      "infrastructure_relevance_action": "archive_only",
-      "infrastructure_relevance_reasons": [
-        "direct_ai_infrastructure_relevance:0.22",
-        "semiconductor_relevance:0.36(hbm)"
-      ],
-      "infrastructureRelevanceAction": "archive_only",
-      "articlePagePublished": false,
-      "homepagePublished": false,
-      "archiveOnly": true,
-      "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
-    }
-  },
-  {
     "id": "eff04f6506da505b",
     "sourceRegistryId": "nsf-news",
     "source": "U.S. National Science Foundation",
@@ -721,151 +419,6 @@
       "infrastructure_relevance_action": "archive_only",
       "infrastructure_relevance_reasons": [
         "semiconductor_relevance:0.49(semiconductor)"
-      ],
-      "infrastructureRelevanceAction": "archive_only",
-      "articlePagePublished": false,
-      "homepagePublished": false,
-      "archiveOnly": true,
-      "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
-    }
-  },
-  {
-    "id": "df4872316ce5d4a8",
-    "sourceRegistryId": "arxiv-cs-dc",
-    "source": "arXiv",
-    "url": "https://arxiv.org/abs/2609.28862",
-    "title": "pytest-gpu-proof: Enabling Cloud-CPU Continuous Integration for GPU Code with Local GPU Attestation",
-    "snippet": "arXiv:2609.28862v1 Announce Type: new Abstract: GPU acceleration is now routine across robotics, but cloud-hosted GPU continuous integration (CI) runners are expensive, resulting in severe under-testing of GPU-accelerat…",
-    "contentText": "arXiv:2609.28862v1 Announce Type: new Abstract: GPU acceleration is now routine across robotics, but cloud-hosted GPU continuous integration (CI) runners are expensive, resulting in severe under-testing of GPU-accelerated code. We present pytest-gpu-proof, an open-source pytest plugin offering a practical middle ground. Tests can be run on a local machine, signed with a receipt of exactly what ran and what it produced, and integrated into standard CPU CI workflows (e.g., GitHub Actions). The tool is open source and on PyPI, and we are actively integrating it across our lab's software stack.",
-    "publishedAt": "2026-09-25T04:00:00.000Z",
-    "sourceImage": null,
-    "region": "US",
-    "language": "en",
-    "defaultCategory": "AI Infrastructure",
-    "source_text_scope": "abstract",
-    "ai_topic_score": 0.297,
-    "ai_topic_reasons": [
-      "gpu"
-    ],
-    "category": "Semiconductors",
-    "primary_category": "Semiconductors",
-    "secondary_category": "Accelerators, memory, and advanced packaging",
-    "infrastructure_layer": "Silicon",
-    "affected_stakeholders": [
-      "semiconductor suppliers",
-      "hyperscalers",
-      "server OEMs",
-      "investors"
-    ],
-    "article_type": "Product / Platform Update",
-    "urgency_score": 0.27,
-    "taxonomy_confidence": 0.61,
-    "taxonomy_reasons": [
-      "gpu"
-    ],
-    "direct_ai_infrastructure_relevance": 0.22,
-    "data_center_relevance": 0,
-    "cloud_capacity_relevance": 0,
-    "semiconductor_relevance": 0.297,
-    "power_grid_relevance": 0,
-    "cooling_relevance": 0,
-    "capital_markets_relevance": 0,
-    "enterprise_ai_infrastructure_relevance": 0,
-    "infrastructure_relevance_score": 0.291,
-    "infrastructure_relevance_tier": "archive_only",
-    "infrastructure_relevance_action": "archive_only",
-    "infrastructure_relevance_reasons": [
-      "direct_ai_infrastructure_relevance:0.22",
-      "semiconductor_relevance:0.30(gpu)"
-    ],
-    "infrastructure_relevance": {
-      "direct_ai_infrastructure_relevance": 0.22,
-      "data_center_relevance": 0,
-      "cloud_capacity_relevance": 0,
-      "semiconductor_relevance": 0.297,
-      "power_grid_relevance": 0,
-      "cooling_relevance": 0,
-      "capital_markets_relevance": 0,
-      "enterprise_ai_infrastructure_relevance": 0,
-      "infrastructure_relevance_score": 0.291,
-      "infrastructure_relevance_tier": "archive_only",
-      "infrastructure_relevance_action": "archive_only",
-      "infrastructure_relevance_reasons": [
-        "direct_ai_infrastructure_relevance:0.22",
-        "semiconductor_relevance:0.30(gpu)"
-      ],
-      "infrastructureRelevanceAction": "archive_only",
-      "articlePagePublished": false,
-      "homepagePublished": false,
-      "archiveOnly": true,
-      "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
-    }
-  },
-  {
-    "id": "014ef10f3f64d488",
-    "sourceRegistryId": "arxiv-cs-dc",
-    "source": "arXiv",
-    "url": "https://arxiv.org/abs/2510.05111",
-    "title": "Agora: A System for Consumption-Based GPU Pricing",
-    "snippet": "arXiv:2510.05111v2 Announce Type: replace Abstract: We present Agora, a lightweight system designed for cloud-based GPUs which meters a three-dimensional resource vector from commodity performance counters and prices it…",
-    "contentText": "arXiv:2510.05111v2 Announce Type: replace Abstract: We present Agora, a lightweight system designed for cloud-based GPUs which meters a three-dimensional resource vector from commodity performance counters and prices it with a function that charges customers based on resources used rather than time spent renting. Because the calibration is revenue-neutral, any gain must come from demand the flat rate had priced out, and we report under what conditions this consumption-based pricing scheme increases revenue: we find that the switch is revenue-negative at the median on a fixed market, but provides benefits in 86 percent of cases where a provider serves 15 to 30 percent of its addressable market against 10 percent where it serves over 60 percent. Revenue expands dramatically in proportion to…",
-    "publishedAt": "2026-09-25T04:00:00.000Z",
-    "sourceImage": null,
-    "region": "US",
-    "language": "en",
-    "defaultCategory": "AI Infrastructure",
-    "source_text_scope": "abstract",
-    "ai_topic_score": 0.517,
-    "ai_topic_reasons": [
-      "gpu",
-      "gpus"
-    ],
-    "category": "Semiconductors",
-    "primary_category": "Semiconductors",
-    "secondary_category": "Accelerators, memory, and advanced packaging",
-    "infrastructure_layer": "Silicon",
-    "affected_stakeholders": [
-      "semiconductor suppliers",
-      "hyperscalers",
-      "server OEMs",
-      "investors"
-    ],
-    "article_type": "Capacity Expansion",
-    "urgency_score": 0.33,
-    "taxonomy_confidence": 0.61,
-    "taxonomy_reasons": [
-      "gpu"
-    ],
-    "direct_ai_infrastructure_relevance": 0.22,
-    "data_center_relevance": 0,
-    "cloud_capacity_relevance": 0,
-    "semiconductor_relevance": 0.297,
-    "power_grid_relevance": 0,
-    "cooling_relevance": 0,
-    "capital_markets_relevance": 0,
-    "enterprise_ai_infrastructure_relevance": 0,
-    "infrastructure_relevance_score": 0.291,
-    "infrastructure_relevance_tier": "archive_only",
-    "infrastructure_relevance_action": "archive_only",
-    "infrastructure_relevance_reasons": [
-      "direct_ai_infrastructure_relevance:0.22",
-      "semiconductor_relevance:0.30(gpu)"
-    ],
-    "infrastructure_relevance": {
-      "direct_ai_infrastructure_relevance": 0.22,
-      "data_center_relevance": 0,
-      "cloud_capacity_relevance": 0,
-      "semiconductor_relevance": 0.297,
-      "power_grid_relevance": 0,
-      "cooling_relevance": 0,
-      "capital_markets_relevance": 0,
-      "enterprise_ai_infrastructure_relevance": 0,
-      "infrastructure_relevance_score": 0.291,
-      "infrastructure_relevance_tier": "archive_only",
-      "infrastructure_relevance_action": "archive_only",
-      "infrastructure_relevance_reasons": [
-        "direct_ai_infrastructure_relevance:0.22",
-        "semiconductor_relevance:0.30(gpu)"
       ],
       "infrastructureRelevanceAction": "archive_only",
       "articlePagePublished": false,
@@ -2004,6 +1557,75 @@
     }
   },
   {
+    "id": "5279ccde67f6b49b",
+    "sourceRegistryId": "federal-register-data-center-search",
+    "source": "Federal Register",
+    "url": "https://www.federalregister.gov/documents/2026/09/28/2026-19714/proposed-collection-comment-request",
+    "title": "Proposed Collection; Comment Request",
+    "snippet": "In compliance with the Paperwork Reduction Act of 1995, OUSD(P&R) announces a proposed public information collection and seeks public comment on the provisions thereof. Comments are invited on: whether the proposed coll…",
+    "contentText": "In compliance with the Paperwork Reduction Act of 1995, OUSD(P&R) announces a proposed public information collection and seeks public comment on the provisions thereof. Comments are invited on: whether the proposed collection of information is necessary for the proper performance of the functions of the agency, including whether the information shall have practical utility; the accuracy of the agency's estimate of the burden of the proposed information collection; ways to enhance the quality, utility, and clarity of the information to be collected; and ways to minimize the burden of the information collection on respondents, including through the use of automated collection techniques or other forms of information technology.",
+    "publishedAt": "2026-09-28T04:00:00.000Z",
+    "sourceImage": null,
+    "region": "US",
+    "language": "en",
+    "defaultCategory": "Data Centers",
+    "ai_topic_score": 0,
+    "ai_topic_reasons": [
+      "ai_not_in_title"
+    ],
+    "category": "Power & Grid",
+    "primary_category": "Power & Grid",
+    "secondary_category": "Interconnection and power procurement",
+    "infrastructure_layer": "Power",
+    "affected_stakeholders": [
+      "data center operators",
+      "utilities",
+      "cloud capacity teams",
+      "investors"
+    ],
+    "article_type": "Policy / Regulation",
+    "urgency_score": 0.24,
+    "taxonomy_confidence": 0.57,
+    "taxonomy_reasons": [
+      "utility"
+    ],
+    "direct_ai_infrastructure_relevance": 0,
+    "data_center_relevance": 0,
+    "cloud_capacity_relevance": 0,
+    "semiconductor_relevance": 0,
+    "power_grid_relevance": 0.26,
+    "cooling_relevance": 0,
+    "capital_markets_relevance": 0,
+    "enterprise_ai_infrastructure_relevance": 0,
+    "infrastructure_relevance_score": 0.186,
+    "infrastructure_relevance_tier": "archive_only",
+    "infrastructure_relevance_action": "archive_only",
+    "infrastructure_relevance_reasons": [
+      "power_grid_relevance:0.26(utility)"
+    ],
+    "infrastructure_relevance": {
+      "direct_ai_infrastructure_relevance": 0,
+      "data_center_relevance": 0,
+      "cloud_capacity_relevance": 0,
+      "semiconductor_relevance": 0,
+      "power_grid_relevance": 0.26,
+      "cooling_relevance": 0,
+      "capital_markets_relevance": 0,
+      "enterprise_ai_infrastructure_relevance": 0,
+      "infrastructure_relevance_score": 0.186,
+      "infrastructure_relevance_tier": "archive_only",
+      "infrastructure_relevance_action": "archive_only",
+      "infrastructure_relevance_reasons": [
+        "power_grid_relevance:0.26(utility)"
+      ],
+      "infrastructureRelevanceAction": "archive_only",
+      "articlePagePublished": false,
+      "homepagePublished": false,
+      "archiveOnly": true,
+      "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
+    }
+  },
+  {
     "id": "40b1b6ea96c37cb2",
     "sourceRegistryId": "federal-register-bis",
     "source": "Federal Register",
@@ -2073,16 +1695,292 @@
     }
   },
   {
-    "id": "3f3554a1e1533423",
-    "sourceRegistryId": "federal-register-ferc",
-    "source": "Federal Register",
-    "url": "https://www.federalregister.gov/documents/2026/09/16/2026-19011/commission-information-collection-activities-ferc-555-comment-request-extension",
-    "title": "Commission Information Collection Activities (Ferc-555); Comment Request; Extension",
-    "snippet": "In compliance with the requirements of the Paperwork Reduction Act of 1995, the Federal Energy Regulatory Commission (Commission or FERC) is soliciting public comment on the currently approved information collection, FE…",
-    "contentText": "In compliance with the requirements of the Paperwork Reduction Act of 1995, the Federal Energy Regulatory Commission (Commission or FERC) is soliciting public comment on the currently approved information collection, FERC-555: Preservation of Records for Public Utilities and Licensees, Natural Gas and Oil Pipeline Companies (OMB Control No. 1902-0098) which will be submitted to the Office of Management and Budget (OMB) for a review of the information collection requirements. There are no proposed changes to the record keeping requirements. The 60-day notice period ended on September 8, 2026, with no comments received.",
-    "publishedAt": "2026-09-16T04:00:00.000Z",
+    "id": "a38f7f95e107cb00",
+    "sourceRegistryId": "whitehouse-presidential-actions",
+    "source": "The White House",
+    "url": "https://www.whitehouse.gov/presidential-actions/2026/09/constitution-day-citizenship-day-and-constitution-week-2026/",
+    "title": "Constitution Day, Citizenship Day, and Constitution Week, 2026",
+    "snippet": "BY THE PRESIDENT OF THE UNITED STATES OF AMERICA A PROCLAMATION During Constitution Week, we proudly commemorate the 239th anniversary of the signing of the United States Constitution, the very foundation of our Republi…",
+    "contentText": "Presidential Actions Search Select Category All News Briefings & Statements All Presidential Actions Executive Orders Nominations & Appointments Presidential Memoranda Proclamations Fact Sheets Releases Remarks Research All Briefings & Statements Presidential Actions All Executive Orders Nominations & Appointments Presidential Memoranda Proclamations Fact Sheets Releases Remarks Research BY THE PRESIDENT OF THE UNITED STATES OF AMERICA A PROCLAMATION During Constitution Week, we proudly commemorate the 239th anniversary of the signing of the United States Constitution, the very foundation of our Republic and an eternal reminder that all power throughout our land flows from We the People. Over two centuries later, we remain more committed than ever to protecting and cherishing the fundamen…",
+    "publishedAt": "2026-09-16T20:09:16.000Z",
     "sourceImage": null,
     "region": "US",
+    "language": "en",
+    "defaultCategory": "Policy & Siting",
+    "ai_topic_score": 0,
+    "ai_topic_reasons": [
+      "ai_not_in_title"
+    ],
+    "category": "Power & Grid",
+    "primary_category": "Power & Grid",
+    "secondary_category": "Interconnection and power procurement",
+    "infrastructure_layer": "Power",
+    "affected_stakeholders": [
+      "data center operators",
+      "utilities",
+      "cloud capacity teams",
+      "investors"
+    ],
+    "article_type": "Policy / Regulation",
+    "urgency_score": 0.31,
+    "taxonomy_confidence": 0.57,
+    "taxonomy_reasons": [
+      "power"
+    ],
+    "direct_ai_infrastructure_relevance": 0,
+    "data_center_relevance": 0,
+    "cloud_capacity_relevance": 0,
+    "semiconductor_relevance": 0,
+    "power_grid_relevance": 0.22,
+    "cooling_relevance": 0,
+    "capital_markets_relevance": 0,
+    "enterprise_ai_infrastructure_relevance": 0,
+    "infrastructure_relevance_score": 0.163,
+    "infrastructure_relevance_tier": "archive_only",
+    "infrastructure_relevance_action": "archive_only",
+    "infrastructure_relevance_reasons": [
+      "power_grid_relevance:0.22(power)"
+    ],
+    "infrastructure_relevance": {
+      "direct_ai_infrastructure_relevance": 0,
+      "data_center_relevance": 0,
+      "cloud_capacity_relevance": 0,
+      "semiconductor_relevance": 0,
+      "power_grid_relevance": 0.22,
+      "cooling_relevance": 0,
+      "capital_markets_relevance": 0,
+      "enterprise_ai_infrastructure_relevance": 0,
+      "infrastructure_relevance_score": 0.163,
+      "infrastructure_relevance_tier": "archive_only",
+      "infrastructure_relevance_action": "archive_only",
+      "infrastructure_relevance_reasons": [
+        "power_grid_relevance:0.22(power)"
+      ],
+      "infrastructureRelevanceAction": "archive_only",
+      "articlePagePublished": false,
+      "homepagePublished": false,
+      "archiveOnly": true,
+      "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
+    }
+  },
+  {
+    "id": "d31732c62dd131f2",
+    "sourceRegistryId": "ec-press-corner",
+    "source": "European Commission",
+    "url": "https://ec.europa.eu/commission/presscorner/detail/en/speech_26_1989",
+    "title": "Wystąpienie komisarza Piotra Serafina podczas XXVI Międzynarodowej Konferencji „Rola chrześcijan w procesie integracji europejskiej” pt. „Europa skazana na podział czy zjednoczenie?”",
+    "snippet": "European Commission Speech Krakow, 26 Sep 2026 Szanowni Państwo, Pytacie Państwo czy „Europa jest skazana na podział czy na jedność?”. Chce udzielić na to pytanie optymistycznej i prawdziwej odpowiedzi: przy...",
+    "contentText": "European Commission Speech Krakow, 26 Sep 2026 Szanowni Państwo, Pytacie Państwo czy „Europa jest skazana na podział czy na jedność?”. Chce udzielić na to pytanie optymistycznej i prawdziwej odpowiedzi: przy...",
+    "publishedAt": "2026-09-26T11:51:24.000Z",
+    "sourceImage": null,
+    "region": "EU",
+    "language": "en",
+    "defaultCategory": "Policy & Siting",
+    "ai_topic_score": 0,
+    "ai_topic_reasons": [
+      "ai_not_in_title"
+    ],
+    "category": "Policy & Siting",
+    "primary_category": "Policy & Siting",
+    "secondary_category": "Permitting, regulation, and market access",
+    "infrastructure_layer": "Policy",
+    "affected_stakeholders": [
+      "regulators",
+      "site selectors",
+      "developers",
+      "utilities"
+    ],
+    "article_type": "Policy / Regulation",
+    "urgency_score": 0.18,
+    "taxonomy_confidence": 0.53,
+    "taxonomy_reasons": [
+      "policy"
+    ],
+    "direct_ai_infrastructure_relevance": 0,
+    "data_center_relevance": 0,
+    "cloud_capacity_relevance": 0,
+    "semiconductor_relevance": 0,
+    "power_grid_relevance": 0,
+    "cooling_relevance": 0,
+    "capital_markets_relevance": 0,
+    "enterprise_ai_infrastructure_relevance": 0,
+    "infrastructure_relevance_score": 0,
+    "infrastructure_relevance_tier": "archive_only",
+    "infrastructure_relevance_action": "archive_only",
+    "infrastructure_relevance_reasons": [
+      "no_strong_compute_current_infrastructure_match"
+    ],
+    "infrastructure_relevance": {
+      "direct_ai_infrastructure_relevance": 0,
+      "data_center_relevance": 0,
+      "cloud_capacity_relevance": 0,
+      "semiconductor_relevance": 0,
+      "power_grid_relevance": 0,
+      "cooling_relevance": 0,
+      "capital_markets_relevance": 0,
+      "enterprise_ai_infrastructure_relevance": 0,
+      "infrastructure_relevance_score": 0,
+      "infrastructure_relevance_tier": "archive_only",
+      "infrastructure_relevance_action": "archive_only",
+      "infrastructure_relevance_reasons": [
+        "no_strong_compute_current_infrastructure_match"
+      ],
+      "infrastructureRelevanceAction": "archive_only",
+      "articlePagePublished": false,
+      "homepagePublished": false,
+      "archiveOnly": true,
+      "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
+    }
+  },
+  {
+    "id": "1ced4c6c6bfadf75",
+    "sourceRegistryId": "whitehouse-presidential-actions",
+    "source": "The White House",
+    "url": "https://www.whitehouse.gov/presidential-actions/2026/09/gold-star-mothers-and-familys-day-2026/",
+    "title": "Gold Star Mother’s And Family’s Day, 2026",
+    "snippet": "BY THE PRESIDENT OF THE UNITED STATES OF AMERICA A PROCLAMATION America is free, strong, secure, and prosperous due to the courage of the heroes in uniform who are willing to lay down their lives in the defense of our R…",
+    "contentText": "Presidential Actions Search Select Category All News Briefings & Statements All Presidential Actions Executive Orders Nominations & Appointments Presidential Memoranda Proclamations Fact Sheets Releases Remarks Research All Briefings & Statements Presidential Actions All Executive Orders Nominations & Appointments Presidential Memoranda Proclamations Fact Sheets Releases Remarks Research BY THE PRESIDENT OF THE UNITED STATES OF AMERICA A PROCLAMATION America is free, strong, secure, and prosperous due to the courage of the heroes in uniform who are willing to lay down their lives in the defense of our Republic. The supreme sacrifice paid by every fallen warrior is borne in perpetual sorrow and profound anguish by the loved ones left behind. On Gold Star Mother&#8217;s and Family&#8217;s D…",
+    "publishedAt": "2026-09-25T19:47:32.000Z",
+    "sourceImage": null,
+    "region": "US",
+    "language": "en",
+    "defaultCategory": "Policy & Siting",
+    "ai_topic_score": 0,
+    "ai_topic_reasons": [
+      "ai_not_in_title"
+    ],
+    "category": "Policy & Siting",
+    "primary_category": "Policy & Siting",
+    "secondary_category": "Permitting, regulation, and market access",
+    "infrastructure_layer": "Policy",
+    "affected_stakeholders": [
+      "regulators",
+      "site selectors",
+      "developers",
+      "utilities"
+    ],
+    "article_type": "Policy / Regulation",
+    "urgency_score": 0.18,
+    "taxonomy_confidence": 0.53,
+    "taxonomy_reasons": [
+      "policy"
+    ],
+    "direct_ai_infrastructure_relevance": 0,
+    "data_center_relevance": 0,
+    "cloud_capacity_relevance": 0,
+    "semiconductor_relevance": 0,
+    "power_grid_relevance": 0,
+    "cooling_relevance": 0,
+    "capital_markets_relevance": 0,
+    "enterprise_ai_infrastructure_relevance": 0,
+    "infrastructure_relevance_score": 0,
+    "infrastructure_relevance_tier": "archive_only",
+    "infrastructure_relevance_action": "archive_only",
+    "infrastructure_relevance_reasons": [
+      "no_strong_compute_current_infrastructure_match"
+    ],
+    "infrastructure_relevance": {
+      "direct_ai_infrastructure_relevance": 0,
+      "data_center_relevance": 0,
+      "cloud_capacity_relevance": 0,
+      "semiconductor_relevance": 0,
+      "power_grid_relevance": 0,
+      "cooling_relevance": 0,
+      "capital_markets_relevance": 0,
+      "enterprise_ai_infrastructure_relevance": 0,
+      "infrastructure_relevance_score": 0,
+      "infrastructure_relevance_tier": "archive_only",
+      "infrastructure_relevance_action": "archive_only",
+      "infrastructure_relevance_reasons": [
+        "no_strong_compute_current_infrastructure_match"
+      ],
+      "infrastructureRelevanceAction": "archive_only",
+      "articlePagePublished": false,
+      "homepagePublished": false,
+      "archiveOnly": true,
+      "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
+    }
+  },
+  {
+    "id": "1868d12b5b2f4192",
+    "sourceRegistryId": "ec-press-corner",
+    "source": "European Commission",
+    "url": "https://ec.europa.eu/commission/presscorner/detail/en/speech_26_1986",
+    "title": "Speech by Commissioner Albuquerque at the Interparliamentary Conference on Stability, Economic Coordination and Governance in the EU",
+    "snippet": "European Commission Speech Dublin, 25 Sep 2026 Good morning, ladies and gentlemen. It is a pleasure to join you today for this Interparliamentary Conference. National parliaments have an essential role in sh...",
+    "contentText": "European Commission Speech Dublin, 25 Sep 2026 Good morning, ladies and gentlemen. It is a pleasure to join you today for this Interparliamentary Conference. National parliaments have an essential role in sh...",
+    "publishedAt": "2026-09-25T13:26:07.000Z",
+    "sourceImage": null,
+    "region": "EU",
+    "language": "en",
+    "defaultCategory": "Policy & Siting",
+    "ai_topic_score": 0,
+    "ai_topic_reasons": [
+      "ai_not_in_title"
+    ],
+    "category": "Policy & Siting",
+    "primary_category": "Policy & Siting",
+    "secondary_category": "Permitting, regulation, and market access",
+    "infrastructure_layer": "Policy",
+    "affected_stakeholders": [
+      "regulators",
+      "site selectors",
+      "developers",
+      "utilities"
+    ],
+    "article_type": "Policy / Regulation",
+    "urgency_score": 0.18,
+    "taxonomy_confidence": 0.53,
+    "taxonomy_reasons": [
+      "policy"
+    ],
+    "direct_ai_infrastructure_relevance": 0,
+    "data_center_relevance": 0,
+    "cloud_capacity_relevance": 0,
+    "semiconductor_relevance": 0,
+    "power_grid_relevance": 0,
+    "cooling_relevance": 0,
+    "capital_markets_relevance": 0,
+    "enterprise_ai_infrastructure_relevance": 0,
+    "infrastructure_relevance_score": 0,
+    "infrastructure_relevance_tier": "archive_only",
+    "infrastructure_relevance_action": "archive_only",
+    "infrastructure_relevance_reasons": [
+      "no_strong_compute_current_infrastructure_match"
+    ],
+    "infrastructure_relevance": {
+      "direct_ai_infrastructure_relevance": 0,
+      "data_center_relevance": 0,
+      "cloud_capacity_relevance": 0,
+      "semiconductor_relevance": 0,
+      "power_grid_relevance": 0,
+      "cooling_relevance": 0,
+      "capital_markets_relevance": 0,
+      "enterprise_ai_infrastructure_relevance": 0,
+      "infrastructure_relevance_score": 0,
+      "infrastructure_relevance_tier": "archive_only",
+      "infrastructure_relevance_action": "archive_only",
+      "infrastructure_relevance_reasons": [
+        "no_strong_compute_current_infrastructure_match"
+      ],
+      "infrastructureRelevanceAction": "archive_only",
+      "articlePagePublished": false,
+      "homepagePublished": false,
+      "archiveOnly": true,
+      "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
+    }
+  },
+  {
+    "id": "18262f2c9abbb3b4",
+    "sourceRegistryId": "uk-desnz",
+    "source": "UK Department for Energy Security and Net Zero",
+    "url": "https://www.gov.uk/government/publications/oil-and-gas-opred-communications-2026",
+    "title": "Oil and gas: OPRED communications, 2026",
+    "snippet": "OPRED communications issued to stakeholders in 2026.",
+    "contentText": "OPRED communications issued to stakeholders in 2026.",
+    "publishedAt": "2026-09-25T13:09:20.000Z",
+    "sourceImage": null,
+    "region": "UK",
     "language": "en",
     "defaultCategory": "Power & Grid",
     "ai_topic_score": 0,
@@ -2099,9 +1997,9 @@
       "cloud capacity teams",
       "investors"
     ],
-    "article_type": "Policy / Regulation",
-    "urgency_score": 0.42,
-    "taxonomy_confidence": 0.65,
+    "article_type": "Other",
+    "urgency_score": 0.36,
+    "taxonomy_confidence": 0.61,
     "taxonomy_reasons": [
       "power",
       "grid"
@@ -2110,32 +2008,99 @@
     "data_center_relevance": 0,
     "cloud_capacity_relevance": 0,
     "semiconductor_relevance": 0,
-    "power_grid_relevance": 0.26,
+    "power_grid_relevance": 0,
     "cooling_relevance": 0,
     "capital_markets_relevance": 0,
     "enterprise_ai_infrastructure_relevance": 0,
-    "infrastructure_relevance_score": 0.186,
+    "infrastructure_relevance_score": 0,
     "infrastructure_relevance_tier": "archive_only",
     "infrastructure_relevance_action": "archive_only",
     "infrastructure_relevance_reasons": [
-      "power_grid_relevance:0.26(utilities)",
-      "procedural_regulatory_docket_without_compute_context"
+      "no_strong_compute_current_infrastructure_match"
     ],
     "infrastructure_relevance": {
       "direct_ai_infrastructure_relevance": 0,
       "data_center_relevance": 0,
       "cloud_capacity_relevance": 0,
       "semiconductor_relevance": 0,
-      "power_grid_relevance": 0.26,
+      "power_grid_relevance": 0,
       "cooling_relevance": 0,
       "capital_markets_relevance": 0,
       "enterprise_ai_infrastructure_relevance": 0,
-      "infrastructure_relevance_score": 0.186,
+      "infrastructure_relevance_score": 0,
       "infrastructure_relevance_tier": "archive_only",
       "infrastructure_relevance_action": "archive_only",
       "infrastructure_relevance_reasons": [
-        "power_grid_relevance:0.26(utilities)",
-        "procedural_regulatory_docket_without_compute_context"
+        "no_strong_compute_current_infrastructure_match"
+      ],
+      "infrastructureRelevanceAction": "archive_only",
+      "articlePagePublished": false,
+      "homepagePublished": false,
+      "archiveOnly": true,
+      "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
+    }
+  },
+  {
+    "id": "c84be5d6a7c56ba8",
+    "sourceRegistryId": "ec-press-corner",
+    "source": "European Commission",
+    "url": "https://ec.europa.eu/commission/presscorner/detail/en/mex_26_1982",
+    "title": "Daily News 25 / 09 / 2026",
+    "snippet": "European Commission Daily news Brussels, 25 Sep 2026 Commission takes action to ensure complete and timely transposition of EU directives The European Commission is taking action against several EU Member States t...",
+    "contentText": "European Commission Daily news Brussels, 25 Sep 2026 Commission takes action to ensure complete and timely transposition of EU directives The European Commission is taking action against several EU Member States t...",
+    "publishedAt": "2026-09-25T09:48:32.000Z",
+    "sourceImage": null,
+    "region": "US",
+    "language": "en",
+    "defaultCategory": "Policy & Siting",
+    "ai_topic_score": 0,
+    "ai_topic_reasons": [
+      "ai_not_in_title"
+    ],
+    "category": "Policy & Siting",
+    "primary_category": "Policy & Siting",
+    "secondary_category": "Permitting, regulation, and market access",
+    "infrastructure_layer": "Policy",
+    "affected_stakeholders": [
+      "regulators",
+      "site selectors",
+      "developers",
+      "utilities"
+    ],
+    "article_type": "Policy / Regulation",
+    "urgency_score": 0.18,
+    "taxonomy_confidence": 0.53,
+    "taxonomy_reasons": [
+      "policy"
+    ],
+    "direct_ai_infrastructure_relevance": 0,
+    "data_center_relevance": 0,
+    "cloud_capacity_relevance": 0,
+    "semiconductor_relevance": 0,
+    "power_grid_relevance": 0,
+    "cooling_relevance": 0,
+    "capital_markets_relevance": 0,
+    "enterprise_ai_infrastructure_relevance": 0,
+    "infrastructure_relevance_score": 0,
+    "infrastructure_relevance_tier": "archive_only",
+    "infrastructure_relevance_action": "archive_only",
+    "infrastructure_relevance_reasons": [
+      "no_strong_compute_current_infrastructure_match"
+    ],
+    "infrastructure_relevance": {
+      "direct_ai_infrastructure_relevance": 0,
+      "data_center_relevance": 0,
+      "cloud_capacity_relevance": 0,
+      "semiconductor_relevance": 0,
+      "power_grid_relevance": 0,
+      "cooling_relevance": 0,
+      "capital_markets_relevance": 0,
+      "enterprise_ai_infrastructure_relevance": 0,
+      "infrastructure_relevance_score": 0,
+      "infrastructure_relevance_tier": "archive_only",
+      "infrastructure_relevance_action": "archive_only",
+      "infrastructure_relevance_reasons": [
+        "no_strong_compute_current_infrastructure_match"
       ],
       "infrastructureRelevanceAction": "archive_only",
       "articlePagePublished": false,
