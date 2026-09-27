@@ -47017,28 +47017,21 @@
         "1": true,
         "2": true
       }
+    },
+    "2026-09-28": {
+      "date": "2026-09-28",
+      "createdAt": "2026-09-27T18:57:54.309Z",
+      "refreshedAt": "2026-09-27T18:57:54.309Z",
+      "candidateWindowHours": 24,
+      "curatedItems": [],
+      "curatedIds": [],
+      "publishedIds": [],
+      "slotPublications": {
+        "0": true
+      }
     }
   },
   "runHistory": [
-    {
-      "at": "2026-08-18T23:32:11.876Z",
-      "day": "2026-08-19",
-      "slot": 1,
-      "publishedCount": 0,
-      "authoredColumn": {
-        "published": false,
-        "reason": "verify:unsupported_numeric_claims:33 million,000 megawatts,33 million,000 megawatts,24 months"
-      },
-      "llmUsage": {
-        "calls": 5,
-        "failures": 0,
-        "prompt_tokens": 13175,
-        "completion_tokens": 7475,
-        "total_tokens": 20650,
-        "token_budget": 60000,
-        "call_budget": 40
-      }
-    },
     {
       "at": "2026-08-19T07:50:59.930Z",
       "day": "2026-08-19",
@@ -50301,9 +50294,28 @@
         "token_budget": 60000,
         "call_budget": 40
       }
+    },
+    {
+      "at": "2026-09-27T18:57:54.309Z",
+      "day": "2026-09-28",
+      "slot": 0,
+      "publishedCount": 0,
+      "authoredColumn": {
+        "published": false,
+        "reason": "no_qualifying_story"
+      },
+      "llmUsage": {
+        "calls": 1,
+        "failures": 0,
+        "prompt_tokens": 370,
+        "completion_tokens": 12,
+        "total_tokens": 382,
+        "token_budget": 60000,
+        "call_budget": 40
+      }
     }
   ],
-  "lastRunAt": "2026-09-27T12:58:32.285Z",
+  "lastRunAt": "2026-09-27T18:57:54.309Z",
   "authored": {
     "lastColumnAt": "2026-09-16T18:47:02.256Z",
     "columnsByDay": {
