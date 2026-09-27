@@ -47007,37 +47007,19 @@
     "2026-09-27": {
       "date": "2026-09-27",
       "createdAt": "2026-09-26T18:27:13.460Z",
-      "refreshedAt": "2026-09-27T01:20:36.886Z",
+      "refreshedAt": "2026-09-27T12:58:32.285Z",
       "candidateWindowHours": 24,
       "curatedItems": [],
       "curatedIds": [],
       "publishedIds": [],
       "slotPublications": {
         "0": true,
-        "1": true
+        "1": true,
+        "2": true
       }
     }
   },
   "runHistory": [
-    {
-      "at": "2026-08-18T15:37:19.132Z",
-      "day": "2026-08-19",
-      "slot": 0,
-      "publishedCount": 0,
-      "authoredColumn": {
-        "published": false,
-        "reason": "verify:unsupported_numeric_claims:33 million,33 million"
-      },
-      "llmUsage": {
-        "calls": 5,
-        "failures": 0,
-        "prompt_tokens": 13312,
-        "completion_tokens": 7579,
-        "total_tokens": 20891,
-        "token_budget": 60000,
-        "call_budget": 40
-      }
-    },
     {
       "at": "2026-08-18T23:32:11.876Z",
       "day": "2026-08-19",
@@ -50300,9 +50282,28 @@
         "token_budget": 60000,
         "call_budget": 40
       }
+    },
+    {
+      "at": "2026-09-27T12:58:32.285Z",
+      "day": "2026-09-27",
+      "slot": 2,
+      "publishedCount": 0,
+      "authoredColumn": {
+        "published": false,
+        "reason": "no_qualifying_story"
+      },
+      "llmUsage": {
+        "calls": 1,
+        "failures": 0,
+        "prompt_tokens": 370,
+        "completion_tokens": 12,
+        "total_tokens": 382,
+        "token_budget": 60000,
+        "call_budget": 40
+      }
     }
   ],
-  "lastRunAt": "2026-09-27T01:20:36.886Z",
+  "lastRunAt": "2026-09-27T12:58:32.285Z",
   "authored": {
     "lastColumnAt": "2026-09-16T18:47:02.256Z",
     "columnsByDay": {
