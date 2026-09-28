@@ -873,7 +873,9 @@
     "da60d6f9264d334b",
     "5b109c48f719a8ed",
     "626eac9e14588b8a",
-    "014ef10f3f64d488"
+    "014ef10f3f64d488",
+    "b87635e78e8d0606",
+    "c3bb26ce5367e885"
   ],
   "dayPlans": {
     "2026-03-24": {
@@ -47030,60 +47032,350 @@
         "0": true,
         "1": true
       }
-    }
-  },
-  "runHistory": [
-    {
-      "at": "2026-08-19T15:37:32.873Z",
-      "day": "2026-08-20",
-      "slot": 0,
-      "publishedCount": 0,
-      "signalCardCount": 0,
-      "archiveOnlyCount": 1,
-      "processedIds": [
-        "41090ff9729a3644"
-      ],
-      "blockedCount": 0,
-      "blockedItems": [],
-      "archiveOnlyItems": [
+    },
+    "2026-09-29": {
+      "date": "2026-09-29",
+      "createdAt": "2026-09-28T15:22:17.133Z",
+      "refreshedAt": "2026-09-28T15:22:17.133Z",
+      "candidateWindowHours": 24,
+      "curatedItems": [
         {
-          "id": "41090ff9729a3644",
-          "title": "Longer wells boost Permian crude oil and natural gas production",
-          "infrastructure_relevance_score": 0.43,
+          "id": "b87635e78e8d0606",
+          "sourceRegistryId": "arxiv-cs-dc",
+          "source": "arXiv",
+          "url": "https://arxiv.org/abs/2609.30785",
+          "title": "Job Class Thermal Intent Aware Liquid Cooling Allocation for AI Data Centers",
+          "snippet": "arXiv:2609.30785v1 Announce Type: new Abstract: GPU-dense AI data centers need to run on liquid cooling as air simply cannot shed the heat at these power densities. Yet the cooling loops themselves are blind to what wor…",
+          "contentText": "arXiv:2609.30785v1 Announce Type: new Abstract: GPU-dense AI data centers need to run on liquid cooling as air simply cannot shed the heat at these power densities. Yet the cooling loops themselves are blind to what workloads are about to run; they crank up flow only after a sensor catches a temperature climb, which can take 30 to 50 seconds. We built Job-Class Thermal Intent (JCTI) to close that window. The scheduler already knows a job is coming and what class it belongs to; JCTI feeds that information straight to the cooling controller so it can stage coolant before the heat shows up. We pulled the thermal signatures for each job class out of MLPerf GPU power traces and tuned arrival patterns against Alibaba cluster data. Over 120 paired Monte Carlo trials the numbers come out to 56.4%…",
+          "publishedAt": "2026-09-28T04:00:00.000Z",
+          "sourceImage": null,
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure",
+          "source_text_scope": "abstract",
+          "ai_topic_score": 0.463,
+          "ai_topic_reasons": [
+            "gpu",
+            "ai"
+          ],
+          "category": "Cooling & Facility Engineering",
+          "primary_category": "Cooling & Facility Engineering",
+          "secondary_category": "Thermal design and rack density",
+          "infrastructure_layer": "Cooling",
+          "affected_stakeholders": [
+            "operators",
+            "equipment vendors",
+            "data center developers",
+            "enterprise IT"
+          ],
+          "article_type": "Other",
+          "urgency_score": 0.57,
+          "taxonomy_confidence": 0.93,
+          "taxonomy_reasons": [
+            "cooling",
+            "liquid cooling",
+            "thermal"
+          ],
+          "direct_ai_infrastructure_relevance": 0.78,
+          "data_center_relevance": 0.55,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0.22,
+          "power_grid_relevance": 0.22,
+          "cooling_relevance": 1,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.972,
+          "infrastructure_relevance_tier": "signal_card",
+          "infrastructure_relevance_action": "publish_signal_card_only",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:0.78",
+            "data_center_relevance:0.55(data centers)",
+            "semiconductor_relevance:0.22(gpu)",
+            "power_grid_relevance:0.22(power)",
+            "cooling_relevance:1.00(cooling, liquid cooling, thermal)",
+            "abstract_only_source_capped_at_signal_card"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 0.78,
+            "data_center_relevance": 0.55,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0.22,
+            "power_grid_relevance": 0.22,
+            "cooling_relevance": 1,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.972,
+            "infrastructure_relevance_tier": "signal_card",
+            "infrastructure_relevance_action": "publish_signal_card_only",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:0.78",
+              "data_center_relevance:0.55(data centers)",
+              "semiconductor_relevance:0.22(gpu)",
+              "power_grid_relevance:0.22(power)",
+              "cooling_relevance:1.00(cooling, liquid cooling, thermal)",
+              "abstract_only_source_capped_at_signal_card"
+            ],
+            "infrastructureRelevanceAction": "publish_signal_card_only",
+            "articlePagePublished": false,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 73
+        },
+        {
+          "id": "c3bb26ce5367e885",
+          "sourceRegistryId": "arxiv-cs-dc",
+          "source": "arXiv",
+          "url": "https://arxiv.org/abs/2609.30854",
+          "title": "The KV Cache Is the New Memory Wall",
+          "snippet": "arXiv:2609.30854v1 Announce Type: new Abstract: Autoregressive LLM inference at long context is bounded by memory bandwidth, not arithmetic throughput, and the binding resource shifts from model weights to the Key-Value…",
+          "contentText": "arXiv:2609.30854v1 Announce Type: new Abstract: Autoregressive LLM inference at long context is bounded by memory bandwidth, not arithmetic throughput, and the binding resource shifts from model weights to the Key-Value (KV) cache as sequence length grows. For Llama-3-70B in BF16, the 140 GB weight footprint exceeds the 80 GB HBM of a single accelerator, and one 128k-token sequence adds 42 GB of KV cache. Techniques that compress, evict, page, share, or offload KV state have proliferated, but reported gains use inconsistent workloads, hardware, and quality metrics, preventing cross-paper comparison. This SoK paper unifies the field analytically, with a protocol that strictly separates derived and reported claims. We derive closed-form arithmetic intensity as a decaying function of context…",
+          "publishedAt": "2026-09-28T04:00:00.000Z",
+          "sourceImage": null,
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure",
+          "source_text_scope": "abstract",
+          "ai_topic_score": 0.6,
+          "ai_topic_reasons": [
+            "llm",
+            "inference",
+            "llama",
+            "accelerator",
+            "ai_not_in_title"
+          ],
+          "category": "Semiconductors",
+          "primary_category": "Semiconductors",
+          "secondary_category": "Accelerators, memory, and advanced packaging",
+          "infrastructure_layer": "Silicon",
+          "affected_stakeholders": [
+            "semiconductor suppliers",
+            "hyperscalers",
+            "server OEMs",
+            "investors"
+          ],
+          "article_type": "Capacity Expansion",
+          "urgency_score": 0.33,
+          "taxonomy_confidence": 0.62,
+          "taxonomy_reasons": [
+            "hbm"
+          ],
+          "direct_ai_infrastructure_relevance": 0.22,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0.58,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.455,
           "infrastructure_relevance_tier": "archive_only",
           "infrastructure_relevance_action": "archive_only",
           "infrastructure_relevance_reasons": [
-            "cloud_capacity_relevance:0.32(hyperscalers)",
-            "power_grid_relevance:0.50(power, grid)"
+            "direct_ai_infrastructure_relevance:0.22",
+            "semiconductor_relevance:0.58(hbm, accelerator)"
           ],
-          "extraction_quality_score": 1,
-          "source_domain_adapter": "generic",
-          "content_length": 1621,
-          "boilerplate_ratio": 0,
-          "repetition_blocked": false,
-          "repetition_block_reasons": [],
-          "repetition_check": null,
-          "expert_insight_complete": false,
-          "expert_insight_missing_fields": [
-            "named_companies"
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 0.22,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0.58,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.455,
+            "infrastructure_relevance_tier": "archive_only",
+            "infrastructure_relevance_action": "archive_only",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:0.22",
+              "semiconductor_relevance:0.58(hbm, accelerator)"
+            ],
+            "infrastructureRelevanceAction": "archive_only",
+            "articlePagePublished": false,
+            "homepagePublished": false,
+            "archiveOnly": true,
+            "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
+          },
+          "score": 39
+        },
+        {
+          "id": "ffefee3d5e91139a",
+          "sourceRegistryId": "arxiv-cs-dc",
+          "source": "arXiv",
+          "url": "https://arxiv.org/abs/2605.25375",
+          "title": "Bandwidth-Aware and Cost-Efficient Pipeline Parallel Scheduling in Geo-Distributed LLM Training",
+          "snippet": "arXiv:2605.25375v2 Announce Type: replace Abstract: The rapid evolution of large language models (LLMs) has made geographically distributed training necessary due to GPU scarcity within a single cloud region. In such cr…",
+          "contentText": "arXiv:2605.25375v2 Announce Type: replace Abstract: The rapid evolution of large language models (LLMs) has made geographically distributed training necessary due to GPU scarcity within a single cloud region. In such cross-region settings, Pipeline Parallelism (PP) is communication-efficient, yet scheduling PP remains challenging under heterogeneous inter-region bandwidth and regional electricity prices. Existing schedulers are either delay-first, incurring high electricity cost, or cost-first, relying on rigid resource allocation that prolongs Job Completion Time (JCT). They are also ineffective at optimizing execution order in multi-tenant environments, where long-running and bandwidth-intensive jobs can cause head-of-line (HoL) blocking and degrade overall performance. To this end, we…",
+          "publishedAt": "2026-09-28T04:00:00.000Z",
+          "sourceImage": null,
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure",
+          "source_text_scope": "abstract",
+          "ai_topic_score": 1,
+          "ai_topic_reasons": [
+            "large language models",
+            "llm",
+            "llms",
+            "gpu"
           ],
-          "reason": "infrastructure_relevance_below_signal_threshold"
+          "category": "Cloud Capacity",
+          "primary_category": "Cloud Capacity",
+          "secondary_category": "Hyperscale regions and accelerator availability",
+          "infrastructure_layer": "Cloud Platform",
+          "affected_stakeholders": [
+            "hyperscalers",
+            "cloud buyers",
+            "enterprise IT",
+            "operators"
+          ],
+          "article_type": "Other",
+          "urgency_score": 0.44,
+          "taxonomy_confidence": 0.58,
+          "taxonomy_reasons": [
+            "cloud region"
+          ],
+          "direct_ai_infrastructure_relevance": 0.22,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0.32,
+          "semiconductor_relevance": 0.22,
+          "power_grid_relevance": 0.24,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.378,
+          "infrastructure_relevance_tier": "archive_only",
+          "infrastructure_relevance_action": "archive_only",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:0.22",
+            "cloud_capacity_relevance:0.32(cloud region)",
+            "semiconductor_relevance:0.22(gpu)",
+            "power_grid_relevance:0.24(electricity)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 0.22,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0.32,
+            "semiconductor_relevance": 0.22,
+            "power_grid_relevance": 0.24,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.378,
+            "infrastructure_relevance_tier": "archive_only",
+            "infrastructure_relevance_action": "archive_only",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:0.22",
+              "cloud_capacity_relevance:0.32(cloud region)",
+              "semiconductor_relevance:0.22(gpu)",
+              "power_grid_relevance:0.24(electricity)"
+            ],
+            "infrastructureRelevanceAction": "archive_only",
+            "articlePagePublished": false,
+            "homepagePublished": false,
+            "archiveOnly": true,
+            "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
+          },
+          "score": 32
+        },
+        {
+          "id": "ba80d3d23fac3f13",
+          "sourceRegistryId": "arxiv-cs-dc",
+          "source": "arXiv",
+          "url": "https://arxiv.org/abs/2604.15186",
+          "title": "Scepsy: Serving Agentic Workflows Using Aggregate LLM Pipelines",
+          "snippet": "arXiv:2604.15186v2 Announce Type: replace Abstract: Agentic workflows carry out complex tasks by orchestrating multiple large language models (LLMs) and tools. Serving them at a target throughput with low latency is har…",
+          "contentText": "arXiv:2604.15186v2 Announce Type: replace Abstract: Agentic workflows carry out complex tasks by orchestrating multiple large language models (LLMs) and tools. Serving them at a target throughput with low latency is hard because they are written in arbitrary agentic frameworks and their execution times are unpredictable: execution branches, fans out, or recurs in data-dependent ways. Since their LLMs often outnumber the available GPUs, they also oversubscribe GPUs. We describe Scepsy, a serving system that schedules arbitrary multi-LLM agentic workflows onto a GPU cluster. Scepsy exploits the insight that, while the end-to-end latency of an agentic workflow is unpredictable, each LLM's fraction of execution time is comparatively stable across requests. Scepsy profiles each LLM under diffe…",
+          "publishedAt": "2026-09-28T04:00:00.000Z",
+          "sourceImage": null,
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure",
+          "source_text_scope": "abstract",
+          "ai_topic_score": 1,
+          "ai_topic_reasons": [
+            "large language models",
+            "llm",
+            "llms",
+            "agentic",
+            "gpu",
+            "gpus"
+          ],
+          "category": "AI Infrastructure",
+          "primary_category": "AI Infrastructure",
+          "secondary_category": "GPU clusters and deployment readiness",
+          "infrastructure_layer": "Compute",
+          "affected_stakeholders": [
+            "operators",
+            "hyperscalers",
+            "cloud buyers",
+            "investors"
+          ],
+          "article_type": "Other",
+          "urgency_score": 0.34,
+          "taxonomy_confidence": 0.71,
+          "taxonomy_reasons": [
+            "ai infrastructure",
+            "gpu cluster"
+          ],
+          "direct_ai_infrastructure_relevance": 0.64,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0.22,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.49,
+          "infrastructure_relevance_tier": "archive_only",
+          "infrastructure_relevance_action": "archive_only",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:0.64(gpu cluster)",
+            "semiconductor_relevance:0.22(gpu)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 0.64,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0.22,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.49,
+            "infrastructure_relevance_tier": "archive_only",
+            "infrastructure_relevance_action": "archive_only",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:0.64(gpu cluster)",
+              "semiconductor_relevance:0.22(gpu)"
+            ],
+            "infrastructureRelevanceAction": "archive_only",
+            "articlePagePublished": false,
+            "homepagePublished": false,
+            "archiveOnly": true,
+            "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
+          },
+          "score": 45
         }
       ],
-      "authoredColumn": {
-        "published": false,
-        "reason": "draft:no_parseable_draft"
-      },
-      "llmUsage": {
-        "calls": 4,
-        "failures": 0,
-        "prompt_tokens": 6985,
-        "completion_tokens": 3510,
-        "total_tokens": 10495,
-        "token_budget": 60000,
-        "call_budget": 40
+      "curatedIds": [
+        "b87635e78e8d0606",
+        "c3bb26ce5367e885",
+        "ffefee3d5e91139a",
+        "ba80d3d23fac3f13"
+      ],
+      "publishedIds": [
+        "b87635e78e8d0606",
+        "c3bb26ce5367e885"
+      ],
+      "slotPublications": {
+        "0": true
       }
-    },
+    }
+  },
+  "runHistory": [
     {
       "at": "2026-08-19T23:33:20.272Z",
       "day": "2026-08-20",
@@ -50314,9 +50606,37 @@
         "token_budget": 60000,
         "call_budget": 40
       }
+    },
+    {
+      "at": "2026-09-28T15:22:17.133Z",
+      "day": "2026-09-29",
+      "slot": 0,
+      "publishedCount": 0,
+      "signalCardCount": 2,
+      "archiveOnlyCount": 0,
+      "processedIds": [
+        "b87635e78e8d0606",
+        "c3bb26ce5367e885"
+      ],
+      "blockedCount": 0,
+      "blockedItems": [],
+      "archiveOnlyItems": [],
+      "authoredColumn": {
+        "published": false,
+        "reason": "no_qualifying_story"
+      },
+      "llmUsage": {
+        "calls": 3,
+        "failures": 0,
+        "prompt_tokens": 4096,
+        "completion_tokens": 606,
+        "total_tokens": 4702,
+        "token_budget": 60000,
+        "call_budget": 40
+      }
     }
   ],
-  "lastRunAt": "2026-09-28T01:34:54.377Z",
+  "lastRunAt": "2026-09-28T15:22:17.133Z",
   "authored": {
     "lastColumnAt": "2026-09-16T18:47:02.256Z",
     "columnsByDay": {
