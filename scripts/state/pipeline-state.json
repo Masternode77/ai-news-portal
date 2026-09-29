@@ -879,7 +879,9 @@
     "ba80d3d23fac3f13",
     "ffefee3d5e91139a",
     "cb57985cb148504a",
-    "3f7f9d722c7f20df"
+    "3f7f9d722c7f20df",
+    "0312bfc6d3fca3b4",
+    "f19226cf98e97067"
   ],
   "dayPlans": {
     "2026-03-24": {
@@ -47378,28 +47380,273 @@
         "1": true,
         "2": true
       }
+    },
+    "2026-09-30": {
+      "date": "2026-09-30",
+      "createdAt": "2026-09-29T19:54:17.966Z",
+      "refreshedAt": "2026-09-29T19:54:17.966Z",
+      "candidateWindowHours": 24,
+      "curatedItems": [
+        {
+          "id": "0312bfc6d3fca3b4",
+          "sourceRegistryId": "arxiv-cs-dc",
+          "source": "arXiv",
+          "url": "https://arxiv.org/abs/2605.23348",
+          "title": "XWind: A Cross-site Router for Large Language Model Inference Serving at Renewable Energy Farms",
+          "snippet": "arXiv:2605.23348v3 Announce Type: replace Abstract: AI power demand is growing at an unprecedented rate while power grids are often ailing and struggle to keep up. Grid expansion comes with high capital expenditure and…",
+          "contentText": "arXiv:2605.23348v3 Announce Type: replace Abstract: AI power demand is growing at an unprecedented rate while power grids are often ailing and struggle to keep up. Grid expansion comes with high capital expenditure and long-distance transmission losses, yet there is abundant renewable energy at the source, just not matched to demand. This paper proposes a complementary AI infrastructure deployment model, AI Greeninferencing, that brings modular AI compute to renewable energy sources, focusing on wind, allowing AI footprint expansion, generating local behind-the-meter demand for renewable sites, and helping ease the growing strain on power utilities. Our feasibility analysis shows that 890+ GW of wind capacity lies within 50 ms network round trip time of Azure data centers, and that site-w…",
+          "publishedAt": "2026-09-29T04:00:00.000Z",
+          "sourceImage": null,
+          "region": "APAC",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure",
+          "source_text_scope": "abstract",
+          "ai_topic_score": 1,
+          "ai_topic_reasons": [
+            "large language model",
+            "inference",
+            "ai infrastructure",
+            "ai"
+          ],
+          "category": "Power & Grid",
+          "primary_category": "Power & Grid",
+          "secondary_category": "Interconnection and power procurement",
+          "infrastructure_layer": "Power",
+          "affected_stakeholders": [
+            "data center operators",
+            "utilities",
+            "cloud capacity teams",
+            "investors"
+          ],
+          "article_type": "Capacity Expansion",
+          "urgency_score": 0.75,
+          "taxonomy_confidence": 0.93,
+          "taxonomy_reasons": [
+            "power",
+            "grid",
+            "transmission",
+            "gw"
+          ],
+          "direct_ai_infrastructure_relevance": 0.82,
+          "data_center_relevance": 0.42,
+          "cloud_capacity_relevance": 0.22,
+          "semiconductor_relevance": 0,
+          "power_grid_relevance": 1,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0.28,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.98,
+          "infrastructure_relevance_tier": "signal_card",
+          "infrastructure_relevance_action": "publish_signal_card_only",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:0.82(ai infrastructure)",
+            "data_center_relevance:0.42(data centers)",
+            "cloud_capacity_relevance:0.22(azure)",
+            "power_grid_relevance:1.00(power, grid, utilities)",
+            "capital_markets_relevance:0.28(capital expenditure)",
+            "abstract_only_source_capped_at_signal_card"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 0.82,
+            "data_center_relevance": 0.42,
+            "cloud_capacity_relevance": 0.22,
+            "semiconductor_relevance": 0,
+            "power_grid_relevance": 1,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0.28,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.98,
+            "infrastructure_relevance_tier": "signal_card",
+            "infrastructure_relevance_action": "publish_signal_card_only",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:0.82(ai infrastructure)",
+              "data_center_relevance:0.42(data centers)",
+              "cloud_capacity_relevance:0.22(azure)",
+              "power_grid_relevance:1.00(power, grid, utilities)",
+              "capital_markets_relevance:0.28(capital expenditure)",
+              "abstract_only_source_capped_at_signal_card"
+            ],
+            "infrastructureRelevanceAction": "publish_signal_card_only",
+            "articlePagePublished": false,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 73
+        },
+        {
+          "id": "f19226cf98e97067",
+          "sourceRegistryId": "arxiv-cs-dc",
+          "source": "arXiv",
+          "url": "https://arxiv.org/abs/2609.34340",
+          "title": "VarioPath: Workload-Aware All-to-All Communication for PCIe GPU Clusters",
+          "snippet": "arXiv:2609.34340v1 Announce Type: new Abstract: AlltoAllv communication is a critical primitive in distributed large-model inference, particularly for mixture-of-experts (MoE) models. The growing adoption of PCIe GPU sy…",
+          "contentText": "arXiv:2609.34340v1 Announce Type: new Abstract: AlltoAllv communication is a critical primitive in distributed large-model inference, particularly for mixture-of-experts (MoE) models. The growing adoption of PCIe GPU systems for cost-efficient inference makes AlltoAllv performance on these systems increasingly important. Without a dedicated scale-up interconnect (e.g., NVLink or Infinity Fabric), PCIe GPU systems carry both intra-node and inter-node traffic through the PCIe hierarchy, where concurrent transfers can contend for PCIe link bandwidth. This link contention, compounded by skewed traffic distributions and dynamic traffic demand, makes efficient AlltoAllv scheduling challenging. Existing approaches are either poorly suited to PCIe GPU systems or incur substantial schedule synthes…",
+          "publishedAt": "2026-09-29T04:00:00.000Z",
+          "sourceImage": null,
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure",
+          "source_text_scope": "abstract",
+          "ai_topic_score": 0.577,
+          "ai_topic_reasons": [
+            "inference",
+            "gpu"
+          ],
+          "category": "AI Infrastructure",
+          "primary_category": "AI Infrastructure",
+          "secondary_category": "GPU clusters and deployment readiness",
+          "infrastructure_layer": "Compute",
+          "affected_stakeholders": [
+            "operators",
+            "hyperscalers",
+            "cloud buyers",
+            "investors"
+          ],
+          "article_type": "Market Analysis",
+          "urgency_score": 0.39,
+          "taxonomy_confidence": 0.65,
+          "taxonomy_reasons": [
+            "ai infrastructure"
+          ],
+          "direct_ai_infrastructure_relevance": 0.77,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0.297,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.662,
+          "infrastructure_relevance_tier": "signal_card",
+          "infrastructure_relevance_action": "publish_signal_card_only",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:0.77(gpu clusters)",
+            "semiconductor_relevance:0.30(gpu)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 0.77,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0.297,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.662,
+            "infrastructure_relevance_tier": "signal_card",
+            "infrastructure_relevance_action": "publish_signal_card_only",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:0.77(gpu clusters)",
+              "semiconductor_relevance:0.30(gpu)"
+            ],
+            "infrastructureRelevanceAction": "publish_signal_card_only",
+            "articlePagePublished": false,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 48
+        },
+        {
+          "id": "1376fed4a5670f48",
+          "sourceRegistryId": "arxiv-cs-dc",
+          "source": "arXiv",
+          "url": "https://arxiv.org/abs/2609.34818",
+          "title": "Accelerator Choice Is Not Enough: AlphaFold2 Inference on Cloud TPUs",
+          "snippet": "arXiv:2609.34818v1 Announce Type: new Abstract: AlphaFold2 is written in JAX, so the same inference code compiles and runs unchanged on CPUs, GPUs and Google Cloud TPUs. That portability makes the accelerator look like…",
+          "contentText": "arXiv:2609.34818v1 Announce Type: new Abstract: AlphaFold2 is written in JAX, so the same inference code compiles and runs unchanged on CPUs, GPUs and Google Cloud TPUs. That portability makes the accelerator look like the main decision a user has to make. We show that it is not. Running one AlphaFold2 inference workload across a Colab CPU runtime, an NVIDIA T4 GPU and a dedicated eight-chip Cloud TPU v5e slice, we find a large hardware advantage for the TPU, 0.47 s per call in steady state on a single chip against 13.1 s on the T4 in the same measurement campaign, and three ways in which the software layer decides how much of it a user actually gets. The default execution path uses one chip of the eight, and at list prices the idle capacity makes the slice cost about as much per predicti…",
+          "publishedAt": "2026-09-29T04:00:00.000Z",
+          "sourceImage": null,
+          "region": "APAC",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure",
+          "source_text_scope": "abstract",
+          "ai_topic_score": 1,
+          "ai_topic_reasons": [
+            "inference",
+            "nvidia",
+            "gpu",
+            "gpus",
+            "accelerator"
+          ],
+          "category": "Semiconductors",
+          "primary_category": "Semiconductors",
+          "secondary_category": "Accelerators, memory, and advanced packaging",
+          "infrastructure_layer": "Silicon",
+          "affected_stakeholders": [
+            "semiconductor suppliers",
+            "hyperscalers",
+            "server OEMs",
+            "investors"
+          ],
+          "article_type": "Capacity Expansion",
+          "urgency_score": 0.47,
+          "taxonomy_confidence": 0.82,
+          "taxonomy_reasons": [
+            "chip",
+            "gpu",
+            "nvidia"
+          ],
+          "direct_ai_infrastructure_relevance": 0.22,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0.24,
+          "semiconductor_relevance": 0.797,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0.3,
+          "infrastructure_relevance_score": 0.668,
+          "infrastructure_relevance_tier": "signal_card",
+          "infrastructure_relevance_action": "publish_signal_card_only",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:0.22",
+            "cloud_capacity_relevance:0.24(google cloud)",
+            "semiconductor_relevance:0.80(nvidia, accelerator, gpu)",
+            "enterprise_ai_infrastructure_relevance:0.30(inference workload)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 0.22,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0.24,
+            "semiconductor_relevance": 0.797,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0.3,
+            "infrastructure_relevance_score": 0.668,
+            "infrastructure_relevance_tier": "signal_card",
+            "infrastructure_relevance_action": "publish_signal_card_only",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:0.22",
+              "cloud_capacity_relevance:0.24(google cloud)",
+              "semiconductor_relevance:0.80(nvidia, accelerator, gpu)",
+              "enterprise_ai_infrastructure_relevance:0.30(inference workload)"
+            ],
+            "infrastructureRelevanceAction": "publish_signal_card_only",
+            "articlePagePublished": false,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 52
+        }
+      ],
+      "curatedIds": [
+        "0312bfc6d3fca3b4",
+        "f19226cf98e97067",
+        "1376fed4a5670f48"
+      ],
+      "publishedIds": [
+        "0312bfc6d3fca3b4",
+        "f19226cf98e97067"
+      ],
+      "slotPublications": {
+        "0": true
+      }
     }
   },
   "runHistory": [
-    {
-      "at": "2026-08-20T23:35:42.557Z",
-      "day": "2026-08-21",
-      "slot": 1,
-      "publishedCount": 0,
-      "authoredColumn": {
-        "published": true,
-        "slug": "intel-s-integrated-workstation-gpu-is-an-edge-inference-cost-sto-2026-08-20"
-      },
-      "llmUsage": {
-        "calls": 5,
-        "failures": 0,
-        "prompt_tokens": 13976,
-        "completion_tokens": 7432,
-        "total_tokens": 21408,
-        "token_budget": 60000,
-        "call_budget": 40
-      }
-    },
     {
       "at": "2026-08-21T07:53:51.554Z",
       "day": "2026-08-21",
@@ -50684,9 +50931,37 @@
         "token_budget": 60000,
         "call_budget": 40
       }
+    },
+    {
+      "at": "2026-09-29T19:54:17.966Z",
+      "day": "2026-09-30",
+      "slot": 0,
+      "publishedCount": 0,
+      "signalCardCount": 2,
+      "archiveOnlyCount": 0,
+      "processedIds": [
+        "0312bfc6d3fca3b4",
+        "f19226cf98e97067"
+      ],
+      "blockedCount": 0,
+      "blockedItems": [],
+      "archiveOnlyItems": [],
+      "authoredColumn": {
+        "published": false,
+        "reason": "no_qualifying_story"
+      },
+      "llmUsage": {
+        "calls": 3,
+        "failures": 0,
+        "prompt_tokens": 3967,
+        "completion_tokens": 590,
+        "total_tokens": 4557,
+        "token_budget": 60000,
+        "call_budget": 40
+      }
     }
   ],
-  "lastRunAt": "2026-09-29T14:01:02.432Z",
+  "lastRunAt": "2026-09-29T19:54:17.966Z",
   "authored": {
     "lastColumnAt": "2026-09-16T18:47:02.256Z",
     "columnsByDay": {
