@@ -877,7 +877,9 @@
     "b87635e78e8d0606",
     "c3bb26ce5367e885",
     "ba80d3d23fac3f13",
-    "ffefee3d5e91139a"
+    "ffefee3d5e91139a",
+    "cb57985cb148504a",
+    "3f7f9d722c7f20df"
   ],
   "dayPlans": {
     "2026-03-24": {
@@ -47038,80 +47040,71 @@
     "2026-09-29": {
       "date": "2026-09-29",
       "createdAt": "2026-09-28T15:22:17.133Z",
-      "refreshedAt": "2026-09-29T02:34:41.553Z",
+      "refreshedAt": "2026-09-29T14:01:02.432Z",
       "candidateWindowHours": 24,
       "curatedItems": [
         {
-          "id": "ffefee3d5e91139a",
-          "sourceRegistryId": "arxiv-cs-dc",
-          "source": "arXiv",
-          "url": "https://arxiv.org/abs/2605.25375",
-          "title": "Bandwidth-Aware and Cost-Efficient Pipeline Parallel Scheduling in Geo-Distributed LLM Training",
-          "snippet": "arXiv:2605.25375v2 Announce Type: replace Abstract: The rapid evolution of large language models (LLMs) has made geographically distributed training necessary due to GPU scarcity within a single cloud region. In such cr…",
-          "contentText": "arXiv:2605.25375v2 Announce Type: replace Abstract: The rapid evolution of large language models (LLMs) has made geographically distributed training necessary due to GPU scarcity within a single cloud region. In such cross-region settings, Pipeline Parallelism (PP) is communication-efficient, yet scheduling PP remains challenging under heterogeneous inter-region bandwidth and regional electricity prices. Existing schedulers are either delay-first, incurring high electricity cost, or cost-first, relying on rigid resource allocation that prolongs Job Completion Time (JCT). They are also ineffective at optimizing execution order in multi-tenant environments, where long-running and bandwidth-intensive jobs can cause head-of-line (HoL) blocking and degrade overall performance. To this end, we…",
-          "publishedAt": "2026-09-28T04:00:00.000Z",
+          "id": "cb57985cb148504a",
+          "sourceRegistryId": "uk-desnz",
+          "source": "UK Department for Energy Security and Net Zero",
+          "url": "https://www.gov.uk/government/news/great-british-grid-to-speed-up-connections-and-cut-bills",
+          "title": "Great British Grid to speed up connections and cut bills",
+          "snippet": "Families and businesses across the country will benefit from faster grid connections.",
+          "contentText": "Families and businesses across the country will benefit from faster grid connections.",
+          "publishedAt": "2026-09-29T13:45:20.000Z",
           "sourceImage": null,
           "region": "US",
           "language": "en",
-          "defaultCategory": "AI Infrastructure",
-          "source_text_scope": "abstract",
-          "ai_topic_score": 1,
+          "defaultCategory": "Power & Grid",
+          "ai_topic_score": 0,
           "ai_topic_reasons": [
-            "large language models",
-            "llm",
-            "llms",
-            "gpu"
+            "ai_not_in_title"
           ],
-          "category": "Cloud Capacity",
-          "primary_category": "Cloud Capacity",
-          "secondary_category": "Hyperscale regions and accelerator availability",
-          "infrastructure_layer": "Cloud Platform",
+          "category": "Power & Grid",
+          "primary_category": "Power & Grid",
+          "secondary_category": "Interconnection and power procurement",
+          "infrastructure_layer": "Power",
           "affected_stakeholders": [
-            "hyperscalers",
-            "cloud buyers",
-            "enterprise IT",
-            "operators"
+            "data center operators",
+            "utilities",
+            "cloud capacity teams",
+            "investors"
           ],
           "article_type": "Other",
           "urgency_score": 0.44,
-          "taxonomy_confidence": 0.58,
+          "taxonomy_confidence": 0.7,
           "taxonomy_reasons": [
-            "cloud region"
+            "power",
+            "grid"
           ],
-          "direct_ai_infrastructure_relevance": 0.22,
+          "direct_ai_infrastructure_relevance": 0,
           "data_center_relevance": 0,
-          "cloud_capacity_relevance": 0.32,
-          "semiconductor_relevance": 0.22,
-          "power_grid_relevance": 0.24,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0,
+          "power_grid_relevance": 0.378,
           "cooling_relevance": 0,
           "capital_markets_relevance": 0,
           "enterprise_ai_infrastructure_relevance": 0,
-          "infrastructure_relevance_score": 0.378,
+          "infrastructure_relevance_score": 0.254,
           "infrastructure_relevance_tier": "archive_only",
           "infrastructure_relevance_action": "archive_only",
           "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:0.22",
-            "cloud_capacity_relevance:0.32(cloud region)",
-            "semiconductor_relevance:0.22(gpu)",
-            "power_grid_relevance:0.24(electricity)"
+            "power_grid_relevance:0.38(grid)"
           ],
           "infrastructure_relevance": {
-            "direct_ai_infrastructure_relevance": 0.22,
+            "direct_ai_infrastructure_relevance": 0,
             "data_center_relevance": 0,
-            "cloud_capacity_relevance": 0.32,
-            "semiconductor_relevance": 0.22,
-            "power_grid_relevance": 0.24,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0,
+            "power_grid_relevance": 0.378,
             "cooling_relevance": 0,
             "capital_markets_relevance": 0,
             "enterprise_ai_infrastructure_relevance": 0,
-            "infrastructure_relevance_score": 0.378,
+            "infrastructure_relevance_score": 0.254,
             "infrastructure_relevance_tier": "archive_only",
             "infrastructure_relevance_action": "archive_only",
             "infrastructure_relevance_reasons": [
-              "direct_ai_infrastructure_relevance:0.22",
-              "cloud_capacity_relevance:0.32(cloud region)",
-              "semiconductor_relevance:0.22(gpu)",
-              "power_grid_relevance:0.24(electricity)"
+              "power_grid_relevance:0.38(grid)"
             ],
             "infrastructureRelevanceAction": "archive_only",
             "articlePagePublished": false,
@@ -47119,30 +47112,27 @@
             "archiveOnly": true,
             "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
           },
-          "score": 26
+          "score": 50
         },
         {
-          "id": "ba80d3d23fac3f13",
+          "id": "3f7f9d722c7f20df",
           "sourceRegistryId": "arxiv-cs-dc",
           "source": "arXiv",
-          "url": "https://arxiv.org/abs/2604.15186",
-          "title": "Scepsy: Serving Agentic Workflows Using Aggregate LLM Pipelines",
-          "snippet": "arXiv:2604.15186v2 Announce Type: replace Abstract: Agentic workflows carry out complex tasks by orchestrating multiple large language models (LLMs) and tools. Serving them at a target throughput with low latency is har…",
-          "contentText": "arXiv:2604.15186v2 Announce Type: replace Abstract: Agentic workflows carry out complex tasks by orchestrating multiple large language models (LLMs) and tools. Serving them at a target throughput with low latency is hard because they are written in arbitrary agentic frameworks and their execution times are unpredictable: execution branches, fans out, or recurs in data-dependent ways. Since their LLMs often outnumber the available GPUs, they also oversubscribe GPUs. We describe Scepsy, a serving system that schedules arbitrary multi-LLM agentic workflows onto a GPU cluster. Scepsy exploits the insight that, while the end-to-end latency of an agentic workflow is unpredictable, each LLM's fraction of execution time is comparatively stable across requests. Scepsy profiles each LLM under diffe…",
-          "publishedAt": "2026-09-28T04:00:00.000Z",
+          "url": "https://arxiv.org/abs/2608.12993",
+          "title": "A Theory of Probabilistic Power Provisioning for Data Centers with Distributed Energy Storage",
+          "snippet": "arXiv:2608.12993v1 Announce Type: cross Abstract: The growing power demands and variability of AI workloads make electrical power delivery a critical constraint in data-center operation. Distributed energy storage can r…",
+          "contentText": "arXiv:2608.12993v1 Announce Type: cross Abstract: The growing power demands and variability of AI workloads make electrical power delivery a critical constraint in data-center operation. Distributed energy storage can reduce the power capacity required to support stochastic loads, but its benefits depend fundamentally on the statistics and time scales of demand. This paper develops a probabilistic framework that jointly characterizes provisioned power, energy-storage capacity, and the probability of overdraw. We show that storage-assisted provisioning separates into two operating regimes. In the Small Battery Region, overdraw is dominated by short-lived demand excursions and storage provides nearly linear reductions in the required power margin. In the Large Battery Region, overdraw resul…",
+          "publishedAt": "2026-09-29T04:00:00.000Z",
           "sourceImage": null,
-          "region": "US",
+          "region": "APAC",
           "language": "en",
           "defaultCategory": "AI Infrastructure",
           "source_text_scope": "abstract",
-          "ai_topic_score": 1,
+          "ai_topic_score": 0.48,
           "ai_topic_reasons": [
-            "large language models",
-            "llm",
-            "llms",
-            "agentic",
-            "gpu",
-            "gpus"
+            "ai workloads",
+            "ai",
+            "ai_not_in_title"
           ],
           "category": "AI Infrastructure",
           "primary_category": "AI Infrastructure",
@@ -47154,89 +47144,243 @@
             "cloud buyers",
             "investors"
           ],
-          "article_type": "Other",
-          "urgency_score": 0.34,
-          "taxonomy_confidence": 0.71,
+          "article_type": "Capacity Expansion",
+          "urgency_score": 0.59,
+          "taxonomy_confidence": 0.65,
           "taxonomy_reasons": [
-            "ai infrastructure",
-            "gpu cluster"
+            "ai infrastructure"
           ],
-          "direct_ai_infrastructure_relevance": 0.64,
+          "direct_ai_infrastructure_relevance": 0.78,
+          "data_center_relevance": 0.55,
+          "cloud_capacity_relevance": 0.27,
+          "semiconductor_relevance": 0,
+          "power_grid_relevance": 0.297,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0.483,
+          "infrastructure_relevance_score": 0.793,
+          "infrastructure_relevance_tier": "signal_card",
+          "infrastructure_relevance_action": "publish_signal_card_only",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:0.78",
+            "data_center_relevance:0.55(data centers)",
+            "cloud_capacity_relevance:0.27(provisioning)",
+            "power_grid_relevance:0.30(power)",
+            "enterprise_ai_infrastructure_relevance:0.48(storage, ai workloads)",
+            "abstract_only_source_capped_at_signal_card"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 0.78,
+            "data_center_relevance": 0.55,
+            "cloud_capacity_relevance": 0.27,
+            "semiconductor_relevance": 0,
+            "power_grid_relevance": 0.297,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0.483,
+            "infrastructure_relevance_score": 0.793,
+            "infrastructure_relevance_tier": "signal_card",
+            "infrastructure_relevance_action": "publish_signal_card_only",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:0.78",
+              "data_center_relevance:0.55(data centers)",
+              "cloud_capacity_relevance:0.27(provisioning)",
+              "power_grid_relevance:0.30(power)",
+              "enterprise_ai_infrastructure_relevance:0.48(storage, ai workloads)",
+              "abstract_only_source_capped_at_signal_card"
+            ],
+            "infrastructureRelevanceAction": "publish_signal_card_only",
+            "articlePagePublished": false,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 65
+        },
+        {
+          "id": "0312bfc6d3fca3b4",
+          "sourceRegistryId": "arxiv-cs-dc",
+          "source": "arXiv",
+          "url": "https://arxiv.org/abs/2605.23348",
+          "title": "XWind: A Cross-site Router for Large Language Model Inference Serving at Renewable Energy Farms",
+          "snippet": "arXiv:2605.23348v3 Announce Type: replace Abstract: AI power demand is growing at an unprecedented rate while power grids are often ailing and struggle to keep up. Grid expansion comes with high capital expenditure and…",
+          "contentText": "arXiv:2605.23348v3 Announce Type: replace Abstract: AI power demand is growing at an unprecedented rate while power grids are often ailing and struggle to keep up. Grid expansion comes with high capital expenditure and long-distance transmission losses, yet there is abundant renewable energy at the source, just not matched to demand. This paper proposes a complementary AI infrastructure deployment model, AI Greeninferencing, that brings modular AI compute to renewable energy sources, focusing on wind, allowing AI footprint expansion, generating local behind-the-meter demand for renewable sites, and helping ease the growing strain on power utilities. Our feasibility analysis shows that 890+ GW of wind capacity lies within 50 ms network round trip time of Azure data centers, and that site-w…",
+          "publishedAt": "2026-09-29T04:00:00.000Z",
+          "sourceImage": null,
+          "region": "APAC",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure",
+          "source_text_scope": "abstract",
+          "ai_topic_score": 1,
+          "ai_topic_reasons": [
+            "large language model",
+            "inference",
+            "ai infrastructure",
+            "ai"
+          ],
+          "category": "Power & Grid",
+          "primary_category": "Power & Grid",
+          "secondary_category": "Interconnection and power procurement",
+          "infrastructure_layer": "Power",
+          "affected_stakeholders": [
+            "data center operators",
+            "utilities",
+            "cloud capacity teams",
+            "investors"
+          ],
+          "article_type": "Capacity Expansion",
+          "urgency_score": 0.75,
+          "taxonomy_confidence": 0.93,
+          "taxonomy_reasons": [
+            "power",
+            "grid",
+            "transmission",
+            "gw"
+          ],
+          "direct_ai_infrastructure_relevance": 0.82,
+          "data_center_relevance": 0.42,
+          "cloud_capacity_relevance": 0.22,
+          "semiconductor_relevance": 0,
+          "power_grid_relevance": 1,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0.28,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.98,
+          "infrastructure_relevance_tier": "signal_card",
+          "infrastructure_relevance_action": "publish_signal_card_only",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:0.82(ai infrastructure)",
+            "data_center_relevance:0.42(data centers)",
+            "cloud_capacity_relevance:0.22(azure)",
+            "power_grid_relevance:1.00(power, grid, utilities)",
+            "capital_markets_relevance:0.28(capital expenditure)",
+            "abstract_only_source_capped_at_signal_card"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 0.82,
+            "data_center_relevance": 0.42,
+            "cloud_capacity_relevance": 0.22,
+            "semiconductor_relevance": 0,
+            "power_grid_relevance": 1,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0.28,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.98,
+            "infrastructure_relevance_tier": "signal_card",
+            "infrastructure_relevance_action": "publish_signal_card_only",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:0.82(ai infrastructure)",
+              "data_center_relevance:0.42(data centers)",
+              "cloud_capacity_relevance:0.22(azure)",
+              "power_grid_relevance:1.00(power, grid, utilities)",
+              "capital_markets_relevance:0.28(capital expenditure)",
+              "abstract_only_source_capped_at_signal_card"
+            ],
+            "infrastructureRelevanceAction": "publish_signal_card_only",
+            "articlePagePublished": false,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 73
+        },
+        {
+          "id": "f19226cf98e97067",
+          "sourceRegistryId": "arxiv-cs-dc",
+          "source": "arXiv",
+          "url": "https://arxiv.org/abs/2609.34340",
+          "title": "VarioPath: Workload-Aware All-to-All Communication for PCIe GPU Clusters",
+          "snippet": "arXiv:2609.34340v1 Announce Type: new Abstract: AlltoAllv communication is a critical primitive in distributed large-model inference, particularly for mixture-of-experts (MoE) models. The growing adoption of PCIe GPU sy…",
+          "contentText": "arXiv:2609.34340v1 Announce Type: new Abstract: AlltoAllv communication is a critical primitive in distributed large-model inference, particularly for mixture-of-experts (MoE) models. The growing adoption of PCIe GPU systems for cost-efficient inference makes AlltoAllv performance on these systems increasingly important. Without a dedicated scale-up interconnect (e.g., NVLink or Infinity Fabric), PCIe GPU systems carry both intra-node and inter-node traffic through the PCIe hierarchy, where concurrent transfers can contend for PCIe link bandwidth. This link contention, compounded by skewed traffic distributions and dynamic traffic demand, makes efficient AlltoAllv scheduling challenging. Existing approaches are either poorly suited to PCIe GPU systems or incur substantial schedule synthes…",
+          "publishedAt": "2026-09-29T04:00:00.000Z",
+          "sourceImage": null,
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure",
+          "source_text_scope": "abstract",
+          "ai_topic_score": 0.577,
+          "ai_topic_reasons": [
+            "inference",
+            "gpu"
+          ],
+          "category": "AI Infrastructure",
+          "primary_category": "AI Infrastructure",
+          "secondary_category": "GPU clusters and deployment readiness",
+          "infrastructure_layer": "Compute",
+          "affected_stakeholders": [
+            "operators",
+            "hyperscalers",
+            "cloud buyers",
+            "investors"
+          ],
+          "article_type": "Market Analysis",
+          "urgency_score": 0.39,
+          "taxonomy_confidence": 0.65,
+          "taxonomy_reasons": [
+            "ai infrastructure"
+          ],
+          "direct_ai_infrastructure_relevance": 0.77,
           "data_center_relevance": 0,
           "cloud_capacity_relevance": 0,
-          "semiconductor_relevance": 0.22,
+          "semiconductor_relevance": 0.297,
           "power_grid_relevance": 0,
           "cooling_relevance": 0,
           "capital_markets_relevance": 0,
           "enterprise_ai_infrastructure_relevance": 0,
-          "infrastructure_relevance_score": 0.49,
-          "infrastructure_relevance_tier": "archive_only",
-          "infrastructure_relevance_action": "archive_only",
+          "infrastructure_relevance_score": 0.662,
+          "infrastructure_relevance_tier": "signal_card",
+          "infrastructure_relevance_action": "publish_signal_card_only",
           "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:0.64(gpu cluster)",
-            "semiconductor_relevance:0.22(gpu)"
+            "direct_ai_infrastructure_relevance:0.77(gpu clusters)",
+            "semiconductor_relevance:0.30(gpu)"
           ],
           "infrastructure_relevance": {
-            "direct_ai_infrastructure_relevance": 0.64,
+            "direct_ai_infrastructure_relevance": 0.77,
             "data_center_relevance": 0,
             "cloud_capacity_relevance": 0,
-            "semiconductor_relevance": 0.22,
+            "semiconductor_relevance": 0.297,
             "power_grid_relevance": 0,
             "cooling_relevance": 0,
             "capital_markets_relevance": 0,
             "enterprise_ai_infrastructure_relevance": 0,
-            "infrastructure_relevance_score": 0.49,
-            "infrastructure_relevance_tier": "archive_only",
-            "infrastructure_relevance_action": "archive_only",
+            "infrastructure_relevance_score": 0.662,
+            "infrastructure_relevance_tier": "signal_card",
+            "infrastructure_relevance_action": "publish_signal_card_only",
             "infrastructure_relevance_reasons": [
-              "direct_ai_infrastructure_relevance:0.64(gpu cluster)",
-              "semiconductor_relevance:0.22(gpu)"
+              "direct_ai_infrastructure_relevance:0.77(gpu clusters)",
+              "semiconductor_relevance:0.30(gpu)"
             ],
-            "infrastructureRelevanceAction": "archive_only",
+            "infrastructureRelevanceAction": "publish_signal_card_only",
             "articlePagePublished": false,
-            "homepagePublished": false,
-            "archiveOnly": true,
-            "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
           },
-          "score": 39
+          "score": 48
         }
       ],
       "curatedIds": [
-        "ffefee3d5e91139a",
-        "ba80d3d23fac3f13"
+        "cb57985cb148504a",
+        "3f7f9d722c7f20df",
+        "0312bfc6d3fca3b4",
+        "f19226cf98e97067"
       ],
       "publishedIds": [
         "b87635e78e8d0606",
         "c3bb26ce5367e885",
         "ba80d3d23fac3f13",
-        "ffefee3d5e91139a"
+        "ffefee3d5e91139a",
+        "cb57985cb148504a",
+        "3f7f9d722c7f20df"
       ],
       "slotPublications": {
         "0": true,
-        "1": true
+        "1": true,
+        "2": true
       }
     }
   },
   "runHistory": [
-    {
-      "at": "2026-08-20T15:38:42.623Z",
-      "day": "2026-08-21",
-      "slot": 0,
-      "publishedCount": 0,
-      "authoredColumn": {
-        "published": true,
-        "slug": "amazon-s-gilroy-site-proves-zoning-lead-time-beats-community-con-2026-08-20"
-      },
-      "llmUsage": {
-        "calls": 5,
-        "failures": 0,
-        "prompt_tokens": 14386,
-        "completion_tokens": 8388,
-        "total_tokens": 22774,
-        "token_budget": 60000,
-        "call_budget": 40
-      }
-    },
     {
       "at": "2026-08-20T23:35:42.557Z",
       "day": "2026-08-21",
@@ -50512,9 +50656,37 @@
         "token_budget": 60000,
         "call_budget": 40
       }
+    },
+    {
+      "at": "2026-09-29T14:01:02.432Z",
+      "day": "2026-09-29",
+      "slot": 2,
+      "publishedCount": 0,
+      "signalCardCount": 2,
+      "archiveOnlyCount": 0,
+      "processedIds": [
+        "cb57985cb148504a",
+        "3f7f9d722c7f20df"
+      ],
+      "blockedCount": 0,
+      "blockedItems": [],
+      "archiveOnlyItems": [],
+      "authoredColumn": {
+        "published": false,
+        "reason": "no_qualifying_story"
+      },
+      "llmUsage": {
+        "calls": 3,
+        "failures": 0,
+        "prompt_tokens": 4055,
+        "completion_tokens": 639,
+        "total_tokens": 4694,
+        "token_budget": 60000,
+        "call_budget": 40
+      }
     }
   ],
-  "lastRunAt": "2026-09-29T02:34:41.553Z",
+  "lastRunAt": "2026-09-29T14:01:02.432Z",
   "authored": {
     "lastColumnAt": "2026-09-16T18:47:02.256Z",
     "columnsByDay": {
