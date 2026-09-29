@@ -875,7 +875,9 @@
     "626eac9e14588b8a",
     "014ef10f3f64d488",
     "b87635e78e8d0606",
-    "c3bb26ce5367e885"
+    "c3bb26ce5367e885",
+    "ba80d3d23fac3f13",
+    "ffefee3d5e91139a"
   ],
   "dayPlans": {
     "2026-03-24": {
@@ -47036,7 +47038,7 @@
     "2026-09-29": {
       "date": "2026-09-29",
       "createdAt": "2026-09-28T15:22:17.133Z",
-      "refreshedAt": "2026-09-28T21:09:40.772Z",
+      "refreshedAt": "2026-09-29T02:34:41.553Z",
       "candidateWindowHours": 24,
       "curatedItems": [
         {
@@ -47117,7 +47119,7 @@
             "archiveOnly": true,
             "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
           },
-          "score": 32
+          "score": 26
         },
         {
           "id": "ba80d3d23fac3f13",
@@ -47196,125 +47198,26 @@
             "archiveOnly": true,
             "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
           },
-          "score": 45
-        },
-        {
-          "id": "15baaf876573a03a",
-          "sourceRegistryId": "arxiv-cs-pf",
-          "source": "arXiv",
-          "url": "https://arxiv.org/abs/2608.00008",
-          "title": "Energy Efficiency of Locally Deployed LLMs: A Preliminary Quantitative GPU Power Benchmark on Consumer Hardware",
-          "snippet": "arXiv:2608.00008v2 Announce Type: replace-cross Abstract: The local deployment of large language models (LLMs) is gaining traction due to privacy concerns and the desire for on-premise inference. However, the energy cos…",
-          "contentText": "arXiv:2608.00008v2 Announce Type: replace-cross Abstract: The local deployment of large language models (LLMs) is gaining traction due to privacy concerns and the desire for on-premise inference. However, the energy costs on consumer hardware remain poorly characterized, as most benchmarks focus solely on accuracy. This paper presents a reproducible, hardware-level energy benchmark of 18 open-source LLMs (0.5B to 7B parameters) executed on a single consumer GPU (RTX 4060ti 16GB). Using the Ollama inference engine, GPU power draw was sampled at 2hz via nvidia-smi across a fixed prompt set. We evaluate mean/peak power, total energy per prompt (J/prompt), energy per output token (J/tok), and throughput (tok/s). Our findings suggest that factors beyond raw parameter count, including model arc…",
-          "publishedAt": "2026-09-28T04:00:00.000Z",
-          "sourceImage": null,
-          "region": "US",
-          "language": "en",
-          "defaultCategory": "AI Infrastructure",
-          "source_text_scope": "abstract",
-          "ai_topic_score": 1,
-          "ai_topic_reasons": [
-            "large language models",
-            "llms",
-            "inference",
-            "nvidia",
-            "gpu"
-          ],
-          "category": "Semiconductors",
-          "primary_category": "Semiconductors",
-          "secondary_category": "Accelerators, memory, and advanced packaging",
-          "infrastructure_layer": "Silicon",
-          "affected_stakeholders": [
-            "semiconductor suppliers",
-            "hyperscalers",
-            "server OEMs",
-            "investors"
-          ],
-          "article_type": "Operations Update",
-          "urgency_score": 0.42,
-          "taxonomy_confidence": 0.73,
-          "taxonomy_reasons": [
-            "gpu",
-            "nvidia"
-          ],
-          "direct_ai_infrastructure_relevance": 0.22,
-          "data_center_relevance": 0,
-          "cloud_capacity_relevance": 0,
-          "semiconductor_relevance": 0.577,
-          "power_grid_relevance": 0.297,
-          "cooling_relevance": 0,
-          "capital_markets_relevance": 0,
-          "enterprise_ai_infrastructure_relevance": 0,
-          "infrastructure_relevance_score": 0.505,
-          "infrastructure_relevance_tier": "archive_only",
-          "infrastructure_relevance_action": "archive_only",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:0.22",
-            "semiconductor_relevance:0.58(nvidia, gpu)",
-            "power_grid_relevance:0.30(power)",
-            "adjacent_only_topic_requires_infrastructure_evidence"
-          ],
-          "infrastructure_relevance": {
-            "direct_ai_infrastructure_relevance": 0.22,
-            "data_center_relevance": 0,
-            "cloud_capacity_relevance": 0,
-            "semiconductor_relevance": 0.577,
-            "power_grid_relevance": 0.297,
-            "cooling_relevance": 0,
-            "capital_markets_relevance": 0,
-            "enterprise_ai_infrastructure_relevance": 0,
-            "infrastructure_relevance_score": 0.505,
-            "infrastructure_relevance_tier": "archive_only",
-            "infrastructure_relevance_action": "archive_only",
-            "infrastructure_relevance_reasons": [
-              "direct_ai_infrastructure_relevance:0.22",
-              "semiconductor_relevance:0.58(nvidia, gpu)",
-              "power_grid_relevance:0.30(power)",
-              "adjacent_only_topic_requires_infrastructure_evidence"
-            ],
-            "infrastructureRelevanceAction": "archive_only",
-            "articlePagePublished": false,
-            "homepagePublished": false,
-            "archiveOnly": true,
-            "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
-          },
-          "score": 49
+          "score": 39
         }
       ],
       "curatedIds": [
         "ffefee3d5e91139a",
-        "ba80d3d23fac3f13",
-        "15baaf876573a03a"
+        "ba80d3d23fac3f13"
       ],
       "publishedIds": [
         "b87635e78e8d0606",
-        "c3bb26ce5367e885"
+        "c3bb26ce5367e885",
+        "ba80d3d23fac3f13",
+        "ffefee3d5e91139a"
       ],
       "slotPublications": {
-        "0": true
+        "0": true,
+        "1": true
       }
     }
   },
   "runHistory": [
-    {
-      "at": "2026-08-20T07:53:24.056Z",
-      "day": "2026-08-20",
-      "slot": 2,
-      "publishedCount": 0,
-      "authoredColumn": {
-        "published": true,
-        "slug": "amazon-s-texas-gas-plant-is-a-queue-jumping-move-not-a-climate-s-2026-08-20"
-      },
-      "llmUsage": {
-        "calls": 5,
-        "failures": 0,
-        "prompt_tokens": 12763,
-        "completion_tokens": 6700,
-        "total_tokens": 19463,
-        "token_budget": 60000,
-        "call_budget": 40
-      }
-    },
     {
       "at": "2026-08-20T15:38:42.623Z",
       "day": "2026-08-21",
@@ -50554,9 +50457,64 @@
         "token_budget": 60000,
         "call_budget": 40
       }
+    },
+    {
+      "at": "2026-09-29T02:34:41.553Z",
+      "day": "2026-09-29",
+      "slot": 1,
+      "publishedCount": 0,
+      "signalCardCount": 1,
+      "archiveOnlyCount": 1,
+      "processedIds": [
+        "ba80d3d23fac3f13",
+        "ffefee3d5e91139a"
+      ],
+      "blockedCount": 0,
+      "blockedItems": [],
+      "archiveOnlyItems": [
+        {
+          "id": "ffefee3d5e91139a",
+          "title": "Bandwidth-Aware and Cost-Efficient Pipeline Parallel Scheduling in Geo-Distributed LLM Training",
+          "infrastructure_relevance_score": 0.378,
+          "infrastructure_relevance_tier": "archive_only",
+          "infrastructure_relevance_action": "archive_only",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:0.22",
+            "cloud_capacity_relevance:0.32(cloud region)",
+            "semiconductor_relevance:0.22(gpu)",
+            "power_grid_relevance:0.24(electricity)"
+          ],
+          "extraction_quality_score": 1,
+          "source_domain_adapter": "arxiv",
+          "content_length": 1763,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": false,
+          "repetition_block_reasons": [],
+          "repetition_check": null,
+          "expert_insight_complete": false,
+          "expert_insight_missing_fields": [
+            "concrete_facts",
+            "named_companies"
+          ],
+          "reason": "infrastructure_relevance_below_signal_threshold"
+        }
+      ],
+      "authoredColumn": {
+        "published": false,
+        "reason": "no_qualifying_story"
+      },
+      "llmUsage": {
+        "calls": 3,
+        "failures": 0,
+        "prompt_tokens": 4065,
+        "completion_tokens": 589,
+        "total_tokens": 4654,
+        "token_budget": 60000,
+        "call_budget": 40
+      }
     }
   ],
-  "lastRunAt": "2026-09-28T21:09:40.772Z",
+  "lastRunAt": "2026-09-29T02:34:41.553Z",
   "authored": {
     "lastColumnAt": "2026-09-16T18:47:02.256Z",
     "columnsByDay": {

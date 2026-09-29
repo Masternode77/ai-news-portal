@@ -9,10 +9,10 @@ Source artifact category partitions: 9
 Source artifact company partitions: 16
 Source artifact region partitions: 7
 Source artifact archive partitions: 21
-Source artifact records: 499
+Source artifact records: 500
 
 ## Current reader-facing route state
 
-Public archive route: `/archive/` (37 rendered eligible records)
+Public archive route: `/archive/` (38 rendered eligible records)
 Taxonomy detail routes with rendered eligible records: 12
 Static taxonomy route shells: 32 (not counts of rendered eligible records)
