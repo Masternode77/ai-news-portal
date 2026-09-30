@@ -883,7 +883,9 @@
     "0312bfc6d3fca3b4",
     "f19226cf98e97067",
     "1376fed4a5670f48",
-    "348036963e84f659"
+    "348036963e84f659",
+    "3d34a1742df7d939",
+    "dde7bef9753169ec"
   ],
   "dayPlans": {
     "2026-03-24": {
@@ -47386,25 +47388,242 @@
     "2026-09-30": {
       "date": "2026-09-30",
       "createdAt": "2026-09-29T19:54:17.966Z",
-      "refreshedAt": "2026-09-30T02:02:49.468Z",
+      "refreshedAt": "2026-09-30T13:38:14.765Z",
       "candidateWindowHours": 24,
       "curatedItems": [
         {
-          "id": "348036963e84f659",
-          "sourceRegistryId": "whitehouse-presidential-actions",
-          "source": "The White House",
-          "url": "https://www.whitehouse.gov/presidential-actions/2026/09/inaugurating-the-era-of-super-intelligence/",
-          "title": "Inaugurating The Era Of Super Intelligence",
-          "snippet": "By the authority vested in me as President by the Constitution and the laws of the United States of America, it is hereby ordered: Section 1. Purpose. America stands at the forefront of a new technological revolution in…",
-          "contentText": "Presidential Actions Search Select Category All News Briefings & Statements All Presidential Actions Executive Orders Nominations & Appointments Presidential Memoranda Proclamations Fact Sheets Releases Remarks Research All Briefings & Statements Presidential Actions All Executive Orders Nominations & Appointments Presidential Memoranda Proclamations Fact Sheets Releases Remarks Research By the authority vested in me as President by the Constitution and the laws of the United States of America, it is hereby ordered: Section 1 . Purpose . America stands at the forefront of a new technological revolution in intelligence. The modern field of artificial intelligence was born in the United States, where American scientists first gave the field its name and laid the foundations for its developm…",
-          "publishedAt": "2026-09-29T21:17:25.000Z",
+          "id": "3d34a1742df7d939",
+          "sourceRegistryId": "arxiv-cs-dc",
+          "source": "arXiv",
+          "url": "https://arxiv.org/abs/2605.27963",
+          "title": "Throughput-Optimized Networks at Scale",
+          "snippet": "arXiv:2605.27963v2 Announce Type: replace-cross Abstract: Data center network design plays a critical role in AI training by supporting scaling to thousands of accelerators. An open problem, designing a near-optimal thr…",
+          "contentText": "arXiv:2605.27963v2 Announce Type: replace-cross Abstract: Data center network design plays a critical role in AI training by supporting scaling to thousands of accelerators. An open problem, designing a near-optimal throughput-oriented network-topology, routing, and collectives-has not been achieved at scale and with broad applicability to physical or implementation constraints. We address this problem with a compelling use-case, Google's TPU v4-8t supercomputer where the topology may be reconfigured to achieve higher All-to-All throughput, supporting large, parallelized AI training. We show that the existing TPU networks leave terabytes per second of throughput on the table and we fill that gap. This paper presents Throughput-Optimized Networks at Scale (TONS), an automated network synth…",
+          "publishedAt": "2026-09-30T04:00:00.000Z",
+          "sourceImage": null,
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure",
+          "source_text_scope": "abstract",
+          "ai_topic_score": 0.38,
+          "ai_topic_reasons": [
+            "accelerators",
+            "ai",
+            "ai_not_in_title"
+          ],
+          "category": "AI Infrastructure",
+          "primary_category": "AI Infrastructure",
+          "secondary_category": "GPU clusters and deployment readiness",
+          "infrastructure_layer": "Compute",
+          "affected_stakeholders": [
+            "operators",
+            "hyperscalers",
+            "cloud buyers",
+            "investors"
+          ],
+          "article_type": "Other",
+          "urgency_score": 0.4,
+          "taxonomy_confidence": 0.65,
+          "taxonomy_reasons": [
+            "ai infrastructure"
+          ],
+          "direct_ai_infrastructure_relevance": 0.78,
+          "data_center_relevance": 0.42,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.695,
+          "infrastructure_relevance_tier": "signal_card",
+          "infrastructure_relevance_action": "publish_signal_card_only",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:0.78",
+            "data_center_relevance:0.42(data center)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 0.78,
+            "data_center_relevance": 0.42,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.695,
+            "infrastructure_relevance_tier": "signal_card",
+            "infrastructure_relevance_action": "publish_signal_card_only",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:0.78",
+              "data_center_relevance:0.42(data center)"
+            ],
+            "infrastructureRelevanceAction": "publish_signal_card_only",
+            "articlePagePublished": false,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 61
+        },
+        {
+          "id": "dde7bef9753169ec",
+          "sourceRegistryId": "eia-today-in-energy",
+          "source": "U.S. Energy Information Administration",
+          "url": "https://www.eia.gov/todayinenergy/detail.php?id=68224",
+          "title": "U.S. electricity use for electric vehicles increasing at a slower pace in 2026",
+          "snippet": "We estimate light-duty electric vehicles in the United States consumed 8% more electricity during the first six months of 2026 than in the last half of 2025 (2H25) in our Monthly Energy Review, down from the 13-24% grow…",
+          "contentText": "We estimate light-duty electric vehicles in the United States consumed 8% more electricity during the first six months of 2026 than in the last half of 2025 (2H25) in our Monthly Energy Review, down from the 13-24% growth seen in six-month periods in recent years. The slowing electric vehicle electricity consumption growth followed a decline in sales after U.S. federal tax credits expired in September 2025. Overall, U.S. light-duty electric vehicle electricity use has more than doubled since 1H23, totaling nearly 14 billion kilowatthours in 1H26.",
+          "publishedAt": "2026-09-30T14:00:00.000Z",
+          "sourceImage": null,
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "Power & Grid",
+          "ai_topic_score": 0,
+          "ai_topic_reasons": [
+            "ai_not_in_title"
+          ],
+          "category": "Power & Grid",
+          "primary_category": "Power & Grid",
+          "secondary_category": "Interconnection and power procurement",
+          "infrastructure_layer": "Power",
+          "affected_stakeholders": [
+            "data center operators",
+            "utilities",
+            "cloud capacity teams",
+            "investors"
+          ],
+          "article_type": "Other",
+          "urgency_score": 0.43,
+          "taxonomy_confidence": 0.77,
+          "taxonomy_reasons": [
+            "power",
+            "grid",
+            "electricity"
+          ],
+          "direct_ai_infrastructure_relevance": 0,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0,
+          "power_grid_relevance": 0.324,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.223,
+          "infrastructure_relevance_tier": "archive_only",
+          "infrastructure_relevance_action": "archive_only",
+          "infrastructure_relevance_reasons": [
+            "power_grid_relevance:0.32(electricity)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 0,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0,
+            "power_grid_relevance": 0.324,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.223,
+            "infrastructure_relevance_tier": "archive_only",
+            "infrastructure_relevance_action": "archive_only",
+            "infrastructure_relevance_reasons": [
+              "power_grid_relevance:0.32(electricity)"
+            ],
+            "infrastructureRelevanceAction": "archive_only",
+            "articlePagePublished": false,
+            "homepagePublished": false,
+            "archiveOnly": true,
+            "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
+          },
+          "score": 55
+        },
+        {
+          "id": "836559db4e7689ee",
+          "sourceRegistryId": "gao-reports",
+          "source": "U.S. Government Accountability Office",
+          "url": "https://www.gao.gov/products/gao-26-108607",
+          "title": "Foreign Assistance: Agencies Made Broad Changes, but State Lacked Guidance for Decisions",
+          "snippet": "What GAO Found In response to multiple executive orders issued beginning in January 2025, selected agencies have made changes, some significant, to their foreign assistance programming and staffing. Eight of the nine ag…",
+          "contentText": "What GAO Found In response to multiple executive orders issued beginning in January 2025, selected agencies have made changes, some significant, to their foreign assistance programming and staffing. Eight of the nine agencies included in GAO’s review decreased funding (e.g., obligations) for foreign assistance awards. One agency did not decrease the number of awards but has been unable to disburse funds to awardees since January 2025. Most notably, the U.S. Agency for International Development (USAID) terminated approximately 6,780 of 7,510 awards between January 2025 and March 2026, according to State data. The value of obligations of the terminated awards from their beginning until March 2026 was $79.1 billion. The remaining active awards, now managed by State, represented about $52.1 b…",
+          "publishedAt": "2026-09-30T11:11:58.000Z",
+          "sourceImage": null,
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "Power & Grid",
+          "ai_topic_score": 0,
+          "ai_topic_reasons": [
+            "ai_not_in_title"
+          ],
+          "category": "Power & Grid",
+          "primary_category": "Power & Grid",
+          "secondary_category": "Interconnection and power procurement",
+          "infrastructure_layer": "Power",
+          "affected_stakeholders": [
+            "data center operators",
+            "utilities",
+            "cloud capacity teams",
+            "investors"
+          ],
+          "article_type": "Financing / M&A",
+          "urgency_score": 0.5,
+          "taxonomy_confidence": 0.61,
+          "taxonomy_reasons": [
+            "power",
+            "grid"
+          ],
+          "direct_ai_infrastructure_relevance": 0,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0.28,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.197,
+          "infrastructure_relevance_tier": "archive_only",
+          "infrastructure_relevance_action": "archive_only",
+          "infrastructure_relevance_reasons": [
+            "capital_markets_relevance:0.28(funding)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 0,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0.28,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.197,
+            "infrastructure_relevance_tier": "archive_only",
+            "infrastructure_relevance_action": "archive_only",
+            "infrastructure_relevance_reasons": [
+              "capital_markets_relevance:0.28(funding)"
+            ],
+            "infrastructureRelevanceAction": "archive_only",
+            "articlePagePublished": false,
+            "homepagePublished": false,
+            "archiveOnly": true,
+            "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
+          },
+          "score": 50
+        },
+        {
+          "id": "93509c80500e1888",
+          "sourceRegistryId": "ec-press-corner",
+          "source": "European Commission",
+          "url": "https://ec.europa.eu/commission/presscorner/detail/en/speech_26_2029",
+          "title": "Speech by Commissioner Lahbib on Equality Data",
+          "snippet": "European Commission Speech Brussels, 30 Sep 2026 Like many of you, I love music. Pop, jazz, rap, classical. You name it. One of my favourite artists is Rachmaninoff. Sometimes when I am listening to his music,...",
+          "contentText": "European Commission Speech Brussels, 30 Sep 2026 Like many of you, I love music. Pop, jazz, rap, classical. You name it. One of my favourite artists is Rachmaninoff. Sometimes when I am listening to his music,...",
+          "publishedAt": "2026-09-30T13:30:10.000Z",
           "sourceImage": null,
           "region": "US",
           "language": "en",
           "defaultCategory": "Policy & Siting",
-          "ai_topic_score": 0.4,
+          "ai_topic_score": 0,
           "ai_topic_reasons": [
-            "artificial intelligence",
             "ai_not_in_title"
           ],
           "category": "Policy & Siting",
@@ -47458,128 +47677,174 @@
             "archiveOnly": true,
             "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
           },
-          "score": 38
+          "score": 46
         },
         {
-          "id": "1376fed4a5670f48",
-          "sourceRegistryId": "arxiv-cs-dc",
-          "source": "arXiv",
-          "url": "https://arxiv.org/abs/2609.34818",
-          "title": "Accelerator Choice Is Not Enough: AlphaFold2 Inference on Cloud TPUs",
-          "snippet": "arXiv:2609.34818v1 Announce Type: new Abstract: AlphaFold2 is written in JAX, so the same inference code compiles and runs unchanged on CPUs, GPUs and Google Cloud TPUs. That portability makes the accelerator look like…",
-          "contentText": "arXiv:2609.34818v1 Announce Type: new Abstract: AlphaFold2 is written in JAX, so the same inference code compiles and runs unchanged on CPUs, GPUs and Google Cloud TPUs. That portability makes the accelerator look like the main decision a user has to make. We show that it is not. Running one AlphaFold2 inference workload across a Colab CPU runtime, an NVIDIA T4 GPU and a dedicated eight-chip Cloud TPU v5e slice, we find a large hardware advantage for the TPU, 0.47 s per call in steady state on a single chip against 13.1 s on the T4 in the same measurement campaign, and three ways in which the software layer decides how much of it a user actually gets. The default execution path uses one chip of the eight, and at list prices the idle capacity makes the slice cost about as much per predicti…",
-          "publishedAt": "2026-09-29T04:00:00.000Z",
+          "id": "51df4b9635f1658f",
+          "sourceRegistryId": "ec-press-corner",
+          "source": "European Commission",
+          "url": "https://ec.europa.eu/commission/presscorner/detail/en/ac_26_2026",
+          "title": "President von der Leyen attends UN General Assembly underscoring the EU's commitment to multilateralism",
+          "snippet": "European Commission News Brussels, 30 Sep 2026 President Ursula von der Leyen was in New York last week to participate in the 81st UN General Assembly. Throughout the week, the President engaged with world ...",
+          "contentText": "European Commission News Brussels, 30 Sep 2026 President Ursula von der Leyen was in New York last week to participate in the 81st UN General Assembly. Throughout the week, the President engaged with world ...",
+          "publishedAt": "2026-09-30T12:50:13.000Z",
           "sourceImage": null,
-          "region": "APAC",
+          "region": "US",
           "language": "en",
-          "defaultCategory": "AI Infrastructure",
-          "source_text_scope": "abstract",
-          "ai_topic_score": 1,
+          "defaultCategory": "Policy & Siting",
+          "ai_topic_score": 0,
           "ai_topic_reasons": [
-            "inference",
-            "nvidia",
-            "gpu",
-            "gpus",
-            "accelerator"
+            "ai_not_in_title"
           ],
-          "category": "Semiconductors",
-          "primary_category": "Semiconductors",
-          "secondary_category": "Accelerators, memory, and advanced packaging",
-          "infrastructure_layer": "Silicon",
+          "category": "Policy & Siting",
+          "primary_category": "Policy & Siting",
+          "secondary_category": "Permitting, regulation, and market access",
+          "infrastructure_layer": "Policy",
           "affected_stakeholders": [
-            "semiconductor suppliers",
-            "hyperscalers",
-            "server OEMs",
-            "investors"
+            "regulators",
+            "site selectors",
+            "developers",
+            "utilities"
           ],
-          "article_type": "Capacity Expansion",
-          "urgency_score": 0.47,
-          "taxonomy_confidence": 0.82,
+          "article_type": "Policy / Regulation",
+          "urgency_score": 0.18,
+          "taxonomy_confidence": 0.53,
           "taxonomy_reasons": [
-            "chip",
-            "gpu",
-            "nvidia"
+            "policy"
           ],
-          "direct_ai_infrastructure_relevance": 0.22,
+          "direct_ai_infrastructure_relevance": 0,
           "data_center_relevance": 0,
-          "cloud_capacity_relevance": 0.24,
-          "semiconductor_relevance": 0.797,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0,
           "power_grid_relevance": 0,
           "cooling_relevance": 0,
           "capital_markets_relevance": 0,
-          "enterprise_ai_infrastructure_relevance": 0.3,
-          "infrastructure_relevance_score": 0.668,
-          "infrastructure_relevance_tier": "signal_card",
-          "infrastructure_relevance_action": "publish_signal_card_only",
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0,
+          "infrastructure_relevance_tier": "archive_only",
+          "infrastructure_relevance_action": "archive_only",
           "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:0.22",
-            "cloud_capacity_relevance:0.24(google cloud)",
-            "semiconductor_relevance:0.80(nvidia, accelerator, gpu)",
-            "enterprise_ai_infrastructure_relevance:0.30(inference workload)"
+            "no_strong_compute_current_infrastructure_match"
           ],
           "infrastructure_relevance": {
-            "direct_ai_infrastructure_relevance": 0.22,
+            "direct_ai_infrastructure_relevance": 0,
             "data_center_relevance": 0,
-            "cloud_capacity_relevance": 0.24,
-            "semiconductor_relevance": 0.797,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0,
             "power_grid_relevance": 0,
             "cooling_relevance": 0,
             "capital_markets_relevance": 0,
-            "enterprise_ai_infrastructure_relevance": 0.3,
-            "infrastructure_relevance_score": 0.668,
-            "infrastructure_relevance_tier": "signal_card",
-            "infrastructure_relevance_action": "publish_signal_card_only",
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0,
+            "infrastructure_relevance_tier": "archive_only",
+            "infrastructure_relevance_action": "archive_only",
             "infrastructure_relevance_reasons": [
-              "direct_ai_infrastructure_relevance:0.22",
-              "cloud_capacity_relevance:0.24(google cloud)",
-              "semiconductor_relevance:0.80(nvidia, accelerator, gpu)",
-              "enterprise_ai_infrastructure_relevance:0.30(inference workload)"
+              "no_strong_compute_current_infrastructure_match"
             ],
-            "infrastructureRelevanceAction": "publish_signal_card_only",
+            "infrastructureRelevanceAction": "archive_only",
             "articlePagePublished": false,
-            "homepagePublished": true,
-            "archiveOnly": false,
-            "archiveOnlyReason": null
+            "homepagePublished": false,
+            "archiveOnly": true,
+            "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
+          },
+          "score": 46
+        },
+        {
+          "id": "41defc88bd3f0a14",
+          "sourceRegistryId": "gao-reports",
+          "source": "U.S. Government Accountability Office",
+          "url": "https://www.gao.gov/products/gao-26-108174",
+          "title": "Fraud in Federal Programs: Limited Beneficial Ownership Information Available on Awardees",
+          "snippet": "What GAO Found Illicit actors hide their beneficial ownership in multiple ways to fraudulently access federal awards, such as contracts, grants, and Medicare payments, and to evade payment on taxes. GAO’s review of fede…",
+          "contentText": "What GAO Found Illicit actors hide their beneficial ownership in multiple ways to fraudulently access federal awards, such as contracts, grants, and Medicare payments, and to evade payment on taxes. GAO’s review of federal cases highlights tactics illicit actors have used, such as using stolen identities, shell companies, professional enablers, and pass-through billing schemes to hide ownership. For example, from July 2019 through January 2023, three purported hospice owners stole identities to register shell companies and defrauded Medicare for nearly $16 million. In another example, from June 2018 through September 2018, a foreign-based scam ring, with U.S. based conspirators, directed legitimate federal contractors to a fake government website. This pass-through billing scam caused the…",
+          "publishedAt": "2026-09-30T11:29:46.000Z",
+          "sourceImage": null,
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "Power & Grid",
+          "ai_topic_score": 0,
+          "ai_topic_reasons": [
+            "ai_not_in_title"
+          ],
+          "category": "Power & Grid",
+          "primary_category": "Power & Grid",
+          "secondary_category": "Interconnection and power procurement",
+          "infrastructure_layer": "Power",
+          "affected_stakeholders": [
+            "data center operators",
+            "utilities",
+            "cloud capacity teams",
+            "investors"
+          ],
+          "article_type": "Other",
+          "urgency_score": 0.36,
+          "taxonomy_confidence": 0.61,
+          "taxonomy_reasons": [
+            "power",
+            "grid"
+          ],
+          "direct_ai_infrastructure_relevance": 0,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0,
+          "infrastructure_relevance_tier": "archive_only",
+          "infrastructure_relevance_action": "archive_only",
+          "infrastructure_relevance_reasons": [
+            "no_strong_compute_current_infrastructure_match"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 0,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0,
+            "infrastructure_relevance_tier": "archive_only",
+            "infrastructure_relevance_action": "archive_only",
+            "infrastructure_relevance_reasons": [
+              "no_strong_compute_current_infrastructure_match"
+            ],
+            "infrastructureRelevanceAction": "archive_only",
+            "articlePagePublished": false,
+            "homepagePublished": false,
+            "archiveOnly": true,
+            "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
           },
           "score": 46
         }
       ],
       "curatedIds": [
-        "348036963e84f659",
-        "1376fed4a5670f48"
+        "3d34a1742df7d939",
+        "dde7bef9753169ec",
+        "836559db4e7689ee",
+        "93509c80500e1888",
+        "51df4b9635f1658f",
+        "41defc88bd3f0a14"
       ],
       "publishedIds": [
         "0312bfc6d3fca3b4",
         "f19226cf98e97067",
         "1376fed4a5670f48",
-        "348036963e84f659"
+        "348036963e84f659",
+        "3d34a1742df7d939",
+        "dde7bef9753169ec"
       ],
       "slotPublications": {
         "0": true,
-        "1": true
+        "1": true,
+        "2": true
       }
     }
   },
   "runHistory": [
-    {
-      "at": "2026-08-21T15:38:39.430Z",
-      "day": "2026-08-22",
-      "slot": 0,
-      "publishedCount": 0,
-      "authoredColumn": {
-        "published": true,
-        "slug": "sk-hynix-s-tiered-memory-pitch-is-a-margin-defense-play-not-an-a-2026-08-21"
-      },
-      "llmUsage": {
-        "calls": 4,
-        "failures": 0,
-        "prompt_tokens": 10915,
-        "completion_tokens": 6440,
-        "total_tokens": 17355,
-        "token_budget": 60000,
-        "call_budget": 40
-      }
-    },
     {
       "at": "2026-08-21T23:34:29.192Z",
       "day": "2026-08-22",
@@ -50906,9 +51171,37 @@
         "token_budget": 60000,
         "call_budget": 40
       }
+    },
+    {
+      "at": "2026-09-30T13:38:14.765Z",
+      "day": "2026-09-30",
+      "slot": 2,
+      "publishedCount": 0,
+      "signalCardCount": 2,
+      "archiveOnlyCount": 0,
+      "processedIds": [
+        "3d34a1742df7d939",
+        "dde7bef9753169ec"
+      ],
+      "blockedCount": 0,
+      "blockedItems": [],
+      "archiveOnlyItems": [],
+      "authoredColumn": {
+        "published": false,
+        "reason": "no_qualifying_story"
+      },
+      "llmUsage": {
+        "calls": 2,
+        "failures": 3,
+        "prompt_tokens": 2317,
+        "completion_tokens": 444,
+        "total_tokens": 2761,
+        "token_budget": 60000,
+        "call_budget": 40
+      }
     }
   ],
-  "lastRunAt": "2026-09-30T02:02:49.468Z",
+  "lastRunAt": "2026-09-30T13:38:14.765Z",
   "authored": {
     "lastColumnAt": "2026-09-16T18:47:02.256Z",
     "columnsByDay": {
