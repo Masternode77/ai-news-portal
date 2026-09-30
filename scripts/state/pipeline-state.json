@@ -885,7 +885,9 @@
     "1376fed4a5670f48",
     "348036963e84f659",
     "3d34a1742df7d939",
-    "dde7bef9753169ec"
+    "dde7bef9753169ec",
+    "d498501c1e45a1a9",
+    "2663044dc3fd4042"
   ],
   "dayPlans": {
     "2026-03-24": {
@@ -47842,28 +47844,184 @@
         "1": true,
         "2": true
       }
+    },
+    "2026-10-01": {
+      "date": "2026-10-01",
+      "createdAt": "2026-09-30T19:55:43.760Z",
+      "refreshedAt": "2026-09-30T19:55:43.760Z",
+      "candidateWindowHours": 24,
+      "curatedItems": [
+        {
+          "id": "2663044dc3fd4042",
+          "sourceRegistryId": "arxiv-cs-ar",
+          "source": "arXiv",
+          "url": "https://arxiv.org/abs/2604.16007",
+          "title": "MemExplorer: Navigating the Heterogeneous Memory Design Space for Agentic Inference NPUs",
+          "snippet": "arXiv:2604.16007v2 Announce Type: replace Abstract: Emerging agentic large language model (LLM) workloads are driving rapidly growing demand for memory capacity and bandwidth. Different phases of inference, such as pref…",
+          "contentText": "arXiv:2604.16007v2 Announce Type: replace Abstract: Emerging agentic large language model (LLM) workloads are driving rapidly growing demand for memory capacity and bandwidth. Different phases of inference, such as prefill and decode, have distinct requirements. Industry is responding by combining heterogeneous accelerators into interconnected systems, as exemplified by NVIDIA's Vera Rubin platform, where each device has its own memory architecture. The range of available memory technologies is also expanding. High-density on-chip SRAM, HBM, LPDDR, GDDR, and emerging options such as high-bandwidth flash (HBF) each offer different trade-offs in capacity, bandwidth, and power. Identifying efficient memory architectures for next-generation inference accelerators remains challenging because t…",
+          "publishedAt": "2026-09-30T04:00:00.000Z",
+          "sourceImage": null,
+          "region": "APAC",
+          "language": "en",
+          "defaultCategory": "Semiconductors",
+          "source_text_scope": "abstract",
+          "ai_topic_score": 1,
+          "ai_topic_reasons": [
+            "large language model",
+            "llm",
+            "agentic",
+            "inference",
+            "nvidia",
+            "accelerators"
+          ],
+          "category": "Semiconductors",
+          "primary_category": "Semiconductors",
+          "secondary_category": "Accelerators, memory, and advanced packaging",
+          "infrastructure_layer": "Silicon",
+          "affected_stakeholders": [
+            "semiconductor suppliers",
+            "hyperscalers",
+            "server OEMs",
+            "investors"
+          ],
+          "article_type": "Capacity Expansion",
+          "urgency_score": 0.51,
+          "taxonomy_confidence": 0.79,
+          "taxonomy_reasons": [
+            "chip",
+            "nvidia",
+            "hbm"
+          ],
+          "direct_ai_infrastructure_relevance": 0.22,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0.64,
+          "power_grid_relevance": 0.22,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.525,
+          "infrastructure_relevance_tier": "archive_only",
+          "infrastructure_relevance_action": "archive_only",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:0.22",
+            "semiconductor_relevance:0.64(nvidia, hbm)",
+            "power_grid_relevance:0.22(power)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 0.22,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0.64,
+            "power_grid_relevance": 0.22,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.525,
+            "infrastructure_relevance_tier": "archive_only",
+            "infrastructure_relevance_action": "archive_only",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:0.22",
+              "semiconductor_relevance:0.64(nvidia, hbm)",
+              "power_grid_relevance:0.22(power)"
+            ],
+            "infrastructureRelevanceAction": "archive_only",
+            "articlePagePublished": false,
+            "homepagePublished": false,
+            "archiveOnly": true,
+            "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
+          },
+          "score": 46
+        },
+        {
+          "id": "d498501c1e45a1a9",
+          "sourceRegistryId": "arxiv-cs-dc",
+          "source": "arXiv",
+          "url": "https://arxiv.org/abs/2609.34244",
+          "title": "Heddle: Learning Structural Templates for Parallelism Planning on Heterogeneous GPU Clusters",
+          "snippet": "arXiv:2609.34244v2 Announce Type: replace Abstract: Training large machine learning models on shared GPU infrastructures faces two challenges: (1) GPU availability shifts dynamically with varying resource demands from t…",
+          "contentText": "arXiv:2609.34244v2 Announce Type: replace Abstract: Training large machine learning models on shared GPU infrastructures faces two challenges: (1) GPU availability shifts dynamically with varying resource demands from tenants, and (2) hardware heterogeneity accumulates as datacenters continuously adopt new GPU generations. Due to the vast search space induced by heterogeneous GPU types and node sizes, training planners must prune it aggressively to remain tractable, yet must also derive high-throughput plans promptly as cluster configurations change. Heddle achieves this goal through a learning-based planner that reduces the full planning problem to a search over pipeline structures. Heddle encapsulates planning decisions in a structural template and learns to construct plans from templat…",
+          "publishedAt": "2026-09-30T04:00:00.000Z",
+          "sourceImage": null,
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure",
+          "source_text_scope": "abstract",
+          "ai_topic_score": 0.597,
+          "ai_topic_reasons": [
+            "machine learning",
+            "gpu"
+          ],
+          "category": "AI Infrastructure",
+          "primary_category": "AI Infrastructure",
+          "secondary_category": "GPU clusters and deployment readiness",
+          "infrastructure_layer": "Compute",
+          "affected_stakeholders": [
+            "operators",
+            "hyperscalers",
+            "cloud buyers",
+            "investors"
+          ],
+          "article_type": "Other",
+          "urgency_score": 0.39,
+          "taxonomy_confidence": 0.65,
+          "taxonomy_reasons": [
+            "ai infrastructure"
+          ],
+          "direct_ai_infrastructure_relevance": 0.77,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0.297,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.662,
+          "infrastructure_relevance_tier": "signal_card",
+          "infrastructure_relevance_action": "publish_signal_card_only",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:0.77(gpu clusters)",
+            "semiconductor_relevance:0.30(gpu)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 0.77,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0.297,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.662,
+            "infrastructure_relevance_tier": "signal_card",
+            "infrastructure_relevance_action": "publish_signal_card_only",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:0.77(gpu clusters)",
+              "semiconductor_relevance:0.30(gpu)"
+            ],
+            "infrastructureRelevanceAction": "publish_signal_card_only",
+            "articlePagePublished": false,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 56
+        }
+      ],
+      "curatedIds": [
+        "2663044dc3fd4042",
+        "d498501c1e45a1a9"
+      ],
+      "publishedIds": [
+        "d498501c1e45a1a9",
+        "2663044dc3fd4042"
+      ],
+      "slotPublications": {
+        "0": true
+      }
     }
   },
   "runHistory": [
-    {
-      "at": "2026-08-21T23:34:29.192Z",
-      "day": "2026-08-22",
-      "slot": 1,
-      "publishedCount": 0,
-      "authoredColumn": {
-        "published": false,
-        "reason": "verify:missing_counterargument_section|template_language_detected"
-      },
-      "llmUsage": {
-        "calls": 5,
-        "failures": 0,
-        "prompt_tokens": 13589,
-        "completion_tokens": 6854,
-        "total_tokens": 20443,
-        "token_budget": 60000,
-        "call_budget": 40
-      }
-    },
     {
       "at": "2026-08-22T07:41:03.876Z",
       "day": "2026-08-22",
@@ -51199,9 +51357,60 @@
         "token_budget": 60000,
         "call_budget": 40
       }
+    },
+    {
+      "at": "2026-09-30T19:55:43.760Z",
+      "day": "2026-10-01",
+      "slot": 0,
+      "publishedCount": 0,
+      "signalCardCount": 1,
+      "archiveOnlyCount": 1,
+      "processedIds": [
+        "d498501c1e45a1a9",
+        "2663044dc3fd4042"
+      ],
+      "blockedCount": 0,
+      "blockedItems": [],
+      "archiveOnlyItems": [
+        {
+          "id": "2663044dc3fd4042",
+          "title": "MemExplorer: Navigating the Heterogeneous Memory Design Space for Agentic Inference NPUs",
+          "infrastructure_relevance_score": 0.525,
+          "infrastructure_relevance_tier": "archive_only",
+          "infrastructure_relevance_action": "archive_only",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:0.22",
+            "semiconductor_relevance:0.64(nvidia, hbm)",
+            "power_grid_relevance:0.22(power)"
+          ],
+          "extraction_quality_score": 1,
+          "source_domain_adapter": "arxiv",
+          "content_length": 1668,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": false,
+          "repetition_block_reasons": [],
+          "repetition_check": null,
+          "expert_insight_complete": true,
+          "expert_insight_missing_fields": [],
+          "reason": "infrastructure_relevance_below_signal_threshold"
+        }
+      ],
+      "authoredColumn": {
+        "published": false,
+        "reason": "no_qualifying_story"
+      },
+      "llmUsage": {
+        "calls": 3,
+        "failures": 0,
+        "prompt_tokens": 3825,
+        "completion_tokens": 526,
+        "total_tokens": 4351,
+        "token_budget": 60000,
+        "call_budget": 40
+      }
     }
   ],
-  "lastRunAt": "2026-09-30T13:38:14.765Z",
+  "lastRunAt": "2026-09-30T19:55:43.760Z",
   "authored": {
     "lastColumnAt": "2026-09-16T18:47:02.256Z",
     "columnsByDay": {
