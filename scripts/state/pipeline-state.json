@@ -881,7 +881,9 @@
     "cb57985cb148504a",
     "3f7f9d722c7f20df",
     "0312bfc6d3fca3b4",
-    "f19226cf98e97067"
+    "f19226cf98e97067",
+    "1376fed4a5670f48",
+    "348036963e84f659"
   ],
   "dayPlans": {
     "2026-03-24": {
@@ -47384,169 +47386,79 @@
     "2026-09-30": {
       "date": "2026-09-30",
       "createdAt": "2026-09-29T19:54:17.966Z",
-      "refreshedAt": "2026-09-29T19:54:17.966Z",
+      "refreshedAt": "2026-09-30T02:02:49.468Z",
       "candidateWindowHours": 24,
       "curatedItems": [
         {
-          "id": "0312bfc6d3fca3b4",
-          "sourceRegistryId": "arxiv-cs-dc",
-          "source": "arXiv",
-          "url": "https://arxiv.org/abs/2605.23348",
-          "title": "XWind: A Cross-site Router for Large Language Model Inference Serving at Renewable Energy Farms",
-          "snippet": "arXiv:2605.23348v3 Announce Type: replace Abstract: AI power demand is growing at an unprecedented rate while power grids are often ailing and struggle to keep up. Grid expansion comes with high capital expenditure and…",
-          "contentText": "arXiv:2605.23348v3 Announce Type: replace Abstract: AI power demand is growing at an unprecedented rate while power grids are often ailing and struggle to keep up. Grid expansion comes with high capital expenditure and long-distance transmission losses, yet there is abundant renewable energy at the source, just not matched to demand. This paper proposes a complementary AI infrastructure deployment model, AI Greeninferencing, that brings modular AI compute to renewable energy sources, focusing on wind, allowing AI footprint expansion, generating local behind-the-meter demand for renewable sites, and helping ease the growing strain on power utilities. Our feasibility analysis shows that 890+ GW of wind capacity lies within 50 ms network round trip time of Azure data centers, and that site-w…",
-          "publishedAt": "2026-09-29T04:00:00.000Z",
-          "sourceImage": null,
-          "region": "APAC",
-          "language": "en",
-          "defaultCategory": "AI Infrastructure",
-          "source_text_scope": "abstract",
-          "ai_topic_score": 1,
-          "ai_topic_reasons": [
-            "large language model",
-            "inference",
-            "ai infrastructure",
-            "ai"
-          ],
-          "category": "Power & Grid",
-          "primary_category": "Power & Grid",
-          "secondary_category": "Interconnection and power procurement",
-          "infrastructure_layer": "Power",
-          "affected_stakeholders": [
-            "data center operators",
-            "utilities",
-            "cloud capacity teams",
-            "investors"
-          ],
-          "article_type": "Capacity Expansion",
-          "urgency_score": 0.75,
-          "taxonomy_confidence": 0.93,
-          "taxonomy_reasons": [
-            "power",
-            "grid",
-            "transmission",
-            "gw"
-          ],
-          "direct_ai_infrastructure_relevance": 0.82,
-          "data_center_relevance": 0.42,
-          "cloud_capacity_relevance": 0.22,
-          "semiconductor_relevance": 0,
-          "power_grid_relevance": 1,
-          "cooling_relevance": 0,
-          "capital_markets_relevance": 0.28,
-          "enterprise_ai_infrastructure_relevance": 0,
-          "infrastructure_relevance_score": 0.98,
-          "infrastructure_relevance_tier": "signal_card",
-          "infrastructure_relevance_action": "publish_signal_card_only",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:0.82(ai infrastructure)",
-            "data_center_relevance:0.42(data centers)",
-            "cloud_capacity_relevance:0.22(azure)",
-            "power_grid_relevance:1.00(power, grid, utilities)",
-            "capital_markets_relevance:0.28(capital expenditure)",
-            "abstract_only_source_capped_at_signal_card"
-          ],
-          "infrastructure_relevance": {
-            "direct_ai_infrastructure_relevance": 0.82,
-            "data_center_relevance": 0.42,
-            "cloud_capacity_relevance": 0.22,
-            "semiconductor_relevance": 0,
-            "power_grid_relevance": 1,
-            "cooling_relevance": 0,
-            "capital_markets_relevance": 0.28,
-            "enterprise_ai_infrastructure_relevance": 0,
-            "infrastructure_relevance_score": 0.98,
-            "infrastructure_relevance_tier": "signal_card",
-            "infrastructure_relevance_action": "publish_signal_card_only",
-            "infrastructure_relevance_reasons": [
-              "direct_ai_infrastructure_relevance:0.82(ai infrastructure)",
-              "data_center_relevance:0.42(data centers)",
-              "cloud_capacity_relevance:0.22(azure)",
-              "power_grid_relevance:1.00(power, grid, utilities)",
-              "capital_markets_relevance:0.28(capital expenditure)",
-              "abstract_only_source_capped_at_signal_card"
-            ],
-            "infrastructureRelevanceAction": "publish_signal_card_only",
-            "articlePagePublished": false,
-            "homepagePublished": true,
-            "archiveOnly": false,
-            "archiveOnlyReason": null
-          },
-          "score": 73
-        },
-        {
-          "id": "f19226cf98e97067",
-          "sourceRegistryId": "arxiv-cs-dc",
-          "source": "arXiv",
-          "url": "https://arxiv.org/abs/2609.34340",
-          "title": "VarioPath: Workload-Aware All-to-All Communication for PCIe GPU Clusters",
-          "snippet": "arXiv:2609.34340v1 Announce Type: new Abstract: AlltoAllv communication is a critical primitive in distributed large-model inference, particularly for mixture-of-experts (MoE) models. The growing adoption of PCIe GPU sy…",
-          "contentText": "arXiv:2609.34340v1 Announce Type: new Abstract: AlltoAllv communication is a critical primitive in distributed large-model inference, particularly for mixture-of-experts (MoE) models. The growing adoption of PCIe GPU systems for cost-efficient inference makes AlltoAllv performance on these systems increasingly important. Without a dedicated scale-up interconnect (e.g., NVLink or Infinity Fabric), PCIe GPU systems carry both intra-node and inter-node traffic through the PCIe hierarchy, where concurrent transfers can contend for PCIe link bandwidth. This link contention, compounded by skewed traffic distributions and dynamic traffic demand, makes efficient AlltoAllv scheduling challenging. Existing approaches are either poorly suited to PCIe GPU systems or incur substantial schedule synthes…",
-          "publishedAt": "2026-09-29T04:00:00.000Z",
+          "id": "348036963e84f659",
+          "sourceRegistryId": "whitehouse-presidential-actions",
+          "source": "The White House",
+          "url": "https://www.whitehouse.gov/presidential-actions/2026/09/inaugurating-the-era-of-super-intelligence/",
+          "title": "Inaugurating The Era Of Super Intelligence",
+          "snippet": "By the authority vested in me as President by the Constitution and the laws of the United States of America, it is hereby ordered: Section 1. Purpose. America stands at the forefront of a new technological revolution in…",
+          "contentText": "Presidential Actions Search Select Category All News Briefings & Statements All Presidential Actions Executive Orders Nominations & Appointments Presidential Memoranda Proclamations Fact Sheets Releases Remarks Research All Briefings & Statements Presidential Actions All Executive Orders Nominations & Appointments Presidential Memoranda Proclamations Fact Sheets Releases Remarks Research By the authority vested in me as President by the Constitution and the laws of the United States of America, it is hereby ordered: Section 1 . Purpose . America stands at the forefront of a new technological revolution in intelligence. The modern field of artificial intelligence was born in the United States, where American scientists first gave the field its name and laid the foundations for its developm…",
+          "publishedAt": "2026-09-29T21:17:25.000Z",
           "sourceImage": null,
           "region": "US",
           "language": "en",
-          "defaultCategory": "AI Infrastructure",
-          "source_text_scope": "abstract",
-          "ai_topic_score": 0.577,
+          "defaultCategory": "Policy & Siting",
+          "ai_topic_score": 0.4,
           "ai_topic_reasons": [
-            "inference",
-            "gpu"
+            "artificial intelligence",
+            "ai_not_in_title"
           ],
-          "category": "AI Infrastructure",
-          "primary_category": "AI Infrastructure",
-          "secondary_category": "GPU clusters and deployment readiness",
-          "infrastructure_layer": "Compute",
+          "category": "Policy & Siting",
+          "primary_category": "Policy & Siting",
+          "secondary_category": "Permitting, regulation, and market access",
+          "infrastructure_layer": "Policy",
           "affected_stakeholders": [
-            "operators",
-            "hyperscalers",
-            "cloud buyers",
-            "investors"
+            "regulators",
+            "site selectors",
+            "developers",
+            "utilities"
           ],
-          "article_type": "Market Analysis",
-          "urgency_score": 0.39,
-          "taxonomy_confidence": 0.65,
+          "article_type": "Policy / Regulation",
+          "urgency_score": 0.18,
+          "taxonomy_confidence": 0.53,
           "taxonomy_reasons": [
-            "ai infrastructure"
+            "policy"
           ],
-          "direct_ai_infrastructure_relevance": 0.77,
+          "direct_ai_infrastructure_relevance": 0,
           "data_center_relevance": 0,
           "cloud_capacity_relevance": 0,
-          "semiconductor_relevance": 0.297,
+          "semiconductor_relevance": 0,
           "power_grid_relevance": 0,
           "cooling_relevance": 0,
           "capital_markets_relevance": 0,
           "enterprise_ai_infrastructure_relevance": 0,
-          "infrastructure_relevance_score": 0.662,
-          "infrastructure_relevance_tier": "signal_card",
-          "infrastructure_relevance_action": "publish_signal_card_only",
+          "infrastructure_relevance_score": 0,
+          "infrastructure_relevance_tier": "archive_only",
+          "infrastructure_relevance_action": "archive_only",
           "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:0.77(gpu clusters)",
-            "semiconductor_relevance:0.30(gpu)"
+            "no_strong_compute_current_infrastructure_match"
           ],
           "infrastructure_relevance": {
-            "direct_ai_infrastructure_relevance": 0.77,
+            "direct_ai_infrastructure_relevance": 0,
             "data_center_relevance": 0,
             "cloud_capacity_relevance": 0,
-            "semiconductor_relevance": 0.297,
+            "semiconductor_relevance": 0,
             "power_grid_relevance": 0,
             "cooling_relevance": 0,
             "capital_markets_relevance": 0,
             "enterprise_ai_infrastructure_relevance": 0,
-            "infrastructure_relevance_score": 0.662,
-            "infrastructure_relevance_tier": "signal_card",
-            "infrastructure_relevance_action": "publish_signal_card_only",
+            "infrastructure_relevance_score": 0,
+            "infrastructure_relevance_tier": "archive_only",
+            "infrastructure_relevance_action": "archive_only",
             "infrastructure_relevance_reasons": [
-              "direct_ai_infrastructure_relevance:0.77(gpu clusters)",
-              "semiconductor_relevance:0.30(gpu)"
+              "no_strong_compute_current_infrastructure_match"
             ],
-            "infrastructureRelevanceAction": "publish_signal_card_only",
+            "infrastructureRelevanceAction": "archive_only",
             "articlePagePublished": false,
-            "homepagePublished": true,
-            "archiveOnly": false,
-            "archiveOnlyReason": null
+            "homepagePublished": false,
+            "archiveOnly": true,
+            "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
           },
-          "score": 48
+          "score": 38
         },
         {
           "id": "1376fed4a5670f48",
@@ -47629,43 +47541,26 @@
             "archiveOnly": false,
             "archiveOnlyReason": null
           },
-          "score": 52
+          "score": 46
         }
       ],
       "curatedIds": [
-        "0312bfc6d3fca3b4",
-        "f19226cf98e97067",
+        "348036963e84f659",
         "1376fed4a5670f48"
       ],
       "publishedIds": [
         "0312bfc6d3fca3b4",
-        "f19226cf98e97067"
+        "f19226cf98e97067",
+        "1376fed4a5670f48",
+        "348036963e84f659"
       ],
       "slotPublications": {
-        "0": true
+        "0": true,
+        "1": true
       }
     }
   },
   "runHistory": [
-    {
-      "at": "2026-08-21T07:53:51.554Z",
-      "day": "2026-08-21",
-      "slot": 2,
-      "publishedCount": 0,
-      "authoredColumn": {
-        "published": false,
-        "reason": "verify:copied_source_sentence"
-      },
-      "llmUsage": {
-        "calls": 5,
-        "failures": 0,
-        "prompt_tokens": 14467,
-        "completion_tokens": 8057,
-        "total_tokens": 22524,
-        "token_budget": 60000,
-        "call_budget": 40
-      }
-    },
     {
       "at": "2026-08-21T15:38:39.430Z",
       "day": "2026-08-22",
@@ -50959,9 +50854,61 @@
         "token_budget": 60000,
         "call_budget": 40
       }
+    },
+    {
+      "at": "2026-09-30T02:02:49.468Z",
+      "day": "2026-09-30",
+      "slot": 1,
+      "publishedCount": 0,
+      "signalCardCount": 1,
+      "archiveOnlyCount": 1,
+      "processedIds": [
+        "1376fed4a5670f48",
+        "348036963e84f659"
+      ],
+      "blockedCount": 0,
+      "blockedItems": [],
+      "archiveOnlyItems": [
+        {
+          "id": "348036963e84f659",
+          "title": "Inaugurating The Era Of Super Intelligence",
+          "infrastructure_relevance_score": 0.197,
+          "infrastructure_relevance_tier": "archive_only",
+          "infrastructure_relevance_action": "archive_only",
+          "infrastructure_relevance_reasons": [
+            "capital_markets_relevance:0.28(funding)"
+          ],
+          "extraction_quality_score": 1,
+          "source_domain_adapter": "whitehouse",
+          "content_length": 1754,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": false,
+          "repetition_block_reasons": [],
+          "repetition_check": null,
+          "expert_insight_complete": false,
+          "expert_insight_missing_fields": [
+            "concrete_facts",
+            "named_companies"
+          ],
+          "reason": "infrastructure_relevance_below_signal_threshold"
+        }
+      ],
+      "authoredColumn": {
+        "published": false,
+        "reason": "no_qualifying_story"
+      },
+      "llmUsage": {
+        "calls": 3,
+        "failures": 0,
+        "prompt_tokens": 3684,
+        "completion_tokens": 558,
+        "total_tokens": 4242,
+        "token_budget": 60000,
+        "call_budget": 40
+      }
     }
   ],
-  "lastRunAt": "2026-09-29T19:54:17.966Z",
+  "lastRunAt": "2026-09-30T02:02:49.468Z",
   "authored": {
     "lastColumnAt": "2026-09-16T18:47:02.256Z",
     "columnsByDay": {
