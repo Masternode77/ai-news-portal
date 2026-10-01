@@ -130030,6 +130030,221 @@
     "imageGeneratedAt": "2026-09-12T23:42:06.374Z"
   },
   {
+    "id": "46bbca0a76ec578b",
+    "sourceRegistryId": "arxiv-cs-pf",
+    "source": "arXiv",
+    "url": "https://arxiv.org/abs/2511.10333",
+    "title": "EDGC: Entropy-driven Dynamic Gradient Compression for Efficient LLM Training",
+    "snippet": "arXiv:2511.10333v2 Announce Type: replace-cross Abstract: Training large language models (LLMs) at scale incurs substantial communication overhead, while static gradient compression cannot adapt to gradient evolution an…",
+    "contentText": "arXiv:2511.10333v2 Announce Type: replace-cross Abstract: Training large language models (LLMs) at scale incurs substantial communication overhead, while static gradient compression cannot adapt to gradient evolution and may degrade model quality. We propose EDGC, an entropy-driven dynamic gradient compression framework that adapts compression ranks to gradient entropy during training. EDGC combines efficient entropy estimation through gradient sampling, a theoretical model relating entropy to compression rank under a bounded-error constraint, and window-based rank adjustment across pipeline stages. Experiments on 32-V100 and 64-H100 GPU clusters training GPT2 models with 2.5B and 12.1B parameters show that EDGC reduces communication latency by up to 46.45% and end-to-end training time by…",
+    "publishedAt": "2026-10-01T04:00:00.000Z",
+    "sourceImage": null,
+    "region": "US",
+    "language": "en",
+    "defaultCategory": "AI Infrastructure",
+    "source_text_scope": "abstract",
+    "ai_topic_score": 1,
+    "ai_topic_reasons": [
+      "large language model",
+      "large language models",
+      "llm",
+      "llms",
+      "model training",
+      "gpu"
+    ],
+    "category": "AI Infrastructure",
+    "primary_category": "AI Infrastructure",
+    "secondary_category": "Research / Technical",
+    "infrastructure_layer": "Compute",
+    "affected_stakeholders": [
+      "operators",
+      "investors",
+      "AI developers",
+      "hyperscalers",
+      "cloud buyers"
+    ],
+    "article_type": "Research / Technical",
+    "urgency_score": 0.7,
+    "taxonomy_confidence": 0.79,
+    "taxonomy_reasons": [
+      "ai infrastructure",
+      "neocloud",
+      "deployment readiness"
+    ],
+    "direct_ai_infrastructure_relevance": 0.64,
+    "data_center_relevance": 0,
+    "cloud_capacity_relevance": 0,
+    "semiconductor_relevance": 0.22,
+    "power_grid_relevance": 0,
+    "cooling_relevance": 0,
+    "capital_markets_relevance": 0,
+    "enterprise_ai_infrastructure_relevance": 0,
+    "infrastructure_relevance_score": 0.49,
+    "infrastructure_relevance_tier": "archive_only",
+    "infrastructure_relevance_action": "archive_only",
+    "infrastructure_relevance_reasons": [
+      "direct_ai_infrastructure_relevance:0.64(gpu clusters)",
+      "semiconductor_relevance:0.22(gpu)"
+    ],
+    "infrastructure_relevance": {
+      "direct_ai_infrastructure_relevance": 0.64,
+      "data_center_relevance": 0,
+      "cloud_capacity_relevance": 0,
+      "semiconductor_relevance": 0.22,
+      "power_grid_relevance": 0,
+      "cooling_relevance": 0,
+      "capital_markets_relevance": 0,
+      "enterprise_ai_infrastructure_relevance": 0,
+      "infrastructure_relevance_score": 0.49,
+      "infrastructure_relevance_tier": "archive_only",
+      "infrastructure_relevance_action": "archive_only",
+      "infrastructure_relevance_reasons": [
+        "direct_ai_infrastructure_relevance:0.64(gpu clusters)",
+        "semiconductor_relevance:0.22(gpu)"
+      ],
+      "infrastructureRelevanceAction": "archive_only",
+      "articlePagePublished": false,
+      "homepagePublished": false,
+      "archiveOnly": true,
+      "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
+    },
+    "score": 45,
+    "slug": "edgc-entropy-driven-dynamic-gradient-compression-for-efficient-llm-training",
+    "summary": "EDGC introduces a dynamic gradient compression framework that significantly reduces communication overhead in large language model training while preserving model quality.",
+    "insight": "This advancement is crucial for operators and investors as it enhances training efficiency, potentially lowering costs and accelerating deployment of AI models. Improved communication latency and training time can lead to faster innovation cycles in AI applic…",
+    "expert_insight": {
+      "concrete_facts": [
+        "Experiments on 32-V100 and 64-H100 GPU clusters training GPT2 models with 2.5B and 12.1B parameters show that EDGC reduces communication latency by up to 46.45% and end-to-end training time by 16.13%, while maintaining model quality.",
+        "Experiments on 32-V100 and 64-H100 GPU clusters training GPT2 models with 2.5B and 12.1B parameters show that EDGC reduces communication latency by up to 46.45% and end-to-end training time by…"
+      ],
+      "named_companies": [],
+      "infrastructure_layer": "Compute",
+      "bottleneck_type": "compute_supply",
+      "who_gains_leverage": "chip suppliers, systems integrators, and buyers with committed accelerator allocations",
+      "who_takes_execution_risk": "cloud providers and enterprises that still need networking, power, and facility readiness around purchased systems",
+      "timing_dependency": "accelerator allocation, server integration, memory supply, and cluster turn-up",
+      "counterargument": "The source may still describe intent rather than delivered capacity, so the operating impact depends on follow-through.",
+      "next_observable_signal": "delivery schedules, memory availability, networking readiness, or deployed cluster utilization",
+      "expert_insight_complete": false,
+      "expert_insight_missing_fields": [
+        "named_companies"
+      ]
+    },
+    "expertInsight": {
+      "concrete_facts": [
+        "Experiments on 32-V100 and 64-H100 GPU clusters training GPT2 models with 2.5B and 12.1B parameters show that EDGC reduces communication latency by up to 46.45% and end-to-end training time by 16.13%, while maintaining model quality.",
+        "Experiments on 32-V100 and 64-H100 GPU clusters training GPT2 models with 2.5B and 12.1B parameters show that EDGC reduces communication latency by up to 46.45% and end-to-end training time by…"
+      ],
+      "named_companies": [],
+      "infrastructure_layer": "Compute",
+      "bottleneck_type": "compute_supply",
+      "who_gains_leverage": "chip suppliers, systems integrators, and buyers with committed accelerator allocations",
+      "who_takes_execution_risk": "cloud providers and enterprises that still need networking, power, and facility readiness around purchased systems",
+      "timing_dependency": "accelerator allocation, server integration, memory supply, and cluster turn-up",
+      "counterargument": "The source may still describe intent rather than delivered capacity, so the operating impact depends on follow-through.",
+      "next_observable_signal": "delivery schedules, memory availability, networking readiness, or deployed cluster utilization",
+      "expert_insight_complete": false,
+      "expert_insight_missing_fields": [
+        "named_companies"
+      ]
+    },
+    "concrete_facts": [
+      "Experiments on 32-V100 and 64-H100 GPU clusters training GPT2 models with 2.5B and 12.1B parameters show that EDGC reduces communication latency by up to 46.45% and end-to-end training time by 16.13%, while maintaining model quality.",
+      "Experiments on 32-V100 and 64-H100 GPU clusters training GPT2 models with 2.5B and 12.1B parameters show that EDGC reduces communication latency by up to 46.45% and end-to-end training time by…"
+    ],
+    "named_companies": [],
+    "bottleneck_type": "compute_supply",
+    "who_gains_leverage": "chip suppliers, systems integrators, and buyers with committed accelerator allocations",
+    "who_takes_execution_risk": "cloud providers and enterprises that still need networking, power, and facility readiness around purchased systems",
+    "timing_dependency": "accelerator allocation, server integration, memory supply, and cluster turn-up",
+    "counterargument": "The source may still describe intent rather than delivered capacity, so the operating impact depends on follow-through.",
+    "next_observable_signal": "delivery schedules, memory availability, networking readiness, or deployed cluster utilization",
+    "expert_insight_complete": false,
+    "expert_insight_missing_fields": [
+      "named_companies"
+    ],
+    "tags": [
+      "llm",
+      "gradient compression",
+      "ai training",
+      "efficiency",
+      "edgc",
+      "communication"
+    ],
+    "imagePrompt": "A high-tech data center with advanced GPU clusters, showcasing dynamic data flow and AI model training processes, in a futuristic and vibrant style.",
+    "lang": "en",
+    "articleText": "Training large language models (LLMs) at scale incurs substantial communication overhead, while static gradient compression cannot adapt to gradient evolution and may degrade model quality. We propose EDGC, an entropy-driven dynamic gradient compression framework that adapts compression ranks to gradient entropy during training. EDGC combines efficient entropy estimation through gradient sampling, a theoretical model relating entropy to compression rank under a bounded-error constraint, and window-based rank adjustment across pipeline stages. Experiments on 32-V100 and 64-H100 GPU clusters training GPT2 models with 2.5B and 12.1B parameters show that EDGC reduces communication latency by up to 46.45% and end-to-end training time by 16.13%, while maintaining model quality.",
+    "content_length": 782,
+    "boilerplate_ratio": 0,
+    "title_body_similarity": 0.89,
+    "copyright_footer_detected": false,
+    "nav_or_cta_detected": false,
+    "sentence_completion_score": 1,
+    "source_domain_adapter": "arxiv",
+    "extraction_quality_score": 0.84,
+    "extraction_qa": {
+      "content_length": 782,
+      "boilerplate_ratio": 0,
+      "title_body_similarity": 0.89,
+      "copyright_footer_detected": false,
+      "legal_boilerplate_detected": false,
+      "nav_or_cta_detected": false,
+      "sentence_completion_score": 1,
+      "source_domain_adapter": "arxiv",
+      "extraction_quality_score": 0.84,
+      "extraction_failure_reason": null,
+      "extraction_quality_reasons": [],
+      "public_publishable": true,
+      "can_generate_longform": false,
+      "cleaned_source_length": 782,
+      "block_reasons": [
+        "cleaned_source_text_below_1200",
+        "source_evidence_length_below_1200"
+      ]
+    },
+    "extraction_artifact": {
+      "artifact_version": "extraction_v1",
+      "source_url": "https://arxiv.org/abs/2511.10333",
+      "extracted_text_sha256": "b6a8382b1a7550e854a2eb5484f72c233aa754b100dd90de4eedd859b4161d3c",
+      "cleaned_extracted_text": "Training large language models (LLMs) at scale incurs substantial communication overhead, while static gradient compression cannot adapt to gradient evolution and may degrade model quality. We propose EDGC, an entropy-driven dynamic gradient compression framework that adapts compression ranks to gradient entropy during training. EDGC combines efficient entropy estimation through gradient sampling, a theoretical model relating entropy to compression rank under a bounded-error constraint, and window-based rank adjustment across pipeline stages. Experiments on 32-V100 and 64-H100 GPU clusters training GPT2 models with 2.5B and 12.1B parameters show that EDGC reduces communication latency by up to 46.45% and end-to-end training time by 16.13%, while maintaining model quality.",
+      "extraction_qa": {
+        "cleaned_source_length": 782,
+        "block_reasons": [
+          "cleaned_source_text_below_1200",
+          "source_evidence_length_below_1200"
+        ],
+        "public_publishable": true,
+        "can_generate_longform": false,
+        "boilerplate_ratio": 0,
+        "copyright_footer_detected": false,
+        "nav_or_cta_detected": false,
+        "sentence_completion_score": 1
+      }
+    },
+    "cleaned_source_text": "Training large language models (LLMs) at scale incurs substantial communication overhead, while static gradient compression cannot adapt to gradient evolution and may degrade model quality. We propose EDGC, an entropy-driven dynamic gradient compression framework that adapts compression ranks to gradient entropy during training. EDGC combines efficient entropy estimation through gradient sampling, a theoretical model relating entropy to compression rank under a bounded-error constraint, and window-based rank adjustment across pipeline stages. Experiments on 32-V100 and 64-H100 GPU clusters training GPT2 models with 2.5B and 12.1B parameters show that EDGC reduces communication latency by up to 46.45% and end-to-end training time by 16.13%, while maintaining model quality.",
+    "sourceUrl": "https://arxiv.org/abs/2511.10333",
+    "generatedImage": "/generated/articles/46bbca0a76ec578b-edgc-entropy-driven-dynamic-gradient-compression-for-efficient-llm-training/hero.webp",
+    "infrastructureRelevanceAction": "archive_only",
+    "articlePagePublished": false,
+    "homepagePublished": false,
+    "archiveOnly": true,
+    "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold",
+    "article_blueprint": null,
+    "articleBlueprint": null,
+    "expertLensShort": null,
+    "expertLensFull": null,
+    "expertLens": null,
+    "public_content_tier": "hidden",
+    "signalCardOnly": false,
+    "seo_noindex": true,
+    "noindex": true,
+    "public_tier_reasons": [
+      "low_relevance",
+      "relevance_below_adjacent_threshold"
+    ],
+    "searchText": "EDGC: Entropy-driven Dynamic Gradient Compression for Efficient LLM Training arXiv AI Infrastructure Research / Technical Compute compute_supply chip suppliers, systems integrators, and buyers with committed accelerator allocations cloud providers and enterprises that still need networking, power, and facility readiness around purchased systems accelerator allocation, server integration, memory supply, and cluster turn-up The source may still describe intent rather than delivered capacity, so the operating impact depends on follow-through. delivery schedules, memory availability, networking readiness, or deployed cluster utilization US EDGC introduces a dynamic gradient compression framework that significantly reduces communication overhead in large language model training while preserving model quality. Training large language models (LLMs) at scale incurs substantial communication overhead, while static gradient compression cannot adapt to gradient evolution and may degrade model quality. We propose EDGC, an entropy-driven dynamic gradient compression framework that adapts compression ranks to gradient entropy during training. EDGC combines efficient entropy estimation through gradient sampling, a theoretical model relating entropy to compression rank under a bounded-error constraint, and window-based rank adjustment across pipeline stages. Experiments on 32-V100 and 64-H100 GPU clusters training GPT2 models with 2.5B and 12.1B parameters show that EDGC reduces communication latency by up to 46.45% and end-to-end training time by 16.13%, while maintaining model quality. operators investors AI developers hyperscalers cloud buyers Experiments on 32-V100 and 64-H100 GPU clusters training GPT2 models with 2.5B and 12.1B parameters show that EDGC reduces communication latency by up to 46.45% and end-to-end training time by 16.13%, while maintaining model quality. Experiments on 32-V100 and 64-H100 GPU clusters training GPT2 models with 2.5B and 12.1B parameters show that EDGC reduces communication latency by up to 46.45% and end-to-end training time by… llm gradient compression ai training efficiency edgc communication"
+  },
+  {
     "id": "dde7bef9753169ec",
     "sourceRegistryId": "eia-today-in-energy",
     "source": "U.S. Energy Information Administration",

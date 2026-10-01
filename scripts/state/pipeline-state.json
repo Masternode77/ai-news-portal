@@ -889,7 +889,8 @@
     "d498501c1e45a1a9",
     "2663044dc3fd4042",
     "c9a773cb782b7801",
-    "bd371f39531db9df"
+    "bd371f39531db9df",
+    "46bbca0a76ec578b"
   ],
   "dayPlans": {
     "2026-03-24": {
@@ -48026,28 +48027,102 @@
         "1": true,
         "2": true
       }
+    },
+    "2026-10-02": {
+      "date": "2026-10-02",
+      "createdAt": "2026-10-01T20:14:28.958Z",
+      "refreshedAt": "2026-10-01T20:14:28.958Z",
+      "candidateWindowHours": 24,
+      "curatedItems": [
+        {
+          "id": "46bbca0a76ec578b",
+          "sourceRegistryId": "arxiv-cs-pf",
+          "source": "arXiv",
+          "url": "https://arxiv.org/abs/2511.10333",
+          "title": "EDGC: Entropy-driven Dynamic Gradient Compression for Efficient LLM Training",
+          "snippet": "arXiv:2511.10333v2 Announce Type: replace-cross Abstract: Training large language models (LLMs) at scale incurs substantial communication overhead, while static gradient compression cannot adapt to gradient evolution an…",
+          "contentText": "arXiv:2511.10333v2 Announce Type: replace-cross Abstract: Training large language models (LLMs) at scale incurs substantial communication overhead, while static gradient compression cannot adapt to gradient evolution and may degrade model quality. We propose EDGC, an entropy-driven dynamic gradient compression framework that adapts compression ranks to gradient entropy during training. EDGC combines efficient entropy estimation through gradient sampling, a theoretical model relating entropy to compression rank under a bounded-error constraint, and window-based rank adjustment across pipeline stages. Experiments on 32-V100 and 64-H100 GPU clusters training GPT2 models with 2.5B and 12.1B parameters show that EDGC reduces communication latency by up to 46.45% and end-to-end training time by…",
+          "publishedAt": "2026-10-01T04:00:00.000Z",
+          "sourceImage": null,
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure",
+          "source_text_scope": "abstract",
+          "ai_topic_score": 1,
+          "ai_topic_reasons": [
+            "large language models",
+            "llm",
+            "llms",
+            "gpu"
+          ],
+          "category": "AI Infrastructure",
+          "primary_category": "AI Infrastructure",
+          "secondary_category": "GPU clusters and deployment readiness",
+          "infrastructure_layer": "Compute",
+          "affected_stakeholders": [
+            "operators",
+            "hyperscalers",
+            "cloud buyers",
+            "investors"
+          ],
+          "article_type": "Other",
+          "urgency_score": 0.34,
+          "taxonomy_confidence": 0.63,
+          "taxonomy_reasons": [
+            "ai infrastructure"
+          ],
+          "direct_ai_infrastructure_relevance": 0.64,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0.22,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.49,
+          "infrastructure_relevance_tier": "archive_only",
+          "infrastructure_relevance_action": "archive_only",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:0.64(gpu clusters)",
+            "semiconductor_relevance:0.22(gpu)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 0.64,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0.22,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.49,
+            "infrastructure_relevance_tier": "archive_only",
+            "infrastructure_relevance_action": "archive_only",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:0.64(gpu clusters)",
+              "semiconductor_relevance:0.22(gpu)"
+            ],
+            "infrastructureRelevanceAction": "archive_only",
+            "articlePagePublished": false,
+            "homepagePublished": false,
+            "archiveOnly": true,
+            "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
+          },
+          "score": 45
+        }
+      ],
+      "curatedIds": [
+        "46bbca0a76ec578b"
+      ],
+      "publishedIds": [
+        "46bbca0a76ec578b"
+      ],
+      "slotPublications": {
+        "0": true
+      }
     }
   },
   "runHistory": [
-    {
-      "at": "2026-08-22T23:30:37.270Z",
-      "day": "2026-08-23",
-      "slot": 1,
-      "publishedCount": 0,
-      "authoredColumn": {
-        "published": true,
-        "slug": "efficiency-as-strategy-means-supply-stays-tight-longer-than-cape-2026-08-22"
-      },
-      "llmUsage": {
-        "calls": 5,
-        "failures": 0,
-        "prompt_tokens": 13692,
-        "completion_tokens": 7981,
-        "total_tokens": 21673,
-        "token_budget": 60000,
-        "call_budget": 40
-      }
-    },
     {
       "at": "2026-08-23T07:08:03.079Z",
       "day": "2026-08-23",
@@ -51424,9 +51499,60 @@
         "token_budget": 60000,
         "call_budget": 40
       }
+    },
+    {
+      "at": "2026-10-01T20:14:28.958Z",
+      "day": "2026-10-02",
+      "slot": 0,
+      "publishedCount": 0,
+      "signalCardCount": 0,
+      "archiveOnlyCount": 1,
+      "processedIds": [
+        "46bbca0a76ec578b"
+      ],
+      "blockedCount": 0,
+      "blockedItems": [],
+      "archiveOnlyItems": [
+        {
+          "id": "46bbca0a76ec578b",
+          "title": "EDGC: Entropy-driven Dynamic Gradient Compression for Efficient LLM Training",
+          "infrastructure_relevance_score": 0.49,
+          "infrastructure_relevance_tier": "archive_only",
+          "infrastructure_relevance_action": "archive_only",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:0.64(gpu clusters)",
+            "semiconductor_relevance:0.22(gpu)"
+          ],
+          "extraction_quality_score": 0.84,
+          "source_domain_adapter": "arxiv",
+          "content_length": 782,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": false,
+          "repetition_block_reasons": [],
+          "repetition_check": null,
+          "expert_insight_complete": false,
+          "expert_insight_missing_fields": [
+            "named_companies"
+          ],
+          "reason": "infrastructure_relevance_below_signal_threshold"
+        }
+      ],
+      "authoredColumn": {
+        "published": false,
+        "reason": "no_qualifying_story"
+      },
+      "llmUsage": {
+        "calls": 2,
+        "failures": 0,
+        "prompt_tokens": 2103,
+        "completion_tokens": 447,
+        "total_tokens": 2550,
+        "token_budget": 60000,
+        "call_budget": 40
+      }
     }
   ],
-  "lastRunAt": "2026-10-01T14:26:09.597Z",
+  "lastRunAt": "2026-10-01T20:14:28.958Z",
   "authored": {
     "lastColumnAt": "2026-09-16T18:47:02.256Z",
     "columnsByDay": {
