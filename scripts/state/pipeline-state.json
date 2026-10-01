@@ -887,7 +887,9 @@
     "3d34a1742df7d939",
     "dde7bef9753169ec",
     "d498501c1e45a1a9",
-    "2663044dc3fd4042"
+    "2663044dc3fd4042",
+    "c9a773cb782b7801",
+    "bd371f39531db9df"
   ],
   "dayPlans": {
     "2026-03-24": {
@@ -47848,40 +47850,185 @@
     "2026-10-01": {
       "date": "2026-10-01",
       "createdAt": "2026-09-30T19:55:43.760Z",
-      "refreshedAt": "2026-10-01T02:03:36.111Z",
+      "refreshedAt": "2026-10-01T14:26:09.597Z",
       "candidateWindowHours": 24,
-      "curatedItems": [],
-      "curatedIds": [],
+      "curatedItems": [
+        {
+          "id": "c9a773cb782b7801",
+          "sourceRegistryId": "arxiv-cs-dc",
+          "source": "arXiv",
+          "url": "https://arxiv.org/abs/2609.39422",
+          "title": "FissionReady: Joint Workload and Power Scheduling for Data Centers Powered by Small Modular Reactors",
+          "snippet": "arXiv:2609.39422v1 Announce Type: new Abstract: Data centers are increasingly exploring small modular nuclear reactors (SMRs) as a carbon-free power source, but variable datacenter demand and negative grid prices requir…",
+          "contentText": "arXiv:2609.39422v1 Announce Type: new Abstract: Data centers are increasingly exploring small modular nuclear reactors (SMRs) as a carbon-free power source, but variable datacenter demand and negative grid prices require the SMR plant to load-follow rather than run at constant output. Load following is uniquely challenging and complex for SMR plants due to underlying nuclear physics. We propose FissionReady, a datacenter scheduler that tracks each module's fuel age, xenon state, and remaining flexibility to determine per-module operating envelopes, then coordinates load-following, batch deferral, and grid purchasing through a two-timescale optimization. FissionReady achieves zero involuntary shutdowns and zero batch deadline misses while reducing water consumption by roughly one-third and…",
+          "publishedAt": "2026-10-01T04:00:00.000Z",
+          "sourceImage": null,
+          "region": "Global",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure",
+          "source_text_scope": "abstract",
+          "ai_topic_score": 0,
+          "ai_topic_reasons": [
+            "ai_not_in_title"
+          ],
+          "category": "Power & Grid",
+          "primary_category": "Power & Grid",
+          "secondary_category": "Interconnection and power procurement",
+          "infrastructure_layer": "Power",
+          "affected_stakeholders": [
+            "data center operators",
+            "utilities",
+            "cloud capacity teams",
+            "investors"
+          ],
+          "article_type": "Market Analysis",
+          "urgency_score": 0.63,
+          "taxonomy_confidence": 0.85,
+          "taxonomy_reasons": [
+            "power",
+            "grid",
+            "nuclear"
+          ],
+          "direct_ai_infrastructure_relevance": 0.7,
+          "data_center_relevance": 0.97,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0,
+          "power_grid_relevance": 0.837,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.852,
+          "infrastructure_relevance_tier": "signal_card",
+          "infrastructure_relevance_action": "publish_signal_card_only",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:0.70",
+            "data_center_relevance:0.97(data centers, datacenter)",
+            "power_grid_relevance:0.84(power, grid, nuclear)",
+            "abstract_only_source_capped_at_signal_card"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 0.7,
+            "data_center_relevance": 0.97,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0,
+            "power_grid_relevance": 0.837,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.852,
+            "infrastructure_relevance_tier": "signal_card",
+            "infrastructure_relevance_action": "publish_signal_card_only",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:0.70",
+              "data_center_relevance:0.97(data centers, datacenter)",
+              "power_grid_relevance:0.84(power, grid, nuclear)",
+              "abstract_only_source_capped_at_signal_card"
+            ],
+            "infrastructureRelevanceAction": "publish_signal_card_only",
+            "articlePagePublished": false,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 68
+        },
+        {
+          "id": "bd371f39531db9df",
+          "sourceRegistryId": "arxiv-cs-dc",
+          "source": "arXiv",
+          "url": "https://arxiv.org/abs/2609.38697",
+          "title": "Cascadia: A Control-Plane-Free Alternative to Hyperconverged AI Infrastructure",
+          "snippet": "arXiv:2609.38697v1 Announce Type: new Abstract: We present Cascadia, a system for serving large language models on fleets of commodity Intel AIPCs using their CPU, integrated-GPU, and NPU resources. Every node embeds in…",
+          "contentText": "arXiv:2609.38697v1 Announce Type: new Abstract: We present Cascadia, a system for serving large language models on fleets of commodity Intel AIPCs using their CPU, integrated-GPU, and NPU resources. Every node embeds ingress, scheduling, and execution; inference requests require no dedicated routing control plane. Nodes join a libp2p QUIC mesh using CA-issued ed25519 admission certificates, gossip signed capabilities, exchange live load over direct peer streams, and route OpenAI-compatible requests to eligible peers. An operator-run certificate authority handles admission and fleet management outside the inference path. Three serving modes share one interface: whole-model execution on one node, load-balanced replicas, and pipeline-sharded chains using the compilation and speculative decod…",
+          "publishedAt": "2026-10-01T04:00:00.000Z",
+          "sourceImage": null,
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure",
+          "source_text_scope": "abstract",
+          "ai_topic_score": 1,
+          "ai_topic_reasons": [
+            "large language models",
+            "inference",
+            "ai infrastructure",
+            "openai",
+            "gpu",
+            "ai"
+          ],
+          "category": "AI Infrastructure",
+          "primary_category": "AI Infrastructure",
+          "secondary_category": "GPU clusters and deployment readiness",
+          "infrastructure_layer": "Compute",
+          "affected_stakeholders": [
+            "operators",
+            "hyperscalers",
+            "cloud buyers",
+            "investors"
+          ],
+          "article_type": "Other",
+          "urgency_score": 0.4,
+          "taxonomy_confidence": 0.68,
+          "taxonomy_reasons": [
+            "ai infrastructure"
+          ],
+          "direct_ai_infrastructure_relevance": 0.77,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0.42,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.689,
+          "infrastructure_relevance_tier": "signal_card",
+          "infrastructure_relevance_action": "publish_signal_card_only",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:0.77(ai infrastructure)",
+            "semiconductor_relevance:0.42(intel, gpu)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 0.77,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0.42,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.689,
+            "infrastructure_relevance_tier": "signal_card",
+            "infrastructure_relevance_action": "publish_signal_card_only",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:0.77(ai infrastructure)",
+              "semiconductor_relevance:0.42(intel, gpu)"
+            ],
+            "infrastructureRelevanceAction": "publish_signal_card_only",
+            "articlePagePublished": false,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 61
+        }
+      ],
+      "curatedIds": [
+        "c9a773cb782b7801",
+        "bd371f39531db9df"
+      ],
       "publishedIds": [
         "d498501c1e45a1a9",
-        "2663044dc3fd4042"
+        "2663044dc3fd4042",
+        "c9a773cb782b7801",
+        "bd371f39531db9df"
       ],
       "slotPublications": {
         "0": true,
-        "1": true
+        "1": true,
+        "2": true
       }
     }
   },
   "runHistory": [
-    {
-      "at": "2026-08-22T15:26:17.330Z",
-      "day": "2026-08-23",
-      "slot": 0,
-      "publishedCount": 0,
-      "authoredColumn": {
-        "published": true,
-        "slug": "eaton-s-quantum-contract-is-a-grid-planning-bet-not-a-quantum-be-2026-08-22"
-      },
-      "llmUsage": {
-        "calls": 5,
-        "failures": 0,
-        "prompt_tokens": 13453,
-        "completion_tokens": 6562,
-        "total_tokens": 20015,
-        "token_budget": 60000,
-        "call_budget": 40
-      }
-    },
     {
       "at": "2026-08-22T23:30:37.270Z",
       "day": "2026-08-23",
@@ -51249,9 +51396,37 @@
         "token_budget": 60000,
         "call_budget": 40
       }
+    },
+    {
+      "at": "2026-10-01T14:26:09.597Z",
+      "day": "2026-10-01",
+      "slot": 2,
+      "publishedCount": 0,
+      "signalCardCount": 2,
+      "archiveOnlyCount": 0,
+      "processedIds": [
+        "c9a773cb782b7801",
+        "bd371f39531db9df"
+      ],
+      "blockedCount": 0,
+      "blockedItems": [],
+      "archiveOnlyItems": [],
+      "authoredColumn": {
+        "published": false,
+        "reason": "no_qualifying_story"
+      },
+      "llmUsage": {
+        "calls": 3,
+        "failures": 0,
+        "prompt_tokens": 3687,
+        "completion_tokens": 568,
+        "total_tokens": 4255,
+        "token_budget": 60000,
+        "call_budget": 40
+      }
     }
   ],
-  "lastRunAt": "2026-10-01T02:03:36.111Z",
+  "lastRunAt": "2026-10-01T14:26:09.597Z",
   "authored": {
     "lastColumnAt": "2026-09-16T18:47:02.256Z",
     "columnsByDay": {
