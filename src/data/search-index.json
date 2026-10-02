@@ -140,7 +140,7 @@
         "sourceId": "eia-today-in-energy",
         "reviewedAt": "2026-08-12T00:00:00.000Z",
         "termsUrl": "https://www.eia.gov/about/copyrights_reuse.php",
-        "checkedAt": "2026-10-02T02:20:25.572Z",
+        "checkedAt": "2026-10-02T13:58:28.823Z",
         "registryDigest": "b7a6bfe7b34bbb3ceeddab4fe5c7e6fd9a391af3c82cd9641e7e42964813913b",
         "registryBlobSha": "",
         "contentDigest": "beeeed148253b62b7ae888a3bc79c5979dbfa234b587e2f7b91bbaeafcf5acde"
@@ -299,7 +299,7 @@
         "sourceId": "eia-today-in-energy",
         "reviewedAt": "2026-08-12T00:00:00.000Z",
         "termsUrl": "https://www.eia.gov/about/copyrights_reuse.php",
-        "checkedAt": "2026-10-02T02:20:25.829Z",
+        "checkedAt": "2026-10-02T13:58:29.027Z",
         "registryDigest": "b7a6bfe7b34bbb3ceeddab4fe5c7e6fd9a391af3c82cd9641e7e42964813913b",
         "registryBlobSha": "",
         "contentDigest": "d15ccae9ee9ddf6214d8b39fbdf87ac41a1f82721e955148a1cd5e0a2de7b028"
@@ -458,7 +458,7 @@
         "sourceId": "eia-today-in-energy",
         "reviewedAt": "2026-08-12T00:00:00.000Z",
         "termsUrl": "https://www.eia.gov/about/copyrights_reuse.php",
-        "checkedAt": "2026-10-02T02:20:26.060Z",
+        "checkedAt": "2026-10-02T13:58:29.215Z",
         "registryDigest": "b7a6bfe7b34bbb3ceeddab4fe5c7e6fd9a391af3c82cd9641e7e42964813913b",
         "registryBlobSha": "",
         "contentDigest": "ade711e2b20996fa86c8248da2f499d76c8f2f8bdd82d9e630f5e080f97f58e2"
@@ -617,7 +617,7 @@
         "sourceId": "eia-today-in-energy",
         "reviewedAt": "2026-08-12T00:00:00.000Z",
         "termsUrl": "https://www.eia.gov/about/copyrights_reuse.php",
-        "checkedAt": "2026-10-02T02:20:26.301Z",
+        "checkedAt": "2026-10-02T13:58:29.403Z",
         "registryDigest": "b7a6bfe7b34bbb3ceeddab4fe5c7e6fd9a391af3c82cd9641e7e42964813913b",
         "registryBlobSha": "",
         "contentDigest": "8e6376116876948d8a9e27d52a0f3747ce46816914268a5bd0bf93fafd85c604"
@@ -776,7 +776,7 @@
         "sourceId": "eia-today-in-energy",
         "reviewedAt": "2026-08-12T00:00:00.000Z",
         "termsUrl": "https://www.eia.gov/about/copyrights_reuse.php",
-        "checkedAt": "2026-10-02T02:20:26.569Z",
+        "checkedAt": "2026-10-02T13:58:29.615Z",
         "registryDigest": "b7a6bfe7b34bbb3ceeddab4fe5c7e6fd9a391af3c82cd9641e7e42964813913b",
         "registryBlobSha": "",
         "contentDigest": "2c6d66c26ee5e8faea303eb6655f65da943f22d62f0b30f232281dfa85dca6d7"
@@ -138326,6 +138326,416 @@
     "imageStatus": "generated",
     "imageError": "",
     "imageGeneratedAt": "2026-09-12T23:42:06.374Z"
+  },
+  {
+    "id": "923f77c67220b0c8",
+    "sourceRegistryId": "arxiv-cs-ar",
+    "source": "arXiv",
+    "url": "https://arxiv.org/abs/2608.24637",
+    "title": "Cross-Layer Analysis of Thermal Tuning Stalls in Wafer-Scale Optical Interconnects for LLM MoE Training",
+    "snippet": "arXiv:2608.24637v3 Announce Type: replace Abstract: Mixture-of-experts (MoE) training is dominated by all-to-all communication, and wafer-scale optical interconnects based on dense wavelength-division multiplexing promi…",
+    "contentText": "arXiv:2608.24637v3 Announce Type: replace Abstract: Mixture-of-experts (MoE) training is dominated by all-to-all communication, and wafer-scale optical interconnects based on dense wavelength-division multiplexing promise the bandwidth density it needs. Their microring resonators are held on resonance by thermo-optic tuning loops, while MoE compute bursts move the temperature of the photonic layer by several kelvin within milliseconds. We quantify the cost with a cross-layer analysis in which per-device timelines from a packet-level network simulation drive an Ansys thermal model of a 3D GPU, EIC, and PIC stack, the resonance drift becomes a per-round communication stall, and the stall is fed back into the network simulation until both agree. H100 die-temperature measurements match the mo…",
+    "publishedAt": "2026-10-02T04:00:00.000Z",
+    "sourceImage": null,
+    "region": "Global",
+    "language": "en",
+    "defaultCategory": "Semiconductors",
+    "source_text_scope": "abstract",
+    "ai_topic_score": 0.946,
+    "ai_topic_reasons": [
+      "llm",
+      "llama",
+      "gpu"
+    ],
+    "category": "Semiconductors",
+    "primary_category": "Semiconductors",
+    "secondary_category": "AI Infrastructure",
+    "infrastructure_layer": "Silicon",
+    "affected_stakeholders": [
+      "operators",
+      "hyperscalers",
+      "investors",
+      "semiconductor suppliers",
+      "server OEMs"
+    ],
+    "article_type": "Research / Technical",
+    "urgency_score": 0.6,
+    "taxonomy_confidence": 0.81,
+    "taxonomy_reasons": [
+      "gpu",
+      "advanced packaging",
+      "wafer"
+    ],
+    "direct_ai_infrastructure_relevance": 0.22,
+    "data_center_relevance": 0,
+    "cloud_capacity_relevance": 0,
+    "semiconductor_relevance": 0.544,
+    "power_grid_relevance": 0.22,
+    "cooling_relevance": 0.405,
+    "capital_markets_relevance": 0,
+    "enterprise_ai_infrastructure_relevance": 0,
+    "infrastructure_relevance_score": 0.545,
+    "infrastructure_relevance_tier": "archive_only",
+    "infrastructure_relevance_action": "archive_only",
+    "infrastructure_relevance_reasons": [
+      "direct_ai_infrastructure_relevance:0.22",
+      "semiconductor_relevance:0.54(wafer, gpu)",
+      "power_grid_relevance:0.22(power)",
+      "cooling_relevance:0.41(thermal)"
+    ],
+    "infrastructure_relevance": {
+      "direct_ai_infrastructure_relevance": 0.22,
+      "data_center_relevance": 0,
+      "cloud_capacity_relevance": 0,
+      "semiconductor_relevance": 0.544,
+      "power_grid_relevance": 0.22,
+      "cooling_relevance": 0.405,
+      "capital_markets_relevance": 0,
+      "enterprise_ai_infrastructure_relevance": 0,
+      "infrastructure_relevance_score": 0.545,
+      "infrastructure_relevance_tier": "archive_only",
+      "infrastructure_relevance_action": "archive_only",
+      "infrastructure_relevance_reasons": [
+        "direct_ai_infrastructure_relevance:0.22",
+        "semiconductor_relevance:0.54(wafer, gpu)",
+        "power_grid_relevance:0.22(power)",
+        "cooling_relevance:0.41(thermal)"
+      ],
+      "infrastructureRelevanceAction": "archive_only",
+      "articlePagePublished": false,
+      "homepagePublished": false,
+      "archiveOnly": true,
+      "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
+    },
+    "score": 44,
+    "slug": "cross-layer-analysis-of-thermal-tuning-stalls-in-wafer-scale-optical-interconnects-for-llm-moe-training",
+    "summary": "A study analyzes thermal tuning stalls in wafer-scale optical interconnects for Mixture-of-Experts (MoE) training, highlighting communication efficiency challenges.",
+    "insight": "Understanding thermal tuning stalls is critical for optimizing performance in MoE training, impacting the efficiency of large-scale AI model training. Operators and investors must consider these factors when planning infrastructure investments.",
+    "expert_insight": {
+      "concrete_facts": [
+        "For Mixtral 8x7B and LLaMA-MoE 6.7B on a wafer fabric within 3% and 16% of an ideal non-blocking fat-tree, a tracking loop at the measured 5 nm/s lengthens the iteration by 1.58x and 2.82x without thermal feedback and by 1.32x and 1.55x with it, and the stall persists at full model depth."
+      ],
+      "named_companies": [],
+      "infrastructure_layer": "Silicon",
+      "bottleneck_type": "power_grid",
+      "who_gains_leverage": "utilities, power-secured developers, and operators with firm interconnection positions",
+      "who_takes_execution_risk": "developers and cloud buyers whose delivery dates depend on utility upgrades or energization schedules",
+      "timing_dependency": "utility interconnection, equipment procurement, and energization milestones",
+      "counterargument": "More compute supply does not automatically become useful capacity if facilities, power, networking, and software readiness lag.",
+      "next_observable_signal": "interconnection approvals, substation equipment dates, power purchase agreements, or disclosed energization windows",
+      "expert_insight_complete": false,
+      "expert_insight_missing_fields": [
+        "named_companies"
+      ]
+    },
+    "expertInsight": {
+      "concrete_facts": [
+        "For Mixtral 8x7B and LLaMA-MoE 6.7B on a wafer fabric within 3% and 16% of an ideal non-blocking fat-tree, a tracking loop at the measured 5 nm/s lengthens the iteration by 1.58x and 2.82x without thermal feedback and by 1.32x and 1.55x with it, and the stall persists at full model depth."
+      ],
+      "named_companies": [],
+      "infrastructure_layer": "Silicon",
+      "bottleneck_type": "power_grid",
+      "who_gains_leverage": "utilities, power-secured developers, and operators with firm interconnection positions",
+      "who_takes_execution_risk": "developers and cloud buyers whose delivery dates depend on utility upgrades or energization schedules",
+      "timing_dependency": "utility interconnection, equipment procurement, and energization milestones",
+      "counterargument": "More compute supply does not automatically become useful capacity if facilities, power, networking, and software readiness lag.",
+      "next_observable_signal": "interconnection approvals, substation equipment dates, power purchase agreements, or disclosed energization windows",
+      "expert_insight_complete": false,
+      "expert_insight_missing_fields": [
+        "named_companies"
+      ]
+    },
+    "concrete_facts": [
+      "For Mixtral 8x7B and LLaMA-MoE 6.7B on a wafer fabric within 3% and 16% of an ideal non-blocking fat-tree, a tracking loop at the measured 5 nm/s lengthens the iteration by 1.58x and 2.82x without thermal feedback and by 1.32x and 1.55x with it, and the stall persists at full model depth."
+    ],
+    "named_companies": [],
+    "bottleneck_type": "power_grid",
+    "who_gains_leverage": "utilities, power-secured developers, and operators with firm interconnection positions",
+    "who_takes_execution_risk": "developers and cloud buyers whose delivery dates depend on utility upgrades or energization schedules",
+    "timing_dependency": "utility interconnection, equipment procurement, and energization milestones",
+    "counterargument": "More compute supply does not automatically become useful capacity if facilities, power, networking, and software readiness lag.",
+    "next_observable_signal": "interconnection approvals, substation equipment dates, power purchase agreements, or disclosed energization windows",
+    "expert_insight_complete": false,
+    "expert_insight_missing_fields": [
+      "named_companies"
+    ],
+    "tags": [
+      "moe",
+      "thermal tuning",
+      "optical interconnects",
+      "ai training",
+      "semiconductors",
+      "gpu"
+    ],
+    "imagePrompt": "A high-tech laboratory setting showcasing wafer-scale optical interconnects and advanced semiconductor technology, with a focus on thermal tuning mechanisms.",
+    "lang": "en",
+    "articleText": "Mixture-of-experts (MoE) training is dominated by all-to-all communication, and wafer-scale optical interconnects based on dense wavelength-division multiplexing promise the bandwidth density it needs. Their microring resonators are held on resonance by thermo-optic tuning loops, while MoE compute bursts move the temperature of the photonic layer by several kelvin within milliseconds. We quantify the cost with a cross-layer analysis in which per-device timelines from a packet-level network simulation drive an Ansys thermal model of a 3D GPU, EIC, and PIC stack, the resonance drift becomes a per-round communication stall, and the stall is fed back into the network simulation until both agree. H100 die-temperature measurements match the modeled swing of 300 ms bursts within 15%. For Mixtral 8x7B and LLaMA-MoE 6.7B on a wafer fabric within 3% and 16% of an ideal non-blocking fat-tree, a tracking loop at the measured 5 nm/s lengthens the iteration by 1.58x and 2.82x without thermal feedback and by 1.32x and 1.55x with it, and the stall persists at full model depth. The stall disappears for a loop that slews at 40 nm/s or reacts within 0.5 ms, for a heater pre-driven within 1 ms of each GPU kernel launch, or for a dummy load above 75% of peak power. Removing the drift at the ring is the least costly option. An athermalized lithium-niobate ring with a non-volatile ferroelectric setpoint needs no holding power, no fast tracking loop, and no signal from the GPU, and it keeps its residual drift inside the detuning budget if its athermal point lies within about 3 K of the operating temperature.",
+    "content_length": 1611,
+    "boilerplate_ratio": 0,
+    "title_body_similarity": 0.85,
+    "copyright_footer_detected": false,
+    "nav_or_cta_detected": false,
+    "sentence_completion_score": 1,
+    "source_domain_adapter": "arxiv",
+    "extraction_quality_score": 1,
+    "extraction_qa": {
+      "content_length": 1611,
+      "boilerplate_ratio": 0,
+      "title_body_similarity": 0.85,
+      "copyright_footer_detected": false,
+      "legal_boilerplate_detected": false,
+      "nav_or_cta_detected": false,
+      "sentence_completion_score": 1,
+      "source_domain_adapter": "arxiv",
+      "extraction_quality_score": 1,
+      "extraction_failure_reason": null,
+      "extraction_quality_reasons": [],
+      "public_publishable": true,
+      "can_generate_longform": true,
+      "cleaned_source_length": 1611,
+      "block_reasons": []
+    },
+    "extraction_artifact": {
+      "artifact_version": "extraction_v1",
+      "source_url": "https://arxiv.org/abs/2608.24637",
+      "extracted_text_sha256": "6bae0d5cd657cf42b37fa9667cf01690235d1cbf81d28e3c7ba1d0ea1073c12a",
+      "cleaned_extracted_text": "Mixture-of-experts (MoE) training is dominated by all-to-all communication, and wafer-scale optical interconnects based on dense wavelength-division multiplexing promise the bandwidth density it needs. Their microring resonators are held on resonance by thermo-optic tuning loops, while MoE compute bursts move the temperature of the photonic layer by several kelvin within milliseconds. We quantify the cost with a cross-layer analysis in which per-device timelines from a packet-level network simulation drive an Ansys thermal model of a 3D GPU, EIC, and PIC stack, the resonance drift becomes a per-round communication stall, and the stall is fed back into the network simulation until both agree. H100 die-temperature measurements match the modeled swing of 300 ms bursts within 15%. For Mixtral 8x7B and LLaMA-MoE 6.7B on a wafer fabric within 3% and 16% of an ideal non-blocking fat-tree, a tracking loop at the measured 5 nm/s lengthens the iteration by 1.58x and 2.82x without thermal feedback and by 1.32x and 1.55x with it, and the stall persists at full model depth. The stall disappears for a loop that slews at 40 nm/s or reacts within 0.5 ms, for a heater pre-driven within 1 ms of each GPU kernel launch, or for a dummy load above 75% of peak power. Removing the drift at the ring is the least costly option. An athermalized lithium-niobate ring with a non-volatile ferroelectric setpoint needs no holding power, no fast tracking loop, and no signal from the GPU, and it keeps its residual drift inside the detuning budget if its athermal point lies within about 3 K of the operating temperature.",
+      "extraction_qa": {
+        "cleaned_source_length": 1611,
+        "block_reasons": [],
+        "public_publishable": true,
+        "can_generate_longform": true,
+        "boilerplate_ratio": 0,
+        "copyright_footer_detected": false,
+        "nav_or_cta_detected": false,
+        "sentence_completion_score": 1
+      }
+    },
+    "cleaned_source_text": "Mixture-of-experts (MoE) training is dominated by all-to-all communication, and wafer-scale optical interconnects based on dense wavelength-division multiplexing promise the bandwidth density it needs. Their microring resonators are held on resonance by thermo-optic tuning loops, while MoE compute bursts move the temperature of the photonic layer by several kelvin within milliseconds. We quantify the cost with a cross-layer analysis in which per-device timelines from a packet-level network simulation drive an Ansys thermal model of a 3D GPU, EIC, and PIC stack, the resonance drift becomes a per-round communication stall, and the stall is fed back into the network simulation until both agree. H100 die-temperature measurements match the modeled swing of 300 ms bursts within 15%. For Mixtral 8x7B and LLaMA-MoE 6.7B on a wafer fabric within 3% and 16% of an ideal non-blocking fat-tree, a tracking loop at the measured 5 nm/s lengthens the iteration by 1.58x and 2.82x without thermal feedback and by 1.32x and 1.55x with it, and the stall persists at full model depth. The stall disappears for a loop that slews at 40 nm/s or reacts within 0.5 ms, for a heater pre-driven within 1 ms of each GPU kernel launch, or for a dummy load above 75% of peak power. Removing the drift at the ring is the least costly option. An athermalized lithium-niobate ring with a non-volatile ferroelectric setpoint needs no holding power, no fast tracking loop, and no signal from the GPU, and it keeps its residual drift inside the detuning budget if its athermal point lies within about 3 K of the operating temperature.",
+    "sourceUrl": "https://arxiv.org/abs/2608.24637",
+    "generatedImage": "/generated/articles/923f77c67220b0c8-cross-layer-analysis-of-thermal-tuning-stalls-in-wafer-scale-optical-interconnects-for-llm/hero.webp",
+    "infrastructureRelevanceAction": "archive_only",
+    "articlePagePublished": false,
+    "homepagePublished": false,
+    "archiveOnly": true,
+    "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold",
+    "article_blueprint": null,
+    "articleBlueprint": null,
+    "expertLensShort": null,
+    "expertLensFull": null,
+    "expertLens": null,
+    "public_content_tier": "hidden",
+    "signalCardOnly": false,
+    "seo_noindex": true,
+    "noindex": true,
+    "public_tier_reasons": [
+      "low_relevance",
+      "relevance_below_adjacent_threshold"
+    ],
+    "searchText": "Cross-Layer Analysis of Thermal Tuning Stalls in Wafer-Scale Optical Interconnects for LLM MoE Training arXiv Semiconductors AI Infrastructure Silicon Research / Technical power_grid utilities, power-secured developers, and operators with firm interconnection positions developers and cloud buyers whose delivery dates depend on utility upgrades or energization schedules utility interconnection, equipment procurement, and energization milestones More compute supply does not automatically become useful capacity if facilities, power, networking, and software readiness lag. interconnection approvals, substation equipment dates, power purchase agreements, or disclosed energization windows Global A study analyzes thermal tuning stalls in wafer-scale optical interconnects for Mixture-of-Experts (MoE) training, highlighting communication efficiency challenges. Mixture-of-experts (MoE) training is dominated by all-to-all communication, and wafer-scale optical interconnects based on dense wavelength-division multiplexing promise the bandwidth density it needs. Their microring resonators are held on resonance by thermo-optic tuning loops, while MoE compute bursts move the temperature of the photonic layer by several kelvin within milliseconds. We quantify the cost with a cross-layer analysis in which per-device timelines from a packet-level network simulation drive an Ansys thermal model of a 3D GPU, EIC, and PIC stack, the resonance drift becomes a per-round communication stall, and the stall is fed back into the network simulation until both agree. H100 die-temperature measurements match the modeled swing of 300 ms bursts within 15%. For Mixtral 8x7B and LLaMA-MoE 6.7B on a wafer fabric within 3% and 16% of an ideal non-blocking fat-tree, a tracking loop at the measured 5 nm/s lengthens the iteration by 1.58x and 2.82x without thermal feedback and by 1.32x and 1.55x with it, and the stall persists at full model depth. The stall disappears for a loop that slews at 40 nm/s or reacts within 0.5 ms, for a heater pre-driven within 1 ms of each GPU kernel launch, or for a dummy load above 75% of peak power. Removing the drift at the ring is the least costly option. An athermalized lithium-niobate ring with a non-volatile ferroelectric setpoint needs no holding power, no fast tracking loop, and no signal from the GPU, and it keeps its residual drift inside the detuning budget if its athermal point lies within about 3 K of the operating temperature. operators hyperscalers investors semiconductor suppliers server OEMs For Mixtral 8x7B and LLaMA-MoE 6.7B on a wafer fabric within 3% and 16% of an ideal non-blocking fat-tree, a tracking loop at the measured 5 nm/s lengthens the iteration by 1.58x and 2.82x without thermal feedback and by 1.32x and 1.55x with it, and the stall persists at full model depth. moe thermal tuning optical interconnects ai training semiconductors gpu"
+  },
+  {
+    "id": "8398fe63a01674fa",
+    "sourceRegistryId": "arxiv-cs-ar",
+    "source": "arXiv",
+    "url": "https://arxiv.org/abs/2610.00207",
+    "title": "ShatterQuant: Breaking Uniform Precision with Block-Wise Mixed-Precision on a Systolic Transformer Hardware Accelerator",
+    "snippet": "arXiv:2610.00207v1 Announce Type: new Abstract: Due to limited support for intra-tensor heterogeneous precision in conventional accelerators, neural network quantization remains largely restricted to per-tensor precisio…",
+    "contentText": "arXiv:2610.00207v1 Announce Type: new Abstract: Due to limited support for intra-tensor heterogeneous precision in conventional accelerators, neural network quantization remains largely restricted to per-tensor precision assignment. We present ShatterQuant, a hardware-software co-designed framework enabling mixed-precision quantization within each tensor by assigning independent bit-widths to blocks of a weight projection. ShatterQuant couples precision granularity with PE configuration, such that each precision determines an effective block height. We introduce (1) a hardware-aware post-training method that assigns intra-tensor precision based on block-level standard deviation and weight sensitivity; (2) the ShatterQuant Transformer Accelerator supporting 1/2/4/8-bit weight precision, pr…",
+    "publishedAt": "2026-10-02T04:00:00.000Z",
+    "sourceImage": null,
+    "region": "US",
+    "language": "en",
+    "defaultCategory": "Semiconductors",
+    "source_text_scope": "abstract",
+    "ai_topic_score": 0.47,
+    "ai_topic_reasons": [
+      "accelerator",
+      "accelerators"
+    ],
+    "category": "Semiconductors",
+    "primary_category": "Semiconductors",
+    "secondary_category": "AI Infrastructure",
+    "infrastructure_layer": "Silicon",
+    "affected_stakeholders": [
+      "hyperscalers",
+      "investors",
+      "operators",
+      "AI developers",
+      "data center operators"
+    ],
+    "article_type": "Product / Platform Update",
+    "urgency_score": 0.7,
+    "taxonomy_confidence": 0.85,
+    "taxonomy_reasons": [
+      "power",
+      "grid",
+      "interconnection",
+      "transformer"
+    ],
+    "direct_ai_infrastructure_relevance": 0,
+    "data_center_relevance": 0,
+    "cloud_capacity_relevance": 0,
+    "semiconductor_relevance": 0.577,
+    "power_grid_relevance": 0.351,
+    "cooling_relevance": 0,
+    "capital_markets_relevance": 0,
+    "enterprise_ai_infrastructure_relevance": 0,
+    "infrastructure_relevance_score": 0.38,
+    "infrastructure_relevance_tier": "archive_only",
+    "infrastructure_relevance_action": "archive_only",
+    "infrastructure_relevance_reasons": [
+      "semiconductor_relevance:0.58(tsmc, accelerator)",
+      "power_grid_relevance:0.35(transformer)"
+    ],
+    "infrastructure_relevance": {
+      "direct_ai_infrastructure_relevance": 0,
+      "data_center_relevance": 0,
+      "cloud_capacity_relevance": 0,
+      "semiconductor_relevance": 0.577,
+      "power_grid_relevance": 0.351,
+      "cooling_relevance": 0,
+      "capital_markets_relevance": 0,
+      "enterprise_ai_infrastructure_relevance": 0,
+      "infrastructure_relevance_score": 0.38,
+      "infrastructure_relevance_tier": "archive_only",
+      "infrastructure_relevance_action": "archive_only",
+      "infrastructure_relevance_reasons": [
+        "semiconductor_relevance:0.58(tsmc, accelerator)",
+        "power_grid_relevance:0.35(transformer)"
+      ],
+      "infrastructureRelevanceAction": "archive_only",
+      "articlePagePublished": false,
+      "homepagePublished": false,
+      "archiveOnly": true,
+      "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
+    },
+    "score": 38,
+    "slug": "shatterquant-breaking-uniform-precision-with-block-wise-mixed-precision-on-a-systolic-transformer-hardware-accelerator",
+    "summary": "ShatterQuant introduces a framework for mixed-precision quantization in neural networks, enhancing efficiency in hardware accelerators. It supports various bit-widths for optimize…",
+    "insight": "This advancement allows for more efficient use of hardware resources, potentially lowering costs for operators and improving performance for AI applications. Investors should note the implications for next-gen AI hardware capabilities.",
+    "expert_insight": {
+      "concrete_facts": [],
+      "named_companies": [
+        "TSMC"
+      ],
+      "infrastructure_layer": "Silicon",
+      "bottleneck_type": "power_grid",
+      "who_gains_leverage": "utilities, power-secured developers, and operators with firm interconnection positions",
+      "who_takes_execution_risk": "developers and cloud buyers whose delivery dates depend on utility upgrades or energization schedules",
+      "timing_dependency": "utility interconnection, equipment procurement, and energization milestones",
+      "counterargument": "The source supports a specific infrastructure read, but it does not by itself prove a broad market shift.",
+      "next_observable_signal": "interconnection approvals, substation equipment dates, power purchase agreements, or disclosed energization windows",
+      "expert_insight_complete": false,
+      "expert_insight_missing_fields": [
+        "concrete_facts"
+      ]
+    },
+    "expertInsight": {
+      "concrete_facts": [],
+      "named_companies": [
+        "TSMC"
+      ],
+      "infrastructure_layer": "Silicon",
+      "bottleneck_type": "power_grid",
+      "who_gains_leverage": "utilities, power-secured developers, and operators with firm interconnection positions",
+      "who_takes_execution_risk": "developers and cloud buyers whose delivery dates depend on utility upgrades or energization schedules",
+      "timing_dependency": "utility interconnection, equipment procurement, and energization milestones",
+      "counterargument": "The source supports a specific infrastructure read, but it does not by itself prove a broad market shift.",
+      "next_observable_signal": "interconnection approvals, substation equipment dates, power purchase agreements, or disclosed energization windows",
+      "expert_insight_complete": false,
+      "expert_insight_missing_fields": [
+        "concrete_facts"
+      ]
+    },
+    "concrete_facts": [],
+    "named_companies": [
+      "TSMC"
+    ],
+    "bottleneck_type": "power_grid",
+    "who_gains_leverage": "utilities, power-secured developers, and operators with firm interconnection positions",
+    "who_takes_execution_risk": "developers and cloud buyers whose delivery dates depend on utility upgrades or energization schedules",
+    "timing_dependency": "utility interconnection, equipment procurement, and energization milestones",
+    "counterargument": "The source supports a specific infrastructure read, but it does not by itself prove a broad market shift.",
+    "next_observable_signal": "interconnection approvals, substation equipment dates, power purchase agreements, or disclosed energization windows",
+    "expert_insight_complete": false,
+    "expert_insight_missing_fields": [
+      "concrete_facts"
+    ],
+    "tags": [
+      "mixed-precision",
+      "AI",
+      "hardware",
+      "accelerators",
+      "quantization",
+      "semiconductors"
+    ],
+    "imagePrompt": "A high-tech semiconductor manufacturing facility showcasing advanced AI hardware, with intricate circuit designs and a focus on innovation in mixed-precision technology.",
+    "lang": "en",
+    "articleText": "Due to limited support for intra-tensor heterogeneous precision in conventional accelerators, neural network quantization remains largely restricted to per-tensor precision assignment. We present ShatterQuant, a hardware-software co-designed framework enabling mixed-precision quantization within each tensor by assigning independent bit-widths to blocks of a weight projection. ShatterQuant couples precision granularity with PE configuration, such that each precision determines an effective block height. We introduce (1) a hardware-aware post-training method that assigns intra-tensor precision based on block-level standard deviation and weight sensitivity; (2) the ShatterQuant Transformer Accelerator supporting 1/2/4/8-bit weight precision, precision-dependent PE configuration, block rescaling, and integrated softmax and piecewise-linear nonlinearities; and (3) an evaluation of model-hardware tradeoffs using an implementation in the TSMC 16nm PDK operating at 1 GHz, achieving 1.5 TOPS, 760 GOPS/$mm^2$ area efficiency, and 2.8 TOPS/W energy efficiency. On DeiT and ImageNet-1K, ShatterQuant achieves accuracy within $3.3\\%$ of state-of-the-art mixed-precision techniques while using a 2 bit lower effective bitwidth, while for PixelDiT demonstrates comparable generation quality. ShatterQuant demonstrates how fine-grained intra-tensor mixed-precision can be realized through hardware-software co-design.",
+    "content_length": 1417,
+    "boilerplate_ratio": 0,
+    "title_body_similarity": 0.64,
+    "copyright_footer_detected": false,
+    "nav_or_cta_detected": false,
+    "sentence_completion_score": 1,
+    "source_domain_adapter": "arxiv",
+    "extraction_quality_score": 1,
+    "extraction_qa": {
+      "content_length": 1417,
+      "boilerplate_ratio": 0,
+      "title_body_similarity": 0.64,
+      "copyright_footer_detected": false,
+      "legal_boilerplate_detected": false,
+      "nav_or_cta_detected": false,
+      "sentence_completion_score": 1,
+      "source_domain_adapter": "arxiv",
+      "extraction_quality_score": 1,
+      "extraction_failure_reason": null,
+      "extraction_quality_reasons": [],
+      "public_publishable": true,
+      "can_generate_longform": true,
+      "cleaned_source_length": 1417,
+      "block_reasons": []
+    },
+    "extraction_artifact": {
+      "artifact_version": "extraction_v1",
+      "source_url": "https://arxiv.org/abs/2610.00207",
+      "extracted_text_sha256": "0782327b0dd96ec010181e369df67f24f974c56084b5b75c93d048ddc109b327",
+      "cleaned_extracted_text": "Due to limited support for intra-tensor heterogeneous precision in conventional accelerators, neural network quantization remains largely restricted to per-tensor precision assignment. We present ShatterQuant, a hardware-software co-designed framework enabling mixed-precision quantization within each tensor by assigning independent bit-widths to blocks of a weight projection. ShatterQuant couples precision granularity with PE configuration, such that each precision determines an effective block height. We introduce (1) a hardware-aware post-training method that assigns intra-tensor precision based on block-level standard deviation and weight sensitivity; (2) the ShatterQuant Transformer Accelerator supporting 1/2/4/8-bit weight precision, precision-dependent PE configuration, block rescaling, and integrated softmax and piecewise-linear nonlinearities; and (3) an evaluation of model-hardware tradeoffs using an implementation in the TSMC 16nm PDK operating at 1 GHz, achieving 1.5 TOPS, 760 GOPS/$mm^2$ area efficiency, and 2.8 TOPS/W energy efficiency. On DeiT and ImageNet-1K, ShatterQuant achieves accuracy within $3.3\\%$ of state-of-the-art mixed-precision techniques while using a 2 bit lower effective bitwidth, while for PixelDiT demonstrates comparable generation quality. ShatterQuant demonstrates how fine-grained intra-tensor mixed-precision can be realized through hardware-software co-design.",
+      "extraction_qa": {
+        "cleaned_source_length": 1417,
+        "block_reasons": [],
+        "public_publishable": true,
+        "can_generate_longform": true,
+        "boilerplate_ratio": 0,
+        "copyright_footer_detected": false,
+        "nav_or_cta_detected": false,
+        "sentence_completion_score": 1
+      }
+    },
+    "cleaned_source_text": "Due to limited support for intra-tensor heterogeneous precision in conventional accelerators, neural network quantization remains largely restricted to per-tensor precision assignment. We present ShatterQuant, a hardware-software co-designed framework enabling mixed-precision quantization within each tensor by assigning independent bit-widths to blocks of a weight projection. ShatterQuant couples precision granularity with PE configuration, such that each precision determines an effective block height. We introduce (1) a hardware-aware post-training method that assigns intra-tensor precision based on block-level standard deviation and weight sensitivity; (2) the ShatterQuant Transformer Accelerator supporting 1/2/4/8-bit weight precision, precision-dependent PE configuration, block rescaling, and integrated softmax and piecewise-linear nonlinearities; and (3) an evaluation of model-hardware tradeoffs using an implementation in the TSMC 16nm PDK operating at 1 GHz, achieving 1.5 TOPS, 760 GOPS/$mm^2$ area efficiency, and 2.8 TOPS/W energy efficiency. On DeiT and ImageNet-1K, ShatterQuant achieves accuracy within $3.3\\%$ of state-of-the-art mixed-precision techniques while using a 2 bit lower effective bitwidth, while for PixelDiT demonstrates comparable generation quality. ShatterQuant demonstrates how fine-grained intra-tensor mixed-precision can be realized through hardware-software co-design.",
+    "sourceUrl": "https://arxiv.org/abs/2610.00207",
+    "generatedImage": "/generated/articles/8398fe63a01674fa-shatterquant-breaking-uniform-precision-with-block-wise-mixed-precision-on-a-systolic-tran/hero.webp",
+    "infrastructureRelevanceAction": "archive_only",
+    "articlePagePublished": false,
+    "homepagePublished": false,
+    "archiveOnly": true,
+    "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold",
+    "article_blueprint": null,
+    "articleBlueprint": null,
+    "expertLensShort": null,
+    "expertLensFull": null,
+    "expertLens": null,
+    "public_content_tier": "hidden",
+    "signalCardOnly": false,
+    "seo_noindex": true,
+    "noindex": true,
+    "public_tier_reasons": [
+      "low_relevance",
+      "relevance_below_adjacent_threshold"
+    ],
+    "searchText": "ShatterQuant: Breaking Uniform Precision with Block-Wise Mixed-Precision on a Systolic Transformer Hardware Accelerator arXiv Semiconductors AI Infrastructure Silicon Product / Platform Update power_grid utilities, power-secured developers, and operators with firm interconnection positions developers and cloud buyers whose delivery dates depend on utility upgrades or energization schedules utility interconnection, equipment procurement, and energization milestones The source supports a specific infrastructure read, but it does not by itself prove a broad market shift. interconnection approvals, substation equipment dates, power purchase agreements, or disclosed energization windows US ShatterQuant introduces a framework for mixed-precision quantization in neural networks, enhancing efficiency in hardware accelerators. It supports various bit-widths for optimize… Due to limited support for intra-tensor heterogeneous precision in conventional accelerators, neural network quantization remains largely restricted to per-tensor precision assignment. We present ShatterQuant, a hardware-software co-designed framework enabling mixed-precision quantization within each tensor by assigning independent bit-widths to blocks of a weight projection. ShatterQuant couples precision granularity with PE configuration, such that each precision determines an effective block height. We introduce (1) a hardware-aware post-training method that assigns intra-tensor precision based on block-level standard deviation and weight sensitivity; (2) the ShatterQuant Transformer Accelerator supporting 1/2/4/8-bit weight precision, precision-dependent PE configuration, block rescaling, and integrated softmax and piecewise-linear nonlinearities; and (3) an evaluation of model-hardware tradeoffs using an implementation in the TSMC 16nm PDK operating at 1 GHz, achieving 1.5 TOPS, 760 GOPS/$mm^2$ area efficiency, and 2.8 TOPS/W energy efficiency. On DeiT and ImageNet-1K, ShatterQuant achieves accuracy within $3.3\\%$ of state-of-the-art mixed-precision techniques while using a 2 bit lower effective bitwidth, while for PixelDiT demonstrates comparable generation quality. ShatterQuant demonstrates how fine-grained intra-tensor mixed-precision can be realized through hardware-software co-design. hyperscalers investors operators AI developers data center operators TSMC mixed-precision AI hardware accelerators quantization semiconductors"
   },
   {
     "id": "46bbca0a76ec578b",

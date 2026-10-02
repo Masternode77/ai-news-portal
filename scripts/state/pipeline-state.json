@@ -890,7 +890,9 @@
     "2663044dc3fd4042",
     "c9a773cb782b7801",
     "bd371f39531db9df",
-    "46bbca0a76ec578b"
+    "46bbca0a76ec578b",
+    "923f77c67220b0c8",
+    "8398fe63a01674fa"
   ],
   "dayPlans": {
     "2026-03-24": {
@@ -48031,39 +48033,176 @@
     "2026-10-02": {
       "date": "2026-10-02",
       "createdAt": "2026-10-01T20:14:28.958Z",
-      "refreshedAt": "2026-10-02T02:09:50.283Z",
+      "refreshedAt": "2026-10-02T13:49:38.136Z",
       "candidateWindowHours": 24,
-      "curatedItems": [],
-      "curatedIds": [],
+      "curatedItems": [
+        {
+          "id": "923f77c67220b0c8",
+          "sourceRegistryId": "arxiv-cs-ar",
+          "source": "arXiv",
+          "url": "https://arxiv.org/abs/2608.24637",
+          "title": "Cross-Layer Analysis of Thermal Tuning Stalls in Wafer-Scale Optical Interconnects for LLM MoE Training",
+          "snippet": "arXiv:2608.24637v3 Announce Type: replace Abstract: Mixture-of-experts (MoE) training is dominated by all-to-all communication, and wafer-scale optical interconnects based on dense wavelength-division multiplexing promi…",
+          "contentText": "arXiv:2608.24637v3 Announce Type: replace Abstract: Mixture-of-experts (MoE) training is dominated by all-to-all communication, and wafer-scale optical interconnects based on dense wavelength-division multiplexing promise the bandwidth density it needs. Their microring resonators are held on resonance by thermo-optic tuning loops, while MoE compute bursts move the temperature of the photonic layer by several kelvin within milliseconds. We quantify the cost with a cross-layer analysis in which per-device timelines from a packet-level network simulation drive an Ansys thermal model of a 3D GPU, EIC, and PIC stack, the resonance drift becomes a per-round communication stall, and the stall is fed back into the network simulation until both agree. H100 die-temperature measurements match the mo…",
+          "publishedAt": "2026-10-02T04:00:00.000Z",
+          "sourceImage": null,
+          "region": "Global",
+          "language": "en",
+          "defaultCategory": "Semiconductors",
+          "source_text_scope": "abstract",
+          "ai_topic_score": 0.706,
+          "ai_topic_reasons": [
+            "llm",
+            "gpu"
+          ],
+          "category": "Semiconductors",
+          "primary_category": "Semiconductors",
+          "secondary_category": "Accelerators, memory, and advanced packaging",
+          "infrastructure_layer": "Silicon",
+          "affected_stakeholders": [
+            "semiconductor suppliers",
+            "hyperscalers",
+            "server OEMs",
+            "investors"
+          ],
+          "article_type": "Supply Chain",
+          "urgency_score": 0.3,
+          "taxonomy_confidence": 0.73,
+          "taxonomy_reasons": [
+            "gpu",
+            "wafer"
+          ],
+          "direct_ai_infrastructure_relevance": 0,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0.544,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0.405,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.38,
+          "infrastructure_relevance_tier": "archive_only",
+          "infrastructure_relevance_action": "archive_only",
+          "infrastructure_relevance_reasons": [
+            "semiconductor_relevance:0.54(wafer, gpu)",
+            "cooling_relevance:0.41(thermal)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 0,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0.544,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0.405,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.38,
+            "infrastructure_relevance_tier": "archive_only",
+            "infrastructure_relevance_action": "archive_only",
+            "infrastructure_relevance_reasons": [
+              "semiconductor_relevance:0.54(wafer, gpu)",
+              "cooling_relevance:0.41(thermal)"
+            ],
+            "infrastructureRelevanceAction": "archive_only",
+            "articlePagePublished": false,
+            "homepagePublished": false,
+            "archiveOnly": true,
+            "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
+          },
+          "score": 44
+        },
+        {
+          "id": "8398fe63a01674fa",
+          "sourceRegistryId": "arxiv-cs-ar",
+          "source": "arXiv",
+          "url": "https://arxiv.org/abs/2610.00207",
+          "title": "ShatterQuant: Breaking Uniform Precision with Block-Wise Mixed-Precision on a Systolic Transformer Hardware Accelerator",
+          "snippet": "arXiv:2610.00207v1 Announce Type: new Abstract: Due to limited support for intra-tensor heterogeneous precision in conventional accelerators, neural network quantization remains largely restricted to per-tensor precisio…",
+          "contentText": "arXiv:2610.00207v1 Announce Type: new Abstract: Due to limited support for intra-tensor heterogeneous precision in conventional accelerators, neural network quantization remains largely restricted to per-tensor precision assignment. We present ShatterQuant, a hardware-software co-designed framework enabling mixed-precision quantization within each tensor by assigning independent bit-widths to blocks of a weight projection. ShatterQuant couples precision granularity with PE configuration, such that each precision determines an effective block height. We introduce (1) a hardware-aware post-training method that assigns intra-tensor precision based on block-level standard deviation and weight sensitivity; (2) the ShatterQuant Transformer Accelerator supporting 1/2/4/8-bit weight precision, pr…",
+          "publishedAt": "2026-10-02T04:00:00.000Z",
+          "sourceImage": null,
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "Semiconductors",
+          "source_text_scope": "abstract",
+          "ai_topic_score": 0.47,
+          "ai_topic_reasons": [
+            "accelerator",
+            "accelerators"
+          ],
+          "category": "Power & Grid",
+          "primary_category": "Power & Grid",
+          "secondary_category": "Interconnection and power procurement",
+          "infrastructure_layer": "Power",
+          "affected_stakeholders": [
+            "data center operators",
+            "utilities",
+            "cloud capacity teams",
+            "investors"
+          ],
+          "article_type": "Product / Platform Update",
+          "urgency_score": 0.45,
+          "taxonomy_confidence": 0.61,
+          "taxonomy_reasons": [
+            "transformer"
+          ],
+          "direct_ai_infrastructure_relevance": 0,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0.297,
+          "power_grid_relevance": 0.351,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.339,
+          "infrastructure_relevance_tier": "archive_only",
+          "infrastructure_relevance_action": "archive_only",
+          "infrastructure_relevance_reasons": [
+            "semiconductor_relevance:0.30(accelerator)",
+            "power_grid_relevance:0.35(transformer)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 0,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0.297,
+            "power_grid_relevance": 0.351,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.339,
+            "infrastructure_relevance_tier": "archive_only",
+            "infrastructure_relevance_action": "archive_only",
+            "infrastructure_relevance_reasons": [
+              "semiconductor_relevance:0.30(accelerator)",
+              "power_grid_relevance:0.35(transformer)"
+            ],
+            "infrastructureRelevanceAction": "archive_only",
+            "articlePagePublished": false,
+            "homepagePublished": false,
+            "archiveOnly": true,
+            "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
+          },
+          "score": 38
+        }
+      ],
+      "curatedIds": [
+        "923f77c67220b0c8",
+        "8398fe63a01674fa"
+      ],
       "publishedIds": [
-        "46bbca0a76ec578b"
+        "46bbca0a76ec578b",
+        "923f77c67220b0c8",
+        "8398fe63a01674fa"
       ],
       "slotPublications": {
         "0": true,
-        "1": true
+        "1": true,
+        "2": true
       }
     }
   },
   "runHistory": [
-    {
-      "at": "2026-08-23T07:31:50.453Z",
-      "day": "2026-08-23",
-      "slot": 2,
-      "publishedCount": 0,
-      "authoredColumn": {
-        "published": false,
-        "reason": "verify:figures_missing"
-      },
-      "llmUsage": {
-        "calls": 5,
-        "failures": 0,
-        "prompt_tokens": 14457,
-        "completion_tokens": 6589,
-        "total_tokens": 21046,
-        "token_budget": 60000,
-        "call_budget": 40
-      }
-    },
     {
       "at": "2026-08-23T08:08:07.005Z",
       "day": "2026-08-23",
@@ -51472,9 +51611,86 @@
         "token_budget": 60000,
         "call_budget": 40
       }
+    },
+    {
+      "at": "2026-10-02T13:49:38.136Z",
+      "day": "2026-10-02",
+      "slot": 2,
+      "publishedCount": 0,
+      "signalCardCount": 0,
+      "archiveOnlyCount": 2,
+      "processedIds": [
+        "923f77c67220b0c8",
+        "8398fe63a01674fa"
+      ],
+      "blockedCount": 0,
+      "blockedItems": [],
+      "archiveOnlyItems": [
+        {
+          "id": "923f77c67220b0c8",
+          "title": "Cross-Layer Analysis of Thermal Tuning Stalls in Wafer-Scale Optical Interconnects for LLM MoE Training",
+          "infrastructure_relevance_score": 0.545,
+          "infrastructure_relevance_tier": "archive_only",
+          "infrastructure_relevance_action": "archive_only",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:0.22",
+            "semiconductor_relevance:0.54(wafer, gpu)",
+            "power_grid_relevance:0.22(power)",
+            "cooling_relevance:0.41(thermal)"
+          ],
+          "extraction_quality_score": 1,
+          "source_domain_adapter": "arxiv",
+          "content_length": 1611,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": false,
+          "repetition_block_reasons": [],
+          "repetition_check": null,
+          "expert_insight_complete": false,
+          "expert_insight_missing_fields": [
+            "named_companies"
+          ],
+          "reason": "infrastructure_relevance_below_signal_threshold"
+        },
+        {
+          "id": "8398fe63a01674fa",
+          "title": "ShatterQuant: Breaking Uniform Precision with Block-Wise Mixed-Precision on a Systolic Transformer Hardware Accelerator",
+          "infrastructure_relevance_score": 0.38,
+          "infrastructure_relevance_tier": "archive_only",
+          "infrastructure_relevance_action": "archive_only",
+          "infrastructure_relevance_reasons": [
+            "semiconductor_relevance:0.58(tsmc, accelerator)",
+            "power_grid_relevance:0.35(transformer)"
+          ],
+          "extraction_quality_score": 1,
+          "source_domain_adapter": "arxiv",
+          "content_length": 1417,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": false,
+          "repetition_block_reasons": [],
+          "repetition_check": null,
+          "expert_insight_complete": false,
+          "expert_insight_missing_fields": [
+            "concrete_facts"
+          ],
+          "reason": "infrastructure_relevance_below_signal_threshold"
+        }
+      ],
+      "authoredColumn": {
+        "published": false,
+        "reason": "no_qualifying_story"
+      },
+      "llmUsage": {
+        "calls": 3,
+        "failures": 0,
+        "prompt_tokens": 4123,
+        "completion_tokens": 574,
+        "total_tokens": 4697,
+        "token_budget": 60000,
+        "call_budget": 40
+      }
     }
   ],
-  "lastRunAt": "2026-10-02T02:09:50.283Z",
+  "lastRunAt": "2026-10-02T13:49:38.136Z",
   "authored": {
     "lastColumnAt": "2026-09-16T18:47:02.256Z",
     "columnsByDay": {
