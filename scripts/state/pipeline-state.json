@@ -48200,28 +48200,21 @@
         "1": true,
         "2": true
       }
+    },
+    "2026-10-03": {
+      "date": "2026-10-03",
+      "createdAt": "2026-10-02T19:50:52.362Z",
+      "refreshedAt": "2026-10-02T19:50:52.362Z",
+      "candidateWindowHours": 24,
+      "curatedItems": [],
+      "curatedIds": [],
+      "publishedIds": [],
+      "slotPublications": {
+        "0": true
+      }
     }
   },
   "runHistory": [
-    {
-      "at": "2026-08-23T08:08:07.005Z",
-      "day": "2026-08-23",
-      "slot": 2,
-      "publishedCount": 0,
-      "authoredColumn": {
-        "published": true,
-        "slug": "gym-class-hack-shifts-agent-liability-from-theory-to-contract-2026-08-23"
-      },
-      "llmUsage": {
-        "calls": 4,
-        "failures": 0,
-        "prompt_tokens": 10786,
-        "completion_tokens": 4365,
-        "total_tokens": 15151,
-        "token_budget": 60000,
-        "call_budget": 40
-      }
-    },
     {
       "at": "2026-08-23T15:28:08.721Z",
       "day": "2026-08-24",
@@ -51688,9 +51681,28 @@
         "token_budget": 60000,
         "call_budget": 40
       }
+    },
+    {
+      "at": "2026-10-02T19:50:52.362Z",
+      "day": "2026-10-03",
+      "slot": 0,
+      "publishedCount": 0,
+      "authoredColumn": {
+        "published": false,
+        "reason": "no_qualifying_story"
+      },
+      "llmUsage": {
+        "calls": 1,
+        "failures": 0,
+        "prompt_tokens": 1325,
+        "completion_tokens": 145,
+        "total_tokens": 1470,
+        "token_budget": 60000,
+        "call_budget": 40
+      }
     }
   ],
-  "lastRunAt": "2026-10-02T13:49:38.136Z",
+  "lastRunAt": "2026-10-02T19:50:52.362Z",
   "authored": {
     "lastColumnAt": "2026-09-16T18:47:02.256Z",
     "columnsByDay": {
