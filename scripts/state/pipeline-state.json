@@ -892,7 +892,9 @@
     "bd371f39531db9df",
     "46bbca0a76ec578b",
     "923f77c67220b0c8",
-    "8398fe63a01674fa"
+    "8398fe63a01674fa",
+    "d301851ed2aef74f",
+    "76dd7bdf7191e8f3"
   ],
   "dayPlans": {
     "2026-03-24": {
@@ -48204,36 +48206,173 @@
     "2026-10-03": {
       "date": "2026-10-03",
       "createdAt": "2026-10-02T19:50:52.362Z",
-      "refreshedAt": "2026-10-02T19:50:52.362Z",
+      "refreshedAt": "2026-10-03T01:53:43.948Z",
       "candidateWindowHours": 24,
-      "curatedItems": [],
-      "curatedIds": [],
-      "publishedIds": [],
+      "curatedItems": [
+        {
+          "id": "d301851ed2aef74f",
+          "sourceRegistryId": "eia-today-in-energy",
+          "source": "U.S. Energy Information Administration",
+          "url": "https://www.eia.gov/todayinenergy/detail.php?id=68225",
+          "title": "U.S. natural gas production reached a record high in July 2026",
+          "snippet": "U.S. natural gas production hit an all-time high in July 2026, driven primarily by increased output in the Permian Basin, according to our latest Natural Gas Monthly.",
+          "contentText": "U.S. natural gas production hit an all-time high in July 2026, driven primarily by increased output in the Permian Basin, according to our latest Natural Gas Monthly.",
+          "publishedAt": "2026-10-02T14:00:00.000Z",
+          "sourceImage": null,
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "Power & Grid",
+          "ai_topic_score": 0,
+          "ai_topic_reasons": [
+            "ai_not_in_title"
+          ],
+          "category": "Power & Grid",
+          "primary_category": "Power & Grid",
+          "secondary_category": "Interconnection and power procurement",
+          "infrastructure_layer": "Power",
+          "affected_stakeholders": [
+            "data center operators",
+            "utilities",
+            "cloud capacity teams",
+            "investors"
+          ],
+          "article_type": "Other",
+          "urgency_score": 0.36,
+          "taxonomy_confidence": 0.61,
+          "taxonomy_reasons": [
+            "power",
+            "grid"
+          ],
+          "direct_ai_infrastructure_relevance": 0,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0,
+          "infrastructure_relevance_tier": "archive_only",
+          "infrastructure_relevance_action": "archive_only",
+          "infrastructure_relevance_reasons": [
+            "no_strong_compute_current_infrastructure_match"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 0,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0,
+            "infrastructure_relevance_tier": "archive_only",
+            "infrastructure_relevance_action": "archive_only",
+            "infrastructure_relevance_reasons": [
+              "no_strong_compute_current_infrastructure_match"
+            ],
+            "infrastructureRelevanceAction": "archive_only",
+            "articlePagePublished": false,
+            "homepagePublished": false,
+            "archiveOnly": true,
+            "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
+          },
+          "score": 25
+        },
+        {
+          "id": "76dd7bdf7191e8f3",
+          "sourceRegistryId": "arxiv-cs-ar",
+          "source": "arXiv",
+          "url": "https://arxiv.org/abs/2610.00311",
+          "title": "EdgeDAE: Acceleration of Diffusion Action Experts for Real-Time Physical AI with Tiny VLAs on Edge FPGA-GPU Systems",
+          "snippet": "arXiv:2610.00311v1 Announce Type: new Abstract: Physical AI models such as Vision-Language-Action (VLA) architectures enable generalist robotic policies through large-scale transformer backbones and diffusion-based acti…",
+          "contentText": "arXiv:2610.00311v1 Announce Type: new Abstract: Physical AI models such as Vision-Language-Action (VLA) architectures enable generalist robotic policies through large-scale transformer backbones and diffusion-based action decoders. While edge GPU platforms excel at parallelizing the compute-intensive vision-transformer workloads, they exhibit fundamental limitations for the Diffusion Action Expert (DAE) module: the iterative denoising process requires repeated parameter loading from DRAM across multiple steps, resulting in memory-bound performance where the GPU's massive computational throughput remains underutilized. This mismatch between DAE's I/O-intensive characteristics and GPU's compute-centric architecture motivates a heterogeneous acceleration approach. This paper presents \\textbf…",
+          "publishedAt": "2026-10-02T04:00:00.000Z",
+          "sourceImage": null,
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "Semiconductors",
+          "source_text_scope": "abstract",
+          "ai_topic_score": 0.94,
+          "ai_topic_reasons": [
+            "ai models",
+            "gpu",
+            "ai"
+          ],
+          "category": "Semiconductors",
+          "primary_category": "Semiconductors",
+          "secondary_category": "Accelerators, memory, and advanced packaging",
+          "infrastructure_layer": "Silicon",
+          "affected_stakeholders": [
+            "semiconductor suppliers",
+            "hyperscalers",
+            "server OEMs",
+            "investors"
+          ],
+          "article_type": "Supply Chain",
+          "urgency_score": 0.29,
+          "taxonomy_confidence": 0.61,
+          "taxonomy_reasons": [
+            "gpu"
+          ],
+          "direct_ai_infrastructure_relevance": 0.22,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0.297,
+          "power_grid_relevance": 0.26,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.334,
+          "infrastructure_relevance_tier": "archive_only",
+          "infrastructure_relevance_action": "archive_only",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:0.22",
+            "semiconductor_relevance:0.30(gpu)",
+            "power_grid_relevance:0.26(transformer)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 0.22,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0.297,
+            "power_grid_relevance": 0.26,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.334,
+            "infrastructure_relevance_tier": "archive_only",
+            "infrastructure_relevance_action": "archive_only",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:0.22",
+              "semiconductor_relevance:0.30(gpu)",
+              "power_grid_relevance:0.26(transformer)"
+            ],
+            "infrastructureRelevanceAction": "archive_only",
+            "articlePagePublished": false,
+            "homepagePublished": false,
+            "archiveOnly": true,
+            "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
+          },
+          "score": 28
+        }
+      ],
+      "curatedIds": [
+        "d301851ed2aef74f",
+        "76dd7bdf7191e8f3"
+      ],
+      "publishedIds": [
+        "d301851ed2aef74f",
+        "76dd7bdf7191e8f3"
+      ],
       "slotPublications": {
-        "0": true
+        "0": true,
+        "1": true
       }
     }
   },
   "runHistory": [
-    {
-      "at": "2026-08-23T15:28:08.721Z",
-      "day": "2026-08-24",
-      "slot": 0,
-      "publishedCount": 0,
-      "authoredColumn": {
-        "published": true,
-        "slug": "delta-s-150kw-cdu-is-a-retrofit-admission-not-a-roadmap-win-2026-08-23"
-      },
-      "llmUsage": {
-        "calls": 5,
-        "failures": 0,
-        "prompt_tokens": 15526,
-        "completion_tokens": 7029,
-        "total_tokens": 22555,
-        "token_budget": 60000,
-        "call_budget": 40
-      }
-    },
     {
       "at": "2026-08-23T23:31:04.873Z",
       "day": "2026-08-24",
@@ -51700,9 +51839,80 @@
         "token_budget": 60000,
         "call_budget": 40
       }
+    },
+    {
+      "at": "2026-10-03T01:53:43.948Z",
+      "day": "2026-10-03",
+      "slot": 1,
+      "publishedCount": 0,
+      "signalCardCount": 0,
+      "archiveOnlyCount": 2,
+      "processedIds": [
+        "d301851ed2aef74f",
+        "76dd7bdf7191e8f3"
+      ],
+      "blockedCount": 0,
+      "blockedItems": [],
+      "archiveOnlyItems": [
+        {
+          "id": "d301851ed2aef74f",
+          "title": "U.S. natural gas production reached a record high in July 2026",
+          "infrastructure_relevance_score": 0,
+          "infrastructure_relevance_tier": "archive_only",
+          "infrastructure_relevance_action": "archive_only",
+          "infrastructure_relevance_reasons": [
+            "no_strong_compute_current_infrastructure_match"
+          ],
+          "extraction_quality_score": 1,
+          "source_domain_adapter": "generic",
+          "content_length": 1711,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": false,
+          "repetition_block_reasons": [],
+          "repetition_check": null,
+          "expert_insight_complete": true,
+          "expert_insight_missing_fields": [],
+          "reason": "infrastructure_relevance_below_signal_threshold"
+        },
+        {
+          "id": "76dd7bdf7191e8f3",
+          "title": "EdgeDAE: Acceleration of Diffusion Action Experts for Real-Time Physical AI with Tiny VLAs on Edge FPGA-GPU Systems",
+          "infrastructure_relevance_score": 0.334,
+          "infrastructure_relevance_tier": "archive_only",
+          "infrastructure_relevance_action": "archive_only",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:0.22",
+            "semiconductor_relevance:0.30(gpu)",
+            "power_grid_relevance:0.26(transformer)"
+          ],
+          "extraction_quality_score": 1,
+          "source_domain_adapter": "arxiv",
+          "content_length": 1481,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": false,
+          "repetition_block_reasons": [],
+          "repetition_check": null,
+          "expert_insight_complete": true,
+          "expert_insight_missing_fields": [],
+          "reason": "infrastructure_relevance_below_signal_threshold"
+        }
+      ],
+      "authoredColumn": {
+        "published": false,
+        "reason": "no_qualifying_story"
+      },
+      "llmUsage": {
+        "calls": 3,
+        "failures": 0,
+        "prompt_tokens": 3561,
+        "completion_tokens": 654,
+        "total_tokens": 4215,
+        "token_budget": 60000,
+        "call_budget": 40
+      }
     }
   ],
-  "lastRunAt": "2026-10-02T19:50:52.362Z",
+  "lastRunAt": "2026-10-03T01:53:43.948Z",
   "authored": {
     "lastColumnAt": "2026-09-16T18:47:02.256Z",
     "columnsByDay": {
