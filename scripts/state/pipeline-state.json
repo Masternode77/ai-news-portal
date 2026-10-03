@@ -894,7 +894,9 @@
     "923f77c67220b0c8",
     "8398fe63a01674fa",
     "d301851ed2aef74f",
-    "76dd7bdf7191e8f3"
+    "76dd7bdf7191e8f3",
+    "978a61134524475e",
+    "dcc497596891311f"
   ],
   "dayPlans": {
     "2026-03-24": {
@@ -48219,28 +48221,174 @@
         "1": true,
         "2": true
       }
+    },
+    "2026-10-04": {
+      "date": "2026-10-04",
+      "createdAt": "2026-10-03T18:37:01.308Z",
+      "refreshedAt": "2026-10-03T18:37:01.308Z",
+      "candidateWindowHours": 24,
+      "curatedItems": [
+        {
+          "id": "978a61134524475e",
+          "sourceRegistryId": "doe-newsroom",
+          "source": "U.S. Department of Energy",
+          "url": "https://www.energy.gov/articles/trump-administration-mitigates-blackout-risks-keeping-colorado-coal-plant-online",
+          "title": "Trump Administration Mitigates Blackout Risks by Keeping Colorado Coal Plant Online",
+          "snippet": "U.S. Secretary of Energy Chris Wright today issued an emergency order to prevent a Colorado coal plant from going offline to ensure Americans maintain access to affordable, reliable, and secure electricity.",
+          "contentText": "U.S. Secretary of Energy Chris Wright today issued an emergency order to prevent a Colorado coal plant from going offline to ensure Americans maintain access to affordable, reliable, and secure electricity.",
+          "publishedAt": "2026-09-25T23:00:00.000Z",
+          "sourceImage": null,
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "Power & Grid",
+          "ai_topic_score": 0,
+          "ai_topic_reasons": [
+            "ai_not_in_title"
+          ],
+          "category": "Power & Grid",
+          "primary_category": "Power & Grid",
+          "secondary_category": "Interconnection and power procurement",
+          "infrastructure_layer": "Power",
+          "affected_stakeholders": [
+            "data center operators",
+            "utilities",
+            "cloud capacity teams",
+            "investors"
+          ],
+          "article_type": "Other",
+          "urgency_score": 0.42,
+          "taxonomy_confidence": 0.73,
+          "taxonomy_reasons": [
+            "power",
+            "grid",
+            "electricity"
+          ],
+          "direct_ai_infrastructure_relevance": 0,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0,
+          "power_grid_relevance": 0.24,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.174,
+          "infrastructure_relevance_tier": "archive_only",
+          "infrastructure_relevance_action": "archive_only",
+          "infrastructure_relevance_reasons": [
+            "power_grid_relevance:0.24(electricity)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 0,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0,
+            "power_grid_relevance": 0.24,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.174,
+            "infrastructure_relevance_tier": "archive_only",
+            "infrastructure_relevance_action": "archive_only",
+            "infrastructure_relevance_reasons": [
+              "power_grid_relevance:0.24(electricity)"
+            ],
+            "infrastructureRelevanceAction": "archive_only",
+            "articlePagePublished": false,
+            "homepagePublished": false,
+            "archiveOnly": true,
+            "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
+          },
+          "score": 23
+        },
+        {
+          "id": "dcc497596891311f",
+          "sourceRegistryId": "eia-today-in-energy",
+          "source": "U.S. Energy Information Administration",
+          "url": "https://www.eia.gov/todayinenergy/detail.php?id=68204",
+          "title": "Henry Hub natural gas prices this summer were 6% lower than last summer",
+          "snippet": "The Henry Hub natural gas spot price averaged $2.93 per million British thermal units from June through August, 6% less than the same period last year. Prices were lower this summer despite exceptionally hot weather tha…",
+          "contentText": "The Henry Hub natural gas spot price averaged $2.93 per million British thermal units from June through August, 6% less than the same period last year. Prices were lower this summer despite exceptionally hot weather that increased electricity demand for air conditioning. Natural gas-fired power plants often help meet higher demand during such periods.",
+          "publishedAt": "2026-09-25T14:00:00.000Z",
+          "sourceImage": null,
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "Power & Grid",
+          "ai_topic_score": 0,
+          "ai_topic_reasons": [
+            "ai_not_in_title"
+          ],
+          "category": "Power & Grid",
+          "primary_category": "Power & Grid",
+          "secondary_category": "Interconnection and power procurement",
+          "infrastructure_layer": "Power",
+          "affected_stakeholders": [
+            "data center operators",
+            "utilities",
+            "cloud capacity teams",
+            "investors"
+          ],
+          "article_type": "Market Analysis",
+          "urgency_score": 0.49,
+          "taxonomy_confidence": 0.76,
+          "taxonomy_reasons": [
+            "power",
+            "grid",
+            "electricity"
+          ],
+          "direct_ai_infrastructure_relevance": 0,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0,
+          "power_grid_relevance": 0.46,
+          "cooling_relevance": 0.3,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.403,
+          "infrastructure_relevance_tier": "archive_only",
+          "infrastructure_relevance_action": "archive_only",
+          "infrastructure_relevance_reasons": [
+            "power_grid_relevance:0.46(power, electricity)",
+            "cooling_relevance:0.30(thermal)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 0,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0,
+            "power_grid_relevance": 0.46,
+            "cooling_relevance": 0.3,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.403,
+            "infrastructure_relevance_tier": "archive_only",
+            "infrastructure_relevance_action": "archive_only",
+            "infrastructure_relevance_reasons": [
+              "power_grid_relevance:0.46(power, electricity)",
+              "cooling_relevance:0.30(thermal)"
+            ],
+            "infrastructureRelevanceAction": "archive_only",
+            "articlePagePublished": false,
+            "homepagePublished": false,
+            "archiveOnly": true,
+            "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
+          },
+          "score": 29
+        }
+      ],
+      "curatedIds": [
+        "978a61134524475e",
+        "dcc497596891311f"
+      ],
+      "publishedIds": [
+        "978a61134524475e",
+        "dcc497596891311f"
+      ],
+      "slotPublications": {
+        "0": true
+      }
     }
   },
   "runHistory": [
-    {
-      "at": "2026-08-24T08:03:32.167Z",
-      "day": "2026-08-24",
-      "slot": 2,
-      "publishedCount": 0,
-      "authoredColumn": {
-        "published": true,
-        "slug": "nvidia-s-500-billion-financing-bet-assumes-compute-acts-like-inf-2026-08-24"
-      },
-      "llmUsage": {
-        "calls": 5,
-        "failures": 0,
-        "prompt_tokens": 15599,
-        "completion_tokens": 7603,
-        "total_tokens": 23202,
-        "token_budget": 60000,
-        "call_budget": 40
-      }
-    },
     {
       "at": "2026-08-24T15:45:03.520Z",
       "day": "2026-08-25",
@@ -51759,9 +51907,37 @@
         "token_budget": 60000,
         "call_budget": 40
       }
+    },
+    {
+      "at": "2026-10-03T18:37:01.308Z",
+      "day": "2026-10-04",
+      "slot": 0,
+      "publishedCount": 0,
+      "signalCardCount": 2,
+      "archiveOnlyCount": 0,
+      "processedIds": [
+        "978a61134524475e",
+        "dcc497596891311f"
+      ],
+      "blockedCount": 0,
+      "blockedItems": [],
+      "archiveOnlyItems": [],
+      "authoredColumn": {
+        "published": false,
+        "reason": "no_qualifying_story"
+      },
+      "llmUsage": {
+        "calls": 3,
+        "failures": 0,
+        "prompt_tokens": 5253,
+        "completion_tokens": 615,
+        "total_tokens": 5868,
+        "token_budget": 60000,
+        "call_budget": 40
+      }
     }
   ],
-  "lastRunAt": "2026-10-03T12:28:57.858Z",
+  "lastRunAt": "2026-10-03T18:37:01.308Z",
   "authored": {
     "lastColumnAt": "2026-09-16T18:47:02.256Z",
     "columnsByDay": {
