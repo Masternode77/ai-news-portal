@@ -2,6 +2,7 @@ import { createHash } from 'node:crypto';
 import { validateExtractionArtifact } from './extraction-artifact.mjs';
 import { safeHttpUrl } from './normalize.mjs';
 import { loadSourceRegistrySync, sourceUsageDecision } from './source-registry.mjs';
+import { googleReleaseNoteTarget } from './google-cloud-release-notes.mjs';
 
 function sha256(value) {
   return createHash('sha256').update(String(value), 'utf8').digest('hex');
@@ -11,7 +12,7 @@ function normalizedUrl(value = '') {
   const safe = safeHttpUrl(value);
   if (!safe) return null;
   const url = new URL(safe);
-  url.hash = '';
+  if (!googleReleaseNoteTarget(url.href)) url.hash = '';
   return url;
 }
 
@@ -24,6 +25,7 @@ function registrySnapshot(source = {}) {
     terms_url: source.terms_url,
     reviewed_at: source.reviewed_at,
     allow_text_use: source.allow_text_use,
+    ...(source.article_path ? { article_path: source.article_path } : {}),
   };
 }
 
@@ -83,8 +85,14 @@ export function currentSourceTextAuthorization(article = {}, artifact = {}, opti
     return denied(decision.detail || 'source_not_registered', checkedAt, { sourceId });
   }
 
-  const articleUrl = normalizedUrl(article.sourceUrl || article.canonicalUrl || article.url || article.link);
+  const articleSourceUrl = article.sourceUrl || article.canonicalUrl || article.url || article.link;
+  if (/^google-cloud-(?:compute|ai)-releases$/.test(sourceId)
+    && (!googleReleaseNoteTarget(articleSourceUrl) || !googleReleaseNoteTarget(artifactValidation.sourceUrl))) {
+    return denied('release_note_dated_source_required', checkedAt, { sourceId });
+  }
+  const articleUrl = normalizedUrl(articleSourceUrl);
   if (!articleUrl) return denied('article_source_url_malformed', checkedAt, { sourceId });
+  if (source.article_path && articleUrl.pathname !== source.article_path) return denied('article_source_path_mismatch', checkedAt, { sourceId });
   const artifactUrl = normalizedUrl(artifactValidation.sourceUrl);
   if (!artifactUrl) return denied('artifact_source_url_malformed', checkedAt, { sourceId });
   const registryHost = String(source.domain || '').trim().toLowerCase().replace(/^www\./, '');

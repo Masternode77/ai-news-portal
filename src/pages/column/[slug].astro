@@ -1,4 +1,5 @@
 ---
+import SourceLicense from '../../components/SourceLicense.astro';
 import Layout from '../../layouts/Layout.astro';
 import ArticleHeader from '../../components/ArticleHeader.astro';
 import ArticleHeroImage from '../../components/ArticleHeroImage.astro';
@@ -117,6 +118,7 @@ const sources = (columnRecord.sources || [])
                 <li>
                   <a href={source.url} target="_blank" rel="noopener noreferrer">{source.title || source.name}</a>
                   <span> — {source.name}</span>
+                  <SourceLicense url={source.url} />
                 </li>
               ))}
             </ul>

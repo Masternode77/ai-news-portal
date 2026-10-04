@@ -36,6 +36,8 @@ import { classifyAiTopicRelevance } from './relevance-classifier.mjs';
 import { abstractOnlyTextScope, sourceUsageDecision } from './source-registry.mjs';
 import { sourceExtractionPassesLongformGate } from './source-extraction-fail-closed.mjs';
 import { validateExtractionArtifact } from './extraction-artifact.mjs';
+import { COLUMN_COVERAGE_BEATS, columnCoverageBeat, recentColumnCoverage } from './column-coverage.mjs';
+import { googleReleaseNoteTarget } from './google-cloud-release-notes.mjs';
 
 const CHARTER_RELATIVE_PATH = 'config/editorial/persona-charter.json';
 const STORY_KEY_WINDOW_HOURS = 72;
@@ -311,6 +313,7 @@ export function storyKeyFor(article = {}) {
   const raw = String(article.sourceUrl || article.url || article.title || '').trim();
   try {
     const parsed = new URL(raw);
+    if (googleReleaseNoteTarget(raw)) return `${parsed.origin}${parsed.pathname}${parsed.hash}`.toLowerCase();
     if (parsed.hostname === 'www.eia.gov' && parsed.pathname === '/todayinenergy/detail.php') {
       const id = parsed.searchParams.get('id');
       if (id) return `${parsed.origin}${parsed.pathname}?id=${id}`.toLowerCase();
@@ -353,11 +356,15 @@ function frequencyCheck(authored, now, { force = false } = {}) {
 // Pass 0 — deterministic story selection. No LLM: relevance x evidence depth
 // x corroboration x freshness, with a hard floor so weak news never earns a
 // column. Returning null here is a normal outcome, not a failure.
-export function selectColumnStoryWithDiagnostics({ candidates = [], pool = [], excludedStoryKeys = new Set(), now = new Date(), sources = [] } = {}) {
+export function selectColumnStoryWithDiagnostics({ candidates = [], pool = [], excludedStoryKeys = new Set(), now = new Date(), sources = [], existingColumns = [] } = {}) {
   const counts = Object.fromEntries([...SELECTION_REJECTION_KEYS, 'qualifying'].map((key) => [key, 0]));
+  const byBeat = Object.fromEntries(COLUMN_COVERAGE_BEATS.map(beat => [beat, { candidates: 0, qualifying: 0, rejections: {} }]));
+  const recentCoverage = recentColumnCoverage(existingColumns, now);
   const scored = [];
 
   for (const article of candidates) {
+    const beat = columnCoverageBeat(article || {});
+    byBeat[beat].candidates += 1;
     let rejection = '';
     let evidencePack = null;
     if (!article?.id || !article.title) rejection = 'invalid_identity';
@@ -375,10 +382,12 @@ export function selectColumnStoryWithDiagnostics({ candidates = [], pool = [], e
 
     if (rejection) {
       counts[rejection] += 1;
+      byBeat[beat].rejections[rejection] = (byBeat[beat].rejections[rejection] || 0) + 1;
       continue;
     }
 
     counts.qualifying += 1;
+    byBeat[beat].qualifying += 1;
     const corroborating = findCorroboratingSources(article, pool)
       .filter((candidate) => sourceUsageDecision(candidate, sources, 'text', now).authorized)
       .filter((candidate) => !abstractOnlySource(candidate, sources))
@@ -391,17 +400,29 @@ export function selectColumnStoryWithDiagnostics({ candidates = [], pool = [], e
       * Math.min(evidencePack.facts.length, 10)
       * (1 + 0.25 * corroborating.length)
       * freshness;
-    scored.push({ article, evidencePack, corroborating, score });
+    scored.push({ article, evidencePack, corroborating, score, beat });
   }
 
-  scored.sort((a, b) => b.score - a.score);
-  const selection = scored[0] || null;
+  scored.sort((a, b) => b.score - a.score || String(a.article.id).localeCompare(String(b.article.id)));
+  // Diversity only breaks a near tie among fully eligible stories. A thin
+  // source or a materially weaker story cannot win to fill a topic quota.
+  const contenders = scored.filter(item => item.score >= scored[0].score * 0.85);
+  if (recentCoverage.total) contenders.sort((a, b) =>
+    recentCoverage.counts[a.beat] - recentCoverage.counts[b.beat]
+    || Number(a.beat === recentCoverage.lastBeat) - Number(b.beat === recentCoverage.lastBeat)
+    || b.score - a.score
+    || String(a.article.id).localeCompare(String(b.article.id)));
+  const selection = contenders[0] || null;
   return {
     selection,
     diagnostics: {
       total_candidates: candidates.length,
       counts,
       selected_id: selection?.article?.id || null,
+      selected_beat: selection?.beat || null,
+      selection_reason: selection ? (selection === scored[0] ? 'highest_evidence_score' : 'coverage_near_tie') : 'no_qualifying_story',
+      by_beat: byBeat,
+      recent_coverage: recentCoverage,
     },
   };
 }
@@ -460,6 +481,7 @@ function personaSystemPrompt(charter) {
 
 function evidencePayload(selection, ledger) {
   return {
+    coverage_beat: selection.beat,
     primary_source: {
       title: selection.article.title,
       source: selection.article.source,
@@ -597,6 +619,7 @@ function columnRecord({ charter, selection, stance, essay, quality, figures = []
     analysisPublishedAt: publishedAt,
     updatedAt: publishedAt,
     category: selection.article.primary_category || selection.article.category || 'AI Infrastructure',
+    coverage_beat: selection.beat,
     primary_category: selection.article.primary_category || selection.article.category || 'AI Infrastructure',
     tags: Array.isArray(selection.article.tags) ? selection.article.tags.slice(0, 6) : [],
     figures,
@@ -660,7 +683,7 @@ export async function generateAuthoredColumn({
   }
 
   const charter = loadPersonaCharter();
-  const selectionResult = selectColumnStoryWithDiagnostics({ candidates, pool, excludedStoryKeys: excluded, now, sources });
+  const selectionResult = selectColumnStoryWithDiagnostics({ candidates, pool, excludedStoryKeys: excluded, now, sources, existingColumns });
   const { selection, diagnostics: selectionDiagnostics } = selectionResult;
   authored.lastSelection = {
     at: now.toISOString(),

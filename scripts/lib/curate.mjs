@@ -56,6 +56,7 @@ async function curateWithLlm(items) {
       'Select the most decision-useful stories for operators, investors, site selectors, and infrastructure strategists.',
       'Two lanes qualify. Infrastructure: data center load, grid capacity, generation and interconnection, chips and accelerators, cooling, cloud capacity, colocation, or capital flowing into those. AI: frontier model releases and capabilities, AI lab strategy and financing, AI policy and regulation, AI security incidents, and compute demand from AI workloads.',
       'Prioritize source credibility, novelty, and source diversity. Skip enforcement actions, audits, grants, and announcements that only mention AI or energy in passing, even if that leaves fewer picks. An empty selection is a valid answer when nothing qualifies.',
+      'Among comparably consequential eligible stories, vary the mix across AI companies and model economics, data center and cloud operators (leases, earnings, financing and capacity), compute hardware, power and cooling, and policy. Policy is not the default beat. Never add a weak story merely to fill a category.',
       `Return JSON only with key selectedIds as an array of up to ${DAILY_CURATION_TARGET} ids, best first.`,
     ].join(' '),
     userPrompt: JSON.stringify({ candidates: payload }),

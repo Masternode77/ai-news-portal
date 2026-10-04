@@ -1,4 +1,5 @@
 import crypto from 'node:crypto';
+import { googleReleaseNoteTarget } from './google-cloud-release-notes.mjs';
 import { CATEGORIES, CATEGORY_KEYWORDS, REGION_HINTS } from './constants.mjs';
 
 const CONTROL_CHARACTERS = /[\u0000-\u001F\u007F]/;
@@ -17,7 +18,7 @@ export function safeHttpUrl(value = '') {
       || parsed.username
       || parsed.password
     ) return '';
-    parsed.hash = '';
+    if (!googleReleaseNoteTarget(parsed.href)) parsed.hash = '';
     const dropParams = [
       'utm_source',
       'utm_medium',

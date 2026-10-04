@@ -6,6 +6,7 @@ import { isPublicLongformArticle } from './public-surface-eligibility.mjs';
 import { canonicalArticlePath, safeHttpUrl } from './normalize.mjs';
 import { isPublicProductFit } from './public-product-fit.mjs';
 import { currentSourceTextAuthorization } from './source-text-publication-authorization.mjs';
+import { googleReleaseNoteTarget } from './google-cloud-release-notes.mjs';
 import {
   inferBottleneckAxis,
   orderByFirstViewportAxisDiversity,
@@ -31,7 +32,7 @@ function canonicalFeedKey(article = {}) {
   const url = safeHttpUrl(rawUrl);
   if (url) {
     const parsed = new URL(url);
-    parsed.hash = '';
+    if (!googleReleaseNoteTarget(parsed.href)) parsed.hash = '';
     for (const key of [...parsed.searchParams.keys()]) {
       if (/^(?:utm_.+|fbclid|gclid|mc_cid|mc_eid)$/i.test(key)) parsed.searchParams.delete(key);
     }

@@ -2,6 +2,7 @@ import { PIPELINE_OFFLINE } from './constants.mjs';
 import { stripHtml, truncate } from './normalize.mjs';
 import { analyzeExtractionQuality } from './quality-gate.mjs';
 import { fetchAuthorizedSourceText } from './source-text-fetcher.mjs';
+import { googleReleaseNoteSection } from './google-cloud-release-notes.mjs';
 
 const GENERIC_ADAPTER = 'generic';
 
@@ -357,8 +358,11 @@ export async function fetchArticleExtraction({
       accept: apiTarget?.accept,
     });
     const html = apiTarget ? apiTarget.toHtml(fetched.text) : fetched.text;
-    const articleSection = extractSection(html, adapter);
+    const isGoogleRelease = /^google-cloud-(?:compute|ai)-releases$/.test(sourceRegistryId);
+    const articleSection = isGoogleRelease ? googleReleaseNoteSection(html, url) : extractSection(html, adapter);
+    if (isGoogleRelease && !articleSection) return fallbackExtraction(url, fallbackSnippet, 'release_note_anchor_or_license_missing');
     const { rawText, cleanedText } = paragraphTextFromSection(articleSection, adapter);
+    if (isGoogleRelease && !cleanedText) return fallbackExtraction(url, fallbackSnippet, 'release_note_text_missing');
     const articleText = truncateAtSentence(cleanedText || fallbackSnippet, 1800);
     const extractionQa = analyzeExtractionQuality({
       title,

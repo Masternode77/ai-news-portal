@@ -1,4 +1,42 @@
 sources:
+  - id: google-cloud-compute-releases
+    name: Google Cloud Compute Engine
+    domain: docs.cloud.google.com
+    article_hosts: docs.cloud.google.com
+    article_path: /compute/docs/release-notes
+    coverage: cloud operator compute capacity, instance availability, GPU systems and deployment economics
+    priority: P1
+    feed: https://docs.cloud.google.com/feeds/compute-release-notes.xml
+    defaultCategory: Hyperscalers & Cloud
+    region: Global
+    language: en
+    status: active_feed
+    text_use_basis: google_cloud_documentation_cc_by_4_0
+    image_use_basis: unreviewed
+    terms_url: https://docs.cloud.google.com/compute/docs/release-notes
+    reviewed_at: 2026-10-04
+    allow_text_use: true
+    allow_image_reuse: false
+    rights_note: Page footer explicitly licenses documentation content CC BY 4.0 except otherwise noted. Discovery feed only; extract the linked dated section with a present licence marker, attribute Google Cloud and the licence, identify adaptation. Not Google Cloud Blog or customer content.
+  - id: google-cloud-ai-releases
+    name: Google Cloud AI
+    domain: docs.cloud.google.com
+    article_hosts: docs.cloud.google.com
+    article_path: /gemini-enterprise-agent-platform/release-notes
+    coverage: AI models, inference, model serving, enterprise deployment and cloud provider economics
+    priority: P1
+    feed: https://docs.cloud.google.com/feeds/gcp-release-notes.xml
+    defaultCategory: AI Infrastructure (GPU/Neocloud)
+    region: Global
+    language: en
+    status: active_feed
+    text_use_basis: google_cloud_documentation_cc_by_4_0
+    image_use_basis: unreviewed
+    terms_url: https://docs.cloud.google.com/gemini-enterprise-agent-platform/release-notes
+    reviewed_at: 2026-10-04
+    allow_text_use: true
+    allow_image_reuse: false
+    rights_note: Page footer explicitly licenses documentation content CC BY 4.0 except otherwise noted. Discovery feed only; extract the linked dated section with a present licence marker, attribute Google Cloud and the licence, identify adaptation. Not Google Cloud Blog or customer content.
   - id: eia-today-in-energy
     name: U.S. Energy Information Administration
     domain: eia.gov

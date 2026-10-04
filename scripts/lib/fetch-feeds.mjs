@@ -15,6 +15,7 @@ import { classifyTaxonomy } from './taxonomy.mjs';
 import { fetchPublicResource } from './public-network-fetcher.mjs';
 import { activeRegistryFeeds, loadSourceRegistry } from './source-registry.mjs';
 import { sourceTextTargetDecision } from './source-text-fetcher.mjs';
+import { googleReleaseNoteTarget, scopeGoogleAiReleaseItem } from './google-cloud-release-notes.mjs';
 
 const FEED_CONTENT_TYPES = [
   'application/atom+xml',
@@ -121,12 +122,18 @@ export function httpsItemUrl(url = '') {
 }
 
 export function parseFeedItem(feed, item, now = new Date()) {
-  const title = textValue(item.title).replace(/\s+/g, ' ').trim();
+  let title = textValue(item.title).replace(/\s+/g, ' ').trim();
   const url = httpsItemUrl(repairFeedLink(textValue(item.link) || textValue(item.guid) || '', feed.url));
   if (!title || !url) return null;
 
   const rawBody = stripHtml(textValue(item.contentEncoded || item.content || item.summary || item.contentSnippet || ''));
   const rawSnippet = stripHtml(textValue(item.contentSnippet || item.summary || rawBody || ''));
+  const release = googleReleaseNoteTarget(url);
+  if (release && /^google-cloud-(?:compute|ai)-releases$/.test(feed.sourceRegistryId || '')) {
+    const paragraph = textValue(item.content).match(/<p\b[^>]*>([\s\S]*?)<\/p>/i)?.[1];
+    const lead = stripHtml(paragraph || '').replace(/\s+/g, ' ').trim();
+    title = `${release.product}: ${truncate((lead || title).split(/(?<=[.!?])\s/)[0], 140)}`;
+  }
 
   const baseItem = {
     id: stableArticleId(url, title),
@@ -194,12 +201,15 @@ async function fetchFeedItems(feed, networkOptions = {}) {
   const parsed = await parser.parseString(response.bytes.toString('utf8'));
   const now = networkOptions.now || new Date();
   return (parsed.items || [])
+    .map(item => feed.sourceRegistryId === 'google-cloud-ai-releases' ? scopeGoogleAiReleaseItem(item) : item)
+    .filter(Boolean)
     .map((item) => parseFeedItem(feed, item, now))
     .filter(Boolean);
 }
 
 function relevanceThenRecency(a, b) {
-  const scoreGap = (Number(b.infrastructure_relevance_score) || 0) - (Number(a.infrastructure_relevance_score) || 0);
+  const laneScore = item => Math.max(Number(item.infrastructure_relevance_score) || 0, Number(item.ai_topic_score) || 0);
+  const scoreGap = laneScore(b) - laneScore(a);
   if (scoreGap !== 0) return scoreGap;
   return new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime();
 }
@@ -280,7 +290,7 @@ export function refreshCachedRelevance(records = [], sources = []) {
 // enforcement actions, proclamations) is left to the relevance-ordered pass,
 // so registering more government feeds does not push on-beat items out.
 function reservesSourceSlot(item) {
-  return item.infrastructure_relevance_tier !== 'archive_only';
+  return item.infrastructure_relevance_tier !== 'archive_only' || Number(item.ai_topic_score) >= 0.75;
 }
 
 // The pool is capped, and several authorized sources publish far more

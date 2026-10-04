@@ -16,6 +16,25 @@ If the existing Mac task has no refresh step, it needs a one-time update on that
 4. Visually inspect the actual result and import it with the queued fingerprint. Re-run the same ID queue command; successful completion has no job, no blocked entry and `pendingCount: 0`. An empty `jobs` array alone does not mean completion. A failure stays pending and must not be reported as completed artwork.
 5. Keep the column JSON, manifest and generated source/variants in the same change. Publish only within the existing task's authorization. Preserve concurrent news updates; do not overwrite a refreshed collection with an old snapshot.
 
+## Coverage mix
+
+The Current covers AI companies and model economics, data center/cloud operators
+(capacity, leases, earnings and financing), compute hardware, power/cooling, and
+policy. Policy is not the default subject. Intake ranks both existing relevance
+lanes; this does not promote an AI-only source to an infrastructure wire article.
+Among fully eligible column candidates within 15% of the strongest evidence score,
+the selector favors the least-covered beat in the latest five columns from the last
+30 days. A materially stronger story still wins. There is no topic quota and no
+exception to source rights, extraction, fidelity, repetition or publication limits.
+
+Read `authored.lastSelection.diagnostics.by_beat`, `selected_beat`,
+`selection_reason` and `recent_coverage` to distinguish absent/blocked company
+sources from selection imbalance. New columns store `coverage_beat`; historical
+columns are classified without rewriting their content. Do not promise company
+coverage merely because the prompt names companies: an authorized full source
+and a qualified candidate must actually exist. Any new source permission needs
+its own evidence-backed review, outside the routine image automation.
+
 ## Existing repeated images
 
 The default queue reads authored columns as well as latest news, prioritizes columns, and detects shared source hashes across the entire manifest. Process bounded batches (default one, maximum five when requested) using the same native workflow. Repeated runs gradually replace shared column images while preserving an already unique image for the same column. `register_existing` is reserved for recovery of that column's own unshared source.

@@ -1,0 +1,6 @@
+---
+import { googleReleaseNoteTarget } from '../../scripts/lib/google-cloud-release-notes.mjs';
+const { url } = Astro.props;
+const isGoogleRelease = Boolean(googleReleaseNoteTarget(url));
+---
+{isGoogleRelease && <small class="source-license">Adapted from Google Cloud documentation under <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener noreferrer">CC BY 4.0</a>. Analysis and wording by Compute Current.</small>}

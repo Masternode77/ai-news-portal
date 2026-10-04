@@ -4,6 +4,7 @@ import { hasInternalPublicLanguage } from './internal-language-guard.mjs';
 import { classifyInfrastructureRelevance } from './relevance-classifier.mjs';
 import { routeStrictInfrastructureRelevance } from './strict-infrastructure-relevance-router.mjs';
 import { validateExtractionArtifact } from './extraction-artifact.mjs';
+import { googleReleaseNoteTarget } from './google-cloud-release-notes.mjs';
 
 const PUBLIC_RELEVANCE_THRESHOLD = 0.55;
 const PUBLIC_COPY_QUALIFICATION_PATTERN = /\b(?:before it becomes a full Compute Current analysis|needs evidence|source-backed facts|watchlist|qualification|routing decision|publish decision)\b/i;
@@ -28,7 +29,7 @@ function normalizedSourceUrl(value = '') {
   try {
     const url = new URL(String(value || ''));
     if (!/^https?:$/.test(url.protocol)) return '';
-    url.hash = '';
+    if (!googleReleaseNoteTarget(url.href)) url.hash = '';
     return url.href;
   } catch {
     return '';

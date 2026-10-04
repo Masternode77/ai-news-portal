@@ -34,6 +34,9 @@ export function sourceTextTargetDecision(subject = {}, sources = [], now = new D
   if (target.protocol !== 'https:') return { authorized: false, reason: 'unsafe_source_text_url', detail: 'https_required' };
   if (target.username || target.password) return { authorized: false, reason: 'unsafe_source_text_url', detail: 'credentials_not_allowed' };
   if (target.port && target.port !== '443') return { authorized: false, reason: 'unsafe_source_text_url', detail: 'nonstandard_port' };
+  if (source.article_path && target.pathname !== source.article_path) {
+    return { authorized: false, reason: 'unsafe_source_text_url', detail: 'article_path_not_allowlisted' };
+  }
   const allowedHosts = configuredHosts(source);
   if (!allowedHosts.includes(normalizeNetworkHost(target.hostname))) {
     return { authorized: false, reason: 'unsafe_source_text_url', detail: 'article_host_not_allowlisted' };

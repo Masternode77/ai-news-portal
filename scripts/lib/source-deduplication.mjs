@@ -1,4 +1,5 @@
 import { compact, hash, titleTextFor } from './autonomous-desk-utils.mjs';
+import { googleReleaseNoteTarget } from './google-cloud-release-notes.mjs';
 
 export function normalizedTitleKey(value = '') {
   return compact(value)
@@ -22,7 +23,8 @@ export function dedupeSourceItems(items = []) {
   const seenTitle = new Set();
   const out = [];
   for (const item of items) {
-    const urlKey = String(item.url || item.sourceUrl || '').replace(/#.*$/, '');
+    const rawUrl = String(item.url || item.sourceUrl || '');
+    const urlKey = googleReleaseNoteTarget(rawUrl) ? rawUrl : rawUrl.replace(/#.*$/, '');
     const titleKey = normalizedTitleKey(item.title);
     if (urlKey && seenUrl.has(urlKey)) continue;
     if (titleKey && seenTitle.has(titleKey)) continue;

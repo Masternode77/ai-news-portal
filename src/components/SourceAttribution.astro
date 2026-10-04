@@ -1,4 +1,5 @@
 ---
+import SourceLicense from './SourceLicense.astro';
 const { source } = Astro.props;
 ---
 <section class="source-attribution" aria-label="Source attribution">
@@ -9,4 +10,5 @@ const { source } = Astro.props;
       <a href={source.url} target="_blank" rel="noopener noreferrer">Read the source</a>
     ) : null}
   </p>
+  <SourceLicense url={source.url} />
 </section>

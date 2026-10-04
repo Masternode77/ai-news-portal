@@ -11,8 +11,11 @@ function recencyScore(isoDate) {
 }
 
 function relevanceScore(item) {
-  if (Number.isFinite(item.infrastructure_relevance_score)) {
-    return Math.round(item.infrastructure_relevance_score * 42);
+  if (Number.isFinite(item.infrastructure_relevance_score) || Number.isFinite(item.ai_topic_score)) {
+    return Math.round(Math.max(
+      Number.isFinite(item.infrastructure_relevance_score) ? item.infrastructure_relevance_score : 0,
+      Number.isFinite(item.ai_topic_score) ? item.ai_topic_score : 0,
+    ) * 42);
   }
 
   const haystack = `${item.title} ${item.snippet} ${item.contentText || ''}`.toLowerCase();
