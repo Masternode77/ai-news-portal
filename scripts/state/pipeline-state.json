@@ -48404,233 +48404,10 @@
     "2026-10-05": {
       "date": "2026-10-05",
       "createdAt": "2026-10-04T17:17:48.065Z",
-      "refreshedAt": "2026-10-04T21:04:49.361Z",
+      "refreshedAt": "2026-10-04T22:05:30.235Z",
       "candidateWindowHours": 24,
-      "curatedItems": [
-        {
-          "id": "168b174a04128103",
-          "sourceRegistryId": "google-cloud-ai-releases",
-          "source": "Google Cloud AI",
-          "url": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/release-notes#September_29_2026",
-          "title": "Google Cloud AI: Custom denial messages for semantic governance policies",
-          "snippet": "Feature Custom denial messages for semantic governance policies You can now configure a fixed Denial message on a semantic governance policy to show end users when the policy denies a request, in place of the policy den…",
-          "contentText": "Feature Custom denial messages for semantic governance policies You can now configure a fixed Denial message on a semantic governance policy to show end users when the policy denies a request, in place of the policy denial rationale. The message can be up to 1,000 characters and is configurable in the Google Cloud console on the policy create or edit page, or by setting agentResponseCustomization.denialMessage on the policy resource using the REST API. When a single request triggers denials from more than one policy, the policy engine combines the configured Denial messages, deduplicates them, and falls back to a generic message for firing policies that don't have one configured. For more information, see Configure a semantic governance policy and Information exposure risk .",
-          "publishedAt": "2026-09-29T07:00:00.000Z",
-          "sourceImage": null,
-          "region": "US",
-          "language": "en",
-          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
-          "ai_topic_score": 0.483,
-          "ai_topic_reasons": [
-            "gemini",
-            "ai"
-          ],
-          "category": "AI Infrastructure",
-          "primary_category": "AI Infrastructure",
-          "secondary_category": "GPU clusters and deployment readiness",
-          "infrastructure_layer": "Compute",
-          "affected_stakeholders": [
-            "operators",
-            "hyperscalers",
-            "cloud buyers",
-            "investors"
-          ],
-          "article_type": "Policy / Regulation",
-          "urgency_score": 0.28,
-          "taxonomy_confidence": 0.65,
-          "taxonomy_reasons": [
-            "ai infrastructure",
-            "neocloud"
-          ],
-          "direct_ai_infrastructure_relevance": 0.22,
-          "data_center_relevance": 0,
-          "cloud_capacity_relevance": 0.324,
-          "semiconductor_relevance": 0,
-          "power_grid_relevance": 0,
-          "cooling_relevance": 0,
-          "capital_markets_relevance": 0,
-          "enterprise_ai_infrastructure_relevance": 0,
-          "infrastructure_relevance_score": 0.306,
-          "infrastructure_relevance_tier": "archive_only",
-          "infrastructure_relevance_action": "archive_only",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:0.22",
-            "cloud_capacity_relevance:0.32(google cloud)"
-          ],
-          "infrastructure_relevance": {
-            "direct_ai_infrastructure_relevance": 0.22,
-            "data_center_relevance": 0,
-            "cloud_capacity_relevance": 0.324,
-            "semiconductor_relevance": 0,
-            "power_grid_relevance": 0,
-            "cooling_relevance": 0,
-            "capital_markets_relevance": 0,
-            "enterprise_ai_infrastructure_relevance": 0,
-            "infrastructure_relevance_score": 0.306,
-            "infrastructure_relevance_tier": "archive_only",
-            "infrastructure_relevance_action": "archive_only",
-            "infrastructure_relevance_reasons": [
-              "direct_ai_infrastructure_relevance:0.22",
-              "cloud_capacity_relevance:0.32(google cloud)"
-            ],
-            "infrastructureRelevanceAction": "archive_only",
-            "articlePagePublished": false,
-            "homepagePublished": false,
-            "archiveOnly": true,
-            "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
-          },
-          "score": 36
-        },
-        {
-          "id": "b8a3286414469197",
-          "sourceRegistryId": "uk-desnz",
-          "source": "UK Department for Energy Security and Net Zero",
-          "url": "https://www.gov.uk/government/news/uks-decommissioning-mission-continues-to-expand",
-          "title": "UK’s decommissioning mission continues to expand",
-          "snippet": "Hinkley Point B nuclear power station in Somerset transferred from EDF to the NDA for decommissioning.",
-          "contentText": "Hinkley Point B nuclear power station in Somerset transferred from EDF to the NDA for decommissioning.",
-          "publishedAt": "2026-10-01T09:21:10.000Z",
-          "sourceImage": null,
-          "region": "EU",
-          "language": "en",
-          "defaultCategory": "Power & Grid",
-          "ai_topic_score": 0,
-          "ai_topic_reasons": [
-            "ai_not_in_title"
-          ],
-          "category": "Power & Grid",
-          "primary_category": "Power & Grid",
-          "secondary_category": "Interconnection and power procurement",
-          "infrastructure_layer": "Power",
-          "affected_stakeholders": [
-            "data center operators",
-            "utilities",
-            "cloud capacity teams",
-            "investors"
-          ],
-          "article_type": "Other",
-          "urgency_score": 0.46,
-          "taxonomy_confidence": 0.77,
-          "taxonomy_reasons": [
-            "power",
-            "grid",
-            "nuclear"
-          ],
-          "direct_ai_infrastructure_relevance": 0,
-          "data_center_relevance": 0,
-          "cloud_capacity_relevance": 0,
-          "semiconductor_relevance": 0,
-          "power_grid_relevance": 0.48,
-          "cooling_relevance": 0,
-          "capital_markets_relevance": 0,
-          "enterprise_ai_infrastructure_relevance": 0,
-          "infrastructure_relevance_score": 0.313,
-          "infrastructure_relevance_tier": "archive_only",
-          "infrastructure_relevance_action": "archive_only",
-          "infrastructure_relevance_reasons": [
-            "power_grid_relevance:0.48(power, nuclear)"
-          ],
-          "infrastructure_relevance": {
-            "direct_ai_infrastructure_relevance": 0,
-            "data_center_relevance": 0,
-            "cloud_capacity_relevance": 0,
-            "semiconductor_relevance": 0,
-            "power_grid_relevance": 0.48,
-            "cooling_relevance": 0,
-            "capital_markets_relevance": 0,
-            "enterprise_ai_infrastructure_relevance": 0,
-            "infrastructure_relevance_score": 0.313,
-            "infrastructure_relevance_tier": "archive_only",
-            "infrastructure_relevance_action": "archive_only",
-            "infrastructure_relevance_reasons": [
-              "power_grid_relevance:0.48(power, nuclear)"
-            ],
-            "infrastructureRelevanceAction": "archive_only",
-            "articlePagePublished": false,
-            "homepagePublished": false,
-            "archiveOnly": true,
-            "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
-          },
-          "score": 22
-        },
-        {
-          "id": "af7565ca100cccb3",
-          "sourceRegistryId": "acer-news",
-          "source": "ACER (EU energy regulators)",
-          "url": "https://www.acer.europa.eu/news/europes-retail-energy-markets-and-shift-electrification-prices-affordability-and-consumer-flexibility",
-          "title": "Europe’s retail energy markets and the shift to electrification: prices, affordability and consumer flexibility",
-          "snippet": "The 2026 Monitoring Report on retail energy markets examines electricity bills, affordability and what the shift to electrification means for consumers.",
-          "contentText": "The 2026 Monitoring Report on retail energy markets examines electricity bills, affordability and what the shift to electrification means for consumers.",
-          "publishedAt": "2026-09-30T07:47:00.000Z",
-          "sourceImage": null,
-          "region": "EU",
-          "language": "en",
-          "defaultCategory": "Power & Grid",
-          "ai_topic_score": 0,
-          "ai_topic_reasons": [
-            "ai_not_in_title"
-          ],
-          "category": "Power & Grid",
-          "primary_category": "Power & Grid",
-          "secondary_category": "Interconnection and power procurement",
-          "infrastructure_layer": "Power",
-          "affected_stakeholders": [
-            "data center operators",
-            "utilities",
-            "cloud capacity teams",
-            "investors"
-          ],
-          "article_type": "Other",
-          "urgency_score": 0.42,
-          "taxonomy_confidence": 0.73,
-          "taxonomy_reasons": [
-            "power",
-            "grid",
-            "electricity"
-          ],
-          "direct_ai_infrastructure_relevance": 0,
-          "data_center_relevance": 0,
-          "cloud_capacity_relevance": 0,
-          "semiconductor_relevance": 0,
-          "power_grid_relevance": 0.24,
-          "cooling_relevance": 0,
-          "capital_markets_relevance": 0,
-          "enterprise_ai_infrastructure_relevance": 0,
-          "infrastructure_relevance_score": 0.174,
-          "infrastructure_relevance_tier": "archive_only",
-          "infrastructure_relevance_action": "archive_only",
-          "infrastructure_relevance_reasons": [
-            "power_grid_relevance:0.24(electricity)"
-          ],
-          "infrastructure_relevance": {
-            "direct_ai_infrastructure_relevance": 0,
-            "data_center_relevance": 0,
-            "cloud_capacity_relevance": 0,
-            "semiconductor_relevance": 0,
-            "power_grid_relevance": 0.24,
-            "cooling_relevance": 0,
-            "capital_markets_relevance": 0,
-            "enterprise_ai_infrastructure_relevance": 0,
-            "infrastructure_relevance_score": 0.174,
-            "infrastructure_relevance_tier": "archive_only",
-            "infrastructure_relevance_action": "archive_only",
-            "infrastructure_relevance_reasons": [
-              "power_grid_relevance:0.24(electricity)"
-            ],
-            "infrastructureRelevanceAction": "archive_only",
-            "articlePagePublished": false,
-            "homepagePublished": false,
-            "archiveOnly": true,
-            "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
-          },
-          "score": 16
-        }
-      ],
-      "curatedIds": [
-        "168b174a04128103",
-        "b8a3286414469197",
-        "af7565ca100cccb3"
-      ],
+      "curatedItems": [],
+      "curatedIds": [],
       "publishedIds": [
         "741e7affa6897e99",
         "518703cc40750ccb",
@@ -48654,25 +48431,6 @@
     }
   },
   "runHistory": [
-    {
-      "at": "2026-08-28T23:57:32.701Z",
-      "day": "2026-08-29",
-      "slot": 1,
-      "publishedCount": 0,
-      "authoredColumn": {
-        "published": false,
-        "reason": "no_qualifying_story"
-      },
-      "llmUsage": {
-        "calls": 1,
-        "failures": 0,
-        "prompt_tokens": 102,
-        "completion_tokens": 5,
-        "total_tokens": 107,
-        "token_budget": 60000,
-        "call_budget": 40
-      }
-    },
     {
       "at": "2026-08-29T04:08:04.519Z",
       "day": "2026-08-29",
@@ -52954,11 +52712,123 @@
         "token_budget": 120000,
         "call_budget": 60
       }
+    },
+    {
+      "at": "2026-10-04T22:05:30.235Z",
+      "day": "2026-10-05",
+      "slot": 0,
+      "publishedCount": 0,
+      "authoredColumn": {
+        "published": true,
+        "slug": "malaysia-collapsed-a-multi-billion-dollar-server-smuggling-route-2026-10-04",
+        "selectionDiagnostics": {
+          "total_candidates": 97,
+          "counts": {
+            "invalid_identity": 0,
+            "text_rights_unauthorized": 0,
+            "abstract_only": 42,
+            "extraction_ineligible": 39,
+            "expert_insight_incomplete": 1,
+            "relevance_below_threshold": 12,
+            "already_covered": 2,
+            "stale_story": 0,
+            "digest_roundup": 0,
+            "unclean_evidence": 0,
+            "insufficient_facts": 0,
+            "qualifying": 1
+          },
+          "selected_id": "527c917b74f90f0e",
+          "selected_beat": "compute_hardware",
+          "selection_reason": "highest_evidence_score",
+          "by_beat": {
+            "ai_business": {
+              "candidates": 13,
+              "qualifying": 0,
+              "rejections": {
+                "abstract_only": 7,
+                "extraction_ineligible": 4,
+                "relevance_below_threshold": 1,
+                "expert_insight_incomplete": 1
+              }
+            },
+            "data_center_operators": {
+              "candidates": 5,
+              "qualifying": 0,
+              "rejections": {
+                "abstract_only": 2,
+                "extraction_ineligible": 2,
+                "relevance_below_threshold": 1
+              }
+            },
+            "compute_hardware": {
+              "candidates": 22,
+              "qualifying": 1,
+              "rejections": {
+                "abstract_only": 20,
+                "extraction_ineligible": 1
+              }
+            },
+            "power_cooling": {
+              "candidates": 37,
+              "qualifying": 0,
+              "rejections": {
+                "relevance_below_threshold": 8,
+                "abstract_only": 10,
+                "extraction_ineligible": 19
+              }
+            },
+            "policy": {
+              "candidates": 8,
+              "qualifying": 0,
+              "rejections": {
+                "already_covered": 2,
+                "extraction_ineligible": 6
+              }
+            },
+            "other_infrastructure": {
+              "candidates": 12,
+              "qualifying": 0,
+              "rejections": {
+                "abstract_only": 3,
+                "relevance_below_threshold": 2,
+                "extraction_ineligible": 7
+              }
+            }
+          },
+          "recent_coverage": {
+            "counts": {
+              "ai_business": 0,
+              "data_center_operators": 0,
+              "compute_hardware": 0,
+              "power_cooling": 2,
+              "policy": 1,
+              "other_infrastructure": 0
+            },
+            "lastBeat": "policy",
+            "total": 3
+          },
+          "attempts": [
+            {
+              "id": "527c917b74f90f0e",
+              "outcome": "published"
+            }
+          ]
+        }
+      },
+      "llmUsage": {
+        "calls": 5,
+        "failures": 0,
+        "prompt_tokens": 27167,
+        "completion_tokens": 8145,
+        "total_tokens": 35312,
+        "token_budget": 120000,
+        "call_budget": 60
+      }
     }
   ],
-  "lastRunAt": "2026-10-04T21:04:49.361Z",
+  "lastRunAt": "2026-10-04T22:05:30.235Z",
   "authored": {
-    "lastColumnAt": "2026-10-04T10:31:52.065Z",
+    "lastColumnAt": "2026-10-04T22:05:30.235Z",
     "columnsByDay": {
       "2026-08-17": 2,
       "2026-08-18": 1,
@@ -52971,54 +52841,30 @@
       "2026-08-28": 2,
       "2026-09-08": 1,
       "2026-09-16": 1,
-      "2026-10-04": 1
+      "2026-10-04": 2
     },
     "recentStoryKeys": [
       {
         "key": "https://ec.europa.eu/commission/presscorner/detail/en/ip_26_1667",
         "at": "2026-10-04T10:31:52.065Z"
+      },
+      {
+        "key": "https://epoch.ai/data-insights/malaysia-china-chip-smuggling",
+        "at": "2026-10-04T22:05:30.235Z"
       }
     ],
-    "lastFailure": {
-      "at": "2026-10-04T21:04:49.361Z",
-      "stage": "verify",
-      "detail": "insight_density_below_0.75",
-      "metrics": {
-        "chars": 9381,
-        "words": 1407,
-        "sections": 5,
-        "paragraphs": 18,
-        "human_style_score": 0.89,
-        "insight_density_score": 0.732,
-        "source_summary_ratio": 0.231,
-        "copyright_overlap_score": 0.111,
-        "unsupported_claim_count": 0,
-        "repeated_sentence_ratio": 0,
-        "heading_sequence_similarity": 0,
-        "conclusion_similarity": 0.163,
-        "thesis_overlap": 0.048,
-        "heading_reuse_max": 0.286,
-        "lead_reuse_max": 0.053,
-        "figure_count": 1
-      },
-      "attempts": [
-        {
-          "id": "527c917b74f90f0e",
-          "outcome": "verify:insight_density_below_0.75"
-        }
-      ]
-    },
+    "lastFailure": null,
     "lastSelection": {
-      "at": "2026-10-04T21:04:49.361Z",
+      "at": "2026-10-04T22:05:30.235Z",
       "outcome": "selected",
       "selectedId": "527c917b74f90f0e",
       "diagnostics": {
-        "total_candidates": 94,
+        "total_candidates": 97,
         "counts": {
           "invalid_identity": 0,
           "text_rights_unauthorized": 0,
           "abstract_only": 42,
-          "extraction_ineligible": 36,
+          "extraction_ineligible": 39,
           "expert_insight_incomplete": 1,
           "relevance_below_threshold": 12,
           "already_covered": 2,
@@ -53060,12 +52906,12 @@
             }
           },
           "power_cooling": {
-            "candidates": 36,
+            "candidates": 37,
             "qualifying": 0,
             "rejections": {
               "relevance_below_threshold": 8,
               "abstract_only": 10,
-              "extraction_ineligible": 18
+              "extraction_ineligible": 19
             }
           },
           "policy": {
@@ -53077,12 +52923,12 @@
             }
           },
           "other_infrastructure": {
-            "candidates": 10,
+            "candidates": 12,
             "qualifying": 0,
             "rejections": {
               "abstract_only": 3,
               "relevance_below_threshold": 2,
-              "extraction_ineligible": 5
+              "extraction_ineligible": 7
             }
           }
         },
@@ -53102,7 +52948,7 @@
       "attempts": [
         {
           "id": "527c917b74f90f0e",
-          "outcome": "verify:insight_density_below_0.75"
+          "outcome": "published"
         }
       ]
     }

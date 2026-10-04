@@ -1,78 +1,5 @@
 [
   {
-    "id": "168b174a04128103",
-    "sourceRegistryId": "google-cloud-ai-releases",
-    "source": "Google Cloud AI",
-    "url": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/release-notes#September_29_2026",
-    "title": "Google Cloud AI: Custom denial messages for semantic governance policies",
-    "snippet": "Feature Custom denial messages for semantic governance policies You can now configure a fixed Denial message on a semantic governance policy to show end users when the policy denies a request, in place of the policy den…",
-    "contentText": "Feature Custom denial messages for semantic governance policies You can now configure a fixed Denial message on a semantic governance policy to show end users when the policy denies a request, in place of the policy denial rationale. The message can be up to 1,000 characters and is configurable in the Google Cloud console on the policy create or edit page, or by setting agentResponseCustomization.denialMessage on the policy resource using the REST API. When a single request triggers denials from more than one policy, the policy engine combines the configured Denial messages, deduplicates them, and falls back to a generic message for firing policies that don't have one configured. For more information, see Configure a semantic governance policy and Information exposure risk .",
-    "publishedAt": "2026-09-29T07:00:00.000Z",
-    "sourceImage": null,
-    "region": "US",
-    "language": "en",
-    "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
-    "ai_topic_score": 0.483,
-    "ai_topic_reasons": [
-      "gemini",
-      "ai"
-    ],
-    "category": "AI Infrastructure",
-    "primary_category": "AI Infrastructure",
-    "secondary_category": "GPU clusters and deployment readiness",
-    "infrastructure_layer": "Compute",
-    "affected_stakeholders": [
-      "operators",
-      "hyperscalers",
-      "cloud buyers",
-      "investors"
-    ],
-    "article_type": "Policy / Regulation",
-    "urgency_score": 0.28,
-    "taxonomy_confidence": 0.65,
-    "taxonomy_reasons": [
-      "ai infrastructure",
-      "neocloud"
-    ],
-    "direct_ai_infrastructure_relevance": 0.22,
-    "data_center_relevance": 0,
-    "cloud_capacity_relevance": 0.324,
-    "semiconductor_relevance": 0,
-    "power_grid_relevance": 0,
-    "cooling_relevance": 0,
-    "capital_markets_relevance": 0,
-    "enterprise_ai_infrastructure_relevance": 0,
-    "infrastructure_relevance_score": 0.306,
-    "infrastructure_relevance_tier": "archive_only",
-    "infrastructure_relevance_action": "archive_only",
-    "infrastructure_relevance_reasons": [
-      "direct_ai_infrastructure_relevance:0.22",
-      "cloud_capacity_relevance:0.32(google cloud)"
-    ],
-    "infrastructure_relevance": {
-      "direct_ai_infrastructure_relevance": 0.22,
-      "data_center_relevance": 0,
-      "cloud_capacity_relevance": 0.324,
-      "semiconductor_relevance": 0,
-      "power_grid_relevance": 0,
-      "cooling_relevance": 0,
-      "capital_markets_relevance": 0,
-      "enterprise_ai_infrastructure_relevance": 0,
-      "infrastructure_relevance_score": 0.306,
-      "infrastructure_relevance_tier": "archive_only",
-      "infrastructure_relevance_action": "archive_only",
-      "infrastructure_relevance_reasons": [
-        "direct_ai_infrastructure_relevance:0.22",
-        "cloud_capacity_relevance:0.32(google cloud)"
-      ],
-      "infrastructureRelevanceAction": "archive_only",
-      "articlePagePublished": false,
-      "homepagePublished": false,
-      "archiveOnly": true,
-      "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
-    }
-  },
-  {
     "id": "8b9b324626df1fd9",
     "sourceRegistryId": "google-cloud-ai-releases",
     "source": "Google Cloud AI",
@@ -137,77 +64,6 @@
       "infrastructure_relevance_reasons": [
         "direct_ai_infrastructure_relevance:0.22",
         "cloud_capacity_relevance:0.32(google cloud)"
-      ],
-      "infrastructureRelevanceAction": "archive_only",
-      "articlePagePublished": false,
-      "homepagePublished": false,
-      "archiveOnly": true,
-      "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
-    }
-  },
-  {
-    "id": "b8a3286414469197",
-    "sourceRegistryId": "uk-desnz",
-    "source": "UK Department for Energy Security and Net Zero",
-    "url": "https://www.gov.uk/government/news/uks-decommissioning-mission-continues-to-expand",
-    "title": "UK’s decommissioning mission continues to expand",
-    "snippet": "Hinkley Point B nuclear power station in Somerset transferred from EDF to the NDA for decommissioning.",
-    "contentText": "Hinkley Point B nuclear power station in Somerset transferred from EDF to the NDA for decommissioning.",
-    "publishedAt": "2026-10-01T09:21:10.000Z",
-    "sourceImage": null,
-    "region": "EU",
-    "language": "en",
-    "defaultCategory": "Power & Grid",
-    "ai_topic_score": 0,
-    "ai_topic_reasons": [
-      "ai_not_in_title"
-    ],
-    "category": "Power & Grid",
-    "primary_category": "Power & Grid",
-    "secondary_category": "Interconnection and power procurement",
-    "infrastructure_layer": "Power",
-    "affected_stakeholders": [
-      "data center operators",
-      "utilities",
-      "cloud capacity teams",
-      "investors"
-    ],
-    "article_type": "Other",
-    "urgency_score": 0.46,
-    "taxonomy_confidence": 0.77,
-    "taxonomy_reasons": [
-      "power",
-      "grid",
-      "nuclear"
-    ],
-    "direct_ai_infrastructure_relevance": 0,
-    "data_center_relevance": 0,
-    "cloud_capacity_relevance": 0,
-    "semiconductor_relevance": 0,
-    "power_grid_relevance": 0.48,
-    "cooling_relevance": 0,
-    "capital_markets_relevance": 0,
-    "enterprise_ai_infrastructure_relevance": 0,
-    "infrastructure_relevance_score": 0.313,
-    "infrastructure_relevance_tier": "archive_only",
-    "infrastructure_relevance_action": "archive_only",
-    "infrastructure_relevance_reasons": [
-      "power_grid_relevance:0.48(power, nuclear)"
-    ],
-    "infrastructure_relevance": {
-      "direct_ai_infrastructure_relevance": 0,
-      "data_center_relevance": 0,
-      "cloud_capacity_relevance": 0,
-      "semiconductor_relevance": 0,
-      "power_grid_relevance": 0.48,
-      "cooling_relevance": 0,
-      "capital_markets_relevance": 0,
-      "enterprise_ai_infrastructure_relevance": 0,
-      "infrastructure_relevance_score": 0.313,
-      "infrastructure_relevance_tier": "archive_only",
-      "infrastructure_relevance_action": "archive_only",
-      "infrastructure_relevance_reasons": [
-        "power_grid_relevance:0.48(power, nuclear)"
       ],
       "infrastructureRelevanceAction": "archive_only",
       "articlePagePublished": false,
@@ -1070,77 +926,6 @@
     }
   },
   {
-    "id": "af7565ca100cccb3",
-    "sourceRegistryId": "acer-news",
-    "source": "ACER (EU energy regulators)",
-    "url": "https://www.acer.europa.eu/news/europes-retail-energy-markets-and-shift-electrification-prices-affordability-and-consumer-flexibility",
-    "title": "Europe’s retail energy markets and the shift to electrification: prices, affordability and consumer flexibility",
-    "snippet": "The 2026 Monitoring Report on retail energy markets examines electricity bills, affordability and what the shift to electrification means for consumers.",
-    "contentText": "The 2026 Monitoring Report on retail energy markets examines electricity bills, affordability and what the shift to electrification means for consumers.",
-    "publishedAt": "2026-09-30T07:47:00.000Z",
-    "sourceImage": null,
-    "region": "EU",
-    "language": "en",
-    "defaultCategory": "Power & Grid",
-    "ai_topic_score": 0,
-    "ai_topic_reasons": [
-      "ai_not_in_title"
-    ],
-    "category": "Power & Grid",
-    "primary_category": "Power & Grid",
-    "secondary_category": "Interconnection and power procurement",
-    "infrastructure_layer": "Power",
-    "affected_stakeholders": [
-      "data center operators",
-      "utilities",
-      "cloud capacity teams",
-      "investors"
-    ],
-    "article_type": "Other",
-    "urgency_score": 0.42,
-    "taxonomy_confidence": 0.73,
-    "taxonomy_reasons": [
-      "power",
-      "grid",
-      "electricity"
-    ],
-    "direct_ai_infrastructure_relevance": 0,
-    "data_center_relevance": 0,
-    "cloud_capacity_relevance": 0,
-    "semiconductor_relevance": 0,
-    "power_grid_relevance": 0.24,
-    "cooling_relevance": 0,
-    "capital_markets_relevance": 0,
-    "enterprise_ai_infrastructure_relevance": 0,
-    "infrastructure_relevance_score": 0.174,
-    "infrastructure_relevance_tier": "archive_only",
-    "infrastructure_relevance_action": "archive_only",
-    "infrastructure_relevance_reasons": [
-      "power_grid_relevance:0.24(electricity)"
-    ],
-    "infrastructure_relevance": {
-      "direct_ai_infrastructure_relevance": 0,
-      "data_center_relevance": 0,
-      "cloud_capacity_relevance": 0,
-      "semiconductor_relevance": 0,
-      "power_grid_relevance": 0.24,
-      "cooling_relevance": 0,
-      "capital_markets_relevance": 0,
-      "enterprise_ai_infrastructure_relevance": 0,
-      "infrastructure_relevance_score": 0.174,
-      "infrastructure_relevance_tier": "archive_only",
-      "infrastructure_relevance_action": "archive_only",
-      "infrastructure_relevance_reasons": [
-        "power_grid_relevance:0.24(electricity)"
-      ],
-      "infrastructureRelevanceAction": "archive_only",
-      "articlePagePublished": false,
-      "homepagePublished": false,
-      "archiveOnly": true,
-      "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
-    }
-  },
-  {
     "id": "071ab1ea188d8989",
     "sourceRegistryId": "whitehouse-presidential-actions",
     "source": "The White House",
@@ -1348,13 +1133,13 @@
     }
   },
   {
-    "id": "98d7208aa39f25d0",
+    "id": "0c3fbad1f09140c5",
     "sourceRegistryId": "ftc-press",
     "source": "Federal Trade Commission",
-    "url": "https://www.ftc.gov/news-events/news/press-releases/2026/10/ftc-secures-settlement-protects-small-businesses-illegal-price-discrimination",
-    "title": "FTC Secures Settlement that Protects Small Businesses from Illegal Price Discrimination",
-    "snippet": "Settlement with Southern Glazer’s will help level the playing field for small businesses and facilitate consumer access to lower-priced wine and spirits at local retailers The Federal Trade Commission secured a settleme…",
-    "contentText": "Settlement with Southern Glazer’s will help level the playing field for small businesses and facilitate consumer access to lower-priced wine and spirits at local retailers The Federal Trade Commission secured a settlement agreement with Southern Glazer’s Wine and Spirits LLC, the nation’s largest distributor of wine and spirits, that will redress allegedly illegal price discrimination practices and make it easier for small businesses to compete against large chain retailers. View Press Release",
+    "url": "https://www.ftc.gov/news-events/news/press-releases/2026/10/ftc-states-sue-lenscom-misrepresenting-price-contact-lenses-search-ads-its-website",
+    "title": "FTC, States Sue Lens.com for Misrepresenting the Price of Contact Lenses in Search Ads and on Its Website",
+    "snippet": "Lens.com hides bogus ‘taxes & fees’ charge that often doubles the price of contact lenses for consumers, the FTC and states allege Today, the Federal Trade Commission, joined by the Utah and Nevada Attorneys General, su…",
+    "contentText": "Lens.com hides bogus ‘taxes & fees’ charge that often doubles the price of contact lenses for consumers, the FTC and states allege Today, the Federal Trade Commission, joined by the Utah and Nevada Attorneys General, sued to stop a long-running deceptive pricing scheme run by contact lens retailer Lens.com Inc. View Press Release",
     "publishedAt": "2026-10-02T12:00:00.000Z",
     "sourceImage": null,
     "region": "US",
@@ -1414,13 +1199,13 @@
     }
   },
   {
-    "id": "0c3fbad1f09140c5",
+    "id": "98d7208aa39f25d0",
     "sourceRegistryId": "ftc-press",
     "source": "Federal Trade Commission",
-    "url": "https://www.ftc.gov/news-events/news/press-releases/2026/10/ftc-states-sue-lenscom-misrepresenting-price-contact-lenses-search-ads-its-website",
-    "title": "FTC, States Sue Lens.com for Misrepresenting the Price of Contact Lenses in Search Ads and on Its Website",
-    "snippet": "Lens.com hides bogus ‘taxes & fees’ charge that often doubles the price of contact lenses for consumers, the FTC and states allege Today, the Federal Trade Commission, joined by the Utah and Nevada Attorneys General, su…",
-    "contentText": "Lens.com hides bogus ‘taxes & fees’ charge that often doubles the price of contact lenses for consumers, the FTC and states allege Today, the Federal Trade Commission, joined by the Utah and Nevada Attorneys General, sued to stop a long-running deceptive pricing scheme run by contact lens retailer Lens.com Inc. View Press Release",
+    "url": "https://www.ftc.gov/news-events/news/press-releases/2026/10/ftc-secures-settlement-protects-small-businesses-illegal-price-discrimination",
+    "title": "FTC Secures Settlement that Protects Small Businesses from Illegal Price Discrimination",
+    "snippet": "Settlement with Southern Glazer’s will help level the playing field for small businesses and facilitate consumer access to lower-priced wine and spirits at local retailers The Federal Trade Commission secured a settleme…",
+    "contentText": "Settlement with Southern Glazer’s will help level the playing field for small businesses and facilitate consumer access to lower-priced wine and spirits at local retailers The Federal Trade Commission secured a settlement agreement with Southern Glazer’s Wine and Spirits LLC, the nation’s largest distributor of wine and spirits, that will redress allegedly illegal price discrimination practices and make it easier for small businesses to compete against large chain retailers. View Press Release",
     "publishedAt": "2026-10-02T12:00:00.000Z",
     "sourceImage": null,
     "region": "US",
@@ -2061,6 +1846,211 @@
     "taxonomy_reasons": [
       "power",
       "grid"
+    ],
+    "direct_ai_infrastructure_relevance": 0,
+    "data_center_relevance": 0,
+    "cloud_capacity_relevance": 0,
+    "semiconductor_relevance": 0,
+    "power_grid_relevance": 0,
+    "cooling_relevance": 0,
+    "capital_markets_relevance": 0,
+    "enterprise_ai_infrastructure_relevance": 0,
+    "infrastructure_relevance_score": 0,
+    "infrastructure_relevance_tier": "archive_only",
+    "infrastructure_relevance_action": "archive_only",
+    "infrastructure_relevance_reasons": [
+      "no_strong_compute_current_infrastructure_match"
+    ],
+    "infrastructure_relevance": {
+      "direct_ai_infrastructure_relevance": 0,
+      "data_center_relevance": 0,
+      "cloud_capacity_relevance": 0,
+      "semiconductor_relevance": 0,
+      "power_grid_relevance": 0,
+      "cooling_relevance": 0,
+      "capital_markets_relevance": 0,
+      "enterprise_ai_infrastructure_relevance": 0,
+      "infrastructure_relevance_score": 0,
+      "infrastructure_relevance_tier": "archive_only",
+      "infrastructure_relevance_action": "archive_only",
+      "infrastructure_relevance_reasons": [
+        "no_strong_compute_current_infrastructure_match"
+      ],
+      "infrastructureRelevanceAction": "archive_only",
+      "articlePagePublished": false,
+      "homepagePublished": false,
+      "archiveOnly": true,
+      "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
+    }
+  },
+  {
+    "id": "6d77fc9cd6c1ca14",
+    "sourceRegistryId": "gao-reports",
+    "source": "U.S. Government Accountability Office",
+    "url": "https://www.gao.gov/products/gao-26-107729",
+    "title": "Public Health Preparedness: Action Needed to Address National and Biosecurity Risks Associated with Disposal of Federal Laboratory Equipment",
+    "snippet": "What GAO Found The Department of Health and Human Services (HHS) and the U.S. Department of Agriculture (USDA) sold 1,316 pieces of unneeded laboratory equipment in fiscal years 2022 through 2025. Of that 1,316, GAO ide…",
+    "contentText": "What GAO Found The Department of Health and Human Services (HHS) and the U.S. Department of Agriculture (USDA) sold 1,316 pieces of unneeded laboratory equipment in fiscal years 2022 through 2025. Of that 1,316, GAO identified nine pieces of equipment–freeze dryers and mass spectrometers–that were on the Commerce Control List and sold to individuals and companies in the U.S. and Canada, some of which appeared to be resellers. These items are subject to export controls because they could be used by certain countries of concern to develop biological weapons or to gain a military advantage. Examples of Laboratory Equipment on the Commerce Control List GAO found that HHS and USDA, in selling the nine pieces of equipment, did not report to the General Services Administration (GSA) that the ite…",
+    "publishedAt": "2026-10-01T11:22:23.000Z",
+    "sourceImage": null,
+    "region": "US",
+    "language": "en",
+    "defaultCategory": "Power & Grid",
+    "ai_topic_score": 0,
+    "ai_topic_reasons": [
+      "ai_not_in_title"
+    ],
+    "category": "Power & Grid",
+    "primary_category": "Power & Grid",
+    "secondary_category": "Interconnection and power procurement",
+    "infrastructure_layer": "Power",
+    "affected_stakeholders": [
+      "data center operators",
+      "utilities",
+      "cloud capacity teams",
+      "investors"
+    ],
+    "article_type": "Other",
+    "urgency_score": 0.36,
+    "taxonomy_confidence": 0.61,
+    "taxonomy_reasons": [
+      "power",
+      "grid"
+    ],
+    "direct_ai_infrastructure_relevance": 0,
+    "data_center_relevance": 0,
+    "cloud_capacity_relevance": 0,
+    "semiconductor_relevance": 0,
+    "power_grid_relevance": 0,
+    "cooling_relevance": 0,
+    "capital_markets_relevance": 0,
+    "enterprise_ai_infrastructure_relevance": 0,
+    "infrastructure_relevance_score": 0,
+    "infrastructure_relevance_tier": "archive_only",
+    "infrastructure_relevance_action": "archive_only",
+    "infrastructure_relevance_reasons": [
+      "no_strong_compute_current_infrastructure_match"
+    ],
+    "infrastructure_relevance": {
+      "direct_ai_infrastructure_relevance": 0,
+      "data_center_relevance": 0,
+      "cloud_capacity_relevance": 0,
+      "semiconductor_relevance": 0,
+      "power_grid_relevance": 0,
+      "cooling_relevance": 0,
+      "capital_markets_relevance": 0,
+      "enterprise_ai_infrastructure_relevance": 0,
+      "infrastructure_relevance_score": 0,
+      "infrastructure_relevance_tier": "archive_only",
+      "infrastructure_relevance_action": "archive_only",
+      "infrastructure_relevance_reasons": [
+        "no_strong_compute_current_infrastructure_match"
+      ],
+      "infrastructureRelevanceAction": "archive_only",
+      "articlePagePublished": false,
+      "homepagePublished": false,
+      "archiveOnly": true,
+      "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
+    }
+  },
+  {
+    "id": "9b59dfffa7e1c059",
+    "sourceRegistryId": "sec-press",
+    "source": "U.S. Securities and Exchange Commission",
+    "url": "https://www.sec.gov/newsroom/press-releases/2026-97-sec-charges-two-individuals-orchestrating-fraud-scheme-targeted-veterans",
+    "title": "SEC Charges Two Individuals With Orchestrating Fraud Scheme That Targeted Veterans",
+    "snippet": "The Securities and Exchange Commission today announced charges against Christopher Kenji Dinelli and Jacob David “Kobe” Frankel for allegedly orchestrating a fraud scheme that raised more than $8.7 million from 35 inves…",
+    "contentText": "The Securities and Exchange Commission today announced charges against Christopher Kenji Dinelli and Jacob David “Kobe” Frankel for allegedly orchestrating a fraud scheme that raised more than $8.7 million from 35 investors through their fund, Beyond…",
+    "publishedAt": "2026-09-30T16:42:15.000Z",
+    "sourceImage": null,
+    "region": "US",
+    "language": "en",
+    "defaultCategory": "Capital Markets",
+    "ai_topic_score": 0,
+    "ai_topic_reasons": [
+      "ai_not_in_title"
+    ],
+    "category": "Other",
+    "primary_category": "Other",
+    "secondary_category": "General AI infrastructure signal",
+    "infrastructure_layer": "Demand",
+    "affected_stakeholders": [
+      "operators"
+    ],
+    "article_type": "Other",
+    "urgency_score": 0.18,
+    "taxonomy_confidence": null,
+    "taxonomy_reasons": [
+      "fallback_taxonomy"
+    ],
+    "direct_ai_infrastructure_relevance": 0,
+    "data_center_relevance": 0,
+    "cloud_capacity_relevance": 0,
+    "semiconductor_relevance": 0,
+    "power_grid_relevance": 0,
+    "cooling_relevance": 0,
+    "capital_markets_relevance": 0,
+    "enterprise_ai_infrastructure_relevance": 0,
+    "infrastructure_relevance_score": 0,
+    "infrastructure_relevance_tier": "archive_only",
+    "infrastructure_relevance_action": "archive_only",
+    "infrastructure_relevance_reasons": [
+      "no_strong_compute_current_infrastructure_match"
+    ],
+    "infrastructure_relevance": {
+      "direct_ai_infrastructure_relevance": 0,
+      "data_center_relevance": 0,
+      "cloud_capacity_relevance": 0,
+      "semiconductor_relevance": 0,
+      "power_grid_relevance": 0,
+      "cooling_relevance": 0,
+      "capital_markets_relevance": 0,
+      "enterprise_ai_infrastructure_relevance": 0,
+      "infrastructure_relevance_score": 0,
+      "infrastructure_relevance_tier": "archive_only",
+      "infrastructure_relevance_action": "archive_only",
+      "infrastructure_relevance_reasons": [
+        "no_strong_compute_current_infrastructure_match"
+      ],
+      "infrastructureRelevanceAction": "archive_only",
+      "articlePagePublished": false,
+      "homepagePublished": false,
+      "archiveOnly": true,
+      "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
+    }
+  },
+  {
+    "id": "8dac52649f138331",
+    "sourceRegistryId": "nsf-news",
+    "source": "U.S. National Science Foundation",
+    "url": "https://www.nsf.gov/news/podcast-new-quantum-enabled-materials",
+    "title": "Podcast: New quantum-enabled materials",
+    "snippet": "NSF-supported researcher Morteza Kayyalha discusses his work developing quantum-enabled materials and devices...",
+    "contentText": "NSF-supported researcher Morteza Kayyalha discusses his work developing quantum-enabled materials and devices...",
+    "publishedAt": "2026-09-30T16:11:09.000Z",
+    "sourceImage": null,
+    "region": "US",
+    "language": "en",
+    "defaultCategory": "AI Infrastructure",
+    "ai_topic_score": 0,
+    "ai_topic_reasons": [
+      "ai_not_in_title"
+    ],
+    "category": "AI Infrastructure",
+    "primary_category": "AI Infrastructure",
+    "secondary_category": "GPU clusters and deployment readiness",
+    "infrastructure_layer": "Compute",
+    "affected_stakeholders": [
+      "operators",
+      "hyperscalers",
+      "cloud buyers",
+      "investors"
+    ],
+    "article_type": "Other",
+    "urgency_score": 0.18,
+    "taxonomy_confidence": 0.53,
+    "taxonomy_reasons": [
+      "ai infrastructure"
     ],
     "direct_ai_infrastructure_relevance": 0,
     "data_center_relevance": 0,
