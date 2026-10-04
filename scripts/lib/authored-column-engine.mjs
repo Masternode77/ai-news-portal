@@ -230,15 +230,69 @@ export function loadPersonaCharter() {
   return JSON.parse(fs.readFileSync(modulePath, 'utf8'));
 }
 
+// A model sometimes breaks strict JSON with a raw line break or tab inside a
+// string value. Escaping control characters inside string literals is
+// lossless; any other malformation still fails the parse.
+function escapeControlCharactersInStrings(text) {
+  let output = '';
+  let inString = false;
+  let escaped = false;
+  for (const character of text) {
+    if (!inString) {
+      if (character === '"') inString = true;
+      output += character;
+      continue;
+    }
+    if (escaped) {
+      output += character;
+      escaped = false;
+    } else if (character === '\\') {
+      output += character;
+      escaped = true;
+    } else if (character === '"') {
+      output += character;
+      inString = false;
+    } else if (character === '\n') {
+      output += '\\n';
+    } else if (character === '\r') {
+      output += '\\r';
+    } else if (character === '\t') {
+      output += '\\t';
+    } else if (character.charCodeAt(0) < 0x20) {
+      output += `\\u${character.charCodeAt(0).toString(16).padStart(4, '0')}`;
+    } else {
+      output += character;
+    }
+  }
+  return output;
+}
+
 function parseModelJson(content) {
   const trimmed = String(content || '').trim().replace(/^```(?:json)?\s*/i, '').replace(/\s*```$/, '');
-  return safeJsonParse(trimmed, null);
+  const strict = safeJsonParse(trimmed, null);
+  if (strict !== null) return strict;
+  return safeJsonParse(escapeControlCharactersInStrings(trimmed), null);
+}
+
+// A reply wrapped in one envelope key ({"column": {...}}) or naming the
+// headline "title" carries the same essay. Unwrap it without rewriting it.
+function unwrapEssayObject(value, depth = 0) {
+  if (!value || typeof value !== 'object' || Array.isArray(value)) return value;
+  if (typeof value.headline === 'string' && value.headline.trim()) return value;
+  const keys = Object.keys(value);
+  const inner = keys.length === 1 ? value[keys[0]] : null;
+  if (depth < 2 && inner && typeof inner === 'object' && !Array.isArray(inner)) return unwrapEssayObject(inner, depth + 1);
+  if (typeof value.title === 'string' && value.title.trim()) {
+    const { title, ...rest } = value;
+    return { ...rest, headline: title };
+  }
+  return value;
 }
 
 class EssayStructureError extends Error {}
 
 export function parseModelEssay(content, { recoverFormat = false, requireSections = false } = {}) {
-  const essay = parseModelJson(content);
+  const essay = unwrapEssayObject(parseModelJson(content));
   if (!essay || typeof essay !== 'object' || Array.isArray(essay)
     || typeof essay.headline !== 'string' || !essay.headline.trim()) {
     throw new EssayStructureError('invalid_structured_essay');
@@ -658,7 +712,7 @@ async function thesisPass({ charter, selection, ledger, recentTheses, callModel 
   return parseModelJson(content);
 }
 
-async function draftPass({ charter, selection, ledger, stance, recentHeadings = [], recentLeads = [], callModel }) {
+async function draftPass({ charter, selection, ledger, stance, recentHeadings = [], recentLeads = [], feedback = [], callModel }) {
   const content = await callModel({
     model: AUTHORED_COLUMN_MODEL,
     temperature: 0.7,
@@ -681,6 +735,7 @@ async function draftPass({ charter, selection, ledger, stance, recentHeadings = 
       '- Attribute every number inline to its source publication by name. Cite only numbers present in verified_claims, copied exactly — same value, same unit; never convert units (do not turn 2,500 MW into 2.5 GW) and never derive new figures.',
       '- Write every sentence in your own words: never reproduce a sentence or long phrase from the source coverage. Short quoted fragments inside quotation marks are the only exception.',
       '- No ellipsis characters. No bullet lists; write prose.',
+      ...(feedback.length ? [`Repair: ${feedback.join(' | ')}`] : []),
     ].join('\n'),
     userPrompt: JSON.stringify({
       stance,
@@ -909,11 +964,22 @@ async function attemptColumnForSelection({
   }
   if (!stance?.thesis) return failWith('thesis', 'no_parseable_thesis');
 
+  // A draft reply that fails the JSON contract gets one repair attempt, as a
+  // malformed revision already does: the 2026-10-04 run lost a qualifying
+  // story to a single unparseable draft.
   let draft;
-  try {
-    draft = await draftPass({ charter, selection, ledger, stance, recentHeadings, recentLeads, callModel });
-  } catch (error) {
-    return failWith('draft', error.message, null, error);
+  let draftFeedback = [];
+  for (let draftAttempt = 1; draftAttempt <= 2; draftAttempt += 1) {
+    try {
+      draft = await draftPass({ charter, selection, ledger, stance, recentHeadings, recentLeads, feedback: draftFeedback, callModel });
+      break;
+    } catch (error) {
+      if (error instanceof EssayStructureError && draftAttempt < 2) {
+        draftFeedback = [`The previous reply failed ${error.message}. Return exactly one JSON object with a nonempty "headline" string, a "deck" string, an "opening_paragraphs" array and 4 to 6 "sections" objects whose "paragraphs" are nonempty single-line strings, with no text or code fence outside the JSON.`];
+        continue;
+      }
+      return failWith('draft', error.message, null, error);
+    }
   }
   if (!draft?.body || !draft?.headline) return failWith('draft', 'no_parseable_draft');
 

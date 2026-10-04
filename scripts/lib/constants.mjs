@@ -7,10 +7,14 @@ export const MIN_ITEMS_PER_SOURCE_IN_POOL = Number(process.env.MIN_ITEMS_PER_SOU
 export const MAX_ITEMS_PER_SOURCE_IN_POOL = Number(process.env.MAX_ITEMS_PER_SOURCE_IN_POOL || 6);
 export const POOL_MAX_AGE_DAYS = Number(process.env.POOL_MAX_AGE_DAYS || 10);
 export const PIPELINE_FORCE_SLOT = process.env.PIPELINE_FORCE_SLOT === '1';
-// Daily throughput: three scheduled runs process up to three curated items
-// each. The daily target is also the per-day processing cap, so repeated
-// manual runs on one day cannot exhaust the candidate pool.
+// Daily throughput: each run processes up to three curated items. The daily
+// target caps what reaches a public surface (an article page or a signal card)
+// per KST day; a pick the relevance gate files as archive-only does not use
+// it, so a thin morning cannot close the day. DAILY_PROCESSING_LIMIT caps
+// everything processed per day, so repeated manual runs on one day cannot
+// exhaust the candidate pool or the model budget.
 export const DAILY_CURATION_TARGET = Number(process.env.DAILY_CURATION_TARGET || 9);
+export const DAILY_PROCESSING_LIMIT = Number(process.env.DAILY_PROCESSING_LIMIT || 18);
 export const ITEMS_PER_RUN = Number(process.env.ITEMS_PER_RUN || 3);
 export const FRESH_CANDIDATE_WINDOW_HOURS = Number(process.env.FRESH_CANDIDATE_WINDOW_HOURS || 24);
 // Older on-beat items stay eligible behind the fresh ones for a week.

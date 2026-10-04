@@ -38,8 +38,10 @@ Run history from 2026-09-11 to 2026-10-04 shows no full article pages and two co
 
 ### Wire throughput (`scripts/lib/curate.mjs`, `scripts/lib/constants.mjs`)
 
-- `ITEMS_PER_RUN` 2 → 3 and `DAILY_CURATION_TARGET` 6 → 9. The daily target is also the
-  per-day processing cap; `PIPELINE_FORCE_SLOT` (the `force_wire` input) lifts it.
+- `ITEMS_PER_RUN` 2 → 3 and `DAILY_CURATION_TARGET` 6 → 9. After the fourth live run the daily
+  target counts only items that reached a public surface (an article page or a signal card), and
+  `DAILY_PROCESSING_LIMIT` (18) caps everything processed per KST day; `PIPELINE_FORCE_SLOT` (the
+  `force_wire` input) lifts both.
 - `pickItemsForRun()` no longer returns nothing because a slot already ran. Slots stay in state
   as history.
 - `applyCurationFloor()` tops a thin model answer up to `CURATION_FLOOR` (3) with candidates whose
@@ -175,11 +177,40 @@ survey stay excluded (no compute anchor, relevance 0.44).
 Follow-up: the column insight-density default is now 0.75 (`AUTHORED_MIN_INSIGHT_DENSITY` still
 overrides it). Summary-heavy prose still fails; every other column gate is unchanged.
 
+## Fourth live run (Update News `37230176681`, release v0.0.36)
+
+- The column stage selected the same Epoch AI story. The thesis pass worked, but the draft reply
+  did not parse as the required JSON essay (`draft:invalid_structured_essay`) and the draft pass
+  had no retry, so the run published nothing. Three model calls used 13,814 tokens.
+- The wire picked nothing. The three earlier runs of KST 2026-10-05 had processed nine items,
+  every one archive-only on infrastructure relevance (Google Cloud release notes 0.22–0.31,
+  Epoch AI Data Insights 0–0.28), and the daily cap counted processed items, so the day closed
+  with nothing published. The September baseline still produced zero to five signal cards a day.
+- The pool held 30 items, all archive-only at fetch time. It is rebuilt from the live feeds on
+  every run: arXiv, the source of most September signal cards, lists only its latest
+  announcement and nothing at weekends, so weekday preprints that were not processed disappeared
+  from the weekend pool. Processed items also kept their pool slots.
+
+Follow-up:
+
+- The daily target counts only items that are publicly visible after the final integrity sync,
+  on the latest surface or in the archive, so a record quarantined there does not use it;
+  archive-only outcomes count toward the new processing limit only. Picks the classifier expects to surface run before
+  snippet-tier archive picks. Plans written before the change are not treated as full.
+- The pool skips items the wire already processed, and `carryOverPoolItems()` offers unprocessed
+  items from the previous pool again while they are fresh and their source still authorizes text
+  use. The live copy wins, matched by ID or, when a feed rewrites a headline, by source and URL;
+  the per-source cap still applies.
+- A draft that fails the JSON contract gets one repair attempt. A reply wrapped in one envelope
+  key, a `title` key standing in for `headline`, or a raw line break inside a JSON string no
+  longer fails the parse.
+- `.env.example` now ships the code's throughput values (it still had 6 per day and 2 per run).
+
 ## Configuration
 
 | Variable | Default |
 | --- | --- |
-| `ITEMS_PER_RUN` / `DAILY_CURATION_TARGET` | 3 / 9 |
+| `ITEMS_PER_RUN` / `DAILY_CURATION_TARGET` / `DAILY_PROCESSING_LIMIT` | 3 / 9 / 18 |
 | `CURATION_FLOOR` / `CURATION_FLOOR_MIN_RELEVANCE` | 3 / 0.55 |
 | `CANDIDATE_MAX_AGE_HOURS` | 168 |
 | `AUTHORED_COLUMN_MIN_RELEVANCE` / `AUTHORED_COLUMN_MIN_FACTS` | 0.6 / 3 |

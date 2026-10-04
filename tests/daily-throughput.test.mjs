@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
-import { applyCurationFloor, pickItemsForRun, rollingCandidates } from '../scripts/lib/curate.mjs';
+import { applyCurationFloor, pickItemsForRun, rollingCandidates, surfacedProcessedIds, updatePlanAfterRun } from '../scripts/lib/curate.mjs';
 
 const NOW = new Date('2026-10-04T12:00:00Z');
 
@@ -19,17 +19,85 @@ function candidate(id, hoursOld, infra = 0.6, ai = 0, extra = {}) {
   };
 }
 
+const ids = (count, prefix = 'done') => Array.from({ length: count }, (_, index) => `${prefix}-${index}`);
+
 test('a slot that already ran no longer blocks the next run, but each run and day are capped', () => {
   const curatedItems = Array.from({ length: 12 }, (_, index) => candidate(`c${index}`, index));
-  const plan = { curatedItems, publishedIds: ['c0'], slotPublications: { 0: true, 1: true, 2: true } };
+  const plan = { curatedItems, publishedIds: ['c0'], visibleIds: ['c0'], slotPublications: { 0: true, 1: true, 2: true } };
   const { picked } = pickItemsForRun(plan, NOW, { force: false });
   assert.deepEqual(picked.map((item) => item.id), ['c1', 'c2', 'c3']);
 
-  const nearlyFull = { ...plan, publishedIds: Array.from({ length: 8 }, (_, index) => `done-${index}`) };
-  assert.equal(pickItemsForRun(nearlyFull, NOW, { force: false }).picked.length, 1, 'the ninth item of the day is the last one');
-  const full = { ...plan, publishedIds: Array.from({ length: 9 }, (_, index) => `done-${index}`) };
+  const nearlyFull = { ...plan, publishedIds: ids(8), visibleIds: ids(8) };
+  assert.equal(pickItemsForRun(nearlyFull, NOW, { force: false }).picked.length, 1, 'the ninth published item of the day is the last one');
+  const full = { ...plan, publishedIds: ids(9), visibleIds: ids(9) };
   assert.equal(pickItemsForRun(full, NOW, { force: false }).picked.length, 0);
   assert.equal(pickItemsForRun(full, NOW, { force: true }).picked.length, 3, 'an operator-forced run lifts the daily cap');
+});
+
+test('archive-only outcomes do not close the day, but the processing limit does', () => {
+  const curatedItems = Array.from({ length: 30 }, (_, index) => candidate(`c${index}`, index));
+  // 2026-10-05 KST: three runs processed nine picks and filed all nine as archive-only.
+  const archivedMorning = { curatedItems, publishedIds: ids(9, 'arch'), visibleIds: [] };
+  assert.equal(pickItemsForRun(archivedMorning, NOW, { force: false }).picked.length, 3);
+  const legacyPlan = { curatedItems, publishedIds: ids(9, 'arch') };
+  assert.equal(pickItemsForRun(legacyPlan, NOW, { force: false }).picked.length, 3, 'a plan written before visibleIds existed is not treated as full');
+  const nearLimit = { curatedItems, publishedIds: ids(17, 'arch'), visibleIds: ['arch-0'] };
+  assert.equal(pickItemsForRun(nearLimit, NOW, { force: false }).picked.length, 1, 'repeated manual runs stop at the processing limit');
+  const atLimit = { curatedItems, publishedIds: ids(18, 'arch'), visibleIds: [] };
+  assert.equal(pickItemsForRun(atLimit, NOW, { force: false }).picked.length, 0);
+  assert.equal(pickItemsForRun(atLimit, NOW, { force: true }).picked.length, 3, 'an operator-forced run lifts both caps');
+});
+
+test('picks the classifier expects to surface run before snippet-tier archive picks', () => {
+  const curatedItems = [candidate('arch-a', 1, 0.3), candidate('sig-a', 2, 0.7), candidate('arch-b', 3, 0.2), candidate('sig-b', 4, 0.6)];
+  const { picked } = pickItemsForRun({ curatedItems, publishedIds: [], visibleIds: [] }, NOW, { force: false });
+  assert.deepEqual(picked.map((item) => item.id), ['sig-a', 'sig-b', 'arch-a'], 'model order is kept inside each group');
+});
+
+test('the day plan records processed and published items separately', () => {
+  const next = updatePlanAfterRun({ curatedItems: [], publishedIds: ['a'], visibleIds: ['a'] }, [{ id: 'b' }, { id: 'c' }], 1, { visibleIds: ['c'] });
+  assert.deepEqual(next.publishedIds, ['a', 'b', 'c']);
+  assert.deepEqual(next.visibleIds, ['a', 'c']);
+  assert.equal(next.slotPublications[1], true);
+  assert.deepEqual(updatePlanAfterRun({ publishedIds: [] }, [{ id: 'x' }], 0).visibleIds, [], 'nothing counts as published by default');
+});
+
+test('the env template ships the same throughput caps as the code', async () => {
+  const { readFile } = await import('node:fs/promises');
+  const constants = await import('../scripts/lib/constants.mjs');
+  const template = await readFile(new URL('../.env.example', import.meta.url), 'utf8');
+  for (const key of ['DAILY_CURATION_TARGET', 'DAILY_PROCESSING_LIMIT', 'ITEMS_PER_RUN']) {
+    const shipped = template.match(new RegExp(`^${key}=(.*)$`, 'm'))?.[1];
+    assert.equal(Number(shipped), constants[key], `${key} in .env.example`);
+  }
+});
+
+test('an item counts as published only when the final sync left it publicly visible', () => {
+  const processed = [{ id: 'memo' }, { id: 'card' }, { id: 'overflow' }, { id: 'quarantined' }, { id: 'archive-only' }, { id: 'missing' }];
+  const latest = [{ id: 'card', public_content_tier: 'signal_card' }, { id: 'older-story' }, { id: 'memo' }];
+  const archive = [
+    { id: 'overflow', public_content_tier: 'longform_analysis' },
+    { id: 'quarantined', public_status: 'quarantined', quarantined: true, homepagePublished: false, archiveOnly: true },
+    { id: 'archive-only', archiveOnly: true, infrastructure_relevance_action: 'archive_only' },
+  ];
+  assert.deepEqual(surfacedProcessedIds([...latest, ...archive], processed), ['memo', 'card', 'overflow'],
+    'an eligible record past the latest window still counts; quarantined and archive-only records do not');
+  assert.deepEqual(surfacedProcessedIds([], processed), []);
+});
+
+test('both pipeline outcomes record which processed items reached a public surface', async () => {
+  const { readFile } = await import('node:fs/promises');
+  const pipeline = await readFile(new URL('../scripts/pipeline.mjs', import.meta.url), 'utf8');
+  assert.match(pipeline, /updatePlanAfterRun\(plan, processedItems, slot, \{\s*visibleIds: surfacedProcessedIds\(\[\.\.\.latest, \.\.\.\(updatedArchive \|\| \[\]\)\], processedItems\),\s*\}\)/);
+  assert.match(pipeline, /updatePlanAfterRun\(plan, finalProcessedItems, slot, \{\s*visibleIds: surfacedProcessedIds\(\[\.\.\.latest, \.\.\.\(updatedArchive \|\| \[\]\)\], finalProcessedItems\),\s*\}\)/);
+  // Both calls follow the sync that produced \`latest\`.
+  for (const call of ['updatePlanAfterRun(plan, processedItems', 'updatePlanAfterRun(plan, finalProcessedItems']) {
+    const callAt = pipeline.indexOf(call);
+    const syncAt = pipeline.lastIndexOf('await syncArchiveArtifacts(', callAt);
+    assert.ok(syncAt > -1 && syncAt < callAt, `${call} runs after the archive sync`);
+  }
+  assert.match(pipeline, /fetchNewsPoolResult\(\{ sources, now, previousItems: previousPool, excludeIds: processedIds \}\)/);
+  assert.match(pipeline, /loadPoolWithFallback\(existingLatest, sources, \{ processedIds: state\.publishedIds \|\| \[\] \}\)/);
 });
 
 test('the curation floor adds only on-beat candidates, full text first, up to three', () => {
