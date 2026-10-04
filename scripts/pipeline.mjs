@@ -530,7 +530,9 @@ async function publishExistingOnly({
   const { latest, archive: updatedArchive, supabaseStatus } = await syncArchiveArtifacts(templateChecked, existingArchive);
   await writeJsonFile(LATEST_NEWS_PATH, latest);
 
-  state.dayPlans[todayKey] = updatePlanAfterRun(plan, processedItems, slot, { visibleIds: surfacedProcessedIds(latest, processedItems) });
+  state.dayPlans[todayKey] = updatePlanAfterRun(plan, processedItems, slot, {
+    visibleIds: surfacedProcessedIds([...latest, ...(updatedArchive || [])], processedItems),
+  });
   state.publishedIds = [...new Set([...(state.publishedIds || []), ...processedItems.map((x) => x.id)])].slice(-1000);
   state.lastRunAt = now.toISOString();
   state.runHistory.push({
@@ -726,7 +728,7 @@ async function main() {
   await writeJsonFile(LATEST_NEWS_PATH, latest);
 
   const updatedPlan = updatePlanAfterRun(plan, finalProcessedItems, slot, {
-    visibleIds: surfacedProcessedIds(latest, finalProcessedItems),
+    visibleIds: surfacedProcessedIds([...latest, ...(updatedArchive || [])], finalProcessedItems),
   });
   state.dayPlans[todayKey] = updatedPlan;
   state.publishedIds = [...new Set([...(state.publishedIds || []), ...finalProcessedItems.map((x) => x.id)])].slice(-1000);

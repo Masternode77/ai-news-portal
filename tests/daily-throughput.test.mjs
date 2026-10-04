@@ -72,18 +72,24 @@ test('the env template ships the same throughput caps as the code', async () => 
   }
 });
 
-test('an item counts as published only when the final sync left it on the public surface', () => {
-  const processed = [{ id: 'memo' }, { id: 'card' }, { id: 'quarantined' }, { id: 'archived' }];
-  const latest = [{ id: 'card' }, { id: 'older-story' }, { id: 'memo' }];
-  assert.deepEqual(surfacedProcessedIds(latest, processed), ['memo', 'card']);
+test('an item counts as published only when the final sync left it publicly visible', () => {
+  const processed = [{ id: 'memo' }, { id: 'card' }, { id: 'overflow' }, { id: 'quarantined' }, { id: 'archive-only' }, { id: 'missing' }];
+  const latest = [{ id: 'card', public_content_tier: 'signal_card' }, { id: 'older-story' }, { id: 'memo' }];
+  const archive = [
+    { id: 'overflow', public_content_tier: 'longform_analysis' },
+    { id: 'quarantined', public_status: 'quarantined', quarantined: true, homepagePublished: false, archiveOnly: true },
+    { id: 'archive-only', archiveOnly: true, infrastructure_relevance_action: 'archive_only' },
+  ];
+  assert.deepEqual(surfacedProcessedIds([...latest, ...archive], processed), ['memo', 'card', 'overflow'],
+    'an eligible record past the latest window still counts; quarantined and archive-only records do not');
   assert.deepEqual(surfacedProcessedIds([], processed), []);
 });
 
 test('both pipeline outcomes record which processed items reached a public surface', async () => {
   const { readFile } = await import('node:fs/promises');
   const pipeline = await readFile(new URL('../scripts/pipeline.mjs', import.meta.url), 'utf8');
-  assert.match(pipeline, /updatePlanAfterRun\(plan, processedItems, slot, \{ visibleIds: surfacedProcessedIds\(latest, processedItems\) \}\)/);
-  assert.match(pipeline, /updatePlanAfterRun\(plan, finalProcessedItems, slot, \{\s*visibleIds: surfacedProcessedIds\(latest, finalProcessedItems\),\s*\}\)/);
+  assert.match(pipeline, /updatePlanAfterRun\(plan, processedItems, slot, \{\s*visibleIds: surfacedProcessedIds\(\[\.\.\.latest, \.\.\.\(updatedArchive \|\| \[\]\)\], processedItems\),\s*\}\)/);
+  assert.match(pipeline, /updatePlanAfterRun\(plan, finalProcessedItems, slot, \{\s*visibleIds: surfacedProcessedIds\(\[\.\.\.latest, \.\.\.\(updatedArchive \|\| \[\]\)\], finalProcessedItems\),\s*\}\)/);
   // Both calls follow the sync that produced \`latest\`.
   for (const call of ['updatePlanAfterRun(plan, processedItems', 'updatePlanAfterRun(plan, finalProcessedItems']) {
     const callAt = pipeline.indexOf(call);

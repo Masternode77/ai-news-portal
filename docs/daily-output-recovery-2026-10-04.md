@@ -193,9 +193,9 @@ overrides it). Summary-heavy prose still fails; every other column gate is uncha
 
 Follow-up:
 
-- The daily target counts only items that are on the public surface after the final integrity
-  sync, so a record quarantined there does not use it; archive-only outcomes count toward the new
-  processing limit only. Picks the classifier expects to surface run before
+- The daily target counts only items that are publicly visible after the final integrity sync,
+  on the latest surface or in the archive, so a record quarantined there does not use it;
+  archive-only outcomes count toward the new processing limit only. Picks the classifier expects to surface run before
   snippet-tier archive picks. Plans written before the change are not treated as full.
 - The pool skips items the wire already processed, and `carryOverPoolItems()` offers unprocessed
   items from the previous pool again while they are fresh and their source still authorizes text
