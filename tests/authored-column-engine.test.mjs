@@ -891,6 +891,32 @@ test('a between-and range keeps both endpoints in each figure label', () => {
   for (const item of result.figures[0].items) assert.match(item.label, /between 10 MW and 20 MW/);
 });
 
+test('encoded entities before a figure do not shift its label onto another clause', () => {
+  const ledger = buildClaimLedger({
+    cluster_id: 'authored_entities',
+    representative_source: {
+      source_url: 'https://example.com/entities',
+      source_name: 'Example Utility',
+      title: 'Northline and Southline data center capacity and financing update',
+      cleaned_text: 'Northline &quot;formally&quot; &amp; finally approved its 10 MW, while Southline secured $20 million in data center financing for the campus.',
+    },
+    supporting_sources: [],
+  }, 'entities');
+  const claims = numericLedgerClaims(ledger);
+  const indexOf = (unit) => claims.findIndex((claim) => claim.unit === unit && /Northline/.test(claim.claim_text));
+  const result = buildColumnFigures({
+    ledger,
+    stance: { angle: 'Northline and Southline data center capacity and financing' },
+    headline: 'Northline and Southline data center capacity and financing diverge',
+    sectionCount: 6,
+    modelSpec: [{ type: 'stat-row', title: 'Northline and Southline on record', claim_indexes: [indexOf('MW'), indexOf('million')], anchor: 1 }],
+  });
+  const [capacity, financing] = result.figures[0].items;
+  assert.match(capacity.label, /approved its 10 MW$/);
+  assert.doesNotMatch(capacity.label, /Southline/);
+  assert.match(financing.label, /Southline secured \$20 million/);
+});
+
 test('buildColumnFigures honors a valid model spec and rejects invalid ones', () => {
   const ledger = fixtureLedger();
   const headline = 'The Dakota Grid Deal Is A Utility Execution Story Now';

@@ -221,12 +221,17 @@ function ownClauseLabel(claim, decoded) {
 function numberAlignedLabel(claim) {
   if (!Number.isFinite(claim.figure_index)) return labelFor(claim);
   const decoded = decodeEntities(String(claim.claim_text || '')).replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ');
-  if (extractFigureNumbers(claim.claim_text).length > 1) {
-    const clause = ownClauseLabel(claim, decoded);
+  // figure_index was measured on the raw claim text; decoded entities and
+  // stripped tags shift offsets, so the number is located again in the text
+  // the label is cut from.
+  const decodedIndex = ownNumberIndex({ ...claim, claim_text: decoded });
+  const index = Number.isFinite(decodedIndex) ? decodedIndex : claim.figure_index;
+  if (extractFigureNumbers(decoded).length > 1) {
+    const clause = ownClauseLabel({ ...claim, figure_index: index }, decoded);
     if (clause) return clause;
   }
-  if (claim.figure_index <= 70) return labelFor(claim);
-  const start = decoded.lastIndexOf(' ', Math.max(0, claim.figure_index - 60)) + 1;
+  if (index <= 70) return labelFor(claim);
+  const start = decoded.lastIndexOf(' ', Math.max(0, index - 60)) + 1;
   const windowed = decoded.slice(start).trim();
   return condense((start > 0 ? '\u2026' : '') + windowed, 96);
 }
