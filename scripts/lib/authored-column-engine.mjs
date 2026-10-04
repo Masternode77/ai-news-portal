@@ -406,7 +406,7 @@ const FEEDBACK_HINTS = [
   [/^human_style_below_/, () =>
     'Vary sentence rhythm and vocabulary; remove formulaic transitions and symmetrical sentence patterns.'],
   [/^insight_density_below_/, () =>
-    'Add more specific, falsifiable analytical claims; cut generic observations.'],
+    'Make the decision analysis explicit: say which operators, suppliers, investors or utilities carry the cost, risk, timing and capacity exposure, who gains or loses leverage, and which constraint, allocation or milestone decides it. Use fewer reporting verbs such as said, reported or announced, keeping each source attribution once. Add specific, falsifiable claims and cut generic observations.'],
 ];
 
 export function verificationFeedback(reasons = []) {

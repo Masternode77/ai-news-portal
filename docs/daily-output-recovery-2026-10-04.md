@@ -206,6 +206,23 @@ Follow-up:
   longer fails the parse.
 - `.env.example` now ships the code's throughput values (it still had 6 per day and 2 per run).
 
+## Fifth live run (Update News `37234465461`, release v0.0.37)
+
+- The wire processed three more items although nine had already been processed that KST day.
+  One, a UK energy department item scored 0.615 after extraction, became the day's first
+  published brief; two stayed archive-only.
+- The column draft parsed and went through revision. Verification withheld it for insight density
+  0.732 (1,407 words, 5 sections, human-style 0.89, no unsupported claims). Eight model calls used
+  36,955 tokens.
+- The density score counted 17 decision words in their exact singular form only, so "investors",
+  "operators", "costs" and "risks" earned nothing, and the revision directive for this failure did
+  not say what the score rewards.
+
+Follow-up: inflected forms now count like the base word. Published columns move by 0 to 0.11 and
+the lowest scores 0.81, so the 0.75 floor still separates analysis from summary. The revision
+directive now names the stakeholder, exposure and constraint analysis the score rewards and asks
+for fewer reporting verbs. No word was added to the list and the floor is unchanged.
+
 ## Configuration
 
 | Variable | Default |
