@@ -250,8 +250,13 @@ function similar(a, b) {
 
 // Highest-scoring items first for selection; one copy of a story across
 // outlets; a per-publisher cap; newest first in the result.
-export function selectHeadlines(items = [], { limit = HEADLINE_LIMIT, perSource = HEADLINE_PER_SOURCE } = {}) {
-  const ranked = [...items].sort((a, b) => b.score - a.score || Date.parse(b.publishedAt) - Date.parse(a.publishedAt));
+// `preferUrls` ranks those items ahead of the rest (fresh items over carried-
+// over ones) without exempting them from any cap.
+export function selectHeadlines(items = [], { limit = HEADLINE_LIMIT, perSource = HEADLINE_PER_SOURCE, preferUrls = null } = {}) {
+  const preferred = (item) => (preferUrls instanceof Set && preferUrls.has(item.url) ? 1 : 0);
+  const ranked = [...items].sort((a, b) => preferred(b) - preferred(a)
+    || b.score - a.score
+    || Date.parse(b.publishedAt) - Date.parse(a.publishedAt));
   const selected = [];
   const perSourceCount = new Map();
   const seenUrls = new Set();
@@ -328,8 +333,15 @@ export function mergeHeadlineSnapshots(result = {}, previous = null, { now = new
     }
     const urls = new Set(incoming.map((item) => item.url));
     const kept = prior.filter((item) => item.language === language && !urls.has(item.url));
-    if (kept.length) carriedOver[language] = kept.length;
-    merged.push(...incoming, ...kept);
+    // The combined lane goes through the same selection as a fresh one: the
+    // language limit, the per-publisher cap, URL and similarity dedupe.
+    const lane = selectHeadlines([...incoming, ...kept], {
+      limit: HEADLINE_LIMITS_BY_LANGUAGE[language] ?? HEADLINE_LIMIT,
+      preferUrls: urls,
+    });
+    const carried = lane.filter((item) => !urls.has(item.url)).length;
+    if (carried) carriedOver[language] = carried;
+    merged.push(...lane);
   }
   merged.sort((a, b) => Date.parse(b.publishedAt) - Date.parse(a.publishedAt));
   return {

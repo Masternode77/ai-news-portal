@@ -158,7 +158,7 @@ test('refresh tolerates feed failures and reports them', async () => {
 
 test('a thin language lane keeps its previous current headlines instead of blanking', () => {
   const item = (id, language, hoursOld) => ({
-    id, title: `Headline ${id} about AI data center capacity`, url: `https://example.com/${id}`, source: 'Feed', sourceRegistryId: 'feed',
+    id, title: `Item${id.replace(/[^a-z0-9]/gi, '')} alpha${id.replace(/[^a-z0-9]/gi, '')} beta${id.replace(/[^a-z0-9]/gi, '')} AI data center capacity`, url: `https://example.com/${id}`, source: 'Feed', sourceRegistryId: 'feed',
     publishedAt: new Date(NOW.getTime() - hoursOld * 3_600_000).toISOString(), language, segment: 'data_centers', companies: [], score: 5,
   });
   const previous = { items: [item('ko-1', 'ko', 5), item('ko-2', 'ko', 10), item('ko-old', 'ko', 24 * 9), item('en-old-1', 'en', 3)] };
@@ -177,6 +177,23 @@ test('a thin language lane keeps its previous current headlines instead of blank
   for (let index = 1; index < keptEnglish.items.length; index += 1) {
     assert.ok(Date.parse(keptEnglish.items[index - 1].publishedAt) >= Date.parse(keptEnglish.items[index].publishedAt));
   }
+});
+
+test('a merged lane still obeys the language limit, publisher cap and dedupe, fresh items first', () => {
+  const item = (id, source, hoursOld, score = 5) => ({
+    id, title: `Item${id} alpha${id} beta${id} gamma${id} AI data centers`, url: `https://${source}.example/${id}`, source, sourceRegistryId: source,
+    publishedAt: new Date(NOW.getTime() - hoursOld * 3_600_000).toISOString(), language: 'en', segment: 'data_centers', companies: [], score,
+  });
+  const previous = { items: Array.from({ length: 80 }, (_, index) => item(`old${index}`, `pub${index % 14}`, 30 + index, 9)) };
+  const incoming = Array.from({ length: 7 }, (_, index) => item(`new${index}`, 'pub0', 1 + index, 4));
+  const sourceIds = new Set(Array.from({ length: 14 }, (_, index) => `pub${index}`));
+  const merged = mergeHeadlineSnapshots({ items: incoming }, previous, { now: NOW, sourceIds });
+  const english = merged.items.filter((entry) => entry.language === 'en');
+  assert.ok(english.length <= 80);
+  const perSource = english.reduce((acc, entry) => ({ ...acc, [entry.sourceRegistryId]: (acc[entry.sourceRegistryId] || 0) + 1 }), {});
+  assert.ok(Object.values(perSource).every((count) => count <= 6), JSON.stringify(perSource));
+  assert.equal(english.filter((entry) => entry.id.startsWith('new')).length, 6, 'fresh items win their publisher\'s six slots');
+  assert.equal(new Set(english.map((entry) => entry.url)).size, english.length);
 });
 
 test('carried-over headlines from a source that lost its verdict are dropped at once', () => {
