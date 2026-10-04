@@ -100,3 +100,17 @@ test('a boilerplate headline yields no claim', () => {
   }, 'article_boilerplate');
   assert.ok(!result.claims.some((claim) => claim.numeric_value === 30));
 });
+
+test('a terse numeric headline keeps its claim', () => {
+  const result = buildClaimLedger({
+    cluster_id: 'sig_terse',
+    representative_source: {
+      title: '5 GW deal',
+      cleaned_text: 'The parties signed the agreement at a ceremony in the state capital on Tuesday afternoon.',
+      source_url: 'https://example.com/terse',
+      source_name: 'Example Source',
+      source_published_at: '2026-10-01T00:00:00Z',
+    },
+  }, 'article_terse');
+  assert.ok(result.claims.some((claim) => claim.numeric_value === 5 && /GW/.test(claim.unit)));
+});

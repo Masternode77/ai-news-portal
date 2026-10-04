@@ -917,6 +917,33 @@ test('encoded entities before a figure do not shift its label onto another claus
   assert.match(financing.label, /Southline secured \$20 million/);
 });
 
+test('a between that names parties does not stop two figures from splitting', () => {
+  const ledger = buildClaimLedger({
+    cluster_id: 'authored_parties',
+    representative_source: {
+      source_url: 'https://example.com/parties',
+      source_name: 'Example Utility',
+      title: 'Northline and Southline data center capacity and financing agreement',
+      cleaned_text: 'The agreement between Northline and Southline approved 10 MW of battery capacity and secured $10 million in construction financing for the data center campus.',
+    },
+    supporting_sources: [],
+  }, 'parties');
+  const claims = numericLedgerClaims(ledger);
+  const indexOf = (unit) => claims.findIndex((claim) => claim.numeric_value === 10 && claim.unit === unit);
+  const result = buildColumnFigures({
+    ledger,
+    stance: { angle: 'Northline and Southline data center capacity and financing agreement' },
+    headline: 'The Northline and Southline agreement ties data center capacity to financing',
+    sectionCount: 6,
+    modelSpec: [{ type: 'stat-row', title: 'Northline and Southline agreement', claim_indexes: [indexOf('MW'), indexOf('million')], anchor: 1 }],
+  });
+  const [capacity, financing] = result.figures[0].items;
+  assert.match(capacity.label, /approved 10 MW of battery capacity/);
+  assert.doesNotMatch(capacity.label, /\$10 million/);
+  assert.match(financing.label, /secured \$10 million/);
+  assert.doesNotMatch(financing.label, /10 MW/);
+});
+
 test('buildColumnFigures honors a valid model spec and rejects invalid ones', () => {
   const ledger = fixtureLedger();
   const headline = 'The Dakota Grid Deal Is A Utility Execution Story Now';

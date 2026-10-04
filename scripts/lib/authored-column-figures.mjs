@@ -189,27 +189,38 @@ export function factLedgerClaims(ledger = {}) {
 // holds its own number, without a leading conjunction. Commas inside numbers
 // ("$80,000") do not split a clause. A clause that still holds another figure
 // ("approved 10 MW ... and secured $10 million ...") is split again at its
-// conjunctions; if that cannot isolate the number, the usual label applies.
+// conjunctions, except the "and" of a numeric range ("between 10 MW and 20
+// MW"); if that cannot isolate the number, the usual label applies.
 const CLAUSE_BREAK = /[,;](?!\d)\s+|\s[\u2014\u2013]\s/g;
 const CONJUNCTION_BREAK = /\s(?:and|but|yet|while|whereas)\s/gi;
 const CLAUSE_LEAD = /^(?:and|but|yet|while|whereas|so|or)\s+/i;
+const RANGE_OPENING = /\bbetween\s+\$?\d[\d,.]*(?:\s*[A-Za-z%]+)?$/i;
+const RANGE_CLOSING = /^\$?\d/;
 
-function segmentAround(text, index, breaker) {
+function breaksIn(text, breaker, keep = () => true) {
+  return [...text.matchAll(breaker)].filter((match) => keep(match, text));
+}
+
+function rangeConjunction(match, text) {
+  return /^\s+and\s+$/i.test(match[0])
+    && RANGE_OPENING.test(text.slice(0, match.index))
+    && RANGE_CLOSING.test(text.slice(match.index + match[0].length));
+}
+
+function segmentAround(index, breaks) {
   let start = 0;
-  for (const match of text.matchAll(breaker)) {
+  for (const match of breaks) {
     if (match.index >= index) return { start, end: match.index };
     start = match.index + match[0].length;
   }
-  return { start, end: text.length };
+  return { start, end: Infinity };
 }
 
 function ownClauseLabel(claim, decoded) {
-  const outer = segmentAround(decoded, claim.figure_index, CLAUSE_BREAK);
+  const outer = segmentAround(claim.figure_index, breaksIn(decoded, CLAUSE_BREAK));
   let clause = decoded.slice(outer.start, outer.end);
-  // "between 10 MW and 20 MW" is one range: its "and" is never a clause
-  // break, and such a clause falls back to the usual label.
-  if (extractFigureNumbers(clause).length > 1 && !/\bbetween\b/i.test(clause)) {
-    const inner = segmentAround(clause, claim.figure_index - outer.start, CONJUNCTION_BREAK);
+  if (extractFigureNumbers(clause).length > 1) {
+    const inner = segmentAround(claim.figure_index - outer.start, breaksIn(clause, CONJUNCTION_BREAK, (match, text) => !rangeConjunction(match, text)));
     clause = clause.slice(inner.start, inner.end);
   }
   clause = clause.replace(CLAUSE_LEAD, '').trim();

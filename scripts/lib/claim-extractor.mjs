@@ -43,12 +43,12 @@ function claimRowsFor(text, item) {
 // with a space glued it onto the first sentence ("...via Malaysia Between
 // April 2024 and June 2025, China recorded...") and every figure label drawn
 // from that claim led with the headline. Each source's headline is now one
-// sentence of its own, kept even when it is shorter than the body-sentence
-// minimum, so a number it carries ("Firm plans 300 MW data center") stays a
-// claim.
+// sentence of its own with no body-sentence length floor, so a number it
+// carries ("5 GW deal") stays a claim. Only an empty title, page furniture, or
+// a "title" longer than any headline (scraped page text) is skipped.
 function headlineSentence(item = {}) {
   const headline = sentence(stripHtml(String(item.title || '')));
-  if (headline.length < 12 || headline.length > 320) return '';
+  if (!headline || headline.length > 320) return '';
   return boilerplateSentence(headline) ? '' : headline;
 }
 
