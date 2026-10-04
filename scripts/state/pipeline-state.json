@@ -48225,7 +48225,7 @@
     "2026-10-04": {
       "date": "2026-10-04",
       "createdAt": "2026-10-03T18:37:01.308Z",
-      "refreshedAt": "2026-10-04T02:33:24.486Z",
+      "refreshedAt": "2026-10-04T08:20:01.412Z",
       "candidateWindowHours": 24,
       "curatedItems": [],
       "curatedIds": [],
@@ -48235,30 +48235,12 @@
       ],
       "slotPublications": {
         "0": true,
-        "1": true
+        "1": true,
+        "2": true
       }
     }
   },
   "runHistory": [
-    {
-      "at": "2026-08-24T23:31:38.884Z",
-      "day": "2026-08-25",
-      "slot": 1,
-      "publishedCount": 0,
-      "authoredColumn": {
-        "published": false,
-        "reason": "verify:public_template_phrase:Commercially,"
-      },
-      "llmUsage": {
-        "calls": 5,
-        "failures": 0,
-        "prompt_tokens": 14539,
-        "completion_tokens": 5453,
-        "total_tokens": 19992,
-        "token_budget": 60000,
-        "call_budget": 40
-      }
-    },
     {
       "at": "2026-08-25T07:55:20.245Z",
       "day": "2026-08-25",
@@ -51772,9 +51754,44 @@
         "token_budget": 60000,
         "call_budget": 40
       }
+    },
+    {
+      "at": "2026-10-04T08:20:01.412Z",
+      "day": "2026-10-04",
+      "slot": 2,
+      "publishedCount": 0,
+      "authoredColumn": {
+        "published": false,
+        "reason": "verify:fewer_than_4_sections",
+        "selectionDiagnostics": {
+          "total_candidates": 71,
+          "counts": {
+            "invalid_identity": 0,
+            "text_rights_unauthorized": 0,
+            "abstract_only": 36,
+            "extraction_ineligible": 27,
+            "expert_insight_incomplete": 1,
+            "relevance_below_threshold": 6,
+            "already_covered": 0,
+            "unclean_evidence": 0,
+            "insufficient_facts": 0,
+            "qualifying": 1
+          },
+          "selected_id": "4b3da08b458bdc0a"
+        }
+      },
+      "llmUsage": {
+        "calls": 5,
+        "failures": 0,
+        "prompt_tokens": 17562,
+        "completion_tokens": 6972,
+        "total_tokens": 24534,
+        "token_budget": 60000,
+        "call_budget": 40
+      }
     }
   ],
-  "lastRunAt": "2026-10-04T02:33:24.486Z",
+  "lastRunAt": "2026-10-04T08:20:01.412Z",
   "authored": {
     "lastColumnAt": "2026-09-16T18:47:02.256Z",
     "columnsByDay": {
@@ -51791,6 +51808,31 @@
       "2026-09-16": 1
     },
     "recentStoryKeys": [],
-    "lastFailure": null
+    "lastFailure": {
+      "at": "2026-10-04T08:20:01.412Z",
+      "stage": "verify",
+      "detail": "fewer_than_4_sections"
+    },
+    "lastSelection": {
+      "at": "2026-10-04T08:20:01.412Z",
+      "outcome": "selected",
+      "selectedId": "4b3da08b458bdc0a",
+      "diagnostics": {
+        "total_candidates": 71,
+        "counts": {
+          "invalid_identity": 0,
+          "text_rights_unauthorized": 0,
+          "abstract_only": 36,
+          "extraction_ineligible": 27,
+          "expert_insight_incomplete": 1,
+          "relevance_below_threshold": 6,
+          "already_covered": 0,
+          "unclean_evidence": 0,
+          "insufficient_facts": 0,
+          "qualifying": 1
+        },
+        "selected_id": "4b3da08b458bdc0a"
+      }
+    }
   }
 }
