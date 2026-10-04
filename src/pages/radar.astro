@@ -3,9 +3,14 @@ import Layout from '../layouts/Layout.astro';
 import IndustryRadar from '../components/IndustryRadar.astro';
 import industryHeadlines from '../data/industry-headlines.json';
 import { SITE } from '../config/site';
-import { headlinesBySegment, headlinesFor } from '../../scripts/lib/industry-headlines-view.mjs';
+import { eligibleHeadlineSourceIds, headlinesBySegment, headlinesFor } from '../../scripts/lib/industry-headlines-view.mjs';
+import { loadSourceRegistrySync } from '../../scripts/lib/source-registry.mjs';
 
-const items = headlinesFor(industryHeadlines, { language: 'en', limit: 80 });
+const items = headlinesFor(industryHeadlines, {
+  language: 'en',
+  limit: 80,
+  sourceIds: eligibleHeadlineSourceIds(loadSourceRegistrySync(), new Date()),
+});
 const groups = headlinesBySegment(items);
 const sourceCount = new Set(items.map((item) => item.source)).size;
 const updatedLabel = industryHeadlines.generatedAt

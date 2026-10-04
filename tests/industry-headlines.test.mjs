@@ -12,7 +12,7 @@ import {
   scoreHeadline,
   selectHeadlines,
 } from '../scripts/lib/industry-headlines.mjs';
-import { headlinesBySegment, headlinesFor } from '../scripts/lib/industry-headlines-view.mjs';
+import { eligibleHeadlineSourceIds, headlinesBySegment, headlinesFor } from '../scripts/lib/industry-headlines-view.mjs';
 import { loadSourceRegistrySync } from '../scripts/lib/source-registry.mjs';
 import { updateIndustryHeadlines } from '../scripts/update-industry-headlines.mjs';
 
@@ -142,14 +142,15 @@ test('a thin language lane keeps its previous current headlines instead of blank
   });
   const previous = { items: [item('ko-1', 'ko', 5), item('ko-2', 'ko', 10), item('ko-old', 'ko', 24 * 9), item('en-old-1', 'en', 3)] };
   const englishOnly = { generatedAt: NOW.toISOString(), feeds: { attempted: 42, succeeded: 38, failed: ['etnews', 'thelec', 'datanet', 'zdnet-korea'] }, items: Array.from({ length: 9 }, (_, index) => item(`en-${index}`, 'en', index + 1)) };
-  const merged = mergeHeadlineSnapshots(englishOnly, previous, { now: NOW });
+  const sourceIds = new Set(['feed']);
+  const merged = mergeHeadlineSnapshots(englishOnly, previous, { now: NOW, sourceIds });
   assert.deepEqual(merged.items.filter((entry) => entry.language === 'ko').map((entry) => entry.id), ['ko-1', 'ko-2']);
   assert.equal(merged.items.filter((entry) => entry.language === 'en').length, 9, 'a full English refresh replaces the old English list');
   assert.ok(!merged.items.some((entry) => entry.id === 'en-old-1'));
   assert.deepEqual(merged.carriedOver, { ko: 2 });
 
   const thinEnglish = { ...englishOnly, items: [item('en-new', 'en', 1)] };
-  const keptEnglish = mergeHeadlineSnapshots(thinEnglish, previous, { now: NOW });
+  const keptEnglish = mergeHeadlineSnapshots(thinEnglish, previous, { now: NOW, sourceIds });
   assert.deepEqual(keptEnglish.items.filter((entry) => entry.language === 'en').map((entry) => entry.id), ['en-new', 'en-old-1']);
   assert.ok(!keptEnglish.items.some((entry) => entry.id === 'ko-old'), 'expired headlines are never carried over');
   for (let index = 1; index < keptEnglish.items.length; index += 1) {
@@ -157,18 +158,42 @@ test('a thin language lane keeps its previous current headlines instead of blank
   }
 });
 
+test('carried-over headlines from a source that lost its verdict are dropped at once', () => {
+  const item = (id, sourceRegistryId) => ({
+    id, title: `Headline ${id} about AI data center capacity`, url: `https://example.com/${id}`, source: sourceRegistryId, sourceRegistryId,
+    publishedAt: '2026-10-04T08:00:00Z', language: 'ko', segment: 'chips', companies: [], score: 5,
+  });
+  const previous = { items: [item('kept', 'etnews'), item('removed', 'thelec')] };
+  const merged = mergeHeadlineSnapshots({ items: [] }, previous, { now: NOW, sourceIds: new Set(['etnews']) });
+  assert.deepEqual(merged.items.map((entry) => entry.id), ['kept']);
+  assert.deepEqual(mergeHeadlineSnapshots({ items: [] }, previous, { now: NOW }).items, [], 'without current eligibility nothing is carried over');
+
+  const sources = loadSourceRegistrySync().map((row) => (row.id === 'thelec' ? { ...row, link_only_basis: '' } : row));
+  const eligible = eligibleHeadlineSourceIds(sources, NOW);
+  assert.ok(eligible.has('etnews'));
+  assert.ok(!eligible.has('thelec'), 'removing link_only_basis removes the source');
+  assert.deepEqual(headlinesFor({ items: previous.items }, { now: NOW, language: 'ko', sourceIds: eligible }).map((entry) => entry.id), ['kept'], 'pages drop it on the next build');
+  assert.deepEqual([...eligibleHeadlineSourceIds(loadSourceRegistrySync(), NOW)].sort(), headlineFeeds(loadSourceRegistrySync(), NOW).map((feed) => feed.sourceRegistryId).sort());
+});
+
 test('the refresh script writes the merged snapshot and keeps a thin lane', async () => {
   const dir = await fs.mkdtemp(path.join(os.tmpdir(), 'radar-'));
   const file = path.join(dir, 'industry-headlines.json');
   const korean = { id: 'ko-1', title: '삼성전자, HBM4 엔비디아 공급 본격화', url: 'https://www.etnews.com/1', source: '전자신문', sourceRegistryId: 'etnews', publishedAt: '2026-10-04T08:00:00Z', language: 'ko', segment: 'chips', companies: [], score: 6 };
   await fs.writeFile(file, JSON.stringify({ generatedAt: 'previous', items: [korean] }));
-  const sources = [{ id: 'good', name: 'Good Feed', domain: 'good.example', feed: 'https://good.example/feed', status: 'active_feed', allow_text_use: false, link_only_basis: 'feed_listing_low_risk', reviewed_at: '2026-09-05', language: 'en' }];
+  const sources = [
+    { id: 'good', name: 'Good Feed', domain: 'good.example', feed: 'https://good.example/feed', status: 'active_feed', allow_text_use: false, link_only_basis: 'feed_listing_low_risk', reviewed_at: '2026-09-05', language: 'en' },
+    { id: 'etnews', name: '전자신문', domain: 'etnews.com', feed: 'https://rss.etnews.com/Section901.xml', status: 'active_feed', allow_text_use: false, link_only_basis: 'feed_listing_low_risk', reviewed_at: '2026-09-10', language: 'ko' },
+  ];
   const outcome = await updateIndustryHeadlines({
     now: NOW,
     sources,
     path: file,
     offline: false,
-    fetchFeed: async () => [{ title: 'AMD MI450 to ship in Q3 with HBM4', link: 'https://good.example/amd', isoDate: '2026-10-04T09:00:00Z' }],
+    fetchFeed: async (feed) => {
+      if (feed.sourceRegistryId === 'etnews') throw new Error('HTTP 503');
+      return [{ title: 'AMD MI450 to ship in Q3 with HBM4', link: 'https://good.example/amd', isoDate: '2026-10-04T09:00:00Z' }];
+    },
   });
   assert.equal(outcome.written, true);
   const written = JSON.parse(await fs.readFile(file, 'utf8'));

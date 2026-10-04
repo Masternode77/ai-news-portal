@@ -4,9 +4,14 @@ import records from '../../data/korea-briefs.json';
 import { getPublishedKoreaBriefs } from '../../../scripts/lib/korea-briefs.mjs';
 import IndustryRadar from '../../components/IndustryRadar.astro';
 import industryHeadlines from '../../data/industry-headlines.json';
-import { headlinesFor } from '../../../scripts/lib/industry-headlines-view.mjs';
+import { eligibleHeadlineSourceIds, headlinesFor } from '../../../scripts/lib/industry-headlines-view.mjs';
+import { loadSourceRegistrySync } from '../../../scripts/lib/source-registry.mjs';
 
-const koreanHeadlines = headlinesFor(industryHeadlines, { language: 'ko', limit: 16 });
+const koreanHeadlines = headlinesFor(industryHeadlines, {
+  language: 'ko',
+  limit: 16,
+  sourceIds: eligibleHeadlineSourceIds(loadSourceRegistrySync(), new Date()),
+});
 
 const briefs = getPublishedKoreaBriefs(records);
 type KoreaBrief = (typeof records)[number] & { publicationMode: 'summary' | 'link_only' };

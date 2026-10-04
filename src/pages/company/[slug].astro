@@ -6,7 +6,8 @@ import { SITE } from '../../config/site';
 import { buildHomepageFeed } from '../../../scripts/lib/homepage-feed-builder.mjs';
 import IndustryRadar from '../../components/IndustryRadar.astro';
 import industryHeadlines from '../../data/industry-headlines.json';
-import { headlinesFor } from '../../../scripts/lib/industry-headlines-view.mjs';
+import { eligibleHeadlineSourceIds, headlinesFor } from '../../../scripts/lib/industry-headlines-view.mjs';
+import { loadSourceRegistrySync } from '../../../scripts/lib/source-registry.mjs';
 
 export function getStaticPaths() {
   return (taxonomyPages.companies || []).map((page) => ({ params: { slug: page.slug }, props: { page } }));
@@ -14,7 +15,12 @@ export function getStaticPaths() {
 
 const { page } = Astro.props;
 const feed = buildHomepageFeed(page.items || [], { limit: 50, minimumVisible: 0 });
-const companyHeadlines = headlinesFor(industryHeadlines, { language: 'en', limit: 10, company: page.name });
+const companyHeadlines = headlinesFor(industryHeadlines, {
+  language: 'en',
+  limit: 10,
+  company: page.name,
+  sourceIds: eligibleHeadlineSourceIds(loadSourceRegistrySync(), new Date()),
+});
 ---
 <Layout title={`${page.name} | ${SITE.name}`} description={`Compute Current coverage involving ${page.name}.`} canonicalPath={`/company/${page.slug}/`}>
   <main class="policy-shell taxonomy-page">

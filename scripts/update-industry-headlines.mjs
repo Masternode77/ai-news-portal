@@ -5,7 +5,7 @@
 import fs from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 import { loadSourceRegistry } from './lib/source-registry.mjs';
-import { INDUSTRY_HEADLINES_PATH, mergeHeadlineSnapshots, refreshIndustryHeadlines } from './lib/industry-headlines.mjs';
+import { INDUSTRY_HEADLINES_PATH, eligibleHeadlineSourceIds, mergeHeadlineSnapshots, refreshIndustryHeadlines } from './lib/industry-headlines.mjs';
 import { PIPELINE_OFFLINE } from './lib/constants.mjs';
 
 async function readPrevious(path) {
@@ -24,7 +24,7 @@ export async function updateIndustryHeadlines({ now = new Date(), sources, fetch
   const registry = sources || await loadSourceRegistry();
   const result = await refreshIndustryHeadlines({ sources: registry, now, ...(fetchFeed ? { fetchFeed } : {}) });
   const previous = await readPrevious(path);
-  const snapshot = mergeHeadlineSnapshots(result, previous, { now });
+  const snapshot = mergeHeadlineSnapshots(result, previous, { now, sourceIds: eligibleHeadlineSourceIds(registry, now) });
   const counts = snapshot.items.reduce((acc, item) => ({ ...acc, [item.language]: (acc[item.language] || 0) + 1 }), {});
   console.log(`[headlines] feeds attempted=${result.feeds.attempted} ok=${result.feeds.succeeded} failed=${result.feeds.failed.length} fresh=${result.items.length} published=${snapshot.items.length} ${JSON.stringify(counts)}`);
   if (result.feeds.failed.length) console.log(`[headlines] failed feeds: ${result.feeds.failed.join(', ')}`);

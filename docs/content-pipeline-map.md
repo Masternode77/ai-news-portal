@@ -82,7 +82,11 @@ Korean) keeps AI company, chip, cloud, IT, data center and power items. A
 language whose refresh brings fewer than its minimum (8 English, 3 Korean)
 keeps its previous headlines that are still inside the seven-day window,
 merged with the new ones (`mergeHeadlineSnapshots()`), so one failed lane never
-blanks its section in `src/data/industry-headlines.json`. The list renders on the homepage, `/radar/`,
+blanks its section in `src/data/industry-headlines.json`; carried-over items must
+still come from a currently eligible source. The pages apply the same registry
+gate (`eligibleHeadlineSourceIds()` in `scripts/lib/industry-headlines-view.mjs`)
+at build time, so removing a row's `link_only_basis` drops its headlines on the
+next deploy. The list renders on the homepage, `/radar/`,
 company pages and `/ko/` through `src/components/IndustryRadar.astro`, which
 carries no ad slot and states the removal address.
 

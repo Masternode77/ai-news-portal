@@ -13,17 +13,16 @@ import { forbiddenPublicPhraseMatches } from './copy-quality-guard.mjs';
 import { detectTruncationArtifacts } from './truncation-detector.mjs';
 import { BANNED_PHRASES } from './banned-phrases.mjs';
 
-export const LINK_ONLY_BASES = new Set(['feed_listing_permitted', 'feed_listing_low_risk']);
 export const INDUSTRY_HEADLINES_PATH = 'src/data/industry-headlines.json';
 export const HEADLINE_MAX_AGE_HOURS = 7 * 24;
 export const HEADLINE_LIMIT = 80;
 export const HEADLINE_PER_SOURCE = 6;
 export const HEADLINE_MIN_SCORE = 3.5;
-const REVIEW_WINDOW_DAYS = 365;
-const BLOCKED_STATUSES = new Set(['blocked', 'paywalled', 'extraction_failed']);
 const BOILERPLATE = /want more .* stories|copyright ©|all rights reserved|sign up for.+newsletter|sponsored|advertorial|\bpromoted\b/i;
 
-export { SEGMENT_LABELS, headlinesFor } from './industry-headlines-view.mjs';
+import { linkOnlyHeadlineSourceEligible } from './industry-headlines-view.mjs';
+
+export { LINK_ONLY_BASES, SEGMENT_LABELS, eligibleHeadlineSourceIds, headlinesFor } from './industry-headlines-view.mjs';
 
 // core: a pure-play AI, chip, data center or infrastructure company whose
 // news is on-beat by itself. Diversified companies (core false) need an AI,
@@ -132,11 +131,6 @@ function textValue(value) {
   return '';
 }
 
-function reviewedWithinWindow(row = {}, now = new Date()) {
-  const reviewed = Date.parse(String(row.reviewed_at || ''));
-  if (!Number.isFinite(reviewed) || reviewed > now.getTime()) return false;
-  return now.getTime() - reviewed <= REVIEW_WINDOW_DAYS * 86_400_000;
-}
 
 function registryHosts(row = {}) {
   const configured = String(row.article_hosts || '').split(/[\s,]+/);
@@ -150,11 +144,7 @@ function registryHosts(row = {}) {
 // (text-authorized sources already feed the wire itself).
 export function headlineFeeds(sources = [], now = new Date()) {
   return sources
-    .filter((row) => LINK_ONLY_BASES.has(String(row.link_only_basis || '').trim())
-      && !BLOCKED_STATUSES.has(row.status)
-      && row.status === 'active_feed'
-      && String(row.allow_text_use) !== 'true' && row.allow_text_use !== true
-      && reviewedWithinWindow(row, now)
+    .filter((row) => linkOnlyHeadlineSourceEligible(row, now)
       && safeHttpUrl(row.feed)?.startsWith('https://'))
     .map((row) => ({
       sourceRegistryId: row.id,
@@ -301,12 +291,17 @@ async function fetchHeadlineFeed(feed, networkOptions = {}) {
 // lane (every Korean feed down, say) never blanks its section.
 export const MIN_HEADLINES_PER_LANGUAGE = { en: 8, ko: 3 };
 
-export function mergeHeadlineSnapshots(result = {}, previous = null, { now = new Date(), minimums = MIN_HEADLINES_PER_LANGUAGE } = {}) {
+// `sourceIds` is the set of currently eligible headline sources: a carried-over
+// headline from a source that lost its link-only verdict (a removal request,
+// a block, a lapsed review) is never written back.
+export function mergeHeadlineSnapshots(result = {}, previous = null, { now = new Date(), minimums = MIN_HEADLINES_PER_LANGUAGE, sourceIds = null } = {}) {
   const cutoff = now.getTime() - HEADLINE_MAX_AGE_HOURS * 3_600_000;
   const current = (item) => item && typeof item.url === 'string' && typeof item.title === 'string'
     && Number.isFinite(Date.parse(item.publishedAt)) && Date.parse(item.publishedAt) >= cutoff;
   const fresh = (Array.isArray(result.items) ? result.items : []).filter(current);
-  const prior = (Array.isArray(previous?.items) ? previous.items : []).filter(current);
+  const prior = (Array.isArray(previous?.items) ? previous.items : [])
+    .filter(current)
+    .filter((item) => sourceIds instanceof Set && sourceIds.has(item.sourceRegistryId));
   const languages = [...new Set([...Object.keys(minimums), ...fresh.map((item) => item.language), ...prior.map((item) => item.language)])].filter(Boolean);
   const merged = [];
   const carriedOver = {};

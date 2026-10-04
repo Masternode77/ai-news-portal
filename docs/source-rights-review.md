@@ -138,7 +138,9 @@ conditions above:
 - **Attribution and removal.** Every item names its publisher and links to the original. The
   block states that Compute Current does not copy or summarize the articles and gives the
   removal address (`briefings@computecurrent.com`). A removal request is honoured by deleting
-  the row's `link_only_basis`; the next scheduled refresh drops the source.
+  the row's `link_only_basis`: the next build drops that publisher's headlines from every page
+  (the pages apply the same registry gate as the refresh), and the refresh never carries them
+  over again.
 - **Public copy safety.** Headlines that would trip the public copy, forbidden phrase,
   truncation, boilerplate or banned-phrase checks are dropped before storage, so a third-party
   headline cannot fail the production content gate.

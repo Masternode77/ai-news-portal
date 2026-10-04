@@ -13,7 +13,7 @@ import SiteFooter from '../components/SiteFooter.astro';
 import AdSlot from '../components/monetize/AdSlot.astro';
 import IndustryRadar from '../components/IndustryRadar.astro';
 import industryHeadlines from '../data/industry-headlines.json';
-import { headlinesFor } from '../../scripts/lib/industry-headlines-view.mjs';
+import { eligibleHeadlineSourceIds, headlinesFor } from '../../scripts/lib/industry-headlines-view.mjs';
 import latestNews from '../data/latest-news.json';
 import archivedNews from '../data/archived-news.json';
 import editorialCycles from '../data/editorial-cycles.json';
@@ -27,7 +27,12 @@ import { categoryKey, categoryShortLabel } from '../lib/category-visuals';
 import { buildColumnCards } from '../../scripts/lib/column-surface.mjs';
 
 const leadColumn = buildColumnCards(authoredColumns)[0] || null;
-const radarItems = headlinesFor(industryHeadlines, { language: 'en', limit: 12, maxAgeHours: 72 });
+const radarItems = headlinesFor(industryHeadlines, {
+  language: 'en',
+  limit: 12,
+  maxAgeHours: 72,
+  sourceIds: eligibleHeadlineSourceIds(loadSourceRegistrySync(), new Date()),
+});
 
 const boardTitle = SITE.name;
 const homepageArticles = process.env.HOMEPAGE_FIXTURE === 'empty' ? [] : [...latestNews, ...archivedNews];
