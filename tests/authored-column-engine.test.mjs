@@ -843,6 +843,31 @@ test('equal magnitudes with different units keep their own figure labels', () =>
   assert.notEqual(capacity.label, financing.label);
 });
 
+test('two figures early in one sentence without a comma still get their own labels', () => {
+  const ledger = buildClaimLedger({
+    cluster_id: 'authored_early_pair',
+    representative_source: {
+      source_url: 'https://example.com/northline',
+      source_name: 'Example Utility',
+      title: 'Northline campus battery capacity and financing update',
+      cleaned_text: 'Northline approved 10 MW of battery capacity and secured $10 million in construction financing for the campus expansion this month.',
+    },
+    supporting_sources: [],
+  }, 'early_pair');
+  const claims = numericLedgerClaims(ledger);
+  const indexOf = (unit) => claims.findIndex((claim) => claim.numeric_value === 10 && claim.unit === unit);
+  const result = buildColumnFigures({
+    ledger,
+    stance: { angle: 'Northline campus battery capacity and financing at the data center' },
+    headline: 'Northline campus battery capacity and financing set the data center schedule',
+    sectionCount: 6,
+    modelSpec: [{ type: 'stat-row', title: 'Northline capacity and financing', claim_indexes: [indexOf('MW'), indexOf('million')], anchor: 1 }],
+  });
+  const [capacity, financing] = result.figures[0].items;
+  assert.equal(capacity.label, 'Northline approved 10 MW of battery capacity');
+  assert.equal(financing.label, 'secured $10 million in construction financing for the campus expansion this month');
+});
+
 test('buildColumnFigures honors a valid model spec and rejects invalid ones', () => {
   const ledger = fixtureLedger();
   const headline = 'The Dakota Grid Deal Is A Utility Execution Story Now';

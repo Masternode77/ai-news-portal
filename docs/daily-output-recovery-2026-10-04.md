@@ -239,11 +239,14 @@ for fewer reporting verbs. No word was added to the list and the floor is unchan
 Follow-up:
 
 - Both rows of the column's figure carried the Epoch headline glued to the first sentence, and the
-  $0.6 billion row repeated the $3.8 billion statement. The claim extractor now closes the source
-  headline as its own sentence without taking one of the eight body-sentence slots, and each
-  figure row windows its label around its own number. The column's two labels now use the
-  source's own wording. The artwork queue reports the same ready and blocked columns and the same
-  fingerprint before and after the extractor change.
+  $0.6 billion row repeated the $3.8 billion statement. The claim extractor now keeps each source
+  headline as its own sentence, even a short one, and headline claims no longer use the
+  eighteen-claim body budget. A figure row finds its own number by value and unit, and when a
+  sentence holds several figures the row takes the clause that holds its number. The column's
+  labels now read "China recorded $3.8 billion of server imports from Malaysia" and "Malaysia
+  recorded only $0.6 billion of exports to China", and its `updatedAt` records the correction.
+  The artwork queue reports the same ready and blocked columns and the same fingerprint before
+  and after the extractor change.
 - A read of the column against the stored Epoch text found three factual assertions the source
   does not make: a share of NVIDIA's H100 shipments, "the first enforcement action in this
   cycle", and a history of Singapore, Thailand and the UAE in enforcement actions. They were

@@ -184,11 +184,45 @@ export function factLedgerClaims(ledger = {}) {
   );
 }
 
+// A sentence with several figures ("China recorded $3.8 billion ..., yet
+// Malaysia recorded only $0.6 billion ...") gives each row the clause that
+// holds its own number, without a leading conjunction. Commas inside numbers
+// ("$80,000") do not split a clause. A clause that still holds another figure
+// ("approved 10 MW ... and secured $10 million ...") is split again at its
+// conjunctions; if that cannot isolate the number, the usual label applies.
+const CLAUSE_BREAK = /[,;](?!\d)\s+|\s[\u2014\u2013]\s/g;
+const CONJUNCTION_BREAK = /\s(?:and|but|yet|while|whereas)\s/gi;
+const CLAUSE_LEAD = /^(?:and|but|yet|while|whereas|so|or)\s+/i;
+
+function segmentAround(text, index, breaker) {
+  let start = 0;
+  for (const match of text.matchAll(breaker)) {
+    if (match.index >= index) return { start, end: match.index };
+    start = match.index + match[0].length;
+  }
+  return { start, end: text.length };
+}
+
+function ownClauseLabel(claim, decoded) {
+  const outer = segmentAround(decoded, claim.figure_index, CLAUSE_BREAK);
+  let clause = decoded.slice(outer.start, outer.end);
+  if (extractFigureNumbers(clause).length > 1) {
+    const inner = segmentAround(clause, claim.figure_index - outer.start, CONJUNCTION_BREAK);
+    clause = clause.slice(inner.start, inner.end);
+  }
+  clause = clause.replace(CLAUSE_LEAD, '').trim();
+  return clause.length >= 20 && extractFigureNumbers(clause).length === 1 ? condense(clause, 96) : null;
+}
+
 // When the number was found deep in the claim text, window the label around
 // it so the row's context and its figure line up.
 function numberAlignedLabel(claim) {
   if (!Number.isFinite(claim.figure_index)) return labelFor(claim);
   const decoded = decodeEntities(String(claim.claim_text || '')).replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ');
+  if (extractFigureNumbers(claim.claim_text).length > 1) {
+    const clause = ownClauseLabel(claim, decoded);
+    if (clause) return clause;
+  }
   if (claim.figure_index <= 70) return labelFor(claim);
   const start = decoded.lastIndexOf(' ', Math.max(0, claim.figure_index - 60)) + 1;
   const windowed = decoded.slice(start).trim();
