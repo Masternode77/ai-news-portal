@@ -130,9 +130,24 @@ export function relevantClaims(claims = [], { headline = '', stance = {} } = {})
 // extractor keeps its value and unit, but its label must window around its
 // own number, not the sentence opening, or the $0.6 billion row reads as the
 // $3.8 billion statement.
+function unitKey(unit = '') {
+  const key = String(unit || '').toLowerCase().replace(/[$\s.]/g, '');
+  if (key === '%' || key === 'percent') return 'percent';
+  if (key === 'bn' || key === 'b') return 'billion';
+  if (key === 'm') return 'million';
+  if (/^megawatts?$/.test(key)) return 'mw';
+  if (/^gigawatts?$/.test(key)) return 'gw';
+  return key.replace(/s$/, '');
+}
+
+// Equal magnitudes can sit side by side ("10 MW ... $10 million"), so the
+// claim's unit picks the occurrence; a value alone decides only when it
+// occurs once.
 function ownNumberIndex(claim) {
   const value = Number(claim.numeric_value);
-  const match = extractFigureNumbers(claim.claim_text).find((number) => Math.abs(number.value - value) < 1e-9);
+  const unit = unitKey(claim.unit);
+  const sameValue = extractFigureNumbers(claim.claim_text).filter((number) => Math.abs(number.value - value) < 1e-9);
+  const match = sameValue.find((number) => unitKey(number.unit) === unit) || (sameValue.length === 1 ? sameValue[0] : null);
   return match ? match.index : undefined;
 }
 

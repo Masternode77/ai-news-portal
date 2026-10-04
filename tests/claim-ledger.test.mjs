@@ -34,3 +34,35 @@ test('an unpunctuated headline stays out of the first body claim and keeps every
   assert.ok(!texts.some((text) => /Malaysia Between April/.test(text)), 'the headline is not glued to the body');
   assert.ok(result.claims.some((claim) => claim.numeric_value === 16), 'the eighth body sentence still yields its claim alongside the headline');
 });
+
+test('a short headline keeps its number as a claim', () => {
+  const result = buildClaimLedger({
+    cluster_id: 'sig_short_headline',
+    representative_source: {
+      title: 'Firm plans 300 MW data center',
+      cleaned_text: 'The developer filed its zoning application with the county planning office on Monday morning.',
+      source_url: 'https://example.com/short',
+      source_name: 'Example Source',
+      source_published_at: '2026-10-01T00:00:00Z',
+    },
+  }, 'article_short');
+  assert.ok(result.claims.some((claim) => claim.numeric_value === 300 && claim.claim_text === 'Firm plans 300 MW data center.'));
+});
+
+test('headline claims do not crowd a third source out of the claim budget', () => {
+  const sourceWith = (name, base) => ({
+    title: `${name} adds ${base} MW of contracted data center capacity`,
+    cleaned_text: Array.from({ length: 8 }, (_, index) => `${name} sentence ${index + 1} reports ${base + index + 1} MW of contracted data center capacity this quarter.`).join(' '),
+    source_url: `https://example.com/${name.toLowerCase()}`,
+    source_name: name,
+    source_published_at: '2026-10-01T00:00:00Z',
+  });
+  const result = buildClaimLedger({
+    cluster_id: 'sig_budget',
+    representative_source: sourceWith('Alpha', 100),
+    supporting_sources: [sourceWith('Beta', 200), sourceWith('Gamma', 300)],
+  }, 'article_budget');
+  const fromGamma = result.claims.filter((claim) => claim.source_name === 'Gamma');
+  assert.ok(fromGamma.some((claim) => claim.numeric_value === 301), 'the third source still contributes its body claims');
+  assert.ok(result.claims.some((claim) => claim.numeric_value === 100), 'headline claims are kept on top of the body budget');
+});
