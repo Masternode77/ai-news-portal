@@ -48225,7 +48225,7 @@
     "2026-10-04": {
       "date": "2026-10-04",
       "createdAt": "2026-10-03T18:37:01.308Z",
-      "refreshedAt": "2026-10-04T08:49:59.885Z",
+      "refreshedAt": "2026-10-04T09:20:47.601Z",
       "candidateWindowHours": 24,
       "curatedItems": [],
       "curatedIds": [],
@@ -48241,25 +48241,6 @@
     }
   },
   "runHistory": [
-    {
-      "at": "2026-08-25T15:47:55.019Z",
-      "day": "2026-08-26",
-      "slot": 0,
-      "publishedCount": 0,
-      "authoredColumn": {
-        "published": false,
-        "reason": "draft:no_parseable_draft"
-      },
-      "llmUsage": {
-        "calls": 3,
-        "failures": 0,
-        "prompt_tokens": 7694,
-        "completion_tokens": 2529,
-        "total_tokens": 10223,
-        "token_budget": 60000,
-        "call_budget": 40
-      }
-    },
     {
       "at": "2026-08-25T23:34:12.498Z",
       "day": "2026-08-26",
@@ -51805,9 +51786,44 @@
         "token_budget": 60000,
         "call_budget": 40
       }
+    },
+    {
+      "at": "2026-10-04T09:20:47.601Z",
+      "day": "2026-10-04",
+      "slot": 2,
+      "publishedCount": 0,
+      "authoredColumn": {
+        "published": false,
+        "reason": "verify:unsupported_numeric_claims:18 months,12 months,18 months",
+        "selectionDiagnostics": {
+          "total_candidates": 71,
+          "counts": {
+            "invalid_identity": 0,
+            "text_rights_unauthorized": 0,
+            "abstract_only": 36,
+            "extraction_ineligible": 27,
+            "expert_insight_incomplete": 1,
+            "relevance_below_threshold": 6,
+            "already_covered": 0,
+            "unclean_evidence": 0,
+            "insufficient_facts": 0,
+            "qualifying": 1
+          },
+          "selected_id": "4b3da08b458bdc0a"
+        }
+      },
+      "llmUsage": {
+        "calls": 5,
+        "failures": 0,
+        "prompt_tokens": 18543,
+        "completion_tokens": 7990,
+        "total_tokens": 26533,
+        "token_budget": 60000,
+        "call_budget": 40
+      }
     }
   ],
-  "lastRunAt": "2026-10-04T08:49:59.885Z",
+  "lastRunAt": "2026-10-04T09:20:47.601Z",
   "authored": {
     "lastColumnAt": "2026-09-16T18:47:02.256Z",
     "columnsByDay": {
@@ -51825,12 +51841,30 @@
     },
     "recentStoryKeys": [],
     "lastFailure": {
-      "at": "2026-10-04T08:49:59.885Z",
-      "stage": "draft",
-      "detail": "invalid_structured_heading"
+      "at": "2026-10-04T09:20:47.601Z",
+      "stage": "verify",
+      "detail": "unsupported_numeric_claims:18 months,12 months,18 months",
+      "metrics": {
+        "chars": 12185,
+        "words": 1795,
+        "sections": 5,
+        "paragraphs": 18,
+        "human_style_score": 0.84,
+        "insight_density_score": 0.91,
+        "source_summary_ratio": 0.12,
+        "copyright_overlap_score": 0.007,
+        "unsupported_claim_count": 3,
+        "repeated_sentence_ratio": 0,
+        "heading_sequence_similarity": 0,
+        "conclusion_similarity": 0.185,
+        "thesis_overlap": 0.063,
+        "heading_reuse_max": 0.375,
+        "lead_reuse_max": 0.111,
+        "figure_count": 1
+      }
     },
     "lastSelection": {
-      "at": "2026-10-04T08:49:59.885Z",
+      "at": "2026-10-04T09:20:47.601Z",
       "outcome": "selected",
       "selectedId": "4b3da08b458bdc0a",
       "diagnostics": {
