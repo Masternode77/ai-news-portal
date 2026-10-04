@@ -60,16 +60,18 @@ export function extractClaimsFromCluster(cluster = {}) {
     if (headline) headlineRows.push(...claimRowsFor(headline, item));
     for (const text of splitSentences(item.cleaned_text || '').slice(0, 8)) bodyRows.push(...claimRowsFor(text, item));
   }
-  const seen = new Set();
-  const unique = (row) => {
-    const key = [row.claim_text.toLowerCase(), row.numeric_value, row.unit].join('|');
+  const keyOf = (row) => [row.claim_text.toLowerCase(), row.numeric_value, row.unit].join('|');
+  const firstOccurrences = (rows, seen) => rows.filter((row) => {
+    const key = keyOf(row);
     if (seen.has(key)) return false;
     seen.add(key);
     return true;
-  };
+  });
   // Body claims keep the eight-sentence, eighteen-claim budget they had before
   // headlines were split out, so a third corroborating source still reaches
-  // the ledger; headline claims (one sentence per source) come on top.
-  const body = bodyRows.filter(unique).slice(0, 18);
-  return [...body, ...headlineRows.filter(unique)];
+  // the ledger; headline claims (one sentence per source) come on top. A
+  // headline is compared only with the body claims actually kept, so a body
+  // row cut by the budget never removes the headline that repeats it.
+  const body = firstOccurrences(bodyRows, new Set()).slice(0, 18);
+  return [...body, ...firstOccurrences(headlineRows, new Set(body.map(keyOf)))];
 }

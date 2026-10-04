@@ -66,3 +66,23 @@ test('headline claims do not crowd a third source out of the claim budget', () =
   assert.ok(fromGamma.some((claim) => claim.numeric_value === 301), 'the third source still contributes its body claims');
   assert.ok(result.claims.some((claim) => claim.numeric_value === 100), 'headline claims are kept on top of the body budget');
 });
+
+test('a headline repeated by a body sentence beyond the claim budget is still kept', () => {
+  const headline = 'Gamma adds 700 MW of contracted data center capacity in Ohio';
+  const body = [
+    ...Array.from({ length: 7 }, (_, index) => `Sentence ${index + 1} reports ${index + 11} MW, ${index + 21} MW and ${index + 31} MW of contracted capacity this quarter.`),
+    `${headline}.`,
+  ].join(' ');
+  const result = buildClaimLedger({
+    cluster_id: 'sig_repeat',
+    representative_source: {
+      title: headline,
+      cleaned_text: body,
+      source_url: 'https://example.com/repeat',
+      source_name: 'Example Source',
+      source_published_at: '2026-10-01T00:00:00Z',
+    },
+  }, 'article_repeat');
+  assert.ok(result.claims.filter((claim) => claim.claim_text !== `${headline}.`).length <= 18, 'body claims stay within the budget');
+  assert.ok(result.claims.some((claim) => claim.numeric_value === 700), 'the headline claim survives');
+});
