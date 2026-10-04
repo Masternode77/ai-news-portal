@@ -148,6 +148,43 @@ test('malformed first structured revision uses the existing bounded retry withou
   }
 });
 
+test('draft heading formatting reaches revision but cannot bypass final structure verification', async () => {
+  resetLlmUsageForTests();
+  process.env.AUTHORED_MIN_WORDS = '700';
+  process.env.AUTHORED_MIN_CHARS = '4200';
+  try {
+    for (const repair of [true, false]) {
+      let calls = 0;
+      const invalid = structuredEssay();
+      invalid.sections[0].heading = "Europe's Grid Timing";
+      const result = await generateAuthoredColumn({
+        candidates: [fixtureArticle()], sources: FIXTURE_SOURCES, state: {},
+        now: new Date('2026-10-04T09:00:00Z'),
+        callModel: async request => {
+          calls += 1;
+          if (calls === 1) return STANCE_JSON;
+          if (calls === 3) {
+            assert.match(request.systemPrompt, /Rewrite section 1's heading/);
+            assert.ok(JSON.parse(request.userPrompt).body.includes("Europe's Grid Timing"));
+          }
+          return JSON.stringify(calls === 2 || !repair ? invalid : structuredEssay());
+        },
+      });
+      if (repair) {
+        assert.ok(result.column, JSON.stringify(result));
+        assert.equal(calls, 3);
+      } else {
+        assert.equal(result.column, null);
+        assert.equal(result.failure, 'voice:invalid_structured_heading');
+        assert.equal(calls, 4);
+      }
+    }
+  } finally {
+    delete process.env.AUTHORED_MIN_WORDS;
+    delete process.env.AUTHORED_MIN_CHARS;
+  }
+});
+
 test('engine skips cleanly without an api key', async () => {
   resetLlmUsageForTests();
   delete process.env.OPENROUTER_API_KEY;

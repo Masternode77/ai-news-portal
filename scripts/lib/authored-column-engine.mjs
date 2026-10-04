@@ -174,7 +174,7 @@ function parseModelJson(content) {
 
 class EssayStructureError extends Error {}
 
-export function parseModelEssay(content) {
+export function parseModelEssay(content, { draft = false } = {}) {
   const essay = parseModelJson(content);
   if (!essay || typeof essay !== 'object' || Array.isArray(essay)
     || typeof essay.headline !== 'string' || !essay.headline.trim()) {
@@ -191,21 +191,31 @@ export function parseModelEssay(content) {
     }
     return values.map(value => value.trim());
   };
-  if (!Array.isArray(essay.sections) || essay.sections.length < 4 || essay.sections.length > 6) {
+  if (!Array.isArray(essay.sections) || !essay.sections.length) {
     throw new EssayStructureError('invalid_structured_sections');
   }
+  const formatIssues = [];
+  if (essay.sections.length < 4 || essay.sections.length > 6) {
+    if (!draft) throw new EssayStructureError('invalid_structured_sections');
+    formatIssues.push('Restructure the draft into exactly 4-6 section objects without omitting substantive analysis.');
+  }
   const blocks = paragraphs(essay.opening_paragraphs, true);
-  for (const section of essay.sections) {
+  for (const [index, section] of essay.sections.entries()) {
     const heading = typeof section?.heading === 'string' ? section.heading.trim() : '';
     const words = heading.split(/\s+/).length;
+    if (!heading || /[\r\n]/.test(heading)) throw new EssayStructureError('invalid_structured_heading');
     if (!isHeading(heading) || !/^[A-Z][A-Za-z0-9 ]*$/.test(heading) || words < 2 || words > 6) {
-      throw new EssayStructureError('invalid_structured_heading');
+      if (!draft) throw new EssayStructureError('invalid_structured_heading');
+      formatIssues.push(`Rewrite section ${index + 1}'s heading as 2-6 words starting with an uppercase letter and containing only ASCII letters, digits and spaces. Preserve its meaning, but remove punctuation and markdown by rephrasing it.`);
     }
     blocks.push(heading, ...paragraphs(section.paragraphs));
   }
   // Serialize explicit model-written sections; never infer or invent headings
   // from prose. The unchanged final gate still checks section count and quality.
-  return { headline: essay.headline, deck: essay.deck, body: blocks.join('\n\n'), figures: essay.figures };
+  return {
+    headline: essay.headline, deck: essay.deck, body: blocks.join('\n\n'), figures: essay.figures,
+    ...(formatIssues.length ? { formatIssues } : {}),
+  };
 }
 
 function stripInlineMarkdown(line) {
@@ -508,7 +518,7 @@ async function draftPass({ charter, selection, ledger, stance, recentHeadings = 
       '- Return exactly 4 to 6 objects in sections, each with its own heading and at least one substantive paragraph. The complete essay must have at least six substantive paragraphs. Put any unheaded opening paragraphs in opening_paragraphs (an empty array is allowed). Do not return a body string: the publisher assembles the paragraph arrays and headings with blank lines.',
       '- 1200 to 1800 words, written in the first person, committed to the thesis by the third paragraph.',
       '- Plain text only — no markdown of any kind (no #, ##, **, *, _, backticks, or bullet markers anywhere in the body).',
-      '- Plain paragraphs separated by blank lines; each paragraph is a single unwrapped line.',
+      '- Each paragraph array item is a single unwrapped plain-text paragraph with no newline characters. Do not put section headings into paragraph strings.',
       '- Section headings: invented for THIS argument — never generic labels, never headings any recent column used (the avoid list is in the payload). Each heading is 2-6 words, starts with an uppercase letter, and contains only ASCII letters, digits and spaces (no apostrophes, quotes, commas, colons, dashes, or trailing punctuation).',
       '- One section must present the honest case against the thesis, under a heading phrased from this column\'s specifics (the words "wrong", "watchlist" and other retired template phrasings are forbidden).',
       '- The final section looks forward: name two or three concrete observables with rough timeframes, under a fresh heading of your own invention.',
@@ -524,7 +534,7 @@ async function draftPass({ charter, selection, ledger, stance, recentHeadings = 
       recent_leads_to_avoid: recentLeads,
     }),
   });
-  return parseModelEssay(content);
+  return parseModelEssay(content, { draft: true });
 }
 
 async function voicePass({ charter, draft, feedback = [], callModel }) {
@@ -685,7 +695,7 @@ export async function generateAuthoredColumn({
   let essay = draft;
   let quality;
   let figures = [];
-  let formatFeedback = [];
+  let formatFeedback = draft.formatIssues || [];
   while (attempts < 2) {
     attempts += 1;
     let voiced;
@@ -698,7 +708,7 @@ export async function generateAuthoredColumn({
       });
     } catch (error) {
       if (error instanceof EssayStructureError && attempts < 2) {
-        formatFeedback = [`The previous JSON failed ${error.message}. Return all required arrays with 4-6 valid section headings and nonempty single-line paragraph strings; preserve the complete essay.`];
+        formatFeedback = [...(draft.formatIssues || []), `The previous JSON failed ${error.message}. Return all required arrays with 4-6 valid section headings and nonempty single-line paragraph strings; preserve the complete essay.`];
         continue;
       }
       return failWith('voice', error.message);
