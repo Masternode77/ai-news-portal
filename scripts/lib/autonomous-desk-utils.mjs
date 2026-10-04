@@ -52,12 +52,20 @@ export function titleTextFor(item = {}) {
   return compact(item.title || item.expertLensFull?.finalHeadline || 'Untitled signal');
 }
 
+const BOILERPLATE_SENTENCE = /(copyright|privacy policy|terms of use|newsletter|advertisement|registered office|want more)/i;
+
+// Shared with the claim extractor's standalone headlines so both reject the
+// same page furniture.
+export function boilerplateSentence(line = '') {
+  return BOILERPLATE_SENTENCE.test(String(line || ''));
+}
+
 export function splitSentences(text = '') {
   return compact(stripHtml(text))
     .split(/(?<=[.!?])\s+/)
     .map((line) => sentence(line))
     .filter((line) => line.length >= 45 && line.length <= 320)
-    .filter((line) => !/(copyright|privacy policy|terms of use|newsletter|advertisement|registered office|want more)/i.test(line))
+    .filter((line) => !boilerplateSentence(line))
     .filter((line) => !/(fuelin\.|clo\.|Hundreds o\.|\b[a-z]\.|\bU\.S\.|\bU\.K\.)$/i.test(line));
 }
 

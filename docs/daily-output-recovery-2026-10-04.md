@@ -223,6 +223,40 @@ the lowest scores 0.81, so the 0.75 floor still separates analysis from summary.
 directive now names the stakeholder, exposure and constraint analysis the score rewards and asks
 for fewer reporting verbs. No word was added to the list and the floor is unchanged.
 
+## Sixth live run (Update News `37238528474`, release v0.0.38)
+
+- The column stage published "Malaysia collapsed a multi-billion-dollar server smuggling route
+  with one permit", anchored on the Epoch AI trade-data insight: 1,683 words, 6 sections, 21
+  paragraphs, human-style 0.94, insight density 0.93, overlap 0.014, no unsupported claims, one
+  figure, two revision passes. Five model calls used 35,312 tokens.
+- Production returned 200 for the column page, and the homepage, column index and RSS feed list
+  it. The smoke workflow still exited non-zero because its last listing pipe hit a broken pipe
+  under `pipefail` after every check had printed its result.
+- The wire picked nothing: the curation model chose no item and no pool item reached the floor's
+  0.55 lane score (the best was 0.48). The day's processing count stayed at 12 of 18 and its
+  published count at 1 of 9.
+
+Follow-up:
+
+- Both rows of the column's figure carried the Epoch headline glued to the first sentence, and the
+  $0.6 billion row repeated the $3.8 billion statement. The claim extractor now keeps each source
+  headline as its own sentence, even a short one, and headline claims no longer use the
+  eighteen-claim body budget. A figure row finds its own number by value and unit, and when a
+  sentence holds several figures the row takes the clause that holds its number. The column's
+  labels now read "China recorded $3.8 billion of server imports from Malaysia" and "Malaysia
+  recorded only $0.6 billion of exports to China", and its `updatedAt` records the correction.
+  The artwork queue reports the same ready and blocked columns and the same fingerprint before
+  and after the extractor change.
+- A read of the column against the stored Epoch text found three factual assertions the source
+  does not make: a share of NVIDIA's H100 shipments, "the first enforcement action in this
+  cycle", and a history of Singapore, Thailand and the UAE in enforcement actions. They were
+  removed or narrowed; the argument, attribution and figures are otherwise unchanged (1,627
+  words). The authored quality contract was re-run on the corrected text with the engine's own
+  inputs, it still passes, and the stored metrics now describe the published copy.
+- The column's dedicated artwork is a ready `generate` job for the Mac's Codex task
+  (`docs/mac-column-image-automation.md`). This cloud session has no native image tool, so the
+  column keeps its current image until that task imports one.
+
 ## Configuration
 
 | Variable | Default |

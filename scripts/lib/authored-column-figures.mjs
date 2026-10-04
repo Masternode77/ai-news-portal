@@ -125,9 +125,36 @@ export function relevantClaims(claims = [], { headline = '', stance = {} } = {})
     .map((entry) => entry.claim);
 }
 
+// A sentence often carries several numbers ("China recorded $3.8 billion ...
+// yet Malaysia recorded only $0.6 billion"). A claim parsed by the strict
+// extractor keeps its value and unit, but its label must window around its
+// own number, not the sentence opening, or the $0.6 billion row reads as the
+// $3.8 billion statement.
+function unitKey(unit = '') {
+  const key = String(unit || '').toLowerCase().replace(/[$\s.]/g, '');
+  if (key === '%' || key === 'percent') return 'percent';
+  if (key === 'bn' || key === 'b') return 'billion';
+  if (key === 'm') return 'million';
+  if (/^megawatts?$/.test(key)) return 'mw';
+  if (/^gigawatts?$/.test(key)) return 'gw';
+  return key.replace(/s$/, '');
+}
+
+// Equal magnitudes can sit side by side ("10 MW ... $10 million"), so the
+// claim's unit picks the occurrence; a value alone decides only when it
+// occurs once.
+function ownNumberIndex(claim) {
+  const value = Number(claim.numeric_value);
+  const unit = unitKey(claim.unit);
+  const sameValue = extractFigureNumbers(claim.claim_text).filter((number) => Math.abs(number.value - value) < 1e-9);
+  const match = sameValue.find((number) => unitKey(number.unit) === unit) || (sameValue.length === 1 ? sameValue[0] : null);
+  return match ? match.index : undefined;
+}
+
 function withFigureNumber(claim) {
   if (Number.isFinite(Number(claim.numeric_value)) && String(claim.unit || '').trim()) {
-    return { ...claim };
+    const figureIndex = ownNumberIndex(claim);
+    return Number.isFinite(figureIndex) ? { ...claim, figure_index: figureIndex } : { ...claim };
   }
   const [number] = extractFigureNumbers(claim.claim_text);
   if (!number) return null;
@@ -157,13 +184,66 @@ export function factLedgerClaims(ledger = {}) {
   );
 }
 
+// A sentence with several figures ("China recorded $3.8 billion ..., yet
+// Malaysia recorded only $0.6 billion ...") gives each row the clause that
+// holds its own number, without a leading conjunction. Commas inside numbers
+// ("$80,000") do not split a clause. A clause that still holds another figure
+// ("approved 10 MW ... and secured $10 million ...") is split again at its
+// conjunctions, except the "and" of a numeric range ("between 10 MW and 20
+// MW"); if that cannot isolate the number, the usual label applies.
+const CLAUSE_BREAK = /[,;](?!\d)\s+|\s[\u2014\u2013]\s/g;
+const CONJUNCTION_BREAK = /\s(?:and|but|yet|while|whereas)\s/gi;
+const CLAUSE_LEAD = /^(?:and|but|yet|while|whereas|so|or)\s+/i;
+const RANGE_QUALIFIER = '(?:(?:about|approximately|roughly|around|nearly|almost|some|up to|over|more than|less than)\\s+)?';
+const RANGE_OPENING = new RegExp(`\\bbetween\\s+${RANGE_QUALIFIER}\\$?\\d[\\d,.]*(?:\\s*[A-Za-z%]+)?$`, 'i');
+const RANGE_CLOSING = new RegExp(`^${RANGE_QUALIFIER}\\$?\\d`, 'i');
+
+function breaksIn(text, breaker, keep = () => true) {
+  return [...text.matchAll(breaker)].filter((match) => keep(match, text));
+}
+
+function rangeConjunction(match, text) {
+  return /^\s+and\s+$/i.test(match[0])
+    && RANGE_OPENING.test(text.slice(0, match.index))
+    && RANGE_CLOSING.test(text.slice(match.index + match[0].length));
+}
+
+function segmentAround(index, breaks) {
+  let start = 0;
+  for (const match of breaks) {
+    if (match.index >= index) return { start, end: match.index };
+    start = match.index + match[0].length;
+  }
+  return { start, end: Infinity };
+}
+
+function ownClauseLabel(claim, decoded) {
+  const outer = segmentAround(claim.figure_index, breaksIn(decoded, CLAUSE_BREAK));
+  let clause = decoded.slice(outer.start, outer.end);
+  if (extractFigureNumbers(clause).length > 1) {
+    const inner = segmentAround(claim.figure_index - outer.start, breaksIn(clause, CONJUNCTION_BREAK, (match, text) => !rangeConjunction(match, text)));
+    clause = clause.slice(inner.start, inner.end);
+  }
+  clause = clause.replace(CLAUSE_LEAD, '').trim();
+  return clause.length >= 20 && extractFigureNumbers(clause).length === 1 ? condense(clause, 96) : null;
+}
+
 // When the number was found deep in the claim text, window the label around
 // it so the row's context and its figure line up.
 function numberAlignedLabel(claim) {
   if (!Number.isFinite(claim.figure_index)) return labelFor(claim);
   const decoded = decodeEntities(String(claim.claim_text || '')).replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ');
-  if (claim.figure_index <= 70) return labelFor(claim);
-  const start = decoded.lastIndexOf(' ', Math.max(0, claim.figure_index - 60)) + 1;
+  // figure_index was measured on the raw claim text; decoded entities and
+  // stripped tags shift offsets, so the number is located again in the text
+  // the label is cut from.
+  const decodedIndex = ownNumberIndex({ ...claim, claim_text: decoded });
+  const index = Number.isFinite(decodedIndex) ? decodedIndex : claim.figure_index;
+  if (extractFigureNumbers(decoded).length > 1) {
+    const clause = ownClauseLabel({ ...claim, figure_index: index }, decoded);
+    if (clause) return clause;
+  }
+  if (index <= 70) return labelFor(claim);
+  const start = decoded.lastIndexOf(' ', Math.max(0, index - 60)) + 1;
   const windowed = decoded.slice(start).trim();
   return condense((start > 0 ? '\u2026' : '') + windowed, 96);
 }
@@ -284,16 +364,20 @@ function deterministicFigures({ claims, stance, headline, sectionCount }) {
     .sort((a, b) => b.length - a.length)[0] || [];
 
   const figures = [];
+  const firstClaims = largestUnitGroup.length >= 3 ? largestUnitGroup : claims;
   if (largestUnitGroup.length >= 3) {
-    figures.push(buildFigure('bar', primaryTitle, largestUnitGroup, 2, sectionCount));
+    figures.push(buildFigure('bar', primaryTitle, firstClaims, 2, sectionCount));
   } else if (claims.length >= 4) {
-    figures.push(buildFigure('table', primaryTitle, claims, 2, sectionCount));
+    figures.push(buildFigure('table', primaryTitle, firstClaims, 2, sectionCount));
   } else {
-    figures.push(buildFigure('stat-row', primaryTitle, claims, 2, sectionCount));
+    figures.push(buildFigure('stat-row', primaryTitle, firstClaims, 2, sectionCount));
   }
 
-  const used = new Set(figures.flatMap((figure) => figure.items.map((item) => item.label)));
-  const remaining = claims.filter((claim) => !used.has(labelFor(claim)));
+  // Rows carry clause-specific labels, so the second figure skips the claims
+  // the first one used by identity, never by comparing label text.
+  const claimKey = (claim) => claim.claim_id || [claim.claim_text, claim.numeric_value, claim.unit].join('|');
+  const used = new Set(firstClaims.slice(0, MAX_ITEMS_PER_FIGURE).map(claimKey));
+  const remaining = claims.filter((claim) => !used.has(claimKey(claim)));
   if (remaining.length >= 2) {
     const secondTitle = claimTitle(remaining[0].claim_text);
     if (titleOk(secondTitle) && secondTitle.toLowerCase() !== figures[0].title.toLowerCase()) {
