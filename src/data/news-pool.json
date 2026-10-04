@@ -1,5 +1,80 @@
 [
   {
+    "id": "741e7affa6897e99",
+    "sourceRegistryId": "google-cloud-ai-releases",
+    "source": "Google Cloud AI",
+    "url": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/release-notes#September_28_2026",
+    "title": "Google Cloud AI: Anthropic's Claude Sonnet 5.5",
+    "snippet": "Feature Anthropic's Claude Sonnet 5.5 Claude Sonnet 5.5 is available in Model Garden. Feature Provisioned Throughput: Support for changing order scope and increasing term Provisioned Throughput now directly supports fro…",
+    "contentText": "Feature Anthropic's Claude Sonnet 5.5 Claude Sonnet 5.5 is available in Model Garden. Feature Provisioned Throughput: Support for changing order scope and increasing term Provisioned Throughput now directly supports from the self service console the ability to change the scope or increase the term of an order through a supersede and replace operation. For more information, see Restructure an order . Feature Gemini 3 models supported by the Interactions API in Preview Gemini 3 models are supported by the Interactions API in Preview on Gemini Enterprise Agent Platform. For more information, see the Interactions API overview . Feature Gemini 3.8 Flash TTS and Gemini 3.8 Flash-Lite TTS (Preview) Gemini 3.8 Flash TTS and Gemini 3.8 Flash-Lite TTS are available in Preview on the global endpoint…",
+    "publishedAt": "2026-09-28T07:00:00.000Z",
+    "sourceImage": null,
+    "region": "Global",
+    "language": "en",
+    "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+    "ai_topic_score": 1,
+    "ai_topic_reasons": [
+      "anthropic",
+      "gemini",
+      "claude",
+      "ai"
+    ],
+    "category": "AI Infrastructure",
+    "primary_category": "AI Infrastructure",
+    "secondary_category": "GPU clusters and deployment readiness",
+    "infrastructure_layer": "Compute",
+    "affected_stakeholders": [
+      "operators",
+      "hyperscalers",
+      "cloud buyers",
+      "investors"
+    ],
+    "article_type": "Product / Platform Update",
+    "urgency_score": 0.28,
+    "taxonomy_confidence": 0.65,
+    "taxonomy_reasons": [
+      "ai infrastructure",
+      "neocloud"
+    ],
+    "direct_ai_infrastructure_relevance": 0.22,
+    "data_center_relevance": 0,
+    "cloud_capacity_relevance": 0.324,
+    "semiconductor_relevance": 0,
+    "power_grid_relevance": 0,
+    "cooling_relevance": 0,
+    "capital_markets_relevance": 0,
+    "enterprise_ai_infrastructure_relevance": 0,
+    "infrastructure_relevance_score": 0.306,
+    "infrastructure_relevance_tier": "archive_only",
+    "infrastructure_relevance_action": "archive_only",
+    "infrastructure_relevance_reasons": [
+      "direct_ai_infrastructure_relevance:0.22",
+      "cloud_capacity_relevance:0.32(google cloud)"
+    ],
+    "infrastructure_relevance": {
+      "direct_ai_infrastructure_relevance": 0.22,
+      "data_center_relevance": 0,
+      "cloud_capacity_relevance": 0.324,
+      "semiconductor_relevance": 0,
+      "power_grid_relevance": 0,
+      "cooling_relevance": 0,
+      "capital_markets_relevance": 0,
+      "enterprise_ai_infrastructure_relevance": 0,
+      "infrastructure_relevance_score": 0.306,
+      "infrastructure_relevance_tier": "archive_only",
+      "infrastructure_relevance_action": "archive_only",
+      "infrastructure_relevance_reasons": [
+        "direct_ai_infrastructure_relevance:0.22",
+        "cloud_capacity_relevance:0.32(google cloud)"
+      ],
+      "infrastructureRelevanceAction": "archive_only",
+      "articlePagePublished": false,
+      "homepagePublished": false,
+      "archiveOnly": true,
+      "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
+    }
+  },
+  {
     "id": "a5497ac8cff12225",
     "sourceRegistryId": "doe-newsroom",
     "source": "U.S. Department of Energy",
@@ -71,6 +146,226 @@
     }
   },
   {
+    "id": "104074cc6be6e5b6",
+    "sourceRegistryId": "google-cloud-ai-releases",
+    "source": "Google Cloud AI",
+    "url": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/release-notes#September_30_2026",
+    "title": "Google Cloud AI: Cloud Trace integration with Agent Gateway (Preview)",
+    "snippet": "Feature Cloud Trace integration with Agent Gateway (Preview) Agent Gateway integrates with Cloud Trace in Preview to provide end-to-end request observability for agent workloads. Enabling Cloud Trace gives you visibilit…",
+    "contentText": "Feature Cloud Trace integration with Agent Gateway (Preview) Agent Gateway integrates with Cloud Trace in Preview to provide end-to-end request observability for agent workloads. Enabling Cloud Trace gives you visibility into how requests travel from your agents through the gateway and across Google Cloud services, tools, agents, and MCP servers. For more information, see Use Cloud Trace . Feature xAI's Grok 4.7 Grok 4.7 is available in Preview in Model Garden. Fixed CodeMender updates (v0.11.0) This release introduces updates to CodeMender: Tiered location configuration : Added support for configuring the service location using the CM_LOCATION environment variable or location in config.yaml (defaulting to global ), replacing the --location command-line flag. CI gate severity validation :…",
+    "publishedAt": "2026-09-30T07:00:00.000Z",
+    "sourceImage": null,
+    "region": "US",
+    "language": "en",
+    "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+    "ai_topic_score": 0.723,
+    "ai_topic_reasons": [
+      "gemini",
+      "grok",
+      "ai"
+    ],
+    "category": "AI Infrastructure",
+    "primary_category": "AI Infrastructure",
+    "secondary_category": "GPU clusters and deployment readiness",
+    "infrastructure_layer": "Compute",
+    "affected_stakeholders": [
+      "operators",
+      "hyperscalers",
+      "cloud buyers",
+      "investors"
+    ],
+    "article_type": "Product / Platform Update",
+    "urgency_score": 0.28,
+    "taxonomy_confidence": 0.65,
+    "taxonomy_reasons": [
+      "ai infrastructure",
+      "neocloud"
+    ],
+    "direct_ai_infrastructure_relevance": 0.22,
+    "data_center_relevance": 0,
+    "cloud_capacity_relevance": 0.324,
+    "semiconductor_relevance": 0,
+    "power_grid_relevance": 0,
+    "cooling_relevance": 0,
+    "capital_markets_relevance": 0,
+    "enterprise_ai_infrastructure_relevance": 0,
+    "infrastructure_relevance_score": 0.306,
+    "infrastructure_relevance_tier": "archive_only",
+    "infrastructure_relevance_action": "archive_only",
+    "infrastructure_relevance_reasons": [
+      "direct_ai_infrastructure_relevance:0.22",
+      "cloud_capacity_relevance:0.32(google cloud)"
+    ],
+    "infrastructure_relevance": {
+      "direct_ai_infrastructure_relevance": 0.22,
+      "data_center_relevance": 0,
+      "cloud_capacity_relevance": 0.324,
+      "semiconductor_relevance": 0,
+      "power_grid_relevance": 0,
+      "cooling_relevance": 0,
+      "capital_markets_relevance": 0,
+      "enterprise_ai_infrastructure_relevance": 0,
+      "infrastructure_relevance_score": 0.306,
+      "infrastructure_relevance_tier": "archive_only",
+      "infrastructure_relevance_action": "archive_only",
+      "infrastructure_relevance_reasons": [
+        "direct_ai_infrastructure_relevance:0.22",
+        "cloud_capacity_relevance:0.32(google cloud)"
+      ],
+      "infrastructureRelevanceAction": "archive_only",
+      "articlePagePublished": false,
+      "homepagePublished": false,
+      "archiveOnly": true,
+      "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
+    }
+  },
+  {
+    "id": "168b174a04128103",
+    "sourceRegistryId": "google-cloud-ai-releases",
+    "source": "Google Cloud AI",
+    "url": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/release-notes#September_29_2026",
+    "title": "Google Cloud AI: Custom denial messages for semantic governance policies",
+    "snippet": "Feature Custom denial messages for semantic governance policies You can now configure a fixed Denial message on a semantic governance policy to show end users when the policy denies a request, in place of the policy den…",
+    "contentText": "Feature Custom denial messages for semantic governance policies You can now configure a fixed Denial message on a semantic governance policy to show end users when the policy denies a request, in place of the policy denial rationale. The message can be up to 1,000 characters and is configurable in the Google Cloud console on the policy create or edit page, or by setting agentResponseCustomization.denialMessage on the policy resource using the REST API. When a single request triggers denials from more than one policy, the policy engine combines the configured Denial messages, deduplicates them, and falls back to a generic message for firing policies that don't have one configured. For more information, see Configure a semantic governance policy and Information exposure risk .",
+    "publishedAt": "2026-09-29T07:00:00.000Z",
+    "sourceImage": null,
+    "region": "US",
+    "language": "en",
+    "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+    "ai_topic_score": 0.483,
+    "ai_topic_reasons": [
+      "gemini",
+      "ai"
+    ],
+    "category": "AI Infrastructure",
+    "primary_category": "AI Infrastructure",
+    "secondary_category": "GPU clusters and deployment readiness",
+    "infrastructure_layer": "Compute",
+    "affected_stakeholders": [
+      "operators",
+      "hyperscalers",
+      "cloud buyers",
+      "investors"
+    ],
+    "article_type": "Policy / Regulation",
+    "urgency_score": 0.28,
+    "taxonomy_confidence": 0.65,
+    "taxonomy_reasons": [
+      "ai infrastructure",
+      "neocloud"
+    ],
+    "direct_ai_infrastructure_relevance": 0.22,
+    "data_center_relevance": 0,
+    "cloud_capacity_relevance": 0.324,
+    "semiconductor_relevance": 0,
+    "power_grid_relevance": 0,
+    "cooling_relevance": 0,
+    "capital_markets_relevance": 0,
+    "enterprise_ai_infrastructure_relevance": 0,
+    "infrastructure_relevance_score": 0.306,
+    "infrastructure_relevance_tier": "archive_only",
+    "infrastructure_relevance_action": "archive_only",
+    "infrastructure_relevance_reasons": [
+      "direct_ai_infrastructure_relevance:0.22",
+      "cloud_capacity_relevance:0.32(google cloud)"
+    ],
+    "infrastructure_relevance": {
+      "direct_ai_infrastructure_relevance": 0.22,
+      "data_center_relevance": 0,
+      "cloud_capacity_relevance": 0.324,
+      "semiconductor_relevance": 0,
+      "power_grid_relevance": 0,
+      "cooling_relevance": 0,
+      "capital_markets_relevance": 0,
+      "enterprise_ai_infrastructure_relevance": 0,
+      "infrastructure_relevance_score": 0.306,
+      "infrastructure_relevance_tier": "archive_only",
+      "infrastructure_relevance_action": "archive_only",
+      "infrastructure_relevance_reasons": [
+        "direct_ai_infrastructure_relevance:0.22",
+        "cloud_capacity_relevance:0.32(google cloud)"
+      ],
+      "infrastructureRelevanceAction": "archive_only",
+      "articlePagePublished": false,
+      "homepagePublished": false,
+      "archiveOnly": true,
+      "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
+    }
+  },
+  {
+    "id": "8b9b324626df1fd9",
+    "sourceRegistryId": "google-cloud-ai-releases",
+    "source": "Google Cloud AI",
+    "url": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/release-notes#September_25_2026",
+    "title": "Google Cloud AI: Semantic governance policies support VPC Service Controls (Preview)",
+    "snippet": "Feature Semantic governance policies support VPC Service Controls (Preview) Semantic governance policy and the Semantic governance policy engine support VPC Service Controls in Preview . You can include Semantic governa…",
+    "contentText": "Feature Semantic governance policies support VPC Service Controls (Preview) Semantic governance policy and the Semantic governance policy engine support VPC Service Controls in Preview . You can include Semantic governance policy and the policy engine in your service perimeter to help mitigate the risk of data exfiltration when governing agent tool calls. For more information, see VPC Service Controls with Gemini Enterprise Agent Platform and Semantic governance policies overview .",
+    "publishedAt": "2026-09-25T07:00:00.000Z",
+    "sourceImage": null,
+    "region": "Global",
+    "language": "en",
+    "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+    "ai_topic_score": 0.483,
+    "ai_topic_reasons": [
+      "gemini",
+      "ai"
+    ],
+    "category": "AI Infrastructure",
+    "primary_category": "AI Infrastructure",
+    "secondary_category": "GPU clusters and deployment readiness",
+    "infrastructure_layer": "Compute",
+    "affected_stakeholders": [
+      "operators",
+      "hyperscalers",
+      "cloud buyers",
+      "investors"
+    ],
+    "article_type": "Policy / Regulation",
+    "urgency_score": 0.28,
+    "taxonomy_confidence": 0.65,
+    "taxonomy_reasons": [
+      "ai infrastructure",
+      "neocloud"
+    ],
+    "direct_ai_infrastructure_relevance": 0.22,
+    "data_center_relevance": 0,
+    "cloud_capacity_relevance": 0.324,
+    "semiconductor_relevance": 0,
+    "power_grid_relevance": 0,
+    "cooling_relevance": 0,
+    "capital_markets_relevance": 0,
+    "enterprise_ai_infrastructure_relevance": 0,
+    "infrastructure_relevance_score": 0.306,
+    "infrastructure_relevance_tier": "archive_only",
+    "infrastructure_relevance_action": "archive_only",
+    "infrastructure_relevance_reasons": [
+      "direct_ai_infrastructure_relevance:0.22",
+      "cloud_capacity_relevance:0.32(google cloud)"
+    ],
+    "infrastructure_relevance": {
+      "direct_ai_infrastructure_relevance": 0.22,
+      "data_center_relevance": 0,
+      "cloud_capacity_relevance": 0.324,
+      "semiconductor_relevance": 0,
+      "power_grid_relevance": 0,
+      "cooling_relevance": 0,
+      "capital_markets_relevance": 0,
+      "enterprise_ai_infrastructure_relevance": 0,
+      "infrastructure_relevance_score": 0.306,
+      "infrastructure_relevance_tier": "archive_only",
+      "infrastructure_relevance_action": "archive_only",
+      "infrastructure_relevance_reasons": [
+        "direct_ai_infrastructure_relevance:0.22",
+        "cloud_capacity_relevance:0.32(google cloud)"
+      ],
+      "infrastructureRelevanceAction": "archive_only",
+      "articlePagePublished": false,
+      "homepagePublished": false,
+      "archiveOnly": true,
+      "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
+    }
+  },
+  {
     "id": "dcc497596891311f",
     "sourceRegistryId": "eia-today-in-energy",
     "source": "U.S. Energy Information Administration",
@@ -135,6 +430,76 @@
       "infrastructure_relevance_reasons": [
         "power_grid_relevance:0.46(power, electricity)",
         "cooling_relevance:0.30(thermal)"
+      ],
+      "infrastructureRelevanceAction": "archive_only",
+      "articlePagePublished": false,
+      "homepagePublished": false,
+      "archiveOnly": true,
+      "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
+    }
+  },
+  {
+    "id": "348036963e84f659",
+    "sourceRegistryId": "whitehouse-presidential-actions",
+    "source": "The White House",
+    "url": "https://www.whitehouse.gov/presidential-actions/2026/09/inaugurating-the-era-of-super-intelligence/",
+    "title": "Inaugurating The Era Of Super Intelligence",
+    "snippet": "By the authority vested in me as President by the Constitution and the laws of the United States of America, it is hereby ordered: Section 1. Purpose. America stands at the forefront of a new technological revolution in…",
+    "contentText": "Presidential Actions Search Select Category All News Briefings & Statements All Presidential Actions Executive Orders Nominations & Appointments Presidential Memoranda Proclamations Fact Sheets Releases Remarks Research All Briefings & Statements Presidential Actions All Executive Orders Nominations & Appointments Presidential Memoranda Proclamations Fact Sheets Releases Remarks Research By the authority vested in me as President by the Constitution and the laws of the United States of America, it is hereby ordered: Section 1 . Purpose . America stands at the forefront of a new technological revolution in intelligence. The modern field of artificial intelligence was born in the United States, where American scientists first gave the field its name and laid the foundations for its developm…",
+    "publishedAt": "2026-09-29T21:17:25.000Z",
+    "sourceImage": null,
+    "region": "US",
+    "language": "en",
+    "defaultCategory": "Policy & Siting",
+    "ai_topic_score": 0.4,
+    "ai_topic_reasons": [
+      "artificial intelligence",
+      "ai_not_in_title"
+    ],
+    "category": "Policy & Siting",
+    "primary_category": "Policy & Siting",
+    "secondary_category": "Permitting, regulation, and market access",
+    "infrastructure_layer": "Policy",
+    "affected_stakeholders": [
+      "regulators",
+      "site selectors",
+      "developers",
+      "utilities"
+    ],
+    "article_type": "Policy / Regulation",
+    "urgency_score": 0.18,
+    "taxonomy_confidence": 0.53,
+    "taxonomy_reasons": [
+      "policy"
+    ],
+    "direct_ai_infrastructure_relevance": 0,
+    "data_center_relevance": 0,
+    "cloud_capacity_relevance": 0,
+    "semiconductor_relevance": 0,
+    "power_grid_relevance": 0,
+    "cooling_relevance": 0,
+    "capital_markets_relevance": 0,
+    "enterprise_ai_infrastructure_relevance": 0,
+    "infrastructure_relevance_score": 0,
+    "infrastructure_relevance_tier": "archive_only",
+    "infrastructure_relevance_action": "archive_only",
+    "infrastructure_relevance_reasons": [
+      "no_strong_compute_current_infrastructure_match"
+    ],
+    "infrastructure_relevance": {
+      "direct_ai_infrastructure_relevance": 0,
+      "data_center_relevance": 0,
+      "cloud_capacity_relevance": 0,
+      "semiconductor_relevance": 0,
+      "power_grid_relevance": 0,
+      "cooling_relevance": 0,
+      "capital_markets_relevance": 0,
+      "enterprise_ai_infrastructure_relevance": 0,
+      "infrastructure_relevance_score": 0,
+      "infrastructure_relevance_tier": "archive_only",
+      "infrastructure_relevance_action": "archive_only",
+      "infrastructure_relevance_reasons": [
+        "no_strong_compute_current_infrastructure_match"
       ],
       "infrastructureRelevanceAction": "archive_only",
       "articlePagePublished": false,
@@ -635,6 +1000,282 @@
       "infrastructure_relevance_action": "archive_only",
       "infrastructure_relevance_reasons": [
         "power_grid_relevance:0.32(electricity)"
+      ],
+      "infrastructureRelevanceAction": "archive_only",
+      "articlePagePublished": false,
+      "homepagePublished": false,
+      "archiveOnly": true,
+      "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
+    }
+  },
+  {
+    "id": "518703cc40750ccb",
+    "sourceRegistryId": "google-cloud-compute-releases",
+    "source": "Google Cloud Compute Engine",
+    "url": "https://docs.cloud.google.com/compute/docs/release-notes#September_30_2026",
+    "title": "Google Cloud Compute Engine: Generally available : You can specify a 120-second preemption notice duration while creating Spot VMs.",
+    "snippet": "Feature Generally available: You can specify a 120-second preemption notice duration while creating Spot VMs. Use this feature for workloads on Spot VMs where you want up to an additional 120 seconds for handling preemp…",
+    "contentText": "Feature Generally available : You can specify a 120-second preemption notice duration while creating Spot VMs. Use this feature for workloads on Spot VMs where you want up to an additional 120 seconds for handling preemption. If you want to migrate existing Spot VMs workloads, make sure you update your workload to handle preemption outside of a shutdown script and test preemption. For more information, see Spot VMs and Create and use Spot VMs .",
+    "publishedAt": "2026-09-30T07:00:00.000Z",
+    "sourceImage": null,
+    "region": "US",
+    "language": "en",
+    "defaultCategory": "Hyperscalers & Cloud",
+    "ai_topic_score": 0,
+    "ai_topic_reasons": [
+      "ai_not_in_title"
+    ],
+    "category": "Cloud Capacity",
+    "primary_category": "Cloud Capacity",
+    "secondary_category": "Hyperscale regions and accelerator availability",
+    "infrastructure_layer": "Cloud Platform",
+    "affected_stakeholders": [
+      "hyperscalers",
+      "cloud buyers",
+      "enterprise IT",
+      "operators"
+    ],
+    "article_type": "Product / Platform Update",
+    "urgency_score": 0.25,
+    "taxonomy_confidence": 0.61,
+    "taxonomy_reasons": [
+      "google cloud"
+    ],
+    "direct_ai_infrastructure_relevance": 0,
+    "data_center_relevance": 0,
+    "cloud_capacity_relevance": 0.324,
+    "semiconductor_relevance": 0,
+    "power_grid_relevance": 0,
+    "cooling_relevance": 0,
+    "capital_markets_relevance": 0,
+    "enterprise_ai_infrastructure_relevance": 0,
+    "infrastructure_relevance_score": 0.223,
+    "infrastructure_relevance_tier": "archive_only",
+    "infrastructure_relevance_action": "archive_only",
+    "infrastructure_relevance_reasons": [
+      "cloud_capacity_relevance:0.32(google cloud)"
+    ],
+    "infrastructure_relevance": {
+      "direct_ai_infrastructure_relevance": 0,
+      "data_center_relevance": 0,
+      "cloud_capacity_relevance": 0.324,
+      "semiconductor_relevance": 0,
+      "power_grid_relevance": 0,
+      "cooling_relevance": 0,
+      "capital_markets_relevance": 0,
+      "enterprise_ai_infrastructure_relevance": 0,
+      "infrastructure_relevance_score": 0.223,
+      "infrastructure_relevance_tier": "archive_only",
+      "infrastructure_relevance_action": "archive_only",
+      "infrastructure_relevance_reasons": [
+        "cloud_capacity_relevance:0.32(google cloud)"
+      ],
+      "infrastructureRelevanceAction": "archive_only",
+      "articlePagePublished": false,
+      "homepagePublished": false,
+      "archiveOnly": true,
+      "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
+    }
+  },
+  {
+    "id": "758880cc9e6d9387",
+    "sourceRegistryId": "google-cloud-compute-releases",
+    "source": "Google Cloud Compute Engine",
+    "url": "https://docs.cloud.google.com/compute/docs/release-notes#September_29_2026",
+    "title": "Google Cloud Compute Engine: Interface-based versioning (IBV) for the Compute Engine API is now generally available.",
+    "snippet": "Announcement Interface-based versioning (IBV) for the Compute Engine API is now generally available. IBV lets you call a specific, date-based API version so you can adopt API changes on your own schedule. For more infor…",
+    "contentText": "Announcement Interface-based versioning (IBV) for the Compute Engine API is now generally available. IBV lets you call a specific, date-based API version so you can adopt API changes on your own schedule. For more information, see Compute Engine API versioning . Feature Generally available : Compute Engine API version 2026-09-01 is now generally available. In this version, aggregatedList methods return partial results by default when a scope is unreachable. The returnPartialSuccess query parameter is no longer available in aggregatedList and list methods. For more information, see the 2026-09-01 REST reference . Feature Preview : Compute Engine API version 2026-10-01-preview is now available in Preview. In this version, the quotas field is no longer available in responses from the project…",
+    "publishedAt": "2026-09-29T07:00:00.000Z",
+    "sourceImage": null,
+    "region": "Global",
+    "language": "en",
+    "defaultCategory": "Hyperscalers & Cloud",
+    "ai_topic_score": 0,
+    "ai_topic_reasons": [
+      "ai_not_in_title"
+    ],
+    "category": "Cloud Capacity",
+    "primary_category": "Cloud Capacity",
+    "secondary_category": "Hyperscale regions and accelerator availability",
+    "infrastructure_layer": "Cloud Platform",
+    "affected_stakeholders": [
+      "hyperscalers",
+      "cloud buyers",
+      "enterprise IT",
+      "operators"
+    ],
+    "article_type": "Other",
+    "urgency_score": 0.25,
+    "taxonomy_confidence": 0.61,
+    "taxonomy_reasons": [
+      "google cloud"
+    ],
+    "direct_ai_infrastructure_relevance": 0,
+    "data_center_relevance": 0,
+    "cloud_capacity_relevance": 0.324,
+    "semiconductor_relevance": 0,
+    "power_grid_relevance": 0,
+    "cooling_relevance": 0,
+    "capital_markets_relevance": 0,
+    "enterprise_ai_infrastructure_relevance": 0,
+    "infrastructure_relevance_score": 0.223,
+    "infrastructure_relevance_tier": "archive_only",
+    "infrastructure_relevance_action": "archive_only",
+    "infrastructure_relevance_reasons": [
+      "cloud_capacity_relevance:0.32(google cloud)"
+    ],
+    "infrastructure_relevance": {
+      "direct_ai_infrastructure_relevance": 0,
+      "data_center_relevance": 0,
+      "cloud_capacity_relevance": 0.324,
+      "semiconductor_relevance": 0,
+      "power_grid_relevance": 0,
+      "cooling_relevance": 0,
+      "capital_markets_relevance": 0,
+      "enterprise_ai_infrastructure_relevance": 0,
+      "infrastructure_relevance_score": 0.223,
+      "infrastructure_relevance_tier": "archive_only",
+      "infrastructure_relevance_action": "archive_only",
+      "infrastructure_relevance_reasons": [
+        "cloud_capacity_relevance:0.32(google cloud)"
+      ],
+      "infrastructureRelevanceAction": "archive_only",
+      "articlePagePublished": false,
+      "homepagePublished": false,
+      "archiveOnly": true,
+      "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
+    }
+  },
+  {
+    "id": "a50001faa15fb37a",
+    "sourceRegistryId": "google-cloud-compute-releases",
+    "source": "Google Cloud Compute Engine",
+    "url": "https://docs.cloud.google.com/compute/docs/release-notes#September_28_2026",
+    "title": "Google Cloud Compute Engine: Allowlisted GA : You can expose the host ID of a Compute Engine instance to verify its physical location in relation to other compute insta…",
+    "snippet": "Feature Allowlisted GA: You can expose the host ID of a Compute Engine instance to verify its physical location in relation to other compute instances in your Google Cloud organization. Use compute instance proximity in…",
+    "contentText": "Feature Allowlisted GA : You can expose the host ID of a Compute Engine instance to verify its physical location in relation to other compute instances in your Google Cloud organization. Use compute instance proximity in a zone to optimize latency-sensitive workloads or improve the reliability of your applications. For more information, see View the physical location of a Compute Engine instance . Feature Generally available : The C4D machine series supports Hyperdisk Throughput. For more information, see About Hyperdisk Throughput and Hyperdisk Throughput performance limits .",
+    "publishedAt": "2026-09-28T07:00:00.000Z",
+    "sourceImage": null,
+    "region": "US",
+    "language": "en",
+    "defaultCategory": "Hyperscalers & Cloud",
+    "ai_topic_score": 0,
+    "ai_topic_reasons": [
+      "ai_not_in_title"
+    ],
+    "category": "Cloud Capacity",
+    "primary_category": "Cloud Capacity",
+    "secondary_category": "Hyperscale regions and accelerator availability",
+    "infrastructure_layer": "Cloud Platform",
+    "affected_stakeholders": [
+      "hyperscalers",
+      "cloud buyers",
+      "enterprise IT",
+      "operators"
+    ],
+    "article_type": "Product / Platform Update",
+    "urgency_score": 0.25,
+    "taxonomy_confidence": 0.61,
+    "taxonomy_reasons": [
+      "google cloud"
+    ],
+    "direct_ai_infrastructure_relevance": 0,
+    "data_center_relevance": 0,
+    "cloud_capacity_relevance": 0.324,
+    "semiconductor_relevance": 0,
+    "power_grid_relevance": 0,
+    "cooling_relevance": 0,
+    "capital_markets_relevance": 0,
+    "enterprise_ai_infrastructure_relevance": 0,
+    "infrastructure_relevance_score": 0.223,
+    "infrastructure_relevance_tier": "archive_only",
+    "infrastructure_relevance_action": "archive_only",
+    "infrastructure_relevance_reasons": [
+      "cloud_capacity_relevance:0.32(google cloud)"
+    ],
+    "infrastructure_relevance": {
+      "direct_ai_infrastructure_relevance": 0,
+      "data_center_relevance": 0,
+      "cloud_capacity_relevance": 0.324,
+      "semiconductor_relevance": 0,
+      "power_grid_relevance": 0,
+      "cooling_relevance": 0,
+      "capital_markets_relevance": 0,
+      "enterprise_ai_infrastructure_relevance": 0,
+      "infrastructure_relevance_score": 0.223,
+      "infrastructure_relevance_tier": "archive_only",
+      "infrastructure_relevance_action": "archive_only",
+      "infrastructure_relevance_reasons": [
+        "cloud_capacity_relevance:0.32(google cloud)"
+      ],
+      "infrastructureRelevanceAction": "archive_only",
+      "articlePagePublished": false,
+      "homepagePublished": false,
+      "archiveOnly": true,
+      "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
+    }
+  },
+  {
+    "id": "5519345ac2cdc1c7",
+    "sourceRegistryId": "google-cloud-compute-releases",
+    "source": "Google Cloud Compute Engine",
+    "url": "https://docs.cloud.google.com/compute/docs/release-notes#September_25_2026",
+    "title": "Google Cloud Compute Engine: Generally available : New X5 series with 50% larger memory instances: Breaking the previous 32TB memory limit of the X4 memory-optimized ma…",
+    "snippet": "Feature Generally available: New X5 series with 50% larger memory instances: Breaking the previous 32TB memory limit of the X4 memory-optimized machine type, a new X5 series introduces massive 48TB configurations. This…",
+    "contentText": "Feature Generally available : New X5 series with 50% larger memory instances: Breaking the previous 32TB memory limit of the X4 memory-optimized machine type , a new X5 series introduces massive 48TB configurations. This empowers the largest SAP HANA and RISE with SAP customers to easily scale up their mission-critical databases on a single node.",
+    "publishedAt": "2026-09-25T07:00:00.000Z",
+    "sourceImage": null,
+    "region": "US",
+    "language": "en",
+    "defaultCategory": "Hyperscalers & Cloud",
+    "ai_topic_score": 0,
+    "ai_topic_reasons": [
+      "ai_not_in_title"
+    ],
+    "category": "Cloud Capacity",
+    "primary_category": "Cloud Capacity",
+    "secondary_category": "Hyperscale regions and accelerator availability",
+    "infrastructure_layer": "Cloud Platform",
+    "affected_stakeholders": [
+      "hyperscalers",
+      "cloud buyers",
+      "enterprise IT",
+      "operators"
+    ],
+    "article_type": "Supply Chain",
+    "urgency_score": 0.25,
+    "taxonomy_confidence": 0.61,
+    "taxonomy_reasons": [
+      "google cloud"
+    ],
+    "direct_ai_infrastructure_relevance": 0,
+    "data_center_relevance": 0,
+    "cloud_capacity_relevance": 0.324,
+    "semiconductor_relevance": 0,
+    "power_grid_relevance": 0,
+    "cooling_relevance": 0,
+    "capital_markets_relevance": 0,
+    "enterprise_ai_infrastructure_relevance": 0,
+    "infrastructure_relevance_score": 0.223,
+    "infrastructure_relevance_tier": "archive_only",
+    "infrastructure_relevance_action": "archive_only",
+    "infrastructure_relevance_reasons": [
+      "cloud_capacity_relevance:0.32(google cloud)"
+    ],
+    "infrastructure_relevance": {
+      "direct_ai_infrastructure_relevance": 0,
+      "data_center_relevance": 0,
+      "cloud_capacity_relevance": 0.324,
+      "semiconductor_relevance": 0,
+      "power_grid_relevance": 0,
+      "cooling_relevance": 0,
+      "capital_markets_relevance": 0,
+      "enterprise_ai_infrastructure_relevance": 0,
+      "infrastructure_relevance_score": 0.223,
+      "infrastructure_relevance_tier": "archive_only",
+      "infrastructure_relevance_action": "archive_only",
+      "infrastructure_relevance_reasons": [
+        "cloud_capacity_relevance:0.32(google cloud)"
       ],
       "infrastructureRelevanceAction": "archive_only",
       "articlePagePublished": false,
@@ -1451,621 +2092,6 @@
     "taxonomy_confidence": 0.53,
     "taxonomy_reasons": [
       "policy"
-    ],
-    "direct_ai_infrastructure_relevance": 0,
-    "data_center_relevance": 0,
-    "cloud_capacity_relevance": 0,
-    "semiconductor_relevance": 0,
-    "power_grid_relevance": 0,
-    "cooling_relevance": 0,
-    "capital_markets_relevance": 0,
-    "enterprise_ai_infrastructure_relevance": 0,
-    "infrastructure_relevance_score": 0,
-    "infrastructure_relevance_tier": "archive_only",
-    "infrastructure_relevance_action": "archive_only",
-    "infrastructure_relevance_reasons": [
-      "no_strong_compute_current_infrastructure_match"
-    ],
-    "infrastructure_relevance": {
-      "direct_ai_infrastructure_relevance": 0,
-      "data_center_relevance": 0,
-      "cloud_capacity_relevance": 0,
-      "semiconductor_relevance": 0,
-      "power_grid_relevance": 0,
-      "cooling_relevance": 0,
-      "capital_markets_relevance": 0,
-      "enterprise_ai_infrastructure_relevance": 0,
-      "infrastructure_relevance_score": 0,
-      "infrastructure_relevance_tier": "archive_only",
-      "infrastructure_relevance_action": "archive_only",
-      "infrastructure_relevance_reasons": [
-        "no_strong_compute_current_infrastructure_match"
-      ],
-      "infrastructureRelevanceAction": "archive_only",
-      "articlePagePublished": false,
-      "homepagePublished": false,
-      "archiveOnly": true,
-      "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
-    }
-  },
-  {
-    "id": "d301851ed2aef74f",
-    "sourceRegistryId": "eia-today-in-energy",
-    "source": "U.S. Energy Information Administration",
-    "url": "https://www.eia.gov/todayinenergy/detail.php?id=68225",
-    "title": "U.S. natural gas production reached a record high in July 2026",
-    "snippet": "U.S. natural gas production hit an all-time high in July 2026, driven primarily by increased output in the Permian Basin, according to our latest Natural Gas Monthly.",
-    "contentText": "U.S. natural gas production hit an all-time high in July 2026, driven primarily by increased output in the Permian Basin, according to our latest Natural Gas Monthly.",
-    "publishedAt": "2026-10-02T14:00:00.000Z",
-    "sourceImage": null,
-    "region": "US",
-    "language": "en",
-    "defaultCategory": "Power & Grid",
-    "ai_topic_score": 0,
-    "ai_topic_reasons": [
-      "ai_not_in_title"
-    ],
-    "category": "Power & Grid",
-    "primary_category": "Power & Grid",
-    "secondary_category": "Interconnection and power procurement",
-    "infrastructure_layer": "Power",
-    "affected_stakeholders": [
-      "data center operators",
-      "utilities",
-      "cloud capacity teams",
-      "investors"
-    ],
-    "article_type": "Other",
-    "urgency_score": 0.36,
-    "taxonomy_confidence": 0.61,
-    "taxonomy_reasons": [
-      "power",
-      "grid"
-    ],
-    "direct_ai_infrastructure_relevance": 0,
-    "data_center_relevance": 0,
-    "cloud_capacity_relevance": 0,
-    "semiconductor_relevance": 0,
-    "power_grid_relevance": 0,
-    "cooling_relevance": 0,
-    "capital_markets_relevance": 0,
-    "enterprise_ai_infrastructure_relevance": 0,
-    "infrastructure_relevance_score": 0,
-    "infrastructure_relevance_tier": "archive_only",
-    "infrastructure_relevance_action": "archive_only",
-    "infrastructure_relevance_reasons": [
-      "no_strong_compute_current_infrastructure_match"
-    ],
-    "infrastructure_relevance": {
-      "direct_ai_infrastructure_relevance": 0,
-      "data_center_relevance": 0,
-      "cloud_capacity_relevance": 0,
-      "semiconductor_relevance": 0,
-      "power_grid_relevance": 0,
-      "cooling_relevance": 0,
-      "capital_markets_relevance": 0,
-      "enterprise_ai_infrastructure_relevance": 0,
-      "infrastructure_relevance_score": 0,
-      "infrastructure_relevance_tier": "archive_only",
-      "infrastructure_relevance_action": "archive_only",
-      "infrastructure_relevance_reasons": [
-        "no_strong_compute_current_infrastructure_match"
-      ],
-      "infrastructureRelevanceAction": "archive_only",
-      "articlePagePublished": false,
-      "homepagePublished": false,
-      "archiveOnly": true,
-      "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
-    }
-  },
-  {
-    "id": "98d7208aa39f25d0",
-    "sourceRegistryId": "ftc-press",
-    "source": "Federal Trade Commission",
-    "url": "https://www.ftc.gov/news-events/news/press-releases/2026/10/ftc-secures-settlement-protects-small-businesses-illegal-price-discrimination",
-    "title": "FTC Secures Settlement that Protects Small Businesses from Illegal Price Discrimination",
-    "snippet": "Settlement with Southern Glazer’s will help level the playing field for small businesses and facilitate consumer access to lower-priced wine and spirits at local retailers The Federal Trade Commission secured a settleme…",
-    "contentText": "Settlement with Southern Glazer’s will help level the playing field for small businesses and facilitate consumer access to lower-priced wine and spirits at local retailers The Federal Trade Commission secured a settlement agreement with Southern Glazer’s Wine and Spirits LLC, the nation’s largest distributor of wine and spirits, that will redress allegedly illegal price discrimination practices and make it easier for small businesses to compete against large chain retailers. View Press Release",
-    "publishedAt": "2026-10-02T12:00:00.000Z",
-    "sourceImage": null,
-    "region": "US",
-    "language": "en",
-    "defaultCategory": "Capital Markets",
-    "ai_topic_score": 0,
-    "ai_topic_reasons": [
-      "ai_not_in_title"
-    ],
-    "category": "Other",
-    "primary_category": "Other",
-    "secondary_category": "General AI infrastructure signal",
-    "infrastructure_layer": "Demand",
-    "affected_stakeholders": [
-      "operators"
-    ],
-    "article_type": "Product / Platform Update",
-    "urgency_score": 0.18,
-    "taxonomy_confidence": null,
-    "taxonomy_reasons": [
-      "fallback_taxonomy"
-    ],
-    "direct_ai_infrastructure_relevance": 0,
-    "data_center_relevance": 0,
-    "cloud_capacity_relevance": 0,
-    "semiconductor_relevance": 0,
-    "power_grid_relevance": 0,
-    "cooling_relevance": 0,
-    "capital_markets_relevance": 0,
-    "enterprise_ai_infrastructure_relevance": 0,
-    "infrastructure_relevance_score": 0,
-    "infrastructure_relevance_tier": "archive_only",
-    "infrastructure_relevance_action": "archive_only",
-    "infrastructure_relevance_reasons": [
-      "no_strong_compute_current_infrastructure_match"
-    ],
-    "infrastructure_relevance": {
-      "direct_ai_infrastructure_relevance": 0,
-      "data_center_relevance": 0,
-      "cloud_capacity_relevance": 0,
-      "semiconductor_relevance": 0,
-      "power_grid_relevance": 0,
-      "cooling_relevance": 0,
-      "capital_markets_relevance": 0,
-      "enterprise_ai_infrastructure_relevance": 0,
-      "infrastructure_relevance_score": 0,
-      "infrastructure_relevance_tier": "archive_only",
-      "infrastructure_relevance_action": "archive_only",
-      "infrastructure_relevance_reasons": [
-        "no_strong_compute_current_infrastructure_match"
-      ],
-      "infrastructureRelevanceAction": "archive_only",
-      "articlePagePublished": false,
-      "homepagePublished": false,
-      "archiveOnly": true,
-      "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
-    }
-  },
-  {
-    "id": "0c3fbad1f09140c5",
-    "sourceRegistryId": "ftc-press",
-    "source": "Federal Trade Commission",
-    "url": "https://www.ftc.gov/news-events/news/press-releases/2026/10/ftc-states-sue-lenscom-misrepresenting-price-contact-lenses-search-ads-its-website",
-    "title": "FTC, States Sue Lens.com for Misrepresenting the Price of Contact Lenses in Search Ads and on Its Website",
-    "snippet": "Lens.com hides bogus ‘taxes & fees’ charge that often doubles the price of contact lenses for consumers, the FTC and states allege Today, the Federal Trade Commission, joined by the Utah and Nevada Attorneys General, su…",
-    "contentText": "Lens.com hides bogus ‘taxes & fees’ charge that often doubles the price of contact lenses for consumers, the FTC and states allege Today, the Federal Trade Commission, joined by the Utah and Nevada Attorneys General, sued to stop a long-running deceptive pricing scheme run by contact lens retailer Lens.com Inc. View Press Release",
-    "publishedAt": "2026-10-02T12:00:00.000Z",
-    "sourceImage": null,
-    "region": "US",
-    "language": "en",
-    "defaultCategory": "Capital Markets",
-    "ai_topic_score": 0,
-    "ai_topic_reasons": [
-      "ai_not_in_title"
-    ],
-    "category": "Other",
-    "primary_category": "Other",
-    "secondary_category": "General AI infrastructure signal",
-    "infrastructure_layer": "Demand",
-    "affected_stakeholders": [
-      "operators"
-    ],
-    "article_type": "Product / Platform Update",
-    "urgency_score": 0.18,
-    "taxonomy_confidence": null,
-    "taxonomy_reasons": [
-      "fallback_taxonomy"
-    ],
-    "direct_ai_infrastructure_relevance": 0,
-    "data_center_relevance": 0,
-    "cloud_capacity_relevance": 0,
-    "semiconductor_relevance": 0,
-    "power_grid_relevance": 0,
-    "cooling_relevance": 0,
-    "capital_markets_relevance": 0,
-    "enterprise_ai_infrastructure_relevance": 0,
-    "infrastructure_relevance_score": 0,
-    "infrastructure_relevance_tier": "archive_only",
-    "infrastructure_relevance_action": "archive_only",
-    "infrastructure_relevance_reasons": [
-      "no_strong_compute_current_infrastructure_match"
-    ],
-    "infrastructure_relevance": {
-      "direct_ai_infrastructure_relevance": 0,
-      "data_center_relevance": 0,
-      "cloud_capacity_relevance": 0,
-      "semiconductor_relevance": 0,
-      "power_grid_relevance": 0,
-      "cooling_relevance": 0,
-      "capital_markets_relevance": 0,
-      "enterprise_ai_infrastructure_relevance": 0,
-      "infrastructure_relevance_score": 0,
-      "infrastructure_relevance_tier": "archive_only",
-      "infrastructure_relevance_action": "archive_only",
-      "infrastructure_relevance_reasons": [
-        "no_strong_compute_current_infrastructure_match"
-      ],
-      "infrastructureRelevanceAction": "archive_only",
-      "articlePagePublished": false,
-      "homepagePublished": false,
-      "archiveOnly": true,
-      "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
-    }
-  },
-  {
-    "id": "3b18d891d790abfb",
-    "sourceRegistryId": "gao-reports",
-    "source": "U.S. Government Accountability Office",
-    "url": "https://www.gao.gov/products/gao-27-108779",
-    "title": "U.S. Interagency Council on Homelessness: Staff Placed on Administrative Leave Have Returned and Await Direction",
-    "snippet": "What GAO Found The U.S. Interagency Council on Homelessness (USICH) is an independent establishment in the executive branch that coordinates the federal response to homelessness. It consists of representatives from desi…",
-    "contentText": "What GAO Found The U.S. Interagency Council on Homelessness (USICH) is an independent establishment in the executive branch that coordinates the federal response to homelessness. It consists of representatives from designated federal agencies (the Council) and a staff that has ranged from 10 to 18 full-time employees over the past decade. USICH’s enabling legislation—the McKinney-Vento Homeless Assistance Act—requires it to maintain certain personnel and perform specified duties. These include providing technical assistance to state and local governments through five to 10 regional coordinators employed by the Council, reporting annually to the President and Congress on federal efforts to address homelessness, and developing a national strategic plan to end homelessness. The act also esta…",
-    "publishedAt": "2026-10-02T11:23:27.000Z",
-    "sourceImage": null,
-    "region": "US",
-    "language": "en",
-    "defaultCategory": "Power & Grid",
-    "ai_topic_score": 0,
-    "ai_topic_reasons": [
-      "ai_not_in_title"
-    ],
-    "category": "Power & Grid",
-    "primary_category": "Power & Grid",
-    "secondary_category": "Interconnection and power procurement",
-    "infrastructure_layer": "Power",
-    "affected_stakeholders": [
-      "data center operators",
-      "utilities",
-      "cloud capacity teams",
-      "investors"
-    ],
-    "article_type": "Research / Technical",
-    "urgency_score": 0.36,
-    "taxonomy_confidence": 0.61,
-    "taxonomy_reasons": [
-      "power",
-      "grid"
-    ],
-    "direct_ai_infrastructure_relevance": 0,
-    "data_center_relevance": 0,
-    "cloud_capacity_relevance": 0,
-    "semiconductor_relevance": 0,
-    "power_grid_relevance": 0,
-    "cooling_relevance": 0,
-    "capital_markets_relevance": 0,
-    "enterprise_ai_infrastructure_relevance": 0,
-    "infrastructure_relevance_score": 0,
-    "infrastructure_relevance_tier": "archive_only",
-    "infrastructure_relevance_action": "archive_only",
-    "infrastructure_relevance_reasons": [
-      "no_strong_compute_current_infrastructure_match"
-    ],
-    "infrastructure_relevance": {
-      "direct_ai_infrastructure_relevance": 0,
-      "data_center_relevance": 0,
-      "cloud_capacity_relevance": 0,
-      "semiconductor_relevance": 0,
-      "power_grid_relevance": 0,
-      "cooling_relevance": 0,
-      "capital_markets_relevance": 0,
-      "enterprise_ai_infrastructure_relevance": 0,
-      "infrastructure_relevance_score": 0,
-      "infrastructure_relevance_tier": "archive_only",
-      "infrastructure_relevance_action": "archive_only",
-      "infrastructure_relevance_reasons": [
-        "no_strong_compute_current_infrastructure_match"
-      ],
-      "infrastructureRelevanceAction": "archive_only",
-      "articlePagePublished": false,
-      "homepagePublished": false,
-      "archiveOnly": true,
-      "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
-    }
-  },
-  {
-    "id": "cea4d47dd8a79bc1",
-    "sourceRegistryId": "gao-reports",
-    "source": "U.S. Government Accountability Office",
-    "url": "https://www.gao.gov/products/gao-27-109056",
-    "title": "Innovation in Action: Getting You Up to Speed on Manufacturing",
-    "snippet": "This Scroll-Driven Narrative tells the story of how the federal government is trying to strengthen U.S. manufacturing through Manufacturing USA—a national network of institutes that are partnerships between federal agen…",
-    "contentText": "This Scroll-Driven Narrative tells the story of how the federal government is trying to strengthen U.S. manufacturing through Manufacturing USA—a national network of institutes that are partnerships between federal agencies, companies, universities, and others. It is a companion to a series of reports GAO has issued examining the Manufacturing USA program—for example, Advanced Manufacturing: Aligning Strategies and Improving Agency Reviews Could Help Institutes Achieve National Goals, GAO-25-107369. This product highlights key themes and recommendations from GAO’s prior work, such as recommendations to better measure performance across the Manufacturing USA network, as well as agency efforts to implement them. For more information, contact Hilary M. Benedict at benedicth@gao.gov.",
-    "publishedAt": "2026-10-02T11:10:19.000Z",
-    "sourceImage": null,
-    "region": "US",
-    "language": "en",
-    "defaultCategory": "Power & Grid",
-    "ai_topic_score": 0,
-    "ai_topic_reasons": [
-      "ai_not_in_title"
-    ],
-    "category": "Power & Grid",
-    "primary_category": "Power & Grid",
-    "secondary_category": "Interconnection and power procurement",
-    "infrastructure_layer": "Power",
-    "affected_stakeholders": [
-      "data center operators",
-      "utilities",
-      "cloud capacity teams",
-      "investors"
-    ],
-    "article_type": "Other",
-    "urgency_score": 0.36,
-    "taxonomy_confidence": 0.61,
-    "taxonomy_reasons": [
-      "power",
-      "grid"
-    ],
-    "direct_ai_infrastructure_relevance": 0,
-    "data_center_relevance": 0,
-    "cloud_capacity_relevance": 0,
-    "semiconductor_relevance": 0,
-    "power_grid_relevance": 0,
-    "cooling_relevance": 0,
-    "capital_markets_relevance": 0,
-    "enterprise_ai_infrastructure_relevance": 0,
-    "infrastructure_relevance_score": 0,
-    "infrastructure_relevance_tier": "archive_only",
-    "infrastructure_relevance_action": "archive_only",
-    "infrastructure_relevance_reasons": [
-      "no_strong_compute_current_infrastructure_match"
-    ],
-    "infrastructure_relevance": {
-      "direct_ai_infrastructure_relevance": 0,
-      "data_center_relevance": 0,
-      "cloud_capacity_relevance": 0,
-      "semiconductor_relevance": 0,
-      "power_grid_relevance": 0,
-      "cooling_relevance": 0,
-      "capital_markets_relevance": 0,
-      "enterprise_ai_infrastructure_relevance": 0,
-      "infrastructure_relevance_score": 0,
-      "infrastructure_relevance_tier": "archive_only",
-      "infrastructure_relevance_action": "archive_only",
-      "infrastructure_relevance_reasons": [
-        "no_strong_compute_current_infrastructure_match"
-      ],
-      "infrastructureRelevanceAction": "archive_only",
-      "articlePagePublished": false,
-      "homepagePublished": false,
-      "archiveOnly": true,
-      "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
-    }
-  },
-  {
-    "id": "6ed19a40a70755de",
-    "sourceRegistryId": "ec-press-corner",
-    "source": "European Commission",
-    "url": "https://ec.europa.eu/commission/presscorner/detail/en/statement_26_2053",
-    "title": "Statement by President von der Leyen with Prime Minister of North Macedonia Mickoski",
-    "snippet": "European Commission Statement Skopje, 02 Oct 2026 Prime Minister, dear Hristijan, It is very good to be back in Skopje. Thank you very much for the very warm welcome. North Macedonia has shown time and again th...",
-    "contentText": "European Commission Statement Skopje, 02 Oct 2026 Prime Minister, dear Hristijan, It is very good to be back in Skopje. Thank you very much for the very warm welcome. North Macedonia has shown time and again th...",
-    "publishedAt": "2026-10-02T10:19:03.000Z",
-    "sourceImage": null,
-    "region": "EU",
-    "language": "en",
-    "defaultCategory": "Policy & Siting",
-    "ai_topic_score": 0,
-    "ai_topic_reasons": [
-      "ai_not_in_title"
-    ],
-    "category": "Policy & Siting",
-    "primary_category": "Policy & Siting",
-    "secondary_category": "Permitting, regulation, and market access",
-    "infrastructure_layer": "Policy",
-    "affected_stakeholders": [
-      "regulators",
-      "site selectors",
-      "developers",
-      "utilities"
-    ],
-    "article_type": "Policy / Regulation",
-    "urgency_score": 0.18,
-    "taxonomy_confidence": 0.53,
-    "taxonomy_reasons": [
-      "policy"
-    ],
-    "direct_ai_infrastructure_relevance": 0,
-    "data_center_relevance": 0,
-    "cloud_capacity_relevance": 0,
-    "semiconductor_relevance": 0,
-    "power_grid_relevance": 0,
-    "cooling_relevance": 0,
-    "capital_markets_relevance": 0,
-    "enterprise_ai_infrastructure_relevance": 0,
-    "infrastructure_relevance_score": 0,
-    "infrastructure_relevance_tier": "archive_only",
-    "infrastructure_relevance_action": "archive_only",
-    "infrastructure_relevance_reasons": [
-      "no_strong_compute_current_infrastructure_match"
-    ],
-    "infrastructure_relevance": {
-      "direct_ai_infrastructure_relevance": 0,
-      "data_center_relevance": 0,
-      "cloud_capacity_relevance": 0,
-      "semiconductor_relevance": 0,
-      "power_grid_relevance": 0,
-      "cooling_relevance": 0,
-      "capital_markets_relevance": 0,
-      "enterprise_ai_infrastructure_relevance": 0,
-      "infrastructure_relevance_score": 0,
-      "infrastructure_relevance_tier": "archive_only",
-      "infrastructure_relevance_action": "archive_only",
-      "infrastructure_relevance_reasons": [
-        "no_strong_compute_current_infrastructure_match"
-      ],
-      "infrastructureRelevanceAction": "archive_only",
-      "articlePagePublished": false,
-      "homepagePublished": false,
-      "archiveOnly": true,
-      "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
-    }
-  },
-  {
-    "id": "5103a7c415320b24",
-    "sourceRegistryId": "ec-press-corner",
-    "source": "European Commission",
-    "url": "https://ec.europa.eu/commission/presscorner/detail/en/mex_26_2050",
-    "title": "Daily News 02 / 10 / 2026",
-    "snippet": "European Commission Daily news Brussels, 02 Oct 2026 Commission disburses €2.9 billion under Ukraine Facility to support financial stability and reforms Today, the European Commission has released €2.9 billion to ...",
-    "contentText": "European Commission Daily news Brussels, 02 Oct 2026 Commission disburses €2.9 billion under Ukraine Facility to support financial stability and reforms Today, the European Commission has released €2.9 billion to ...",
-    "publishedAt": "2026-10-02T09:22:33.000Z",
-    "sourceImage": null,
-    "region": "US",
-    "language": "en",
-    "defaultCategory": "Policy & Siting",
-    "ai_topic_score": 0,
-    "ai_topic_reasons": [
-      "ai_not_in_title"
-    ],
-    "category": "Policy & Siting",
-    "primary_category": "Policy & Siting",
-    "secondary_category": "Permitting, regulation, and market access",
-    "infrastructure_layer": "Policy",
-    "affected_stakeholders": [
-      "regulators",
-      "site selectors",
-      "developers",
-      "utilities"
-    ],
-    "article_type": "Policy / Regulation",
-    "urgency_score": 0.18,
-    "taxonomy_confidence": 0.53,
-    "taxonomy_reasons": [
-      "policy"
-    ],
-    "direct_ai_infrastructure_relevance": 0,
-    "data_center_relevance": 0,
-    "cloud_capacity_relevance": 0,
-    "semiconductor_relevance": 0,
-    "power_grid_relevance": 0,
-    "cooling_relevance": 0,
-    "capital_markets_relevance": 0,
-    "enterprise_ai_infrastructure_relevance": 0,
-    "infrastructure_relevance_score": 0,
-    "infrastructure_relevance_tier": "archive_only",
-    "infrastructure_relevance_action": "archive_only",
-    "infrastructure_relevance_reasons": [
-      "no_strong_compute_current_infrastructure_match"
-    ],
-    "infrastructure_relevance": {
-      "direct_ai_infrastructure_relevance": 0,
-      "data_center_relevance": 0,
-      "cloud_capacity_relevance": 0,
-      "semiconductor_relevance": 0,
-      "power_grid_relevance": 0,
-      "cooling_relevance": 0,
-      "capital_markets_relevance": 0,
-      "enterprise_ai_infrastructure_relevance": 0,
-      "infrastructure_relevance_score": 0,
-      "infrastructure_relevance_tier": "archive_only",
-      "infrastructure_relevance_action": "archive_only",
-      "infrastructure_relevance_reasons": [
-        "no_strong_compute_current_infrastructure_match"
-      ],
-      "infrastructureRelevanceAction": "archive_only",
-      "articlePagePublished": false,
-      "homepagePublished": false,
-      "archiveOnly": true,
-      "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
-    }
-  },
-  {
-    "id": "36fe9ff6b0770079",
-    "sourceRegistryId": "ec-press-corner",
-    "source": "European Commission",
-    "url": "https://ec.europa.eu/commission/presscorner/detail/en/fs_22_3862",
-    "title": "Factsheet - EU solidarity with Ukraine",
-    "snippet": "European Commission Factsheet Brussels, 02 Oct 2026 Factsheet - EU solidarity with Ukraine Factsheet - EU solidarity with Ukraine",
-    "contentText": "European Commission Factsheet Brussels, 02 Oct 2026 Factsheet - EU solidarity with Ukraine Factsheet - EU solidarity with Ukraine",
-    "publishedAt": "2026-10-01T22:00:00.000Z",
-    "sourceImage": null,
-    "region": "US",
-    "language": "en",
-    "defaultCategory": "Policy & Siting",
-    "ai_topic_score": 0,
-    "ai_topic_reasons": [
-      "ai_not_in_title"
-    ],
-    "category": "Policy & Siting",
-    "primary_category": "Policy & Siting",
-    "secondary_category": "Permitting, regulation, and market access",
-    "infrastructure_layer": "Policy",
-    "affected_stakeholders": [
-      "regulators",
-      "site selectors",
-      "developers",
-      "utilities"
-    ],
-    "article_type": "Policy / Regulation",
-    "urgency_score": 0.18,
-    "taxonomy_confidence": 0.53,
-    "taxonomy_reasons": [
-      "policy"
-    ],
-    "direct_ai_infrastructure_relevance": 0,
-    "data_center_relevance": 0,
-    "cloud_capacity_relevance": 0,
-    "semiconductor_relevance": 0,
-    "power_grid_relevance": 0,
-    "cooling_relevance": 0,
-    "capital_markets_relevance": 0,
-    "enterprise_ai_infrastructure_relevance": 0,
-    "infrastructure_relevance_score": 0,
-    "infrastructure_relevance_tier": "archive_only",
-    "infrastructure_relevance_action": "archive_only",
-    "infrastructure_relevance_reasons": [
-      "no_strong_compute_current_infrastructure_match"
-    ],
-    "infrastructure_relevance": {
-      "direct_ai_infrastructure_relevance": 0,
-      "data_center_relevance": 0,
-      "cloud_capacity_relevance": 0,
-      "semiconductor_relevance": 0,
-      "power_grid_relevance": 0,
-      "cooling_relevance": 0,
-      "capital_markets_relevance": 0,
-      "enterprise_ai_infrastructure_relevance": 0,
-      "infrastructure_relevance_score": 0,
-      "infrastructure_relevance_tier": "archive_only",
-      "infrastructure_relevance_action": "archive_only",
-      "infrastructure_relevance_reasons": [
-        "no_strong_compute_current_infrastructure_match"
-      ],
-      "infrastructureRelevanceAction": "archive_only",
-      "articlePagePublished": false,
-      "homepagePublished": false,
-      "archiveOnly": true,
-      "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
-    }
-  },
-  {
-    "id": "523f6d5aa0ccd10e",
-    "sourceRegistryId": "sec-press",
-    "source": "U.S. Securities and Exchange Commission",
-    "url": "https://www.sec.gov/newsroom/press-releases/2026-100-sec-proposal-would-address-how-investment-advisers-funds-can-custody-crypto-assets-under-federal",
-    "title": "SEC Proposal Would Address How Investment Advisers and Funds Can Custody Crypto Assets Under the Federal Securities Laws",
-    "snippet": "The Securities and Exchange Commission today proposed new rules and amendments to provide a tailored framework for the custody of crypto assets for registered investment advisers and regulated funds, i.e. registered inv…",
-    "contentText": "The Securities and Exchange Commission today proposed new rules and amendments to provide a tailored framework for the custody of crypto assets for registered investment advisers and regulated funds, i.e. registered investment companies and business…",
-    "publishedAt": "2026-10-01T16:16:07.000Z",
-    "sourceImage": null,
-    "region": "US",
-    "language": "en",
-    "defaultCategory": "Capital Markets",
-    "ai_topic_score": 0,
-    "ai_topic_reasons": [
-      "ai_not_in_title"
-    ],
-    "category": "Other",
-    "primary_category": "Other",
-    "secondary_category": "General AI infrastructure signal",
-    "infrastructure_layer": "Demand",
-    "affected_stakeholders": [
-      "operators"
-    ],
-    "article_type": "Other",
-    "urgency_score": 0.18,
-    "taxonomy_confidence": null,
-    "taxonomy_reasons": [
-      "fallback_taxonomy"
     ],
     "direct_ai_infrastructure_relevance": 0,
     "data_center_relevance": 0,
