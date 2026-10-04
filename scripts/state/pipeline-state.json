@@ -905,7 +905,10 @@
     "ac9ecc88ff6c43e1",
     "a50001faa15fb37a",
     "523f2c2d27136fe2",
-    "758880cc9e6d9387"
+    "758880cc9e6d9387",
+    "b8a3286414469197",
+    "168b174a04128103",
+    "af7565ca100cccb3"
   ],
   "dayPlans": {
     "2026-03-24": {
@@ -48401,7 +48404,7 @@
     "2026-10-05": {
       "date": "2026-10-05",
       "createdAt": "2026-10-04T17:17:48.065Z",
-      "refreshedAt": "2026-10-04T19:58:06.717Z",
+      "refreshedAt": "2026-10-04T21:04:49.361Z",
       "candidateWindowHours": 24,
       "curatedItems": [
         {
@@ -48479,78 +48482,6 @@
           "score": 36
         },
         {
-          "id": "af7565ca100cccb3",
-          "sourceRegistryId": "acer-news",
-          "source": "ACER (EU energy regulators)",
-          "url": "https://www.acer.europa.eu/news/europes-retail-energy-markets-and-shift-electrification-prices-affordability-and-consumer-flexibility",
-          "title": "Europe’s retail energy markets and the shift to electrification: prices, affordability and consumer flexibility",
-          "snippet": "The 2026 Monitoring Report on retail energy markets examines electricity bills, affordability and what the shift to electrification means for consumers.",
-          "contentText": "The 2026 Monitoring Report on retail energy markets examines electricity bills, affordability and what the shift to electrification means for consumers.",
-          "publishedAt": "2026-09-30T07:47:00.000Z",
-          "sourceImage": null,
-          "region": "EU",
-          "language": "en",
-          "defaultCategory": "Power & Grid",
-          "ai_topic_score": 0,
-          "ai_topic_reasons": [
-            "ai_not_in_title"
-          ],
-          "category": "Power & Grid",
-          "primary_category": "Power & Grid",
-          "secondary_category": "Interconnection and power procurement",
-          "infrastructure_layer": "Power",
-          "affected_stakeholders": [
-            "data center operators",
-            "utilities",
-            "cloud capacity teams",
-            "investors"
-          ],
-          "article_type": "Other",
-          "urgency_score": 0.42,
-          "taxonomy_confidence": 0.73,
-          "taxonomy_reasons": [
-            "power",
-            "grid",
-            "electricity"
-          ],
-          "direct_ai_infrastructure_relevance": 0,
-          "data_center_relevance": 0,
-          "cloud_capacity_relevance": 0,
-          "semiconductor_relevance": 0,
-          "power_grid_relevance": 0.24,
-          "cooling_relevance": 0,
-          "capital_markets_relevance": 0,
-          "enterprise_ai_infrastructure_relevance": 0,
-          "infrastructure_relevance_score": 0.174,
-          "infrastructure_relevance_tier": "archive_only",
-          "infrastructure_relevance_action": "archive_only",
-          "infrastructure_relevance_reasons": [
-            "power_grid_relevance:0.24(electricity)"
-          ],
-          "infrastructure_relevance": {
-            "direct_ai_infrastructure_relevance": 0,
-            "data_center_relevance": 0,
-            "cloud_capacity_relevance": 0,
-            "semiconductor_relevance": 0,
-            "power_grid_relevance": 0.24,
-            "cooling_relevance": 0,
-            "capital_markets_relevance": 0,
-            "enterprise_ai_infrastructure_relevance": 0,
-            "infrastructure_relevance_score": 0.174,
-            "infrastructure_relevance_tier": "archive_only",
-            "infrastructure_relevance_action": "archive_only",
-            "infrastructure_relevance_reasons": [
-              "power_grid_relevance:0.24(electricity)"
-            ],
-            "infrastructureRelevanceAction": "archive_only",
-            "articlePagePublished": false,
-            "homepagePublished": false,
-            "archiveOnly": true,
-            "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
-          },
-          "score": 16
-        },
-        {
           "id": "b8a3286414469197",
           "sourceRegistryId": "uk-desnz",
           "source": "UK Department for Energy Security and Net Zero",
@@ -48621,12 +48552,84 @@
             "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
           },
           "score": 22
+        },
+        {
+          "id": "af7565ca100cccb3",
+          "sourceRegistryId": "acer-news",
+          "source": "ACER (EU energy regulators)",
+          "url": "https://www.acer.europa.eu/news/europes-retail-energy-markets-and-shift-electrification-prices-affordability-and-consumer-flexibility",
+          "title": "Europe’s retail energy markets and the shift to electrification: prices, affordability and consumer flexibility",
+          "snippet": "The 2026 Monitoring Report on retail energy markets examines electricity bills, affordability and what the shift to electrification means for consumers.",
+          "contentText": "The 2026 Monitoring Report on retail energy markets examines electricity bills, affordability and what the shift to electrification means for consumers.",
+          "publishedAt": "2026-09-30T07:47:00.000Z",
+          "sourceImage": null,
+          "region": "EU",
+          "language": "en",
+          "defaultCategory": "Power & Grid",
+          "ai_topic_score": 0,
+          "ai_topic_reasons": [
+            "ai_not_in_title"
+          ],
+          "category": "Power & Grid",
+          "primary_category": "Power & Grid",
+          "secondary_category": "Interconnection and power procurement",
+          "infrastructure_layer": "Power",
+          "affected_stakeholders": [
+            "data center operators",
+            "utilities",
+            "cloud capacity teams",
+            "investors"
+          ],
+          "article_type": "Other",
+          "urgency_score": 0.42,
+          "taxonomy_confidence": 0.73,
+          "taxonomy_reasons": [
+            "power",
+            "grid",
+            "electricity"
+          ],
+          "direct_ai_infrastructure_relevance": 0,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0,
+          "power_grid_relevance": 0.24,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.174,
+          "infrastructure_relevance_tier": "archive_only",
+          "infrastructure_relevance_action": "archive_only",
+          "infrastructure_relevance_reasons": [
+            "power_grid_relevance:0.24(electricity)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 0,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0,
+            "power_grid_relevance": 0.24,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.174,
+            "infrastructure_relevance_tier": "archive_only",
+            "infrastructure_relevance_action": "archive_only",
+            "infrastructure_relevance_reasons": [
+              "power_grid_relevance:0.24(electricity)"
+            ],
+            "infrastructureRelevanceAction": "archive_only",
+            "articlePagePublished": false,
+            "homepagePublished": false,
+            "archiveOnly": true,
+            "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
+          },
+          "score": 16
         }
       ],
       "curatedIds": [
         "168b174a04128103",
-        "af7565ca100cccb3",
-        "b8a3286414469197"
+        "b8a3286414469197",
+        "af7565ca100cccb3"
       ],
       "publishedIds": [
         "741e7affa6897e99",
@@ -48637,7 +48640,13 @@
         "ac9ecc88ff6c43e1",
         "a50001faa15fb37a",
         "523f2c2d27136fe2",
-        "758880cc9e6d9387"
+        "758880cc9e6d9387",
+        "b8a3286414469197",
+        "168b174a04128103",
+        "af7565ca100cccb3"
+      ],
+      "visibleIds": [
+        "b8a3286414469197"
       ],
       "slotPublications": {
         "0": true
@@ -48645,33 +48654,6 @@
     }
   },
   "runHistory": [
-    {
-      "at": "2026-08-28T19:25:07.344Z",
-      "day": "2026-08-29",
-      "slot": 0,
-      "publishedCount": 0,
-      "signalCardCount": 1,
-      "archiveOnlyCount": 0,
-      "processedIds": [
-        "5fb4b1933e5d650e"
-      ],
-      "blockedCount": 0,
-      "blockedItems": [],
-      "archiveOnlyItems": [],
-      "authoredColumn": {
-        "published": true,
-        "slug": "switch-s-ipo-is-a-grid-timing-disclosure-test-not-a-demand-story-2026-08-28"
-      },
-      "llmUsage": {
-        "calls": 6,
-        "failures": 0,
-        "prompt_tokens": 15500,
-        "completion_tokens": 6498,
-        "total_tokens": 21998,
-        "token_budget": 60000,
-        "call_budget": 40
-      }
-    },
     {
       "at": "2026-08-28T23:57:32.701Z",
       "day": "2026-08-29",
@@ -52806,9 +52788,175 @@
         "token_budget": 120000,
         "call_budget": 60
       }
+    },
+    {
+      "at": "2026-10-04T21:04:49.361Z",
+      "day": "2026-10-05",
+      "slot": 0,
+      "publishedCount": 0,
+      "signalCardCount": 1,
+      "archiveOnlyCount": 2,
+      "processedIds": [
+        "b8a3286414469197",
+        "168b174a04128103",
+        "af7565ca100cccb3"
+      ],
+      "blockedCount": 0,
+      "blockedItems": [],
+      "archiveOnlyItems": [
+        {
+          "id": "168b174a04128103",
+          "title": "Google Cloud AI: Custom denial messages for semantic governance policies",
+          "infrastructure_relevance_score": 0.306,
+          "infrastructure_relevance_tier": "archive_only",
+          "infrastructure_relevance_action": "archive_only",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:0.22",
+            "cloud_capacity_relevance:0.32(google cloud)"
+          ],
+          "extraction_quality_score": 0.78,
+          "source_domain_adapter": "googlecloud",
+          "content_length": 624,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": false,
+          "repetition_block_reasons": [],
+          "repetition_check": null,
+          "expert_insight_complete": true,
+          "expert_insight_missing_fields": [],
+          "reason": "infrastructure_relevance_below_signal_threshold"
+        },
+        {
+          "id": "af7565ca100cccb3",
+          "title": "Europe’s retail energy markets and the shift to electrification: prices, affordability and consumer flexibility",
+          "infrastructure_relevance_score": 0.174,
+          "infrastructure_relevance_tier": "archive_only",
+          "infrastructure_relevance_action": "archive_only",
+          "infrastructure_relevance_reasons": [
+            "power_grid_relevance:0.24(electricity)"
+          ],
+          "extraction_quality_score": 1,
+          "source_domain_adapter": "acer",
+          "content_length": 1680,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": false,
+          "repetition_block_reasons": [],
+          "repetition_check": null,
+          "expert_insight_complete": false,
+          "expert_insight_missing_fields": [
+            "named_companies"
+          ],
+          "reason": "infrastructure_relevance_below_signal_threshold"
+        }
+      ],
+      "authoredColumn": {
+        "published": false,
+        "reason": "verify:insight_density_below_0.75",
+        "selectionDiagnostics": {
+          "total_candidates": 94,
+          "counts": {
+            "invalid_identity": 0,
+            "text_rights_unauthorized": 0,
+            "abstract_only": 42,
+            "extraction_ineligible": 36,
+            "expert_insight_incomplete": 1,
+            "relevance_below_threshold": 12,
+            "already_covered": 2,
+            "stale_story": 0,
+            "digest_roundup": 0,
+            "unclean_evidence": 0,
+            "insufficient_facts": 0,
+            "qualifying": 1
+          },
+          "selected_id": "527c917b74f90f0e",
+          "selected_beat": "compute_hardware",
+          "selection_reason": "highest_evidence_score",
+          "by_beat": {
+            "ai_business": {
+              "candidates": 13,
+              "qualifying": 0,
+              "rejections": {
+                "abstract_only": 7,
+                "extraction_ineligible": 4,
+                "relevance_below_threshold": 1,
+                "expert_insight_incomplete": 1
+              }
+            },
+            "data_center_operators": {
+              "candidates": 5,
+              "qualifying": 0,
+              "rejections": {
+                "abstract_only": 2,
+                "extraction_ineligible": 2,
+                "relevance_below_threshold": 1
+              }
+            },
+            "compute_hardware": {
+              "candidates": 22,
+              "qualifying": 1,
+              "rejections": {
+                "abstract_only": 20,
+                "extraction_ineligible": 1
+              }
+            },
+            "power_cooling": {
+              "candidates": 36,
+              "qualifying": 0,
+              "rejections": {
+                "relevance_below_threshold": 8,
+                "abstract_only": 10,
+                "extraction_ineligible": 18
+              }
+            },
+            "policy": {
+              "candidates": 8,
+              "qualifying": 0,
+              "rejections": {
+                "already_covered": 2,
+                "extraction_ineligible": 6
+              }
+            },
+            "other_infrastructure": {
+              "candidates": 10,
+              "qualifying": 0,
+              "rejections": {
+                "abstract_only": 3,
+                "relevance_below_threshold": 2,
+                "extraction_ineligible": 5
+              }
+            }
+          },
+          "recent_coverage": {
+            "counts": {
+              "ai_business": 0,
+              "data_center_operators": 0,
+              "compute_hardware": 0,
+              "power_cooling": 2,
+              "policy": 1,
+              "other_infrastructure": 0
+            },
+            "lastBeat": "policy",
+            "total": 3
+          },
+          "attempts": [
+            {
+              "id": "527c917b74f90f0e",
+              "outcome": "verify:insight_density_below_0.75"
+            }
+          ]
+        }
+      },
+      "llmUsage": {
+        "calls": 8,
+        "failures": 0,
+        "prompt_tokens": 29253,
+        "completion_tokens": 7702,
+        "total_tokens": 36955,
+        "token_budget": 120000,
+        "call_budget": 60
+      }
     }
   ],
-  "lastRunAt": "2026-10-04T19:58:06.717Z",
+  "lastRunAt": "2026-10-04T21:04:49.361Z",
   "authored": {
     "lastColumnAt": "2026-10-04T10:31:52.065Z",
     "columnsByDay": {
@@ -52832,29 +52980,47 @@
       }
     ],
     "lastFailure": {
-      "at": "2026-10-04T19:58:06.717Z",
-      "stage": "draft",
-      "detail": "invalid_structured_essay",
+      "at": "2026-10-04T21:04:49.361Z",
+      "stage": "verify",
+      "detail": "insight_density_below_0.75",
+      "metrics": {
+        "chars": 9381,
+        "words": 1407,
+        "sections": 5,
+        "paragraphs": 18,
+        "human_style_score": 0.89,
+        "insight_density_score": 0.732,
+        "source_summary_ratio": 0.231,
+        "copyright_overlap_score": 0.111,
+        "unsupported_claim_count": 0,
+        "repeated_sentence_ratio": 0,
+        "heading_sequence_similarity": 0,
+        "conclusion_similarity": 0.163,
+        "thesis_overlap": 0.048,
+        "heading_reuse_max": 0.286,
+        "lead_reuse_max": 0.053,
+        "figure_count": 1
+      },
       "attempts": [
         {
           "id": "527c917b74f90f0e",
-          "outcome": "draft:invalid_structured_essay"
+          "outcome": "verify:insight_density_below_0.75"
         }
       ]
     },
     "lastSelection": {
-      "at": "2026-10-04T19:58:06.717Z",
+      "at": "2026-10-04T21:04:49.361Z",
       "outcome": "selected",
       "selectedId": "527c917b74f90f0e",
       "diagnostics": {
-        "total_candidates": 80,
+        "total_candidates": 94,
         "counts": {
           "invalid_identity": 0,
           "text_rights_unauthorized": 0,
           "abstract_only": 42,
-          "extraction_ineligible": 24,
+          "extraction_ineligible": 36,
           "expert_insight_incomplete": 1,
-          "relevance_below_threshold": 10,
+          "relevance_below_threshold": 12,
           "already_covered": 2,
           "stale_story": 0,
           "digest_roundup": 0,
@@ -52894,29 +53060,29 @@
             }
           },
           "power_cooling": {
-            "candidates": 31,
+            "candidates": 36,
             "qualifying": 0,
             "rejections": {
+              "relevance_below_threshold": 8,
               "abstract_only": 10,
-              "relevance_below_threshold": 6,
-              "extraction_ineligible": 15
+              "extraction_ineligible": 18
             }
           },
           "policy": {
-            "candidates": 3,
+            "candidates": 8,
             "qualifying": 0,
             "rejections": {
               "already_covered": 2,
-              "extraction_ineligible": 1
+              "extraction_ineligible": 6
             }
           },
           "other_infrastructure": {
-            "candidates": 6,
+            "candidates": 10,
             "qualifying": 0,
             "rejections": {
               "abstract_only": 3,
               "relevance_below_threshold": 2,
-              "extraction_ineligible": 1
+              "extraction_ineligible": 5
             }
           }
         },
@@ -52936,7 +53102,7 @@
       "attempts": [
         {
           "id": "527c917b74f90f0e",
-          "outcome": "draft:invalid_structured_essay"
+          "outcome": "verify:insight_density_below_0.75"
         }
       ]
     }

@@ -140,7 +140,7 @@
         "sourceId": "eia-today-in-energy",
         "reviewedAt": "2026-08-12T00:00:00.000Z",
         "termsUrl": "https://www.eia.gov/about/copyrights_reuse.php",
-        "checkedAt": "2026-10-04T20:06:23.659Z",
+        "checkedAt": "2026-10-04T21:18:09.942Z",
         "registryDigest": "b9a03260f8b627972ab6dbcc3d3cf63897de781b4609c05f7bd902aa301dd512",
         "registryBlobSha": "",
         "contentDigest": "beeeed148253b62b7ae888a3bc79c5979dbfa234b587e2f7b91bbaeafcf5acde"
@@ -299,7 +299,7 @@
         "sourceId": "eia-today-in-energy",
         "reviewedAt": "2026-08-12T00:00:00.000Z",
         "termsUrl": "https://www.eia.gov/about/copyrights_reuse.php",
-        "checkedAt": "2026-10-04T20:06:23.824Z",
+        "checkedAt": "2026-10-04T21:18:10.205Z",
         "registryDigest": "b9a03260f8b627972ab6dbcc3d3cf63897de781b4609c05f7bd902aa301dd512",
         "registryBlobSha": "",
         "contentDigest": "d15ccae9ee9ddf6214d8b39fbdf87ac41a1f82721e955148a1cd5e0a2de7b028"
@@ -458,7 +458,7 @@
         "sourceId": "eia-today-in-energy",
         "reviewedAt": "2026-08-12T00:00:00.000Z",
         "termsUrl": "https://www.eia.gov/about/copyrights_reuse.php",
-        "checkedAt": "2026-10-04T20:06:23.973Z",
+        "checkedAt": "2026-10-04T21:18:10.444Z",
         "registryDigest": "b9a03260f8b627972ab6dbcc3d3cf63897de781b4609c05f7bd902aa301dd512",
         "registryBlobSha": "",
         "contentDigest": "ade711e2b20996fa86c8248da2f499d76c8f2f8bdd82d9e630f5e080f97f58e2"
@@ -617,7 +617,7 @@
         "sourceId": "eia-today-in-energy",
         "reviewedAt": "2026-08-12T00:00:00.000Z",
         "termsUrl": "https://www.eia.gov/about/copyrights_reuse.php",
-        "checkedAt": "2026-10-04T20:06:24.121Z",
+        "checkedAt": "2026-10-04T21:18:10.684Z",
         "registryDigest": "b9a03260f8b627972ab6dbcc3d3cf63897de781b4609c05f7bd902aa301dd512",
         "registryBlobSha": "",
         "contentDigest": "8e6376116876948d8a9e27d52a0f3747ce46816914268a5bd0bf93fafd85c604"
@@ -776,7 +776,7 @@
         "sourceId": "eia-today-in-energy",
         "reviewedAt": "2026-08-12T00:00:00.000Z",
         "termsUrl": "https://www.eia.gov/about/copyrights_reuse.php",
-        "checkedAt": "2026-10-04T20:06:24.284Z",
+        "checkedAt": "2026-10-04T21:18:10.957Z",
         "registryDigest": "b9a03260f8b627972ab6dbcc3d3cf63897de781b4609c05f7bd902aa301dd512",
         "registryBlobSha": "",
         "contentDigest": "2c6d66c26ee5e8faea303eb6655f65da943f22d62f0b30f232281dfa85dca6d7"
@@ -1993,6 +1993,216 @@
     "generatedImageProvider": "codex",
     "imageProvider": "codex",
     "imagePrompt": "Use case: Compute Current public article image.\nTitle: On-premise data centers remain a hidden cooling load\nCategory: Cooling\nInfrastructure layer: Cooling\nStory archetype: source-signal\nRegion: US\nTone: premium infrastructure intelligence\nContext: EIA building data show that offices with data centers use more electricity for computing and cooling than comparable offices without server facilities.\nComposition: original editorial infrastructure image, realistic depth, wide hero crop, clear subject, enough negative space for card and OpenGraph crops.\nVisual vocabulary: data center halls, substations, transformers, grid interconnects, cooling loops, semiconductor packages, cloud capacity signals, financing pressure, or siting constraints when relevant.\nConstraints: no logos, no brand marks, no readable text, no watermarks, no stock-photo people, no decorative bokeh, no generic purple gradient."
+  },
+  {
+    "id": "b8a3286414469197",
+    "sourceRegistryId": "uk-desnz",
+    "source": "UK Department for Energy Security and Net Zero",
+    "url": "https://www.gov.uk/government/news/uks-decommissioning-mission-continues-to-expand",
+    "title": "UK’s decommissioning mission continues to expand",
+    "snippet": "Hinkley Point B nuclear power station in Somerset transferred from EDF to the NDA for decommissioning.",
+    "contentText": "Hinkley Point B nuclear power station in Somerset transferred from EDF to the NDA for decommissioning.",
+    "publishedAt": "2026-10-01T09:21:10.000Z",
+    "sourceImage": null,
+    "region": "EU",
+    "language": "en",
+    "defaultCategory": "Power & Grid",
+    "ai_topic_score": 0,
+    "ai_topic_reasons": [
+      "ai_not_in_title"
+    ],
+    "category": "Power & Grid",
+    "primary_category": "Power & Grid",
+    "secondary_category": "Nuclear Decommissioning",
+    "infrastructure_layer": "Power",
+    "affected_stakeholders": [
+      "operators",
+      "utilities",
+      "investors",
+      "local communities",
+      "data center operators"
+    ],
+    "article_type": "Operations Update",
+    "urgency_score": 0.5,
+    "taxonomy_confidence": 0.95,
+    "taxonomy_reasons": [
+      "power",
+      "grid",
+      "interconnection",
+      "electricity",
+      "nuclear"
+    ],
+    "direct_ai_infrastructure_relevance": 0,
+    "data_center_relevance": 0,
+    "cloud_capacity_relevance": 0,
+    "semiconductor_relevance": 0,
+    "power_grid_relevance": 1,
+    "cooling_relevance": 0,
+    "capital_markets_relevance": 0,
+    "enterprise_ai_infrastructure_relevance": 0,
+    "infrastructure_relevance_score": 0.615,
+    "infrastructure_relevance_tier": "signal_card",
+    "infrastructure_relevance_action": "publish_signal_card_only",
+    "infrastructure_relevance_reasons": [
+      "power_grid_relevance:1.00(power, grid, electricity)"
+    ],
+    "infrastructure_relevance": {
+      "direct_ai_infrastructure_relevance": 0,
+      "data_center_relevance": 0,
+      "cloud_capacity_relevance": 0,
+      "semiconductor_relevance": 0,
+      "power_grid_relevance": 1,
+      "cooling_relevance": 0,
+      "capital_markets_relevance": 0,
+      "enterprise_ai_infrastructure_relevance": 0,
+      "infrastructure_relevance_score": 0.615,
+      "infrastructure_relevance_tier": "signal_card",
+      "infrastructure_relevance_action": "publish_signal_card_only",
+      "infrastructure_relevance_reasons": [
+        "power_grid_relevance:1.00(power, grid, electricity)"
+      ],
+      "infrastructureRelevanceAction": "publish_signal_card_only",
+      "articlePagePublished": false,
+      "homepagePublished": true,
+      "archiveOnly": false,
+      "archiveOnlyReason": null
+    },
+    "score": 22,
+    "slug": "uk-s-decommissioning-mission-continues-to-expand",
+    "summary": "Hinkley Point B nuclear power station has been transferred to the UK's Nuclear Decommissioning Authority for decommissioning, marking a significant expansion of their mission.",
+    "insight": "This transition highlights the ongoing commitment to managing nuclear legacies responsibly, which is crucial for operators and investors in the energy sector. The decommissioning efforts will also sustain local employment and community engagement.",
+    "expert_insight": {
+      "concrete_facts": [
+        "When it finished generating some 46 years later, in 2022, it had produced enough zero-carbon electricity to power every home in the South West of England for 33 years.",
+        "NDA Group CEO, David Peattie, unveils new NRS sign at Hinkley Point B Today marks a further expansion of the Nuclear Decommissioning Authority (NDA) group’s nationally important mission as Hinkley Point B nuclear power station in Somerset transferred from EDF to the NDA for decommissioning.",
+        "We are safely cleaning up sites and managing waste, preparing land for alternative uses, as well as sustaining national capability, supporting local communities, and giving confidence that the UK will manage its nuclear legacy responsibly.",
+        "UK’s decommissioning mission continues to expand Hinkley Point B nuclear power station has been transferred to the UK's Nuclear Decommissioning Authority for decommissioning, marking a significant expansion of their mission.",
+        "The decommissioning efforts will also sustain local employment and community engagement."
+      ],
+      "named_companies": [
+        "NDA Group"
+      ],
+      "infrastructure_layer": "Power",
+      "bottleneck_type": "power_grid",
+      "who_gains_leverage": "utilities, power-secured developers, and operators with firm interconnection positions",
+      "who_takes_execution_risk": "developers and cloud buyers whose delivery dates depend on utility upgrades or energization schedules",
+      "timing_dependency": "utility interconnection, equipment procurement, and energization milestones",
+      "counterargument": "A power-side development can still be too narrow to change the broader delivery curve unless it scales across sites.",
+      "next_observable_signal": "interconnection approvals, substation equipment dates, power purchase agreements, or disclosed energization windows",
+      "expert_insight_complete": true,
+      "expert_insight_missing_fields": []
+    },
+    "expertInsight": {
+      "concrete_facts": [
+        "When it finished generating some 46 years later, in 2022, it had produced enough zero-carbon electricity to power every home in the South West of England for 33 years.",
+        "NDA Group CEO, David Peattie, unveils new NRS sign at Hinkley Point B Today marks a further expansion of the Nuclear Decommissioning Authority (NDA) group’s nationally important mission as Hinkley Point B nuclear power station in Somerset transferred from EDF to the NDA for decommissioning.",
+        "We are safely cleaning up sites and managing waste, preparing land for alternative uses, as well as sustaining national capability, supporting local communities, and giving confidence that the UK will manage its nuclear legacy responsibly.",
+        "UK’s decommissioning mission continues to expand Hinkley Point B nuclear power station has been transferred to the UK's Nuclear Decommissioning Authority for decommissioning, marking a significant expansion of their mission.",
+        "The decommissioning efforts will also sustain local employment and community engagement."
+      ],
+      "named_companies": [
+        "NDA Group"
+      ],
+      "infrastructure_layer": "Power",
+      "bottleneck_type": "power_grid",
+      "who_gains_leverage": "utilities, power-secured developers, and operators with firm interconnection positions",
+      "who_takes_execution_risk": "developers and cloud buyers whose delivery dates depend on utility upgrades or energization schedules",
+      "timing_dependency": "utility interconnection, equipment procurement, and energization milestones",
+      "counterargument": "A power-side development can still be too narrow to change the broader delivery curve unless it scales across sites.",
+      "next_observable_signal": "interconnection approvals, substation equipment dates, power purchase agreements, or disclosed energization windows",
+      "expert_insight_complete": true,
+      "expert_insight_missing_fields": []
+    },
+    "concrete_facts": [
+      "When it finished generating some 46 years later, in 2022, it had produced enough zero-carbon electricity to power every home in the South West of England for 33 years.",
+      "NDA Group CEO, David Peattie, unveils new NRS sign at Hinkley Point B Today marks a further expansion of the Nuclear Decommissioning Authority (NDA) group’s nationally important mission as Hinkley Point B nuclear power station in Somerset transferred from EDF to the NDA for decommissioning.",
+      "We are safely cleaning up sites and managing waste, preparing land for alternative uses, as well as sustaining national capability, supporting local communities, and giving confidence that the UK will manage its nuclear legacy responsibly.",
+      "UK’s decommissioning mission continues to expand Hinkley Point B nuclear power station has been transferred to the UK's Nuclear Decommissioning Authority for decommissioning, marking a significant expansion of their mission.",
+      "The decommissioning efforts will also sustain local employment and community engagement."
+    ],
+    "named_companies": [
+      "NDA Group"
+    ],
+    "bottleneck_type": "power_grid",
+    "who_gains_leverage": "utilities, power-secured developers, and operators with firm interconnection positions",
+    "who_takes_execution_risk": "developers and cloud buyers whose delivery dates depend on utility upgrades or energization schedules",
+    "timing_dependency": "utility interconnection, equipment procurement, and energization milestones",
+    "counterargument": "A power-side development can still be too narrow to change the broader delivery curve unless it scales across sites.",
+    "next_observable_signal": "interconnection approvals, substation equipment dates, power purchase agreements, or disclosed energization windows",
+    "expert_insight_complete": true,
+    "expert_insight_missing_fields": [],
+    "tags": [
+      "nuclear",
+      "decommissioning",
+      "energy",
+      "UK",
+      "sustainability",
+      "employment"
+    ],
+    "imagePrompt": "Aerial view of Hinkley Point B nuclear power station with decommissioning activities in progress, showcasing cranes and workers, set against a clear blue sky.",
+    "lang": "en",
+    "articleText": "Hinkley Point B nuclear power station in Somerset transferred from EDF to the NDA for decommissioning. NDA Group CEO, David Peattie, unveils new NRS sign at Hinkley Point B Today marks a further expansion of the Nuclear Decommissioning Authority (NDA) group’s nationally important mission as Hinkley Point B nuclear power station in Somerset transferred from EDF to the NDA for decommissioning. The site will be managed by NDA subsidiary Nuclear Restoration Services (NRS), which is also decommissioning the neighbouring Hinkley Point A site. This marks an historic new chapter for the site, which was the first British-designed Advanced Gas-cooled Reactor to export electricity to the national grid back in 1976. When it finished generating some 46 years later, in 2022, it had produced enough zero-carbon electricity to power every home in the South West of England for 33 years. Hinkley Point B will continue to provide well-paid skilled jobs within the local community with around 250 people working on site transferring from EDF to NRS bringing their knowledge and experience to deliver the safe, secure decommissioning of the site. As our mission continues to expand, we’re proud to draw on decades of expertise, applying proven skills, innovation and experience to safely decommission the AGR fleet. As we warmly welcome our new colleagues to the NDA group it’s a reminder that decommissioning underpins the nuclear energy sector. We are safely cleaning up sites and managing waste, preparing land for alternative uses, as well as sustaining national capability, supporting local communities, and giving confidence that the UK will manage its nuclear legacy responsibly.",
+    "content_length": 1677,
+    "boilerplate_ratio": 0,
+    "title_body_similarity": 1,
+    "copyright_footer_detected": false,
+    "nav_or_cta_detected": false,
+    "sentence_completion_score": 1,
+    "source_domain_adapter": "generic",
+    "extraction_quality_score": 1,
+    "extraction_qa": {
+      "content_length": 1677,
+      "boilerplate_ratio": 0,
+      "title_body_similarity": 1,
+      "copyright_footer_detected": false,
+      "legal_boilerplate_detected": false,
+      "nav_or_cta_detected": false,
+      "sentence_completion_score": 1,
+      "source_domain_adapter": "generic",
+      "extraction_quality_score": 1,
+      "extraction_failure_reason": null,
+      "extraction_quality_reasons": [],
+      "public_publishable": true,
+      "can_generate_longform": true,
+      "cleaned_source_length": 1677,
+      "block_reasons": []
+    },
+    "extraction_artifact": {
+      "artifact_version": "extraction_v1",
+      "source_url": "https://www.gov.uk/government/news/uks-decommissioning-mission-continues-to-expand",
+      "extracted_text_sha256": "eec85499337121af5067f9da5c630b8812a34e286be05147fac9b51a99996669",
+      "cleaned_extracted_text": "Hinkley Point B nuclear power station in Somerset transferred from EDF to the NDA for decommissioning. NDA Group CEO, David Peattie, unveils new NRS sign at Hinkley Point B Today marks a further expansion of the Nuclear Decommissioning Authority (NDA) group’s nationally important mission as Hinkley Point B nuclear power station in Somerset transferred from EDF to the NDA for decommissioning. The site will be managed by NDA subsidiary Nuclear Restoration Services (NRS), which is also decommissioning the neighbouring Hinkley Point A site. This marks an historic new chapter for the site, which was the first British-designed Advanced Gas-cooled Reactor to export electricity to the national grid back in 1976. When it finished generating some 46 years later, in 2022, it had produced enough zero-carbon electricity to power every home in the South West of England for 33 years. Hinkley Point B will continue to provide well-paid skilled jobs within the local community with around 250 people working on site transferring from EDF to NRS bringing their knowledge and experience to deliver the safe, secure decommissioning of the site. As our mission continues to expand, we’re proud to draw on decades of expertise, applying proven skills, innovation and experience to safely decommission the AGR fleet. As we warmly welcome our new colleagues to the NDA group it’s a reminder that decommissioning underpins the nuclear energy sector. We are safely cleaning up sites and managing waste, preparing land for alternative uses, as well as sustaining national capability, supporting local communities, and giving confidence that the UK will manage its nuclear legacy responsibly.",
+      "extraction_qa": {
+        "cleaned_source_length": 1677,
+        "block_reasons": [],
+        "public_publishable": true,
+        "can_generate_longform": true,
+        "boilerplate_ratio": 0,
+        "copyright_footer_detected": false,
+        "nav_or_cta_detected": false,
+        "sentence_completion_score": 1
+      }
+    },
+    "cleaned_source_text": "Hinkley Point B nuclear power station in Somerset transferred from EDF to the NDA for decommissioning. NDA Group CEO, David Peattie, unveils new NRS sign at Hinkley Point B Today marks a further expansion of the Nuclear Decommissioning Authority (NDA) group’s nationally important mission as Hinkley Point B nuclear power station in Somerset transferred from EDF to the NDA for decommissioning. The site will be managed by NDA subsidiary Nuclear Restoration Services (NRS), which is also decommissioning the neighbouring Hinkley Point A site. This marks an historic new chapter for the site, which was the first British-designed Advanced Gas-cooled Reactor to export electricity to the national grid back in 1976. When it finished generating some 46 years later, in 2022, it had produced enough zero-carbon electricity to power every home in the South West of England for 33 years. Hinkley Point B will continue to provide well-paid skilled jobs within the local community with around 250 people working on site transferring from EDF to NRS bringing their knowledge and experience to deliver the safe, secure decommissioning of the site. As our mission continues to expand, we’re proud to draw on decades of expertise, applying proven skills, innovation and experience to safely decommission the AGR fleet. As we warmly welcome our new colleagues to the NDA group it’s a reminder that decommissioning underpins the nuclear energy sector. We are safely cleaning up sites and managing waste, preparing land for alternative uses, as well as sustaining national capability, supporting local communities, and giving confidence that the UK will manage its nuclear legacy responsibly.",
+    "sourceUrl": "https://www.gov.uk/government/news/uks-decommissioning-mission-continues-to-expand",
+    "generatedImage": "/generated/articles/b8a3286414469197-uk-s-decommissioning-mission-continues-to-expand/hero.webp",
+    "infrastructureRelevanceAction": "publish_signal_card_only",
+    "articlePagePublished": false,
+    "homepagePublished": true,
+    "archiveOnly": false,
+    "archiveOnlyReason": null,
+    "signalCardOnly": true,
+    "signalCardReason": "infrastructure_relevance_signal_card_threshold",
+    "article_blueprint": null,
+    "articleBlueprint": null,
+    "expertLensShort": null,
+    "expertLensFull": null,
+    "expertLens": null,
+    "public_content_tier": "editorial_brief",
+    "seo_noindex": false,
+    "noindex": false,
+    "public_tier_reasons": [],
+    "searchText": "UK’s decommissioning mission continues to expand UK Department for Energy Security and Net Zero Power & Grid Nuclear Decommissioning Power Operations Update power_grid utilities, power-secured developers, and operators with firm interconnection positions developers and cloud buyers whose delivery dates depend on utility upgrades or energization schedules utility interconnection, equipment procurement, and energization milestones A power-side development can still be too narrow to change the broader delivery curve unless it scales across sites. interconnection approvals, substation equipment dates, power purchase agreements, or disclosed energization windows EU Hinkley Point B nuclear power station has been transferred to the UK's Nuclear Decommissioning Authority for decommissioning, marking a significant expansion of their mission. Hinkley Point B nuclear power station in Somerset transferred from EDF to the NDA for decommissioning. NDA Group CEO, David Peattie, unveils new NRS sign at Hinkley Point B Today marks a further expansion of the Nuclear Decommissioning Authority (NDA) group’s nationally important mission as Hinkley Point B nuclear power station in Somerset transferred from EDF to the NDA for decommissioning. The site will be managed by NDA subsidiary Nuclear Restoration Services (NRS), which is also decommissioning the neighbouring Hinkley Point A site. This marks an historic new chapter for the site, which was the first British-designed Advanced Gas-cooled Reactor to export electricity to the national grid back in 1976. When it finished generating some 46 years later, in 2022, it had produced enough zero-carbon electricity to power every home in the South West of England for 33 years. Hinkley Point B will continue to provide well-paid skilled jobs within the local community with around 250 people working on site transferring from EDF to NRS bringing their knowledge and experience to deliver the safe, secure decommissioning of the site. As our mission continues to expand, we’re proud to draw on decades of expertise, applying proven skills, innovation and experience to safely decommission the AGR fleet. As we warmly welcome our new colleagues to the NDA group it’s a reminder that decommissioning underpins the nuclear energy sector. We are safely cleaning up sites and managing waste, preparing land for alternative uses, as well as sustaining national capability, supporting local communities, and giving confidence that the UK will manage its nuclear legacy responsibly. operators utilities investors local communities data center operators When it finished generating some 46 years later, in 2022, it had produced enough zero-carbon electricity to power every home in the South West of England for 33 years. NDA Group CEO, David Peattie, unveils new NRS sign at Hinkley Point B Today marks a further expansion of the Nuclear Decommissioning Authority (NDA) group’s nationally important mission as Hinkley Point B nuclear power station in Somerset transferred from EDF to the NDA for decommissioning. We are safely cleaning up sites and managing waste, preparing land for alternative uses, as well as sustaining national capability, supporting local communities, and giving confidence that the UK will manage its nuclear legacy responsibly. UK’s decommissioning mission continues to expand Hinkley Point B nuclear power station has been transferred to the UK's Nuclear Decommissioning Authority for decommissioning, marking a significant expansion of their mission. The decommissioning efforts will also sustain local employment and community engagement. NDA Group nuclear decommissioning energy UK sustainability employment"
   },
   {
     "id": "c9a773cb782b7801",
@@ -139994,6 +140204,208 @@
     "searchText": "U.S. electricity use for electric vehicles increasing at a slower pace in 2026 U.S. Energy Information Administration Power & Grid Electric Vehicles Power Market Analysis power_grid utilities, power-secured developers, and operators with firm interconnection positions developers and cloud buyers whose delivery dates depend on utility upgrades or energization schedules utility interconnection, equipment procurement, and energization milestones A power-side development can still be too narrow to change the broader delivery curve unless it scales across sites. interconnection approvals, substation equipment dates, power purchase agreements, or disclosed energization windows US Electric vehicle electricity consumption in the U.S. increased by 8% in the first half of 2026, a slowdown from previous growth rates due to declining sales post-tax credit expira… Data source: U.S. Energy Information Administration, Monthly Energy Review Data values: Electricity End Use and Electric Vehicle Use Note: Data are modeled estimates for on-road, light-duty electric vehicles. EV=electric vehicle; 1H23=first half of 2023 We estimate light-duty electric vehicles in the United States consumed 8% more electricity during the first six months of 2026 than in the last half of 2025 (2H25) in our Monthly Energy Review , down from the 13&ndash;24% growth seen in six-month periods in recent years. The slowing electric vehicle electricity consumption growth followed a decline in sales after U.S. federal tax credits expired in September 2025 . Overall, U.S. light-duty electric vehicle electricity use has more than doubled since 1H23, totaling nearly 14 billion kilowatthours in 1H26. Americans drive many different vehicle types . Both battery electric vehicles and plug-in hybrid electric vehicles can consume electricity from the grid and are included in our electric vehicle electricity consumption estimates. Internal combustion, hybrid electric, and fuel cell electric vehicles consume other fuels, do not connect to the grid, and are not included in our electric vehicle electricity use data. The New Clean Vehicle Credit and Qualified Commercial Clean Vehicle Credit , which reduced the cost to buy and lease new electric vehicles, ended on September 30, 2025. In 1H26, new electric vehicle sales were down 19% compared with 2H25. New electric vehicle sales are relatively small compared with the total number of vehicles on the road. In 2024, the most recent year of available data, electric vehicles accounted for 2% of all registered light-duty vehicles in the United States. utilities investors operators data center operators cloud capacity teams light-duty electric vehicle electricity use has more than doubled since 1H23, totaling nearly 14 billion kilowatthours in 1H26. Energy Information Administration, Monthly Energy Review Data values: Electricity End Use and Electric Vehicle Use Note: Data are modeled estimates for on-road, light-duty electric vehicles. EV=electric vehicle; 1H23=first half of 2023 We estimate light-duty electric vehicles in the United States consumed 8% more electricity during the first six months of 2026 than in the last half of 2025 (2H25) in our Monthly Energy Review, down from the 13&ndash;24% growth seen in six-month periods in recent years. We estimate light-duty electric vehicles in the United States consumed 8% more electricity during the first six months of 2026 than in the last half of 2025 (2H25) in our Monthly Energy Review, down from the 13-24% growth seen in six-month periods in recent years. Monthly Energy U.S. Energy Monthly Energy Review Data electric vehicles electricity consumption tax credits U.S. energy market trends power"
   },
   {
+    "id": "af7565ca100cccb3",
+    "sourceRegistryId": "acer-news",
+    "source": "ACER (EU energy regulators)",
+    "url": "https://www.acer.europa.eu/news/europes-retail-energy-markets-and-shift-electrification-prices-affordability-and-consumer-flexibility",
+    "title": "Europe’s retail energy markets and the shift to electrification: prices, affordability and consumer flexibility",
+    "snippet": "The 2026 Monitoring Report on retail energy markets examines electricity bills, affordability and what the shift to electrification means for consumers.",
+    "contentText": "The 2026 Monitoring Report on retail energy markets examines electricity bills, affordability and what the shift to electrification means for consumers.",
+    "publishedAt": "2026-09-30T07:47:00.000Z",
+    "sourceImage": null,
+    "region": "EU",
+    "language": "en",
+    "defaultCategory": "Power & Grid",
+    "ai_topic_score": 0,
+    "ai_topic_reasons": [
+      "ai_not_in_title"
+    ],
+    "category": "Power & Grid",
+    "primary_category": "Power & Grid",
+    "secondary_category": "Retail Energy Markets",
+    "infrastructure_layer": "Power",
+    "affected_stakeholders": [
+      "consumers",
+      "utilities",
+      "regulators",
+      "investors",
+      "energy providers"
+    ],
+    "article_type": "Market Analysis",
+    "urgency_score": 0.7,
+    "taxonomy_confidence": 0.81,
+    "taxonomy_reasons": [
+      "power",
+      "grid",
+      "interconnection",
+      "electricity"
+    ],
+    "direct_ai_infrastructure_relevance": 0,
+    "data_center_relevance": 0,
+    "cloud_capacity_relevance": 0,
+    "semiconductor_relevance": 0,
+    "power_grid_relevance": 0.24,
+    "cooling_relevance": 0,
+    "capital_markets_relevance": 0,
+    "enterprise_ai_infrastructure_relevance": 0,
+    "infrastructure_relevance_score": 0.174,
+    "infrastructure_relevance_tier": "archive_only",
+    "infrastructure_relevance_action": "archive_only",
+    "infrastructure_relevance_reasons": [
+      "power_grid_relevance:0.24(electricity)"
+    ],
+    "infrastructure_relevance": {
+      "direct_ai_infrastructure_relevance": 0,
+      "data_center_relevance": 0,
+      "cloud_capacity_relevance": 0,
+      "semiconductor_relevance": 0,
+      "power_grid_relevance": 0.24,
+      "cooling_relevance": 0,
+      "capital_markets_relevance": 0,
+      "enterprise_ai_infrastructure_relevance": 0,
+      "infrastructure_relevance_score": 0.174,
+      "infrastructure_relevance_tier": "archive_only",
+      "infrastructure_relevance_action": "archive_only",
+      "infrastructure_relevance_reasons": [
+        "power_grid_relevance:0.24(electricity)"
+      ],
+      "infrastructureRelevanceAction": "archive_only",
+      "articlePagePublished": false,
+      "homepagePublished": false,
+      "archiveOnly": true,
+      "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
+    },
+    "score": 16,
+    "slug": "europe-s-retail-energy-markets-and-the-shift-to-electrification-prices-affordability-and-consumer-flexibility",
+    "summary": "The 2026 Monitoring Report highlights the impact of electrification on Europe's retail energy markets, focusing on pricing, affordability, and consumer flexibility.",
+    "insight": "As electricity prices remain high, the transition to electrification may be hindered, affecting household financial benefits. Limited consumer exposure to dynamic pricing contracts restricts potential savings and flexibility.",
+    "expert_insight": {
+      "concrete_facts": [
+        "As Europe moves towards greater electrification, retail energy markets will increasingly shape the costs and opportunities for consumers.",
+        "How electricity is priced and how consumers can respond to changing prices will influence whether households can benefit financially from this transition."
+      ],
+      "named_companies": [],
+      "infrastructure_layer": "Power",
+      "bottleneck_type": "power_grid",
+      "who_gains_leverage": "utilities, power-secured developers, and operators with firm interconnection positions",
+      "who_takes_execution_risk": "developers and cloud buyers whose delivery dates depend on utility upgrades or energization schedules",
+      "timing_dependency": "utility interconnection, equipment procurement, and energization milestones",
+      "counterargument": "The source may still describe intent rather than delivered capacity, so the operating impact depends on follow-through.",
+      "next_observable_signal": "interconnection approvals, substation equipment dates, power purchase agreements, or disclosed energization windows",
+      "expert_insight_complete": false,
+      "expert_insight_missing_fields": [
+        "named_companies"
+      ]
+    },
+    "expertInsight": {
+      "concrete_facts": [
+        "As Europe moves towards greater electrification, retail energy markets will increasingly shape the costs and opportunities for consumers.",
+        "How electricity is priced and how consumers can respond to changing prices will influence whether households can benefit financially from this transition."
+      ],
+      "named_companies": [],
+      "infrastructure_layer": "Power",
+      "bottleneck_type": "power_grid",
+      "who_gains_leverage": "utilities, power-secured developers, and operators with firm interconnection positions",
+      "who_takes_execution_risk": "developers and cloud buyers whose delivery dates depend on utility upgrades or energization schedules",
+      "timing_dependency": "utility interconnection, equipment procurement, and energization milestones",
+      "counterargument": "The source may still describe intent rather than delivered capacity, so the operating impact depends on follow-through.",
+      "next_observable_signal": "interconnection approvals, substation equipment dates, power purchase agreements, or disclosed energization windows",
+      "expert_insight_complete": false,
+      "expert_insight_missing_fields": [
+        "named_companies"
+      ]
+    },
+    "concrete_facts": [
+      "As Europe moves towards greater electrification, retail energy markets will increasingly shape the costs and opportunities for consumers.",
+      "How electricity is priced and how consumers can respond to changing prices will influence whether households can benefit financially from this transition."
+    ],
+    "named_companies": [],
+    "bottleneck_type": "power_grid",
+    "who_gains_leverage": "utilities, power-secured developers, and operators with firm interconnection positions",
+    "who_takes_execution_risk": "developers and cloud buyers whose delivery dates depend on utility upgrades or energization schedules",
+    "timing_dependency": "utility interconnection, equipment procurement, and energization milestones",
+    "counterargument": "The source may still describe intent rather than delivered capacity, so the operating impact depends on follow-through.",
+    "next_observable_signal": "interconnection approvals, substation equipment dates, power purchase agreements, or disclosed energization windows",
+    "expert_insight_complete": false,
+    "expert_insight_missing_fields": [
+      "named_companies"
+    ],
+    "tags": [
+      "electrification",
+      "energy prices",
+      "consumer flexibility",
+      "EU",
+      "smart meters",
+      "retail markets"
+    ],
+    "imagePrompt": "A modern European cityscape with electric vehicles charging, smart meters on buildings, and a clear blue sky, showcasing the transition to electrification in energy markets.",
+    "lang": "en",
+    "articleText": "Europe’s retail energy markets and the shift to electrification: prices, affordability and consumer flexibility What is it about? As Europe moves towards greater electrification, retail energy markets will increasingly shape the costs and opportunities for consumers. How electricity is priced and how consumers can respond to changing prices will influence whether households can benefit financially from this transition. The 2026 Monitoring Report on retail energy markets examines electricity bills, affordability and what the shift to electrification means for consumers. Household retail prices rose sharply after the 2022 energy crisis and have remained elevated. In 2025, EU households spent an average of €840 on electricity and €1,170 on gas. Household electricity expenditure ranges from 1.2% to 3.9% of national median income across the EU , reflecting differences in prices, consumption and household income. High electricity-to-gas price ratios can weaken the incentive to electrify. E lectricity remains relatively expensive compared to gas, discouraging households from switching to electric technologies. Network charges, taxes and upfront costs often widen this price gap further. Most consumers are not exposed to the benefits of flexibility. 7% of EU households are on dynamic price contracts, while over 80% in nine countries are on single fixed-term, fixed-price electricity contracts. This limits their exposure to changing price signals and potential savings. Smart meter rollout is also uneven across Member States: 66% of monitored customers have a smart meter, but coverage remains below 20% in several countries. Flexible consumption could reduce bills.",
+    "content_length": 1680,
+    "boilerplate_ratio": 0,
+    "title_body_similarity": 1,
+    "copyright_footer_detected": false,
+    "nav_or_cta_detected": false,
+    "sentence_completion_score": 1,
+    "source_domain_adapter": "acer",
+    "extraction_quality_score": 1,
+    "extraction_qa": {
+      "content_length": 1680,
+      "boilerplate_ratio": 0,
+      "title_body_similarity": 1,
+      "copyright_footer_detected": false,
+      "legal_boilerplate_detected": false,
+      "nav_or_cta_detected": false,
+      "sentence_completion_score": 1,
+      "source_domain_adapter": "acer",
+      "extraction_quality_score": 1,
+      "extraction_failure_reason": null,
+      "extraction_quality_reasons": [],
+      "public_publishable": true,
+      "can_generate_longform": true,
+      "cleaned_source_length": 1680,
+      "block_reasons": []
+    },
+    "extraction_artifact": {
+      "artifact_version": "extraction_v1",
+      "source_url": "https://www.acer.europa.eu/news/europes-retail-energy-markets-and-shift-electrification-prices-affordability-and-consumer-flexibility",
+      "extracted_text_sha256": "81c16c5b9e947c4185eecef1281a1b10da1a4787388144aa915ee5ebb407ef21",
+      "cleaned_extracted_text": "Europe’s retail energy markets and the shift to electrification: prices, affordability and consumer flexibility What is it about? As Europe moves towards greater electrification, retail energy markets will increasingly shape the costs and opportunities for consumers. How electricity is priced and how consumers can respond to changing prices will influence whether households can benefit financially from this transition. The 2026 Monitoring Report on retail energy markets examines electricity bills, affordability and what the shift to electrification means for consumers. Household retail prices rose sharply after the 2022 energy crisis and have remained elevated. In 2025, EU households spent an average of €840 on electricity and €1,170 on gas. Household electricity expenditure ranges from 1.2% to 3.9% of national median income across the EU , reflecting differences in prices, consumption and household income. High electricity-to-gas price ratios can weaken the incentive to electrify. E lectricity remains relatively expensive compared to gas, discouraging households from switching to electric technologies. Network charges, taxes and upfront costs often widen this price gap further. Most consumers are not exposed to the benefits of flexibility. 7% of EU households are on dynamic price contracts, while over 80% in nine countries are on single fixed-term, fixed-price electricity contracts. This limits their exposure to changing price signals and potential savings. Smart meter rollout is also uneven across Member States: 66% of monitored customers have a smart meter, but coverage remains below 20% in several countries. Flexible consumption could reduce bills.",
+      "extraction_qa": {
+        "cleaned_source_length": 1680,
+        "block_reasons": [],
+        "public_publishable": true,
+        "can_generate_longform": true,
+        "boilerplate_ratio": 0,
+        "copyright_footer_detected": false,
+        "nav_or_cta_detected": false,
+        "sentence_completion_score": 1
+      }
+    },
+    "cleaned_source_text": "Europe’s retail energy markets and the shift to electrification: prices, affordability and consumer flexibility What is it about? As Europe moves towards greater electrification, retail energy markets will increasingly shape the costs and opportunities for consumers. How electricity is priced and how consumers can respond to changing prices will influence whether households can benefit financially from this transition. The 2026 Monitoring Report on retail energy markets examines electricity bills, affordability and what the shift to electrification means for consumers. Household retail prices rose sharply after the 2022 energy crisis and have remained elevated. In 2025, EU households spent an average of €840 on electricity and €1,170 on gas. Household electricity expenditure ranges from 1.2% to 3.9% of national median income across the EU , reflecting differences in prices, consumption and household income. High electricity-to-gas price ratios can weaken the incentive to electrify. E lectricity remains relatively expensive compared to gas, discouraging households from switching to electric technologies. Network charges, taxes and upfront costs often widen this price gap further. Most consumers are not exposed to the benefits of flexibility. 7% of EU households are on dynamic price contracts, while over 80% in nine countries are on single fixed-term, fixed-price electricity contracts. This limits their exposure to changing price signals and potential savings. Smart meter rollout is also uneven across Member States: 66% of monitored customers have a smart meter, but coverage remains below 20% in several countries. Flexible consumption could reduce bills.",
+    "sourceUrl": "https://www.acer.europa.eu/news/europes-retail-energy-markets-and-shift-electrification-prices-affordability-and-consumer-flexibility",
+    "generatedImage": "/generated/articles/af7565ca100cccb3-europe-s-retail-energy-markets-and-the-shift-to-electrification-prices-affordability-and-c/hero.webp",
+    "infrastructureRelevanceAction": "archive_only",
+    "articlePagePublished": false,
+    "homepagePublished": false,
+    "archiveOnly": true,
+    "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold",
+    "article_blueprint": null,
+    "articleBlueprint": null,
+    "expertLensShort": null,
+    "expertLensFull": null,
+    "expertLens": null,
+    "public_content_tier": "hidden",
+    "signalCardOnly": false,
+    "seo_noindex": true,
+    "noindex": true,
+    "public_tier_reasons": [
+      "low_relevance",
+      "relevance_below_adjacent_threshold"
+    ],
+    "searchText": "Europe’s retail energy markets and the shift to electrification: prices, affordability and consumer flexibility ACER (EU energy regulators) Power & Grid Retail Energy Markets Power Market Analysis power_grid utilities, power-secured developers, and operators with firm interconnection positions developers and cloud buyers whose delivery dates depend on utility upgrades or energization schedules utility interconnection, equipment procurement, and energization milestones The source may still describe intent rather than delivered capacity, so the operating impact depends on follow-through. interconnection approvals, substation equipment dates, power purchase agreements, or disclosed energization windows EU The 2026 Monitoring Report highlights the impact of electrification on Europe's retail energy markets, focusing on pricing, affordability, and consumer flexibility. Europe’s retail energy markets and the shift to electrification: prices, affordability and consumer flexibility What is it about? As Europe moves towards greater electrification, retail energy markets will increasingly shape the costs and opportunities for consumers. How electricity is priced and how consumers can respond to changing prices will influence whether households can benefit financially from this transition. The 2026 Monitoring Report on retail energy markets examines electricity bills, affordability and what the shift to electrification means for consumers. Household retail prices rose sharply after the 2022 energy crisis and have remained elevated. In 2025, EU households spent an average of €840 on electricity and €1,170 on gas. Household electricity expenditure ranges from 1.2% to 3.9% of national median income across the EU , reflecting differences in prices, consumption and household income. High electricity-to-gas price ratios can weaken the incentive to electrify. E lectricity remains relatively expensive compared to gas, discouraging households from switching to electric technologies. Network charges, taxes and upfront costs often widen this price gap further. Most consumers are not exposed to the benefits of flexibility. 7% of EU households are on dynamic price contracts, while over 80% in nine countries are on single fixed-term, fixed-price electricity contracts. This limits their exposure to changing price signals and potential savings. Smart meter rollout is also uneven across Member States: 66% of monitored customers have a smart meter, but coverage remains below 20% in several countries. Flexible consumption could reduce bills. consumers utilities regulators investors energy providers As Europe moves towards greater electrification, retail energy markets will increasingly shape the costs and opportunities for consumers. How electricity is priced and how consumers can respond to changing prices will influence whether households can benefit financially from this transition. electrification energy prices consumer flexibility smart meters retail markets"
+  },
+  {
     "id": "518703cc40750ccb",
     "sourceRegistryId": "google-cloud-compute-releases",
     "source": "Google Cloud Compute Engine",
@@ -141069,6 +141481,223 @@
       "not_enough_public_evidence"
     ],
     "searchText": "Great British Grid to speed up connections and cut bills UK Department for Energy Security and Net Zero Power & Grid Infrastructure Development Power Policy / Regulation power_grid utilities, power-secured developers, and operators with firm interconnection positions developers and cloud buyers whose delivery dates depend on utility upgrades or energization schedules utility interconnection, equipment procurement, and energization milestones Capital alone does not prove capacity will arrive on schedule without power, equipment, permits, and customers lining up. interconnection approvals, substation equipment dates, power purchase agreements, or disclosed energization windows UK The UK government has launched the Great British Grid to expedite electricity grid connections, enhancing energy security and reducing costs for families and businesses. Families and businesses across the country will benefit from faster grid connections. Families and businesses across the country will benefit from faster grid connections, greater energy security and lower costs as the government takes action to remove one of the biggest barriers to clean power and economic growth. The government today (Tuesday 29 September) announces Great British Grid ( GBG ), a new publicly owned body within Great British Energy that will help accelerate the delivery of the electricity network infrastructure Britain needs. Just as Great British Energy is investing in supply chain, generation and storage projects across the country, now Great British Grid will be able to invest in our electricity grid. Britain’s electricity grid must be expanded and modernised at an unprecedented pace if it is to support growing demand from households and businesses, connect new sources of clean power and unlock economic growth. While private investment will continue to play a vital role, the scale of the challenge requires additional public investment and dedicated leadership. Great British Grid will bring together public and private investment to support the delivery of critical network infrastructure across the country. Working alongside existing network operators, it will help accelerate projects, increase competition and support the delivery of the grid upgrades needed to power Britain’s future. Together, Great British Energy and Great British Grid will be able to invest across the energy system, supporting both the clean power generation Britain needs and the network infrastructure required to get that power to homes, businesses and industry. operators utilities investors businesses households The government today (Tuesday 29 September) announces Great British Grid ( GBG ), a new publicly owned body within Great British Energy that will help accelerate the delivery of the electricity network infrastructure Britain needs. Just as Great British Energy is investing in supply chain, generation and storage projects across the country, now Great British Grid will be able to invest in our electricity grid. Together, Great British Energy and Great British Grid will be able to invest across the energy system, supporting both the clean power generation Britain needs and the network infrastructure required to get that power to homes, businesses and industry. Great British Grid to speed up connections and cut bills The UK government has launched the Great British Grid to expedite electricity grid connections, enhancing energy security and reducing costs for families and businesses. Families and businesses across the country will benefit from faster grid connections. Great British Energy uk energy grid infrastructure cleanpower investment"
+  },
+  {
+    "id": "168b174a04128103",
+    "sourceRegistryId": "google-cloud-ai-releases",
+    "source": "Google Cloud AI",
+    "url": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/release-notes#September_29_2026",
+    "title": "Google Cloud AI: Custom denial messages for semantic governance policies",
+    "snippet": "Feature Custom denial messages for semantic governance policies You can now configure a fixed Denial message on a semantic governance policy to show end users when the policy denies a request, in place of the policy den…",
+    "contentText": "Feature Custom denial messages for semantic governance policies You can now configure a fixed Denial message on a semantic governance policy to show end users when the policy denies a request, in place of the policy denial rationale. The message can be up to 1,000 characters and is configurable in the Google Cloud console on the policy create or edit page, or by setting agentResponseCustomization.denialMessage on the policy resource using the REST API. When a single request triggers denials from more than one policy, the policy engine combines the configured Denial messages, deduplicates them, and falls back to a generic message for firing policies that don't have one configured. For more information, see Configure a semantic governance policy and Information exposure risk .",
+    "publishedAt": "2026-09-29T07:00:00.000Z",
+    "sourceImage": null,
+    "region": "US",
+    "language": "en",
+    "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+    "ai_topic_score": 0.483,
+    "ai_topic_reasons": [
+      "gemini",
+      "ai"
+    ],
+    "category": "AI Infrastructure",
+    "primary_category": "AI Infrastructure",
+    "secondary_category": "Product / Platform Update",
+    "infrastructure_layer": "Cloud Platform",
+    "affected_stakeholders": [
+      "operators",
+      "enterprise IT",
+      "hyperscalers",
+      "cloud buyers",
+      "investors"
+    ],
+    "article_type": "Product / Platform Update",
+    "urgency_score": 0.4,
+    "taxonomy_confidence": 0.73,
+    "taxonomy_reasons": [
+      "ai infrastructure",
+      "neocloud",
+      "deployment readiness"
+    ],
+    "direct_ai_infrastructure_relevance": 0.22,
+    "data_center_relevance": 0,
+    "cloud_capacity_relevance": 0.324,
+    "semiconductor_relevance": 0,
+    "power_grid_relevance": 0,
+    "cooling_relevance": 0,
+    "capital_markets_relevance": 0,
+    "enterprise_ai_infrastructure_relevance": 0,
+    "infrastructure_relevance_score": 0.306,
+    "infrastructure_relevance_tier": "archive_only",
+    "infrastructure_relevance_action": "archive_only",
+    "infrastructure_relevance_reasons": [
+      "direct_ai_infrastructure_relevance:0.22",
+      "cloud_capacity_relevance:0.32(google cloud)"
+    ],
+    "infrastructure_relevance": {
+      "direct_ai_infrastructure_relevance": 0.22,
+      "data_center_relevance": 0,
+      "cloud_capacity_relevance": 0.324,
+      "semiconductor_relevance": 0,
+      "power_grid_relevance": 0,
+      "cooling_relevance": 0,
+      "capital_markets_relevance": 0,
+      "enterprise_ai_infrastructure_relevance": 0,
+      "infrastructure_relevance_score": 0.306,
+      "infrastructure_relevance_tier": "archive_only",
+      "infrastructure_relevance_action": "archive_only",
+      "infrastructure_relevance_reasons": [
+        "direct_ai_infrastructure_relevance:0.22",
+        "cloud_capacity_relevance:0.32(google cloud)"
+      ],
+      "infrastructureRelevanceAction": "archive_only",
+      "articlePagePublished": false,
+      "homepagePublished": false,
+      "archiveOnly": true,
+      "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
+    },
+    "score": 36,
+    "slug": "google-cloud-ai-custom-denial-messages-for-semantic-governance-policies",
+    "summary": "Google Cloud AI introduces customizable denial messages for semantic governance policies, allowing tailored responses for denied requests. This feature enhances user experience an…",
+    "insight": "Operators can improve user interactions by providing clear, customized messages when requests are denied, which may reduce confusion and support inquiries. This update also streamlines policy management for enterprise IT.",
+    "expert_insight": {
+      "concrete_facts": [
+        "Google Cloud AI: Custom denial messages for semantic governance policies Google Cloud AI introduces customizable denial messages for semantic governance policies, allowing tailored responses for denied requests.",
+        "The message can be up to 1,000 characters and is configurable in the Google Cloud console on the policy create or edit page, or by setting agentResponseCustomization.denialMessage on the policy resource using the REST API."
+      ],
+      "named_companies": [
+        "Google",
+        "Google Cloud"
+      ],
+      "infrastructure_layer": "Cloud Platform",
+      "bottleneck_type": "cloud_capacity",
+      "who_gains_leverage": "cloud platforms and capacity brokers that can translate reserved demand into available AI instances",
+      "who_takes_execution_risk": "buyers that commit workloads before regional capacity, pricing, and service levels are visible",
+      "timing_dependency": "regional capacity release, customer onboarding, and service availability dates",
+      "counterargument": "The source may still describe intent rather than delivered capacity, so the operating impact depends on follow-through.",
+      "next_observable_signal": "new instance availability, regional capacity disclosures, pricing changes, or workload migration updates",
+      "expert_insight_complete": true,
+      "expert_insight_missing_fields": []
+    },
+    "expertInsight": {
+      "concrete_facts": [
+        "Google Cloud AI: Custom denial messages for semantic governance policies Google Cloud AI introduces customizable denial messages for semantic governance policies, allowing tailored responses for denied requests.",
+        "The message can be up to 1,000 characters and is configurable in the Google Cloud console on the policy create or edit page, or by setting agentResponseCustomization.denialMessage on the policy resource using the REST API."
+      ],
+      "named_companies": [
+        "Google",
+        "Google Cloud"
+      ],
+      "infrastructure_layer": "Cloud Platform",
+      "bottleneck_type": "cloud_capacity",
+      "who_gains_leverage": "cloud platforms and capacity brokers that can translate reserved demand into available AI instances",
+      "who_takes_execution_risk": "buyers that commit workloads before regional capacity, pricing, and service levels are visible",
+      "timing_dependency": "regional capacity release, customer onboarding, and service availability dates",
+      "counterargument": "The source may still describe intent rather than delivered capacity, so the operating impact depends on follow-through.",
+      "next_observable_signal": "new instance availability, regional capacity disclosures, pricing changes, or workload migration updates",
+      "expert_insight_complete": true,
+      "expert_insight_missing_fields": []
+    },
+    "concrete_facts": [
+      "Google Cloud AI: Custom denial messages for semantic governance policies Google Cloud AI introduces customizable denial messages for semantic governance policies, allowing tailored responses for denied requests.",
+      "The message can be up to 1,000 characters and is configurable in the Google Cloud console on the policy create or edit page, or by setting agentResponseCustomization.denialMessage on the policy resource using the REST API."
+    ],
+    "named_companies": [
+      "Google",
+      "Google Cloud"
+    ],
+    "bottleneck_type": "cloud_capacity",
+    "who_gains_leverage": "cloud platforms and capacity brokers that can translate reserved demand into available AI instances",
+    "who_takes_execution_risk": "buyers that commit workloads before regional capacity, pricing, and service levels are visible",
+    "timing_dependency": "regional capacity release, customer onboarding, and service availability dates",
+    "counterargument": "The source may still describe intent rather than delivered capacity, so the operating impact depends on follow-through.",
+    "next_observable_signal": "new instance availability, regional capacity disclosures, pricing changes, or workload migration updates",
+    "expert_insight_complete": true,
+    "expert_insight_missing_fields": [],
+    "tags": [
+      "google",
+      "cloud",
+      "ai",
+      "governance",
+      "policy",
+      "customization"
+    ],
+    "imagePrompt": "A modern cloud computing environment with abstract representations of AI governance, featuring digital interfaces and user interactions, in a sleek, high-tech style.",
+    "lang": "en",
+    "articleText": "You can now configure a fixed Denial message on a semantic governance policy to show end users when the policy denies a request, in place of the policy denial rationale. The message can be up to 1,000 characters and is configurable in the Google Cloud console on the policy create or edit page, or by setting agentResponseCustomization.denialMessage on the policy resource using the REST API. When a single request triggers denials from more than one policy, the policy engine combines the configured Denial messages, deduplicates them, and falls back to a generic message for firing policies that don't have one configured.",
+    "content_length": 624,
+    "boilerplate_ratio": 0,
+    "title_body_similarity": 0.88,
+    "copyright_footer_detected": false,
+    "nav_or_cta_detected": false,
+    "sentence_completion_score": 1,
+    "source_domain_adapter": "googlecloud",
+    "extraction_quality_score": 0.78,
+    "extraction_qa": {
+      "content_length": 624,
+      "boilerplate_ratio": 0,
+      "title_body_similarity": 0.88,
+      "copyright_footer_detected": false,
+      "legal_boilerplate_detected": false,
+      "nav_or_cta_detected": false,
+      "sentence_completion_score": 1,
+      "source_domain_adapter": "googlecloud",
+      "extraction_quality_score": 0.78,
+      "extraction_failure_reason": null,
+      "extraction_quality_reasons": [
+        "extraction_quality_score 0.78 below 0.80",
+        "content_length 624 below 650"
+      ],
+      "public_publishable": true,
+      "can_generate_longform": false,
+      "cleaned_source_length": 624,
+      "block_reasons": [
+        "cleaned_source_text_below_1200",
+        "source_evidence_length_below_1200"
+      ]
+    },
+    "extraction_artifact": {
+      "artifact_version": "extraction_v1",
+      "source_url": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/release-notes#September_29_2026",
+      "extracted_text_sha256": "16836cd7176277fd1f0621ebbcd14c6d5e821f20f0330a9b64183c09354ec498",
+      "cleaned_extracted_text": "You can now configure a fixed Denial message on a semantic governance policy to show end users when the policy denies a request, in place of the policy denial rationale. The message can be up to 1,000 characters and is configurable in the Google Cloud console on the policy create or edit page, or by setting agentResponseCustomization.denialMessage on the policy resource using the REST API. When a single request triggers denials from more than one policy, the policy engine combines the configured Denial messages, deduplicates them, and falls back to a generic message for firing policies that don't have one configured.",
+      "extraction_qa": {
+        "cleaned_source_length": 624,
+        "block_reasons": [
+          "cleaned_source_text_below_1200",
+          "source_evidence_length_below_1200"
+        ],
+        "public_publishable": true,
+        "can_generate_longform": false,
+        "boilerplate_ratio": 0,
+        "copyright_footer_detected": false,
+        "nav_or_cta_detected": false,
+        "sentence_completion_score": 1
+      }
+    },
+    "cleaned_source_text": "You can now configure a fixed Denial message on a semantic governance policy to show end users when the policy denies a request, in place of the policy denial rationale. The message can be up to 1,000 characters and is configurable in the Google Cloud console on the policy create or edit page, or by setting agentResponseCustomization.denialMessage on the policy resource using the REST API. When a single request triggers denials from more than one policy, the policy engine combines the configured Denial messages, deduplicates them, and falls back to a generic message for firing policies that don't have one configured.",
+    "sourceUrl": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/release-notes#September_29_2026",
+    "generatedImage": "/generated/articles/168b174a04128103-google-cloud-ai-custom-denial-messages-for-semantic-governance-policies/hero.webp",
+    "infrastructureRelevanceAction": "archive_only",
+    "articlePagePublished": false,
+    "homepagePublished": false,
+    "archiveOnly": true,
+    "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold",
+    "article_blueprint": null,
+    "articleBlueprint": null,
+    "expertLensShort": null,
+    "expertLensFull": null,
+    "expertLens": null,
+    "public_content_tier": "hidden",
+    "signalCardOnly": false,
+    "seo_noindex": true,
+    "noindex": true,
+    "public_tier_reasons": [
+      "low_relevance",
+      "missing_concrete_infrastructure_layer",
+      "relevance_below_adjacent_threshold"
+    ],
+    "searchText": "Google Cloud AI: Custom denial messages for semantic governance policies Google Cloud AI AI Infrastructure Product / Platform Update Cloud Platform cloud_capacity cloud platforms and capacity brokers that can translate reserved demand into available AI instances buyers that commit workloads before regional capacity, pricing, and service levels are visible regional capacity release, customer onboarding, and service availability dates The source may still describe intent rather than delivered capacity, so the operating impact depends on follow-through. new instance availability, regional capacity disclosures, pricing changes, or workload migration updates US Google Cloud AI introduces customizable denial messages for semantic governance policies, allowing tailored responses for denied requests. This feature enhances user experience an… You can now configure a fixed Denial message on a semantic governance policy to show end users when the policy denies a request, in place of the policy denial rationale. The message can be up to 1,000 characters and is configurable in the Google Cloud console on the policy create or edit page, or by setting agentResponseCustomization.denialMessage on the policy resource using the REST API. When a single request triggers denials from more than one policy, the policy engine combines the configured Denial messages, deduplicates them, and falls back to a generic message for firing policies that don't have one configured. operators enterprise IT hyperscalers cloud buyers investors Google Cloud AI: Custom denial messages for semantic governance policies Google Cloud AI introduces customizable denial messages for semantic governance policies, allowing tailored responses for denied requests. The message can be up to 1,000 characters and is configurable in the Google Cloud console on the policy create or edit page, or by setting agentResponseCustomization.denialMessage on the policy resource using the REST API. Google Google Cloud google cloud ai governance policy customization"
   },
   {
     "id": "758880cc9e6d9387",
