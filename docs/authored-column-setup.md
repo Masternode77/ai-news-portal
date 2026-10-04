@@ -45,7 +45,7 @@
 | `LLM_RUN_BUDGET_TOKENS` | 60000 | 실행당 토큰 상한(초과 시 LLM 작업 중단) |
 | `LLM_RUN_BUDGET_CALLS` | 40 | 실행당 호출 상한 |
 | `AUTHORED_MIN_HUMAN_STYLE` | 0.84 | 문체 점수 하한 (낮추면 발행률↑ 품질↓) |
-| `AUTHORED_MIN_INSIGHT_DENSITY` | 0.78 | 분석 밀도 하한 |
+| `AUTHORED_MIN_INSIGHT_DENSITY` | 0.75 | 분석 밀도 하한 |
 
 ### 칼럼 대상 범위: 인프라 스토리와 AI 스토리
 
