@@ -42,21 +42,21 @@ const TRACKED_COMPANIES = [
   ['NVIDIA', 'chips', true, ['Nvidia', '엔비디아']], ['AMD', 'chips', true], ['Intel', 'chips', true, ['인텔']], ['TSMC', 'chips', true],
   ['SK hynix', 'chips', true, ['SK Hynix', 'SK하이닉스']], ['Micron', 'chips', true, ['마이크론']], ['Broadcom', 'chips', true, ['브로드컴']], ['Marvell', 'chips', true],
   ['Qualcomm', 'chips', false, ['퀄컴']], ['Arm', 'chips', false, ['Arm Holdings']], ['Cerebras', 'chips', true], ['Groq', 'chips', true],
-  ['SambaNova', 'chips', true], ['Tenstorrent', 'chips', true], ['Etched', 'chips', true], ['Lightmatter', 'chips', true],
+  ['SambaNova', 'chips', true], ['Tenstorrent', 'chips', true], ['Etched', 'chips', false], ['Lightmatter', 'chips', true],
   ['Ayar Labs', 'chips', true], ['ASML', 'chips', true], ['Applied Materials', 'chips', true], ['Lam Research', 'chips', true],
   ['KLA', 'chips', true], ['Tokyo Electron', 'chips', true], ['GlobalFoundries', 'chips', true], ['Rapidus', 'chips', true],
   ['SMIC', 'chips', true], ['Cambricon', 'chips', true], ['Huawei', 'chips', false], ['Samsung', 'chips', false, ['Samsung Electronics', '삼성전자']],
   ['Supermicro', 'it_infrastructure', true, ['Super Micro', '슈퍼마이크로']], ['Dell', 'it_infrastructure', true, ['Dell Technologies']],
   ['HPE', 'it_infrastructure', true, ['Hewlett Packard Enterprise']], ['Lenovo', 'it_infrastructure', false],
-  ['Cisco', 'it_infrastructure', true, ['시스코']], ['Arista', 'it_infrastructure', true], ['Juniper', 'it_infrastructure', true],
-  ['Nokia', 'it_infrastructure', false], ['Ciena', 'it_infrastructure', true], ['Coherent', 'it_infrastructure', true],
+  ['Cisco', 'it_infrastructure', true, ['시스코']], ['Arista', 'it_infrastructure', true], ['Juniper Networks', 'it_infrastructure', true],
+  ['Nokia', 'it_infrastructure', false], ['Ciena', 'it_infrastructure', true], ['Coherent', 'it_infrastructure', false],
   ['Lumentum', 'it_infrastructure', true], ['Credo', 'it_infrastructure', true], ['Astera Labs', 'it_infrastructure', true],
   ['Celestica', 'it_infrastructure', true], ['Foxconn', 'it_infrastructure', true, ['Hon Hai']], ['Quanta', 'it_infrastructure', true],
   ['Wiwynn', 'it_infrastructure', true], ['IBM', 'it_infrastructure', false], ['Red Hat', 'it_infrastructure', false],
   ['Pure Storage', 'it_infrastructure', true], ['NetApp', 'it_infrastructure', true], ['Western Digital', 'it_infrastructure', true],
   ['Seagate', 'it_infrastructure', true], ['Cloudflare', 'it_infrastructure', false], ['Akamai', 'it_infrastructure', false],
   ['AWS', 'cloud', true, ['Amazon Web Services']], ['Microsoft', 'cloud', false, ['Azure', 'Microsoft Azure', '마이크로소프트']],
-  ['Google', 'cloud', false, ['Google Cloud', 'Alphabet', '구글']], ['Oracle', 'cloud', true, ['OCI', '오라클']], ['Meta', 'cloud', false, ['메타']],
+  ['Google', 'cloud', false, ['Google Cloud', 'Alphabet', '구글']], ['Oracle', 'cloud', true, ['오라클']], ['Meta', 'cloud', false, ['메타']],
   ['Amazon', 'cloud', false, ['아마존']], ['Apple', 'cloud', false], ['CoreWeave', 'cloud', true], ['Lambda Labs', 'cloud', true],
   ['Nebius', 'cloud', true], ['Crusoe', 'cloud', true], ['Together AI', 'cloud', true], ['Nscale', 'cloud', true],
   ['Fluidstack', 'cloud', true], ['Vultr', 'cloud', true], ['DigitalOcean', 'cloud', true], ['G42', 'cloud', true],
@@ -69,9 +69,9 @@ const TRACKED_COMPANIES = [
   ['Cipher Mining', 'data_centers', true], ['TeraWulf', 'data_centers', true], ['Hut 8', 'data_centers', true],
   ['Galaxy Digital', 'data_centers', true], ['Stargate', 'data_centers', true], ['DigitalBridge', 'data_centers', true],
   ['Blackstone', 'data_centers', false], ['Brookfield', 'data_centers', false], ['KKR', 'data_centers', false],
-  ['Vertiv', 'power_cooling', true, ['버티브']], ['Schneider Electric', 'power_cooling', true], ['Eaton', 'power_cooling', true],
+  ['Vertiv', 'power_cooling', true, ['버티브']], ['Schneider Electric', 'power_cooling', true], ['Eaton', 'power_cooling', false],
   ['GE Vernova', 'power_cooling', true], ['Siemens Energy', 'power_cooling', true], ['Bloom Energy', 'power_cooling', true],
-  ['Constellation Energy', 'power_cooling', true, ['Constellation']], ['Vistra', 'power_cooling', true],
+  ['Constellation Energy', 'power_cooling', true], ['Vistra', 'power_cooling', true],
   ['Talen Energy', 'power_cooling', true, ['Talen']], ['NRG', 'power_cooling', false], ['Dominion Energy', 'power_cooling', false],
   ['Entergy', 'power_cooling', false], ['Duke Energy', 'power_cooling', false], ['NextEra', 'power_cooling', false],
   ['Oklo', 'power_cooling', true], ['NuScale', 'power_cooling', true], ['Kairos Power', 'power_cooling', true],
@@ -79,16 +79,24 @@ const TRACKED_COMPANIES = [
   ['Fervo', 'power_cooling', true], ['Commonwealth Fusion', 'power_cooling', true], ['Helion', 'power_cooling', true],
   // Korean companies, matched in Korean-language headlines.
   ['Naver', 'ai_companies', false, ['네이버']], ['Kakao', 'ai_companies', false, ['카카오']],
-  ['FuriosaAI', 'chips', true, ['퓨리오사AI', '퓨리오사']], ['Rebellions', 'chips', true, ['리벨리온']],
+  ['FuriosaAI', 'chips', true, ['퓨리오사AI', '퓨리오사']], ['Rebellions', 'chips', false, ['리벨리온']],
   ['KT', 'cloud', false], ['SK Telecom', 'cloud', false, ['SK텔레콤', 'SKT']], ['LG CNS', 'it_infrastructure', false],
   ['Samsung SDS', 'it_infrastructure', false, ['삼성SDS']], ['Doosan Enerbility', 'power_cooling', true, ['두산에너빌리티']],
 ].map(([name, segment, core, aliases = []]) => ({ name, segment, core, aliases }));
+
+// Korean names that begin a longer common word: 인텔리전스 (intelligence),
+// 메타버스/메타데이터 (metaverse, metadata), 마이크론 as a unit of length.
+const ALIAS_GUARDS = {
+  인텔: '(?!리)',
+  메타: '(?!버스|데이터|인지|물질)',
+  마이크론: '(?!\\s?(?:급|두께|단위|미터))',
+};
 
 const COMPANY_MATCHERS = TRACKED_COMPANIES.map((company) => ({
   ...company,
   // Case-sensitive so common words (arm, meta, crusoe) never match prose.
   pattern: new RegExp(`(?<![A-Za-z0-9])(?:${[company.name, ...company.aliases]
-    .map((value) => value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('|')})(?![A-Za-z0-9])`),
+    .map((value) => `${value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}${ALIAS_GUARDS[value] || ''}`).join('|')})(?![A-Za-z0-9])`),
 }));
 
 // English patterns use word boundaries; Korean terms match as substrings

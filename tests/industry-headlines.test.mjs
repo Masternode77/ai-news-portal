@@ -4,6 +4,7 @@ import os from 'node:os';
 import path from 'node:path';
 import test from 'node:test';
 import {
+  headlineCompanies,
   headlineFeeds,
   headlineFromFeedItem,
   headlineSafeForPublicSurface,
@@ -88,6 +89,23 @@ test('scoring keeps infrastructure companies and drops consumer and generic item
     'Arm wrestling with legacy code',
     '카카오, 신규 이모티콘 이벤트',
   ]) assert.ok(scoreHeadline(title).score < 3.5, title);
+});
+
+test('common words that share a tracked company name do not tag or admit a headline', () => {
+  for (const title of [
+    'SpaceX expands satellite constellation over Asia',
+    'OCI image spec 1.2 adds artifact support',
+    'Eaton fire lawsuit targets Southern California Edison',
+    'AI 비즈니스 인텔리전스 플랫폼 출시',
+    '메타버스 플랫폼에 AI 도입',
+  ]) {
+    const scored = scoreHeadline(title);
+    assert.ok(scored.score < 3.5, title);
+    assert.ok(!scored.companies.some((company) => ['Constellation Energy', 'Oracle', 'Intel', 'Meta'].includes(company.name)), title);
+  }
+  assert.deepEqual(headlineCompanies('인텔, 18A 공정 AI 칩 양산').map((company) => company.name), ['Intel']);
+  assert.deepEqual(headlineCompanies('메타, AI 데이터센터 증설').map((company) => company.name), ['Meta']);
+  assert.deepEqual(headlineCompanies('Constellation Energy signs nuclear PPA with Microsoft data centers').map((company) => company.name).sort(), ['Constellation Energy', 'Microsoft']);
 });
 
 test('selection removes cross-outlet duplicates, caps each publisher and lists newest first', () => {
