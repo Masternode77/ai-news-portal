@@ -61,7 +61,10 @@ per-source cap applies to the publication.
 Registry keys added on 2026-10-04: `article_path_prefix` limits a source to one
 slug under a section path (Epoch AI), `feed_format: epoch_html_index` reads a
 server-rendered section index instead of RSS (`scripts/lib/epoch-ai.mjs`), and
-`license_marker` names a licence statement every extracted page must show in
+`pool_max_age_days` gives a slow research source (Epoch AI: 21) a longer
+freshness window in the pool and in curation than the default
+`POOL_MAX_AGE_DAYS`, and `license_marker` names a licence statement every
+extracted page must show in
 its visible text (markup inside the statement, such as a linked licence name, is
 ignored; text in scripts, styles or comments never counts).
 

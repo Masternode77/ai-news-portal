@@ -66,13 +66,24 @@ export function epochArticleTarget(value = '') {
   return { url: `https://${EPOCH_HOST}${prefix}${match[2]}`, prefix, section: EPOCH_SECTIONS[prefix], slug: match[2] };
 }
 
-export function epochIndexLinks(html = '', prefix = '', limit = EPOCH_INDEX_ARTICLE_LIMIT) {
+// Section indexes list pinned older pieces before the newest ones. Each card
+// shows its date just before its link; when such a date is present and older
+// than the window, the link is skipped so the fetch budget goes to recent
+// work. Links without a readable listing date are kept (the article page's
+// own date is checked again later).
+export function epochIndexLinks(html = '', prefix = '', limit = EPOCH_INDEX_ARTICLE_LIMIT, { now = new Date(), maxAgeDays = 0 } = {}) {
   if (!EPOCH_SECTIONS[prefix]) return [];
+  const source = String(html || '');
+  const cutoff = maxAgeDays > 0 ? now.getTime() - maxAgeDays * 86_400_000 : Number.NEGATIVE_INFINITY;
   const links = [];
-  for (const match of String(html || '').matchAll(/href=["']([^"'#?]+)["']/gi)) {
+  let lastIndex = 0;
+  for (const match of source.matchAll(/href=["']([^"'#?]+)["']/gi)) {
     const raw = match[1].startsWith('/') ? `https://${EPOCH_HOST}${match[1]}` : match[1];
     const target = epochArticleTarget(raw);
     if (!target || target.prefix !== prefix || links.includes(target.url)) continue;
+    const listingDate = Date.parse(epochPublishedAt(source.slice(lastIndex, match.index).slice(-1500)) || '');
+    lastIndex = match.index + match[0].length;
+    if (Number.isFinite(listingDate) && listingDate < cutoff) continue;
     links.push(target.url);
     if (links.length >= limit) break;
   }
@@ -128,12 +139,12 @@ export function epochArticleSection(html = '', url = '') {
 
 // Builds rss-parser-shaped items for one Epoch section index. `fetchHtml`
 // returns the page text for a URL on epoch.ai; a failed article is skipped.
-export async function fetchEpochIndexItems(feed = {}, { fetchHtml, limit = EPOCH_INDEX_ARTICLE_LIMIT } = {}) {
+export async function fetchEpochIndexItems(feed = {}, { fetchHtml, limit = EPOCH_INDEX_ARTICLE_LIMIT, now = new Date(), maxAgeDays = 0 } = {}) {
   const prefix = feed.articlePathPrefix || '';
   if (!EPOCH_SECTIONS[prefix] || typeof fetchHtml !== 'function') return [];
   const index = await fetchHtml(feed.url);
   const items = [];
-  for (const link of epochIndexLinks(index, prefix, limit)) {
+  for (const link of epochIndexLinks(index, prefix, limit, { now, maxAgeDays })) {
     try {
       const metadata = epochArticleMetadata(await fetchHtml(link), link);
       if (!metadata) continue;
