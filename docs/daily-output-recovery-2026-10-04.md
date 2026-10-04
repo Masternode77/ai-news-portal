@@ -251,7 +251,8 @@ Follow-up:
   does not make: a share of NVIDIA's H100 shipments, "the first enforcement action in this
   cycle", and a history of Singapore, Thailand and the UAE in enforcement actions. They were
   removed or narrowed; the argument, attribution and figures are otherwise unchanged (1,627
-  words).
+  words). The authored quality contract was re-run on the corrected text with the engine's own
+  inputs, it still passes, and the stored metrics now describe the published copy.
 - The column's dedicated artwork is a ready `generate` job for the Mac's Codex task
   (`docs/mac-column-image-automation.md`). This cloud session has no native image tool, so the
   column keeps its current image until that task imports one.
