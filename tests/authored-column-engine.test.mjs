@@ -113,6 +113,7 @@ test('structured draft and revision pass the existing quality gates end to end',
       now: new Date('2026-10-04T09:00:00Z'),
       callModel: async request => {
         calls += 1;
+        assert.match(request.systemPrompt, /not evidence of an enacted permit condition/);
         if (calls === 1) return STANCE_JSON;
         assert.match(request.systemPrompt, /opening_paragraphs/);
         assert.match(request.systemPrompt, /uppercase letter/);
@@ -265,6 +266,8 @@ test('voice revision receives the verified numeric ledger and rejects invented w
           if (calls === 3 || calls === 4) {
             const payload = JSON.parse(request.userPrompt);
             assert.ok(payload.verified_claims.some(claim => claim.value === 200));
+            assert.equal(payload.evidence.source_text, `${fixtureArticle().title}\n${SOURCE_TEXT}`);
+            assert.match(request.systemPrompt, /Source fidelity contract/);
             assert.match(request.systemPrompt, /Correcting evidence failures takes priority/);
             assert.match(request.systemPrompt, /Remove unsupported numbers rather than spelling them out/);
           }

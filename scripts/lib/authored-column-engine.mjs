@@ -449,6 +449,7 @@ function personaSystemPrompt(charter) {
     'Standing analytical positions (argue from these when they genuinely apply, and say so):',
     positions,
     'Hard rules:',
+    '- Separate reported facts from analysis in the headline, deck, thesis and body. A proposal, rating, consultation or policy ambition is not evidence of an enacted permit condition, mandatory contract, deadline or capacity-recognition rule. Do not invent legal mechanisms. Mark unsupported future effects as conditional analysis, not obligations already in force. Standing positions and expert_insight are analytical context, not verified source facts.',
     ...charter.persona.honesty_rules.map((rule) => `- ${rule}`),
     ...charter.voice.dos.map((rule) => `- ${rule}`),
     ...charter.voice.donts.map((rule) => `- ${rule}`),
@@ -471,9 +472,10 @@ function evidencePayload(selection, ledger) {
       url: article.sourceUrl || article.url,
     })),
     facts: selection.evidencePack.facts,
+    source_text: sourceTextFor(selection),
     expert_insight: selection.article.expert_insight || selection.article.expertInsight || {},
-    // Only verified_primary claims: the unsupported-claim gate accepts
-    // exactly this set, so the model must never see numbers it cannot cite.
+    // The numeric gate accepts only verified_primary claims. Full source
+    // context preserves meaning and status, not permission to derive values.
     verified_claims: ledger.claims
       .filter((claim) => claim.verification_status === 'verified_primary')
       .map((claim) => ({ text: claim.claim_text, value: claim.numeric_value, unit: claim.unit, source: claim.source_name })),
@@ -540,7 +542,7 @@ async function draftPass({ charter, selection, ledger, stance, recentHeadings = 
   return parseModelEssay(content, { recoverFormat: true });
 }
 
-async function voicePass({ charter, draft, verifiedClaims = [], feedback = [], callModel }) {
+async function voicePass({ charter, draft, evidence, feedback = [], callModel }) {
   const content = await callModel({
     model: AUTHORED_COLUMN_MODEL,
     temperature: 0.4,
@@ -553,11 +555,12 @@ async function voicePass({ charter, draft, verifiedClaims = [], feedback = [], c
       'Tighten the prose toward the persona voice: varied sentence rhythm, concrete verbs, no throat-clearing, no corporate filler.',
       'Formatting contract: return exactly 4-6 section objects with at least one substantive paragraph each, and at least six substantive paragraphs in the complete essay. Prefer 2-6 words per heading. Each heading starts with an uppercase letter or digit, is under 87 characters, and uses ASCII letters, digits, spaces or &:/+- only; rephrase apostrophes, quotes and other unsupported punctuation. Each paragraph is a single unwrapped string with no newline or markdown symbols. Keep any unheaded opening in opening_paragraphs (an empty array is allowed). Do not return a body string; the publisher assembles the headings and paragraphs. Keep the draft\'s own headings (or sharpen them), never template headings like "On My Watchlist" or "Where I Could Be Wrong". Retain 1200-1800 total words and the full argument, not a summary.',
       'Numeric evidence contract: the draft is not an authority for numbers. Every retained numeric value and unit must appear in verified_claims with matching attribution; do not convert or derive values. Remove unsupported numbers rather than spelling them out, replacing them with synonyms, or inventing a citation. For forward-looking analysis use nonnumeric event-based observables instead of unsupported month counts or dates.',
+      'Source fidelity contract: use evidence.source_text to check nonnumeric claims too. Correct overstatement of legal status, causality or required actions in the headline and deck as well as the prose. A prior draft or thesis does not establish a fact. If the source does not establish a binding rule, remove the assertion or make the potential consequence explicitly conditional.',
       feedback.length
         ? `The previous version failed these checks — fix every one without weakening the argument: ${feedback.join(' | ')}`
         : 'Polish only; keep structure and headings.',
     ].join('\n'),
-    userPrompt: JSON.stringify({ ...draft, verified_claims: verifiedClaims }),
+    userPrompt: JSON.stringify({ ...draft, evidence, verified_claims: evidence.verified_claims }),
   });
   return parseModelEssay(content, { recoverFormat: true, requireSections: Boolean(draft.formatIssues?.length) });
 }
@@ -707,7 +710,7 @@ export async function generateAuthoredColumn({
       voiced = await voicePass({
         charter,
         draft: essay,
-        verifiedClaims: evidencePayload(selection, ledger).verified_claims,
+        evidence: evidencePayload(selection, ledger),
         feedback: [...verificationFeedback(quality?.reasons || []), ...formatFeedback],
         callModel,
       });
