@@ -526,7 +526,7 @@ async function publishExistingOnly({
   const imageBackfilled = await backfillLocalImages(signalMerged);
   const withExpertLens = await attachExpertLensToVisibleWindow(imageBackfilled, [], recentBlueprintIds);
   const templateChecked = applyTiersForPublication(applyAntiTemplateRewrite(withExpertLens, [...existingLatest, ...existingArchive]));
-  const { latest, supabaseStatus } = await syncArchiveArtifacts(templateChecked, existingArchive);
+  const { latest, archive: updatedArchive, supabaseStatus } = await syncArchiveArtifacts(templateChecked, existingArchive);
   await writeJsonFile(LATEST_NEWS_PATH, latest);
 
   state.dayPlans[todayKey] = updatePlanAfterRun(plan, processedItems, slot);
@@ -546,9 +546,11 @@ async function publishExistingOnly({
   });
   const authoredOutcome = await runAuthoredColumnStage({
     state,
-    candidates: columnCandidateRecords({ latest, pool, existingArchive, now, sources }),
+    // The archive this run just wrote, so items processed now into the
+    // archive lane reach column selection with their extraction artifacts.
+    candidates: columnCandidateRecords({ latest, pool, existingArchive: updatedArchive || existingArchive, now, sources }),
     pool,
-    recentRecords: [...latest, ...(existingArchive || [])],
+    recentRecords: [...latest, ...(updatedArchive || existingArchive || [])],
     now,
     sources,
   });
@@ -596,7 +598,7 @@ async function main() {
     const imageBackfilled = await backfillLocalImages(normalizedExisting);
     const withExpertLens = await attachExpertLensToVisibleWindow(imageBackfilled, [], recentBlueprintIds);
     const templateChecked = applyTiersForPublication(applyAntiTemplateRewrite(withExpertLens, [...existingLatest, ...existingArchive]));
-    const { latest, supabaseStatus } = await syncArchiveArtifacts(templateChecked, existingArchive);
+    const { latest, archive: updatedArchive, supabaseStatus } = await syncArchiveArtifacts(templateChecked, existingArchive);
     await writeJsonFile(LATEST_NEWS_PATH, latest);
 
     state.dayPlans[todayKey] = {
@@ -615,9 +617,9 @@ async function main() {
     });
     const authoredOutcome = await runAuthoredColumnStage({
       state,
-      candidates: columnCandidateRecords({ latest, pool, existingArchive, now, sources }),
+      candidates: columnCandidateRecords({ latest, pool, existingArchive: updatedArchive || existingArchive, now, sources }),
       pool,
-      recentRecords: [...latest, ...(existingArchive || [])],
+      recentRecords: [...latest, ...(updatedArchive || existingArchive || [])],
       now,
       sources,
     });
@@ -718,7 +720,7 @@ async function main() {
 
   logRepetitionBlockedArticles(repetitionBlocked);
 
-  const { latest, supabaseStatus } = await syncArchiveArtifacts(repetitionChecked, existingArchive);
+  const { latest, archive: updatedArchive, supabaseStatus } = await syncArchiveArtifacts(repetitionChecked, existingArchive);
 
   await writeJsonFile(LATEST_NEWS_PATH, latest);
 
@@ -744,9 +746,9 @@ async function main() {
   });
   const authoredOutcome = await runAuthoredColumnStage({
     state,
-    candidates: columnCandidateRecords({ latest: [...repetitionPassed, ...latest], pool, existingArchive, now, sources }),
+    candidates: columnCandidateRecords({ latest: [...repetitionPassed, ...latest], pool, existingArchive: updatedArchive || existingArchive, now, sources }),
     pool,
-    recentRecords: [...latest, ...(existingArchive || [])],
+    recentRecords: [...latest, ...(updatedArchive || existingArchive || [])],
     now,
     sources,
   });

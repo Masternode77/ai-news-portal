@@ -82,3 +82,12 @@ test('column candidates prefer the processed record over the raw pool copy, insi
   const tooOld = { ...processed, id: 'old', publishedAt: new Date(NOW.getTime() - 30 * 86_400_000).toISOString() };
   assert.equal(columnCandidateRecords({ latest: [], pool: [], existingArchive: [tooOld], now: NOW, sources: loadSourceRegistrySync() }).length, 0);
 });
+
+test('every column stage call reads the archive written in the same run', async () => {
+  const fs = await import('node:fs/promises');
+  const source = await fs.readFile('scripts/pipeline.mjs', 'utf8');
+  const calls = [...source.matchAll(/columnCandidateRecords\(\{[^}]*\}\)/g)].map((match) => match[0]);
+  assert.equal(calls.length, 3);
+  for (const call of calls) assert.match(call, /existingArchive: updatedArchive \|\| existingArchive/);
+  assert.equal((source.match(/archive: updatedArchive/g) || []).length, 3, 'each syncArchiveArtifacts call keeps its returned archive');
+});
