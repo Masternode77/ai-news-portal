@@ -1,4 +1,5 @@
 import {
+  boilerplateSentence,
   compact,
   extractCompanies,
   extractNumericClaims,
@@ -48,7 +49,7 @@ function claimRowsFor(text, item) {
 function headlineSentence(item = {}) {
   const headline = sentence(stripHtml(String(item.title || '')));
   if (headline.length < 12 || headline.length > 320) return '';
-  return /(copyright|privacy policy|terms of use|newsletter|advertisement)/i.test(headline) ? '' : headline;
+  return boilerplateSentence(headline) ? '' : headline;
 }
 
 export function extractClaimsFromCluster(cluster = {}) {

@@ -86,3 +86,17 @@ test('a headline repeated by a body sentence beyond the claim budget is still ke
   assert.ok(result.claims.filter((claim) => claim.claim_text !== `${headline}.`).length <= 18, 'body claims stay within the budget');
   assert.ok(result.claims.some((claim) => claim.numeric_value === 700), 'the headline claim survives');
 });
+
+test('a boilerplate headline yields no claim', () => {
+  const result = buildClaimLedger({
+    cluster_id: 'sig_boilerplate',
+    representative_source: {
+      title: 'Want more data center reporting for 30 days',
+      cleaned_text: 'The operator filed its interconnection request with the regional utility on Monday afternoon.',
+      source_url: 'https://example.com/boilerplate',
+      source_name: 'Example Source',
+      source_published_at: '2026-10-01T00:00:00Z',
+    },
+  }, 'article_boilerplate');
+  assert.ok(!result.claims.some((claim) => claim.numeric_value === 30));
+});

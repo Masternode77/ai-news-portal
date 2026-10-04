@@ -868,6 +868,29 @@ test('two figures early in one sentence without a comma still get their own labe
   assert.equal(financing.label, 'secured $10 million in construction financing for the campus expansion this month');
 });
 
+test('a between-and range keeps both endpoints in each figure label', () => {
+  const ledger = buildClaimLedger({
+    cluster_id: 'authored_range',
+    representative_source: {
+      source_url: 'https://example.com/range',
+      source_name: 'Example Utility',
+      title: 'Utility sets the campus capacity range for the data center',
+      cleaned_text: 'The utility will add capacity between 10 MW and 20 MW for the data center campus over two construction phases.',
+    },
+    supporting_sources: [],
+  }, 'range');
+  const claims = numericLedgerClaims(ledger);
+  const indexOf = (value) => claims.findIndex((claim) => claim.numeric_value === value && claim.unit === 'MW');
+  const result = buildColumnFigures({
+    ledger,
+    stance: { angle: 'The utility capacity range for the data center campus' },
+    headline: 'The utility capacity range sets the data center campus schedule',
+    sectionCount: 6,
+    modelSpec: [{ type: 'stat-row', title: 'The campus capacity range', claim_indexes: [indexOf(10), indexOf(20)], anchor: 1 }],
+  });
+  for (const item of result.figures[0].items) assert.match(item.label, /between 10 MW and 20 MW/);
+});
+
 test('buildColumnFigures honors a valid model spec and rejects invalid ones', () => {
   const ledger = fixtureLedger();
   const headline = 'The Dakota Grid Deal Is A Utility Execution Story Now';

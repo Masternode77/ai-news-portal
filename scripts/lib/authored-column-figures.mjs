@@ -206,7 +206,9 @@ function segmentAround(text, index, breaker) {
 function ownClauseLabel(claim, decoded) {
   const outer = segmentAround(decoded, claim.figure_index, CLAUSE_BREAK);
   let clause = decoded.slice(outer.start, outer.end);
-  if (extractFigureNumbers(clause).length > 1) {
+  // "between 10 MW and 20 MW" is one range: its "and" is never a clause
+  // break, and such a clause falls back to the usual label.
+  if (extractFigureNumbers(clause).length > 1 && !/\bbetween\b/i.test(clause)) {
     const inner = segmentAround(clause, claim.figure_index - outer.start, CONJUNCTION_BREAK);
     clause = clause.slice(inner.start, inner.end);
   }
