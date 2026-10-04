@@ -56,3 +56,38 @@ test('candidates are fresh first, then older items within the week, and never ol
   const published = rollingCandidates(pool, { publishedIds: ['fresh'] }, null, NOW).map((item) => item.id);
   assert.deepEqual(published, ['three-days']);
 });
+
+test('column candidates prefer the processed record over the raw pool copy, inside the anchor horizon', async () => {
+  const { columnCandidateRecords } = await import('../scripts/pipeline.mjs');
+  const { loadSourceRegistrySync } = await import('../scripts/lib/source-registry.mjs');
+  const publishedAt = new Date(NOW.getTime() - 17 * 86_400_000).toISOString();
+  const raw = {
+    id: 'epoch-smuggling', sourceRegistryId: 'epoch-ai-data-insights', source: 'Epoch AI',
+    url: 'https://epoch.ai/data-insights/malaysia-china-chip-smuggling', title: 'Trade data consistent with chips smuggled to China via Malaysia',
+    publishedAt, infrastructure_relevance_score: 0.16, ai_topic_score: 0.18, pool_max_age_days: 21,
+  };
+  const processed = {
+    ...raw,
+    sourceUrl: raw.url,
+    infrastructure_relevance_score: 0.281,
+    ai_topic_score: 0.6,
+    cleaned_source_text: 'China recorded server imports from Malaysia at AI server prices well above the matching Malaysian exports.',
+    extraction_artifact: { source_url: raw.url, cleaned_extracted_text: 'China recorded server imports from Malaysia.' },
+    archiveOnly: true,
+  };
+  const [candidate] = columnCandidateRecords({ latest: [], pool: [raw], existingArchive: [processed], now: NOW, sources: loadSourceRegistrySync() });
+  assert.equal(candidate.ai_topic_score, 0.6, 'post-extraction scores win over fetch-time scores');
+  assert.ok(candidate.extraction_artifact, 'the extraction artifact is kept');
+
+  const tooOld = { ...processed, id: 'old', publishedAt: new Date(NOW.getTime() - 30 * 86_400_000).toISOString() };
+  assert.equal(columnCandidateRecords({ latest: [], pool: [], existingArchive: [tooOld], now: NOW, sources: loadSourceRegistrySync() }).length, 0);
+});
+
+test('every column stage call reads the archive written in the same run', async () => {
+  const fs = await import('node:fs/promises');
+  const source = await fs.readFile('scripts/pipeline.mjs', 'utf8');
+  const calls = [...source.matchAll(/columnCandidateRecords\(\{[^}]*\}\)/g)].map((match) => match[0]);
+  assert.equal(calls.length, 3);
+  for (const call of calls) assert.match(call, /existingArchive: updatedArchive \|\| existingArchive/);
+  assert.equal((source.match(/archive: updatedArchive/g) || []).length, 3, 'each syncArchiveArtifacts call keeps its returned archive');
+});

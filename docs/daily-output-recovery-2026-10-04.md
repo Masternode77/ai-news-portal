@@ -145,6 +145,21 @@ anchor limit, so weekly research stays eligible for the pool and curation for th
 Data Insights index pins older pieces above the newest ones, so link selection reads each card's
 listing date and skips pinned items outside that window.
 
+## Second live run (Update News `37222384303`, release v0.0.34)
+
+- Four Epoch AI Data Insights entered the pool through the 21-day window. The wire processed
+  three of them, all archive-only on infrastructure relevance.
+- The column stage still found no qualifying story. The processed Epoch records were invisible
+  to it: `columnCandidateRecords()` kept archive records for 14 days by source date and let the
+  raw pool copy of the same item win the merge, so the selector saw fetch-time scores and no
+  extraction artifact.
+
+Follow-up: archive records now stay candidates for the 21-day anchor horizon, and processed
+surface and archive records take precedence over the raw pool copy. A read-only replay on the
+committed data then finds one qualifying anchor, Epoch AI's "Trade data consistent with $3B of
+chips smuggled to China via Malaysia", while the benchmark leaderboard and the AI-adoption
+survey stay excluded (no compute anchor, relevance 0.44).
+
 ## Configuration
 
 | Variable | Default |

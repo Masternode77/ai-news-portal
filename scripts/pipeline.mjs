@@ -39,7 +39,7 @@ import {
 } from './lib/state-store.mjs';
 import { stableArticleId, truncate } from './lib/normalize.mjs';
 import { loadSourceRegistry, loadSourceRegistrySync, textAuthorizedRecords } from './lib/source-registry.mjs';
-import { generateAuthoredColumn } from './lib/authored-column-engine.mjs';
+import { generateAuthoredColumn, MAX_ANCHOR_AGE_DAYS } from './lib/authored-column-engine.mjs';
 import { generateArticleImageSet, metadataPatchFromImageSet } from './lib/image2-provider.mjs';
 import { appendAuthoredColumn, readAuthoredColumns } from './lib/authored-column-store.mjs';
 import { llmUsageSummary } from './lib/llm-budget.mjs';
@@ -173,10 +173,11 @@ export function authorizedTextFallbackPool(records = [], sources = [], now = new
 }
 
 // Column candidates span the whole recent corpus, not just the 30-item
-// public surface: the fetched pool plus anything archived in the last two
-// weeks. The surface alone ran dry once every story on it had a column.
+// public surface: the fetched pool plus anything archived inside the column
+// anchor horizon. The surface alone ran dry once every story on it had a
+// column.
 export function columnCandidateRecords({ latest = [], pool = [], existingArchive = [], now = new Date(), sources } = {}) {
-  const archiveCutoff = now.getTime() - 14 * 86_400_000;
+  const archiveCutoff = now.getTime() - MAX_ANCHOR_AGE_DAYS * 86_400_000;
   const recentArchive = (existingArchive || []).filter((article) => {
     const stamp = new Date(article?.analysisPublishedAt || article?.publishedAt || 0).getTime();
     return Number.isFinite(stamp) && stamp >= archiveCutoff;
@@ -185,7 +186,10 @@ export function columnCandidateRecords({ latest = [], pool = [], existingArchive
   // docket guard; re-stamp and demote them so an abstract-only record or a
   // procedural notice is recognised before column selection.
   const registry = Array.isArray(sources) ? sources : loadSourceRegistrySync();
-  return refreshCachedRelevance(dedupeById([...(latest || []), ...(pool || []), ...recentArchive]), registry);
+  // Processed records (surface and archive) carry the extraction artifact and
+  // post-extraction relevance; they take precedence over the raw pool copy of
+  // the same item, which only adds stories the wire has not processed yet.
+  return refreshCachedRelevance(dedupeById([...(latest || []), ...recentArchive, ...(pool || [])]), registry);
 }
 
 async function loadPoolWithFallback(existingLatest, sources) {
@@ -522,7 +526,7 @@ async function publishExistingOnly({
   const imageBackfilled = await backfillLocalImages(signalMerged);
   const withExpertLens = await attachExpertLensToVisibleWindow(imageBackfilled, [], recentBlueprintIds);
   const templateChecked = applyTiersForPublication(applyAntiTemplateRewrite(withExpertLens, [...existingLatest, ...existingArchive]));
-  const { latest, supabaseStatus } = await syncArchiveArtifacts(templateChecked, existingArchive);
+  const { latest, archive: updatedArchive, supabaseStatus } = await syncArchiveArtifacts(templateChecked, existingArchive);
   await writeJsonFile(LATEST_NEWS_PATH, latest);
 
   state.dayPlans[todayKey] = updatePlanAfterRun(plan, processedItems, slot);
@@ -542,9 +546,11 @@ async function publishExistingOnly({
   });
   const authoredOutcome = await runAuthoredColumnStage({
     state,
-    candidates: columnCandidateRecords({ latest, pool, existingArchive, now, sources }),
+    // The archive this run just wrote, so items processed now into the
+    // archive lane reach column selection with their extraction artifacts.
+    candidates: columnCandidateRecords({ latest, pool, existingArchive: updatedArchive || existingArchive, now, sources }),
     pool,
-    recentRecords: [...latest, ...(existingArchive || [])],
+    recentRecords: [...latest, ...(updatedArchive || existingArchive || [])],
     now,
     sources,
   });
@@ -592,7 +598,7 @@ async function main() {
     const imageBackfilled = await backfillLocalImages(normalizedExisting);
     const withExpertLens = await attachExpertLensToVisibleWindow(imageBackfilled, [], recentBlueprintIds);
     const templateChecked = applyTiersForPublication(applyAntiTemplateRewrite(withExpertLens, [...existingLatest, ...existingArchive]));
-    const { latest, supabaseStatus } = await syncArchiveArtifacts(templateChecked, existingArchive);
+    const { latest, archive: updatedArchive, supabaseStatus } = await syncArchiveArtifacts(templateChecked, existingArchive);
     await writeJsonFile(LATEST_NEWS_PATH, latest);
 
     state.dayPlans[todayKey] = {
@@ -611,9 +617,9 @@ async function main() {
     });
     const authoredOutcome = await runAuthoredColumnStage({
       state,
-      candidates: columnCandidateRecords({ latest, pool, existingArchive, now, sources }),
+      candidates: columnCandidateRecords({ latest, pool, existingArchive: updatedArchive || existingArchive, now, sources }),
       pool,
-      recentRecords: [...latest, ...(existingArchive || [])],
+      recentRecords: [...latest, ...(updatedArchive || existingArchive || [])],
       now,
       sources,
     });
@@ -714,7 +720,7 @@ async function main() {
 
   logRepetitionBlockedArticles(repetitionBlocked);
 
-  const { latest, supabaseStatus } = await syncArchiveArtifacts(repetitionChecked, existingArchive);
+  const { latest, archive: updatedArchive, supabaseStatus } = await syncArchiveArtifacts(repetitionChecked, existingArchive);
 
   await writeJsonFile(LATEST_NEWS_PATH, latest);
 
@@ -740,9 +746,9 @@ async function main() {
   });
   const authoredOutcome = await runAuthoredColumnStage({
     state,
-    candidates: columnCandidateRecords({ latest: [...repetitionPassed, ...latest], pool, existingArchive, now, sources }),
+    candidates: columnCandidateRecords({ latest: [...repetitionPassed, ...latest], pool, existingArchive: updatedArchive || existingArchive, now, sources }),
     pool,
-    recentRecords: [...latest, ...(existingArchive || [])],
+    recentRecords: [...latest, ...(updatedArchive || existingArchive || [])],
     now,
     sources,
   });
