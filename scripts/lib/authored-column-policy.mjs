@@ -1,10 +1,10 @@
 // Quality contract for The Current — the authored analyst column.
 //
-// Columns bypass the source-extraction gates (they are original essays, not
-// extracted articles), so this policy must be at least as rigorous as the
-// composite gate that governs source-derived longform. Every check reuses an
-// existing guard module where one exists. There is deliberately no fallback:
-// a column that fails here is not published.
+// Column selection separately requires source text to pass the fail-closed
+// long-form extraction gate. This policy governs the generated essay and must
+// remain at least as rigorous as the composite source-derived long-form gate.
+// Every check reuses an existing guard module where one exists. There is
+// deliberately no fallback: a column that fails here is not published.
 import { bannedPhraseMatches } from './banned-phrases.mjs';
 import { guardPublicCopy } from './copy-quality-guard.mjs';
 import { guardPublicTemplatePhrases } from './public-template-phrase-guard.mjs';

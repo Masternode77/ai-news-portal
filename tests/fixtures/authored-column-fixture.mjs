@@ -4,6 +4,11 @@ const SOURCE_TEXT = [
   'The developer told Grid Journal the project carries a 3 billion dollar budget and an energization date in late 2027.',
   'Utility filings show the interconnection queue position was granted after a two-year wait, and the first 40 MW phase is already contracted to a cloud tenant.',
   'Northline also said liquid cooling will be required for the second phase because rack densities keep climbing.',
+  'The filing assigns substation construction to the regional utility and requires the developer to complete its on-site distribution equipment before commissioning can begin.',
+  'Grid Journal reported that long-lead transformers have been reserved, while the final protection study and utility acceptance tests remain on the delivery schedule.',
+  'The first-phase lease ties customer occupancy to energization milestones rather than the announcement date, leaving the developer exposed if utility work slips.',
+  'Local permitting records identify Northline Power as the campus developer and describe the project as a data-center facility rather than a general industrial load.',
+  'The source does not claim the full campus is energized today; it distinguishes contracted capacity, construction milestones, and the later operating target.',
 ].join(' ');
 
 const CLOSING_HEADING = 'Signals That Settle the Dakota Bet';
@@ -11,9 +16,24 @@ const COUNTER_HEADING = 'The Case for the Utility Delivering';
 
 export { SOURCE_TEXT, CLOSING_HEADING, COUNTER_HEADING };
 
+export const FIXTURE_SOURCE = {
+  id: 'grid-journal',
+  name: 'Grid Journal',
+  domain: 'example.com',
+  feed: 'https://example.com/feed',
+  status: 'active_feed',
+  text_use_basis: 'licensed',
+  image_use_basis: 'unreviewed',
+  terms_url: 'https://example.com/terms',
+  reviewed_at: '2026-01-01',
+  allow_text_use: true,
+  allow_image_reuse: false,
+};
+
 export function fixtureArticle(overrides = {}) {
   return {
     id: 'wire-001',
+    sourceRegistryId: FIXTURE_SOURCE.id,
     title: 'Northline Power lands 200 MW grid deal for Dakota AI campus',
     source: 'Grid Journal',
     sourceUrl: 'https://example.com/northline-dakota',
@@ -36,6 +56,13 @@ export function fixtureArticle(overrides = {}) {
       timing_dependency: 'substation completion before late 2027',
       counterargument: 'the queue position may slip if utility work is delayed',
       next_observable_signal: 'substation construction milestones',
+      expert_insight_complete: true,
+      expert_insight_missing_fields: [],
+    },
+    extraction_qa: {
+      public_publishable: true,
+      can_generate_longform: true,
+      block_reasons: [],
     },
     cleaned_source_text: SOURCE_TEXT,
     articleText: SOURCE_TEXT,

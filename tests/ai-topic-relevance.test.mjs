@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import test from 'node:test';
 import { classifyAiTopicRelevance, classifyInfrastructureRelevance } from '../scripts/lib/relevance-classifier.mjs';
 import { columnStoryRelevance, selectColumnStory } from '../scripts/lib/authored-column-engine.mjs';
-import { fixtureArticle } from './fixtures/authored-column-fixture.mjs';
+import { FIXTURE_SOURCE, fixtureArticle } from './fixtures/authored-column-fixture.mjs';
 
 const modelLaunch = {
   title: 'OpenAI releases GPT-5.6 Sol with a 2 million token context window',
@@ -46,13 +46,13 @@ test('the column selector accepts an AI-lane story that clears the floor on that
     ai_topic_score: 0.9,
   });
   assert.equal(columnStoryRelevance(aiStory), 0.9);
-  const selected = selectColumnStory({ candidates: [aiStory], pool: [] });
+  const selected = selectColumnStory({ candidates: [aiStory], pool: [], sources: [FIXTURE_SOURCE] });
   assert.equal(selected?.article?.id, 'ai-001');
 });
 
 test('the column selector still rejects a story weak on both lanes', () => {
   const weak = fixtureArticle({ id: 'weak', infrastructure_relevance_score: 0.5, ai_topic_score: 0.4 });
-  assert.equal(selectColumnStory({ candidates: [weak], pool: [] }), null);
+  assert.equal(selectColumnStory({ candidates: [weak], pool: [], sources: [FIXTURE_SOURCE] }), null);
 });
 
 test('columnStoryRelevance derives the AI lane when a record predates the field', () => {

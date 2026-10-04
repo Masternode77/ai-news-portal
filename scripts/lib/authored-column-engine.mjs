@@ -33,11 +33,26 @@ import {
 import { isHeading, headingSequence } from './visible-body-length.mjs';
 import { buildColumnFigures } from './authored-column-figures.mjs';
 import { classifyAiTopicRelevance } from './relevance-classifier.mjs';
-import { abstractOnlyTextScope } from './source-registry.mjs';
+import { abstractOnlyTextScope, sourceUsageDecision } from './source-registry.mjs';
+import { sourceExtractionPassesLongformGate } from './source-extraction-fail-closed.mjs';
+import { validateExtractionArtifact } from './extraction-artifact.mjs';
 
 const CHARTER_RELATIVE_PATH = 'config/editorial/persona-charter.json';
 const STORY_KEY_WINDOW_HOURS = 72;
 const MIN_STORY_RELEVANCE = 0.75;
+const POLICY_ACTOR_PATTERN = /\b(?:commission|department|agency|authority|administration|ministry|parliament|congress|regulator|council|government|bureau|office)\b/i;
+const POLICY_CONTEXT_PATTERN = /\b(?:policy|regulation|regulatory|government|permitting|siting)\b/i;
+const SELECTION_REJECTION_KEYS = [
+  'invalid_identity',
+  'text_rights_unauthorized',
+  'abstract_only',
+  'extraction_ineligible',
+  'expert_insight_incomplete',
+  'relevance_below_threshold',
+  'already_covered',
+  'unclean_evidence',
+  'insufficient_facts',
+];
 
 // A column can argue either lane: an infrastructure story or an AI story
 // (frontier models, labs, policy, security, compute demand) read through
@@ -58,6 +73,85 @@ const MIN_STORY_FACTS = 4;
 // records predate the stamped field, so the registry row is consulted too.
 export function abstractOnlySource(article = {}, sources = []) {
   return abstractOnlyTextScope(article, sources);
+}
+
+function columnSourceText(article = {}) {
+  return article.extraction_artifact?.cleaned_extracted_text
+    || article.cleaned_source_text
+    || article.articleText
+    || article.contentText
+    || '';
+}
+
+function strictExtractionQaPasses(qa) {
+  return Boolean(qa)
+    && typeof qa === 'object'
+    && !Array.isArray(qa)
+    && qa.public_publishable === true
+    && qa.can_generate_longform === true
+    && Array.isArray(qa.block_reasons)
+    && qa.block_reasons.length === 0;
+}
+
+export function columnSourceLongformEligible(article = {}) {
+  if (article.extraction_artifact && !validateExtractionArtifact(article.extraction_artifact).ok) return false;
+  if (article.extraction_qa?.extraction_failure_reason) return false;
+  const qaEntries = [];
+  if (Object.hasOwn(article, 'extraction_qa')) qaEntries.push(article.extraction_qa);
+  if (article.extraction_artifact && Object.hasOwn(article.extraction_artifact, 'extraction_qa')) {
+    qaEntries.push(article.extraction_artifact.extraction_qa);
+  }
+  if (!qaEntries.length || !qaEntries.every(strictExtractionQaPasses)) return false;
+  return sourceExtractionPassesLongformGate({
+    ...article,
+    rawText: columnSourceText(article),
+  }).ok;
+}
+
+function articleExpertInsight(article = {}) {
+  return article.expert_insight || article.expertInsight || {};
+}
+
+function buildColumnEvidencePack(article = {}) {
+  return buildEvidencePack({
+    ...article,
+    cleaned_source_text: columnSourceText(article),
+    source_evidence_text: '',
+    articleText: '',
+    contentText: '',
+    fullArticleText: '',
+    summary: '',
+    snippet: '',
+  });
+}
+
+function namedPolicyActor(article = {}, evidencePack = {}) {
+  const policyContext = [
+    article.article_type,
+    article.primary_category,
+    article.secondary_category,
+    article.category,
+    article.infrastructure_layer,
+  ].filter(Boolean).join(' ');
+  if (!POLICY_CONTEXT_PATTERN.test(policyContext)) return '';
+
+  const evidenceText = String(evidencePack.evidenceText || columnSourceText(article));
+  const candidates = [article.source, ...(evidencePack.namedActors || [])]
+    .map((value) => String(value || '').trim())
+    .filter((value) => value.length >= 6 && POLICY_ACTOR_PATTERN.test(value));
+  return candidates.find((actor) => actor === article.source || evidenceText.toLowerCase().includes(actor.toLowerCase())) || '';
+}
+
+export function authoredInsightEligible(article = {}, evidencePack = buildColumnEvidencePack(article)) {
+  const insight = articleExpertInsight(article);
+  if (article.expert_insight_complete === true || insight.expert_insight_complete === true) return true;
+  const missing = Array.isArray(insight.expert_insight_missing_fields)
+    ? insight.expert_insight_missing_fields
+    : article.expert_insight_missing_fields;
+  return Array.isArray(missing)
+    && missing.length === 1
+    && missing[0] === 'named_companies'
+    && Boolean(namedPolicyActor(article, evidencePack));
 }
 
 // Resolves from the working directory first (the pipeline, Astro build, and
@@ -211,28 +305,61 @@ function frequencyCheck(authored, now, { force = false } = {}) {
 // Pass 0 — deterministic story selection. No LLM: relevance x evidence depth
 // x corroboration x freshness, with a hard floor so weak news never earns a
 // column. Returning null here is a normal outcome, not a failure.
-export function selectColumnStory({ candidates = [], pool = [], excludedStoryKeys = new Set(), now = new Date(), sources = [] } = {}) {
-  const scored = candidates
-    .filter((article) => article?.id && article.title)
-    .filter((article) => !abstractOnlySource(article, sources))
-    .filter((article) => article.expert_insight_complete === true || article.expert_insight?.expert_insight_complete === true)
-    .filter((article) => columnStoryRelevance(article) >= MIN_STORY_RELEVANCE)
-    .filter((article) => !excludedStoryKeys.has(storyKeyFor(article)))
-    .map((article) => {
-      const evidencePack = buildEvidencePack(article);
-      if ((evidencePack.facts?.length || 0) < MIN_STORY_FACTS) return null;
-      const corroborating = findCorroboratingSources(article, pool).slice(0, 2);
-      const ageHours = Math.max(1, (now.getTime() - articleDateMs(article)) / 3_600_000);
-      const freshness = Math.max(0.25, Math.min(1, 30 / ageHours));
-      const score = columnStoryRelevance(article)
-        * Math.min(evidencePack.facts.length, 10)
-        * (1 + 0.25 * corroborating.length)
-        * freshness;
-      return { article, evidencePack, corroborating, score };
-    })
-    .filter(Boolean)
-    .sort((a, b) => b.score - a.score);
-  return scored[0] || null;
+export function selectColumnStoryWithDiagnostics({ candidates = [], pool = [], excludedStoryKeys = new Set(), now = new Date(), sources = [] } = {}) {
+  const counts = Object.fromEntries([...SELECTION_REJECTION_KEYS, 'qualifying'].map((key) => [key, 0]));
+  const scored = [];
+
+  for (const article of candidates) {
+    let rejection = '';
+    let evidencePack = null;
+    if (!article?.id || !article.title) rejection = 'invalid_identity';
+    else if (!sourceUsageDecision(article, sources, 'text', now).authorized) rejection = 'text_rights_unauthorized';
+    else if (abstractOnlySource(article, sources)) rejection = 'abstract_only';
+    else if (!columnSourceLongformEligible(article)) rejection = 'extraction_ineligible';
+    else {
+      evidencePack = buildColumnEvidencePack(article);
+      if (!authoredInsightEligible(article, evidencePack)) rejection = 'expert_insight_incomplete';
+      else if (columnStoryRelevance(article) < MIN_STORY_RELEVANCE) rejection = 'relevance_below_threshold';
+      else if (excludedStoryKeys.has(storyKeyFor(article))) rejection = 'already_covered';
+      else if (!evidencePack.ok) rejection = 'unclean_evidence';
+      else if ((evidencePack.facts?.length || 0) < MIN_STORY_FACTS) rejection = 'insufficient_facts';
+    }
+
+    if (rejection) {
+      counts[rejection] += 1;
+      continue;
+    }
+
+    counts.qualifying += 1;
+    const corroborating = findCorroboratingSources(article, pool)
+      .filter((candidate) => sourceUsageDecision(candidate, sources, 'text', now).authorized)
+      .filter((candidate) => !abstractOnlySource(candidate, sources))
+      .filter(columnSourceLongformEligible)
+      .filter((candidate) => buildColumnEvidencePack(candidate).ok)
+      .slice(0, 2);
+    const ageHours = Math.max(1, (now.getTime() - articleDateMs(article)) / 3_600_000);
+    const freshness = Math.max(0.25, Math.min(1, 30 / ageHours));
+    const score = columnStoryRelevance(article)
+      * Math.min(evidencePack.facts.length, 10)
+      * (1 + 0.25 * corroborating.length)
+      * freshness;
+    scored.push({ article, evidencePack, corroborating, score });
+  }
+
+  scored.sort((a, b) => b.score - a.score);
+  const selection = scored[0] || null;
+  return {
+    selection,
+    diagnostics: {
+      total_candidates: candidates.length,
+      counts,
+      selected_id: selection?.article?.id || null,
+    },
+  };
+}
+
+export function selectColumnStory(options = {}) {
+  return selectColumnStoryWithDiagnostics(options).selection;
 }
 
 function clusterFor(selection) {
@@ -241,7 +368,7 @@ function clusterFor(selection) {
     source_name: article.source || '',
     source_published_at: article.publishedAt || '',
     title: article.title || '',
-    cleaned_text: article.cleaned_source_text || article.articleText || article.contentText || article.snippet || '',
+    cleaned_text: columnSourceText(article),
   });
   return {
     cluster_id: `authored_${selection.article.id}`,
@@ -252,7 +379,7 @@ function clusterFor(selection) {
 
 function sourceTextFor(selection) {
   return [selection.article, ...selection.corroborating]
-    .map((article) => [article.title, article.cleaned_source_text || article.articleText || article.contentText || article.snippet].filter(Boolean).join('\n'))
+    .map((article) => [article.title, columnSourceText(article)].filter(Boolean).join('\n'))
     .join('\n\n');
 }
 
@@ -479,8 +606,15 @@ export async function generateAuthoredColumn({
   }
 
   const charter = loadPersonaCharter();
-  const selection = selectColumnStory({ candidates, pool, excludedStoryKeys: excluded, now, sources });
-  if (!selection) return { column: null, skipReason: 'no_qualifying_story' };
+  const selectionResult = selectColumnStoryWithDiagnostics({ candidates, pool, excludedStoryKeys: excluded, now, sources });
+  const { selection, diagnostics: selectionDiagnostics } = selectionResult;
+  authored.lastSelection = {
+    at: now.toISOString(),
+    outcome: selection ? 'selected' : 'no_qualifying_story',
+    selectedId: selection?.article?.id || null,
+    diagnostics: selectionDiagnostics,
+  };
+  if (!selection) return { column: null, skipReason: 'no_qualifying_story', selectionDiagnostics };
 
   const ledger = buildClaimLedger(clusterFor(selection), selection.article.id);
   const sourceText = sourceTextFor(selection);
@@ -491,7 +625,7 @@ export async function generateAuthoredColumn({
 
   const failWith = (stage, detail) => {
     authored.lastFailure = { at: now.toISOString(), stage, detail };
-    return { column: null, failure: `${stage}:${detail}` };
+    return { column: null, failure: `${stage}:${detail}`, selectionDiagnostics };
   };
 
   let stance;
@@ -576,5 +710,5 @@ export async function generateAuthoredColumn({
   authored.recentStoryKeys = [...(authored.recentStoryKeys || []), { key: column.story_key, at: now.toISOString() }].slice(-30);
   authored.lastFailure = null;
 
-  return { column };
+  return { column, selectionDiagnostics };
 }

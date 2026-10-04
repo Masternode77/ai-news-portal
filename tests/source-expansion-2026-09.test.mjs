@@ -22,7 +22,7 @@ import { createExtractionArtifact } from '../scripts/lib/extraction-artifact.mjs
 import { applyPublicRouting, routeStrictInfrastructureRelevance } from '../scripts/lib/strict-infrastructure-relevance-router.mjs';
 import { canGenerateFullArticle } from '../scripts/lib/editorial-story-engine-v2.mjs';
 import { abstractOnlyTextScope } from '../scripts/lib/source-registry.mjs';
-import { fixtureArticle } from './fixtures/authored-column-fixture.mjs';
+import { FIXTURE_SOURCE, fixtureArticle } from './fixtures/authored-column-fixture.mjs';
 import { classifyInfrastructureRelevance, proceduralDocketWithoutComputeContext } from '../scripts/lib/relevance-classifier.mjs';
 import { applyPublicContentTier } from '../scripts/lib/public-content-tier-router.mjs';
 import { ecPresscornerApiTarget, fetchArticleExtraction } from '../scripts/lib/source-fetch.mjs';
@@ -238,8 +238,8 @@ test('an abstract-only record can never anchor an authored column', () => {
   assert.equal(abstractOnlySource(fixtureArticle()), false);
 
   // Then: it is refused as the primary source, while a full document still wins.
-  assert.equal(selectColumnStory({ candidates: [abstractOnly], pool: [] }), null);
-  const selected = selectColumnStory({ candidates: [abstractOnly, fixtureArticle()], pool: [abstractOnly] });
+  assert.equal(selectColumnStory({ candidates: [abstractOnly], pool: [], sources: [FIXTURE_SOURCE] }), null);
+  const selected = selectColumnStory({ candidates: [abstractOnly, fixtureArticle()], pool: [abstractOnly], sources: [FIXTURE_SOURCE] });
   assert.equal(selected?.article?.id, 'wire-001');
 
   // And: a legacy record without the stamped field is recognised through its registry row,

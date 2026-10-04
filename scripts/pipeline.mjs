@@ -188,8 +188,7 @@ export function columnCandidateRecords({ latest = [], pool = [], existingArchive
   return refreshCachedRelevance(dedupeById([...(latest || []), ...(pool || []), ...recentArchive]), registry);
 }
 
-async function loadPoolWithFallback(existingLatest) {
-  const sources = await loadSourceRegistry();
+async function loadPoolWithFallback(existingLatest, sources) {
   const now = new Date();
   if (PIPELINE_USE_EXISTING_POOL) {
     const existingPool = await readJsonFile(NEWS_POOL_PATH, []);
@@ -372,7 +371,7 @@ function asSignalCard(article, reason) {
 // Runs The Current column stage after the wire surface is written. Column
 // failures never break the wire run: every outcome is logged and recorded in
 // pipeline state, and a failed or skipped column simply publishes nothing.
-async function runAuthoredColumnStage({ state, candidates, pool, recentRecords, now }) {
+async function runAuthoredColumnStage({ state, candidates, pool, recentRecords, now, sources }) {
   try {
     const existingColumns = await readAuthoredColumns();
     const result = await withTimeout('authored column', () => generateAuthoredColumn({
@@ -382,8 +381,25 @@ async function runAuthoredColumnStage({ state, candidates, pool, recentRecords, 
       existingColumns,
       state,
       now,
+      sources,
       force: process.env.AUTHORED_COLUMN_FORCE === '1',
     }), 360_000);
+    if (result.selectionDiagnostics) {
+      const { total_candidates: total, selected_id: selected, counts = {} } = result.selectionDiagnostics;
+      console.log([
+        `[pipeline] authored selection: total=${total}`,
+        `qualifying=${counts.qualifying || 0}`,
+        `rights=${counts.text_rights_unauthorized || 0}`,
+        `abstract=${counts.abstract_only || 0}`,
+        `extraction=${counts.extraction_ineligible || 0}`,
+        `insight=${counts.expert_insight_incomplete || 0}`,
+        `relevance=${counts.relevance_below_threshold || 0}`,
+        `covered=${counts.already_covered || 0}`,
+        `evidence=${counts.unclean_evidence || 0}`,
+        `facts=${counts.insufficient_facts || 0}`,
+        `selected=${selected || 'none'}`,
+      ].join(' '));
+    }
     if (result.column) {
       // Column hero via the same image2 (OpenAI image) path wire articles
       // use. The generator falls back internally when the key is missing or
@@ -402,11 +418,11 @@ async function runAuthoredColumnStage({ state, candidates, pool, recentRecords, 
       }
       await appendAuthoredColumn(result.column);
       console.log(`[pipeline] authored column published: ${result.column.slug} (${result.column.authored_quality.metrics.words} words, attempts=${result.column.authored_quality.attempts})`);
-      return { published: true, slug: result.column.slug };
+      return { published: true, slug: result.column.slug, selectionDiagnostics: result.selectionDiagnostics };
     }
     const reason = result.skipReason || result.failure || 'unknown';
     console.log(`[pipeline] authored column: none this run (${reason})`);
-    return { published: false, reason };
+    return { published: false, reason, selectionDiagnostics: result.selectionDiagnostics };
   } catch (error) {
     console.warn(`[pipeline] authored column stage failed: ${error.message}`);
     return { published: false, reason: `stage_error:${error.message}` };
@@ -488,6 +504,7 @@ async function publishExistingOnly({
   now,
   blocked = [],
   pool = [],
+  sources = [],
 }) {
   const recentBlueprintIds = blueprintHistoryFromRecords([...(existingLatest || []), ...(existingArchive || [])]);
   const normalizedExisting = dedupeById((existingLatest || []).map((item) => normalizeExistingArticle(item)));
@@ -515,10 +532,11 @@ async function publishExistingOnly({
   });
   const authoredOutcome = await runAuthoredColumnStage({
     state,
-    candidates: columnCandidateRecords({ latest, pool, existingArchive, now }),
+    candidates: columnCandidateRecords({ latest, pool, existingArchive, now, sources }),
     pool,
     recentRecords: [...latest, ...(existingArchive || [])],
     now,
+    sources,
   });
   state.runHistory[state.runHistory.length - 1].authoredColumn = authoredOutcome;
   state.runHistory[state.runHistory.length - 1].llmUsage = llmUsageSummary();
@@ -538,14 +556,15 @@ async function main() {
       : '[pipeline] llm: DISABLED (no OPENROUTER_API_KEY or offline mode); deterministic fallbacks in use'
   );
 
-  const [state, existingLatest, existingArchive] = await Promise.all([
+  const [state, existingLatest, existingArchive, sources] = await Promise.all([
     readPipelineState(PIPELINE_STATE_PATH),
     readJsonFile(LATEST_NEWS_PATH, []),
     readArchiveSnapshot(),
+    loadSourceRegistry(),
   ]);
   const recentBlueprintIds = blueprintHistoryFromRecords([...(existingLatest || []), ...(existingArchive || [])]);
 
-  const pool = await loadPoolWithFallback(existingLatest);
+  const pool = await loadPoolWithFallback(existingLatest, sources);
   console.log(`[pipeline] pool loaded: ${pool.length} items`);
 
   if (!pool.length) {
@@ -582,10 +601,11 @@ async function main() {
     });
     const authoredOutcome = await runAuthoredColumnStage({
       state,
-      candidates: columnCandidateRecords({ latest, pool, existingArchive, now }),
+      candidates: columnCandidateRecords({ latest, pool, existingArchive, now, sources }),
       pool,
       recentRecords: [...latest, ...(existingArchive || [])],
       now,
+      sources,
     });
     state.runHistory[state.runHistory.length - 1].authoredColumn = authoredOutcome;
     state.runHistory[state.runHistory.length - 1].llmUsage = llmUsageSummary();
@@ -643,6 +663,7 @@ async function main() {
       now,
       blocked,
       pool,
+      sources,
     });
     console.log(
       `[pipeline] completed with no new article pages published; quality gate blocked ${blocked.length}. archive push: ${JSON.stringify(supabaseStatus)}`
@@ -709,10 +730,11 @@ async function main() {
   });
   const authoredOutcome = await runAuthoredColumnStage({
     state,
-    candidates: columnCandidateRecords({ latest: [...repetitionPassed, ...latest], pool, existingArchive, now }),
+    candidates: columnCandidateRecords({ latest: [...repetitionPassed, ...latest], pool, existingArchive, now, sources }),
     pool,
     recentRecords: [...latest, ...(existingArchive || [])],
     now,
+    sources,
   });
   state.runHistory[state.runHistory.length - 1].authoredColumn = authoredOutcome;
   state.runHistory[state.runHistory.length - 1].llmUsage = llmUsageSummary();

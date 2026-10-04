@@ -8,6 +8,8 @@ import { canonicalArticleImagePaths } from './lib/image-store.mjs';
 import { isPublicLongformArticle } from './lib/public-surface-eligibility.mjs';
 import { isAuthoredColumn } from './lib/authored-column-policy.mjs';
 import { publishedColumns } from './lib/column-surface.mjs';
+import { columnArtworkReadiness } from './lib/column-artwork-readiness.mjs';
+import { loadSourceRegistrySync } from './lib/source-registry.mjs';
 
 const DEFAULT_ARTICLES_PATH = 'src/data/latest-news.json';
 const DEFAULT_MANIFEST_PATH = 'config/codex-image-manifest.json';
@@ -42,6 +44,10 @@ function needsCodexArtwork(article = {}) {
 }
 
 export function selectCodexImageJobs(articles = [], registrations = {}, options = {}) {
+  return prepareCodexImageQueue(articles, registrations, options).jobs;
+}
+
+export function prepareCodexImageQueue(articles = [], registrations = {}, options = {}) {
   const limit = options.limit ?? 1;
   if (!Number.isInteger(limit) || limit < 1 || limit > 5) throw new Error('Image queue limit must be an integer from 1 to 5.');
   const requestedId = clean(options.id);
@@ -58,7 +64,7 @@ export function selectCodexImageJobs(articles = [], registrations = {}, options 
     .filter((article) => isAuthoredColumn(article) || ['stale', 'recoverable'].includes(registrations[article.id]?.state) || needsCodexArtwork(article))
     .sort((left, right) => Number(isAuthoredColumn(right)) - Number(isAuthoredColumn(left)) || articleTime(right) - articleTime(left));
 
-  return eligible.flatMap((article) => {
+  const pending = eligible.flatMap((article) => {
     if (!SAFE_ARTICLE_ID.test(article.id) || ['__proto__', 'constructor', 'prototype'].includes(article.id)) {
       throw new Error(`Article id "${article.id}" is unsafe for the Codex image import command.`);
     }
@@ -96,7 +102,18 @@ export function selectCodexImageJobs(articles = [], registrations = {}, options 
       importArgs: ['node', 'scripts/import-codex-image.mjs', '--id', article.id, '--file', '<generated-image-path>', '--fingerprint', fingerprint],
       importCommand: `node scripts/import-codex-image.mjs --id ${article.id} --file <generated-image-path> --fingerprint ${fingerprint}`,
     }];
-  }).slice(0, limit);
+  });
+  const excluded = new Set(options.excludeIds || []);
+  const blocked = [];
+  const ready = pending.filter(job => {
+    const readiness = options.readiness?.[job.id];
+    const reasons = [...(readiness?.ok === false ? (readiness.reasons?.length ? readiness.reasons : ['column_readiness_failed']) : []),
+      ...(excluded.has(job.id) ? ['deferred_for_this_run'] : [])];
+    if (!reasons.length) return true;
+    blocked.push({ id: job.id, title: job.title, fingerprint: job.fingerprint, reasons });
+    return false;
+  });
+  return { jobs: ready.slice(0, limit), pendingCount: pending.length, readyCount: ready.length, blocked };
 }
 
 function manifestError(message) {
@@ -193,11 +210,12 @@ export function parseArgs(args) {
   const parsed = { id: undefined, limit: 1 };
   for (let index = 0; index < args.length; index += 2) {
     const flag = args[index];
-    if (!['--id', '--limit'].includes(flag)) throw new Error(`Unknown argument "${flag}". Usage: node scripts/prepare-codex-images.mjs [--id <article-id>] [--limit <1-5>]`);
+    if (!['--id', '--limit', '--exclude-id'].includes(flag)) throw new Error(`Unknown argument "${flag}". Usage: node scripts/prepare-codex-images.mjs [--id <article-id>] [--limit <1-5>] [--exclude-id <blocked-id>]`);
     const value = args[index + 1];
     if (!value || value.startsWith('--')) throw new Error(`Argument ${flag} requires a value.`);
     if (flag === '--id') parsed.id = value;
     if (flag === '--limit') parsed.limit = Number(value);
+    if (flag === '--exclude-id') (parsed.excludeIds ||= []).push(value);
   }
   return parsed;
 }
@@ -212,9 +230,19 @@ export async function main(args = process.argv.slice(2)) {
   const articles = collections.flat();
   if (options.id && !articles.some((article) => article?.id === options.id)) throw new Error(`Article "${options.id}" was not found in latest news or authored columns.`);
   const registrations = await inspectCodexImageRegistrations(articles);
-  const jobs = selectCodexImageJobs(articles, registrations, options);
-  process.stdout.write(`${JSON.stringify({ jobs }, null, 2)}\n`);
-  return jobs;
+  const archived = JSON.parse(await fs.readFile('src/data/archived-news.json', 'utf8'));
+  if (!Array.isArray(archived)) throw new Error('src/data/archived-news.json must contain an array.');
+  const sourceRegistry = loadSourceRegistrySync();
+  const columns = articles.filter(isAuthoredColumn);
+  const readiness = Object.fromEntries(columns
+    .filter(column => registrations[column.id]?.state !== 'valid')
+    .map(column => [column.id, columnArtworkReadiness(column, [...collections[0], ...archived], columns, { sourceRegistry })]));
+  for (const id of options.excludeIds || []) {
+    if (!articles.some(article => article.id === id)) throw new Error(`Excluded article "${id}" was not found.`);
+  }
+  const queue = prepareCodexImageQueue(articles, registrations, { ...options, readiness });
+  process.stdout.write(`${JSON.stringify(queue, null, 2)}\n`);
+  return queue.jobs;
 }
 
 if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {

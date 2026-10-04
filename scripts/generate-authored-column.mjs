@@ -11,21 +11,24 @@ import { readArchiveSnapshot } from './lib/archive-store.mjs';
 import { generateAuthoredColumn } from './lib/authored-column-engine.mjs';
 import { appendAuthoredColumn, readAuthoredColumns } from './lib/authored-column-store.mjs';
 import { llmUsageSummary } from './lib/llm-budget.mjs';
+import { loadSourceRegistry } from './lib/source-registry.mjs';
 
 const dryRun = process.argv.includes('--dry-run');
 const force = process.argv.includes('--force') || process.env.AUTHORED_COLUMN_FORCE === '1';
 
 async function main() {
-  const [state, latest, archive, pool, existingColumns] = await Promise.all([
+  const [state, latest, archive, pool, existingColumns, sources] = await Promise.all([
     readPipelineState(PIPELINE_STATE_PATH),
     readJsonFile(LATEST_NEWS_PATH, []),
     readArchiveSnapshot(),
     readJsonFile(NEWS_POOL_PATH, []),
     readAuthoredColumns(),
+    loadSourceRegistry(),
   ]);
 
   const result = await generateAuthoredColumn({
     candidates: latest,
+    sources,
     pool: [...pool, ...latest],
     recentRecords: [...latest, ...archive],
     existingColumns,

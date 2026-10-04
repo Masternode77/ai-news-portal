@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import test from 'node:test';
 import { generateAuthoredColumn, storyKeyFor } from '../scripts/lib/authored-column-engine.mjs';
 import { resetLlmUsageForTests } from '../scripts/lib/llm-budget.mjs';
-import { fixtureArticle, STANCE_JSON, essayJson } from './fixtures/authored-column-fixture.mjs';
+import { fixtureArticle, FIXTURE_SOURCE, STANCE_JSON, essayJson } from './fixtures/authored-column-fixture.mjs';
 
 test('default authored column provider remains disabled without an OpenRouter key', async () => {
   const previous = process.env.OPENROUTER_API_KEY;
@@ -35,6 +35,7 @@ test('explicit local adapter runs the normal story and quality gates without an 
   try {
     const result = await generateAuthoredColumn({
       candidates: [fixtureArticle()],
+      sources: [FIXTURE_SOURCE],
       pool: [],
       existingColumns: [],
       recentRecords: [],

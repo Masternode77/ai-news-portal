@@ -8,6 +8,7 @@ import { spawnSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import { selectCodexImageJobs, inspectCodexImageRegistrations } from '../scripts/prepare-codex-images.mjs';
 import { registerCodexImage, imageFingerprint } from '../scripts/lib/codex-image-provider.mjs';
+import { artworkColumn, artworkSource } from './fixtures/column-artwork.mjs';
 
 const column = {
   id: 'col-unique', content_origin: 'authored', slug: 'unique-column',
@@ -18,6 +19,12 @@ const column = {
 };
 
 test('CLI reads authored columns alongside news and stops queuing after a successful import', async () => {
+  const column = artworkColumn();
+  const sourceRecord = artworkSource();
+  sourceRecord.sourceRegistryId = 'eia-today-in-energy';
+  sourceRecord.sourceUrl = 'https://www.eia.gov/artwork-test-fixture';
+  sourceRecord.extraction_artifact = { ...sourceRecord.extraction_artifact, source_url: sourceRecord.sourceUrl };
+  column.sources = [{ url: sourceRecord.sourceUrl }];
   const root = await fs.mkdtemp(path.join(os.tmpdir(), 'cc-column-cli-'));
   const queueScript = fileURLToPath(new URL('../scripts/prepare-codex-images.mjs', import.meta.url));
   const importScript = fileURLToPath(new URL('../scripts/import-codex-image.mjs', import.meta.url));
@@ -30,9 +37,11 @@ test('CLI reads authored columns alongside news and stops queuing after a succes
     await fs.mkdir(path.join(root, 'src/data'), { recursive: true });
     await fs.mkdir(path.join(root, 'config'));
     await fs.writeFile(path.join(root, 'src/data/latest-news.json'), '[]');
-    await fs.writeFile(path.join(root, 'src/data/archived-news.json'), '[]');
+    await fs.writeFile(path.join(root, 'src/data/archived-news.json'), JSON.stringify([sourceRecord]));
     await fs.writeFile(path.join(root, 'src/data/authored-columns.json'), JSON.stringify([column]));
-    const [job] = run(queueScript, ['--id', column.id]).jobs;
+    const prepared = run(queueScript, ['--id', column.id]);
+    const [job] = prepared.jobs;
+    assert.ok(job, JSON.stringify(prepared));
     assert.equal(job.action, 'generate');
     const source = path.join(root, 'new.png');
     await sharp({ create: { width: 640, height: 360, channels: 3, background: '#987654' } }).png().toFile(source);
