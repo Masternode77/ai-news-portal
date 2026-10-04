@@ -48225,7 +48225,7 @@
     "2026-10-04": {
       "date": "2026-10-04",
       "createdAt": "2026-10-03T18:37:01.308Z",
-      "refreshedAt": "2026-10-04T08:20:01.412Z",
+      "refreshedAt": "2026-10-04T08:49:59.885Z",
       "candidateWindowHours": 24,
       "curatedItems": [],
       "curatedIds": [],
@@ -48241,25 +48241,6 @@
     }
   },
   "runHistory": [
-    {
-      "at": "2026-08-25T07:55:20.245Z",
-      "day": "2026-08-25",
-      "slot": 2,
-      "publishedCount": 0,
-      "authoredColumn": {
-        "published": true,
-        "slug": "quantum-networking-hardware-is-not-ai-infrastructure-yet-2026-08-25"
-      },
-      "llmUsage": {
-        "calls": 4,
-        "failures": 0,
-        "prompt_tokens": 11588,
-        "completion_tokens": 4380,
-        "total_tokens": 15968,
-        "token_budget": 60000,
-        "call_budget": 40
-      }
-    },
     {
       "at": "2026-08-25T15:47:55.019Z",
       "day": "2026-08-26",
@@ -51789,9 +51770,44 @@
         "token_budget": 60000,
         "call_budget": 40
       }
+    },
+    {
+      "at": "2026-10-04T08:49:59.885Z",
+      "day": "2026-10-04",
+      "slot": 2,
+      "publishedCount": 0,
+      "authoredColumn": {
+        "published": false,
+        "reason": "draft:invalid_structured_heading",
+        "selectionDiagnostics": {
+          "total_candidates": 71,
+          "counts": {
+            "invalid_identity": 0,
+            "text_rights_unauthorized": 0,
+            "abstract_only": 36,
+            "extraction_ineligible": 27,
+            "expert_insight_incomplete": 1,
+            "relevance_below_threshold": 6,
+            "already_covered": 0,
+            "unclean_evidence": 0,
+            "insufficient_facts": 0,
+            "qualifying": 1
+          },
+          "selected_id": "4b3da08b458bdc0a"
+        }
+      },
+      "llmUsage": {
+        "calls": 3,
+        "failures": 0,
+        "prompt_tokens": 10047,
+        "completion_tokens": 2607,
+        "total_tokens": 12654,
+        "token_budget": 60000,
+        "call_budget": 40
+      }
     }
   ],
-  "lastRunAt": "2026-10-04T08:20:01.412Z",
+  "lastRunAt": "2026-10-04T08:49:59.885Z",
   "authored": {
     "lastColumnAt": "2026-09-16T18:47:02.256Z",
     "columnsByDay": {
@@ -51809,12 +51825,12 @@
     },
     "recentStoryKeys": [],
     "lastFailure": {
-      "at": "2026-10-04T08:20:01.412Z",
-      "stage": "verify",
-      "detail": "fewer_than_4_sections"
+      "at": "2026-10-04T08:49:59.885Z",
+      "stage": "draft",
+      "detail": "invalid_structured_heading"
     },
     "lastSelection": {
-      "at": "2026-10-04T08:20:01.412Z",
+      "at": "2026-10-04T08:49:59.885Z",
       "outcome": "selected",
       "selectedId": "4b3da08b458bdc0a",
       "diagnostics": {
