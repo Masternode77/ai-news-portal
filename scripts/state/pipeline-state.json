@@ -896,7 +896,10 @@
     "d301851ed2aef74f",
     "76dd7bdf7191e8f3",
     "978a61134524475e",
-    "dcc497596891311f"
+    "dcc497596891311f",
+    "741e7affa6897e99",
+    "518703cc40750ccb",
+    "104074cc6be6e5b6"
   ],
   "dayPlans": {
     "2026-03-24": {
@@ -48388,28 +48391,393 @@
         "1": true,
         "2": true
       }
+    },
+    "2026-10-05": {
+      "date": "2026-10-05",
+      "createdAt": "2026-10-04T17:17:48.065Z",
+      "refreshedAt": "2026-10-04T17:17:48.065Z",
+      "candidateWindowHours": 24,
+      "curatedItems": [
+        {
+          "id": "741e7affa6897e99",
+          "sourceRegistryId": "google-cloud-ai-releases",
+          "source": "Google Cloud AI",
+          "url": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/release-notes#September_28_2026",
+          "title": "Google Cloud AI: Anthropic's Claude Sonnet 5.5",
+          "snippet": "Feature Anthropic's Claude Sonnet 5.5 Claude Sonnet 5.5 is available in Model Garden. Feature Provisioned Throughput: Support for changing order scope and increasing term Provisioned Throughput now directly supports fro…",
+          "contentText": "Feature Anthropic's Claude Sonnet 5.5 Claude Sonnet 5.5 is available in Model Garden. Feature Provisioned Throughput: Support for changing order scope and increasing term Provisioned Throughput now directly supports from the self service console the ability to change the scope or increase the term of an order through a supersede and replace operation. For more information, see Restructure an order . Feature Gemini 3 models supported by the Interactions API in Preview Gemini 3 models are supported by the Interactions API in Preview on Gemini Enterprise Agent Platform. For more information, see the Interactions API overview . Feature Gemini 3.8 Flash TTS and Gemini 3.8 Flash-Lite TTS (Preview) Gemini 3.8 Flash TTS and Gemini 3.8 Flash-Lite TTS are available in Preview on the global endpoint…",
+          "publishedAt": "2026-09-28T07:00:00.000Z",
+          "sourceImage": null,
+          "region": "Global",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "ai_topic_score": 1,
+          "ai_topic_reasons": [
+            "anthropic",
+            "gemini",
+            "claude",
+            "ai"
+          ],
+          "category": "AI Infrastructure",
+          "primary_category": "AI Infrastructure",
+          "secondary_category": "GPU clusters and deployment readiness",
+          "infrastructure_layer": "Compute",
+          "affected_stakeholders": [
+            "operators",
+            "hyperscalers",
+            "cloud buyers",
+            "investors"
+          ],
+          "article_type": "Product / Platform Update",
+          "urgency_score": 0.28,
+          "taxonomy_confidence": 0.65,
+          "taxonomy_reasons": [
+            "ai infrastructure",
+            "neocloud"
+          ],
+          "direct_ai_infrastructure_relevance": 0.22,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0.324,
+          "semiconductor_relevance": 0,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.306,
+          "infrastructure_relevance_tier": "archive_only",
+          "infrastructure_relevance_action": "archive_only",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:0.22",
+            "cloud_capacity_relevance:0.32(google cloud)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 0.22,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0.324,
+            "semiconductor_relevance": 0,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.306,
+            "infrastructure_relevance_tier": "archive_only",
+            "infrastructure_relevance_action": "archive_only",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:0.22",
+              "cloud_capacity_relevance:0.32(google cloud)"
+            ],
+            "infrastructureRelevanceAction": "archive_only",
+            "articlePagePublished": false,
+            "homepagePublished": false,
+            "archiveOnly": true,
+            "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
+          },
+          "score": 54
+        },
+        {
+          "id": "518703cc40750ccb",
+          "sourceRegistryId": "google-cloud-compute-releases",
+          "source": "Google Cloud Compute Engine",
+          "url": "https://docs.cloud.google.com/compute/docs/release-notes#September_30_2026",
+          "title": "Google Cloud Compute Engine: Generally available : You can specify a 120-second preemption notice duration while creating Spot VMs.",
+          "snippet": "Feature Generally available: You can specify a 120-second preemption notice duration while creating Spot VMs. Use this feature for workloads on Spot VMs where you want up to an additional 120 seconds for handling preemp…",
+          "contentText": "Feature Generally available : You can specify a 120-second preemption notice duration while creating Spot VMs. Use this feature for workloads on Spot VMs where you want up to an additional 120 seconds for handling preemption. If you want to migrate existing Spot VMs workloads, make sure you update your workload to handle preemption outside of a shutdown script and test preemption. For more information, see Spot VMs and Create and use Spot VMs .",
+          "publishedAt": "2026-09-30T07:00:00.000Z",
+          "sourceImage": null,
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "Hyperscalers & Cloud",
+          "ai_topic_score": 0,
+          "ai_topic_reasons": [
+            "ai_not_in_title"
+          ],
+          "category": "Cloud Capacity",
+          "primary_category": "Cloud Capacity",
+          "secondary_category": "Hyperscale regions and accelerator availability",
+          "infrastructure_layer": "Cloud Platform",
+          "affected_stakeholders": [
+            "hyperscalers",
+            "cloud buyers",
+            "enterprise IT",
+            "operators"
+          ],
+          "article_type": "Product / Platform Update",
+          "urgency_score": 0.25,
+          "taxonomy_confidence": 0.61,
+          "taxonomy_reasons": [
+            "google cloud"
+          ],
+          "direct_ai_infrastructure_relevance": 0,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0.324,
+          "semiconductor_relevance": 0,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.223,
+          "infrastructure_relevance_tier": "archive_only",
+          "infrastructure_relevance_action": "archive_only",
+          "infrastructure_relevance_reasons": [
+            "cloud_capacity_relevance:0.32(google cloud)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 0,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0.324,
+            "semiconductor_relevance": 0,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.223,
+            "infrastructure_relevance_tier": "archive_only",
+            "infrastructure_relevance_action": "archive_only",
+            "infrastructure_relevance_reasons": [
+              "cloud_capacity_relevance:0.32(google cloud)"
+            ],
+            "infrastructureRelevanceAction": "archive_only",
+            "articlePagePublished": false,
+            "homepagePublished": false,
+            "archiveOnly": true,
+            "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
+          },
+          "score": 25
+        },
+        {
+          "id": "104074cc6be6e5b6",
+          "sourceRegistryId": "google-cloud-ai-releases",
+          "source": "Google Cloud AI",
+          "url": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/release-notes#September_30_2026",
+          "title": "Google Cloud AI: Cloud Trace integration with Agent Gateway (Preview)",
+          "snippet": "Feature Cloud Trace integration with Agent Gateway (Preview) Agent Gateway integrates with Cloud Trace in Preview to provide end-to-end request observability for agent workloads. Enabling Cloud Trace gives you visibilit…",
+          "contentText": "Feature Cloud Trace integration with Agent Gateway (Preview) Agent Gateway integrates with Cloud Trace in Preview to provide end-to-end request observability for agent workloads. Enabling Cloud Trace gives you visibility into how requests travel from your agents through the gateway and across Google Cloud services, tools, agents, and MCP servers. For more information, see Use Cloud Trace . Feature xAI's Grok 4.7 Grok 4.7 is available in Preview in Model Garden. Fixed CodeMender updates (v0.11.0) This release introduces updates to CodeMender: Tiered location configuration : Added support for configuring the service location using the CM_LOCATION environment variable or location in config.yaml (defaulting to global ), replacing the --location command-line flag. CI gate severity validation :…",
+          "publishedAt": "2026-09-30T07:00:00.000Z",
+          "sourceImage": null,
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "ai_topic_score": 0.723,
+          "ai_topic_reasons": [
+            "gemini",
+            "grok",
+            "ai"
+          ],
+          "category": "AI Infrastructure",
+          "primary_category": "AI Infrastructure",
+          "secondary_category": "GPU clusters and deployment readiness",
+          "infrastructure_layer": "Compute",
+          "affected_stakeholders": [
+            "operators",
+            "hyperscalers",
+            "cloud buyers",
+            "investors"
+          ],
+          "article_type": "Product / Platform Update",
+          "urgency_score": 0.28,
+          "taxonomy_confidence": 0.65,
+          "taxonomy_reasons": [
+            "ai infrastructure",
+            "neocloud"
+          ],
+          "direct_ai_infrastructure_relevance": 0.22,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0.324,
+          "semiconductor_relevance": 0,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.306,
+          "infrastructure_relevance_tier": "archive_only",
+          "infrastructure_relevance_action": "archive_only",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:0.22",
+            "cloud_capacity_relevance:0.32(google cloud)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 0.22,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0.324,
+            "semiconductor_relevance": 0,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.306,
+            "infrastructure_relevance_tier": "archive_only",
+            "infrastructure_relevance_action": "archive_only",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:0.22",
+              "cloud_capacity_relevance:0.32(google cloud)"
+            ],
+            "infrastructureRelevanceAction": "archive_only",
+            "articlePagePublished": false,
+            "homepagePublished": false,
+            "archiveOnly": true,
+            "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
+          },
+          "score": 46
+        },
+        {
+          "id": "a50001faa15fb37a",
+          "sourceRegistryId": "google-cloud-compute-releases",
+          "source": "Google Cloud Compute Engine",
+          "url": "https://docs.cloud.google.com/compute/docs/release-notes#September_28_2026",
+          "title": "Google Cloud Compute Engine: Allowlisted GA : You can expose the host ID of a Compute Engine instance to verify its physical location in relation to other compute insta…",
+          "snippet": "Feature Allowlisted GA: You can expose the host ID of a Compute Engine instance to verify its physical location in relation to other compute instances in your Google Cloud organization. Use compute instance proximity in…",
+          "contentText": "Feature Allowlisted GA : You can expose the host ID of a Compute Engine instance to verify its physical location in relation to other compute instances in your Google Cloud organization. Use compute instance proximity in a zone to optimize latency-sensitive workloads or improve the reliability of your applications. For more information, see View the physical location of a Compute Engine instance . Feature Generally available : The C4D machine series supports Hyperdisk Throughput. For more information, see About Hyperdisk Throughput and Hyperdisk Throughput performance limits .",
+          "publishedAt": "2026-09-28T07:00:00.000Z",
+          "sourceImage": null,
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "Hyperscalers & Cloud",
+          "ai_topic_score": 0,
+          "ai_topic_reasons": [
+            "ai_not_in_title"
+          ],
+          "category": "Cloud Capacity",
+          "primary_category": "Cloud Capacity",
+          "secondary_category": "Hyperscale regions and accelerator availability",
+          "infrastructure_layer": "Cloud Platform",
+          "affected_stakeholders": [
+            "hyperscalers",
+            "cloud buyers",
+            "enterprise IT",
+            "operators"
+          ],
+          "article_type": "Product / Platform Update",
+          "urgency_score": 0.25,
+          "taxonomy_confidence": 0.61,
+          "taxonomy_reasons": [
+            "google cloud"
+          ],
+          "direct_ai_infrastructure_relevance": 0,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0.324,
+          "semiconductor_relevance": 0,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.223,
+          "infrastructure_relevance_tier": "archive_only",
+          "infrastructure_relevance_action": "archive_only",
+          "infrastructure_relevance_reasons": [
+            "cloud_capacity_relevance:0.32(google cloud)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 0,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0.324,
+            "semiconductor_relevance": 0,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.223,
+            "infrastructure_relevance_tier": "archive_only",
+            "infrastructure_relevance_action": "archive_only",
+            "infrastructure_relevance_reasons": [
+              "cloud_capacity_relevance:0.32(google cloud)"
+            ],
+            "infrastructureRelevanceAction": "archive_only",
+            "articlePagePublished": false,
+            "homepagePublished": false,
+            "archiveOnly": true,
+            "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
+          },
+          "score": 21
+        },
+        {
+          "id": "758880cc9e6d9387",
+          "sourceRegistryId": "google-cloud-compute-releases",
+          "source": "Google Cloud Compute Engine",
+          "url": "https://docs.cloud.google.com/compute/docs/release-notes#September_29_2026",
+          "title": "Google Cloud Compute Engine: Interface-based versioning (IBV) for the Compute Engine API is now generally available.",
+          "snippet": "Announcement Interface-based versioning (IBV) for the Compute Engine API is now generally available. IBV lets you call a specific, date-based API version so you can adopt API changes on your own schedule. For more infor…",
+          "contentText": "Announcement Interface-based versioning (IBV) for the Compute Engine API is now generally available. IBV lets you call a specific, date-based API version so you can adopt API changes on your own schedule. For more information, see Compute Engine API versioning . Feature Generally available : Compute Engine API version 2026-09-01 is now generally available. In this version, aggregatedList methods return partial results by default when a scope is unreachable. The returnPartialSuccess query parameter is no longer available in aggregatedList and list methods. For more information, see the 2026-09-01 REST reference . Feature Preview : Compute Engine API version 2026-10-01-preview is now available in Preview. In this version, the quotas field is no longer available in responses from the project…",
+          "publishedAt": "2026-09-29T07:00:00.000Z",
+          "sourceImage": null,
+          "region": "Global",
+          "language": "en",
+          "defaultCategory": "Hyperscalers & Cloud",
+          "ai_topic_score": 0,
+          "ai_topic_reasons": [
+            "ai_not_in_title"
+          ],
+          "category": "Cloud Capacity",
+          "primary_category": "Cloud Capacity",
+          "secondary_category": "Hyperscale regions and accelerator availability",
+          "infrastructure_layer": "Cloud Platform",
+          "affected_stakeholders": [
+            "hyperscalers",
+            "cloud buyers",
+            "enterprise IT",
+            "operators"
+          ],
+          "article_type": "Other",
+          "urgency_score": 0.25,
+          "taxonomy_confidence": 0.61,
+          "taxonomy_reasons": [
+            "google cloud"
+          ],
+          "direct_ai_infrastructure_relevance": 0,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0.324,
+          "semiconductor_relevance": 0,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.223,
+          "infrastructure_relevance_tier": "archive_only",
+          "infrastructure_relevance_action": "archive_only",
+          "infrastructure_relevance_reasons": [
+            "cloud_capacity_relevance:0.32(google cloud)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 0,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0.324,
+            "semiconductor_relevance": 0,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.223,
+            "infrastructure_relevance_tier": "archive_only",
+            "infrastructure_relevance_action": "archive_only",
+            "infrastructure_relevance_reasons": [
+              "cloud_capacity_relevance:0.32(google cloud)"
+            ],
+            "infrastructureRelevanceAction": "archive_only",
+            "articlePagePublished": false,
+            "homepagePublished": false,
+            "archiveOnly": true,
+            "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
+          },
+          "score": 25
+        }
+      ],
+      "curatedIds": [
+        "741e7affa6897e99",
+        "518703cc40750ccb",
+        "104074cc6be6e5b6",
+        "a50001faa15fb37a",
+        "758880cc9e6d9387"
+      ],
+      "publishedIds": [
+        "741e7affa6897e99",
+        "518703cc40750ccb",
+        "104074cc6be6e5b6"
+      ],
+      "slotPublications": {
+        "0": true
+      }
     }
   },
   "runHistory": [
-    {
-      "at": "2026-08-27T04:30:30.301Z",
-      "day": "2026-08-27",
-      "slot": 1,
-      "publishedCount": 0,
-      "authoredColumn": {
-        "published": false,
-        "reason": "draft:no_parseable_draft"
-      },
-      "llmUsage": {
-        "calls": 3,
-        "failures": 0,
-        "prompt_tokens": 7699,
-        "completion_tokens": 2478,
-        "total_tokens": 10177,
-        "token_budget": 60000,
-        "call_budget": 40
-      }
-    },
     {
       "at": "2026-08-27T18:16:44.842Z",
       "day": "2026-08-28",
@@ -51973,9 +52341,185 @@
         "token_budget": 60000,
         "call_budget": 40
       }
+    },
+    {
+      "at": "2026-10-04T17:17:48.065Z",
+      "day": "2026-10-05",
+      "slot": 0,
+      "publishedCount": 0,
+      "signalCardCount": 0,
+      "archiveOnlyCount": 3,
+      "processedIds": [
+        "741e7affa6897e99",
+        "518703cc40750ccb",
+        "104074cc6be6e5b6"
+      ],
+      "blockedCount": 0,
+      "blockedItems": [],
+      "archiveOnlyItems": [
+        {
+          "id": "741e7affa6897e99",
+          "title": "Google Cloud AI: Anthropic's Claude Sonnet 5.5",
+          "infrastructure_relevance_score": 0.306,
+          "infrastructure_relevance_tier": "archive_only",
+          "infrastructure_relevance_action": "archive_only",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:0.22",
+            "cloud_capacity_relevance:0.32(google cloud)"
+          ],
+          "extraction_quality_score": 0.86,
+          "source_domain_adapter": "googlecloud",
+          "content_length": 786,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": false,
+          "repetition_block_reasons": [],
+          "repetition_check": null,
+          "expert_insight_complete": true,
+          "expert_insight_missing_fields": [],
+          "reason": "infrastructure_relevance_below_signal_threshold"
+        },
+        {
+          "id": "518703cc40750ccb",
+          "title": "Google Cloud Compute Engine: Generally available : You can specify a 120-second preemption notice duration while creating Spot VMs.",
+          "infrastructure_relevance_score": 0.223,
+          "infrastructure_relevance_tier": "archive_only",
+          "infrastructure_relevance_action": "archive_only",
+          "infrastructure_relevance_reasons": [
+            "cloud_capacity_relevance:0.32(google cloud)"
+          ],
+          "extraction_quality_score": 0.68,
+          "source_domain_adapter": "googlecloud",
+          "content_length": 440,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": false,
+          "repetition_block_reasons": [],
+          "repetition_check": null,
+          "expert_insight_complete": true,
+          "expert_insight_missing_fields": [],
+          "reason": "infrastructure_relevance_below_signal_threshold"
+        },
+        {
+          "id": "104074cc6be6e5b6",
+          "title": "Google Cloud AI: Cloud Trace integration with Agent Gateway (Preview)",
+          "infrastructure_relevance_score": 0.306,
+          "infrastructure_relevance_tier": "archive_only",
+          "infrastructure_relevance_action": "archive_only",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:0.22",
+            "cloud_capacity_relevance:0.32(google cloud)"
+          ],
+          "extraction_quality_score": 0.75,
+          "source_domain_adapter": "googlecloud",
+          "content_length": 619,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": false,
+          "repetition_block_reasons": [],
+          "repetition_check": null,
+          "expert_insight_complete": true,
+          "expert_insight_missing_fields": [],
+          "reason": "infrastructure_relevance_below_signal_threshold"
+        }
+      ],
+      "authoredColumn": {
+        "published": false,
+        "reason": "no_qualifying_story",
+        "selectionDiagnostics": {
+          "total_candidates": 70,
+          "counts": {
+            "invalid_identity": 0,
+            "text_rights_unauthorized": 0,
+            "abstract_only": 36,
+            "extraction_ineligible": 26,
+            "expert_insight_incomplete": 0,
+            "relevance_below_threshold": 6,
+            "already_covered": 2,
+            "stale_story": 0,
+            "digest_roundup": 0,
+            "unclean_evidence": 0,
+            "insufficient_facts": 0,
+            "qualifying": 0
+          },
+          "selected_id": null,
+          "selected_beat": null,
+          "selection_reason": "no_qualifying_story",
+          "by_beat": {
+            "ai_business": {
+              "candidates": 11,
+              "qualifying": 0,
+              "rejections": {
+                "abstract_only": 7,
+                "extraction_ineligible": 4
+              }
+            },
+            "data_center_operators": {
+              "candidates": 4,
+              "qualifying": 0,
+              "rejections": {
+                "abstract_only": 1,
+                "extraction_ineligible": 3
+              }
+            },
+            "compute_hardware": {
+              "candidates": 17,
+              "qualifying": 0,
+              "rejections": {
+                "abstract_only": 16,
+                "extraction_ineligible": 1
+              }
+            },
+            "power_cooling": {
+              "candidates": 29,
+              "qualifying": 0,
+              "rejections": {
+                "abstract_only": 10,
+                "relevance_below_threshold": 5,
+                "extraction_ineligible": 14
+              }
+            },
+            "policy": {
+              "candidates": 6,
+              "qualifying": 0,
+              "rejections": {
+                "already_covered": 2,
+                "relevance_below_threshold": 1,
+                "extraction_ineligible": 3
+              }
+            },
+            "other_infrastructure": {
+              "candidates": 3,
+              "qualifying": 0,
+              "rejections": {
+                "abstract_only": 2,
+                "extraction_ineligible": 1
+              }
+            }
+          },
+          "recent_coverage": {
+            "counts": {
+              "ai_business": 0,
+              "data_center_operators": 0,
+              "compute_hardware": 0,
+              "power_cooling": 2,
+              "policy": 1,
+              "other_infrastructure": 0
+            },
+            "lastBeat": "policy",
+            "total": 3
+          }
+        }
+      },
+      "llmUsage": {
+        "calls": 4,
+        "failures": 0,
+        "prompt_tokens": 4742,
+        "completion_tokens": 784,
+        "total_tokens": 5526,
+        "token_budget": 120000,
+        "call_budget": 60
+      }
     }
   ],
-  "lastRunAt": "2026-10-04T13:11:31.441Z",
+  "lastRunAt": "2026-10-04T17:17:48.065Z",
   "authored": {
     "lastColumnAt": "2026-10-04T10:31:52.065Z",
     "columnsByDay": {
@@ -52000,24 +52544,92 @@
     ],
     "lastFailure": null,
     "lastSelection": {
-      "at": "2026-10-04T10:31:52.065Z",
-      "outcome": "selected",
-      "selectedId": "4b3da08b458bdc0a",
+      "at": "2026-10-04T17:17:48.065Z",
+      "outcome": "no_qualifying_story",
+      "selectedId": null,
       "diagnostics": {
-        "total_candidates": 71,
+        "total_candidates": 70,
         "counts": {
           "invalid_identity": 0,
           "text_rights_unauthorized": 0,
           "abstract_only": 36,
-          "extraction_ineligible": 27,
-          "expert_insight_incomplete": 1,
+          "extraction_ineligible": 26,
+          "expert_insight_incomplete": 0,
           "relevance_below_threshold": 6,
-          "already_covered": 0,
+          "already_covered": 2,
+          "stale_story": 0,
+          "digest_roundup": 0,
           "unclean_evidence": 0,
           "insufficient_facts": 0,
-          "qualifying": 1
+          "qualifying": 0
         },
-        "selected_id": "4b3da08b458bdc0a"
+        "selected_id": null,
+        "selected_beat": null,
+        "selection_reason": "no_qualifying_story",
+        "by_beat": {
+          "ai_business": {
+            "candidates": 11,
+            "qualifying": 0,
+            "rejections": {
+              "abstract_only": 7,
+              "extraction_ineligible": 4
+            }
+          },
+          "data_center_operators": {
+            "candidates": 4,
+            "qualifying": 0,
+            "rejections": {
+              "abstract_only": 1,
+              "extraction_ineligible": 3
+            }
+          },
+          "compute_hardware": {
+            "candidates": 17,
+            "qualifying": 0,
+            "rejections": {
+              "abstract_only": 16,
+              "extraction_ineligible": 1
+            }
+          },
+          "power_cooling": {
+            "candidates": 29,
+            "qualifying": 0,
+            "rejections": {
+              "abstract_only": 10,
+              "relevance_below_threshold": 5,
+              "extraction_ineligible": 14
+            }
+          },
+          "policy": {
+            "candidates": 6,
+            "qualifying": 0,
+            "rejections": {
+              "already_covered": 2,
+              "relevance_below_threshold": 1,
+              "extraction_ineligible": 3
+            }
+          },
+          "other_infrastructure": {
+            "candidates": 3,
+            "qualifying": 0,
+            "rejections": {
+              "abstract_only": 2,
+              "extraction_ineligible": 1
+            }
+          }
+        },
+        "recent_coverage": {
+          "counts": {
+            "ai_business": 0,
+            "data_center_operators": 0,
+            "compute_hardware": 0,
+            "power_cooling": 2,
+            "policy": 1,
+            "other_infrastructure": 0
+          },
+          "lastBeat": "policy",
+          "total": 3
+        }
       }
     }
   }
