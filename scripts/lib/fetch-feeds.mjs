@@ -150,6 +150,7 @@ export function parseFeedItem(feed, item, now = new Date()) {
     language: feed.language || guessLanguage(`${title} ${rawSnippet}`),
     defaultCategory: feed.defaultCategory || null,
     ...(feed.textScope ? { source_text_scope: feed.textScope } : {}),
+    ...(feed.poolMaxAgeDays ? { pool_max_age_days: feed.poolMaxAgeDays } : {}),
   };
   const infrastructureRelevance = classifyInfrastructureRelevance(baseItem);
   const aiTopic = classifyAiTopicRelevance(baseItem);
@@ -202,7 +203,7 @@ async function fetchEpochFeedItems(feed, networkOptions = {}) {
     return response.bytes.toString('utf8');
   };
   const now = networkOptions.now || new Date();
-  const items = await fetchEpochIndexItems(feed, { fetchHtml });
+  const items = await fetchEpochIndexItems(feed, { fetchHtml, now, maxAgeDays: feed.poolMaxAgeDays });
   return items.map((item) => parseFeedItem(feed, item, now)).filter(Boolean);
 }
 
@@ -239,7 +240,8 @@ function relevanceThenRecency(a, b) {
 
 function isFresh(item, now) {
   const stamp = new Date(item.publishedAt).getTime();
-  return Number.isFinite(stamp) && now - stamp <= POOL_MAX_AGE_DAYS * 86_400_000;
+  const days = Number(item.pool_max_age_days) > 0 ? Number(item.pool_max_age_days) : POOL_MAX_AGE_DAYS;
+  return Number.isFinite(stamp) && now - stamp <= days * 86_400_000;
 }
 
 function registrySourceFor(record = {}, sources = []) {

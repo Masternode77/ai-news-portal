@@ -173,6 +173,9 @@ export function activeRegistryFeeds(sources = [], now = new Date()) {
       textScope: String(source.text_scope || '').trim().toLowerCase(),
       ...(source.feed_format ? { feedFormat: String(source.feed_format).trim() } : {}),
       ...(source.article_path_prefix ? { articlePathPrefix: String(source.article_path_prefix).trim() } : {}),
+      // Research sources publish weekly or slower; their items stay eligible
+      // for the pool and curation for this many days instead of the default.
+      ...(Number(source.pool_max_age_days) > 0 ? { poolMaxAgeDays: Number(source.pool_max_age_days) } : {}),
     }));
 }
 

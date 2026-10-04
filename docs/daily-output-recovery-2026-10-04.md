@@ -127,6 +127,24 @@ section.
   publishers would be the largest remaining lever and is the owner's decision.
 - The two Epoch sections publish roughly weekly; Google TPU notes arrive about monthly.
 
+## First live run (Update News `37219823883`, release v0.0.33)
+
+- The run passed the full test suite and the production content gate and committed `f8f0a46a`.
+- The wire processed three curated items instead of zero to two. All three were short Google
+  Cloud release notes and stayed archive-only (infrastructure relevance 0.22–0.31).
+- The column stage found no qualifying story among 70 candidates: 36 abstract-only, 26 not
+  extracted or failing extraction QA, 6 below relevance, 2 already covered.
+- The industry radar published 97 headlines (80 English, 17 Korean) from 37 of 42 feeds. Blocks &
+  Files, HPCwire, SemiAnalysis, Tom's Hardware and VentureBeat failed that refresh.
+- No Epoch AI, Google TPU or Kubernetes item entered the pool. Their newest pieces were older than
+  the pool's 10-day window (Epoch: Gradient Updates 2026-08-27, Data Insights 2026-09-14 to
+  09-18; TPU: 2026-06-01; Kubernetes: 2026-09-22).
+
+Follow-up: the Epoch rows now carry `pool_max_age_days: 21`, the same horizon as the column
+anchor limit, so weekly research stays eligible for the pool and curation for three weeks. The
+Data Insights index pins older pieces above the newest ones, so link selection reads each card's
+listing date and skips pinned items outside that window.
+
 ## Configuration
 
 | Variable | Default |
@@ -137,3 +155,4 @@ section.
 | `AUTHORED_COLUMN_MIN_RELEVANCE` / `AUTHORED_COLUMN_MIN_FACTS` | 0.6 / 3 |
 | `AUTHORED_COLUMN_MAX_STORY_ATTEMPTS` / `AUTHORED_COLUMN_MAX_ANCHOR_AGE_DAYS` | 2 / 21 |
 | `LLM_RUN_BUDGET_TOKENS` / `LLM_RUN_BUDGET_CALLS` | 120000 / 60 |
+| Registry `pool_max_age_days` (Epoch rows) | 21 (default `POOL_MAX_AGE_DAYS` 10) |

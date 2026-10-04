@@ -158,3 +158,36 @@ test('licence markers match visible text across inline markup only', async () =>
   assert.equal(pageCarriesLicenseMarker('<style>.x:after{content:"Distributed under CC BY 4.0"}</style>', 'Distributed under CC BY 4.0'), false);
   assert.equal(pageCarriesLicenseMarker('Distributed under CC BY 4.0', ''), false);
 });
+
+test('index selection skips pinned pieces older than the research window', () => {
+  const html = `
+    <div class="card"><span>Jan. 9, 2026</span><a href="/data-insights/ai-chip-production">Pinned</a></div>
+    <div class="card"><span>Mar. 12, 2025</span><a href="/data-insights/llm-inference-price-trends">Pinned too</a></div>
+    <div class="card"><span>Sep. 18, 2026</span><a href="/data-insights/math-preprints-disclosed-ai-use">Recent</a></div>
+    <div class="card"><span>Sep. 17, 2026</span><a href="/data-insights/malaysia-china-chip-smuggling">Recent</a></div>
+    <div class="card"><a href="/data-insights/undated-card">No listing date</a></div>`;
+  assert.deepEqual(epochIndexLinks(html, '/data-insights/', 5, { now: NOW, maxAgeDays: 21 }), [
+    'https://epoch.ai/data-insights/math-preprints-disclosed-ai-use',
+    'https://epoch.ai/data-insights/malaysia-china-chip-smuggling',
+    'https://epoch.ai/data-insights/undated-card',
+  ]);
+  assert.equal(epochIndexLinks(html, '/data-insights/', 5).length, 5, 'without a window every listed link is eligible');
+});
+
+test('research rows carry a 21-day window through the pool and curation', async () => {
+  const { selectPoolItems } = await import('../scripts/lib/fetch-feeds.mjs');
+  const { rollingCandidates } = await import('../scripts/lib/curate.mjs');
+  const feeds = activeRegistryFeeds(loadSourceRegistrySync(), NOW);
+  assert.equal(feeds.find((feed) => feed.sourceRegistryId === 'epoch-ai-data-insights').poolMaxAgeDays, 21);
+  assert.equal(feeds.find((feed) => feed.sourceRegistryId === 'eia-today-in-energy').poolMaxAgeDays, undefined);
+
+  const at = (days) => new Date(NOW.getTime() - days * 86_400_000).toISOString();
+  const base = { infrastructure_relevance_score: 0.7, ai_topic_score: 0.8, infrastructure_relevance_tier: 'signal_card', score: 50 };
+  const research = { ...base, id: 'research', source: 'Epoch AI', title: 'AI chip smuggling through Malaysia', publishedAt: at(16), pool_max_age_days: 21 };
+  const oldNews = { ...base, id: 'old-news', source: 'Agency', title: 'Grid capacity notice for data centers', publishedAt: at(16) };
+  const fresh = { ...base, id: 'fresh', source: 'Other', title: 'Fresh GPU cluster announcement', publishedAt: at(1) };
+  const pool = selectPoolItems([research, oldNews, fresh], NOW.getTime()).map((item) => item.id).sort();
+  assert.deepEqual(pool, ['fresh', 'research']);
+  const candidates = rollingCandidates([research, oldNews, fresh], { publishedIds: [] }, null, NOW).map((item) => item.id).sort();
+  assert.deepEqual(candidates, ['fresh', 'research']);
+});

@@ -191,7 +191,13 @@ export function rollingCandidates(pool, state, existingPlan, now) {
     ...(existingPlan?.publishedIds || []),
   ]);
   const cutoffMs = now.getTime() - FRESH_CANDIDATE_WINDOW_HOURS * 60 * 60 * 1000;
-  const maxAgeMs = now.getTime() - CANDIDATE_MAX_AGE_HOURS * 60 * 60 * 1000;
+  // A research source's registry window (pool_max_age_days) replaces the
+  // default maximum age for its own items only.
+  const maxAgeMsFor = (item) => {
+    const days = Number(item.pool_max_age_days);
+    const hours = days > 0 ? Math.max(CANDIDATE_MAX_AGE_HOURS, days * 24) : CANDIDATE_MAX_AGE_HOURS;
+    return now.getTime() - hours * 60 * 60 * 1000;
+  };
   const ranked = rankWithDiversity(pool)
     .filter((item) => !publishedSet.has(item.id))
     .filter((item) => !definitivelyArchived(item));
@@ -202,7 +208,7 @@ export function rollingCandidates(pool, state, existingPlan, now) {
   // follow, and the shortlist then orders everything by lane relevance.
   // Nothing older than the maximum age is ever offered, even on a quiet day.
   const freshIds = new Set(fresh.map((item) => item.id));
-  const recent = ranked.filter((item) => !freshIds.has(item.id) && publishedAtMs(item) >= maxAgeMs);
+  const recent = ranked.filter((item) => !freshIds.has(item.id) && publishedAtMs(item) >= maxAgeMsFor(item));
   return [...fresh, ...recent];
 }
 
