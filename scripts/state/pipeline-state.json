@@ -902,7 +902,10 @@
     "104074cc6be6e5b6",
     "c91ebe7f12a4e53e",
     "527c917b74f90f0e",
-    "ac9ecc88ff6c43e1"
+    "ac9ecc88ff6c43e1",
+    "a50001faa15fb37a",
+    "523f2c2d27136fe2",
+    "758880cc9e6d9387"
   ],
   "dayPlans": {
     "2026-03-24": {
@@ -48398,228 +48401,9 @@
     "2026-10-05": {
       "date": "2026-10-05",
       "createdAt": "2026-10-04T17:17:48.065Z",
-      "refreshedAt": "2026-10-04T17:57:33.976Z",
+      "refreshedAt": "2026-10-04T18:58:25.513Z",
       "candidateWindowHours": 24,
       "curatedItems": [
-        {
-          "id": "c91ebe7f12a4e53e",
-          "sourceRegistryId": "epoch-ai-data-insights",
-          "source": "Epoch AI",
-          "url": "https://epoch.ai/data-insights/astra-eci-breakdown",
-          "title": "GPT-6 Astra leads on math benchmarks, but not on software engineering",
-          "snippet": "OpenAI",
-          "contentText": "OpenAI",
-          "publishedAt": "2026-09-16T12:00:00.000Z",
-          "sourceImage": null,
-          "region": "Global",
-          "language": "en",
-          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
-          "pool_max_age_days": 21,
-          "ai_topic_score": 0.54,
-          "ai_topic_reasons": [
-            "openai",
-            "ai",
-            "ai_not_in_title"
-          ],
-          "category": "AI Infrastructure",
-          "primary_category": "AI Infrastructure",
-          "secondary_category": "GPU clusters and deployment readiness",
-          "infrastructure_layer": "Compute",
-          "affected_stakeholders": [
-            "operators",
-            "hyperscalers",
-            "cloud buyers",
-            "investors"
-          ],
-          "article_type": "Product / Platform Update",
-          "urgency_score": 0.18,
-          "taxonomy_confidence": 0.61,
-          "taxonomy_reasons": [
-            "ai infrastructure",
-            "neocloud"
-          ],
-          "direct_ai_infrastructure_relevance": 0,
-          "data_center_relevance": 0,
-          "cloud_capacity_relevance": 0,
-          "semiconductor_relevance": 0,
-          "power_grid_relevance": 0,
-          "cooling_relevance": 0,
-          "capital_markets_relevance": 0,
-          "enterprise_ai_infrastructure_relevance": 0,
-          "infrastructure_relevance_score": 0,
-          "infrastructure_relevance_tier": "archive_only",
-          "infrastructure_relevance_action": "archive_only",
-          "infrastructure_relevance_reasons": [
-            "no_strong_compute_current_infrastructure_match"
-          ],
-          "infrastructure_relevance": {
-            "direct_ai_infrastructure_relevance": 0,
-            "data_center_relevance": 0,
-            "cloud_capacity_relevance": 0,
-            "semiconductor_relevance": 0,
-            "power_grid_relevance": 0,
-            "cooling_relevance": 0,
-            "capital_markets_relevance": 0,
-            "enterprise_ai_infrastructure_relevance": 0,
-            "infrastructure_relevance_score": 0,
-            "infrastructure_relevance_tier": "archive_only",
-            "infrastructure_relevance_action": "archive_only",
-            "infrastructure_relevance_reasons": [
-              "no_strong_compute_current_infrastructure_match"
-            ],
-            "infrastructureRelevanceAction": "archive_only",
-            "articlePagePublished": false,
-            "homepagePublished": false,
-            "archiveOnly": true,
-            "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
-          },
-          "score": 23
-        },
-        {
-          "id": "527c917b74f90f0e",
-          "sourceRegistryId": "epoch-ai-data-insights",
-          "source": "Epoch AI",
-          "url": "https://epoch.ai/data-insights/malaysia-china-chip-smuggling",
-          "title": "Trade data consistent with $3B of chips smuggled to China via Malaysia",
-          "snippet": "Epoch AI",
-          "contentText": "Epoch AI",
-          "publishedAt": "2026-09-17T12:00:00.000Z",
-          "sourceImage": null,
-          "region": "APAC",
-          "language": "en",
-          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
-          "pool_max_age_days": 21,
-          "ai_topic_score": 0.18,
-          "ai_topic_reasons": [
-            "ai",
-            "ai_not_in_title"
-          ],
-          "category": "AI Infrastructure",
-          "primary_category": "AI Infrastructure",
-          "secondary_category": "GPU clusters and deployment readiness",
-          "infrastructure_layer": "Compute",
-          "affected_stakeholders": [
-            "operators",
-            "hyperscalers",
-            "cloud buyers",
-            "investors"
-          ],
-          "article_type": "Other",
-          "urgency_score": 0.23,
-          "taxonomy_confidence": 0.65,
-          "taxonomy_reasons": [
-            "ai infrastructure",
-            "neocloud"
-          ],
-          "direct_ai_infrastructure_relevance": 0.22,
-          "data_center_relevance": 0,
-          "cloud_capacity_relevance": 0,
-          "semiconductor_relevance": 0,
-          "power_grid_relevance": 0,
-          "cooling_relevance": 0,
-          "capital_markets_relevance": 0,
-          "enterprise_ai_infrastructure_relevance": 0,
-          "infrastructure_relevance_score": 0.163,
-          "infrastructure_relevance_tier": "archive_only",
-          "infrastructure_relevance_action": "archive_only",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:0.22"
-          ],
-          "infrastructure_relevance": {
-            "direct_ai_infrastructure_relevance": 0.22,
-            "data_center_relevance": 0,
-            "cloud_capacity_relevance": 0,
-            "semiconductor_relevance": 0,
-            "power_grid_relevance": 0,
-            "cooling_relevance": 0,
-            "capital_markets_relevance": 0,
-            "enterprise_ai_infrastructure_relevance": 0,
-            "infrastructure_relevance_score": 0.163,
-            "infrastructure_relevance_tier": "archive_only",
-            "infrastructure_relevance_action": "archive_only",
-            "infrastructure_relevance_reasons": [
-              "direct_ai_infrastructure_relevance:0.22"
-            ],
-            "infrastructureRelevanceAction": "archive_only",
-            "articlePagePublished": false,
-            "homepagePublished": false,
-            "archiveOnly": true,
-            "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
-          },
-          "score": 12
-        },
-        {
-          "id": "ac9ecc88ff6c43e1",
-          "sourceRegistryId": "epoch-ai-data-insights",
-          "source": "Epoch AI",
-          "url": "https://epoch.ai/data-insights/near-daily-ai-use-doubled",
-          "title": "Near-daily AI use among US adults has more than doubled in six months",
-          "snippet": "The share of US adults using AI at least 6 days a week rose from 8% in March 2026 to 19% in August 2026, according to Epoch AI/Ipsos polling.",
-          "contentText": "The share of US adults using AI at least 6 days a week rose from 8% in March 2026 to 19% in August 2026, according to Epoch AI/Ipsos polling.",
-          "publishedAt": "2026-09-14T12:00:00.000Z",
-          "sourceImage": null,
-          "region": "US",
-          "language": "en",
-          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
-          "pool_max_age_days": 21,
-          "ai_topic_score": 0.243,
-          "ai_topic_reasons": [
-            "ai"
-          ],
-          "category": "AI Infrastructure",
-          "primary_category": "AI Infrastructure",
-          "secondary_category": "GPU clusters and deployment readiness",
-          "infrastructure_layer": "Compute",
-          "affected_stakeholders": [
-            "operators",
-            "hyperscalers",
-            "cloud buyers",
-            "investors"
-          ],
-          "article_type": "Other",
-          "urgency_score": 0.18,
-          "taxonomy_confidence": 0.61,
-          "taxonomy_reasons": [
-            "ai infrastructure",
-            "neocloud"
-          ],
-          "direct_ai_infrastructure_relevance": 0,
-          "data_center_relevance": 0,
-          "cloud_capacity_relevance": 0,
-          "semiconductor_relevance": 0,
-          "power_grid_relevance": 0,
-          "cooling_relevance": 0,
-          "capital_markets_relevance": 0,
-          "enterprise_ai_infrastructure_relevance": 0,
-          "infrastructure_relevance_score": 0,
-          "infrastructure_relevance_tier": "archive_only",
-          "infrastructure_relevance_action": "archive_only",
-          "infrastructure_relevance_reasons": [
-            "no_strong_compute_current_infrastructure_match"
-          ],
-          "infrastructure_relevance": {
-            "direct_ai_infrastructure_relevance": 0,
-            "data_center_relevance": 0,
-            "cloud_capacity_relevance": 0,
-            "semiconductor_relevance": 0,
-            "power_grid_relevance": 0,
-            "cooling_relevance": 0,
-            "capital_markets_relevance": 0,
-            "enterprise_ai_infrastructure_relevance": 0,
-            "infrastructure_relevance_score": 0,
-            "infrastructure_relevance_tier": "archive_only",
-            "infrastructure_relevance_action": "archive_only",
-            "infrastructure_relevance_reasons": [
-              "no_strong_compute_current_infrastructure_match"
-            ],
-            "infrastructureRelevanceAction": "archive_only",
-            "articlePagePublished": false,
-            "homepagePublished": false,
-            "archiveOnly": true,
-            "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
-          },
-          "score": 11
-        },
         {
           "id": "a50001faa15fb37a",
           "sourceRegistryId": "google-cloud-compute-releases",
@@ -48689,76 +48473,6 @@
             "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
           },
           "score": 21
-        },
-        {
-          "id": "758880cc9e6d9387",
-          "sourceRegistryId": "google-cloud-compute-releases",
-          "source": "Google Cloud Compute Engine",
-          "url": "https://docs.cloud.google.com/compute/docs/release-notes#September_29_2026",
-          "title": "Google Cloud Compute Engine: Interface-based versioning (IBV) for the Compute Engine API is now generally available.",
-          "snippet": "Announcement Interface-based versioning (IBV) for the Compute Engine API is now generally available. IBV lets you call a specific, date-based API version so you can adopt API changes on your own schedule. For more infor…",
-          "contentText": "Announcement Interface-based versioning (IBV) for the Compute Engine API is now generally available. IBV lets you call a specific, date-based API version so you can adopt API changes on your own schedule. For more information, see Compute Engine API versioning . Feature Generally available : Compute Engine API version 2026-09-01 is now generally available. In this version, aggregatedList methods return partial results by default when a scope is unreachable. The returnPartialSuccess query parameter is no longer available in aggregatedList and list methods. For more information, see the 2026-09-01 REST reference . Feature Preview : Compute Engine API version 2026-10-01-preview is now available in Preview. In this version, the quotas field is no longer available in responses from the project…",
-          "publishedAt": "2026-09-29T07:00:00.000Z",
-          "sourceImage": null,
-          "region": "Global",
-          "language": "en",
-          "defaultCategory": "Hyperscalers & Cloud",
-          "ai_topic_score": 0,
-          "ai_topic_reasons": [
-            "ai_not_in_title"
-          ],
-          "category": "Cloud Capacity",
-          "primary_category": "Cloud Capacity",
-          "secondary_category": "Hyperscale regions and accelerator availability",
-          "infrastructure_layer": "Cloud Platform",
-          "affected_stakeholders": [
-            "hyperscalers",
-            "cloud buyers",
-            "enterprise IT",
-            "operators"
-          ],
-          "article_type": "Other",
-          "urgency_score": 0.25,
-          "taxonomy_confidence": 0.61,
-          "taxonomy_reasons": [
-            "google cloud"
-          ],
-          "direct_ai_infrastructure_relevance": 0,
-          "data_center_relevance": 0,
-          "cloud_capacity_relevance": 0.324,
-          "semiconductor_relevance": 0,
-          "power_grid_relevance": 0,
-          "cooling_relevance": 0,
-          "capital_markets_relevance": 0,
-          "enterprise_ai_infrastructure_relevance": 0,
-          "infrastructure_relevance_score": 0.223,
-          "infrastructure_relevance_tier": "archive_only",
-          "infrastructure_relevance_action": "archive_only",
-          "infrastructure_relevance_reasons": [
-            "cloud_capacity_relevance:0.32(google cloud)"
-          ],
-          "infrastructure_relevance": {
-            "direct_ai_infrastructure_relevance": 0,
-            "data_center_relevance": 0,
-            "cloud_capacity_relevance": 0.324,
-            "semiconductor_relevance": 0,
-            "power_grid_relevance": 0,
-            "cooling_relevance": 0,
-            "capital_markets_relevance": 0,
-            "enterprise_ai_infrastructure_relevance": 0,
-            "infrastructure_relevance_score": 0.223,
-            "infrastructure_relevance_tier": "archive_only",
-            "infrastructure_relevance_action": "archive_only",
-            "infrastructure_relevance_reasons": [
-              "cloud_capacity_relevance:0.32(google cloud)"
-            ],
-            "infrastructureRelevanceAction": "archive_only",
-            "articlePagePublished": false,
-            "homepagePublished": false,
-            "archiveOnly": true,
-            "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
-          },
-          "score": 25
         },
         {
           "id": "523f2c2d27136fe2",
@@ -48831,6 +48545,76 @@
             "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
           },
           "score": 19
+        },
+        {
+          "id": "758880cc9e6d9387",
+          "sourceRegistryId": "google-cloud-compute-releases",
+          "source": "Google Cloud Compute Engine",
+          "url": "https://docs.cloud.google.com/compute/docs/release-notes#September_29_2026",
+          "title": "Google Cloud Compute Engine: Interface-based versioning (IBV) for the Compute Engine API is now generally available.",
+          "snippet": "Announcement Interface-based versioning (IBV) for the Compute Engine API is now generally available. IBV lets you call a specific, date-based API version so you can adopt API changes on your own schedule. For more infor…",
+          "contentText": "Announcement Interface-based versioning (IBV) for the Compute Engine API is now generally available. IBV lets you call a specific, date-based API version so you can adopt API changes on your own schedule. For more information, see Compute Engine API versioning . Feature Generally available : Compute Engine API version 2026-09-01 is now generally available. In this version, aggregatedList methods return partial results by default when a scope is unreachable. The returnPartialSuccess query parameter is no longer available in aggregatedList and list methods. For more information, see the 2026-09-01 REST reference . Feature Preview : Compute Engine API version 2026-10-01-preview is now available in Preview. In this version, the quotas field is no longer available in responses from the project…",
+          "publishedAt": "2026-09-29T07:00:00.000Z",
+          "sourceImage": null,
+          "region": "Global",
+          "language": "en",
+          "defaultCategory": "Hyperscalers & Cloud",
+          "ai_topic_score": 0,
+          "ai_topic_reasons": [
+            "ai_not_in_title"
+          ],
+          "category": "Cloud Capacity",
+          "primary_category": "Cloud Capacity",
+          "secondary_category": "Hyperscale regions and accelerator availability",
+          "infrastructure_layer": "Cloud Platform",
+          "affected_stakeholders": [
+            "hyperscalers",
+            "cloud buyers",
+            "enterprise IT",
+            "operators"
+          ],
+          "article_type": "Other",
+          "urgency_score": 0.25,
+          "taxonomy_confidence": 0.61,
+          "taxonomy_reasons": [
+            "google cloud"
+          ],
+          "direct_ai_infrastructure_relevance": 0,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0.324,
+          "semiconductor_relevance": 0,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.223,
+          "infrastructure_relevance_tier": "archive_only",
+          "infrastructure_relevance_action": "archive_only",
+          "infrastructure_relevance_reasons": [
+            "cloud_capacity_relevance:0.32(google cloud)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 0,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0.324,
+            "semiconductor_relevance": 0,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.223,
+            "infrastructure_relevance_tier": "archive_only",
+            "infrastructure_relevance_action": "archive_only",
+            "infrastructure_relevance_reasons": [
+              "cloud_capacity_relevance:0.32(google cloud)"
+            ],
+            "infrastructureRelevanceAction": "archive_only",
+            "articlePagePublished": false,
+            "homepagePublished": false,
+            "archiveOnly": true,
+            "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
+          },
+          "score": 25
         },
         {
           "id": "168b174a04128103",
@@ -48908,12 +48692,9 @@
         }
       ],
       "curatedIds": [
-        "c91ebe7f12a4e53e",
-        "527c917b74f90f0e",
-        "ac9ecc88ff6c43e1",
         "a50001faa15fb37a",
-        "758880cc9e6d9387",
         "523f2c2d27136fe2",
+        "758880cc9e6d9387",
         "168b174a04128103"
       ],
       "publishedIds": [
@@ -48922,7 +48703,10 @@
         "104074cc6be6e5b6",
         "c91ebe7f12a4e53e",
         "527c917b74f90f0e",
-        "ac9ecc88ff6c43e1"
+        "ac9ecc88ff6c43e1",
+        "a50001faa15fb37a",
+        "523f2c2d27136fe2",
+        "758880cc9e6d9387"
       ],
       "slotPublications": {
         "0": true
@@ -48930,25 +48714,6 @@
     }
   },
   "runHistory": [
-    {
-      "at": "2026-08-28T00:19:57.747Z",
-      "day": "2026-08-28",
-      "slot": 1,
-      "publishedCount": 0,
-      "authoredColumn": {
-        "published": false,
-        "reason": "draft:no_parseable_draft"
-      },
-      "llmUsage": {
-        "calls": 3,
-        "failures": 0,
-        "prompt_tokens": 7704,
-        "completion_tokens": 2587,
-        "total_tokens": 10291,
-        "token_budget": 60000,
-        "call_budget": 40
-      }
-    },
     {
       "at": "2026-08-28T06:54:04.118Z",
       "day": "2026-08-28",
@@ -52831,9 +52596,195 @@
         "token_budget": 120000,
         "call_budget": 60
       }
+    },
+    {
+      "at": "2026-10-04T18:58:25.513Z",
+      "day": "2026-10-05",
+      "slot": 0,
+      "publishedCount": 0,
+      "signalCardCount": 0,
+      "archiveOnlyCount": 3,
+      "processedIds": [
+        "a50001faa15fb37a",
+        "523f2c2d27136fe2",
+        "758880cc9e6d9387"
+      ],
+      "blockedCount": 0,
+      "blockedItems": [],
+      "archiveOnlyItems": [
+        {
+          "id": "a50001faa15fb37a",
+          "title": "Google Cloud Compute Engine: Allowlisted GA : You can expose the host ID of a Compute Engine instance to verify its physical location in relation to other compute insta…",
+          "infrastructure_relevance_score": 0.223,
+          "infrastructure_relevance_tier": "archive_only",
+          "infrastructure_relevance_action": "archive_only",
+          "infrastructure_relevance_reasons": [
+            "cloud_capacity_relevance:0.32(google cloud)"
+          ],
+          "extraction_quality_score": 0.68,
+          "source_domain_adapter": "googlecloud",
+          "content_length": 468,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": false,
+          "repetition_block_reasons": [],
+          "repetition_check": null,
+          "expert_insight_complete": true,
+          "expert_insight_missing_fields": [],
+          "reason": "infrastructure_relevance_below_signal_threshold"
+        },
+        {
+          "id": "523f2c2d27136fe2",
+          "title": "In August, 25% of math preprints acknowledged AI use, up from 4% in April",
+          "infrastructure_relevance_score": 0.197,
+          "infrastructure_relevance_tier": "archive_only",
+          "infrastructure_relevance_action": "archive_only",
+          "infrastructure_relevance_reasons": [
+            "capital_markets_relevance:0.28(funding)"
+          ],
+          "extraction_quality_score": 1,
+          "source_domain_adapter": "generic",
+          "content_length": 1734,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": false,
+          "repetition_block_reasons": [],
+          "repetition_check": null,
+          "expert_insight_complete": false,
+          "expert_insight_missing_fields": [
+            "concrete_facts",
+            "named_companies"
+          ],
+          "reason": "infrastructure_relevance_below_signal_threshold"
+        },
+        {
+          "id": "758880cc9e6d9387",
+          "title": "Google Cloud Compute Engine: Interface-based versioning (IBV) for the Compute Engine API is now generally available.",
+          "infrastructure_relevance_score": 0.223,
+          "infrastructure_relevance_tier": "archive_only",
+          "infrastructure_relevance_action": "archive_only",
+          "infrastructure_relevance_reasons": [
+            "cloud_capacity_relevance:0.32(google cloud)"
+          ],
+          "extraction_quality_score": 1,
+          "source_domain_adapter": "googlecloud",
+          "content_length": 1283,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": false,
+          "repetition_block_reasons": [],
+          "repetition_check": null,
+          "expert_insight_complete": true,
+          "expert_insight_missing_fields": [],
+          "reason": "infrastructure_relevance_below_signal_threshold"
+        }
+      ],
+      "authoredColumn": {
+        "published": false,
+        "reason": "verify:insight_density_below_0.78",
+        "selectionDiagnostics": {
+          "total_candidates": 80,
+          "counts": {
+            "invalid_identity": 0,
+            "text_rights_unauthorized": 0,
+            "abstract_only": 42,
+            "extraction_ineligible": 24,
+            "expert_insight_incomplete": 1,
+            "relevance_below_threshold": 10,
+            "already_covered": 2,
+            "stale_story": 0,
+            "digest_roundup": 0,
+            "unclean_evidence": 0,
+            "insufficient_facts": 0,
+            "qualifying": 1
+          },
+          "selected_id": "527c917b74f90f0e",
+          "selected_beat": "compute_hardware",
+          "selection_reason": "highest_evidence_score",
+          "by_beat": {
+            "ai_business": {
+              "candidates": 13,
+              "qualifying": 0,
+              "rejections": {
+                "abstract_only": 7,
+                "extraction_ineligible": 4,
+                "relevance_below_threshold": 1,
+                "expert_insight_incomplete": 1
+              }
+            },
+            "data_center_operators": {
+              "candidates": 5,
+              "qualifying": 0,
+              "rejections": {
+                "abstract_only": 2,
+                "extraction_ineligible": 2,
+                "relevance_below_threshold": 1
+              }
+            },
+            "compute_hardware": {
+              "candidates": 22,
+              "qualifying": 1,
+              "rejections": {
+                "abstract_only": 20,
+                "extraction_ineligible": 1
+              }
+            },
+            "power_cooling": {
+              "candidates": 31,
+              "qualifying": 0,
+              "rejections": {
+                "abstract_only": 10,
+                "relevance_below_threshold": 6,
+                "extraction_ineligible": 15
+              }
+            },
+            "policy": {
+              "candidates": 3,
+              "qualifying": 0,
+              "rejections": {
+                "already_covered": 2,
+                "extraction_ineligible": 1
+              }
+            },
+            "other_infrastructure": {
+              "candidates": 6,
+              "qualifying": 0,
+              "rejections": {
+                "abstract_only": 3,
+                "relevance_below_threshold": 2,
+                "extraction_ineligible": 1
+              }
+            }
+          },
+          "recent_coverage": {
+            "counts": {
+              "ai_business": 0,
+              "data_center_operators": 0,
+              "compute_hardware": 0,
+              "power_cooling": 2,
+              "policy": 1,
+              "other_infrastructure": 0
+            },
+            "lastBeat": "policy",
+            "total": 3
+          },
+          "attempts": [
+            {
+              "id": "527c917b74f90f0e",
+              "outcome": "verify:insight_density_below_0.78"
+            }
+          ]
+        }
+      },
+      "llmUsage": {
+        "calls": 8,
+        "failures": 0,
+        "prompt_tokens": 28968,
+        "completion_tokens": 8969,
+        "total_tokens": 37937,
+        "token_budget": 120000,
+        "call_budget": 60
+      }
     }
   ],
-  "lastRunAt": "2026-10-04T17:57:33.976Z",
+  "lastRunAt": "2026-10-04T18:58:25.513Z",
   "authored": {
     "lastColumnAt": "2026-10-04T10:31:52.065Z",
     "columnsByDay": {
@@ -52856,79 +52807,110 @@
         "at": "2026-10-04T10:31:52.065Z"
       }
     ],
-    "lastFailure": null,
+    "lastFailure": {
+      "at": "2026-10-04T18:58:25.513Z",
+      "stage": "verify",
+      "detail": "insight_density_below_0.78",
+      "metrics": {
+        "chars": 11037,
+        "words": 1676,
+        "sections": 5,
+        "paragraphs": 18,
+        "human_style_score": 0.84,
+        "insight_density_score": 0.769,
+        "source_summary_ratio": 0.126,
+        "copyright_overlap_score": 0.034,
+        "unsupported_claim_count": 0,
+        "repeated_sentence_ratio": 0,
+        "heading_sequence_similarity": 0,
+        "conclusion_similarity": 0.067,
+        "thesis_overlap": 0.048,
+        "heading_reuse_max": 0.5,
+        "lead_reuse_max": 0.067,
+        "figure_count": 1
+      },
+      "attempts": [
+        {
+          "id": "527c917b74f90f0e",
+          "outcome": "verify:insight_density_below_0.78"
+        }
+      ]
+    },
     "lastSelection": {
-      "at": "2026-10-04T17:57:33.976Z",
-      "outcome": "no_qualifying_story",
-      "selectedId": null,
+      "at": "2026-10-04T18:58:25.513Z",
+      "outcome": "selected",
+      "selectedId": "527c917b74f90f0e",
       "diagnostics": {
-        "total_candidates": 71,
+        "total_candidates": 80,
         "counts": {
           "invalid_identity": 0,
           "text_rights_unauthorized": 0,
-          "abstract_only": 36,
-          "extraction_ineligible": 27,
-          "expert_insight_incomplete": 0,
-          "relevance_below_threshold": 6,
+          "abstract_only": 42,
+          "extraction_ineligible": 24,
+          "expert_insight_incomplete": 1,
+          "relevance_below_threshold": 10,
           "already_covered": 2,
           "stale_story": 0,
           "digest_roundup": 0,
           "unclean_evidence": 0,
           "insufficient_facts": 0,
-          "qualifying": 0
+          "qualifying": 1
         },
-        "selected_id": null,
-        "selected_beat": null,
-        "selection_reason": "no_qualifying_story",
+        "selected_id": "527c917b74f90f0e",
+        "selected_beat": "compute_hardware",
+        "selection_reason": "highest_evidence_score",
         "by_beat": {
           "ai_business": {
             "candidates": 13,
             "qualifying": 0,
             "rejections": {
               "abstract_only": 7,
-              "extraction_ineligible": 6
+              "extraction_ineligible": 4,
+              "relevance_below_threshold": 1,
+              "expert_insight_incomplete": 1
             }
           },
           "data_center_operators": {
-            "candidates": 4,
+            "candidates": 5,
             "qualifying": 0,
             "rejections": {
-              "abstract_only": 1,
-              "extraction_ineligible": 3
+              "abstract_only": 2,
+              "extraction_ineligible": 2,
+              "relevance_below_threshold": 1
             }
           },
           "compute_hardware": {
-            "candidates": 18,
-            "qualifying": 0,
+            "candidates": 22,
+            "qualifying": 1,
             "rejections": {
-              "abstract_only": 16,
-              "extraction_ineligible": 2
+              "abstract_only": 20,
+              "extraction_ineligible": 1
             }
           },
           "power_cooling": {
-            "candidates": 28,
+            "candidates": 31,
             "qualifying": 0,
             "rejections": {
               "abstract_only": 10,
-              "relevance_below_threshold": 5,
-              "extraction_ineligible": 13
+              "relevance_below_threshold": 6,
+              "extraction_ineligible": 15
             }
           },
           "policy": {
-            "candidates": 4,
+            "candidates": 3,
             "qualifying": 0,
             "rejections": {
               "already_covered": 2,
-              "relevance_below_threshold": 1,
               "extraction_ineligible": 1
             }
           },
           "other_infrastructure": {
-            "candidates": 4,
+            "candidates": 6,
             "qualifying": 0,
             "rejections": {
-              "abstract_only": 2,
-              "extraction_ineligible": 2
+              "abstract_only": 3,
+              "relevance_below_threshold": 2,
+              "extraction_ineligible": 1
             }
           }
         },
@@ -52944,7 +52926,13 @@
           "lastBeat": "policy",
           "total": 3
         }
-      }
+      },
+      "attempts": [
+        {
+          "id": "527c917b74f90f0e",
+          "outcome": "verify:insight_density_below_0.78"
+        }
+      ]
     }
   }
 }
