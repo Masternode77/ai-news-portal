@@ -14,3 +14,11 @@ test('inflected forms count like the base terms', () => {
   assert.ok(plural.insight_density_score > insightDensityScore('Plain prose with none of the decision words.').insight_density_score);
   assert.equal(insightDensityScore('A riskier costume for the controller.').insight_density_score, 0.68, 'words that merely start with a term do not count');
 });
+
+test('verb tense does not change the score', () => {
+  const past = insightDensityScore('The rule constrained supply, exposed every supplier, allocated scarce capacity and risked delivery while it controlled pricing and leveraged procurement.');
+  const progressive = insightDensityScore('The rule is constraining supply, exposing every supplier, allocating scarce capacity and risking delivery while it is controlling pricing and leveraging procurement.');
+  const present = insightDensityScore('The rule constrains supply, exposes every supplier, allocates scarce capacity and risks delivery while it controls pricing and leverages procurement.');
+  assert.equal(progressive.insight_density_score, past.insight_density_score);
+  assert.equal(present.insight_density_score, past.insight_density_score);
+});
