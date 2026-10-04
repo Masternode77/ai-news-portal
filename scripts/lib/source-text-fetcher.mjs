@@ -15,6 +15,16 @@ function configuredHosts(source = {}) {
   return [...new Set([source.domain, ...values].map(normalizeNetworkHost).filter(Boolean))];
 }
 
+// A prefix-scoped source accepts only one slug segment under its section
+// path, with no query string or fragment.
+export function articlePathWithinPrefix(target, prefix = '') {
+  const value = String(prefix || '').trim();
+  if (!value.startsWith('/') || !value.endsWith('/')) return false;
+  if (target.search || target.hash) return false;
+  if (!target.pathname.startsWith(value)) return false;
+  return /^[a-z0-9]+(?:-[a-z0-9]+)*\/?$/.test(target.pathname.slice(value.length));
+}
+
 export function sourceTextTargetDecision(subject = {}, sources = [], now = new Date()) {
   const sourceId = String(subject.sourceRegistryId || subject.source_id || '').trim();
   const source = sources.find((entry) => String(entry?.id || '').trim() === sourceId);
@@ -35,6 +45,9 @@ export function sourceTextTargetDecision(subject = {}, sources = [], now = new D
   if (target.username || target.password) return { authorized: false, reason: 'unsafe_source_text_url', detail: 'credentials_not_allowed' };
   if (target.port && target.port !== '443') return { authorized: false, reason: 'unsafe_source_text_url', detail: 'nonstandard_port' };
   if (source.article_path && target.pathname !== source.article_path) {
+    return { authorized: false, reason: 'unsafe_source_text_url', detail: 'article_path_not_allowlisted' };
+  }
+  if (source.article_path_prefix && !articlePathWithinPrefix(target, source.article_path_prefix)) {
     return { authorized: false, reason: 'unsafe_source_text_url', detail: 'article_path_not_allowlisted' };
   }
   const allowedHosts = configuredHosts(source);

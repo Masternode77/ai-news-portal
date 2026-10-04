@@ -112,3 +112,38 @@ for every row. The verdict key above applies to its link-only table.
 2. Find a current RSS URL for The Register (data centre section) and Data Center Frontier; retest with `Feed Probe`.
 3. Retry VentureBeat, Power Engineering and insideHPC from a different network or ask them directly; the runner is blocked.
 4. If the link-only lane is built, start with TechCrunch, ServeTheHome and Tom's Hardware (explicit permission) and the government feeds already authorised, then add the "low risk" group with attribution and a documented takedown path.
+
+## 2026-10-04 addendum — link-only lane built
+
+The owner asked for wider exposure of AI company, data center and IT company news, which is
+the product decision this review said the lane needed. It is implemented as the industry radar
+(`scripts/lib/industry-headlines.mjs`, `src/components/IndustryRadar.astro`) under the
+conditions above:
+
+- **Gate.** A row is listed only when it carries `link_only_basis: feed_listing_permitted`
+  (TechCrunch, ServeTheHome, Tom's Hardware) or `link_only_basis: feed_listing_low_risk` (the
+  "Low risk" rows here and in `docs/source-expansion-2026-09.md`), its `reviewed_at` is inside
+  the 365-day window, and it is not text-authorized. Ask-first rows (Bloomberg, Capacity,
+  Uptime Institute, Canary Media, Berkeley Lab, NESO), blocked rows (insideHPC, Power
+  Engineering, Data Center Frontier, 전기신문) and Ofgem carry no `link_only_basis` and are
+  never fetched.
+- **Fields.** Only the feed's exact headline, publication date, publisher name and an https
+  link on the publisher's own host are stored and shown. Feed descriptions, bodies and images
+  are discarded, so ServeTheHome's 300-character synopsis limit and TechCrunch's "display only
+  the content provided in the feed" rule are met without displaying any synopsis; headlines are
+  not rewritten. Article pages are never fetched (NVIDIA, Data Center Knowledge and Informa
+  TechTarget crawling clauses).
+- **No advertising inside the block.** The component contains no ad slot (TechCrunch rule), and
+  a test asserts that.
+- **Attribution and removal.** Every item names its publisher and links to the original. The
+  block states that Compute Current does not copy or summarize the articles and gives the
+  removal address (`briefings@computecurrent.com`). A removal request is honoured by deleting
+  the row's `link_only_basis`: the next build drops that publisher's headlines from every page
+  (the pages apply the same registry gate as the refresh), and the refresh never carries them
+  over again.
+- **Public copy safety.** Headlines that would trip the public copy, forbidden phrase,
+  truncation, boilerplate or banned-phrase checks are dropped before storage, so a third-party
+  headline cannot fail the production content gate.
+
+Full-text use for these publishers remains unauthorized; nothing in this addendum changes
+`text_use_basis` or `allow_text_use`.

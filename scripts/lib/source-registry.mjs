@@ -171,6 +171,8 @@ export function activeRegistryFeeds(sources = [], now = new Date()) {
       // 'abstract' marks sources whose authorized text is metadata only (arXiv);
       // the relevance classifier caps such items at the signal-card lane.
       textScope: String(source.text_scope || '').trim().toLowerCase(),
+      ...(source.feed_format ? { feedFormat: String(source.feed_format).trim() } : {}),
+      ...(source.article_path_prefix ? { articlePathPrefix: String(source.article_path_prefix).trim() } : {}),
     }));
 }
 

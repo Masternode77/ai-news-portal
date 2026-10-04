@@ -8,7 +8,7 @@ import { buildColumnSitemapEntries } from '../../scripts/lib/column-surface.mjs'
 
 export function GET() {
   const entries = [
-    ...['/data/', '/data/demand/', '/data/capacity/', '/data/ercot/', '/ko/', '/hubs/', '/entities/', '/glossary/', '/newsletter/', ...reference.hubs.map(row => `/hubs/${row.slug}/`), ...reference.entities.map(row => `/entities/${row.slug}/`)].map(loc => ({loc})),
+    ...['/radar/', '/data/', '/data/demand/', '/data/capacity/', '/data/ercot/', '/ko/', '/hubs/', '/entities/', '/glossary/', '/newsletter/', ...reference.hubs.map(row => `/hubs/${row.slug}/`), ...reference.entities.map(row => `/entities/${row.slug}/`)].map(loc => ({loc})),
     ...buildSitemapEntries([...latestNews, ...archivedNews]),
     ...buildColumnSitemapEntries(authoredColumns, SITE.url),
   ];

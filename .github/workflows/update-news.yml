@@ -20,7 +20,9 @@ on:
 jobs:
   update-news:
     runs-on: ubuntu-latest
-    timeout-minutes: 25
+    # Tests and the content gate take about 15 minutes; the wider wire run,
+    # the radar refresh and a second column attempt need headroom on top.
+    timeout-minutes: 40
     permissions:
       contents: write
     concurrency:
@@ -68,6 +70,13 @@ jobs:
           SUPABASE_ARCHIVE_TABLE: ${{ secrets.SUPABASE_ARCHIVE_TABLE }}
         run: npm run pipeline
 
+      # Headline-and-link lane (docs/source-rights-review.md). Never blocks the
+      # wire or column run: a failed refresh keeps the previous list.
+      - name: Refresh industry radar headlines
+        timeout-minutes: 4
+        continue-on-error: true
+        run: node ./scripts/update-industry-headlines.mjs
+
       - name: Restore approved public inventory
         run: node ./scripts/restore-eia-public-inventory.mjs
 
@@ -102,6 +111,7 @@ jobs:
             src/data/authored-columns.json \
             src/data/search-index.json \
             src/data/news-pool.json \
+            src/data/industry-headlines.json \
             src/data/taxonomy-pages.json \
             src/data/pipeline-heartbeat.json \
             scripts/state/pipeline-state.json \

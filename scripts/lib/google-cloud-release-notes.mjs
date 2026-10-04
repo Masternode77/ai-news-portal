@@ -1,7 +1,11 @@
 const PRODUCTS = {
   '/compute/docs/release-notes': 'Google Cloud Compute Engine',
   '/gemini-enterprise-agent-platform/release-notes': 'Google Cloud AI',
+  '/tpu/docs/release-notes': 'Google Cloud TPU',
 };
+
+// Registry rows whose items are dated Google Cloud release-note sections.
+export const GOOGLE_RELEASE_SOURCE_PATTERN = /^google-cloud-(?:compute|ai|tpu)-releases$/;
 
 export function scopeGoogleAiReleaseItem(item = {}) {
   const content = String(item.content || '');
