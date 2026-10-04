@@ -223,6 +223,19 @@ the lowest scores 0.81, so the 0.75 floor still separates analysis from summary.
 directive now names the stakeholder, exposure and constraint analysis the score rewards and asks
 for fewer reporting verbs. No word was added to the list and the floor is unchanged.
 
+## Sixth live run (Update News `37238528474`, release v0.0.38)
+
+- The column stage published "Malaysia collapsed a multi-billion-dollar server smuggling route
+  with one permit", anchored on the Epoch AI trade-data insight: 1,683 words, 6 sections, 21
+  paragraphs, human-style 0.94, insight density 0.93, overlap 0.014, no unsupported claims, one
+  figure, two revision passes. Five model calls used 35,312 tokens.
+- Production returned 200 for the column page, and the homepage, column index and RSS feed list
+  it. The smoke workflow still exited non-zero because its last listing pipe hit a broken pipe
+  under `pipefail` after every check had printed its result.
+- The wire picked nothing: the curation model chose no item and no pool item reached the floor's
+  0.55 lane score (the best was 0.48). The day's processing count stayed at 12 of 18 and its
+  published count at 1 of 9.
+
 ## Configuration
 
 | Variable | Default |
