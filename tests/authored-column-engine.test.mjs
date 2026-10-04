@@ -909,3 +909,17 @@ test('a second story is skipped when the stage lacks time for a full attempt', a
     delete process.env.OPENROUTER_API_KEY;
   }
 });
+
+test('the column insight-density floor is 0.75 and still rejects summary-heavy prose', async () => {
+  const { AUTHORED_MIN_INSIGHT_DENSITY_DEFAULT } = await import('../scripts/lib/authored-column-policy.mjs');
+  const { insightDensityScore } = await import('../scripts/lib/insight-density-score.mjs');
+  assert.equal(AUTHORED_MIN_INSIGHT_DENSITY_DEFAULT, 0.75);
+  const nearMiss = 'Export enforcement shifts the risk and the cost onto every supplier, operator and investor. Timing, capacity, leverage and allocation decide who absorbs it.';
+  const score = insightDensityScore(nearMiss).insight_density_score;
+  assert.ok(score >= 0.75 && score < 0.78, String(score));
+  const result = authoredColumnQualityResult({ body: nearMiss, title: 'Short test', deck: '', summary: '', thesis: '', ledgerClaims: [], sourceText: '', recentRecords: [] });
+  assert.ok(!result.reasons.some((reason) => reason.startsWith('insight_density_below')), result.reasons.join('|'));
+  const summary = 'The company said it announced the deal, according to the article; the source reported the headline and said the article was reported.';
+  const summaryResult = authoredColumnQualityResult({ body: summary, title: 'Short test', deck: '', summary: '', thesis: '', ledgerClaims: [], sourceText: '', recentRecords: [] });
+  assert.ok(summaryResult.reasons.some((reason) => reason.startsWith('insight_density_below_0.75')));
+});
