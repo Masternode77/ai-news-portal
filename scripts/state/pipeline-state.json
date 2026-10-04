@@ -48225,7 +48225,7 @@
     "2026-10-04": {
       "date": "2026-10-04",
       "createdAt": "2026-10-03T18:37:01.308Z",
-      "refreshedAt": "2026-10-04T09:51:56.286Z",
+      "refreshedAt": "2026-10-04T10:31:52.065Z",
       "candidateWindowHours": 24,
       "curatedItems": [],
       "curatedIds": [],
@@ -48241,25 +48241,6 @@
     }
   },
   "runHistory": [
-    {
-      "at": "2026-08-26T07:56:33.709Z",
-      "day": "2026-08-26",
-      "slot": 2,
-      "publishedCount": 0,
-      "authoredColumn": {
-        "published": false,
-        "reason": "draft:no_parseable_draft"
-      },
-      "llmUsage": {
-        "calls": 3,
-        "failures": 0,
-        "prompt_tokens": 7698,
-        "completion_tokens": 2167,
-        "total_tokens": 9865,
-        "token_budget": 60000,
-        "call_budget": 40
-      }
-    },
     {
       "at": "2026-08-26T16:22:46.524Z",
       "day": "2026-08-27",
@@ -51837,11 +51818,46 @@
         "token_budget": 60000,
         "call_budget": 40
       }
+    },
+    {
+      "at": "2026-10-04T10:31:52.065Z",
+      "day": "2026-10-04",
+      "slot": 2,
+      "publishedCount": 0,
+      "authoredColumn": {
+        "published": true,
+        "slug": "brussels-turned-waste-heat-into-a-permit-condition-i-read-the-eu-2026-10-04",
+        "selectionDiagnostics": {
+          "total_candidates": 71,
+          "counts": {
+            "invalid_identity": 0,
+            "text_rights_unauthorized": 0,
+            "abstract_only": 36,
+            "extraction_ineligible": 27,
+            "expert_insight_incomplete": 1,
+            "relevance_below_threshold": 6,
+            "already_covered": 0,
+            "unclean_evidence": 0,
+            "insufficient_facts": 0,
+            "qualifying": 1
+          },
+          "selected_id": "4b3da08b458bdc0a"
+        }
+      },
+      "llmUsage": {
+        "calls": 5,
+        "failures": 0,
+        "prompt_tokens": 17703,
+        "completion_tokens": 5521,
+        "total_tokens": 23224,
+        "token_budget": 60000,
+        "call_budget": 40
+      }
     }
   ],
-  "lastRunAt": "2026-10-04T09:51:56.286Z",
+  "lastRunAt": "2026-10-04T10:31:52.065Z",
   "authored": {
-    "lastColumnAt": "2026-09-16T18:47:02.256Z",
+    "lastColumnAt": "2026-10-04T10:31:52.065Z",
     "columnsByDay": {
       "2026-08-17": 2,
       "2026-08-18": 1,
@@ -51853,16 +51869,18 @@
       "2026-08-25": 1,
       "2026-08-28": 2,
       "2026-09-08": 1,
-      "2026-09-16": 1
+      "2026-09-16": 1,
+      "2026-10-04": 1
     },
-    "recentStoryKeys": [],
-    "lastFailure": {
-      "at": "2026-10-04T09:51:56.286Z",
-      "stage": "voice",
-      "detail": "invalid_structured_heading"
-    },
+    "recentStoryKeys": [
+      {
+        "key": "https://ec.europa.eu/commission/presscorner/detail/en/ip_26_1667",
+        "at": "2026-10-04T10:31:52.065Z"
+      }
+    ],
+    "lastFailure": null,
     "lastSelection": {
-      "at": "2026-10-04T09:51:56.286Z",
+      "at": "2026-10-04T10:31:52.065Z",
       "outcome": "selected",
       "selectedId": "4b3da08b458bdc0a",
       "diagnostics": {
