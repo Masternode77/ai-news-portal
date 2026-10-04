@@ -48,7 +48,7 @@ Run history from 2026-09-11 to 2026-10-04 shows no full article pages and two co
 - The prompt asks for at least three on-beat stories when they exist and names AI company,
   cloud, chipmaker, data center operator and IT infrastructure announcements.
 - `rollingCandidates()` always keeps older candidates (up to `CANDIDATE_MAX_AGE_HOURS`, 168)
-  behind the fresh ones.
+  behind the fresh ones, and never offers anything older, even on a quiet day.
 
 ### Columns (`scripts/lib/authored-column-engine.mjs`)
 
@@ -89,7 +89,7 @@ Run history from 2026-09-11 to 2026-10-04 shows no full article pages and two co
 | --- | --- | --- |
 | `epoch-ai-gradient-updates`, `epoch-ai-data-insights` | About page: "Epoch AI's work is free to use, distribute, and reproduce provided the source and authors are credited under the Creative Commons Attribution license" (CC BY 4.0 link). No RSS exists; section indexes are server-rendered; robots.txt disallows only `/assets/`, `/i`, `/fro`. | `feed_format: epoch_html_index` reads the index and each article's metadata (5 per section per run). Every page must carry the CC BY 4.0 link before it is listed or extracted. `article_path_prefix` allows one slug under the section path. |
 | `google-cloud-tpu-releases` | Same Google Cloud documentation CC BY 4.0 footer as the existing rows; feed 200 with 30 dated entries. | Existing dated-section adapter; ID pattern shared through `GOOGLE_RELEASE_SOURCE_PATTERN`. |
-| `kubernetes-blog` | Blog pages carry "The Kubernetes Authors · Documentation Distributed under CC BY 4.0"; feed 200 with 50 items. | `license_marker` requires that footer statement on every extracted page. |
+| `kubernetes-blog` | Blog pages carry "The Kubernetes Authors · Documentation Distributed under CC BY 4.0"; feed 200 with 50 items. | `license_marker` requires that footer statement in every extracted page's visible text (the licence name is a link, so markup inside the statement is ignored). |
 
 Pages adapted from these sources show a CC BY 4.0 notice through `SourceLicense.astro`.
 
@@ -99,7 +99,9 @@ Pages adapted from these sources show a CC BY 4.0 notice through `SourceLicense.
 on the homepage, `/radar/`, company pages and `/ko/`. Only the exact headline, date, publisher
 and link are kept. The conditions and the removal path are in the 2026-10-04 addendum of
 `docs/source-rights-review.md`. The workflow refreshes the list after each news update without
-blocking the run.
+blocking the run. A language whose refresh comes back thin (fewer than 8 English or 3 Korean
+headlines) keeps its previous still-current headlines, so a failed lane never blanks its
+section.
 
 ### Checked and left out
 

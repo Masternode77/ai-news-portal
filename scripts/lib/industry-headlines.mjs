@@ -295,6 +295,41 @@ async function fetchHeadlineFeed(feed, networkOptions = {}) {
   return parsed.items || [];
 }
 
+// A refresh replaces a language's headlines only when it brings enough of
+// them. Otherwise that language keeps its previous items that are still inside
+// the age window, merged with whatever the refresh did bring, so one failed
+// lane (every Korean feed down, say) never blanks its section.
+export const MIN_HEADLINES_PER_LANGUAGE = { en: 8, ko: 3 };
+
+export function mergeHeadlineSnapshots(result = {}, previous = null, { now = new Date(), minimums = MIN_HEADLINES_PER_LANGUAGE } = {}) {
+  const cutoff = now.getTime() - HEADLINE_MAX_AGE_HOURS * 3_600_000;
+  const current = (item) => item && typeof item.url === 'string' && typeof item.title === 'string'
+    && Number.isFinite(Date.parse(item.publishedAt)) && Date.parse(item.publishedAt) >= cutoff;
+  const fresh = (Array.isArray(result.items) ? result.items : []).filter(current);
+  const prior = (Array.isArray(previous?.items) ? previous.items : []).filter(current);
+  const languages = [...new Set([...Object.keys(minimums), ...fresh.map((item) => item.language), ...prior.map((item) => item.language)])].filter(Boolean);
+  const merged = [];
+  const carriedOver = {};
+  for (const language of languages) {
+    const incoming = fresh.filter((item) => item.language === language);
+    if (incoming.length >= (minimums[language] ?? 1)) {
+      merged.push(...incoming);
+      continue;
+    }
+    const urls = new Set(incoming.map((item) => item.url));
+    const kept = prior.filter((item) => item.language === language && !urls.has(item.url));
+    if (kept.length) carriedOver[language] = kept.length;
+    merged.push(...incoming, ...kept);
+  }
+  merged.sort((a, b) => Date.parse(b.publishedAt) - Date.parse(a.publishedAt));
+  return {
+    generatedAt: result.generatedAt || now.toISOString(),
+    feeds: result.feeds || { attempted: 0, succeeded: 0, failed: [] },
+    ...(Object.keys(carriedOver).length ? { carriedOver } : {}),
+    items: merged,
+  };
+}
+
 export async function refreshIndustryHeadlines({ sources = [], now = new Date(), fetchFeed = fetchHeadlineFeed, networkOptions = {} } = {}) {
   const feeds = headlineFeeds(sources, now);
   const failed = [];

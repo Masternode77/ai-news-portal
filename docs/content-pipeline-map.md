@@ -61,7 +61,9 @@ per-source cap applies to the publication.
 Registry keys added on 2026-10-04: `article_path_prefix` limits a source to one
 slug under a section path (Epoch AI), `feed_format: epoch_html_index` reads a
 server-rendered section index instead of RSS (`scripts/lib/epoch-ai.mjs`), and
-`license_marker` names a licence statement every extracted page must contain.
+`license_marker` names a licence statement every extracted page must show in
+its visible text (markup inside the statement, such as a linked licence name, is
+ignored; text in scripts, styles or comments never counts).
 
 ## 1a. Industry Radar (headline-and-link lane)
 
@@ -77,8 +79,10 @@ pages are never fetched. Titles that would fail the public copy, forbidden
 phrase, truncation, boilerplate or banned-phrase checks are dropped. A
 headline scorer (topic terms plus a tracked-company list in English and
 Korean) keeps AI company, chip, cloud, IT, data center and power items. A
-refresh with fewer than eight items keeps the previous
-`src/data/industry-headlines.json`. The list renders on the homepage, `/radar/`,
+language whose refresh brings fewer than its minimum (8 English, 3 Korean)
+keeps its previous headlines that are still inside the seven-day window,
+merged with the new ones (`mergeHeadlineSnapshots()`), so one failed lane never
+blanks its section in `src/data/industry-headlines.json`. The list renders on the homepage, `/radar/`,
 company pages and `/ko/` through `src/components/IndustryRadar.astro`, which
 carries no ad slot and states the removal address.
 

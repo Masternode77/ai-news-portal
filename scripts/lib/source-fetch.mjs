@@ -329,6 +329,23 @@ function licenseMarkerFor(sourceRegistryId = '', sources) {
   return String(row?.license_marker || '').trim();
 }
 
+// The marker is matched against the page's visible text, so a statement whose
+// licence name is a link ("Distributed under <a>CC BY 4.0</a>") still counts,
+// while text inside scripts or styles never does.
+export function pageCarriesLicenseMarker(html = '', marker = '') {
+  const normalize = (value) => String(value || '').replace(/\s+/g, ' ').trim().toLowerCase();
+  const visible = String(html || '')
+    .replace(/<script[\s\S]*?<\/script>/gi, ' ')
+    .replace(/<style[\s\S]*?<\/style>/gi, ' ')
+    .replace(/<!--[\s\S]*?-->/g, ' ')
+    .replace(/<[^>]+>/g, ' ')
+    .replace(/&nbsp;|&#160;/gi, ' ')
+    .replace(/&copy;|&#169;/gi, '\u00a9')
+    .replace(/&amp;/gi, '&');
+  const wanted = normalize(marker);
+  return Boolean(wanted) && normalize(visible).includes(wanted);
+}
+
 function fallbackExtraction(url, fallbackSnippet, reason) {
   const adapter = adapterForUrl(url);
   const articleText = truncate(fallbackSnippet, 500);
@@ -378,7 +395,7 @@ export async function fetchArticleExtraction({
     const html = apiTarget ? apiTarget.toHtml(fetched.text) : fetched.text;
     const isGoogleRelease = GOOGLE_RELEASE_SOURCE_PATTERN.test(sourceRegistryId);
     const marker = licenseMarkerFor(sourceRegistryId, sources);
-    if (marker && !html.includes(marker)) return fallbackExtraction(url, fallbackSnippet, 'license_marker_missing');
+    if (marker && !pageCarriesLicenseMarker(html, marker)) return fallbackExtraction(url, fallbackSnippet, 'license_marker_missing');
     const isEpoch = /^epoch-ai-/.test(sourceRegistryId);
     const articleSection = isGoogleRelease
       ? googleReleaseNoteSection(html, url)

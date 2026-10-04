@@ -200,15 +200,10 @@ export function rollingCandidates(pool, state, existingPlan, now) {
   // Fresh items lead, but a handful of fresh off-beat notices must not hide
   // the week's on-beat story: older candidates inside the maximum age always
   // follow, and the shortlist then orders everything by lane relevance.
+  // Nothing older than the maximum age is ever offered, even on a quiet day.
   const freshIds = new Set(fresh.map((item) => item.id));
   const recent = ranked.filter((item) => !freshIds.has(item.id) && publishedAtMs(item) >= maxAgeMs);
-  if (fresh.length + recent.length >= ITEMS_PER_RUN) return [...fresh, ...recent];
-  const recentIds = new Set(recent.map((item) => item.id));
-  return [
-    ...fresh,
-    ...recent,
-    ...ranked.filter((item) => !freshIds.has(item.id) && !recentIds.has(item.id)),
-  ];
+  return [...fresh, ...recent];
 }
 
 export async function planForToday(pool, state, now = new Date()) {

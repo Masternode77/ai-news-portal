@@ -140,8 +140,21 @@ test('a registry licence marker must appear on every extracted page', async () =
   const sources = loadSourceRegistrySync();
   const url = 'https://kubernetes.io/blog/2026/09/22/dynamic-resource-allocation-for-accelerators/';
   const body = '<main><p>Dynamic resource allocation lets a Kubernetes cluster schedule GPUs and other accelerators for AI training and inference workloads.</p></main>';
-  const withMarker = await fetchArticleExtraction({ url, sourceRegistryId: 'kubernetes-blog', sources, now: NOW, networkOptions: networkFor(`${body}<footer>The Kubernetes Authors | Documentation Distributed under CC BY 4.0</footer>`) });
+  // The real footer links the licence name, so the marker spans markup.
+  const footer = '<footer><p>&copy; 2026 The Kubernetes Authors | Documentation Distributed under <a href="https://git.k8s.io/website/LICENSE" class="light-text">CC BY 4.0</a></p></footer>';
+  const withMarker = await fetchArticleExtraction({ url, sourceRegistryId: 'kubernetes-blog', sources, now: NOW, networkOptions: networkFor(`${body}${footer}`) });
   assert.match(withMarker.articleText, /Dynamic resource allocation/);
   const withoutMarker = await fetchArticleExtraction({ url, sourceRegistryId: 'kubernetes-blog', sources, now: NOW, networkOptions: networkFor(body) });
   assert.equal(withoutMarker.extractionQa.extraction_failure_reason, 'license_marker_missing');
+  const scriptOnly = await fetchArticleExtraction({ url, sourceRegistryId: 'kubernetes-blog', sources, now: NOW, networkOptions: networkFor(`${body}<script>const note = "Distributed under CC BY 4.0";</script>`) });
+  assert.equal(scriptOnly.extractionQa.extraction_failure_reason, 'license_marker_missing');
+});
+
+test('licence markers match visible text across inline markup only', async () => {
+  const { pageCarriesLicenseMarker } = await import('../scripts/lib/source-fetch.mjs');
+  assert.equal(pageCarriesLicenseMarker('Documentation Distributed under <a href="x">CC BY 4.0</a>', 'Distributed under CC BY 4.0'), true);
+  assert.equal(pageCarriesLicenseMarker('Distributed&nbsp;under\n  CC BY 4.0', 'Distributed under CC BY 4.0'), true);
+  assert.equal(pageCarriesLicenseMarker('<!-- Distributed under CC BY 4.0 -->', 'Distributed under CC BY 4.0'), false);
+  assert.equal(pageCarriesLicenseMarker('<style>.x:after{content:"Distributed under CC BY 4.0"}</style>', 'Distributed under CC BY 4.0'), false);
+  assert.equal(pageCarriesLicenseMarker('Distributed under CC BY 4.0', ''), false);
 });

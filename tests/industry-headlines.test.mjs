@@ -7,6 +7,7 @@ import {
   headlineFeeds,
   headlineFromFeedItem,
   headlineSafeForPublicSurface,
+  mergeHeadlineSnapshots,
   refreshIndustryHeadlines,
   scoreHeadline,
   selectHeadlines,
@@ -134,24 +135,46 @@ test('refresh tolerates feed failures and reports them', async () => {
   assert.deepEqual(result.items.map((item) => item.title), ['AMD MI450 to ship in Q3 with HBM4']);
 });
 
-test('a thin refresh keeps the previous list instead of blanking the section', async () => {
+test('a thin language lane keeps its previous current headlines instead of blanking', () => {
+  const item = (id, language, hoursOld) => ({
+    id, title: `Headline ${id} about AI data center capacity`, url: `https://example.com/${id}`, source: 'Feed', sourceRegistryId: 'feed',
+    publishedAt: new Date(NOW.getTime() - hoursOld * 3_600_000).toISOString(), language, segment: 'data_centers', companies: [], score: 5,
+  });
+  const previous = { items: [item('ko-1', 'ko', 5), item('ko-2', 'ko', 10), item('ko-old', 'ko', 24 * 9), item('en-old-1', 'en', 3)] };
+  const englishOnly = { generatedAt: NOW.toISOString(), feeds: { attempted: 42, succeeded: 38, failed: ['etnews', 'thelec', 'datanet', 'zdnet-korea'] }, items: Array.from({ length: 9 }, (_, index) => item(`en-${index}`, 'en', index + 1)) };
+  const merged = mergeHeadlineSnapshots(englishOnly, previous, { now: NOW });
+  assert.deepEqual(merged.items.filter((entry) => entry.language === 'ko').map((entry) => entry.id), ['ko-1', 'ko-2']);
+  assert.equal(merged.items.filter((entry) => entry.language === 'en').length, 9, 'a full English refresh replaces the old English list');
+  assert.ok(!merged.items.some((entry) => entry.id === 'en-old-1'));
+  assert.deepEqual(merged.carriedOver, { ko: 2 });
+
+  const thinEnglish = { ...englishOnly, items: [item('en-new', 'en', 1)] };
+  const keptEnglish = mergeHeadlineSnapshots(thinEnglish, previous, { now: NOW });
+  assert.deepEqual(keptEnglish.items.filter((entry) => entry.language === 'en').map((entry) => entry.id), ['en-new', 'en-old-1']);
+  assert.ok(!keptEnglish.items.some((entry) => entry.id === 'ko-old'), 'expired headlines are never carried over');
+  for (let index = 1; index < keptEnglish.items.length; index += 1) {
+    assert.ok(Date.parse(keptEnglish.items[index - 1].publishedAt) >= Date.parse(keptEnglish.items[index].publishedAt));
+  }
+});
+
+test('the refresh script writes the merged snapshot and keeps a thin lane', async () => {
   const dir = await fs.mkdtemp(path.join(os.tmpdir(), 'radar-'));
   const file = path.join(dir, 'industry-headlines.json');
-  await fs.writeFile(file, JSON.stringify({ generatedAt: 'previous', items: [{ id: 'kept' }] }));
+  const korean = { id: 'ko-1', title: '삼성전자, HBM4 엔비디아 공급 본격화', url: 'https://www.etnews.com/1', source: '전자신문', sourceRegistryId: 'etnews', publishedAt: '2026-10-04T08:00:00Z', language: 'ko', segment: 'chips', companies: [], score: 6 };
+  await fs.writeFile(file, JSON.stringify({ generatedAt: 'previous', items: [korean] }));
   const sources = [{ id: 'good', name: 'Good Feed', domain: 'good.example', feed: 'https://good.example/feed', status: 'active_feed', allow_text_use: false, link_only_basis: 'feed_listing_low_risk', reviewed_at: '2026-09-05', language: 'en' }];
   const outcome = await updateIndustryHeadlines({
     now: NOW,
     sources,
     path: file,
     offline: false,
-    fetchFeed: async () => [{ title: 'AMD MI450 to ship in Q3 with HBM4', link: 'https://good.example/amd', isoDate: '2026-10-04T08:00:00Z' }],
+    fetchFeed: async () => [{ title: 'AMD MI450 to ship in Q3 with HBM4', link: 'https://good.example/amd', isoDate: '2026-10-04T09:00:00Z' }],
   });
-  assert.equal(outcome.written, false);
-  assert.equal(JSON.parse(await fs.readFile(file, 'utf8')).generatedAt, 'previous');
-
-  const many = Array.from({ length: 10 }, (_, index) => ({ title: `AMD Instinct GPU shipment ${index} reaches new AI data center`, link: `https://good.example/amd-${index}`, isoDate: `2026-10-04T0${index}:00:00Z` }));
-  const written = await updateIndustryHeadlines({ now: NOW, sources: [{ ...sources[0] }], path: file, offline: false, fetchFeed: async () => many });
-  assert.equal(written.written, false, 'one publisher is capped below the replacement threshold');
+  assert.equal(outcome.written, true);
+  const written = JSON.parse(await fs.readFile(file, 'utf8'));
+  assert.deepEqual(written.items.map((entry) => entry.id).length, 2);
+  assert.ok(written.items.some((entry) => entry.language === 'ko'), 'the Korean lane survives an English-only refresh');
+  assert.equal((await updateIndustryHeadlines({ offline: true, path: file })).written, false);
 });
 
 test('view helpers filter by language, age and company and group by segment', () => {
