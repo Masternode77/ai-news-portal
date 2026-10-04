@@ -194,8 +194,9 @@ export function factLedgerClaims(ledger = {}) {
 const CLAUSE_BREAK = /[,;](?!\d)\s+|\s[\u2014\u2013]\s/g;
 const CONJUNCTION_BREAK = /\s(?:and|but|yet|while|whereas)\s/gi;
 const CLAUSE_LEAD = /^(?:and|but|yet|while|whereas|so|or)\s+/i;
-const RANGE_OPENING = /\bbetween\s+\$?\d[\d,.]*(?:\s*[A-Za-z%]+)?$/i;
-const RANGE_CLOSING = /^\$?\d/;
+const RANGE_QUALIFIER = '(?:(?:about|approximately|roughly|around|nearly|almost|some|up to|over|more than|less than)\\s+)?';
+const RANGE_OPENING = new RegExp(`\\bbetween\\s+${RANGE_QUALIFIER}\\$?\\d[\\d,.]*(?:\\s*[A-Za-z%]+)?$`, 'i');
+const RANGE_CLOSING = new RegExp(`^${RANGE_QUALIFIER}\\$?\\d`, 'i');
 
 function breaksIn(text, breaker, keep = () => true) {
   return [...text.matchAll(breaker)].filter((match) => keep(match, text));
@@ -363,16 +364,20 @@ function deterministicFigures({ claims, stance, headline, sectionCount }) {
     .sort((a, b) => b.length - a.length)[0] || [];
 
   const figures = [];
+  const firstClaims = largestUnitGroup.length >= 3 ? largestUnitGroup : claims;
   if (largestUnitGroup.length >= 3) {
-    figures.push(buildFigure('bar', primaryTitle, largestUnitGroup, 2, sectionCount));
+    figures.push(buildFigure('bar', primaryTitle, firstClaims, 2, sectionCount));
   } else if (claims.length >= 4) {
-    figures.push(buildFigure('table', primaryTitle, claims, 2, sectionCount));
+    figures.push(buildFigure('table', primaryTitle, firstClaims, 2, sectionCount));
   } else {
-    figures.push(buildFigure('stat-row', primaryTitle, claims, 2, sectionCount));
+    figures.push(buildFigure('stat-row', primaryTitle, firstClaims, 2, sectionCount));
   }
 
-  const used = new Set(figures.flatMap((figure) => figure.items.map((item) => item.label)));
-  const remaining = claims.filter((claim) => !used.has(labelFor(claim)));
+  // Rows carry clause-specific labels, so the second figure skips the claims
+  // the first one used by identity, never by comparing label text.
+  const claimKey = (claim) => claim.claim_id || [claim.claim_text, claim.numeric_value, claim.unit].join('|');
+  const used = new Set(firstClaims.slice(0, MAX_ITEMS_PER_FIGURE).map(claimKey));
+  const remaining = claims.filter((claim) => !used.has(claimKey(claim)));
   if (remaining.length >= 2) {
     const secondTitle = claimTitle(remaining[0].claim_text);
     if (titleOk(secondTitle) && secondTitle.toLowerCase() !== figures[0].title.toLowerCase()) {

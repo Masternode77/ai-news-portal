@@ -944,6 +944,52 @@ test('a between that names parties does not stop two figures from splitting', ()
   assert.doesNotMatch(financing.label, /10 MW/);
 });
 
+test('a qualified range endpoint still keeps the range whole', () => {
+  const ledger = buildClaimLedger({
+    cluster_id: 'authored_qualified_range',
+    representative_source: {
+      source_url: 'https://example.com/qualified',
+      source_name: 'Example Utility',
+      title: 'Utility sets the campus capacity range for the data center',
+      cleaned_text: 'The utility will add capacity between 10 MW and approximately 20 MW for the data center campus over two construction phases.',
+    },
+    supporting_sources: [],
+  }, 'qualified_range');
+  const claims = numericLedgerClaims(ledger);
+  const indexOf = (value) => claims.findIndex((claim) => claim.numeric_value === value && claim.unit === 'MW');
+  const result = buildColumnFigures({
+    ledger,
+    stance: { angle: 'The utility capacity range for the data center campus' },
+    headline: 'The utility capacity range sets the data center campus schedule',
+    sectionCount: 6,
+    modelSpec: [{ type: 'stat-row', title: 'The campus capacity range', claim_indexes: [indexOf(10), indexOf(20)], anchor: 1 }],
+  });
+  for (const item of result.figures[0].items) assert.match(item.label, /between 10 MW and approximately 20 MW/);
+});
+
+test('the fallback figures never repeat claims whose labels were shortened to clauses', () => {
+  const ledger = buildClaimLedger({
+    cluster_id: 'authored_fallback_pair',
+    representative_source: {
+      source_url: 'https://example.com/trade',
+      source_name: 'Example Research',
+      title: 'Malaysia and China report different server trade values',
+      cleaned_text: 'Between April 2024 and June 2025, China recorded $3.8 billion of server imports from Malaysia, yet Malaysia recorded only $0.6 billion of server exports to China.',
+    },
+    supporting_sources: [],
+  }, 'fallback_pair');
+  const result = buildColumnFigures({
+    ledger,
+    stance: { angle: 'China and Malaysia server trade values diverge' },
+    headline: 'China and Malaysia disagree on the value of the server trade',
+    sectionCount: 6,
+    modelSpec: null,
+  });
+  const values = result.figures.flatMap((figure) => figure.items.map((item) => item.value));
+  assert.ok(values.length >= 2, JSON.stringify(result));
+  assert.equal(new Set(values).size, values.length, 'no value appears in two rows');
+});
+
 test('buildColumnFigures honors a valid model spec and rejects invalid ones', () => {
   const ledger = fixtureLedger();
   const headline = 'The Dakota Grid Deal Is A Utility Execution Story Now';
