@@ -1,0 +1,47 @@
+---
+import Layout from '../layouts/Layout.astro';
+import IndustryRadar from '../components/IndustryRadar.astro';
+import industryHeadlines from '../data/industry-headlines.json';
+import { SITE } from '../config/site';
+import { headlinesBySegment, headlinesFor } from '../../scripts/lib/industry-headlines-view.mjs';
+
+const items = headlinesFor(industryHeadlines, { language: 'en', limit: 80 });
+const groups = headlinesBySegment(items);
+const sourceCount = new Set(items.map((item) => item.source)).size;
+const updatedLabel = industryHeadlines.generatedAt
+  ? new Intl.DateTimeFormat('en-US', { month: 'short', day: 'numeric', year: 'numeric', hour: '2-digit', minute: '2-digit', timeZone: 'UTC' }).format(new Date(industryHeadlines.generatedAt))
+  : '';
+---
+<Layout
+  title={`Industry radar | ${SITE.name}`}
+  description="The week's headlines on AI companies, chipmakers, cloud providers and data center operators, linked to each publisher."
+  canonicalPath="/radar/"
+>
+  <main class="policy-shell taxonomy-page">
+    <a class="back-link" href="/">Latest analysis</a>
+    <section class="policy-page">
+      <p class="eyebrow">Industry radar</p>
+      <h1>The week across the AI infrastructure industry</h1>
+      <p class="policy-lede">
+        Headlines on AI companies, chipmakers, cloud providers, IT and network suppliers, data center operators and their
+        power partners, gathered from {sourceCount > 0 ? `${sourceCount} trade publications and company newsrooms` : 'trade publications and company newsrooms'}.
+        Each link opens the publisher's own article. Compute Current's own analysis lives in
+        <a href="/column/">The Current</a> and the <a href="/archive/">archive</a>.
+      </p>
+      {updatedLabel && <p class="radar-updated">Updated {updatedLabel} UTC</p>}
+    </section>
+    {groups.length > 0 ? (
+      groups.map((group, index) => (
+        <IndustryRadar
+          items={group.items}
+          title={group.label}
+          eyebrow=""
+          headingId={`radar-${group.segment}`}
+          showNote={index === groups.length - 1}
+        />
+      ))
+    ) : (
+      <p class="policy-lede">Headlines appear here after the next scheduled update.</p>
+    )}
+  </main>
+</Layout>

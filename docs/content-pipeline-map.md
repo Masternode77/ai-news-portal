@@ -5,7 +5,7 @@ This document maps the current content generation pipeline.
 ## High-Level Flow
 
 1. `.github/workflows/update-news.yml` runs `npm run pipeline` on the 00:05, 08:05, and 16:05 KST schedules, or by manual dispatch.
-2. `scripts/pipeline.mjs` reads the rights-gated registry, fetches or reuses only authorized RSS candidates, plans eligible items, applies relevance/extraction/repetition gates, and writes artifacts only when a valid path produces changes.
+2. `scripts/pipeline.mjs` reads the rights-gated registry, fetches or reuses only authorized RSS candidates, plans eligible items, applies relevance/extraction/repetition gates, and writes artifacts only when a valid path produces changes. Each run processes up to `ITEMS_PER_RUN` (3) unprocessed curated items and a KST day at most `DAILY_CURATION_TARGET` (9); slots are run history, not a lock. When the curation model returns fewer than `CURATION_FLOOR` (3) picks, `applyCurationFloor()` adds the strongest candidates whose stronger lane (infrastructure or AI) scores at least 0.55. The authored column stage then runs every time (see `docs/daily-output-recovery-2026-10-04.md` for its thresholds).
 3. The workflow rebuilds taxonomy, runs `npm test`, then runs `npm run content:gate` (including the production build) before recording its heartbeat.
 4. It commits only changed tracked artifacts back to `main`; Vercel builds from the pushed repository state.
 
@@ -26,9 +26,14 @@ Only entries with a reviewed, rights-clean basis are authorized: US federal
 public-domain agencies (EIA, DOE, NIST, FTC, GAO, NRC, NSF, SEC, the White House
 and the Federal Register agency/term feeds), UK Open Government Licence
 departments, the European Commission press corner (CC BY 4.0), ACER (reuse with
-acknowledgement) and arXiv abstract metadata (CC0). Commercial publishers stay `text_use_basis: unreviewed` with
-`allow_text_use: false`; they are listed as link-only candidates and are never
-fetched. If every entry were unreviewed or disabled, `activeRegistryFeeds()`
+acknowledgement), arXiv abstract metadata (CC0), Google Cloud release notes for
+Compute Engine, Gemini Enterprise Agent Platform and Cloud TPU (CC BY 4.0, dated
+sections only), Epoch AI's Gradient Updates and Data Insights (CC BY 4.0, every
+page must carry the licence link) and the Kubernetes Blog (CC BY 4.0, every page
+must carry the registry `license_marker`). Commercial publishers stay
+`text_use_basis: unreviewed` with `allow_text_use: false`; their article text is
+never fetched. Rows with a recorded `link_only_basis` feed only the industry
+radar (headline, date, publisher and link; see section 1a). If every entry were unreviewed or disabled, `activeRegistryFeeds()`
 would return no feeds, `fetchNewsPoolResult()` would report
 `no_authorized_sources`, and the pipeline would exit without publication. Use
 `config/sourceRightsAttestation.template.yml` to record an authorized review
@@ -52,6 +57,30 @@ reserves that slot with an item that is at least signal-card relevant), and
 caps the pool at `MAX_ITEMS_FETCHED`. Feeds from one publication (the five
 Federal Register feeds, the three arXiv feeds) share a source name so the
 per-source cap applies to the publication.
+
+Registry keys added on 2026-10-04: `article_path_prefix` limits a source to one
+slug under a section path (Epoch AI), `feed_format: epoch_html_index` reads a
+server-rendered section index instead of RSS (`scripts/lib/epoch-ai.mjs`), and
+`license_marker` names a licence statement every extracted page must contain.
+
+## 1a. Industry Radar (headline-and-link lane)
+
+`scripts/update-industry-headlines.mjs` runs after the news update in
+`update-news.yml` (non-blocking, `continue-on-error`). `headlineFeeds()` in
+`scripts/lib/industry-headlines.mjs` admits only registry rows whose
+`link_only_basis` is `feed_listing_permitted` or `feed_listing_low_risk`
+(the verdicts in `docs/source-rights-review.md`), whose review is inside the
+365-day window and which are not text-authorized. Each item keeps only the
+feed's exact headline, publication date, publisher and https link on the
+publisher's host; descriptions, bodies and images are discarded and article
+pages are never fetched. Titles that would fail the public copy, forbidden
+phrase, truncation, boilerplate or banned-phrase checks are dropped. A
+headline scorer (topic terms plus a tracked-company list in English and
+Korean) keeps AI company, chip, cloud, IT, data center and power items. A
+refresh with fewer than eight items keeps the previous
+`src/data/industry-headlines.json`. The list renders on the homepage, `/radar/`,
+company pages and `/ko/` through `src/components/IndustryRadar.astro`, which
+carries no ad slot and states the removal address.
 
 ## 2. Source Article Extraction Logic
 
@@ -282,7 +311,7 @@ JSON stores:
 - `src/data/latest-news.json`: live homepage surface, capped by `LATEST_NEWS_LIMIT` and excluding archive-only relevance failures.
 - `src/data/archived-news.json`: overflow, archive-only, and prior articles enriched for archive/search.
 - `src/data/search-index.json`: merged latest + archive records with `searchText` for client-side search.
-- `scripts/state/pipeline-state.json`: pipeline state containing published IDs, day plans, slot publication markers, run history, last run time, extraction gate details, and infrastructure relevance routing details.
+- `scripts/state/pipeline-state.json`: pipeline state containing published IDs, day plans, slot publication history (not a publication lock since 2026-10-04), run history, last run time, extraction gate details, and infrastructure relevance routing details.
 
 Database table:
 

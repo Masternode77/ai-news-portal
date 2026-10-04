@@ -11,6 +11,9 @@ import ColumnHero from '../components/home/ColumnHero.astro';
 import authoredColumns from '../data/authored-columns.json';
 import SiteFooter from '../components/SiteFooter.astro';
 import AdSlot from '../components/monetize/AdSlot.astro';
+import IndustryRadar from '../components/IndustryRadar.astro';
+import industryHeadlines from '../data/industry-headlines.json';
+import { headlinesFor } from '../../scripts/lib/industry-headlines-view.mjs';
 import latestNews from '../data/latest-news.json';
 import archivedNews from '../data/archived-news.json';
 import editorialCycles from '../data/editorial-cycles.json';
@@ -24,6 +27,7 @@ import { categoryKey, categoryShortLabel } from '../lib/category-visuals';
 import { buildColumnCards } from '../../scripts/lib/column-surface.mjs';
 
 const leadColumn = buildColumnCards(authoredColumns)[0] || null;
+const radarItems = headlinesFor(industryHeadlines, { language: 'en', limit: 12, maxAgeHours: 72 });
 
 const boardTitle = SITE.name;
 const homepageArticles = process.env.HOMEPAGE_FIXTURE === 'empty' ? [] : [...latestNews, ...archivedNews];
@@ -183,6 +187,7 @@ const structuredData = {
       </a>
       <nav class="masthead-nav" aria-label="Primary coverage navigation">
         <a href="/column/">The Current</a>
+        <a href="/radar/">Radar</a>
         <a href="/category/power-grid/">Power</a>
         <a href="/category/data-centers/">Data Centers</a>
         <a href="/category/cloud-capacity/">Cloud</a>
@@ -275,6 +280,15 @@ const structuredData = {
       eyebrow="Recent intelligence"
       dek="Source-linked analysis and briefs from the AI infrastructure buildout."
       monetize={true}
+    />
+
+    <IndustryRadar
+      items={radarItems}
+      title="Industry radar"
+      eyebrow="Across the industry"
+      dek="The latest headlines on AI companies, chipmakers, cloud providers and data center operators from the trade press and company newsrooms."
+      showAllLink={true}
+      headingId="home-industry-radar"
     />
 
     <section class="lane-strip" aria-label="Compute Current coverage lanes">

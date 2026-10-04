@@ -2,7 +2,9 @@ import { PIPELINE_OFFLINE } from './constants.mjs';
 import { stripHtml, truncate } from './normalize.mjs';
 import { analyzeExtractionQuality } from './quality-gate.mjs';
 import { fetchAuthorizedSourceText } from './source-text-fetcher.mjs';
-import { googleReleaseNoteSection } from './google-cloud-release-notes.mjs';
+import { GOOGLE_RELEASE_SOURCE_PATTERN, googleReleaseNoteSection } from './google-cloud-release-notes.mjs';
+import { loadSourceRegistrySync } from './source-registry.mjs';
+import { epochArticleSection } from './epoch-ai.mjs';
 
 const GENERIC_ADAPTER = 'generic';
 
@@ -311,6 +313,22 @@ function truncateAtSentence(text = '', maxLen = 1800) {
   return truncate(cleaned, maxLen);
 }
 
+// A registry row may name a licence statement every extracted page must carry
+// (for example a site footer); without it the page is not used as text.
+function licenseMarkerFor(sourceRegistryId = '', sources) {
+  if (!sourceRegistryId) return '';
+  let registry = sources;
+  if (!Array.isArray(registry)) {
+    try {
+      registry = loadSourceRegistrySync();
+    } catch {
+      registry = [];
+    }
+  }
+  const row = registry.find((entry) => String(entry?.id || '').trim() === sourceRegistryId);
+  return String(row?.license_marker || '').trim();
+}
+
 function fallbackExtraction(url, fallbackSnippet, reason) {
   const adapter = adapterForUrl(url);
   const articleText = truncate(fallbackSnippet, 500);
@@ -358,9 +376,15 @@ export async function fetchArticleExtraction({
       accept: apiTarget?.accept,
     });
     const html = apiTarget ? apiTarget.toHtml(fetched.text) : fetched.text;
-    const isGoogleRelease = /^google-cloud-(?:compute|ai)-releases$/.test(sourceRegistryId);
-    const articleSection = isGoogleRelease ? googleReleaseNoteSection(html, url) : extractSection(html, adapter);
+    const isGoogleRelease = GOOGLE_RELEASE_SOURCE_PATTERN.test(sourceRegistryId);
+    const marker = licenseMarkerFor(sourceRegistryId, sources);
+    if (marker && !html.includes(marker)) return fallbackExtraction(url, fallbackSnippet, 'license_marker_missing');
+    const isEpoch = /^epoch-ai-/.test(sourceRegistryId);
+    const articleSection = isGoogleRelease
+      ? googleReleaseNoteSection(html, url)
+      : isEpoch ? removeNonContentBlocks(epochArticleSection(html, url)) : extractSection(html, adapter);
     if (isGoogleRelease && !articleSection) return fallbackExtraction(url, fallbackSnippet, 'release_note_anchor_or_license_missing');
+    if (isEpoch && !articleSection) return fallbackExtraction(url, fallbackSnippet, 'epoch_license_or_body_missing');
     const { rawText, cleanedText } = paragraphTextFromSection(articleSection, adapter);
     if (isGoogleRelease && !cleanedText) return fallbackExtraction(url, fallbackSnippet, 'release_note_text_missing');
     const articleText = truncateAtSentence(cleanedText || fallbackSnippet, 1800);

@@ -1,4 +1,5 @@
 import Parser from 'rss-parser';
+import { EPOCH_HOST, fetchEpochIndexItems } from './epoch-ai.mjs';
 import {
   MAX_ITEMS_FETCHED,
   MAX_ITEMS_PER_SOURCE_IN_POOL,
@@ -15,7 +16,7 @@ import { classifyTaxonomy } from './taxonomy.mjs';
 import { fetchPublicResource } from './public-network-fetcher.mjs';
 import { activeRegistryFeeds, loadSourceRegistry } from './source-registry.mjs';
 import { sourceTextTargetDecision } from './source-text-fetcher.mjs';
-import { googleReleaseNoteTarget, scopeGoogleAiReleaseItem } from './google-cloud-release-notes.mjs';
+import { GOOGLE_RELEASE_SOURCE_PATTERN, googleReleaseNoteTarget, scopeGoogleAiReleaseItem } from './google-cloud-release-notes.mjs';
 
 const FEED_CONTENT_TYPES = [
   'application/atom+xml',
@@ -129,7 +130,7 @@ export function parseFeedItem(feed, item, now = new Date()) {
   const rawBody = stripHtml(textValue(item.contentEncoded || item.content || item.summary || item.contentSnippet || ''));
   const rawSnippet = stripHtml(textValue(item.contentSnippet || item.summary || rawBody || ''));
   const release = googleReleaseNoteTarget(url);
-  if (release && /^google-cloud-(?:compute|ai)-releases$/.test(feed.sourceRegistryId || '')) {
+  if (release && GOOGLE_RELEASE_SOURCE_PATTERN.test(feed.sourceRegistryId || '')) {
     const paragraph = textValue(item.content).match(/<p\b[^>]*>([\s\S]*?)<\/p>/i)?.[1];
     const lead = stripHtml(paragraph || '').replace(/\s+/g, ' ').trim();
     title = `${release.product}: ${truncate((lead || title).split(/(?<=[.!?])\s/)[0], 140)}`;
@@ -184,7 +185,29 @@ export function parseFeedItem(feed, item, now = new Date()) {
   };
 }
 
+async function fetchEpochFeedItems(feed, networkOptions = {}) {
+  const fetchHtml = async (url) => {
+    const response = await fetchPublicResource(url, {
+      allowedHosts: [EPOCH_HOST],
+      contentTypes: ['text/html'],
+      headers: {
+        accept: 'text/html,application/xhtml+xml',
+        'user-agent': 'Mozilla/5.0 (compatible; ComputeCurrentBot/1.0)',
+      },
+      maxBytes: networkOptions.maxBytes || 2 * 1024 * 1024,
+      request: networkOptions.request,
+      resolveHost: networkOptions.resolveHost,
+      timeoutMs: networkOptions.timeoutMs || 12_000,
+    });
+    return response.bytes.toString('utf8');
+  };
+  const now = networkOptions.now || new Date();
+  const items = await fetchEpochIndexItems(feed, { fetchHtml });
+  return items.map((item) => parseFeedItem(feed, item, now)).filter(Boolean);
+}
+
 async function fetchFeedItems(feed, networkOptions = {}) {
+  if (feed.feedFormat === 'epoch_html_index') return fetchEpochFeedItems(feed, networkOptions);
   const feedUrl = new URL(feed.url);
   const response = await fetchPublicResource(feed.url, {
     allowedHosts: [feedUrl.hostname],

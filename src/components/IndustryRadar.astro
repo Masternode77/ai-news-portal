@@ -1,0 +1,186 @@
+---
+// Headline-and-link list for publishers whose terms allow a feed listing but
+// not text reuse. It shows the feed's own headline, publisher and date and
+// links to the publisher's page. No ad slot may sit inside this block.
+import taxonomyPages from '../data/taxonomy-pages.json';
+import { SITE } from '../config/site';
+import { SEGMENT_LABELS } from '../../scripts/lib/industry-headlines-view.mjs';
+
+interface Headline {
+  id: string;
+  title: string;
+  url: string;
+  source: string;
+  publishedAt: string;
+  segment?: string;
+  companies?: { name: string; segment: string }[];
+}
+
+interface Props {
+  items: Headline[];
+  title?: string;
+  eyebrow?: string;
+  dek?: string;
+  lang?: 'en' | 'ko';
+  showAllLink?: boolean;
+  headingId?: string;
+  compact?: boolean;
+  showNote?: boolean;
+}
+
+const {
+  items = [],
+  title = 'Industry radar',
+  eyebrow = 'Across the industry',
+  dek = '',
+  lang = 'en',
+  showAllLink = false,
+  headingId = 'industry-radar-heading',
+  compact = false,
+  showNote = true,
+} = Astro.props as Props;
+
+const KO_SEGMENTS: Record<string, string> = {
+  ai_companies: 'AI 기업',
+  chips: '반도체·하드웨어',
+  it_infrastructure: 'IT·네트워크',
+  cloud: '클라우드',
+  data_centers: '데이터센터',
+  power_cooling: '전력·냉각',
+};
+const segmentLabel = (segment = '') => (lang === 'ko' ? KO_SEGMENTS[segment] : (SEGMENT_LABELS as Record<string, string>)[segment]) || '';
+const companySlugs = new Map((taxonomyPages.companies || []).map((page: { name: string; slug: string }) => [page.name.toLowerCase(), page.slug]));
+const formatter = new Intl.DateTimeFormat(lang === 'ko' ? 'ko-KR' : 'en-US', { month: 'short', day: 'numeric', timeZone: 'UTC' });
+const note = lang === 'ko'
+  ? `제목·날짜·매체명은 각 매체가 공개한 RSS에서 가져오며 링크는 원문 페이지로 연결됩니다. 기사 본문은 복제하거나 요약하지 않습니다. 게재 중단 요청: ${SITE.contactEmail}`
+  : `Headlines, dates and publisher names come from each publisher's public feed, and every link opens the publisher's own page. Compute Current does not copy or summarize these articles. Publishers can ask for removal at ${SITE.contactEmail}.`;
+const moreLabel = lang === 'ko' ? '전체 헤드라인 보기' : 'See all industry headlines';
+---
+{items.length > 0 && (
+  <section class:list={['industry-radar', { 'industry-radar--compact': compact }]} aria-labelledby={headingId} data-industry-radar lang={lang}>
+    <div class="radar-head">
+      {eyebrow && <p class="eyebrow radar-eyebrow">{eyebrow}</p>}
+      <h2 id={headingId}>{title}</h2>
+      {dek && <p class="radar-dek">{dek}</p>}
+    </div>
+    <ol class="radar-list">
+      {items.map((item) => (
+        <li class="radar-item" data-segment={item.segment}>
+          {segmentLabel(item.segment) && <span class="radar-segment">{segmentLabel(item.segment)}</span>}
+          <a class="radar-link" href={item.url} target="_blank" rel="noopener noreferrer nofollow">{item.title}</a>
+          <span class="radar-meta">
+            <span class="radar-source">{item.source}</span>
+            <span aria-hidden="true"> · </span>
+            <time datetime={item.publishedAt}>{formatter.format(new Date(item.publishedAt))}</time>
+          </span>
+          {(item.companies || []).some((company) => companySlugs.has(company.name.toLowerCase())) && (
+            <span class="radar-companies">
+              {(item.companies || [])
+                .filter((company) => companySlugs.has(company.name.toLowerCase()))
+                .slice(0, 3)
+                .map((company) => <a href={`/company/${companySlugs.get(company.name.toLowerCase())}/`}>{company.name}</a>)}
+            </span>
+          )}
+        </li>
+      ))}
+    </ol>
+    {showAllLink && <a class="radar-more" href="/radar/">{moreLabel}</a>}
+    {showNote && <p class="radar-note">{note}</p>}
+  </section>
+)}
+
+<style>
+  .industry-radar {
+    margin: 34px 0;
+    padding: 24px 26px;
+    border-radius: var(--al-radius, 18px);
+    background: var(--al-soft, #f5f5f7);
+  }
+  .radar-head h2 {
+    margin: 4px 0 6px;
+    font-size: clamp(1.3rem, 2.4vw, 1.7rem);
+    letter-spacing: -0.01em;
+  }
+  .radar-eyebrow {
+    margin: 0;
+  }
+  .radar-dek {
+    margin: 0 0 14px;
+    color: var(--al-muted, #6e6e73);
+    max-width: 62ch;
+  }
+  .radar-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 4px 28px;
+  }
+  .industry-radar--compact .radar-list {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .radar-item {
+    display: grid;
+    align-content: start;
+    gap: 3px;
+    padding: 11px 0;
+    border-bottom: 1px solid var(--al-hairline, rgba(0, 0, 0, 0.08));
+    min-width: 0;
+  }
+  .radar-segment {
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--al-muted, #6e6e73);
+  }
+  .radar-link {
+    color: var(--al-text, #1d1d1f);
+    font-weight: 600;
+    line-height: 1.38;
+    overflow-wrap: anywhere;
+  }
+  .radar-link:hover {
+    color: var(--al-blue-deep, #0066cc);
+    text-decoration: underline;
+  }
+  .radar-meta {
+    font-size: 0.82rem;
+    color: var(--al-muted, #6e6e73);
+  }
+  .radar-companies {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 2px;
+  }
+  .radar-companies a {
+    font-size: 0.74rem;
+    padding: 2px 8px;
+    border-radius: 999px;
+    background: #ffffff;
+    color: var(--al-text, #1d1d1f);
+    border: 1px solid var(--al-hairline-strong, rgba(0, 0, 0, 0.14));
+  }
+  .radar-more {
+    display: inline-block;
+    margin-top: 14px;
+    font-weight: 600;
+    color: var(--al-blue-deep, #0066cc);
+  }
+  .radar-note {
+    margin: 14px 0 0;
+    font-size: 0.78rem;
+    color: var(--al-muted, #6e6e73);
+    max-width: 80ch;
+  }
+  @media (max-width: 760px) {
+    .industry-radar {
+      padding: 18px 16px;
+    }
+    .radar-list {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+</style>

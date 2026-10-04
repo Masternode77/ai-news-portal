@@ -24,6 +24,13 @@ const INCOMPLETE_TERMINALS = new Set([
 ]);
 const SAFE_ABBREVIATIONS = new Set(['u.s', 'u.k', 'e.g', 'i.e', 'inc', 'co', 'ltd', 'corp', 'mr', 'ms', 'dr']);
 
+// A single letter that follows a period or a slash closes an abbreviation or
+// a unit (L.L.C., F.B., Bcf/d, b/d), not a clipped word. A clipped word ends
+// after a space ("the c.", "clo.") and is still reported.
+function abbreviationOrUnitLetter(terminal = '', before = '') {
+  return terminal.length === 1 && (before === '.' || before === '/');
+}
+
 function normalizeText(text = '') {
   return String(text || '').replace(/\s+/g, ' ').trim();
 }
@@ -67,19 +74,23 @@ export function detectTruncationArtifacts(text = '', options = {}) {
     .filter(Boolean);
 
   for (const sentence of sentenceLike) {
-    const terminal = sentence.match(/\b([A-Za-z](?:[A-Za-z]|\s){0,16})\.(?:"|')?$/)?.[1]?.toLowerCase();
+    const match = sentence.match(/\b([A-Za-z](?:[A-Za-z]|\s){0,16})\.(?:"|')?$/);
+    const terminal = match?.[1]?.toLowerCase();
     if (!terminal) continue;
-    const safe = SAFE_ABBREVIATIONS.has(terminal.replace(/\.$/, ''));
+    const safe = SAFE_ABBREVIATIONS.has(terminal.replace(/\.$/, ''))
+      || abbreviationOrUnitLetter(terminal, sentence.charAt(match.index - 1));
     if (!safe && INCOMPLETE_TERMINALS.has(terminal)) {
       artifacts.push(`incomplete_terminal:${terminal}`);
     }
   }
 
-  const lastTokenRaw = normalized.match(/\b([A-Za-z]{1,16})\.?$/)?.[1];
+  const lastTokenMatch = normalized.match(/\b([A-Za-z]{1,16})\.?$/);
+  const lastTokenRaw = lastTokenMatch?.[1];
   const lastToken = lastTokenRaw?.toLowerCase();
   if (
     lastToken &&
     !(lastTokenRaw.length === 1 && lastTokenRaw === lastTokenRaw.toUpperCase()) &&
+    !abbreviationOrUnitLetter(lastToken, normalized.charAt(lastTokenMatch.index - 1)) &&
     INCOMPLETE_TERMINALS.has(lastToken) &&
     !SAFE_ABBREVIATIONS.has(lastToken)
   ) {

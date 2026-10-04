@@ -2,6 +2,11 @@
 import ProductLayout from '../../layouts/ProductLayout.astro';
 import records from '../../data/korea-briefs.json';
 import { getPublishedKoreaBriefs } from '../../../scripts/lib/korea-briefs.mjs';
+import IndustryRadar from '../../components/IndustryRadar.astro';
+import industryHeadlines from '../../data/industry-headlines.json';
+import { headlinesFor } from '../../../scripts/lib/industry-headlines-view.mjs';
+
+const koreanHeadlines = headlinesFor(industryHeadlines, { language: 'ko', limit: 16 });
 
 const briefs = getPublishedKoreaBriefs(records);
 type KoreaBrief = (typeof records)[number] & { publicationMode: 'summary' | 'link_only' };
@@ -16,7 +21,7 @@ const formatDate = (value: string) => new Intl.DateTimeFormat('ko-KR', {
   lang="ko"
 >
   <section class="product-note" aria-label="편집 및 이용 기준">
-    모든 항목은 편집자가 원문과 항목별 공공누리 표시를 직접 확인한 고정 스냅샷입니다. 텍스트만 사용하며 사진·영상·첨부파일은 재사용하지 않습니다.
+    ‘검토된 정책 신호’의 모든 항목은 편집자가 원문과 항목별 공공누리 표시를 직접 확인한 고정 스냅샷입니다. 텍스트만 사용하며 사진·영상·첨부파일은 재사용하지 않습니다.
     자동 수집 결과를 바로 게시하지 않으며, 검토 기한이 지나면 항목은 공개 목록에서 제외됩니다.
   </section>
 
@@ -46,4 +51,13 @@ const formatDate = (value: string) => new Intl.DateTimeFormat('ko-KR', {
       ))}
     </div>
   </section>
+
+  <IndustryRadar
+    items={koreanHeadlines}
+    lang="ko"
+    title="업계 헤드라인"
+    eyebrow="국내 AI·반도체·데이터센터"
+    dek="국내 IT·반도체 전문 매체가 공개한 RSS의 제목과 링크를 자동으로 모은 목록입니다. 위의 검토된 정책 신호와는 별도이며, 링크는 각 매체의 원문으로 연결됩니다."
+    headingId="ko-industry-radar"
+  />
 </ProductLayout>

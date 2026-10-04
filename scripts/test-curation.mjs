@@ -64,12 +64,21 @@ assert.ok(!plan.curatedIds.includes('old-b'));
 
 const { slot, picked } = pickItemsForRun(plan, now);
 assert.equal(slot, 2);
-assert.equal(picked.length, 2);
+assert.equal(picked.length, 3);
 assert.ok(picked.every((pickedItem) => pickedItem.id.startsWith('fresh-')));
 
 const updatedPlan = updatePlanAfterRun(plan, picked, slot);
 assert.equal(updatedPlan.slotPublications[2], true);
-assert.ok(updatedPlan.publishedIds.includes(picked[0].id));
-assert.ok(updatedPlan.publishedIds.includes(picked[1].id));
+assert.ok(picked.every((pickedItem) => updatedPlan.publishedIds.includes(pickedItem.id)));
+
+// A slot that already ran no longer blocks a later run in the same slot.
+const again = pickItemsForRun(updatedPlan, now);
+assert.equal(again.picked.length, 3);
+assert.ok(again.picked.every((pickedItem) => !updatedPlan.publishedIds.includes(pickedItem.id)));
+
+// The day stops at the daily processing cap unless the run is forced.
+const capped = { ...updatedPlan, publishedIds: Array.from({ length: 9 }, (_, index) => `done-${index}`) };
+assert.equal(pickItemsForRun(capped, now).picked.length, 0);
+assert.equal(pickItemsForRun(capped, now, { force: true }).picked.length, 3);
 
 console.log('curation rolling freshness test passed');

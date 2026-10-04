@@ -368,12 +368,16 @@ function asSignalCard(article, reason) {
   };
 }
 
+// Two story attempts fit inside this window; the workflow step allows 18 minutes.
+const AUTHORED_COLUMN_STAGE_TIMEOUT_MS = 600_000;
+
 // Runs The Current column stage after the wire surface is written. Column
 // failures never break the wire run: every outcome is logged and recorded in
 // pipeline state, and a failed or skipped column simply publishes nothing.
 async function runAuthoredColumnStage({ state, candidates, pool, recentRecords, now, sources }) {
   try {
     const existingColumns = await readAuthoredColumns();
+    const stageStartedAt = Date.now();
     const result = await withTimeout('authored column', () => generateAuthoredColumn({
       candidates,
       pool,
@@ -383,7 +387,8 @@ async function runAuthoredColumnStage({ state, candidates, pool, recentRecords, 
       now,
       sources,
       force: process.env.AUTHORED_COLUMN_FORCE === '1',
-    }), 360_000);
+      deadlineMs: stageStartedAt + AUTHORED_COLUMN_STAGE_TIMEOUT_MS - 30_000,
+    }), AUTHORED_COLUMN_STAGE_TIMEOUT_MS);
     if (result.selectionDiagnostics) {
       const { total_candidates: total, selected_id: selected, counts = {} } = result.selectionDiagnostics;
       console.log([
@@ -395,10 +400,15 @@ async function runAuthoredColumnStage({ state, candidates, pool, recentRecords, 
         `insight=${counts.expert_insight_incomplete || 0}`,
         `relevance=${counts.relevance_below_threshold || 0}`,
         `covered=${counts.already_covered || 0}`,
+        `stale=${counts.stale_story || 0}`,
+        `digest=${counts.digest_roundup || 0}`,
         `evidence=${counts.unclean_evidence || 0}`,
         `facts=${counts.insufficient_facts || 0}`,
         `selected=${selected || 'none'}`,
       ].join(' '));
+      for (const attempt of result.selectionDiagnostics.attempts || []) {
+        console.log(`[pipeline] authored attempt: ${attempt.id} -> ${attempt.outcome}`);
+      }
     }
     if (result.column) {
       // Column hero via the same image2 (OpenAI image) path wire articles

@@ -38,7 +38,7 @@ Audit output omits `git status` so running this writer cannot make its own repor
 
 ## Crawler and Feed Sources
 
-- Feed registry: `config/sourceRegistry.yml` contains 78 registered sources; `activeRegistryFeeds()` currently returns 24 authorized feeds.
+- Feed registry: `config/sourceRegistry.yml` contains 82 registered sources; `activeRegistryFeeds()` currently returns 28 authorized feeds.
 - Fetcher: `scripts/lib/fetch-feeds.mjs` parses RSS/Atom into `news-pool.json` through `parseFeedItem()`.
 - Source acquisition fails closed: a source requires approved text rights, HTTPS terms, and a review no older than 365 days. With zero authorized feeds, `fetchNewsPoolResult()` returns `no_authorized_sources` and the pipeline exits without publication.
 - Source selection and curation flow through `scripts/lib/curate.mjs`, `source-priority-policy.mjs`, and relevance routers.
@@ -82,7 +82,7 @@ Audit output omits `git status` so running this writer cannot make its own repor
 - The legacy plaintext `ADMIN_PASSWORD` contract is not active: authentication requires `ADMIN_USERNAME`, `ADMIN_PASSWORD_HASH`, and `ADMIN_SESSION_SECRET`=true.
 - Implemented admin controls: structured scrypt password hashes use timing-safe verification; validated session secrets sign HttpOnly, SameSite=Strict cookies; mutating requests require CSRF; local failed-login throttling and audit logging are present.
 - Remaining external production dependency: login fails closed until a distributed Vercel Firewall rate-limit rule is published, tested, and attested with `ADMIN_VERCEL_RATE_LIMIT_READY=true`.
-- Existing env constants include image, OpenRouter, Supabase, and pipeline settings in `scripts/lib/constants.mjs` (11642 bytes).
+- Existing env constants include image, OpenRouter, Supabase, and pipeline settings in `scripts/lib/constants.mjs` (12470 bytes).
 
 ## Deployment Platform Assumptions
 

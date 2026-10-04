@@ -4,6 +4,8 @@ import {
   authoredInsightEligible,
   columnSourceLongformEligible,
   generateAuthoredColumn,
+  MIN_STORY_FACTS,
+  MIN_STORY_RELEVANCE,
   normalizeAuthoredBody,
   parseModelEssay,
   selectColumnStory,
@@ -324,7 +326,7 @@ test('story selection fails closed on source rights and extraction QA with diagn
   assert.equal(result.diagnostics.counts.extraction_ineligible, 1);
 });
 
-test('authored selection allows only-named-companies policy exception with a named regulatory actor', () => {
+test('authored selection treats missing company or fact heuristics as non-blocking but keeps substantive insight required', () => {
   const commissionSource = {
     ...FIXTURE_SOURCE,
     id: 'ec-press-corner',
@@ -359,8 +361,23 @@ test('authored selection allows only-named-companies policy exception with a nam
     source: 'Grid Journal',
     sourceUrl: 'https://example.com/anonymous-policy',
   };
-  assert.equal(authoredInsightEligible(anonymous), false);
-  assert.equal(selectColumnStory({ candidates: [anonymous], sources: FIXTURE_SOURCES }), null);
+  // A market or system story without a named company can still be argued.
+  assert.equal(authoredInsightEligible(anonymous), true);
+  assert.equal(selectColumnStory({ candidates: [anonymous], sources: FIXTURE_SOURCES })?.article.id, anonymous.id);
+
+  // Without a bottleneck or decision point there is nothing to argue.
+  const thin = {
+    ...anonymous,
+    id: 'thin-policy',
+    sourceUrl: 'https://example.com/thin-policy',
+    expert_insight: {
+      ...anonymous.expert_insight,
+      bottleneck_type: '',
+      expert_insight_missing_fields: ['named_companies', 'bottleneck_type'],
+    },
+  };
+  assert.equal(authoredInsightEligible(thin), false);
+  assert.equal(selectColumnStory({ candidates: [thin], sources: FIXTURE_SOURCES }), null);
 });
 
 test('corroborating sources must independently pass rights, scope, extraction, and evidence gates', () => {
@@ -764,4 +781,131 @@ test('buildColumnFigures falls back to evidence-pack facts when the ledger yield
   assert.equal(result.figures[0].type, 'table');
   assert.ok(result.figures[0].items.length >= 2);
   assert.ok(result.figures[0].items.every((item) => item.source === 'Grid Journal'));
+});
+
+test('column relevance floor is 0.6 on either lane and the fact floor is three', () => {
+  const nearFloor = fixtureArticle({ id: 'near-floor', sourceUrl: 'https://example.com/near-floor', infrastructure_relevance_score: 0.62, ai_topic_score: 0.1 });
+  const belowFloor = fixtureArticle({ id: 'below-floor', sourceUrl: 'https://example.com/below-floor', infrastructure_relevance_score: 0.5, ai_topic_score: 0.52 });
+  const aiLane = fixtureArticle({ id: 'ai-lane', sourceUrl: 'https://example.com/ai-lane', infrastructure_relevance_score: 0.3, ai_topic_score: 0.64 });
+  const { diagnostics } = selectColumnStoryWithDiagnostics({ candidates: [nearFloor, belowFloor, aiLane], sources: FIXTURE_SOURCES });
+  assert.equal(diagnostics.counts.qualifying, 2);
+  assert.equal(diagnostics.counts.relevance_below_threshold, 1);
+  assert.equal(MIN_STORY_RELEVANCE, 0.6);
+  assert.equal(MIN_STORY_FACTS, 3);
+});
+
+test('a rejected top story falls through to the next-ranked qualifying story in the same run', async () => {
+  resetLlmUsageForTests();
+  process.env.OPENROUTER_API_KEY = 'test-key';
+  process.env.AUTHORED_MIN_WORDS = '700';
+  process.env.AUTHORED_MIN_CHARS = '4200';
+  try {
+    const first = fixtureArticle();
+    const second = fixtureArticle({ id: 'wire-002', sourceUrl: 'https://example.com/northline-dakota-second' });
+    const storiesSeen = [];
+    const state = {};
+    const result = await generateAuthoredColumn({
+      candidates: [first, second],
+      sources: FIXTURE_SOURCES,
+      state,
+      now: new Date('2026-10-04T09:00:00Z'),
+      callModel: async (request) => {
+        const forSecond = request.userPrompt.includes('northline-dakota-second');
+        if (/choose the stance/.test(request.systemPrompt)) {
+          storiesSeen.push(forSecond ? 'second' : 'first');
+          return STANCE_JSON;
+        }
+        if (!forSecond) return JSON.stringify({ headline: 'Too Short To Publish Anywhere Near The Bar', deck: 'A deck that is long enough to pass the standfirst window but backed by a body that is far too short.', body: 'One tiny paragraph that fails every structural check.' });
+        return JSON.stringify(structuredEssay());
+      },
+    });
+    assert.ok(result.column, JSON.stringify(result.selectionDiagnostics));
+    assert.deepEqual(storiesSeen, ['first', 'second']);
+    assert.equal(result.column.based_on_article_ids[0], 'wire-002');
+    assert.equal(result.selectionDiagnostics.attempts.length, 2);
+    assert.match(result.selectionDiagnostics.attempts[0].outcome, /^verify:/);
+    assert.equal(result.selectionDiagnostics.attempts[1].outcome, 'published');
+    assert.equal(state.authored.lastFailure, null);
+  } finally {
+    delete process.env.OPENROUTER_API_KEY;
+    delete process.env.AUTHORED_MIN_WORDS;
+    delete process.env.AUTHORED_MIN_CHARS;
+  }
+});
+
+test('a spent LLM budget stops the run instead of trying another story', async () => {
+  resetLlmUsageForTests();
+  process.env.OPENROUTER_API_KEY = 'test-key';
+  try {
+    const { LlmBudgetExceededError } = await import('../scripts/lib/llm-budget.mjs');
+    const first = fixtureArticle();
+    const second = fixtureArticle({ id: 'wire-002', sourceUrl: 'https://example.com/northline-dakota-second' });
+    let calls = 0;
+    const state = {};
+    const result = await generateAuthoredColumn({
+      candidates: [first, second],
+      sources: FIXTURE_SOURCES,
+      state,
+      now: new Date('2026-10-04T09:00:00Z'),
+      callModel: async () => {
+        calls += 1;
+        throw new LlmBudgetExceededError('llm token budget exhausted (test)');
+      },
+    });
+    assert.equal(result.column, null);
+    assert.match(result.failure, /^thesis:llm token budget exhausted/);
+    assert.equal(calls, 1);
+    assert.equal(state.authored.lastFailure.attempts.length, 1);
+  } finally {
+    delete process.env.OPENROUTER_API_KEY;
+  }
+});
+
+test('a stale source, a digest or an already-argued headline cannot anchor a column', async () => {
+  const { digestRoundup } = await import('../scripts/lib/authored-column-engine.mjs');
+  const now = new Date('2026-10-04T12:00:00Z');
+  const old = fixtureArticle({
+    id: 'old-source',
+    sourceUrl: 'https://example.com/old-source',
+    publishedAt: '2026-08-20T00:00:00Z',
+    analysisPublishedAt: '2026-10-04T08:00:00Z',
+  });
+  const { diagnostics } = selectColumnStoryWithDiagnostics({ candidates: [old], sources: FIXTURE_SOURCES, now });
+  assert.equal(diagnostics.counts.stale_story, 1, 'processing date must not make an old source look current');
+
+  assert.equal(digestRoundup({ title: 'Daily News 21 / 09 / 2026', sourceUrl: 'https://example.com/x' }), true);
+  assert.equal(digestRoundup({ title: 'Commission proposal', sourceUrl: 'https://ec.europa.eu/commission/presscorner/detail/en/mex_26_1918' }), true);
+  assert.equal(digestRoundup({ title: 'Commission proposal', sourceUrl: 'https://ec.europa.eu/commission/presscorner/detail/en/ip_26_1667' }), false);
+  const digest = fixtureArticle({ id: 'digest', title: 'Daily News 03 / 10 / 2026', sourceUrl: 'https://example.com/digest', publishedAt: '2026-10-04T06:00:00Z' });
+  assert.equal(selectColumnStoryWithDiagnostics({ candidates: [digest], sources: FIXTURE_SOURCES, now }).diagnostics.counts.digest_roundup, 1);
+
+  const fresh = fixtureArticle({ id: 'fresh-copy', sourceUrl: 'https://example.com/second-outlet-copy', publishedAt: '2026-10-04T06:00:00Z' });
+  const existingColumns = [{ publishedAt: '2026-10-02T00:00:00Z', story_key: 'https://example.com/other', sources: [{ title: fresh.title, url: 'https://example.com/other' }] }];
+  const covered = selectColumnStoryWithDiagnostics({ candidates: [fresh], sources: FIXTURE_SOURCES, now, existingColumns });
+  assert.equal(covered.diagnostics.counts.already_covered, 1);
+  assert.equal(covered.selection, null);
+});
+
+test('a second story is skipped when the stage lacks time for a full attempt', async () => {
+  resetLlmUsageForTests();
+  process.env.OPENROUTER_API_KEY = 'test-key';
+  try {
+    const first = fixtureArticle();
+    const second = fixtureArticle({ id: 'wire-002', sourceUrl: 'https://example.com/northline-dakota-second' });
+    const result = await generateAuthoredColumn({
+      candidates: [first, second],
+      sources: FIXTURE_SOURCES,
+      state: {},
+      now: new Date('2026-10-04T09:00:00Z'),
+      deadlineMs: Date.now() + 1_000,
+      callModel: async (request) => {
+        if (/choose the stance/.test(request.systemPrompt)) return STANCE_JSON;
+        return JSON.stringify({ headline: 'Too Short To Publish Anywhere Near The Bar', deck: 'A deck that is long enough to pass the standfirst window but backed by a body that is far too short.', body: 'One tiny paragraph that fails every structural check.' });
+      },
+    });
+    assert.equal(result.column, null);
+    assert.deepEqual(result.selectionDiagnostics.attempts.map((attempt) => attempt.outcome.split(':')[0]), ['verify', 'skipped']);
+  } finally {
+    delete process.env.OPENROUTER_API_KEY;
+  }
 });

@@ -7,9 +7,20 @@ export const MIN_ITEMS_PER_SOURCE_IN_POOL = Number(process.env.MIN_ITEMS_PER_SOU
 export const MAX_ITEMS_PER_SOURCE_IN_POOL = Number(process.env.MAX_ITEMS_PER_SOURCE_IN_POOL || 6);
 export const POOL_MAX_AGE_DAYS = Number(process.env.POOL_MAX_AGE_DAYS || 10);
 export const PIPELINE_FORCE_SLOT = process.env.PIPELINE_FORCE_SLOT === '1';
-export const DAILY_CURATION_TARGET = Number(process.env.DAILY_CURATION_TARGET || 6);
-export const ITEMS_PER_RUN = Number(process.env.ITEMS_PER_RUN || 2);
+// Daily throughput: three scheduled runs process up to three curated items
+// each. The daily target is also the per-day processing cap, so repeated
+// manual runs on one day cannot exhaust the candidate pool.
+export const DAILY_CURATION_TARGET = Number(process.env.DAILY_CURATION_TARGET || 9);
+export const ITEMS_PER_RUN = Number(process.env.ITEMS_PER_RUN || 3);
 export const FRESH_CANDIDATE_WINDOW_HOURS = Number(process.env.FRESH_CANDIDATE_WINDOW_HOURS || 24);
+// Older on-beat items stay eligible behind the fresh ones for a week.
+export const CANDIDATE_MAX_AGE_HOURS = Number(process.env.CANDIDATE_MAX_AGE_HOURS || 168);
+// When the curation model returns fewer picks than the floor, the
+// deterministic ranker tops the plan up with on-beat items (either lane at or
+// above the minimum relevance). Downstream relevance, extraction, quality and
+// repetition gates still decide what each pick becomes.
+export const CURATION_FLOOR = Number(process.env.CURATION_FLOOR ?? 3);
+export const CURATION_FLOOR_MIN_RELEVANCE = Number(process.env.CURATION_FLOOR_MIN_RELEVANCE || 0.55);
 export const LATEST_NEWS_LIMIT = Number(process.env.LATEST_NEWS_LIMIT || 30);
 export const EXPERT_LENS_VERSION = Number(process.env.EXPERT_LENS_VERSION || 2);
 export const PIPELINE_USE_EXISTING_POOL = process.env.PIPELINE_USE_EXISTING_POOL === '1';

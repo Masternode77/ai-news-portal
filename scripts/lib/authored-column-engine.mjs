@@ -17,7 +17,7 @@ import {
   PIPELINE_OFFLINE,
 } from './constants.mjs';
 import { callOpenRouterText } from './openrouter.mjs';
-import { llmUsageSummary } from './llm-budget.mjs';
+import { LlmBudgetExceededError, llmUsageSummary } from './llm-budget.mjs';
 import { buildEvidencePack } from './evidence-pack-builder.mjs';
 import { findCorroboratingSources } from './multi-source-corroboration.mjs';
 import { buildClaimLedger } from './claim-ledger.mjs';
@@ -33,6 +33,7 @@ import {
 import { isHeading, headingSequence } from './visible-body-length.mjs';
 import { buildColumnFigures } from './authored-column-figures.mjs';
 import { classifyAiTopicRelevance } from './relevance-classifier.mjs';
+import { extractExpertInsight } from './expert-insight-engine.mjs';
 import { abstractOnlyTextScope, sourceUsageDecision } from './source-registry.mjs';
 import { sourceExtractionPassesLongformGate } from './source-extraction-fail-closed.mjs';
 import { validateExtractionArtifact } from './extraction-artifact.mjs';
@@ -41,7 +42,37 @@ import { googleReleaseNoteTarget } from './google-cloud-release-notes.mjs';
 
 const CHARTER_RELATIVE_PATH = 'config/editorial/persona-charter.json';
 const STORY_KEY_WINDOW_HOURS = 72;
-const MIN_STORY_RELEVANCE = 0.75;
+// Either lane at 0.75 or above anchors a column on relevance alone. Between
+// the relaxed floor (0.6) and 0.75 the source itself must name the compute
+// side (data centers, AI, cloud, chips, large loads): a generic power or
+// policy story is never forced into a data-center frame. Extraction, rights,
+// evidence, numeric provenance, repetition and source-fidelity gates are
+// unchanged.
+export const MIN_STORY_RELEVANCE = numberFromEnv('AUTHORED_COLUMN_MIN_RELEVANCE', 0.6);
+export const STRONG_STORY_RELEVANCE = 0.75;
+const COMPUTE_ANCHOR_PATTERN = /\b(?:data[- ]?cent(?:er|re)s?|hyperscal\w*|colocation|large[- ]loads?|artificial intelligence|machine learning|generative ai|gpus?|accelerators?|semiconductors?|chips?|chipmakers?|cloud|compute|computing|servers?|inference|supercomput\w*|hpc|llms?|foundation models?|frontier models?)\b/i;
+const AI_TOKEN_PATTERN = /\bAI\b/;
+
+export function computeAnchored(article = {}) {
+  const text = `${article.title || ''}\n${columnSourceText(article)}`;
+  return COMPUTE_ANCHOR_PATTERN.test(text) || AI_TOKEN_PATTERN.test(text);
+}
+
+export function columnRelevanceQualifies(article = {}) {
+  const relevance = columnStoryRelevance(article);
+  if (relevance >= STRONG_STORY_RELEVANCE) return true;
+  return relevance >= MIN_STORY_RELEVANCE && computeAnchored(article);
+}
+// When generation or verification rejects the top story, the run tries the
+// next-ranked qualifying story instead of publishing nothing.
+const MAX_STORY_ATTEMPTS_PER_RUN = Math.max(1, Math.floor(numberFromEnv('AUTHORED_COLUMN_MAX_STORY_ATTEMPTS', 2)));
+// A column argues a current development. A record older than this (by its own
+// publication or restoration date) may carry figures that are years old, so it
+// can corroborate but cannot anchor a column.
+export const MAX_ANCHOR_AGE_DAYS = numberFromEnv('AUTHORED_COLUMN_MAX_ANCHOR_AGE_DAYS', 21);
+// A full attempt (thesis, draft, up to two revisions) takes about two to four
+// minutes of model time.
+const MIN_ATTEMPT_TIME_MS = 240_000;
 const POLICY_ACTOR_PATTERN = /\b(?:commission|department|agency|authority|administration|ministry|parliament|congress|regulator|council|government|bureau|office)\b/i;
 const POLICY_CONTEXT_PATTERN = /\b(?:policy|regulation|regulatory|government|permitting|siting)\b/i;
 const SELECTION_REJECTION_KEYS = [
@@ -52,6 +83,8 @@ const SELECTION_REJECTION_KEYS = [
   'expert_insight_incomplete',
   'relevance_below_threshold',
   'already_covered',
+  'stale_story',
+  'digest_roundup',
   'unclean_evidence',
   'insufficient_facts',
 ];
@@ -60,6 +93,11 @@ const SELECTION_REJECTION_KEYS = [
 // (frontier models, labs, policy, security, compute demand) read through
 // the desk's infrastructure lens. The floor applies to whichever lane the
 // story is strongest in.
+function numberFromEnv(name, fallback) {
+  const value = Number(process.env[name]);
+  return Number.isFinite(value) && value > 0 ? value : fallback;
+}
+
 export function columnStoryRelevance(article = {}) {
   const infrastructure = Number(article.infrastructure_relevance_score || 0);
   const aiTopic = Number.isFinite(Number(article.ai_topic_score))
@@ -67,7 +105,7 @@ export function columnStoryRelevance(article = {}) {
     : classifyAiTopicRelevance(article).ai_topic_score;
   return Math.max(infrastructure, aiTopic);
 }
-const MIN_STORY_FACTS = 4;
+export const MIN_STORY_FACTS = numberFromEnv('AUTHORED_COLUMN_MIN_FACTS', 3);
 
 // An abstract-only source (arXiv: CC0 metadata, never the e-print) is capped
 // at the signal-card lane on the wire; it cannot anchor a column either. It may
@@ -144,14 +182,37 @@ function namedPolicyActor(article = {}, evidencePack = {}) {
   return candidates.find((actor) => actor === article.source || evidenceText.toLowerCase().includes(actor.toLowerCase())) || '';
 }
 
-export function authoredInsightEligible(article = {}, evidencePack = buildColumnEvidencePack(article)) {
+// The column's own evidence pack enforces the fact floor, and a policy,
+// market or system story can be argued without a named company. Those two
+// heuristic fields therefore never block a column on their own. The
+// substantive fields (infrastructure layer, bottleneck, leverage, execution
+// risk, timing, counterargument, next signal) still must be present, so every
+// column keeps a concrete bottleneck or decision point to argue. A record
+// enriched before the insight engine existed is assessed from its saved text.
+const NON_BLOCKING_INSIGHT_FIELDS = new Set(['named_companies', 'concrete_facts']);
+
+function columnInsight(article = {}) {
   const insight = articleExpertInsight(article);
+  if (insight.expert_insight_complete === true || Array.isArray(insight.expert_insight_missing_fields)) return insight;
+  if (article.expert_insight_complete === true || Array.isArray(article.expert_insight_missing_fields)) {
+    return {
+      ...insight,
+      expert_insight_complete: article.expert_insight_complete === true,
+      expert_insight_missing_fields: article.expert_insight_missing_fields || [],
+    };
+  }
+  const text = columnSourceText(article);
+  return text ? extractExpertInsight({ ...article, cleaned_source_text: text, articleText: text }) : insight;
+}
+
+export function authoredInsightEligible(article = {}, evidencePack = buildColumnEvidencePack(article)) {
+  const insight = columnInsight(article);
   if (article.expert_insight_complete === true || insight.expert_insight_complete === true) return true;
-  const missing = Array.isArray(insight.expert_insight_missing_fields)
-    ? insight.expert_insight_missing_fields
-    : article.expert_insight_missing_fields;
-  return Array.isArray(missing)
-    && missing.length === 1
+  const missing = Array.isArray(insight.expert_insight_missing_fields) ? insight.expert_insight_missing_fields : null;
+  if (!missing) return false;
+  if (missing.every((field) => NON_BLOCKING_INSIGHT_FIELDS.has(field))) return true;
+  // Legacy narrow case kept for records whose only gap is the company field.
+  return missing.length === 1
     && missing[0] === 'named_companies'
     && Boolean(namedPolicyActor(article, evidencePack));
 }
@@ -304,6 +365,13 @@ export function verificationFeedback(reasons = []) {
   });
 }
 
+// The source's own publication date: a wire record processed today about a
+// month-old article must not look like a current development.
+function anchorDateMs(article = {}) {
+  const stamp = new Date(article.publishedAt || article.analysisPublishedAt || 0).getTime();
+  return Number.isFinite(stamp) ? stamp : 0;
+}
+
 function articleDateMs(article = {}) {
   const stamp = new Date(article.analysisPublishedAt || article.publishedAt || 0).getTime();
   return Number.isFinite(stamp) ? stamp : 0;
@@ -322,6 +390,51 @@ export function storyKeyFor(article = {}) {
     // Preserve the existing string fallback for non-URL story keys.
   }
   return raw.toLowerCase().replace(/[?#].*$/, '');
+}
+
+// A daily digest bundles unrelated items; its lead item usually has its own
+// press release. It can corroborate but cannot anchor a single-thesis column.
+const DIGEST_TITLE_PATTERN = /^\s*(?:daily news|daily briefing|news digest|news roundup|weekly (?:news|roundup|digest|briefing)|week in review)\b/i;
+
+export function digestRoundup(article = {}) {
+  if (DIGEST_TITLE_PATTERN.test(String(article.title || ''))) return true;
+  try {
+    const url = new URL(String(article.sourceUrl || article.url || ''));
+    return url.hostname === 'ec.europa.eu' && /\/presscorner\/detail\/[a-z]{2}\/mex_\d+/i.test(url.pathname);
+  } catch {
+    return false;
+  }
+}
+
+function normalizedHeadline(value = '') {
+  return String(value || '').toLowerCase().replace(/&[a-z]+;/g, ' ').replace(/[^a-z0-9]+/g, ' ').trim();
+}
+
+// Source headlines of columns from the last 30 days. A candidate that carries
+// one of them as its own title, or inside its lead text (a digest or a second
+// outlet's copy of the same announcement), covers a story already argued.
+export function recentColumnSourceHeadlines(existingColumns = [], now = new Date()) {
+  const cutoff = now.getTime() - 30 * 86_400_000;
+  const headlines = new Set();
+  for (const column of existingColumns || []) {
+    const stamp = new Date(column?.publishedAt || column?.analysisPublishedAt || 0).getTime();
+    if (Number.isFinite(stamp) && stamp && stamp < cutoff) continue;
+    for (const source of column?.sources || []) {
+      const headline = normalizedHeadline(source?.title);
+      if (headline.split(' ').length >= 5) headlines.add(headline);
+    }
+  }
+  return headlines;
+}
+
+function repeatsRecentColumnSource(article = {}, headlines = new Set()) {
+  if (!headlines.size) return false;
+  const title = normalizedHeadline(article.title);
+  const lead = normalizedHeadline(columnSourceText(article).slice(0, 800));
+  for (const headline of headlines) {
+    if (title === headline || lead.includes(headline)) return true;
+  }
+  return false;
 }
 
 function authoredState(state = {}) {
@@ -360,6 +473,7 @@ export function selectColumnStoryWithDiagnostics({ candidates = [], pool = [], e
   const counts = Object.fromEntries([...SELECTION_REJECTION_KEYS, 'qualifying'].map((key) => [key, 0]));
   const byBeat = Object.fromEntries(COLUMN_COVERAGE_BEATS.map(beat => [beat, { candidates: 0, qualifying: 0, rejections: {} }]));
   const recentCoverage = recentColumnCoverage(existingColumns, now);
+  const coveredHeadlines = recentColumnSourceHeadlines(existingColumns, now);
   const scored = [];
 
   for (const article of candidates) {
@@ -374,8 +488,11 @@ export function selectColumnStoryWithDiagnostics({ candidates = [], pool = [], e
     else {
       evidencePack = buildColumnEvidencePack(article);
       if (!authoredInsightEligible(article, evidencePack)) rejection = 'expert_insight_incomplete';
-      else if (columnStoryRelevance(article) < MIN_STORY_RELEVANCE) rejection = 'relevance_below_threshold';
+      else if (!columnRelevanceQualifies(article)) rejection = 'relevance_below_threshold';
       else if (excludedStoryKeys.has(storyKeyFor(article))) rejection = 'already_covered';
+      else if (repeatsRecentColumnSource(article, coveredHeadlines)) rejection = 'already_covered';
+      else if (now.getTime() - anchorDateMs(article) > MAX_ANCHOR_AGE_DAYS * 86_400_000) rejection = 'stale_story';
+      else if (digestRoundup(article)) rejection = 'digest_roundup';
       else if (!evidencePack.ok) rejection = 'unclean_evidence';
       else if ((evidencePack.facts?.length || 0) < MIN_STORY_FACTS) rejection = 'insufficient_facts';
     }
@@ -413,8 +530,19 @@ export function selectColumnStoryWithDiagnostics({ candidates = [], pool = [], e
     || b.score - a.score
     || String(a.article.id).localeCompare(String(b.article.id)));
   const selection = contenders[0] || null;
+  // Fallback order for this run: the chosen story first, then every other
+  // qualifying story by evidence score, one per story key.
+  const ranked = [];
+  const rankedKeys = new Set();
+  for (const item of [selection, ...scored].filter(Boolean)) {
+    const key = storyKeyFor(item.article);
+    if (rankedKeys.has(key)) continue;
+    rankedKeys.add(key);
+    ranked.push(item);
+  }
   return {
     selection,
+    ranked,
     diagnostics: {
       total_candidates: candidates.length,
       counts,
@@ -495,7 +623,7 @@ function evidencePayload(selection, ledger) {
     })),
     facts: selection.evidencePack.facts,
     source_text: sourceTextFor(selection),
-    expert_insight: selection.article.expert_insight || selection.article.expertInsight || {},
+    expert_insight: columnInsight(selection.article),
     // The numeric gate accepts only verified_primary claims. Full source
     // context preserves meaning and status, not permission to derive values.
     verified_claims: ledger.claims
@@ -666,6 +794,7 @@ export async function generateAuthoredColumn({
   sources = [],
   callModel = callOpenRouterText,
   model = AUTHORED_COLUMN_MODEL,
+  deadlineMs = Number.POSITIVE_INFINITY,
 } = {}) {
   if (!AUTHORED_COLUMN_ENABLED) return { column: null, skipReason: 'disabled' };
   const explicitModel = callModel !== callOpenRouterText;
@@ -685,6 +814,7 @@ export async function generateAuthoredColumn({
   const charter = loadPersonaCharter();
   const selectionResult = selectColumnStoryWithDiagnostics({ candidates, pool, excludedStoryKeys: excluded, now, sources, existingColumns });
   const { selection, diagnostics: selectionDiagnostics } = selectionResult;
+  const ranked = selectionResult.ranked?.length ? selectionResult.ranked : (selection ? [selection] : []);
   authored.lastSelection = {
     at: now.toISOString(),
     outcome: selection ? 'selected' : 'no_qualifying_story',
@@ -693,23 +823,89 @@ export async function generateAuthoredColumn({
   };
   if (!selection) return { column: null, skipReason: 'no_qualifying_story', selectionDiagnostics };
 
-  const ledger = buildClaimLedger(clusterFor(selection), selection.article.id);
-  const sourceText = sourceTextFor(selection);
   const recentTheses = existingColumns.slice(0, 10).map((column) => column.stance?.thesis).filter(Boolean);
   const recentHeadings = recentHeadingsFromColumns(existingColumns);
   const recentLeads = recentLeadsFromColumns(existingColumns);
   const repetitionCorpus = [...existingColumns.slice(0, 20), ...recentRecords.slice(0, 50)];
+  const attemptsLog = [];
+  let lastFailure = null;
 
-  const failWith = (stage, detail, metrics) => {
-    authored.lastFailure = { at: now.toISOString(), stage, detail, ...(metrics ? { metrics } : {}) };
-    return { column: null, failure: `${stage}:${detail}`, selectionDiagnostics };
+  for (const contender of ranked.slice(0, MAX_STORY_ATTEMPTS_PER_RUN)) {
+    // A further story starts only with time for a full attempt left.
+    if (attemptsLog.length && Date.now() + MIN_ATTEMPT_TIME_MS > deadlineMs) {
+      attemptsLog.push({ id: contender.article.id, outcome: 'skipped:time_budget' });
+      break;
+    }
+    const outcome = await attemptColumnForSelection({
+      charter,
+      selection: contender,
+      recentTheses,
+      recentHeadings,
+      recentLeads,
+      repetitionCorpus,
+      callModel,
+      model,
+      now,
+    });
+    attemptsLog.push({ id: contender.article.id, outcome: outcome.column ? 'published' : `${outcome.stage}:${outcome.detail}` });
+    if (outcome.column) {
+      const column = outcome.column;
+      const dayKey = now.toISOString().slice(0, 10);
+      authored.lastColumnAt = now.toISOString();
+      authored.columnsByDay = { ...(authored.columnsByDay || {}), [dayKey]: (authored.columnsByDay?.[dayKey] || 0) + 1 };
+      authored.recentStoryKeys = [...(authored.recentStoryKeys || []), { key: column.story_key, at: now.toISOString() }].slice(-30);
+      authored.lastFailure = null;
+      authored.lastSelection = { ...authored.lastSelection, selectedId: contender.article.id, attempts: attemptsLog };
+      return { column, selectionDiagnostics: { ...selectionDiagnostics, selected_id: contender.article.id, attempts: attemptsLog } };
+    }
+    lastFailure = outcome;
+    // A spent run budget cannot be fixed by switching stories.
+    if (outcome.budgetExhausted) break;
+  }
+
+  authored.lastFailure = {
+    at: now.toISOString(),
+    stage: lastFailure.stage,
+    detail: lastFailure.detail,
+    ...(lastFailure.metrics ? { metrics: lastFailure.metrics } : {}),
+    attempts: attemptsLog,
   };
+  authored.lastSelection = { ...authored.lastSelection, attempts: attemptsLog };
+  return {
+    column: null,
+    failure: `${lastFailure.stage}:${lastFailure.detail}`,
+    selectionDiagnostics: { ...selectionDiagnostics, attempts: attemptsLog },
+  };
+}
+
+// One full generation attempt (thesis, draft, up to two revisions, verification)
+// for one selected story. Returns { column } or { stage, detail, metrics }.
+async function attemptColumnForSelection({
+  charter,
+  selection,
+  recentTheses,
+  recentHeadings,
+  recentLeads,
+  repetitionCorpus,
+  callModel,
+  model,
+  now,
+}) {
+  const ledger = buildClaimLedger(clusterFor(selection), selection.article.id);
+  const sourceText = sourceTextFor(selection);
+  const failWith = (stage, detail, metrics, error) => ({
+    column: null,
+    stage,
+    detail,
+    ...(metrics ? { metrics } : {}),
+    budgetExhausted: error instanceof LlmBudgetExceededError,
+  });
 
   let stance;
   try {
     stance = await thesisPass({ charter, selection, ledger, recentTheses, callModel });
   } catch (error) {
-    return failWith('thesis', error.message);
+    return failWith('thesis', error.message, null, error);
   }
   if (!stance?.thesis) return failWith('thesis', 'no_parseable_thesis');
 
@@ -717,7 +913,7 @@ export async function generateAuthoredColumn({
   try {
     draft = await draftPass({ charter, selection, ledger, stance, recentHeadings, recentLeads, callModel });
   } catch (error) {
-    return failWith('draft', error.message);
+    return failWith('draft', error.message, null, error);
   }
   if (!draft?.body || !draft?.headline) return failWith('draft', 'no_parseable_draft');
 
@@ -742,7 +938,7 @@ export async function generateAuthoredColumn({
         formatFeedback = [...(essay.formatIssues || []), `The previous JSON failed ${error.message}. Return all required arrays with 4-6 valid section headings and nonempty single-line paragraph strings; preserve the complete essay.`];
         continue;
       }
-      return failWith('voice', error.message);
+      return failWith('voice', error.message, null, error);
     }
     if (voiced?.body && voiced?.headline) essay = voiced;
     formatFeedback = essay.formatIssues || [];
@@ -793,12 +989,5 @@ export async function generateAuthoredColumn({
     model,
     now,
   });
-
-  const dayKey = now.toISOString().slice(0, 10);
-  authored.lastColumnAt = now.toISOString();
-  authored.columnsByDay = { ...(authored.columnsByDay || {}), [dayKey]: (authored.columnsByDay?.[dayKey] || 0) + 1 };
-  authored.recentStoryKeys = [...(authored.recentStoryKeys || []), { key: column.story_key, at: now.toISOString() }].slice(-30);
-  authored.lastFailure = null;
-
-  return { column, selectionDiagnostics };
+  return { column };
 }

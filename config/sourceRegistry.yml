@@ -37,6 +37,84 @@ sources:
     allow_text_use: true
     allow_image_reuse: false
     rights_note: Page footer explicitly licenses documentation content CC BY 4.0 except otherwise noted. Discovery feed only; extract the linked dated section with a present licence marker, attribute Google Cloud and the licence, identify adaptation. Not Google Cloud Blog or customer content.
+  - id: google-cloud-tpu-releases
+    name: Google Cloud TPU
+    domain: docs.cloud.google.com
+    article_hosts: docs.cloud.google.com
+    article_path: /tpu/docs/release-notes
+    coverage: TPU accelerator generations, availability, pod capacity and AI training and inference infrastructure
+    priority: P1
+    feed: https://docs.cloud.google.com/feeds/tpu-release-notes.xml
+    defaultCategory: AI Infrastructure (GPU/Neocloud)
+    region: Global
+    language: en
+    status: active_feed
+    text_use_basis: google_cloud_documentation_cc_by_4_0
+    image_use_basis: unreviewed
+    terms_url: https://docs.cloud.google.com/tpu/docs/release-notes
+    reviewed_at: 2026-10-04
+    allow_text_use: true
+    allow_image_reuse: false
+    rights_note: Same Google Cloud documentation footer licence as the Compute Engine row (CC BY 4.0 except otherwise noted); runner Feed Probe 2026-10-04 returned 200 with 30 dated entries. Extract only the linked dated section with a present licence marker, attribute Google Cloud and the licence, identify adaptation.
+  - id: epoch-ai-gradient-updates
+    name: Epoch AI
+    domain: epoch.ai
+    article_hosts: epoch.ai
+    article_path_prefix: /gradient-updates/
+    feed_format: epoch_html_index
+    coverage: AI compute economics, frontier lab buildouts and financing, chips, data center capacity and power
+    priority: P1
+    feed: https://epoch.ai/gradient-updates
+    defaultCategory: AI Infrastructure (GPU/Neocloud)
+    region: Global
+    language: en
+    status: active_feed
+    text_use_basis: epoch_ai_cc_by_4_0
+    image_use_basis: unreviewed
+    terms_url: https://epoch.ai/about
+    reviewed_at: 2026-10-04
+    allow_text_use: true
+    allow_image_reuse: false
+    rights_note: About page (Terms Probe 2026-10-04) - "Epoch AI's work is free to use, distribute, and reproduce provided the source and authors are credited under the Creative Commons Attribution license", linking CC BY 4.0. No RSS feed exists; discovery reads the server-rendered section index (robots.txt disallows only /assets/, /i and /fro). Every article page must carry the CC BY 4.0 licence link before it is listed or extracted; attribute Epoch AI and the licence and identify adaptation. Material marked as third-party is not reused.
+  - id: epoch-ai-data-insights
+    name: Epoch AI
+    domain: epoch.ai
+    article_hosts: epoch.ai
+    article_path_prefix: /data-insights/
+    feed_format: epoch_html_index
+    coverage: AI chip production, compute capacity, frontier data center power and inference price trends
+    priority: P1
+    feed: https://epoch.ai/data-insights
+    defaultCategory: AI Infrastructure (GPU/Neocloud)
+    region: Global
+    language: en
+    status: active_feed
+    text_use_basis: epoch_ai_cc_by_4_0
+    image_use_basis: unreviewed
+    terms_url: https://epoch.ai/about
+    reviewed_at: 2026-10-04
+    allow_text_use: true
+    allow_image_reuse: false
+    rights_note: Same Epoch AI CC BY 4.0 statement and per-page licence requirement as the Gradient Updates row. Data insight pages also state that their charts are under the Creative Commons BY license; charts and images are not reused.
+  - id: kubernetes-blog
+    name: Kubernetes Blog
+    domain: kubernetes.io
+    article_hosts: kubernetes.io
+    license_marker: Distributed under CC BY 4.0
+    coverage: cluster software for AI training and inference, accelerator scheduling and cloud-native infrastructure
+    priority: P2
+    feed: https://kubernetes.io/feed.xml
+    defaultCategory: Hyperscalers & Cloud
+    region: Global
+    language: en
+    status: active_feed
+    text_use_basis: kubernetes_website_cc_by_4_0
+    image_use_basis: unreviewed
+    terms_url: https://kubernetes.io/blog/
+    reviewed_at: 2026-10-04
+    allow_text_use: true
+    allow_image_reuse: false
+    rights_note: Blog pages carry the site footer "The Kubernetes Authors | Documentation Distributed under CC BY 4.0" (Terms Probe 2026-10-04); the blog is published from the CC BY 4.0 kubernetes/website repository. Extraction requires that footer marker on each page; attribute The Kubernetes Authors and the licence, identify adaptation. Linux Foundation trademark policy applies to logos, which are never reused.
   - id: eia-today-in-energy
     name: U.S. Energy Information Administration
     domain: eia.gov
@@ -69,6 +147,7 @@ sources:
     reviewed_at: 2026-09-05
     allow_text_use: false
     allow_image_reuse: false
+    link_only_basis: feed_listing_low_risk
     rights_note: link-only low risk (headline + link); no copying, republishing or redistribution of material
   - id: bloomberg-technology
     name: Bloomberg Technology
@@ -101,6 +180,7 @@ sources:
     reviewed_at: 2026-09-05
     allow_text_use: false
     allow_image_reuse: false
+    link_only_basis: feed_listing_low_risk
     rights_note: link-only low risk from the feed; scraper clause forbids fetching article pages; personal non-commercial use only
   - id: google-cloud-blog
     name: Google Cloud Blog
@@ -117,6 +197,7 @@ sources:
     reviewed_at: 2026-09-05
     allow_text_use: false
     allow_image_reuse: false
+    link_only_basis: feed_listing_low_risk
     rights_note: link-only low risk; generic Google terms, no blog-specific page found
   - id: aws-news-blog
     name: AWS News Blog
@@ -133,6 +214,7 @@ sources:
     reviewed_at: 2026-09-05
     allow_text_use: false
     allow_image_reuse: false
+    link_only_basis: feed_listing_low_risk
     rights_note: link-only low risk; personal use licence, no commercial use or data mining; only docs.aws.amazon.com is CC-BY-SA
   - id: microsoft-azure-blog
     name: Microsoft Azure Blog
@@ -149,6 +231,7 @@ sources:
     reviewed_at: 2026-09-05
     allow_text_use: false
     allow_image_reuse: false
+    link_only_basis: feed_listing_low_risk
     rights_note: link-only low risk; personal and non-commercial use only
   - id: techcrunch-ai
     name: TechCrunch AI
@@ -165,6 +248,7 @@ sources:
     reviewed_at: 2026-09-05
     allow_text_use: false
     allow_image_reuse: false
+    link_only_basis: feed_listing_permitted
     rights_note: link-only permitted explicitly: show feed content as shipped with attribution and link, no advertising inside the feed block
   - id: venturebeat-ai
     name: VentureBeat AI
@@ -181,6 +265,7 @@ sources:
     reviewed_at: 2026-09-05
     allow_text_use: false
     allow_image_reuse: false
+    link_only_basis: feed_listing_low_risk
     rights_note: link-only low risk; terms page rate-limited (429) from the runner, feed copyright VentureBeat
   - id: theregister-data-centre
     name: The Register
@@ -197,6 +282,7 @@ sources:
     reviewed_at: 2026-09-06
     allow_text_use: false
     allow_image_reuse: false
+    link_only_basis: feed_listing_low_risk
     rights_note: link-only low risk; official RSS directory replacement feed returns 200, while personal non-commercial and no-copying terms keep text and images unauthorized
   - id: datacenterdynamics
     name: Data Center Dynamics
@@ -213,6 +299,7 @@ sources:
     reviewed_at: 2026-09-05
     allow_text_use: false
     allow_image_reuse: false
+    link_only_basis: feed_listing_low_risk
     rights_note: link-only low risk; no copying or distribution for commercial use, no database of downloaded material
   - id: datacenterknowledge
     name: Data Center Knowledge
@@ -229,6 +316,7 @@ sources:
     reviewed_at: 2026-09-05
     allow_text_use: false
     allow_image_reuse: false
+    link_only_basis: feed_listing_low_risk
     rights_note: link-only low risk; Informa TechTarget terms ban data mining and robots; reprints via Wright's Media
   - id: servethehome
     name: ServeTheHome
@@ -245,6 +333,7 @@ sources:
     reviewed_at: 2026-09-05
     allow_text_use: false
     allow_image_reuse: false
+    link_only_basis: feed_listing_permitted
     rights_note: link-only permitted explicitly: up to 300 consecutive characters plus one image when linking back
   - id: toms-hardware
     name: Tom's Hardware
@@ -261,6 +350,7 @@ sources:
     reviewed_at: 2026-09-05
     allow_text_use: false
     allow_image_reuse: false
+    link_only_basis: feed_listing_permitted
     rights_note: link-only permitted explicitly by Future's linking rule; no commercial use of content without a licence
   - id: storagereview
     name: StorageReview
@@ -277,6 +367,7 @@ sources:
     reviewed_at: 2026-09-05
     allow_text_use: false
     allow_image_reuse: false
+    link_only_basis: feed_listing_low_risk
     rights_note: link-only low risk; no terms page found, default copyright Flying Pig Ventures
   - id: semiconductor-engineering
     name: Semiconductor Engineering
@@ -293,6 +384,7 @@ sources:
     reviewed_at: 2026-09-05
     allow_text_use: false
     allow_image_reuse: false
+    link_only_basis: feed_listing_low_risk
     rights_note: link-only low risk; non-commercial personal viewing only, no copying
   - id: datacenterfrontier
     name: Data Center Frontier
@@ -325,6 +417,7 @@ sources:
     reviewed_at: 2026-09-05
     allow_text_use: false
     allow_image_reuse: false
+    link_only_basis: feed_listing_low_risk
     rights_note: link-only low risk; no terms page found, default copyright iMiller Public Relations
   - id: cloudflare-blog
     name: Cloudflare Blog
@@ -341,6 +434,7 @@ sources:
     reviewed_at: 2026-09-05
     allow_text_use: false
     allow_image_reuse: false
+    link_only_basis: feed_listing_low_risk
     rights_note: link-only low risk; website terms, no feed-specific clause
   - id: meta-engineering
     name: Engineering at Meta
@@ -357,6 +451,7 @@ sources:
     reviewed_at: 2026-09-05
     allow_text_use: false
     allow_image_reuse: false
+    link_only_basis: feed_listing_low_risk
     rights_note: link-only low risk; terms unreadable from the runner (HTTP 400)
   - id: hugging-face-blog
     name: Hugging Face Blog
@@ -373,6 +468,7 @@ sources:
     reviewed_at: 2026-09-05
     allow_text_use: false
     allow_image_reuse: false
+    link_only_basis: feed_listing_low_risk
     rights_note: link-only low risk; no reproduction or republishing of proprietary materials without written permission
   - id: uptime-institute-journal
     name: Uptime Institute Journal
@@ -405,6 +501,7 @@ sources:
     reviewed_at: 2026-09-05
     allow_text_use: false
     allow_image_reuse: false
+    link_only_basis: feed_listing_low_risk
     rights_note: link-only low risk from the feed; Tabor terms ban data mining and commercial exploitation; article pages return 403
   - id: insidehpc
     name: insideHPC
@@ -437,6 +534,7 @@ sources:
     reviewed_at: 2026-09-05
     allow_text_use: false
     allow_image_reuse: false
+    link_only_basis: feed_listing_low_risk
     rights_note: link-only low risk; Situation Publishing terms, personal non-commercial use
   - id: utility-dive
     name: Utility Dive
@@ -453,6 +551,7 @@ sources:
     reviewed_at: 2026-09-05
     allow_text_use: false
     allow_image_reuse: false
+    link_only_basis: feed_listing_low_risk
     rights_note: link-only low risk; Informa TechTarget terms ban data mining and robots
   - id: power-engineering
     name: Power Engineering
@@ -901,6 +1000,7 @@ sources:
     reviewed_at: 2026-09-10
     allow_text_use: false
     allow_image_reuse: false
+    link_only_basis: feed_listing_low_risk
     rights_note: link-only candidate; feed 200 (83 items, redirects to ?lab_viewport=rss); about/terms page 404, footer reserves all rights
   - id: fierce-network
     name: Fierce Network
@@ -918,6 +1018,7 @@ sources:
     reviewed_at: 2026-09-10
     allow_text_use: false
     allow_image_reuse: false
+    link_only_basis: feed_listing_low_risk
     rights_note: link-only candidate; feed 200 (25 items); Questex terms not yet read from the runner
   - id: light-reading
     name: Light Reading
@@ -935,6 +1036,7 @@ sources:
     reviewed_at: 2026-09-10
     allow_text_use: false
     allow_image_reuse: false
+    link_only_basis: feed_listing_low_risk
     rights_note: link-only candidate; feed 200 (50 items); Informa TechTarget terms ban data mining and robots, same as Data Center Knowledge
   - id: network-world
     name: Network World
@@ -952,6 +1054,7 @@ sources:
     reviewed_at: 2026-09-10
     allow_text_use: false
     allow_image_reuse: false
+    link_only_basis: feed_listing_low_risk
     rights_note: link-only candidate; feed 200 (20 items, full text in feed); Foundry terms not yet read from the runner
   - id: eetimes
     name: EE Times
@@ -969,6 +1072,7 @@ sources:
     reviewed_at: 2026-09-10
     allow_text_use: false
     allow_image_reuse: false
+    link_only_basis: feed_listing_low_risk
     rights_note: link-only candidate; feed 200 (10 items); AspenCore terms not yet read from the runner
   - id: techpowerup
     name: TechPowerUp
@@ -986,6 +1090,7 @@ sources:
     reviewed_at: 2026-09-10
     allow_text_use: false
     allow_image_reuse: false
+    link_only_basis: feed_listing_low_risk
     rights_note: link-only candidate; feed 200 (125 items, consumer-heavy); terms not yet read from the runner
   - id: semiconductor-digest
     name: Semiconductor Digest
@@ -1003,6 +1108,7 @@ sources:
     reviewed_at: 2026-09-10
     allow_text_use: false
     allow_image_reuse: false
+    link_only_basis: feed_listing_low_risk
     rights_note: link-only candidate; feed 200 (100 items, full text in feed); terms not yet read from the runner
   - id: ieee-spectrum-computing
     name: IEEE Spectrum
@@ -1020,6 +1126,7 @@ sources:
     reviewed_at: 2026-09-10
     allow_text_use: false
     allow_image_reuse: false
+    link_only_basis: feed_listing_low_risk
     rights_note: link-only candidate; feed 200 (30 items); IEEE site terms reserve reproduction rights
   - id: mit-technology-review
     name: MIT Technology Review
@@ -1037,6 +1144,7 @@ sources:
     reviewed_at: 2026-09-10
     allow_text_use: false
     allow_image_reuse: false
+    link_only_basis: feed_listing_low_risk
     rights_note: link-only candidate; feed 200 (10 items); paywalled site, terms reserve all rights
   - id: ars-technica-biz-it
     name: Ars Technica
@@ -1054,6 +1162,7 @@ sources:
     reviewed_at: 2026-09-10
     allow_text_use: false
     allow_image_reuse: false
+    link_only_basis: feed_listing_low_risk
     rights_note: link-only candidate; feed 200 (20 items); Conde Nast user agreement reserves reproduction rights
   - id: canary-media
     name: Canary Media
@@ -1088,6 +1197,7 @@ sources:
     reviewed_at: 2026-09-10
     allow_text_use: false
     allow_image_reuse: false
+    link_only_basis: feed_listing_low_risk
     rights_note: link-only candidate; feed 200 (10 items, full text in feed); terms not yet read from the runner
   - id: carbon-brief
     name: Carbon Brief
@@ -1105,6 +1215,7 @@ sources:
     reviewed_at: 2026-09-10
     allow_text_use: false
     allow_image_reuse: false
+    link_only_basis: feed_listing_low_risk
     rights_note: link-only candidate; feed 200 (12 items, full text in feed); licence page not yet read from the runner
   - id: ieefa
     name: IEEFA
@@ -1122,6 +1233,7 @@ sources:
     reviewed_at: 2026-09-10
     allow_text_use: false
     allow_image_reuse: false
+    link_only_basis: feed_listing_low_risk
     rights_note: link-only candidate; feed 200 (10 items); terms not yet read from the runner
   - id: berkeley-lab-news
     name: Berkeley Lab News Center
@@ -1156,6 +1268,7 @@ sources:
     reviewed_at: 2026-09-10
     allow_text_use: false
     allow_image_reuse: false
+    link_only_basis: feed_listing_low_risk
     rights_note: link-only candidate; Substack feed 200 (20 items, partly paywalled); author holds copyright under Substack terms
   - id: interconnects
     name: Interconnects
@@ -1173,6 +1286,7 @@ sources:
     reviewed_at: 2026-09-10
     allow_text_use: false
     allow_image_reuse: false
+    link_only_basis: feed_listing_low_risk
     rights_note: link-only candidate; Substack feed 200 (7 items); author holds copyright under Substack terms
   - id: fabricated-knowledge
     name: Fabricated Knowledge
@@ -1190,6 +1304,7 @@ sources:
     reviewed_at: 2026-09-10
     allow_text_use: false
     allow_image_reuse: false
+    link_only_basis: feed_listing_low_risk
     rights_note: link-only candidate; Substack feed 200 (16 items); author holds copyright under Substack terms
   - id: latent-space
     name: Latent Space
@@ -1207,6 +1322,7 @@ sources:
     reviewed_at: 2026-09-10
     allow_text_use: false
     allow_image_reuse: false
+    link_only_basis: feed_listing_low_risk
     rights_note: link-only candidate; Substack feed 200 (12 items); author holds copyright under Substack terms
   - id: etnews
     name: 전자신문
@@ -1224,6 +1340,7 @@ sources:
     reviewed_at: 2026-09-10
     allow_text_use: false
     allow_image_reuse: false
+    link_only_basis: feed_listing_low_risk
     rights_note: link-only candidate; section feed 200 (30 items); Korean press copyright, no text reuse without a licence
   - id: zdnet-korea
     name: ZDNet Korea
@@ -1241,6 +1358,7 @@ sources:
     reviewed_at: 2026-09-10
     allow_text_use: false
     allow_image_reuse: false
+    link_only_basis: feed_listing_low_risk
     rights_note: link-only candidate; FeedBurner feed 200 (29 items); Korean press copyright
   - id: electimes
     name: 전기신문
@@ -1275,6 +1393,7 @@ sources:
     reviewed_at: 2026-09-10
     allow_text_use: false
     allow_image_reuse: false
+    link_only_basis: feed_listing_low_risk
     rights_note: link-only candidate; feed 200 (50 items); Korean press copyright
   - id: datanet
     name: 데이터넷
@@ -1292,6 +1411,7 @@ sources:
     reviewed_at: 2026-09-10
     allow_text_use: false
     allow_image_reuse: false
+    link_only_basis: feed_listing_low_risk
     rights_note: link-only candidate; feed 200 (50 items); Korean press copyright
   - id: ofgem
     name: Ofgem

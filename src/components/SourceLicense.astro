@@ -1,6 +1,17 @@
 ---
 import { googleReleaseNoteTarget } from '../../scripts/lib/google-cloud-release-notes.mjs';
+import { epochArticleTarget } from '../../scripts/lib/epoch-ai.mjs';
 const { url } = Astro.props;
 const isGoogleRelease = Boolean(googleReleaseNoteTarget(url));
+const isEpoch = Boolean(epochArticleTarget(url));
+let isKubernetes = false;
+try {
+  isKubernetes = new URL(String(url || '')).hostname === 'kubernetes.io';
+} catch {
+  isKubernetes = false;
+}
+const licenseLink = 'https://creativecommons.org/licenses/by/4.0/';
 ---
-{isGoogleRelease && <small class="source-license">Adapted from Google Cloud documentation under <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener noreferrer">CC BY 4.0</a>. Analysis and wording by Compute Current.</small>}
+{isGoogleRelease && <small class="source-license">Adapted from Google Cloud documentation under <a href={licenseLink} target="_blank" rel="noopener noreferrer">CC BY 4.0</a>. Analysis and wording by Compute Current.</small>}
+{isEpoch && <small class="source-license">Adapted from research by Epoch AI under <a href={licenseLink} target="_blank" rel="noopener noreferrer">CC BY 4.0</a>. Analysis and wording by Compute Current.</small>}
+{isKubernetes && <small class="source-license">Adapted from the Kubernetes Blog by The Kubernetes Authors under <a href={licenseLink} target="_blank" rel="noopener noreferrer">CC BY 4.0</a>. Analysis and wording by Compute Current.</small>}

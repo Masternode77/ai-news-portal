@@ -3,8 +3,10 @@
 // LlmBudgetExceededError so a runaway loop can never burn unbounded credit
 // inside a scheduled pipeline run.
 
-const DEFAULT_TOKEN_BUDGET = 60_000;
-const DEFAULT_CALL_BUDGET = 40;
+// A full column attempt costs about four calls and 25k tokens; the budget
+// covers curation, wire enrichment and two column attempts in one run.
+const DEFAULT_TOKEN_BUDGET = 120_000;
+const DEFAULT_CALL_BUDGET = 60;
 
 const state = {
   calls: 0,

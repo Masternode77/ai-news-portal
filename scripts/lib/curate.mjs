@@ -1,4 +1,7 @@
 import {
+  CANDIDATE_MAX_AGE_HOURS,
+  CURATION_FLOOR,
+  CURATION_FLOOR_MIN_RELEVANCE,
   CURATION_MODEL,
   DAILY_CURATION_TARGET,
   FRESH_CANDIDATE_WINDOW_HOURS,
@@ -55,8 +58,9 @@ async function curateWithLlm(items) {
       'You are the curation editor for an AI and data center signal board.',
       'Select the most decision-useful stories for operators, investors, site selectors, and infrastructure strategists.',
       'Two lanes qualify. Infrastructure: data center load, grid capacity, generation and interconnection, chips and accelerators, cooling, cloud capacity, colocation, or capital flowing into those. AI: frontier model releases and capabilities, AI lab strategy and financing, AI policy and regulation, AI security incidents, and compute demand from AI workloads.',
-      'Prioritize source credibility, novelty, and source diversity. Skip enforcement actions, audits, grants, and announcements that only mention AI or energy in passing, even if that leaves fewer picks. An empty selection is a valid answer when nothing qualifies.',
-      'Among comparably consequential eligible stories, vary the mix across AI companies and model economics, data center and cloud operators (leases, earnings, financing and capacity), compute hardware, power and cooling, and policy. Policy is not the default beat. Never add a weak story merely to fill a category.',
+      'Prioritize source credibility, novelty, and source diversity. Skip items that only mention AI or energy in passing, such as routine enforcement actions, unrelated audits and generic grants.',
+      `The desk publishes every day: select at least ${Math.min(CURATION_FLOOR, DAILY_CURATION_TARGET)} stories whenever that many candidates touch either lane, including AI company, cloud provider, chipmaker, data center operator and IT infrastructure announcements, release notes, research and policy. Return an empty selection only when no candidate touches either lane.`,
+      'Among comparably consequential eligible stories, vary the mix across AI companies and model economics, data center and cloud operators (leases, earnings, financing and capacity), compute hardware, IT and networking infrastructure, power and cooling, and policy. Policy is not the default beat.',
       `Return JSON only with key selectedIds as an array of up to ${DAILY_CURATION_TARGET} ids, best first.`,
     ].join(' '),
     userPrompt: JSON.stringify({ candidates: payload }),
@@ -125,6 +129,39 @@ function publishedAtMs(item) {
   return Number.isFinite(timestamp) ? timestamp : 0;
 }
 
+function abstractOnlyCandidate(item = {}) {
+  return String(item.source_text_scope || '').trim().toLowerCase() === 'abstract';
+}
+
+// The curation model may answer with fewer picks than the desk needs, or none
+// at all on a quiet day. The floor tops the plan up with the strongest on-beat
+// candidates (either lane at or above the minimum relevance), full-text
+// sources before abstract-only ones. It never adds an item below that
+// relevance, and the wire's relevance, extraction, quality and repetition
+// gates still decide whether each pick becomes an article, a signal card or an
+// archive record.
+export function applyCurationFloor(selectedIds = [], ranked = [], {
+  floor = CURATION_FLOOR,
+  minRelevance = CURATION_FLOOR_MIN_RELEVANCE,
+  limit = DAILY_CURATION_TARGET,
+} = {}) {
+  const ids = [...new Set(selectedIds)].slice(0, limit);
+  const target = Math.min(Math.max(0, floor), limit);
+  if (ids.length >= target) return ids;
+  const chosen = new Set(ids);
+  const eligible = ranked
+    .filter((item) => item?.id && !chosen.has(item.id) && laneRelevance(item) >= minRelevance)
+    .sort((a, b) => Number(abstractOnlyCandidate(a)) - Number(abstractOnlyCandidate(b))
+      || laneRelevance(b) - laneRelevance(a)
+      || publishedAtMs(b) - publishedAtMs(a));
+  for (const item of eligible) {
+    if (ids.length >= target) break;
+    ids.push(item.id);
+    chosen.add(item.id);
+  }
+  return ids;
+}
+
 // A fetch-time archive tier is a title-and-snippet estimate, and the curation
 // model may still pick such an item (the Duane Arnold restart brief scored
 // 0.28 on its feed snippet). An archive decision is definitive, and the item
@@ -154,19 +191,23 @@ export function rollingCandidates(pool, state, existingPlan, now) {
     ...(existingPlan?.publishedIds || []),
   ]);
   const cutoffMs = now.getTime() - FRESH_CANDIDATE_WINDOW_HOURS * 60 * 60 * 1000;
+  const maxAgeMs = now.getTime() - CANDIDATE_MAX_AGE_HOURS * 60 * 60 * 1000;
   const ranked = rankWithDiversity(pool)
     .filter((item) => !publishedSet.has(item.id))
     .filter((item) => !definitivelyArchived(item));
   const fresh = ranked.filter((item) => publishedAtMs(item) >= cutoffMs);
 
-  if (fresh.length >= ITEMS_PER_RUN) {
-    return fresh;
-  }
-
+  // Fresh items lead, but a handful of fresh off-beat notices must not hide
+  // the week's on-beat story: older candidates inside the maximum age always
+  // follow, and the shortlist then orders everything by lane relevance.
   const freshIds = new Set(fresh.map((item) => item.id));
+  const recent = ranked.filter((item) => !freshIds.has(item.id) && publishedAtMs(item) >= maxAgeMs);
+  if (fresh.length + recent.length >= ITEMS_PER_RUN) return [...fresh, ...recent];
+  const recentIds = new Set(recent.map((item) => item.id));
   return [
     ...fresh,
-    ...ranked.filter((item) => !freshIds.has(item.id)),
+    ...recent,
+    ...ranked.filter((item) => !freshIds.has(item.id) && !recentIds.has(item.id)),
   ];
 }
 
@@ -175,7 +216,11 @@ export async function planForToday(pool, state, now = new Date()) {
   const existingPlan = state.dayPlans[key];
   const ranked = rollingCandidates(pool, state, existingPlan, now);
   const llmSelection = await curateWithLlm(ranked);
-  const selectedIds = llmSelection === null ? fallbackCurate(ranked) : llmSelection;
+  const modelIds = llmSelection === null ? fallbackCurate(ranked) : llmSelection;
+  const selectedIds = applyCurationFloor(modelIds, ranked);
+  if (selectedIds.length > modelIds.length) {
+    console.log(`[curate] floor added ${selectedIds.length - modelIds.length} on-beat candidate(s) to ${modelIds.length} model pick(s)`);
+  }
   const curatedItems = selectedIds
     .map((id) => ranked.find((item) => item.id === id))
     .filter(Boolean)
@@ -195,15 +240,20 @@ export async function planForToday(pool, state, now = new Date()) {
   return { key, plan };
 }
 
-export function pickItemsForRun(plan, now = new Date()) {
+// Each run processes up to ITEMS_PER_RUN unprocessed curated items, and a day
+// processes at most DAILY_CURATION_TARGET. Slots are recorded as run history
+// only: a run that found nothing no longer locks the rest of its slot, so a
+// later scheduled or manual run can still publish the day's stories.
+// PIPELINE_FORCE_SLOT lifts the daily cap for an operator-forced run.
+export function pickItemsForRun(plan, now = new Date(), { force = PIPELINE_FORCE_SLOT } = {}) {
   const slot = kstSlot(now);
-  const alreadySlotPublished = plan.slotPublications?.[slot];
-  if (alreadySlotPublished && !PIPELINE_FORCE_SLOT) return { slot, picked: [] };
-
   const publishedSet = new Set(plan.publishedIds || []);
+  const remainingToday = force
+    ? ITEMS_PER_RUN
+    : Math.max(0, DAILY_CURATION_TARGET - publishedSet.size);
   const available = (plan.curatedItems || [])
     .filter((item) => !publishedSet.has(item.id))
-    .slice(0, ITEMS_PER_RUN);
+    .slice(0, Math.min(ITEMS_PER_RUN, remainingToday));
 
   return { slot, picked: available };
 }
