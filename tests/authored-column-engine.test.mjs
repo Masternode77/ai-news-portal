@@ -185,6 +185,49 @@ test('draft heading formatting reaches revision but cannot bypass final structur
   }
 });
 
+test('voice revision receives the verified numeric ledger and rejects invented watch horizons', async () => {
+  resetLlmUsageForTests();
+  process.env.AUTHORED_MIN_WORDS = '700';
+  process.env.AUTHORED_MIN_CHARS = '4200';
+  try {
+    for (const repair of [true, false]) {
+      let calls = 0;
+      const result = await generateAuthoredColumn({
+        candidates: [fixtureArticle()], sources: FIXTURE_SOURCES, state: {},
+        now: new Date('2026-10-04T10:00:00Z'),
+        callModel: async request => {
+          calls += 1;
+          if (calls === 1) {
+            assert.match(request.systemPrompt, /never invent numeric timelines/);
+            return STANCE_JSON;
+          }
+          const essay = structuredEssay();
+          if (calls === 3 || calls === 4) {
+            const payload = JSON.parse(request.userPrompt);
+            assert.ok(payload.verified_claims.some(claim => claim.value === 200));
+            assert.match(request.systemPrompt, /Correcting evidence failures takes priority/);
+            assert.match(request.systemPrompt, /Remove unsupported numbers rather than spelling them out/);
+          }
+          if (calls === 4) assert.match(request.systemPrompt, /18 months/);
+          if (calls < 4 || !repair) essay.sections[0].paragraphs.push('The project will complete in 18 months.');
+          return JSON.stringify(essay);
+        },
+      });
+      assert.equal(calls, 4);
+      if (repair) {
+        assert.ok(result.column, JSON.stringify(result));
+        assert.equal(result.column.authored_quality.metrics.unsupported_claim_count, 0);
+      } else {
+        assert.equal(result.column, null);
+        assert.match(result.failure, /unsupported_numeric_claims:18 months/);
+      }
+    }
+  } finally {
+    delete process.env.AUTHORED_MIN_WORDS;
+    delete process.env.AUTHORED_MIN_CHARS;
+  }
+});
+
 test('engine skips cleanly without an api key', async () => {
   resetLlmUsageForTests();
   delete process.env.OPENROUTER_API_KEY;

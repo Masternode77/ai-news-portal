@@ -491,8 +491,9 @@ async function thesisPass({ charter, selection, ledger, recentTheses, callModel 
       '  "angle": string (one line on the underappreciated dynamic),',
       '  "standing_position_ids": string[] (ids of standing positions that genuinely apply, may be empty),',
       '  "counterargument": string (the strongest honest case against the thesis),',
-      '  "watch_items": string[2-3] (concrete observables with rough timeframes),',
+      '  "watch_items": string[2-3] (concrete observables tied to events such as the next filing or regulatory review; never invent numeric timelines),',
       '  "working_headlines": string[3] (first-person-friendly, specific, 40-90 chars) }',
+      'Use numbers, dates and durations only when explicitly present in verified_claims. This applies to forecasts and personal watch horizons too; otherwise use nonnumeric event-based timing.',
     ].join('\n'),
     userPrompt: JSON.stringify({
       evidence: evidencePayload(selection, ledger),
@@ -521,7 +522,7 @@ async function draftPass({ charter, selection, ledger, stance, recentHeadings = 
       '- Each paragraph array item is a single unwrapped plain-text paragraph with no newline characters. Do not put section headings into paragraph strings.',
       '- Section headings: invented for THIS argument — never generic labels, never headings any recent column used (the avoid list is in the payload). Each heading is 2-6 words, starts with an uppercase letter, and contains only ASCII letters, digits and spaces (no apostrophes, quotes, commas, colons, dashes, or trailing punctuation).',
       '- One section must present the honest case against the thesis, under a heading phrased from this column\'s specifics (the words "wrong", "watchlist" and other retired template phrasings are forbidden).',
-      '- The final section looks forward: name two or three concrete observables with rough timeframes, under a fresh heading of your own invention.',
+      '- The final section looks forward: name two or three concrete observables tied to events such as the next filing or regulatory review, under a fresh heading. Use no numeric forecast horizon, date or duration unless it is in verified_claims. Stance/watch_items are analytical proposals, not verified evidence.',
       '- Open with a different device than the recent leads shown in the payload: a scene, a specific number, a contradiction, a filing detail, or a deadline.',
       '- Attribute every number inline to its source publication by name. Cite only numbers present in verified_claims, copied exactly — same value, same unit; never convert units (do not turn 2,500 MW into 2.5 GW) and never derive new figures.',
       '- Write every sentence in your own words: never reproduce a sentence or long phrase from the source coverage. Short quoted fragments inside quotation marks are the only exception.',
@@ -537,7 +538,7 @@ async function draftPass({ charter, selection, ledger, stance, recentHeadings = 
   return parseModelEssay(content, { draft: true });
 }
 
-async function voicePass({ charter, draft, feedback = [], callModel }) {
+async function voicePass({ charter, draft, verifiedClaims = [], feedback = [], callModel }) {
   const content = await callModel({
     model: AUTHORED_COLUMN_MODEL,
     temperature: 0.4,
@@ -545,15 +546,16 @@ async function voicePass({ charter, draft, feedback = [], callModel }) {
     timeoutMs: 75_000,
     systemPrompt: [
       personaSystemPrompt(charter),
-      'Task: revise the column below. Preserve every fact, number, and attribution exactly. Return this strict JSON shape:',
+      'Task: revise the column below against verified_claims. Preserve supported facts, numbers and attributions exactly, but remove unsupported numeric claims and invented timelines, including those already in the draft or stance. Correcting evidence failures takes priority over preserving draft wording. Return this strict JSON shape:',
       '{ "headline": string, "deck": string, "opening_paragraphs": string[], "sections": [{ "heading": string, "paragraphs": string[] }] }',
       'Tighten the prose toward the persona voice: varied sentence rhythm, concrete verbs, no throat-clearing, no corporate filler.',
-      'Formatting contract: return exactly 4-6 section objects with at least one substantive paragraph each, and at least six substantive paragraphs in the complete essay. Each heading has 2-6 words, starts with an uppercase letter, and uses ASCII letters/digits/spaces only. Each paragraph is a single unwrapped string with no newline or markdown symbols. Keep any unheaded opening in opening_paragraphs (an empty array is allowed). Do not return a body string; the publisher assembles the headings and paragraphs. Keep the draft\'s own headings (or sharpen them), never template headings like "On My Watchlist" or "Where I Could Be Wrong". Numbers and attributions stay unchanged; retain 1200-1800 total words and the full argument, not a summary.',
+      'Formatting contract: return exactly 4-6 section objects with at least one substantive paragraph each, and at least six substantive paragraphs in the complete essay. Each heading has 2-6 words, starts with an uppercase letter, and uses ASCII letters/digits/spaces only. Each paragraph is a single unwrapped string with no newline or markdown symbols. Keep any unheaded opening in opening_paragraphs (an empty array is allowed). Do not return a body string; the publisher assembles the headings and paragraphs. Keep the draft\'s own headings (or sharpen them), never template headings like "On My Watchlist" or "Where I Could Be Wrong". Retain 1200-1800 total words and the full argument, not a summary.',
+      'Numeric evidence contract: the draft is not an authority for numbers. Every retained numeric value and unit must appear in verified_claims with matching attribution; do not convert or derive values. Remove unsupported numbers rather than spelling them out, replacing them with synonyms, or inventing a citation. For forward-looking analysis use nonnumeric event-based observables instead of unsupported month counts or dates.',
       feedback.length
         ? `The previous version failed these checks — fix every one without weakening the argument: ${feedback.join(' | ')}`
         : 'Polish only; keep structure and headings.',
     ].join('\n'),
-    userPrompt: JSON.stringify(draft),
+    userPrompt: JSON.stringify({ ...draft, verified_claims: verifiedClaims }),
   });
   return parseModelEssay(content);
 }
@@ -703,6 +705,7 @@ export async function generateAuthoredColumn({
       voiced = await voicePass({
         charter,
         draft: essay,
+        verifiedClaims: evidencePayload(selection, ledger).verified_claims,
         feedback: [...verificationFeedback(quality?.reasons || []), ...formatFeedback],
         callModel,
       });
