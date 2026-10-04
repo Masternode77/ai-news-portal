@@ -174,13 +174,14 @@ function parseModelJson(content) {
 
 class EssayStructureError extends Error {}
 
-export function parseModelEssay(content, { draft = false } = {}) {
+export function parseModelEssay(content, { recoverFormat = false, requireSections = false } = {}) {
   const essay = parseModelJson(content);
   if (!essay || typeof essay !== 'object' || Array.isArray(essay)
     || typeof essay.headline !== 'string' || !essay.headline.trim()) {
     throw new EssayStructureError('invalid_structured_essay');
   }
   if (!Object.hasOwn(essay, 'sections')) {
+    if (requireSections) throw new EssayStructureError('invalid_structured_sections');
     if (typeof essay.body !== 'string' || !essay.body.trim()) throw new EssayStructureError('invalid_structured_essay');
     return essay;
   }
@@ -196,17 +197,18 @@ export function parseModelEssay(content, { draft = false } = {}) {
   }
   const formatIssues = [];
   if (essay.sections.length < 4 || essay.sections.length > 6) {
-    if (!draft) throw new EssayStructureError('invalid_structured_sections');
-    formatIssues.push('Restructure the draft into exactly 4-6 section objects without omitting substantive analysis.');
+    if (!recoverFormat) throw new EssayStructureError('invalid_structured_sections');
+    formatIssues.push('invalid_structured_sections: Restructure the draft into exactly 4-6 section objects without omitting substantive analysis.');
   }
   const blocks = paragraphs(essay.opening_paragraphs, true);
   for (const [index, section] of essay.sections.entries()) {
-    const heading = typeof section?.heading === 'string' ? section.heading.trim() : '';
-    const words = heading.split(/\s+/).length;
+    let heading = typeof section?.heading === 'string' ? section.heading.trim() : '';
     if (!heading || /[\r\n]/.test(heading)) throw new EssayStructureError('invalid_structured_heading');
-    if (!isHeading(heading) || !/^[A-Z][A-Za-z0-9 ]*$/.test(heading) || words < 2 || words > 6) {
-      if (!draft) throw new EssayStructureError('invalid_structured_heading');
-      formatIssues.push(`Rewrite section ${index + 1}'s heading as 2-6 words starting with an uppercase letter and containing only ASCII letters, digits and spaces. Preserve its meaning, but remove punctuation and markdown by rephrasing it.`);
+    heading = stripInlineMarkdown(heading.replace(/^#{1,6}\s+/, ''))
+      .replace(/[\u2010-\u2015]/g, '-').replace(/\s+/g, ' ').replace(/^[a-z]/, letter => letter.toUpperCase());
+    if (!isHeading(heading) || /[<>]/.test(heading)) {
+      if (!recoverFormat) throw new EssayStructureError('invalid_structured_heading');
+      formatIssues.push(`invalid_structured_heading: Rewrite section ${index + 1}'s heading ${JSON.stringify(heading)}. Start with an uppercase letter or digit, keep it under 87 characters, and use ASCII letters, digits, spaces or &:/+- only. Rephrase apostrophes, quotes and other unsupported punctuation while preserving the meaning.`);
     }
     blocks.push(heading, ...paragraphs(section.paragraphs));
   }
@@ -520,7 +522,7 @@ async function draftPass({ charter, selection, ledger, stance, recentHeadings = 
       '- 1200 to 1800 words, written in the first person, committed to the thesis by the third paragraph.',
       '- Plain text only — no markdown of any kind (no #, ##, **, *, _, backticks, or bullet markers anywhere in the body).',
       '- Each paragraph array item is a single unwrapped plain-text paragraph with no newline characters. Do not put section headings into paragraph strings.',
-      '- Section headings: invented for THIS argument — never generic labels, never headings any recent column used (the avoid list is in the payload). Each heading is 2-6 words, starts with an uppercase letter, and contains only ASCII letters, digits and spaces (no apostrophes, quotes, commas, colons, dashes, or trailing punctuation).',
+      '- Section headings: invented for THIS argument — never generic labels, never headings any recent column used (the avoid list is in the payload). Prefer 2-6 words. Each heading starts with an uppercase letter or digit, is under 87 characters, and uses only ASCII letters, digits, spaces or &:/+- (no apostrophes, quotes, commas, periods or markdown).',
       '- One section must present the honest case against the thesis, under a heading phrased from this column\'s specifics (the words "wrong", "watchlist" and other retired template phrasings are forbidden).',
       '- The final section looks forward: name two or three concrete observables tied to events such as the next filing or regulatory review, under a fresh heading. Use no numeric forecast horizon, date or duration unless it is in verified_claims. Stance/watch_items are analytical proposals, not verified evidence.',
       '- Open with a different device than the recent leads shown in the payload: a scene, a specific number, a contradiction, a filing detail, or a deadline.',
@@ -535,7 +537,7 @@ async function draftPass({ charter, selection, ledger, stance, recentHeadings = 
       recent_leads_to_avoid: recentLeads,
     }),
   });
-  return parseModelEssay(content, { draft: true });
+  return parseModelEssay(content, { recoverFormat: true });
 }
 
 async function voicePass({ charter, draft, verifiedClaims = [], feedback = [], callModel }) {
@@ -549,7 +551,7 @@ async function voicePass({ charter, draft, verifiedClaims = [], feedback = [], c
       'Task: revise the column below against verified_claims. Preserve supported facts, numbers and attributions exactly, but remove unsupported numeric claims and invented timelines, including those already in the draft or stance. Correcting evidence failures takes priority over preserving draft wording. Return this strict JSON shape:',
       '{ "headline": string, "deck": string, "opening_paragraphs": string[], "sections": [{ "heading": string, "paragraphs": string[] }] }',
       'Tighten the prose toward the persona voice: varied sentence rhythm, concrete verbs, no throat-clearing, no corporate filler.',
-      'Formatting contract: return exactly 4-6 section objects with at least one substantive paragraph each, and at least six substantive paragraphs in the complete essay. Each heading has 2-6 words, starts with an uppercase letter, and uses ASCII letters/digits/spaces only. Each paragraph is a single unwrapped string with no newline or markdown symbols. Keep any unheaded opening in opening_paragraphs (an empty array is allowed). Do not return a body string; the publisher assembles the headings and paragraphs. Keep the draft\'s own headings (or sharpen them), never template headings like "On My Watchlist" or "Where I Could Be Wrong". Retain 1200-1800 total words and the full argument, not a summary.',
+      'Formatting contract: return exactly 4-6 section objects with at least one substantive paragraph each, and at least six substantive paragraphs in the complete essay. Prefer 2-6 words per heading. Each heading starts with an uppercase letter or digit, is under 87 characters, and uses ASCII letters, digits, spaces or &:/+- only; rephrase apostrophes, quotes and other unsupported punctuation. Each paragraph is a single unwrapped string with no newline or markdown symbols. Keep any unheaded opening in opening_paragraphs (an empty array is allowed). Do not return a body string; the publisher assembles the headings and paragraphs. Keep the draft\'s own headings (or sharpen them), never template headings like "On My Watchlist" or "Where I Could Be Wrong". Retain 1200-1800 total words and the full argument, not a summary.',
       'Numeric evidence contract: the draft is not an authority for numbers. Every retained numeric value and unit must appear in verified_claims with matching attribution; do not convert or derive values. Remove unsupported numbers rather than spelling them out, replacing them with synonyms, or inventing a citation. For forward-looking analysis use nonnumeric event-based observables instead of unsupported month counts or dates.',
       feedback.length
         ? `The previous version failed these checks — fix every one without weakening the argument: ${feedback.join(' | ')}`
@@ -557,7 +559,7 @@ async function voicePass({ charter, draft, verifiedClaims = [], feedback = [], c
     ].join('\n'),
     userPrompt: JSON.stringify({ ...draft, verified_claims: verifiedClaims }),
   });
-  return parseModelEssay(content);
+  return parseModelEssay(content, { recoverFormat: true, requireSections: Boolean(draft.formatIssues?.length) });
 }
 
 function columnRecord({ charter, selection, stance, essay, quality, figures = [], now, model = AUTHORED_COLUMN_MODEL }) {
@@ -711,13 +713,13 @@ export async function generateAuthoredColumn({
       });
     } catch (error) {
       if (error instanceof EssayStructureError && attempts < 2) {
-        formatFeedback = [...(draft.formatIssues || []), `The previous JSON failed ${error.message}. Return all required arrays with 4-6 valid section headings and nonempty single-line paragraph strings; preserve the complete essay.`];
+        formatFeedback = [...(essay.formatIssues || []), `The previous JSON failed ${error.message}. Return all required arrays with 4-6 valid section headings and nonempty single-line paragraph strings; preserve the complete essay.`];
         continue;
       }
       return failWith('voice', error.message);
     }
-    formatFeedback = [];
     if (voiced?.body && voiced?.headline) essay = voiced;
+    formatFeedback = essay.formatIssues || [];
     essay = { ...essay, body: normalizeAuthoredBody(essay.body) };
     figures = buildColumnFigures({
       ledger,
@@ -742,6 +744,12 @@ export async function generateAuthoredColumn({
       recentLeads,
       figures,
     });
+    // A parseable failed revision is the next repair input, never a publishable
+    // fallback. Check every explicit heading even when enough others are valid.
+    if (formatFeedback.length) {
+      quality.ok = false;
+      quality.reasons = [...new Set([...quality.reasons, ...formatFeedback.map(issue => issue.split(':')[0])])];
+    }
     if (quality.ok) break;
   }
 

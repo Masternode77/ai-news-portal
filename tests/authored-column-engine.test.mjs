@@ -74,13 +74,32 @@ test('structured model sections serialize without losing or inventing prose and 
   assert.deepEqual(headingSequence(parsed.body), structured.sections.map(section => section.heading));
   assert.deepEqual(parseModelEssay(essayJson()), JSON.parse(essayJson()), 'legacy adapters remain compatible');
   assert.throws(() => parseModelEssay(JSON.stringify({ ...structured, sections: 'invalid', body: parsed.body })), /invalid_structured_sections/);
-  assert.throws(() => parseModelEssay(JSON.stringify({ ...structured, sections: [{ heading: 'lowercase heading', paragraphs: ['Paragraph.'] }, ...structured.sections.slice(1)] })), /invalid_structured_heading/);
+  assert.throws(() => parseModelEssay(JSON.stringify({ ...structured, sections: [{ heading: "Europe's Grid Timing", paragraphs: ['Paragraph.'] }, ...structured.sections.slice(1)] })), /invalid_structured_heading/);
   assert.throws(() => parseModelEssay(JSON.stringify({ ...structured, sections: [{ heading: 'Valid Heading', paragraphs: ['Paragraph.\nHidden Heading'] }, ...structured.sections.slice(1)] })), /invalid_structured_paragraphs/);
   assert.throws(() => parseModelEssay(JSON.stringify({ ...structured, sections: structured.sections.slice(0, 2) })), /invalid_structured_sections/, 'missing sections must not be synthesized');
   assert.throws(() => parseModelEssay(JSON.stringify({ ...structured, sections: Array(7).fill(structured.sections[0]) })), /invalid_structured_sections/);
-  assert.throws(() => parseModelEssay(JSON.stringify({ ...structured, sections: [{ heading: '2027 Changes Everything', paragraphs: ['Paragraph.'] }, ...structured.sections.slice(1)] })), /invalid_structured_heading/);
   assert.throws(() => parseModelEssay('not JSON'), /invalid_structured_essay/);
   assert.throws(() => parseModelEssay('{"headline":"Missing essay"}'), /invalid_structured_essay/);
+});
+
+test('explicit headings follow the existing renderer grammar after typography cleanup', () => {
+  for (const [input, expected] of [
+    ['2027 Changes Everything', '2027 Changes Everything'],
+    ['Power & Water: A/B + C', 'Power & Water: A/B + C'],
+    ['This Specific Heading Has More Than Six Words', 'This Specific Heading Has More Than Six Words'],
+    ['## **lowercase grid \u2014 timing**', 'Lowercase grid - timing'],
+  ]) {
+    const essay = structuredEssay();
+    essay.sections[0].heading = input;
+    const parsed = parseModelEssay(JSON.stringify(essay));
+    assert.equal(headingSequence(parsed.body)[0], expected);
+    assert.ok(parsed.body.includes(essay.sections[0].paragraphs[0]), 'prose is preserved');
+  }
+  for (const heading of ['A'.repeat(87), 'Ends With Period.', '<b>Hidden Markup</b>']) {
+    const essay = structuredEssay();
+    essay.sections[0].heading = heading;
+    assert.throws(() => parseModelEssay(JSON.stringify(essay)), /invalid_structured_heading/);
+  }
 });
 
 test('structured draft and revision pass the existing quality gates end to end', async () => {
@@ -116,7 +135,8 @@ test('malformed first structured revision uses the existing bounded retry withou
   process.env.AUTHORED_MIN_CHARS = '4200';
   try {
     const invalid = structuredEssay();
-    invalid.sections[0].heading = 'lowercase heading';
+    invalid.sections[0].heading = "Europe's Grid Timing";
+    invalid.sections[0].paragraphs.push('Grid availability remains a binding operating constraint.');
     for (const broken of [JSON.stringify(invalid), 'not JSON', '{"headline":"Missing essay"}']) {
       for (const repair of [true, false]) {
         let calls = 0;
@@ -128,7 +148,14 @@ test('malformed first structured revision uses the existing bounded retry withou
             if (calls === 1) return STANCE_JSON;
             if (calls === 4) {
               assert.match(request.systemPrompt, /invalid_structured_/);
-              assert.equal(JSON.parse(request.userPrompt).body, JSON.parse(essayJson()).body);
+              const expected = broken === JSON.stringify(invalid)
+                ? parseModelEssay(broken, { recoverFormat: true }).body
+                : JSON.parse(essayJson()).body;
+              assert.equal(JSON.parse(request.userPrompt).body, expected, 'retry receives the latest parseable revision');
+              if (broken === JSON.stringify(invalid)) {
+                assert.match(request.systemPrompt, /Rewrite section 1's heading "Europe's Grid Timing"/);
+                assert.match(expected, /Grid availability remains a binding operating constraint/);
+              }
             }
             if (calls === 3 || (calls === 4 && !repair)) return broken;
             return JSON.stringify(structuredEssay());
@@ -138,7 +165,7 @@ test('malformed first structured revision uses the existing bounded retry withou
         if (repair) assert.ok(result.column, JSON.stringify(result));
         else {
           assert.equal(result.column, null);
-          assert.match(result.failure, /^voice:invalid_structured_/);
+          assert.match(result.failure, /^(voice|verify):.*invalid_structured_/);
         }
       }
     }
@@ -175,9 +202,42 @@ test('draft heading formatting reaches revision but cannot bypass final structur
         assert.equal(calls, 3);
       } else {
         assert.equal(result.column, null);
-        assert.equal(result.failure, 'voice:invalid_structured_heading');
+        assert.match(result.failure, /^verify:.*invalid_structured_heading/);
         assert.equal(calls, 4);
       }
+    }
+  } finally {
+    delete process.env.AUTHORED_MIN_WORDS;
+    delete process.env.AUTHORED_MIN_CHARS;
+  }
+});
+
+test('legacy body-only replies cannot clear an unresolved structured heading failure', async () => {
+  resetLlmUsageForTests();
+  process.env.AUTHORED_MIN_WORDS = '700';
+  process.env.AUTHORED_MIN_CHARS = '4200';
+  try {
+    for (const invalidAtDraft of [true, false]) {
+      let calls = 0;
+      const invalid = structuredEssay();
+      invalid.sections[0].heading = "Europe's Grid Timing";
+      const legacy = parseModelEssay(JSON.stringify(invalid), { recoverFormat: true });
+      delete legacy.formatIssues;
+      assert.throws(() => parseModelEssay(JSON.stringify(legacy), { requireSections: true }), /invalid_structured_sections/);
+      const result = await generateAuthoredColumn({
+        candidates: [fixtureArticle()], sources: FIXTURE_SOURCES, state: {},
+        now: new Date('2026-10-04T10:00:00Z'),
+        callModel: async () => {
+          calls += 1;
+          if (calls === 1) return STANCE_JSON;
+          if (calls === 2) return JSON.stringify(invalidAtDraft ? invalid : structuredEssay());
+          if (calls === 3 && !invalidAtDraft) return JSON.stringify(invalid);
+          return JSON.stringify(legacy);
+        },
+      });
+      assert.equal(calls, 4);
+      assert.equal(result.column, null);
+      assert.equal(result.failure, 'voice:invalid_structured_sections');
     }
   } finally {
     delete process.env.AUTHORED_MIN_WORDS;
