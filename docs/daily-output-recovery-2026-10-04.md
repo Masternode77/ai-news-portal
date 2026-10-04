@@ -193,12 +193,14 @@ overrides it). Summary-heavy prose still fails; every other column gate is uncha
 
 Follow-up:
 
-- The daily target counts only items that reached a public surface; archive-only outcomes count
-  toward the new processing limit only. Picks the classifier expects to surface run before
+- The daily target counts only items that are on the public surface after the final integrity
+  sync, so a record quarantined there does not use it; archive-only outcomes count toward the new
+  processing limit only. Picks the classifier expects to surface run before
   snippet-tier archive picks. Plans written before the change are not treated as full.
 - The pool skips items the wire already processed, and `carryOverPoolItems()` offers unprocessed
   items from the previous pool again while they are fresh and their source still authorizes text
-  use. The live copy wins and the per-source cap still applies.
+  use. The live copy wins, matched by ID or, when a feed rewrites a headline, by source and URL;
+  the per-source cap still applies.
 - A draft that fails the JSON contract gets one repair attempt. A reply wrapped in one envelope
   key, a `title` key standing in for `headline`, or a raw line break inside a JSON string no
   longer fails the parse.

@@ -66,6 +66,25 @@ test('only unprocessed, fresh, still-authorized items without a live copy are ca
   assert.deepEqual(research.map((entry) => entry.id), ['weekly'], 'a registry research window keeps its own maximum age');
 });
 
+test('a retitled live item replaces its carried copy, but a sibling note on another anchor stays', () => {
+  const sources = [source()];
+  const previous = [
+    item('old-title', 30, { url: 'https://research.example/papers/42/?utm_source=rss' }),
+    item('same-page-other-anchor', 30, { url: 'https://research.example/notes#October_01' }),
+    item('other-source-same-url', 30, { sourceRegistryId: 'second-feed', source: 'Second Feed', url: 'https://research.example/papers/42' }),
+  ];
+  const fetched = [
+    item('new-title', 1, { url: 'https://research.example/papers/42', title: 'Retitled paper 42' }),
+    item('live-note', 1, { url: 'https://research.example/notes#October_02' }),
+  ];
+  const carried = carryOverPoolItems(previous, {
+    fetched,
+    sources: [...sources, source({ id: 'second-feed', name: 'Second Feed' })],
+    now: NOW,
+  });
+  assert.deepEqual(carried.map((entry) => entry.id), ['same-page-other-anchor', 'other-source-same-url']);
+});
+
 test('a weekend run with an empty research feed still offers the unprocessed weekday items', async () => {
   const result = await fetchNewsPoolResult({
     sources: [source()],

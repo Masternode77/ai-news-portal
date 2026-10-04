@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
-import { applyCurationFloor, pickItemsForRun, rollingCandidates, updatePlanAfterRun } from '../scripts/lib/curate.mjs';
+import { applyCurationFloor, pickItemsForRun, rollingCandidates, surfacedProcessedIds, updatePlanAfterRun } from '../scripts/lib/curate.mjs';
 
 const NOW = new Date('2026-10-04T12:00:00Z');
 
@@ -72,11 +72,24 @@ test('the env template ships the same throughput caps as the code', async () => 
   }
 });
 
+test('an item counts as published only when the final sync left it on the public surface', () => {
+  const processed = [{ id: 'memo' }, { id: 'card' }, { id: 'quarantined' }, { id: 'archived' }];
+  const latest = [{ id: 'card' }, { id: 'older-story' }, { id: 'memo' }];
+  assert.deepEqual(surfacedProcessedIds(latest, processed), ['memo', 'card']);
+  assert.deepEqual(surfacedProcessedIds([], processed), []);
+});
+
 test('both pipeline outcomes record which processed items reached a public surface', async () => {
   const { readFile } = await import('node:fs/promises');
   const pipeline = await readFile(new URL('../scripts/pipeline.mjs', import.meta.url), 'utf8');
-  assert.match(pipeline, /updatePlanAfterRun\(plan, processedItems, slot, \{ visibleIds: signalOnly\.map\(\(x\) => x\.id\) \}\)/);
-  assert.match(pipeline, /updatePlanAfterRun\(plan, finalProcessedItems, slot, \{\s*visibleIds: \[\.\.\.repetitionPassed, \.\.\.signalCards\]\.map\(\(x\) => x\.id\),\s*\}\)/);
+  assert.match(pipeline, /updatePlanAfterRun\(plan, processedItems, slot, \{ visibleIds: surfacedProcessedIds\(latest, processedItems\) \}\)/);
+  assert.match(pipeline, /updatePlanAfterRun\(plan, finalProcessedItems, slot, \{\s*visibleIds: surfacedProcessedIds\(latest, finalProcessedItems\),\s*\}\)/);
+  // Both calls follow the sync that produced \`latest\`.
+  for (const call of ['updatePlanAfterRun(plan, processedItems', 'updatePlanAfterRun(plan, finalProcessedItems']) {
+    const callAt = pipeline.indexOf(call);
+    const syncAt = pipeline.lastIndexOf('await syncArchiveArtifacts(', callAt);
+    assert.ok(syncAt > -1 && syncAt < callAt, `${call} runs after the archive sync`);
+  }
   assert.match(pipeline, /fetchNewsPoolResult\(\{ sources, now, previousItems: previousPool, excludeIds: processedIds \}\)/);
   assert.match(pipeline, /loadPoolWithFallback\(existingLatest, sources, \{ processedIds: state\.publishedIds \|\| \[\] \}\)/);
 });

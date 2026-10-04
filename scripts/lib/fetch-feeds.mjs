@@ -386,14 +386,34 @@ export function selectPoolItems(fetched = [], now = Date.now(), { excludeIds = [
 // never processed. Unprocessed items from the previous pool are offered again
 // while they are fresh and their source still authorizes text use; the live
 // copy of an item always wins, and the usual pool rules then apply.
+// A feed that rewrites a headline keeps the URL but changes the item ID
+// (stableArticleId hashes both), so a live copy is also recognised by its
+// source and URL. The fragment stays part of the key: release-note feeds give
+// each dated section its own anchor on one page.
+function liveCopyKey(item = {}) {
+  try {
+    const url = new URL(String(item.url || '').trim());
+    for (const key of [...url.searchParams.keys()]) {
+      if (/^utm_/i.test(key)) url.searchParams.delete(key);
+    }
+    const path = url.pathname.replace(/\/+$/, '') || '/';
+    const source = String(item.sourceRegistryId || item.source || '').trim().toLowerCase();
+    return `${source}|${url.hostname.toLowerCase().replace(/^www\./, '')}${path}${url.search}${url.hash}`;
+  } catch {
+    return '';
+  }
+}
+
 export function carryOverPoolItems(previous = [], { fetched = [], excludeIds = [], sources = [], now = new Date() } = {}) {
   const excluded = excludeIds instanceof Set ? excludeIds : new Set(excludeIds || []);
   const fetchedIds = new Set((fetched || []).map((item) => item?.id).filter(Boolean));
+  const fetchedKeys = new Set((fetched || []).map((item) => liveCopyKey(item)).filter(Boolean));
   const nowMs = now instanceof Date ? now.getTime() : Number(now);
   const nowDate = new Date(nowMs);
   const carried = (Array.isArray(previous) ? previous : [])
     .filter((item) => item && item.id && item.url && item.title)
     .filter((item) => !fetchedIds.has(item.id) && !excluded.has(item.id))
+    .filter((item) => !fetchedKeys.has(liveCopyKey(item)))
     .filter((item) => isFresh(item, nowMs))
     .filter((item) => sourceTextTargetDecision(item, sources, nowDate).authorized);
   return refreshCachedRelevance(carried, sources);

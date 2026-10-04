@@ -274,6 +274,14 @@ export function pickItemsForRun(plan, now = new Date(), { force = PIPELINE_FORCE
   return { slot, picked: available };
 }
 
+// The final integrity sync can still quarantine a record that passed the
+// run's gates and move it to the archive, so an item counts as published only
+// when it sits on the public surface that sync returned.
+export function surfacedProcessedIds(latest = [], processed = []) {
+  const surfaced = new Set((latest || []).map((article) => article?.id).filter(Boolean));
+  return [...new Set((processed || []).map((item) => item?.id).filter((id) => id && surfaced.has(id)))];
+}
+
 export function updatePlanAfterRun(plan, picked, slot, { visibleIds = [] } = {}) {
   const pickedIds = picked.map((item) => item.id);
   return {

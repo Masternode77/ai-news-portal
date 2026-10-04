@@ -13,7 +13,7 @@ import { fileURLToPath } from 'node:url';
 import { readArchiveSnapshot, syncArchiveArtifacts } from './lib/archive-store.mjs';
 import { applyAntiTemplateRewrite } from './lib/anti-template-rewrite.mjs';
 import { enrichContent } from './lib/content.mjs';
-import { planForToday, pickItemsForRun, updatePlanAfterRun } from './lib/curate.mjs';
+import { planForToday, pickItemsForRun, surfacedProcessedIds, updatePlanAfterRun } from './lib/curate.mjs';
 import {
   attachExpertLens,
   blueprintHistoryFromRecords,
@@ -530,7 +530,7 @@ async function publishExistingOnly({
   const { latest, archive: updatedArchive, supabaseStatus } = await syncArchiveArtifacts(templateChecked, existingArchive);
   await writeJsonFile(LATEST_NEWS_PATH, latest);
 
-  state.dayPlans[todayKey] = updatePlanAfterRun(plan, processedItems, slot, { visibleIds: signalOnly.map((x) => x.id) });
+  state.dayPlans[todayKey] = updatePlanAfterRun(plan, processedItems, slot, { visibleIds: surfacedProcessedIds(latest, processedItems) });
   state.publishedIds = [...new Set([...(state.publishedIds || []), ...processedItems.map((x) => x.id)])].slice(-1000);
   state.lastRunAt = now.toISOString();
   state.runHistory.push({
@@ -726,7 +726,7 @@ async function main() {
   await writeJsonFile(LATEST_NEWS_PATH, latest);
 
   const updatedPlan = updatePlanAfterRun(plan, finalProcessedItems, slot, {
-    visibleIds: [...repetitionPassed, ...signalCards].map((x) => x.id),
+    visibleIds: surfacedProcessedIds(latest, finalProcessedItems),
   });
   state.dayPlans[todayKey] = updatedPlan;
   state.publishedIds = [...new Set([...(state.publishedIds || []), ...finalProcessedItems.map((x) => x.id)])].slice(-1000);
