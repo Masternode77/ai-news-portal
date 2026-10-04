@@ -172,6 +172,42 @@ function parseModelJson(content) {
   return safeJsonParse(trimmed, null);
 }
 
+class EssayStructureError extends Error {}
+
+export function parseModelEssay(content) {
+  const essay = parseModelJson(content);
+  if (!essay || typeof essay !== 'object' || Array.isArray(essay)
+    || typeof essay.headline !== 'string' || !essay.headline.trim()) {
+    throw new EssayStructureError('invalid_structured_essay');
+  }
+  if (!Object.hasOwn(essay, 'sections')) {
+    if (typeof essay.body !== 'string' || !essay.body.trim()) throw new EssayStructureError('invalid_structured_essay');
+    return essay;
+  }
+  const paragraphs = (values, allowEmpty = false) => {
+    if (!Array.isArray(values) || (!allowEmpty && !values.length)
+      || values.some(value => typeof value !== 'string' || !value.trim() || /[\r\n]/.test(value))) {
+      throw new EssayStructureError('invalid_structured_paragraphs');
+    }
+    return values.map(value => value.trim());
+  };
+  if (!Array.isArray(essay.sections) || essay.sections.length < 4 || essay.sections.length > 6) {
+    throw new EssayStructureError('invalid_structured_sections');
+  }
+  const blocks = paragraphs(essay.opening_paragraphs, true);
+  for (const section of essay.sections) {
+    const heading = typeof section?.heading === 'string' ? section.heading.trim() : '';
+    const words = heading.split(/\s+/).length;
+    if (!isHeading(heading) || !/^[A-Z][A-Za-z0-9 ]*$/.test(heading) || words < 2 || words > 6) {
+      throw new EssayStructureError('invalid_structured_heading');
+    }
+    blocks.push(heading, ...paragraphs(section.paragraphs));
+  }
+  // Serialize explicit model-written sections; never infer or invent headings
+  // from prose. The unchanged final gate still checks section count and quality.
+  return { headline: essay.headline, deck: essay.deck, body: blocks.join('\n\n'), figures: essay.figures };
+}
+
 function stripInlineMarkdown(line) {
   return line
     .replace(/\*\*([^*]+)\*\*/g, '$1')
@@ -213,7 +249,7 @@ export function normalizeAuthoredBody(body = '') {
 // pass can actually act on; unknown codes pass through verbatim.
 const FEEDBACK_HINTS = [
   [/^fewer_than_4_sections$|^more_than_7_sections$/, () =>
-    'Structure the essay into 4 to 6 sections. Every section heading must be a standalone plain-text line of 2-6 words (letters, digits and spaces only — no markdown symbols, no punctuation) with a blank line before and after it.'],
+    'Return 4 to 6 objects in the sections array, each with a heading and substantive paragraph strings. Every heading must be 2-6 words, start with an uppercase letter and contain only ASCII letters, digits and spaces. The publisher renders each heading as a standalone plain-text line with blank lines; do not embed headings inside paragraph strings.'],
   [/^legacy_template_heading(?::(.+))?$/, (match) =>
     `Replace ${match[1] ? `the heading(s) ${match[1]}` : 'the retired template headings'} with headings invented for this specific argument — the phrases "On My Watchlist" and "Where I Could Be Wrong" are permanently retired.`],
   [/^heading_reused_recently(?::(.+))?$/, (match) =>
@@ -466,13 +502,14 @@ async function draftPass({ charter, selection, ledger, stance, recentHeadings = 
     systemPrompt: [
       personaSystemPrompt(charter),
       'Task: write the full column as strict JSON only:',
-      '{ "headline": string (40-105 chars), "deck": string (one standfirst sentence, 80-240 chars), "body": string, "figures": FigureSpec[] }',
+      '{ "headline": string (40-105 chars), "deck": string (one standfirst sentence, 80-240 chars), "opening_paragraphs": string[], "sections": [{ "heading": string, "paragraphs": string[] }], "figures": FigureSpec[] }',
       'FigureSpec (1 to 3 of them, drawn ONLY from the verified_claims array): { "type": "stat-row"|"table"|"bar", "title": string (8-60 chars, specific to this argument — never a generic label like "By the numbers"), "claim_indexes": int[] (0-based indexes into verified_claims; a bar needs 3+ claims sharing one unit), "anchor": int (the figure renders after this section, 1-based) }',
-      'Body contract:',
+      'Essay contract:',
+      '- Return exactly 4 to 6 objects in sections, each with its own heading and at least one substantive paragraph. The complete essay must have at least six substantive paragraphs. Put any unheaded opening paragraphs in opening_paragraphs (an empty array is allowed). Do not return a body string: the publisher assembles the paragraph arrays and headings with blank lines.',
       '- 1200 to 1800 words, written in the first person, committed to the thesis by the third paragraph.',
       '- Plain text only — no markdown of any kind (no #, ##, **, *, _, backticks, or bullet markers anywhere in the body).',
       '- Plain paragraphs separated by blank lines; each paragraph is a single unwrapped line.',
-      '- Section headings: 4 to 6 of them, invented for THIS argument — never generic labels, never headings any recent column used (the avoid list is in the payload). Each heading is a standalone line of 2-6 words with a blank line before and after it, containing only letters, digits and spaces (no apostrophes, quotes, commas, colons, dashes, or trailing punctuation).',
+      '- Section headings: invented for THIS argument — never generic labels, never headings any recent column used (the avoid list is in the payload). Each heading is 2-6 words, starts with an uppercase letter, and contains only ASCII letters, digits and spaces (no apostrophes, quotes, commas, colons, dashes, or trailing punctuation).',
       '- One section must present the honest case against the thesis, under a heading phrased from this column\'s specifics (the words "wrong", "watchlist" and other retired template phrasings are forbidden).',
       '- The final section looks forward: name two or three concrete observables with rough timeframes, under a fresh heading of your own invention.',
       '- Open with a different device than the recent leads shown in the payload: a scene, a specific number, a contradiction, a filing detail, or a deadline.',
@@ -487,7 +524,7 @@ async function draftPass({ charter, selection, ledger, stance, recentHeadings = 
       recent_leads_to_avoid: recentLeads,
     }),
   });
-  return parseModelJson(content);
+  return parseModelEssay(content);
 }
 
 async function voicePass({ charter, draft, feedback = [], callModel }) {
@@ -498,17 +535,17 @@ async function voicePass({ charter, draft, feedback = [], callModel }) {
     timeoutMs: 75_000,
     systemPrompt: [
       personaSystemPrompt(charter),
-      'Task: revise the column below. Preserve every fact, number, and attribution exactly. Keep the same JSON shape:',
-      '{ "headline": string, "deck": string, "body": string }',
+      'Task: revise the column below. Preserve every fact, number, and attribution exactly. Return this strict JSON shape:',
+      '{ "headline": string, "deck": string, "opening_paragraphs": string[], "sections": [{ "heading": string, "paragraphs": string[] }] }',
       'Tighten the prose toward the persona voice: varied sentence rhythm, concrete verbs, no throat-clearing, no corporate filler.',
-      'Formatting contract (must hold after revision): plain text only with no markdown symbols; paragraphs separated by blank lines; 4-6 standalone plain-text section headings (2-6 words, letters/digits/spaces only) each surrounded by blank lines; keep the draft\'s own section headings (or sharpen them) — never substitute template headings like "On My Watchlist" or "Where I Could Be Wrong"; numbers unchanged from the draft.',
+      'Formatting contract: return exactly 4-6 section objects with at least one substantive paragraph each, and at least six substantive paragraphs in the complete essay. Each heading has 2-6 words, starts with an uppercase letter, and uses ASCII letters/digits/spaces only. Each paragraph is a single unwrapped string with no newline or markdown symbols. Keep any unheaded opening in opening_paragraphs (an empty array is allowed). Do not return a body string; the publisher assembles the headings and paragraphs. Keep the draft\'s own headings (or sharpen them), never template headings like "On My Watchlist" or "Where I Could Be Wrong". Numbers and attributions stay unchanged; retain 1200-1800 total words and the full argument, not a summary.',
       feedback.length
         ? `The previous version failed these checks — fix every one without weakening the argument: ${feedback.join(' | ')}`
         : 'Polish only; keep structure and headings.',
     ].join('\n'),
     userPrompt: JSON.stringify(draft),
   });
-  return parseModelJson(content);
+  return parseModelEssay(content);
 }
 
 function columnRecord({ charter, selection, stance, essay, quality, figures = [], now, model = AUTHORED_COLUMN_MODEL }) {
@@ -623,8 +660,8 @@ export async function generateAuthoredColumn({
   const recentLeads = recentLeadsFromColumns(existingColumns);
   const repetitionCorpus = [...existingColumns.slice(0, 20), ...recentRecords.slice(0, 50)];
 
-  const failWith = (stage, detail) => {
-    authored.lastFailure = { at: now.toISOString(), stage, detail };
+  const failWith = (stage, detail, metrics) => {
+    authored.lastFailure = { at: now.toISOString(), stage, detail, ...(metrics ? { metrics } : {}) };
     return { column: null, failure: `${stage}:${detail}`, selectionDiagnostics };
   };
 
@@ -648,6 +685,7 @@ export async function generateAuthoredColumn({
   let essay = draft;
   let quality;
   let figures = [];
+  let formatFeedback = [];
   while (attempts < 2) {
     attempts += 1;
     let voiced;
@@ -655,12 +693,17 @@ export async function generateAuthoredColumn({
       voiced = await voicePass({
         charter,
         draft: essay,
-        feedback: verificationFeedback(quality?.reasons || []),
+        feedback: [...verificationFeedback(quality?.reasons || []), ...formatFeedback],
         callModel,
       });
     } catch (error) {
+      if (error instanceof EssayStructureError && attempts < 2) {
+        formatFeedback = [`The previous JSON failed ${error.message}. Return all required arrays with 4-6 valid section headings and nonempty single-line paragraph strings; preserve the complete essay.`];
+        continue;
+      }
       return failWith('voice', error.message);
     }
+    formatFeedback = [];
     if (voiced?.body && voiced?.headline) essay = voiced;
     essay = { ...essay, body: normalizeAuthoredBody(essay.body) };
     figures = buildColumnFigures({
@@ -690,7 +733,7 @@ export async function generateAuthoredColumn({
   }
 
   if (!quality?.ok) {
-    return failWith('verify', (quality?.reasons || ['unknown']).slice(0, 6).join('|'));
+    return failWith('verify', (quality?.reasons || ['unknown']).slice(0, 6).join('|'), quality?.metrics);
   }
 
   const column = columnRecord({

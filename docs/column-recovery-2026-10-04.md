@@ -33,7 +33,7 @@ A new native Codex illustration shows backup generators, fuel tanks and delivery
 
 `/Users/josh/.codex/generated_images/019dc517-a381-7733-b96f-477dbe23124b/exec-4addb840-aea7-4c17-b00a-da9bdfcc3e72.png`
 
-The other 15 legacy replacements remain editorial holds: their current stored sources lack valid authorized extraction artifacts. They are not reported as completed or silently dropped. Recovering authorized, source-faithful evidence is separate from generating an illustration; this repair does not invent permissions or reconstruct provenance from unverified legacy text.
+The other 15 legacy replacements remain editorial holds: their current stored sources lack valid extraction artifacts and all 15 currently have text-use authorization disabled in the source registry. They are not reported as completed or silently dropped. Recovering authorized, source-faithful evidence is separate from generating an illustration; this repair does not invent permissions or reconstruct provenance from unverified legacy text.
 
 ## Automation and verification
 
@@ -41,4 +41,8 @@ The existing `compute-current` heartbeat remains active on the same schedule and
 
 Before the final review fixes, the full suite passed 643 source tests, 22 built tests, build, quality, relevance, taxonomy and repetition checks. After those fixes, all 77 focused generation/image regressions passed. The final production content gate also passed: type checking reported no errors or warnings, 93 pages built, 21 gate regressions passed, and the public output, copy, article quality, homepage, feed, image and admin-exclusion audits passed with no broken images. The EIA column's registration is valid and unshared, all four source/variant files decode as WebP, and its ID-specific queue has zero pending or blocked jobs.
 
-Production deployment and a real unforced Update News run are still to be verified; these are not inferred from unit-test success.
+Production deployment `dpl_EJGCzFTF7aM3iifaZoYBAoSBAUSD` reached READY at commit `3a2142230cc2363e9d4f826371be667c14a55fc6` on the real domain. The EIA column returned HTTP 200 and its three image variants returned HTTP 200 with byte hashes equal to the verified local files. Desktop and mobile browser checks found no page errors or horizontal overflow, and the hero loaded at its native 1536-pixel width.
+
+Unforced Update News run `37188494811` completed successfully, including the full test suite and production content gate. It selected the European Commission story (one qualifying item among 71), proving the selection repair in the actual production workflow. It did **not** publish a new column: both revision attempts failed the unchanged `fewer_than_4_sections` gate. The generated draft was not retained, so the logs establish the structural failure but not its exact formatting cause.
+
+The follow-up repair asks the draft and voice passes for explicit `opening_paragraphs` and `sections` arrays, then serializes the model-written headings and paragraphs into the existing plain-text body contract. It never invents headings or relaxes the final section, source, repetition or length gates. Invalid structured fields, missing essay bodies and unparsable JSON use the existing bounded revision retry, then fail closed; valid legacy body-only adapters remain compatible. Verification failures now retain aggregate quality metrics. All 80 focused generation/image regressions pass, including malformed-response recovery and rejection; project checking reports no errors or warnings. A further actual unforced run is required to establish text-generation recovery, not merely successful selection or unit tests.

@@ -5,6 +5,7 @@ import {
   columnSourceLongformEligible,
   generateAuthoredColumn,
   normalizeAuthoredBody,
+  parseModelEssay,
   selectColumnStory,
   selectColumnStoryWithDiagnostics,
   verificationFeedback,
@@ -54,6 +55,98 @@ function fixtureLedger() {
     supporting_sources: [],
   }, article.id);
 }
+
+function structuredEssay() {
+  const { body, ...essay } = JSON.parse(essayJson());
+  const opening_paragraphs = [];
+  const sections = [];
+  for (const block of body.split('\n\n')) {
+    if (headingSequence(block).length) sections.push({ heading: block, paragraphs: [] });
+    else (sections.at(-1)?.paragraphs || opening_paragraphs).push(block);
+  }
+  return { ...essay, opening_paragraphs, sections };
+}
+
+test('structured model sections serialize without losing or inventing prose and headings', () => {
+  const structured = structuredEssay();
+  const parsed = parseModelEssay(JSON.stringify(structured));
+  assert.equal(parsed.body, JSON.parse(essayJson()).body);
+  assert.deepEqual(headingSequence(parsed.body), structured.sections.map(section => section.heading));
+  assert.deepEqual(parseModelEssay(essayJson()), JSON.parse(essayJson()), 'legacy adapters remain compatible');
+  assert.throws(() => parseModelEssay(JSON.stringify({ ...structured, sections: 'invalid', body: parsed.body })), /invalid_structured_sections/);
+  assert.throws(() => parseModelEssay(JSON.stringify({ ...structured, sections: [{ heading: 'lowercase heading', paragraphs: ['Paragraph.'] }, ...structured.sections.slice(1)] })), /invalid_structured_heading/);
+  assert.throws(() => parseModelEssay(JSON.stringify({ ...structured, sections: [{ heading: 'Valid Heading', paragraphs: ['Paragraph.\nHidden Heading'] }, ...structured.sections.slice(1)] })), /invalid_structured_paragraphs/);
+  assert.throws(() => parseModelEssay(JSON.stringify({ ...structured, sections: structured.sections.slice(0, 2) })), /invalid_structured_sections/, 'missing sections must not be synthesized');
+  assert.throws(() => parseModelEssay(JSON.stringify({ ...structured, sections: Array(7).fill(structured.sections[0]) })), /invalid_structured_sections/);
+  assert.throws(() => parseModelEssay(JSON.stringify({ ...structured, sections: [{ heading: '2027 Changes Everything', paragraphs: ['Paragraph.'] }, ...structured.sections.slice(1)] })), /invalid_structured_heading/);
+  assert.throws(() => parseModelEssay('not JSON'), /invalid_structured_essay/);
+  assert.throws(() => parseModelEssay('{"headline":"Missing essay"}'), /invalid_structured_essay/);
+});
+
+test('structured draft and revision pass the existing quality gates end to end', async () => {
+  resetLlmUsageForTests();
+  process.env.AUTHORED_MIN_WORDS = '700';
+  process.env.AUTHORED_MIN_CHARS = '4200';
+  let calls = 0;
+  try {
+    const result = await generateAuthoredColumn({
+      candidates: [fixtureArticle()], sources: FIXTURE_SOURCES, state: {},
+      now: new Date('2026-10-04T09:00:00Z'),
+      callModel: async request => {
+        calls += 1;
+        if (calls === 1) return STANCE_JSON;
+        assert.match(request.systemPrompt, /opening_paragraphs/);
+        assert.match(request.systemPrompt, /uppercase letter/);
+        return JSON.stringify(structuredEssay());
+      },
+    });
+    assert.ok(result.column, JSON.stringify(result));
+    assert.equal(result.column.expertLensFull.finalArticleBody, JSON.parse(essayJson()).body);
+    assert.equal(result.column.authored_quality.metrics.sections, structuredEssay().sections.length);
+    assert.equal(calls, 3);
+  } finally {
+    delete process.env.AUTHORED_MIN_WORDS;
+    delete process.env.AUTHORED_MIN_CHARS;
+  }
+});
+
+test('malformed first structured revision uses the existing bounded retry without dropping the draft', async () => {
+  resetLlmUsageForTests();
+  process.env.AUTHORED_MIN_WORDS = '700';
+  process.env.AUTHORED_MIN_CHARS = '4200';
+  try {
+    const invalid = structuredEssay();
+    invalid.sections[0].heading = 'lowercase heading';
+    for (const broken of [JSON.stringify(invalid), 'not JSON', '{"headline":"Missing essay"}']) {
+      for (const repair of [true, false]) {
+        let calls = 0;
+        const result = await generateAuthoredColumn({
+          candidates: [fixtureArticle()], sources: FIXTURE_SOURCES, state: {},
+          now: new Date('2026-10-04T09:00:00Z'),
+          callModel: async request => {
+            calls += 1;
+            if (calls === 1) return STANCE_JSON;
+            if (calls === 4) {
+              assert.match(request.systemPrompt, /invalid_structured_/);
+              assert.equal(JSON.parse(request.userPrompt).body, JSON.parse(essayJson()).body);
+            }
+            if (calls === 3 || (calls === 4 && !repair)) return broken;
+            return JSON.stringify(structuredEssay());
+          },
+        });
+        assert.equal(calls, 4);
+        if (repair) assert.ok(result.column, JSON.stringify(result));
+        else {
+          assert.equal(result.column, null);
+          assert.match(result.failure, /^voice:invalid_structured_/);
+        }
+      }
+    }
+  } finally {
+    delete process.env.AUTHORED_MIN_WORDS;
+    delete process.env.AUTHORED_MIN_CHARS;
+  }
+});
 
 test('engine skips cleanly without an api key', async () => {
   resetLlmUsageForTests();
@@ -282,6 +375,7 @@ test('verification failure publishes nothing and records the reason', async () =
     assert.equal(result.column, null);
     assert.match(result.failure, /^verify:/);
     assert.ok(state.authored.lastFailure);
+    assert.equal(state.authored.lastFailure.metrics.sections, 0);
     assert.ok(calls >= 3, 'expected a retry voice pass before giving up');
   } finally {
     delete process.env.OPENROUTER_API_KEY;
