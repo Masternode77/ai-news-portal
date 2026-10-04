@@ -76,9 +76,15 @@ const again = pickItemsForRun(updatedPlan, now);
 assert.equal(again.picked.length, 3);
 assert.ok(again.picked.every((pickedItem) => !updatedPlan.publishedIds.includes(pickedItem.id)));
 
-// The day stops at the daily processing cap unless the run is forced.
-const capped = { ...updatedPlan, publishedIds: Array.from({ length: 9 }, (_, index) => `done-${index}`) };
+// The day stops once nine items reached a public surface unless the run is
+// forced. Archive-only outcomes count toward the processing limit only.
+const done = (count) => Array.from({ length: count }, (_, index) => `done-${index}`);
+const capped = { ...updatedPlan, publishedIds: done(9), visibleIds: done(9) };
 assert.equal(pickItemsForRun(capped, now).picked.length, 0);
 assert.equal(pickItemsForRun(capped, now, { force: true }).picked.length, 3);
+const archivedOnly = { ...updatedPlan, publishedIds: done(9), visibleIds: [] };
+assert.ok(pickItemsForRun(archivedOnly, now).picked.length > 0, 'nine archive-only outcomes do not close the day');
+const processingLimit = { ...updatedPlan, publishedIds: done(18), visibleIds: [] };
+assert.equal(pickItemsForRun(processingLimit, now).picked.length, 0);
 
 console.log('curation rolling freshness test passed');

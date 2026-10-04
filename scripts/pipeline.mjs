@@ -192,7 +192,7 @@ export function columnCandidateRecords({ latest = [], pool = [], existingArchive
   return refreshCachedRelevance(dedupeById([...(latest || []), ...recentArchive, ...(pool || [])]), registry);
 }
 
-async function loadPoolWithFallback(existingLatest, sources) {
+async function loadPoolWithFallback(existingLatest, sources, { processedIds = [] } = {}) {
   const now = new Date();
   if (PIPELINE_USE_EXISTING_POOL) {
     const existingPool = await readJsonFile(NEWS_POOL_PATH, []);
@@ -201,12 +201,13 @@ async function loadPoolWithFallback(existingLatest, sources) {
   }
 
   try {
+    const previousPool = await readJsonFile(NEWS_POOL_PATH, []);
     const acquisition = await withSingleRetry('fetch pool', async () => {
-      const result = await fetchNewsPoolResult({ sources, now });
+      const result = await fetchNewsPoolResult({ sources, now, previousItems: previousPool, excludeIds: processedIds });
       if (result.status === 'transient_fetch_failure') throw new Error('authorized feed acquisition failed');
       return result;
     });
-    console.log(`[pipeline] feed acquisition status=${acquisition.status} authorizedSources=${acquisition.authorizedSourceCount} failedSources=${acquisition.failedSourceCount}`);
+    console.log(`[pipeline] feed acquisition status=${acquisition.status} authorizedSources=${acquisition.authorizedSourceCount} failedSources=${acquisition.failedSourceCount} carriedOver=${acquisition.carriedOverCount || 0}`);
     if (acquisition.status === 'no_authorized_sources') return [];
     if (acquisition.items.length) {
       await writeJsonFile(NEWS_POOL_PATH, acquisition.items);
@@ -529,7 +530,7 @@ async function publishExistingOnly({
   const { latest, archive: updatedArchive, supabaseStatus } = await syncArchiveArtifacts(templateChecked, existingArchive);
   await writeJsonFile(LATEST_NEWS_PATH, latest);
 
-  state.dayPlans[todayKey] = updatePlanAfterRun(plan, processedItems, slot);
+  state.dayPlans[todayKey] = updatePlanAfterRun(plan, processedItems, slot, { visibleIds: signalOnly.map((x) => x.id) });
   state.publishedIds = [...new Set([...(state.publishedIds || []), ...processedItems.map((x) => x.id)])].slice(-1000);
   state.lastRunAt = now.toISOString();
   state.runHistory.push({
@@ -580,7 +581,7 @@ async function main() {
   ]);
   const recentBlueprintIds = blueprintHistoryFromRecords([...(existingLatest || []), ...(existingArchive || [])]);
 
-  const pool = await loadPoolWithFallback(existingLatest, sources);
+  const pool = await loadPoolWithFallback(existingLatest, sources, { processedIds: state.publishedIds || [] });
   console.log(`[pipeline] pool loaded: ${pool.length} items`);
 
   if (!pool.length) {
@@ -724,7 +725,9 @@ async function main() {
 
   await writeJsonFile(LATEST_NEWS_PATH, latest);
 
-  const updatedPlan = updatePlanAfterRun(plan, finalProcessedItems, slot);
+  const updatedPlan = updatePlanAfterRun(plan, finalProcessedItems, slot, {
+    visibleIds: [...repetitionPassed, ...signalCards].map((x) => x.id),
+  });
   state.dayPlans[todayKey] = updatedPlan;
   state.publishedIds = [...new Set([...(state.publishedIds || []), ...finalProcessedItems.map((x) => x.id)])].slice(-1000);
   state.lastRunAt = now.toISOString();

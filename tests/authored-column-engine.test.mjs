@@ -178,6 +178,59 @@ test('malformed first structured revision uses the existing bounded retry withou
   }
 });
 
+test('an unparseable first draft gets one repair attempt before the story is dropped', async () => {
+  resetLlmUsageForTests();
+  process.env.AUTHORED_MIN_WORDS = '700';
+  process.env.AUTHORED_MIN_CHARS = '4200';
+  try {
+    for (const secondDraftValid of [true, false]) {
+      let calls = 0;
+      const result = await generateAuthoredColumn({
+        candidates: [fixtureArticle()], sources: FIXTURE_SOURCES, state: {},
+        now: new Date('2026-10-04T09:00:00Z'),
+        callModel: async request => {
+          calls += 1;
+          if (calls === 1) return STANCE_JSON;
+          if (calls === 2) {
+            assert.doesNotMatch(request.systemPrompt, /Repair:/);
+            return 'Here is the column you asked for.';
+          }
+          if (calls === 3) {
+            assert.match(request.systemPrompt, /Repair: The previous reply failed invalid_structured_essay/);
+            return secondDraftValid ? JSON.stringify(structuredEssay()) : '{"title": ""}';
+          }
+          return JSON.stringify(structuredEssay());
+        },
+      });
+      if (secondDraftValid) {
+        assert.ok(result.column, JSON.stringify(result));
+        assert.equal(calls, 4, 'stance, failed draft, repaired draft, voice');
+      } else {
+        assert.equal(result.column, null);
+        assert.match(result.failure, /^draft:invalid_structured_essay/);
+        assert.equal(calls, 3, 'one repair attempt only');
+      }
+    }
+  } finally {
+    delete process.env.AUTHORED_MIN_WORDS;
+    delete process.env.AUTHORED_MIN_CHARS;
+  }
+});
+
+test('a wrapped reply, a title key or a raw line break inside a string still parses as the same essay', () => {
+  const essay = structuredEssay();
+  const expected = parseModelEssay(JSON.stringify(essay)).body;
+  assert.equal(parseModelEssay(JSON.stringify({ column: essay })).body, expected, 'one envelope key is unwrapped');
+  const { headline, ...rest } = essay;
+  const aliased = parseModelEssay(JSON.stringify({ ...rest, title: headline }));
+  assert.equal(aliased.headline, headline, 'title stands in for a missing headline');
+  assert.equal(aliased.body, expected);
+  const rawBreak = JSON.stringify({ ...essay, deck: 'DECKMARK' }).replace('DECKMARK', 'First line\nsecond line');
+  assert.throws(() => JSON.parse(rawBreak), 'the fixture really is invalid strict JSON');
+  assert.equal(parseModelEssay(rawBreak).body, expected);
+  assert.throws(() => parseModelEssay('{"column": {"title": ""}}'), /invalid_structured_essay/, 'an empty envelope still fails');
+});
+
 test('draft heading formatting reaches revision but cannot bypass final structure verification', async () => {
   resetLlmUsageForTests();
   process.env.AUTHORED_MIN_WORDS = '700';

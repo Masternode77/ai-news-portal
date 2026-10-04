@@ -4,6 +4,7 @@ import {
   CURATION_FLOOR_MIN_RELEVANCE,
   CURATION_MODEL,
   DAILY_CURATION_TARGET,
+  DAILY_PROCESSING_LIMIT,
   FRESH_CANDIDATE_WINDOW_HOURS,
   ITEMS_PER_RUN,
   OPENROUTER_MODEL,
@@ -234,36 +235,51 @@ export async function planForToday(pool, state, now = new Date()) {
     candidateWindowHours: FRESH_CANDIDATE_WINDOW_HOURS,
     curatedItems,
     curatedIds: curatedItems.map((item) => item.id),
+    // publishedIds lists every item processed today, whatever it became;
+    // visibleIds lists the ones that reached a public surface.
     publishedIds: existingPlan?.publishedIds || [],
+    visibleIds: existingPlan?.visibleIds || [],
     slotPublications: existingPlan?.slotPublications || {},
   };
 
   return { key, plan };
 }
 
-// Each run processes up to ITEMS_PER_RUN unprocessed curated items, and a day
-// processes at most DAILY_CURATION_TARGET. Slots are recorded as run history
-// only: a run that found nothing no longer locks the rest of its slot, so a
-// later scheduled or manual run can still publish the day's stories.
-// PIPELINE_FORCE_SLOT lifts the daily cap for an operator-forced run.
+// A fetch-time archive tier is a title-and-snippet estimate, so such a pick
+// still runs (extraction can lift it), but behind the picks the classifier
+// already expects to reach a public surface.
+function expectedSurfaceFirst(items = []) {
+  const expected = items.filter((item) => item.infrastructure_relevance_tier !== 'archive_only');
+  const archiveTier = items.filter((item) => item.infrastructure_relevance_tier === 'archive_only');
+  return [...expected, ...archiveTier];
+}
+
+// Each run processes up to ITEMS_PER_RUN unprocessed curated items. A day
+// stops once DAILY_CURATION_TARGET items reached a public surface or
+// DAILY_PROCESSING_LIMIT items were processed. Archive-only outcomes count
+// toward the second cap only: on 2026-10-05 KST three runs filed nine
+// snippet-tier picks as archive-only and the old processed-item cap closed
+// the day with nothing published. Slots are recorded as run history only.
+// PIPELINE_FORCE_SLOT lifts the daily caps for an operator-forced run.
 export function pickItemsForRun(plan, now = new Date(), { force = PIPELINE_FORCE_SLOT } = {}) {
   const slot = kstSlot(now);
-  const publishedSet = new Set(plan.publishedIds || []);
+  const processedSet = new Set(plan.publishedIds || []);
+  const visibleCount = new Set(plan.visibleIds || []).size;
   const remainingToday = force
     ? ITEMS_PER_RUN
-    : Math.max(0, DAILY_CURATION_TARGET - publishedSet.size);
-  const available = (plan.curatedItems || [])
-    .filter((item) => !publishedSet.has(item.id))
+    : Math.max(0, Math.min(DAILY_CURATION_TARGET - visibleCount, DAILY_PROCESSING_LIMIT - processedSet.size));
+  const available = expectedSurfaceFirst((plan.curatedItems || []).filter((item) => !processedSet.has(item.id)))
     .slice(0, Math.min(ITEMS_PER_RUN, remainingToday));
 
   return { slot, picked: available };
 }
 
-export function updatePlanAfterRun(plan, picked, slot) {
+export function updatePlanAfterRun(plan, picked, slot, { visibleIds = [] } = {}) {
   const pickedIds = picked.map((item) => item.id);
   return {
     ...plan,
     publishedIds: [...new Set([...(plan.publishedIds || []), ...pickedIds])],
+    visibleIds: [...new Set([...(plan.visibleIds || []), ...visibleIds])],
     slotPublications: {
       ...(plan.slotPublications || {}),
       [slot]: true,

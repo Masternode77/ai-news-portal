@@ -320,13 +320,17 @@ function reservesSourceSlot(item) {
 
 // The pool is capped, and several authorized sources publish far more
 // off-beat items than on-beat ones (audit reports, enforcement actions,
-// months-deep archives). Three rules keep it a news pool: items older than
-// POOL_MAX_AGE_DAYS are dropped whenever anything fresh exists, no source
-// takes more than MAX_ITEMS_PER_SOURCE_IN_POOL slots, and ordering is by
-// fetch-time relevance first with recency breaking ties.
-export function selectPoolItems(fetched = [], now = Date.now()) {
-  const fresh = fetched.filter((item) => isFresh(item, now));
-  const candidates = fresh.length ? fresh : fetched;
+// months-deep archives). Four rules keep it a news pool: items the wire
+// already processed hold no slot (curation never offers them again, and the
+// archive keeps their processed copies for column selection), items older
+// than POOL_MAX_AGE_DAYS are dropped whenever anything fresh exists, no
+// source takes more than MAX_ITEMS_PER_SOURCE_IN_POOL slots, and ordering is
+// by fetch-time relevance first with recency breaking ties.
+export function selectPoolItems(fetched = [], now = Date.now(), { excludeIds = [] } = {}) {
+  const excluded = excludeIds instanceof Set ? excludeIds : new Set(excludeIds || []);
+  const usable = fetched.filter((item) => item && !excluded.has(item.id));
+  const fresh = usable.filter((item) => isFresh(item, now));
+  const candidates = fresh.length ? fresh : usable;
   candidates.sort(relevanceThenRecency);
 
   const dedupedByRecency = [];
@@ -375,6 +379,26 @@ export function selectPoolItems(fetched = [], now = Date.now()) {
   return selected;
 }
 
+// The pool file is rewritten from the live feeds on every run, so an
+// unprocessed item vanished as soon as its feed stopped listing it. arXiv
+// lists only the latest announcement and nothing at weekends, which left
+// weekend runs with no on-beat candidate although Friday's preprints were
+// never processed. Unprocessed items from the previous pool are offered again
+// while they are fresh and their source still authorizes text use; the live
+// copy of an item always wins, and the usual pool rules then apply.
+export function carryOverPoolItems(previous = [], { fetched = [], excludeIds = [], sources = [], now = new Date() } = {}) {
+  const excluded = excludeIds instanceof Set ? excludeIds : new Set(excludeIds || []);
+  const fetchedIds = new Set((fetched || []).map((item) => item?.id).filter(Boolean));
+  const nowMs = now instanceof Date ? now.getTime() : Number(now);
+  const nowDate = new Date(nowMs);
+  const carried = (Array.isArray(previous) ? previous : [])
+    .filter((item) => item && item.id && item.url && item.title)
+    .filter((item) => !fetchedIds.has(item.id) && !excluded.has(item.id))
+    .filter((item) => isFresh(item, nowMs))
+    .filter((item) => sourceTextTargetDecision(item, sources, nowDate).authorized);
+  return refreshCachedRelevance(carried, sources);
+}
+
 export async function fetchNewsPoolResult(options = {}) {
   const sources = options.sources || await loadSourceRegistry(options.registryPath);
   const now = options.now || new Date();
@@ -395,13 +419,21 @@ export async function fetchNewsPoolResult(options = {}) {
     }
   }));
   const failedSourceCount = attempts.filter((attempt) => !attempt.ok).length;
-  const items = selectPoolItems(attempts.flatMap((attempt) => attempt.items), now.getTime());
-  const status = items.length
+  const excludeIds = new Set(options.excludeIds || []);
+  const fetchedItems = attempts.flatMap((attempt) => attempt.items);
+  const carried = carryOverPoolItems(options.previousItems || [], { fetched: fetchedItems, excludeIds, sources, now });
+  const carriedIds = new Set(carried.map((item) => item.id));
+  const items = selectPoolItems([...fetchedItems, ...carried], now.getTime(), { excludeIds });
+  const carriedOverCount = items.filter((item) => carriedIds.has(item.id)).length;
+  const liveCount = items.length - carriedOverCount;
+  const status = liveCount
     ? 'fetched'
     : failedSourceCount > 0
       ? 'transient_fetch_failure'
-      : 'authorized_sources_empty';
-  return { status, items, authorizedSourceCount: feeds.length, failedSourceCount };
+      : items.length
+        ? 'fetched'
+        : 'authorized_sources_empty';
+  return { status, items, authorizedSourceCount: feeds.length, failedSourceCount, carriedOverCount };
 }
 
 export async function fetchNewsPool(options = {}) {
