@@ -78,7 +78,9 @@ publisher's host; descriptions, bodies and images are discarded and article
 pages are never fetched. Titles that would fail the public copy, forbidden
 phrase, truncation, boilerplate or banned-phrase checks are dropped. A
 headline scorer (topic terms plus a tracked-company list in English and
-Korean) keeps AI company, chip, cloud, IT, data center and power items. A
+Korean) keeps AI company, chip, cloud, IT, data center and power items. Each
+language is selected and capped on its own (80 English, 30 Korean), so English
+volume cannot crowd out the Korean lane. A
 language whose refresh brings fewer than its minimum (8 English, 3 Korean)
 keeps its previous headlines that are still inside the seven-day window,
 merged with the new ones (`mergeHeadlineSnapshots()`), so one failed lane never

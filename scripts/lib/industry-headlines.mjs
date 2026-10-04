@@ -16,6 +16,9 @@ import { BANNED_PHRASES } from './banned-phrases.mjs';
 export const INDUSTRY_HEADLINES_PATH = 'src/data/industry-headlines.json';
 export const HEADLINE_MAX_AGE_HOURS = 7 * 24;
 export const HEADLINE_LIMIT = 80;
+// Each language lane is selected and capped on its own, so a busy English day
+// can never crowd the Korean lane out of the snapshot.
+export const HEADLINE_LIMITS_BY_LANGUAGE = { en: 80, ko: 30 };
 export const HEADLINE_PER_SOURCE = 6;
 export const HEADLINE_MIN_SCORE = 3.5;
 const BOILERPLATE = /want more .* stories|copyright ©|all rights reserved|sign up for.+newsletter|sponsored|advertorial|\bpromoted\b/i;
@@ -265,6 +268,18 @@ export function selectHeadlines(items = [], { limit = HEADLINE_LIMIT, perSource 
   return selected.sort((a, b) => Date.parse(b.publishedAt) - Date.parse(a.publishedAt));
 }
 
+export function selectHeadlinesByLanguage(items = [], limits = HEADLINE_LIMITS_BY_LANGUAGE) {
+  const byLanguage = new Map();
+  for (const item of items) {
+    const language = item.language || 'en';
+    if (!byLanguage.has(language)) byLanguage.set(language, []);
+    byLanguage.get(language).push(item);
+  }
+  return [...byLanguage.entries()]
+    .flatMap(([language, group]) => selectHeadlines(group, { limit: limits[language] ?? HEADLINE_LIMIT }))
+    .sort((a, b) => Date.parse(b.publishedAt) - Date.parse(a.publishedAt));
+}
+
 const parser = new Parser({ timeout: 20_000 });
 
 async function fetchHeadlineFeed(feed, networkOptions = {}) {
@@ -346,7 +361,7 @@ export async function refreshIndustryHeadlines({ sources = [], now = new Date(),
     }
   });
   await Promise.all(workers);
-  const items = selectHeadlines(collected);
+  const items = selectHeadlinesByLanguage(collected);
   return {
     generatedAt: now.toISOString(),
     feeds: { attempted: feeds.length, succeeded: feeds.length - failed.length, failed: failed.sort() },

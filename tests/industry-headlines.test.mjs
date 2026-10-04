@@ -11,6 +11,7 @@ import {
   refreshIndustryHeadlines,
   scoreHeadline,
   selectHeadlines,
+  selectHeadlinesByLanguage,
 } from '../scripts/lib/industry-headlines.mjs';
 import { eligibleHeadlineSourceIds, headlinesBySegment, headlinesFor } from '../scripts/lib/industry-headlines-view.mjs';
 import { loadSourceRegistrySync } from '../scripts/lib/source-registry.mjs';
@@ -110,6 +111,26 @@ test('selection removes cross-outlet duplicates, caps each publisher and lists n
   const selected = selectHeadlines(items, { perSource: 3 });
   assert.equal(selected.filter((item) => item.title.startsWith('Nvidia to invest')).length, 1);
   assert.equal(selected.filter((item) => item.sourceRegistryId === 'three').length, 3);
+  for (let index = 1; index < selected.length; index += 1) {
+    assert.ok(Date.parse(selected[index - 1].publishedAt) >= Date.parse(selected[index].publishedAt));
+  }
+});
+
+test('each language lane is selected on its own so English volume cannot crowd out Korean', () => {
+  const english = Array.from({ length: 120 }, (_, index) => ({
+    id: `en-${index}`, title: `Item${index} alpha${index} beta${index} gamma${index} delta${index} GPUs`,
+    url: `https://en${index % 30}.example/${index}`, source: `en${index % 30}`, sourceRegistryId: `en${index % 30}`,
+    publishedAt: new Date(NOW.getTime() - index * 60_000).toISOString(), language: 'en', score: 9, segment: 'chips', companies: [],
+  }));
+  const korean = ['삼성전자 HBM4 공급', 'SK하이닉스 실적 발표', '네이버 데이터센터 증설', '퓨리오사AI NPU 양산'].map((title, index) => ({
+    id: `ko-${index}`, title, url: `https://ko${index}.example/${index}`, source: `ko${index}`, sourceRegistryId: `ko${index}`,
+    publishedAt: new Date(NOW.getTime() - index * 3_600_000).toISOString(), language: 'ko', score: 4, segment: 'chips', companies: [],
+  }));
+  // A single score-first list drops the whole Korean lane.
+  assert.equal(selectHeadlines([...english, ...korean]).filter((item) => item.language === 'ko').length, 0);
+  const selected = selectHeadlinesByLanguage([...english, ...korean]);
+  assert.equal(selected.filter((item) => item.language === 'ko').length, 4);
+  assert.equal(selected.filter((item) => item.language === 'en').length, 80);
   for (let index = 1; index < selected.length; index += 1) {
     assert.ok(Date.parse(selected[index - 1].publishedAt) >= Date.parse(selected[index].publishedAt));
   }
