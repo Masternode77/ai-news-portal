@@ -689,6 +689,9 @@ test('verificationFeedback translates reason codes into actionable directives', 
   assert.match(feedback[5], /own words/);
   assert.match(feedback[6], /80 and 240 characters/);
   assert.equal(feedback[7], 'some_unknown_code');
+  const [density] = verificationFeedback(['insight_density_below_0.75']);
+  assert.match(density, /operators, suppliers, investors or utilities/, 'the directive names what the density score measures');
+  assert.match(density, /fewer reporting verbs/);
 });
 
 test('quality policy names the offending unsupported numbers', () => {
