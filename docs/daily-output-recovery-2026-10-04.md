@@ -236,6 +236,23 @@ for fewer reporting verbs. No word was added to the list and the floor is unchan
   0.55 lane score (the best was 0.48). The day's processing count stayed at 12 of 18 and its
   published count at 1 of 9.
 
+Follow-up:
+
+- Both rows of the column's figure carried the Epoch headline glued to the first sentence, and the
+  $0.6 billion row repeated the $3.8 billion statement. The claim extractor now closes the source
+  headline as its own sentence without taking one of the eight body-sentence slots, and each
+  figure row windows its label around its own number. The column's two labels now use the
+  source's own wording. The artwork queue reports the same ready and blocked columns and the same
+  fingerprint before and after the extractor change.
+- A read of the column against the stored Epoch text found three factual assertions the source
+  does not make: a share of NVIDIA's H100 shipments, "the first enforcement action in this
+  cycle", and a history of Singapore, Thailand and the UAE in enforcement actions. They were
+  removed or narrowed; the argument, attribution and figures are otherwise unchanged (1,627
+  words).
+- The column's dedicated artwork is a ready `generate` job for the Mac's Codex task
+  (`docs/mac-column-image-automation.md`). This cloud session has no native image tool, so the
+  column keeps its current image until that task imports one.
+
 ## Configuration
 
 | Variable | Default |

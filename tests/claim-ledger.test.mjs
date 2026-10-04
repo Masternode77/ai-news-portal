@@ -16,3 +16,21 @@ test('claim ledger records numeric claims for published analysis candidates', ()
   assert.ok(result.claims.some((claim) => claim.numeric_value === 300));
   assert.equal(result.summary.unsupported_claim_count, 0);
 });
+
+test('an unpunctuated headline stays out of the first body claim and keeps every body slot', () => {
+  const body = Array.from({ length: 8 }, (_, index) => `Sentence ${index + 1} reports that the operator added ${index + 10} MW of contracted data center capacity this quarter.`).join(' ');
+  const result = buildClaimLedger({
+    cluster_id: 'sig_headline',
+    representative_source: {
+      title: 'Trade data consistent with $3B of chips routed through Malaysia',
+      cleaned_text: `Between April 2024 and June 2025, China recorded $3.8 billion of server imports from Malaysia. ${body}`,
+      source_url: 'https://example.com/headline',
+      source_name: 'Example Source',
+      source_published_at: '2026-10-01T00:00:00Z',
+    },
+  }, 'article_headline');
+  const texts = result.claims.map((claim) => claim.claim_text);
+  assert.ok(texts.some((text) => text.startsWith('Between April 2024 and June 2025, China recorded $3.8 billion')), 'the first body sentence is its own claim');
+  assert.ok(!texts.some((text) => /Malaysia Between April/.test(text)), 'the headline is not glued to the body');
+  assert.ok(result.claims.some((claim) => claim.numeric_value === 16), 'the eighth body sentence still yields its claim alongside the headline');
+});

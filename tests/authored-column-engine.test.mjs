@@ -791,6 +791,32 @@ test('buildColumnFigures constructs 1-3 deterministic figures from the ledger', 
   }
 });
 
+test('each figure row windows its label around its own number when a sentence holds several', () => {
+  const ledger = buildClaimLedger({
+    cluster_id: 'authored_two_numbers',
+    representative_source: {
+      source_url: 'https://example.com/trade',
+      source_name: 'Example Research',
+      title: 'Server trade gap between Malaysia and China',
+      cleaned_text: 'Between April 2024 and June 2025, China recorded $3.8 billion of server imports from Malaysia, at AI server prices of $80,000 to $150,000 per unit, yet Malaysia recorded only $0.6 billion of exports to China across the same months.',
+    },
+    supporting_sources: [],
+  }, 'two_numbers');
+  const claims = numericLedgerClaims(ledger);
+  const indexOf = (value) => claims.findIndex((claim) => claim.numeric_value === value);
+  const result = buildColumnFigures({
+    ledger,
+    stance: { angle: 'The server trade gap between Malaysia and China' },
+    headline: 'Malaysia and China disagree on the server trade',
+    sectionCount: 6,
+    modelSpec: [{ type: 'stat-row', title: 'The customs value gap', claim_indexes: [indexOf(3.8), indexOf(0.6)], anchor: 1 }],
+  });
+  const [first, second] = result.figures[0].items;
+  assert.match(first.label, /\$3\.8 billion/);
+  assert.match(second.label, /\$0\.6 billion/, 'the second row names its own figure');
+  assert.notEqual(first.label, second.label);
+});
+
 test('buildColumnFigures honors a valid model spec and rejects invalid ones', () => {
   const ledger = fixtureLedger();
   const headline = 'The Dakota Grid Deal Is A Utility Execution Story Now';

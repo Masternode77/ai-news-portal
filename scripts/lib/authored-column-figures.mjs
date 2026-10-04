@@ -125,9 +125,21 @@ export function relevantClaims(claims = [], { headline = '', stance = {} } = {})
     .map((entry) => entry.claim);
 }
 
+// A sentence often carries several numbers ("China recorded $3.8 billion ...
+// yet Malaysia recorded only $0.6 billion"). A claim parsed by the strict
+// extractor keeps its value and unit, but its label must window around its
+// own number, not the sentence opening, or the $0.6 billion row reads as the
+// $3.8 billion statement.
+function ownNumberIndex(claim) {
+  const value = Number(claim.numeric_value);
+  const match = extractFigureNumbers(claim.claim_text).find((number) => Math.abs(number.value - value) < 1e-9);
+  return match ? match.index : undefined;
+}
+
 function withFigureNumber(claim) {
   if (Number.isFinite(Number(claim.numeric_value)) && String(claim.unit || '').trim()) {
-    return { ...claim };
+    const figureIndex = ownNumberIndex(claim);
+    return Number.isFinite(figureIndex) ? { ...claim, figure_index: figureIndex } : { ...claim };
   }
   const [number] = extractFigureNumbers(claim.claim_text);
   if (!number) return null;

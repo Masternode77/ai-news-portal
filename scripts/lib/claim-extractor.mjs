@@ -22,7 +22,14 @@ export function extractClaimsFromCluster(cluster = {}) {
   const sourceItems = [cluster.representative_source, ...(cluster.supporting_sources || [])].filter(Boolean);
   const rows = [];
   for (const item of sourceItems) {
-    const sentences = splitSentences([item.title, item.cleaned_text].filter(Boolean).join(' ')).slice(0, 8);
+    // A headline usually has no closing punctuation, so joining it to the body
+    // with a space glued it onto the first sentence ("...via Malaysia Between
+    // April 2024 and June 2025, China recorded...") and every figure label
+    // drawn from that claim led with the headline. The headline is now its own
+    // sentence, and it does not take one of the eight body-sentence slots, so
+    // the body claims a column may cite are the same as before.
+    const titleSentences = splitSentences(compact(item.title || '')).slice(0, 1);
+    const sentences = [...titleSentences, ...splitSentences(item.cleaned_text || '').slice(0, 8)];
     for (const sentence of sentences) {
       const numerics = extractNumericClaims(sentence);
       if (numerics.length) {
