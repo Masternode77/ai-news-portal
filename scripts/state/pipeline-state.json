@@ -911,7 +911,10 @@
     "af7565ca100cccb3",
     "a3b7a774d9504e99",
     "8c015ec83cbadc52",
-    "2fbd834c6cf374c2"
+    "2fbd834c6cf374c2",
+    "ba17df47777bdce5",
+    "40dbc732d0fd62ce",
+    "d4f156c55959b5d6"
   ],
   "dayPlans": {
     "2026-03-24": {
@@ -48436,27 +48439,262 @@
     "2026-10-06": {
       "date": "2026-10-06",
       "createdAt": "2026-10-05T15:56:48.034Z",
-      "refreshedAt": "2026-10-05T15:56:48.034Z",
+      "refreshedAt": "2026-10-05T21:55:48.663Z",
       "candidateWindowHours": 24,
       "curatedItems": [
         {
-          "id": "8c015ec83cbadc52",
-          "sourceRegistryId": "epoch-ai-data-insights",
-          "source": "Epoch AI",
-          "url": "https://epoch.ai/data-insights/openai-coding-agent-spending",
-          "title": "Coding-agent use at OpenAI is doubling roughly every month",
-          "snippet": "OpenAI researchers’ coding-agent usage, valued at API prices, has recently been doubling roughly every month, according to breakpoint fits.",
-          "contentText": "OpenAI researchers’ coding-agent usage, valued at API prices, has recently been doubling roughly every month, according to breakpoint fits.",
-          "publishedAt": "2026-10-05T12:00:00.000Z",
+          "id": "ba17df47777bdce5",
+          "sourceRegistryId": "doe-newsroom",
+          "source": "U.S. Department of Energy",
+          "url": "https://www.energy.gov/articles/energy-department-announces-42-billion-investment-boost-nuclear-power-and-help-lower",
+          "title": "Energy Department Announces $4.2 Billion Investment to Boost Nuclear Power and Help Lower Energy Costs in Pennsylvania and Ohio",
+          "snippet": "Today’s announcement will deliver more reliable American energy, strengthen the grid, lower costs, and meet growing power demand across the 13-state PJM Interconnection, L.L.C. region.",
+          "contentText": "Today’s announcement will deliver more reliable American energy, strengthen the grid, lower costs, and meet growing power demand across the 13-state PJM Interconnection, L.L.C. region.",
+          "publishedAt": "2026-10-05T16:05:00.000Z",
           "sourceImage": null,
           "region": "US",
           "language": "en",
-          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
-          "pool_max_age_days": 21,
-          "ai_topic_score": 0.666,
+          "defaultCategory": "Power & Grid",
+          "ai_topic_score": 0,
           "ai_topic_reasons": [
-            "openai",
+            "ai_not_in_title"
+          ],
+          "category": "Power & Grid",
+          "primary_category": "Power & Grid",
+          "secondary_category": "Interconnection and power procurement",
+          "infrastructure_layer": "Power",
+          "affected_stakeholders": [
+            "data center operators",
+            "utilities",
+            "cloud capacity teams",
+            "investors"
+          ],
+          "article_type": "Product / Platform Update",
+          "urgency_score": 0.7,
+          "taxonomy_confidence": 0.95,
+          "taxonomy_reasons": [
+            "power",
+            "grid",
+            "interconnection",
+            "nuclear"
+          ],
+          "direct_ai_infrastructure_relevance": 0,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0,
+          "power_grid_relevance": 1,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.615,
+          "infrastructure_relevance_tier": "signal_card",
+          "infrastructure_relevance_action": "publish_signal_card_only",
+          "infrastructure_relevance_reasons": [
+            "power_grid_relevance:1.00(power, grid, interconnection)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 0,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0,
+            "power_grid_relevance": 1,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.615,
+            "infrastructure_relevance_tier": "signal_card",
+            "infrastructure_relevance_action": "publish_signal_card_only",
+            "infrastructure_relevance_reasons": [
+              "power_grid_relevance:1.00(power, grid, interconnection)"
+            ],
+            "infrastructureRelevanceAction": "publish_signal_card_only",
+            "articlePagePublished": false,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 64
+        },
+        {
+          "id": "40dbc732d0fd62ce",
+          "sourceRegistryId": "arxiv-cs-dc",
+          "source": "arXiv",
+          "url": "https://arxiv.org/abs/2605.24461",
+          "title": "Provisioning to Runtime Optimization of a 100 MW-Scale AI Cluster",
+          "snippet": "arXiv:2605.24461v3 Announce Type: replace-cross Abstract: The electric power supply for AI data centers is now the most significant bottleneck in the race toward Artificial General Intelligence, surpassing even the cons…",
+          "contentText": "arXiv:2605.24461v3 Announce Type: replace-cross Abstract: The electric power supply for AI data centers is now the most significant bottleneck in the race toward Artificial General Intelligence, surpassing even the constraint of AI accelerator availability. To our knowledge, this paper is the first to describe the end-to-end power management process for a hyper-scale AI datacenter; from early power planning to accommodate next-generation accelerators 6--12 months before their general availability, to tuning power settings after large scale deployment, and finally to dynamic, runtime power management for evolving workloads. We present detailed power measurements for a 150 MW datacenter hosting a cluster of 83K GB200 GPUs. We share insights from building this state-of-the-art AI cluster. We…",
+          "publishedAt": "2026-10-05T04:00:00.000Z",
+          "sourceImage": null,
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure",
+          "source_text_scope": "abstract",
+          "ai_topic_score": 0.863,
+          "ai_topic_reasons": [
+            "gpus",
+            "accelerator",
+            "accelerators",
             "ai"
+          ],
+          "category": "Data Centers",
+          "primary_category": "Data Centers",
+          "secondary_category": "Campus development and colocation capacity",
+          "infrastructure_layer": "Facility",
+          "affected_stakeholders": [
+            "data center operators",
+            "developers",
+            "site selectors",
+            "investors"
+          ],
+          "article_type": "Supply Chain",
+          "urgency_score": 0.54,
+          "taxonomy_confidence": 0.66,
+          "taxonomy_reasons": [
+            "datacenter"
+          ],
+          "direct_ai_infrastructure_relevance": 0.82,
+          "data_center_relevance": 0.84,
+          "cloud_capacity_relevance": 0.27,
+          "semiconductor_relevance": 0.22,
+          "power_grid_relevance": 0.49,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.888,
+          "infrastructure_relevance_tier": "signal_card",
+          "infrastructure_relevance_action": "publish_signal_card_only",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:0.82(ai datacenter)",
+            "data_center_relevance:0.84(data centers, datacenter)",
+            "cloud_capacity_relevance:0.27(provisioning)",
+            "semiconductor_relevance:0.22(accelerator)",
+            "power_grid_relevance:0.49(power, mw)",
+            "abstract_only_source_capped_at_signal_card"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 0.82,
+            "data_center_relevance": 0.84,
+            "cloud_capacity_relevance": 0.27,
+            "semiconductor_relevance": 0.22,
+            "power_grid_relevance": 0.49,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.888,
+            "infrastructure_relevance_tier": "signal_card",
+            "infrastructure_relevance_action": "publish_signal_card_only",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:0.82(ai datacenter)",
+              "data_center_relevance:0.84(data centers, datacenter)",
+              "cloud_capacity_relevance:0.27(provisioning)",
+              "semiconductor_relevance:0.22(accelerator)",
+              "power_grid_relevance:0.49(power, mw)",
+              "abstract_only_source_capped_at_signal_card"
+            ],
+            "infrastructureRelevanceAction": "publish_signal_card_only",
+            "articlePagePublished": false,
+            "homepagePublished": true,
+            "archiveOnly": false,
+            "archiveOnlyReason": null
+          },
+          "score": 53
+        },
+        {
+          "id": "d4f156c55959b5d6",
+          "sourceRegistryId": "kubernetes-blog",
+          "source": "Kubernetes Blog",
+          "url": "https://kubernetes.io/blog/2026/10/05/scaling-kubernetes-workloads-with-node-swap/",
+          "title": "Scaling Kubernetes Workloads with Node Swap",
+          "snippet": "Memory is often the first hard limit a Kubernetes cluster hits. Nodes run out of RAM long before they run out of CPU, and the new wave of agentic AI workloads makes this worse. These workloads demand large memory footpr…",
+          "contentText": "Memory is often the first hard limit a Kubernetes cluster hits. Nodes run out of RAM long before they run out of CPU, and the new wave of agentic AI workloads makes this worse. These workloads demand large memory footprints to start up and run untrusted code, then sit idle waiting for the next prompt. That idle but resident memory is expensive, and it caps how many pods a node can hold. This is where swap helps. Kubernetes support for running nodes with swap enabled reached General Availability in v1.34, and by backing that swap with fast NVMe solid state drives (SSDs), a node can page out dormant memory and pack in far more pods. This post explains how we benchmarked that approach across three workloads, including CI/CD kernel builds, sandboxed headless browsers, and isolated Python runt…",
+          "publishedAt": "2026-10-05T18:00:00.000Z",
+          "sourceImage": "https://kubernetes.io/blog/2026/10/05/scaling-kubernetes-workloads-with-node-swap/node-swap-chart.svg",
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "Hyperscalers & Cloud",
+          "ai_topic_score": 0.6,
+          "ai_topic_reasons": [
+            "agentic",
+            "ai workloads",
+            "ai",
+            "ai_not_in_title"
+          ],
+          "category": "Enterprise AI Infrastructure",
+          "primary_category": "Enterprise AI Infrastructure",
+          "secondary_category": "Enterprise deployment operations",
+          "infrastructure_layer": "Enterprise Platform",
+          "affected_stakeholders": [
+            "enterprise IT",
+            "cloud buyers",
+            "platform teams",
+            "software vendors"
+          ],
+          "article_type": "Supply Chain",
+          "urgency_score": 0.32,
+          "taxonomy_confidence": 0.64,
+          "taxonomy_reasons": [
+            "kubernetes"
+          ],
+          "direct_ai_infrastructure_relevance": 0.22,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0.537,
+          "infrastructure_relevance_score": 0.43,
+          "infrastructure_relevance_tier": "archive_only",
+          "infrastructure_relevance_action": "archive_only",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:0.22",
+            "enterprise_ai_infrastructure_relevance:0.54(kubernetes, ai workloads)",
+            "weak_ai_adjacent_without_compute_current_infrastructure_surface"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 0.22,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0.537,
+            "infrastructure_relevance_score": 0.43,
+            "infrastructure_relevance_tier": "archive_only",
+            "infrastructure_relevance_action": "archive_only",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:0.22",
+              "enterprise_ai_infrastructure_relevance:0.54(kubernetes, ai workloads)",
+              "weak_ai_adjacent_without_compute_current_infrastructure_surface"
+            ],
+            "infrastructureRelevanceAction": "archive_only",
+            "articlePagePublished": false,
+            "homepagePublished": false,
+            "archiveOnly": true,
+            "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
+          },
+          "score": 63
+        },
+        {
+          "id": "fc68deee24627bb2",
+          "sourceRegistryId": "arxiv-cs-dc",
+          "source": "arXiv",
+          "url": "https://arxiv.org/abs/2610.03457",
+          "title": "Cross-Facility LLM Pre-training on HPC: Elastic Aggregation, Data Leasing, and Queue-Aware Placement",
+          "snippet": "arXiv:2610.03457v1 Announce Type: new Abstract: Academic compute is fragmented: allocations are granted per facility, and facilities differ in accelerators and software stacks, schedule jobs independently, and share nei…",
+          "contentText": "arXiv:2610.03457v1 Announce Type: new Abstract: Academic compute is fragmented: allocations are granted per facility, and facilities differ in accelerators and software stacks, schedule jobs independently, and share neither a network nor a filesystem. We present a system that pools such allocations to pre-train a single language model across three supercomputers on two continents, up to 7,400km apart: Snellius (NVIDIA H100), LUMI and Frontier (both AMD MI250X). It combines (i) DiLoCo-style two-loop training with an elastic, token-weighted Nesterov outer step for which zero, one or many live sites are all normal states; (ii) DARL, a data-leasing protocol whose heartbeat-backed leases guarantee that, within an epoch, no sample is trained twice or lost under crashes, late joins and work stea…",
+          "publishedAt": "2026-10-05T04:00:00.000Z",
+          "sourceImage": null,
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure",
+          "source_text_scope": "abstract",
+          "ai_topic_score": 0.946,
+          "ai_topic_reasons": [
+            "llm",
+            "nvidia",
+            "accelerators"
           ],
           "category": "AI Infrastructure",
           "primary_category": "AI Infrastructure",
@@ -48468,41 +48706,117 @@
             "cloud buyers",
             "investors"
           ],
-          "article_type": "Other",
-          "urgency_score": 0.18,
-          "taxonomy_confidence": 0.61,
+          "article_type": "Product / Platform Update",
+          "urgency_score": 0.33,
+          "taxonomy_confidence": 0.72,
           "taxonomy_reasons": [
             "ai infrastructure",
-            "neocloud"
+            "hpc"
+          ],
+          "direct_ai_infrastructure_relevance": 0.49,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0.5,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.468,
+          "infrastructure_relevance_tier": "archive_only",
+          "infrastructure_relevance_action": "archive_only",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:0.49(hpc)",
+            "semiconductor_relevance:0.50(nvidia, amd)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 0.49,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0.5,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.468,
+            "infrastructure_relevance_tier": "archive_only",
+            "infrastructure_relevance_action": "archive_only",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:0.49(hpc)",
+              "semiconductor_relevance:0.50(nvidia, amd)"
+            ],
+            "infrastructureRelevanceAction": "archive_only",
+            "articlePagePublished": false,
+            "homepagePublished": false,
+            "archiveOnly": true,
+            "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
+          },
+          "score": 60
+        },
+        {
+          "id": "839cc75597b4bcc8",
+          "sourceRegistryId": "doe-newsroom",
+          "source": "U.S. Department of Energy",
+          "url": "https://www.energy.gov/articles/energy-department-announces-alaska-railbelt-transmission-project-receive-defense",
+          "title": "Energy Department Announces Alaska Railbelt Transmission Project to Receive Defense Production Act Funding, Securing Alaska Military Installations and Local Communities",
+          "snippet": "The U.S. Department of Energy today announced its intent to deploy Defense Production Act funding to develop a second high-voltage connection between Southcentral and Interior Alaska, strengthening grid infrastructure e…",
+          "contentText": "The U.S. Department of Energy today announced its intent to deploy Defense Production Act funding to develop a second high-voltage connection between Southcentral and Interior Alaska, strengthening grid infrastructure essential to national defense.",
+          "publishedAt": "2026-10-05T17:05:00.000Z",
+          "sourceImage": null,
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "Power & Grid",
+          "ai_topic_score": 0,
+          "ai_topic_reasons": [
+            "ai_not_in_title"
+          ],
+          "category": "Power & Grid",
+          "primary_category": "Power & Grid",
+          "secondary_category": "Interconnection and power procurement",
+          "infrastructure_layer": "Power",
+          "affected_stakeholders": [
+            "data center operators",
+            "utilities",
+            "cloud capacity teams",
+            "investors"
+          ],
+          "article_type": "Financing / M&A",
+          "urgency_score": 0.61,
+          "taxonomy_confidence": 0.82,
+          "taxonomy_reasons": [
+            "power",
+            "grid",
+            "transmission"
           ],
           "direct_ai_infrastructure_relevance": 0,
           "data_center_relevance": 0,
           "cloud_capacity_relevance": 0,
           "semiconductor_relevance": 0,
-          "power_grid_relevance": 0,
+          "power_grid_relevance": 0.658,
           "cooling_relevance": 0,
-          "capital_markets_relevance": 0,
+          "capital_markets_relevance": 0.378,
           "enterprise_ai_infrastructure_relevance": 0,
-          "infrastructure_relevance_score": 0,
+          "infrastructure_relevance_score": 0.535,
           "infrastructure_relevance_tier": "archive_only",
           "infrastructure_relevance_action": "archive_only",
           "infrastructure_relevance_reasons": [
-            "no_strong_compute_current_infrastructure_match"
+            "power_grid_relevance:0.66(grid, transmission)",
+            "capital_markets_relevance:0.38(funding)"
           ],
           "infrastructure_relevance": {
             "direct_ai_infrastructure_relevance": 0,
             "data_center_relevance": 0,
             "cloud_capacity_relevance": 0,
             "semiconductor_relevance": 0,
-            "power_grid_relevance": 0,
+            "power_grid_relevance": 0.658,
             "cooling_relevance": 0,
-            "capital_markets_relevance": 0,
+            "capital_markets_relevance": 0.378,
             "enterprise_ai_infrastructure_relevance": 0,
-            "infrastructure_relevance_score": 0,
+            "infrastructure_relevance_score": 0.535,
             "infrastructure_relevance_tier": "archive_only",
             "infrastructure_relevance_action": "archive_only",
             "infrastructure_relevance_reasons": [
-              "no_strong_compute_current_infrastructure_match"
+              "power_grid_relevance:0.66(grid, transmission)",
+              "capital_markets_relevance:0.38(funding)"
             ],
             "infrastructureRelevanceAction": "archive_only",
             "articlePagePublished": false,
@@ -48510,26 +48824,27 @@
             "archiveOnly": true,
             "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
           },
-          "score": 59
+          "score": 60
         },
         {
-          "id": "2fbd834c6cf374c2",
+          "id": "ee5758fc5bf78de4",
           "sourceRegistryId": "arxiv-cs-dc",
           "source": "arXiv",
-          "url": "https://arxiv.org/abs/2610.03286",
-          "title": "VenusRL: A Fully Disaggregated Agentic RL System with Priority Scheduling and Scalable Interaction",
-          "snippet": "arXiv:2610.03286v1 Announce Type: new Abstract: Agentic Reinforcement Learning (RL) trains LLM agents through multi-turn interactions with external tool environments. Its multi-turn nature exposes two system-level bottl…",
-          "contentText": "arXiv:2610.03286v1 Announce Type: new Abstract: Agentic Reinforcement Learning (RL) trains LLM agents through multi-turn interactions with external tool environments. Its multi-turn nature exposes two system-level bottlenecks unaddressed by existing agentic RL frameworks. First, end-to-end training throughput is constrained by the slowest trajectories to complete, yet optimizing per-GPU utilization alone scatters rollout progress across many groups, delaying the completion of enough groups to unblock the next training step. Second, tool sandboxes are statically over-provisioned by their declared memory ceilings, leaving most physical memory stranded while replicating near-identical state across sandboxes launched from the same prompt. We present VenusRL, a fully disaggregated agentic RL s…",
+          "url": "https://arxiv.org/abs/2610.03394",
+          "title": "EdgeAgent: Orchestrating On-Device LLM inference for End-User Multi-Agent Systems on CPU-GPU Unified Memory Architectures",
+          "snippet": "arXiv:2610.03394v1 Announce Type: new Abstract: Emerging multi-agent LLMs demand privacy-preserving edge deployment, yet current inference systems struggle with these collaborative workflows. Specifically, the memory-bo…",
+          "contentText": "arXiv:2610.03394v1 Announce Type: new Abstract: Emerging multi-agent LLMs demand privacy-preserving edge deployment, yet current inference systems struggle with these collaborative workflows. Specifically, the memory-bound decode phase causes severe bus contention on unified memory architectures (UMA), paralyzing naive CPU-GPU co-execution. Furthermore, speculative decoding in multi-agent workloads faces extreme variance in drafting difficulty, alternating between complex reasoning and predictable structured generation. Compounded by frequent tool-induced stalls, this highly fragmented execution severely underutilizes hardware and defeats traditional static batching. We present EdgeAgent, a cross-layer inference system explicitly co-designed for edge UMA and multi-agent workloads. At the…",
           "publishedAt": "2026-10-05T04:00:00.000Z",
           "sourceImage": null,
           "region": "US",
           "language": "en",
           "defaultCategory": "AI Infrastructure",
           "source_text_scope": "abstract",
-          "ai_topic_score": 0.985,
+          "ai_topic_score": 1,
           "ai_topic_reasons": [
             "llm",
-            "agentic",
+            "llms",
+            "inference",
             "gpu"
           ],
           "category": "Semiconductors",
@@ -48543,116 +48858,41 @@
             "investors"
           ],
           "article_type": "Supply Chain",
-          "urgency_score": 0.23,
-          "taxonomy_confidence": 0.57,
+          "urgency_score": 0.27,
+          "taxonomy_confidence": 0.61,
           "taxonomy_reasons": [
             "gpu"
-          ],
-          "direct_ai_infrastructure_relevance": 0,
-          "data_center_relevance": 0,
-          "cloud_capacity_relevance": 0,
-          "semiconductor_relevance": 0.22,
-          "power_grid_relevance": 0,
-          "cooling_relevance": 0,
-          "capital_markets_relevance": 0,
-          "enterprise_ai_infrastructure_relevance": 0,
-          "infrastructure_relevance_score": 0.163,
-          "infrastructure_relevance_tier": "archive_only",
-          "infrastructure_relevance_action": "archive_only",
-          "infrastructure_relevance_reasons": [
-            "semiconductor_relevance:0.22(gpu)"
-          ],
-          "infrastructure_relevance": {
-            "direct_ai_infrastructure_relevance": 0,
-            "data_center_relevance": 0,
-            "cloud_capacity_relevance": 0,
-            "semiconductor_relevance": 0.22,
-            "power_grid_relevance": 0,
-            "cooling_relevance": 0,
-            "capital_markets_relevance": 0,
-            "enterprise_ai_infrastructure_relevance": 0,
-            "infrastructure_relevance_score": 0.163,
-            "infrastructure_relevance_tier": "archive_only",
-            "infrastructure_relevance_action": "archive_only",
-            "infrastructure_relevance_reasons": [
-              "semiconductor_relevance:0.22(gpu)"
-            ],
-            "infrastructureRelevanceAction": "archive_only",
-            "articlePagePublished": false,
-            "homepagePublished": false,
-            "archiveOnly": true,
-            "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
-          },
-          "score": 57
-        },
-        {
-          "id": "a3b7a774d9504e99",
-          "sourceRegistryId": "arxiv-cs-dc",
-          "source": "arXiv",
-          "url": "https://arxiv.org/abs/2610.02522",
-          "title": "Beaver: Elastic GPU Sharing between ML and Latency-Critical vRAN Workloads",
-          "snippet": "arXiv:2610.02522v1 Announce Type: new Abstract: Within the shared industry vision of AI-RAN, AI-and-RAN seeks to co-locate virtualized radio access network (vRAN) workloads and AI services on shared GPUs. This sharing i…",
-          "contentText": "arXiv:2610.02522v1 Announce Type: new Abstract: Within the shared industry vision of AI-RAN, AI-and-RAN seeks to co-locate virtualized radio access network (vRAN) workloads and AI services on shared GPUs. This sharing is inherently asymmetric: vRAN workload is latency-critical, whereas the machine learning (ML) workload is a throughput-oriented, best-effort co-tenant. We present Beaver, a GPU sharing system that jointly manages compute and memory resources while protecting the vRAN's strict processing deadline. Beaver sizes the vRAN's streaming multiprocessor (SM) allocation from each slot's scheduled workload, repartitions SM allocations at slot granularity, and rewrites compiled ML kernels to yield HBM bandwidth during the vRAN's memory-critical phases. We implement Beaver and evaluate…",
-          "publishedAt": "2026-10-05T04:00:00.000Z",
-          "sourceImage": null,
-          "region": "US",
-          "language": "en",
-          "defaultCategory": "AI Infrastructure",
-          "source_text_scope": "abstract",
-          "ai_topic_score": 0.997,
-          "ai_topic_reasons": [
-            "machine learning",
-            "gpu",
-            "gpus",
-            "ai"
-          ],
-          "category": "Semiconductors",
-          "primary_category": "Semiconductors",
-          "secondary_category": "Accelerators, memory, and advanced packaging",
-          "infrastructure_layer": "Silicon",
-          "affected_stakeholders": [
-            "semiconductor suppliers",
-            "hyperscalers",
-            "server OEMs",
-            "investors"
-          ],
-          "article_type": "Supply Chain",
-          "urgency_score": 0.34,
-          "taxonomy_confidence": 0.74,
-          "taxonomy_reasons": [
-            "gpu",
-            "hbm"
           ],
           "direct_ai_infrastructure_relevance": 0.22,
           "data_center_relevance": 0,
           "cloud_capacity_relevance": 0,
-          "semiconductor_relevance": 0.657,
+          "semiconductor_relevance": 0.297,
           "power_grid_relevance": 0,
           "cooling_relevance": 0,
           "capital_markets_relevance": 0,
           "enterprise_ai_infrastructure_relevance": 0,
-          "infrastructure_relevance_score": 0.499,
+          "infrastructure_relevance_score": 0.291,
           "infrastructure_relevance_tier": "archive_only",
           "infrastructure_relevance_action": "archive_only",
           "infrastructure_relevance_reasons": [
             "direct_ai_infrastructure_relevance:0.22",
-            "semiconductor_relevance:0.66(hbm, gpu)"
+            "semiconductor_relevance:0.30(gpu)"
           ],
           "infrastructure_relevance": {
             "direct_ai_infrastructure_relevance": 0.22,
             "data_center_relevance": 0,
             "cloud_capacity_relevance": 0,
-            "semiconductor_relevance": 0.657,
+            "semiconductor_relevance": 0.297,
             "power_grid_relevance": 0,
             "cooling_relevance": 0,
             "capital_markets_relevance": 0,
             "enterprise_ai_infrastructure_relevance": 0,
-            "infrastructure_relevance_score": 0.499,
+            "infrastructure_relevance_score": 0.291,
             "infrastructure_relevance_tier": "archive_only",
             "infrastructure_relevance_action": "archive_only",
             "infrastructure_relevance_reasons": [
               "direct_ai_infrastructure_relevance:0.22",
-              "semiconductor_relevance:0.66(hbm, gpu)"
+              "semiconductor_relevance:0.30(gpu)"
             ],
             "infrastructureRelevanceAction": "archive_only",
             "articlePagePublished": false,
@@ -48660,7 +48900,7 @@
             "archiveOnly": true,
             "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
           },
-          "score": 62
+          "score": 74
         },
         {
           "id": "750a8fa4d5ee3ae8",
@@ -48740,82 +48980,6 @@
           "score": 66
         },
         {
-          "id": "ee5758fc5bf78de4",
-          "sourceRegistryId": "arxiv-cs-dc",
-          "source": "arXiv",
-          "url": "https://arxiv.org/abs/2610.03394",
-          "title": "EdgeAgent: Orchestrating On-Device LLM inference for End-User Multi-Agent Systems on CPU-GPU Unified Memory Architectures",
-          "snippet": "arXiv:2610.03394v1 Announce Type: new Abstract: Emerging multi-agent LLMs demand privacy-preserving edge deployment, yet current inference systems struggle with these collaborative workflows. Specifically, the memory-bo…",
-          "contentText": "arXiv:2610.03394v1 Announce Type: new Abstract: Emerging multi-agent LLMs demand privacy-preserving edge deployment, yet current inference systems struggle with these collaborative workflows. Specifically, the memory-bound decode phase causes severe bus contention on unified memory architectures (UMA), paralyzing naive CPU-GPU co-execution. Furthermore, speculative decoding in multi-agent workloads faces extreme variance in drafting difficulty, alternating between complex reasoning and predictable structured generation. Compounded by frequent tool-induced stalls, this highly fragmented execution severely underutilizes hardware and defeats traditional static batching. We present EdgeAgent, a cross-layer inference system explicitly co-designed for edge UMA and multi-agent workloads. At the…",
-          "publishedAt": "2026-10-05T04:00:00.000Z",
-          "sourceImage": null,
-          "region": "US",
-          "language": "en",
-          "defaultCategory": "AI Infrastructure",
-          "source_text_scope": "abstract",
-          "ai_topic_score": 1,
-          "ai_topic_reasons": [
-            "llm",
-            "llms",
-            "inference",
-            "gpu"
-          ],
-          "category": "Semiconductors",
-          "primary_category": "Semiconductors",
-          "secondary_category": "Accelerators, memory, and advanced packaging",
-          "infrastructure_layer": "Silicon",
-          "affected_stakeholders": [
-            "semiconductor suppliers",
-            "hyperscalers",
-            "server OEMs",
-            "investors"
-          ],
-          "article_type": "Supply Chain",
-          "urgency_score": 0.27,
-          "taxonomy_confidence": 0.61,
-          "taxonomy_reasons": [
-            "gpu"
-          ],
-          "direct_ai_infrastructure_relevance": 0.22,
-          "data_center_relevance": 0,
-          "cloud_capacity_relevance": 0,
-          "semiconductor_relevance": 0.297,
-          "power_grid_relevance": 0,
-          "cooling_relevance": 0,
-          "capital_markets_relevance": 0,
-          "enterprise_ai_infrastructure_relevance": 0,
-          "infrastructure_relevance_score": 0.291,
-          "infrastructure_relevance_tier": "archive_only",
-          "infrastructure_relevance_action": "archive_only",
-          "infrastructure_relevance_reasons": [
-            "direct_ai_infrastructure_relevance:0.22",
-            "semiconductor_relevance:0.30(gpu)"
-          ],
-          "infrastructure_relevance": {
-            "direct_ai_infrastructure_relevance": 0.22,
-            "data_center_relevance": 0,
-            "cloud_capacity_relevance": 0,
-            "semiconductor_relevance": 0.297,
-            "power_grid_relevance": 0,
-            "cooling_relevance": 0,
-            "capital_markets_relevance": 0,
-            "enterprise_ai_infrastructure_relevance": 0,
-            "infrastructure_relevance_score": 0.291,
-            "infrastructure_relevance_tier": "archive_only",
-            "infrastructure_relevance_action": "archive_only",
-            "infrastructure_relevance_reasons": [
-              "direct_ai_infrastructure_relevance:0.22",
-              "semiconductor_relevance:0.30(gpu)"
-            ],
-            "infrastructureRelevanceAction": "archive_only",
-            "articlePagePublished": false,
-            "homepagePublished": false,
-            "archiveOnly": true,
-            "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
-          },
-          "score": 74
-        },
-        {
           "id": "2820ebdb73577d17",
           "sourceRegistryId": "arxiv-cs-dc",
           "source": "arXiv",
@@ -48889,23 +49053,102 @@
             "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
           },
           "score": 70
+        },
+        {
+          "id": "e0c0b3bbc2249938",
+          "sourceRegistryId": "google-cloud-compute-releases",
+          "source": "Google Cloud Compute Engine",
+          "url": "https://docs.cloud.google.com/compute/docs/release-notes#October_05_2026",
+          "title": "Google Cloud Compute Engine: Preview : External IPv6 addresses are now supported for Standard Tier .",
+          "snippet": "Feature Preview: External IPv6 addresses are now supported for Standard Tier. For more information, see IPv6 subnet ranges.",
+          "contentText": "Feature Preview : External IPv6 addresses are now supported for Standard Tier . For more information, see IPv6 subnet ranges .",
+          "publishedAt": "2026-10-05T07:00:00.000Z",
+          "sourceImage": null,
+          "region": "Global",
+          "language": "en",
+          "defaultCategory": "Hyperscalers & Cloud",
+          "ai_topic_score": 0,
+          "ai_topic_reasons": [
+            "ai_not_in_title"
+          ],
+          "category": "Cloud Capacity",
+          "primary_category": "Cloud Capacity",
+          "secondary_category": "Hyperscale regions and accelerator availability",
+          "infrastructure_layer": "Cloud Platform",
+          "affected_stakeholders": [
+            "hyperscalers",
+            "cloud buyers",
+            "enterprise IT",
+            "operators"
+          ],
+          "article_type": "Research / Technical",
+          "urgency_score": 0.25,
+          "taxonomy_confidence": 0.61,
+          "taxonomy_reasons": [
+            "google cloud"
+          ],
+          "direct_ai_infrastructure_relevance": 0,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0.324,
+          "semiconductor_relevance": 0,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.223,
+          "infrastructure_relevance_tier": "archive_only",
+          "infrastructure_relevance_action": "archive_only",
+          "infrastructure_relevance_reasons": [
+            "cloud_capacity_relevance:0.32(google cloud)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 0,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0.324,
+            "semiconductor_relevance": 0,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.223,
+            "infrastructure_relevance_tier": "archive_only",
+            "infrastructure_relevance_action": "archive_only",
+            "infrastructure_relevance_reasons": [
+              "cloud_capacity_relevance:0.32(google cloud)"
+            ],
+            "infrastructureRelevanceAction": "archive_only",
+            "articlePagePublished": false,
+            "homepagePublished": false,
+            "archiveOnly": true,
+            "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
+          },
+          "score": 34
         }
       ],
       "curatedIds": [
-        "8c015ec83cbadc52",
-        "2fbd834c6cf374c2",
-        "a3b7a774d9504e99",
-        "750a8fa4d5ee3ae8",
+        "ba17df47777bdce5",
+        "40dbc732d0fd62ce",
+        "d4f156c55959b5d6",
+        "fc68deee24627bb2",
+        "839cc75597b4bcc8",
         "ee5758fc5bf78de4",
-        "2820ebdb73577d17"
+        "750a8fa4d5ee3ae8",
+        "2820ebdb73577d17",
+        "e0c0b3bbc2249938"
       ],
       "publishedIds": [
         "a3b7a774d9504e99",
         "8c015ec83cbadc52",
-        "2fbd834c6cf374c2"
+        "2fbd834c6cf374c2",
+        "ba17df47777bdce5",
+        "40dbc732d0fd62ce",
+        "d4f156c55959b5d6"
       ],
       "visibleIds": [
-        "a3b7a774d9504e99"
+        "a3b7a774d9504e99",
+        "ba17df47777bdce5",
+        "40dbc732d0fd62ce",
+        "d4f156c55959b5d6"
       ],
       "slotPublications": {
         "0": true
@@ -48913,25 +49156,6 @@
     }
   },
   "runHistory": [
-    {
-      "at": "2026-08-29T18:15:19.389Z",
-      "day": "2026-08-30",
-      "slot": 0,
-      "publishedCount": 0,
-      "authoredColumn": {
-        "published": false,
-        "reason": "no_qualifying_story"
-      },
-      "llmUsage": {
-        "calls": 1,
-        "failures": 0,
-        "prompt_tokens": 102,
-        "completion_tokens": 5,
-        "total_tokens": 107,
-        "token_budget": 60000,
-        "call_budget": 40
-      }
-    },
     {
       "at": "2026-08-30T01:14:02.444Z",
       "day": "2026-08-30",
@@ -53453,9 +53677,134 @@
         "token_budget": 120000,
         "call_budget": 60
       }
+    },
+    {
+      "at": "2026-10-05T21:55:48.663Z",
+      "day": "2026-10-06",
+      "slot": 0,
+      "publishedCount": 0,
+      "signalCardCount": 3,
+      "archiveOnlyCount": 0,
+      "processedIds": [
+        "ba17df47777bdce5",
+        "40dbc732d0fd62ce",
+        "d4f156c55959b5d6"
+      ],
+      "blockedCount": 0,
+      "blockedItems": [],
+      "archiveOnlyItems": [],
+      "authoredColumn": {
+        "published": false,
+        "reason": "draft:OpenRouter request failed: 402 model=anthropic/claude-sonnet-4.5 {\"error\":{\"message\":\"This request would exceed your available credits given your current in-flight requests. Retry after in-flight requests settle, or add credits.\",\"code\":402,\"metadata\":{\"reason\":\"in_flight_budget_exhau",
+        "selectionDiagnostics": {
+          "total_candidates": 98,
+          "counts": {
+            "invalid_identity": 0,
+            "text_rights_unauthorized": 0,
+            "abstract_only": 50,
+            "extraction_ineligible": 30,
+            "expert_insight_incomplete": 0,
+            "relevance_below_threshold": 13,
+            "already_covered": 3,
+            "stale_story": 0,
+            "digest_roundup": 0,
+            "unclean_evidence": 0,
+            "insufficient_facts": 0,
+            "qualifying": 2
+          },
+          "selected_id": "8c015ec83cbadc52",
+          "selected_beat": "ai_business",
+          "selection_reason": "highest_evidence_score",
+          "by_beat": {
+            "ai_business": {
+              "candidates": 15,
+              "qualifying": 1,
+              "rejections": {
+                "abstract_only": 10,
+                "extraction_ineligible": 3,
+                "relevance_below_threshold": 1
+              }
+            },
+            "data_center_operators": {
+              "candidates": 7,
+              "qualifying": 1,
+              "rejections": {
+                "abstract_only": 2,
+                "extraction_ineligible": 3,
+                "relevance_below_threshold": 1
+              }
+            },
+            "compute_hardware": {
+              "candidates": 25,
+              "qualifying": 0,
+              "rejections": {
+                "abstract_only": 24,
+                "already_covered": 1
+              }
+            },
+            "power_cooling": {
+              "candidates": 35,
+              "qualifying": 0,
+              "rejections": {
+                "relevance_below_threshold": 9,
+                "abstract_only": 10,
+                "extraction_ineligible": 16
+              }
+            },
+            "policy": {
+              "candidates": 6,
+              "qualifying": 0,
+              "rejections": {
+                "already_covered": 2,
+                "extraction_ineligible": 4
+              }
+            },
+            "other_infrastructure": {
+              "candidates": 10,
+              "qualifying": 0,
+              "rejections": {
+                "abstract_only": 4,
+                "relevance_below_threshold": 2,
+                "extraction_ineligible": 4
+              }
+            }
+          },
+          "recent_coverage": {
+            "counts": {
+              "ai_business": 0,
+              "data_center_operators": 0,
+              "compute_hardware": 1,
+              "power_cooling": 2,
+              "policy": 1,
+              "other_infrastructure": 0
+            },
+            "lastBeat": "compute_hardware",
+            "total": 4
+          },
+          "attempts": [
+            {
+              "id": "8c015ec83cbadc52",
+              "outcome": "voice:OpenRouter request failed: 402 model=anthropic/claude-sonnet-4.5 {\"error\":{\"message\":\"This request would exceed your available credits given your current in-flight requests. Retry after in-flight requests settle, or add credits.\",\"code\":402,\"metadata\":{\"reason\":\"in_flight_budget_exhau"
+            },
+            {
+              "id": "d4f156c55959b5d6",
+              "outcome": "draft:OpenRouter request failed: 402 model=anthropic/claude-sonnet-4.5 {\"error\":{\"message\":\"This request would exceed your available credits given your current in-flight requests. Retry after in-flight requests settle, or add credits.\",\"code\":402,\"metadata\":{\"reason\":\"in_flight_budget_exhau"
+            }
+          ]
+        }
+      },
+      "llmUsage": {
+        "calls": 7,
+        "failures": 2,
+        "prompt_tokens": 19393,
+        "completion_tokens": 3812,
+        "total_tokens": 23205,
+        "token_budget": 120000,
+        "call_budget": 60
+      }
     }
   ],
-  "lastRunAt": "2026-10-05T15:56:48.034Z",
+  "lastRunAt": "2026-10-05T21:55:48.663Z",
   "authored": {
     "lastColumnAt": "2026-10-04T22:05:30.235Z",
     "columnsByDay": {
@@ -53483,55 +53832,59 @@
       }
     ],
     "lastFailure": {
-      "at": "2026-10-05T15:56:48.034Z",
-      "stage": "voice",
+      "at": "2026-10-05T21:55:48.663Z",
+      "stage": "draft",
       "detail": "OpenRouter request failed: 402 model=anthropic/claude-sonnet-4.5 {\"error\":{\"message\":\"This request would exceed your available credits given your current in-flight requests. Retry after in-flight requests settle, or add credits.\",\"code\":402,\"metadata\":{\"reason\":\"in_flight_budget_exhau",
       "attempts": [
         {
           "id": "8c015ec83cbadc52",
           "outcome": "voice:OpenRouter request failed: 402 model=anthropic/claude-sonnet-4.5 {\"error\":{\"message\":\"This request would exceed your available credits given your current in-flight requests. Retry after in-flight requests settle, or add credits.\",\"code\":402,\"metadata\":{\"reason\":\"in_flight_budget_exhau"
+        },
+        {
+          "id": "d4f156c55959b5d6",
+          "outcome": "draft:OpenRouter request failed: 402 model=anthropic/claude-sonnet-4.5 {\"error\":{\"message\":\"This request would exceed your available credits given your current in-flight requests. Retry after in-flight requests settle, or add credits.\",\"code\":402,\"metadata\":{\"reason\":\"in_flight_budget_exhau"
         }
       ]
     },
     "lastSelection": {
-      "at": "2026-10-05T15:56:48.034Z",
+      "at": "2026-10-05T21:55:48.663Z",
       "outcome": "selected",
       "selectedId": "8c015ec83cbadc52",
       "diagnostics": {
-        "total_candidates": 95,
+        "total_candidates": 98,
         "counts": {
           "invalid_identity": 0,
           "text_rights_unauthorized": 0,
-          "abstract_only": 48,
-          "extraction_ineligible": 31,
+          "abstract_only": 50,
+          "extraction_ineligible": 30,
           "expert_insight_incomplete": 0,
-          "relevance_below_threshold": 12,
+          "relevance_below_threshold": 13,
           "already_covered": 3,
           "stale_story": 0,
           "digest_roundup": 0,
           "unclean_evidence": 0,
           "insufficient_facts": 0,
-          "qualifying": 1
+          "qualifying": 2
         },
         "selected_id": "8c015ec83cbadc52",
         "selected_beat": "ai_business",
         "selection_reason": "highest_evidence_score",
         "by_beat": {
           "ai_business": {
-            "candidates": 13,
+            "candidates": 15,
             "qualifying": 1,
             "rejections": {
-              "abstract_only": 8,
+              "abstract_only": 10,
               "extraction_ineligible": 3,
               "relevance_below_threshold": 1
             }
           },
           "data_center_operators": {
-            "candidates": 5,
-            "qualifying": 0,
+            "candidates": 7,
+            "qualifying": 1,
             "rejections": {
               "abstract_only": 2,
-              "extraction_ineligible": 2,
+              "extraction_ineligible": 3,
               "relevance_below_threshold": 1
             }
           },
@@ -53544,29 +53897,29 @@
             }
           },
           "power_cooling": {
-            "candidates": 33,
+            "candidates": 35,
             "qualifying": 0,
             "rejections": {
-              "relevance_below_threshold": 8,
+              "relevance_below_threshold": 9,
               "abstract_only": 10,
-              "extraction_ineligible": 15
+              "extraction_ineligible": 16
             }
           },
           "policy": {
-            "candidates": 10,
+            "candidates": 6,
             "qualifying": 0,
             "rejections": {
               "already_covered": 2,
-              "extraction_ineligible": 8
+              "extraction_ineligible": 4
             }
           },
           "other_infrastructure": {
-            "candidates": 9,
+            "candidates": 10,
             "qualifying": 0,
             "rejections": {
               "abstract_only": 4,
               "relevance_below_threshold": 2,
-              "extraction_ineligible": 3
+              "extraction_ineligible": 4
             }
           }
         },
@@ -53587,6 +53940,10 @@
         {
           "id": "8c015ec83cbadc52",
           "outcome": "voice:OpenRouter request failed: 402 model=anthropic/claude-sonnet-4.5 {\"error\":{\"message\":\"This request would exceed your available credits given your current in-flight requests. Retry after in-flight requests settle, or add credits.\",\"code\":402,\"metadata\":{\"reason\":\"in_flight_budget_exhau"
+        },
+        {
+          "id": "d4f156c55959b5d6",
+          "outcome": "draft:OpenRouter request failed: 402 model=anthropic/claude-sonnet-4.5 {\"error\":{\"message\":\"This request would exceed your available credits given your current in-flight requests. Retry after in-flight requests settle, or add credits.\",\"code\":402,\"metadata\":{\"reason\":\"in_flight_budget_exhau"
         }
       ]
     }
