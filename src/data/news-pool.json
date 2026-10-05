@@ -1,20 +1,473 @@
 [
   {
-    "id": "8b9b324626df1fd9",
-    "sourceRegistryId": "google-cloud-ai-releases",
-    "source": "Google Cloud AI",
-    "url": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/release-notes#September_25_2026",
-    "title": "Google Cloud AI: Semantic governance policies support VPC Service Controls (Preview)",
-    "snippet": "Feature Semantic governance policies support VPC Service Controls (Preview) Semantic governance policy and the Semantic governance policy engine support VPC Service Controls in Preview . You can include Semantic governa…",
-    "contentText": "Feature Semantic governance policies support VPC Service Controls (Preview) Semantic governance policy and the Semantic governance policy engine support VPC Service Controls in Preview . You can include Semantic governance policy and the policy engine in your service perimeter to help mitigate the risk of data exfiltration when governing agent tool calls. For more information, see VPC Service Controls with Gemini Enterprise Agent Platform and Semantic governance policies overview .",
-    "publishedAt": "2026-09-25T07:00:00.000Z",
+    "id": "ee5758fc5bf78de4",
+    "sourceRegistryId": "arxiv-cs-dc",
+    "source": "arXiv",
+    "url": "https://arxiv.org/abs/2610.03394",
+    "title": "EdgeAgent: Orchestrating On-Device LLM inference for End-User Multi-Agent Systems on CPU-GPU Unified Memory Architectures",
+    "snippet": "arXiv:2610.03394v1 Announce Type: new Abstract: Emerging multi-agent LLMs demand privacy-preserving edge deployment, yet current inference systems struggle with these collaborative workflows. Specifically, the memory-bo…",
+    "contentText": "arXiv:2610.03394v1 Announce Type: new Abstract: Emerging multi-agent LLMs demand privacy-preserving edge deployment, yet current inference systems struggle with these collaborative workflows. Specifically, the memory-bound decode phase causes severe bus contention on unified memory architectures (UMA), paralyzing naive CPU-GPU co-execution. Furthermore, speculative decoding in multi-agent workloads faces extreme variance in drafting difficulty, alternating between complex reasoning and predictable structured generation. Compounded by frequent tool-induced stalls, this highly fragmented execution severely underutilizes hardware and defeats traditional static batching. We present EdgeAgent, a cross-layer inference system explicitly co-designed for edge UMA and multi-agent workloads. At the…",
+    "publishedAt": "2026-10-05T04:00:00.000Z",
+    "sourceImage": null,
+    "region": "US",
+    "language": "en",
+    "defaultCategory": "AI Infrastructure",
+    "source_text_scope": "abstract",
+    "ai_topic_score": 1,
+    "ai_topic_reasons": [
+      "llm",
+      "llms",
+      "inference",
+      "gpu"
+    ],
+    "category": "Semiconductors",
+    "primary_category": "Semiconductors",
+    "secondary_category": "Accelerators, memory, and advanced packaging",
+    "infrastructure_layer": "Silicon",
+    "affected_stakeholders": [
+      "semiconductor suppliers",
+      "hyperscalers",
+      "server OEMs",
+      "investors"
+    ],
+    "article_type": "Supply Chain",
+    "urgency_score": 0.27,
+    "taxonomy_confidence": 0.61,
+    "taxonomy_reasons": [
+      "gpu"
+    ],
+    "direct_ai_infrastructure_relevance": 0.22,
+    "data_center_relevance": 0,
+    "cloud_capacity_relevance": 0,
+    "semiconductor_relevance": 0.297,
+    "power_grid_relevance": 0,
+    "cooling_relevance": 0,
+    "capital_markets_relevance": 0,
+    "enterprise_ai_infrastructure_relevance": 0,
+    "infrastructure_relevance_score": 0.291,
+    "infrastructure_relevance_tier": "archive_only",
+    "infrastructure_relevance_action": "archive_only",
+    "infrastructure_relevance_reasons": [
+      "direct_ai_infrastructure_relevance:0.22",
+      "semiconductor_relevance:0.30(gpu)"
+    ],
+    "infrastructure_relevance": {
+      "direct_ai_infrastructure_relevance": 0.22,
+      "data_center_relevance": 0,
+      "cloud_capacity_relevance": 0,
+      "semiconductor_relevance": 0.297,
+      "power_grid_relevance": 0,
+      "cooling_relevance": 0,
+      "capital_markets_relevance": 0,
+      "enterprise_ai_infrastructure_relevance": 0,
+      "infrastructure_relevance_score": 0.291,
+      "infrastructure_relevance_tier": "archive_only",
+      "infrastructure_relevance_action": "archive_only",
+      "infrastructure_relevance_reasons": [
+        "direct_ai_infrastructure_relevance:0.22",
+        "semiconductor_relevance:0.30(gpu)"
+      ],
+      "infrastructureRelevanceAction": "archive_only",
+      "articlePagePublished": false,
+      "homepagePublished": false,
+      "archiveOnly": true,
+      "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
+    }
+  },
+  {
+    "id": "2d69bea3eeaa8b41",
+    "sourceRegistryId": "arxiv-cs-dc",
+    "source": "arXiv",
+    "url": "https://arxiv.org/abs/2610.02745",
+    "title": "AI-Assisted GPU optimization of the Stochastic Variational Method for Few-Body Boson System",
+    "snippet": "arXiv:2610.02745v1 Announce Type: cross Abstract: The stochastic variational method (SVM) is one of the most powerful methods to solve quantum few-body systems precisely in various fields, such as nuclear and atomic phy…",
+    "contentText": "arXiv:2610.02745v1 Announce Type: cross Abstract: The stochastic variational method (SVM) is one of the most powerful methods to solve quantum few-body systems precisely in various fields, such as nuclear and atomic physics. To the best of our knowledge, no SVM code optimized for GPUs has been reported. We developed a parallel SVM code for few-body clusters of $^4$He atoms and optimized it for two GPU architectures, NVIDIA GH200 and AMD Instinct MI300A, with the entire code written by an AI coding agent. On the algorithmic side, we introduce the secular-equation method with the Gu--Eisenstat prescription for solving the generalized eigenvalue problem within the SVM framework. The main part of the code tuning is to batch the many small matrices so that the GPUs are used efficiently, togeth…",
+    "publishedAt": "2026-10-05T04:00:00.000Z",
+    "sourceImage": null,
+    "region": "US",
+    "language": "en",
+    "defaultCategory": "AI Infrastructure",
+    "source_text_scope": "abstract",
+    "ai_topic_score": 1,
+    "ai_topic_reasons": [
+      "nvidia",
+      "gpu",
+      "gpus",
+      "ai"
+    ],
+    "category": "Semiconductors",
+    "primary_category": "Semiconductors",
+    "secondary_category": "Accelerators, memory, and advanced packaging",
+    "infrastructure_layer": "Silicon",
+    "affected_stakeholders": [
+      "semiconductor suppliers",
+      "hyperscalers",
+      "server OEMs",
+      "investors"
+    ],
+    "article_type": "Other",
+    "urgency_score": 0.38,
+    "taxonomy_confidence": 0.85,
+    "taxonomy_reasons": [
+      "gpu",
+      "nvidia",
+      "amd"
+    ],
+    "direct_ai_infrastructure_relevance": 0.22,
+    "data_center_relevance": 0,
+    "cloud_capacity_relevance": 0,
+    "semiconductor_relevance": 0.797,
+    "power_grid_relevance": 0.26,
+    "cooling_relevance": 0,
+    "capital_markets_relevance": 0,
+    "enterprise_ai_infrastructure_relevance": 0,
+    "infrastructure_relevance_score": 0.624,
+    "infrastructure_relevance_tier": "signal_card",
+    "infrastructure_relevance_action": "publish_signal_card_only",
+    "infrastructure_relevance_reasons": [
+      "direct_ai_infrastructure_relevance:0.22",
+      "semiconductor_relevance:0.80(nvidia, amd, gpu)",
+      "power_grid_relevance:0.26(nuclear)"
+    ],
+    "infrastructure_relevance": {
+      "direct_ai_infrastructure_relevance": 0.22,
+      "data_center_relevance": 0,
+      "cloud_capacity_relevance": 0,
+      "semiconductor_relevance": 0.797,
+      "power_grid_relevance": 0.26,
+      "cooling_relevance": 0,
+      "capital_markets_relevance": 0,
+      "enterprise_ai_infrastructure_relevance": 0,
+      "infrastructure_relevance_score": 0.624,
+      "infrastructure_relevance_tier": "signal_card",
+      "infrastructure_relevance_action": "publish_signal_card_only",
+      "infrastructure_relevance_reasons": [
+        "direct_ai_infrastructure_relevance:0.22",
+        "semiconductor_relevance:0.80(nvidia, amd, gpu)",
+        "power_grid_relevance:0.26(nuclear)"
+      ],
+      "infrastructureRelevanceAction": "publish_signal_card_only",
+      "articlePagePublished": false,
+      "homepagePublished": true,
+      "archiveOnly": false,
+      "archiveOnlyReason": null
+    }
+  },
+  {
+    "id": "2820ebdb73577d17",
+    "sourceRegistryId": "arxiv-cs-dc",
+    "source": "arXiv",
+    "url": "https://arxiv.org/abs/2610.03226",
+    "title": "D2K-Bench: Can LLM Agents Turn Expert Designs into Efficient GPU Kernels?",
+    "snippet": "arXiv:2610.03226v1 Announce Type: cross Abstract: GPU kernels generated by large language model (LLM) agents can remain less efficient than expert implementations, but runtime alone does not reveal how the gap relates t…",
+    "contentText": "arXiv:2610.03226v1 Announce Type: cross Abstract: GPU kernels generated by large language model (LLM) agents can remain less efficient than expert implementations, but runtime alone does not reveal how the gap relates to design discovery and implementation. We introduce D2K-Bench, a diagnostic benchmark of 26 tasks and 85 workloads that measures how effectively agents translate expert design guidance into efficient GPU kernels. The guidance covers L1: high-level algorithmic insights, L2: dataflow design, and L3: low-level optimization tricks, including dependencies among these levels. Pairwise runs with and without guidance share task descriptions, workloads, tools, hardware, and a 350-turn budget. Complementary assessments examine independently proposed designs and the design properties…",
+    "publishedAt": "2026-10-05T04:00:00.000Z",
     "sourceImage": null,
     "region": "Global",
     "language": "en",
-    "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
-    "ai_topic_score": 0.483,
+    "defaultCategory": "AI Infrastructure",
+    "source_text_scope": "abstract",
+    "ai_topic_score": 1,
     "ai_topic_reasons": [
-      "gemini",
+      "large language model",
+      "llm",
+      "gpu"
+    ],
+    "category": "Semiconductors",
+    "primary_category": "Semiconductors",
+    "secondary_category": "Accelerators, memory, and advanced packaging",
+    "infrastructure_layer": "Silicon",
+    "affected_stakeholders": [
+      "semiconductor suppliers",
+      "hyperscalers",
+      "server OEMs",
+      "investors"
+    ],
+    "article_type": "Earnings / Guidance",
+    "urgency_score": 0.27,
+    "taxonomy_confidence": 0.61,
+    "taxonomy_reasons": [
+      "gpu"
+    ],
+    "direct_ai_infrastructure_relevance": 0.22,
+    "data_center_relevance": 0,
+    "cloud_capacity_relevance": 0,
+    "semiconductor_relevance": 0.297,
+    "power_grid_relevance": 0,
+    "cooling_relevance": 0,
+    "capital_markets_relevance": 0,
+    "enterprise_ai_infrastructure_relevance": 0,
+    "infrastructure_relevance_score": 0.291,
+    "infrastructure_relevance_tier": "archive_only",
+    "infrastructure_relevance_action": "archive_only",
+    "infrastructure_relevance_reasons": [
+      "direct_ai_infrastructure_relevance:0.22",
+      "semiconductor_relevance:0.30(gpu)"
+    ],
+    "infrastructure_relevance": {
+      "direct_ai_infrastructure_relevance": 0.22,
+      "data_center_relevance": 0,
+      "cloud_capacity_relevance": 0,
+      "semiconductor_relevance": 0.297,
+      "power_grid_relevance": 0,
+      "cooling_relevance": 0,
+      "capital_markets_relevance": 0,
+      "enterprise_ai_infrastructure_relevance": 0,
+      "infrastructure_relevance_score": 0.291,
+      "infrastructure_relevance_tier": "archive_only",
+      "infrastructure_relevance_action": "archive_only",
+      "infrastructure_relevance_reasons": [
+        "direct_ai_infrastructure_relevance:0.22",
+        "semiconductor_relevance:0.30(gpu)"
+      ],
+      "infrastructureRelevanceAction": "archive_only",
+      "articlePagePublished": false,
+      "homepagePublished": false,
+      "archiveOnly": true,
+      "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
+    }
+  },
+  {
+    "id": "750a8fa4d5ee3ae8",
+    "sourceRegistryId": "arxiv-cs-pf",
+    "source": "arXiv",
+    "url": "https://arxiv.org/abs/2610.02598",
+    "title": "Activation Sparsity with Weight Approximation for Faster LLM Decoding on Offloaded Weights",
+    "snippet": "arXiv:2610.02598v1 Announce Type: cross Abstract: Deploying LLMs on consumer-grade GPUs with insufficient memory to hold their weights can result in prohibitively slow inference, because decoding repeatedly transfers of…",
+    "contentText": "arXiv:2610.02598v1 Announce Type: cross Abstract: Deploying LLMs on consumer-grade GPUs with insufficient memory to hold their weights can result in prohibitively slow inference, because decoding repeatedly transfers offloaded weights from system RAM or flash storage into GPU at much lower bandwidth than local GPU-memory access. Activation sparsity reduces these transfers by skipping weights associated with zero or near-zero activations. However, as more activation contributions are omitted, model quality eventually degrades rapidly, indicating that weights associated with small-magnitude activations collectively influence model quality sharply. In this work, we improve the trade-off between model quality and decoding performance when exploiting activation sparsity. Our key idea is to rep…",
+    "publishedAt": "2026-10-05T04:00:00.000Z",
+    "sourceImage": null,
+    "region": "US",
+    "language": "en",
+    "defaultCategory": "AI Infrastructure",
+    "source_text_scope": "abstract",
+    "ai_topic_score": 1,
+    "ai_topic_reasons": [
+      "llm",
+      "llms",
+      "inference",
+      "gpu",
+      "gpus"
+    ],
+    "category": "Semiconductors",
+    "primary_category": "Semiconductors",
+    "secondary_category": "Accelerators, memory, and advanced packaging",
+    "infrastructure_layer": "Silicon",
+    "affected_stakeholders": [
+      "semiconductor suppliers",
+      "hyperscalers",
+      "server OEMs",
+      "investors"
+    ],
+    "article_type": "Supply Chain",
+    "urgency_score": 0.26,
+    "taxonomy_confidence": 0.57,
+    "taxonomy_reasons": [
+      "gpu"
+    ],
+    "direct_ai_infrastructure_relevance": 0.22,
+    "data_center_relevance": 0,
+    "cloud_capacity_relevance": 0,
+    "semiconductor_relevance": 0.22,
+    "power_grid_relevance": 0,
+    "cooling_relevance": 0,
+    "capital_markets_relevance": 0,
+    "enterprise_ai_infrastructure_relevance": 0.18,
+    "infrastructure_relevance_score": 0.246,
+    "infrastructure_relevance_tier": "archive_only",
+    "infrastructure_relevance_action": "archive_only",
+    "infrastructure_relevance_reasons": [
+      "direct_ai_infrastructure_relevance:0.22",
+      "semiconductor_relevance:0.22(gpu)"
+    ],
+    "infrastructure_relevance": {
+      "direct_ai_infrastructure_relevance": 0.22,
+      "data_center_relevance": 0,
+      "cloud_capacity_relevance": 0,
+      "semiconductor_relevance": 0.22,
+      "power_grid_relevance": 0,
+      "cooling_relevance": 0,
+      "capital_markets_relevance": 0,
+      "enterprise_ai_infrastructure_relevance": 0.18,
+      "infrastructure_relevance_score": 0.246,
+      "infrastructure_relevance_tier": "archive_only",
+      "infrastructure_relevance_action": "archive_only",
+      "infrastructure_relevance_reasons": [
+        "direct_ai_infrastructure_relevance:0.22",
+        "semiconductor_relevance:0.22(gpu)"
+      ],
+      "infrastructureRelevanceAction": "archive_only",
+      "articlePagePublished": false,
+      "homepagePublished": false,
+      "archiveOnly": true,
+      "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
+    }
+  },
+  {
+    "id": "a3b7a774d9504e99",
+    "sourceRegistryId": "arxiv-cs-dc",
+    "source": "arXiv",
+    "url": "https://arxiv.org/abs/2610.02522",
+    "title": "Beaver: Elastic GPU Sharing between ML and Latency-Critical vRAN Workloads",
+    "snippet": "arXiv:2610.02522v1 Announce Type: new Abstract: Within the shared industry vision of AI-RAN, AI-and-RAN seeks to co-locate virtualized radio access network (vRAN) workloads and AI services on shared GPUs. This sharing i…",
+    "contentText": "arXiv:2610.02522v1 Announce Type: new Abstract: Within the shared industry vision of AI-RAN, AI-and-RAN seeks to co-locate virtualized radio access network (vRAN) workloads and AI services on shared GPUs. This sharing is inherently asymmetric: vRAN workload is latency-critical, whereas the machine learning (ML) workload is a throughput-oriented, best-effort co-tenant. We present Beaver, a GPU sharing system that jointly manages compute and memory resources while protecting the vRAN's strict processing deadline. Beaver sizes the vRAN's streaming multiprocessor (SM) allocation from each slot's scheduled workload, repartitions SM allocations at slot granularity, and rewrites compiled ML kernels to yield HBM bandwidth during the vRAN's memory-critical phases. We implement Beaver and evaluate…",
+    "publishedAt": "2026-10-05T04:00:00.000Z",
+    "sourceImage": null,
+    "region": "US",
+    "language": "en",
+    "defaultCategory": "AI Infrastructure",
+    "source_text_scope": "abstract",
+    "ai_topic_score": 0.997,
+    "ai_topic_reasons": [
+      "machine learning",
+      "gpu",
+      "gpus",
+      "ai"
+    ],
+    "category": "Semiconductors",
+    "primary_category": "Semiconductors",
+    "secondary_category": "Accelerators, memory, and advanced packaging",
+    "infrastructure_layer": "Silicon",
+    "affected_stakeholders": [
+      "semiconductor suppliers",
+      "hyperscalers",
+      "server OEMs",
+      "investors"
+    ],
+    "article_type": "Supply Chain",
+    "urgency_score": 0.34,
+    "taxonomy_confidence": 0.74,
+    "taxonomy_reasons": [
+      "gpu",
+      "hbm"
+    ],
+    "direct_ai_infrastructure_relevance": 0.22,
+    "data_center_relevance": 0,
+    "cloud_capacity_relevance": 0,
+    "semiconductor_relevance": 0.657,
+    "power_grid_relevance": 0,
+    "cooling_relevance": 0,
+    "capital_markets_relevance": 0,
+    "enterprise_ai_infrastructure_relevance": 0,
+    "infrastructure_relevance_score": 0.499,
+    "infrastructure_relevance_tier": "archive_only",
+    "infrastructure_relevance_action": "archive_only",
+    "infrastructure_relevance_reasons": [
+      "direct_ai_infrastructure_relevance:0.22",
+      "semiconductor_relevance:0.66(hbm, gpu)"
+    ],
+    "infrastructure_relevance": {
+      "direct_ai_infrastructure_relevance": 0.22,
+      "data_center_relevance": 0,
+      "cloud_capacity_relevance": 0,
+      "semiconductor_relevance": 0.657,
+      "power_grid_relevance": 0,
+      "cooling_relevance": 0,
+      "capital_markets_relevance": 0,
+      "enterprise_ai_infrastructure_relevance": 0,
+      "infrastructure_relevance_score": 0.499,
+      "infrastructure_relevance_tier": "archive_only",
+      "infrastructure_relevance_action": "archive_only",
+      "infrastructure_relevance_reasons": [
+        "direct_ai_infrastructure_relevance:0.22",
+        "semiconductor_relevance:0.66(hbm, gpu)"
+      ],
+      "infrastructureRelevanceAction": "archive_only",
+      "articlePagePublished": false,
+      "homepagePublished": false,
+      "archiveOnly": true,
+      "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
+    }
+  },
+  {
+    "id": "2fbd834c6cf374c2",
+    "sourceRegistryId": "arxiv-cs-dc",
+    "source": "arXiv",
+    "url": "https://arxiv.org/abs/2610.03286",
+    "title": "VenusRL: A Fully Disaggregated Agentic RL System with Priority Scheduling and Scalable Interaction",
+    "snippet": "arXiv:2610.03286v1 Announce Type: new Abstract: Agentic Reinforcement Learning (RL) trains LLM agents through multi-turn interactions with external tool environments. Its multi-turn nature exposes two system-level bottl…",
+    "contentText": "arXiv:2610.03286v1 Announce Type: new Abstract: Agentic Reinforcement Learning (RL) trains LLM agents through multi-turn interactions with external tool environments. Its multi-turn nature exposes two system-level bottlenecks unaddressed by existing agentic RL frameworks. First, end-to-end training throughput is constrained by the slowest trajectories to complete, yet optimizing per-GPU utilization alone scatters rollout progress across many groups, delaying the completion of enough groups to unblock the next training step. Second, tool sandboxes are statically over-provisioned by their declared memory ceilings, leaving most physical memory stranded while replicating near-identical state across sandboxes launched from the same prompt. We present VenusRL, a fully disaggregated agentic RL s…",
+    "publishedAt": "2026-10-05T04:00:00.000Z",
+    "sourceImage": null,
+    "region": "US",
+    "language": "en",
+    "defaultCategory": "AI Infrastructure",
+    "source_text_scope": "abstract",
+    "ai_topic_score": 0.985,
+    "ai_topic_reasons": [
+      "llm",
+      "agentic",
+      "gpu"
+    ],
+    "category": "Semiconductors",
+    "primary_category": "Semiconductors",
+    "secondary_category": "Accelerators, memory, and advanced packaging",
+    "infrastructure_layer": "Silicon",
+    "affected_stakeholders": [
+      "semiconductor suppliers",
+      "hyperscalers",
+      "server OEMs",
+      "investors"
+    ],
+    "article_type": "Supply Chain",
+    "urgency_score": 0.23,
+    "taxonomy_confidence": 0.57,
+    "taxonomy_reasons": [
+      "gpu"
+    ],
+    "direct_ai_infrastructure_relevance": 0,
+    "data_center_relevance": 0,
+    "cloud_capacity_relevance": 0,
+    "semiconductor_relevance": 0.22,
+    "power_grid_relevance": 0,
+    "cooling_relevance": 0,
+    "capital_markets_relevance": 0,
+    "enterprise_ai_infrastructure_relevance": 0,
+    "infrastructure_relevance_score": 0.163,
+    "infrastructure_relevance_tier": "archive_only",
+    "infrastructure_relevance_action": "archive_only",
+    "infrastructure_relevance_reasons": [
+      "semiconductor_relevance:0.22(gpu)"
+    ],
+    "infrastructure_relevance": {
+      "direct_ai_infrastructure_relevance": 0,
+      "data_center_relevance": 0,
+      "cloud_capacity_relevance": 0,
+      "semiconductor_relevance": 0.22,
+      "power_grid_relevance": 0,
+      "cooling_relevance": 0,
+      "capital_markets_relevance": 0,
+      "enterprise_ai_infrastructure_relevance": 0,
+      "infrastructure_relevance_score": 0.163,
+      "infrastructure_relevance_tier": "archive_only",
+      "infrastructure_relevance_action": "archive_only",
+      "infrastructure_relevance_reasons": [
+        "semiconductor_relevance:0.22(gpu)"
+      ],
+      "infrastructureRelevanceAction": "archive_only",
+      "articlePagePublished": false,
+      "homepagePublished": false,
+      "archiveOnly": true,
+      "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
+    }
+  },
+  {
+    "id": "8c015ec83cbadc52",
+    "sourceRegistryId": "epoch-ai-data-insights",
+    "source": "Epoch AI",
+    "url": "https://epoch.ai/data-insights/openai-coding-agent-spending",
+    "title": "Coding-agent use at OpenAI is doubling roughly every month",
+    "snippet": "OpenAI researchers’ coding-agent usage, valued at API prices, has recently been doubling roughly every month, according to breakpoint fits.",
+    "contentText": "OpenAI researchers’ coding-agent usage, valued at API prices, has recently been doubling roughly every month, according to breakpoint fits.",
+    "publishedAt": "2026-10-05T12:00:00.000Z",
+    "sourceImage": null,
+    "region": "US",
+    "language": "en",
+    "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+    "pool_max_age_days": 21,
+    "ai_topic_score": 0.666,
+    "ai_topic_reasons": [
+      "openai",
       "ai"
     ],
     "category": "AI Infrastructure",
@@ -27,43 +480,41 @@
       "cloud buyers",
       "investors"
     ],
-    "article_type": "Policy / Regulation",
-    "urgency_score": 0.28,
-    "taxonomy_confidence": 0.65,
+    "article_type": "Other",
+    "urgency_score": 0.18,
+    "taxonomy_confidence": 0.61,
     "taxonomy_reasons": [
       "ai infrastructure",
       "neocloud"
     ],
-    "direct_ai_infrastructure_relevance": 0.22,
+    "direct_ai_infrastructure_relevance": 0,
     "data_center_relevance": 0,
-    "cloud_capacity_relevance": 0.324,
+    "cloud_capacity_relevance": 0,
     "semiconductor_relevance": 0,
     "power_grid_relevance": 0,
     "cooling_relevance": 0,
     "capital_markets_relevance": 0,
     "enterprise_ai_infrastructure_relevance": 0,
-    "infrastructure_relevance_score": 0.306,
+    "infrastructure_relevance_score": 0,
     "infrastructure_relevance_tier": "archive_only",
     "infrastructure_relevance_action": "archive_only",
     "infrastructure_relevance_reasons": [
-      "direct_ai_infrastructure_relevance:0.22",
-      "cloud_capacity_relevance:0.32(google cloud)"
+      "no_strong_compute_current_infrastructure_match"
     ],
     "infrastructure_relevance": {
-      "direct_ai_infrastructure_relevance": 0.22,
+      "direct_ai_infrastructure_relevance": 0,
       "data_center_relevance": 0,
-      "cloud_capacity_relevance": 0.324,
+      "cloud_capacity_relevance": 0,
       "semiconductor_relevance": 0,
       "power_grid_relevance": 0,
       "cooling_relevance": 0,
       "capital_markets_relevance": 0,
       "enterprise_ai_infrastructure_relevance": 0,
-      "infrastructure_relevance_score": 0.306,
+      "infrastructure_relevance_score": 0,
       "infrastructure_relevance_tier": "archive_only",
       "infrastructure_relevance_action": "archive_only",
       "infrastructure_relevance_reasons": [
-        "direct_ai_infrastructure_relevance:0.22",
-        "cloud_capacity_relevance:0.32(google cloud)"
+        "no_strong_compute_current_infrastructure_match"
       ],
       "infrastructureRelevanceAction": "archive_only",
       "articlePagePublished": false,
@@ -352,75 +803,6 @@
       "infrastructure_relevance_action": "archive_only",
       "infrastructure_relevance_reasons": [
         "capital_markets_relevance:0.32(ipo)"
-      ],
-      "infrastructureRelevanceAction": "archive_only",
-      "articlePagePublished": false,
-      "homepagePublished": false,
-      "archiveOnly": true,
-      "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
-    }
-  },
-  {
-    "id": "5519345ac2cdc1c7",
-    "sourceRegistryId": "google-cloud-compute-releases",
-    "source": "Google Cloud Compute Engine",
-    "url": "https://docs.cloud.google.com/compute/docs/release-notes#September_25_2026",
-    "title": "Google Cloud Compute Engine: Generally available : New X5 series with 50% larger memory instances: Breaking the previous 32TB memory limit of the X4 memory-optimized ma…",
-    "snippet": "Feature Generally available: New X5 series with 50% larger memory instances: Breaking the previous 32TB memory limit of the X4 memory-optimized machine type, a new X5 series introduces massive 48TB configurations. This…",
-    "contentText": "Feature Generally available : New X5 series with 50% larger memory instances: Breaking the previous 32TB memory limit of the X4 memory-optimized machine type , a new X5 series introduces massive 48TB configurations. This empowers the largest SAP HANA and RISE with SAP customers to easily scale up their mission-critical databases on a single node.",
-    "publishedAt": "2026-09-25T07:00:00.000Z",
-    "sourceImage": null,
-    "region": "US",
-    "language": "en",
-    "defaultCategory": "Hyperscalers & Cloud",
-    "ai_topic_score": 0,
-    "ai_topic_reasons": [
-      "ai_not_in_title"
-    ],
-    "category": "Cloud Capacity",
-    "primary_category": "Cloud Capacity",
-    "secondary_category": "Hyperscale regions and accelerator availability",
-    "infrastructure_layer": "Cloud Platform",
-    "affected_stakeholders": [
-      "hyperscalers",
-      "cloud buyers",
-      "enterprise IT",
-      "operators"
-    ],
-    "article_type": "Supply Chain",
-    "urgency_score": 0.25,
-    "taxonomy_confidence": 0.61,
-    "taxonomy_reasons": [
-      "google cloud"
-    ],
-    "direct_ai_infrastructure_relevance": 0,
-    "data_center_relevance": 0,
-    "cloud_capacity_relevance": 0.324,
-    "semiconductor_relevance": 0,
-    "power_grid_relevance": 0,
-    "cooling_relevance": 0,
-    "capital_markets_relevance": 0,
-    "enterprise_ai_infrastructure_relevance": 0,
-    "infrastructure_relevance_score": 0.223,
-    "infrastructure_relevance_tier": "archive_only",
-    "infrastructure_relevance_action": "archive_only",
-    "infrastructure_relevance_reasons": [
-      "cloud_capacity_relevance:0.32(google cloud)"
-    ],
-    "infrastructure_relevance": {
-      "direct_ai_infrastructure_relevance": 0,
-      "data_center_relevance": 0,
-      "cloud_capacity_relevance": 0.324,
-      "semiconductor_relevance": 0,
-      "power_grid_relevance": 0,
-      "cooling_relevance": 0,
-      "capital_markets_relevance": 0,
-      "enterprise_ai_infrastructure_relevance": 0,
-      "infrastructure_relevance_score": 0.223,
-      "infrastructure_relevance_tier": "archive_only",
-      "infrastructure_relevance_action": "archive_only",
-      "infrastructure_relevance_reasons": [
-        "cloud_capacity_relevance:0.32(google cloud)"
       ],
       "infrastructureRelevanceAction": "archive_only",
       "articlePagePublished": false,
@@ -926,6 +1308,696 @@
     }
   },
   {
+    "id": "47929c542293481c",
+    "sourceRegistryId": "eia-today-in-energy",
+    "source": "U.S. Energy Information Administration",
+    "url": "https://www.eia.gov/todayinenergy/detail.php?id=68245",
+    "title": "Crude oil prices and refinery margins generally increased throughout the third quarter",
+    "snippet": "Petroleum markets in the third quarter of 2026 (3Q26) were characterized by increasing prices for crude oil and petroleum products amid persistent conflict in the Middle East.",
+    "contentText": "Petroleum markets in the third quarter of 2026 (3Q26) were characterized by increasing prices for crude oil and petroleum products amid persistent conflict in the Middle East.",
+    "publishedAt": "2026-10-05T14:00:00.000Z",
+    "sourceImage": null,
+    "region": "EU",
+    "language": "en",
+    "defaultCategory": "Power & Grid",
+    "ai_topic_score": 0,
+    "ai_topic_reasons": [
+      "ai_not_in_title"
+    ],
+    "category": "Power & Grid",
+    "primary_category": "Power & Grid",
+    "secondary_category": "Interconnection and power procurement",
+    "infrastructure_layer": "Power",
+    "affected_stakeholders": [
+      "data center operators",
+      "utilities",
+      "cloud capacity teams",
+      "investors"
+    ],
+    "article_type": "Other",
+    "urgency_score": 0.36,
+    "taxonomy_confidence": 0.61,
+    "taxonomy_reasons": [
+      "power",
+      "grid"
+    ],
+    "direct_ai_infrastructure_relevance": 0,
+    "data_center_relevance": 0,
+    "cloud_capacity_relevance": 0,
+    "semiconductor_relevance": 0,
+    "power_grid_relevance": 0,
+    "cooling_relevance": 0,
+    "capital_markets_relevance": 0,
+    "enterprise_ai_infrastructure_relevance": 0,
+    "infrastructure_relevance_score": 0,
+    "infrastructure_relevance_tier": "archive_only",
+    "infrastructure_relevance_action": "archive_only",
+    "infrastructure_relevance_reasons": [
+      "no_strong_compute_current_infrastructure_match"
+    ],
+    "infrastructure_relevance": {
+      "direct_ai_infrastructure_relevance": 0,
+      "data_center_relevance": 0,
+      "cloud_capacity_relevance": 0,
+      "semiconductor_relevance": 0,
+      "power_grid_relevance": 0,
+      "cooling_relevance": 0,
+      "capital_markets_relevance": 0,
+      "enterprise_ai_infrastructure_relevance": 0,
+      "infrastructure_relevance_score": 0,
+      "infrastructure_relevance_tier": "archive_only",
+      "infrastructure_relevance_action": "archive_only",
+      "infrastructure_relevance_reasons": [
+        "no_strong_compute_current_infrastructure_match"
+      ],
+      "infrastructureRelevanceAction": "archive_only",
+      "articlePagePublished": false,
+      "homepagePublished": false,
+      "archiveOnly": true,
+      "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
+    }
+  },
+  {
+    "id": "1956abb370a66ed1",
+    "sourceRegistryId": "ec-press-corner",
+    "source": "European Commission",
+    "url": "https://ec.europa.eu/commission/presscorner/detail/es/speech_26_2074",
+    "title": "Executive Vice-President Ribera opening speech at the Barcelona University Opening Ceremony of the 2026-2027 Academic Year",
+    "snippet": "European Commission Discurso Barcelona, 05 Oct 2026 Magnífico rector, claustro, autoridades, miembros de la comunidad académica, personal de la universidad, estudiantes, queridas amigas y amigos, buenas tardes y ...",
+    "contentText": "European Commission Discurso Barcelona, 05 Oct 2026 Magnífico rector, claustro, autoridades, miembros de la comunidad académica, personal de la universidad, estudiantes, queridas amigas y amigos, buenas tardes y ...",
+    "publishedAt": "2026-10-05T13:11:24.000Z",
+    "sourceImage": null,
+    "region": "US",
+    "language": "en",
+    "defaultCategory": "Policy & Siting",
+    "ai_topic_score": 0,
+    "ai_topic_reasons": [
+      "ai_not_in_title"
+    ],
+    "category": "Policy & Siting",
+    "primary_category": "Policy & Siting",
+    "secondary_category": "Permitting, regulation, and market access",
+    "infrastructure_layer": "Policy",
+    "affected_stakeholders": [
+      "regulators",
+      "site selectors",
+      "developers",
+      "utilities"
+    ],
+    "article_type": "Policy / Regulation",
+    "urgency_score": 0.18,
+    "taxonomy_confidence": 0.53,
+    "taxonomy_reasons": [
+      "policy"
+    ],
+    "direct_ai_infrastructure_relevance": 0,
+    "data_center_relevance": 0,
+    "cloud_capacity_relevance": 0,
+    "semiconductor_relevance": 0,
+    "power_grid_relevance": 0,
+    "cooling_relevance": 0,
+    "capital_markets_relevance": 0,
+    "enterprise_ai_infrastructure_relevance": 0,
+    "infrastructure_relevance_score": 0,
+    "infrastructure_relevance_tier": "archive_only",
+    "infrastructure_relevance_action": "archive_only",
+    "infrastructure_relevance_reasons": [
+      "no_strong_compute_current_infrastructure_match"
+    ],
+    "infrastructure_relevance": {
+      "direct_ai_infrastructure_relevance": 0,
+      "data_center_relevance": 0,
+      "cloud_capacity_relevance": 0,
+      "semiconductor_relevance": 0,
+      "power_grid_relevance": 0,
+      "cooling_relevance": 0,
+      "capital_markets_relevance": 0,
+      "enterprise_ai_infrastructure_relevance": 0,
+      "infrastructure_relevance_score": 0,
+      "infrastructure_relevance_tier": "archive_only",
+      "infrastructure_relevance_action": "archive_only",
+      "infrastructure_relevance_reasons": [
+        "no_strong_compute_current_infrastructure_match"
+      ],
+      "infrastructureRelevanceAction": "archive_only",
+      "articlePagePublished": false,
+      "homepagePublished": false,
+      "archiveOnly": true,
+      "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
+    }
+  },
+  {
+    "id": "b2bc03b739d52e99",
+    "sourceRegistryId": "sec-press",
+    "source": "U.S. Securities and Exchange Commission",
+    "url": "https://www.sec.gov/newsroom/press-releases/2026-101-sec-coordinates-global-financial-regulators-raise-fraud-awareness-during-world-investor-week",
+    "title": "SEC Coordinates with Global Financial Regulators to Raise Fraud Awareness During World Investor Week",
+    "snippet": "The Securities and Exchange Commission, in coordination with other U.S. and global financial regulators, today issued a joint investor bulletin as part of World Investor Week (WIW). The bulletin encourages investors to…",
+    "contentText": "The Securities and Exchange Commission, in coordination with other U.S. and global financial regulators, today issued a joint investor bulletin as part of World Investor Week (WIW). The bulletin encourages investors to be resilient in changing…",
+    "publishedAt": "2026-10-05T12:47:36.000Z",
+    "sourceImage": null,
+    "region": "US",
+    "language": "en",
+    "defaultCategory": "Capital Markets",
+    "ai_topic_score": 0,
+    "ai_topic_reasons": [
+      "ai_not_in_title"
+    ],
+    "category": "Other",
+    "primary_category": "Other",
+    "secondary_category": "General AI infrastructure signal",
+    "infrastructure_layer": "Demand",
+    "affected_stakeholders": [
+      "operators"
+    ],
+    "article_type": "Other",
+    "urgency_score": 0.18,
+    "taxonomy_confidence": null,
+    "taxonomy_reasons": [
+      "fallback_taxonomy"
+    ],
+    "direct_ai_infrastructure_relevance": 0,
+    "data_center_relevance": 0,
+    "cloud_capacity_relevance": 0,
+    "semiconductor_relevance": 0,
+    "power_grid_relevance": 0,
+    "cooling_relevance": 0,
+    "capital_markets_relevance": 0,
+    "enterprise_ai_infrastructure_relevance": 0,
+    "infrastructure_relevance_score": 0,
+    "infrastructure_relevance_tier": "archive_only",
+    "infrastructure_relevance_action": "archive_only",
+    "infrastructure_relevance_reasons": [
+      "no_strong_compute_current_infrastructure_match"
+    ],
+    "infrastructure_relevance": {
+      "direct_ai_infrastructure_relevance": 0,
+      "data_center_relevance": 0,
+      "cloud_capacity_relevance": 0,
+      "semiconductor_relevance": 0,
+      "power_grid_relevance": 0,
+      "cooling_relevance": 0,
+      "capital_markets_relevance": 0,
+      "enterprise_ai_infrastructure_relevance": 0,
+      "infrastructure_relevance_score": 0,
+      "infrastructure_relevance_tier": "archive_only",
+      "infrastructure_relevance_action": "archive_only",
+      "infrastructure_relevance_reasons": [
+        "no_strong_compute_current_infrastructure_match"
+      ],
+      "infrastructureRelevanceAction": "archive_only",
+      "articlePagePublished": false,
+      "homepagePublished": false,
+      "archiveOnly": true,
+      "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
+    }
+  },
+  {
+    "id": "1ff308a552a6609f",
+    "sourceRegistryId": "nist-news",
+    "source": "National Institute of Standards and Technology",
+    "url": "https://www.nist.gov/news-events/news/2026/10/physicist-jun-ye-wins-wolf-prize-physics",
+    "title": "Physicist Jun Ye Wins Wolf Prize in Physics",
+    "snippet": "The award cites Ye’s achievement in “transformative, widely applicable advances in the control of ultracold atomic systems.”",
+    "contentText": "The award cites Ye’s achievement in “transformative, widely applicable advances in the control of ultracold atomic systems.”",
+    "publishedAt": "2026-10-05T12:00:00.000Z",
+    "sourceImage": null,
+    "region": "US",
+    "language": "en",
+    "defaultCategory": "AI Infrastructure",
+    "ai_topic_score": 0,
+    "ai_topic_reasons": [
+      "ai_not_in_title"
+    ],
+    "category": "AI Infrastructure",
+    "primary_category": "AI Infrastructure",
+    "secondary_category": "GPU clusters and deployment readiness",
+    "infrastructure_layer": "Compute",
+    "affected_stakeholders": [
+      "operators",
+      "hyperscalers",
+      "cloud buyers",
+      "investors"
+    ],
+    "article_type": "Other",
+    "urgency_score": 0.18,
+    "taxonomy_confidence": 0.53,
+    "taxonomy_reasons": [
+      "ai infrastructure"
+    ],
+    "direct_ai_infrastructure_relevance": 0,
+    "data_center_relevance": 0,
+    "cloud_capacity_relevance": 0,
+    "semiconductor_relevance": 0,
+    "power_grid_relevance": 0,
+    "cooling_relevance": 0,
+    "capital_markets_relevance": 0,
+    "enterprise_ai_infrastructure_relevance": 0,
+    "infrastructure_relevance_score": 0,
+    "infrastructure_relevance_tier": "archive_only",
+    "infrastructure_relevance_action": "archive_only",
+    "infrastructure_relevance_reasons": [
+      "no_strong_compute_current_infrastructure_match"
+    ],
+    "infrastructure_relevance": {
+      "direct_ai_infrastructure_relevance": 0,
+      "data_center_relevance": 0,
+      "cloud_capacity_relevance": 0,
+      "semiconductor_relevance": 0,
+      "power_grid_relevance": 0,
+      "cooling_relevance": 0,
+      "capital_markets_relevance": 0,
+      "enterprise_ai_infrastructure_relevance": 0,
+      "infrastructure_relevance_score": 0,
+      "infrastructure_relevance_tier": "archive_only",
+      "infrastructure_relevance_action": "archive_only",
+      "infrastructure_relevance_reasons": [
+        "no_strong_compute_current_infrastructure_match"
+      ],
+      "infrastructureRelevanceAction": "archive_only",
+      "articlePagePublished": false,
+      "homepagePublished": false,
+      "archiveOnly": true,
+      "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
+    }
+  },
+  {
+    "id": "a58dec916eab9df4",
+    "sourceRegistryId": "gao-reports",
+    "source": "U.S. Government Accountability Office",
+    "url": "https://www.gao.gov/products/gao-26-107393",
+    "title": "Medicare Part D: Payments and Contracts Between Pharmacies and Plan Sponsors That Are Vertically Integrated",
+    "snippet": "What GAO Found The insurance plan sponsors that provide Medicare Part D drug coverage have increasingly become vertically integrated—that is, under common ownership—with pharmacy benefit managers and pharmacies. GAO fou…",
+    "contentText": "What GAO Found The insurance plan sponsors that provide Medicare Part D drug coverage have increasingly become vertically integrated—that is, under common ownership—with pharmacy benefit managers and pharmacies. GAO found that, for four large Part D plan sponsors, the pharmacies they owned accounted for about 24 percent of the Part D drugs they provided to their enrollees (drug utilization) and about 28 percent of the total payments to pharmacies in 2023 (see figure). Payments included both reimbursement from plan sponsors and cost sharing paid by or on behalf of beneficiaries. When these vertically integrated plan sponsors’ own pharmacies provided drugs to their enrollees, they primarily did so through mail-order pharmacies. In contrast, other (non-owned) pharmacies primarily provided dr…",
+    "publishedAt": "2026-10-05T11:26:32.000Z",
+    "sourceImage": null,
+    "region": "US",
+    "language": "en",
+    "defaultCategory": "Power & Grid",
+    "ai_topic_score": 0,
+    "ai_topic_reasons": [
+      "ai_not_in_title"
+    ],
+    "category": "Power & Grid",
+    "primary_category": "Power & Grid",
+    "secondary_category": "Interconnection and power procurement",
+    "infrastructure_layer": "Power",
+    "affected_stakeholders": [
+      "data center operators",
+      "utilities",
+      "cloud capacity teams",
+      "investors"
+    ],
+    "article_type": "Other",
+    "urgency_score": 0.36,
+    "taxonomy_confidence": 0.61,
+    "taxonomy_reasons": [
+      "power",
+      "grid"
+    ],
+    "direct_ai_infrastructure_relevance": 0,
+    "data_center_relevance": 0,
+    "cloud_capacity_relevance": 0,
+    "semiconductor_relevance": 0,
+    "power_grid_relevance": 0,
+    "cooling_relevance": 0,
+    "capital_markets_relevance": 0,
+    "enterprise_ai_infrastructure_relevance": 0,
+    "infrastructure_relevance_score": 0,
+    "infrastructure_relevance_tier": "archive_only",
+    "infrastructure_relevance_action": "archive_only",
+    "infrastructure_relevance_reasons": [
+      "no_strong_compute_current_infrastructure_match"
+    ],
+    "infrastructure_relevance": {
+      "direct_ai_infrastructure_relevance": 0,
+      "data_center_relevance": 0,
+      "cloud_capacity_relevance": 0,
+      "semiconductor_relevance": 0,
+      "power_grid_relevance": 0,
+      "cooling_relevance": 0,
+      "capital_markets_relevance": 0,
+      "enterprise_ai_infrastructure_relevance": 0,
+      "infrastructure_relevance_score": 0,
+      "infrastructure_relevance_tier": "archive_only",
+      "infrastructure_relevance_action": "archive_only",
+      "infrastructure_relevance_reasons": [
+        "no_strong_compute_current_infrastructure_match"
+      ],
+      "infrastructureRelevanceAction": "archive_only",
+      "articlePagePublished": false,
+      "homepagePublished": false,
+      "archiveOnly": true,
+      "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
+    }
+  },
+  {
+    "id": "d68e59d9603ee69d",
+    "sourceRegistryId": "gao-reports",
+    "source": "U.S. Government Accountability Office",
+    "url": "https://www.gao.gov/products/gao-27-108692",
+    "title": "Concrete Masonry Promotion Program: Commerce Could Enhance Its Oversight Controls",
+    "snippet": "What GAO Found The Concrete Masonry Checkoff (CMC) program is a federally authorized, industry-funded program that supports research, education, and promotion projects intended to strengthen the concrete masonry industr…",
+    "contentText": "What GAO Found The Concrete Masonry Checkoff (CMC) program is a federally authorized, industry-funded program that supports research, education, and promotion projects intended to strengthen the concrete masonry industry and expand markets for its products. The term checkoff refers to the way similar programs are funded—that is, through assessments. The CMC Board administers the program, which is funded through mandatory assessments on specified concrete masonry units sold. From 2023 through 2025, the board collected over $27 million in assessments and spent nearly $15 million of the funds, primarily on 17 national projects and 69 regional projects. CMC Program Assessments and Projects, 2023–2025 2023 2024 2025 Total Assessments collected $5.4 million $11.3 million $10.5 million $27.2 mil…",
+    "publishedAt": "2026-10-05T11:20:59.000Z",
+    "sourceImage": null,
+    "region": "US",
+    "language": "en",
+    "defaultCategory": "Power & Grid",
+    "ai_topic_score": 0,
+    "ai_topic_reasons": [
+      "ai_not_in_title"
+    ],
+    "category": "Power & Grid",
+    "primary_category": "Power & Grid",
+    "secondary_category": "Interconnection and power procurement",
+    "infrastructure_layer": "Power",
+    "affected_stakeholders": [
+      "data center operators",
+      "utilities",
+      "cloud capacity teams",
+      "investors"
+    ],
+    "article_type": "Research / Technical",
+    "urgency_score": 0.36,
+    "taxonomy_confidence": 0.61,
+    "taxonomy_reasons": [
+      "power",
+      "grid"
+    ],
+    "direct_ai_infrastructure_relevance": 0,
+    "data_center_relevance": 0,
+    "cloud_capacity_relevance": 0,
+    "semiconductor_relevance": 0,
+    "power_grid_relevance": 0,
+    "cooling_relevance": 0,
+    "capital_markets_relevance": 0,
+    "enterprise_ai_infrastructure_relevance": 0,
+    "infrastructure_relevance_score": 0,
+    "infrastructure_relevance_tier": "archive_only",
+    "infrastructure_relevance_action": "archive_only",
+    "infrastructure_relevance_reasons": [
+      "no_strong_compute_current_infrastructure_match"
+    ],
+    "infrastructure_relevance": {
+      "direct_ai_infrastructure_relevance": 0,
+      "data_center_relevance": 0,
+      "cloud_capacity_relevance": 0,
+      "semiconductor_relevance": 0,
+      "power_grid_relevance": 0,
+      "cooling_relevance": 0,
+      "capital_markets_relevance": 0,
+      "enterprise_ai_infrastructure_relevance": 0,
+      "infrastructure_relevance_score": 0,
+      "infrastructure_relevance_tier": "archive_only",
+      "infrastructure_relevance_action": "archive_only",
+      "infrastructure_relevance_reasons": [
+        "no_strong_compute_current_infrastructure_match"
+      ],
+      "infrastructureRelevanceAction": "archive_only",
+      "articlePagePublished": false,
+      "homepagePublished": false,
+      "archiveOnly": true,
+      "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
+    }
+  },
+  {
+    "id": "1927f3ed362f55bc",
+    "sourceRegistryId": "ec-press-corner",
+    "source": "European Commission",
+    "url": "https://ec.europa.eu/commission/presscorner/detail/en/mex_26_2073",
+    "title": "Daily News 05 / 10 / 2026",
+    "snippet": "European Commission Daily news Brussels, 05 Oct 2026 Commission greenlights Finland's fifth payment request for €229.2 million under NextGenerationEU Today, the European Commission positively assessed Finland's f...",
+    "contentText": "European Commission Daily news Brussels, 05 Oct 2026 Commission greenlights Finland's fifth payment request for €229.2 million under NextGenerationEU Today, the European Commission positively assessed Finland's f...",
+    "publishedAt": "2026-10-05T09:26:54.000Z",
+    "sourceImage": null,
+    "region": "US",
+    "language": "en",
+    "defaultCategory": "Policy & Siting",
+    "ai_topic_score": 0,
+    "ai_topic_reasons": [
+      "ai_not_in_title"
+    ],
+    "category": "Policy & Siting",
+    "primary_category": "Policy & Siting",
+    "secondary_category": "Permitting, regulation, and market access",
+    "infrastructure_layer": "Policy",
+    "affected_stakeholders": [
+      "regulators",
+      "site selectors",
+      "developers",
+      "utilities"
+    ],
+    "article_type": "Policy / Regulation",
+    "urgency_score": 0.18,
+    "taxonomy_confidence": 0.53,
+    "taxonomy_reasons": [
+      "policy"
+    ],
+    "direct_ai_infrastructure_relevance": 0,
+    "data_center_relevance": 0,
+    "cloud_capacity_relevance": 0,
+    "semiconductor_relevance": 0,
+    "power_grid_relevance": 0,
+    "cooling_relevance": 0,
+    "capital_markets_relevance": 0,
+    "enterprise_ai_infrastructure_relevance": 0,
+    "infrastructure_relevance_score": 0,
+    "infrastructure_relevance_tier": "archive_only",
+    "infrastructure_relevance_action": "archive_only",
+    "infrastructure_relevance_reasons": [
+      "no_strong_compute_current_infrastructure_match"
+    ],
+    "infrastructure_relevance": {
+      "direct_ai_infrastructure_relevance": 0,
+      "data_center_relevance": 0,
+      "cloud_capacity_relevance": 0,
+      "semiconductor_relevance": 0,
+      "power_grid_relevance": 0,
+      "cooling_relevance": 0,
+      "capital_markets_relevance": 0,
+      "enterprise_ai_infrastructure_relevance": 0,
+      "infrastructure_relevance_score": 0,
+      "infrastructure_relevance_tier": "archive_only",
+      "infrastructure_relevance_action": "archive_only",
+      "infrastructure_relevance_reasons": [
+        "no_strong_compute_current_infrastructure_match"
+      ],
+      "infrastructureRelevanceAction": "archive_only",
+      "articlePagePublished": false,
+      "homepagePublished": false,
+      "archiveOnly": true,
+      "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
+    }
+  },
+  {
+    "id": "a0b55655125dc0ed",
+    "sourceRegistryId": "ec-press-corner",
+    "source": "European Commission",
+    "url": "https://ec.europa.eu/commission/presscorner/detail/en/speech_26_2069",
+    "title": "Commissioner Roswall's keynote speech at the event \"Water - A Key Resource for Competitiveness, Quality of Live, and Resilience\"",
+    "snippet": "European Commission Speech Berlin, 05 Oct 2026 Minister Schneider, Excellencies, ladies and gentlemen, This past summer, as Europe was gripped by drought, as our soils were sucked dry and our rivers ran lo...",
+    "contentText": "European Commission Speech Berlin, 05 Oct 2026 Minister Schneider, Excellencies, ladies and gentlemen, This past summer, as Europe was gripped by drought, as our soils were sucked dry and our rivers ran lo...",
+    "publishedAt": "2026-10-05T09:11:34.000Z",
+    "sourceImage": null,
+    "region": "EU",
+    "language": "en",
+    "defaultCategory": "Policy & Siting",
+    "ai_topic_score": 0,
+    "ai_topic_reasons": [
+      "ai_not_in_title"
+    ],
+    "category": "Policy & Siting",
+    "primary_category": "Policy & Siting",
+    "secondary_category": "Permitting, regulation, and market access",
+    "infrastructure_layer": "Policy",
+    "affected_stakeholders": [
+      "regulators",
+      "site selectors",
+      "developers",
+      "utilities"
+    ],
+    "article_type": "Policy / Regulation",
+    "urgency_score": 0.18,
+    "taxonomy_confidence": 0.53,
+    "taxonomy_reasons": [
+      "policy"
+    ],
+    "direct_ai_infrastructure_relevance": 0,
+    "data_center_relevance": 0,
+    "cloud_capacity_relevance": 0,
+    "semiconductor_relevance": 0,
+    "power_grid_relevance": 0,
+    "cooling_relevance": 0,
+    "capital_markets_relevance": 0,
+    "enterprise_ai_infrastructure_relevance": 0,
+    "infrastructure_relevance_score": 0,
+    "infrastructure_relevance_tier": "archive_only",
+    "infrastructure_relevance_action": "archive_only",
+    "infrastructure_relevance_reasons": [
+      "no_strong_compute_current_infrastructure_match"
+    ],
+    "infrastructure_relevance": {
+      "direct_ai_infrastructure_relevance": 0,
+      "data_center_relevance": 0,
+      "cloud_capacity_relevance": 0,
+      "semiconductor_relevance": 0,
+      "power_grid_relevance": 0,
+      "cooling_relevance": 0,
+      "capital_markets_relevance": 0,
+      "enterprise_ai_infrastructure_relevance": 0,
+      "infrastructure_relevance_score": 0,
+      "infrastructure_relevance_tier": "archive_only",
+      "infrastructure_relevance_action": "archive_only",
+      "infrastructure_relevance_reasons": [
+        "no_strong_compute_current_infrastructure_match"
+      ],
+      "infrastructureRelevanceAction": "archive_only",
+      "articlePagePublished": false,
+      "homepagePublished": false,
+      "archiveOnly": true,
+      "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
+    }
+  },
+  {
+    "id": "4dc191c97cf52197",
+    "sourceRegistryId": "ec-press-corner",
+    "source": "European Commission",
+    "url": "https://ec.europa.eu/commission/presscorner/detail/en/ip_26_2068",
+    "title": "Commission greenlights Finland's fifth payment request for €229.2 million under NextGenerationEU",
+    "snippet": "European Commission Press release Brussels, 05 Oct 2026 Today, the European Commission positively assessed Finland's fifth payment request of €229.2 million under the Recovery and Resilience Facility, the centrepiece of…",
+    "contentText": "European Commission Press release Brussels, 05 Oct 2026 Today, the European Commission positively assessed Finland's fifth payment request of €229.2 million under the Recovery and Resilience Facility, the centrepiece of NextGenerationEU.",
+    "publishedAt": "2026-10-05T08:31:03.000Z",
+    "sourceImage": null,
+    "region": "US",
+    "language": "en",
+    "defaultCategory": "Policy & Siting",
+    "ai_topic_score": 0,
+    "ai_topic_reasons": [
+      "ai_not_in_title"
+    ],
+    "category": "Policy & Siting",
+    "primary_category": "Policy & Siting",
+    "secondary_category": "Permitting, regulation, and market access",
+    "infrastructure_layer": "Policy",
+    "affected_stakeholders": [
+      "regulators",
+      "site selectors",
+      "developers",
+      "utilities"
+    ],
+    "article_type": "Policy / Regulation",
+    "urgency_score": 0.18,
+    "taxonomy_confidence": 0.53,
+    "taxonomy_reasons": [
+      "policy"
+    ],
+    "direct_ai_infrastructure_relevance": 0,
+    "data_center_relevance": 0,
+    "cloud_capacity_relevance": 0,
+    "semiconductor_relevance": 0,
+    "power_grid_relevance": 0,
+    "cooling_relevance": 0,
+    "capital_markets_relevance": 0,
+    "enterprise_ai_infrastructure_relevance": 0,
+    "infrastructure_relevance_score": 0,
+    "infrastructure_relevance_tier": "archive_only",
+    "infrastructure_relevance_action": "archive_only",
+    "infrastructure_relevance_reasons": [
+      "no_strong_compute_current_infrastructure_match"
+    ],
+    "infrastructure_relevance": {
+      "direct_ai_infrastructure_relevance": 0,
+      "data_center_relevance": 0,
+      "cloud_capacity_relevance": 0,
+      "semiconductor_relevance": 0,
+      "power_grid_relevance": 0,
+      "cooling_relevance": 0,
+      "capital_markets_relevance": 0,
+      "enterprise_ai_infrastructure_relevance": 0,
+      "infrastructure_relevance_score": 0,
+      "infrastructure_relevance_tier": "archive_only",
+      "infrastructure_relevance_action": "archive_only",
+      "infrastructure_relevance_reasons": [
+        "no_strong_compute_current_infrastructure_match"
+      ],
+      "infrastructureRelevanceAction": "archive_only",
+      "articlePagePublished": false,
+      "homepagePublished": false,
+      "archiveOnly": true,
+      "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
+    }
+  },
+  {
+    "id": "b50eef40099f40d2",
+    "sourceRegistryId": "ec-press-corner",
+    "source": "European Commission",
+    "url": "https://ec.europa.eu/commission/presscorner/detail/en/speech_26_2067",
+    "title": "Speech by Commissioner Lahbib at the 30th anniversary of the European Association of Service Providers for People with Disabilities",
+    "snippet": "European Commission Speech Brussels, 05 Oct 2026 I am pleased to be here to celebrate your 30 years of supporting people with disabilities. And yes, thirty years of pushing us at the European Commission to do ...",
+    "contentText": "European Commission Speech Brussels, 05 Oct 2026 I am pleased to be here to celebrate your 30 years of supporting people with disabilities. And yes, thirty years of pushing us at the European Commission to do ...",
+    "publishedAt": "2026-10-05T07:43:20.000Z",
+    "sourceImage": null,
+    "region": "US",
+    "language": "en",
+    "defaultCategory": "Policy & Siting",
+    "ai_topic_score": 0,
+    "ai_topic_reasons": [
+      "ai_not_in_title"
+    ],
+    "category": "Policy & Siting",
+    "primary_category": "Policy & Siting",
+    "secondary_category": "Permitting, regulation, and market access",
+    "infrastructure_layer": "Policy",
+    "affected_stakeholders": [
+      "regulators",
+      "site selectors",
+      "developers",
+      "utilities"
+    ],
+    "article_type": "Policy / Regulation",
+    "urgency_score": 0.18,
+    "taxonomy_confidence": 0.53,
+    "taxonomy_reasons": [
+      "policy"
+    ],
+    "direct_ai_infrastructure_relevance": 0,
+    "data_center_relevance": 0,
+    "cloud_capacity_relevance": 0,
+    "semiconductor_relevance": 0,
+    "power_grid_relevance": 0,
+    "cooling_relevance": 0,
+    "capital_markets_relevance": 0,
+    "enterprise_ai_infrastructure_relevance": 0,
+    "infrastructure_relevance_score": 0,
+    "infrastructure_relevance_tier": "archive_only",
+    "infrastructure_relevance_action": "archive_only",
+    "infrastructure_relevance_reasons": [
+      "no_strong_compute_current_infrastructure_match"
+    ],
+    "infrastructure_relevance": {
+      "direct_ai_infrastructure_relevance": 0,
+      "data_center_relevance": 0,
+      "cloud_capacity_relevance": 0,
+      "semiconductor_relevance": 0,
+      "power_grid_relevance": 0,
+      "cooling_relevance": 0,
+      "capital_markets_relevance": 0,
+      "enterprise_ai_infrastructure_relevance": 0,
+      "infrastructure_relevance_score": 0,
+      "infrastructure_relevance_tier": "archive_only",
+      "infrastructure_relevance_action": "archive_only",
+      "infrastructure_relevance_reasons": [
+        "no_strong_compute_current_infrastructure_match"
+      ],
+      "infrastructureRelevanceAction": "archive_only",
+      "articlePagePublished": false,
+      "homepagePublished": false,
+      "archiveOnly": true,
+      "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
+    }
+  },
+  {
     "id": "071ab1ea188d8989",
     "sourceRegistryId": "whitehouse-presidential-actions",
     "source": "The White House",
@@ -995,210 +2067,6 @@
     }
   },
   {
-    "id": "5e651add716b2e1b",
-    "sourceRegistryId": "ec-press-corner",
-    "source": "European Commission",
-    "url": "https://ec.europa.eu/commission/presscorner/detail/en/statement_26_2063",
-    "title": "Statement by Commissioner Lahbib on the siege of Oleshky, Ukraine",
-    "snippet": "European Commission Statement Brussels, 02 Oct 2026 What is happening in Oleshky, Ukraine, is appalling. Civilians are trapped under siege by Russian forces without access to food, medicine, clean water and basic...",
-    "contentText": "European Commission Statement Brussels, 02 Oct 2026 What is happening in Oleshky, Ukraine, is appalling. Civilians are trapped under siege by Russian forces without access to food, medicine, clean water and basic...",
-    "publishedAt": "2026-10-02T15:38:58.000Z",
-    "sourceImage": null,
-    "region": "US",
-    "language": "en",
-    "defaultCategory": "Policy & Siting",
-    "ai_topic_score": 0,
-    "ai_topic_reasons": [
-      "ai_not_in_title"
-    ],
-    "category": "Policy & Siting",
-    "primary_category": "Policy & Siting",
-    "secondary_category": "Permitting, regulation, and market access",
-    "infrastructure_layer": "Policy",
-    "affected_stakeholders": [
-      "regulators",
-      "site selectors",
-      "developers",
-      "utilities"
-    ],
-    "article_type": "Policy / Regulation",
-    "urgency_score": 0.18,
-    "taxonomy_confidence": 0.53,
-    "taxonomy_reasons": [
-      "policy"
-    ],
-    "direct_ai_infrastructure_relevance": 0,
-    "data_center_relevance": 0,
-    "cloud_capacity_relevance": 0,
-    "semiconductor_relevance": 0,
-    "power_grid_relevance": 0,
-    "cooling_relevance": 0,
-    "capital_markets_relevance": 0,
-    "enterprise_ai_infrastructure_relevance": 0,
-    "infrastructure_relevance_score": 0,
-    "infrastructure_relevance_tier": "archive_only",
-    "infrastructure_relevance_action": "archive_only",
-    "infrastructure_relevance_reasons": [
-      "no_strong_compute_current_infrastructure_match"
-    ],
-    "infrastructure_relevance": {
-      "direct_ai_infrastructure_relevance": 0,
-      "data_center_relevance": 0,
-      "cloud_capacity_relevance": 0,
-      "semiconductor_relevance": 0,
-      "power_grid_relevance": 0,
-      "cooling_relevance": 0,
-      "capital_markets_relevance": 0,
-      "enterprise_ai_infrastructure_relevance": 0,
-      "infrastructure_relevance_score": 0,
-      "infrastructure_relevance_tier": "archive_only",
-      "infrastructure_relevance_action": "archive_only",
-      "infrastructure_relevance_reasons": [
-        "no_strong_compute_current_infrastructure_match"
-      ],
-      "infrastructureRelevanceAction": "archive_only",
-      "articlePagePublished": false,
-      "homepagePublished": false,
-      "archiveOnly": true,
-      "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
-    }
-  },
-  {
-    "id": "27e98b3f09baa73d",
-    "sourceRegistryId": "ec-press-corner",
-    "source": "European Commission",
-    "url": "https://ec.europa.eu/commission/presscorner/detail/en/statement_26_2057",
-    "title": "G7 Leaders' Statement on global energy security and market stability",
-    "snippet": "European Commission Statement Brussels, 02 Oct 2026 Today, we, the Leaders of the G7, convened a virtual meeting to address the deepening challenges to our energy security. Facing unprecedented volatility in oil ...",
-    "contentText": "European Commission Statement Brussels, 02 Oct 2026 Today, we, the Leaders of the G7, convened a virtual meeting to address the deepening challenges to our energy security. Facing unprecedented volatility in oil ...",
-    "publishedAt": "2026-10-02T14:23:24.000Z",
-    "sourceImage": null,
-    "region": "US",
-    "language": "en",
-    "defaultCategory": "Policy & Siting",
-    "ai_topic_score": 0,
-    "ai_topic_reasons": [
-      "ai_not_in_title"
-    ],
-    "category": "Policy & Siting",
-    "primary_category": "Policy & Siting",
-    "secondary_category": "Permitting, regulation, and market access",
-    "infrastructure_layer": "Policy",
-    "affected_stakeholders": [
-      "regulators",
-      "site selectors",
-      "developers",
-      "utilities"
-    ],
-    "article_type": "Policy / Regulation",
-    "urgency_score": 0.18,
-    "taxonomy_confidence": 0.53,
-    "taxonomy_reasons": [
-      "policy"
-    ],
-    "direct_ai_infrastructure_relevance": 0,
-    "data_center_relevance": 0,
-    "cloud_capacity_relevance": 0,
-    "semiconductor_relevance": 0,
-    "power_grid_relevance": 0,
-    "cooling_relevance": 0,
-    "capital_markets_relevance": 0,
-    "enterprise_ai_infrastructure_relevance": 0,
-    "infrastructure_relevance_score": 0,
-    "infrastructure_relevance_tier": "archive_only",
-    "infrastructure_relevance_action": "archive_only",
-    "infrastructure_relevance_reasons": [
-      "no_strong_compute_current_infrastructure_match"
-    ],
-    "infrastructure_relevance": {
-      "direct_ai_infrastructure_relevance": 0,
-      "data_center_relevance": 0,
-      "cloud_capacity_relevance": 0,
-      "semiconductor_relevance": 0,
-      "power_grid_relevance": 0,
-      "cooling_relevance": 0,
-      "capital_markets_relevance": 0,
-      "enterprise_ai_infrastructure_relevance": 0,
-      "infrastructure_relevance_score": 0,
-      "infrastructure_relevance_tier": "archive_only",
-      "infrastructure_relevance_action": "archive_only",
-      "infrastructure_relevance_reasons": [
-        "no_strong_compute_current_infrastructure_match"
-      ],
-      "infrastructureRelevanceAction": "archive_only",
-      "articlePagePublished": false,
-      "homepagePublished": false,
-      "archiveOnly": true,
-      "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
-    }
-  },
-  {
-    "id": "98d7208aa39f25d0",
-    "sourceRegistryId": "ftc-press",
-    "source": "Federal Trade Commission",
-    "url": "https://www.ftc.gov/news-events/news/press-releases/2026/10/ftc-secures-settlement-protects-small-businesses-illegal-price-discrimination",
-    "title": "FTC Secures Settlement that Protects Small Businesses from Illegal Price Discrimination",
-    "snippet": "Settlement with Southern Glazer’s will help level the playing field for small businesses and facilitate consumer access to lower-priced wine and spirits at local retailers The Federal Trade Commission secured a settleme…",
-    "contentText": "Settlement with Southern Glazer’s will help level the playing field for small businesses and facilitate consumer access to lower-priced wine and spirits at local retailers The Federal Trade Commission secured a settlement agreement with Southern Glazer’s Wine and Spirits LLC, the nation’s largest distributor of wine and spirits, that will redress allegedly illegal price discrimination practices and make it easier for small businesses to compete against large chain retailers. View Press Release",
-    "publishedAt": "2026-10-02T12:00:00.000Z",
-    "sourceImage": null,
-    "region": "US",
-    "language": "en",
-    "defaultCategory": "Capital Markets",
-    "ai_topic_score": 0,
-    "ai_topic_reasons": [
-      "ai_not_in_title"
-    ],
-    "category": "Other",
-    "primary_category": "Other",
-    "secondary_category": "General AI infrastructure signal",
-    "infrastructure_layer": "Demand",
-    "affected_stakeholders": [
-      "operators"
-    ],
-    "article_type": "Product / Platform Update",
-    "urgency_score": 0.18,
-    "taxonomy_confidence": null,
-    "taxonomy_reasons": [
-      "fallback_taxonomy"
-    ],
-    "direct_ai_infrastructure_relevance": 0,
-    "data_center_relevance": 0,
-    "cloud_capacity_relevance": 0,
-    "semiconductor_relevance": 0,
-    "power_grid_relevance": 0,
-    "cooling_relevance": 0,
-    "capital_markets_relevance": 0,
-    "enterprise_ai_infrastructure_relevance": 0,
-    "infrastructure_relevance_score": 0,
-    "infrastructure_relevance_tier": "archive_only",
-    "infrastructure_relevance_action": "archive_only",
-    "infrastructure_relevance_reasons": [
-      "no_strong_compute_current_infrastructure_match"
-    ],
-    "infrastructure_relevance": {
-      "direct_ai_infrastructure_relevance": 0,
-      "data_center_relevance": 0,
-      "cloud_capacity_relevance": 0,
-      "semiconductor_relevance": 0,
-      "power_grid_relevance": 0,
-      "cooling_relevance": 0,
-      "capital_markets_relevance": 0,
-      "enterprise_ai_infrastructure_relevance": 0,
-      "infrastructure_relevance_score": 0,
-      "infrastructure_relevance_tier": "archive_only",
-      "infrastructure_relevance_action": "archive_only",
-      "infrastructure_relevance_reasons": [
-        "no_strong_compute_current_infrastructure_match"
-      ],
-      "infrastructureRelevanceAction": "archive_only",
-      "articlePagePublished": false,
-      "homepagePublished": false,
-      "archiveOnly": true,
-      "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
-    }
-  },
-  {
     "id": "0c3fbad1f09140c5",
     "sourceRegistryId": "ftc-press",
     "source": "Federal Trade Commission",
@@ -1227,830 +2095,6 @@
     "taxonomy_confidence": null,
     "taxonomy_reasons": [
       "fallback_taxonomy"
-    ],
-    "direct_ai_infrastructure_relevance": 0,
-    "data_center_relevance": 0,
-    "cloud_capacity_relevance": 0,
-    "semiconductor_relevance": 0,
-    "power_grid_relevance": 0,
-    "cooling_relevance": 0,
-    "capital_markets_relevance": 0,
-    "enterprise_ai_infrastructure_relevance": 0,
-    "infrastructure_relevance_score": 0,
-    "infrastructure_relevance_tier": "archive_only",
-    "infrastructure_relevance_action": "archive_only",
-    "infrastructure_relevance_reasons": [
-      "no_strong_compute_current_infrastructure_match"
-    ],
-    "infrastructure_relevance": {
-      "direct_ai_infrastructure_relevance": 0,
-      "data_center_relevance": 0,
-      "cloud_capacity_relevance": 0,
-      "semiconductor_relevance": 0,
-      "power_grid_relevance": 0,
-      "cooling_relevance": 0,
-      "capital_markets_relevance": 0,
-      "enterprise_ai_infrastructure_relevance": 0,
-      "infrastructure_relevance_score": 0,
-      "infrastructure_relevance_tier": "archive_only",
-      "infrastructure_relevance_action": "archive_only",
-      "infrastructure_relevance_reasons": [
-        "no_strong_compute_current_infrastructure_match"
-      ],
-      "infrastructureRelevanceAction": "archive_only",
-      "articlePagePublished": false,
-      "homepagePublished": false,
-      "archiveOnly": true,
-      "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
-    }
-  },
-  {
-    "id": "3b18d891d790abfb",
-    "sourceRegistryId": "gao-reports",
-    "source": "U.S. Government Accountability Office",
-    "url": "https://www.gao.gov/products/gao-27-108779",
-    "title": "U.S. Interagency Council on Homelessness: Staff Placed on Administrative Leave Have Returned and Await Direction",
-    "snippet": "What GAO Found The U.S. Interagency Council on Homelessness (USICH) is an independent establishment in the executive branch that coordinates the federal response to homelessness. It consists of representatives from desi…",
-    "contentText": "What GAO Found The U.S. Interagency Council on Homelessness (USICH) is an independent establishment in the executive branch that coordinates the federal response to homelessness. It consists of representatives from designated federal agencies (the Council) and a staff that has ranged from 10 to 18 full-time employees over the past decade. USICH’s enabling legislation—the McKinney-Vento Homeless Assistance Act—requires it to maintain certain personnel and perform specified duties. These include providing technical assistance to state and local governments through five to 10 regional coordinators employed by the Council, reporting annually to the President and Congress on federal efforts to address homelessness, and developing a national strategic plan to end homelessness. The act also esta…",
-    "publishedAt": "2026-10-02T11:23:27.000Z",
-    "sourceImage": null,
-    "region": "US",
-    "language": "en",
-    "defaultCategory": "Power & Grid",
-    "ai_topic_score": 0,
-    "ai_topic_reasons": [
-      "ai_not_in_title"
-    ],
-    "category": "Power & Grid",
-    "primary_category": "Power & Grid",
-    "secondary_category": "Interconnection and power procurement",
-    "infrastructure_layer": "Power",
-    "affected_stakeholders": [
-      "data center operators",
-      "utilities",
-      "cloud capacity teams",
-      "investors"
-    ],
-    "article_type": "Research / Technical",
-    "urgency_score": 0.36,
-    "taxonomy_confidence": 0.61,
-    "taxonomy_reasons": [
-      "power",
-      "grid"
-    ],
-    "direct_ai_infrastructure_relevance": 0,
-    "data_center_relevance": 0,
-    "cloud_capacity_relevance": 0,
-    "semiconductor_relevance": 0,
-    "power_grid_relevance": 0,
-    "cooling_relevance": 0,
-    "capital_markets_relevance": 0,
-    "enterprise_ai_infrastructure_relevance": 0,
-    "infrastructure_relevance_score": 0,
-    "infrastructure_relevance_tier": "archive_only",
-    "infrastructure_relevance_action": "archive_only",
-    "infrastructure_relevance_reasons": [
-      "no_strong_compute_current_infrastructure_match"
-    ],
-    "infrastructure_relevance": {
-      "direct_ai_infrastructure_relevance": 0,
-      "data_center_relevance": 0,
-      "cloud_capacity_relevance": 0,
-      "semiconductor_relevance": 0,
-      "power_grid_relevance": 0,
-      "cooling_relevance": 0,
-      "capital_markets_relevance": 0,
-      "enterprise_ai_infrastructure_relevance": 0,
-      "infrastructure_relevance_score": 0,
-      "infrastructure_relevance_tier": "archive_only",
-      "infrastructure_relevance_action": "archive_only",
-      "infrastructure_relevance_reasons": [
-        "no_strong_compute_current_infrastructure_match"
-      ],
-      "infrastructureRelevanceAction": "archive_only",
-      "articlePagePublished": false,
-      "homepagePublished": false,
-      "archiveOnly": true,
-      "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
-    }
-  },
-  {
-    "id": "cea4d47dd8a79bc1",
-    "sourceRegistryId": "gao-reports",
-    "source": "U.S. Government Accountability Office",
-    "url": "https://www.gao.gov/products/gao-27-109056",
-    "title": "Innovation in Action: Getting You Up to Speed on Manufacturing",
-    "snippet": "This Scroll-Driven Narrative tells the story of how the federal government is trying to strengthen U.S. manufacturing through Manufacturing USA—a national network of institutes that are partnerships between federal agen…",
-    "contentText": "This Scroll-Driven Narrative tells the story of how the federal government is trying to strengthen U.S. manufacturing through Manufacturing USA—a national network of institutes that are partnerships between federal agencies, companies, universities, and others. It is a companion to a series of reports GAO has issued examining the Manufacturing USA program—for example, Advanced Manufacturing: Aligning Strategies and Improving Agency Reviews Could Help Institutes Achieve National Goals, GAO-25-107369. This product highlights key themes and recommendations from GAO’s prior work, such as recommendations to better measure performance across the Manufacturing USA network, as well as agency efforts to implement them. For more information, contact Hilary M. Benedict at benedicth@gao.gov.",
-    "publishedAt": "2026-10-02T11:10:19.000Z",
-    "sourceImage": null,
-    "region": "US",
-    "language": "en",
-    "defaultCategory": "Power & Grid",
-    "ai_topic_score": 0,
-    "ai_topic_reasons": [
-      "ai_not_in_title"
-    ],
-    "category": "Power & Grid",
-    "primary_category": "Power & Grid",
-    "secondary_category": "Interconnection and power procurement",
-    "infrastructure_layer": "Power",
-    "affected_stakeholders": [
-      "data center operators",
-      "utilities",
-      "cloud capacity teams",
-      "investors"
-    ],
-    "article_type": "Other",
-    "urgency_score": 0.36,
-    "taxonomy_confidence": 0.61,
-    "taxonomy_reasons": [
-      "power",
-      "grid"
-    ],
-    "direct_ai_infrastructure_relevance": 0,
-    "data_center_relevance": 0,
-    "cloud_capacity_relevance": 0,
-    "semiconductor_relevance": 0,
-    "power_grid_relevance": 0,
-    "cooling_relevance": 0,
-    "capital_markets_relevance": 0,
-    "enterprise_ai_infrastructure_relevance": 0,
-    "infrastructure_relevance_score": 0,
-    "infrastructure_relevance_tier": "archive_only",
-    "infrastructure_relevance_action": "archive_only",
-    "infrastructure_relevance_reasons": [
-      "no_strong_compute_current_infrastructure_match"
-    ],
-    "infrastructure_relevance": {
-      "direct_ai_infrastructure_relevance": 0,
-      "data_center_relevance": 0,
-      "cloud_capacity_relevance": 0,
-      "semiconductor_relevance": 0,
-      "power_grid_relevance": 0,
-      "cooling_relevance": 0,
-      "capital_markets_relevance": 0,
-      "enterprise_ai_infrastructure_relevance": 0,
-      "infrastructure_relevance_score": 0,
-      "infrastructure_relevance_tier": "archive_only",
-      "infrastructure_relevance_action": "archive_only",
-      "infrastructure_relevance_reasons": [
-        "no_strong_compute_current_infrastructure_match"
-      ],
-      "infrastructureRelevanceAction": "archive_only",
-      "articlePagePublished": false,
-      "homepagePublished": false,
-      "archiveOnly": true,
-      "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
-    }
-  },
-  {
-    "id": "6ed19a40a70755de",
-    "sourceRegistryId": "ec-press-corner",
-    "source": "European Commission",
-    "url": "https://ec.europa.eu/commission/presscorner/detail/en/statement_26_2053",
-    "title": "Statement by President von der Leyen with Prime Minister of North Macedonia Mickoski",
-    "snippet": "European Commission Statement Skopje, 02 Oct 2026 Prime Minister, dear Hristijan, It is very good to be back in Skopje. Thank you very much for the very warm welcome. North Macedonia has shown time and again th...",
-    "contentText": "European Commission Statement Skopje, 02 Oct 2026 Prime Minister, dear Hristijan, It is very good to be back in Skopje. Thank you very much for the very warm welcome. North Macedonia has shown time and again th...",
-    "publishedAt": "2026-10-02T10:19:03.000Z",
-    "sourceImage": null,
-    "region": "EU",
-    "language": "en",
-    "defaultCategory": "Policy & Siting",
-    "ai_topic_score": 0,
-    "ai_topic_reasons": [
-      "ai_not_in_title"
-    ],
-    "category": "Policy & Siting",
-    "primary_category": "Policy & Siting",
-    "secondary_category": "Permitting, regulation, and market access",
-    "infrastructure_layer": "Policy",
-    "affected_stakeholders": [
-      "regulators",
-      "site selectors",
-      "developers",
-      "utilities"
-    ],
-    "article_type": "Policy / Regulation",
-    "urgency_score": 0.18,
-    "taxonomy_confidence": 0.53,
-    "taxonomy_reasons": [
-      "policy"
-    ],
-    "direct_ai_infrastructure_relevance": 0,
-    "data_center_relevance": 0,
-    "cloud_capacity_relevance": 0,
-    "semiconductor_relevance": 0,
-    "power_grid_relevance": 0,
-    "cooling_relevance": 0,
-    "capital_markets_relevance": 0,
-    "enterprise_ai_infrastructure_relevance": 0,
-    "infrastructure_relevance_score": 0,
-    "infrastructure_relevance_tier": "archive_only",
-    "infrastructure_relevance_action": "archive_only",
-    "infrastructure_relevance_reasons": [
-      "no_strong_compute_current_infrastructure_match"
-    ],
-    "infrastructure_relevance": {
-      "direct_ai_infrastructure_relevance": 0,
-      "data_center_relevance": 0,
-      "cloud_capacity_relevance": 0,
-      "semiconductor_relevance": 0,
-      "power_grid_relevance": 0,
-      "cooling_relevance": 0,
-      "capital_markets_relevance": 0,
-      "enterprise_ai_infrastructure_relevance": 0,
-      "infrastructure_relevance_score": 0,
-      "infrastructure_relevance_tier": "archive_only",
-      "infrastructure_relevance_action": "archive_only",
-      "infrastructure_relevance_reasons": [
-        "no_strong_compute_current_infrastructure_match"
-      ],
-      "infrastructureRelevanceAction": "archive_only",
-      "articlePagePublished": false,
-      "homepagePublished": false,
-      "archiveOnly": true,
-      "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
-    }
-  },
-  {
-    "id": "5103a7c415320b24",
-    "sourceRegistryId": "ec-press-corner",
-    "source": "European Commission",
-    "url": "https://ec.europa.eu/commission/presscorner/detail/en/mex_26_2050",
-    "title": "Daily News 02 / 10 / 2026",
-    "snippet": "European Commission Daily news Brussels, 02 Oct 2026 Commission disburses €2.9 billion under Ukraine Facility to support financial stability and reforms Today, the European Commission has released €2.9 billion to ...",
-    "contentText": "European Commission Daily news Brussels, 02 Oct 2026 Commission disburses €2.9 billion under Ukraine Facility to support financial stability and reforms Today, the European Commission has released €2.9 billion to ...",
-    "publishedAt": "2026-10-02T09:22:33.000Z",
-    "sourceImage": null,
-    "region": "US",
-    "language": "en",
-    "defaultCategory": "Policy & Siting",
-    "ai_topic_score": 0,
-    "ai_topic_reasons": [
-      "ai_not_in_title"
-    ],
-    "category": "Policy & Siting",
-    "primary_category": "Policy & Siting",
-    "secondary_category": "Permitting, regulation, and market access",
-    "infrastructure_layer": "Policy",
-    "affected_stakeholders": [
-      "regulators",
-      "site selectors",
-      "developers",
-      "utilities"
-    ],
-    "article_type": "Policy / Regulation",
-    "urgency_score": 0.18,
-    "taxonomy_confidence": 0.53,
-    "taxonomy_reasons": [
-      "policy"
-    ],
-    "direct_ai_infrastructure_relevance": 0,
-    "data_center_relevance": 0,
-    "cloud_capacity_relevance": 0,
-    "semiconductor_relevance": 0,
-    "power_grid_relevance": 0,
-    "cooling_relevance": 0,
-    "capital_markets_relevance": 0,
-    "enterprise_ai_infrastructure_relevance": 0,
-    "infrastructure_relevance_score": 0,
-    "infrastructure_relevance_tier": "archive_only",
-    "infrastructure_relevance_action": "archive_only",
-    "infrastructure_relevance_reasons": [
-      "no_strong_compute_current_infrastructure_match"
-    ],
-    "infrastructure_relevance": {
-      "direct_ai_infrastructure_relevance": 0,
-      "data_center_relevance": 0,
-      "cloud_capacity_relevance": 0,
-      "semiconductor_relevance": 0,
-      "power_grid_relevance": 0,
-      "cooling_relevance": 0,
-      "capital_markets_relevance": 0,
-      "enterprise_ai_infrastructure_relevance": 0,
-      "infrastructure_relevance_score": 0,
-      "infrastructure_relevance_tier": "archive_only",
-      "infrastructure_relevance_action": "archive_only",
-      "infrastructure_relevance_reasons": [
-        "no_strong_compute_current_infrastructure_match"
-      ],
-      "infrastructureRelevanceAction": "archive_only",
-      "articlePagePublished": false,
-      "homepagePublished": false,
-      "archiveOnly": true,
-      "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
-    }
-  },
-  {
-    "id": "36fe9ff6b0770079",
-    "sourceRegistryId": "ec-press-corner",
-    "source": "European Commission",
-    "url": "https://ec.europa.eu/commission/presscorner/detail/en/fs_22_3862",
-    "title": "Factsheet - EU solidarity with Ukraine",
-    "snippet": "European Commission Factsheet Brussels, 02 Oct 2026 Factsheet - EU solidarity with Ukraine Factsheet - EU solidarity with Ukraine",
-    "contentText": "European Commission Factsheet Brussels, 02 Oct 2026 Factsheet - EU solidarity with Ukraine Factsheet - EU solidarity with Ukraine",
-    "publishedAt": "2026-10-01T22:00:00.000Z",
-    "sourceImage": null,
-    "region": "US",
-    "language": "en",
-    "defaultCategory": "Policy & Siting",
-    "ai_topic_score": 0,
-    "ai_topic_reasons": [
-      "ai_not_in_title"
-    ],
-    "category": "Policy & Siting",
-    "primary_category": "Policy & Siting",
-    "secondary_category": "Permitting, regulation, and market access",
-    "infrastructure_layer": "Policy",
-    "affected_stakeholders": [
-      "regulators",
-      "site selectors",
-      "developers",
-      "utilities"
-    ],
-    "article_type": "Policy / Regulation",
-    "urgency_score": 0.18,
-    "taxonomy_confidence": 0.53,
-    "taxonomy_reasons": [
-      "policy"
-    ],
-    "direct_ai_infrastructure_relevance": 0,
-    "data_center_relevance": 0,
-    "cloud_capacity_relevance": 0,
-    "semiconductor_relevance": 0,
-    "power_grid_relevance": 0,
-    "cooling_relevance": 0,
-    "capital_markets_relevance": 0,
-    "enterprise_ai_infrastructure_relevance": 0,
-    "infrastructure_relevance_score": 0,
-    "infrastructure_relevance_tier": "archive_only",
-    "infrastructure_relevance_action": "archive_only",
-    "infrastructure_relevance_reasons": [
-      "no_strong_compute_current_infrastructure_match"
-    ],
-    "infrastructure_relevance": {
-      "direct_ai_infrastructure_relevance": 0,
-      "data_center_relevance": 0,
-      "cloud_capacity_relevance": 0,
-      "semiconductor_relevance": 0,
-      "power_grid_relevance": 0,
-      "cooling_relevance": 0,
-      "capital_markets_relevance": 0,
-      "enterprise_ai_infrastructure_relevance": 0,
-      "infrastructure_relevance_score": 0,
-      "infrastructure_relevance_tier": "archive_only",
-      "infrastructure_relevance_action": "archive_only",
-      "infrastructure_relevance_reasons": [
-        "no_strong_compute_current_infrastructure_match"
-      ],
-      "infrastructureRelevanceAction": "archive_only",
-      "articlePagePublished": false,
-      "homepagePublished": false,
-      "archiveOnly": true,
-      "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
-    }
-  },
-  {
-    "id": "523f6d5aa0ccd10e",
-    "sourceRegistryId": "sec-press",
-    "source": "U.S. Securities and Exchange Commission",
-    "url": "https://www.sec.gov/newsroom/press-releases/2026-100-sec-proposal-would-address-how-investment-advisers-funds-can-custody-crypto-assets-under-federal",
-    "title": "SEC Proposal Would Address How Investment Advisers and Funds Can Custody Crypto Assets Under the Federal Securities Laws",
-    "snippet": "The Securities and Exchange Commission today proposed new rules and amendments to provide a tailored framework for the custody of crypto assets for registered investment advisers and regulated funds, i.e. registered inv…",
-    "contentText": "The Securities and Exchange Commission today proposed new rules and amendments to provide a tailored framework for the custody of crypto assets for registered investment advisers and regulated funds, i.e. registered investment companies and business…",
-    "publishedAt": "2026-10-01T16:16:07.000Z",
-    "sourceImage": null,
-    "region": "US",
-    "language": "en",
-    "defaultCategory": "Capital Markets",
-    "ai_topic_score": 0,
-    "ai_topic_reasons": [
-      "ai_not_in_title"
-    ],
-    "category": "Other",
-    "primary_category": "Other",
-    "secondary_category": "General AI infrastructure signal",
-    "infrastructure_layer": "Demand",
-    "affected_stakeholders": [
-      "operators"
-    ],
-    "article_type": "Other",
-    "urgency_score": 0.18,
-    "taxonomy_confidence": null,
-    "taxonomy_reasons": [
-      "fallback_taxonomy"
-    ],
-    "direct_ai_infrastructure_relevance": 0,
-    "data_center_relevance": 0,
-    "cloud_capacity_relevance": 0,
-    "semiconductor_relevance": 0,
-    "power_grid_relevance": 0,
-    "cooling_relevance": 0,
-    "capital_markets_relevance": 0,
-    "enterprise_ai_infrastructure_relevance": 0,
-    "infrastructure_relevance_score": 0,
-    "infrastructure_relevance_tier": "archive_only",
-    "infrastructure_relevance_action": "archive_only",
-    "infrastructure_relevance_reasons": [
-      "no_strong_compute_current_infrastructure_match"
-    ],
-    "infrastructure_relevance": {
-      "direct_ai_infrastructure_relevance": 0,
-      "data_center_relevance": 0,
-      "cloud_capacity_relevance": 0,
-      "semiconductor_relevance": 0,
-      "power_grid_relevance": 0,
-      "cooling_relevance": 0,
-      "capital_markets_relevance": 0,
-      "enterprise_ai_infrastructure_relevance": 0,
-      "infrastructure_relevance_score": 0,
-      "infrastructure_relevance_tier": "archive_only",
-      "infrastructure_relevance_action": "archive_only",
-      "infrastructure_relevance_reasons": [
-        "no_strong_compute_current_infrastructure_match"
-      ],
-      "infrastructureRelevanceAction": "archive_only",
-      "articlePagePublished": false,
-      "homepagePublished": false,
-      "archiveOnly": true,
-      "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
-    }
-  },
-  {
-    "id": "637efac5671d4375",
-    "sourceRegistryId": "sec-press",
-    "source": "U.S. Securities and Exchange Commission",
-    "url": "https://www.sec.gov/newsroom/press-releases/2026-99-secs-division-examinations-announces-new-exam-handbook",
-    "title": "SEC’s Division of Examinations Announces New Exam Handbook",
-    "snippet": "The Securities and Exchange Commission’s Division of Examinations today published its new handbook, “The SEC Exam Handbook: A Practical Guide on Process and Engagement,” which replaces and expands upon the previous exam…",
-    "contentText": "The Securities and Exchange Commission’s Division of Examinations today published its new handbook, “The SEC Exam Handbook: A Practical Guide on Process and Engagement,” which replaces and expands upon the previous examination brochure by providing…",
-    "publishedAt": "2026-10-01T15:03:35.000Z",
-    "sourceImage": null,
-    "region": "US",
-    "language": "en",
-    "defaultCategory": "Capital Markets",
-    "ai_topic_score": 0,
-    "ai_topic_reasons": [
-      "ai_not_in_title"
-    ],
-    "category": "Other",
-    "primary_category": "Other",
-    "secondary_category": "General AI infrastructure signal",
-    "infrastructure_layer": "Demand",
-    "affected_stakeholders": [
-      "operators"
-    ],
-    "article_type": "Capacity Expansion",
-    "urgency_score": 0.24,
-    "taxonomy_confidence": null,
-    "taxonomy_reasons": [
-      "fallback_taxonomy"
-    ],
-    "direct_ai_infrastructure_relevance": 0,
-    "data_center_relevance": 0,
-    "cloud_capacity_relevance": 0,
-    "semiconductor_relevance": 0,
-    "power_grid_relevance": 0,
-    "cooling_relevance": 0,
-    "capital_markets_relevance": 0,
-    "enterprise_ai_infrastructure_relevance": 0,
-    "infrastructure_relevance_score": 0,
-    "infrastructure_relevance_tier": "archive_only",
-    "infrastructure_relevance_action": "archive_only",
-    "infrastructure_relevance_reasons": [
-      "no_strong_compute_current_infrastructure_match"
-    ],
-    "infrastructure_relevance": {
-      "direct_ai_infrastructure_relevance": 0,
-      "data_center_relevance": 0,
-      "cloud_capacity_relevance": 0,
-      "semiconductor_relevance": 0,
-      "power_grid_relevance": 0,
-      "cooling_relevance": 0,
-      "capital_markets_relevance": 0,
-      "enterprise_ai_infrastructure_relevance": 0,
-      "infrastructure_relevance_score": 0,
-      "infrastructure_relevance_tier": "archive_only",
-      "infrastructure_relevance_action": "archive_only",
-      "infrastructure_relevance_reasons": [
-        "no_strong_compute_current_infrastructure_match"
-      ],
-      "infrastructureRelevanceAction": "archive_only",
-      "articlePagePublished": false,
-      "homepagePublished": false,
-      "archiveOnly": true,
-      "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
-    }
-  },
-  {
-    "id": "e4e8132b8ce135cb",
-    "sourceRegistryId": "eia-today-in-energy",
-    "source": "U.S. Energy Information Administration",
-    "url": "https://www.eia.gov/todayinenergy/detail.php?id=68244",
-    "title": "U.S. exports of propane reached records in the first half of 2026",
-    "snippet": "U.S. propane exports increased to 2 million barrels per day (b/d) in the first half of 2026, 11% more than during the same period in 2025. Increased U.S. propane production and changing trade flows, particularly increas…",
-    "contentText": "U.S. propane exports increased to 2 million barrels per day (b/d) in the first half of 2026, 11% more than during the same period in 2025. Increased U.S. propane production and changing trade flows, particularly increased exports to India and other countries in South Asia, drove propane exports to a record high of 2.1 million (b/d) in April 2026. Since then, total propane exports, including exports to India, have continued at levels well above the five-year average.",
-    "publishedAt": "2026-10-01T14:00:00.000Z",
-    "sourceImage": null,
-    "region": "APAC",
-    "language": "en",
-    "defaultCategory": "Power & Grid",
-    "ai_topic_score": 0,
-    "ai_topic_reasons": [
-      "ai_not_in_title"
-    ],
-    "category": "Power & Grid",
-    "primary_category": "Power & Grid",
-    "secondary_category": "Interconnection and power procurement",
-    "infrastructure_layer": "Power",
-    "affected_stakeholders": [
-      "data center operators",
-      "utilities",
-      "cloud capacity teams",
-      "investors"
-    ],
-    "article_type": "Other",
-    "urgency_score": 0.36,
-    "taxonomy_confidence": 0.61,
-    "taxonomy_reasons": [
-      "power",
-      "grid"
-    ],
-    "direct_ai_infrastructure_relevance": 0,
-    "data_center_relevance": 0,
-    "cloud_capacity_relevance": 0,
-    "semiconductor_relevance": 0,
-    "power_grid_relevance": 0,
-    "cooling_relevance": 0,
-    "capital_markets_relevance": 0,
-    "enterprise_ai_infrastructure_relevance": 0,
-    "infrastructure_relevance_score": 0,
-    "infrastructure_relevance_tier": "archive_only",
-    "infrastructure_relevance_action": "archive_only",
-    "infrastructure_relevance_reasons": [
-      "no_strong_compute_current_infrastructure_match"
-    ],
-    "infrastructure_relevance": {
-      "direct_ai_infrastructure_relevance": 0,
-      "data_center_relevance": 0,
-      "cloud_capacity_relevance": 0,
-      "semiconductor_relevance": 0,
-      "power_grid_relevance": 0,
-      "cooling_relevance": 0,
-      "capital_markets_relevance": 0,
-      "enterprise_ai_infrastructure_relevance": 0,
-      "infrastructure_relevance_score": 0,
-      "infrastructure_relevance_tier": "archive_only",
-      "infrastructure_relevance_action": "archive_only",
-      "infrastructure_relevance_reasons": [
-        "no_strong_compute_current_infrastructure_match"
-      ],
-      "infrastructureRelevanceAction": "archive_only",
-      "articlePagePublished": false,
-      "homepagePublished": false,
-      "archiveOnly": true,
-      "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
-    }
-  },
-  {
-    "id": "57afb558c59fe227",
-    "sourceRegistryId": "gao-reports",
-    "source": "U.S. Government Accountability Office",
-    "url": "https://www.gao.gov/products/gao-26-108195",
-    "title": "Tobacco Products: FDA Should Monitor Timeliness of Application Reviews",
-    "snippet": "What GAO Found In 2016, the Food and Drug Administration (FDA) expanded its authority to oversee all tobacco products, including millions of e-cigarettes that were already on the market. In response, it received a surge…",
-    "contentText": "What GAO Found In 2016, the Food and Drug Administration (FDA) expanded its authority to oversee all tobacco products, including millions of e-cigarettes that were already on the market. In response, it received a surge of applications from manufacturers in 2020 for products seeking authorization to remain on the market legally. Specifically, it received over 25 million applications in 2020 and 2021, compared to just over 1 thousand applications in 2018 and 2019. This led to a backlog of applications. While FDA has since reviewed most of the applications submitted during this period, almost 132 thousand remained without a completed review as of December 31, 2025. (See figure.) Figure: FDA Tobacco Product Application Reviews, Calendar Year (CY) 2018-2025 From CY2018 to CY2025, FDA took an…",
-    "publishedAt": "2026-10-01T11:23:55.000Z",
-    "sourceImage": null,
-    "region": "US",
-    "language": "en",
-    "defaultCategory": "Power & Grid",
-    "ai_topic_score": 0,
-    "ai_topic_reasons": [
-      "ai_not_in_title"
-    ],
-    "category": "Power & Grid",
-    "primary_category": "Power & Grid",
-    "secondary_category": "Interconnection and power procurement",
-    "infrastructure_layer": "Power",
-    "affected_stakeholders": [
-      "data center operators",
-      "utilities",
-      "cloud capacity teams",
-      "investors"
-    ],
-    "article_type": "Market Analysis",
-    "urgency_score": 0.36,
-    "taxonomy_confidence": 0.61,
-    "taxonomy_reasons": [
-      "power",
-      "grid"
-    ],
-    "direct_ai_infrastructure_relevance": 0,
-    "data_center_relevance": 0,
-    "cloud_capacity_relevance": 0,
-    "semiconductor_relevance": 0,
-    "power_grid_relevance": 0,
-    "cooling_relevance": 0,
-    "capital_markets_relevance": 0,
-    "enterprise_ai_infrastructure_relevance": 0,
-    "infrastructure_relevance_score": 0,
-    "infrastructure_relevance_tier": "archive_only",
-    "infrastructure_relevance_action": "archive_only",
-    "infrastructure_relevance_reasons": [
-      "no_strong_compute_current_infrastructure_match"
-    ],
-    "infrastructure_relevance": {
-      "direct_ai_infrastructure_relevance": 0,
-      "data_center_relevance": 0,
-      "cloud_capacity_relevance": 0,
-      "semiconductor_relevance": 0,
-      "power_grid_relevance": 0,
-      "cooling_relevance": 0,
-      "capital_markets_relevance": 0,
-      "enterprise_ai_infrastructure_relevance": 0,
-      "infrastructure_relevance_score": 0,
-      "infrastructure_relevance_tier": "archive_only",
-      "infrastructure_relevance_action": "archive_only",
-      "infrastructure_relevance_reasons": [
-        "no_strong_compute_current_infrastructure_match"
-      ],
-      "infrastructureRelevanceAction": "archive_only",
-      "articlePagePublished": false,
-      "homepagePublished": false,
-      "archiveOnly": true,
-      "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
-    }
-  },
-  {
-    "id": "6d77fc9cd6c1ca14",
-    "sourceRegistryId": "gao-reports",
-    "source": "U.S. Government Accountability Office",
-    "url": "https://www.gao.gov/products/gao-26-107729",
-    "title": "Public Health Preparedness: Action Needed to Address National and Biosecurity Risks Associated with Disposal of Federal Laboratory Equipment",
-    "snippet": "What GAO Found The Department of Health and Human Services (HHS) and the U.S. Department of Agriculture (USDA) sold 1,316 pieces of unneeded laboratory equipment in fiscal years 2022 through 2025. Of that 1,316, GAO ide…",
-    "contentText": "What GAO Found The Department of Health and Human Services (HHS) and the U.S. Department of Agriculture (USDA) sold 1,316 pieces of unneeded laboratory equipment in fiscal years 2022 through 2025. Of that 1,316, GAO identified nine pieces of equipment–freeze dryers and mass spectrometers–that were on the Commerce Control List and sold to individuals and companies in the U.S. and Canada, some of which appeared to be resellers. These items are subject to export controls because they could be used by certain countries of concern to develop biological weapons or to gain a military advantage. Examples of Laboratory Equipment on the Commerce Control List GAO found that HHS and USDA, in selling the nine pieces of equipment, did not report to the General Services Administration (GSA) that the ite…",
-    "publishedAt": "2026-10-01T11:22:23.000Z",
-    "sourceImage": null,
-    "region": "US",
-    "language": "en",
-    "defaultCategory": "Power & Grid",
-    "ai_topic_score": 0,
-    "ai_topic_reasons": [
-      "ai_not_in_title"
-    ],
-    "category": "Power & Grid",
-    "primary_category": "Power & Grid",
-    "secondary_category": "Interconnection and power procurement",
-    "infrastructure_layer": "Power",
-    "affected_stakeholders": [
-      "data center operators",
-      "utilities",
-      "cloud capacity teams",
-      "investors"
-    ],
-    "article_type": "Other",
-    "urgency_score": 0.36,
-    "taxonomy_confidence": 0.61,
-    "taxonomy_reasons": [
-      "power",
-      "grid"
-    ],
-    "direct_ai_infrastructure_relevance": 0,
-    "data_center_relevance": 0,
-    "cloud_capacity_relevance": 0,
-    "semiconductor_relevance": 0,
-    "power_grid_relevance": 0,
-    "cooling_relevance": 0,
-    "capital_markets_relevance": 0,
-    "enterprise_ai_infrastructure_relevance": 0,
-    "infrastructure_relevance_score": 0,
-    "infrastructure_relevance_tier": "archive_only",
-    "infrastructure_relevance_action": "archive_only",
-    "infrastructure_relevance_reasons": [
-      "no_strong_compute_current_infrastructure_match"
-    ],
-    "infrastructure_relevance": {
-      "direct_ai_infrastructure_relevance": 0,
-      "data_center_relevance": 0,
-      "cloud_capacity_relevance": 0,
-      "semiconductor_relevance": 0,
-      "power_grid_relevance": 0,
-      "cooling_relevance": 0,
-      "capital_markets_relevance": 0,
-      "enterprise_ai_infrastructure_relevance": 0,
-      "infrastructure_relevance_score": 0,
-      "infrastructure_relevance_tier": "archive_only",
-      "infrastructure_relevance_action": "archive_only",
-      "infrastructure_relevance_reasons": [
-        "no_strong_compute_current_infrastructure_match"
-      ],
-      "infrastructureRelevanceAction": "archive_only",
-      "articlePagePublished": false,
-      "homepagePublished": false,
-      "archiveOnly": true,
-      "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
-    }
-  },
-  {
-    "id": "9b59dfffa7e1c059",
-    "sourceRegistryId": "sec-press",
-    "source": "U.S. Securities and Exchange Commission",
-    "url": "https://www.sec.gov/newsroom/press-releases/2026-97-sec-charges-two-individuals-orchestrating-fraud-scheme-targeted-veterans",
-    "title": "SEC Charges Two Individuals With Orchestrating Fraud Scheme That Targeted Veterans",
-    "snippet": "The Securities and Exchange Commission today announced charges against Christopher Kenji Dinelli and Jacob David “Kobe” Frankel for allegedly orchestrating a fraud scheme that raised more than $8.7 million from 35 inves…",
-    "contentText": "The Securities and Exchange Commission today announced charges against Christopher Kenji Dinelli and Jacob David “Kobe” Frankel for allegedly orchestrating a fraud scheme that raised more than $8.7 million from 35 investors through their fund, Beyond…",
-    "publishedAt": "2026-09-30T16:42:15.000Z",
-    "sourceImage": null,
-    "region": "US",
-    "language": "en",
-    "defaultCategory": "Capital Markets",
-    "ai_topic_score": 0,
-    "ai_topic_reasons": [
-      "ai_not_in_title"
-    ],
-    "category": "Other",
-    "primary_category": "Other",
-    "secondary_category": "General AI infrastructure signal",
-    "infrastructure_layer": "Demand",
-    "affected_stakeholders": [
-      "operators"
-    ],
-    "article_type": "Other",
-    "urgency_score": 0.18,
-    "taxonomy_confidence": null,
-    "taxonomy_reasons": [
-      "fallback_taxonomy"
-    ],
-    "direct_ai_infrastructure_relevance": 0,
-    "data_center_relevance": 0,
-    "cloud_capacity_relevance": 0,
-    "semiconductor_relevance": 0,
-    "power_grid_relevance": 0,
-    "cooling_relevance": 0,
-    "capital_markets_relevance": 0,
-    "enterprise_ai_infrastructure_relevance": 0,
-    "infrastructure_relevance_score": 0,
-    "infrastructure_relevance_tier": "archive_only",
-    "infrastructure_relevance_action": "archive_only",
-    "infrastructure_relevance_reasons": [
-      "no_strong_compute_current_infrastructure_match"
-    ],
-    "infrastructure_relevance": {
-      "direct_ai_infrastructure_relevance": 0,
-      "data_center_relevance": 0,
-      "cloud_capacity_relevance": 0,
-      "semiconductor_relevance": 0,
-      "power_grid_relevance": 0,
-      "cooling_relevance": 0,
-      "capital_markets_relevance": 0,
-      "enterprise_ai_infrastructure_relevance": 0,
-      "infrastructure_relevance_score": 0,
-      "infrastructure_relevance_tier": "archive_only",
-      "infrastructure_relevance_action": "archive_only",
-      "infrastructure_relevance_reasons": [
-        "no_strong_compute_current_infrastructure_match"
-      ],
-      "infrastructureRelevanceAction": "archive_only",
-      "articlePagePublished": false,
-      "homepagePublished": false,
-      "archiveOnly": true,
-      "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
-    }
-  },
-  {
-    "id": "8dac52649f138331",
-    "sourceRegistryId": "nsf-news",
-    "source": "U.S. National Science Foundation",
-    "url": "https://www.nsf.gov/news/podcast-new-quantum-enabled-materials",
-    "title": "Podcast: New quantum-enabled materials",
-    "snippet": "NSF-supported researcher Morteza Kayyalha discusses his work developing quantum-enabled materials and devices...",
-    "contentText": "NSF-supported researcher Morteza Kayyalha discusses his work developing quantum-enabled materials and devices...",
-    "publishedAt": "2026-09-30T16:11:09.000Z",
-    "sourceImage": null,
-    "region": "US",
-    "language": "en",
-    "defaultCategory": "AI Infrastructure",
-    "ai_topic_score": 0,
-    "ai_topic_reasons": [
-      "ai_not_in_title"
-    ],
-    "category": "AI Infrastructure",
-    "primary_category": "AI Infrastructure",
-    "secondary_category": "GPU clusters and deployment readiness",
-    "infrastructure_layer": "Compute",
-    "affected_stakeholders": [
-      "operators",
-      "hyperscalers",
-      "cloud buyers",
-      "investors"
-    ],
-    "article_type": "Other",
-    "urgency_score": 0.18,
-    "taxonomy_confidence": 0.53,
-    "taxonomy_reasons": [
-      "ai infrastructure"
     ],
     "direct_ai_infrastructure_relevance": 0,
     "data_center_relevance": 0,

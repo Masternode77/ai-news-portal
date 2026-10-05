@@ -908,7 +908,10 @@
     "758880cc9e6d9387",
     "b8a3286414469197",
     "168b174a04128103",
-    "af7565ca100cccb3"
+    "af7565ca100cccb3",
+    "a3b7a774d9504e99",
+    "8c015ec83cbadc52",
+    "2fbd834c6cf374c2"
   ],
   "dayPlans": {
     "2026-03-24": {
@@ -48429,28 +48432,487 @@
         "0": true,
         "1": true
       }
+    },
+    "2026-10-06": {
+      "date": "2026-10-06",
+      "createdAt": "2026-10-05T15:56:48.034Z",
+      "refreshedAt": "2026-10-05T15:56:48.034Z",
+      "candidateWindowHours": 24,
+      "curatedItems": [
+        {
+          "id": "8c015ec83cbadc52",
+          "sourceRegistryId": "epoch-ai-data-insights",
+          "source": "Epoch AI",
+          "url": "https://epoch.ai/data-insights/openai-coding-agent-spending",
+          "title": "Coding-agent use at OpenAI is doubling roughly every month",
+          "snippet": "OpenAI researchers’ coding-agent usage, valued at API prices, has recently been doubling roughly every month, according to breakpoint fits.",
+          "contentText": "OpenAI researchers’ coding-agent usage, valued at API prices, has recently been doubling roughly every month, according to breakpoint fits.",
+          "publishedAt": "2026-10-05T12:00:00.000Z",
+          "sourceImage": null,
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "pool_max_age_days": 21,
+          "ai_topic_score": 0.666,
+          "ai_topic_reasons": [
+            "openai",
+            "ai"
+          ],
+          "category": "AI Infrastructure",
+          "primary_category": "AI Infrastructure",
+          "secondary_category": "GPU clusters and deployment readiness",
+          "infrastructure_layer": "Compute",
+          "affected_stakeholders": [
+            "operators",
+            "hyperscalers",
+            "cloud buyers",
+            "investors"
+          ],
+          "article_type": "Other",
+          "urgency_score": 0.18,
+          "taxonomy_confidence": 0.61,
+          "taxonomy_reasons": [
+            "ai infrastructure",
+            "neocloud"
+          ],
+          "direct_ai_infrastructure_relevance": 0,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0,
+          "infrastructure_relevance_tier": "archive_only",
+          "infrastructure_relevance_action": "archive_only",
+          "infrastructure_relevance_reasons": [
+            "no_strong_compute_current_infrastructure_match"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 0,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0,
+            "infrastructure_relevance_tier": "archive_only",
+            "infrastructure_relevance_action": "archive_only",
+            "infrastructure_relevance_reasons": [
+              "no_strong_compute_current_infrastructure_match"
+            ],
+            "infrastructureRelevanceAction": "archive_only",
+            "articlePagePublished": false,
+            "homepagePublished": false,
+            "archiveOnly": true,
+            "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
+          },
+          "score": 59
+        },
+        {
+          "id": "2fbd834c6cf374c2",
+          "sourceRegistryId": "arxiv-cs-dc",
+          "source": "arXiv",
+          "url": "https://arxiv.org/abs/2610.03286",
+          "title": "VenusRL: A Fully Disaggregated Agentic RL System with Priority Scheduling and Scalable Interaction",
+          "snippet": "arXiv:2610.03286v1 Announce Type: new Abstract: Agentic Reinforcement Learning (RL) trains LLM agents through multi-turn interactions with external tool environments. Its multi-turn nature exposes two system-level bottl…",
+          "contentText": "arXiv:2610.03286v1 Announce Type: new Abstract: Agentic Reinforcement Learning (RL) trains LLM agents through multi-turn interactions with external tool environments. Its multi-turn nature exposes two system-level bottlenecks unaddressed by existing agentic RL frameworks. First, end-to-end training throughput is constrained by the slowest trajectories to complete, yet optimizing per-GPU utilization alone scatters rollout progress across many groups, delaying the completion of enough groups to unblock the next training step. Second, tool sandboxes are statically over-provisioned by their declared memory ceilings, leaving most physical memory stranded while replicating near-identical state across sandboxes launched from the same prompt. We present VenusRL, a fully disaggregated agentic RL s…",
+          "publishedAt": "2026-10-05T04:00:00.000Z",
+          "sourceImage": null,
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure",
+          "source_text_scope": "abstract",
+          "ai_topic_score": 0.985,
+          "ai_topic_reasons": [
+            "llm",
+            "agentic",
+            "gpu"
+          ],
+          "category": "Semiconductors",
+          "primary_category": "Semiconductors",
+          "secondary_category": "Accelerators, memory, and advanced packaging",
+          "infrastructure_layer": "Silicon",
+          "affected_stakeholders": [
+            "semiconductor suppliers",
+            "hyperscalers",
+            "server OEMs",
+            "investors"
+          ],
+          "article_type": "Supply Chain",
+          "urgency_score": 0.23,
+          "taxonomy_confidence": 0.57,
+          "taxonomy_reasons": [
+            "gpu"
+          ],
+          "direct_ai_infrastructure_relevance": 0,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0.22,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.163,
+          "infrastructure_relevance_tier": "archive_only",
+          "infrastructure_relevance_action": "archive_only",
+          "infrastructure_relevance_reasons": [
+            "semiconductor_relevance:0.22(gpu)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 0,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0.22,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.163,
+            "infrastructure_relevance_tier": "archive_only",
+            "infrastructure_relevance_action": "archive_only",
+            "infrastructure_relevance_reasons": [
+              "semiconductor_relevance:0.22(gpu)"
+            ],
+            "infrastructureRelevanceAction": "archive_only",
+            "articlePagePublished": false,
+            "homepagePublished": false,
+            "archiveOnly": true,
+            "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
+          },
+          "score": 57
+        },
+        {
+          "id": "a3b7a774d9504e99",
+          "sourceRegistryId": "arxiv-cs-dc",
+          "source": "arXiv",
+          "url": "https://arxiv.org/abs/2610.02522",
+          "title": "Beaver: Elastic GPU Sharing between ML and Latency-Critical vRAN Workloads",
+          "snippet": "arXiv:2610.02522v1 Announce Type: new Abstract: Within the shared industry vision of AI-RAN, AI-and-RAN seeks to co-locate virtualized radio access network (vRAN) workloads and AI services on shared GPUs. This sharing i…",
+          "contentText": "arXiv:2610.02522v1 Announce Type: new Abstract: Within the shared industry vision of AI-RAN, AI-and-RAN seeks to co-locate virtualized radio access network (vRAN) workloads and AI services on shared GPUs. This sharing is inherently asymmetric: vRAN workload is latency-critical, whereas the machine learning (ML) workload is a throughput-oriented, best-effort co-tenant. We present Beaver, a GPU sharing system that jointly manages compute and memory resources while protecting the vRAN's strict processing deadline. Beaver sizes the vRAN's streaming multiprocessor (SM) allocation from each slot's scheduled workload, repartitions SM allocations at slot granularity, and rewrites compiled ML kernels to yield HBM bandwidth during the vRAN's memory-critical phases. We implement Beaver and evaluate…",
+          "publishedAt": "2026-10-05T04:00:00.000Z",
+          "sourceImage": null,
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure",
+          "source_text_scope": "abstract",
+          "ai_topic_score": 0.997,
+          "ai_topic_reasons": [
+            "machine learning",
+            "gpu",
+            "gpus",
+            "ai"
+          ],
+          "category": "Semiconductors",
+          "primary_category": "Semiconductors",
+          "secondary_category": "Accelerators, memory, and advanced packaging",
+          "infrastructure_layer": "Silicon",
+          "affected_stakeholders": [
+            "semiconductor suppliers",
+            "hyperscalers",
+            "server OEMs",
+            "investors"
+          ],
+          "article_type": "Supply Chain",
+          "urgency_score": 0.34,
+          "taxonomy_confidence": 0.74,
+          "taxonomy_reasons": [
+            "gpu",
+            "hbm"
+          ],
+          "direct_ai_infrastructure_relevance": 0.22,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0.657,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.499,
+          "infrastructure_relevance_tier": "archive_only",
+          "infrastructure_relevance_action": "archive_only",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:0.22",
+            "semiconductor_relevance:0.66(hbm, gpu)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 0.22,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0.657,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.499,
+            "infrastructure_relevance_tier": "archive_only",
+            "infrastructure_relevance_action": "archive_only",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:0.22",
+              "semiconductor_relevance:0.66(hbm, gpu)"
+            ],
+            "infrastructureRelevanceAction": "archive_only",
+            "articlePagePublished": false,
+            "homepagePublished": false,
+            "archiveOnly": true,
+            "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
+          },
+          "score": 62
+        },
+        {
+          "id": "750a8fa4d5ee3ae8",
+          "sourceRegistryId": "arxiv-cs-pf",
+          "source": "arXiv",
+          "url": "https://arxiv.org/abs/2610.02598",
+          "title": "Activation Sparsity with Weight Approximation for Faster LLM Decoding on Offloaded Weights",
+          "snippet": "arXiv:2610.02598v1 Announce Type: cross Abstract: Deploying LLMs on consumer-grade GPUs with insufficient memory to hold their weights can result in prohibitively slow inference, because decoding repeatedly transfers of…",
+          "contentText": "arXiv:2610.02598v1 Announce Type: cross Abstract: Deploying LLMs on consumer-grade GPUs with insufficient memory to hold their weights can result in prohibitively slow inference, because decoding repeatedly transfers offloaded weights from system RAM or flash storage into GPU at much lower bandwidth than local GPU-memory access. Activation sparsity reduces these transfers by skipping weights associated with zero or near-zero activations. However, as more activation contributions are omitted, model quality eventually degrades rapidly, indicating that weights associated with small-magnitude activations collectively influence model quality sharply. In this work, we improve the trade-off between model quality and decoding performance when exploiting activation sparsity. Our key idea is to rep…",
+          "publishedAt": "2026-10-05T04:00:00.000Z",
+          "sourceImage": null,
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure",
+          "source_text_scope": "abstract",
+          "ai_topic_score": 1,
+          "ai_topic_reasons": [
+            "llm",
+            "llms",
+            "inference",
+            "gpu",
+            "gpus"
+          ],
+          "category": "Semiconductors",
+          "primary_category": "Semiconductors",
+          "secondary_category": "Accelerators, memory, and advanced packaging",
+          "infrastructure_layer": "Silicon",
+          "affected_stakeholders": [
+            "semiconductor suppliers",
+            "hyperscalers",
+            "server OEMs",
+            "investors"
+          ],
+          "article_type": "Supply Chain",
+          "urgency_score": 0.26,
+          "taxonomy_confidence": 0.57,
+          "taxonomy_reasons": [
+            "gpu"
+          ],
+          "direct_ai_infrastructure_relevance": 0.22,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0.22,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0.18,
+          "infrastructure_relevance_score": 0.246,
+          "infrastructure_relevance_tier": "archive_only",
+          "infrastructure_relevance_action": "archive_only",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:0.22",
+            "semiconductor_relevance:0.22(gpu)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 0.22,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0.22,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0.18,
+            "infrastructure_relevance_score": 0.246,
+            "infrastructure_relevance_tier": "archive_only",
+            "infrastructure_relevance_action": "archive_only",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:0.22",
+              "semiconductor_relevance:0.22(gpu)"
+            ],
+            "infrastructureRelevanceAction": "archive_only",
+            "articlePagePublished": false,
+            "homepagePublished": false,
+            "archiveOnly": true,
+            "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
+          },
+          "score": 66
+        },
+        {
+          "id": "ee5758fc5bf78de4",
+          "sourceRegistryId": "arxiv-cs-dc",
+          "source": "arXiv",
+          "url": "https://arxiv.org/abs/2610.03394",
+          "title": "EdgeAgent: Orchestrating On-Device LLM inference for End-User Multi-Agent Systems on CPU-GPU Unified Memory Architectures",
+          "snippet": "arXiv:2610.03394v1 Announce Type: new Abstract: Emerging multi-agent LLMs demand privacy-preserving edge deployment, yet current inference systems struggle with these collaborative workflows. Specifically, the memory-bo…",
+          "contentText": "arXiv:2610.03394v1 Announce Type: new Abstract: Emerging multi-agent LLMs demand privacy-preserving edge deployment, yet current inference systems struggle with these collaborative workflows. Specifically, the memory-bound decode phase causes severe bus contention on unified memory architectures (UMA), paralyzing naive CPU-GPU co-execution. Furthermore, speculative decoding in multi-agent workloads faces extreme variance in drafting difficulty, alternating between complex reasoning and predictable structured generation. Compounded by frequent tool-induced stalls, this highly fragmented execution severely underutilizes hardware and defeats traditional static batching. We present EdgeAgent, a cross-layer inference system explicitly co-designed for edge UMA and multi-agent workloads. At the…",
+          "publishedAt": "2026-10-05T04:00:00.000Z",
+          "sourceImage": null,
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure",
+          "source_text_scope": "abstract",
+          "ai_topic_score": 1,
+          "ai_topic_reasons": [
+            "llm",
+            "llms",
+            "inference",
+            "gpu"
+          ],
+          "category": "Semiconductors",
+          "primary_category": "Semiconductors",
+          "secondary_category": "Accelerators, memory, and advanced packaging",
+          "infrastructure_layer": "Silicon",
+          "affected_stakeholders": [
+            "semiconductor suppliers",
+            "hyperscalers",
+            "server OEMs",
+            "investors"
+          ],
+          "article_type": "Supply Chain",
+          "urgency_score": 0.27,
+          "taxonomy_confidence": 0.61,
+          "taxonomy_reasons": [
+            "gpu"
+          ],
+          "direct_ai_infrastructure_relevance": 0.22,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0.297,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.291,
+          "infrastructure_relevance_tier": "archive_only",
+          "infrastructure_relevance_action": "archive_only",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:0.22",
+            "semiconductor_relevance:0.30(gpu)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 0.22,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0.297,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.291,
+            "infrastructure_relevance_tier": "archive_only",
+            "infrastructure_relevance_action": "archive_only",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:0.22",
+              "semiconductor_relevance:0.30(gpu)"
+            ],
+            "infrastructureRelevanceAction": "archive_only",
+            "articlePagePublished": false,
+            "homepagePublished": false,
+            "archiveOnly": true,
+            "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
+          },
+          "score": 74
+        },
+        {
+          "id": "2820ebdb73577d17",
+          "sourceRegistryId": "arxiv-cs-dc",
+          "source": "arXiv",
+          "url": "https://arxiv.org/abs/2610.03226",
+          "title": "D2K-Bench: Can LLM Agents Turn Expert Designs into Efficient GPU Kernels?",
+          "snippet": "arXiv:2610.03226v1 Announce Type: cross Abstract: GPU kernels generated by large language model (LLM) agents can remain less efficient than expert implementations, but runtime alone does not reveal how the gap relates t…",
+          "contentText": "arXiv:2610.03226v1 Announce Type: cross Abstract: GPU kernels generated by large language model (LLM) agents can remain less efficient than expert implementations, but runtime alone does not reveal how the gap relates to design discovery and implementation. We introduce D2K-Bench, a diagnostic benchmark of 26 tasks and 85 workloads that measures how effectively agents translate expert design guidance into efficient GPU kernels. The guidance covers L1: high-level algorithmic insights, L2: dataflow design, and L3: low-level optimization tricks, including dependencies among these levels. Pairwise runs with and without guidance share task descriptions, workloads, tools, hardware, and a 350-turn budget. Complementary assessments examine independently proposed designs and the design properties…",
+          "publishedAt": "2026-10-05T04:00:00.000Z",
+          "sourceImage": null,
+          "region": "Global",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure",
+          "source_text_scope": "abstract",
+          "ai_topic_score": 1,
+          "ai_topic_reasons": [
+            "large language model",
+            "llm",
+            "gpu"
+          ],
+          "category": "Semiconductors",
+          "primary_category": "Semiconductors",
+          "secondary_category": "Accelerators, memory, and advanced packaging",
+          "infrastructure_layer": "Silicon",
+          "affected_stakeholders": [
+            "semiconductor suppliers",
+            "hyperscalers",
+            "server OEMs",
+            "investors"
+          ],
+          "article_type": "Earnings / Guidance",
+          "urgency_score": 0.27,
+          "taxonomy_confidence": 0.61,
+          "taxonomy_reasons": [
+            "gpu"
+          ],
+          "direct_ai_infrastructure_relevance": 0.22,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0.297,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.291,
+          "infrastructure_relevance_tier": "archive_only",
+          "infrastructure_relevance_action": "archive_only",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:0.22",
+            "semiconductor_relevance:0.30(gpu)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 0.22,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0.297,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.291,
+            "infrastructure_relevance_tier": "archive_only",
+            "infrastructure_relevance_action": "archive_only",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:0.22",
+              "semiconductor_relevance:0.30(gpu)"
+            ],
+            "infrastructureRelevanceAction": "archive_only",
+            "articlePagePublished": false,
+            "homepagePublished": false,
+            "archiveOnly": true,
+            "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
+          },
+          "score": 70
+        }
+      ],
+      "curatedIds": [
+        "8c015ec83cbadc52",
+        "2fbd834c6cf374c2",
+        "a3b7a774d9504e99",
+        "750a8fa4d5ee3ae8",
+        "ee5758fc5bf78de4",
+        "2820ebdb73577d17"
+      ],
+      "publishedIds": [
+        "a3b7a774d9504e99",
+        "8c015ec83cbadc52",
+        "2fbd834c6cf374c2"
+      ],
+      "visibleIds": [
+        "a3b7a774d9504e99"
+      ],
+      "slotPublications": {
+        "0": true
+      }
     }
   },
   "runHistory": [
-    {
-      "at": "2026-08-29T13:09:49.387Z",
-      "day": "2026-08-29",
-      "slot": 2,
-      "publishedCount": 0,
-      "authoredColumn": {
-        "published": false,
-        "reason": "no_qualifying_story"
-      },
-      "llmUsage": {
-        "calls": 1,
-        "failures": 0,
-        "prompt_tokens": 102,
-        "completion_tokens": 5,
-        "total_tokens": 107,
-        "token_budget": 60000,
-        "call_budget": 40
-      }
-    },
     {
       "at": "2026-08-29T18:15:19.389Z",
       "day": "2026-08-30",
@@ -52825,9 +53287,175 @@
         "token_budget": 120000,
         "call_budget": 60
       }
+    },
+    {
+      "at": "2026-10-05T15:56:48.034Z",
+      "day": "2026-10-06",
+      "slot": 0,
+      "publishedCount": 0,
+      "signalCardCount": 1,
+      "archiveOnlyCount": 2,
+      "processedIds": [
+        "a3b7a774d9504e99",
+        "8c015ec83cbadc52",
+        "2fbd834c6cf374c2"
+      ],
+      "blockedCount": 0,
+      "blockedItems": [],
+      "archiveOnlyItems": [
+        {
+          "id": "8c015ec83cbadc52",
+          "title": "Coding-agent use at OpenAI is doubling roughly every month",
+          "infrastructure_relevance_score": 0.246,
+          "infrastructure_relevance_tier": "archive_only",
+          "infrastructure_relevance_action": "archive_only",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:0.22",
+            "power_grid_relevance:0.22(power)"
+          ],
+          "extraction_quality_score": 1,
+          "source_domain_adapter": "generic",
+          "content_length": 1790,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": false,
+          "repetition_block_reasons": [],
+          "repetition_check": null,
+          "expert_insight_complete": true,
+          "expert_insight_missing_fields": [],
+          "reason": "infrastructure_relevance_below_signal_threshold"
+        },
+        {
+          "id": "2fbd834c6cf374c2",
+          "title": "VenusRL: A Fully Disaggregated Agentic RL System with Priority Scheduling and Scalable Interaction",
+          "infrastructure_relevance_score": 0.524,
+          "infrastructure_relevance_tier": "archive_only",
+          "infrastructure_relevance_action": "archive_only",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:0.70(ai infrastructure)",
+            "semiconductor_relevance:0.22(gpu)"
+          ],
+          "extraction_quality_score": 1,
+          "source_domain_adapter": "arxiv",
+          "content_length": 1512,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": false,
+          "repetition_block_reasons": [],
+          "repetition_check": null,
+          "expert_insight_complete": false,
+          "expert_insight_missing_fields": [
+            "named_companies"
+          ],
+          "reason": "infrastructure_relevance_below_signal_threshold"
+        }
+      ],
+      "authoredColumn": {
+        "published": false,
+        "reason": "voice:OpenRouter request failed: 402 model=anthropic/claude-sonnet-4.5 {\"error\":{\"message\":\"This request would exceed your available credits given your current in-flight requests. Retry after in-flight requests settle, or add credits.\",\"code\":402,\"metadata\":{\"reason\":\"in_flight_budget_exhau",
+        "selectionDiagnostics": {
+          "total_candidates": 95,
+          "counts": {
+            "invalid_identity": 0,
+            "text_rights_unauthorized": 0,
+            "abstract_only": 48,
+            "extraction_ineligible": 31,
+            "expert_insight_incomplete": 0,
+            "relevance_below_threshold": 12,
+            "already_covered": 3,
+            "stale_story": 0,
+            "digest_roundup": 0,
+            "unclean_evidence": 0,
+            "insufficient_facts": 0,
+            "qualifying": 1
+          },
+          "selected_id": "8c015ec83cbadc52",
+          "selected_beat": "ai_business",
+          "selection_reason": "highest_evidence_score",
+          "by_beat": {
+            "ai_business": {
+              "candidates": 13,
+              "qualifying": 1,
+              "rejections": {
+                "abstract_only": 8,
+                "extraction_ineligible": 3,
+                "relevance_below_threshold": 1
+              }
+            },
+            "data_center_operators": {
+              "candidates": 5,
+              "qualifying": 0,
+              "rejections": {
+                "abstract_only": 2,
+                "extraction_ineligible": 2,
+                "relevance_below_threshold": 1
+              }
+            },
+            "compute_hardware": {
+              "candidates": 25,
+              "qualifying": 0,
+              "rejections": {
+                "abstract_only": 24,
+                "already_covered": 1
+              }
+            },
+            "power_cooling": {
+              "candidates": 33,
+              "qualifying": 0,
+              "rejections": {
+                "relevance_below_threshold": 8,
+                "abstract_only": 10,
+                "extraction_ineligible": 15
+              }
+            },
+            "policy": {
+              "candidates": 10,
+              "qualifying": 0,
+              "rejections": {
+                "already_covered": 2,
+                "extraction_ineligible": 8
+              }
+            },
+            "other_infrastructure": {
+              "candidates": 9,
+              "qualifying": 0,
+              "rejections": {
+                "abstract_only": 4,
+                "relevance_below_threshold": 2,
+                "extraction_ineligible": 3
+              }
+            }
+          },
+          "recent_coverage": {
+            "counts": {
+              "ai_business": 0,
+              "data_center_operators": 0,
+              "compute_hardware": 1,
+              "power_cooling": 2,
+              "policy": 1,
+              "other_infrastructure": 0
+            },
+            "lastBeat": "compute_hardware",
+            "total": 4
+          },
+          "attempts": [
+            {
+              "id": "8c015ec83cbadc52",
+              "outcome": "voice:OpenRouter request failed: 402 model=anthropic/claude-sonnet-4.5 {\"error\":{\"message\":\"This request would exceed your available credits given your current in-flight requests. Retry after in-flight requests settle, or add credits.\",\"code\":402,\"metadata\":{\"reason\":\"in_flight_budget_exhau"
+            }
+          ]
+        }
+      },
+      "llmUsage": {
+        "calls": 7,
+        "failures": 1,
+        "prompt_tokens": 22192,
+        "completion_tokens": 5551,
+        "total_tokens": 27743,
+        "token_budget": 120000,
+        "call_budget": 60
+      }
     }
   ],
-  "lastRunAt": "2026-10-05T01:51:47.793Z",
+  "lastRunAt": "2026-10-05T15:56:48.034Z",
   "authored": {
     "lastColumnAt": "2026-10-04T22:05:30.235Z",
     "columnsByDay": {
@@ -52854,39 +53482,48 @@
         "at": "2026-10-04T22:05:30.235Z"
       }
     ],
-    "lastFailure": null,
+    "lastFailure": {
+      "at": "2026-10-05T15:56:48.034Z",
+      "stage": "voice",
+      "detail": "OpenRouter request failed: 402 model=anthropic/claude-sonnet-4.5 {\"error\":{\"message\":\"This request would exceed your available credits given your current in-flight requests. Retry after in-flight requests settle, or add credits.\",\"code\":402,\"metadata\":{\"reason\":\"in_flight_budget_exhau",
+      "attempts": [
+        {
+          "id": "8c015ec83cbadc52",
+          "outcome": "voice:OpenRouter request failed: 402 model=anthropic/claude-sonnet-4.5 {\"error\":{\"message\":\"This request would exceed your available credits given your current in-flight requests. Retry after in-flight requests settle, or add credits.\",\"code\":402,\"metadata\":{\"reason\":\"in_flight_budget_exhau"
+        }
+      ]
+    },
     "lastSelection": {
-      "at": "2026-10-04T22:05:30.235Z",
+      "at": "2026-10-05T15:56:48.034Z",
       "outcome": "selected",
-      "selectedId": "527c917b74f90f0e",
+      "selectedId": "8c015ec83cbadc52",
       "diagnostics": {
-        "total_candidates": 97,
+        "total_candidates": 95,
         "counts": {
           "invalid_identity": 0,
           "text_rights_unauthorized": 0,
-          "abstract_only": 42,
-          "extraction_ineligible": 39,
-          "expert_insight_incomplete": 1,
+          "abstract_only": 48,
+          "extraction_ineligible": 31,
+          "expert_insight_incomplete": 0,
           "relevance_below_threshold": 12,
-          "already_covered": 2,
+          "already_covered": 3,
           "stale_story": 0,
           "digest_roundup": 0,
           "unclean_evidence": 0,
           "insufficient_facts": 0,
           "qualifying": 1
         },
-        "selected_id": "527c917b74f90f0e",
-        "selected_beat": "compute_hardware",
+        "selected_id": "8c015ec83cbadc52",
+        "selected_beat": "ai_business",
         "selection_reason": "highest_evidence_score",
         "by_beat": {
           "ai_business": {
             "candidates": 13,
-            "qualifying": 0,
+            "qualifying": 1,
             "rejections": {
-              "abstract_only": 7,
-              "extraction_ineligible": 4,
-              "relevance_below_threshold": 1,
-              "expert_insight_incomplete": 1
+              "abstract_only": 8,
+              "extraction_ineligible": 3,
+              "relevance_below_threshold": 1
             }
           },
           "data_center_operators": {
@@ -52899,37 +53536,37 @@
             }
           },
           "compute_hardware": {
-            "candidates": 22,
-            "qualifying": 1,
+            "candidates": 25,
+            "qualifying": 0,
             "rejections": {
-              "abstract_only": 20,
-              "extraction_ineligible": 1
+              "abstract_only": 24,
+              "already_covered": 1
             }
           },
           "power_cooling": {
-            "candidates": 37,
+            "candidates": 33,
             "qualifying": 0,
             "rejections": {
               "relevance_below_threshold": 8,
               "abstract_only": 10,
-              "extraction_ineligible": 19
+              "extraction_ineligible": 15
             }
           },
           "policy": {
-            "candidates": 8,
+            "candidates": 10,
             "qualifying": 0,
             "rejections": {
               "already_covered": 2,
-              "extraction_ineligible": 6
+              "extraction_ineligible": 8
             }
           },
           "other_infrastructure": {
-            "candidates": 12,
+            "candidates": 9,
             "qualifying": 0,
             "rejections": {
-              "abstract_only": 3,
+              "abstract_only": 4,
               "relevance_below_threshold": 2,
-              "extraction_ineligible": 7
+              "extraction_ineligible": 3
             }
           }
         },
@@ -52937,19 +53574,19 @@
           "counts": {
             "ai_business": 0,
             "data_center_operators": 0,
-            "compute_hardware": 0,
+            "compute_hardware": 1,
             "power_cooling": 2,
             "policy": 1,
             "other_infrastructure": 0
           },
-          "lastBeat": "policy",
-          "total": 3
+          "lastBeat": "compute_hardware",
+          "total": 4
         }
       },
       "attempts": [
         {
-          "id": "527c917b74f90f0e",
-          "outcome": "published"
+          "id": "8c015ec83cbadc52",
+          "outcome": "voice:OpenRouter request failed: 402 model=anthropic/claude-sonnet-4.5 {\"error\":{\"message\":\"This request would exceed your available credits given your current in-flight requests. Retry after in-flight requests settle, or add credits.\",\"code\":402,\"metadata\":{\"reason\":\"in_flight_budget_exhau"
         }
       ]
     }
