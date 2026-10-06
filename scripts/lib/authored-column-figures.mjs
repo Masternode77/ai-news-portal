@@ -15,6 +15,7 @@ const MAX_FIGURES = 3;
 const MAX_ITEMS_PER_FIGURE = 5;
 const TITLE_MIN = 8;
 const TITLE_MAX = 64;
+const AUTOMATIC_TITLE_MAX = 105;
 
 const NAMED_ENTITIES = {
   amp: '&', quot: '"', apos: "'", nbsp: ' ',
@@ -29,13 +30,17 @@ export function decodeEntities(text = '') {
     .replace(/&([a-z]+);/gi, (match, name) => NAMED_ENTITIES[name.toLowerCase()] ?? match);
 }
 
-function condense(text = '', limit = TITLE_MAX) {
-  const cleaned = decodeEntities(String(text || ''))
+function cleanTitle(text = '') {
+  return decodeEntities(String(text || ''))
     .replace(/<[^>]+>/g, ' ')
     .replace(/…|\.{3}/g, ' ')
     .replace(/\s+/g, ' ')
     .replace(/[.!?,;:]+$/g, '')
     .trim();
+}
+
+function condense(text = '', limit = TITLE_MAX) {
+  const cleaned = cleanTitle(text);
   if (cleaned.length <= limit) return cleaned;
   const slice = cleaned.slice(0, limit + 1);
   const cut = slice.lastIndexOf(' ');
@@ -283,10 +288,24 @@ function sourceNote(items = []) {
 }
 
 function titleOk(title = '') {
-  const cleaned = condense(title);
+  const cleaned = cleanTitle(title);
   if (cleaned.length < TITLE_MIN || cleaned.length > TITLE_MAX) return false;
   if (bannedPhraseMatches(cleaned).length) return false;
   return guardPublicTemplatePhrases(cleaned).ok;
+}
+
+// The authored headline has already passed the 105-character publication
+// contract. Preserve it whole so an automatic caption cannot drop a
+// qualifier or end mid-clause. The 64-character limit remains exclusive to
+// model-proposed FigureSpec titles.
+function automaticTitle(...candidates) {
+  for (const candidate of candidates) {
+    const cleaned = cleanTitle(candidate);
+    if (cleaned.length < TITLE_MIN || cleaned.length > AUTOMATIC_TITLE_MAX) continue;
+    if (bannedPhraseMatches(cleaned).length || !guardPublicTemplatePhrases(cleaned).ok) continue;
+    return cleaned;
+  }
+  return '';
 }
 
 // Bars imply comparable magnitudes. Physical units and money with an
@@ -309,7 +328,7 @@ function buildFigure(type, title, claims, anchor, sectionCount) {
   const items = claims.slice(0, MAX_ITEMS_PER_FIGURE).map(itemFor);
   return {
     type,
-    title: condense(title),
+    title: cleanTitle(title),
     anchor: clampAnchor(anchor, sectionCount),
     items,
     source_note: sourceNote(items),
@@ -340,7 +359,7 @@ function validSpecFigure(spec, baseClaims, relevantIds, sectionCount) {
   const items = selected.map((claim) => (Number.isFinite(Number(claim.numeric_value)) && String(claim.unit || '').trim() ? itemFor(claim) : factItemFor(claim)));
   return {
     type: spec.type,
-    title: condense(spec.title),
+    title: cleanTitle(spec.title),
     anchor: clampAnchor(spec.anchor, sectionCount),
     items: items.slice(0, MAX_ITEMS_PER_FIGURE),
     source_note: sourceNote(items),
@@ -362,7 +381,7 @@ function distinctTitles(figures) {
 // A second stat-row figure is added when enough distinct claims remain.
 function deterministicFigures({ claims, stance, headline, sectionCount }) {
   if (!claims.length) return [];
-  const primaryTitle = condense(stance?.angle || headline || claims[0].claim_text);
+  const primaryTitle = automaticTitle(stance?.angle, headline) || claimTitle(claims[0].claim_text);
   const byUnit = new Map();
   for (const claim of claims) {
     const list = byUnit.get(claim.unit) || [];
@@ -402,8 +421,9 @@ function deterministicFigures({ claims, stance, headline, sectionCount }) {
 function factTableFigure({ ledger, stance, headline, sectionCount }) {
   const facts = relevantClaims(factLedgerClaims(ledger), { headline, stance });
   if (facts.length < 1) return null;
-  const title = condense(stance?.angle || headline || facts[0].claim_text);
-  if (!titleOk(title)) return null;
+  const automatic = automaticTitle(stance?.angle, headline);
+  const title = automatic || claimTitle(facts[0].claim_text);
+  if (!automatic && !titleOk(title)) return null;
   const items = facts.slice(0, MAX_ITEMS_PER_FIGURE).map(factItemFor);
   return {
     type: 'table',
@@ -423,8 +443,9 @@ function evidencePackFigure({ facts = [], factSource = '', stance, headline, sec
     .map((fact) => decodeEntities(String(fact || '')).trim())
     .filter((fact) => fact.length >= 25 && looksLikeProse(fact));
   if (usable.length < 2) return null;
-  const title = condense(stance?.angle || headline || usable[0]);
-  if (!titleOk(title)) return null;
+  const automatic = automaticTitle(stance?.angle, headline);
+  const title = automatic || claimTitle(usable[0]);
+  if (!automatic && !titleOk(title)) return null;
   const items = usable.slice(0, MAX_ITEMS_PER_FIGURE).map((fact) => ({
     label: completeFactLabel(fact),
     value: null,

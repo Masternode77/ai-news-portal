@@ -787,11 +787,28 @@ test('buildColumnFigures constructs 1-3 deterministic figures from the ledger', 
   assert.ok(figures.length >= 1 && figures.length <= 3);
   for (const figure of figures) {
     assert.ok(['stat-row', 'table', 'bar'].includes(figure.type));
-    assert.ok(figure.title.length >= 8 && figure.title.length <= 64, figure.title);
+    assert.ok(figure.title.length >= 8 && figure.title.length <= 105, figure.title);
     assert.ok(figure.items.length >= 1);
     assert.ok(figure.anchor >= 1 && figure.anchor <= 5);
     assert.ok(figure.items.every((item) => item.display && item.source));
   }
+});
+
+test('deterministic figure titles preserve the complete validated headline and its qualifier', () => {
+  const headline='Up to 3× pod density is a Kubernetes benchmark, not a reason to assume production fleets can swap safely';
+  const ledger={claims:[
+    {claim_id:'density',claim_text:'The Kubernetes benchmark reported pod density of up to 3 times for one measured group.',numeric_value:3,unit:'times',source_name:'Kubernetes Blog',verification_status:'verified_primary'},
+    {claim_id:'nodes',claim_text:'The Kubernetes pod density benchmark evaluated 4 node configurations in its measured setup.',numeric_value:4,unit:'nodes',source_name:'Kubernetes Blog',verification_status:'verified_primary'},
+  ]};
+  const result=buildColumnFigures({
+    ledger,
+    stance:{...JSON.parse(STANCE_JSON),angle:headline},
+    headline,
+    sectionCount:6,
+  });
+  assert.equal(result.source,'deterministic');
+  assert.equal(result.figures[0].title,headline);
+  assert.match(result.figures[0].title,/not a reason to assume production fleets can swap safely$/);
 });
 
 test('fact-table labels preserve the complete verified statement and its qualifiers', () => {
@@ -1046,6 +1063,15 @@ test('buildColumnFigures honors a valid model spec and rejects invalid ones', ()
   assert.equal(valid.figures[0].type, 'table');
   assert.equal(valid.figures[0].anchor, 3);
   assert.ok(valid.figures[0].items.length >= 2);
+
+  const overlongModelTitle = buildColumnFigures({
+    ledger,
+    stance: JSON.parse(STANCE_JSON),
+    headline,
+    sectionCount: 6,
+    modelSpec: [{ type: 'table', title: 'Dakota campus power evidence ' + 'x'.repeat(40), claim_indexes: [0, 1, 2], anchor: 3 }],
+  });
+  assert.notEqual(overlongModelTitle.source, 'model_spec');
 
   const invalid = buildColumnFigures({
     ledger,
