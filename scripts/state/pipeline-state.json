@@ -914,7 +914,10 @@
     "2fbd834c6cf374c2",
     "ba17df47777bdce5",
     "40dbc732d0fd62ce",
-    "d4f156c55959b5d6"
+    "d4f156c55959b5d6",
+    "5f46b11788153b65",
+    "6beffabd14bbab23",
+    "4588d7c08ebae066"
   ],
   "dayPlans": {
     "2026-03-24": {
@@ -49153,28 +49156,628 @@
       "slotPublications": {
         "0": true
       }
+    },
+    "2026-10-07": {
+      "date": "2026-10-07",
+      "createdAt": "2026-10-06T17:12:20.309Z",
+      "refreshedAt": "2026-10-06T17:12:20.309Z",
+      "candidateWindowHours": 24,
+      "curatedItems": [
+        {
+          "id": "5f46b11788153b65",
+          "sourceRegistryId": "arxiv-cs-dc",
+          "source": "arXiv",
+          "url": "https://arxiv.org/abs/2610.05748",
+          "title": "MOLT: A Fine-Grained GPU Memory Sharing System for LLM Serving with Opportunistic Fine-Tuning",
+          "snippet": "arXiv:2610.05748v1 Announce Type: new Abstract: Large language model (LLM) serving scales its replica count with the request load, yet GPU memory still stands idle inside the replicas. Adding a replica takes minutes, wh…",
+          "contentText": "arXiv:2610.05748v1 Announce Type: new Abstract: Large language model (LLM) serving scales its replica count with the request load, yet GPU memory still stands idle inside the replicas. Adding a replica takes minutes, while the memory that a replica needs changes within seconds. Even instant autoscaling could not return this idle memory, because the smallest unit that it can remove is a whole replica. Colocating parameter-efficient fine-tuning (PEFT) with inference can use this memory, but inference must be able to reclaim it within seconds, before requests that wait for memory exceed their latency service-level objective (SLO). Existing colocation systems either keep the tuning memory resident or let inference reclaim it at the coarse granularity of a whole training sample. Each such recl…",
+          "publishedAt": "2026-10-06T04:00:00.000Z",
+          "sourceImage": null,
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure",
+          "source_text_scope": "abstract",
+          "ai_topic_score": 1,
+          "ai_topic_reasons": [
+            "large language model",
+            "llm",
+            "inference",
+            "gpu"
+          ],
+          "category": "Semiconductors",
+          "primary_category": "Semiconductors",
+          "secondary_category": "Accelerators, memory, and advanced packaging",
+          "infrastructure_layer": "Silicon",
+          "affected_stakeholders": [
+            "semiconductor suppliers",
+            "hyperscalers",
+            "server OEMs",
+            "investors"
+          ],
+          "article_type": "Product / Platform Update",
+          "urgency_score": 0.29,
+          "taxonomy_confidence": 0.61,
+          "taxonomy_reasons": [
+            "gpu"
+          ],
+          "direct_ai_infrastructure_relevance": 0,
+          "data_center_relevance": 0.34,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0.297,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.333,
+          "infrastructure_relevance_tier": "archive_only",
+          "infrastructure_relevance_action": "archive_only",
+          "infrastructure_relevance_reasons": [
+            "data_center_relevance:0.34(colocation)",
+            "semiconductor_relevance:0.30(gpu)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 0,
+            "data_center_relevance": 0.34,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0.297,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.333,
+            "infrastructure_relevance_tier": "archive_only",
+            "infrastructure_relevance_action": "archive_only",
+            "infrastructure_relevance_reasons": [
+              "data_center_relevance:0.34(colocation)",
+              "semiconductor_relevance:0.30(gpu)"
+            ],
+            "infrastructureRelevanceAction": "archive_only",
+            "articlePagePublished": false,
+            "homepagePublished": false,
+            "archiveOnly": true,
+            "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
+          },
+          "score": 74
+        },
+        {
+          "id": "6beffabd14bbab23",
+          "sourceRegistryId": "arxiv-cs-dc",
+          "source": "arXiv",
+          "url": "https://arxiv.org/abs/2610.05305",
+          "title": "Characterizing Parallelism Strategies in LLM Inference: Fundamental Compute-Communication Trade-offs",
+          "snippet": "arXiv:2610.05305v1 Announce Type: new Abstract: Large Language Model (LLM) inference has become the dominant workload in modern AI systems, requiring serving infrastructures to maximize throughput while meeting strict l…",
+          "contentText": "arXiv:2610.05305v1 Announce Type: new Abstract: Large Language Model (LLM) inference has become the dominant workload in modern AI systems, requiring serving infrastructures to maximize throughput while meeting strict latency Service-Level Objectives (SLOs). Since state-of-the-art LLMs exceed the compute and memory capacity of a single GPU, inference is commonly distributed across multiple GPUs using tensor parallelism (TP), pipeline parallelism (PP), or hybrid parallelism (HB). However, selecting the most effective parallelism strategy remains challenging due to complex interactions among computation, communication, pipeline utilization, sequence length, batch size, and model architecture. Existing approaches largely rely on empirical evaluation and provide limited analytical insight int…",
+          "publishedAt": "2026-10-06T04:00:00.000Z",
+          "sourceImage": null,
+          "region": "APAC",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure",
+          "source_text_scope": "abstract",
+          "ai_topic_score": 1,
+          "ai_topic_reasons": [
+            "large language model",
+            "llm",
+            "llms",
+            "inference",
+            "gpu",
+            "gpus"
+          ],
+          "category": "Semiconductors",
+          "primary_category": "Semiconductors",
+          "secondary_category": "Accelerators, memory, and advanced packaging",
+          "infrastructure_layer": "Silicon",
+          "affected_stakeholders": [
+            "semiconductor suppliers",
+            "hyperscalers",
+            "server OEMs",
+            "investors"
+          ],
+          "article_type": "Capacity Expansion",
+          "urgency_score": 0.34,
+          "taxonomy_confidence": 0.57,
+          "taxonomy_reasons": [
+            "gpu"
+          ],
+          "direct_ai_infrastructure_relevance": 0.22,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0.22,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.246,
+          "infrastructure_relevance_tier": "archive_only",
+          "infrastructure_relevance_action": "archive_only",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:0.22",
+            "semiconductor_relevance:0.22(gpu)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 0.22,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0.22,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.246,
+            "infrastructure_relevance_tier": "archive_only",
+            "infrastructure_relevance_action": "archive_only",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:0.22",
+              "semiconductor_relevance:0.22(gpu)"
+            ],
+            "infrastructureRelevanceAction": "archive_only",
+            "articlePagePublished": false,
+            "homepagePublished": false,
+            "archiveOnly": true,
+            "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
+          },
+          "score": 74
+        },
+        {
+          "id": "4588d7c08ebae066",
+          "sourceRegistryId": "google-cloud-compute-releases",
+          "source": "Google Cloud Compute Engine",
+          "url": "https://docs.cloud.google.com/compute/docs/release-notes#October_05_2026",
+          "title": "Google Cloud Compute Engine: Generally available : Z3 machine types that have 8 to 44 vCPUs can use Hyperdisk Balanced High Availability volumes to synchronously replic…",
+          "snippet": "Feature Generally available: Z3 machine types that have 8 to 44 vCPUs can use Hyperdisk Balanced High Availability volumes to synchronously replicate data across two zones. For more information, see About Hyperdisk Bala…",
+          "contentText": "Feature Generally available : Z3 machine types that have 8 to 44 vCPUs can use Hyperdisk Balanced High Availability volumes to synchronously replicate data across two zones. For more information, see About Hyperdisk Balanced High Availability . Feature Preview : External IPv6 addresses are now supported for Standard Tier . For more information, see IPv6 subnet ranges .",
+          "publishedAt": "2026-10-05T07:00:00.000Z",
+          "sourceImage": null,
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "Hyperscalers & Cloud",
+          "ai_topic_score": 0,
+          "ai_topic_reasons": [
+            "ai_not_in_title"
+          ],
+          "category": "Cloud Capacity",
+          "primary_category": "Cloud Capacity",
+          "secondary_category": "Hyperscale regions and accelerator availability",
+          "infrastructure_layer": "Cloud Platform",
+          "affected_stakeholders": [
+            "hyperscalers",
+            "cloud buyers",
+            "enterprise IT",
+            "operators"
+          ],
+          "article_type": "Research / Technical",
+          "urgency_score": 0.25,
+          "taxonomy_confidence": 0.61,
+          "taxonomy_reasons": [
+            "google cloud"
+          ],
+          "direct_ai_infrastructure_relevance": 0,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0.324,
+          "semiconductor_relevance": 0,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.223,
+          "infrastructure_relevance_tier": "archive_only",
+          "infrastructure_relevance_action": "archive_only",
+          "infrastructure_relevance_reasons": [
+            "cloud_capacity_relevance:0.32(google cloud)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 0,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0.324,
+            "semiconductor_relevance": 0,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.223,
+            "infrastructure_relevance_tier": "archive_only",
+            "infrastructure_relevance_action": "archive_only",
+            "infrastructure_relevance_reasons": [
+              "cloud_capacity_relevance:0.32(google cloud)"
+            ],
+            "infrastructureRelevanceAction": "archive_only",
+            "articlePagePublished": false,
+            "homepagePublished": false,
+            "archiveOnly": true,
+            "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
+          },
+          "score": 31
+        },
+        {
+          "id": "839cc75597b4bcc8",
+          "sourceRegistryId": "doe-newsroom",
+          "source": "U.S. Department of Energy",
+          "url": "https://www.energy.gov/articles/energy-department-announces-alaska-railbelt-transmission-project-receive-defense",
+          "title": "Energy Department Announces Alaska Railbelt Transmission Project to Receive Defense Production Act Funding, Securing Alaska Military Installations and Local Communities",
+          "snippet": "The U.S. Department of Energy today announced its intent to deploy Defense Production Act funding to develop a second high-voltage connection between Southcentral and Interior Alaska, strengthening grid infrastructure e…",
+          "contentText": "The U.S. Department of Energy today announced its intent to deploy Defense Production Act funding to develop a second high-voltage connection between Southcentral and Interior Alaska, strengthening grid infrastructure essential to national defense.",
+          "publishedAt": "2026-10-05T17:05:00.000Z",
+          "sourceImage": null,
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "Power & Grid",
+          "ai_topic_score": 0,
+          "ai_topic_reasons": [
+            "ai_not_in_title"
+          ],
+          "category": "Power & Grid",
+          "primary_category": "Power & Grid",
+          "secondary_category": "Interconnection and power procurement",
+          "infrastructure_layer": "Power",
+          "affected_stakeholders": [
+            "data center operators",
+            "utilities",
+            "cloud capacity teams",
+            "investors"
+          ],
+          "article_type": "Financing / M&A",
+          "urgency_score": 0.61,
+          "taxonomy_confidence": 0.82,
+          "taxonomy_reasons": [
+            "power",
+            "grid",
+            "transmission"
+          ],
+          "direct_ai_infrastructure_relevance": 0,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0,
+          "power_grid_relevance": 0.658,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0.378,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.535,
+          "infrastructure_relevance_tier": "archive_only",
+          "infrastructure_relevance_action": "archive_only",
+          "infrastructure_relevance_reasons": [
+            "power_grid_relevance:0.66(grid, transmission)",
+            "capital_markets_relevance:0.38(funding)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 0,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0,
+            "power_grid_relevance": 0.658,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0.378,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.535,
+            "infrastructure_relevance_tier": "archive_only",
+            "infrastructure_relevance_action": "archive_only",
+            "infrastructure_relevance_reasons": [
+              "power_grid_relevance:0.66(grid, transmission)",
+              "capital_markets_relevance:0.38(funding)"
+            ],
+            "infrastructureRelevanceAction": "archive_only",
+            "articlePagePublished": false,
+            "homepagePublished": false,
+            "archiveOnly": true,
+            "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
+          },
+          "score": 48
+        },
+        {
+          "id": "8201c7a1ee43cf94",
+          "sourceRegistryId": "arxiv-cs-dc",
+          "source": "arXiv",
+          "url": "https://arxiv.org/abs/2610.04093",
+          "title": "Beyond Masked Sparsity: SNACK Enables Truly Sparse Neural Networks on GPU",
+          "snippet": "arXiv:2610.04093v1 Announce Type: cross Abstract: Deep neural networks continue to grow in parameter count, driving up training and inference cost on GPUs. Sparse neural networks and Dynamic Sparse Training (DST) promis…",
+          "contentText": "arXiv:2610.04093v1 Announce Type: cross Abstract: Deep neural networks continue to grow in parameter count, driving up training and inference cost on GPUs. Sparse neural networks and Dynamic Sparse Training (DST) promise to reduce these costs, but most implementations rely on binary masks over dense tensors and recover little of the theoretical compute, memory, or energy savings. We propose SNACK, a truly sparse GPU layer that stores and computes only non-zero connections. SNACK exposes a simple PyTorch API for restructuring connections and backpropagating gradients entirely in the sparse paradigm, and ships SNACK-COO, a custom COO-format SpMM CUDA kernel with a batch-to-Streaming-Multiprocessor mapping tuned for the small-batch, high-sparsity regime typical of large-model training and si…",
+          "publishedAt": "2026-10-06T04:00:00.000Z",
+          "sourceImage": null,
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure",
+          "source_text_scope": "abstract",
+          "ai_topic_score": 1,
+          "ai_topic_reasons": [
+            "model training",
+            "inference",
+            "gpu",
+            "gpus"
+          ],
+          "category": "Semiconductors",
+          "primary_category": "Semiconductors",
+          "secondary_category": "Accelerators, memory, and advanced packaging",
+          "infrastructure_layer": "Silicon",
+          "affected_stakeholders": [
+            "semiconductor suppliers",
+            "hyperscalers",
+            "server OEMs",
+            "investors"
+          ],
+          "article_type": "Supply Chain",
+          "urgency_score": 0.25,
+          "taxonomy_confidence": 0.61,
+          "taxonomy_reasons": [
+            "gpu"
+          ],
+          "direct_ai_infrastructure_relevance": 0,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0.297,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.207,
+          "infrastructure_relevance_tier": "archive_only",
+          "infrastructure_relevance_action": "archive_only",
+          "infrastructure_relevance_reasons": [
+            "semiconductor_relevance:0.30(gpu)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 0,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0.297,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.207,
+            "infrastructure_relevance_tier": "archive_only",
+            "infrastructure_relevance_action": "archive_only",
+            "infrastructure_relevance_reasons": [
+              "semiconductor_relevance:0.30(gpu)"
+            ],
+            "infrastructureRelevanceAction": "archive_only",
+            "articlePagePublished": false,
+            "homepagePublished": false,
+            "archiveOnly": true,
+            "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
+          },
+          "score": 66
+        },
+        {
+          "id": "23d67cc0547316b9",
+          "sourceRegistryId": "arxiv-cs-dc",
+          "source": "arXiv",
+          "url": "https://arxiv.org/abs/2610.04956",
+          "title": "From Overloaded to Guaranteed: High-Throughput Multi-SLO Enforcement for LoRA-Assisted On-Premise LLM Deployment",
+          "snippet": "arXiv:2610.04956v1 Announce Type: cross Abstract: As Large Language Models (LLMs) become essential in privacy-sensitive sectors like hospitals and government agencies, the on-premise LLM servers offer a cost-effective a…",
+          "contentText": "arXiv:2610.04956v1 Announce Type: cross Abstract: As Large Language Models (LLMs) become essential in privacy-sensitive sectors like hospitals and government agencies, the on-premise LLM servers offer a cost-effective and secure alternative to public cloud services. However, these resource-constrained servers struggle to guarantee heterogeneous Service Level Objectives (SLOs) when serving multiple LoRA-adapted services simultaneously. Existing serving frameworks suffer from severe SLO violations due to the computational overhead of LoRA layers and the rigid nature of batch scheduling. To address this, we propose HALO, a scheduling method tailored for LoRA-assisted on-premise LLM deployment. HALO introduces two key innovations: a spatial multiplexing strategy that overlaps Base and LoRA co…",
+          "publishedAt": "2026-10-06T04:00:00.000Z",
+          "sourceImage": null,
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure",
+          "source_text_scope": "abstract",
+          "ai_topic_score": 1,
+          "ai_topic_reasons": [
+            "large language models",
+            "llm",
+            "llms"
+          ],
+          "category": "AI Infrastructure",
+          "primary_category": "AI Infrastructure",
+          "secondary_category": "GPU clusters and deployment readiness",
+          "infrastructure_layer": "Compute",
+          "affected_stakeholders": [
+            "operators",
+            "hyperscalers",
+            "cloud buyers",
+            "investors"
+          ],
+          "article_type": "Product / Platform Update",
+          "urgency_score": 0.23,
+          "taxonomy_confidence": 0.57,
+          "taxonomy_reasons": [
+            "ai infrastructure"
+          ],
+          "direct_ai_infrastructure_relevance": 0.22,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.163,
+          "infrastructure_relevance_tier": "archive_only",
+          "infrastructure_relevance_action": "archive_only",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:0.22"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 0.22,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.163,
+            "infrastructure_relevance_tier": "archive_only",
+            "infrastructure_relevance_action": "archive_only",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:0.22"
+            ],
+            "infrastructureRelevanceAction": "archive_only",
+            "articlePagePublished": false,
+            "homepagePublished": false,
+            "archiveOnly": true,
+            "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
+          },
+          "score": 58
+        },
+        {
+          "id": "f803adcd035efb55",
+          "sourceRegistryId": "arxiv-cs-dc",
+          "source": "arXiv",
+          "url": "https://arxiv.org/abs/2610.06325",
+          "title": "Fine-Tuning a 3B-Parameter LLM on a Smartphone: Characterizing Sustained Training",
+          "snippet": "arXiv:2610.06325v1 Announce Type: new Abstract: Multi-billion-parameter LLMs now run on phones for inference, and training them on the device would personalize them without user data leaving the phone. Prior work has me…",
+          "contentText": "arXiv:2610.06325v1 Announce Type: new Abstract: Multi-billion-parameter LLMs now run on phones for inference, and training them on the device would personalize them without user data leaving the phone. Prior work has measured individual training steps of such models on phones, but not complete training runs, and not whether adapters trained on the device improve personalization. We present the first systematic characterization of a multi-billion-parameter LLM fine-tuned on a mobile device, covering memory, per-step time, thermal behavior, and energy. An iPhone 17 Pro can fine-tune a 3B-parameter LLM to a typical user within one battery charge, and the resulting adapters improve personalization as much as adapters trained on a server. Sustained training throttles the phone to about half it…",
+          "publishedAt": "2026-10-06T04:00:00.000Z",
+          "sourceImage": null,
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure",
+          "source_text_scope": "abstract",
+          "ai_topic_score": 1,
+          "ai_topic_reasons": [
+            "llm",
+            "llms",
+            "inference"
+          ],
+          "category": "Cooling & Facility Engineering",
+          "primary_category": "Cooling & Facility Engineering",
+          "secondary_category": "Thermal design and rack density",
+          "infrastructure_layer": "Cooling",
+          "affected_stakeholders": [
+            "operators",
+            "equipment vendors",
+            "data center developers",
+            "enterprise IT"
+          ],
+          "article_type": "Supply Chain",
+          "urgency_score": 0.25,
+          "taxonomy_confidence": 0.58,
+          "taxonomy_reasons": [
+            "thermal"
+          ],
+          "direct_ai_infrastructure_relevance": 0,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0,
+          "semiconductor_relevance": 0,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0.3,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.209,
+          "infrastructure_relevance_tier": "archive_only",
+          "infrastructure_relevance_action": "archive_only",
+          "infrastructure_relevance_reasons": [
+            "cooling_relevance:0.30(thermal)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 0,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0,
+            "semiconductor_relevance": 0,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0.3,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.209,
+            "infrastructure_relevance_tier": "archive_only",
+            "infrastructure_relevance_action": "archive_only",
+            "infrastructure_relevance_reasons": [
+              "cooling_relevance:0.30(thermal)"
+            ],
+            "infrastructureRelevanceAction": "archive_only",
+            "articlePagePublished": false,
+            "homepagePublished": false,
+            "archiveOnly": true,
+            "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
+          },
+          "score": 70
+        },
+        {
+          "id": "3ed5cfaabfc5464d",
+          "sourceRegistryId": "google-cloud-ai-releases",
+          "source": "Google Cloud AI",
+          "url": "https://docs.cloud.google.com/gemini-enterprise-agent-platform/release-notes#October_05_2026",
+          "title": "Google Cloud AI: CodeMender updates (v0.12.0)",
+          "snippet": "Fixed CodeMender updates (v0.12.0) This release introduces updates to CodeMender: Hidden file scanning : Added the --include-hidden flag to cm find (or include_hidden under scan in config.yaml ) to include hidden direct…",
+          "contentText": "Fixed CodeMender updates (v0.12.0) This release introduces updates to CodeMender: Hidden file scanning : Added the --include-hidden flag to cm find (or include_hidden under scan in config.yaml ) to include hidden directories and files, such as .github/ and .config/ , in vulnerability scans. Larger file support : Raised the default file discovery size limit ( max_file_size_kb ) from 500 KB to 2 MiB so cm find no longer skips large source files. Existing configurations that use the previous 500 KB default are upgraded automatically, and --deep and --diff scans can now read beyond the inline preview of files larger than 64 KB. Report output for every scan mode : cm find --output now writes the scan report for standard, --deep , --parallel , and --diff scans. Scoped fixes : cm fix now prevent…",
+          "publishedAt": "2026-10-05T07:00:00.000Z",
+          "sourceImage": null,
+          "region": "US",
+          "language": "en",
+          "defaultCategory": "AI Infrastructure (GPU/Neocloud)",
+          "ai_topic_score": 0.483,
+          "ai_topic_reasons": [
+            "gemini",
+            "ai"
+          ],
+          "category": "AI Infrastructure",
+          "primary_category": "AI Infrastructure",
+          "secondary_category": "GPU clusters and deployment readiness",
+          "infrastructure_layer": "Compute",
+          "affected_stakeholders": [
+            "operators",
+            "hyperscalers",
+            "cloud buyers",
+            "investors"
+          ],
+          "article_type": "Product / Platform Update",
+          "urgency_score": 0.28,
+          "taxonomy_confidence": 0.65,
+          "taxonomy_reasons": [
+            "ai infrastructure",
+            "neocloud"
+          ],
+          "direct_ai_infrastructure_relevance": 0.22,
+          "data_center_relevance": 0,
+          "cloud_capacity_relevance": 0.324,
+          "semiconductor_relevance": 0,
+          "power_grid_relevance": 0,
+          "cooling_relevance": 0,
+          "capital_markets_relevance": 0,
+          "enterprise_ai_infrastructure_relevance": 0,
+          "infrastructure_relevance_score": 0.306,
+          "infrastructure_relevance_tier": "archive_only",
+          "infrastructure_relevance_action": "archive_only",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:0.22",
+            "cloud_capacity_relevance:0.32(google cloud)"
+          ],
+          "infrastructure_relevance": {
+            "direct_ai_infrastructure_relevance": 0.22,
+            "data_center_relevance": 0,
+            "cloud_capacity_relevance": 0.324,
+            "semiconductor_relevance": 0,
+            "power_grid_relevance": 0,
+            "cooling_relevance": 0,
+            "capital_markets_relevance": 0,
+            "enterprise_ai_infrastructure_relevance": 0,
+            "infrastructure_relevance_score": 0.306,
+            "infrastructure_relevance_tier": "archive_only",
+            "infrastructure_relevance_action": "archive_only",
+            "infrastructure_relevance_reasons": [
+              "direct_ai_infrastructure_relevance:0.22",
+              "cloud_capacity_relevance:0.32(google cloud)"
+            ],
+            "infrastructureRelevanceAction": "archive_only",
+            "articlePagePublished": false,
+            "homepagePublished": false,
+            "archiveOnly": true,
+            "archiveOnlyReason": "infrastructure_relevance_below_signal_threshold"
+          },
+          "score": 42
+        }
+      ],
+      "curatedIds": [
+        "5f46b11788153b65",
+        "6beffabd14bbab23",
+        "4588d7c08ebae066",
+        "839cc75597b4bcc8",
+        "8201c7a1ee43cf94",
+        "23d67cc0547316b9",
+        "f803adcd035efb55",
+        "3ed5cfaabfc5464d"
+      ],
+      "publishedIds": [
+        "5f46b11788153b65",
+        "6beffabd14bbab23",
+        "4588d7c08ebae066"
+      ],
+      "visibleIds": [],
+      "slotPublications": {
+        "0": true
+      }
     }
   },
   "runHistory": [
-    {
-      "at": "2026-08-30T01:14:02.444Z",
-      "day": "2026-08-30",
-      "slot": 1,
-      "publishedCount": 0,
-      "authoredColumn": {
-        "published": false,
-        "reason": "no_qualifying_story"
-      },
-      "llmUsage": {
-        "calls": 1,
-        "failures": 0,
-        "prompt_tokens": 102,
-        "completion_tokens": 6,
-        "total_tokens": 108,
-        "token_budget": 60000,
-        "call_budget": 40
-      }
-    },
     {
       "at": "2026-08-30T12:50:11.866Z",
       "day": "2026-08-30",
@@ -53802,11 +54405,109 @@
         "token_budget": 120000,
         "call_budget": 60
       }
+    },
+    {
+      "at": "2026-10-06T17:12:20.309Z",
+      "day": "2026-10-07",
+      "slot": 0,
+      "publishedCount": 0,
+      "signalCardCount": 0,
+      "archiveOnlyCount": 3,
+      "processedIds": [
+        "5f46b11788153b65",
+        "6beffabd14bbab23",
+        "4588d7c08ebae066"
+      ],
+      "blockedCount": 0,
+      "blockedItems": [],
+      "archiveOnlyItems": [
+        {
+          "id": "5f46b11788153b65",
+          "title": "MOLT: A Fine-Grained GPU Memory Sharing System for LLM Serving with Opportunistic Fine-Tuning",
+          "infrastructure_relevance_score": 0.368,
+          "infrastructure_relevance_tier": "archive_only",
+          "infrastructure_relevance_action": "archive_only",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:0.22",
+            "data_center_relevance:0.34(colocation)",
+            "semiconductor_relevance:0.30(gpu)"
+          ],
+          "extraction_quality_score": 1,
+          "source_domain_adapter": "arxiv",
+          "content_length": 1433,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": false,
+          "repetition_block_reasons": [],
+          "repetition_check": null,
+          "expert_insight_complete": false,
+          "expert_insight_missing_fields": [
+            "named_companies"
+          ],
+          "reason": "infrastructure_relevance_below_signal_threshold"
+        },
+        {
+          "id": "6beffabd14bbab23",
+          "title": "Characterizing Parallelism Strategies in LLM Inference: Fundamental Compute-Communication Trade-offs",
+          "infrastructure_relevance_score": 0.246,
+          "infrastructure_relevance_tier": "archive_only",
+          "infrastructure_relevance_action": "archive_only",
+          "infrastructure_relevance_reasons": [
+            "direct_ai_infrastructure_relevance:0.22",
+            "semiconductor_relevance:0.22(gpu)"
+          ],
+          "extraction_quality_score": 1,
+          "source_domain_adapter": "arxiv",
+          "content_length": 1846,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": false,
+          "repetition_block_reasons": [],
+          "repetition_check": null,
+          "expert_insight_complete": false,
+          "expert_insight_missing_fields": [
+            "concrete_facts",
+            "named_companies"
+          ],
+          "reason": "infrastructure_relevance_below_signal_threshold"
+        },
+        {
+          "id": "4588d7c08ebae066",
+          "title": "Google Cloud Compute Engine: Generally available : Z3 machine types that have 8 to 44 vCPUs can use Hyperdisk Balanced High Availability volumes to synchronously replic…",
+          "infrastructure_relevance_score": 0.263,
+          "infrastructure_relevance_tier": "archive_only",
+          "infrastructure_relevance_action": "archive_only",
+          "infrastructure_relevance_reasons": [
+            "cloud_capacity_relevance:0.32(google cloud)"
+          ],
+          "extraction_quality_score": 0.31,
+          "source_domain_adapter": "googlecloud",
+          "content_length": 236,
+          "boilerplate_ratio": 0,
+          "repetition_blocked": false,
+          "repetition_block_reasons": [],
+          "repetition_check": null,
+          "expert_insight_complete": true,
+          "expert_insight_missing_fields": [],
+          "reason": "infrastructure_relevance_below_signal_threshold"
+        }
+      ],
+      "authoredColumn": {
+        "published": false,
+        "reason": "min_gap_not_reached:0.4h<4h"
+      },
+      "llmUsage": {
+        "calls": 4,
+        "failures": 0,
+        "prompt_tokens": 0,
+        "completion_tokens": 0,
+        "total_tokens": 0,
+        "token_budget": 120000,
+        "call_budget": 60
+      }
     }
   ],
-  "lastRunAt": "2026-10-05T21:55:48.663Z",
+  "lastRunAt": "2026-10-06T17:12:20.309Z",
   "authored": {
-    "lastColumnAt": "2026-10-04T22:05:30.235Z",
+    "lastColumnAt": "2026-10-06T16:48:10.001Z",
     "columnsByDay": {
       "2026-08-17": 2,
       "2026-08-18": 1,
@@ -53819,7 +54520,8 @@
       "2026-08-28": 2,
       "2026-09-08": 1,
       "2026-09-16": 1,
-      "2026-10-04": 2
+      "2026-10-04": 2,
+      "2026-10-06": 1
     },
     "recentStoryKeys": [
       {
@@ -53829,97 +54531,82 @@
       {
         "key": "https://epoch.ai/data-insights/malaysia-china-chip-smuggling",
         "at": "2026-10-04T22:05:30.235Z"
+      },
+      {
+        "key": "https://kubernetes.io/blog/2026/10/05/scaling-kubernetes-workloads-with-node-swap/",
+        "at": "2026-10-06T16:48:10.001Z"
       }
     ],
-    "lastFailure": {
-      "at": "2026-10-05T21:55:48.663Z",
-      "stage": "draft",
-      "detail": "OpenRouter request failed: 402 model=anthropic/claude-sonnet-4.5 {\"error\":{\"message\":\"This request would exceed your available credits given your current in-flight requests. Retry after in-flight requests settle, or add credits.\",\"code\":402,\"metadata\":{\"reason\":\"in_flight_budget_exhau",
-      "attempts": [
-        {
-          "id": "8c015ec83cbadc52",
-          "outcome": "voice:OpenRouter request failed: 402 model=anthropic/claude-sonnet-4.5 {\"error\":{\"message\":\"This request would exceed your available credits given your current in-flight requests. Retry after in-flight requests settle, or add credits.\",\"code\":402,\"metadata\":{\"reason\":\"in_flight_budget_exhau"
-        },
-        {
-          "id": "d4f156c55959b5d6",
-          "outcome": "draft:OpenRouter request failed: 402 model=anthropic/claude-sonnet-4.5 {\"error\":{\"message\":\"This request would exceed your available credits given your current in-flight requests. Retry after in-flight requests settle, or add credits.\",\"code\":402,\"metadata\":{\"reason\":\"in_flight_budget_exhau"
-        }
-      ]
-    },
+    "lastFailure": null,
     "lastSelection": {
-      "at": "2026-10-05T21:55:48.663Z",
+      "at": "2026-10-06T16:48:10.001Z",
       "outcome": "selected",
-      "selectedId": "8c015ec83cbadc52",
+      "selectedId": "d4f156c55959b5d6",
       "diagnostics": {
-        "total_candidates": 98,
+        "total_candidates": 45,
         "counts": {
           "invalid_identity": 0,
           "text_rights_unauthorized": 0,
-          "abstract_only": 50,
-          "extraction_ineligible": 30,
+          "abstract_only": 24,
+          "extraction_ineligible": 1,
           "expert_insight_incomplete": 0,
-          "relevance_below_threshold": 13,
-          "already_covered": 3,
-          "stale_story": 0,
+          "relevance_below_threshold": 4,
+          "already_covered": 2,
+          "stale_story": 13,
           "digest_roundup": 0,
           "unclean_evidence": 0,
           "insufficient_facts": 0,
-          "qualifying": 2
+          "qualifying": 1
         },
-        "selected_id": "8c015ec83cbadc52",
-        "selected_beat": "ai_business",
+        "selected_id": "d4f156c55959b5d6",
+        "selected_beat": "data_center_operators",
         "selection_reason": "highest_evidence_score",
         "by_beat": {
           "ai_business": {
-            "candidates": 15,
-            "qualifying": 1,
+            "candidates": 5,
+            "qualifying": 0,
             "rejections": {
-              "abstract_only": 10,
-              "extraction_ineligible": 3,
-              "relevance_below_threshold": 1
+              "abstract_only": 5
             }
           },
           "data_center_operators": {
-            "candidates": 7,
+            "candidates": 5,
             "qualifying": 1,
             "rejections": {
-              "abstract_only": 2,
-              "extraction_ineligible": 3,
-              "relevance_below_threshold": 1
+              "stale_story": 3,
+              "abstract_only": 1
             }
           },
           "compute_hardware": {
-            "candidates": 25,
-            "qualifying": 0,
-            "rejections": {
-              "abstract_only": 24,
-              "already_covered": 1
-            }
-          },
-          "power_cooling": {
-            "candidates": 35,
-            "qualifying": 0,
-            "rejections": {
-              "relevance_below_threshold": 9,
-              "abstract_only": 10,
-              "extraction_ineligible": 16
-            }
-          },
-          "policy": {
-            "candidates": 6,
-            "qualifying": 0,
-            "rejections": {
-              "already_covered": 2,
-              "extraction_ineligible": 4
-            }
-          },
-          "other_infrastructure": {
             "candidates": 10,
             "qualifying": 0,
             "rejections": {
-              "abstract_only": 4,
-              "relevance_below_threshold": 2,
-              "extraction_ineligible": 4
+              "abstract_only": 10
+            }
+          },
+          "power_cooling": {
+            "candidates": 23,
+            "qualifying": 0,
+            "rejections": {
+              "already_covered": 1,
+              "stale_story": 10,
+              "extraction_ineligible": 1,
+              "relevance_below_threshold": 4,
+              "abstract_only": 7
+            }
+          },
+          "policy": {
+            "candidates": 1,
+            "qualifying": 0,
+            "rejections": {
+              "already_covered": 1
+            }
+          },
+          "other_infrastructure": {
+            "candidates": 1,
+            "qualifying": 0,
+            "rejections": {
+              "abstract_only": 1
             }
           }
         },
@@ -53938,12 +54625,8 @@
       },
       "attempts": [
         {
-          "id": "8c015ec83cbadc52",
-          "outcome": "voice:OpenRouter request failed: 402 model=anthropic/claude-sonnet-4.5 {\"error\":{\"message\":\"This request would exceed your available credits given your current in-flight requests. Retry after in-flight requests settle, or add credits.\",\"code\":402,\"metadata\":{\"reason\":\"in_flight_budget_exhau"
-        },
-        {
           "id": "d4f156c55959b5d6",
-          "outcome": "draft:OpenRouter request failed: 402 model=anthropic/claude-sonnet-4.5 {\"error\":{\"message\":\"This request would exceed your available credits given your current in-flight requests. Retry after in-flight requests settle, or add credits.\",\"code\":402,\"metadata\":{\"reason\":\"in_flight_budget_exhau"
+          "outcome": "published"
         }
       ]
     }

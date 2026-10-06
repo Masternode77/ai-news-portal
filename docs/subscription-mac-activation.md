@@ -2,7 +2,8 @@
 
 ## Release status
 
-In progress. No new trial column has been published and the production
+Local verification complete; production release pending. The accepted trial
+column and its unique native artwork are stored locally. The production
 OpenRouter generation workflow has not yet been retired. The existing
 `compute-current` Mac heartbeat was temporarily paused before its 00:45 KST
 slot to prevent a concurrent writer during activation. Its original prompt,
@@ -59,22 +60,43 @@ complete nonnumeric fact labels now preserve the source statement and its
 qualifiers. A bounded Astra source brief now precedes Fable drafting. Its cited URLs and
 exact quotations are validated, and it separates reported facts, measurement
 groups and intended uses. Final Astra review remains independent of the brief.
-The fresh trial of this complete path is pending.
+The fresh trial of this complete path passed: ten new provider responses,
+including the source brief, Fable drafting/repairs and three independent Astra
+reviews. No cached responses were replayed. The final 1,932-word column has
+five sections, source-summary ratio 0.255, overlap 0.015, zero unsupported
+numeric claims and no repeated sentences. Independent native source review
+also passed for its headline, deck, body and visible figures.
+
+The accepted local column is `col_5be9ec4d110578c9`. Its public source records
+were refreshed with the verified 7,621-character extraction while preserving
+the existing news copy. Local artwork readiness passed before storage. The
+full subscription runner completed successfully with 28 authorized feeds, zero
+feed failures and three Astra-enriched archive-only items. It skipped a second
+column under the existing four-hour gap. A concurrent runner was rejected by
+the shared lock before generation. The unique native artwork is registered as
+`codex/generated`; its source SHA-256 is
+`02a46be2c55b598a52620119278b6ab4ce6c63a62518c16f68b237bc136d4ade`.
+Hero and thumbnail crops were visually checked; hero, thumbnail and OpenGraph
+files exist. This column has no remaining image job or blocked image entry.
+Production publication and resuming the existing heartbeat remain pending.
 
 ## Validation completed so far
 
 - Source extraction and propagation: 71 focused tests passed.
-- Authored column engine: 46 focused tests passed.
+- Authored column engine: 47 focused tests passed.
 - Subscription routing: 41 focused tests passed.
 - Subscription provider: 10 focused tests passed.
-- Earlier full suite: 791 source tests and 22 built-page tests passed, plus
+- Latest full runner: 805 source tests and 22 built-page tests passed, plus
   quality, relevance, taxonomy and repetition checks; 96 pages built.
 - Independent code review approved the heading/source fixes, exact-block
   repairs, unchanged summary scoring, and bounded review retries.
 - A live second runner was rejected by the held common-Git operation lock
   before generation. The outer lock remains owned across activation.
 
-The earlier full suite predates the final stance/figure review refinements and is
-not substituted for final integration validation. Full local runner, final
-source review, unique native artwork, content gate, automation activation and
-production publication remain required.
+The full runner also passed its content gate and final audit tests. After
+image registration, 12 image/readiness regression tests and the complete
+content gate passed again. The rendered column has its five intended section
+headings and unique hero. Source claims, repetition, public images and private
+admin exclusion all passed. The successful heartbeat was recorded only after
+these gates. Independent operational review found no code/config blocker;
+automation activation and production verification remain the release steps.

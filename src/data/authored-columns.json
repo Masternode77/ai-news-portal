@@ -1,5 +1,627 @@
 [
   {
+    "id": "col_5be9ec4d110578c9",
+    "content_origin": "authored",
+    "generation_version": "authored_column_v1",
+    "public_content_tier": "authored_column",
+    "slug": "up-to-3-pod-density-is-a-benchmark-not-a-ram-budget-cut-2026-10-06",
+    "title": "Up to 3× pod density is a benchmark, not a RAM budget cut",
+    "deck": "The Kubernetes Blog reports density gains of up to 3× from Local SSD swap across three workloads. I read that as a pilot case for idle-heavy agent sandboxes, not a cue to shrink memory budgets.",
+    "summary": "The Kubernetes Blog reports density gains of up to 3× from Local SSD swap across three workloads. I read that as a pilot case for idle-heavy agent sandboxes, not a cue t…",
+    "expertLensFull": {
+      "finalHeadline": "Up to 3× pod density is a benchmark, not a RAM budget cut",
+      "metaDescription": "The Kubernetes Blog reports density gains of up to 3× from Local SSD swap across three workloads. I read that as a pilot case for idle-heavy agent sandboxes, not a cue t…",
+      "finalArticleBody": "A kubelet configuration stanza carries most of the weight in the Kubernetes Blog post Scaling Kubernetes Workloads with Node Swap: it tells a node to stop refusing to start when swap is present and to hand pods a limited slice of disk-backed memory. Around that stanza the Kubernetes Blog wraps a benchmark of three workloads, a Linux kernel build, sandboxed headless browsers and isolated Python runtimes, and reports density gains of \"up to 3×, often with little or no latency cost,\" on the premise that memory is \"often the first hard limit a Kubernetes cluster hits\" and that agent pods load heavily to run untrusted code, then sit idle waiting for the next prompt.\n\nI read it more narrowly than the post does. Pilot it where agents genuinely sit idle between prompts, and nowhere else yet. Do not let it trim the RAM in the next server order, and do not assume any particular production fleet will land near the top figure. The reason sits in the post itself. The gain comes from paging out dormant memory, and the supplied extract reports results from the post's own three test workloads and nothing from a production agent fleet. I am committing to that distinction, and I will own it if fleet data later show production agents dormant for as much of their life as the post's intended use case describes.\n\nDormant Memory Is the Lever the Post Leaves Unsized\n\nThe mechanism is plain. The kernel pages memory nobody is touching out to a fast local SSD, and the freed RAM goes to pods doing work. The kernel build in the post marks the boundary: the Kubernetes Blog reports that routing swap to a Local SSD let the build run under a lower container memory limit with no slowdown, in fact faster than the no-swap baseline, while pressing the limit lower still pushed the active working set into swap, produced long I/O waits, and lengthened the run. The post calls swap \"an insurance policy for burst memory, not a replacement for active RAM,\" and I read that line as the decision rule rather than a reassurance. What the post reports for that build is two lower limits and two outcomes, with its own explanation of why the second one slowed. It does not report a working-set measurement for the build, and the supplied extract does not describe the full test conditions behind the pair of runs, so I cannot say what else, if anything, differed between them. The question an operator inherits is how far a given workload's limit can fall before its active memory, rather than its dormant memory, starts reaching disk, and the extract offers only the build's two outcomes as a guide, nothing from any reader's fleet.\n\nThat is why the density figure cannot be lifted off the page and dropped onto a fleet. The Python sweep that produced the top number ran many simultaneous sandboxes on the same data analysis job, and the Kubernetes Blog reports that the node hit a hard RAM limit and failed without swap, then reached the 3× figure with it. The post says agent pods \"typically enter long-tail idle phases,\" which describes the intended use case, and nothing in the supplied extract reports an idle ratio taken from a production agent deployment. That gap is where the decision lives.\n\nTwo readings of the same benchmark lead to opposite procurement calls. In the first, agents really do spend most of their life parked, dormant memory is plentiful, and swap converts wasted RAM into pods, which eventually argues for less memory per node. In the second, a reader's agents keep more of their memory active than the post's description of long-tail idle phases implies, and the fleet sits nearer the slower of the kernel build's two swap results than the faster one. The post cannot tell an operator which fleet it runs, and the supplied extract reports no idle measurement from any deployment. The questions I would want answered first are how much resident memory per sandbox goes untouched across a working day, how much swap-in traffic appears in the busiest concurrent window, and how tail latency moves with pod count on the operator's own nodes. Until those are answered, the figure is a ceiling observed on someone else's hardware.\n\nWhat the Post Blames for Peak Latency\n\nOne of my standing positions is that the binding layer keeps moving and the useful question is which layer sets the schedule this quarter. That is my frame, not something the post tests, and the post's own attribution is narrower than my frame. At the maximum densities it ran, the Kubernetes Blog says the per-pod latency increase is \"driven mainly by pods competing for CPU, not by swap I/O,\" and it repeats that attribution for the Python sandboxes. I read that as an explanation of the latency cost at peak in those runs and nothing more. It does not establish what caps a node once swap is on, and the supplied extract reports no such ceiling. The post also gives no latency figure below peak, saying only that an operator tuning for a latency target would run lower and see \"a proportionally smaller latency cost.\" Proportional to what is the number an operator needs and does not get here.\n\nWho pays for the relocated limit depends on what the fleet already owns. The post's cost argument is that density rises on the same infrastructure, and that holds for the Local SSD-backed node it tested. Whether it holds for a reader's fleet turns on questions the extract does not answer: whether its nodes already have local disk fast enough for this, and whether CPU headroom at the chosen density is already there, given that the post attributes peak latency to CPU contention. If either has to be bought, the cost comparison changes, and nothing in the supplied evidence prices that case. On the swap itself, the extract describes the LimitedSwap setting and says the node rations swap space from idle application memory, but it puts no number on how much local disk to set aside per node, and the supplied extract says nothing about drive wear under sustained paging. I will not invent answers. A pilot should log swap capacity consumed, swap-in traffic and drive health per node before anyone edits a bill of materials.\n\nPilot Ticket Versus RAM Budget\n\nHere are my criteria, stated so they can be checked. I would open a pilot when a fleet runs agent sandboxes with long waits between prompts, when its nodes already have Local SSD, when the latency budget tolerates some CPU contention at the chosen density, and when cgroup v2 is in place, because the Kubernetes Blog says the separate swap accounting that answers the old objection depends on it. The post also instructs that workloads run as Burstable QoS with memory limits set above requests, so the pilot should include that change and watch what it does to OOM behavior. I would leave memory procurement alone until the pilot has measured the fleet's own idle ratio and its latency at the density it would actually run.\n\nTwo things keep me from going further. First, the post lists developer environments, browser testing farms, JVM applications and AI execution runtimes as places swap can \"multiply your density efficiency,\" but the supplied extract reports measurements only for the build, browser and Python cases, and it hands the browser density numbers off to external directories. A recommendation is not a result. Second, the only managed platform the extract names is Google Kubernetes Engine, where the Kubernetes Blog says the configuration is natively supported through Node Memory Swap on Local SSD profiles. That is a statement about where the post says the path is packaged, not a finding about any other provider, and I cannot read a commercial winner out of it. The exposed party is any operator who sizes RAM down on the strength of the headline figure before measuring how much of its own agents' memory is actually dormant. The checkpoint that proves me wrong is published fleet data showing that most of a production agent fleet's resident memory sits dormant between prompts, together with a small latency cost below peak density.\n\nThe Case for Not Waiting\n\nThe strongest case against my caution is that the post answers both historical objections to swap. The Kubernetes Blog reports that node swap reached General Availability in v1.34, that cgroup v2 tracks disk swap on its own so a container's real memory use is no longer unpredictable, and that fast NVMe Local SSDs largely eliminate the latency penalty spinning disks imposed. On that reading the kernel build is a demonstration rather than a caveat, the Python sweep went from a hard failure to the 3× figure on one node, peak latency is attributed to CPU, which an operator controls by running below peak, and the enablement the post describes is a kubelet setting paired with the cloud provider's fast local disk. For an operator whose agents genuinely spend most of their life waiting on a prompt, every day the swap stays off is a day paying for idle RAM, and the post's own premise is that idle resident memory is expensive, so the delay I am asking for is not free either.\n\nI accept all of that for the pilot and none of it for the budget. The same post shows the other side of its own tradeoff: the kernel build it ran finished faster under the first lower limit and over 40% slower under the second, in the Kubernetes Blog's own figures, once the active working set reached swap. Which side of that line a reader's fleet lands on is not something the post can report, because it benchmarked its own three workloads and not anyone else's agents, and the supplied extract gives no working-set measurement an operator could compare against. The post describes enablement as a kubelet setting, and the supplied extract says nothing about reversing it, so a pilot still needs its own exit plan, and the extract does not supply one. Even so, a pilot is a smaller commitment than a memory order, and I would rather make the procurement decision with the fleet's own numbers in hand.\n\nRuntime Directories and Fleet Idle Data\n\nThree observables will move my view. The first is the Agent Sandbox GKE Swap Runtimes directory, which the Kubernetes Blog points to for density metrics under gVisor and Kata. The supplied extract carries no browser density numbers, so whether the stronger isolation runtimes match the default-runtime story is open, and the post's own note that untrusted code often needs stricter isolation than standard namespaces is exactly why that gap matters to me.\n\nThe second is whether the swap-on-local-disk path turns up as a packaged option on managed Kubernetes platforms other than Google Kubernetes Engine, which is the only one the supplied extract names. I do not know what other providers ship, and the extract does not say, so I treat the breadth of practical availability as an open question rather than a Google advantage. The third is whether any operator publishes fleet-level measurements of agent idle time and of latency below peak density, which the post describes as proportionally smaller but did not report. I put the most weight on that one. The feature is real, and the post reports its own slower run alongside its faster ones. The number that decides whether it changes a memory budget has not appeared in anything I have been given, and until it does, the right order is pilot, measure, then procure.",
+      "sourceLink": ""
+    },
+    "author": {
+      "name": "Josh Jiwoon Inn",
+      "slug": "josh-inn",
+      "role": "Founder & Editor, Compute Current",
+      "type": "person"
+    },
+    "publishedAt": "2026-10-06T16:48:10.001Z",
+    "analysisPublishedAt": "2026-10-06T16:48:10.001Z",
+    "updatedAt": "2026-10-06T16:48:10.001Z",
+    "category": "Cloud Capacity",
+    "coverage_beat": "data_center_operators",
+    "primary_category": "Cloud Capacity",
+    "tags": [
+      "kubernetes",
+      "node swap",
+      "nvme",
+      "memory management",
+      "ai sandboxes",
+      "workload density"
+    ],
+    "figures": [
+      {
+        "type": "table",
+        "title": "Up to 3× pod density is a benchmark, not a RAM budget cut",
+        "anchor": 2,
+        "items": [
+          {
+            "label": "Kubernetes support for running nodes with swap enabled reached General Availability in v1.34, and by backing that swap with fast NVMe solid state drives (SSDs), a node can page out dormant memory and pack in far more pods.",
+            "value": null,
+            "unit": "",
+            "display": "",
+            "source": "Kubernetes Blog"
+          },
+          {
+            "label": "The Kubernetes ecosystem has reached a fundamental physical resource constraint: the strict limits of hardware memory versus the growing demand for dynamic, bursty workloads in the new agentic era.",
+            "value": null,
+            "unit": "",
+            "display": "",
+            "source": "Kubernetes Blog"
+          },
+          {
+            "label": "Memory is often the first hard limit a Kubernetes cluster hits.",
+            "value": null,
+            "unit": "",
+            "display": "",
+            "source": "Kubernetes Blog"
+          }
+        ],
+        "source_note": "Kubernetes Blog"
+      }
+    ],
+    "sources": [
+      {
+        "name": "Kubernetes Blog",
+        "url": "https://kubernetes.io/blog/2026/10/05/scaling-kubernetes-workloads-with-node-swap/",
+        "title": "Scaling Kubernetes Workloads with Node Swap",
+        "publishedAt": "2026-10-05T18:00:00.000Z"
+      }
+    ],
+    "based_on_article_ids": [
+      "d4f156c55959b5d6"
+    ],
+    "story_key": "https://kubernetes.io/blog/2026/10/05/scaling-kubernetes-workloads-with-node-swap/",
+    "stance": {
+      "thesis": "The Kubernetes Blog reports density gains of up to 3× from Local SSD swap across three workloads. I read that as a pilot case for idle-heavy agent sandboxes, not a cue to shrink memory budgets.",
+      "angle": "Up to 3× pod density is a benchmark, not a RAM budget cut",
+      "standing_position_ids": [
+        "migrating-bottleneck"
+      ]
+    },
+    "authored_quality": {
+      "ok": true,
+      "generatedAt": "2026-10-06T16:48:10.001Z",
+      "model": "claude-fable-5-1",
+      "attempts": 4,
+      "metrics": {
+        "chars": 11253,
+        "words": 1932,
+        "sections": 5,
+        "paragraphs": 13,
+        "human_style_score": 0.84,
+        "insight_density_score": 0.895,
+        "source_summary_ratio": 0.255,
+        "copyright_overlap_score": 0.015,
+        "unsupported_claim_count": 0,
+        "repeated_sentence_ratio": 0,
+        "heading_sequence_similarity": 0,
+        "conclusion_similarity": 0.227,
+        "thesis_overlap": 0.05,
+        "heading_reuse_max": 0.333,
+        "lead_reuse_max": 0.023,
+        "figure_count": 1
+      },
+      "cross_review": {
+        "model": "gpt-6-astra",
+        "approved": true,
+        "source_checks": [
+          {
+            "claim": "Up to 3× pod density is a benchmark, not a RAM budget cut",
+            "source_url": "https://kubernetes.io/blog/2026/10/05/scaling-kubernetes-workloads-with-node-swap/",
+            "evidence_quote": "This post explains how we benchmarked that approach across three workloads, including CI/CD kernel builds, sandboxed headless browsers, and isolated Python runtimes; we found density gains of up to 3×, often with little or no latency cost.",
+            "supported": true
+          },
+          {
+            "claim": "The Kubernetes Blog reports density gains of up to 3× from Local SSD swap across three workloads.",
+            "source_url": "https://kubernetes.io/blog/2026/10/05/scaling-kubernetes-workloads-with-node-swap/",
+            "evidence_quote": "To quantify the performance boundaries and cost-saving potential of Local SSD-backed node swap, this analysis covers three distinct workload categories: a Traditional Build Workload for CI/CD pipelines, High-Density Browser Sandboxes, and Isolated Python Sandboxes.",
+            "supported": true
+          },
+          {
+            "claim": "Scaling Kubernetes Workloads with Node Swap",
+            "source_url": "https://kubernetes.io/blog/2026/10/05/scaling-kubernetes-workloads-with-node-swap/",
+            "evidence_quote": "Scaling Kubernetes Workloads with Node Swap",
+            "supported": true
+          },
+          {
+            "claim": "it tells a node to stop refusing to start when swap is present and to hand pods a limited slice of disk-backed memory.",
+            "source_url": "https://kubernetes.io/blog/2026/10/05/scaling-kubernetes-workloads-with-node-swap/",
+            "evidence_quote": "You enable it via the kubelet configuration: kind : KubeletConfiguration apiVersion : kubelet.config.k8s.io/v1beta1 failSwapOn : false memorySwap : swapBehavior : LimitedSwap",
+            "supported": true
+          },
+          {
+            "claim": "a benchmark of three workloads, a Linux kernel build, sandboxed headless browsers and isolated Python runtimes",
+            "source_url": "https://kubernetes.io/blog/2026/10/05/scaling-kubernetes-workloads-with-node-swap/",
+            "evidence_quote": "This post explains how we benchmarked that approach across three workloads, including CI/CD kernel builds, sandboxed headless browsers, and isolated Python runtimes; we found density gains of up to 3×, often with little or no latency cost.",
+            "supported": true
+          },
+          {
+            "claim": "up to 3×, often with little or no latency cost,",
+            "source_url": "https://kubernetes.io/blog/2026/10/05/scaling-kubernetes-workloads-with-node-swap/",
+            "evidence_quote": "we found density gains of up to 3×, often with little or no latency cost.",
+            "supported": true
+          },
+          {
+            "claim": "often the first hard limit a Kubernetes cluster hits",
+            "source_url": "https://kubernetes.io/blog/2026/10/05/scaling-kubernetes-workloads-with-node-swap/",
+            "evidence_quote": "Memory is often the first hard limit a Kubernetes cluster hits.",
+            "supported": true
+          },
+          {
+            "claim": "agent pods load heavily to run untrusted code, then sit idle waiting for the next prompt.",
+            "source_url": "https://kubernetes.io/blog/2026/10/05/scaling-kubernetes-workloads-with-node-swap/",
+            "evidence_quote": "These agentic pods require large memory footprints to initialize and execute untrusted code. However, after their burst of activity, they typically enter long-tail idle phases waiting for user prompts.",
+            "supported": true
+          },
+          {
+            "claim": "The gain comes from paging out dormant memory",
+            "source_url": "https://kubernetes.io/blog/2026/10/05/scaling-kubernetes-workloads-with-node-swap/",
+            "evidence_quote": "Enabling Local SSD swap offloaded dormant anonymous memory, freeing up physical RAM and preserving the node's page cache.",
+            "supported": true
+          },
+          {
+            "claim": "the supplied extract reports results from the post's own three test workloads and nothing from a production agent fleet.",
+            "source_url": "https://kubernetes.io/blog/2026/10/05/scaling-kubernetes-workloads-with-node-swap/",
+            "evidence_quote": "To quantify the performance boundaries and cost-saving potential of Local SSD-backed node swap, this analysis covers three distinct workload categories: a Traditional Build Workload for CI/CD pipelines, High-Density Browser Sandboxes, and Isolated Python Sandboxes.",
+            "supported": true
+          },
+          {
+            "claim": "The kernel pages memory nobody is touching out to a fast local SSD, and the freed RAM goes to pods doing work.",
+            "source_url": "https://kubernetes.io/blog/2026/10/05/scaling-kubernetes-workloads-with-node-swap/",
+            "evidence_quote": "Fast swap offloads the dormant states of idle agents, allowing you to increase pod density and node utilization on the same infrastructure without compromising security boundaries.",
+            "supported": true
+          },
+          {
+            "claim": "routing swap to a Local SSD let the build run under a lower container memory limit with no slowdown, in fact faster than the no-swap baseline, while pressing the limit lower still pushed the active working set into swap, produced long I/O waits, and lengthened the run.",
+            "source_url": "https://kubernetes.io/blog/2026/10/05/scaling-kubernetes-workloads-with-node-swap/",
+            "evidence_quote": "Routing swap to a Local SSD cut the container memory limit by 50% to 300 MB without incurring any execution slowdown (in fact, it ran cleanly in 374s vs the baseline 433s). However, as an explicit tradeoff, compressing the limit further to 200 MB forced the active working set into swap, causing long I/O wait times and increasing execution time by over 40%.",
+            "supported": true
+          },
+          {
+            "claim": "an insurance policy for burst memory, not a replacement for active RAM,",
+            "source_url": "https://kubernetes.io/blog/2026/10/05/scaling-kubernetes-workloads-with-node-swap/",
+            "evidence_quote": "This reinforces that swap serves as an insurance policy for burst memory, not a replacement for active RAM.",
+            "supported": true
+          },
+          {
+            "claim": "What the post reports for that build is two lower limits and two outcomes, with its own explanation of why the second one slowed.",
+            "source_url": "https://kubernetes.io/blog/2026/10/05/scaling-kubernetes-workloads-with-node-swap/",
+            "evidence_quote": "Routing swap to a Local SSD cut the container memory limit by 50% to 300 MB without incurring any execution slowdown (in fact, it ran cleanly in 374s vs the baseline 433s). However, as an explicit tradeoff, compressing the limit further to 200 MB forced the active working set into swap, causing long I/O wait times and increasing execution time by over 40%.",
+            "supported": true
+          },
+          {
+            "claim": "It does not report a working-set measurement for the build, and the supplied extract does not describe the full test conditions behind the pair of runs, so I cannot say what else, if anything, differed between them.",
+            "source_url": "https://kubernetes.io/blog/2026/10/05/scaling-kubernetes-workloads-with-node-swap/",
+            "evidence_quote": "On a baseline node without swap, the minimum memory limit to prevent an OOM crash during compilation was 600 MB. Routing swap to a Local SSD cut the container memory limit by 50% to 300 MB without incurring any execution slowdown (in fact, it ran cleanly in 374s vs the baseline 433s). However, as an explicit tradeoff, compressing the limit further to 200 MB forced the active working set into swap, causing long I/O wait times and increasing execution time by over 40%.",
+            "supported": true
+          },
+          {
+            "claim": "the extract offers only the build's two outcomes as a guide, nothing from any reader's fleet.",
+            "source_url": "https://kubernetes.io/blog/2026/10/05/scaling-kubernetes-workloads-with-node-swap/",
+            "evidence_quote": "Routing swap to a Local SSD cut the container memory limit by 50% to 300 MB without incurring any execution slowdown (in fact, it ran cleanly in 374s vs the baseline 433s). However, as an explicit tradeoff, compressing the limit further to 200 MB forced the active working set into swap, causing long I/O wait times and increasing execution time by over 40%.",
+            "supported": true
+          },
+          {
+            "claim": "The Python sweep that produced the top number ran many simultaneous sandboxes on the same data analysis job",
+            "source_url": "https://kubernetes.io/blog/2026/10/05/scaling-kubernetes-workloads-with-node-swap/",
+            "evidence_quote": "This sweep deployed simultaneous Python sandbox sessions analyzing 5 million rows of data from the MovieLens 20M dataset, requiring a ≃375 MiB resident memory footprint per execution.",
+            "supported": true
+          },
+          {
+            "claim": "the node hit a hard RAM limit and failed without swap, then reached the 3× figure with it.",
+            "source_url": "https://kubernetes.io/blog/2026/10/05/scaling-kubernetes-workloads-with-node-swap/",
+            "evidence_quote": "Without swap, heavy concurrent bursts exhausted physical memory, causing the node to hit a hard RAM limit and fail at 80 concurrent sessions. Enabling Local SSD swap offloaded dormant anonymous memory, freeing up physical RAM and preserving the node's page cache. This allowed the node to scale to 240 concurrently isolated Python sandboxes—a 3× density improvement.",
+            "supported": true
+          },
+          {
+            "claim": "typically enter long-tail idle phases,",
+            "source_url": "https://kubernetes.io/blog/2026/10/05/scaling-kubernetes-workloads-with-node-swap/",
+            "evidence_quote": "However, after their burst of activity, they typically enter long-tail idle phases waiting for user prompts.",
+            "supported": true
+          },
+          {
+            "claim": "nothing in the supplied extract reports an idle ratio taken from a production agent deployment.",
+            "source_url": "https://kubernetes.io/blog/2026/10/05/scaling-kubernetes-workloads-with-node-swap/",
+            "evidence_quote": "These agentic pods require large memory footprints to initialize and execute untrusted code. However, after their burst of activity, they typically enter long-tail idle phases waiting for user prompts. Keeping this idle state in physical RAM caps cluster density and makes AI infrastructure expensive to run.",
+            "supported": true
+          },
+          {
+            "claim": "In the first, agents really do spend most of their life parked, dormant memory is plentiful, and swap converts wasted RAM into pods, which eventually argues for less memory per node.",
+            "source_url": "https://kubernetes.io/blog/2026/10/05/scaling-kubernetes-workloads-with-node-swap/",
+            "evidence_quote": "Fast swap offloads the dormant states of idle agents, allowing you to increase pod density and node utilization on the same infrastructure without compromising security boundaries.",
+            "supported": true
+          },
+          {
+            "claim": "In the second, a reader's agents keep more of their memory active than the post's description of long-tail idle phases implies, and the fleet sits nearer the slower of the kernel build's two swap results than the faster one.",
+            "source_url": "https://kubernetes.io/blog/2026/10/05/scaling-kubernetes-workloads-with-node-swap/",
+            "evidence_quote": "However, as an explicit tradeoff, compressing the limit further to 200 MB forced the active working set into swap, causing long I/O wait times and increasing execution time by over 40%. This reinforces that swap serves as an insurance policy for burst memory, not a replacement for active RAM.",
+            "supported": true
+          },
+          {
+            "claim": "the figure is a ceiling observed on someone else's hardware.",
+            "source_url": "https://kubernetes.io/blog/2026/10/05/scaling-kubernetes-workloads-with-node-swap/",
+            "evidence_quote": "This post explains how we benchmarked that approach across three workloads, including CI/CD kernel builds, sandboxed headless browsers, and isolated Python runtimes; we found density gains of up to 3×, often with little or no latency cost.",
+            "supported": true
+          },
+          {
+            "claim": "At the maximum densities it ran, the Kubernetes Blog says the per-pod latency increase is \"driven mainly by pods competing for CPU, not by swap I/O,\" and it repeats that attribution for the Python sandboxes.",
+            "source_url": "https://kubernetes.io/blog/2026/10/05/scaling-kubernetes-workloads-with-node-swap/",
+            "evidence_quote": "At these maximum densities, the per-pod latency increase is driven mainly by pods competing for CPU, not by swap I/O.",
+            "supported": true
+          },
+          {
+            "claim": "it repeats that attribution for the Python sandboxes.",
+            "source_url": "https://kubernetes.io/blog/2026/10/05/scaling-kubernetes-workloads-with-node-swap/",
+            "evidence_quote": "As with the browser workloads, the latency rise at peak density comes mainly from the sandboxes competing for CPU rather than from swap itself.",
+            "supported": true
+          },
+          {
+            "claim": "It does not establish what caps a node once swap is on, and the supplied extract reports no such ceiling.",
+            "source_url": "https://kubernetes.io/blog/2026/10/05/scaling-kubernetes-workloads-with-node-swap/",
+            "evidence_quote": "This allowed the node to scale to 240 concurrently isolated Python sandboxes—a 3× density improvement. As with the browser workloads, the latency rise at peak density comes mainly from the sandboxes competing for CPU rather than from swap itself.",
+            "supported": true
+          },
+          {
+            "claim": "The post also gives no latency figure below peak, saying only that an operator tuning for a latency target would run lower and see \"a proportionally smaller latency cost.\"",
+            "source_url": "https://kubernetes.io/blog/2026/10/05/scaling-kubernetes-workloads-with-node-swap/",
+            "evidence_quote": "An operator tuning for a specific latency target would run at a lower density than the peak numbers here and see a proportionally smaller latency cost.",
+            "supported": true
+          },
+          {
+            "claim": "The post's cost argument is that density rises on the same infrastructure, and that holds for the Local SSD-backed node it tested.",
+            "source_url": "https://kubernetes.io/blog/2026/10/05/scaling-kubernetes-workloads-with-node-swap/",
+            "evidence_quote": "Fast swap offloads the dormant states of idle agents, allowing you to increase pod density and node utilization on the same infrastructure without compromising security boundaries.",
+            "supported": true
+          },
+          {
+            "claim": "Whether it holds for a reader's fleet turns on questions the extract does not answer: whether its nodes already have local disk fast enough for this, and whether CPU headroom at the chosen density is already there, given that the post attributes peak latency to CPU contention.",
+            "source_url": "https://kubernetes.io/blog/2026/10/05/scaling-kubernetes-workloads-with-node-swap/",
+            "evidence_quote": "Pairing this upstream configuration with your cloud provider's high-speed local disk gives you dynamic memory balancing.",
+            "supported": true
+          },
+          {
+            "claim": "If either has to be bought, the cost comparison changes, and nothing in the supplied evidence prices that case.",
+            "source_url": "https://kubernetes.io/blog/2026/10/05/scaling-kubernetes-workloads-with-node-swap/",
+            "evidence_quote": "Fast swap offloads the dormant states of idle agents, allowing you to increase pod density and node utilization on the same infrastructure without compromising security boundaries.",
+            "supported": true
+          },
+          {
+            "claim": "the extract describes the LimitedSwap setting and says the node rations swap space from idle application memory",
+            "source_url": "https://kubernetes.io/blog/2026/10/05/scaling-kubernetes-workloads-with-node-swap/",
+            "evidence_quote": "The node automatically rations fast swap space based on idle application memory usage while keeping active processes responsive.",
+            "supported": true
+          },
+          {
+            "claim": "it puts no number on how much local disk to set aside per node, and the supplied extract says nothing about drive wear under sustained paging.",
+            "source_url": "https://kubernetes.io/blog/2026/10/05/scaling-kubernetes-workloads-with-node-swap/",
+            "evidence_quote": "You enable it via the kubelet configuration: kind : KubeletConfiguration apiVersion : kubelet.config.k8s.io/v1beta1 failSwapOn : false memorySwap : swapBehavior : LimitedSwap Pairing this upstream configuration with your cloud provider's high-speed local disk gives you dynamic memory balancing.",
+            "supported": true
+          },
+          {
+            "claim": "cgroup v2 is in place, because the Kubernetes Blog says the separate swap accounting that answers the old objection depends on it.",
+            "source_url": "https://kubernetes.io/blog/2026/10/05/scaling-kubernetes-workloads-with-node-swap/",
+            "evidence_quote": "Kubernetes' swap support resolves this by relying on cgroup v2, whose separate swap accounting tracks disk swap on its own.",
+            "supported": true
+          },
+          {
+            "claim": "The post also instructs that workloads run as Burstable QoS with memory limits set above requests",
+            "source_url": "https://kubernetes.io/blog/2026/10/05/scaling-kubernetes-workloads-with-node-swap/",
+            "evidence_quote": "To get the benefits, configure your workloads with Burstable QoS: set your container's memory limits higher than its requests.",
+            "supported": true
+          },
+          {
+            "claim": "the post lists developer environments, browser testing farms, JVM applications and AI execution runtimes as places swap can \"multiply your density efficiency,\"",
+            "source_url": "https://kubernetes.io/blog/2026/10/05/scaling-kubernetes-workloads-with-node-swap/",
+            "evidence_quote": "If you manage Kubernetes infrastructure for developer environments, browser testing farms, JVM applications, or AI execution runtimes, leveraging Local SSD swap can multiply your density efficiency.",
+            "supported": true
+          },
+          {
+            "claim": "the supplied extract reports measurements only for the build, browser and Python cases, and it hands the browser density numbers off to external directories.",
+            "source_url": "https://kubernetes.io/blog/2026/10/05/scaling-kubernetes-workloads-with-node-swap/",
+            "evidence_quote": "To quantify the performance boundaries and cost-saving potential of Local SSD-backed node swap, this analysis covers three distinct workload categories: a Traditional Build Workload for CI/CD pipelines, High-Density Browser Sandboxes, and Isolated Python Sandboxes.",
+            "supported": true
+          },
+          {
+            "claim": "it hands the browser density numbers off to external directories.",
+            "source_url": "https://kubernetes.io/blog/2026/10/05/scaling-kubernetes-workloads-with-node-swap/",
+            "evidence_quote": "The raw logs and testing methodologies for the default runtime are available in the Agent Sandbox GKE Swap directory . At these maximum densities, the per-pod latency increase is driven mainly by pods competing for CPU, not by swap I/O. An operator tuning for a specific latency target would run at a lower density than the peak numbers here and see a proportionally smaller latency cost. For a comprehensive architectural breakdown and density metrics for gVisor and Kata, see the Agent Sandbox GKE Swap Runtimes directory .",
+            "supported": true
+          },
+          {
+            "claim": "the only managed platform the extract names is Google Kubernetes Engine, where the Kubernetes Blog says the configuration is natively supported through Node Memory Swap on Local SSD profiles.",
+            "source_url": "https://kubernetes.io/blog/2026/10/05/scaling-kubernetes-workloads-with-node-swap/",
+            "evidence_quote": "For example, this is natively supported on Google Kubernetes Engine via Node Memory Swap configured on Local SSD profiles.",
+            "supported": true
+          },
+          {
+            "claim": "the post answers both historical objections to swap.",
+            "source_url": "https://kubernetes.io/blog/2026/10/05/scaling-kubernetes-workloads-with-node-swap/",
+            "evidence_quote": "Historically, swap was discouraged in Kubernetes for two reasons. The first was memory accounting. Under cgroup v1, the controls treated memory and swap as a single combined limit rather than letting operators set an independent limit for disk swap. Without independent tracking, a process could page large amounts of anonymous memory out to disk, which made a container's real memory usage unpredictable and hard to isolate. Kubernetes' swap support resolves this by relying on cgroup v2, whose separate swap accounting tracks disk swap on its own. The second reason was the latency penalty of paging to slow spinning disks, which fast NVMe Local SSDs largely eliminate.",
+            "supported": true
+          },
+          {
+            "claim": "node swap reached General Availability in v1.34",
+            "source_url": "https://kubernetes.io/blog/2026/10/05/scaling-kubernetes-workloads-with-node-swap/",
+            "evidence_quote": "Kubernetes support for running nodes with swap enabled reached General Availability in v1.34",
+            "supported": true
+          },
+          {
+            "claim": "cgroup v2 tracks disk swap on its own so a container's real memory use is no longer unpredictable",
+            "source_url": "https://kubernetes.io/blog/2026/10/05/scaling-kubernetes-workloads-with-node-swap/",
+            "evidence_quote": "Without independent tracking, a process could page large amounts of anonymous memory out to disk, which made a container's real memory usage unpredictable and hard to isolate. Kubernetes' swap support resolves this by relying on cgroup v2, whose separate swap accounting tracks disk swap on its own.",
+            "supported": true
+          },
+          {
+            "claim": "fast NVMe Local SSDs largely eliminate the latency penalty spinning disks imposed.",
+            "source_url": "https://kubernetes.io/blog/2026/10/05/scaling-kubernetes-workloads-with-node-swap/",
+            "evidence_quote": "The second reason was the latency penalty of paging to slow spinning disks, which fast NVMe Local SSDs largely eliminate.",
+            "supported": true
+          },
+          {
+            "claim": "the Python sweep went from a hard failure to the 3× figure on one node",
+            "source_url": "https://kubernetes.io/blog/2026/10/05/scaling-kubernetes-workloads-with-node-swap/",
+            "evidence_quote": "Without swap, heavy concurrent bursts exhausted physical memory, causing the node to hit a hard RAM limit and fail at 80 concurrent sessions. Enabling Local SSD swap offloaded dormant anonymous memory, freeing up physical RAM and preserving the node's page cache. This allowed the node to scale to 240 concurrently isolated Python sandboxes—a 3× density improvement.",
+            "supported": true
+          },
+          {
+            "claim": "peak latency is attributed to CPU, which an operator controls by running below peak",
+            "source_url": "https://kubernetes.io/blog/2026/10/05/scaling-kubernetes-workloads-with-node-swap/",
+            "evidence_quote": "At these maximum densities, the per-pod latency increase is driven mainly by pods competing for CPU, not by swap I/O. An operator tuning for a specific latency target would run at a lower density than the peak numbers here and see a proportionally smaller latency cost.",
+            "supported": true
+          },
+          {
+            "claim": "the enablement the post describes is a kubelet setting paired with the cloud provider's fast local disk.",
+            "source_url": "https://kubernetes.io/blog/2026/10/05/scaling-kubernetes-workloads-with-node-swap/",
+            "evidence_quote": "You enable it via the kubelet configuration: kind : KubeletConfiguration apiVersion : kubelet.config.k8s.io/v1beta1 failSwapOn : false memorySwap : swapBehavior : LimitedSwap Pairing this upstream configuration with your cloud provider's high-speed local disk gives you dynamic memory balancing.",
+            "supported": true
+          },
+          {
+            "claim": "For an operator whose agents genuinely spend most of their life waiting on a prompt, every day the swap stays off is a day paying for idle RAM",
+            "source_url": "https://kubernetes.io/blog/2026/10/05/scaling-kubernetes-workloads-with-node-swap/",
+            "evidence_quote": "However, after their burst of activity, they typically enter long-tail idle phases waiting for user prompts. Keeping this idle state in physical RAM caps cluster density and makes AI infrastructure expensive to run.",
+            "supported": true
+          },
+          {
+            "claim": "the post's own premise is that idle resident memory is expensive",
+            "source_url": "https://kubernetes.io/blog/2026/10/05/scaling-kubernetes-workloads-with-node-swap/",
+            "evidence_quote": "That idle but resident memory is expensive, and it caps how many pods a node can hold.",
+            "supported": true
+          },
+          {
+            "claim": "the kernel build it ran finished faster under the first lower limit and over 40% slower under the second, in the Kubernetes Blog's own figures, once the active working set reached swap.",
+            "source_url": "https://kubernetes.io/blog/2026/10/05/scaling-kubernetes-workloads-with-node-swap/",
+            "evidence_quote": "Routing swap to a Local SSD cut the container memory limit by 50% to 300 MB without incurring any execution slowdown (in fact, it ran cleanly in 374s vs the baseline 433s). However, as an explicit tradeoff, compressing the limit further to 200 MB forced the active working set into swap, causing long I/O wait times and increasing execution time by over 40%.",
+            "supported": true
+          },
+          {
+            "claim": "it benchmarked its own three workloads and not anyone else's agents",
+            "source_url": "https://kubernetes.io/blog/2026/10/05/scaling-kubernetes-workloads-with-node-swap/",
+            "evidence_quote": "This post explains how we benchmarked that approach across three workloads, including CI/CD kernel builds, sandboxed headless browsers, and isolated Python runtimes",
+            "supported": true
+          },
+          {
+            "claim": "the supplied extract gives no working-set measurement an operator could compare against.",
+            "source_url": "https://kubernetes.io/blog/2026/10/05/scaling-kubernetes-workloads-with-node-swap/",
+            "evidence_quote": "However, as an explicit tradeoff, compressing the limit further to 200 MB forced the active working set into swap, causing long I/O wait times and increasing execution time by over 40%.",
+            "supported": true
+          },
+          {
+            "claim": "the supplied extract says nothing about reversing it, so a pilot still needs its own exit plan, and the extract does not supply one.",
+            "source_url": "https://kubernetes.io/blog/2026/10/05/scaling-kubernetes-workloads-with-node-swap/",
+            "evidence_quote": "In Kubernetes v1.34+, node swap is Generally Available. You enable it via the kubelet configuration: kind : KubeletConfiguration apiVersion : kubelet.config.k8s.io/v1beta1 failSwapOn : false memorySwap : swapBehavior : LimitedSwap",
+            "supported": true
+          },
+          {
+            "claim": "The first is the Agent Sandbox GKE Swap Runtimes directory, which the Kubernetes Blog points to for density metrics under gVisor and Kata.",
+            "source_url": "https://kubernetes.io/blog/2026/10/05/scaling-kubernetes-workloads-with-node-swap/",
+            "evidence_quote": "For a comprehensive architectural breakdown and density metrics for gVisor and Kata, see the Agent Sandbox GKE Swap Runtimes directory .",
+            "supported": true
+          },
+          {
+            "claim": "The supplied extract carries no browser density numbers, so whether the stronger isolation runtimes match the default-runtime story is open",
+            "source_url": "https://kubernetes.io/blog/2026/10/05/scaling-kubernetes-workloads-with-node-swap/",
+            "evidence_quote": "This benchmark cross-evaluated several container runtime environments. The raw logs and testing methodologies for the default runtime are available in the Agent Sandbox GKE Swap directory . At these maximum densities, the per-pod latency increase is driven mainly by pods competing for CPU, not by swap I/O. An operator tuning for a specific latency target would run at a lower density than the peak numbers here and see a proportionally smaller latency cost. For a comprehensive architectural breakdown and density metrics for gVisor and Kata, see the Agent Sandbox GKE Swap Runtimes directory .",
+            "supported": true
+          },
+          {
+            "claim": "the post's own note that untrusted code often needs stricter isolation than standard namespaces",
+            "source_url": "https://kubernetes.io/blog/2026/10/05/scaling-kubernetes-workloads-with-node-swap/",
+            "evidence_quote": "However, trusting external code execution often requires stricter security isolation than standard Linux namespaces.",
+            "supported": true
+          },
+          {
+            "claim": "Google Kubernetes Engine, which is the only one the supplied extract names.",
+            "source_url": "https://kubernetes.io/blog/2026/10/05/scaling-kubernetes-workloads-with-node-swap/",
+            "evidence_quote": "For example, this is natively supported on Google Kubernetes Engine via Node Memory Swap configured on Local SSD profiles.",
+            "supported": true
+          },
+          {
+            "claim": "latency below peak density, which the post describes as proportionally smaller but did not report.",
+            "source_url": "https://kubernetes.io/blog/2026/10/05/scaling-kubernetes-workloads-with-node-swap/",
+            "evidence_quote": "An operator tuning for a specific latency target would run at a lower density than the peak numbers here and see a proportionally smaller latency cost.",
+            "supported": true
+          },
+          {
+            "claim": "The feature is real, and the post reports its own slower run alongside its faster ones.",
+            "source_url": "https://kubernetes.io/blog/2026/10/05/scaling-kubernetes-workloads-with-node-swap/",
+            "evidence_quote": "Routing swap to a Local SSD cut the container memory limit by 50% to 300 MB without incurring any execution slowdown (in fact, it ran cleanly in 374s vs the baseline 433s). However, as an explicit tradeoff, compressing the limit further to 200 MB forced the active working set into swap, causing long I/O wait times and increasing execution time by over 40%.",
+            "supported": true
+          },
+          {
+            "claim": "Kubernetes Blog",
+            "source_url": "https://kubernetes.io/blog/2026/10/05/scaling-kubernetes-workloads-with-node-swap/",
+            "evidence_quote": "Scaling Kubernetes Workloads with Node Swap",
+            "supported": true
+          },
+          {
+            "claim": "Kubernetes support for running nodes with swap enabled reached General Availability in v1.34, and by backing that swap with fast NVMe solid state drives (SSDs), a node can page out dormant memory and pack in far more pods.",
+            "source_url": "https://kubernetes.io/blog/2026/10/05/scaling-kubernetes-workloads-with-node-swap/",
+            "evidence_quote": "Kubernetes support for running nodes with swap enabled reached General Availability in v1.34, and by backing that swap with fast NVMe solid state drives (SSDs), a node can page out dormant memory and pack in far more pods.",
+            "supported": true
+          },
+          {
+            "claim": "The Kubernetes ecosystem has reached a fundamental physical resource constraint: the strict limits of hardware memory versus the growing demand for dynamic, bursty workloads in the new agentic era.",
+            "source_url": "https://kubernetes.io/blog/2026/10/05/scaling-kubernetes-workloads-with-node-swap/",
+            "evidence_quote": "The Kubernetes ecosystem has reached a fundamental physical resource constraint: the strict limits of hardware memory versus the growing demand for dynamic, bursty workloads in the new agentic era.",
+            "supported": true
+          },
+          {
+            "claim": "Memory is often the first hard limit a Kubernetes cluster hits.",
+            "source_url": "https://kubernetes.io/blog/2026/10/05/scaling-kubernetes-workloads-with-node-swap/",
+            "evidence_quote": "Memory is often the first hard limit a Kubernetes cluster hits.",
+            "supported": true
+          }
+        ],
+        "numeric_checks": [
+          {
+            "claim": "Up to 3× pod density is a benchmark, not a RAM budget cut",
+            "source_url": "https://kubernetes.io/blog/2026/10/05/scaling-kubernetes-workloads-with-node-swap/",
+            "evidence_quote": "This post explains how we benchmarked that approach across three workloads, including CI/CD kernel builds, sandboxed headless browsers, and isolated Python runtimes; we found density gains of up to 3×, often with little or no latency cost.",
+            "supported": true
+          },
+          {
+            "claim": "The Kubernetes Blog reports density gains of up to 3× from Local SSD swap across three workloads.",
+            "source_url": "https://kubernetes.io/blog/2026/10/05/scaling-kubernetes-workloads-with-node-swap/",
+            "evidence_quote": "This post explains how we benchmarked that approach across three workloads, including CI/CD kernel builds, sandboxed headless browsers, and isolated Python runtimes; we found density gains of up to 3×, often with little or no latency cost.",
+            "supported": true
+          },
+          {
+            "claim": "a benchmark of three workloads, a Linux kernel build, sandboxed headless browsers and isolated Python runtimes",
+            "source_url": "https://kubernetes.io/blog/2026/10/05/scaling-kubernetes-workloads-with-node-swap/",
+            "evidence_quote": "To quantify the performance boundaries and cost-saving potential of Local SSD-backed node swap, this analysis covers three distinct workload categories: a Traditional Build Workload for CI/CD pipelines, High-Density Browser Sandboxes, and Isolated Python Sandboxes.",
+            "supported": true
+          },
+          {
+            "claim": "up to 3×, often with little or no latency cost,",
+            "source_url": "https://kubernetes.io/blog/2026/10/05/scaling-kubernetes-workloads-with-node-swap/",
+            "evidence_quote": "we found density gains of up to 3×, often with little or no latency cost.",
+            "supported": true
+          },
+          {
+            "claim": "the post's own three test workloads",
+            "source_url": "https://kubernetes.io/blog/2026/10/05/scaling-kubernetes-workloads-with-node-swap/",
+            "evidence_quote": "This post explains how we benchmarked that approach across three workloads, including CI/CD kernel builds, sandboxed headless browsers, and isolated Python runtimes",
+            "supported": true
+          },
+          {
+            "claim": "two lower limits and two outcomes",
+            "source_url": "https://kubernetes.io/blog/2026/10/05/scaling-kubernetes-workloads-with-node-swap/",
+            "evidence_quote": "Routing swap to a Local SSD cut the container memory limit by 50% to 300 MB without incurring any execution slowdown (in fact, it ran cleanly in 374s vs the baseline 433s). However, as an explicit tradeoff, compressing the limit further to 200 MB forced the active working set into swap, causing long I/O wait times and increasing execution time by over 40%.",
+            "supported": true
+          },
+          {
+            "claim": "the pair of runs",
+            "source_url": "https://kubernetes.io/blog/2026/10/05/scaling-kubernetes-workloads-with-node-swap/",
+            "evidence_quote": "Routing swap to a Local SSD cut the container memory limit by 50% to 300 MB without incurring any execution slowdown (in fact, it ran cleanly in 374s vs the baseline 433s). However, as an explicit tradeoff, compressing the limit further to 200 MB forced the active working set into swap, causing long I/O wait times and increasing execution time by over 40%.",
+            "supported": true
+          },
+          {
+            "claim": "the build's two outcomes",
+            "source_url": "https://kubernetes.io/blog/2026/10/05/scaling-kubernetes-workloads-with-node-swap/",
+            "evidence_quote": "Routing swap to a Local SSD cut the container memory limit by 50% to 300 MB without incurring any execution slowdown (in fact, it ran cleanly in 374s vs the baseline 433s). However, as an explicit tradeoff, compressing the limit further to 200 MB forced the active working set into swap, causing long I/O wait times and increasing execution time by over 40%.",
+            "supported": true
+          },
+          {
+            "claim": "then reached the 3× figure with it.",
+            "source_url": "https://kubernetes.io/blog/2026/10/05/scaling-kubernetes-workloads-with-node-swap/",
+            "evidence_quote": "Without swap, heavy concurrent bursts exhausted physical memory, causing the node to hit a hard RAM limit and fail at 80 concurrent sessions. Enabling Local SSD swap offloaded dormant anonymous memory, freeing up physical RAM and preserving the node's page cache. This allowed the node to scale to 240 concurrently isolated Python sandboxes—a 3× density improvement.",
+            "supported": true
+          },
+          {
+            "claim": "the kernel build's two swap results",
+            "source_url": "https://kubernetes.io/blog/2026/10/05/scaling-kubernetes-workloads-with-node-swap/",
+            "evidence_quote": "Routing swap to a Local SSD cut the container memory limit by 50% to 300 MB without incurring any execution slowdown (in fact, it ran cleanly in 374s vs the baseline 433s). However, as an explicit tradeoff, compressing the limit further to 200 MB forced the active working set into swap, causing long I/O wait times and increasing execution time by over 40%.",
+            "supported": true
+          },
+          {
+            "claim": "cgroup v2 is in place",
+            "source_url": "https://kubernetes.io/blog/2026/10/05/scaling-kubernetes-workloads-with-node-swap/",
+            "evidence_quote": "Kubernetes' swap support resolves this by relying on cgroup v2, whose separate swap accounting tracks disk swap on its own.",
+            "supported": true
+          },
+          {
+            "claim": "both historical objections to swap",
+            "source_url": "https://kubernetes.io/blog/2026/10/05/scaling-kubernetes-workloads-with-node-swap/",
+            "evidence_quote": "Historically, swap was discouraged in Kubernetes for two reasons.",
+            "supported": true
+          },
+          {
+            "claim": "node swap reached General Availability in v1.34",
+            "source_url": "https://kubernetes.io/blog/2026/10/05/scaling-kubernetes-workloads-with-node-swap/",
+            "evidence_quote": "Kubernetes support for running nodes with swap enabled reached General Availability in v1.34",
+            "supported": true
+          },
+          {
+            "claim": "cgroup v2 tracks disk swap on its own",
+            "source_url": "https://kubernetes.io/blog/2026/10/05/scaling-kubernetes-workloads-with-node-swap/",
+            "evidence_quote": "Kubernetes' swap support resolves this by relying on cgroup v2, whose separate swap accounting tracks disk swap on its own.",
+            "supported": true
+          },
+          {
+            "claim": "the Python sweep went from a hard failure to the 3× figure on one node",
+            "source_url": "https://kubernetes.io/blog/2026/10/05/scaling-kubernetes-workloads-with-node-swap/",
+            "evidence_quote": "Without swap, heavy concurrent bursts exhausted physical memory, causing the node to hit a hard RAM limit and fail at 80 concurrent sessions. Enabling Local SSD swap offloaded dormant anonymous memory, freeing up physical RAM and preserving the node's page cache. This allowed the node to scale to 240 concurrently isolated Python sandboxes—a 3× density improvement.",
+            "supported": true
+          },
+          {
+            "claim": "the kernel build it ran finished faster under the first lower limit and over 40% slower under the second",
+            "source_url": "https://kubernetes.io/blog/2026/10/05/scaling-kubernetes-workloads-with-node-swap/",
+            "evidence_quote": "Routing swap to a Local SSD cut the container memory limit by 50% to 300 MB without incurring any execution slowdown (in fact, it ran cleanly in 374s vs the baseline 433s). However, as an explicit tradeoff, compressing the limit further to 200 MB forced the active working set into swap, causing long I/O wait times and increasing execution time by over 40%.",
+            "supported": true
+          },
+          {
+            "claim": "it benchmarked its own three workloads",
+            "source_url": "https://kubernetes.io/blog/2026/10/05/scaling-kubernetes-workloads-with-node-swap/",
+            "evidence_quote": "This post explains how we benchmarked that approach across three workloads, including CI/CD kernel builds, sandboxed headless browsers, and isolated Python runtimes",
+            "supported": true
+          },
+          {
+            "claim": "Kubernetes support for running nodes with swap enabled reached General Availability in v1.34, and by backing that swap with fast NVMe solid state drives (SSDs), a node can page out dormant memory and pack in far more pods.",
+            "source_url": "https://kubernetes.io/blog/2026/10/05/scaling-kubernetes-workloads-with-node-swap/",
+            "evidence_quote": "Kubernetes support for running nodes with swap enabled reached General Availability in v1.34, and by backing that swap with fast NVMe solid state drives (SSDs), a node can page out dormant memory and pack in far more pods.",
+            "supported": true
+          }
+        ]
+      }
+    },
+    "llm_usage": {
+      "calls": 10,
+      "failures": 0,
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "total_tokens": 0,
+      "token_budget": 120000,
+      "call_budget": 60
+    },
+    "heroImage": "/generated/articles/col_5be9ec4d110578c9-up-to-3-pod-density-is-a-benchmark-not-a-ram-budget-cut/hero.webp",
+    "generatedImage": "/generated/articles/col_5be9ec4d110578c9-up-to-3-pod-density-is-a-benchmark-not-a-ram-budget-cut/hero.webp",
+    "imageAlt": "Editorial image for Up to 3× pod density is a benchmark, not a RAM budget cut",
+    "articlePagePublished": true,
+    "homepagePublished": true,
+    "public_status": "published",
+    "draft": false,
+    "noindex": false,
+    "seo_noindex": false,
+    "archiveOnly": false,
+    "thumbnailImage": "/generated/articles/col_5be9ec4d110578c9-up-to-3-pod-density-is-a-benchmark-not-a-ram-budget-cut/thumbnail.webp",
+    "ogImage": "/generated/articles/col_5be9ec4d110578c9-up-to-3-pod-density-is-a-benchmark-not-a-ram-budget-cut/og.webp",
+    "legacyImage": "/generated/col_5be9ec4d110578c9.webp",
+    "imagePrompt": "Use case: Compute Current public article image.\nTitle: Up to 3× pod density is a benchmark, not a RAM budget cut\nCategory: Cloud Capacity\nInfrastructure layer: Cloud Capacity\nStory archetype: infrastructure analysis\nRegion: Global\nTone: premium infrastructure intelligence\nContext: The Kubernetes Blog reports density gains of up to 3× from Local SSD swap across three workloads. I read that as a pilot case for idle-heavy agent sandboxes, not a cue to shrink memory budgets.\nComposition: original editorial infrastructure image, realistic depth, wide hero crop, clear subject, enough negative space for card and OpenGraph crops.\nVisual vocabulary: data center halls, substations, transformers, grid interconnects, cooling loops, semiconductor packages, cloud capacity signals, financing pressure, or siting constraints when relevant.\nConstraints: no logos, no brand marks, no readable text, no watermarks, no stock-photo people, no decorative bokeh, no generic purple gradient.",
+    "generatedImageProvider": "codex",
+    "generatedImageModel": "",
+    "imageProvider": "codex",
+    "imageModel": "",
+    "imageStatus": "generated",
+    "imageError": "",
+    "imageGeneratedAt": "2026-10-06T17:22:33.267Z"
+  },
+  {
     "id": "col_82697d9ea33d8c58",
     "content_origin": "authored",
     "generation_version": "authored_column_v1",
