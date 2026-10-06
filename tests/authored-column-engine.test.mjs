@@ -794,6 +794,44 @@ test('buildColumnFigures constructs 1-3 deterministic figures from the ledger', 
   }
 });
 
+test('fact-table labels preserve the complete verified statement and its qualifiers', () => {
+  const fact='The Kubernetes ecosystem has reached a fundamental physical resource constraint: the strict limits of hardware memory versus the growing demand for dynamic, bursty workloads in the new agentic era.';
+  const ledger=buildClaimLedger({
+    cluster_id:'complete_fact_label',
+    representative_source:{
+      source_url:'https://example.com/kubernetes-memory',
+      source_name:'Kubernetes Blog',
+      title:'Kubernetes memory constraint',
+      cleaned_text:fact,
+    },
+    supporting_sources:[],
+  },'complete_fact_label');
+  const result=buildColumnFigures({
+    ledger,
+    stance:{angle:'Kubernetes memory constraint for dynamic workloads'},
+    headline:'Kubernetes memory limits shape dynamic workloads',
+    sectionCount:5,
+  });
+  assert.equal(result.source,'fact_table');
+  assert.equal(result.figures[0].items[0].label,fact);
+  assert.match(result.figures[0].items[0].label,/growing demand for dynamic, bursty workloads/);
+});
+
+test('evidence-pack figure labels do not cut conditional facts into partial claims', () => {
+  const conditionalFact='Local SSD-backed swap may increase pod density only when enough resident memory is dormant and the active working set remains in physical memory.';
+  const result=buildColumnFigures({
+    ledger:{claims:[]},
+    stance:{angle:'Dormant memory sets the boundary for node swap'},
+    headline:'Node swap depends on dormant memory',
+    sectionCount:5,
+    facts:[conditionalFact,'Operators must measure workload behavior before changing capacity assumptions for production clusters.'],
+    factSource:'Kubernetes Blog',
+  });
+  assert.equal(result.source,'evidence_pack');
+  assert.equal(result.figures[0].items[0].label,conditionalFact);
+  assert.match(result.figures[0].items[0].label,/only when.*active working set remains/);
+});
+
 test('each figure row windows its label around its own number when a sentence holds several', () => {
   const ledger = buildClaimLedger({
     cluster_id: 'authored_two_numbers',

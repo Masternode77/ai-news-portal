@@ -89,6 +89,34 @@ function approvedReviewForRequest(request) {
   return JSON.stringify({ approved: true, issues: [], source_checks: [reviewedCheck], numeric_checks: [reviewedCheck] });
 }
 
+function isEvidenceBriefRequest(request) {
+  return request.task === 'review' && /Build a source-fidelity evidence brief/.test(request.systemPrompt);
+}
+
+function evidenceBriefForRequest(request, overrides = {}) {
+  const { evidence: requestedEvidence } = JSON.parse(request.userPrompt);
+  const source = requestedEvidence.sources[0];
+  const quote = source.text.split(/(?<=[.!?])\s+/).find((sentence) => sentence.length >= 20) || source.text.slice(0, 160);
+  return JSON.stringify({
+    source_findings: [{
+      classification: 'reported_fact',
+      subject: 'Primary source',
+      statement: 'The primary source reports the selected infrastructure event.',
+      source_url: source.url,
+      evidence_quote: quote,
+    }],
+    scope_limitations: [],
+    operator_proposals_are_not_source_safeguards: true,
+    ...overrides,
+  });
+}
+
+function withEvidenceBrief(finalReview) {
+  return async (request) => isEvidenceBriefRequest(request)
+    ? evidenceBriefForRequest(request)
+    : finalReview(request);
+}
+
 function metadataRepairPatch() {
   const current=JSON.parse(essayJson());
   return JSON.stringify({
@@ -183,32 +211,122 @@ test('unverified expert insight templates never enter model evidence requests', 
     expert_insight_complete:true,
   };
   const requests=[];
+  let fableCalls=0;
   try {
     const result=await generateAuthoredColumn({
       candidates:[article], sources:[FIXTURE_SOURCE], state:{},
       now:new Date('2026-08-23T09:00:00Z'),
       callModel:async request=>{
         requests.push(request);
+        fableCalls+=1;
         assert.equal(request.systemPrompt.includes('expert_insight'),false);
         assert.equal(request.userPrompt.includes(sentinel),false);
         const payload=JSON.parse(request.userPrompt);
         if(payload.evidence) assert.equal(Object.hasOwn(payload.evidence,'expert_insight'),false);
-        return requests.length===1 ? STANCE_JSON : essayJson();
+        return fableCalls===1 ? STANCE_JSON : essayJson();
       },
       reviewModel:async request=>{
         requests.push(request);
         assert.equal(request.userPrompt.includes(sentinel),false);
         const payload=JSON.parse(request.userPrompt);
         assert.equal(Object.hasOwn(payload.evidence,'expert_insight'),false);
+        if(isEvidenceBriefRequest(request)) return evidenceBriefForRequest(request);
         return approvedReviewForRequest(request);
       },
     });
     assert.ok(result.column);
-    assert.equal(requests.length,4);
+    assert.equal(requests.length,5);
   } finally {
     if(oldWords===undefined) delete process.env.AUTHORED_MIN_WORDS; else process.env.AUTHORED_MIN_WORDS=oldWords;
     if(oldChars===undefined) delete process.env.AUTHORED_MIN_CHARS; else process.env.AUTHORED_MIN_CHARS=oldChars;
   }
+});
+
+test('Astra evidence brief precedes Fable and reaches thesis, draft, voice, and targeted repair', async () => {
+  const oldWords=process.env.AUTHORED_MIN_WORDS;
+  const oldChars=process.env.AUTHORED_MIN_CHARS;
+  process.env.AUTHORED_MIN_WORDS='700';
+  process.env.AUTHORED_MIN_CHARS='4200';
+  const order=[];
+  let brief;
+  let finalReviews=0;
+  let fableCalls=0;
+  try {
+    const result=await generateAuthoredColumn({
+      candidates:[fixtureArticle()], sources:[FIXTURE_SOURCE], state:{},
+      now:new Date('2026-08-23T09:00:00Z'),
+      callModel:async request=>{
+        order.push('fable');
+        fableCalls+=1;
+        const payload=JSON.parse(request.userPrompt);
+        assert.deepEqual(payload.evidence.evidence_brief,brief);
+        if(fableCalls===1) return STANCE_JSON;
+        if(fableCalls===4) return metadataRepairPatch();
+        return essayJson();
+      },
+      reviewModel:async request=>{
+        if(isEvidenceBriefRequest(request)){
+          order.push('brief');
+          const response=evidenceBriefForRequest(request);
+          brief=JSON.parse(response);
+          return response;
+        }
+        order.push('review');
+        finalReviews+=1;
+        return finalReviews===1
+          ? JSON.stringify({approved:false,issues:['unsupported scope in the standfirst'],source_checks:[],numeric_checks:[]})
+          : approvedReviewForRequest(request);
+      },
+    });
+    assert.ok(result.column);
+    assert.deepEqual(order,['brief','fable','fable','fable','review','fable','review']);
+    assert.equal(finalReviews,2);
+  } finally {
+    if(oldWords===undefined) delete process.env.AUTHORED_MIN_WORDS; else process.env.AUTHORED_MIN_WORDS=oldWords;
+    if(oldChars===undefined) delete process.env.AUTHORED_MIN_CHARS; else process.env.AUTHORED_MIN_CHARS=oldChars;
+  }
+});
+
+test('Astra evidence brief rejects unknown quotes before any Fable generation', async () => {
+  let fableCalls=0;
+  await assert.rejects(generateAuthoredColumn({
+    candidates:[fixtureArticle()], sources:[FIXTURE_SOURCE], state:{},
+    now:new Date('2026-08-23T09:00:00Z'),
+    callModel:async()=>{ fableCalls+=1; return STANCE_JSON; },
+    reviewModel:async request=>evidenceBriefForRequest(request,{scope_limitations:[{
+      statement:'This limitation is unsupported.',
+      source_url:'https://example.com/northline-dakota',
+      evidence_quote:'This exact quotation does not occur in the supplied source.',
+    }]}),
+  }),/evidence brief was malformed/);
+  assert.equal(fableCalls,0);
+});
+
+test('Astra evidence brief rejects oversized fields before any Fable generation', async () => {
+  let fableCalls=0;
+  await assert.rejects(generateAuthoredColumn({
+    candidates:[fixtureArticle()], sources:[FIXTURE_SOURCE], state:{},
+    now:new Date('2026-08-23T09:00:00Z'),
+    callModel:async()=>{ fableCalls+=1; return STANCE_JSON; },
+    reviewModel:async request=>{
+      const brief=JSON.parse(evidenceBriefForRequest(request));
+      brief.source_findings[0].statement='x'.repeat(801);
+      return JSON.stringify(brief);
+    },
+  }),/evidence brief was malformed/);
+  assert.equal(fableCalls,0);
+});
+
+test('Astra evidence brief transport failures propagate before any Fable generation', async () => {
+  let fableCalls=0;
+  const transportError=new Error('evidence brief transport unavailable');
+  await assert.rejects(generateAuthoredColumn({
+    candidates:[fixtureArticle()], sources:[FIXTURE_SOURCE], state:{},
+    now:new Date('2026-08-23T09:00:00Z'),
+    callModel:async()=>{ fableCalls+=1; return STANCE_JSON; },
+    reviewModel:async()=>{ throw transportError; },
+  }),(error)=>error===transportError);
+  assert.equal(fableCalls,0);
 });
 
 test('regular voice retry receives exact diagnostics after a source-summary failure', async () => {
@@ -368,7 +486,7 @@ test('Astra-rejected model figure title allows one unchanged patch and rebuilds 
         }
         return JSON.stringify(proposedEssay);
       },
-      reviewModel:async request=>{
+      reviewModel:withEvidenceBrief(async request=>{
         const payload=JSON.parse(request.userPrompt);
         reviewFigures.push(payload.figures);
         if(reviewFigures.length===1){
@@ -382,7 +500,7 @@ test('Astra-rejected model figure title allows one unchanged patch and rebuilds 
         assert.ok(payload.figures.every((figure)=>figure.title!==proposedTitle));
         assert.match(payload.figures[0].title,/Dakota Grid Deal Is A Utility Execution Story/);
         return approvedReviewForRequest(request);
-      },
+      }),
     });
     assert.ok(result.column);
     assert.deepEqual(tasks,['column','column','column','column']);
@@ -417,7 +535,7 @@ test('unchanged patch allowance clears immediately after automatic figure reset'
         const current=JSON.parse(request.userPrompt);
         return JSON.stringify({headline:current.headline,deck:current.deck,edits:[]});
       },
-      reviewModel:async request=>{
+      reviewModel:withEvidenceBrief(async request=>{
         reviewCalls+=1;
         const rejected=JSON.parse(approvedReviewForRequest(request));
         rejected.approved=false;
@@ -427,7 +545,7 @@ test('unchanged patch allowance clears immediately after automatic figure reset'
           rejected.source_checks.push({claim:proposedTitle,source_url:payload.evidence.primary_source.url,evidence_quote:payload.evidence.source_text,supported:false});
         }
         return JSON.stringify(rejected);
-      },
+      }),
     }),/empty_editorial_patch/);
     assert.deepEqual(tasks,['column','column','column','column','column','column']);
     assert.equal(reviewCalls,2);
@@ -480,12 +598,12 @@ test('rejected cross-review feedback repairs the voice and requires a fresh acce
         }
         return tasks.length===1 ? STANCE_JSON : essayJson();
       },
-      reviewModel:async request => {
+      reviewModel:withEvidenceBrief(async request => {
         reviewRequests.push(request);
         return reviewRequests.length === 1
           ? JSON.stringify({approved:false, issues:reviewIssues, source_checks:[{claim:unsupportedClaim,source_url:'https://example.com/northline-dakota',evidence_quote:'',supported:false}], numeric_checks:[]})
           : approvedReviewForRequest(request);
-      },
+      }),
     });
     assert.ok(result.column);
     assert.deepEqual(tasks, ['column', 'column', 'column', 'column']);
@@ -525,12 +643,12 @@ test('a second Astra rejection opens one final whole-draft scope audit and fresh
         }
         return essayJson();
       },
-      reviewModel:async request=>{
+      reviewModel:withEvidenceBrief(async request=>{
         reviewRequests.push(request);
         if(reviewRequests.length===1) return JSON.stringify({approved:false,issues:['unsupported benchmark scope'],source_checks:[],numeric_checks:[]});
         if(reviewRequests.length===2) return JSON.stringify({approved:false,issues:['related universal performance claim remains'],source_checks:[],numeric_checks:[]});
         return approvedReviewForRequest(request);
-      },
+      }),
     });
     assert.ok(result.column);
     assert.deepEqual(tasks,['column','column','column','column','column']);
@@ -574,12 +692,12 @@ test('deterministic repairs and Astra repair use separate bounded voice budgets'
         if (tasks.length === 5) return JSON.stringify({headline:currentEssay.headline,deck:currentEssay.deck,edits:[{original:originalBlock,replacement:unsupportedBlock}]});
         return essayJson();
       },
-      reviewModel:async request => {
+      reviewModel:withEvidenceBrief(async request => {
         reviewRequests.push(request);
         return reviewRequests.length === 1
           ? JSON.stringify({approved:false, issues:['unsupported causal claim'], source_checks:[], numeric_checks:[]})
           : approvedReviewForRequest(request);
-      },
+      }),
     });
     assert.ok(result.column);
     assert.deepEqual(tasks, ['column','column','column','column','column','column']);
@@ -629,12 +747,12 @@ test('targeted retry receives exact summary-heavy blocks from the current patche
         }
         return essayJson();
       },
-      reviewModel:async request=>{
+      reviewModel:withEvidenceBrief(async request=>{
         reviewCalls+=1;
         return reviewCalls===1
           ? JSON.stringify({approved:false,issues:['remove unsupported recap'],source_checks:[],numeric_checks:[]})
           : approvedReviewForRequest(request);
-      },
+      }),
     });
     assert.ok(result.column);
     assert.deepEqual(tasks,['column','column','column','column','column']);
@@ -669,7 +787,7 @@ test('repeated cross-review rejection prevents a Fable draft from becoming a col
         }
         return essayJson();
       },
-      reviewModel:async () => { reviewCalls += 1; return JSON.stringify({approved:false, issues:['source mismatch'], source_checks:[], numeric_checks:[]}); },
+      reviewModel:withEvidenceBrief(async () => { reviewCalls += 1; return JSON.stringify({approved:false, issues:['source mismatch'], source_checks:[], numeric_checks:[]}); }),
     }), (error) => error instanceof EditorialReviewRejection && /source mismatch/.test(error.message));
     assert.deepEqual(tasks, ['column', 'column', 'column', 'column', 'column']);
     assert.equal(reviewCalls,3);
@@ -713,10 +831,10 @@ test('three rejected editorial versions stop after at most six voice attempts an
         }
         throw new Error(`unexpected model call ${tasks.length}`);
       },
-      reviewModel:async()=>{
+      reviewModel:withEvidenceBrief(async()=>{
         reviewCalls+=1;
         return JSON.stringify({approved:false,issues:[`review rejection ${reviewCalls}`],source_checks:[],numeric_checks:[]});
-      },
+      }),
     }),error=>error instanceof EditorialReviewRejection && /review rejection 3/.test(error.message));
     assert.deepEqual(tasks,['column','column','column','column','column','column','column','column']);
     assert.equal(reviewCalls,3);
@@ -738,7 +856,7 @@ test('cross-review transport failures propagate without a Fable retry', async ()
       candidates:[fixtureArticle()], sources:[FIXTURE_SOURCE], state:{},
       now:new Date('2026-08-23T09:00:00Z'),
       callModel:async request => { tasks.push(request.task); return tasks.length===1 ? STANCE_JSON : essayJson(); },
-      reviewModel:async () => { throw transportError; },
+      reviewModel:withEvidenceBrief(async () => { throw transportError; }),
     }), (error) => error === transportError);
     assert.deepEqual(tasks, ['column', 'column', 'column']);
   } finally {
@@ -765,7 +883,7 @@ test('deterministic quality exhaustion stays bounded at two voice attempts even 
         if(tasks.length===2) return essayJson();
         return JSON.stringify({headline:'A Valid Looking Headline That Still Has No Essay',deck:'A sufficiently long deck that parses but cannot compensate for an invalid body.',body:'Too short.'});
       },
-      reviewModel:async()=>{ reviewCalls+=1; return JSON.stringify(approved); },
+      reviewModel:withEvidenceBrief(async()=>{ reviewCalls+=1; return JSON.stringify(approved); }),
     });
     assert.equal(result.column,null);
     assert.match(result.failure,/^verify:/);

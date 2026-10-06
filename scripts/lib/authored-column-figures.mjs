@@ -46,6 +46,16 @@ function labelFor(claim) {
   return condense(claim.claim_text, 96);
 }
 
+// Fact rows have no separate display value to preserve the rest of their
+// meaning. Keep the complete verified statement so a character cutoff cannot
+// drop a qualifier or turn a partial clause into a stronger public claim.
+function completeFactLabel(text = '') {
+  return decodeEntities(String(text || ''))
+    .replace(/<[^>]+>/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
 // Titles derived from a claim take its first clause only, so a truncated
 // headline-plus-lead blob never becomes a figure caption.
 function claimTitle(text = '') {
@@ -260,7 +270,7 @@ function itemFor(claim) {
 
 function factItemFor(claim) {
   return {
-    label: labelFor(claim),
+    label: completeFactLabel(claim.claim_text),
     value: null,
     unit: '',
     display: '',
@@ -416,7 +426,7 @@ function evidencePackFigure({ facts = [], factSource = '', stance, headline, sec
   const title = condense(stance?.angle || headline || usable[0]);
   if (!titleOk(title)) return null;
   const items = usable.slice(0, MAX_ITEMS_PER_FIGURE).map((fact) => ({
-    label: condense(fact, 96),
+    label: completeFactLabel(fact),
     value: null,
     unit: '',
     display: '',

@@ -52,14 +52,20 @@ all-fresh runs. Rejected outputs remain private in
 no replayed responses but failed the summary-ratio gate. Exact diagnostics now
 reach the initial voice pass too. Its continuation passed that deterministic
 gate but exposed further source-scope errors. The subsequent source-only trial
-uses all-new responses and the completed metadata/figure review path; its
-outcome is pending.
+used eight all-new responses and passed deterministic prose checks, but its
+final Astra review rejected residual scope claims and an incomplete figure
+label. The figure builder had cut a verified statement at 96 characters;
+complete nonnumeric fact labels now preserve the source statement and its
+qualifiers. A bounded Astra source brief now precedes Fable drafting. Its cited URLs and
+exact quotations are validated, and it separates reported facts, measurement
+groups and intended uses. Final Astra review remains independent of the brief.
+The fresh trial of this complete path is pending.
 
 ## Validation completed so far
 
 - Source extraction and propagation: 71 focused tests passed.
-- Authored column engine: 44 focused tests passed.
-- Subscription routing: 37 focused tests passed.
+- Authored column engine: 46 focused tests passed.
+- Subscription routing: 41 focused tests passed.
 - Subscription provider: 10 focused tests passed.
 - Earlier full suite: 791 source tests and 22 built-page tests passed, plus
   quality, relevance, taxonomy and repetition checks; 96 pages built.

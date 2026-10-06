@@ -13,7 +13,7 @@ operator-selected mode only, never an automatic fallback.
 | Summary, classification, tags, analysis comments | Codex CLI | `gpt-6-astra`, medium reasoning |
 | General long-form analysis | Codex CLI | `gpt-6-astra`, medium reasoning |
 | The Current thesis, draft and editing | Claude Code | `claude-fable-5-1`, high effort |
-| The Current source-fidelity cross-review | Codex CLI | `gpt-6-astra`, medium reasoning |
+| The Current source brief and independent final source-fidelity review | Codex CLI | `gpt-6-astra`, medium reasoning |
 | Image prompt text | Codex CLI | `gpt-6-astra`, medium reasoning |
 | Actual artwork | Existing Mac Codex task's native image tool | Use the model reported by the tool; no API substitute |
 
@@ -22,6 +22,14 @@ Old `OPENROUTER_MODEL`, `CURATION_MODEL`, `EXPERT_LENS_MODEL`, and
 live in `scripts/lib/subscription-provider.mjs`. Unsupported models, expired
 sessions, quota errors and malformed replies stop generation; no cheaper model
 or paid API is selected automatically. Offline tests remain offline.
+
+Before Fable drafts a column, Astra supplies one bounded source-specific brief.
+Each finding cites a known source URL and an exact source excerpt; malformed or
+unverifiable briefs stop before drafting. The brief separates reported facts,
+aggregate measurements, group-specific measurements and motivating use cases.
+It guides drafting and repairs, but the original source remains authoritative.
+The final Astra review does not receive the brief, so it independently checks
+the completed prose and figures against the original evidence.
 
 Column editing allows at most three evidence-reviewed versions, with two
 format/quality attempts per version. A completed Astra rejection is required
@@ -35,7 +43,9 @@ leaves the column unpublished.
 
 Publication stance comes from the current headline and deck, never an abandoned
 planning hypothesis. Astra checks the rendered figure copy and numbers as well
-as the prose. Model evidence excludes the older template-based expert-insight
+as the prose. Nonnumeric fact rows preserve the complete verified statement,
+including qualifiers, instead of cutting it at a display-character limit.
+Model evidence excludes the older template-based expert-insight
 fields; source text, source metadata and verified claims remain available.
 
 ## One-time Mac activation
