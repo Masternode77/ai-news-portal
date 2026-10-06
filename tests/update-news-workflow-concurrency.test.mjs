@@ -27,6 +27,15 @@ test('hosted validation retains the supported runtime and all publication gates'
   assert.equal([...workflow.matchAll(/node \.\/scripts\/audit-omo-ultra-current-state\.mjs/g)].length, 2);
 });
 
+test('only the mocked-network full test step enables source adapters', () => {
+  const fullTestStep = workflow.match(/      - name: Run full test suite\n[\s\S]*?(?=\n      - name:)/)?.[0] || '';
+  assert.match(fullTestStep, /env:\n\s+PIPELINE_OFFLINE: '0'\n\s+run: npm test/);
+  assert.match(fullTestStep, /LLM_PROVIDER remains disabled, so no model can run/);
+  assert.doesNotMatch(workflow.replace(fullTestStep, ''), /PIPELINE_OFFLINE: '0'/);
+  assert.match(workflow, /env:\n\s+LLM_PROVIDER: disabled\n\s+PIPELINE_OFFLINE: '1'/);
+  assert.doesNotMatch(fullTestStep, /^\s+LLM_PROVIDER:/m);
+});
+
 test('hosted validation pins reviewed third-party actions', () => {
   const refs = [...workflow.matchAll(/uses: (actions\/(?:checkout|setup-node))@([0-9a-f]{40}) # v4/g)].map((m) => [m[1], m[2]]);
   assert.deepEqual(refs, [

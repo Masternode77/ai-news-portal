@@ -49,6 +49,10 @@ jobs:
       - name: Synchronize current-state audit
         run: node ./scripts/audit-omo-ultra-current-state.mjs
       - name: Run full test suite
+        # Network-facing tests install mocked fetch fixtures. Keep their source
+        # adapters enabled; LLM_PROVIDER remains disabled, so no model can run.
+        env:
+          PIPELINE_OFFLINE: '0'
         run: npm test
       - name: Run production content gate
         run: npm run content:gate

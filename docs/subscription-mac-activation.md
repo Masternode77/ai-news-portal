@@ -2,19 +2,28 @@
 
 ## Release status
 
-Local verification complete; production release pending. The accepted trial
-column and its unique native artwork are stored locally. The production
-OpenRouter generation workflow has not yet been retired. The existing
-`compute-current` Mac heartbeat was temporarily paused before its 00:45 KST
-slot to prevent a concurrent writer during activation. Its original prompt,
-schedule and target are preserved in the machine-local evidence directory.
-Restore that same automation after the verified transition; do not create a
-second automation.
+The verified column and native artwork are live on `www.computecurrent.com`.
+Release `v0.0.40`, commit `9f906242a8d272bf897b194341e9bdcf8a3be5ee`, reached
+Vercel READY deployment `dpl_57SHcQ2bKHQtKxHX7ktRus8dG41G`; the column page
+and hero image both returned HTTP 200. The original production baseline was
+`cb3ccc8370eb990c8e2f35b9a93587464bc885ef`.
 
-Production was verified at `cb3ccc8370eb990c8e2f35b9a93587464bc885ef`, Vercel READY
-deployment `dpl_mgZUrRc3AGFMFXgzgcJAJfsJzPRW`. Work continues on
-`feat/subscription-astra-fable` in `/Users/josh/Documents/compute-current-subscription`.
-The original main checkout remains preserved.
+The existing `compute-current` heartbeat now has the reviewed subscription
+instructions, with its original ID, target thread and 00:45/08:45/16:45 KST
+schedule. It remains temporarily paused until hosted validation passes. No
+second automation was created. The production GitHub workflow now validates
+only; its OpenRouter generation schedule and paid model-refresh schedule are
+retired. Mac `main` has the release commit and its subscription CLI readiness
+check passed.
+
+The first hosted validation exposed a CI-only test configuration issue: global
+`PIPELINE_OFFLINE=1` prevented mocked source/image fetch fixtures from running.
+Only the full-test step now sets `PIPELINE_OFFLINE=0`; `LLM_PROVIDER=disabled`
+remains enforced, no credentials are supplied, and the separate build/content
+gates remain offline. The affected fixture tests passed 80/80, workflow tests
+passed 5/5, and the exact CI-mode content gate passed locally. Independent
+review approved the fix. The corrected hosted run and heartbeat resumption
+remain pending at this snapshot.
 
 ## Repairs and evidence
 
@@ -78,7 +87,8 @@ the shared lock before generation. The unique native artwork is registered as
 `02a46be2c55b598a52620119278b6ab4ce6c63a62518c16f68b237bc136d4ade`.
 Hero and thumbnail crops were visually checked; hero, thumbnail and OpenGraph
 files exist. This column has no remaining image job or blocked image entry.
-Production publication and resuming the existing heartbeat remain pending.
+The initial production publication is verified; corrected hosted validation
+and resuming the existing heartbeat remain pending.
 
 ## Validation completed so far
 
@@ -99,4 +109,4 @@ content gate passed again. The rendered column has its five intended section
 headings and unique hero. Source claims, repetition, public images and private
 admin exclusion all passed. The successful heartbeat was recorded only after
 these gates. Independent operational review found no code/config blocker;
-automation activation and production verification remain the release steps.
+corrected hosted validation and automation activation remain the final steps.
