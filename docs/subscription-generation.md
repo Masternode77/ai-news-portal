@@ -12,7 +12,7 @@ operator-selected mode only, never an automatic fallback.
 | Story selection | Codex CLI | `gpt-6-astra`, medium reasoning |
 | Summary, classification, tags, analysis comments | Codex CLI | `gpt-6-astra`, medium reasoning |
 | General long-form analysis | Codex CLI | `gpt-6-astra`, medium reasoning |
-| The Current thesis, draft and editing | Claude Code | `claude-fable-5-1` |
+| The Current thesis, draft and editing | Claude Code | `claude-fable-5-1`, high effort |
 | The Current source-fidelity cross-review | Codex CLI | `gpt-6-astra`, medium reasoning |
 | Image prompt text | Codex CLI | `gpt-6-astra`, medium reasoning |
 | Actual artwork | Existing Mac Codex task's native image tool | Use the model reported by the tool; no API substitute |
@@ -32,6 +32,11 @@ repetition and prose checks before a fresh Astra review. Current summary-heavy
 sentences are supplied as repair diagnostics without changing the scoring
 thresholds. A third rejection, authentication failure or transport failure
 leaves the column unpublished.
+
+Publication stance comes from the current headline and deck, never an abandoned
+planning hypothesis. Astra checks the rendered figure copy and numbers as well
+as the prose. Model evidence excludes the older template-based expert-insight
+fields; source text, source metadata and verified claims remain available.
 
 ## One-time Mac activation
 

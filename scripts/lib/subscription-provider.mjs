@@ -139,7 +139,7 @@ export function createSubscriptionProvider({ run = runSubscriptionCli, env = pro
         return text.trim();
       }
       const settings = JSON.stringify({ disableAllHooks: true, availableModels: [model] });
-      const result = await run(commands.claude, ['--print', '--safe-mode', '--model', model, '--effort', 'medium', '--output-format', 'json', '--tools', '', '--disallowedTools', '*', '--strict-mcp-config', '--mcp-config', '{"mcpServers":{}}', '--setting-sources', '', '--settings', settings, '--no-session-persistence'], { cwd, env: childEnv, input, timeoutMs, signal: options.signal, onTerminate });
+      const result = await run(commands.claude, ['--print', '--safe-mode', '--model', model, '--effort', 'high', '--output-format', 'json', '--tools', '', '--disallowedTools', '*', '--strict-mcp-config', '--mcp-config', '{"mcpServers":{}}', '--setting-sources', '', '--settings', settings, '--no-session-persistence'], { cwd, env: childEnv, input, timeoutMs, signal: options.signal, onTerminate });
       let payload;
       try { payload = JSON.parse(result.stdout); } catch { throw new Error('Claude returned invalid result JSON'); }
       if (payload.is_error || payload.subtype !== 'success' || typeof payload.result !== 'string' || !payload.result.trim()) throw new Error('Claude did not complete generation; no fallback was attempted');

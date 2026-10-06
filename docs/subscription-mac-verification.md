@@ -1,4 +1,7 @@
-# Mac subscription verification — 2026-10-06
+# Initial Mac subscription verification — 2026-10-06
+
+This is the initial, historical verification. See the
+[activation follow-up](subscription-mac-activation.md) for subsequent repairs and current release status.
 
 ## Scope and release state
 

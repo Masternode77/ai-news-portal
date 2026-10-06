@@ -77,9 +77,14 @@ const check = { claim: essay.body, source_url: evidence.primary_source.url, evid
 const approved = { approved: true, issues: [], source_checks: [check], numeric_checks: [check] };
 
 function approvedReviewForRequest(request) {
-  const { essay: reviewedEssay, evidence: reviewedEvidence } = JSON.parse(request.userPrompt);
+  const { essay: reviewedEssay, figures = [], evidence: reviewedEvidence } = JSON.parse(request.userPrompt);
   const source = reviewedEvidence.sources[0];
-  const reviewedText = [reviewedEssay.headline, reviewedEssay.deck, reviewedEssay.body].join('\n');
+  const figureText=figures.flatMap((figure)=>[
+    figure.title,
+    figure.source_note,
+    ...figure.items.flatMap((item)=>[item.label,item.display,item.source]),
+  ]).filter(Boolean);
+  const reviewedText = [reviewedEssay.headline, reviewedEssay.deck, reviewedEssay.body, ...figureText].join('\n');
   const reviewedCheck = { claim: reviewedText, source_url: source.url, evidence_quote: source.text, supported: true };
   return JSON.stringify({ approved: true, issues: [], source_checks: [reviewedCheck], numeric_checks: [reviewedCheck] });
 }
@@ -125,12 +130,311 @@ test('source-summary diagnostics identify measured sentences and exact repair bl
   assert.match(diagnostics.summary_heavy_blocks[0].source_like_sentences[0].sentence,/source reported the cluster/);
 });
 
+test('fresh column prompts preserve source status and target a tighter evidence-bound draft', async () => {
+  const oldWords=process.env.AUTHORED_MIN_WORDS;
+  const oldChars=process.env.AUTHORED_MIN_CHARS;
+  process.env.AUTHORED_MIN_WORDS='700';
+  process.env.AUTHORED_MIN_CHARS='4200';
+  const requests=[];
+  try {
+    const result=await generateAuthoredColumn({
+      candidates:[fixtureArticle()], sources:[FIXTURE_SOURCE], state:{},
+      now:new Date('2026-08-23T09:00:00Z'),
+      callModel:async request=>{
+        requests.push(request);
+        assert.match(request.systemPrompt,/motivating examples, intended use cases, possible benefits and recommended configurations/);
+        assert.match(request.systemPrompt,/unused compute does not establish saleable capacity/);
+        assert.match(request.systemPrompt,/publication date alone does not establish that the subject is new/);
+        if(requests.length===1) return STANCE_JSON;
+        if(requests.length===2){
+          assert.match(request.systemPrompt,/1200 to 1400 words/);
+          assert.match(request.systemPrompt,/audit every factual premise in the headline, deck, headings, body, metaphors and counterargument/i);
+        }
+        if(requests.length===3){
+          assert.match(request.systemPrompt,/Retain 1200-1400 total words/);
+          assert.match(request.systemPrompt,/Do not infer an actual fleet match, economic winner or saleable capacity/);
+          const payload=JSON.parse(request.userPrompt);
+          assert.equal(typeof payload.source_summary_diagnostics.source_summary_ratio,'number');
+          assert.ok(Array.isArray(payload.source_summary_diagnostics.summary_heavy_blocks));
+        }
+        return essayJson();
+      },
+    });
+    assert.ok(result.column);
+    assert.equal(requests.length,3);
+  } finally {
+    if(oldWords===undefined) delete process.env.AUTHORED_MIN_WORDS; else process.env.AUTHORED_MIN_WORDS=oldWords;
+    if(oldChars===undefined) delete process.env.AUTHORED_MIN_CHARS; else process.env.AUTHORED_MIN_CHARS=oldChars;
+  }
+});
+
+test('unverified expert insight templates never enter model evidence requests', async () => {
+  const oldWords=process.env.AUTHORED_MIN_WORDS;
+  const oldChars=process.env.AUTHORED_MIN_CHARS;
+  process.env.AUTHORED_MIN_WORDS='700';
+  process.env.AUTHORED_MIN_CHARS='4200';
+  const sentinel='UNVERIFIED_TEMPLATE_ACCELERATOR_ALLOCATION_AND_FACILITY_READINESS';
+  const article=structuredClone(fixtureArticle());
+  article.expert_insight={
+    ...article.expert_insight,
+    who_gains_leverage:sentinel,
+    who_takes_execution_risk:sentinel,
+    timing_dependency:sentinel,
+    expert_insight_complete:true,
+  };
+  const requests=[];
+  try {
+    const result=await generateAuthoredColumn({
+      candidates:[article], sources:[FIXTURE_SOURCE], state:{},
+      now:new Date('2026-08-23T09:00:00Z'),
+      callModel:async request=>{
+        requests.push(request);
+        assert.equal(request.systemPrompt.includes('expert_insight'),false);
+        assert.equal(request.userPrompt.includes(sentinel),false);
+        const payload=JSON.parse(request.userPrompt);
+        if(payload.evidence) assert.equal(Object.hasOwn(payload.evidence,'expert_insight'),false);
+        return requests.length===1 ? STANCE_JSON : essayJson();
+      },
+      reviewModel:async request=>{
+        requests.push(request);
+        assert.equal(request.userPrompt.includes(sentinel),false);
+        const payload=JSON.parse(request.userPrompt);
+        assert.equal(Object.hasOwn(payload.evidence,'expert_insight'),false);
+        return approvedReviewForRequest(request);
+      },
+    });
+    assert.ok(result.column);
+    assert.equal(requests.length,4);
+  } finally {
+    if(oldWords===undefined) delete process.env.AUTHORED_MIN_WORDS; else process.env.AUTHORED_MIN_WORDS=oldWords;
+    if(oldChars===undefined) delete process.env.AUTHORED_MIN_CHARS; else process.env.AUTHORED_MIN_CHARS=oldChars;
+  }
+});
+
+test('regular voice retry receives exact diagnostics after a source-summary failure', async () => {
+  const oldWords=process.env.AUTHORED_MIN_WORDS;
+  const oldChars=process.env.AUTHORED_MIN_CHARS;
+  process.env.AUTHORED_MIN_WORDS='700';
+  process.env.AUTHORED_MIN_CHARS='4200';
+  const currentEssay=JSON.parse(essayJson());
+  const blocks=currentEssay.body.split('\n\n');
+  const sourceSentences=fixtureArticle().articleText.split(/(?<=[.!?])\s+/);
+  const paragraphIndexes=blocks.map((block,index)=>({block,index})).filter(({block})=>block.length>100).slice(0,4);
+  for(const {index} of paragraphIndexes) blocks[index]=`${blocks[index]} ${sourceSentences.slice(0,5).join(' ')}`;
+  const summaryHeavyEssay={...currentEssay,body:blocks.join('\n\n')};
+  const requests=[];
+  try {
+    const result=await generateAuthoredColumn({
+      candidates:[fixtureArticle()], sources:[FIXTURE_SOURCE], state:{},
+      now:new Date('2026-08-23T09:00:00Z'),
+      callModel:async request=>{
+        requests.push(request);
+        if(requests.length===1) return STANCE_JSON;
+        if(requests.length===2) return essayJson();
+        if(requests.length===3) return JSON.stringify(summaryHeavyEssay);
+        if(requests.length===4){
+          assert.match(request.systemPrompt,/previous deterministic source-summary check failed/i);
+          assert.match(request.systemPrompt,/Consolidate repeated facts and source background/);
+          assert.match(request.systemPrompt,/Do not game the measurement through synonym substitution or attribution deletion/);
+          const payload=JSON.parse(request.userPrompt);
+          assert.ok(payload.source_summary_diagnostics.source_summary_ratio>0.35);
+          assert.ok(payload.source_summary_diagnostics.excess_source_like_count>0);
+          assert.ok(payload.source_summary_diagnostics.summary_heavy_blocks.some((entry)=>entry.block===blocks[paragraphIndexes[0].index]));
+          return essayJson();
+        }
+        throw new Error(`unexpected model call ${requests.length}`);
+      },
+    });
+    assert.ok(result.column);
+    assert.equal(requests.length,4);
+  } finally {
+    if(oldWords===undefined) delete process.env.AUTHORED_MIN_WORDS; else process.env.AUTHORED_MIN_WORDS=oldWords;
+    if(oldChars===undefined) delete process.env.AUTHORED_MIN_CHARS; else process.env.AUTHORED_MIN_CHARS=oldChars;
+  }
+});
+
+test('final essay headline and full deck replace the initial stance in metadata and figures', async () => {
+  const oldWords=process.env.AUTHORED_MIN_WORDS;
+  const oldChars=process.env.AUTHORED_MIN_CHARS;
+  process.env.AUTHORED_MIN_WORDS='700';
+  process.env.AUTHORED_MIN_CHARS='4200';
+  const finalEssay=JSON.parse(essayJson());
+  finalEssay.deck='Northline Power secured 200 MW for its Dakota AI campus, and I think the anchor tenant bought schedule risk that remains conditional on the utility completing the substation and meeting the source reported energization target.';
+  const initialStance={
+    thesis:'The source guarantees a universal economic windfall.',
+    angle:'Guaranteed Profit From Every Idle Megawatt',
+    standing_position_ids:['power_binding_constraint'],
+    counterargument:'none',
+    watch_items:['next filing','utility review'],
+    working_headlines:['One','Two','Three'],
+  };
+  let calls=0;
+  try {
+    const result=await generateAuthoredColumn({
+      candidates:[fixtureArticle()], sources:[FIXTURE_SOURCE], state:{},
+      now:new Date('2026-08-23T09:00:00Z'),
+      callModel:async()=>{
+        calls+=1;
+        return calls===1 ? JSON.stringify(initialStance) : JSON.stringify(finalEssay);
+      },
+    });
+    assert.ok(result.column);
+    assert.equal(result.column.stance.thesis,finalEssay.deck);
+    assert.equal(result.column.stance.thesis.length,226);
+    assert.equal(result.column.stance.angle,finalEssay.headline);
+    assert.deepEqual(result.column.stance.standing_position_ids,initialStance.standing_position_ids);
+    assert.ok(result.column.figures.length>0);
+    assert.ok(result.column.figures.every((figure)=>!figure.title.includes('Guaranteed Profit')));
+  } finally {
+    if(oldWords===undefined) delete process.env.AUTHORED_MIN_WORDS; else process.env.AUTHORED_MIN_WORDS=oldWords;
+    if(oldChars===undefined) delete process.env.AUTHORED_MIN_CHARS; else process.env.AUTHORED_MIN_CHARS=oldChars;
+  }
+});
+
 test('Astra cross-review accepts source-bound checks and uses its own task/model', async () => {
   let request;
   const review = await reviewColumnEvidence({ essay, evidence, callModel: async value => { request=value; return JSON.stringify(approved); } });
   assert.equal(request.model, 'gpt-6-astra');
   assert.equal(request.task, 'review');
   assert.equal(review.approved, true);
+});
+
+test('Astra review payload includes visible figure copy and rejects an unsupported figure title', async () => {
+  const figures=[{
+    type:'stat-row',title:'Guaranteed 300 MW Profit',anchor:2,source_note:'Source',
+    items:[{label:'Claimed gain',value:300,unit:'MW',display:'300 MW',source:'Source'}],
+  }];
+  let request;
+  await assert.rejects(reviewColumnEvidence({
+    essay:{...essay,formatIssues:['internal-only'],figures:[{claim_indexes:[987654321],anchor:876543219}]},evidence,figures,
+    callModel:async value=>{
+      request=value;
+      return JSON.stringify({
+        approved:false,issues:['unsupported figure title'],
+        source_checks:[check,{claim:figures[0].title,source_url:evidence.primary_source.url,evidence_quote:evidence.source_text,supported:false}],
+        numeric_checks:[check],
+      });
+    },
+  }),/evidence review rejected/);
+  const payload=JSON.parse(request.userPrompt);
+  assert.deepEqual(payload.figures,[{
+    title:'Guaranteed 300 MW Profit',source_note:'Source',
+    items:[{label:'Claimed gain',display:'300 MW',source:'Source'}],
+  }]);
+  assert.equal('anchor' in payload.figures[0],false);
+  assert.equal('value' in payload.figures[0].items[0],false);
+  assert.deepEqual(Object.keys(payload.essay),['headline','deck','body']);
+  assert.equal(request.userPrompt.includes('claim_indexes'),false);
+  assert.equal(request.userPrompt.includes('internal-only'),false);
+  assert.equal(request.userPrompt.includes('987654321'),false);
+  assert.equal(request.userPrompt.includes('876543219'),false);
+});
+
+test('Astra review rejects a visible figure number missing from numeric coverage', async () => {
+  const figures=[{
+    title:'Capacity comparison',source_note:'Source',
+    items:[{label:'Second capacity claim',display:'300 MW',source:'Source'}],
+  }];
+  await assert.rejects(reviewColumnEvidence({
+    essay,evidence,figures,
+    callModel:async()=>JSON.stringify({...approved,source_checks:[check],numeric_checks:[check]}),
+  }),/evidence review rejected/);
+});
+
+test('Astra-rejected model figure title allows one unchanged patch and rebuilds deterministically', async () => {
+  const oldWords=process.env.AUTHORED_MIN_WORDS;
+  const oldChars=process.env.AUTHORED_MIN_CHARS;
+  process.env.AUTHORED_MIN_WORDS='700';
+  process.env.AUTHORED_MIN_CHARS='4200';
+  const proposedTitle='Dakota campus power and capital on the record';
+  const proposedEssay={
+    ...JSON.parse(essayJson()),
+    figures:[{type:'table',title:proposedTitle,claim_indexes:[0,1,2],anchor:3}],
+  };
+  const tasks=[];
+  const reviewFigures=[];
+  try {
+    const result=await generateAuthoredColumn({
+      candidates:[fixtureArticle()], sources:[FIXTURE_SOURCE], state:{},
+      now:new Date('2026-08-23T09:00:00Z'),
+      callModel:async request=>{
+        tasks.push(request.task);
+        if(tasks.length===1) return STANCE_JSON;
+        if(tasks.length===4){
+          assert.match(request.systemPrompt,/Visible figures are rebuilt after this repair/);
+          assert.match(request.systemPrompt,/Do not return figure fields/);
+          const current=JSON.parse(request.userPrompt);
+          return JSON.stringify({headline:current.headline,deck:current.deck,edits:[]});
+        }
+        return JSON.stringify(proposedEssay);
+      },
+      reviewModel:async request=>{
+        const payload=JSON.parse(request.userPrompt);
+        reviewFigures.push(payload.figures);
+        if(reviewFigures.length===1){
+          assert.equal(payload.figures[0].title,proposedTitle);
+          const rejected=JSON.parse(approvedReviewForRequest(request));
+          rejected.approved=false;
+          rejected.issues=['unsupported model-proposed figure title'];
+          rejected.source_checks.push({claim:proposedTitle,source_url:payload.evidence.primary_source.url,evidence_quote:payload.evidence.source_text,supported:false});
+          return JSON.stringify(rejected);
+        }
+        assert.ok(payload.figures.every((figure)=>figure.title!==proposedTitle));
+        assert.match(payload.figures[0].title,/Dakota Grid Deal Is A Utility Execution Story/);
+        return approvedReviewForRequest(request);
+      },
+    });
+    assert.ok(result.column);
+    assert.deepEqual(tasks,['column','column','column','column']);
+    assert.equal(reviewFigures.length,2);
+    assert.ok(result.column.figures.every((figure)=>figure.title!==proposedTitle));
+  } finally {
+    if(oldWords===undefined) delete process.env.AUTHORED_MIN_WORDS; else process.env.AUTHORED_MIN_WORDS=oldWords;
+    if(oldChars===undefined) delete process.env.AUTHORED_MIN_CHARS; else process.env.AUTHORED_MIN_CHARS=oldChars;
+  }
+});
+
+test('unchanged patch allowance clears immediately after automatic figure reset', async () => {
+  const oldWords=process.env.AUTHORED_MIN_WORDS;
+  const oldChars=process.env.AUTHORED_MIN_CHARS;
+  process.env.AUTHORED_MIN_WORDS='700';
+  process.env.AUTHORED_MIN_CHARS='4200';
+  const proposedTitle='Dakota campus power and capital on the record';
+  const proposedEssay={
+    ...JSON.parse(essayJson()),
+    figures:[{type:'table',title:proposedTitle,claim_indexes:[0,1,2],anchor:3}],
+  };
+  const tasks=[];
+  let reviewCalls=0;
+  try {
+    await assert.rejects(generateAuthoredColumn({
+      candidates:[fixtureArticle()], sources:[FIXTURE_SOURCE], state:{},
+      now:new Date('2026-08-23T09:00:00Z'),
+      callModel:async request=>{
+        tasks.push(request.task);
+        if(tasks.length===1) return STANCE_JSON;
+        if(tasks.length===2 || tasks.length===3) return JSON.stringify(proposedEssay);
+        const current=JSON.parse(request.userPrompt);
+        return JSON.stringify({headline:current.headline,deck:current.deck,edits:[]});
+      },
+      reviewModel:async request=>{
+        reviewCalls+=1;
+        const rejected=JSON.parse(approvedReviewForRequest(request));
+        rejected.approved=false;
+        rejected.issues=[reviewCalls===1 ? 'unsupported figure title' : 'unsupported body scope remains'];
+        if(reviewCalls===1){
+          const payload=JSON.parse(request.userPrompt);
+          rejected.source_checks.push({claim:proposedTitle,source_url:payload.evidence.primary_source.url,evidence_quote:payload.evidence.source_text,supported:false});
+        }
+        return JSON.stringify(rejected);
+      },
+    }),/empty_editorial_patch/);
+    assert.deepEqual(tasks,['column','column','column','column','column','column']);
+    assert.equal(reviewCalls,2);
+  } finally {
+    if(oldWords===undefined) delete process.env.AUTHORED_MIN_WORDS; else process.env.AUTHORED_MIN_WORDS=oldWords;
+    if(oldChars===undefined) delete process.env.AUTHORED_MIN_CHARS; else process.env.AUTHORED_MIN_CHARS=oldChars;
+  }
 });
 
 for (const [name, value] of [

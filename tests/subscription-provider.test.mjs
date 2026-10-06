@@ -49,6 +49,7 @@ test('column uses Fable with no tools, strict empty MCP and only requested model
   const call = calls.at(-1);
   assert.equal(call.command, 'claude');
   assert.equal(call.args[call.args.indexOf('--model') + 1], 'claude-fable-5-1');
+  assert.equal(call.args[call.args.indexOf('--effort') + 1], 'high');
   assert.equal(call.env.CLAUDE_CODE_DISABLE_TERMINAL_TITLE, '1');
   assert.equal(call.args[call.args.indexOf('--tools') + 1], '');
   assert.ok(call.args.includes('--safe-mode'));
