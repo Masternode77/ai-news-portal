@@ -1,7 +1,11 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import { fetchNewsPoolResult } from '../scripts/lib/fetch-feeds.mjs';
-import { fetchArticleExtraction } from '../scripts/lib/source-fetch.mjs';
+import {
+  fetchArticleExtraction,
+  MAX_EXTRACTED_PARAGRAPHS,
+  MAX_EXTRACTED_TEXT_CHARS,
+} from '../scripts/lib/source-fetch.mjs';
 
 const NOW = new Date('2026-08-10T00:00:00.000Z');
 const SOURCE = {
@@ -173,6 +177,68 @@ test('authorized public article extraction pins DNS and accepts bounded HTML', a
   assert.deepEqual(calls, [{ target: 'https://authorized.example/story', address: '93.184.216.34', family: 4 }]);
   assert.equal(result.extractionQa.extraction_failure_reason || '', '');
   assert.match(result.articleText, /accelerator capacity/);
+});
+
+test('generic extraction preserves late evidence from a long authorized article', async () => {
+  const paragraphs = Array.from({ length: 20 }, (_, index) => {
+    const detail = index === 19
+      ? 'The final benchmark reports that the constrained worker recovered capacity after swap activation.'
+      : `Infrastructure benchmark paragraph ${index + 1} documents memory pressure, node capacity, and workload behavior in the authorized source.`;
+    return `<p>${detail} ${'Measured operator evidence remains source-specific. '.repeat(3)}</p>`;
+  });
+  const html = `<html><article>${paragraphs.join('')}</article></html>`;
+
+  const result = await fetchArticleExtraction({
+    url: 'https://authorized.example/long-story',
+    title: 'Authorized infrastructure benchmark',
+    ...extractionOptions({
+      request: async () => response(200, { 'content-type': 'text/html' }, [html]),
+    }),
+  });
+
+  assert.ok(result.articleText.length > 1_800);
+  assert.match(result.articleText, /final benchmark reports/);
+  assert.equal(result.extractionQa.extraction_failure_reason, null);
+});
+
+test('generic extraction marks over-cap source text incomplete for longform', async () => {
+  const paragraphs = Array.from({ length: MAX_EXTRACTED_PARAGRAPHS + 1 }, (_, index) => (
+    `<p>Paragraph ${index + 1} records authorized infrastructure evidence, measured capacity, deployment timing, and operator constraints in a complete sentence.</p>`
+  ));
+  const html = `<html><article>${paragraphs.join('')}</article></html>`;
+
+  const result = await fetchArticleExtraction({
+    url: 'https://authorized.example/over-cap-story',
+    title: 'Authorized infrastructure evidence',
+    ...extractionOptions({
+      request: async () => response(200, { 'content-type': 'text/html' }, [html]),
+    }),
+  });
+
+  assert.ok(result.articleText.length <= MAX_EXTRACTED_TEXT_CHARS);
+  assert.equal(result.extractionQa.extraction_failure_reason, 'extracted_text_limit_exceeded');
+  assert.equal(result.extractionQa.can_generate_longform, false);
+  assert.deepEqual(result.extractionQa.block_reasons, []);
+  assert.deepEqual(result.extractionQa.longform_block_reasons, ['extracted_text_limit_exceeded']);
+});
+
+test('generic extraction fails longform closed when text exceeds the character cap', async () => {
+  const paragraph = `${'Measured capacity and operator constraint evidence remains specific to the authorized article. '.repeat(45)}Sentence complete.`;
+  const html = `<html><article>${Array.from({ length: 12 }, () => `<p>${paragraph}</p>`).join('')}</article></html>`;
+
+  const result = await fetchArticleExtraction({
+    url: 'https://authorized.example/character-cap-story',
+    title: 'Authorized capacity evidence',
+    ...extractionOptions({
+      request: async () => response(200, { 'content-type': 'text/html' }, [html]),
+    }),
+  });
+
+  assert.ok(result.articleText.length <= MAX_EXTRACTED_TEXT_CHARS);
+  assert.equal(result.extractionQa.extraction_failure_reason, 'extracted_text_limit_exceeded');
+  assert.equal(result.extractionQa.can_generate_longform, false);
+  assert.deepEqual(result.extractionQa.block_reasons, []);
+  assert.deepEqual(result.extractionQa.longform_block_reasons, ['extracted_text_limit_exceeded']);
 });
 
 test('candidate-v8 special IPv6 literals DNS answers and redirects never reach authorized-source-text requests', async () => {

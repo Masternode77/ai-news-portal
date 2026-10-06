@@ -7,6 +7,9 @@ import { loadSourceRegistrySync } from './source-registry.mjs';
 import { epochArticleSection } from './epoch-ai.mjs';
 
 const GENERIC_ADAPTER = 'generic';
+export const MAX_EXTRACTED_PARAGRAPHS = 80;
+export const MAX_EXTRACTED_TEXT_CHARS = 24_000;
+const EXTRACTED_TEXT_LIMIT_REASON = 'extracted_text_limit_exceeded';
 
 const SOURCE_ADAPTERS = [
   {
@@ -290,12 +293,20 @@ function paragraphTextFromSection(section = '', adapter) {
   const paragraphs = [...section.matchAll(/<p[^>]*>([\s\S]*?)<\/p>/gi)]
     .map((match) => stripHtml(match[1]))
     .map((text) => text.replace(/\s+/g, ' ').trim())
-    .filter((text) => text.length > 60 && !/cookie|subscribe|advertisement/i.test(text))
-    .slice(0, 14);
+    .filter((text) => text.length > 60 && !/cookie|subscribe|advertisement/i.test(text));
 
-  const rawText = (paragraphs.join(' ') || stripHtml(section)).replace(/\s+/g, ' ').trim();
-  const cleanedText = applyAdapterRemovals(rawText, adapter).replace(/\s+/g, ' ').trim();
-  return { rawText, cleanedText };
+  const paragraphLimitExceeded = paragraphs.length > MAX_EXTRACTED_PARAGRAPHS;
+  const selectedParagraphs = paragraphs.slice(0, MAX_EXTRACTED_PARAGRAPHS);
+  const completeRawText = (selectedParagraphs.join(' ') || stripHtml(section)).replace(/\s+/g, ' ').trim();
+  const completeCleanedText = applyAdapterRemovals(completeRawText, adapter).replace(/\s+/g, ' ').trim();
+  const characterLimitExceeded = completeCleanedText.length > MAX_EXTRACTED_TEXT_CHARS;
+  const cleanedText = truncateAtSentence(completeCleanedText, MAX_EXTRACTED_TEXT_CHARS);
+  const rawText = truncateAtSentence(completeRawText, MAX_EXTRACTED_TEXT_CHARS);
+  return {
+    rawText,
+    cleanedText,
+    extractionLimitExceeded: paragraphLimitExceeded || characterLimitExceeded,
+  };
 }
 
 function truncateAtSentence(text = '', maxLen = 1800) {
@@ -402,9 +413,9 @@ export async function fetchArticleExtraction({
       : isEpoch ? removeNonContentBlocks(epochArticleSection(html, url)) : extractSection(html, adapter);
     if (isGoogleRelease && !articleSection) return fallbackExtraction(url, fallbackSnippet, 'release_note_anchor_or_license_missing');
     if (isEpoch && !articleSection) return fallbackExtraction(url, fallbackSnippet, 'epoch_license_or_body_missing');
-    const { rawText, cleanedText } = paragraphTextFromSection(articleSection, adapter);
+    const { rawText, cleanedText, extractionLimitExceeded } = paragraphTextFromSection(articleSection, adapter);
     if (isGoogleRelease && !cleanedText) return fallbackExtraction(url, fallbackSnippet, 'release_note_text_missing');
-    const articleText = truncateAtSentence(cleanedText || fallbackSnippet, 1800);
+    const articleText = cleanedText || fallbackSnippet;
     const extractionQa = analyzeExtractionQuality({
       title,
       articleText,
@@ -412,7 +423,13 @@ export async function fetchArticleExtraction({
       sourceUrl: url,
       sourceDomainAdapter: adapter.id,
       rawText,
+      extractionFailureReason: extractionLimitExceeded ? EXTRACTED_TEXT_LIMIT_REASON : '',
     });
+    if (extractionLimitExceeded) {
+      extractionQa.can_generate_longform = false;
+      extractionQa.block_reasons = [];
+      extractionQa.longform_block_reasons = [EXTRACTED_TEXT_LIMIT_REASON];
+    }
 
     return { articleText, extractionQa };
   } catch (error) {

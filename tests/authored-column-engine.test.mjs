@@ -90,6 +90,8 @@ test('explicit headings follow the existing renderer grammar after typography cl
     ['Power & Water: A/B + C', 'Power & Water: A/B + C'],
     ['This Specific Heading Has More Than Six Words', 'This Specific Heading Has More Than Six Words'],
     ['## **lowercase grid \u2014 timing**', 'Lowercase grid - timing'],
+    ['Percentiles, Defaults and Drive Specs', 'Percentiles / Defaults and Drive Specs'],
+    ['Costs, Risks, and Timing', 'Costs / Risks and Timing'],
   ]) {
     const essay = structuredEssay();
     essay.sections[0].heading = input;
@@ -97,7 +99,7 @@ test('explicit headings follow the existing renderer grammar after typography cl
     assert.equal(headingSequence(parsed.body)[0], expected);
     assert.ok(parsed.body.includes(essay.sections[0].paragraphs[0]), 'prose is preserved');
   }
-  for (const heading of ['A'.repeat(87), 'Ends With Period.', '<b>Hidden Markup</b>']) {
+  for (const heading of ['A'.repeat(87), 'Ends With Period.', '<b>Hidden Markup</b>', 'A 1,000 MW Queue']) {
     const essay = structuredEssay();
     essay.sections[0].heading = heading;
     assert.throws(() => parseModelEssay(JSON.stringify(essay)), /invalid_structured_heading/);
@@ -690,8 +692,9 @@ test('verificationFeedback translates reason codes into actionable directives', 
   assert.match(feedback[6], /80 and 240 characters/);
   assert.equal(feedback[7], 'some_unknown_code');
   const [density] = verificationFeedback(['insight_density_below_0.75']);
-  assert.match(density, /operators, suppliers, investors or utilities/, 'the directive names what the density score measures');
-  assert.match(density, /fewer reporting verbs/);
+  assert.match(density, /constraints, allocation choices and milestones/);
+  assert.match(density, /factual premises are established/, 'analytical detail must not invent economic premises');
+  assert.match(density, /Preserve attribution and qualifiers/);
 });
 
 test('quality policy names the offending unsupported numbers', () => {

@@ -143,13 +143,7 @@ export function normalizeAiPayload(aiPayload, fallback) {
   };
 }
 
-export async function enrichContent(item) {
-  const { articleText, extractionQa } = await fetchArticleExtraction({
-    url: item.url,
-    title: item.title,
-    fallbackSnippet: item.snippet,
-    sourceRegistryId: item.sourceRegistryId,
-  });
+export function buildContentExtractionState(item, articleText, extractionQa = {}) {
   // The public gates (source-text authorization, product fit, detail routes)
   // validate the artifact through the fail-closed policy: public_publishable,
   // an empty block_reasons list, and a sentence-completion score of at least
@@ -163,6 +157,7 @@ export async function enrichContent(item) {
     url: item.url,
     sourceUrl: item.url,
     sourceRegistryId: item.sourceRegistryId,
+    extractionFailureReason: extractionQa.extraction_failure_reason,
   });
   const extractionArtifact = failClosed.extraction_artifact;
   const publicExtractionQa = {
@@ -171,7 +166,24 @@ export async function enrichContent(item) {
     can_generate_longform: failClosed.extraction_qa.can_generate_longform,
     cleaned_source_length: failClosed.extraction_qa.cleaned_source_length,
     block_reasons: failClosed.extraction_qa.block_reasons,
+    longform_block_reasons: failClosed.extraction_qa.longform_block_reasons,
+    extraction_failure_reason: failClosed.extraction_qa.extraction_failure_reason,
   };
+  return { failClosed, extractionArtifact, publicExtractionQa };
+}
+
+export async function enrichContent(item) {
+  const { articleText, extractionQa } = await fetchArticleExtraction({
+    url: item.url,
+    title: item.title,
+    fallbackSnippet: item.snippet,
+    sourceRegistryId: item.sourceRegistryId,
+  });
+  const { failClosed, extractionArtifact, publicExtractionQa } = buildContentExtractionState(
+    item,
+    articleText,
+    extractionQa,
+  );
   const category = inferCategory(`${item.title} ${item.snippet} ${articleText}`, item.defaultCategory || item.categoryHint);
   const region = inferRegion(`${item.title} ${item.snippet} ${articleText}`, item.region || 'Global');
   const summary = fallbackSummary(item, articleText);

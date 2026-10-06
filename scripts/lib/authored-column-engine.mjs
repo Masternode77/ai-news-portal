@@ -2,8 +2,8 @@
 //
 // Selects the single most consequential story of the run window and writes an
 // opinionated first-person essay under the persona charter, grounded in the
-// evidence pack of the source articles. Three LLM passes (thesis, draft,
-// voice) followed by a deterministic verification gate. There is no fallback
+// evidence pack of the source articles. Thesis, draft and bounded voice repairs
+// pass deterministic gates and, in subscription mode, an independent review. There is no fallback
 // path in this module by design: if generation or verification fails, the run
 // publishes no column and records why.
 import fs from 'node:fs';
@@ -354,8 +354,7 @@ export function parseModelEssay(content, { recoverFormat = false, requireSection
   for (const [index, section] of essay.sections.entries()) {
     let heading = typeof section?.heading === 'string' ? section.heading.trim() : '';
     if (!heading || /[\r\n]/.test(heading)) throw new EssayStructureError('invalid_structured_heading');
-    heading = stripInlineMarkdown(heading.replace(/^#{1,6}\s+/, ''))
-      .replace(/[\u2010-\u2015]/g, '-').replace(/\s+/g, ' ').replace(/^[a-z]/, letter => letter.toUpperCase());
+    heading = normalizeStructuredHeading(heading);
     if (!isHeading(heading) || /[<>]/.test(heading)) {
       if (!recoverFormat) throw new EssayStructureError('invalid_structured_heading');
       formatIssues.push(`invalid_structured_heading: Rewrite section ${index + 1}'s heading ${JSON.stringify(heading)}. Start with an uppercase letter or digit, keep it under 87 characters, and use ASCII letters, digits, spaces or &:/+- only. Rephrase apostrophes, quotes and other unsupported punctuation while preserving the meaning.`);
@@ -368,6 +367,19 @@ export function parseModelEssay(content, { recoverFormat = false, requireSection
     headline: essay.headline, deck: essay.deck, body: blocks.join('\n\n'), figures: essay.figures,
     ...(formatIssues.length ? { formatIssues } : {}),
   };
+}
+
+function normalizeStructuredHeading(heading) {
+  return stripInlineMarkdown(heading.replace(/^#{1,6}\s+/, ''))
+    .replace(/[\u2010-\u2015]/g, '-')
+    // The renderer intentionally accepts only a small punctuation set. Preserve
+    // comma-separated heading lists by converting their separators to the
+    // supported slash form instead of sending the entire essay through another
+    // model revision for a typography-only defect.
+    .replace(/,\s+(?=(?:and|or)\b)/gi, ' ')
+    .replace(/,+(?=\s)/g, ' / ')
+    .replace(/\s+/g, ' ')
+    .replace(/^[a-z]/, letter => letter.toUpperCase());
 }
 
 function stripInlineMarkdown(line) {
@@ -426,6 +438,8 @@ const FEEDBACK_HINTS = [
     'At least one sentence reproduces the source coverage nearly verbatim. Rewrite every sentence in your own words and structure; only short quoted fragments inside quotation marks may repeat source wording.'],
   [/^source_overlap_above_threshold$/, () =>
     'The essay tracks the source text too closely. Restructure the argument and rephrase in your own words so the wording diverges from the coverage.'],
+  [/^source_summary_ratio_above_/, () =>
+    'Reduce the space spent retelling the source chronology and benchmark results. Keep essential facts, qualifiers and numeric attribution, then develop the operator decision: competing interpretations, criteria for acting, and measurements that would distinguish them. Use your own argument and wording. Do not add unsupported mechanisms or economic claims to make the prose less like a summary.'],
   [/^deck_length_out_of_range$/, () =>
     'Rewrite the deck as a single standfirst sentence between 80 and 240 characters.'],
   [/^title_length_out_of_range$/, () =>
@@ -439,7 +453,7 @@ const FEEDBACK_HINTS = [
   [/^human_style_below_/, () =>
     'Vary sentence rhythm and vocabulary; remove formulaic transitions and symmetrical sentence patterns.'],
   [/^insight_density_below_/, () =>
-    'Make the decision analysis explicit: say which operators, suppliers, investors or utilities carry the cost, risk, timing and capacity exposure, who gains or loses leverage, and which constraint, allocation or milestone decides it. Use fewer reporting verbs such as said, reported or announced, keeping each source attribution once. Add specific, falsifiable claims and cut generic observations.'],
+    'Make the decision analysis explicit using constraints, allocation choices and milestones supported by the supplied source. Identify who bears a cost or gains leverage only when the factual premises are established; otherwise name the missing measurement and explain how different results would change the decision. Preserve attribution and qualifiers. Do not invent mechanisms or economic outcomes to increase analytical detail.'],
 ];
 
 export function verificationFeedback(reasons = []) {
@@ -686,6 +700,8 @@ function personaSystemPrompt(charter) {
     positions,
     'Hard rules:',
     '- Separate reported facts from analysis in the headline, deck, thesis and body. A proposal, rating, consultation or policy ambition is not evidence of an enacted permit condition, mandatory contract, deadline or capacity-recognition rule. Do not invent legal mechanisms. Mark unsupported future effects as conditional analysis, not obligations already in force. Standing positions and expert_insight are analytical context, not verified source facts.',
+    '- Apply the same source discipline to technology and economics: do not invent system behavior, deployment history, cost savings, component wear, supplier demand or competitive effects. Every factual premise must be established by evidence.source_text. "I think" and "if" do not make an unsupported technical or economic premise valid. Frame unknown effects as questions or measurements an operator needs, not as results already established.',
+    '- Preserve source qualifiers such as "often" and "up to" without inferring their unstated converse. Missing detail in the supplied extract does not prove the full publication omits it, that no one has published it, or that an outcome did not occur. Scope every absence claim to the supplied evidence.',
     ...charter.persona.honesty_rules.map((rule) => `- ${rule}`),
     ...charter.voice.dos.map((rule) => `- ${rule}`),
     ...charter.voice.donts.map((rule) => `- ${rule}`),
@@ -740,6 +756,7 @@ async function thesisPass({ charter, selection, ledger, recentTheses, callModel 
       '  "watch_items": string[2-3] (concrete observables tied to events such as the next filing or regulatory review; never invent numeric timelines),',
       '  "working_headlines": string[3] (first-person-friendly, specific, 40-90 chars) }',
       'Use numbers, dates and durations only when explicitly present in verified_claims. This applies to forecasts and personal watch horizons too; otherwise use nonnumeric event-based timing.',
+      'Choose a thesis whose factual premises are all supported by source_text. When the evidence reports a benchmark, argue what decision the benchmark justifies and what must still be measured; do not turn density into a proven cost saving or cost transfer. The counterargument and watch_items must obey this evidence boundary too. A standing position may be unused; never invent supporting premises to fit one.',
     ].join('\n'),
     userPrompt: JSON.stringify({
       evidence: evidencePayload(selection, ledger),
@@ -773,6 +790,7 @@ async function draftPass({ charter, selection, ledger, stance, recentHeadings = 
       '- Open with a different device than the recent leads shown in the payload: a scene, a specific number, a contradiction, a filing detail, or a deadline.',
       '- Attribute every number inline to its source publication by name. Cite only numbers present in verified_claims, copied exactly — same value, same unit; never convert units (do not turn 2,500 MW into 2.5 GW) and never derive new figures.',
       '- Write every sentence in your own words: never reproduce a sentence or long phrase from the source coverage. Short quoted fragments inside quotation marks are the only exception.',
+      '- Audit the supplied stance before drafting: it is a proposal, not evidence. Narrow or correct any unsupported premise rather than repeating it through the headline and sections. Develop the argument through explicit decision criteria, competing interpretations and unanswered measurements grounded in the source; do not fill the word count with assumed industry history or mechanism details.',
       '- No ellipsis characters. No bullet lists; write prose.',
       ...(feedback.length ? [`Repair: ${feedback.join(' | ')}`] : []),
     ].join('\n'),
@@ -801,6 +819,7 @@ async function voicePass({ charter, draft, evidence, feedback = [], callModel })
       'Formatting contract: return exactly 4-6 section objects with at least one substantive paragraph each, and at least six substantive paragraphs in the complete essay. Prefer 2-6 words per heading. Each heading starts with an uppercase letter or digit, is under 87 characters, and uses ASCII letters, digits, spaces or &:/+- only; rephrase apostrophes, quotes and other unsupported punctuation. Each paragraph is a single unwrapped string with no newline or markdown symbols. Keep any unheaded opening in opening_paragraphs (an empty array is allowed). Do not return a body string; the publisher assembles the headings and paragraphs. Keep the draft\'s own headings (or sharpen them), never template headings like "On My Watchlist" or "Where I Could Be Wrong". Retain 1200-1800 total words and the full argument, not a summary.',
       'Numeric evidence contract: the draft is not an authority for numbers. Every retained numeric value and unit must appear in verified_claims with matching attribution; do not convert or derive values. Remove unsupported numbers rather than spelling them out, replacing them with synonyms, or inventing a citation. For forward-looking analysis use nonnumeric event-based observables instead of unsupported month counts or dates.',
       'Source fidelity contract: use evidence.source_text to check nonnumeric claims too. Correct overstatement of legal status, causality or required actions in the headline and deck as well as the prose. A prior draft or thesis does not establish a fact. If the source does not establish a binding rule, remove the assertion or make the potential consequence explicitly conditional.',
+      'For an evidence repair, remove the unsupported premise everywhere it drives the argument. Adding "I think" or "if" to the same factual claim is not a repair. Reframe the thesis and headings if necessary; ask for missing measurements instead of predicting what they will show. Keep absence claims limited to the supplied evidence, and preserve all source qualifiers.',
       feedback.length
         ? `The previous version failed these checks — fix every one without weakening the argument: ${feedback.join(' | ')}. Keep the headline at 40-105 characters and the deck at 80-240 characters; put detailed qualifications in the body.`
         : 'Polish only; keep structure and headings.',
@@ -975,7 +994,7 @@ export async function generateAuthoredColumn({
   };
 }
 
-// One full generation attempt (thesis, draft, up to two revisions, verification)
+// One full generation attempt (thesis, draft, bounded quality/editorial repairs)
 // for one selected story. Returns { column } or { stage, detail, metrics }.
 async function attemptColumnForSelection({
   charter,
@@ -1036,72 +1055,84 @@ async function attemptColumnForSelection({
   let formatFeedback = draft.formatIssues || [];
   let reviewFeedback = [];
   let crossReview = null;
-  while (attempts < 2) {
-    attempts += 1;
-    let voiced;
-    try {
-      voiced = await voicePass({
-        charter,
-        draft: essay,
-        evidence: evidencePayload(selection, ledger),
-        feedback: [...verificationFeedback(quality?.reasons || []), ...formatFeedback, ...reviewFeedback],
-        callModel,
-      });
-    } catch (error) {
-      if (error instanceof EssayStructureError && attempts < 2) {
-        formatFeedback = [...(essay.formatIssues || []), `The previous JSON failed ${error.message}. Return all required arrays with 4-6 valid section headings and nonempty single-line paragraph strings; preserve the complete essay.`];
-        continue;
+  let complete = false;
+  const editorialVersionLimit = reviewModel ? 2 : 1;
+  for (let editorialVersion = 1; editorialVersion <= editorialVersionLimit && !complete; editorialVersion += 1) {
+    let versionPassedQuality = false;
+    for (let voiceAttempt = 1; voiceAttempt <= 2; voiceAttempt += 1) {
+      attempts += 1;
+      let voiced;
+      try {
+        voiced = await voicePass({
+          charter,
+          draft: essay,
+          evidence: evidencePayload(selection, ledger),
+          feedback: [...verificationFeedback(quality?.reasons || []), ...formatFeedback, ...reviewFeedback],
+          callModel,
+        });
+      } catch (error) {
+        if (error instanceof EssayStructureError && voiceAttempt < 2) {
+          formatFeedback = [...(essay.formatIssues || []), `The previous JSON failed ${error.message}. Return all required arrays with 4-6 valid section headings and nonempty single-line paragraph strings; preserve the complete essay.`];
+          continue;
+        }
+        return failWith('voice', error.message, null, error);
       }
-      return failWith('voice', error.message, null, error);
-    }
-    if (voiced?.body && voiced?.headline) essay = voiced;
-    formatFeedback = essay.formatIssues || [];
-    essay = { ...essay, body: normalizeAuthoredBody(essay.body) };
-    figures = buildColumnFigures({
-      ledger,
-      stance,
-      headline: essay.headline,
-      sectionCount: headingSequence(essay.body).length,
-      modelSpec: essay.figures ?? draft.figures ?? null,
-      facts: selection.evidencePack.facts || [],
-      factSource: selection.article.source || '',
-    }).figures;
-    quality = authoredColumnQualityResult({
-      body: essay.body,
-      title: essay.headline,
-      deck: essay.deck || '',
-      summary: truncate(essay.deck || '', 170),
-      thesis: stance.thesis,
-      ledgerClaims: ledger.claims,
-      sourceText,
-      recentRecords: repetitionCorpus,
-      recentTheses,
-      recentHeadings,
-      recentLeads,
-      figures,
-    });
-    // A parseable failed revision is the next repair input, never a publishable
-    // fallback. Check every explicit heading even when enough others are valid.
-    if (formatFeedback.length) {
-      quality.ok = false;
-      quality.reasons = [...new Set([...quality.reasons, ...formatFeedback.map(issue => issue.split(':')[0])])];
-    }
-    if (!quality.ok) continue;
+      if (voiced?.body && voiced?.headline) essay = voiced;
+      formatFeedback = essay.formatIssues || [];
+      essay = { ...essay, body: normalizeAuthoredBody(essay.body) };
+      figures = buildColumnFigures({
+        ledger,
+        stance,
+        headline: essay.headline,
+        sectionCount: headingSequence(essay.body).length,
+        modelSpec: essay.figures ?? draft.figures ?? null,
+        facts: selection.evidencePack.facts || [],
+        factSource: selection.article.source || '',
+      }).figures;
+      quality = authoredColumnQualityResult({
+        body: essay.body,
+        title: essay.headline,
+        deck: essay.deck || '',
+        summary: truncate(essay.deck || '', 170),
+        thesis: stance.thesis,
+        ledgerClaims: ledger.claims,
+        sourceText,
+        recentRecords: repetitionCorpus,
+        recentTheses,
+        recentHeadings,
+        recentLeads,
+        figures,
+      });
+      // A parseable failed revision is the next repair input, never a publishable
+      // fallback. Check every explicit heading even when enough others are valid.
+      if (formatFeedback.length) {
+        quality.ok = false;
+        quality.reasons = [...new Set([...quality.reasons, ...formatFeedback.map(issue => issue.split(':')[0])])];
+      }
+      if (!quality.ok) continue;
 
-    if (reviewModel) {
+      versionPassedQuality = true;
+      if (!reviewModel) {
+        complete = true;
+        break;
+      }
       try {
         crossReview = await reviewColumnEvidence({
           essay, evidence: evidencePayload(selection, ledger), callModel: reviewModel,
         });
+        complete = true;
       } catch (error) {
-        if (error instanceof EditorialReviewRejection && attempts < 2) {
+        if (error instanceof EditorialReviewRejection && editorialVersion < editorialVersionLimit) {
           reviewFeedback = error.feedback;
-          continue;
+          break;
         }
         throw error;
       }
+      break;
     }
-    break;
+    // Deterministic quality exhaustion keeps the existing two-attempt bound;
+    // only a completed Astra review can open the second editorial version.
+    if (!versionPassedQuality) break;
   }
 
   if (!quality?.ok) {

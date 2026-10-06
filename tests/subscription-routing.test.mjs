@@ -149,6 +149,50 @@ test('rejected cross-review feedback repairs the voice and requires a fresh acce
   }
 });
 
+test('deterministic repairs and Astra repair use separate bounded voice budgets', async () => {
+  const oldWords=process.env.AUTHORED_MIN_WORDS;
+  const oldChars=process.env.AUTHORED_MIN_CHARS;
+  process.env.AUTHORED_MIN_WORDS='700';
+  process.env.AUTHORED_MIN_CHARS='4200';
+  const tasks=[];
+  const reviewRequests=[];
+  const state={};
+  const badQuality=JSON.stringify({
+    headline:'This Headline Is Long Enough To Clear The Basic Title Gate',
+    deck:'This standfirst is deliberately long enough to pass basic parsing while its body still fails deterministic publication quality.',
+    body:'One tiny paragraph that cannot pass the deterministic column quality gates.',
+  });
+  try {
+    const result = await generateAuthoredColumn({
+      candidates:[fixtureArticle()], sources:[FIXTURE_SOURCE], state,
+      now:new Date('2026-08-23T09:00:00Z'),
+      callModel:async request => {
+        tasks.push(request.task);
+        if (tasks.length === 6) {
+          assert.match(request.systemPrompt, /Astra review issue: unsupported causal claim/);
+          assert.match(request.systemPrompt, /Lengthen the essay/);
+        }
+        if (tasks.length === 1) return STANCE_JSON;
+        if (tasks.length === 3 || tasks.length === 5) return badQuality;
+        return essayJson();
+      },
+      reviewModel:async request => {
+        reviewRequests.push(request);
+        return reviewRequests.length === 1
+          ? JSON.stringify({approved:false, issues:['unsupported causal claim'], source_checks:[], numeric_checks:[]})
+          : approvedReviewForRequest(request);
+      },
+    });
+    assert.ok(result.column);
+    assert.deepEqual(tasks, ['column','column','column','column','column','column']);
+    assert.equal(reviewRequests.length,2);
+    assert.equal(result.column.authored_quality.attempts,4);
+  } finally {
+    if(oldWords===undefined) delete process.env.AUTHORED_MIN_WORDS; else process.env.AUTHORED_MIN_WORDS=oldWords;
+    if(oldChars===undefined) delete process.env.AUTHORED_MIN_CHARS; else process.env.AUTHORED_MIN_CHARS=oldChars;
+  }
+});
+
 test('repeated cross-review rejection prevents a Fable draft from becoming a column', async () => {
   const oldWords=process.env.AUTHORED_MIN_WORDS;
   const oldChars=process.env.AUTHORED_MIN_CHARS;
@@ -188,6 +232,37 @@ test('cross-review transport failures propagate without a Fable retry', async ()
       reviewModel:async () => { throw transportError; },
     }), (error) => error === transportError);
     assert.deepEqual(tasks, ['column', 'column', 'column']);
+  } finally {
+    if(oldWords===undefined) delete process.env.AUTHORED_MIN_WORDS; else process.env.AUTHORED_MIN_WORDS=oldWords;
+    if(oldChars===undefined) delete process.env.AUTHORED_MIN_CHARS; else process.env.AUTHORED_MIN_CHARS=oldChars;
+  }
+});
+
+test('deterministic quality exhaustion stays bounded at two voice attempts even with a reviewer', async () => {
+  const oldWords=process.env.AUTHORED_MIN_WORDS;
+  const oldChars=process.env.AUTHORED_MIN_CHARS;
+  process.env.AUTHORED_MIN_WORDS='700';
+  process.env.AUTHORED_MIN_CHARS='4200';
+  const tasks=[];
+  let reviewCalls=0;
+  const state={};
+  try {
+    const result=await generateAuthoredColumn({
+      candidates:[fixtureArticle()], sources:[FIXTURE_SOURCE], state,
+      now:new Date('2026-08-23T09:00:00Z'),
+      callModel:async request => {
+        tasks.push(request.task);
+        if(tasks.length===1) return STANCE_JSON;
+        if(tasks.length===2) return essayJson();
+        return JSON.stringify({headline:'A Valid Looking Headline That Still Has No Essay',deck:'A sufficiently long deck that parses but cannot compensate for an invalid body.',body:'Too short.'});
+      },
+      reviewModel:async()=>{ reviewCalls+=1; return JSON.stringify(approved); },
+    });
+    assert.equal(result.column,null);
+    assert.match(result.failure,/^verify:/);
+    assert.deepEqual(tasks,['column','column','column','column']);
+    assert.equal(reviewCalls,0);
+    assert.equal(state.authored?.lastColumnAt,null);
   } finally {
     if(oldWords===undefined) delete process.env.AUTHORED_MIN_WORDS; else process.env.AUTHORED_MIN_WORDS=oldWords;
     if(oldChars===undefined) delete process.env.AUTHORED_MIN_CHARS; else process.env.AUTHORED_MIN_CHARS=oldChars;

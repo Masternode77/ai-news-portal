@@ -5,9 +5,28 @@ import { createExtractionArtifact } from './extraction-artifact.mjs';
 
 export const PUBLIC_ARTICLE_MIN_CLEAN_CHARS = 500;
 export const LONGFORM_MIN_CLEAN_CHARS = 1200;
+const LONGFORM_ONLY_EXTRACTION_FAILURES = new Set([
+  'extracted_text_limit_exceeded',
+]);
 
 function compact(value = '') {
   return String(value || '').replace(/\s+/g, ' ').trim();
+}
+
+function persistedLongformBlockReasons(article = {}) {
+  const qaEntries = [article.extraction_qa, article.extraction_artifact?.extraction_qa]
+    .filter((value) => value && typeof value === 'object' && !Array.isArray(value));
+  const candidates = [
+    article.extractionFailureReason,
+    article.extraction_failure_reason,
+    ...qaEntries.flatMap((qa) => [
+      qa.extraction_failure_reason,
+      ...(Array.isArray(qa.longform_block_reasons) ? qa.longform_block_reasons : []),
+    ]),
+  ];
+  return [...new Set(candidates
+    .map((value) => String(value || '').trim())
+    .filter((value) => LONGFORM_ONLY_EXTRACTION_FAILURES.has(value)))];
 }
 
 export function analyzeSourceExtractionFailClosed(article = {}) {
@@ -22,6 +41,8 @@ export function analyzeSourceExtractionFailClosed(article = {}) {
   });
   const completion = sentenceCompletionScore(cleaned_source_text || rawText);
   const reasons = [];
+  const longformBlockReasons = persistedLongformBlockReasons(article);
+  const longformExtractionBlocked = longformBlockReasons.length > 0;
 
   if (boilerplate.boilerplate_ratio > 0.08) reasons.push('boilerplate_ratio_above_0.08');
   if (boilerplate.copyright_footer_detected) reasons.push('copyright_footer_detected');
@@ -37,6 +58,7 @@ export function analyzeSourceExtractionFailClosed(article = {}) {
     reasons.push(`cleaned_source_text_below_${LONGFORM_MIN_CLEAN_CHARS}`);
   }
   if (!sourceCompleteness.ok) reasons.push(...sourceCompleteness.reasons);
+  if (longformExtractionBlocked) reasons.push(...longformBlockReasons);
 
   const uniqueReasons = [...new Set(reasons)];
   const canPublishLocalArticle = cleaned_source_text.length >= PUBLIC_ARTICLE_MIN_CLEAN_CHARS
@@ -44,7 +66,9 @@ export function analyzeSourceExtractionFailClosed(article = {}) {
     && boilerplate.boilerplate_ratio <= 0.08
     && truncation.ok
     && completion >= 0.92;
-  const canGenerateLongform = canPublishLocalArticle && cleaned_source_text.length >= LONGFORM_MIN_CLEAN_CHARS;
+  const canGenerateLongform = canPublishLocalArticle
+    && cleaned_source_text.length >= LONGFORM_MIN_CLEAN_CHARS
+    && !longformExtractionBlocked;
 
   const extraction_qa = {
     public_publishable: canPublishLocalArticle,
@@ -54,7 +78,9 @@ export function analyzeSourceExtractionFailClosed(article = {}) {
     copyright_footer_detected: boilerplate.copyright_footer_detected,
     nav_or_cta_detected: boilerplate.nav_or_cta_detected,
     sentence_completion_score: completion,
-    block_reasons: uniqueReasons,
+    block_reasons: uniqueReasons.filter((reason) => !longformBlockReasons.includes(reason)),
+    longform_block_reasons: longformBlockReasons,
+    extraction_failure_reason: longformBlockReasons[0] || null,
   };
 
   return {
@@ -82,7 +108,7 @@ export function sourceExtractionPassesPublicGate(article = {}) {
   return {
     ...analysis,
     ok: analysis.can_publish_local_article,
-    block_reasons: analysis.can_publish_local_article ? [] : analysis.reasons,
+    block_reasons: analysis.can_publish_local_article ? [] : analysis.extraction_qa.block_reasons,
   };
 }
 
