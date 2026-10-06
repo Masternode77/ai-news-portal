@@ -5,7 +5,8 @@ import { join } from 'node:path';
 
 export const SUBSCRIPTION_MODELS = Object.freeze({ codex: 'gpt-6-astra', claude: 'claude-fable-5-1' });
 const MAX_OUTPUT_BYTES = 2 * 1024 * 1024;
-const ENV_ALLOWLIST = /^(PATH|PATHEXT|HOME|USERPROFILE|APPDATA|LOCALAPPDATA|SYSTEMROOT|WINDIR|COMSPEC|TMP|TEMP|TMPDIR|LANG|LC_ALL|LC_CTYPE|TERM|CODEX_HOME|CLAUDE_CONFIG_DIR)$/i;
+// Claude's macOS Keychain lookup needs USER; retain the account name without exporting credentials.
+const ENV_ALLOWLIST = /^(PATH|PATHEXT|HOME|USER|USERPROFILE|APPDATA|LOCALAPPDATA|SYSTEMROOT|WINDIR|COMSPEC|TMP|TEMP|TMPDIR|LANG|LC_ALL|LC_CTYPE|TERM|CODEX_HOME|CLAUDE_CONFIG_DIR)$/i;
 
 export function subscriptionEnvironment(source = process.env) {
   return Object.fromEntries(Object.entries(source).filter(([key]) => ENV_ALLOWLIST.test(key)));
@@ -66,7 +67,11 @@ export function runSubscriptionCli(command, args, { cwd, env, input = '', timeou
 }
 
 export function createSubscriptionProvider({ run = runSubscriptionCli, env = process.env } = {}) {
-  const childEnv = subscriptionEnvironment(env);
+  const childEnv = {
+    ...subscriptionEnvironment(env),
+    // Skip Claude's background small/fast-model session-title request.
+    CLAUDE_CODE_DISABLE_TERMINAL_TITLE: '1',
+  };
   const commands = { codex: env.SUBSCRIPTION_CODEX_BIN || 'codex', claude: env.SUBSCRIPTION_CLAUDE_BIN || 'claude' };
 
   async function checkAuth(provider, cwd, signal) {

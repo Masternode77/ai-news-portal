@@ -24,6 +24,7 @@ import {
 import { callExpertLensText, rethrowSubscriptionFailure } from './openrouter.mjs';
 import { BANNED_PHRASES, BLOCKED_HOOK_STARTS, hasBannedPhrase } from './banned-phrases.mjs';
 import {
+  BRIEF_LABELS,
   GENERATION_VERSION,
   buildNarrativeLensFields,
   extractNarrativeDNA,
@@ -78,6 +79,79 @@ function finalArticleBody(article, sections, candidate = '', blueprint, enforceB
     return body;
   }
   return blueprintFallbackBody(article, sections, blueprint);
+}
+
+function nonEmptyString(value) {
+  return typeof value === 'string' && Boolean(value.trim());
+}
+
+export function assertCompleteSubscriptionExpertLensPayload(article, payload, blueprint = resolveArticleBlueprint(article)) {
+  const parsed = typeof payload === 'string' ? safeJsonParse(payload, null) : payload;
+  const canonicalSourceLink = article.sourceUrl || article.url || '';
+  const narrativeTextFields = [
+    'protagonist',
+    'antagonist_or_constraint',
+    'core_tension',
+    'infrastructure_layer',
+    'time_horizon',
+    'story_archetype',
+    'hook_style',
+    'evidence_anchor',
+    'counterpoint',
+    'next_observable_signal',
+  ];
+  const requiredTextFields = [
+    'thesis',
+    'whatHappened',
+    'whyThisMatters',
+    'marketMissing',
+    'investors',
+    'operators',
+    'hyperscalers',
+    'watchNext',
+    'finalHeadline',
+    'metaDescription',
+    'finalArticleBody',
+    'sourceLink',
+  ];
+  const readerTextFields = requiredTextFields.filter((field) => field !== 'sourceLink');
+  const body = nonEmptyString(parsed?.finalArticleBody)
+    ? normalizeEditorialParagraphs(parsed.finalArticleBody).join('\n\n')
+    : '';
+  const validBody = body.length >= blueprint.minChars
+    && body.length <= blueprint.maxChars + 400
+    && (bodyUsesBlueprint(body, blueprint) || bodyHasStructuralSections(body))
+    && (!articleHasExpertInsight(article) || expertInsightUsageScore(body, article.expert_insight || article.expertInsight) >= 0.55)
+    && !containsTemplateLanguage(body)
+    && !hasBannedPhrase(body);
+  const valid = parsed
+    && typeof parsed === 'object'
+    && !Array.isArray(parsed)
+    && parsed.blueprintId === blueprint.id
+    && parsed.generation_version === GENERATION_VERSION
+    && parsed.sourceLink === canonicalSourceLink
+    && parsed.narrative_dna && typeof parsed.narrative_dna === 'object' && !Array.isArray(parsed.narrative_dna)
+    && narrativeTextFields.every((field) => nonEmptyString(parsed.narrative_dna[field]))
+    && Array.isArray(parsed.narrative_dna.reader_role)
+    && parsed.narrative_dna.reader_role.length > 0
+    && parsed.narrative_dna.reader_role.every(nonEmptyString)
+    && BRIEF_LABELS.includes(parsed.dynamicBriefLabel)
+    && requiredTextFields.every((field) => nonEmptyString(parsed[field]))
+    && Array.isArray(parsed.executiveSummary)
+    && parsed.executiveSummary.length === 3
+    && parsed.executiveSummary.every(nonEmptyString)
+    && Array.isArray(parsed.headlineOptions)
+    && parsed.headlineOptions.length === 5
+    && parsed.headlineOptions.every(nonEmptyString)
+    && readerTextFields.every((field) => !hasBannedPhrase(parsed[field]))
+    && parsed.executiveSummary.every((value) => !hasBannedPhrase(value))
+    && parsed.headlineOptions.every((value) => !hasBannedPhrase(value))
+    && validBody;
+
+  if (!valid) {
+    throw new Error('Subscription long-form analysis returned incomplete or invalid editorial fields');
+  }
+  return parsed;
 }
 
 function normalizeExecutiveSummary(value = [], fallback = []) {
@@ -354,10 +428,10 @@ async function generateExpertLensFull(article, blueprint) {
   }).catch((error) => { rethrowSubscriptionFailure(error); return ''; });
 
   if (content) {
-    const generated = safeJsonParse(content, null);
-    if (!generated || typeof generated.finalArticleBody !== 'string' || !generated.finalArticleBody.trim()
-      || typeof generated.finalHeadline !== 'string' || !generated.finalHeadline.trim()) {
-      rethrowSubscriptionFailure(new Error('Subscription long-form analysis returned incomplete editorial fields'));
+    try {
+      assertCompleteSubscriptionExpertLensPayload(article, content, blueprint);
+    } catch (error) {
+      rethrowSubscriptionFailure(error);
     }
   }
   return normalizeExpertLensFull(article, content || fallback, blueprint, { enforceBlueprint: true });

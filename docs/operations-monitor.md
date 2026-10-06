@@ -4,11 +4,13 @@ The hourly `Operations Monitor` workflow checks two independent conditions and m
 
 ## Content pipeline freshness
 
-The monitor reads the GitHub Actions run history for `.github/workflows/update-news.yml`. Freshness is based on the most recent run whose conclusion is `success`, rather than the latest attempt. A successful run older than 12 hours raises an alert. A more recent failed completed run is reported as `stale_after_failed_scan`; a stale success without a later failure is `stale_no_recent_success`. No run history is `unknown_no_runs`, not healthy.
+The monitor reads `src/data/pipeline-heartbeat.json`, recorded only after the Mac generation, artwork, review and publication gates. A successful hosted validation run does not establish generation freshness. Missing, stale or failed generation is reported by the heartbeat evaluator. The old workflow-run evaluator remains library compatibility code.
 
 The current source registry is also evaluated with the same authorization rules as the pipeline. Zero active text-authorized feeds is reported separately as `no_authorized_sources`, so an authorization stop is not described as a scan failure.
 
 ## OpenRouter monthly budget
+
+Subscription mode disables this check and does not call OpenRouter. The following budget configuration applies only to explicitly selected legacy `LLM_PROVIDER=openrouter` operation; it is not an activation requirement for the Mac subscription workflow.
 
 Set the repository Actions variable `OPENROUTER_MONTHLY_BUDGET_USD` to the approved monthly budget in US dollars. The approved launch value is `30`, which raises the default warning at $24 and the critical alert at $30. There is intentionally no fallback financial limit in code. The monitor uses the existing `OPENROUTER_API_KEY` Actions secret to call `GET https://openrouter.ai/api/v1/key` and reads the documented `data.usage_monthly` field.
 

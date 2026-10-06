@@ -1,8 +1,12 @@
 import { spawn, execFileSync } from 'node:child_process';
-import { mkdir, writeFile, readFile, rm } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { randomUUID } from 'node:crypto';
+import {
+  acquireSubscriptionOperationLock,
+  assertSubscriptionOperationLockOwner,
+  releaseSubscriptionOperationLock,
+  SUBSCRIPTION_LOCK_OWNER_ENV,
+} from './subscription-operation-lock.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const DEADLINE_MS = 90 * 60 * 1000;
@@ -32,29 +36,6 @@ export function subscriptionNewsEnvironment(source) {
     SUPABASE_URL: '', SUPABASE_SERVICE_ROLE_KEY: '',
     LLM_PROVIDER: 'subscription', IMAGE_PROVIDER: 'codex',
     PIPELINE_OFFLINE: '0',
-  };
-}
-
-async function acquireLock(directory) {
-  try {
-    await mkdir(directory);
-  } catch (error) {
-    if (error.code === 'EEXIST') {
-      throw new Error(`Another subscription writer owns ${directory}. If interrupted, verify its processes have stopped before removing the lock.`);
-    }
-    throw error;
-  }
-  const owner = randomUUID();
-  try {
-    await writeFile(path.join(directory, 'owner'), owner, { flag: 'wx' });
-  } catch (error) {
-    await rm(directory, { recursive: true, force: true });
-    throw error;
-  }
-  return async () => {
-    if (await readFile(path.join(directory, 'owner'), 'utf8').catch(() => '') === owner) {
-      await rm(directory, { recursive: true, force: true });
-    }
   };
 }
 
@@ -110,12 +91,13 @@ export async function runSubscriptionNews({
       + 'Default: generate and validate local content under a shared Git lock (90-minute deadline).\n'
       + 'Set SUBSCRIPTION_INCLUDED_USAGE_CONFIRMED=1 only after confirming extra paid usage is disabled in both accounts.\n'
       + 'Requires installed dependencies, Codex/Claude subscription logins and local generation authorization.\n'
+      + `An automation may hold the operation lock across later artwork/review steps by exporting ${SUBSCRIPTION_LOCK_OWNER_ENV} from subscription-operation-lock.mjs acquire.\n`
       + 'Never commits, pushes, deploys, or marks publication successful. Local partial output is preserved on failure.\n'
       + 'The Mac Codex task must generate/import unique native artwork and rerun publication gates before publishing.');
     return;
   }
   if (args[0] === '--dry-run') {
-    output('Readiness -> shared Git lock -> local steps (LLM_PROVIDER=subscription, IMAGE_PROVIDER=codex; API keys and remote archive writes disabled):');
+    output('Readiness -> shared Git operation lock -> local steps (LLM_PROVIDER=subscription, IMAGE_PROVIDER=codex; API keys and remote archive writes disabled):');
     for (const [command, commandArgs] of SUBSCRIPTION_NEWS_STEPS) output(`${command} ${commandArgs.join(' ')}`);
     output('Stop for native Codex image generation/import and final publication review. No commit, push, deployment or success heartbeat.');
     return;
@@ -132,12 +114,13 @@ export async function runSubscriptionNews({
   process.once('SIGINT', interrupt);
   process.once('SIGTERM', interrupt);
   const timeout = setTimeout(() => controller.abort(new Error('Subscription run exceeded its total deadline.')), deadlineMs);
-  let release;
+  let ownedLock;
   try {
     controller.signal.throwIfAborted();
-    if (args[0] !== '--check') {
-      release = await acquireLock(path.resolve(cwd, commonDirectory(), 'subscription-news.lock'));
-    }
+    const lockOptions = { cwd, commonDirectory };
+    const outerOwner = env[SUBSCRIPTION_LOCK_OWNER_ENV];
+    if (outerOwner) await assertSubscriptionOperationLockOwner(outerOwner, lockOptions);
+    else if (args[0] !== '--check') ownedLock = await acquireSubscriptionOperationLock(lockOptions);
     await readiness({ env: safeEnv, signal: controller.signal });
     controller.signal.throwIfAborted();
     if (args[0] === '--check') {
@@ -155,7 +138,7 @@ export async function runSubscriptionNews({
     process.removeListener('SIGINT', interrupt);
     process.removeListener('SIGTERM', interrupt);
     signal?.removeEventListener('abort', externalAbort);
-    await release?.();
+    if (ownedLock) await releaseSubscriptionOperationLock(ownedLock.owner, { cwd, commonDirectory });
   }
 }
 

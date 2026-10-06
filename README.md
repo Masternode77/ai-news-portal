@@ -58,8 +58,9 @@ Comparator evidence, current implementation crosswalk, and operator boundaries: 
 - **Conditional Expert Lens enrichment**
   - The pipeline hydrates visible records and enriches focused publishable
     articles; it does not guarantee a fixed “Latest-3” window.
-  - Primary model wiring is exposed via `EXPERT_LENS_MODEL`; unavailable model
-    calls fall back through the repository&rsquo;s deterministic path.
+  - Primary model wiring is exposed via `EXPERT_LENS_MODEL`. Deterministic
+    completion remains available for offline/legacy processing and hydration of
+    historical stored records; incomplete live subscription replies stop the run.
 
 - **Codex-managed image flow**
   - Default provider is `IMAGE_PROVIDER=codex`; legacy `image2` callers resolve to the same local provider

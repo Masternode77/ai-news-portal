@@ -63,7 +63,8 @@ Audit output omits `git status` so running this writer cannot make its own repor
 - Build: `npm run prepare:static-images && astro build`.
 - Main pipeline script: `node ./scripts/pipeline.mjs`.
 - Content gate: `npm run check && npm run build && node --test tests/public-output.test.mjs tests/image-output.test.mjs tests/admin-security.test.mjs tests/content-cycle.test.mjs && npm run audit:public && npm run audit:images && npm run audit:admin`.
-- GitHub scheduled workflow expected at `.github/workflows/update-news.yml`: present.
+- GitHub validation workflow at `.github/workflows/update-news.yml`: present; file presence does not prove a generation schedule.
+- Subscription generation requires the existing Mac automation, verified CLI access, and one operation lock across text, artwork, review and publication. Its app-local activation and schedule need separate runtime evidence.
 
 ## Cache and Purge Mechanism
 
@@ -82,7 +83,7 @@ Audit output omits `git status` so running this writer cannot make its own repor
 - The legacy plaintext `ADMIN_PASSWORD` contract is not active: authentication requires `ADMIN_USERNAME`, `ADMIN_PASSWORD_HASH`, and `ADMIN_SESSION_SECRET`=true.
 - Implemented admin controls: structured scrypt password hashes use timing-safe verification; validated session secrets sign HttpOnly, SameSite=Strict cookies; mutating requests require CSRF; local failed-login throttling and audit logging are present.
 - Remaining external production dependency: login fails closed until a distributed Vercel Firewall rate-limit rule is published, tested, and attested with `ADMIN_VERCEL_RATE_LIMIT_READY=true`.
-- Existing env constants include image, OpenRouter, Supabase, and pipeline settings in `scripts/lib/constants.mjs` (12782 bytes).
+- Existing env constants include image, OpenRouter, Supabase, and pipeline settings in `scripts/lib/constants.mjs` (12915 bytes).
 
 ## Deployment Platform Assumptions
 

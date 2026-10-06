@@ -8,6 +8,7 @@ import {
   unique,
 } from './normalize.mjs';
 import { callOpenRouterJson, rethrowSubscriptionFailure } from './openrouter.mjs';
+import { LLM_PROVIDER, PIPELINE_OFFLINE } from './constants.mjs';
 import { fetchArticleExtraction } from './source-fetch.mjs';
 import { normalizeEditorialVoice } from './editorial-humanizer.mjs';
 import { extractExpertInsight } from './expert-insight-engine.mjs';
@@ -67,14 +68,54 @@ function fallbackImagePrompt(item, category, summary) {
 }
 
 export function normalizeAiPayload(aiPayload, fallback) {
-  if (!aiPayload || typeof aiPayload !== 'object' || Array.isArray(aiPayload) || typeof aiPayload.summary !== 'string' || !aiPayload.summary.trim()
-    || typeof aiPayload.insight !== 'string' || !aiPayload.insight.trim()
-    || typeof aiPayload.imagePrompt !== 'string' || !aiPayload.imagePrompt.trim()
-    || !Array.isArray(aiPayload.tags)) {
+  const liveSubscription = LLM_PROVIDER === 'subscription' && !PIPELINE_OFFLINE;
+  const completeSubscriptionPayload = aiPayload
+    && typeof aiPayload === 'object'
+    && !Array.isArray(aiPayload)
+    && typeof aiPayload.summary === 'string' && aiPayload.summary.trim()
+    && typeof aiPayload.insight === 'string' && aiPayload.insight.trim()
+    && PRIMARY_CATEGORIES.includes(aiPayload.primary_category)
+    && typeof aiPayload.secondary_category === 'string' && aiPayload.secondary_category.trim()
+    && INFRASTRUCTURE_LAYERS.includes(aiPayload.infrastructure_layer)
+    && Array.isArray(aiPayload.affected_stakeholders)
+    && aiPayload.affected_stakeholders.length > 0
+    && aiPayload.affected_stakeholders.length <= 5
+    && aiPayload.affected_stakeholders.every((value) => typeof value === 'string' && value.trim())
+    && ARTICLE_TYPES.includes(aiPayload.article_type)
+    && typeof aiPayload.region === 'string' && aiPayload.region.trim()
+    && typeof aiPayload.urgency_score === 'number'
+    && Number.isFinite(aiPayload.urgency_score)
+    && aiPayload.urgency_score >= 0 && aiPayload.urgency_score <= 1
+    && Array.isArray(aiPayload.tags)
+    && aiPayload.tags.length <= 6
+    && aiPayload.tags.every((value) => typeof value === 'string' && value.trim())
+    && typeof aiPayload.imagePrompt === 'string' && aiPayload.imagePrompt.trim();
+
+  if (liveSubscription && !completeSubscriptionPayload) {
     rethrowSubscriptionFailure(new Error('Subscription enrichment returned incomplete editorial fields'));
   }
 
   if (!aiPayload || typeof aiPayload !== 'object') return fallback;
+
+  if (liveSubscription) {
+    return {
+      ...fallback,
+      summary: truncate(normalizeEditorialVoice(aiPayload.summary), 180),
+      insight: truncate(normalizeEditorialVoice(aiPayload.insight), 260),
+      tags: unique(aiPayload.tags).slice(0, 6),
+      region: aiPayload.region,
+      imagePrompt: aiPayload.imagePrompt,
+      taxonomy: {
+        primary_category: aiPayload.primary_category,
+        secondary_category: aiPayload.secondary_category,
+        infrastructure_layer: aiPayload.infrastructure_layer,
+        affected_stakeholders: aiPayload.affected_stakeholders,
+        article_type: aiPayload.article_type,
+        region: aiPayload.region,
+        urgency_score: aiPayload.urgency_score,
+      },
+    };
+  }
 
   const summary = truncate(normalizeEditorialVoice(aiPayload.summary || fallback.summary), 180);
   const insight = truncate(normalizeEditorialVoice(aiPayload.insight || fallback.insight), 260);

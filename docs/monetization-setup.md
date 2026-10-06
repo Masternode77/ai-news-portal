@@ -68,7 +68,7 @@ article 바닥값을 별도로 확인하기 때문입니다.
 
 - [ ] **Google Search Console**에 사이트 등록 + `https://www.computecurrent.com/sitemap-index.xml` 제출
 - [ ] **Bing Webmaster Tools** 등록 (Search Console 가져오기 지원)
-- [ ] 기사 자동 발행이 계속 돌도록 GitHub Actions 시크릿(`OPENROUTER_API_KEY` 등) 유지
+- [ ] `docs/subscription-generation.md`에 따라 맥 구독 로그인, 단일 생성 자동화, 생성 heartbeat 및 발행 검증 확인. 구독 운영에는 `OPENROUTER_API_KEY`가 필요하지 않음
 - [ ] RSS(`/rss.xml`)를 Feedly 등 애그리게이터에 등록
 - [ ] 홈페이지 JSON-LD(Organization/WebSite)와 기사 구조화 데이터는 자동 출력됨
 - [ ] 운영 법인, 지급·세무 정보, AdSense 계정 소유자 정보를 외부 계정에서 확인

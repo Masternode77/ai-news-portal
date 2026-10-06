@@ -4,6 +4,7 @@ import { mkdtemp, mkdir, readdir, rm } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
 import { runSubscriptionNews, runSubscriptionCommand, SUBSCRIPTION_NEWS_STEPS, subscriptionNewsEnvironment } from '../scripts/run-subscription-news.mjs';
+import { acquireSubscriptionOperationLock, releaseSubscriptionOperationLock, SUBSCRIPTION_LOCK_OWNER_ENV } from '../scripts/subscription-operation-lock.mjs';
 
 async function fixture(t) {
   const cwd = await mkdtemp(path.join(tmpdir(), 'subscription-news-'));
@@ -53,6 +54,59 @@ test('existing writer lock is preserved and prevents readiness and generation', 
   await assert.rejects(runSubscriptionNews(options), /Another subscription writer/);
   assert.deepEqual(calls, []);
   assert.deepEqual(await readdir(common), ['subscription-news.lock']);
+});
+
+test('concurrent runs across checkouts share one writer and preserve its lock', async (t) => {
+  const { common, options } = await fixture(t);
+  let enter;
+  let finish;
+  const entered = new Promise((resolve) => { enter = resolve; });
+  const pending = new Promise((resolve) => { finish = resolve; });
+  const first = runSubscriptionNews({
+    ...options,
+    readiness: async () => { enter(); await pending; },
+  });
+  await entered;
+  try {
+    const secondCwd = path.join(options.cwd, 'second-checkout');
+    await mkdir(secondCwd);
+    await assert.rejects(runSubscriptionNews({
+      ...options, cwd: secondCwd,
+      readiness: async () => assert.fail('second writer must not authenticate'),
+      runCommand: async () => assert.fail('second writer must not generate'),
+    }), /Another subscription writer/);
+    assert.deepEqual(await readdir(common), ['subscription-news.lock']);
+  } finally {
+    finish();
+    await first;
+  }
+  assert.deepEqual(await readdir(common), []);
+});
+
+test('runner honors an outer owner and leaves the lock held for post-run artwork and validation', async (t) => {
+  const { common, calls, options } = await fixture(t);
+  const commonDirectory = () => common;
+  const lock = await acquireSubscriptionOperationLock({ cwd: options.cwd, commonDirectory });
+  try {
+    await assert.rejects(runSubscriptionNews({
+      ...options,
+      commonDirectory,
+      env: { [SUBSCRIPTION_LOCK_OWNER_ENV]: 'not-the-owner' },
+      readiness: async () => assert.fail('nonowner must not authenticate'),
+    }), /not owned by the supplied/);
+    await runSubscriptionNews({
+      ...options,
+      commonDirectory,
+      env: { [SUBSCRIPTION_LOCK_OWNER_ENV]: lock.owner },
+    });
+    assert.equal(calls.length, 1 + SUBSCRIPTION_NEWS_STEPS.length);
+    assert.deepEqual(await readdir(common), ['subscription-news.lock']);
+    await assert.rejects(runSubscriptionNews({ ...options, commonDirectory }), /Another subscription writer/);
+    assert.deepEqual(await readdir(common), ['subscription-news.lock']);
+  } finally {
+    await releaseSubscriptionOperationLock(lock.owner, { cwd: options.cwd, commonDirectory });
+  }
+  assert.deepEqual(await readdir(common), []);
 });
 
 test('dry-run and help do not authenticate, generate or write a lock', async (t) => {

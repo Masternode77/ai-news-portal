@@ -26,8 +26,9 @@ or paid API is selected automatically. Offline tests remain offline.
 ## One-time Mac activation
 
 This repository change does not install or update an app-local schedule. The
-Windows implementation session has no connected Mac host and cannot attest to
-its login, subscription, or installed CLI version. Keep the existing Mac task;
+original Windows implementation could not attest to the Mac prerequisites;
+the Mac follow-up verification is recorded separately in
+[subscription-mac-verification.md](subscription-mac-verification.md). Keep the existing Mac task;
 do not create a duplicate Windows task or copy authentication files to CI.
 
 1. Finish the reviewed Git change and make it available on `main` through the
@@ -51,9 +52,10 @@ do not create a duplicate Windows task or copy authentication files to CI.
    authentication or generate content.
 6. Update the existing Mac Codex automation, using the Codex automation tool on
    that host, to follow the run instructions below. Preserve its authorized
-   publication scope. Text generation should use 00:05, 08:05 and 16:05 KST, the
-   old three-times-daily cadence; reconcile any existing image-only schedule so
-   it cannot create a second text generation job. This document creates no timer.
+   publication scope and existing schedule. The current Mac task runs at 00:45,
+   08:45 and 16:45 KST; the retired GitHub generation ran at 00:05, 08:05 and
+   16:05 KST. Reconcile the image-only and retired text paths into the one Mac
+   task so they cannot create a second text generation job. This document creates no timer.
 
 GitHub's `update-news.yml` is now read-only validation on pushes to main and
 manual dispatch. It has no generation schedule, API secrets, commit or push.
@@ -69,17 +71,30 @@ Refresh and verify the production baseline as described in the Mac image
 workflow. Check that no other task is modifying this checkout. Run:
 
 ```sh
-node scripts/run-subscription-news.mjs --check
-node scripts/run-subscription-news.mjs
+node scripts/subscription-operation-lock.mjs acquire
+CC_SUBSCRIPTION_LOCK_OWNER='<owner-token-from-acquire>' node scripts/run-subscription-news.mjs --check
+CC_SUBSCRIPTION_LOCK_OWNER='<owner-token-from-acquire>' node scripts/run-subscription-news.mjs
 ```
 
-The runner takes a shared Git-directory lock, forces subscription generation,
-disables external archive writes and runs the pipeline, radar refresh, approved
-inventory restoration, taxonomy rebuild, audits, tests and the content gate.
-It never commits or pushes. On failure, keep local diagnostic/output changes for
-inspection and report the blocker; do not publish partial work or record success.
-Do not reset or stash another task's changes. The lock serializes runner jobs;
-other Mac tasks must respect the same checkout ownership during artwork/review.
+Acquire this operation lock before refresh or generation and keep the same owner
+exported until native artwork/import, final validation, heartbeat and any
+authorized commit/push all finish. The lock lives in the repository's common Git
+directory, so linked worktrees cannot become a second writer. The runner verifies
+the exported owner and leaves an outer lock in place; without an outer owner it
+takes and releases a runner-only lock for interactive use. In Codex App, retain
+the owner printed by `acquire` and pass it explicitly to every runner command;
+each command uses a separate shell, so an `EXIT` trap in the acquisition command
+would release too early. A wrong owner cannot release the lock, and the tooling
+never removes a stale lock automatically. If a job is interrupted, first verify
+that all of its processes have stopped before performing any manual recovery.
+
+The runner forces subscription generation, disables external archive writes and
+runs the pipeline, radar refresh, approved inventory restoration, taxonomy
+rebuild, audits, tests and the content gate. It never commits or pushes. On
+failure, keep local diagnostic/output changes for inspection and report the
+blocker; do not publish partial work or record success. Do not reset or stash
+another task's changes. Configure only the existing Mac automation to own this
+sequence; do not leave an image-only or legacy text job that can overlap it.
 
 After successful text generation, complete native artwork using
 `docs/mac-column-image-automation.md` and the existing image skill. Each new
@@ -92,6 +107,17 @@ all required generation, review and validation succeeds, record:
 ```sh
 node scripts/record-pipeline-heartbeat.mjs ok
 ```
+
+Keep the operation lock held while recording this heartbeat and through the
+authorized push. After every authorized operation is complete, release it
+explicitly in the final command:
+
+```sh
+CC_SUBSCRIPTION_LOCK_OWNER='<owner-token-from-acquire>' node scripts/subscription-operation-lock.mjs release
+```
+
+Use an `EXIT` trap only in a genuinely long-lived shell that remains active
+across the native image tool and every later step.
 
 Commit/push only within the existing task's explicit authorization. Include all
 related artifacts in the same validated change: article arrays, archive/search,

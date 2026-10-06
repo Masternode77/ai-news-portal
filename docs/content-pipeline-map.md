@@ -4,10 +4,10 @@ This document maps the current content generation pipeline.
 
 ## High-Level Flow
 
-1. `.github/workflows/update-news.yml` runs `npm run pipeline` on the 00:05, 08:05, and 16:05 KST schedules, or by manual dispatch.
+1. The existing Mac Codex automation runs `scripts/run-subscription-news.mjs` using subscription CLIs. Activation and scheduling follow `docs/subscription-generation.md`; repository changes alone do not switch the live schedule. `.github/workflows/update-news.yml` performs read-only validation and has no generation timer.
 2. `scripts/pipeline.mjs` reads the rights-gated registry, fetches or reuses only authorized RSS candidates, plans eligible items, applies relevance/extraction/repetition gates, and writes artifacts only when a valid path produces changes. Each run processes up to `ITEMS_PER_RUN` (3) unprocessed curated items, picks the classifier expects to surface first. A KST day stops once `DAILY_CURATION_TARGET` (9) items are publicly visible after the final integrity sync (an article page or a signal card, on the latest surface or in the archive) or `DAILY_PROCESSING_LIMIT` (18) items were processed; archive-only outcomes count toward the second cap only. Slots are run history, not a lock. The pool skips items the wire already processed and carries unprocessed, still-fresh, still-authorized items over from the previous pool, so a weekday-only feed such as arXiv still supplies the weekend. When the curation model returns fewer than `CURATION_FLOOR` (3) picks, `applyCurationFloor()` adds the strongest candidates whose stronger lane (infrastructure or AI) scores at least 0.55. The authored column stage then runs every time (see `docs/daily-output-recovery-2026-10-04.md` for its thresholds).
-3. The workflow rebuilds taxonomy, runs `npm test`, then runs `npm run content:gate` (including the production build) before recording its heartbeat.
-4. It commits only changed tracked artifacts back to `main`; Vercel builds from the pushed repository state.
+3. The Mac runner rebuilds taxonomy, runs `npm test`, then runs `npm run content:gate` (including the production build). The outer automation completes native column artwork and source review, reruns final gates, and only then records its heartbeat.
+4. Within its existing publication authorization, the Mac automation commits related validated artifacts to `main`; Vercel builds from the pushed repository state. The runner itself never commits or pushes.
 
 ## 1. Crawler Sources
 
@@ -71,7 +71,7 @@ ignored; text in scripts, styles or comments never counts).
 ## 1a. Industry Radar (headline-and-link lane)
 
 `scripts/update-industry-headlines.mjs` runs after the news update in
-`update-news.yml` (non-blocking, `continue-on-error`). `headlineFeeds()` in
+the Mac subscription runner. `headlineFeeds()` in
 `scripts/lib/industry-headlines.mjs` admits only registry rows whose
 `link_only_basis` is `feed_listing_permitted` or `feed_listing_low_risk`
 (the verdicts in `docs/source-rights-review.md`), whose review is inside the
@@ -149,14 +149,14 @@ Prompt constraints:
 - `imagePrompt` should describe a premium 16:9 editorial image with no logos or text.
 - Do not invent facts or numbers unsupported by source text.
 
-If OpenRouter is unavailable or returns invalid JSON, deterministic fallbacks are used:
+Subscription CLI failures and malformed structured replies stop generation without an API or deterministic substitute. The following legacy/offline normalization helpers remain available outside the live subscription failure path:
 
 - `fallbackSummary()` truncates article text, snippet, or title.
 - `fallbackInsight()` infers a practical market theme from keywords.
 - `fallbackImagePrompt()` builds a generic editorial image prompt.
 - `normalizeAiPayload()` validates model output and falls back field-by-field.
 
-OpenRouter wiring is in `scripts/lib/openrouter.mjs`, with `OPENROUTER_MODEL` defaulting to `openai/gpt-5.3-codex`.
+Provider routing is in `scripts/lib/openrouter.mjs`; subscription execution and model pins are in `scripts/lib/subscription-provider.mjs`. Legacy OpenRouter requires explicit operator selection and is never an automatic fallback.
 
 ## 4. Editorial Brief Prompts
 
@@ -290,9 +290,9 @@ Archive management is in `scripts/lib/archive-store.mjs`.
 
 Scheduled publish path:
 
-- `.github/workflows/update-news.yml` schedules the full news pipeline at 00:05, 08:05, and 16:05 KST.
-- It runs `npm run check`, `npm run pipeline`, taxonomy regeneration, `npm test`, and `npm run content:gate`; the content gate performs the production build.
-- It commits and pushes changes to `main` for:
+- The existing Mac automation owns the single generation schedule; follow `docs/subscription-generation.md` for activation and its publication gates.
+- The Mac runner runs `npm run check`, `npm run pipeline`, taxonomy regeneration, `npm test`, and `npm run content:gate`; the content gate performs the production build.
+- After native artwork and final review, the authorized Mac automation commits and pushes related changes to `main` for:
   - `src/data/latest-news.json`
   - `src/data/archived-news.json`
   - `src/data/search-index.json`
@@ -301,7 +301,7 @@ Scheduled publish path:
   - `src/data/pipeline-heartbeat.json`
   - `scripts/state/pipeline-state.json`
   - `public/generated`
-- Commit message: `chore: refresh news surface and archive [skip ci]`.
+- Content-only commits may include `[skip release]`; `[skip ci]` is forbidden because it prevents the Vercel deployment.
 
 Build/deploy path:
 

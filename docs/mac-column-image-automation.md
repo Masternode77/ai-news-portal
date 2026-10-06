@@ -4,9 +4,48 @@ The Mac's existing Codex task performs native image generation. Git stores the c
 
 ## Start of each authorized scheduled run
 
-Use the existing repository checkout and existing schedule. Check `git status --porcelain` and `git branch --show-current` first. On a clean `main` checkout with no local-only commits, run `git fetch origin` and `git merge --ff-only origin/main`. If local changes, a different branch, divergence or another writer are present, preserve them and report the exact blocker; do not reset, stash, force-push or silently switch branches. Read the updated `AGENTS.md` and `.codex/skills/compute-current-images/SKILL.md` after refreshing. Verify live production as required there. An unmerged branch or pending production deployment is not proof of production alignment.
+Use the existing repository checkout and existing schedule. Before refresh or
+generation, acquire the repository-wide operation lock:
+
+```sh
+node scripts/subscription-operation-lock.mjs acquire
+```
+
+Codex App commands use separate shells. Retain the owner token printed by
+`acquire` and pass it explicitly as
+`CC_SUBSCRIPTION_LOCK_OWNER='<owner-token-from-acquire>'` to the subscription
+runner. Keep the same owner through text generation, native artwork and import,
+final gates, success heartbeat, and any authorized commit/push. Do not use an
+`EXIT` trap unless one genuinely long-lived shell spans the native image tool and
+every later step; a trap in a one-command shell releases the lock immediately.
+
+The common Git directory makes the lock apply to every linked checkout. A
+concurrent job must stop when acquisition fails; it must not generate in another
+worktree. The lock is never removed automatically as stale, and a different
+owner cannot release it. Verify an interrupted owner's processes have stopped
+before any manual lock recovery. After the complete operation, release it in the
+final command:
+
+```sh
+CC_SUBSCRIPTION_LOCK_OWNER='<owner-token-from-acquire>' node scripts/subscription-operation-lock.mjs release
+```
+
+Then check `git status --porcelain` and `git branch --show-current`. On a clean
+`main` checkout with no local-only commits, run `git fetch origin` and
+`git merge --ff-only origin/main`. If local changes, a different branch,
+divergence or another writer are present, preserve them and report the exact
+blocker; do not reset, stash, force-push or silently switch branches. Read the
+updated `AGENTS.md` and `.codex/skills/compute-current-images/SKILL.md` after
+refreshing. Verify live production as required there. An unmerged branch or
+pending production deployment is not proof of production alignment.
 
 If the existing Mac task has no refresh step, it needs a one-time update on that Mac (or through a connected Mac host) to follow this document. Use Codex's automation tool to update the existing task, preserving its schedule and previously authorized publication scope; do not create a duplicate Windows schedule. No API key or credential export is needed.
+If that checkout does not yet contain the lock script, first verify that no other
+writer is active and perform the one-time clean fast-forward that installs this
+reviewed change. Do not generate during that bootstrap refresh. Every subsequent
+scheduled run acquires the lock before its refresh.
+Retire or reconcile any separate image-only or legacy text schedule so exactly
+one job can acquire this lock and own the full operation.
 
 ## Each new column
 
@@ -49,7 +88,7 @@ The CLI now checks pending columns against their saved, hash-validated source ar
 
 If a returned job subsequently fails a column-specific review, continue the same run with `--exclude-id <id>` (repeat for additional IDs), recording its reason. Exclusion lasts only for that invocation and never marks an image complete. Stop on environment-wide failures such as unavailable native generation or missing returned file paths. Do not loop indefinitely: inspect each pending ID at most once per run and generate at most the authorized batch size.
 
-Inspect `scripts/state/pipeline-state.json`'s `authored.lastSelection` diagnostics and `authored.lastFailure`, plus recent Update News logs. `no_qualifying_story` is an editorial outcome, not a crash. A new multi-day stall or newly blocked source is actionable; unchanged known holds are quiet. Do not force a column, change source permissions, add paid APIs, or lower quality thresholds to meet a quota. The text stage now accepts a named public policy actor when `named_companies` is the only missing expert field, while retaining relevance, source rights, extraction and all final essay gates.
+Inspect `scripts/state/pipeline-state.json`'s `authored.lastSelection` diagnostics and `authored.lastFailure`, plus recent Mac automation logs. `no_qualifying_story` is an editorial outcome, not a crash. A new multi-day stall or newly blocked source is actionable; unchanged known holds are quiet. Do not force a column, change source permissions, add paid APIs, or lower quality thresholds to meet a quota. The text stage now accepts a named public policy actor when `named_companies` is the only missing expert field, while retaining relevance, source rights, extraction and all final essay gates.
 
 The importer rejects exact reused source files and their normalized source bytes for another column. It also checks other articles' rendered hero, thumbnail, OpenGraph and legacy files, including byte-identical copies at different paths, and protects newly registered column sources from reuse by other articles. This is a file-identity guard, not a perceptual similarity detector: the native generation and visual-review steps must still ensure distinct compositions. Existing images remain visible until replacements are successfully imported; this change does not claim that a disconnected Mac has generated or deployed replacements.
 

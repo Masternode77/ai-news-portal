@@ -49,6 +49,7 @@ test('column uses Fable with no tools, strict empty MCP and only requested model
   const call = calls.at(-1);
   assert.equal(call.command, 'claude');
   assert.equal(call.args[call.args.indexOf('--model') + 1], 'claude-fable-5-1');
+  assert.equal(call.env.CLAUDE_CODE_DISABLE_TERMINAL_TITLE, '1');
   assert.equal(call.args[call.args.indexOf('--tools') + 1], '');
   assert.ok(call.args.includes('--safe-mode'));
   assert.ok(call.args.includes('--strict-mcp-config'));
@@ -56,7 +57,7 @@ test('column uses Fable with no tools, strict empty MCP and only requested model
 });
 
 test('environment allowlist discards API tokens, endpoints, providers and node injection', () => {
-  assert.deepEqual(subscriptionEnvironment({ PATH: '/bin', HOME: '/home/test', CODEX_HOME: '/home/test/.codex', OPENAI_API_KEY: 'secret', ANTHROPIC_AUTH_TOKEN: 'secret', OPENROUTER_API_KEY: 'secret', ANTHROPIC_BASE_URL: 'proxy', CLAUDE_CODE_USE_BEDROCK: '1', NODE_OPTIONS: '--require=evil', AWS_PROFILE: 'paid' }), { PATH: '/bin', HOME: '/home/test', CODEX_HOME: '/home/test/.codex' });
+  assert.deepEqual(subscriptionEnvironment({ PATH: '/bin', HOME: '/home/test', USER: 'test', CODEX_HOME: '/home/test/.codex', OPENAI_API_KEY: 'secret', ANTHROPIC_AUTH_TOKEN: 'secret', OPENROUTER_API_KEY: 'secret', ANTHROPIC_BASE_URL: 'proxy', CLAUDE_CODE_USE_BEDROCK: '1', NODE_OPTIONS: '--require=evil', AWS_PROFILE: 'paid' }), { PATH: '/bin', HOME: '/home/test', USER: 'test', CODEX_HOME: '/home/test/.codex' });
 });
 
 test('preflight requires explicit operator billing confirmation', async () => {

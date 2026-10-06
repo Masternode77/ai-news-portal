@@ -292,6 +292,38 @@ function unwrapEssayObject(value, depth = 0) {
 
 class EssayStructureError extends Error {}
 
+function boundedReviewText(value, maxLength = 240) {
+  return String(value || '').replace(/\s+/g, ' ').trim().slice(0, maxLength);
+}
+
+export class EditorialReviewRejection extends Error {
+  constructor(reasons = [], issues = []) {
+    const boundedReasons = [...new Set(reasons.map((reason) => boundedReviewText(reason, 80)).filter(Boolean))].slice(0, 6);
+    const boundedIssues = [...new Set(issues.map((issue) => boundedReviewText(issue)).filter(Boolean))].slice(0, 16);
+    const diagnostic = [...boundedReasons, ...boundedIssues.map((issue) => `issue:${issue}`)].slice(0, 8).join('|') || 'review_rejected';
+    super(`Astra column evidence review rejected or returned malformed/unsupported checks: ${diagnostic}`);
+    this.name = 'EditorialReviewRejection';
+    this.code = 'editorial_review_rejected';
+    this.reasons = boundedReasons;
+    this.issues = boundedIssues;
+    this.feedback = [
+      ...boundedIssues.map((issue) => `Astra review issue: ${issue}`),
+      ...boundedReasons.map((reason) => {
+        if (reason === 'source_checks_missing' || reason === 'source_checks_invalid') {
+          return 'Astra could not verify every material factual claim against the supplied source. Remove, qualify, or accurately attribute unsupported claims.';
+        }
+        if (reason === 'numeric_checks_invalid' || reason === 'numeric_claims_uncovered') {
+          return 'Astra could not verify every numeric claim. Retain only exact values and units supported by verified_claims with matching source attribution.';
+        }
+        if (reason === 'review_issues' || reason === 'approval_rejected') {
+          return 'Revise the factual assertions Astra rejected while preserving the supported argument and evidence.';
+        }
+        return 'The independent evidence review was malformed or incomplete. Make every factual and numeric assertion explicit, source-bound, and easy to verify.';
+      }),
+    ].slice(0, 22);
+  }
+}
+
 export function parseModelEssay(content, { recoverFormat = false, requireSections = false } = {}) {
   const essay = unwrapEssayObject(parseModelJson(content));
   if (!essay || typeof essay !== 'object' || Array.isArray(essay)
@@ -770,7 +802,7 @@ async function voicePass({ charter, draft, evidence, feedback = [], callModel })
       'Numeric evidence contract: the draft is not an authority for numbers. Every retained numeric value and unit must appear in verified_claims with matching attribution; do not convert or derive values. Remove unsupported numbers rather than spelling them out, replacing them with synonyms, or inventing a citation. For forward-looking analysis use nonnumeric event-based observables instead of unsupported month counts or dates.',
       'Source fidelity contract: use evidence.source_text to check nonnumeric claims too. Correct overstatement of legal status, causality or required actions in the headline and deck as well as the prose. A prior draft or thesis does not establish a fact. If the source does not establish a binding rule, remove the assertion or make the potential consequence explicitly conditional.',
       feedback.length
-        ? `The previous version failed these checks — fix every one without weakening the argument: ${feedback.join(' | ')}`
+        ? `The previous version failed these checks — fix every one without weakening the argument: ${feedback.join(' | ')}. Keep the headline at 40-105 characters and the deck at 80-240 characters; put detailed qualifications in the body.`
         : 'Polish only; keep structure and headings.',
     ].join('\n'),
     userPrompt: JSON.stringify({ ...draft, evidence, verified_claims: evidence.verified_claims }),
@@ -1002,6 +1034,8 @@ async function attemptColumnForSelection({
   let quality;
   let figures = [];
   let formatFeedback = draft.formatIssues || [];
+  let reviewFeedback = [];
+  let crossReview = null;
   while (attempts < 2) {
     attempts += 1;
     let voiced;
@@ -1010,7 +1044,7 @@ async function attemptColumnForSelection({
         charter,
         draft: essay,
         evidence: evidencePayload(selection, ledger),
-        feedback: [...verificationFeedback(quality?.reasons || []), ...formatFeedback],
+        feedback: [...verificationFeedback(quality?.reasons || []), ...formatFeedback, ...reviewFeedback],
         callModel,
       });
     } catch (error) {
@@ -1052,16 +1086,28 @@ async function attemptColumnForSelection({
       quality.ok = false;
       quality.reasons = [...new Set([...quality.reasons, ...formatFeedback.map(issue => issue.split(':')[0])])];
     }
-    if (quality.ok) break;
+    if (!quality.ok) continue;
+
+    if (reviewModel) {
+      try {
+        crossReview = await reviewColumnEvidence({
+          essay, evidence: evidencePayload(selection, ledger), callModel: reviewModel,
+        });
+      } catch (error) {
+        if (error instanceof EditorialReviewRejection && attempts < 2) {
+          reviewFeedback = error.feedback;
+          continue;
+        }
+        throw error;
+      }
+    }
+    break;
   }
 
   if (!quality?.ok) {
     return failWith('verify', (quality?.reasons || ['unknown']).slice(0, 6).join('|'), quality?.metrics);
   }
 
-  const crossReview = reviewModel ? await reviewColumnEvidence({
-    essay, evidence: evidencePayload(selection, ledger), callModel: reviewModel,
-  }) : null;
   const column = columnRecord({
     charter,
     selection,
@@ -1097,17 +1143,32 @@ export async function reviewColumnEvidence({ essay, evidence, callModel = callOp
   const checkValid = check => check?.supported === true && typeof check.claim === 'string' && check.claim.trim().length > 0
     && body.includes(check.claim) && urls.has(check.source_url) && typeof check.evidence_quote === 'string'
     && check.evidence_quote.trim().length > 0 && sources.get(check.source_url)?.includes(check.evidence_quote);
-  const coveredNumber = match => review.numeric_checks.some(check => {
+  const numericChecks = Array.isArray(review?.numeric_checks) ? review.numeric_checks : [];
+  const coveredNumber = match => numericChecks.some(check => {
+    if (!checkValid(check)) return false;
     for (let offset = body.indexOf(check.claim); offset !== -1; offset = body.indexOf(check.claim, offset + 1)) {
       if (match.index >= offset && match.index + match[0].length <= offset + check.claim.length) return true;
     }
     return false;
   });
-  if (review?.approved !== true || !Array.isArray(review.issues) || review.issues.length
-    || !Array.isArray(review.source_checks) || !review.source_checks.length || !review.source_checks.every(checkValid)
-    || !Array.isArray(review.numeric_checks) || !review.numeric_checks.every(checkValid)
-    || [...body.matchAll(/[0-9]+(?:[.,][0-9]+)*/g)].some(match => !coveredNumber(match))) {
-    throw new Error('Astra column evidence review rejected or returned malformed/unsupported checks');
+  const reasons = [];
+  if (!review || typeof review !== 'object' || Array.isArray(review)) reasons.push('malformed_response');
+  if (review?.approved !== true) reasons.push('approval_rejected');
+  if (!Array.isArray(review?.issues)) reasons.push('issues_malformed');
+  else if (review.issues.length) reasons.push('review_issues');
+  if (!Array.isArray(review?.source_checks)) reasons.push('source_checks_malformed');
+  else {
+    if (!review.source_checks.length) reasons.push('source_checks_missing');
+    if (!review.source_checks.every(checkValid)) reasons.push('source_checks_invalid');
+  }
+  if (!Array.isArray(review?.numeric_checks)) reasons.push('numeric_checks_malformed');
+  else if (!review.numeric_checks.every(checkValid)) reasons.push('numeric_checks_invalid');
+  if ([...body.matchAll(/[0-9]+(?:[.,][0-9]+)*/g)].some(match => !coveredNumber(match))) {
+    reasons.push('numeric_claims_uncovered');
+  }
+  if (reasons.length) {
+    const issues = Array.isArray(review?.issues) ? review.issues.filter((issue) => typeof issue === 'string') : [];
+    throw new EditorialReviewRejection(reasons, issues);
   }
   return { model: SUBSCRIPTION_TEXT_MODEL, approved: true, source_checks: review.source_checks, numeric_checks: review.numeric_checks };
 }

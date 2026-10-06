@@ -1,6 +1,6 @@
 # Admin Exclusion Report
 
-Generated at: 2026-10-04T11:50:25.188Z
+Generated at: 2026-10-06T14:02:26.901Z
 Admin pages checked: 4
 Index files checked: 5
 Forbidden private artifacts found: 0
