@@ -199,9 +199,9 @@ test('workflow is hourly, bounded, least-privilege, and supports non-mutating dr
   assert.match(workflow, /actions: read/);
   assert.match(workflow, /contents: read/);
   assert.match(workflow, /issues: write/);
-  assert.match(workflow, /^permissions:\n/m);
+  assert.match(workflow, /^permissions:\r?\n/m);
   assert.doesNotMatch(workflow, /contents: write/);
-  assert.match(workflow, /OPENROUTER_MONTHLY_BUDGET_USD: \$\{\{ vars\./);
+  assert.doesNotMatch(workflow, /OPENROUTER_API_KEY|OPENROUTER_MONTHLY_BUDGET_USD|OPENROUTER_BUDGET_WARNING_PERCENT/);
   assert.match(workflow, /--dry-run/);
   for (const match of workflow.matchAll(/uses:\s*actions\/(?:checkout|setup-node)@([^\s]+)/g)) {
     assert.match(match[1], /^[0-9a-f]{40}$/);

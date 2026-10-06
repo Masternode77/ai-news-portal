@@ -5,9 +5,25 @@ import {
   OPENROUTER_MODEL,
   OPENROUTER_SITE_URL,
   PIPELINE_OFFLINE,
+  LLM_PROVIDER,
+  EXPERT_LENS_MODEL,
 } from './constants.mjs';
+import { subscriptionChatText, assertSubscriptionReady } from './subscription-provider.mjs';
 import { safeJsonParse } from './normalize.mjs';
 import { assertLlmBudget, recordLlmCall, recordLlmFailure } from './llm-budget.mjs';
+
+export function llmEnabled() {
+  return !PIPELINE_OFFLINE && (LLM_PROVIDER === 'subscription' || (LLM_PROVIDER === 'openrouter' && Boolean(process.env.OPENROUTER_API_KEY)));
+}
+
+export function rethrowSubscriptionFailure(error) {
+  if (LLM_PROVIDER === 'subscription' && !PIPELINE_OFFLINE) throw error;
+}
+
+export async function assertLlmReady() {
+  if (!['subscription', 'openrouter', 'disabled'].includes(LLM_PROVIDER)) throw new Error('Unsupported LLM_PROVIDER');
+  if (LLM_PROVIDER === 'subscription' && !PIPELINE_OFFLINE) await assertSubscriptionReady();
+}
 
 const RETRYABLE_STATUS = new Set([408, 429, 500, 502, 503, 504]);
 const RETRY_DELAYS_MS = [2_000, 8_000];
@@ -87,9 +103,27 @@ export async function callOpenRouterText({
   timeoutMs = 30000,
   model = OPENROUTER_MODEL,
   responseFormat = null,
+  task = 'text',
 }) {
+  if (PIPELINE_OFFLINE || LLM_PROVIDER === 'disabled') return '';
+  if (LLM_PROVIDER === 'subscription') {
+    assertLlmBudget();
+    try {
+      const content = await subscriptionChatText([
+        { role: 'system', content: systemPrompt },
+        { role: 'user', content: userPrompt },
+      ], { task });
+      if (!content?.trim()) throw new Error('Subscription provider returned empty content');
+      recordLlmCall();
+      return content;
+    } catch (error) {
+      recordLlmFailure();
+      throw error;
+    }
+  }
+  if (LLM_PROVIDER !== 'openrouter') throw new Error('Unsupported LLM_PROVIDER');
   const apiKey = process.env.OPENROUTER_API_KEY;
-  if (!apiKey || PIPELINE_OFFLINE) return '';
+  if (!apiKey) return '';
 
   assertLlmBudget();
 
@@ -114,6 +148,7 @@ export async function callOpenRouterJson(options) {
   const content = await callOpenRouterText(options);
   const parsed = safeJsonParse(content, null);
   if (parsed === null && content) {
+    rethrowSubscriptionFailure(new Error('Subscription provider returned invalid JSON'));
     // A reply that is not JSON is the silent failure mode of the JSON callers:
     // they fall through to deterministic fallbacks. Name it in the log.
     console.warn(`[openrouter] non-JSON reply from ${options.model || OPENROUTER_MODEL} (${content.length} chars): ${content.slice(0, 160).replace(/\s+/g, ' ')}`);
@@ -124,12 +159,13 @@ export async function callOpenRouterJson(options) {
 }
 
 export async function callExpertLensText(options) {
-  const primaryModel = options.model || process.env.EXPERT_LENS_MODEL || EXPERT_LENS_FALLBACK_MODEL;
+  const primaryModel = options.model || EXPERT_LENS_MODEL;
   const fallbackModel = process.env.EXPERT_LENS_FALLBACK_MODEL || EXPERT_LENS_FALLBACK_MODEL;
   try {
     const content = await callOpenRouterText({ ...options, model: primaryModel });
     return content?.trim() || '';
   } catch (error) {
+    rethrowSubscriptionFailure(error);
     console.warn(`[openrouter] expert-lens model ${primaryModel} failed: ${error.message}`);
     if (fallbackModel && fallbackModel !== primaryModel && isModelNotAvailableError(error)) {
       try {

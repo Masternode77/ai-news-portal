@@ -1,5 +1,6 @@
 import {
   EXPERT_LENS_MODEL,
+  LLM_PROVIDER,
   LATEST_NEWS_PATH,
   NEWS_POOL_PATH,
   OPENROUTER_MODEL,
@@ -8,6 +9,7 @@ import {
   PIPELINE_USE_EXISTING_POOL,
   LATEST_NEWS_LIMIT,
 } from './lib/constants.mjs';
+import { llmEnabled, assertLlmReady, rethrowSubscriptionFailure } from './lib/openrouter.mjs';
 import { applyPublicContentTier } from './lib/public-content-tier-router.mjs';
 import { fileURLToPath } from 'node:url';
 import { readArchiveSnapshot, syncArchiveArtifacts } from './lib/archive-store.mjs';
@@ -50,10 +52,15 @@ async function withSingleRetry(label, fn) {
   try {
     return await fn();
   } catch (error) {
+    rethrowSubscriptionFailure(error);
     console.warn(`[pipeline] ${label} failed; retrying once in ${RETRY_DELAY_MS}ms -> ${error.message}`);
     await sleep(RETRY_DELAY_MS);
     return fn();
   }
+}
+
+function withGenerationTimeout(label, fn, timeoutMs) {
+  return LLM_PROVIDER === 'subscription' ? fn() : withTimeout(label, fn, timeoutMs);
 }
 
 async function withTimeout(label, fn, timeoutMs = 90_000) {
@@ -258,11 +265,12 @@ async function attachExpertLensToVisibleWindow(articles, focusArticleIds = [], r
 
   let enrichedFocus = focusTargets;
   if (focusTargets.length) {
-    enrichedFocus = await withTimeout(
+    enrichedFocus = await withGenerationTimeout(
       'attach expert lens to focused articles',
       () => attachExpertLens(focusTargets, { recentBlueprintIds }),
       90_000
     ).catch((error) => {
+      rethrowSubscriptionFailure(error);
       console.warn(`[pipeline] expert lens fallback -> ${error.message}`);
       return focusTargets.map((article) => hydrateExpertLens(article));
     });
@@ -279,7 +287,7 @@ async function enrichPickedArticles(picked) {
 
   for (const item of picked) {
     console.log(`[pipeline] enriching article ${item.id} :: ${item.title}`);
-    const article = await withTimeout(
+    const article = await withGenerationTimeout(
       `enrich article ${item.id}`,
       () => withSingleRetry(`enrich article ${item.id}`, () => enrichContent(item)),
       75_000
@@ -373,17 +381,16 @@ function asSignalCard(article, reason) {
   };
 }
 
-// Two story attempts fit inside this window; the workflow step allows 18 minutes.
-const AUTHORED_COLUMN_STAGE_TIMEOUT_MS = 600_000;
+// The local subscription runner allows slower CLI reasoning than the legacy API.
+const AUTHORED_COLUMN_STAGE_TIMEOUT_MS = LLM_PROVIDER === 'subscription' ? 7_200_000 : 600_000;
 
-// Runs The Current column stage after the wire surface is written. Column
-// failures never break the wire run: every outcome is logged and recorded in
-// pipeline state, and a failed or skipped column simply publishes nothing.
+// Complete generation before publishing wire artifacts. Subscription failures
+// abort the run; quality rejections remain recorded non-publication outcomes.
 async function runAuthoredColumnStage({ state, candidates, pool, recentRecords, now, sources }) {
   try {
     const existingColumns = await readAuthoredColumns();
     const stageStartedAt = Date.now();
-    const result = await withTimeout('authored column', () => generateAuthoredColumn({
+    const result = await withGenerationTimeout('authored column', () => generateAuthoredColumn({
       candidates,
       pool,
       recentRecords,
@@ -435,10 +442,12 @@ async function runAuthoredColumnStage({ state, candidates, pool, recentRecords, 
       console.log(`[pipeline] authored column published: ${result.column.slug} (${result.column.authored_quality.metrics.words} words, attempts=${result.column.authored_quality.attempts})`);
       return { published: true, slug: result.column.slug, selectionDiagnostics: result.selectionDiagnostics };
     }
+    if (result.failure) rethrowSubscriptionFailure(new Error('Authored column generation failed: ' + result.failure));
     const reason = result.skipReason || result.failure || 'unknown';
     console.log(`[pipeline] authored column: none this run (${reason})`);
     return { published: false, reason, selectionDiagnostics: result.selectionDiagnostics };
   } catch (error) {
+    rethrowSubscriptionFailure(error);
     console.warn(`[pipeline] authored column stage failed: ${error.message}`);
     return { published: false, reason: `stage_error:${error.message}` };
   }
@@ -527,6 +536,14 @@ async function publishExistingOnly({
   const imageBackfilled = await backfillLocalImages(signalMerged);
   const withExpertLens = await attachExpertLensToVisibleWindow(imageBackfilled, [], recentBlueprintIds);
   const templateChecked = applyTiersForPublication(applyAntiTemplateRewrite(withExpertLens, [...existingLatest, ...existingArchive]));
+  const authoredOutcome = await runAuthoredColumnStage({
+    state,
+    candidates: columnCandidateRecords({ latest: templateChecked, pool, existingArchive, now, sources }),
+    pool,
+    recentRecords: [...templateChecked, ...(existingArchive || [])],
+    now,
+    sources,
+  });
   const { latest, archive: updatedArchive, supabaseStatus } = await syncArchiveArtifacts(templateChecked, existingArchive);
   await writeJsonFile(LATEST_NEWS_PATH, latest);
 
@@ -547,16 +564,7 @@ async function publishExistingOnly({
     blockedItems: blocked.map(toRunHistoryItem),
     archiveOnlyItems: archiveOnly.map(toRunHistoryItem),
   });
-  const authoredOutcome = await runAuthoredColumnStage({
-    state,
-    // The archive this run just wrote, so items processed now into the
-    // archive lane reach column selection with their extraction artifacts.
-    candidates: columnCandidateRecords({ latest, pool, existingArchive: updatedArchive || existingArchive, now, sources }),
-    pool,
-    recentRecords: [...latest, ...(updatedArchive || existingArchive || [])],
-    now,
-    sources,
-  });
+
   state.runHistory[state.runHistory.length - 1].authoredColumn = authoredOutcome;
   state.runHistory[state.runHistory.length - 1].llmUsage = llmUsageSummary();
   state.runHistory = state.runHistory.slice(-120);
@@ -568,11 +576,12 @@ async function publishExistingOnly({
 async function main() {
   const now = new Date();
   console.log(`[pipeline] run started at ${now.toISOString()}`);
-  const llmEnabled = Boolean(process.env.OPENROUTER_API_KEY) && !PIPELINE_OFFLINE;
+  await assertLlmReady();
+  const generationEnabled = llmEnabled();
   console.log(
-    llmEnabled
-      ? `[pipeline] llm: ENABLED model=${OPENROUTER_MODEL} lens=${process.env.EXPERT_LENS_MODEL || EXPERT_LENS_MODEL}`
-      : '[pipeline] llm: DISABLED (no OPENROUTER_API_KEY or offline mode); deterministic fallbacks in use'
+    generationEnabled
+      ? `[pipeline] llm: ENABLED provider=${LLM_PROVIDER} model=${OPENROUTER_MODEL} lens=${EXPERT_LENS_MODEL}`
+      : '[pipeline] llm: DISABLED (explicit disabled provider or offline mode); deterministic fallbacks in use'
   );
 
   const [state, existingLatest, existingArchive, sources] = await Promise.all([
@@ -601,6 +610,14 @@ async function main() {
     const imageBackfilled = await backfillLocalImages(normalizedExisting);
     const withExpertLens = await attachExpertLensToVisibleWindow(imageBackfilled, [], recentBlueprintIds);
     const templateChecked = applyTiersForPublication(applyAntiTemplateRewrite(withExpertLens, [...existingLatest, ...existingArchive]));
+    const authoredOutcome = await runAuthoredColumnStage({
+      state,
+      candidates: columnCandidateRecords({ latest: templateChecked, pool, existingArchive, now, sources }),
+      pool,
+      recentRecords: [...templateChecked, ...(existingArchive || [])],
+      now,
+      sources,
+    });
     const { latest, archive: updatedArchive, supabaseStatus } = await syncArchiveArtifacts(templateChecked, existingArchive);
     await writeJsonFile(LATEST_NEWS_PATH, latest);
 
@@ -617,14 +634,6 @@ async function main() {
       day: todayKey,
       slot,
       publishedCount: 0,
-    });
-    const authoredOutcome = await runAuthoredColumnStage({
-      state,
-      candidates: columnCandidateRecords({ latest, pool, existingArchive: updatedArchive || existingArchive, now, sources }),
-      pool,
-      recentRecords: [...latest, ...(updatedArchive || existingArchive || [])],
-      now,
-      sources,
     });
     state.runHistory[state.runHistory.length - 1].authoredColumn = authoredOutcome;
     state.runHistory[state.runHistory.length - 1].llmUsage = llmUsageSummary();
@@ -723,6 +732,14 @@ async function main() {
 
   logRepetitionBlockedArticles(repetitionBlocked);
 
+  const authoredOutcome = await runAuthoredColumnStage({
+    state,
+    candidates: columnCandidateRecords({ latest: repetitionChecked, pool, existingArchive, now, sources }),
+    pool,
+    recentRecords: [...repetitionChecked, ...(existingArchive || [])],
+    now,
+    sources,
+  });
   const { latest, archive: updatedArchive, supabaseStatus } = await syncArchiveArtifacts(repetitionChecked, existingArchive);
 
   await writeJsonFile(LATEST_NEWS_PATH, latest);
@@ -749,14 +766,7 @@ async function main() {
     signalCardItems: signalCards.map(toRunHistoryItem),
     archiveOnlyItems: archiveOnly.map(toRunHistoryItem),
   });
-  const authoredOutcome = await runAuthoredColumnStage({
-    state,
-    candidates: columnCandidateRecords({ latest: [...repetitionPassed, ...latest], pool, existingArchive: updatedArchive || existingArchive, now, sources }),
-    pool,
-    recentRecords: [...latest, ...(updatedArchive || existingArchive || [])],
-    now,
-    sources,
-  });
+
   state.runHistory[state.runHistory.length - 1].authoredColumn = authoredOutcome;
   state.runHistory[state.runHistory.length - 1].llmUsage = llmUsageSummary();
   state.runHistory = state.runHistory.slice(-120);

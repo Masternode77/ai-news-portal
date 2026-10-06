@@ -1,132 +1,58 @@
-name: Update News
+name: Validate News
 
+# Generation runs in the existing Mac Codex task using subscription CLIs.
+# Hosted runners validate artifacts and never receive subscription credentials.
 on:
-  schedule:
-    # Full news pipeline: 00:05 / 08:05 / 16:05 KST
-    - cron: '5 15 * * *'
-    - cron: '5 23 * * *'
-    - cron: '5 7 * * *'
+  push:
+    branches: [main]
+    paths:
+      - 'src/data/**'
+      - 'public/generated/**'
+      - 'config/codex-image-manifest.json'
+      - 'scripts/**'
+      - 'tests/**'
+      - '.github/workflows/update-news.yml'
   workflow_dispatch:
-    inputs:
-      force_column:
-        description: 'Force an authored column this run (bypasses daily cap and minimum gap)'
-        type: boolean
-        default: false
-      force_wire:
-        description: 'Pick wire items even if this KST slot already published (verification runs)'
-        type: boolean
-        default: false
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ai-news-portal-news-validation-${{ github.ref }}
+  cancel-in-progress: false
 
 jobs:
-  update-news:
+  validate-news:
     runs-on: ubuntu-latest
-    # Tests and the content gate take about 15 minutes; the wider wire run,
-    # the radar refresh and a second column attempt need headroom on top.
     timeout-minutes: 40
-    permissions:
-      contents: write
-    concurrency:
-      group: ai-news-portal-main-writes
-      cancel-in-progress: false
-
+    env:
+      LLM_PROVIDER: disabled
+      PIPELINE_OFFLINE: '1'
     steps:
       - name: Checkout repo
         uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with:
-          fetch-depth: 0
-          ref: ${{ github.ref_name }}
-
+          persist-credentials: false
       - name: Setup Node.js
         uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         with:
           node-version: '22.22.0'
           cache: npm
-
       - name: Install XSLT processor
         run: |
           sudo apt-get update
           sudo apt-get install --no-install-recommends -y xsltproc
-
       - name: Install dependencies
         run: npm ci
-
       - name: Validate project
         run: npm run check
-
-      - name: Run news update
-        timeout-minutes: 18
-        env:
-          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
-          OPENROUTER_MODEL: ${{ secrets.OPENROUTER_MODEL }}
-          CURATION_MODEL: ${{ secrets.CURATION_MODEL }}
-          EXPERT_LENS_MODEL: ${{ secrets.EXPERT_LENS_MODEL }}
-          EXPERT_LENS_FALLBACK_MODEL: ${{ secrets.EXPERT_LENS_FALLBACK_MODEL }}
-          AUTHORED_COLUMN_MODEL: ${{ secrets.AUTHORED_COLUMN_MODEL }}
-          AUTHORED_COLUMN_FORCE: ${{ inputs.force_column == true && '1' || '' }}
-          PIPELINE_FORCE_SLOT: ${{ inputs.force_wire == true && '1' || '' }}
-          IMAGE_PROVIDER: codex
-          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
-          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
-          SUPABASE_ARCHIVE_TABLE: ${{ secrets.SUPABASE_ARCHIVE_TABLE }}
-        run: npm run pipeline
-
-      # Headline-and-link lane (docs/source-rights-review.md). Never blocks the
-      # wire or column run: a failed refresh keeps the previous list.
-      - name: Refresh industry radar headlines
-        timeout-minutes: 4
-        continue-on-error: true
-        run: node ./scripts/update-industry-headlines.mjs
-
-      - name: Restore approved public inventory
-        run: node ./scripts/restore-eia-public-inventory.mjs
-
-      - name: Rebuild public taxonomy pages
-        run: npm run rebuild:taxonomy-pages
-
       - name: Synchronize current-state audit
         run: node ./scripts/audit-omo-ultra-current-state.mjs
-
       - name: Run full test suite
         run: npm test
-
       - name: Run production content gate
         run: npm run content:gate
-
-      - name: Synchronize final current-state audit
+      - name: Verify final current-state audit
         run: |
           node ./scripts/audit-omo-ultra-current-state.mjs
           node --test tests/omo-ultra-audit.test.mjs
-
-      - name: Record successful scheduled update
-        run: node ./scripts/record-pipeline-heartbeat.mjs ok
-
-      - name: Commit and push updates
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-
-          git add \
-            src/data/latest-news.json \
-            src/data/archived-news.json \
-            src/data/authored-columns.json \
-            src/data/search-index.json \
-            src/data/news-pool.json \
-            src/data/industry-headlines.json \
-            src/data/taxonomy-pages.json \
-            src/data/pipeline-heartbeat.json \
-            scripts/state/pipeline-state.json \
-            docs/omo-ultra-audit.md \
-            docs/taxonomy-pages-report.md \
-            public/generated
-
-          if git diff --cached --quiet; then
-            echo "No tracked changes to commit."
-            exit 0
-          fi
-
-          # No [skip ci]: Vercel honors it and would skip the production
-          # deploy, leaving fresh articles and columns committed but never
-          # published. Actions stay quiet anyway — visual-qa only runs on
-          # pull requests and the release job skips bot actors.
-          git commit -m "chore: refresh news surface and archive"
-          git push origin HEAD:main

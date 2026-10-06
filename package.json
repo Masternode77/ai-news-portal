@@ -71,7 +71,9 @@
     "regenerate:autonomous-analyses-v1": "node ./scripts/regenerate-autonomous-analyses-v1.mjs",
     "rebuild:taxonomy-pages": "node ./scripts/rebuild-taxonomy-pages.mjs",
     "audit:autonomous-public": "npm run build && node ./scripts/audit-autonomous-public-surface.mjs",
-    "eval:articles": "node ./scripts/eval-article-generation.mjs"
+    "eval:articles": "node ./scripts/eval-article-generation.mjs",
+    "generate:subscription": "node ./scripts/run-subscription-news.mjs",
+    "check:subscription": "node ./scripts/run-subscription-news.mjs --check"
   },
   "dependencies": {
     "@astrojs/rss": "^4.0.19",

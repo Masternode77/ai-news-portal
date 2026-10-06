@@ -48,14 +48,12 @@ Comparator evidence, current implementation crosswalk, and operator boundaries: 
     publication count is conditional on the resulting eligible inventory, not a
     fixed per-run promise.
 
-- **Optional LLM curation and expert insight generation**
-  - If `OPENROUTER_API_KEY` is present, the pipeline uses OpenRouter with `openai/gpt-5.3-codex`
-  - The model can:
-    - pick the strongest 6 stories for the day
-    - generate a sharper 1-2 line summary
-    - write an operator / investor / infrastructure expert insight
-    - produce tags, region, category, and an image prompt
-  - If no key is set, the pipeline falls back to deterministic ranking and heuristic enrichment
+- **Subscription-based curation and analysis**
+  - The Mac's locally authenticated Codex CLI uses `gpt-6-astra` for selection,
+    summaries, classification, tags, general long-form analysis and image prompts.
+  - Claude Code uses `claude-fable-5-1` for The Current; Astra cross-checks source evidence.
+  - Authentication, quota and model errors stop the run. There is no automatic API fallback.
+  - See [subscription setup](docs/subscription-generation.md) before activation.
 
 - **Conditional Expert Lens enrichment**
   - The pipeline hydrates visible records and enriches focused publishable
@@ -111,7 +109,7 @@ Comparator evidence, current implementation crosswalk, and operator boundaries: 
 
 ```bash
 npm install
-PIPELINE_USE_EXISTING_POOL=1 npm run pipeline
+LLM_PROVIDER=disabled PIPELINE_USE_EXISTING_POOL=1 npm run pipeline
 npm run check
 npm run build
 npm run dev
@@ -120,12 +118,14 @@ npm run dev
 ## Environment variables
 
 ### Content + curation
-- `OPENROUTER_API_KEY` *(optional)*: enables GPT-5.3-Codex curation and article enrichment
-- `OPENROUTER_MODEL` *(optional)*: defaults to `openai/gpt-5.3-codex`
-- `OPENROUTER_SITE_URL` *(optional)*: app attribution header
-- `OPENROUTER_APP_TITLE` *(optional)*: app attribution header
-- `EXPERT_LENS_MODEL` *(optional)*: preferred model id for focused Expert Lens enrichment
-- `EXPERT_LENS_FALLBACK_MODEL` *(optional)*: backup model id if the preferred lens model is unavailable
+- `LLM_PROVIDER`: `subscription` by default; `disabled` for deterministic/offline work.
+  `openrouter` is a deliberate legacy opt-in, never a fallback.
+- `SUBSCRIPTION_INCLUDED_USAGE_CONFIRMED=1`: set only after verifying model access
+  and disabling paid extra usage in both subscription accounts.
+- `SUBSCRIPTION_CODEX_BIN` / `SUBSCRIPTION_CLAUDE_BIN`: optional official CLI executable paths.
+- Existing OpenRouter model/key variables apply only in explicit legacy mode.
+- Run `npm run check:subscription` on the Mac before `npm run generate:subscription`.
+  See [activation and scheduling](docs/subscription-generation.md); pulling Git does not install a schedule.
 
 ### Image generation
 - `IMAGE_PROVIDER` *(optional)*: defaults to `codex`
@@ -173,24 +173,18 @@ not the current authentication contract. See
 [`docs/admin-auth-production-gate.md`](docs/admin-auth-production-gate.md) for
 the hash, rotation, and external-control verification procedure.
 
-## GitHub Actions automation
+## Mac generation and GitHub validation
 
-The workflow runs on an **8-hour KST-aligned schedule**:
-- `00:05 KST`
-- `08:05 KST`
-- `16:05 KST`
+The existing Mac Codex task owns the 00:05 / 08:05 / 16:05 KST generation
+cadence after its one-time activation. Follow [subscription generation](docs/subscription-generation.md).
+It generates text through subscription CLIs, completes native artwork, then runs
+all tests and content gates before an authorized publication.
 
-GitHub Actions uses UTC cron expressions, so the workflow defines the UTC equivalents.
-
-Workflow steps:
-1. install dependencies
-2. validate the project and run the rights-gated pipeline; an empty authorized
-   source set exits without publication
-3. rebuild public taxonomy pages
-4. run `npm test`
-5. run `npm run content:gate`, which includes the production build gate
-6. record a successful scheduled-update heartbeat
-7. commit only tracked changed artifacts to `main`
+GitHub's Validate News runs on relevant pushes to main or manual dispatch. It
+installs dependencies and the RSS transform runtime, checks the project, and runs
+`npm test` plus `npm run content:gate`. It does not generate, commit, push or
+record a generation heartbeat. The operations monitor checks the committed Mac
+generation heartbeat, so a validation-only success cannot conceal a stalled Mac.
 
 ## Release versioning
 

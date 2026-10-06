@@ -151,11 +151,29 @@ test('column candidates prefer the processed record over the raw pool copy, insi
   assert.equal(columnCandidateRecords({ latest: [], pool: [], existingArchive: [tooOld], now: NOW, sources: loadSourceRegistrySync() }).length, 0);
 });
 
-test('every column stage call reads the archive written in the same run', async () => {
+test('every column stage uses processed in-memory candidates before publishing the archive', async () => {
   const fs = await import('node:fs/promises');
   const source = await fs.readFile('scripts/pipeline.mjs', 'utf8');
-  const calls = [...source.matchAll(/columnCandidateRecords\(\{[^}]*\}\)/g)].map((match) => match[0]);
+  const calls = [...source.matchAll(/columnCandidateRecords[(][{][^}]*[}][)]/g)].map((match) => match[0]);
   assert.equal(calls.length, 3);
-  for (const call of calls) assert.match(call, /existingArchive: updatedArchive \|\| existingArchive/);
-  assert.equal((source.match(/archive: updatedArchive/g) || []).length, 3, 'each syncArchiveArtifacts call keeps its returned archive');
+  assert.equal(calls.filter(call => call.includes('latest: templateChecked')).length, 2);
+  assert.equal(calls.filter(call => call.includes('latest: repetitionChecked')).length, 1);
+  const stages = [...source.matchAll(/const authoredOutcome = await runAuthoredColumnStage/g)].map(match => match.index);
+  const syncs = [...source.matchAll(/const { latest, archive: updatedArchive, supabaseStatus } = await syncArchiveArtifacts/g)].map(match => match.index);
+  assert.equal(syncs.length, 3);
+  for (let index = 0; index < stages.length; index += 1) {
+    assert.ok(stages[index] < syncs[index], 'generation must finish before that branch publishes');
+    if (index) assert.ok(stages[index] > syncs[index - 1]);
+  }
+  const { columnCandidateRecords } = await import('../scripts/pipeline.mjs');
+  const { loadSourceRegistrySync } = await import('../scripts/lib/source-registry.mjs');
+  const raw = {
+    id: 'current-processed', sourceRegistryId: 'epoch-ai-data-insights', source:'Epoch AI',
+    url:'https://epoch.ai/data-insights/current-processed', title:'AI compute capacity research',
+    publishedAt: NOW.toISOString(), infrastructure_relevance_score:0.1, ai_topic_score:0.1,
+  };
+  const processed = { ...raw, ai_topic_score:0.9, cleaned_source_text:'Verified current extraction.', extraction_artifact:{source_url:raw.url, cleaned_extracted_text:'Verified current extraction.'} };
+  const [candidate] = columnCandidateRecords({latest:[processed], existingArchive:[raw], pool:[raw], now:NOW, sources:loadSourceRegistrySync()});
+  assert.equal(candidate.ai_topic_score,0.9);
+  assert.deepEqual(candidate.extraction_artifact,processed.extraction_artifact);
 });

@@ -4,7 +4,7 @@ import { generateAuthoredColumn, storyKeyFor } from '../scripts/lib/authored-col
 import { resetLlmUsageForTests } from '../scripts/lib/llm-budget.mjs';
 import { fixtureArticle, FIXTURE_SOURCE, STANCE_JSON, essayJson } from './fixtures/authored-column-fixture.mjs';
 
-test('default authored column provider remains disabled without an OpenRouter key', async () => {
+test('disabled authored column provider does not require an OpenRouter key', async () => {
   const previous = process.env.OPENROUTER_API_KEY;
   delete process.env.OPENROUTER_API_KEY;
   try {

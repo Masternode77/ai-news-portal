@@ -82,6 +82,37 @@ export function evaluateContentOperations({
   });
 }
 
+export function evaluatePipelineHeartbeat({ heartbeat = {}, authorizedSourceCount, now = new Date(), staleAfterHours = 12 } = {}) {
+  if (!Number.isInteger(authorizedSourceCount) || authorizedSourceCount < 0) {
+    return result('unknown', 'unknown_source_authorization', 'Authorized source availability could not be determined.');
+  }
+  if (authorizedSourceCount === 0) {
+    return result('alert', 'no_authorized_sources', 'No source is currently authorized for text ingestion.');
+  }
+  const nowMs = now instanceof Date ? now.getTime() : validDateMs(now);
+  if (!Number.isFinite(nowMs) || !Number.isFinite(staleAfterHours) || staleAfterHours <= 0) {
+    throw new TypeError('A valid current time and positive stale threshold are required');
+  }
+  const successMs = validDateMs(heartbeat?.last_successful_pipeline_at);
+  const runMs = validDateMs(heartbeat?.last_pipeline_run_at);
+  const details = {
+    ageHours: successMs === null ? null : (nowMs - successMs) / 3_600_000,
+    lastSuccessfulPipelineAt: heartbeat?.last_successful_pipeline_at || null,
+    lastPipelineRunAt: heartbeat?.last_pipeline_run_at || null,
+  };
+  if (heartbeat?.status === 'failed') {
+    return result('alert', 'latest_pipeline_failed', 'The latest recorded generation pipeline failed.', details);
+  }
+  if (heartbeat?.status !== 'ok' || successMs === null || runMs === null
+      || successMs > runMs || runMs > nowMs) {
+    return result('unknown', 'unknown_pipeline_heartbeat', 'A valid generation pipeline heartbeat is unavailable.', details);
+  }
+  if (details.ageHours > staleAfterHours) {
+    return result('alert', 'stale_no_recent_success', 'No successful generation pipeline occurred within the threshold.', details);
+  }
+  return result('healthy', 'healthy', 'The generation pipeline has a recent recorded success.', details);
+}
+
 export function evaluateOpenRouterBudget({ usageMonthly, budgetUsd, warningPercent = 80 } = {}) {
   const usageProvided = usageMonthly !== null && usageMonthly !== undefined && String(usageMonthly).trim() !== '';
   const usage = Number(usageMonthly);
@@ -175,6 +206,8 @@ export function renderIssueBody(monitor, monitorResult, observedAt = new Date())
   ];
 
   if (monitor.key === CONTENT_MONITOR.key) {
+    if (monitorResult.details?.lastSuccessfulPipelineAt) lines.push(`Last successful generation: ${monitorResult.details.lastSuccessfulPipelineAt}`);
+    if (monitorResult.details?.lastPipelineRunAt) lines.push(`Latest generation attempt: ${monitorResult.details.lastPipelineRunAt}`);
     if (Number.isFinite(monitorResult.details?.ageHours)) {
       lines.push(`Last successful run age: ${monitorResult.details.ageHours.toFixed(1)} hours`);
     }

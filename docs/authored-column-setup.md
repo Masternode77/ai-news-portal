@@ -6,52 +6,48 @@
 저작권 오버랩·반복·문체 점수 등)을 전부 통과해야만 발행되며, **실패하면 아무것도 발행하지
 않습니다**(템플릿 대체 없음).
 
-## 1. 가동 전제: OpenRouter 키 (필수, 이것만 하면 켜집니다)
+## 1. 가동 전제: Mac의 구독 로그인
 
-1. [openrouter.ai](https://openrouter.ai) 가입 → **Keys**에서 API 키 생성.
-2. **Credits**에서 $10 정도 충전 (표준 모델 기준 월 $5~15 예상 — 칼럼 1편당 약 $0.12~0.18).
-3. GitHub 저장소 → **Settings → Secrets and variables → Actions → New repository secret**:
-   - `OPENROUTER_API_KEY` = 발급받은 키
-4. (선택) 모델을 바꾸고 싶으면 시크릿 추가:
-   - `AUTHORED_COLUMN_MODEL` (기본 `anthropic/claude-sonnet-4.5`)
-   - `EXPERT_LENS_MODEL` (wire 기사 본문용, 기본 동일)
-   - `OPENROUTER_MODEL` (선별·요약용 경량 모델, 기본 `openai/gpt-4o-mini`)
+현재 기본 경로는 OpenRouter API가 아니라 Mac의 공식 CLI입니다.
+Codex는 ChatGPT 구독으로 로그인하고 `gpt-6-astra`를 사용합니다.
+Claude Code는 Max 구독으로 로그인하고 `claude-fable-5-1`로 논지·초안·편집을 수행합니다.
+Astra가 원문 근거를 교차 검토합니다. 로그인·한도·모델 오류는 실행 실패로 보고하며
+유료 API나 구형 모델로 자동 전환하지 않습니다.
 
-키가 없으면 칼럼 엔진은 조용히 skip하고(`llm_disabled` 로그), wire 피드는 평소처럼 돕니다.
+[구독 생성 설정](subscription-generation.md)의 로그인, 추가 과금 차단 확인,
+CLI 호환성 점검을 먼저 마치세요. 키 발급이나 GitHub로 구독 인증정보 복사는 필요 없습니다.
 
-## 2. 첫 칼럼 발행하기
+## 2. 첫 칼럼 생성하기
 
-키 등록 후 두 가지 방법:
+Mac 저장소에서 `npm run check:subscription`으로 준비 상태를 확인한 뒤
+`npm run generate:subscription`을 실행합니다. 기존 Mac Codex 작업이
+본문 생성, 고유한 네이티브 이미지 생성·검토·등록, 최종 품질 검사 순서를 수행합니다.
+명령 자체는 커밋·푸시하지 않습니다. 발행 권한이 있는 기존 작업만 검증 후 발행합니다.
+GitHub의 Validate News는 검증 전용이므로 수동 실행해도 칼럼을 생성하지 않습니다.
 
-- **자동**: 다음 정기 실행(00:05 / 08:05 / 16:05 KST)에서 조건이 맞으면 자동 발행.
-- **즉시**: GitHub → **Actions → Update News → Run workflow** →
-  `force_column` 체크 → 실행. (하루 상한·간격 제한을 무시하고 1편 시도)
+기존 하루 세 번(00:05 / 08:05 / 16:05 KST) 일정은 Mac의 기존 자동화에 적용합니다.
+저장소 pull만으로 앱의 예약 설정이 설치되지는 않습니다. 새 작업을 중복 생성하지 마세요.
+적격 후보가 없으면 정상 건너뛰기이며, 인증·한도 오류와 구분해야 합니다.
 
-발행되면 커밋 로그에 `authored column published: <slug>`가 찍히고, Vercel 재배포 후:
-- 홈페이지 상단에 칼럼 히어로가 나타나고
-- `/column/` 인덱스와 `/column/<slug>/` 상세 페이지, RSS·사이트맵에 반영됩니다.
-
-실행 로그에서 `authored column: none this run (<이유>)`가 보이면 그 회차는 기준 미달로
-건너뛴 것입니다(정상 동작). 이유는 `scripts/state/pipeline-state.json`의
-`authored.lastFailure`에도 기록됩니다.
-
-## 3. 운영 파라미터 (전부 GitHub 시크릿/환경변수로 조정)
+## 3. 운영 파라미터 (Mac 작업 환경변수)
 
 | 변수 | 기본값 | 의미 |
 | --- | --- | --- |
+| `LLM_PROVIDER` | subscription | 공식 구독 CLI 사용 |
+| `SUBSCRIPTION_INCLUDED_USAGE_CONFIRMED` | 미설정 | 포함 사용량·추가 과금 차단 확인 후 1로 설정 |
 | `AUTHORED_COLUMNS_PER_DAY` | 3 | 하루 최대 칼럼 수 |
 | `AUTHORED_COLUMN_MIN_GAP_HOURS` | 4 | 칼럼 간 최소 간격 |
-| `AUTHORED_COLUMN_ENABLED` | 1 | 0이면 엔진 완전 비활성화 |
-| `LLM_RUN_BUDGET_TOKENS` | 60000 | 실행당 토큰 상한(초과 시 LLM 작업 중단) |
-| `LLM_RUN_BUDGET_CALLS` | 40 | 실행당 호출 상한 |
-| `AUTHORED_MIN_HUMAN_STYLE` | 0.84 | 문체 점수 하한 (낮추면 발행률↑ 품질↓) |
-| `AUTHORED_MIN_INSIGHT_DENSITY` | 0.75 | 분석 밀도 하한 |
+| `AUTHORED_COLUMN_ENABLED` | 1 | 0이면 칼럼 생성 비활성화 |
+| `LLM_RUN_BUDGET_CALLS` | 60 | 실행당 성공 호출 상한 |
+
+API용 토큰 예산은 구독 잔여 한도를 측정하지 않습니다. 실제 구독 사용 한도는 각 서비스가 관리합니다.
+기존 추출·근거·반복·문체·품질 기준을 통과해야 발행할 수 있습니다.
 
 ### 칼럼 대상 범위: 인프라 스토리와 AI 스토리
 
 칼럼 후보는 두 레인 중 하나에서 관련성 0.75 이상이면 됩니다. 인프라 레인은 `infrastructure_relevance_score`(데이터센터·전력·냉각·반도체·클라우드·자본)이고, AI 레인은 `ai_topic_score`(프런티어 모델 출시와 성능, AI 랩 전략과 자금, AI 정책·규제, AI 보안 사고, AI 워크로드의 컴퓨트 수요)입니다. AI 레인 점수는 `classifyAiTopicRelevance`가 계산하며, AI가 제목의 주제가 아니면 0.6에서 상한이 걸립니다. 어느 레인이든 전문가 인사이트 완성과 증거 사실 4개 이상, 이후의 초안·검증 게이트는 동일하게 적용됩니다. 와이어(홈페이지 카드·상세 페이지)의 인프라 게이트는 바뀌지 않았으므로, 순수 AI 기사는 아카이브에 저장된 뒤 칼럼 후보로만 쓰입니다.
 
-큐레이션 모델은 `config/curation-model.json`이 정하며(현재 OpenAI GPT-5.6 Sol, OpenRouter id `openai/gpt-5.6-sol`), 매월 1일 03:17 UTC에 `Curation Model Refresh` 워크플로가 OpenRouter 카탈로그에서 가장 새로운 범용 OpenAI GPT 텍스트 모델(코딩·오디오·이미지·mini/nano/pro·batch 변형 제외, 버전 높은 순 → 출시 최신 순)을 골라 JSON 응답을 한 번 검증한 뒤 이 파일을 갱신해 커밋합니다. 특정 모델에 고정하려면 `CURATION_MODEL` 시크릿을 설정하면 파일보다 우선합니다. 수동 실행은 Actions에서 `Curation Model Refresh`를 디스패치하면 됩니다. 모델은 풀 전체(최대 30건, 레인 관련성 순)를 보고 고르며, 요청은 JSON 모드입니다. 모델 id가 카탈로그에서 사라지면(400/404) `OPENROUTER_MODEL`로 한 번 재시도하고, 그래도 실패하면 결정론 랭커로 넘어갑니다. 모델이 “해당 없음”(빈 선택)이라고 답하면 그 판단이 그대로 적용되어 그 실행에서는 와이어 기사를 뽑지 않습니다. 실행 로그의 `[curate]` 줄이 어느 경로였는지 보여줍니다.
+큐레이션은 Astra를 사용합니다. OpenRouter 카탈로그 자동 갱신은 중단됐으며, 구독 모델은 코드에서 명시적으로 고정합니다.
 
 ## 4. 발행 후 수정(사후 편집)
 
@@ -71,12 +67,17 @@
 ## 6. 로컬에서 미리 돌려보기 (선택)
 
 ```bash
-# 키를 로컬 .env 없이 셸에 직접 넣고 드라이런(파일 안 씀, 본문 출력)
-OPENROUTER_API_KEY=sk-... node scripts/generate-authored-column.mjs --dry-run
+# 인증 준비 상태만 확인. 글을 생성하거나 저장하지 않습니다.
+node scripts/run-subscription-news.mjs --check
 
-# 검증까지 통과하면 실제로 저장
-OPENROUTER_API_KEY=sk-... node scripts/generate-authored-column.mjs --force
+# 실제 구독 사용량을 소비해 칼럼을 생성하되 파일 저장은 하지 않습니다.
+# 위 설정 가이드의 구독·과금 확인을 먼저 완료해야 합니다.
+node scripts/generate-authored-column.mjs --dry-run
 ```
+
+전체 파이프라인 실행 순서만 확인하려면 `node scripts/run-subscription-news.mjs --dry-run`을 사용하세요.
+이 명령의 dry-run은 모델을 호출하지 않습니다. 두 명령의 dry-run 의미는 다릅니다.
+
 
 ## 7. 구조 다양성 계약 (v2)
 

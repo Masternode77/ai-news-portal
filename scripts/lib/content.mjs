@@ -7,7 +7,7 @@ import {
   truncate,
   unique,
 } from './normalize.mjs';
-import { callOpenRouterJson } from './openrouter.mjs';
+import { callOpenRouterJson, rethrowSubscriptionFailure } from './openrouter.mjs';
 import { fetchArticleExtraction } from './source-fetch.mjs';
 import { normalizeEditorialVoice } from './editorial-humanizer.mjs';
 import { extractExpertInsight } from './expert-insight-engine.mjs';
@@ -66,7 +66,14 @@ function fallbackImagePrompt(item, category, summary) {
   ].join(' ');
 }
 
-function normalizeAiPayload(aiPayload, fallback) {
+export function normalizeAiPayload(aiPayload, fallback) {
+  if (!aiPayload || typeof aiPayload !== 'object' || Array.isArray(aiPayload) || typeof aiPayload.summary !== 'string' || !aiPayload.summary.trim()
+    || typeof aiPayload.insight !== 'string' || !aiPayload.insight.trim()
+    || typeof aiPayload.imagePrompt !== 'string' || !aiPayload.imagePrompt.trim()
+    || !Array.isArray(aiPayload.tags)) {
+    rethrowSubscriptionFailure(new Error('Subscription enrichment returned incomplete editorial fields'));
+  }
+
   if (!aiPayload || typeof aiPayload !== 'object') return fallback;
 
   const summary = truncate(normalizeEditorialVoice(aiPayload.summary || fallback.summary), 180);
@@ -167,7 +174,7 @@ export async function enrichContent(item) {
     defaultRegion: item.region || null,
   }),
     maxTokens: 700,
-  }).catch(() => null);
+  }).catch((error) => { rethrowSubscriptionFailure(error); return null; });
 
   const normalized = normalizeAiPayload(aiPayload, fallback);
   const infrastructureRelevance = classifyInfrastructureRelevance({

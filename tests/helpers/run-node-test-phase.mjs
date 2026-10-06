@@ -34,6 +34,7 @@ if (phase !== 'source' && phase !== 'built') {
   const result = spawnSync(process.execPath, ['--test', ...testFiles], {
     cwd: process.cwd(),
     stdio: 'inherit',
+    env: { ...process.env, LLM_PROVIDER: 'disabled' },
   });
 
   if (result.error) throw result.error;

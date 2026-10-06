@@ -32,10 +32,7 @@ jobs:
         with:
           node-version: '22.22.0'
 
-      - name: Check content freshness and OpenRouter budget
+      - name: Check committed generation heartbeat and source authorization
         env:
           GITHUB_TOKEN: ${{ github.token }}
-          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
-          OPENROUTER_MONTHLY_BUDGET_USD: ${{ vars.OPENROUTER_MONTHLY_BUDGET_USD }}
-          OPENROUTER_BUDGET_WARNING_PERCENT: ${{ vars.OPENROUTER_BUDGET_WARNING_PERCENT }}
         run: node ./scripts/check-operations.mjs ${{ inputs.dry_run && '--dry-run' || '' }}

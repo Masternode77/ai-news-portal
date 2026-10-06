@@ -346,7 +346,7 @@ test('voice revision receives the verified numeric ledger and rejects invented w
   }
 });
 
-test('engine skips cleanly without an api key', async () => {
+test('engine skips cleanly with generation explicitly disabled', async () => {
   resetLlmUsageForTests();
   delete process.env.OPENROUTER_API_KEY;
   const result = await generateAuthoredColumn({ candidates: [fixtureArticle()], pool: [], state: {}, now: new Date() });

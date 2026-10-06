@@ -21,7 +21,7 @@ import {
   expertInsightUsageScore,
   insightFieldSummary,
 } from './expert-insight-engine.mjs';
-import { callExpertLensText } from './openrouter.mjs';
+import { callExpertLensText, rethrowSubscriptionFailure } from './openrouter.mjs';
 import { BANNED_PHRASES, BLOCKED_HOOK_STARTS, hasBannedPhrase } from './banned-phrases.mjs';
 import {
   GENERATION_VERSION,
@@ -351,8 +351,15 @@ async function generateExpertLensFull(article, blueprint) {
       narrativeDNA: extractNarrativeDNA(article),
     }),
     maxTokens: 2600,
-  }).catch(() => '');
+  }).catch((error) => { rethrowSubscriptionFailure(error); return ''; });
 
+  if (content) {
+    const generated = safeJsonParse(content, null);
+    if (!generated || typeof generated.finalArticleBody !== 'string' || !generated.finalArticleBody.trim()
+      || typeof generated.finalHeadline !== 'string' || !generated.finalHeadline.trim()) {
+      rethrowSubscriptionFailure(new Error('Subscription long-form analysis returned incomplete editorial fields'));
+    }
+  }
   return normalizeExpertLensFull(article, content || fallback, blueprint, { enforceBlueprint: true });
 }
 

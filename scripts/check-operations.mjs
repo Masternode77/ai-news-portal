@@ -1,11 +1,11 @@
 import { activeRegistryFeeds, loadSourceRegistry } from './lib/source-registry.mjs';
+import { readPipelineHeartbeat } from './lib/pipeline-heartbeat.mjs';
 import {
   BUDGET_MONITOR,
   CONTENT_MONITOR,
-  evaluateContentOperations,
+  evaluatePipelineHeartbeat,
   evaluateOpenRouterBudget,
   fetchOpenRouterUsage,
-  fetchWorkflowRuns,
   syncMonitorIssue,
   unknownResult,
 } from './lib/operations-monitor.mjs';
@@ -20,12 +20,12 @@ async function contentResult() {
   try {
     const sources = await loadSourceRegistry();
     const authorizedSourceCount = activeRegistryFeeds(sources, now).length;
-    const snapshot = await fetchWorkflowRuns({ repository, token: githubToken });
-    return evaluateContentOperations({ ...snapshot, authorizedSourceCount, now, staleAfterHours: 12 });
+    const heartbeat = await readPipelineHeartbeat();
+    return evaluatePipelineHeartbeat({ heartbeat, authorizedSourceCount, now, staleAfterHours: 12 });
   } catch (error) {
     encounteredOperationalError = true;
     console.error(`content monitor error: ${error.message}`);
-    return unknownResult('unknown_content_monitor_error', 'The content monitor could not retrieve current workflow health.');
+    return unknownResult('unknown_content_monitor_error', 'The content monitor could not read generation pipeline health.');
   }
 }
 
@@ -50,7 +50,9 @@ async function budgetResult() {
 
 const checks = await Promise.all([
   contentResult().then((monitorResult) => ({ monitor: CONTENT_MONITOR, monitorResult })),
-  budgetResult().then((monitorResult) => ({ monitor: BUDGET_MONITOR, monitorResult })),
+  ...(process.env.LLM_PROVIDER === 'openrouter'
+    ? [budgetResult().then((monitorResult) => ({ monitor: BUDGET_MONITOR, monitorResult }))]
+    : []),
 ]);
 
 for (const check of checks) {

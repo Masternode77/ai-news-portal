@@ -52,3 +52,13 @@ If a returned job subsequently fails a column-specific review, continue the same
 Inspect `scripts/state/pipeline-state.json`'s `authored.lastSelection` diagnostics and `authored.lastFailure`, plus recent Update News logs. `no_qualifying_story` is an editorial outcome, not a crash. A new multi-day stall or newly blocked source is actionable; unchanged known holds are quiet. Do not force a column, change source permissions, add paid APIs, or lower quality thresholds to meet a quota. The text stage now accepts a named public policy actor when `named_companies` is the only missing expert field, while retaining relevance, source rights, extraction and all final essay gates.
 
 The importer rejects exact reused source files and their normalized source bytes for another column. It also checks other articles' rendered hero, thumbnail, OpenGraph and legacy files, including byte-identical copies at different paths, and protects newly registered column sources from reuse by other articles. This is a file-identity guard, not a perceptual similarity detector: the native generation and visual-review steps must still ensure distinct compositions. Existing images remain visible until replacements are successfully imported; this change does not claim that a disconnected Mac has generated or deployed replacements.
+
+## Subscription text generation
+
+For the Astra/Fable migration, follow [subscription-generation.md](subscription-generation.md)
+before creating new columns. Use `node scripts/run-subscription-news.mjs` in the
+existing authorized Mac task; then finish this native artwork workflow and rerun
+the gates before publication. GitHub now validates artifacts rather than
+scheduling text generation. Pulling this document does not itself reconfigure
+the Mac automation. Preserve the existing task and reconcile its schedule once
+on the Mac rather than adding another writer.

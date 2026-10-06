@@ -12,7 +12,7 @@ import {
 } from './constants.mjs';
 import { publicVisibilityBlocked } from './content-quarantine.mjs';
 import { kstDayKey, kstSlot } from './normalize.mjs';
-import { callOpenRouterJson, isModelNotAvailableError } from './openrouter.mjs';
+import { callOpenRouterJson, isModelNotAvailableError, rethrowSubscriptionFailure } from './openrouter.mjs';
 import { rankWithDiversity } from './rank.mjs';
 import { proceduralDocketWithoutComputeContext } from './relevance-classifier.mjs';
 
@@ -73,17 +73,19 @@ async function curateWithLlm(items) {
   };
   let usedModel = CURATION_MODEL;
   const result = await callOpenRouterJson({ ...request, model: CURATION_MODEL }).catch(async (error) => {
+    rethrowSubscriptionFailure(error);
     console.warn(`[curate] model ${CURATION_MODEL} failed: ${error.message}`);
     if (CURATION_MODEL !== OPENROUTER_MODEL && isModelNotAvailableError(error)) {
       console.warn(`[curate] retrying curation with fallback model ${OPENROUTER_MODEL}`);
       usedModel = OPENROUTER_MODEL;
-      return callOpenRouterJson({ ...request, model: OPENROUTER_MODEL }).catch(() => null);
+      return callOpenRouterJson({ ...request, model: OPENROUTER_MODEL }).catch((error) => { rethrowSubscriptionFailure(error); return null; });
     }
     return null;
   });
 
   const selected = resolveCuratedSelection(result, shortlist);
   if (selected === null) {
+    if (result !== null) rethrowSubscriptionFailure(new Error('Invalid subscription curation selection'));
     const detail = result && Array.isArray(result.selectedIds)
       ? `${result.selectedIds.length} ids, none from the shortlist`
       : 'no usable selection';

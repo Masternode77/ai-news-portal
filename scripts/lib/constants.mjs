@@ -40,14 +40,13 @@ export const OPENAI_IMAGE_SIZE = process.env.OPENAI_IMAGE_SIZE || '1536x1024';
 export const OPENAI_IMAGE_QUALITY = process.env.OPENAI_IMAGE_QUALITY || 'medium';
 
 export const OPENROUTER_API_URL = 'https://openrouter.ai/api/v1/chat/completions';
-// Defaults are deliberately long-lived catalog ids; production should pin the
-// preferred models via env/secrets. Unknown-model errors surface loudly in
-// logs and trigger the fallback chain instead of silently degrading.
-export const OPENROUTER_MODEL = process.env.OPENROUTER_MODEL || 'openai/gpt-4o-mini';
-// Story curation runs on the newest general-purpose OpenAI GPT model. The
-// monthly curation-model-refresh workflow keeps config/curation-model.json
-// current; CURATION_MODEL pins a model over it. An unavailable id falls back
-// to OPENROUTER_MODEL once before the deterministic ranker takes over.
+export const LLM_PROVIDER = process.env.LLM_PROVIDER || 'subscription';
+export const SUBSCRIPTION_TEXT_MODEL = 'gpt-6-astra';
+export const SUBSCRIPTION_COLUMN_MODEL = 'claude-fable-5-1';
+// Subscription routing pins the requested models; legacy API settings apply
+// only when the operator explicitly selects the openrouter provider.
+export const OPENROUTER_MODEL = (LLM_PROVIDER === 'subscription' ? SUBSCRIPTION_TEXT_MODEL : process.env.OPENROUTER_MODEL || 'openai/gpt-4o-mini');
+// The legacy catalogue remains available only for explicit API operation.
 function configuredCurationModel() {
   try {
     const parsed = JSON.parse(readFileSync(new URL('../../config/curation-model.json', import.meta.url), 'utf8'));
@@ -56,12 +55,12 @@ function configuredCurationModel() {
     return '';
   }
 }
-export const CURATION_MODEL = process.env.CURATION_MODEL || configuredCurationModel() || 'openai/gpt-5.6-sol';
+export const CURATION_MODEL = (LLM_PROVIDER === 'subscription' ? SUBSCRIPTION_TEXT_MODEL : process.env.CURATION_MODEL || configuredCurationModel() || 'openai/gpt-5.6-sol');
 export const OPENROUTER_SITE_URL = process.env.OPENROUTER_SITE_URL || '';
 export const OPENROUTER_APP_TITLE = process.env.OPENROUTER_APP_TITLE || 'Compute Current';
-export const EXPERT_LENS_MODEL = process.env.EXPERT_LENS_MODEL || 'anthropic/claude-sonnet-4.5';
+export const EXPERT_LENS_MODEL = (LLM_PROVIDER === 'subscription' ? SUBSCRIPTION_TEXT_MODEL : process.env.EXPERT_LENS_MODEL || 'anthropic/claude-sonnet-4.5');
 export const EXPERT_LENS_FALLBACK_MODEL = process.env.EXPERT_LENS_FALLBACK_MODEL || 'openai/gpt-4o';
-export const AUTHORED_COLUMN_MODEL = process.env.AUTHORED_COLUMN_MODEL || EXPERT_LENS_MODEL;
+export const AUTHORED_COLUMN_MODEL = (LLM_PROVIDER === 'subscription' ? SUBSCRIPTION_COLUMN_MODEL : process.env.AUTHORED_COLUMN_MODEL || EXPERT_LENS_MODEL);
 
 export const GEMINI_API_URL = process.env.GEMINI_API_URL || 'https://generativelanguage.googleapis.com/v1beta/models';
 export const GEMINI_IMAGE_MODEL = process.env.GEMINI_IMAGE_MODEL || 'gemini-2.5-flash-image';
