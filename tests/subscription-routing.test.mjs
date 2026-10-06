@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import { spawnSync } from 'node:child_process';
 import test from 'node:test';
-import { EditorialReviewRejection, reviewColumnEvidence, generateAuthoredColumn } from '../scripts/lib/authored-column-engine.mjs';
+import { applyEditorialBlockEdits, EditorialReviewRejection, reviewColumnEvidence, generateAuthoredColumn, sourceSummaryRepairDiagnostics } from '../scripts/lib/authored-column-engine.mjs';
 import { fixtureArticle, FIXTURE_SOURCE, STANCE_JSON, essayJson } from './fixtures/authored-column-fixture.mjs';
 
 function runIsolated(code, overrides = {}) {
@@ -84,6 +84,47 @@ function approvedReviewForRequest(request) {
   return JSON.stringify({ approved: true, issues: [], source_checks: [reviewedCheck], numeric_checks: [reviewedCheck] });
 }
 
+function metadataRepairPatch() {
+  const current=JSON.parse(essayJson());
+  return JSON.stringify({
+    headline:current.headline,
+    deck:current.deck.replace('I think','My view is that'),
+    edits:[],
+  });
+}
+
+test('targeted editorial patches preserve every unedited block byte-for-byte', () => {
+  const input={
+    headline:'A Source Bound Column Headline That Is Long Enough',
+    deck:'A source-bound standfirst that is long enough for the column contract and precise about the reported evidence.',
+    body:['Evidence First','The source supports this paragraph exactly.','The project paid for continuously without qualification.','Decision Point','Readers should watch the next filing.'].join('\n\n'),
+  };
+  const originalBlocks=input.body.split('\n\n');
+  const repaired=applyEditorialBlockEdits(input,{
+    headline:input.headline,
+    deck:input.deck,
+    edits:[{original:originalBlocks[2],replacement:'The source does not specify how the project is financed over time.'}],
+  });
+  const repairedBlocks=repaired.body.split('\n\n');
+  assert.equal(repairedBlocks[2],'The source does not specify how the project is financed over time.');
+  for(const index of [0,1,3,4]) assert.equal(repairedBlocks[index],originalBlocks[index]);
+  assert.throws(()=>applyEditorialBlockEdits(input,{headline:input.headline,deck:input.deck,edits:[{original:'Fabricated block',replacement:'Replacement paragraph.'}]}),/unknown_editorial_patch_original/);
+  const ambiguous={...input,body:['Repeated paragraph.','Repeated paragraph.','Decision Point'].join('\n\n')};
+  assert.throws(()=>applyEditorialBlockEdits(ambiguous,{headline:ambiguous.headline,deck:ambiguous.deck,edits:[{original:'Repeated paragraph.',replacement:'One replacement paragraph.'}]}),/ambiguous_editorial_patch_original/);
+  assert.throws(()=>applyEditorialBlockEdits(input,{headline:input.headline,deck:input.deck,edits:[{original:originalBlocks[1],replacement:'First replacement.'},{original:originalBlocks[1],replacement:'Second replacement.'}]}),/invalid_editorial_patch_edit/);
+  assert.throws(()=>applyEditorialBlockEdits(input,{headline:input.headline,deck:input.deck,edits:[{original:originalBlocks[1],replacement:originalBlocks[1]}]}),/empty_editorial_patch/);
+});
+
+test('source-summary diagnostics identify measured sentences and exact repair blocks', () => {
+  const source='The source reported the cluster added capacity. The source said the operator changed its schedule. The filing described the next milestone.';
+  const body=['Evidence Recap','The source reported the cluster added capacity. The source said the operator changed its schedule.','Decision Test','Operators still need to compare the disclosed milestone with their own deployment criteria. The decision depends on evidence outside this source.'].join('\n\n');
+  const diagnostics=sourceSummaryRepairDiagnostics(body,source);
+  assert.ok(diagnostics.source_summary_ratio>0.35);
+  assert.ok(diagnostics.excess_source_like_count>0);
+  assert.equal(diagnostics.summary_heavy_blocks[0].block,body.split('\n\n')[1]);
+  assert.match(diagnostics.summary_heavy_blocks[0].source_like_sentences[0].sentence,/source reported the cluster/);
+});
+
 test('Astra cross-review accepts source-bound checks and uses its own task/model', async () => {
   let request;
   const review = await reviewColumnEvidence({ essay, evidence, callModel: async value => { request=value; return JSON.stringify(approved); } });
@@ -118,6 +159,7 @@ test('rejected cross-review feedback repairs the voice and requires a fresh acce
   const tasks=[];
   const reviewRequests=[];
   const reviewIssues=Array.from({length:12},(_,index)=>`source mismatch ${index + 1}`);
+  const unsupportedClaim='The developer waited two years in the interconnection queue before the utility granted a position, according to the filings.';
   const state={};
   try {
     const result = await generateAuthoredColumn({
@@ -129,13 +171,15 @@ test('rejected cross-review feedback repairs the voice and requires a fresh acce
           assert.match(request.systemPrompt, /Astra review issue: source mismatch 12/);
           assert.match(request.systemPrompt, /headline at 40-105 characters/);
           assert.match(request.systemPrompt, /deck at 80-240 characters/);
+          assert.match(request.systemPrompt, /Exact unverified claim to remove or correct against the source: "The developer waited two years/);
+          return metadataRepairPatch();
         }
         return tasks.length===1 ? STANCE_JSON : essayJson();
       },
       reviewModel:async request => {
         reviewRequests.push(request);
         return reviewRequests.length === 1
-          ? JSON.stringify({approved:false, issues:reviewIssues, source_checks:[], numeric_checks:[]})
+          ? JSON.stringify({approved:false, issues:reviewIssues, source_checks:[{claim:unsupportedClaim,source_url:'https://example.com/northline-dakota',evidence_quote:'',supported:false}], numeric_checks:[]})
           : approvedReviewForRequest(request);
       },
     });
@@ -143,6 +187,51 @@ test('rejected cross-review feedback repairs the voice and requires a fresh acce
     assert.deepEqual(tasks, ['column', 'column', 'column', 'column']);
     assert.equal(reviewRequests.length, 2);
     assert.equal(result.column.authored_quality.cross_review.approved, true);
+  } finally {
+    if(oldWords===undefined) delete process.env.AUTHORED_MIN_WORDS; else process.env.AUTHORED_MIN_WORDS=oldWords;
+    if(oldChars===undefined) delete process.env.AUTHORED_MIN_CHARS; else process.env.AUTHORED_MIN_CHARS=oldChars;
+  }
+});
+
+test('a second Astra rejection opens one final whole-draft scope audit and fresh review', async () => {
+  const oldWords=process.env.AUTHORED_MIN_WORDS;
+  const oldChars=process.env.AUTHORED_MIN_CHARS;
+  process.env.AUTHORED_MIN_WORDS='700';
+  process.env.AUTHORED_MIN_CHARS='4200';
+  const tasks=[];
+  const reviewRequests=[];
+  try {
+    const result=await generateAuthoredColumn({
+      candidates:[fixtureArticle()], sources:[FIXTURE_SOURCE], state:{},
+      now:new Date('2026-08-23T09:00:00Z'),
+      callModel:async request=>{
+        tasks.push(request.task);
+        if(tasks.length===1) return STANCE_JSON;
+        if(tasks.length===4){
+          assert.doesNotMatch(request.systemPrompt,/prior targeted repair left unsupported claims/i);
+          const current=JSON.parse(request.userPrompt);
+          return JSON.stringify({headline:current.headline,deck:current.deck.replace('I think','My view is that'),edits:[]});
+        }
+        if(tasks.length===5){
+          assert.match(request.systemPrompt,/prior targeted repair left unsupported claims/i);
+          assert.match(request.systemPrompt,/Audit the entire headline, deck, and body/);
+          assert.match(request.systemPrompt,/avoid universal performance or economic claims/);
+          const current=JSON.parse(request.userPrompt);
+          return JSON.stringify({headline:current.headline,deck:current.deck.replace('My view is that','My assessment is that'),edits:[]});
+        }
+        return essayJson();
+      },
+      reviewModel:async request=>{
+        reviewRequests.push(request);
+        if(reviewRequests.length===1) return JSON.stringify({approved:false,issues:['unsupported benchmark scope'],source_checks:[],numeric_checks:[]});
+        if(reviewRequests.length===2) return JSON.stringify({approved:false,issues:['related universal performance claim remains'],source_checks:[],numeric_checks:[]});
+        return approvedReviewForRequest(request);
+      },
+    });
+    assert.ok(result.column);
+    assert.deepEqual(tasks,['column','column','column','column','column']);
+    assert.equal(reviewRequests.length,3);
+    assert.equal(result.column.authored_quality.attempts,3);
   } finally {
     if(oldWords===undefined) delete process.env.AUTHORED_MIN_WORDS; else process.env.AUTHORED_MIN_WORDS=oldWords;
     if(oldChars===undefined) delete process.env.AUTHORED_MIN_CHARS; else process.env.AUTHORED_MIN_CHARS=oldChars;
@@ -157,6 +246,9 @@ test('deterministic repairs and Astra repair use separate bounded voice budgets'
   const tasks=[];
   const reviewRequests=[];
   const state={};
+  const currentEssay=JSON.parse(essayJson());
+  const originalBlock=currentEssay.body.split('\n\n')[1];
+  const unsupportedBlock=`${originalBlock} The source also guarantees 999 MW of continuous capacity.`;
   const badQuality=JSON.stringify({
     headline:'This Headline Is Long Enough To Clear The Basic Title Gate',
     deck:'This standfirst is deliberately long enough to pass basic parsing while its body still fails deterministic publication quality.',
@@ -170,10 +262,12 @@ test('deterministic repairs and Astra repair use separate bounded voice budgets'
         tasks.push(request.task);
         if (tasks.length === 6) {
           assert.match(request.systemPrompt, /Astra review issue: unsupported causal claim/);
-          assert.match(request.systemPrompt, /Lengthen the essay/);
+          assert.match(request.systemPrompt, /Remove or rewrite around these numbers/);
+          return JSON.stringify({headline:currentEssay.headline,deck:currentEssay.deck,edits:[{original:unsupportedBlock,replacement:originalBlock}]});
         }
         if (tasks.length === 1) return STANCE_JSON;
-        if (tasks.length === 3 || tasks.length === 5) return badQuality;
+        if (tasks.length === 3) return badQuality;
+        if (tasks.length === 5) return JSON.stringify({headline:currentEssay.headline,deck:currentEssay.deck,edits:[{original:originalBlock,replacement:unsupportedBlock}]});
         return essayJson();
       },
       reviewModel:async request => {
@@ -193,6 +287,60 @@ test('deterministic repairs and Astra repair use separate bounded voice budgets'
   }
 });
 
+test('targeted retry receives exact summary-heavy blocks from the current patched draft', async () => {
+  const oldWords=process.env.AUTHORED_MIN_WORDS;
+  const oldChars=process.env.AUTHORED_MIN_CHARS;
+  process.env.AUTHORED_MIN_WORDS='700';
+  process.env.AUTHORED_MIN_CHARS='4200';
+  const currentEssay=JSON.parse(essayJson());
+  const blocks=currentEssay.body.split('\n\n');
+  const paragraphIndexes=blocks.map((block,index)=>({block,index})).filter(({block})=>block.length>100).slice(0,4);
+  const sourceSentences=fixtureArticle().articleText.split(/(?<=[.!?])\s+/);
+  const summaryEdits=paragraphIndexes.map(({block},index)=>({original:block,replacement:`${block} ${sourceSentences.slice(index,index+4).join(' ')}`}));
+  const restoreEdits=summaryEdits.map((edit)=>({original:edit.replacement,replacement:edit.original}));
+  const tasks=[];
+  let reviewCalls=0;
+  try {
+    const result=await generateAuthoredColumn({
+      candidates:[fixtureArticle()], sources:[FIXTURE_SOURCE], state:{},
+      now:new Date('2026-08-23T09:00:00Z'),
+      callModel:async request=>{
+        tasks.push(request.task);
+        if(tasks.length===1) return STANCE_JSON;
+        if(tasks.length===4){
+          assert.match(request.systemPrompt,/Do not increase the source-like count while making this repair/);
+          const payload=JSON.parse(request.userPrompt);
+          assert.ok(payload.source_summary_diagnostics.source_summary_ratio<=0.35);
+          assert.ok(payload.source_summary_diagnostics.summary_heavy_blocks.length>0);
+          return JSON.stringify({headline:currentEssay.headline,deck:currentEssay.deck,edits:summaryEdits});
+        }
+        if(tasks.length===5){
+          assert.match(request.systemPrompt,/current body measures \d+ source-like sentences/);
+          assert.match(request.systemPrompt,/Current deterministic failures on this exact draft:.*Reduce the space spent retelling/);
+          const payload=JSON.parse(request.userPrompt);
+          assert.ok(payload.source_summary_diagnostics.source_summary_ratio>0.35);
+          assert.ok(payload.source_summary_diagnostics.excess_source_like_count>0);
+          assert.ok(payload.source_summary_diagnostics.summary_heavy_blocks.some((entry)=>entry.block===summaryEdits[0].replacement));
+          return JSON.stringify({headline:currentEssay.headline,deck:currentEssay.deck,edits:restoreEdits});
+        }
+        return essayJson();
+      },
+      reviewModel:async request=>{
+        reviewCalls+=1;
+        return reviewCalls===1
+          ? JSON.stringify({approved:false,issues:['remove unsupported recap'],source_checks:[],numeric_checks:[]})
+          : approvedReviewForRequest(request);
+      },
+    });
+    assert.ok(result.column);
+    assert.deepEqual(tasks,['column','column','column','column','column']);
+    assert.equal(reviewCalls,2);
+  } finally {
+    if(oldWords===undefined) delete process.env.AUTHORED_MIN_WORDS; else process.env.AUTHORED_MIN_WORDS=oldWords;
+    if(oldChars===undefined) delete process.env.AUTHORED_MIN_CHARS; else process.env.AUTHORED_MIN_CHARS=oldChars;
+  }
+});
+
 test('repeated cross-review rejection prevents a Fable draft from becoming a column', async () => {
   const oldWords=process.env.AUTHORED_MIN_WORDS;
   const oldChars=process.env.AUTHORED_MIN_CHARS;
@@ -205,12 +353,69 @@ test('repeated cross-review rejection prevents a Fable draft from becoming a col
     await assert.rejects(generateAuthoredColumn({
       candidates:[fixtureArticle()], sources:[FIXTURE_SOURCE], state,
       now:new Date('2026-08-23T09:00:00Z'),
-      callModel:async request => { tasks.push(request.task); return tasks.length===1 ? STANCE_JSON : essayJson(); },
+      callModel:async request => {
+        tasks.push(request.task);
+        if(tasks.length===1) return STANCE_JSON;
+        if(tasks.length===4 || tasks.length===5) {
+          const current=JSON.parse(request.userPrompt);
+          const deck=tasks.length===4
+            ? current.deck.replace('I think','My view is that')
+            : current.deck.replace('My view is that','My assessment is that');
+          return JSON.stringify({headline:current.headline,deck,edits:[]});
+        }
+        return essayJson();
+      },
       reviewModel:async () => { reviewCalls += 1; return JSON.stringify({approved:false, issues:['source mismatch'], source_checks:[], numeric_checks:[]}); },
     }), (error) => error instanceof EditorialReviewRejection && /source mismatch/.test(error.message));
-    assert.deepEqual(tasks, ['column', 'column', 'column', 'column']);
-    assert.equal(reviewCalls,2);
+    assert.deepEqual(tasks, ['column', 'column', 'column', 'column', 'column']);
+    assert.equal(reviewCalls,3);
     assert.equal(state.authored?.lastColumnAt, null);
+  } finally {
+    if(oldWords===undefined) delete process.env.AUTHORED_MIN_WORDS; else process.env.AUTHORED_MIN_WORDS=oldWords;
+    if(oldChars===undefined) delete process.env.AUTHORED_MIN_CHARS; else process.env.AUTHORED_MIN_CHARS=oldChars;
+  }
+});
+
+test('three rejected editorial versions stop after at most six voice attempts and three reviews', async () => {
+  const oldWords=process.env.AUTHORED_MIN_WORDS;
+  const oldChars=process.env.AUTHORED_MIN_CHARS;
+  process.env.AUTHORED_MIN_WORDS='700';
+  process.env.AUTHORED_MIN_CHARS='4200';
+  const tasks=[];
+  let reviewCalls=0;
+  const currentEssay=JSON.parse(essayJson());
+  const originalBlock=currentEssay.body.split('\n\n')[1];
+  const unsupportedBlock=`${originalBlock} The source guarantees 999 MW without any conditions.`;
+  const badQuality=JSON.stringify({
+    headline:'This Headline Is Long Enough To Clear The Basic Title Gate',
+    deck:'This standfirst is deliberately long enough to parse while the body fails deterministic publication quality.',
+    body:'Too short to clear the deterministic article quality gates.',
+  });
+  try {
+    await assert.rejects(generateAuthoredColumn({
+      candidates:[fixtureArticle()], sources:[FIXTURE_SOURCE], state:{},
+      now:new Date('2026-08-23T09:00:00Z'),
+      callModel:async request=>{
+        tasks.push(request.task);
+        if(tasks.length===1) return STANCE_JSON;
+        if(tasks.length===2 || tasks.length===4) return essayJson();
+        if(tasks.length===3) return badQuality;
+        if(tasks.length===5 || tasks.length===7){
+          if(tasks.length===7) assert.match(request.systemPrompt,/prior targeted repair left unsupported claims/i);
+          return JSON.stringify({headline:currentEssay.headline,deck:currentEssay.deck,edits:[{original:originalBlock,replacement:unsupportedBlock}]});
+        }
+        if(tasks.length===6 || tasks.length===8){
+          return JSON.stringify({headline:currentEssay.headline,deck:currentEssay.deck,edits:[{original:unsupportedBlock,replacement:originalBlock}]});
+        }
+        throw new Error(`unexpected model call ${tasks.length}`);
+      },
+      reviewModel:async()=>{
+        reviewCalls+=1;
+        return JSON.stringify({approved:false,issues:[`review rejection ${reviewCalls}`],source_checks:[],numeric_checks:[]});
+      },
+    }),error=>error instanceof EditorialReviewRejection && /review rejection 3/.test(error.message));
+    assert.deepEqual(tasks,['column','column','column','column','column','column','column','column']);
+    assert.equal(reviewCalls,3);
   } finally {
     if(oldWords===undefined) delete process.env.AUTHORED_MIN_WORDS; else process.env.AUTHORED_MIN_WORDS=oldWords;
     if(oldChars===undefined) delete process.env.AUTHORED_MIN_CHARS; else process.env.AUTHORED_MIN_CHARS=oldChars;

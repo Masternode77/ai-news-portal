@@ -40,6 +40,7 @@ import { sourceExtractionPassesLongformGate } from './source-extraction-fail-clo
 import { validateExtractionArtifact } from './extraction-artifact.mjs';
 import { COLUMN_COVERAGE_BEATS, columnCoverageBeat, recentColumnCoverage } from './column-coverage.mjs';
 import { googleReleaseNoteTarget } from './google-cloud-release-notes.mjs';
+import { sourceSummaryDiagnostics } from './source-summary-ratio.mjs';
 
 const CHARTER_RELATIVE_PATH = 'config/editorial/persona-charter.json';
 const STORY_KEY_WINDOW_HOURS = 72;
@@ -291,23 +292,27 @@ function unwrapEssayObject(value, depth = 0) {
 }
 
 class EssayStructureError extends Error {}
+class EditorialPatchError extends Error {}
 
 function boundedReviewText(value, maxLength = 240) {
   return String(value || '').replace(/\s+/g, ' ').trim().slice(0, maxLength);
 }
 
 export class EditorialReviewRejection extends Error {
-  constructor(reasons = [], issues = []) {
+  constructor(reasons = [], issues = [], unsupportedClaims = []) {
     const boundedReasons = [...new Set(reasons.map((reason) => boundedReviewText(reason, 80)).filter(Boolean))].slice(0, 6);
-    const boundedIssues = [...new Set(issues.map((issue) => boundedReviewText(issue)).filter(Boolean))].slice(0, 16);
+    const boundedIssues = [...new Set(issues.map((issue) => boundedReviewText(issue, 512)).filter(Boolean))].slice(0, 16);
+    const boundedClaims = [...new Set(unsupportedClaims.map((claim) => boundedReviewText(claim, 800)).filter(Boolean))].slice(0, 24);
     const diagnostic = [...boundedReasons, ...boundedIssues.map((issue) => `issue:${issue}`)].slice(0, 8).join('|') || 'review_rejected';
     super(`Astra column evidence review rejected or returned malformed/unsupported checks: ${diagnostic}`);
     this.name = 'EditorialReviewRejection';
     this.code = 'editorial_review_rejected';
     this.reasons = boundedReasons;
     this.issues = boundedIssues;
+    this.unsupportedClaims = boundedClaims;
     this.feedback = [
       ...boundedIssues.map((issue) => `Astra review issue: ${issue}`),
+      ...boundedClaims.map((claim) => `Exact unverified claim to remove or correct against the source: ${JSON.stringify(claim)}`),
       ...boundedReasons.map((reason) => {
         if (reason === 'source_checks_missing' || reason === 'source_checks_invalid') {
           return 'Astra could not verify every material factual claim against the supplied source. Remove, qualify, or accurately attribute unsupported claims.';
@@ -320,7 +325,7 @@ export class EditorialReviewRejection extends Error {
         }
         return 'The independent evidence review was malformed or incomplete. Make every factual and numeric assertion explicit, source-bound, and easy to verify.';
       }),
-    ].slice(0, 22);
+    ];
   }
 }
 
@@ -416,6 +421,80 @@ export function normalizeAuthoredBody(body = '') {
     }
   }
   return out.join('\n').replace(/\n{3,}/g, '\n\n').trim();
+}
+
+export function applyEditorialBlockEdits(essay, patch) {
+  const parsed = typeof patch === 'string' ? parseModelJson(patch) : patch;
+  const exactKeys = (value, allowed) => value && typeof value === 'object' && !Array.isArray(value)
+    && Object.keys(value).every((key) => allowed.includes(key))
+    && allowed.every((key) => Object.hasOwn(value, key));
+  if (!exactKeys(parsed, ['headline', 'deck', 'edits'])
+    || typeof parsed.headline !== 'string' || !parsed.headline.trim() || /[\r\n]/.test(parsed.headline)
+    || typeof parsed.deck !== 'string' || !parsed.deck.trim() || /[\r\n]/.test(parsed.deck)
+    || !Array.isArray(parsed.edits)) {
+    throw new EditorialPatchError('invalid_editorial_patch');
+  }
+
+  const blocks = String(essay?.body || '').split('\n\n');
+  if (!blocks.length || blocks.some((block) => !block)) throw new EditorialPatchError('invalid_editorial_patch_body');
+  const replacements = new Map();
+  for (const edit of parsed.edits) {
+    if (!exactKeys(edit, ['original', 'replacement'])
+      || typeof edit.original !== 'string' || !edit.original
+      || typeof edit.replacement !== 'string' || !edit.replacement.trim()
+      || /[\r\n]/.test(edit.replacement)
+      || replacements.has(edit.original)) {
+      throw new EditorialPatchError('invalid_editorial_patch_edit');
+    }
+    const matches = blocks.reduce((count, block) => count + Number(block === edit.original), 0);
+    if (matches !== 1) throw new EditorialPatchError(matches ? 'ambiguous_editorial_patch_original' : 'unknown_editorial_patch_original');
+
+    const originalIsHeading = isHeading(edit.original);
+    const replacement = originalIsHeading ? normalizeStructuredHeading(edit.replacement.trim()) : edit.replacement.trim();
+    if (originalIsHeading) {
+      if (!isHeading(replacement) || /[<>]/.test(replacement)) throw new EditorialPatchError('invalid_editorial_patch_heading');
+    } else if (isHeading(replacement)
+      || /^(?:[-*•]|\d+[.)])\s/.test(replacement)
+      || /[<>`*_]|^#{1,6}\s/.test(replacement)) {
+      throw new EditorialPatchError('invalid_editorial_patch_paragraph');
+    }
+    replacements.set(edit.original, replacement);
+  }
+
+  const headline = parsed.headline.trim();
+  const deck = parsed.deck.trim();
+  const bodyChanged = [...replacements].some(([original, replacement]) => original !== replacement);
+  if (!bodyChanged && headline === essay.headline && deck === essay.deck) {
+    throw new EditorialPatchError('empty_editorial_patch');
+  }
+  return {
+    ...essay,
+    headline,
+    deck,
+    body: blocks.map((block) => replacements.get(block) ?? block).join('\n\n'),
+  };
+}
+
+export function sourceSummaryRepairDiagnostics(body = '', sourceText = '') {
+  const overall = sourceSummaryDiagnostics(body, sourceText);
+  const blocks = String(body || '').split('\n\n').map((block, index) => {
+    if (isHeading(block)) return null;
+    const diagnostics = sourceSummaryDiagnostics(block, sourceText);
+    const sourceLikeSentences = diagnostics.sentences.filter((entry) => entry.source_like);
+    return sourceLikeSentences.length ? {
+      block_index: index,
+      block,
+      source_like_sentences: sourceLikeSentences,
+    } : null;
+  }).filter(Boolean);
+  return {
+    source_summary_ratio: overall.source_summary_ratio,
+    sentence_count: overall.sentence_count,
+    source_like_count: overall.source_like_count,
+    allowed_source_like_count: overall.allowed_source_like_count,
+    excess_source_like_count: overall.excess_source_like_count,
+    summary_heavy_blocks: blocks,
+  };
 }
 
 // Verification reason codes are compact for state records but cryptic as
@@ -829,6 +908,43 @@ async function voicePass({ charter, draft, evidence, feedback = [], callModel })
   return parseModelEssay(content, { recoverFormat: true, requireSections: Boolean(draft.formatIssues?.length) });
 }
 
+async function editorialRepairPass({ charter, draft, evidence, reviewFeedback = [], qualityFeedback = [], patchFeedback = [], callModel }) {
+  const summaryDiagnostics = sourceSummaryRepairDiagnostics(draft.body, evidence.source_text || '');
+  const hasExcessSourceSummary = summaryDiagnostics.excess_source_like_count > 0;
+  const content = await callModel({
+    model: AUTHORED_COLUMN_MODEL,
+    task: 'column',
+    temperature: 0.2,
+    maxTokens: 2200,
+    timeoutMs: 75_000,
+    systemPrompt: [
+      personaSystemPrompt(charter),
+      'Task: repair only the exact headline, deck, paragraph blocks, or heading blocks implicated by the independent Astra evidence review or the current deterministic diagnostics. Return strict JSON only:',
+      '{ "headline": string, "deck": string, "edits": [{ "original": string, "replacement": string }] }',
+      'Every original must exactly equal one body_blocks entry and occur exactly once. Never submit duplicate edits or an original absent from body_blocks.',
+      'A replacement for a paragraph must be one nonempty plain-text paragraph with no newline, markdown, or bullet marker. A replacement for a heading must remain a valid standalone heading.',
+      'Preserve every unedited body block byte-for-byte. Do not return a rewritten body, sections, opening_paragraphs, commentary, or fallback prose.',
+      'Use an empty edits array only when changing the headline or deck fully resolves the feedback. Every factual and numeric replacement must remain grounded in evidence and verified_claims.',
+      'Keep the headline at 40-105 characters and the deck at 80-240 characters; put detailed qualifications in an edited body block.',
+      'Review findings describe the previously reviewed version and may already be resolved in the current draft. Current deterministic failures and diagnostics describe the exact draft in body_blocks and take precedence for this repair.',
+      `The current body measures ${summaryDiagnostics.source_like_count} source-like sentences out of ${summaryDiagnostics.sentence_count}; at most ${summaryDiagnostics.allowed_source_like_count} may remain. ${hasExcessSourceSummary ? `Substantively rewrite at least ${summaryDiagnostics.excess_source_like_count} of the flagged sentences in summary_heavy_blocks.` : 'Do not increase the source-like count while making this repair; consolidate flagged recap in any block you edit instead of adding more source restatement.'}`,
+      'Reduce repeated source chronology and benchmark recap by replacing it with source-bounded operator decisions, competing interpretations, criteria, or unanswered measurements. Do not game the measurement by merely deleting attribution words or swapping synonyms, and do not invent mechanisms, costs, motives, or causation.',
+      `Outstanding Astra findings from the previously reviewed version: ${reviewFeedback.join(' | ') || 'none'}`,
+      `Current deterministic failures on this exact draft: ${qualityFeedback.join(' | ') || 'none'}`,
+      `Patch-format retry feedback: ${patchFeedback.join(' | ') || 'none'}`,
+    ].join('\n'),
+    userPrompt: JSON.stringify({
+      headline: draft.headline,
+      deck: draft.deck,
+      body_blocks: String(draft.body || '').split('\n\n'),
+      source_summary_diagnostics: summaryDiagnostics,
+      evidence,
+      verified_claims: evidence.verified_claims,
+    }),
+  });
+  return applyEditorialBlockEdits(draft, content);
+}
+
 function columnRecord({ charter, selection, stance, essay, quality, figures = [], now, model = AUTHORED_COLUMN_MODEL }) {
   const publishedAt = now.toISOString();
   const dateSlug = publishedAt.slice(0, 10);
@@ -1056,30 +1172,44 @@ async function attemptColumnForSelection({
   let reviewFeedback = [];
   let crossReview = null;
   let complete = false;
-  const editorialVersionLimit = reviewModel ? 2 : 1;
+  const editorialVersionLimit = reviewModel ? 3 : 1;
   for (let editorialVersion = 1; editorialVersion <= editorialVersionLimit && !complete; editorialVersion += 1) {
     let versionPassedQuality = false;
     for (let voiceAttempt = 1; voiceAttempt <= 2; voiceAttempt += 1) {
       attempts += 1;
       let voiced;
+      const targetedRepair = reviewFeedback.length > 0;
       try {
-        voiced = await voicePass({
-          charter,
-          draft: essay,
-          evidence: evidencePayload(selection, ledger),
-          feedback: [...verificationFeedback(quality?.reasons || []), ...formatFeedback, ...reviewFeedback],
-          callModel,
-        });
+        const evidence = evidencePayload(selection, ledger);
+        voiced = targetedRepair
+          ? await editorialRepairPass({
+            charter,
+            draft: essay,
+            evidence,
+            reviewFeedback,
+            qualityFeedback: verificationFeedback(quality?.reasons || []),
+            patchFeedback: formatFeedback,
+            callModel,
+          })
+          : await voicePass({
+            charter,
+            draft: essay,
+            evidence,
+            feedback: [...verificationFeedback(quality?.reasons || []), ...formatFeedback],
+            callModel,
+          });
       } catch (error) {
-        if (error instanceof EssayStructureError && voiceAttempt < 2) {
-          formatFeedback = [...(essay.formatIssues || []), `The previous JSON failed ${error.message}. Return all required arrays with 4-6 valid section headings and nonempty single-line paragraph strings; preserve the complete essay.`];
+        if ((error instanceof EssayStructureError || error instanceof EditorialPatchError) && voiceAttempt < 2) {
+          formatFeedback = error instanceof EditorialPatchError
+            ? [`The previous targeted patch failed ${error.message}. Return only exact, unambiguous body block edits and preserve every other block byte-for-byte.`]
+            : [...(essay.formatIssues || []), `The previous JSON failed ${error.message}. Return all required arrays with 4-6 valid section headings and nonempty single-line paragraph strings; preserve the complete essay.`];
           continue;
         }
         return failWith('voice', error.message, null, error);
       }
       if (voiced?.body && voiced?.headline) essay = voiced;
       formatFeedback = essay.formatIssues || [];
-      essay = { ...essay, body: normalizeAuthoredBody(essay.body) };
+      if (!targetedRepair) essay = { ...essay, body: normalizeAuthoredBody(essay.body) };
       figures = buildColumnFigures({
         ledger,
         stance,
@@ -1123,7 +1253,12 @@ async function attemptColumnForSelection({
         complete = true;
       } catch (error) {
         if (error instanceof EditorialReviewRejection && editorialVersion < editorialVersionLimit) {
-          reviewFeedback = error.feedback;
+          reviewFeedback = [
+            ...error.feedback,
+            ...(editorialVersion > 1 ? [
+              'A prior targeted repair left unsupported claims. Audit the entire headline, deck, and body for related factual scope problems, including claims outside the quoted review findings. Preserve conditional benchmark limits, avoid universal performance or economic claims, and edit only the affected blocks.',
+            ] : []),
+          ];
           break;
         }
         throw error;
@@ -1131,7 +1266,7 @@ async function attemptColumnForSelection({
       break;
     }
     // Deterministic quality exhaustion keeps the existing two-attempt bound;
-    // only a completed Astra review can open the second editorial version.
+    // only a completed Astra review can open the next editorial version.
     if (!versionPassedQuality) break;
   }
 
@@ -1199,7 +1334,9 @@ export async function reviewColumnEvidence({ essay, evidence, callModel = callOp
   }
   if (reasons.length) {
     const issues = Array.isArray(review?.issues) ? review.issues.filter((issue) => typeof issue === 'string') : [];
-    throw new EditorialReviewRejection(reasons, issues);
+    const checks = [...(Array.isArray(review?.source_checks) ? review.source_checks : []), ...numericChecks];
+    const unsupportedClaims = checks.filter(check => !checkValid(check) && typeof check?.claim === 'string').map(check => check.claim);
+    throw new EditorialReviewRejection(reasons, issues, unsupportedClaims);
   }
   return { model: SUBSCRIPTION_TEXT_MODEL, approved: true, source_checks: review.source_checks, numeric_checks: review.numeric_checks };
 }

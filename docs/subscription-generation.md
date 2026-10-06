@@ -23,6 +23,16 @@ live in `scripts/lib/subscription-provider.mjs`. Unsupported models, expired
 sessions, quota errors and malformed replies stop generation; no cheaper model
 or paid API is selected automatically. Offline tests remain offline.
 
+Column editing allows at most three evidence-reviewed versions, with two
+format/quality attempts per version. A completed Astra rejection is required
+to open another version; deterministic exhaustion alone does not replenish the
+budget. After review, Fable returns exact block replacements rather than a
+whole-body rewrite. Each replacement must pass the same source, numeric,
+repetition and prose checks before a fresh Astra review. Current summary-heavy
+sentences are supplied as repair diagnostics without changing the scoring
+thresholds. A third rejection, authentication failure or transport failure
+leaves the column unpublished.
+
 ## One-time Mac activation
 
 This repository change does not install or update an app-local schedule. The
