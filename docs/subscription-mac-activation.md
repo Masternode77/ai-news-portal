@@ -3,15 +3,15 @@
 ## Release status
 
 The verified column and native artwork are live on `www.computecurrent.com`.
-Release `v0.0.40`, commit `9f906242a8d272bf897b194341e9bdcf8a3be5ee`, reached
-Vercel READY deployment `dpl_57SHcQ2bKHQtKxHX7ktRus8dG41G`; the column page
+Release `v0.0.41`, commit `aed399a31f5dca4c1a4100cea10da57cd9e3fbea`, reached
+Vercel READY deployment `dpl_2tf9XCPGNwRp5EEmkDQNBGa7NHMz`; the column page
 and hero image both returned HTTP 200. The original production baseline was
 `cb3ccc8370eb990c8e2f35b9a93587464bc885ef`.
 
 The existing `compute-current` heartbeat now has the reviewed subscription
 instructions, with its original ID, target thread and 00:45/08:45/16:45 KST
-schedule. It remains temporarily paused until hosted validation passes. No
-second automation was created. The production GitHub workflow now validates
+schedule. It is ACTIVE after hosted validation passed. No second automation
+was created. The production GitHub workflow now validates
 only; its OpenRouter generation schedule and paid model-refresh schedule are
 retired. Mac `main` has the release commit and its subscription CLI readiness
 check passed.
@@ -22,8 +22,10 @@ Only the full-test step now sets `PIPELINE_OFFLINE=0`; `LLM_PROVIDER=disabled`
 remains enforced, no credentials are supplied, and the separate build/content
 gates remain offline. The affected fixture tests passed 80/80, workflow tests
 passed 5/5, and the exact CI-mode content gate passed locally. Independent
-review approved the fix. The corrected hosted run and heartbeat resumption
-remain pending at this snapshot.
+review approved the fix. The corrected hosted validation run
+[37505625672](https://github.com/Masternode77/ai-news-portal/actions/runs/37505625672)
+succeeded: 806 source tests, 22 built-page tests, 21 content-gate tests and
+three final audit tests passed. The existing heartbeat was then reactivated.
 
 ## Repairs and evidence
 
@@ -87,26 +89,29 @@ the shared lock before generation. The unique native artwork is registered as
 `02a46be2c55b598a52620119278b6ab4ce6c63a62518c16f68b237bc136d4ade`.
 Hero and thumbnail crops were visually checked; hero, thumbnail and OpenGraph
 files exist. This column has no remaining image job or blocked image entry.
-The initial production publication is verified; corrected hosted validation
-and resuming the existing heartbeat remain pending.
+Production publication, corrected hosted validation and activation of the
+existing heartbeat are verified.
 
-## Validation completed so far
+## Completed validation
 
 - Source extraction and propagation: 71 focused tests passed.
 - Authored column engine: 47 focused tests passed.
 - Subscription routing: 41 focused tests passed.
 - Subscription provider: 10 focused tests passed.
 - Latest full runner: 805 source tests and 22 built-page tests passed, plus
-  quality, relevance, taxonomy and repetition checks; 96 pages built.
+  quality, relevance, taxonomy and repetition checks.
 - Independent code review approved the heading/source fixes, exact-block
   repairs, unchanged summary scoring, and bounded review retries.
 - A live second runner was rejected by the held common-Git operation lock
-  before generation. The outer lock remains owned across activation.
+  before generation. The outer lock spans activation and is released only
+  after final deployment verification and completion of local processes.
 
 The full runner also passed its content gate and final audit tests. After
 image registration, 12 image/readiness regression tests and the complete
 content gate passed again. The rendered column has its five intended section
 headings and unique hero. Source claims, repetition, public images and private
 admin exclusion all passed. The successful heartbeat was recorded only after
-these gates. Independent operational review found no code/config blocker;
-corrected hosted validation and automation activation remain the final steps.
+these gates. Independent operational review found no code/config blocker. Hosted validation
+and existing automation activation both passed. Mac sleep is disabled and
+automatic restart is enabled; subscription limits and authentication failures
+continue to stop generation without a paid fallback.
