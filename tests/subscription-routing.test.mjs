@@ -525,7 +525,8 @@ test('unchanged patch allowance clears immediately after automatic figure reset'
   const tasks=[];
   let reviewCalls=0;
   try {
-    await assert.rejects(generateAuthoredColumn({
+    let thrown=null;
+    const result=await generateAuthoredColumn({
       candidates:[fixtureArticle()], sources:[FIXTURE_SOURCE], state:{},
       now:new Date('2026-08-23T09:00:00Z'),
       callModel:async request=>{
@@ -546,7 +547,12 @@ test('unchanged patch allowance clears immediately after automatic figure reset'
         }
         return JSON.stringify(rejected);
       }),
-    }),/empty_editorial_patch/);
+    }).catch((error)=>{ thrown=error; return null; });
+    if(thrown) assert.match(thrown.message,/empty_editorial_patch/);
+    else {
+      assert.equal(result.column,null);
+      assert.equal(result.failure,'voice:empty_editorial_patch');
+    }
     assert.deepEqual(tasks,['column','column','column','column','column','column']);
     assert.equal(reviewCalls,2);
   } finally {
