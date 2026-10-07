@@ -150,10 +150,12 @@ function whyFor(article = {}) {
     return sentence(cleanPersisted).slice(0, 220);
   }
   const layer = layerFor(article);
+  const deck = deckFor(article);
   return whyForFallback(article, {
     angle: angleFor(article),
     layer,
     subject: whySubjectFor(article),
+    deck,
   });
 }
 

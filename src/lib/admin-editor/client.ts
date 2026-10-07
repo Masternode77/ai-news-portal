@@ -35,11 +35,18 @@ export const startAdminEditor = (document: Document): void => {
     if (dom.editorPanel) dom.editorPanel.hidden = true;
     setStatus(dom.status, message);
   };
+  const showUnavailable = (): void => {
+    clearPrivateState();
+    if (dom.loginPanel) dom.loginPanel.hidden = true;
+    if (dom.editorPanel) dom.editorPanel.hidden = true;
+    setStatus(dom.status, 'Admin tools are temporarily unavailable.', 'error');
+  };
   const request = async (url: string, options: Readonly<{ method?: string; body?: string }> = {}): Promise<unknown> => {
     try {
       return await requestAdminJson(url, options, state.csrfToken);
     } catch (error) {
       if (error instanceof AdminRequestError) {
+        if (error.code === 'ADMIN_UNAVAILABLE') showUnavailable();
         if (error.status === 401 || error.status === 403) showLogin('Your session is no longer available. Sign in again.');
         throw error;
       }
@@ -66,6 +73,10 @@ export const startAdminEditor = (document: Document): void => {
       state.csrfToken = parseSessionResponse(await request('/api/admin/login')).csrfToken;
       await showEditor();
     } catch (error) {
+      if (error instanceof AdminRequestError && error.code === 'ADMIN_UNAVAILABLE') {
+        showUnavailable();
+        return;
+      }
       if (error instanceof Error) {
         showLogin();
         return;

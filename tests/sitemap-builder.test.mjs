@@ -95,3 +95,17 @@ test('sitemap omits unstable static timestamps while retaining dated article cha
   assert.equal(articleEntry?.lastmod, article.updatedAt);
   assert.equal(sitemapXml(first), sitemapXml(second));
 });
+
+test('sitemap excludes empty category and region taxonomy routes', () => {
+  const entries = buildSitemapEntries([]);
+
+  assert.equal(entries.some((entry) => entry.loc.startsWith('/category/')), false);
+  assert.equal(entries.some((entry) => entry.loc.startsWith('/region/')), false);
+  assert.ok(entries.some((entry) => entry.loc === '/search/'));
+});
+
+test('sitemap excludes company routes without eligible articles or current headlines', () => {
+  const entries = buildSitemapEntriesRaw([], { activeCompanySlugs: [] });
+
+  assert.equal(entries.some((entry) => entry.loc.startsWith('/company/')), false);
+});

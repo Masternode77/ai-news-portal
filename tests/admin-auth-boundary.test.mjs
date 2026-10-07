@@ -22,10 +22,10 @@ function configureAuth() {
   resetLoginSecurityForTests();
 }
 
-function request({ headers = {}, body, rawBody } = {}) {
+function request({ method = 'POST', headers = {}, body, rawBody } = {}) {
   const payload = rawBody === undefined ? JSON.stringify(body) : rawBody;
   const req = Readable.from([Buffer.from(payload)]);
-  req.method = 'POST';
+  req.method = method;
   req.url = '/api/admin/login';
   req.headers = { 'content-type': 'application/json', ...headers };
   req.socket = { remoteAddress: '198.51.100.9' };
@@ -111,6 +111,39 @@ test('production login fails closed until the external rate-limit control is att
   }
 });
 
+test('unconfigured admin responds with a neutral unavailable result and no configuration details', async () => {
+  const previous = {
+    username: process.env.ADMIN_USERNAME,
+    passwordHash: process.env.ADMIN_PASSWORD_HASH,
+    sessionSecret: process.env.ADMIN_SESSION_SECRET,
+  };
+  delete process.env.ADMIN_USERNAME;
+  delete process.env.ADMIN_PASSWORD_HASH;
+  delete process.env.ADMIN_SESSION_SECRET;
+
+  try {
+    const result = await login({ body: { username: 'owner', password: 'correct-password' } });
+    assert.equal(result.statusCode, 503);
+    assert.equal(result.getHeader('set-cookie'), undefined);
+    assert.deepEqual(JSON.parse(result.body), {
+      error: 'Admin service is currently unavailable.',
+      code: 'ADMIN_UNAVAILABLE',
+    });
+    assert.doesNotMatch(JSON.parse(result.body).error, /ADMIN_|username|password|secret|rate.?limit/i);
+
+    const sessionProbe = await login({ method: 'GET', rawBody: '' });
+    assert.equal(sessionProbe.statusCode, 503);
+    assert.deepEqual(JSON.parse(sessionProbe.body), JSON.parse(result.body));
+  } finally {
+    if (previous.username === undefined) delete process.env.ADMIN_USERNAME;
+    else process.env.ADMIN_USERNAME = previous.username;
+    if (previous.passwordHash === undefined) delete process.env.ADMIN_PASSWORD_HASH;
+    else process.env.ADMIN_PASSWORD_HASH = previous.passwordHash;
+    if (previous.sessionSecret === undefined) delete process.env.ADMIN_SESSION_SECRET;
+    else process.env.ADMIN_SESSION_SECRET = previous.sessionSecret;
+  }
+});
+
 test('admin rate-limit attestation stays aligned across runtime, env template, and deployment checklist', () => {
   const envTemplate = fs.readFileSync(new URL('../.env.example', import.meta.url), 'utf8');
   const checklist = fs.readFileSync(new URL('../docs/commercialization-deploy-checklist.md', import.meta.url), 'utf8');
@@ -147,7 +180,11 @@ test('admin rejects placeholder, low-entropy, and malformed password-hash config
       assert.throws(() => createSession('owner'));
       const res = response();
       assert.equal(requireAdmin(authenticatedRequest(forgedCookie(unsafeSecret)), res), null);
-      assert.equal(res.statusCode, 500);
+      assert.equal(res.statusCode, 503);
+      assert.deepEqual(JSON.parse(res.body), {
+        error: 'Admin service is currently unavailable.',
+        code: 'ADMIN_UNAVAILABLE',
+      });
     }
 
     process.env.ADMIN_SESSION_SECRET = safeSecret;

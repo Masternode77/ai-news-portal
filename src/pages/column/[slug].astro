@@ -118,7 +118,7 @@ const sources = (columnRecord.sources || [])
                 <li>
                   <a href={source.url} target="_blank" rel="noopener noreferrer">{source.title || source.name}</a>
                   <span> — {source.name}</span>
-                  <SourceLicense url={source.url} />
+                  <SourceLicense url={source.url} author={source.author} />
                 </li>
               ))}
             </ul>

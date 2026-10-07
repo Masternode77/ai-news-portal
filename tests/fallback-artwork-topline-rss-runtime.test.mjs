@@ -23,7 +23,9 @@ test('finished fallback artwork never exposes placeholder copy and the rendered 
     assert.doesNotMatch(generator, forbiddenArtworkCopy);
     assert.match(generator, /Compute Current editorial briefing/);
     assert.doesNotMatch(builtHome, forbiddenArtworkCopy);
-    assert.match(builtHome, /\/generated\/(?:articles\/eia-data-center-load-timing[^"']*\/(?:hero|thumbnail)\.webp|fallbacks\/ai-infrastructure\.svg)/);
+    const editorialImages = [...builtHome.matchAll(/<img\b[^>]*\bsrc="(\/generated\/(?:articles\/[^"']+\/(?:hero|thumbnail)\.webp|fallbacks\/[^"']+\.svg))"/g)].map(match => match[1]);
+    assert.ok(editorialImages.length > 0, 'The current homepage must render local editorial artwork.');
+    for (const image of editorialImages) assert.ok(fs.existsSync(path.join('dist', image)), `Missing rendered image: ${image}`);
 
     for (const fileName of committedFallbacks) {
       const source = read(path.join(fallbackDirectory, fileName));

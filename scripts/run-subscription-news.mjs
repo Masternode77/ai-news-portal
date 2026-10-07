@@ -1,4 +1,5 @@
 import { spawn, execFileSync } from 'node:child_process';
+import { realpathSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import {
@@ -7,6 +8,7 @@ import {
   releaseSubscriptionOperationLock,
   SUBSCRIPTION_LOCK_OWNER_ENV,
 } from './subscription-operation-lock.mjs';
+import { readSubscriptionJob, updateSubscriptionJob, claimSubscriptionJobRunner, releaseSubscriptionJobRunner, SUBSCRIPTION_JOB_ENV } from './subscription-job.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const DEADLINE_MS = 90 * 60 * 1000;
@@ -115,12 +117,24 @@ export async function runSubscriptionNews({
   process.once('SIGTERM', interrupt);
   const timeout = setTimeout(() => controller.abort(new Error('Subscription run exceeded its total deadline.')), deadlineMs);
   let ownedLock;
+  let trackedJob;
+  const jobProgress = (patch) => updateSubscriptionJob({ cwd, id: env[SUBSCRIPTION_JOB_ENV], owner: env[SUBSCRIPTION_LOCK_OWNER_ENV], patch });
   try {
     controller.signal.throwIfAborted();
     const lockOptions = { cwd, commonDirectory };
     const outerOwner = env[SUBSCRIPTION_LOCK_OWNER_ENV];
     if (outerOwner) await assertSubscriptionOperationLockOwner(outerOwner, lockOptions);
     else if (args[0] !== '--check') ownedLock = await acquireSubscriptionOperationLock(lockOptions);
+    if (env[SUBSCRIPTION_JOB_ENV]) {
+      const job = await readSubscriptionJob({ cwd, id: env[SUBSCRIPTION_JOB_ENV] });
+      if (!outerOwner || job.lock_owner !== outerOwner || realpathSync(job.workspace) !== realpathSync(cwd)) {
+        throw new Error('Subscription job must run inside its own isolated workspace with its operation owner.');
+      }
+      if (job.finished_at) throw new Error('This subscription job has already finished.');
+      if (args[0] !== '--check') {
+        trackedJob = await claimSubscriptionJobRunner({ cwd, id: job.id, owner: outerOwner });
+      }
+    }
     await readiness({ env: safeEnv, signal: controller.signal });
     controller.signal.throwIfAborted();
     if (args[0] === '--check') {
@@ -130,14 +144,20 @@ export async function runSubscriptionNews({
     for (const [command, commandArgs] of SUBSCRIPTION_NEWS_STEPS) {
       controller.signal.throwIfAborted();
       output(`[subscription-news] ${command} ${commandArgs.join(' ')}`);
+      if (trackedJob) await jobProgress({ stage: `${command} ${commandArgs.join(' ')}` });
       await runCommand(command, commandArgs, { cwd, env: safeEnv, signal: controller.signal });
     }
+    if (trackedJob) await jobProgress({ status: 'awaiting_artwork', stage: 'native_artwork_and_publication_review' });
     output('Local generation and validation complete. Native column artwork and publication review remain; nothing was committed or published.');
+  } catch (error) {
+    if (trackedJob) await jobProgress({ status: 'failed', last_error: String(error.message).slice(0, 1000) });
+    throw error;
   } finally {
     clearTimeout(timeout);
     process.removeListener('SIGINT', interrupt);
     process.removeListener('SIGTERM', interrupt);
     signal?.removeEventListener('abort', externalAbort);
+    if (trackedJob) await releaseSubscriptionJobRunner({ cwd, id: env[SUBSCRIPTION_JOB_ENV], owner: env[SUBSCRIPTION_LOCK_OWNER_ENV], lease: trackedJob });
     if (ownedLock) await releaseSubscriptionOperationLock(ownedLock.owner, { cwd, commonDirectory });
   }
 }

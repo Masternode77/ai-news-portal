@@ -1,4 +1,5 @@
-import { buildHomepageFeed } from './homepage-feed-builder.mjs';
+import { buildPublicPublicationCatalog } from './public-publication-catalog.mjs';
+import { safeHttpUrl } from './normalize.mjs';
 
 const DAY_MS = 86_400_000;
 
@@ -23,7 +24,8 @@ export function escapeNewsletterHtml(value = '') {
 
 function safeDigestHref(value = '') {
   const href = String(value || '').trim();
-  return /^\/news\/[a-zA-Z0-9][a-zA-Z0-9._~/-]*\/?$/.test(href) ? `https://www.computecurrent.com${href}` : 'https://www.computecurrent.com/newsletter/';
+  if (/^\/(?:news|column)\/[a-zA-Z0-9][a-zA-Z0-9._~/-]*\/?$/.test(href)) return `https://www.computecurrent.com${href}`;
+  return safeHttpUrl(href) || 'https://www.computecurrent.com/newsletter/';
 }
 
 export function buildWeeklyDigest(records = [], options = {}) {
@@ -33,27 +35,26 @@ export function buildWeeklyDigest(records = [], options = {}) {
   const limit = Number.isInteger(options.limit) && options.limit > 0 ? Math.min(options.limit, 6) : 6;
   if (!Number.isFinite(nowMs)) throw new TypeError('A valid digest date is required');
   const cutoffMs = nowMs - days * DAY_MS;
-  const feed = buildHomepageFeed(records, {
-    ...options,
-    limit: Math.max(records.length, 1),
-    minimumVisible: 0,
-  });
+  const catalog = buildPublicPublicationCatalog({
+    articles: records,
+    columns: options.columns || [],
+  }, options);
 
-  const articles = feed.items
-    .filter((article) => Boolean(article.publicSignal?.view_detail))
-    .map((article) => ({ article, timestamp: publishedMs(article) }))
+  const articles = catalog
+    .map((article) => ({ article, timestamp: publishedMs({ publishedAt: article.date }) }))
     .filter(({ timestamp }) => timestamp !== null && timestamp <= nowMs && timestamp >= cutoffMs)
     .sort((a, b) => b.timestamp - a.timestamp)
     .slice(0, limit)
     .map(({ article, timestamp }) => ({
       id: article.id,
-      title: plainText(article.publicSignal?.title || article.expertLensFull?.finalHeadline || article.title),
-      deck: plainText(article.publicSignal?.deck || article.deck || article.summary),
-      whyItMatters: plainText(article.publicSignal?.why_it_matters || article.why_it_matters),
-      category: plainText(article.publicSignal?.editorial_lens || article.primary_category || article.category || 'AI Infrastructure'),
-      source: plainText(article.publicSignal?.source || article.source || 'Source'),
+      title: plainText(article.title),
+      deck: plainText(article.deck),
+      whyItMatters: plainText(article.whyItMatters),
+      category: plainText(article.category || 'AI Infrastructure'),
+      source: plainText(article.source || 'Source'),
+      type: article.type,
       publishedAt: new Date(timestamp).toISOString(),
-      href: article.publicSignal.view_detail,
+      href: article.href,
     }));
 
   return {
@@ -69,7 +70,7 @@ export function renderWeeklyDigestHtml(digest = {}) {
   const articles = Array.isArray(digest.articles) ? digest.articles : [];
   const entries = articles.map((article) => [
     '<article>',
-    `<p>${escapeNewsletterHtml(article.category)} · ${escapeNewsletterHtml(article.publishedAt)}</p>`,
+    `<p>${escapeNewsletterHtml(article.type || 'Analysis')} · ${escapeNewsletterHtml(article.category)} · ${escapeNewsletterHtml(article.publishedAt)}</p>`,
     `<h2><a href="${escapeNewsletterHtml(safeDigestHref(article.href))}">${escapeNewsletterHtml(article.title)}</a></h2>`,
     `<p>${escapeNewsletterHtml(article.deck)}</p>`,
     article.whyItMatters ? `<p><strong>Why it matters:</strong> ${escapeNewsletterHtml(article.whyItMatters)}</p>` : '',

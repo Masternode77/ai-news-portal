@@ -19,7 +19,7 @@ Audit output omits `git status` so running this writer cannot make its own repor
 
 - Renderer: `src/pages/index.astro` imports latest/archive JSON and calls `buildHomepageFeed(..., { limit: 50, minimumVisible: 30 })`.
 - Current homepage source contains public nav/feed language, but still depends on generated card copy from `scripts/lib/homepage-feed-builder.mjs`.
-- Current public homepage cards after product-fit and source-rights gates: 49. Retained JSON records are not treated as reader-visible cards.
+- Current public homepage cards after product-fit and source-rights gates: 45. Retained JSON records are not treated as reader-visible cards.
 - Evidence: `LatestAnalysisFeed` is the active feed component.
 
 ## Article Detail Renderer
@@ -62,7 +62,7 @@ Audit output omits `git status` so running this writer cannot make its own repor
 
 - Build: `npm run prepare:static-images && astro build`.
 - Main pipeline script: `node ./scripts/pipeline.mjs`.
-- Content gate: `npm run check && npm run build && node --test tests/public-output.test.mjs tests/image-output.test.mjs tests/admin-security.test.mjs tests/content-cycle.test.mjs && npm run audit:public && npm run audit:images && npm run audit:admin`.
+- Content gate: `npm run check && npm run build && npm run content:gate:built`.
 - GitHub validation workflow at `.github/workflows/update-news.yml`: present; file presence does not prove a generation schedule.
 - Subscription generation requires the existing Mac automation, verified CLI access, and one operation lock across text, artwork, review and publication. Its app-local activation and schedule need separate runtime evidence.
 

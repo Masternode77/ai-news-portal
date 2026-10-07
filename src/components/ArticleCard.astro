@@ -12,7 +12,7 @@ const isExternal = href && !href.startsWith('/');
 const sourceIsExternal = sourceHref && !sourceHref.startsWith('/');
 const date = signal.date || signal.publishedAt || '';
 const formattedDate = date
-  ? new Date(date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
+  ? new Date(date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric', timeZone: 'UTC' })
   : '';
 const cta = signal.cta || (detailHref ? 'Read analysis' : 'Source');
 const image = signal.image || '/generated/fallbacks/ai-infrastructure.svg';

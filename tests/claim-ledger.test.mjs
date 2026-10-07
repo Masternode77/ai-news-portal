@@ -114,3 +114,23 @@ test('a terse numeric headline keeps its claim', () => {
   }, 'article_terse');
   assert.ok(result.claims.some((claim) => claim.numeric_value === 5 && /GW/.test(claim.unit)));
 });
+
+test('numeric rows receive the fixed claim budget before nonnumeric rows while output keeps source order', () => {
+  const earlyFacts = Array.from({ length: 7 }, (_, index) => `Operational fact ${index + 1} describes the utility review and procurement sequence without publishing a measured quantity.`);
+  const numericSentence = `The filing reports ${Array.from({ length: 20 }, (_, index) => `${index + 1} MW`).join(', ')} across measured phases.`;
+  const result = buildClaimLedger({
+    cluster_id: 'sig_numeric_budget',
+    representative_source: {
+      title: 'Utility filing publishes measured phases',
+      cleaned_text: [...earlyFacts, numericSentence].join(' '),
+      source_url: 'https://example.com/numeric-budget',
+      source_name: 'Example Source',
+      source_published_at: '2026-10-01T00:00:00Z',
+    },
+  }, 'article_numeric_budget');
+  const body = result.claims.filter((claim) => claim.claim_text !== 'Utility filing publishes measured phases.');
+
+  assert.equal(body.length, 18);
+  assert.deepEqual(body.map((claim) => claim.numeric_value), Array.from({ length: 18 }, (_, index) => index + 1));
+  assert.ok(body.every((claim) => claim.claim_text === numericSentence));
+});

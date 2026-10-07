@@ -1,0 +1,221 @@
+---
+import PublicationGrid from './PublicationGrid.astro';
+import { filterPublications, publicationFacets } from '../../scripts/lib/public-publication-catalog.mjs';
+
+const {
+  catalog = [],
+  pageSize = 18,
+  heading = 'Browse publications',
+  description = 'Search public analysis, columns, briefs, and signals.',
+} = Astro.props;
+const initial = filterPublications(catalog, { page: 1, pageSize });
+const facets = publicationFacets(catalog);
+const catalogJson = JSON.stringify(catalog).replace(/</g, '\\u003c');
+---
+<section class="publication-explorer" data-publication-explorer data-page-size={pageSize}>
+  <div class="publication-explorer-heading">
+    <div>
+      <p class="eyebrow">Publication finder</p>
+      <h2>{heading}</h2>
+    </div>
+    <p>{description}</p>
+  </div>
+
+  <form class="publication-search-form" data-publication-form role="search">
+    <label class="publication-search-query">
+      <span>Search</span>
+      <input type="search" name="q" placeholder="Search titles, topics, sources…" autocomplete="off" />
+    </label>
+    <label>
+      <span>Topic</span>
+      <select name="category">
+        <option value="">All topics</option>
+        {facets.categories.map((item) => <option value={item.slug}>{item.label}</option>)}
+      </select>
+    </label>
+    <label>
+      <span>Type</span>
+      <select name="type">
+        <option value="">All types</option>
+        {facets.types.map((item) => <option value={item.toLowerCase()}>{item}</option>)}
+      </select>
+    </label>
+    <label>
+      <span>Source</span>
+      <select name="source">
+        <option value="">All sources</option>
+        {facets.sources.map((item) => <option value={item}>{item}</option>)}
+      </select>
+    </label>
+    <label>
+      <span>From</span>
+      <input type="date" name="from" />
+    </label>
+    <label>
+      <span>To</span>
+      <input type="date" name="to" />
+    </label>
+    <button type="submit">Apply filters</button>
+    <button type="reset" class="publication-reset">Reset</button>
+  </form>
+
+  <div class="publication-result-summary" aria-live="polite">
+    <strong data-publication-count>{initial.total}</strong> public publications
+  </div>
+  <div data-publication-rendered>
+    <PublicationGrid publications={initial.items} />
+  </div>
+  <nav class="publication-pagination" aria-label="Publication results pages" data-publication-pagination></nav>
+  <script is:inline type="application/json" data-publication-catalog set:html={catalogJson}></script>
+</section>
+
+<script is:inline>
+  (() => {
+    const root = document.querySelector('[data-publication-explorer]');
+    if (!root || root.dataset.enhanced === 'true') return;
+    root.dataset.enhanced = 'true';
+    const catalog = JSON.parse(root.querySelector('[data-publication-catalog]')?.textContent || '[]');
+    const form = root.querySelector('[data-publication-form]');
+    const output = root.querySelector('[data-publication-rendered]');
+    const count = root.querySelector('[data-publication-count]');
+    const pagination = root.querySelector('[data-publication-pagination]');
+    const pageSize = Number(root.dataset.pageSize) || 18;
+    let page = 1;
+
+    const plain = (value) => String(value || '').trim();
+    const dateMs = (value) => {
+      const stamp = new Date(value || 0).getTime();
+      return Number.isFinite(stamp) ? stamp : 0;
+    };
+    const field = (name) => form.elements.namedItem(name);
+    const currentFilters = () => ({
+      q: plain(field('q')?.value).toLowerCase(),
+      category: plain(field('category')?.value).toLowerCase(),
+      type: plain(field('type')?.value).toLowerCase(),
+      source: plain(field('source')?.value).toLowerCase(),
+      from: plain(field('from')?.value),
+      to: plain(field('to')?.value),
+    });
+    const matches = (item, filters) => {
+      const haystack = [item.title, item.deck, item.whyItMatters, item.category, item.source, item.region, ...(item.tags || [])].join(' ').toLowerCase();
+      const stamp = dateMs(item.date);
+      const from = filters.from ? Date.parse(`${filters.from}T00:00:00.000Z`) : null;
+      const to = filters.to ? Date.parse(`${filters.to}T23:59:59.999Z`) : null;
+      return (!filters.q || filters.q.split(/\s+/).every((term) => haystack.includes(term)))
+        && (!filters.category || item.categorySlug === filters.category)
+        && (!filters.type || String(item.type).toLowerCase() === filters.type)
+        && (!filters.source || String(item.source).toLowerCase() === filters.source)
+        && (from === null || stamp >= from)
+        && (to === null || stamp <= to);
+    };
+    const appendText = (parent, tag, text, className = '') => {
+      const node = document.createElement(tag);
+      if (className) node.className = className;
+      node.textContent = text;
+      parent.append(node);
+      return node;
+    };
+    const card = (item) => {
+      const article = document.createElement('article');
+      article.className = 'publication-card';
+      article.dataset.publicationId = item.id;
+      article.dataset.publicationType = item.type;
+      const media = document.createElement('a');
+      media.className = 'publication-card-media';
+      media.href = item.href;
+      media.setAttribute('aria-label', item.title);
+      if (/^https?:/.test(item.href)) { media.target = '_blank'; media.rel = 'noopener noreferrer'; }
+      const image = document.createElement('img');
+      image.src = item.image;
+      image.alt = item.imageAlt;
+      image.loading = 'lazy';
+      image.decoding = 'async';
+      media.append(image);
+      article.append(media);
+      const body = document.createElement('div');
+      body.className = 'publication-card-body';
+      const meta = document.createElement('div');
+      meta.className = 'publication-card-meta';
+      appendText(meta, 'span', item.type, 'publication-type');
+      appendText(meta, 'span', item.category);
+      if (item.date) {
+        const time = appendText(meta, 'time', new Date(item.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric', timeZone: 'UTC' }));
+        time.dateTime = item.date;
+      }
+      body.append(meta);
+      const title = document.createElement('h2');
+      const titleLink = document.createElement('a');
+      titleLink.href = item.href;
+      titleLink.textContent = item.title;
+      if (/^https?:/.test(item.href)) { titleLink.target = '_blank'; titleLink.rel = 'noopener noreferrer'; }
+      title.append(titleLink);
+      body.append(title);
+      if (item.deck) appendText(body, 'p', item.deck);
+      const footer = document.createElement('div');
+      footer.className = 'publication-card-footer';
+      appendText(footer, 'span', item.source);
+      const read = appendText(footer, 'a', item.type === 'Column' ? 'Read column' : item.href.startsWith('/news/') ? 'Read analysis' : 'Read source');
+      read.href = item.href;
+      if (/^https?:/.test(item.href)) { read.target = '_blank'; read.rel = 'noopener noreferrer'; }
+      if (item.sourceHref && item.sourceHref !== item.href) {
+        const source = appendText(footer, 'a', 'Source');
+        source.href = item.sourceHref;
+        source.target = '_blank';
+        source.rel = 'noopener noreferrer';
+      }
+      body.append(footer);
+      article.append(body);
+      return article;
+    };
+    const syncUrl = (filters) => {
+      const params = new URLSearchParams();
+      for (const [key, value] of Object.entries(filters)) if (value) params.set(key, value);
+      if (page > 1) params.set('page', String(page));
+      const query = params.toString();
+      history.replaceState(null, '', `${location.pathname}${query ? `?${query}` : ''}`);
+    };
+    const render = () => {
+      const filters = currentFilters();
+      const results = catalog.filter((item) => matches(item, filters));
+      const pages = Math.max(1, Math.ceil(results.length / pageSize));
+      page = Math.min(Math.max(1, page), pages);
+      output.replaceChildren();
+      const visible = results.slice((page - 1) * pageSize, page * pageSize);
+      if (visible.length) {
+        const grid = document.createElement('div');
+        grid.className = 'publication-grid';
+        grid.dataset.publicationResults = '';
+        visible.forEach((item) => grid.append(card(item)));
+        output.append(grid);
+      } else {
+        const empty = document.createElement('div');
+        empty.className = 'public-empty-state';
+        appendText(empty, 'p', 'No public publications match these filters.');
+        output.append(empty);
+      }
+      count.textContent = String(results.length);
+      pagination.replaceChildren();
+      if (pages > 1) {
+        for (const [label, target, disabled] of [['Previous', page - 1, page === 1], [`Page ${page} of ${pages}`, page, true], ['Next', page + 1, page === pages]]) {
+          const button = document.createElement('button');
+          button.type = 'button';
+          button.textContent = label;
+          button.disabled = disabled;
+          if (!disabled) button.addEventListener('click', () => { page = target; render(); root.scrollIntoView({ behavior: 'smooth', block: 'start' }); });
+          pagination.append(button);
+        }
+      }
+      syncUrl(filters);
+    };
+    const params = new URLSearchParams(location.search);
+    for (const name of ['q', 'category', 'type', 'source', 'from', 'to']) {
+      const control = field(name);
+      if (control && params.has(name)) control.value = params.get(name);
+    }
+    page = Math.max(1, Number(params.get('page')) || 1);
+    form.addEventListener('submit', (event) => { event.preventDefault(); page = 1; render(); });
+    form.addEventListener('reset', () => { setTimeout(() => { page = 1; render(); }, 0); });
+    for (const control of form.querySelectorAll('select, input[type="date"]')) control.addEventListener('change', () => { page = 1; render(); });
+    render();
+  })();
+</script>

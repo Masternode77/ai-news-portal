@@ -42,7 +42,7 @@ test('weekly digest contains at most six currently authorized public-page articl
   assert.ok(digest.articles.every((item) => item.href.startsWith('/news/')));
 });
 
-test('future, older, invalid-date, denied-source, and non-article records are excluded', () => {
+test('future, older, invalid-date, and denied-source records are excluded while public briefs remain discoverable', () => {
   const eligible = article(1, '2026-08-09T12:00:00.000Z');
   const future = article(2, '2026-08-11T12:00:00.000Z');
   const old = article(3, '2026-08-02T12:00:00.000Z');
@@ -51,6 +51,7 @@ test('future, older, invalid-date, denied-source, and non-article records are ex
     articlePagePublished: false,
     public_content_tier: 'editorial_brief',
     signalCardOnly: true,
+    public_routing: { visibility: 'adjacent' },
   });
   const authorized = authorizePublicTestRecords([eligible, future, old, invalid, brief], now.toISOString());
   const denied = article(6, '2026-08-09T10:00:00.000Z', {
@@ -59,7 +60,31 @@ test('future, older, invalid-date, denied-source, and non-article records are ex
   });
   const digest = buildWeeklyDigest([...authorized.records, denied], { ...authorized.options, now });
 
-  assert.deepEqual(digest.articles.map((item) => item.id), ['digest-1']);
+  assert.deepEqual(digest.articles.map((item) => item.id), ['digest-1', 'digest-5']);
+  assert.equal(digest.articles[1].type, 'Brief');
+});
+
+test('weekly digest includes eligible authored columns from the same public catalog', () => {
+  const column = {
+    id: 'col-digest',
+    slug: 'grid-capacity-column',
+    title: 'Grid capacity is the commercial constraint for new clusters',
+    deck: 'A source-backed column about interconnection timing and delivery risk for AI infrastructure.',
+    publishedAt: '2026-08-10T10:00:00.000Z',
+    content_origin: 'authored',
+    generation_version: 'authored_column_v1',
+    public_content_tier: 'authored_column',
+    public_status: 'published',
+    primary_category: 'Power & Grid',
+    sources: [{ name: 'Grid operator', url: 'https://example.com/grid' }],
+    expertLensFull: { finalArticleBody: 'Complete column body.' },
+    authored_quality: { ok: true },
+  };
+  const digest = buildWeeklyDigest([], { now, columns: [column] });
+
+  assert.equal(digest.count, 1);
+  assert.equal(digest.articles[0].type, 'Column');
+  assert.equal(digest.articles[0].href, '/column/grid-capacity-column/');
 });
 
 test('rendered digest escapes hostile titles and attributes', () => {

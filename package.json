@@ -60,7 +60,8 @@
     "audit:feed-volume": "node scripts/audit-public-feed-volume.mjs",
     "audit:public": "node ./scripts/audit-rendered-public-output.mjs && node ./scripts/audit-public-copy.mjs && node ./scripts/audit-public-article-quality.mjs && npm run audit:homepage && npm run audit:feed-volume",
     "audit:admin": "node ./scripts/audit-admin-exclusion.mjs",
-    "content:gate": "npm run check && npm run build && node --test tests/public-output.test.mjs tests/image-output.test.mjs tests/admin-security.test.mjs tests/content-cycle.test.mjs && npm run audit:public && npm run audit:images && npm run audit:admin",
+    "content:gate": "npm run check && npm run build && npm run content:gate:built",
+    "content:gate:built": "node --test tests/public-output.test.mjs tests/image-output.test.mjs tests/admin-security.test.mjs tests/content-cycle.test.mjs && npm run audit:public && npm run audit:images && npm run audit:admin",
     "audit:autonomous-current": "node ./scripts/audit-autonomous-current-state.mjs",
     "run:editorial-cycle": "node ./scripts/run-editorial-cycle.mjs",
     "content:cycle": "PIPELINE_OFFLINE=1 node ./scripts/run-content-cycle.mjs --fixture tests/fixtures/content-cycle-mixed.json --out-dir .cache/content-cycle",
@@ -78,8 +79,8 @@
   "dependencies": {
     "@astrojs/rss": "^4.0.19",
     "@astrojs/sitemap": "^3.7.3",
-    "astro": "^7.2.0",
-    "sharp": "^0.35.3"
+    "astro": "^7.3.6",
+    "sharp": "^0.35.5"
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.10",

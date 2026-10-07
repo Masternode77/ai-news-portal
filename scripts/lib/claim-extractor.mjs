@@ -11,7 +11,7 @@ import { stripHtml } from './normalize.mjs';
 function claimTypeFor(sentence = '', numeric = null) {
   if (numeric) {
     if (/gw|mw|kw|megawatts|gigawatts/i.test(numeric.unit)) return 'power';
-    if (/billion|million/i.test(numeric.unit)) return 'financial';
+    if (/usd|billion|million/i.test(numeric.unit)) return 'financial';
     if (/%|percent/i.test(numeric.unit)) return 'numeric';
     return 'numeric';
   }
@@ -22,12 +22,13 @@ function claimTypeFor(sentence = '', numeric = null) {
 }
 
 function claimRowsFor(text, item) {
-  const row = (claimType, numericValue, unit) => ({
+  const row = (claimType, numeric = null) => ({
     claim_text: compact(text),
     claim_type: claimType,
     entities: extractCompanies(text),
-    numeric_value: numericValue,
-    unit,
+    numeric_value: numeric?.numeric_value ?? null,
+    unit: numeric?.unit || '',
+    comparator: numeric?.comparator || '',
     source_url: item.source_url || item.url,
     source_name: item.source_name || item.source,
     source_published_at: item.source_published_at,
@@ -35,8 +36,8 @@ function claimRowsFor(text, item) {
     is_inference: false,
   });
   const numerics = extractNumericClaims(text);
-  if (!numerics.length) return [row(claimTypeFor(text), null, '')];
-  return numerics.map((numeric) => row(claimTypeFor(text, numeric), numeric.numeric_value, numeric.unit));
+  if (!numerics.length) return [row(claimTypeFor(text))];
+  return numerics.map((numeric) => row(claimTypeFor(text, numeric), numeric));
 }
 
 // A headline usually has no closing punctuation, so joining it to the body
@@ -59,9 +60,14 @@ export function extractClaimsFromCluster(cluster = {}) {
   for (const item of sourceItems) {
     const headline = headlineSentence(item);
     if (headline) headlineRows.push(...claimRowsFor(headline, item));
-    for (const text of splitSentences(item.cleaned_text || '').slice(0, 8)) bodyRows.push(...claimRowsFor(text, item));
+    const sentences = splitSentences(item.cleaned_text || '');
+    const prioritized = [...sentences]
+      .sort((left, right) => Number(extractNumericClaims(right).length > 0) - Number(extractNumericClaims(left).length > 0))
+      .slice(0, 8);
+    const selected = new Set(prioritized);
+    for (const text of sentences.filter((sentence) => selected.has(sentence))) bodyRows.push(...claimRowsFor(text, item));
   }
-  const keyOf = (row) => [row.claim_text.toLowerCase(), row.numeric_value, row.unit].join('|');
+  const keyOf = (row) => [row.claim_text.toLowerCase(), row.numeric_value, row.unit, row.comparator].join('|');
   const firstOccurrences = (rows, seen) => rows.filter((row) => {
     const key = keyOf(row);
     if (seen.has(key)) return false;
@@ -73,6 +79,10 @@ export function extractClaimsFromCluster(cluster = {}) {
   // the ledger; headline claims (one sentence per source) come on top. A
   // headline is compared only with the body claims actually kept, so a body
   // row cut by the budget never removes the headline that repeats it.
-  const body = firstOccurrences(bodyRows, new Set()).slice(0, 18);
+  const uniqueBody = firstOccurrences(bodyRows, new Set());
+  const prioritizedBody = [...uniqueBody]
+    .sort((left, right) => Number(right.numeric_value !== null) - Number(left.numeric_value !== null));
+  const selectedBody = new Set(prioritizedBody.slice(0, 18));
+  const body = uniqueBody.filter((row) => selectedBody.has(row));
   return [...body, ...firstOccurrences(headlineRows, new Set(body.map(keyOf)))];
 }

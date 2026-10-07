@@ -1,0 +1,128 @@
+{
+  "verifiedAt": "2026-10-07T18:00:00.102Z",
+  "production": {
+    "version": "0.0.41",
+    "commit": "2d12829951bf2597970828d39a1a7189a520a115",
+    "deployment": "dpl_ASfFRNDRxXGnxKL7arpjaDKLhACX",
+    "state": "READY",
+    "improvementsDeployed": false
+  },
+  "validation": {
+    "sourceTests": {
+      "pass": 864,
+      "fail": 0
+    },
+    "builtTests": {
+      "pass": 22,
+      "fail": 0
+    },
+    "postIntegrationTargetedTests": {
+      "pass": 118,
+      "fail": 0
+    },
+    "contentGateTests": {
+      "pass": 21,
+      "fail": 0
+    },
+    "contentAudits": "PASS",
+    "typecheck": {
+      "errors": 0,
+      "warnings": 0,
+      "hints": 26
+    },
+    "auditVulnerabilities": 0
+  },
+  "subscriptionTrial": {
+    "published": false,
+    "models": {
+      "codex": "gpt-6-astra",
+      "claude": "claude-fable-5-1"
+    },
+    "actualFullGenerationCalls": 9,
+    "finalCheckpointActualReviewCalls": 1,
+    "reusesActualModelEssay": true,
+    "finalCodeChange": "One source first-person figure label received quotation marks; title, deck, body, stance, facts and sources unchanged.",
+    "reviewApproved": true,
+    "numericChecks": 43,
+    "uniqueNumericIds": 43,
+    "sourceChecks": 26,
+    "metrics": {
+      "chars": 8559,
+      "words": 1473,
+      "sections": 5,
+      "paragraphs": 13,
+      "human_style_score": 0.84,
+      "insight_density_score": 0.815,
+      "source_summary_ratio": 0.233,
+      "copyright_overlap_score": 0.04,
+      "unsupported_claim_count": 0,
+      "repeated_sentence_ratio": 0,
+      "heading_sequence_similarity": 0,
+      "conclusion_similarity": 0.176,
+      "thesis_overlap": 0.028,
+      "heading_reuse_max": 0.2,
+      "lead_reuse_max": 0.045,
+      "figure_count": 1
+    },
+    "codeProvenance": {
+      "scripts/lib/authored-column-engine.mjs": "3ce52336c1fda0fe19d09ef26835ff501b4ff882a563fa188e1d58ec3af6eaf9",
+      "scripts/lib/authored-column-figures.mjs": "6e36d026caf9c4de0054c12953890a42c314eabb23cc9871c4c039e99f75ef5c",
+      "scripts/lib/autonomous-desk-utils.mjs": "98576fa12c8cc03adc146772843355fdc815b46fc7fba01f6a0e161091fbbdd4",
+      "scripts/lib/claim-extractor.mjs": "7c23285051151a12e3e82d9e968be98e35fab9c3b22a0a6ebdfceea5f07008e2",
+      "scripts/lib/numeric-claim-policy.mjs": "86b0298d82e4a75ca73d144e1c25421ea8478824c84c070b20ec4bfdbd8c51a7",
+      "scripts/lib/subscription-provider.mjs": "0503ea499d2ef06cca9cda0c6b0b3bce1f62eb2a72619f0d3ec81612bc067228"
+    }
+  },
+  "isolation": {
+    "at": "2026-10-07T17:57:26.939Z",
+    "baseCommit": "2d12829951bf2597970828d39a1a7189a520a115",
+    "isolatedCleanWorkspace": true,
+    "duplicateBlocked": true,
+    "noChangeFinished": true,
+    "idempotentFinish": true,
+    "primaryWorkPreserved": true,
+    "modelCalls": 0,
+    "publication": false
+  },
+  "reviews": [
+    {
+      "scope": "Operations, CI/release, numeric provenance and figure code",
+      "verdict": "APPROVE",
+      "unresolvedFindings": 0
+    },
+    {
+      "scope": "Public discovery, card copy, Malaysia source correction and artwork",
+      "verdict": "APPROVE",
+      "unresolvedFindings": 0
+    },
+    {
+      "scope": "Responsive gutter, permanent redirects and unchanged automation schedule/authority",
+      "verdict": "APPROVE",
+      "unresolvedFindings": 0
+    },
+    {
+      "scope": "Actual generated essay and final figure checkpoint",
+      "verdict": "APPROVE",
+      "unresolvedFindings": 0,
+      "independence": "Reviewer did not author final text; previously implemented review plumbing."
+    }
+  ],
+  "artwork": {
+    "malaysiaScopedPending": 0,
+    "legacyGlobalBlocked": 15,
+    "globalQueueComplete": false
+  },
+  "remaining": [
+    "Production application release authorization and READY SHA verification",
+    "Existing automation activation after new helper reaches production",
+    "First production-based scheduled run and post-deploy route/image/redirect verification"
+  ],
+  "localLogHashes": {
+    "compute-current-qa-stable-tests.log": "6ab66dde7fe533b731917ef30da1c81a91550f85e2df091cb2be36edd8daea4d",
+    "compute-current-qa-stable-check.log": "8dbfc83841c7b111db280e27b599ac712600d3d7a123369c8a53948db57e8d3c",
+    "compute-current-qa-stable-audit.log": "6d8c5c8f3d7684adb070417bd608d01ae90aa3dc26a65af03ffda4955f38d9a3",
+    "compute-current-qa-stable-content-gate.log": "5f27bc25822243743c8b2dba7074c1c00d7c82497f62d7a2f31310bb2be64e8d",
+    "compute-current-qa-final-targeted.log": "fc8e4c9b32908bfd4532dd2b14137cd5259a9fba390e75687508205442513488",
+    "compute-current-qa-final-checkpoint.log": "bd31200613bad28eacccd790aaa188b9e89a54f9c55a5e4f00062ba748413826"
+  }
+}

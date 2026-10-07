@@ -82,8 +82,9 @@ do not create a duplicate Windows task or copy authentication files to CI.
    16:05 KST. Reconcile the image-only and retired text paths into the one Mac
    task so they cannot create a second text generation job. This document creates no timer.
 
-GitHub's `update-news.yml` is now read-only validation on pushes to main and
-manual dispatch. It has no generation schedule, API secrets, commit or push.
+GitHub's `update-news.yml` is now read-only Application Validation on pull
+requests to `main`, pushes to `main`, and manual dispatch. It has no generation
+schedule, API secrets, commit or push.
 The monthly OpenRouter model-refresh schedule is retired. Coordinate merging
 these workflow changes with Mac activation to avoid an unattended publishing
 pause. Validation success is not a generation heartbeat. The existing Vercel
@@ -92,34 +93,54 @@ Actions, so all local gates must pass before an authorized push.
 
 ## Instructions for the existing Mac Codex task
 
-Refresh and verify the production baseline as described in the Mac image
-workflow. Check that no other task is modifying this checkout. Run:
+Use the existing checkout only as the coordinator. Do not reset, clean, stash or
+switch it, even when it contains unrelated work. Resolve the successful Vercel
+deployment serving `www.computecurrent.com`, require `READY`, and read its exact
+40-character `meta.githubCommitSha`. Start an isolated job anchored to that
+production commit:
 
 ```sh
-node scripts/subscription-operation-lock.mjs acquire
-CC_SUBSCRIPTION_LOCK_OWNER='<owner-token-from-acquire>' node scripts/run-subscription-news.mjs --check
-CC_SUBSCRIPTION_LOCK_OWNER='<owner-token-from-acquire>' node scripts/run-subscription-news.mjs
+node scripts/subscription-job.mjs start --ref <production-ready-full-sha>
 ```
 
-Acquire this operation lock before refresh or generation and keep the same owner
-exported until native artwork/import, final validation, heartbeat and any
-authorized commit/push all finish. The lock lives in the repository's common Git
-directory, so linked worktrees cannot become a second writer. The runner verifies
-the exported owner and leaves an outer lock in place; without an outer owner it
-takes and releases a runner-only lock for interactive use. In Codex App, retain
-the owner printed by `acquire` and pass it explicitly to every runner command;
-each command uses a separate shell, so an `EXIT` trap in the acquisition command
-would release too early. A wrong owner cannot release the lock, and the tooling
-never removes a stale lock automatically. If a job is interrupted, first verify
-that all of its processes have stopped before performing any manual recovery.
+Invoke `start` through a structured subprocess and parse its JSON result. Keep
+the returned `id`, `workspace` and `owner` only in private runtime state; do not
+use shell `eval`, echo or paste the owner into chat, or interpolate the JSON into
+a shell command. `start` fetches `origin`, requires `origin/main` to equal the
+production SHA, acquires the common-Git-directory operation lock, and creates a
+detached worktree. The default workspace is
+`~/.local/share/compute-current/subscription-jobs/<repository-id>/<job-id>`;
+the restricted job record is in the common Git directory at
+`subscription-jobs/<job-id>.json`.
+
+Install dependencies and run every generation, artwork, review, commit and
+validation command only inside the returned workspace. Pass the parsed values
+privately as `CC_SUBSCRIPTION_JOB_ID=<id>` and
+`CC_SUBSCRIPTION_LOCK_OWNER=<owner>` when invoking both the check and real run:
+
+```sh
+node scripts/run-subscription-news.mjs --check
+node scripts/run-subscription-news.mjs
+```
+
+The runner verifies the environment values, current workspace and job owner. It
+rejects the primary checkout, another worktree, a completed job and a mismatched
+owner. A job grants one real runner lease: duplicate processes are blocked, and
+an attempt that reaches the runner cannot be run again after success or failure.
+Finish a failed attempt as `failed`, then use a new `start` for any retry. The
+outer lock remains held after the runner exits so the same job owns
+native artwork, final gates, heartbeat, authorized push and deployment
+verification. A concurrent `start` must stop when lock acquisition fails.
 
 The runner forces subscription generation, disables external archive writes and
 runs the pipeline, radar refresh, approved inventory restoration, taxonomy
 rebuild, audits, tests and the content gate. It never commits or pushes. On
-failure, keep local diagnostic/output changes for inspection and report the
-blocker; do not publish partial work or record success. Do not reset or stash
-another task's changes. Configure only the existing Mac automation to own this
-sequence; do not leave an image-only or legacy text job that can overlap it.
+failure, leave the job workspace and its diagnostic/output changes intact; do
+not publish partial work or record success. A later `start` creates a different,
+clean workspace from the newly verified production commit. Configure only the
+existing Mac automation to own this sequence; do not leave an image-only or
+legacy text job that can overlap it. `node scripts/subscription-job.mjs status`
+lists the ten newest job records without exposing lock owners.
 
 After successful text generation, complete native artwork using
 `docs/mac-column-image-automation.md` and the existing image skill. Each new
@@ -133,16 +154,27 @@ all required generation, review and validation succeeds, record:
 node scripts/record-pipeline-heartbeat.mjs ok
 ```
 
-Keep the operation lock held while recording this heartbeat and through the
-authorized push. After every authorized operation is complete, release it
-explicitly in the final command:
+Keep the job lock held while recording this heartbeat and through the authorized
+push and deployment check. After the runner and all child processes have
+stopped, close the job from the coordinator checkout with exactly one terminal
+status:
 
 ```sh
-CC_SUBSCRIPTION_LOCK_OWNER='<owner-token-from-acquire>' node scripts/subscription-operation-lock.mjs release
+node scripts/subscription-job.mjs finish --id <job-id> --status <failed|no_change|published> [--reason <bounded-reason>]
 ```
 
-Use an `EXIT` trap only in a genuinely long-lived shell that remains active
-across the native image tool and every later step.
+Pass `CC_SUBSCRIPTION_LOCK_OWNER=<owner>` privately to `finish`. Use `failed` for
+any generation, review, artwork, gate, push or deployment failure; dirty output
+is allowed and preserved. Use `no_change` only when the workspace is clean and
+still at its recorded base commit. Use `published` only after the workspace is
+clean, its new commit is an ancestor of `origin/main`, and Vercel is `READY` at
+that exact full commit SHA. `finish` records completion (and the published
+commit when applicable) before releasing the owner-matched operation lock. It
+refuses to finish while the recorded runner PID is alive. Do not call the
+low-level lock release or install an `EXIT` trap during a normal job. If the
+terminal record is saved but lock release fails, retry the identical `finish`
+command with the same owner and status. This retry is idempotent and will not
+release a later job's lock; never change a recorded terminal status.
 
 Commit/push only within the existing task's explicit authorization. Include all
 related artifacts in the same validated change: article arrays, archive/search,

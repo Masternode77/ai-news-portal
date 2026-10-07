@@ -65,7 +65,7 @@ img {
 .page-shell,
 .detail-shell,
 .policy-shell {
-  width: min(1360px, calc(100vw - 32px));
+  width: min(1360px, calc(100% - 32px));
   margin: 0 auto;
   padding: 32px 0 72px;
 }
@@ -3123,8 +3123,8 @@ time {
 
   .page-shell,
   .detail-shell {
-    width: calc(100vw - 20px);
-    max-width: calc(100vw - 20px);
+    width: calc(100% - 32px);
+    max-width: calc(100% - 32px);
     padding-top: 18px;
   }
 

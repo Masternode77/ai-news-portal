@@ -1,0 +1,16 @@
+---
+import PublicationCard from './PublicationCard.astro';
+import '../styles/discovery.css';
+
+const {
+  publications = [],
+  emptyText = 'No qualifying public publications match this view.',
+} = Astro.props;
+---
+{publications.length ? (
+  <div class="publication-grid" data-publication-results>
+    {publications.map((publication: any) => <PublicationCard publication={publication} />)}
+  </div>
+) : (
+  <div class="public-empty-state" data-publication-empty><p>{emptyText}</p></div>
+)}

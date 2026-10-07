@@ -181,34 +181,45 @@ cadence after its one-time activation. Follow [subscription generation](docs/sub
 It generates text through subscription CLIs, completes native artwork, then runs
 all tests and content gates before an authorized publication.
 
-GitHub's Validate News runs on relevant pushes to main or manual dispatch. It
+GitHub's Application Validation runs on every pull request to `main`, every
+push to `main`, or manual dispatch. It
 installs dependencies and the RSS transform runtime, checks the project, and runs
-`npm test` plus `npm run content:gate`. It does not generate, commit, push or
+the production dependency audit, `npm test`, and `npm run content:gate:built`
+against that test run's build. Local and Mac publication validation continues to
+use the complete `npm run content:gate` command. It
+does not generate, commit, push or
 record a generation heartbeat. The operations monitor checks the committed Mac
 generation heartbeat, so a validation-only success cannot conceal a stalled Mac.
 
 ## Release versioning
 
 Human-authored changes merged into `main` automatically create the next semantic
-patch version, synchronize `package.json` and `package-lock.json`, add an annotated
-`vX.Y.Z` tag, and publish a GitHub Release. A manual Release workflow run can select
+patch version only after Application Validation succeeds for that exact `main`
+commit. The release synchronizes `package.json` and `package-lock.json`, adds an annotated
+`vX.Y.Z` tag, and publishes a GitHub Release. A manual Release workflow run performs
+the same application validation and can select
 `patch`, `minor`, or `major` when the change requires a larger version increment.
 
-Automated news refresh commits do not create releases. They update the deployed
-content snapshot without changing the product version. For an exact production
+Automated news refresh commits do not create releases. After validation, the
+release workflow classifies the actual commit diff: changes limited to the
+content-only paths for `src/data`, generated public images, the image manifest,
+pipeline state, and generated audit/taxonomy reports skip semantic versioning.
+Any path outside that bounded inventory is an application change and remains
+eligible for the automatic patch release. Content refreshes update the deployed
+snapshot without changing the product version. For an exact production
 review, record both the semantic version and the exact Git commit SHA because a
 newer content-only commit can legitimately follow the most recent release tag.
 
 ## Deploy to Vercel
 
 1. Import the repository into Vercel
-2. Astro 7.2 is auto-detected via `vercel.json` and builds as a static site
+2. Astro 7.3 is auto-detected via `vercel.json` and builds as a static site
 3. Set the documented deployment environment variables only after their external prerequisites are evidenced
 4. Deploy
 
 ## Notes
 
-- The candidate remains a static Astro 7.2 site. Static output can carry a
+- The candidate remains a static Astro 7.3 site. Static output can carry a
   validated compatible CSP, but this deployment cannot issue a per-request nonce
   for the selected AdSense/CMP model and has not validated such a policy. Its
   deliberate no-enforced-CSP posture is therefore a documented risk acceptance.

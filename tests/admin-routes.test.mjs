@@ -28,6 +28,8 @@ test('/admin and /admin.html render only a login shell with no private data payl
     assert.match(source, /\/api\/admin\/login/);
     assert.doesNotMatch(source, /latest-news\.json|archived-news\.json|buildAdmin/);
     assert.doesNotMatch(source, /ADMIN_PASSWORD|ADMIN_SESSION_SECRET|ADMIN_PASSWORD_HASH/);
+    assert.match(source, /ADMIN_UNAVAILABLE/);
+    assert.match(source, /temporarily unavailable/i);
   }
 });
 
@@ -93,6 +95,7 @@ test('admin dashboard API keeps logs behind admin session auth', async () => {
 
 test('admin dashboard route is API-backed and does not embed private article datasets', () => {
   const dashboardSource = fs.readFileSync(new URL('../src/pages/admin/dashboard.astro', import.meta.url), 'utf8');
+  const editorClient = fs.readFileSync(new URL('../src/lib/admin-editor/client.ts', import.meta.url), 'utf8');
   const adminSource = fs.readFileSync(new URL('../src/pages/admin.astro', import.meta.url), 'utf8');
   const adminHtmlSource = fs.readFileSync(new URL('../src/pages/admin.html.astro', import.meta.url), 'utf8');
 
@@ -101,4 +104,8 @@ test('admin dashboard route is API-backed and does not embed private article dat
   assert.doesNotMatch(dashboardSource, new RegExp('latest-news\\.json|archived-news\\.json|source-health\\.json|claim-ledger\\.json|editorial-cycles\\.json'));
   assert.match(adminSource, new RegExp('/admin/dashboard/'));
   assert.match(adminHtmlSource, new RegExp('/admin/dashboard/'));
+  assert.match(dashboardSource, /ADMIN_UNAVAILABLE/);
+  assert.match(dashboardSource, /temporarily unavailable/i);
+  assert.match(editorClient, /ADMIN_UNAVAILABLE/);
+  assert.match(editorClient, /temporarily unavailable/i);
 });

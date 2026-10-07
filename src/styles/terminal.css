@@ -1784,6 +1784,12 @@ body:has(.commercial-page-contact) {
   }
 }
 
+.home-feed-more {
+  display: flex;
+  justify-content: center;
+  margin: -10px 0 34px;
+}
+
 @media (max-width: 480px) {
   .pulse-grid {
     grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
@@ -2180,6 +2186,29 @@ body:has(.commercial-page-contact) {
 }
 
 @media (max-width: 640px) {
+  .column-hero {
+    gap: 16px;
+    margin-bottom: 18px;
+    padding: 18px;
+    border-radius: 16px;
+  }
+
+  .column-hero h2 {
+    font-size: clamp(1.45rem, 7vw, 1.9rem);
+  }
+
+  .column-hero-deck {
+    display: -webkit-box;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    line-clamp: 3;
+  }
+
+  .column-hero-media img {
+    aspect-ratio: 16 / 8;
+  }
+
   .column-figure-bar-row {
     grid-template-columns: minmax(0, 1fr) auto;
   }

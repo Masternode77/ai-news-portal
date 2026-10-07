@@ -1,0 +1,41 @@
+---
+const { publication } = Astro.props;
+const formattedDate = publication.date
+  ? new Date(publication.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric', timeZone: 'UTC' })
+  : '';
+const external = publication.href?.startsWith('http');
+const sourceExternal = publication.sourceHref?.startsWith('http');
+---
+<article class="publication-card" data-publication-id={publication.id} data-publication-type={publication.type}>
+  <a
+    class="publication-card-media"
+    href={publication.href}
+    target={external ? '_blank' : undefined}
+    rel={external ? 'noopener noreferrer' : undefined}
+    aria-label={publication.title}
+  >
+    <img src={publication.image} alt={publication.imageAlt} loading="lazy" decoding="async" />
+  </a>
+  <div class="publication-card-body">
+    <div class="publication-card-meta">
+      <span class="publication-type">{publication.type}</span>
+      <span>{publication.category}</span>
+      {formattedDate ? <time datetime={publication.date}>{formattedDate}</time> : null}
+    </div>
+    <h2>
+      <a href={publication.href} target={external ? '_blank' : undefined} rel={external ? 'noopener noreferrer' : undefined}>
+        {publication.title}
+      </a>
+    </h2>
+    {publication.deck ? <p>{publication.deck}</p> : null}
+    <div class="publication-card-footer">
+      <span>{publication.source}</span>
+      <a href={publication.href} target={external ? '_blank' : undefined} rel={external ? 'noopener noreferrer' : undefined}>
+        {publication.type === 'Column' ? 'Read column' : publication.kind === 'article' && !publication.href.startsWith('/news/') ? 'Read source' : 'Read analysis'}
+      </a>
+      {publication.sourceHref && publication.sourceHref !== publication.href ? (
+        <a href={publication.sourceHref} target={sourceExternal ? '_blank' : undefined} rel={sourceExternal ? 'noopener noreferrer' : undefined}>Source</a>
+      ) : null}
+    </div>
+  </div>
+</article>

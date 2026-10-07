@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import { getRssString } from '@astrojs/rss';
-import { buildRssItems as buildRssItemsRaw, rssMetadata } from '../scripts/lib/rss-builder.mjs';
+import { buildRssItems as buildRssItemsRaw, buildUnifiedRssItems, rssMetadata } from '../scripts/lib/rss-builder.mjs';
 import { findInternalLanguageHits } from '../scripts/lib/internal-language-guard.mjs';
 import { authorizePublicTestRecords, CANONICAL_ADMIN_BODY, CANONICAL_ADMIN_SOURCE } from './fixtures/admin-publication-integrity.mjs';
 
@@ -242,4 +242,25 @@ test('rss metadata binds media namespace when feed items include media content',
 
   assert.match(xml, /<media:content\b/);
   assert.match(xml, /xmlns:media="http:\/\/search\.yahoo\.com\/mrss\/"/);
+});
+
+test('unified RSS uses the public catalog to include published columns and exclude drafts', () => {
+  const column = {
+    id: 'col-rss',
+    slug: 'grid-capacity-rss',
+    title: 'Grid capacity is the commercial constraint for new clusters',
+    deck: 'A source-backed column about interconnection timing and delivery risk for AI infrastructure.',
+    publishedAt: '2026-08-10T10:00:00.000Z',
+    content_origin: 'authored',
+    generation_version: 'authored_column_v1',
+    public_content_tier: 'authored_column',
+    public_status: 'published',
+    primary_category: 'Power & Grid',
+    expertLensFull: { finalArticleBody: 'Complete column body.' },
+    authored_quality: { ok: true },
+  };
+  const items = buildUnifiedRssItems({ columns: [column, { ...column, id: 'draft', slug: 'draft', draft: true }] });
+
+  assert.equal(items.length, 1);
+  assert.equal(items[0].link, 'https://www.computecurrent.com/column/grid-capacity-rss/');
 });

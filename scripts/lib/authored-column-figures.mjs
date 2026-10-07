@@ -8,6 +8,8 @@
 // model formatting whims. Titles are derived from the column's own argument
 // and evidence, never from fixed labels, so they vary column to column.
 import { bannedPhraseMatches } from './banned-phrases.mjs';
+import { compact as compactDeskText, extractNumericClaims } from './autonomous-desk-utils.mjs';
+import { canonicalNumericUnit } from './numeric-claim-policy.mjs';
 import { guardPublicTemplatePhrases } from './public-template-phrase-guard.mjs';
 
 export const FIGURE_TYPES = ['stat-row', 'table', 'bar'];
@@ -61,6 +63,14 @@ function completeFactLabel(text = '') {
     .trim();
 }
 
+function attributedSourceExcerpt(text = '') {
+  const label = completeFactLabel(text);
+  const firstPerson = /\b(?:we|our|ours|ourselves|i|me|my|mine|myself)\b/i.test(label)
+    || /\bus\b/.test(label);
+  if (!firstPerson) return label;
+  return `“${label}”`;
+}
+
 // Titles derived from a claim take its first clause only, so a truncated
 // headline-plus-lead blob never becomes a figure caption.
 function claimTitle(text = '') {
@@ -72,6 +82,14 @@ function claimTitle(text = '') {
 function formatValue(value, unit) {
   const number = Number(value);
   const rendered = Number.isInteger(number) ? String(number) : String(Number(number.toFixed(2)));
+  if (unitKey(unit) === 'ordinal') {
+    const modulo100 = Math.abs(number) % 100;
+    const modulo10 = Math.abs(number) % 10;
+    const suffix = modulo100 >= 11 && modulo100 <= 13 ? 'th' : ({ 1: 'st', 2: 'nd', 3: 'rd' })[modulo10] || 'th';
+    return `${rendered}${suffix}`;
+  }
+  if (unitKey(unit) === 'year') return rendered;
+  if (unitKey(unit) === 'times') return `${rendered}×`;
   return unit ? `${rendered} ${unit}` : rendered;
 }
 
@@ -79,17 +97,60 @@ function formatValue(value, unit) {
 // unit-bearing numbers even in claims that clearly carry them ($4 billion,
 // 800 VDC, 96 GB). Figures use this wider matcher — display only; the
 // unsupported-claims GATE keeps the strict shared extractor.
-const FIGURE_NUMBER_PATTERN = /(\$\s?\d[\d,]*(?:\.\d+)?)\s*(billion|million|trillion|bn|B\b|M\b)?|\b(\d[\d,]*(?:\.\d+)?)\s?(GW|MW|kW|MWh|GWh|kWh|TWh|VDC|kV|volts?|watts?|TB|GB|PB|Gb|Gbps|Tbps|nm|percent|%|billion|million|trillion|years?|months?|weeks?|days?|hours?|racks?|GPUs?|servers?|acres?)\b/g;
+const COMPARISON_QUALIFIER = '(?:less than|more than|at least|at most|up to|over|under|approximately|about|around|nearly|almost|roughly|some)';
+const FIGURE_NUMBER_PATTERN = new RegExp(
+  `(?:(${COMPARISON_QUALIFIER})\\s+)?(?:`+
+    '(\\$\\s?\\d[\\d,]*(?:\\.\\d+)?)\\s*(billion|million|trillion|bn|B\\b|M\\b)?' +
+    '|\\b(\\d[\\d,]*(?:\\.\\d+)?)\\s?(GW|MW|kW|MWh|GWh|kWh|TWh|VDC|kV|volts?|watts?|TB|GB|PB|Gb|Gbps|Tbps|nm|percent|%|billion|million|trillion|years?|months?|weeks?|days?|hours?|racks?|GPUs?|servers?|acres?)\\b' +
+  ')',
+  'gi',
+);
+
+function sourceDisplay(source = '', numeric = {}) {
+  const raw = String(numeric.raw || '').trim();
+  if (unitKey(numeric.unit) === 'ordinal') {
+    const percentile = /^[-\s]+percentile\b/i.test(String(source).slice(numeric.source_index + raw.length));
+    return percentile ? `${raw} percentile` : raw;
+  }
+  const rawHasUnit = /[^\d,.$<>~=\s-]/u.test(raw);
+  if (!rawHasUnit && !['usd', 'year', 'ordinal'].includes(unitKey(numeric.unit))) return `${raw} ${numeric.unit}`.trim();
+  return raw;
+}
+
+function centralFigureNumbers(text = '') {
+  const source = compactDeskText(text);
+  return extractNumericClaims(source).map((numeric) => ({
+    display: sourceDisplay(source, numeric),
+    value: Number(numeric.numeric_value),
+    unit: numeric.unit,
+    comparator: numeric.comparator,
+    index: numeric.source_index,
+    end: numeric.source_index + String(numeric.raw || '').length,
+  })).filter((item) => Number.isFinite(item.value));
+}
+
+function legacyFigureNumbers(text = '') {
+  const matches = [...compactDeskText(text).matchAll(FIGURE_NUMBER_PATTERN)];
+  return matches.map((match) => {
+    const qualifier = match[1] ? `${match[1].toLowerCase()} ` : '';
+    const numericOffset = match[0].search(/[$\d]/);
+    const index = match.index + Math.max(0, numericOffset);
+    if (match[2]) {
+      const magnitude = match[3] ? ` ${match[3]}` : '';
+      return { display: `${qualifier}${match[2].replace(/\s/g, '')}${magnitude}`, value: Number(match[2].replace(/[$,\s]/g, '')), unit: `$${match[3] || ''}`.trim(), index, end: match.index + match[0].length };
+    }
+    return { display: `${qualifier}${match[4]} ${match[5]}`, value: Number(match[4].replace(/,/g, '')), unit: match[5], index, end: match.index + match[0].length };
+  }).filter((item) => Number.isFinite(item.value));
+}
 
 export function extractFigureNumbers(text = '') {
-  const matches = [...String(text || '').matchAll(FIGURE_NUMBER_PATTERN)];
-  return matches.map((match) => {
-    if (match[1]) {
-      const magnitude = match[2] ? ` ${match[2]}` : '';
-      return { display: `${match[1].replace(/\s/g, '')}${magnitude}`, value: Number(match[1].replace(/[$,\s]/g, '')), unit: `$${match[2] || ''}`.trim(), index: match.index };
-    }
-    return { display: `${match[3]} ${match[4]}`, value: Number(match[3].replace(/,/g, '')), unit: match[4], index: match.index };
-  }).filter((item) => Number.isFinite(item.value));
+  const central = centralFigureNumbers(text);
+  const legacy = legacyFigureNumbers(text).filter((candidate) => !central.some((item) => (
+    candidate.index < item.end && candidate.end > item.index
+  )));
+  return [...central, ...legacy]
+    .sort((left, right) => left.index - right.index)
+    .map(({ end, ...item }) => item);
 }
 
 function verifiedPrimaryClaims(ledger = {}) {
@@ -146,7 +207,13 @@ export function relevantClaims(claims = [], { headline = '', stance = {} } = {})
 // own number, not the sentence opening, or the $0.6 billion row reads as the
 // $3.8 billion statement.
 function unitKey(unit = '') {
-  const key = String(unit || '').toLowerCase().replace(/[$\s.]/g, '');
+  const raw = String(unit || '').toLowerCase().replace(/\s+/g, ' ').trim();
+  const currencyUnit = raw.startsWith('$')
+    ? canonicalNumericUnit(`usd ${raw.slice(1).trim() || ''}`)
+    : '';
+  const canonical = currencyUnit || canonicalNumericUnit(raw);
+  if (canonical) return canonical;
+  const key = raw.replace(/[$\s.]/g, '');
   if (key === '%' || key === 'percent') return 'percent';
   if (key === 'bn' || key === 'b') return 'billion';
   if (key === 'm') return 'million';
@@ -155,21 +222,39 @@ function unitKey(unit = '') {
   return key.replace(/s$/, '');
 }
 
-// Equal magnitudes can sit side by side ("10 MW ... $10 million"), so the
-// claim's unit picks the occurrence; a value alone decides only when it
-// occurs once.
-function ownNumberIndex(claim) {
+function legacyCurrencyUnitMatch(claimUnit = '', figureUnit = '') {
+  const claimKey = unitKey(claimUnit);
+  const figureKey = unitKey(figureUnit);
+  // Older ledgers represented "$10 million" as the magnitude-only unit
+  // "million". Keep those rows usable while preferring the current canonical
+  // "usd million" unit emitted by the numeric extractor.
+  return ['thousand', 'million', 'billion', 'trillion'].includes(claimKey)
+    && figureKey === `usd ${claimKey}`;
+}
+
+// Equal magnitudes can sit side by side ("$10 million ... 10 million users"),
+// so an exact canonical unit always picks the occurrence. The legacy
+// magnitude-only currency alias is safe only when there is one candidate.
+function ownFigureNumber(claim) {
   const value = Number(claim.numeric_value);
   const unit = unitKey(claim.unit);
   const sameValue = extractFigureNumbers(claim.claim_text).filter((number) => Math.abs(number.value - value) < 1e-9);
-  const match = sameValue.find((number) => unitKey(number.unit) === unit) || (sameValue.length === 1 ? sameValue[0] : null);
-  return match ? match.index : undefined;
+  const exact = sameValue.find((number) => unitKey(number.unit) === unit);
+  if (exact) return exact;
+  if (sameValue.length === 1 && legacyCurrencyUnitMatch(unit, sameValue[0].unit)) return sameValue[0];
+  return null;
+}
+
+function ownNumberIndex(claim) {
+  return ownFigureNumber(claim)?.index;
 }
 
 function withFigureNumber(claim) {
   if (Number.isFinite(Number(claim.numeric_value)) && String(claim.unit || '').trim()) {
-    const figureIndex = ownNumberIndex(claim);
-    return Number.isFinite(figureIndex) ? { ...claim, figure_index: figureIndex } : { ...claim };
+    const figureNumber = ownFigureNumber(claim);
+    return figureNumber
+      ? { ...claim, figure_index: figureNumber.index, figure_display: figureNumber.display }
+      : { ...claim };
   }
   const [number] = extractFigureNumbers(claim.claim_text);
   if (!number) return null;
@@ -240,13 +325,17 @@ function ownClauseLabel(claim, decoded) {
     clause = clause.slice(inner.start, inner.end);
   }
   clause = clause.replace(CLAUSE_LEAD, '').trim();
-  return clause.length >= 20 && extractFigureNumbers(clause).length === 1 ? condense(clause, 96) : null;
+  const display = String(claim.figure_display || '').toLowerCase();
+  const keepsDisplayContext = !display || clause.toLowerCase().includes(display);
+  return clause.length >= 20 && extractFigureNumbers(clause).length === 1 && keepsDisplayContext
+    ? completeFactLabel(clause).replace(/[.!?]+$/g, '')
+    : null;
 }
 
 // When the number was found deep in the claim text, window the label around
 // it so the row's context and its figure line up.
 function numberAlignedLabel(claim) {
-  if (!Number.isFinite(claim.figure_index)) return labelFor(claim);
+  if (!Number.isFinite(claim.figure_index)) return completeFactLabel(claim.claim_text);
   const decoded = decodeEntities(String(claim.claim_text || '')).replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ');
   // figure_index was measured on the raw claim text; decoded entities and
   // stripped tags shift offsets, so the number is located again in the text
@@ -257,15 +346,12 @@ function numberAlignedLabel(claim) {
     const clause = ownClauseLabel({ ...claim, figure_index: index }, decoded);
     if (clause) return clause;
   }
-  if (index <= 70) return labelFor(claim);
-  const start = decoded.lastIndexOf(' ', Math.max(0, index - 60)) + 1;
-  const windowed = decoded.slice(start).trim();
-  return condense((start > 0 ? '\u2026' : '') + windowed, 96);
+  return completeFactLabel(decoded);
 }
 
 function itemFor(claim) {
   return {
-    label: numberAlignedLabel(claim),
+    label: attributedSourceExcerpt(numberAlignedLabel(claim)),
     value: Number(claim.numeric_value),
     unit: String(claim.unit || '').trim(),
     display: claim.figure_display || formatValue(claim.numeric_value, String(claim.unit || '').trim()),
@@ -275,7 +361,7 @@ function itemFor(claim) {
 
 function factItemFor(claim) {
   return {
-    label: completeFactLabel(claim.claim_text),
+    label: attributedSourceExcerpt(claim.claim_text),
     value: null,
     unit: '',
     display: '',
@@ -312,9 +398,11 @@ function automaticTitle(...candidates) {
 // explicit magnitude qualify; bare dollar figures (a $118 barrel next to a
 // $4 gallon) do not.
 const BAR_UNIT_PATTERN = /^(GW|MW|kW|MWh|GWh|kWh|TWh|VDC|kV|volts?|watts?|TB|GB|PB|Gb|Gbps|Tbps|nm|percent|%|racks?|GPUs?|servers?|acres?|years?|months?|billion|million|trillion|\$(billion|million|trillion|bn|B|M))$/i;
+const COMPARABLE_CURRENCY_UNITS = new Set(['usd thousand', 'usd million', 'usd billion', 'usd trillion']);
 
 function barComparableUnit(unit = '') {
-  return BAR_UNIT_PATTERN.test(String(unit || '').trim());
+  return BAR_UNIT_PATTERN.test(String(unit || '').trim())
+    || COMPARABLE_CURRENCY_UNITS.has(canonicalNumericUnit(unit));
 }
 
 function clampAnchor(anchor, sectionCount) {
@@ -447,7 +535,7 @@ function evidencePackFigure({ facts = [], factSource = '', stance, headline, sec
   const title = automatic || claimTitle(usable[0]);
   if (!automatic && !titleOk(title)) return null;
   const items = usable.slice(0, MAX_ITEMS_PER_FIGURE).map((fact) => ({
-    label: completeFactLabel(fact),
+    label: attributedSourceExcerpt(fact),
     value: null,
     unit: '',
     display: '',

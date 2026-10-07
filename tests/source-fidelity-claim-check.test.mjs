@@ -98,3 +98,26 @@ test('claim checker accepts exact and conservative paraphrased facts with actor 
   assert.equal(result.ok, true);
   assert.equal(result.unsupportedClaims.length, 0);
 });
+
+test('claim checker preserves the source comparison relation for the same value and unit', () => {
+  const evidence = {
+    evidenceText: 'OpenAI reported that median daily coding-agent use remained under $1 in January 2026.',
+    namedActors: ['OpenAI'],
+  };
+  const equivalent = checkClaimsAgainstEvidence(
+    'OpenAI reported that median daily coding-agent use was less than $1 during January 2026.',
+    evidence,
+  );
+  const reversed = checkClaimsAgainstEvidence(
+    'OpenAI reported that median daily coding-agent use was over $1 during January 2026.',
+    evidence,
+  );
+  const strengthened = checkClaimsAgainstEvidence(
+    'OpenAI reported that median daily coding-agent use was exactly $1 during January 2026.',
+    evidence,
+  );
+
+  assert.equal(equivalent.ok, true);
+  assert.equal(reversed.ok, false);
+  assert.equal(strengthened.ok, false);
+});
