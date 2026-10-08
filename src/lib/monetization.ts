@@ -35,14 +35,16 @@ export const adsConfigured = /^ca-pub-\d{10,20}$/.test(ADSENSE_CLIENT);
 export const analyticsConfigured = /^G-[A-Z0-9]{4,16}$/i.test(GA4_ID);
 
 // This is an explicit deployment attestation, not a local consent mechanism.
-// It must remain true until a certified CMP is configured externally.
+// It must remain false until a certified CMP is configured externally.
 export const googleCmpReady = clean(env.PUBLIC_GOOGLE_CMP_READY).toLowerCase() === 'true';
+export const basicAnalyticsConsent = analyticsConfigured && !googleCmpReady
+  && clean(env.PUBLIC_ANALYTICS_CONSENT_MODE).toLowerCase() === 'basic';
 export const adsenseContentReady = clean(env.PUBLIC_ADSENSE_CONTENT_READY).toLowerCase() === 'true';
 
 // Existing ad surfaces stay off until CMP and content attestations are present;
 // route-specific activation remains the Layout's responsibility.
 export const adsEnabled = adsConfigured && googleCmpReady && adsenseContentReady && verifiedPublicDetailCount > 0;
-export const analyticsEnabled = analyticsConfigured && googleCmpReady;
+export const analyticsEnabled = analyticsConfigured && (googleCmpReady || basicAnalyticsConsent);
 
 export const MONETIZATION_DENIED_PATHS = [
   '/privacy',
@@ -58,6 +60,7 @@ export const MONETIZATION_DENIED_PATHS = [
 
 export const MONETIZATION_DENIED_PREFIXES = ['/admin/', '/api/'] as const;
 export const MONETIZABLE_ROUTE_PREFIXES = ['/archive/', '/news/', '/category/', '/company/', '/region/'] as const;
+export const ANALYTICS_CONTENT_PREFIXES = ['/column/', '/radar/', '/data/', '/ko/', '/hubs/', '/entities/', '/glossary/'] as const;
 
 const normalizePathname = (pathname: string): string => {
   const pathWithoutQuery = clean(pathname).split(/[?#]/, 1)[0] || '';
@@ -81,8 +84,13 @@ export const isMonetizableRoute = (pathname: string): boolean => {
 export const isAdsActiveForRoute = (pathname: string): boolean =>
   adsEnabled && isMonetizableRoute(pathname);
 
-export const isAnalyticsActiveForRoute = (pathname: string): boolean =>
-  analyticsEnabled && isMonetizableRoute(pathname);
+export const isAnalyticsActiveForRoute = (pathname: string): boolean => {
+  const normalizedPathname = normalizePathname(pathname);
+  const isPublicContent = isMonetizableRoute(normalizedPathname)
+    || (ANALYTICS_CONTENT_PREFIXES.some((prefix) => matchesRoutePrefix(normalizedPathname, prefix))
+      && !/\.[a-z0-9]+$/i.test(normalizedPathname));
+  return analyticsEnabled && isPublicContent;
+};
 
 export const isMonetizationActiveForRoute = (pathname: string): boolean =>
   googleCmpReady && isMonetizableRoute(pathname) && (adsConfigured || analyticsConfigured);

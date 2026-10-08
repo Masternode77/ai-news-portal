@@ -17,13 +17,15 @@ loaders, slots, or analytics. The candidate is intentionally off by default.
   invalid verified detail inventory. Initial activation uses manually placed
   units only. Keep Auto ads disabled until post-approval production
   DOM/placement/accessibility QA is recorded.
-- `PUBLIC_GA4_ID` (`G-…`) is also gated by `PUBLIC_GOOGLE_CMP_READY`. Set that
+- `PUBLIC_GA4_ID` (`G-…`) uses `PUBLIC_GOOGLE_CMP_READY` by default. Set that
   flag only after the Google-certified CMP is published and its EEA/UK/CH
-  accept, reject, and revocation flows have been tested. This repository does
-  not provide a custom consent banner.
+  accept, reject, and revocation flows have been tested. For analytics only, explicitly set
+  PUBLIC_ANALYTICS_CONSENT_MODE=basic with a valid GA4 ID and keep CMP readiness false.
+  The local banner loads GA only after acceptance, keeps all ad consent denied, and supports
+  footer reopening/revocation. It does not replace the certified advertising CMP.
 - `/privacy/` is intentionally free of Google advertising, Analytics, and CMP
   runtime. The policy page directs applicable visitors to the footer privacy
-  choices control on a public content page and to Google Ads Settings.
+  choices control on a public content page and to Google Ads Settings. In basic analytics mode, local Analytics choices are available on policy pages too, without loading Google tags.
 - `PUBLIC_ADSENSE_SLOT_LEADERBOARD` / `_INFEED` / `_ARTICLE` / `_BOX` describe
   the manually placed eligible units; route gating remains an additional check.
 

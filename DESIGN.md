@@ -76,6 +76,14 @@ Compute Current is a light, source-linked editorial product for AI-infrastructur
 - Policy pages inherit the public light system, with an eyebrow, a prominent H1, a readable lead, and ruled sections.
 - Inline text adjacent to links, dates, or dynamic values must render with deliberate spaces; source formatting alone is not sufficient.
 
+### Analytics choices
+
+- A nonmodal, bottom-anchored white consent panel uses the existing canvas/text/hairline tokens, 18px radius, card shadow, 24px padding and 16px gaps. Maximum width is 980px; viewport inset is 16px.
+- Accept analytics and Reject analytics have identical soft-surface styling, 44px targets and equal widths. Buttons wrap on narrow screens; panel height is limited to the viewport with internal scrolling. Body text is 1rem/1.6.
+- Analytics choices in the footer reopens the panel, focuses its heading, and returns focus after a choice. Initial presentation does not steal focus or block reading. No animation is needed.
+- States: undecided, accepted, rejected, reopened. No tag requests before acceptance; rejecting after acceptance reloads after deleting GA cookies. Local preference storage lasts 180 days. Policy pages allow choices but never measurement.
+- Intended readers include keyboard and mobile users; decisions must be equally easy to accept, reject and revisit. Browser verification is recorded separately; no visual or accessibility pass is inferred from source checks.
+
 ## 6. Interaction & Accessibility
 
 - All links and controls need hover and `:focus-visible` states.

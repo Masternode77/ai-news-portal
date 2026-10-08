@@ -1,5 +1,6 @@
 ---
 import OpenGraphImage from '../components/OpenGraphImage.astro';
+import AnalyticsConsent from '../components/AnalyticsConsent.astro';
 import '../styles/global.css';
 import '../styles/redesign.css';
 import '../styles/public-intelligence.css';
@@ -8,6 +9,7 @@ import { SITE } from '../config/site';
 import {
   ADSENSE_CLIENT,
   GA4_ID,
+  basicAnalyticsConsent,
   isAdsActiveForRoute,
   isAnalyticsActiveForRoute,
   isMonetizationActiveForRoute,
@@ -42,7 +44,7 @@ const analyticsActive = isAnalyticsActiveForRoute(Astro.url.pathname);
 const monetizationActive = isMonetizationActiveForRoute(Astro.url.pathname);
 
 // The certified CMP, once configured, owns every consent update. Defaults are
-// denied for every region; this site never stores or fabricates a local choice.
+// denied for every region in this certified-CMP path.
 const consentModeBootstrap = [
   'window.dataLayer=window.dataLayer||[];',
   'function gtag(){dataLayer.push(arguments);}',
@@ -73,8 +75,8 @@ const consentModeBootstrap = [
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
-    {monetizationActive ? <script is:inline set:html={consentModeBootstrap}></script> : null}
-    {analyticsActive ? (
+    {(monetizationActive || analyticsActive) && !basicAnalyticsConsent ? <script is:inline set:html={consentModeBootstrap}></script> : null}
+    {analyticsActive && !basicAnalyticsConsent ? (
       <>
         <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin />
         <script is:inline async src={`https://www.googletagmanager.com/gtag/js?id=${GA4_ID}`}></script>
@@ -95,5 +97,6 @@ const consentModeBootstrap = [
   </head>
   <body>
     <slot />
+    {basicAnalyticsConsent ? <AnalyticsConsent measurementId={analyticsActive ? GA4_ID : ''} /> : null}
   </body>
 </html>

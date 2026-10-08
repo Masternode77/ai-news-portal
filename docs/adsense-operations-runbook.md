@@ -11,7 +11,7 @@ promises approval, ad serving, traffic volume, or revenue.
 | State | Repository behavior |
 | --- | --- |
 | `PUBLIC_ADSENSE_CLIENT` is blank or invalid | No AdSense loader, publisher metadata, manual units, or authorized-seller record is active. |
-| Valid `PUBLIC_ADSENSE_CLIENT`, `PUBLIC_GOOGLE_CMP_READY` not `true` | The publisher ID is configured. `ads.txt` publishes the corresponding `pub-…` record for ownership/review, while advertising and Analytics remain off. |
+| Valid `PUBLIC_ADSENSE_CLIENT`, `PUBLIC_GOOGLE_CMP_READY` not `true` | The publisher ID is configured. `ads.txt` publishes the corresponding `pub-…` record for ownership/review, while advertising remains off; Analytics stays off unless the separate basic analytics mode below is explicitly selected. |
 | Valid GA4 ID plus `PUBLIC_GOOGLE_CMP_READY=true` | The operator has attested that the certified Google CMP handoff is ready. Eligible routes may load Analytics; route exclusions still apply. This flag is not a substitute for account/site approval, real ads.txt IDs, EEA/UK/CH choice tests, or legal review. |
 | Valid AdSense ID, CMP ready, and `PUBLIC_ADSENSE_CONTENT_READY=true` | AdSense still stays off unless the code finds a nonzero canonical detail inventory with `publication_integrity.ok=true`. The environment attestation cannot override zero or invalid inventory. |
 
@@ -95,3 +95,7 @@ AdSense, and the selected CMP; a report-only policy also needs a verified report
   the operating organization or jurisdictions change.
 - [ ] Keep a separate record of external-account actions; do not put publisher IDs, payment details, consent
   receipts, or personal data into repository evidence.
+
+## Separate analytics-only mode
+
+`PUBLIC_ANALYTICS_CONSENT_MODE=basic` with a valid `PUBLIC_GA4_ID` and `PUBLIC_GOOGLE_CMP_READY=false` enables a local analytics choice. Only acceptance loads GA; all advertising consent stays denied. This is not a certified advertising CMP and does not satisfy any advertising activation gate above. When certified CMP readiness is true, that existing controller takes precedence and the basic banner is absent. See [monetization setup](monetization-setup.md#analytics-only-basic-consent-no-advertising) for consent, revocation, privacy-route exclusions and rollback verification.
