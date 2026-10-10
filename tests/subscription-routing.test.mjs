@@ -16,6 +16,30 @@ function runIsolated(code, overrides = {}) {
   return result.stdout.trim();
 }
 
+test('the existing enrichment call requests the complete grounded insight contract once', () => {
+  assert.equal(runIsolated(`
+    import assert from 'node:assert/strict';
+    import { buildContentEnrichmentRequest } from './scripts/lib/content.mjs';
+    import { SOURCE_EXPERT_INSIGHT_FIELDS } from './scripts/lib/expert-insight-engine.mjs';
+    globalThis.fetch = () => { throw new Error('Unexpected HTTP'); };
+    const source = 'DOE backed a source-specific tariff filing by PJM.';
+    const request = buildContentEnrichmentRequest({
+      title: 'Energy Department supports FERC call for PJM tariff filing',
+      source: 'U.S. Department of Energy',
+      url: 'https://example.com/doe-pjm',
+      publishedAt: '2026-10-10T00:00:00Z',
+      snippet: source,
+    }, source);
+    assert.equal(JSON.parse(request.userPrompt).articleText, source);
+    assert.equal(request.maxTokens, 1600);
+    assert.match(request.systemPrompt, /source_expert_insight must be null/);
+    assert.match(request.systemPrompt, /exclude headline fragments/);
+    assert.match(request.systemPrompt, /same value, unit, and qualifier/);
+    for (const field of SOURCE_EXPERT_INSIGHT_FIELDS) assert.ok(request.systemPrompt.includes('"' + field + '"'));
+    console.log('grounded-contract');
+  `, { SUBSCRIPTION_CODEX_BIN: 'must-not-execute' }), 'grounded-contract');
+});
+
 test('subscription defaults ignore stale API model overrides', () => {
   const output = runIsolated(`
     import { LLM_PROVIDER, OPENROUTER_MODEL, CURATION_MODEL, EXPERT_LENS_MODEL, AUTHORED_COLUMN_MODEL } from './scripts/lib/constants.mjs';

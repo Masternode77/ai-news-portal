@@ -1,12 +1,10 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import {
-  buildContentEnrichmentRequest,
   resolveEnrichmentExpertInsight,
   sourceGroundedInsightRequired,
 } from '../scripts/lib/content.mjs';
 import {
-  SOURCE_EXPERT_INSIGHT_FIELDS,
   expertInsightUsageScore,
   validateSourceExpertInsight,
 } from '../scripts/lib/expert-insight-engine.mjs';
@@ -171,23 +169,6 @@ test('only extraction-qualified full memos require grounded insight in the live 
     sourceExpertInsight: false,
     sourceText: DOE_SOURCE,
   }), (error) => error.code === 'SOURCE_EXPERT_INSIGHT_INVALID' && error.reason === 'payload_not_object');
-});
-
-test('the existing enrichment call requests the complete grounded insight contract once', () => {
-  const request = buildContentEnrichmentRequest({
-    title: 'Energy Department supports FERC call for PJM tariff filing',
-    source: 'U.S. Department of Energy',
-    url: 'https://example.com/doe-pjm',
-    publishedAt: '2026-10-10T00:00:00Z',
-    snippet: 'DOE backed a source-specific tariff filing.',
-  }, DOE_SOURCE);
-  const input = JSON.parse(request.userPrompt);
-  assert.equal(input.articleText, DOE_SOURCE);
-  assert.equal(request.maxTokens, 1600);
-  assert.match(request.systemPrompt, /source_expert_insight must be null/);
-  assert.match(request.systemPrompt, /exclude headline fragments/);
-  assert.match(request.systemPrompt, /same value, unit, and qualifier/);
-  for (const field of SOURCE_EXPERT_INSIGHT_FIELDS) assert.match(request.systemPrompt, new RegExp(`"${field}"`));
 });
 
 test('retained DOE response uses source-grounded insight without literal sentence-prefix copying', () => {
