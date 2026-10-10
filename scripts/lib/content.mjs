@@ -11,8 +11,14 @@ import { callOpenRouterJson, rethrowSubscriptionFailure } from './openrouter.mjs
 import { LLM_PROVIDER, PIPELINE_OFFLINE } from './constants.mjs';
 import { fetchArticleExtraction } from './source-fetch.mjs';
 import { normalizeEditorialVoice } from './editorial-humanizer.mjs';
-import { extractExpertInsight } from './expert-insight-engine.mjs';
+import {
+  SOURCE_EXPERT_INSIGHT_FIELDS,
+  emptyExpertInsight,
+  extractExpertInsight,
+  validateSourceExpertInsight,
+} from './expert-insight-engine.mjs';
 import { classifyAiTopicRelevance, classifyInfrastructureRelevance } from './relevance-classifier.mjs';
+import { ARTICLE_PAGE_QUALITY_THRESHOLD } from './quality-gate.mjs';
 import { analyzeSourceExtractionFailClosed } from './source-extraction-fail-closed.mjs';
 import {
   ARTICLE_TYPES,
@@ -114,6 +120,8 @@ export function normalizeAiPayload(aiPayload, fallback) {
         region: aiPayload.region,
         urgency_score: aiPayload.urgency_score,
       },
+      sourceExpertInsight: aiPayload.source_expert_insight ?? null,
+      sourceExpertInsightProvided: Object.hasOwn(aiPayload, 'source_expert_insight'),
     };
   }
 
@@ -141,6 +149,92 @@ export function normalizeAiPayload(aiPayload, fallback) {
         urgency_score: aiPayload.urgency_score,
       },
   };
+}
+
+export function buildContentEnrichmentRequest(item, articleText = '') {
+  const liveSubscription = LLM_PROVIDER === 'subscription' && !PIPELINE_OFFLINE;
+  const evidenceContract = SOURCE_EXPERT_INSIGHT_FIELDS
+    .map((field) => `"${field}": string[]`)
+    .join(', ');
+  return {
+    systemPrompt: [
+      'You are a veteran editor covering data centers, hyperscalers, cloud infrastructure, semiconductors, power markets, and AI deployment.',
+      'Write like a senior newsroom editor, not a strategy deck.',
+      `Return JSON only with keys: summary, insight, primary_category, secondary_category, infrastructure_layer, affected_stakeholders, article_type, region, urgency_score, tags, imagePrompt${liveSubscription ? ', source_expert_insight' : ''}.`,
+      'summary: 1-2 sentences, 180 characters max, crisp and factual.',
+      'insight: 2 sentences max, focused on why this matters for operators / investors / capacity planners.',
+      'Avoid phrases such as "Expert lens", "This signal matters", "strategic significance", and "read-through".',
+      `primary_category must be one of: ${PRIMARY_CATEGORIES.join(' | ')}`,
+      'secondary_category: concise desk/subbeat label grounded in the source.',
+      `infrastructure_layer must be one of: ${INFRASTRUCTURE_LAYERS.join(' | ')}`,
+      'affected_stakeholders: array of up to 5 concise plural groups such as operators, utilities, hyperscalers, investors, enterprise IT.',
+      `article_type must be one of: ${ARTICLE_TYPES.join(' | ')}`,
+      'urgency_score: number from 0 to 1 based on timing sensitivity, bottleneck severity, and decision value.',
+      'tags: array of up to 6 concise lowercase tags.',
+      'region: short market label like Global, Korea, APAC, US, EU, MiddleEast.',
+      'imagePrompt: premium editorial image prompt, 16:9, no logos, no text.',
+      'Do not invent facts or numbers not supported by the source text.',
+      ...(liveSubscription ? [
+        'source_expert_insight must be null when the supplied articleText cannot support every required field. Never fill missing evidence with generic infrastructure assumptions.',
+        'Otherwise source_expert_insight must have exactly these keys: concrete_facts, named_actors, infrastructure_layer, bottleneck_type, who_gains_leverage, who_takes_execution_risk, timing_dependency, counterargument, next_observable_signal, source_evidence.',
+        'concrete_facts must contain 1-5 exact complete sentences copied from articleText. named_actors must contain only complete names of organizations, companies, agencies, commissions, utilities, or other institutional actors explicitly named in articleText; exclude headline fragments and descriptive phrases.',
+        'The six analytical fields are bottleneck_type, who_gains_leverage, who_takes_execution_risk, timing_dependency, counterargument, and next_observable_signal. They may be qualified inferences or explicit source limitations when articleText motivates them; cite the exact clauses that motivate each one, never present an inference as a reported fact, and never invent amounts, dates, or actors. Avoid generic interconnection, equipment, permitting, or commissioning claims unless articleText supports them.',
+        `source_evidence must have exactly these keys and array types: {${evidenceContract}}. Each array must contain 1-5 exact excerpts copied from articleText that support that one field. Numeric claims in a field must appear with the same value, unit, and qualifier in its evidence excerpts.`,
+      ] : []),
+    ].join(' '),
+    userPrompt: JSON.stringify({
+      title: item.title,
+      source: item.source,
+      url: item.url,
+      publishedAt: item.publishedAt,
+      snippet: item.snippet,
+      articleText,
+      fullArticleText: articleText,
+      defaultCategory: item.defaultCategory || item.categoryHint || null,
+      defaultRegion: item.region || null,
+    }),
+    maxTokens: liveSubscription ? 1600 : 700,
+  };
+}
+
+export function sourceGroundedInsightRequired({
+  liveSubscription = LLM_PROVIDER === 'subscription' && !PIPELINE_OFFLINE,
+  extractionQa = {},
+  infrastructureRelevance = {},
+} = {}) {
+  return liveSubscription
+    && extractionQa.can_generate_longform === true
+    && Number(extractionQa.extraction_quality_score || 0) >= ARTICLE_PAGE_QUALITY_THRESHOLD
+    && infrastructureRelevance.infrastructure_relevance_tier === 'full_memo';
+}
+
+export function resolveEnrichmentExpertInsight({
+  liveSubscription = LLM_PROVIDER === 'subscription' && !PIPELINE_OFFLINE,
+  extractionQa = {},
+  infrastructureRelevance = {},
+  sourceExpertInsightProvided = false,
+  sourceExpertInsight = null,
+  sourceText = '',
+  heuristicArticle = {},
+} = {}) {
+  if (sourceGroundedInsightRequired({ liveSubscription, extractionQa, infrastructureRelevance })) {
+    if (!sourceExpertInsightProvided) {
+      const error = new Error('Source-grounded expert insight rejected: source_expert_insight_missing');
+      error.code = 'SOURCE_EXPERT_INSIGHT_INVALID';
+      error.reason = 'source_expert_insight_missing';
+      throw error;
+    }
+    if (sourceExpertInsight === null) {
+      return {
+        ...emptyExpertInsight(),
+        source_grounded: false,
+        source_grounded_abstention: true,
+      };
+    }
+    return validateSourceExpertInsight(sourceExpertInsight, sourceText);
+  }
+  if (liveSubscription) return emptyExpertInsight();
+  return extractExpertInsight(heuristicArticle);
 }
 
 export function buildContentExtractionState(item, articleText, extractionQa = {}) {
@@ -196,38 +290,8 @@ export async function enrichContent(item) {
     imagePrompt: fallbackImagePrompt(item, category, summary),
   };
 
-  const aiPayload = await callOpenRouterJson({
-    systemPrompt: [
-      'You are a veteran editor covering data centers, hyperscalers, cloud infrastructure, semiconductors, power markets, and AI deployment.',
-      'Write like a senior newsroom editor, not a strategy deck.',
-      'Return JSON only with keys: summary, insight, primary_category, secondary_category, infrastructure_layer, affected_stakeholders, article_type, region, urgency_score, tags, imagePrompt.',
-      'summary: 1-2 sentences, 180 characters max, crisp and factual.',
-      'insight: 2 sentences max, focused on why this matters for operators / investors / capacity planners.',
-      'Avoid phrases such as "Expert lens", "This signal matters", "strategic significance", and "read-through".',
-      `primary_category must be one of: ${PRIMARY_CATEGORIES.join(' | ')}`,
-      'secondary_category: concise desk/subbeat label grounded in the source.',
-      `infrastructure_layer must be one of: ${INFRASTRUCTURE_LAYERS.join(' | ')}`,
-      'affected_stakeholders: array of up to 5 concise plural groups such as operators, utilities, hyperscalers, investors, enterprise IT.',
-      `article_type must be one of: ${ARTICLE_TYPES.join(' | ')}`,
-      'urgency_score: number from 0 to 1 based on timing sensitivity, bottleneck severity, and decision value.',
-      'tags: array of up to 6 concise lowercase tags.',
-      'region: short market label like Global, Korea, APAC, US, EU, MiddleEast.',
-      'imagePrompt: premium editorial image prompt, 16:9, no logos, no text.',
-      'Do not invent facts or numbers not supported by the source text.',
-    ].join(' '),
-    userPrompt: JSON.stringify({
-      title: item.title,
-      source: item.source,
-    url: item.url,
-    publishedAt: item.publishedAt,
-    snippet: item.snippet,
-    articleText,
-    fullArticleText: articleText,
-    defaultCategory: item.defaultCategory || item.categoryHint || null,
-    defaultRegion: item.region || null,
-  }),
-    maxTokens: 700,
-  }).catch((error) => { rethrowSubscriptionFailure(error); return null; });
+  const aiPayload = await callOpenRouterJson(buildContentEnrichmentRequest(item, articleText))
+    .catch((error) => { rethrowSubscriptionFailure(error); return null; });
 
   const normalized = normalizeAiPayload(aiPayload, fallback);
   const infrastructureRelevance = classifyInfrastructureRelevance({
@@ -254,20 +318,34 @@ export async function enrichContent(item) {
     tags: normalized.tags,
     region: normalized.region,
   }, normalized.taxonomy);
-  const expertInsight = extractExpertInsight({
-    ...item,
-    articleText,
-    summary: normalized.summary,
-    insight: normalized.insight,
-    category: taxonomy.primary_category,
-    primary_category: taxonomy.primary_category,
-    secondary_category: taxonomy.secondary_category,
-    infrastructure_layer: taxonomy.infrastructure_layer,
-    affected_stakeholders: taxonomy.affected_stakeholders,
-    article_type: taxonomy.article_type,
-    region: taxonomy.region,
-    tags: normalized.tags,
-  });
+  const liveSubscription = LLM_PROVIDER === 'subscription' && !PIPELINE_OFFLINE;
+  let expertInsight;
+  try {
+    expertInsight = resolveEnrichmentExpertInsight({
+      liveSubscription,
+      extractionQa: publicExtractionQa,
+      infrastructureRelevance,
+      sourceExpertInsightProvided: normalized.sourceExpertInsightProvided,
+      sourceExpertInsight: normalized.sourceExpertInsight,
+      sourceText: failClosed.cleaned_source_text || articleText,
+      heuristicArticle: {
+      ...item,
+      articleText,
+      summary: normalized.summary,
+      insight: normalized.insight,
+      category: taxonomy.primary_category,
+      primary_category: taxonomy.primary_category,
+      secondary_category: taxonomy.secondary_category,
+      infrastructure_layer: taxonomy.infrastructure_layer,
+      affected_stakeholders: taxonomy.affected_stakeholders,
+      article_type: taxonomy.article_type,
+      region: taxonomy.region,
+      tags: normalized.tags,
+      },
+    });
+  } catch (error) {
+    rethrowSubscriptionFailure(error);
+  }
 
   return {
     ...item,

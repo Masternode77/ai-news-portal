@@ -1,4 +1,6 @@
 import { INFRASTRUCTURE_LAYERS } from './taxonomy.mjs';
+import { extractNumericClaims } from './autonomous-desk-utils.mjs';
+import { numericClaimKey } from './numeric-claim-policy.mjs';
 import { sanitizeGeneratedText, truncate, unique } from './normalize.mjs';
 
 const REQUIRED_TEXT_FIELDS = [
@@ -9,6 +11,13 @@ const REQUIRED_TEXT_FIELDS = [
   'counterargument',
   'next_observable_signal',
 ];
+
+export const SOURCE_EXPERT_INSIGHT_FIELDS = Object.freeze([
+  'concrete_facts',
+  'named_actors',
+  'infrastructure_layer',
+  ...REQUIRED_TEXT_FIELDS,
+]);
 
 const COMPANY_SUFFIX_PATTERN = [
   'Inc',
@@ -238,6 +247,183 @@ function hasSpecificField(value = '') {
   return !/\b(execution risk|infrastructure demand|capacity planning|market participants|stakeholders)\b$/i.test(text);
 }
 
+function sourceInsightError(reason) {
+  const error = new Error(`Source-grounded expert insight rejected: ${reason}`);
+  error.code = 'SOURCE_EXPERT_INSIGHT_INVALID';
+  error.reason = reason;
+  return error;
+}
+
+function exactSourceExcerptList(value, source, field) {
+  if (!Array.isArray(value) || value.length === 0 || value.length > 5 || value.some((excerpt) => typeof excerpt !== 'string')) {
+    throw sourceInsightError(`evidence_shape:${field}`);
+  }
+  const excerpts = value.map(cleanText);
+  if (excerpts.some((excerpt) => excerpt.length < 20 || excerpt.length > 1200 || !source.includes(excerpt))) {
+    throw sourceInsightError(`unsupported_evidence:${field}`);
+  }
+  return excerpts;
+}
+
+function numericClaimsSupported(value, excerpts) {
+  const evidenceKeys = new Set(extractNumericClaims(excerpts.join(' ')).map(numericClaimKey).filter(Boolean));
+  return extractNumericClaims(value).every((claim) => {
+    const key = numericClaimKey(claim);
+    return Boolean(key) && evidenceKeys.has(key);
+  });
+}
+
+function actorHasInstitutionalNameShape(value, source) {
+  const actionLead = /^(?:Build|Deliver|Expand|Improve|Make|Protect|Secure|Support)\b/i;
+  const strongInstitutionMarker = /\b(?:Administration|Agency|Association|Authority|Commission|Company|Corp\.?|Corporation|Council|Department|Foundation|Group|Holdings|Inc\.?|Institute|Interconnection|Laboratory|Labs|LLC|Ministry|Office|Systems|Technologies|University|Utility)\b/i;
+  if (actionLead.test(value) && !strongInstitutionMarker.test(value)) return false;
+  if (/^[A-Z][A-Z0-9&.-]{1,15}$/.test(value)) return true;
+  if (/^[A-Z][a-z0-9]+(?:[A-Z][A-Za-z0-9]*)+$/.test(value)) return true;
+  if (strongInstitutionMarker.test(value)) return true;
+  if (extractNamedCompanies(source).some((candidate) => candidate.toLowerCase() === value.toLowerCase())) return true;
+  const tokens = value.split(/\s+/).filter(Boolean);
+  if (tokens.length === 1 && /^[A-Z][a-z][A-Za-z0-9-]*$/.test(value)) {
+    const escaped = value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    return new RegExp(`\\b${escaped}\\s+(?:announced|filed|plans|reported|said|signed|will)\\b`).test(source);
+  }
+  return tokens.length >= 2 && tokens.length <= 8 && tokens.every((token) => (
+    /^(?:and|of|the)$/i.test(token)
+    || /^[A-Z][A-Za-z0-9&.-]*$/.test(token)
+  ));
+}
+
+function hasCompleteActorMention(value, source) {
+  const lowerSource = source.toLowerCase();
+  const lowerValue = value.toLowerCase();
+  const allowedFollowingRoles = new Set(['CEO', 'CFO', 'COO', 'CTO', 'Chair', 'Director', 'President']);
+  const allowedPrecedingWords = new Set(['The']);
+  let offset = 0;
+  while (offset <= source.length - value.length) {
+    const index = lowerSource.indexOf(lowerValue, offset);
+    if (index < 0) return false;
+    const end = index + value.length;
+    const previous = source[index - 1] || '';
+    const next = source[end] || '';
+    const tokenBoundaries = !/[A-Za-z0-9]/.test(previous) && !/[A-Za-z0-9]/.test(next);
+    const beforeToken = source.slice(0, index).match(/([A-Z][A-Za-z0-9&.-]*)\s+$/)?.[1] || '';
+    const afterToken = source.slice(end).match(/^\s+([A-Z][A-Za-z0-9&.-]*)/)?.[1] || '';
+    const completeStart = !beforeToken || allowedPrecedingWords.has(beforeToken);
+    const completeEnd = !afterToken || allowedFollowingRoles.has(afterToken);
+    if (tokenBoundaries && completeStart && completeEnd) return true;
+    offset = index + 1;
+  }
+  return false;
+}
+
+function looksLikeNamedActor(value, source) {
+  return Boolean(
+    value
+    && value.length <= 160
+    && actorHasInstitutionalNameShape(value, source)
+    && hasCompleteActorMention(value, source)
+  );
+}
+
+function isCompleteSourceSentence(value, source) {
+  const sentence = cleanText(value);
+  if (!/[.!?]$/.test(sentence)) return false;
+  const index = source.indexOf(sentence);
+  if (index < 0) return false;
+  const before = source.slice(0, index);
+  const after = source.slice(index + sentence.length);
+  const startsAtBoundary = index === 0 || /[.!?]\s+$/.test(before);
+  const endsAtBoundary = after.length === 0 || /^\s+[A-Z0-9]/.test(after);
+  return startsAtBoundary && endsAtBoundary;
+}
+
+export function emptyExpertInsight() {
+  return {
+    concrete_facts: [],
+    named_companies: [],
+    infrastructure_layer: '',
+    bottleneck_type: '',
+    who_gains_leverage: '',
+    who_takes_execution_risk: '',
+    timing_dependency: '',
+    counterargument: '',
+    next_observable_signal: '',
+    expert_insight_complete: false,
+    expert_insight_missing_fields: ['concrete_facts', 'named_companies', 'infrastructure_layer', ...REQUIRED_TEXT_FIELDS],
+  };
+}
+
+export function validateSourceExpertInsight(payload, sourceText = '') {
+  const source = cleanText(sourceText);
+  if (source.length < 120) throw sourceInsightError('source_text_insufficient');
+  if (!payload || typeof payload !== 'object' || Array.isArray(payload)) throw sourceInsightError('payload_not_object');
+
+  const keys = Object.keys(payload).sort();
+  const expectedKeys = [...SOURCE_EXPERT_INSIGHT_FIELDS, 'source_evidence'].sort();
+  if (keys.length !== expectedKeys.length || keys.some((key, index) => key !== expectedKeys[index])) {
+    throw sourceInsightError('payload_keys');
+  }
+  if (!payload.source_evidence || typeof payload.source_evidence !== 'object' || Array.isArray(payload.source_evidence)) {
+    throw sourceInsightError('evidence_not_object');
+  }
+  const evidenceKeys = Object.keys(payload.source_evidence).sort();
+  const expectedEvidenceKeys = [...SOURCE_EXPERT_INSIGHT_FIELDS].sort();
+  if (evidenceKeys.length !== expectedEvidenceKeys.length || evidenceKeys.some((key, index) => key !== expectedEvidenceKeys[index])) {
+    throw sourceInsightError('evidence_keys');
+  }
+
+  const facts = Array.isArray(payload.concrete_facts) && payload.concrete_facts.every((value) => typeof value === 'string')
+    ? payload.concrete_facts.map(cleanText)
+    : [];
+  if (facts.length === 0 || facts.length > 5 || facts.some((fact) => fact.length < 20 || !isCompleteSourceSentence(fact, source))) {
+    throw sourceInsightError('concrete_facts_not_source_sentences');
+  }
+  const actors = Array.isArray(payload.named_actors) && payload.named_actors.every((value) => typeof value === 'string')
+    ? unique(payload.named_actors.map(cleanText))
+    : [];
+  if (actors.length === 0 || actors.length > 8 || actors.some((actor) => !looksLikeNamedActor(actor, source))) {
+    throw sourceInsightError('named_actors');
+  }
+  if (typeof payload.infrastructure_layer !== 'string' || !INFRASTRUCTURE_LAYERS.includes(payload.infrastructure_layer)) {
+    throw sourceInsightError('infrastructure_layer');
+  }
+  for (const field of REQUIRED_TEXT_FIELDS) {
+    if (typeof payload[field] !== 'string') throw sourceInsightError(`text_field:${field}`);
+    if (field === 'bottleneck_type') {
+      if (!cleanText(payload[field])) throw sourceInsightError(`text_field:${field}`);
+    } else if (!hasSpecificField(payload[field])) {
+      throw sourceInsightError(`text_field:${field}`);
+    }
+  }
+
+  const normalizedEvidence = {};
+  for (const field of SOURCE_EXPERT_INSIGHT_FIELDS) {
+    const excerpts = exactSourceExcerptList(payload.source_evidence[field], source, field);
+    normalizedEvidence[field] = excerpts;
+    const values = field === 'concrete_facts'
+      ? facts
+      : field === 'named_actors'
+        ? actors
+        : [cleanText(payload[field])];
+    if (field === 'named_actors' && values.some((actor) => !excerpts.some((excerpt) => excerpt.toLowerCase().includes(actor.toLowerCase())))) {
+      throw sourceInsightError('named_actor_evidence');
+    }
+    if (values.some((value) => !numericClaimsSupported(value, excerpts))) {
+      throw sourceInsightError(`unsupported_numeric:${field}`);
+    }
+  }
+
+  return {
+    concrete_facts: facts,
+    named_companies: actors,
+    infrastructure_layer: payload.infrastructure_layer,
+    ...Object.fromEntries(REQUIRED_TEXT_FIELDS.map((field) => [field, cleanText(payload[field])])),
+    source_evidence: normalizedEvidence,
+    source_grounded: true,
+    expert_insight_complete: true,
+    expert_insight_missing_fields: [],
+  };
+}
+
 export function extractExpertInsight(article = {}) {
   const text = sourceText(article);
   const concreteFacts = extractConcreteFacts(article);
@@ -288,9 +474,98 @@ export function articleHasExpertInsight(article = {}) {
   );
 }
 
+const COVERAGE_STOP_WORDS = new Set('a an and are as at be because been but by can could did do does for from has have if in into is it its may more not of on or that the their them then this those to was were what when which who will with without would'.split(' '));
+
+function coverageToken(value = '') {
+  return value.toLowerCase().replace(/[^a-z0-9-]/g, '').replace(/(?:ing|ed|es|s)$/i, '');
+}
+
+function coverageTokens(value = '', exclusions = new Set()) {
+  return cleanText(value).match(/[A-Za-z][A-Za-z0-9-]{2,}/g)
+    ?.map(coverageToken)
+    .filter((token) => token && !COVERAGE_STOP_WORDS.has(token) && !exclusions.has(token)) || [];
+}
+
+function hasNegativeConstruction(value = '') {
+  return /\b(?:not|no|never|neither|nor|cannot|can't|won't|doesn't|don't|didn't|isn't|aren't|wasn't|weren't|without|lack(?:s|ed|ing)?|fail(?:s|ed|ing)?\s+to|insufficient|absent|rather than)\b/i.test(value);
+}
+
+function groundedFieldCovered(body = '', field = '', exclusions = new Set()) {
+  const fieldTokens = [...new Set(coverageTokens(field, exclusions))];
+  if (fieldTokens.length < 3) return false;
+  const fieldNumericClaims = extractNumericClaims(field);
+  const fieldNumericKeys = fieldNumericClaims.map(numericClaimKey).filter(Boolean);
+  if (fieldNumericKeys.length !== fieldNumericClaims.length) return false;
+  const fieldIsNegative = hasNegativeConstruction(field);
+  const fieldBigrams = new Set(fieldTokens.slice(0, -1).map((token, index) => `${token} ${fieldTokens[index + 1]}`));
+  const units = cleanText(body).split(/(?<=[.!?])\s+|\n+/).map(cleanText).filter(Boolean);
+  return units.some((unit) => {
+    if (fieldIsNegative !== hasNegativeConstruction(unit)) return false;
+    const unitNumericKeys = new Set(extractNumericClaims(unit).map(numericClaimKey).filter(Boolean));
+    if (!fieldNumericKeys.every((key) => unitNumericKeys.has(key))) return false;
+    const unitTokens = coverageTokens(unit, exclusions);
+    const unitSet = new Set(unitTokens);
+    const overlap = fieldTokens.filter((token) => unitSet.has(token)).length;
+    const ratio = overlap / Math.min(fieldTokens.length, 10);
+    const unitBigrams = new Set(unitTokens.slice(0, -1).map((token, index) => `${token} ${unitTokens[index + 1]}`));
+    const sharedBigram = [...fieldBigrams].some((bigram) => unitBigrams.has(bigram));
+    return overlap >= 3 && ratio >= 0.4 && (overlap >= 5 || sharedBigram);
+  });
+}
+
+function actorAcronym(value = '') {
+  const ignored = new Set(['and', 'of', 'the']);
+  return value.split(/\s+/)
+    .map((token) => token.replace(/[^A-Za-z0-9]/g, ''))
+    .filter((token) => token && !ignored.has(token.toLowerCase()))
+    .map((token) => token[0])
+    .join('')
+    .toUpperCase();
+}
+
+function groundedActorCovered(body = '', actors = []) {
+  const text = cleanText(body);
+  return actors.some((actor) => {
+    if (text.toLowerCase().includes(cleanText(actor).toLowerCase())) return true;
+    const acronym = actorAcronym(actor);
+    return acronym.length >= 3 && new RegExp(`\\b${acronym.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\b`).test(text);
+  });
+}
+
+function groundedFactCovered(body = '', facts = [], exclusions = new Set()) {
+  const bodyNumericKeys = new Set(extractNumericClaims(body).map(numericClaimKey).filter(Boolean));
+  return facts.some((fact) => {
+    const numericSupported = extractNumericClaims(fact).every((claim) => {
+      const key = numericClaimKey(claim);
+      return Boolean(key) && bodyNumericKeys.has(key);
+    });
+    return numericSupported && groundedFieldCovered(body, fact, exclusions);
+  });
+}
+
 export function expertInsightUsageScore(body = '', insight = {}) {
   const text = cleanText(body).toLowerCase();
   if (!text) return 0;
+
+  if (insight.source_grounded === true) {
+    const actors = Array.isArray(insight.named_companies) ? insight.named_companies.filter(Boolean) : [];
+    const exclusions = new Set([
+      ...actors.flatMap((actor) => coverageTokens(actor)),
+      ...coverageTokens(insight.infrastructure_layer || ''),
+    ]);
+    const checks = [
+      groundedFactCovered(body, insight.concrete_facts || [], exclusions),
+      groundedActorCovered(body, actors),
+      groundedFieldCovered(body, insight.bottleneck_type, exclusions),
+      Boolean(insight.infrastructure_layer && text.includes(insight.infrastructure_layer.toLowerCase())),
+      groundedFieldCovered(body, insight.who_gains_leverage, exclusions),
+      groundedFieldCovered(body, insight.who_takes_execution_risk, exclusions),
+      groundedFieldCovered(body, insight.timing_dependency, exclusions),
+      groundedFieldCovered(body, insight.counterargument, exclusions),
+      groundedFieldCovered(body, insight.next_observable_signal, exclusions),
+    ];
+    return checks.filter(Boolean).length / checks.length;
+  }
 
   const checks = [
     (insight.concrete_facts || []).some((fact) => text.includes(cleanText(fact).toLowerCase().slice(0, 80))),

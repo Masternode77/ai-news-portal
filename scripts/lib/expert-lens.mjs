@@ -26,6 +26,8 @@ import { BANNED_PHRASES, BLOCKED_HOOK_STARTS, hasBannedPhrase } from './banned-p
 import {
   BRIEF_LABELS,
   GENERATION_VERSION,
+  NARRATIVE_DNA_REQUIRED_ARRAY_FIELDS,
+  NARRATIVE_DNA_REQUIRED_TEXT_FIELDS,
   buildNarrativeLensFields,
   extractNarrativeDNA,
 } from './narrative-dna.mjs';
@@ -85,71 +87,78 @@ function nonEmptyString(value) {
   return typeof value === 'string' && Boolean(value.trim());
 }
 
+const SUBSCRIPTION_EXPERT_LENS_REQUIRED_TEXT_FIELDS = Object.freeze([
+  'thesis',
+  'whatHappened',
+  'whyThisMatters',
+  'marketMissing',
+  'investors',
+  'operators',
+  'hyperscalers',
+  'watchNext',
+  'finalHeadline',
+  'metaDescription',
+  'finalArticleBody',
+  'sourceLink',
+]);
+
+function payloadIssue(article, parsed, blueprint) {
+  if (!parsed || typeof parsed !== 'object' || Array.isArray(parsed)) return 'payload_not_object';
+  if (parsed.blueprintId !== blueprint.id) return 'blueprint_id_mismatch';
+  if (parsed.generation_version !== GENERATION_VERSION) return 'generation_version_mismatch';
+
+  const canonicalSourceLink = article.sourceUrl || article.url || '';
+  if (parsed.sourceLink !== canonicalSourceLink) return 'source_link_mismatch';
+  if (!parsed.narrative_dna || typeof parsed.narrative_dna !== 'object' || Array.isArray(parsed.narrative_dna)) {
+    return 'narrative_dna_not_object';
+  }
+  for (const field of NARRATIVE_DNA_REQUIRED_TEXT_FIELDS) {
+    if (!nonEmptyString(parsed.narrative_dna[field])) return `narrative_dna_text:${field}`;
+  }
+  for (const field of NARRATIVE_DNA_REQUIRED_ARRAY_FIELDS) {
+    const value = parsed.narrative_dna[field];
+    if (!Array.isArray(value) || value.length === 0 || !value.every(nonEmptyString)) {
+      return `narrative_dna_array:${field}`;
+    }
+  }
+  if (!BRIEF_LABELS.includes(parsed.dynamicBriefLabel)) return 'dynamic_brief_label';
+  if (parsed.dynamicBriefLabel !== parsed.narrative_dna.public_signal_label) return 'dynamic_brief_label_mismatch';
+  for (const field of SUBSCRIPTION_EXPERT_LENS_REQUIRED_TEXT_FIELDS) {
+    if (!nonEmptyString(parsed[field])) return `text_field:${field}`;
+  }
+  if (!Array.isArray(parsed.executiveSummary) || parsed.executiveSummary.length !== 3 || !parsed.executiveSummary.every(nonEmptyString)) {
+    return 'executive_summary_shape';
+  }
+  if (!Array.isArray(parsed.headlineOptions) || parsed.headlineOptions.length !== 5 || !parsed.headlineOptions.every(nonEmptyString)) {
+    return 'headline_options_shape';
+  }
+
+  const body = normalizeEditorialParagraphs(parsed.finalArticleBody).join('\n\n');
+  if (body.length < blueprint.minChars) return 'body_below_min_chars';
+  if (body.length > blueprint.maxChars + 400) return 'body_above_max_chars';
+  if (!bodyUsesBlueprint(body, blueprint) && !bodyHasStructuralSections(body)) return 'body_structure';
+  if (articleHasExpertInsight(article) && expertInsightUsageScore(body, article.expert_insight || article.expertInsight) < 0.55) {
+    return 'body_expert_insight_usage';
+  }
+  if (containsTemplateLanguage(body)) return 'body_template_language';
+  if (hasBannedPhrase(body)) return 'body_banned_phrase';
+
+  for (const field of SUBSCRIPTION_EXPERT_LENS_REQUIRED_TEXT_FIELDS.filter((field) => !['sourceLink', 'finalArticleBody'].includes(field))) {
+    if (hasBannedPhrase(parsed[field])) return `banned_text:${field}`;
+  }
+  if (parsed.executiveSummary.some((value) => hasBannedPhrase(value))) return 'executive_summary_banned_phrase';
+  if (parsed.headlineOptions.some((value) => hasBannedPhrase(value))) return 'headline_options_banned_phrase';
+  return null;
+}
+
 export function assertCompleteSubscriptionExpertLensPayload(article, payload, blueprint = resolveArticleBlueprint(article)) {
   const parsed = typeof payload === 'string' ? safeJsonParse(payload, null) : payload;
-  const canonicalSourceLink = article.sourceUrl || article.url || '';
-  const narrativeTextFields = [
-    'protagonist',
-    'antagonist_or_constraint',
-    'core_tension',
-    'infrastructure_layer',
-    'time_horizon',
-    'story_archetype',
-    'hook_style',
-    'evidence_anchor',
-    'counterpoint',
-    'next_observable_signal',
-  ];
-  const requiredTextFields = [
-    'thesis',
-    'whatHappened',
-    'whyThisMatters',
-    'marketMissing',
-    'investors',
-    'operators',
-    'hyperscalers',
-    'watchNext',
-    'finalHeadline',
-    'metaDescription',
-    'finalArticleBody',
-    'sourceLink',
-  ];
-  const readerTextFields = requiredTextFields.filter((field) => field !== 'sourceLink');
-  const body = nonEmptyString(parsed?.finalArticleBody)
-    ? normalizeEditorialParagraphs(parsed.finalArticleBody).join('\n\n')
-    : '';
-  const validBody = body.length >= blueprint.minChars
-    && body.length <= blueprint.maxChars + 400
-    && (bodyUsesBlueprint(body, blueprint) || bodyHasStructuralSections(body))
-    && (!articleHasExpertInsight(article) || expertInsightUsageScore(body, article.expert_insight || article.expertInsight) >= 0.55)
-    && !containsTemplateLanguage(body)
-    && !hasBannedPhrase(body);
-  const valid = parsed
-    && typeof parsed === 'object'
-    && !Array.isArray(parsed)
-    && parsed.blueprintId === blueprint.id
-    && parsed.generation_version === GENERATION_VERSION
-    && parsed.sourceLink === canonicalSourceLink
-    && parsed.narrative_dna && typeof parsed.narrative_dna === 'object' && !Array.isArray(parsed.narrative_dna)
-    && narrativeTextFields.every((field) => nonEmptyString(parsed.narrative_dna[field]))
-    && Array.isArray(parsed.narrative_dna.reader_role)
-    && parsed.narrative_dna.reader_role.length > 0
-    && parsed.narrative_dna.reader_role.every(nonEmptyString)
-    && BRIEF_LABELS.includes(parsed.dynamicBriefLabel)
-    && requiredTextFields.every((field) => nonEmptyString(parsed[field]))
-    && Array.isArray(parsed.executiveSummary)
-    && parsed.executiveSummary.length === 3
-    && parsed.executiveSummary.every(nonEmptyString)
-    && Array.isArray(parsed.headlineOptions)
-    && parsed.headlineOptions.length === 5
-    && parsed.headlineOptions.every(nonEmptyString)
-    && readerTextFields.every((field) => !hasBannedPhrase(parsed[field]))
-    && parsed.executiveSummary.every((value) => !hasBannedPhrase(value))
-    && parsed.headlineOptions.every((value) => !hasBannedPhrase(value))
-    && validBody;
-
-  if (!valid) {
-    throw new Error('Subscription long-form analysis returned incomplete or invalid editorial fields');
+  const issue = payloadIssue(article, parsed, blueprint);
+  if (issue) {
+    const error = new Error(`Subscription long-form analysis rejected: ${issue}`);
+    error.code = 'SUBSCRIPTION_EXPERT_LENS_INVALID_PAYLOAD';
+    error.reason = issue;
+    throw error;
   }
   return parsed;
 }
@@ -380,33 +389,39 @@ function needsExpertLens(article) {
   return !hydrated.expertLensFull || !hydrated.expertLensShort;
 }
 
-async function generateExpertLensFull(article, blueprint) {
-  if (!articleHasExpertInsight(article)) {
-    throw new Error('expert insight fields are incomplete; refusing generic long-form article generation');
-  }
-  const fallback = fallbackExpertLensFull(article, blueprint);
+export function buildSubscriptionExpertLensRequest(article, blueprint = resolveArticleBlueprint(article)) {
   const expertInsight = article.expert_insight || article.expertInsight || {};
-  const content = await callExpertLensText({
+  const narrativeDNA = extractNarrativeDNA(article);
+  const sourceLink = article.sourceUrl || article.url || '';
+  const narrativeTextContract = NARRATIVE_DNA_REQUIRED_TEXT_FIELDS
+    .map((field) => `"${field}": string`)
+    .join(', ');
+  const narrativeArrayContract = NARRATIVE_DNA_REQUIRED_ARRAY_FIELDS
+    .map((field) => `"${field}": non-empty string[]`)
+    .join(', ');
+
+  return {
     systemPrompt: [
       'You are the editorial voice for an AI infrastructure intelligence publication.',
       'Write like a top-tier business technology editor covering AI, data centers, power, semiconductors, and cloud infrastructure.',
       EDITORIAL_HUMANIZER_PROMPT,
-      `Use NarrativeDNA before writing: protagonist, antagonist_or_constraint, core_tension, reader_role, infrastructure_layer, time_horizon, story_archetype, hook_style, evidence_anchor, counterpoint, next_observable_signal.`,
+      `The canonical NarrativeDNA object has this required contract: {${narrativeTextContract}, ${narrativeArrayContract}}. Copy every supplied narrativeDNA field into narrative_dna without renaming or replacing canonical fields. Do not add invented aliases such as antagonist_or_constraint, hook_style, or next_observable_signal.`,
       `Do not use any banned phrase: ${BANNED_PHRASES.join(' | ')}.`,
       `No hook or lead sentence may begin with: ${BLOCKED_HOOK_STARTS.join(' | ')}.`,
       'The output must be decision-grade, accurate, skeptical, and free of generic hype or unsupported certainty.',
       'Use this logic in order: report what changed, explain why the development matters now, identify 1-2 underappreciated constraints, name practical implications for the most relevant audience, then end with what to watch next.',
-      'The article must use the extracted expert insight fields. Do not substitute generic infrastructure analysis for missing details.',
-      'Every finalArticleBody must explicitly use at least one concrete fact, one named company, the infrastructure layer, bottleneck type, leverage holder, execution-risk holder, timing dependency, counterargument, and next observable signal.',
+      'The supplied source text is the factual authority. Treat expertInsight as candidate analytical structure derived from that source, and use only details the source supports; do not repeat low-confidence auto-extracted names or labels merely to satisfy a field.',
+      'Ground finalArticleBody in enough source-supported expert insight to pass the editorial gate: a concrete fact and named company from the source, plus the supported infrastructure layer, bottleneck, leverage, execution risk, timing dependency, counterargument, and next observable signal. Do not substitute generic infrastructure analysis for missing evidence.',
       blueprintPrompt(blueprint),
       'Return strict JSON only with keys: blueprintId, generation_version, narrative_dna, dynamicBriefLabel, thesis, whatHappened, whyThisMatters, marketMissing, investors, operators, hyperscalers, watchNext, executiveSummary, headlineOptions, finalHeadline, metaDescription, finalArticleBody, sourceLink.',
-      `generation_version must be "${GENERATION_VERSION}". dynamicBriefLabel must be one of the allowed NarrativeDNA brief labels.`,
-      `blueprintId must be "${blueprint.id}".`,
-      'executiveSummary must be exactly 3 short lines for busy readers: what changed, why it matters, and what to watch.',
-      'headlineOptions must be an array of exactly 5 concise headline ideas written in English, each with a concrete hook that invites a click without hype.',
+      `generation_version must be "${GENERATION_VERSION}". dynamicBriefLabel must equal narrative_dna.public_signal_label and be one of: ${BRIEF_LABELS.join(' | ')}.`,
+      `blueprintId must be "${blueprint.id}". sourceLink must be exactly "${sourceLink}".`,
+      'All scalar editorial fields and every required narrative_dna text field must be non-empty strings. reader_role must be a non-empty array of non-empty strings.',
+      'executiveSummary must be an array of exactly 3 short strings for busy readers: what changed, why it matters, and what to watch.',
+      'headlineOptions must be an array of exactly 5 concise English strings, each with a concrete hook that invites a click without hype.',
       'finalHeadline must use the strongest hook while preserving the source facts.',
       'Keep each section concise but substantive. Do not invent facts or numbers not grounded in the provided context.',
-      `The finalArticleBody is the primary deliverable. It must include the selected blueprint headings as standalone lines and otherwise be reported analysis, not bullets and not a repeated section template.`,
+      'The finalArticleBody is the primary deliverable. It must include the selected blueprint headings as standalone lines and otherwise be reported analysis, not bullets and not a repeated section template.',
       'Do not include the headings "Why it matters", "Pressure points", "Market implications", or "What to watch" anywhere in reader-facing copy.',
     ].join(' '),
     userPrompt: JSON.stringify({
@@ -419,13 +434,22 @@ async function generateExpertLensFull(article, blueprint) {
       summary: article.summary,
       snippet: article.snippet,
       articleText: article.articleText,
-      sourceLink: article.sourceUrl || article.url,
+      sourceLink,
       expertInsight,
       expertInsightFieldSummary: insightFieldSummary(expertInsight),
-      narrativeDNA: extractNarrativeDNA(article),
+      narrativeDNA,
     }),
     maxTokens: 2600,
-  }).catch((error) => { rethrowSubscriptionFailure(error); return ''; });
+  };
+}
+
+async function generateExpertLensFull(article, blueprint) {
+  if (!articleHasExpertInsight(article)) {
+    throw new Error('expert insight fields are incomplete; refusing generic long-form article generation');
+  }
+  const fallback = fallbackExpertLensFull(article, blueprint);
+  const content = await callExpertLensText(buildSubscriptionExpertLensRequest(article, blueprint))
+    .catch((error) => { rethrowSubscriptionFailure(error); return ''; });
 
   if (content) {
     try {

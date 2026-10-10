@@ -1034,11 +1034,14 @@ test('legacy and offline enrichment retain deterministic completion behavior', (
   for (const overrides of [{ LLM_PROVIDER:'openrouter' }, { PIPELINE_OFFLINE:'1' }]) {
     assert.equal(runIsolated(`
       import assert from 'node:assert/strict';
-      import { normalizeAiPayload } from './scripts/lib/content.mjs';
+      import { buildContentEnrichmentRequest, normalizeAiPayload } from './scripts/lib/content.mjs';
       const fallback={summary:'fallback summary',insight:'fallback insight',tags:['fallback'],region:'Global',imagePrompt:'fallback prompt'};
       const normalized=normalizeAiPayload({summary:'legacy summary',insight:'legacy insight',tags:[],imagePrompt:'legacy prompt'},fallback);
       assert.deepEqual(normalized.tags,['fallback']);
       assert.equal(normalized.region,'Global');
+      const request=buildContentEnrichmentRequest({title:'Fixture',source:'Fixture',url:'https://example.com'},'Fixture source text.');
+      assert.equal(request.maxTokens,700);
+      assert.equal(request.systemPrompt.includes('source_expert_insight'),false);
       console.log('legacy-completed');
     `, overrides), 'legacy-completed');
   }
@@ -1048,6 +1051,7 @@ test('subscription long-form rejects partial and banned generated payloads befor
   assert.equal(runIsolated(`
     import assert from 'node:assert/strict';
     import { assertCompleteSubscriptionExpertLensPayload } from './scripts/lib/expert-lens.mjs';
+    import { extractNarrativeDNA } from './scripts/lib/narrative-dna.mjs';
     const article={
       title:'Northline Power lands 200 MW grid deal', article_blueprint:'constraint-ledger', sourceUrl:'https://example.com/source',
       expert_insight:{
@@ -1061,14 +1065,8 @@ test('subscription long-form rejects partial and banned generated payloads befor
     const detail='Northline Power secured 200 MW while grid interconnection in the Power layer remains the bottleneck. Utilities with spare capacity gain leverage, developers with delivery dates carry execution risk, and substation completion before 2027 controls timing. The queue position could still slip, so readers should track substation construction milestones and utility acceptance tests before treating contracted demand as operating capacity.';
     const finalArticleBody=['Change',detail.repeat(2),'Infrastructure Read',detail,'Exposed Edges',detail,'Decision Point',detail].join('\\n\\n');
     const complete={
-      blueprintId:'constraint-ledger', generation_version:'editorial_surface_v2', narrative_dna:{
-        protagonist:'Northline Power', antagonist_or_constraint:'Utility delivery risk',
-        core_tension:'Contracted demand depends on unfinished grid work', reader_role:['operators','investors'],
-        infrastructure_layer:'Power', time_horizon:'through energization', story_archetype:'Power Market Signal',
-        hook_style:'constraint-led', evidence_anchor:'Northline Power secured 200 MW',
-        counterpoint:'The queue position may hold', next_observable_signal:'Substation construction milestones',
-      },
-      dynamicBriefLabel:'Core Signal', thesis:'Northline Power depends on utility delivery', whatHappened:'Northline Power secured 200 MW',
+      blueprintId:'constraint-ledger', generation_version:'editorial_surface_v2', narrative_dna:extractNarrativeDNA(article),
+      dynamicBriefLabel:extractNarrativeDNA(article).public_signal_label, thesis:'Northline Power depends on utility delivery', whatHappened:'Northline Power secured 200 MW',
       whyThisMatters:'Grid timing now controls commissioning', marketMissing:'Utility acceptance remains open',
       investors:'Investors should track the energization schedule', operators:'Operators carry commissioning exposure',
       hyperscalers:'Cloud buyers depend on delivered capacity', watchNext:'Track substation construction milestones',
@@ -1082,7 +1080,7 @@ test('subscription long-form rejects partial and banned generated payloads befor
     assert.doesNotThrow(()=>assertCompleteSubscriptionExpertLensPayload(article,{...complete,finalArticleBody:rephrasedBody}));
     for (const payload of [
       {finalHeadline:'A complete-looking headline',finalArticleBody:'A complete-looking body'},
-      {...complete,narrative_dna:{...complete.narrative_dna,hook_style:''}},
+      {...complete,narrative_dna:{...complete.narrative_dna,concrete_event:''}},
       {...complete,narrative_dna:{...complete.narrative_dna,reader_role:'operators'}},
       {...complete,dynamicBriefLabel:'Invalid label'},
       {...complete,sourceLink:'https://attacker.example/fabricated-source'},
@@ -1091,7 +1089,7 @@ test('subscription long-form rejects partial and banned generated payloads befor
       {...complete,finalArticleBody:'This signal matters for operators.'},
     ]) assert.throws(
       ()=>assertCompleteSubscriptionExpertLensPayload(article,payload),
-      /incomplete or invalid editorial fields/
+      /Subscription long-form analysis rejected:/
     );
     console.log('longform-fallback-blocked');
   `), 'longform-fallback-blocked');
