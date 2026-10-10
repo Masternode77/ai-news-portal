@@ -19,6 +19,25 @@ export const BRIEF_LABELS = [
   'Policy Risk',
   'Stack Shift',
 ];
+export const NARRATIVE_DNA_REQUIRED_TEXT_FIELDS = Object.freeze([
+  'protagonist',
+  'concrete_event',
+  'core_tension',
+  'infrastructure_layer',
+  'decision_relevance',
+  'evidence_anchor',
+  'counterpoint',
+  'watch_metric',
+  'time_horizon',
+  'public_signal_label',
+  'editorial_lens',
+  'story_archetype',
+  'story_archetype_id',
+  'routing_decision',
+]);
+export const NARRATIVE_DNA_REQUIRED_ARRAY_FIELDS = Object.freeze([
+  'reader_role',
+]);
 export const STORY_ARCHETYPES = STORY_ARCHETYPES_V2;
 
 function compact(value = '') {
